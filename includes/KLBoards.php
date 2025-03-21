@@ -304,7 +304,13 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 			$dailyD = locale_number_format_kpi(($MyRow['salesD']));
 			$dailyE = locale_number_format_kpi(($MyRow['salesE']));
 			$dailyF = locale_number_format_kpi(($MyRow['salesF']));
-			$Percent = (($MyRow['salesD']) - ($MyRow['salesC'])) / ($MyRow['salesC']) * 100;
+			
+			// Fix division by zero error
+			$Percent = 0;
+			if (!empty($MyRow['salesC']) && $MyRow['salesC'] != 0) {
+				$Percent = (($MyRow['salesD']) - ($MyRow['salesC'])) / ($MyRow['salesC']) * 100;
+			}
+			
 			$Trend = " ";
 			if ($Percent > MINIMUM_BUSINESS_HISTORY_TREND){
 				$Trend = "Increasing " . locale_number_format($Percent, 0) . "%";
@@ -622,13 +628,20 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				$Name = $MyRow['salesmanname'];
 			}
 
-			$dailyA = $MyRow['salesA'] / $NumDaysA;
-			$dailyB = $MyRow['salesB'] / $NumDaysB;
-			$dailyC = $MyRow['salesC'] / $NumDaysC;
-			$dailyD = $MyRow['salesD'] / $NumDaysD;
-			$dailyE = $MyRow['salesE'] / $NumDaysE;
-			$dailyF = $MyRow['salesF'] / $NumDaysF;
-			$Percent = (($NumDaysD * $NumDaysC * $MyRow['salesC']) != 0) ? (($MyRow['salesD'] / $NumDaysD) - ($MyRow['salesC'] / $NumDaysC)) / ($MyRow['salesC'] / $NumDaysC) * 100 : 0;
+			// Fix division by zero errors
+			$dailyA = ($NumDaysA != 0) ? $MyRow['salesA'] / $NumDaysA : 0;
+			$dailyB = ($NumDaysB != 0) ? $MyRow['salesB'] / $NumDaysB : 0;
+			$dailyC = ($NumDaysC != 0) ? $MyRow['salesC'] / $NumDaysC : 0;
+			$dailyD = ($NumDaysD != 0) ? $MyRow['salesD'] / $NumDaysD : 0;
+			$dailyE = ($NumDaysE != 0) ? $MyRow['salesE'] / $NumDaysE : 0;
+			$dailyF = ($NumDaysF != 0) ? $MyRow['salesF'] / $NumDaysF : 0;
+			
+			// Fix division by zero error
+			$Percent = 0;
+			if ($NumDaysD != 0 && $NumDaysC != 0 && $MyRow['salesC'] != 0) {
+				$Percent = (($MyRow['salesD'] / $NumDaysD) - ($MyRow['salesC'] / $NumDaysC)) / ($MyRow['salesC'] / $NumDaysC) * 100;
+			}
+			
 			$Trend = " ";
 			if ($Percent > MINIMUM_AVERAGE_SALES_TREND){
 				$Trend = "Improving " . locale_number_format($Percent, 0) . "%";
@@ -636,7 +649,11 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($Percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$Trend = "Degrading " . locale_number_format($Percent, 0) . "%";
 			}
-			$Forecast = round((($MyRow['salesD'] / $NumDaysD) + ($MyRow['salesE'] / $NumDaysE)) / 2 * 30, -5);
+			// Fix division by zero error for forecast calculation
+			$Forecast = 0;
+			if ($NumDaysD != 0 && $NumDaysE != 0) {
+				$Forecast = round((($MyRow['salesD'] / $NumDaysD) + ($MyRow['salesE'] / $NumDaysE)) / 2 * 30, -5);
+			}
 
 			$MTD = locale_number_format($MyRow['salesMTD'], 0);
 
@@ -658,14 +675,20 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						</tr>';
 
 			}
-			$TotalDateA = $TotalDateA + ($MyRow['salesA'] / $NumDaysA);
-			$TotalDateB = $TotalDateB + ($MyRow['salesB'] / $NumDaysB);
-			$TotalDateC = $TotalDateC + ($MyRow['salesC'] / $NumDaysC);
-			$TotalDateD = $TotalDateD + ($MyRow['salesD'] / $NumDaysD);
-			$TotalDateE = $TotalDateE + ($MyRow['salesE'] / $NumDaysE);
-			$TotalDateF = $TotalDateF + ($MyRow['salesF'] / $NumDaysF);
+			$TotalDateA = $TotalDateA + ($NumDaysA != 0 ? ($MyRow['salesA'] / $NumDaysA) : 0);
+			$TotalDateB = $TotalDateB + ($NumDaysB != 0 ? ($MyRow['salesB'] / $NumDaysB) : 0);
+			$TotalDateC = $TotalDateC + ($NumDaysC != 0 ? ($MyRow['salesC'] / $NumDaysC) : 0);
+			$TotalDateD = $TotalDateD + ($NumDaysD != 0 ? ($MyRow['salesD'] / $NumDaysD) : 0);
+			$TotalDateE = $TotalDateE + ($NumDaysE != 0 ? ($MyRow['salesE'] / $NumDaysE) : 0);
+			$TotalDateF = $TotalDateF + ($NumDaysF != 0 ? ($MyRow['salesF'] / $NumDaysF) : 0);
 			$TotalDateMTD = $TotalDateMTD + $MyRow['salesMTD'];
-			$Percent = ($TotalDateD - $TotalDateC) / $TotalDateC * 100;
+			
+			// Fix division by zero error
+			$Percent = 0;
+			if ($TotalDateC != 0) {
+				$Percent = ($TotalDateD - $TotalDateC) / $TotalDateC * 100;
+			}
+			
 			$TotalForecast = $TotalForecast + $Forecast;
 			$i++;
 		}
@@ -694,6 +717,8 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					<td class="number">' . locale_number_format($TotalForecast, 0) . '</td>
 					</tr>';
 			$i--;
+			// Fix division by zero error
+			$i = max(1, $i - 1); // Ensure $i is at least 1
 			echo '<tr class="striped_row">
 					<td>' . "" . '</td>
 					<td>' . "" . '</td>
@@ -1140,10 +1165,27 @@ function FinishedStockDistribution($Kind, $ByReport){
 		$i = 1;
 		$Totalpcs = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$PercentStock = ($MyRow['optimalstock'] != 0) ? locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100,0) . "%" : "";
-			$PercentModels = ($MyRow['optimalmodels'] != 0) ? locale_number_format(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100,0). "%" : "";
-			$RealPcsModel = ($MyRow['realmodels'] != 0) ? locale_number_format(($MyRow['realstock']/$MyRow['realmodels']),1) : "";
-			$OptimalPcsModel = ($MyRow['optimalmodels'] != 0) ? locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']),1) : "";
+			// Fix division by zero errors
+			$PercentStock = "";
+			if ($MyRow['optimalstock'] != 0) {
+				$PercentStock = locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100, 0) . "%";
+			}
+			
+			$PercentModels = "";
+			if ($MyRow['optimalmodels'] != 0) {
+				$PercentModels = locale_number_format(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100, 0). "%";
+			}
+			
+			$RealPcsModel = "";
+			if ($MyRow['realmodels'] != 0) {
+				$RealPcsModel = locale_number_format(($MyRow['realstock']/$MyRow['realmodels']), 1);
+			}
+			
+			$OptimalPcsModel = "";
+			if ($MyRow['optimalmodels'] != 0) {
+				$OptimalPcsModel = locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']), 1);
+			}
+			
 			if ($ByReport == "LOCATION"){
 				echo '<tr class="striped_row">
 							<td class="number">' . $i . '</td>
@@ -1690,6 +1732,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
 
 		while ($MyRow = DB_fetch_array($Result)) {
+			// Fix division by zero errors
 			$DailyUse = ($DaysUsage > 0) ? ($MyRow['qused'] / $DaysUsage) : 0;
 			$UsedLastXDays = ceil($DailyUse * $DaysUsage);
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
@@ -1701,6 +1744,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearOU));
 			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
+			// Fix division by zero errors
 			$ForecastUsageDaily = ($DaysMinimumStock > 0) ? ($ForecastUsageNextDays / $DaysMinimumStock) : 0;
 
 			// to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
@@ -1723,11 +1767,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
 			$DaysQOH = ($DailyUse > 0) ? floor($QOH / $DailyUse): 0;
 			$DaysQOO = ($DailyUse > 0) ? floor(($QOH + $MyRow['qoo']) / $DailyUse) : 0;
-			if ($MyRow['pansize'] > 0){
-				$PanSize = $MyRow['pansize'];
-			}else{
-				$PanSize = 1;
-			}
+			
+			// Fix division by zero error
+			$PanSize = ($MyRow['pansize'] > 0) ? $MyRow['pansize'] : 1;
+
 			if ($MinQOHGudang < $MyRow['qohgudang']){
 				// we have enough in gudang, don't need to add some to keep in gudang
 				$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']));
@@ -1836,10 +1879,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$TotalQOHOptimum += $OptimumQOH;
 				$TotalQOHGudang += $MyRow['qohgudang'];
 				$TotalQOHShops += $MyRow['qohshops'];
+				$PercentShortage = 0;
 				if ($OptimumQOH != 0) {
 					$PercentShortage = $MissingQOH / $OptimumQOH * 100;
-				} else {
-					$PercentShortage = 0;  
 				}
 	
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
@@ -1883,18 +1925,20 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		}
 		if (!$ShowHeader){
 			$TotalDailyUse = ($DaysUsage > 0) ? ($UsageXDays / $DaysUsage) : 0;
+			
+			// Fix division by zero errors
+			$TotalDaysQOH = 0;
+			$TotalDaysQOO = 0;
 			if ($TotalDailyUse != 0) {
 				$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
 				$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
-			} else {
-				$TotalDaysQOH = 0;
-				$TotalDaysQOO = 0;
 			}
+			
+			$PercentTotalShortage = 0;
 			if ($TotalQOHOptimum != 0) {
 				$PercentTotalShortage = $MissingTotal / $TotalQOHOptimum * 100;
-			} else {
-				$PercentTotalShortage = 0;  
 			}
+			
 			echo'</tbody>
 				<tfooter>';
 			if ($ExtendedVersion){
@@ -2658,7 +2702,10 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}elseif	($MyRow['currcode'] == 'USD'){
 				$ValueOrderUSD = $MyRow['ordervalue'];
 				$TotalValueOrderUSD += $ValueOrderUSD;
-				$TotalValueAllOrders += ($ValueOrderUSD/$MyRow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
+				// Fix division by zero error
+				if ($MyRow['exchangerate'] != 0) {
+					$TotalValueAllOrders += ($ValueOrderUSD/$MyRow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
+				}
 				$SupplierBalanceIDR =  0;
 				$SupplierBalanceUSD =  $Payments[$MyRow['supplierno']]['balance'];
 				$SupplierBalanceTHB =  0;
@@ -2668,12 +2715,18 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				}else{
 					$PaymentOrderUSD = $ValueOrderUSD - $SupplierBalanceUSD;
 					$AcumUSD = $AcumUSD + $PaymentOrderUSD;
-					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderUSD/$MyRow['exchangerate']);
+					// Fix division by zero error
+					if ($MyRow['exchangerate'] != 0) {
+						$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderUSD/$MyRow['exchangerate']);
+					}
 				}
 			}elseif	($MyRow['currcode'] == 'THB'){
 				$ValueOrderTHB = $MyRow['ordervalue'];
 				$TotalValueOrderTHB += $ValueOrderTHB;
-				$TotalValueAllOrders += ($ValueOrderTHB/$MyRow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
+				// Fix division by zero error
+				if ($MyRow['exchangerate'] != 0) {
+					$TotalValueAllOrders += ($ValueOrderTHB/$MyRow['exchangerate']*STANDARD_COST_FACTOR_FOREIGN);
+				}
 				$SupplierBalanceIDR =  0;
 				$SupplierBalanceUSD =  0;
 				$SupplierBalanceTHB =  $Payments[$MyRow['supplierno']]['balance'];
@@ -2683,7 +2736,10 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				}else{
 					$PaymentOrderTHB = $ValueOrderTHB - $SupplierBalanceTHB;
 					$AcumTHB = $AcumTHB + $PaymentOrderTHB;
-					$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderTHB/$MyRow['exchangerate']);
+					// Fix division by zero error
+					if ($MyRow['exchangerate'] != 0) {
+						$TotalValueAllPayments = $TotalValueAllPayments + ($PaymentOrderTHB/$MyRow['exchangerate']);
+					}
 				}
 			}
 			if ($FieldName2 == ""){
@@ -2833,11 +2889,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS")
 			AND ($TypeOfProduct == "FORSALE")){
+			// Fix division by zero error
+			$AverageItemCost = 0;
 			if ($CurrentTotalQtyItemsForSale != 0) {
 				$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
-			} else {
-				$AverageItemCost = 0;
 			}
+			
 			InsertKPI("Stock", "Average Standard Cost for item for sale (IDR)", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
@@ -2897,7 +2954,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td>' . "" . '</td>
 					</tr>';
 */
-			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
+			// Fix division by zero error
+			$ExpectedDifferenceQtyStock = 0;
+			if ($AverageItemCost != 0) {
+				$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost, -2);
+			}
+			
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
 /*			echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
@@ -2944,7 +3006,12 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td>' . "" . '</td>
 					</tr>';
 */
-			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
+			// Fix division by zero error
+			$ExpectedFutureQtyStock = 0;
+			if ($AverageItemCost != 0) {
+				$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
+			}
+			
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
 /*			echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
@@ -3528,11 +3595,12 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 
+			// Fix division by zero errors
+			$NewStdCost = 0;
 			if ($MyRow['conversionfactor'] > 0 && $MyRow['rate'] > 0) {
 				$NewStdCost = $MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor;
-			} else {
-				$NewStdCost = 0;
 			}
+			
 			$Price = locale_number_format($MyRow['price'],$MyRow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '&SupplierID='. $MyRow['supplierno'] . '&Edit=1&EffectiveFrom='. $MyRow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
@@ -3561,11 +3629,12 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 					// SHOWLINK
 					$StdCostText = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $MyRow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 				}
+				// Fix division by zero error
+				$PercentDiff = 0;
 				if ($MyRow['stdcost'] != 0) {
 					$PercentDiff = ((($MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor)/$MyRow['stdcost'] * 100)-100);
-				} else {
-					$PercentDiff = 0;
 				}
+				
 				echo '<tr class="striped_row">
 						<td class="number">' . $i . '</td>
 						<td>' . $CodeLink . '</td>

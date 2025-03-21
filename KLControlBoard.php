@@ -356,7 +356,7 @@ if ($ProcessSection01){
 		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("THB", "('111205030',
-												'111204030')", 1, $PeriodNow);
+												'111204030AD')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -413,7 +413,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202030",          -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111204030",           0,  500000000, $PeriodNow);
+		BalanceAccountControl("111204030AD",           0,  500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -424,6 +424,7 @@ if ($ProcessSection01){
 									'111121107AD',
 									'111121110AD',
 									'111121115AD',
+									'111121117AD',
 									'111121121AD',
 									'111121122AD',
 									'111121125AD',
@@ -500,17 +501,17 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -50000000,   10000000, $PeriodNow);
+		BalanceAccountControl("111311100AD",  -50000000,   10000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400", -200000000,          1, $PeriodNow);
+		BalanceAccountControl("211021400AD", -200000000,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1500000000, $PeriodNow);
+		BalanceAccountControl("211021500AD",  500000000, 1500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -935,7 +936,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
@@ -946,7 +947,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_OperationalManager){
 		OutstandingOrders("Wholesale", "Quotation", $RootPath);
 		$NumberOfTestExecuted++;
@@ -962,7 +963,7 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_AdministrationTeam
-		OR $KL_SalesTeamOnline){ 
+		OR $KL_CustomerService){ 
 		OnlineMarketPlacePaymentPending(0, $RootPath);
 		$NumberOfTestExecuted++;
 	}
@@ -970,7 +971,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){ 
 		OnlineMarketPlacePaymentPending(10, $RootPath);
@@ -981,25 +982,25 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("MarketPlace", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesTeamOnline){
+	if ($KL_CustomerService){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesTeamOnline){
+	if ($KL_CustomerService){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		OnlineQuotationsFollowUp($RootPath );
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(1, $RootPath);
@@ -1009,7 +1010,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesTeamOnline){ 
+		OR $KL_CustomerService){ 
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
@@ -1017,7 +1018,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath);
 		$NumberOfTestExecuted++;
 	}
@@ -1026,7 +1027,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath);
 		$NumberOfTestExecuted++;
@@ -1035,7 +1036,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OnlineItemsOnProcess($RootPath);
 		$NumberOfTestExecuted++;
@@ -1060,7 +1061,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath);
 		$NumberOfTestExecuted++;
@@ -1072,7 +1073,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		ItemsWithoutWeightOrVolume($RootPath);
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite();
@@ -1705,7 +1706,7 @@ function CustomerDebtByCurrency($Currency){
 function CustomersDebtControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
-			WHERE chartdetails.accountcode = '111311100'
+			WHERE chartdetails.accountcode = '111311100AD'
 				AND chartdetails.period = ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -2084,7 +2085,7 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
-			WHERE chartdetails.accountcode = '211021400'
+			WHERE chartdetails.accountcode = '211021400AD'
 				AND chartdetails.period = ". $Period . "";
 // EXPLAIN SQL 2014-05-31 OK!
 //prnMsg($SQL);
@@ -4943,21 +4944,21 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 		$LastTransfer = "";
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-/*			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
+			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
 				$SQL = "UPDATE loctransfers SET shipqty = recqty 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to fix the wrong information');
-				$ResultFix = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ResultFix = DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Fixed"; 
 			}else{
 				$SQL = "DELETE FROM loctransfers 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to delete the wrong information');
-				$ResultDelete = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ResultDelete = DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Deleted";
 			}
-*/
-			$Action = "CHECK IT OUT";
+
+			$Action = "Fixed";
 			echo '<tr class="striped_row">
 					<td class="number">' . locale_number_format($MyRow['loctransferid'],0) . '</td>
 					<td>' . ConvertSQLDateTime($MyRow['recdate']) . '</td>

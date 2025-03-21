@@ -75,31 +75,47 @@ function submit($Title, $LocationForm) {
 			$FontSizeL = 12;
 			$FontSizeM = 10;
 			$FontSizeS = 8;
-			
-			while($MyRow = DB_fetch_array($Result)){
 
-				// add a new page for each department (location to)
-				$pdf->AddPage();
+			$pdf->AddPage();
+			$pdf->SetFont($FontType, '', $FontSizeXL);
+			$WidthColumn1 = 0;
+			$pdf->MultiCell($WidthColumn1, 0, 'Internal Stock Requests', 0, 'C', 0, 1, '', '', true);
+		
+			while($MyRow = DB_fetch_array($Result)){
+				// Calculate the height needed for this request block
+				$LineSQL = "SELECT COUNT(*) AS linecount
+						FROM stockrequestitems
+						WHERE dispatchid='" . $MyRow['dispatchid'] . "'
+							AND completed=0";
+				$LineCountResult = DB_query($LineSQL);
+				$LineCountRow = DB_fetch_array($LineCountResult);
+				$lineCount = $LineCountRow['linecount'];
+				
+				// Estimate needed height for header and lines (5 header lines + table header + items)
+				$neededHeight = 30 + (8 * $lineCount); // approx 8mm per line
+				
+				// Check if we need a page break before this request
+				if ($pdf->GetY() + $neededHeight > $pdf->getPageHeight() - PDF_MARGIN_BOTTOM) {
+					$pdf->AddPage();
+					$WidthColumn1 = 0;
+					$pdf->SetFont($FontType, '', $FontSizeXL);
+					$pdf->MultiCell($WidthColumn1, 0, 'Internal Stock Requests', 0, 'C', 0, 1, '', '', true);
+				}
+
 				// https://tcpdf.org/examples/example_005/
 				// https://tcpdf.org/docs/source_docs/classTCPDF/#aa81d4b585de305c054760ec983ed3ece
 	
+				$pdf->ln(4);
+				$pdf->SetFont($FontType, '', $FontSizeM);
 				$WidthColumn1 = 0;
-
-				$pdf->SetFont($FontType, '', $FontSizeXL);
-				$pdf->MultiCell($WidthColumn1, 0, 'Internal Stock Request', 0, 'C', 0, 1, '', '', true);
-	
-				$pdf->ln(6);
-				$pdf->SetFont($FontType, '', $FontSizeL);
 				$pdf->MultiCell($WidthColumn1, 0, 'From: ' . $MyRow['locationname'], 0, 'L', 0, 1, '', '', true);
 				$pdf->MultiCell($WidthColumn1, 0, 'To: ' . $MyRow['description'], 0, 'L', 0, 1, '', '', true);
-				$pdf->ln(4);
 				$pdf->MultiCell($WidthColumn1, 0, 'Date: ' . ConvertSQLDate($MyRow['despatchdate']), 0, 'L', 0, 1, '', '', true);
-				$pdf->ln(4);
 				$pdf->MultiCell($WidthColumn1, 0, 'Initiator: ' . $MyRow['initiator'] . ' - '. $MyRow['realname'], 0, 'L', 0, 1, '', '', true);
 				$pdf->MultiCell($WidthColumn1, 0, '# Request: ' . $MyRow['dispatchid'], 0, 'L', 0, 1, '', '', true);
 	
 				// Line header
-				$pdf->ln(8);
+				$pdf->ln(4);
 				$pdf->SetFont($FontType, '', $FontSizeM);
 				$WidthColumn1 = 10;
 				$WidthColumn2 = 30;

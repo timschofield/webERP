@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
-$Title = _('Reasons for Item Return Maintenance');
+$Title = _('Reasons for Stock Adjustment Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -19,7 +19,7 @@ $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title
 	. '" alt="" />' . $Title . '</p>
-	<div class="page_help_text">' . _('Add/edit/delete Item Return Reason') . '</div>
+	<div class="page_help_text">' . _('Add/edit/delete Stock Adjustment Reason') . '</div>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -34,47 +34,47 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['reasonname']) >100) {
 		$InputError = 1;
-		prnMsg(_('The Item Return name description must be 100 characters or less long'),'error');
-		$Errors[$i] = 'returnitemreasons';
+		prnMsg(_('The Stock Adjustment name description must be 100 characters or less long'),'error');
+		$Errors[$i] = 'stockadjustmentreasons';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['reasonname']))==0) {
 		$InputError = 1;
-		prnMsg(_('The Item Return name description must contain at least one character'),'error');
-		$Errors[$i] = 'returnitemreasons';
+		prnMsg(_('The Stock Adjustment name description must contain at least one character'),'error');
+		$Errors[$i] = 'stockadjustmentreasons';
 		$i++;
 	}
 
 	$CheckSQL = "SELECT count(*)
-		     FROM returnitemreasons
+		     FROM stockadjustmentreasons
 		     WHERE reasonname = '" . $_POST['reasonname'] . "'";
 	$CheckResult=DB_query($CheckSQL);
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0) {
 		$InputError = 1;
-		prnMsg(_('You already have a Item Return Reason called').' '.$_POST['reasonname'],'error');
+		prnMsg(_('You already have a Stock Adjustment Reason called').' '.$_POST['reasonname'],'error');
 		$Errors[$i] = 'ReasonName';
 		$i++;
 	}
 
 	if (isset($SelectedType) AND $InputError !=1) {
 
-		$SQL = "UPDATE returnitemreasons
+		$SQL = "UPDATE stockadjustmentreasons
 			SET reasonname = '" . $_POST['reasonname'] . "'
 			WHERE reasonid = '" . $SelectedType . "'";
 
-		prnMsg(_('The Item Return Reason') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
+		prnMsg(_('The Stock Adjustment Reason') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
 	} elseif ($InputError !=1){
 		// Add new record on submit
 
-		$SQL = "INSERT INTO returnitemreasons
+		$SQL = "INSERT INTO stockadjustmentreasons
 					(reasonname)
 				VALUES ('" . $_POST['reasonname'] . "')";
 
 
-		$Msg = _('Item Return Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
-		$CheckSQL = "SELECT count(reasonid) FROM returnitemreasons";
+		$Msg = _('Stock Adjustment Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
+		$CheckSQL = "SELECT count(reasonid) FROM stockadjustmentreasons";
 		$Result = DB_query($CheckSQL);
 		$Row = DB_fetch_row($Result);
 	}
@@ -90,20 +90,20 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$SQL = "SELECT COUNT(*) FROM returnitems WHERE reasonid='" . $SelectedType . "'";
+	$SQL = "SELECT COUNT(*) FROM stockadjustments WHERE reasonid='" . $SelectedType . "'";
 
-	$ErrMsg = _('The number of returned items using this code could not be retrieved because');
+	$ErrMsg = _('The number of stock adjustments using this code could not be retrieved because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (_('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
-			_('There are') . ' ' . $MyRow[0] . ' ' . _('returns using this reason'));
+		prnMsg (_('Cannot delete this Stock Adjustment Reason because it has been used.') . '<br />' .
+			_('There are') . ' ' . $MyRow[0] . ' ' . _('adjustments using this reason'));
 	} else {
 
-		$SQL="DELETE FROM returnitemreasons WHERE reasonid='" . $SelectedType . "'";
+		$SQL="DELETE FROM stockadjustmentreasons WHERE reasonid='" . $SelectedType . "'";
 		$ErrMsg = _('The Reason could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Item Return Reason ') . $SelectedType  . ' ' . _('has been deleted') ,'success');
+		prnMsg(_('Stock Adjustment Reason ') . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 		unset ($SelectedType);
 		unset($_GET['delete']);
@@ -113,13 +113,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedType)){
 
-/* It could still be the second time the page has been run and a record has been selected for modification - SelectedType will
- *  exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then
- * none of the above are true and the list of sales types will be displayed with links to delete or edit each. These will call
- * the same page again and allow update/input or deletion of the records
- */
-
-	$SQL = "SELECT reasonid, reasonname FROM returnitemreasons";
+	$SQL = "SELECT reasonid, reasonname FROM stockadjustmentreasons";
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
@@ -139,7 +133,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 			<td>'.$MyRow[1].'</td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . _('Edit') . '</a></td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'&amp;delete=yes" onclick="return confirm(\'' .
-				_('Are you sure you wish to delete this Item Return Reason?') . '\');">' . _('Delete') . '</a></td>
+				_('Are you sure you wish to delete this Stock Adjustment Reason?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -147,7 +141,6 @@ while ($MyRow = DB_fetch_row($Result)) {
 		</table>';
 }
 
-//end of ifs and buts!
 if (isset($SelectedType)) {
 
 	echo '<div class="centre">
@@ -161,12 +154,12 @@ if (! isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
 	echo '<fieldset>
-		<legend>' . _('Return Reason Details') . '</legend>';
+		<legend>' . _('Stock Adjustment Reason Details') . '</legend>';
 
 	if (isset($SelectedType) AND $SelectedType!='') {
 		$SQL = "SELECT reasonid,
 			       reasonname
-		        FROM returnitemreasons
+		        FROM stockadjustmentreasons
 		        WHERE reasonid='" . $SelectedType . "'";
 
 		$Result = DB_query($SQL);

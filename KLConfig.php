@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "018";
+$KLCodeVersion = "019";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains("LOCAL-TEST")){
@@ -30,13 +30,13 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 		if (URLWithoutScriptNameContains("TEST")){
 			// development environment with the test DB (safe)
 			$webERPType = 'TEST';
-			$ErrorReportingType = 'PRODUCTION';
+			$ErrorReportingType = 'DEVELOPMENT';
 			$Theme = 'xenos'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu-development.com/TEST/';
 		}else{
 			// development environment with the production DB (risky)
 			$webERPType = 'PRODUCTION';
-			$ErrorReportingType = 'PRODUCTION';
+			$ErrorReportingType = 'DEVELOPMENT';
 			$Theme = 'professional'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu-development.com/';
 		}

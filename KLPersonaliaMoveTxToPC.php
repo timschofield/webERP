@@ -236,7 +236,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							'" . $PaymentDate . "',
 							'" . $ExpenseType . "',
 							 " . -$Amount . ",
-							 0,
+							 '1000-01-01',
 							 0,
 							 '',
 							 '" . $Receipt . "')";

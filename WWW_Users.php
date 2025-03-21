@@ -2,14 +2,11 @@
 
 /**************************************************************************************
 *
-* KL RICARD: Some restrictions by role, send emails to admin, allow usage of group os scripts Personalia
+* KL RICARD: Send emails to admin, allow usage of group os scripts Personalia
 * 			Simplify table display, add some fields to the user table
 *
 ***************************************************************************************/
 
-
-
-// WWW_Users.php
 // Entry of users and security settings of users.
 
 include('includes/session.php');
@@ -373,12 +370,12 @@ if(!isset($SelectedUser)) {
 					theme,
 					language
 				FROM www_users";
-	// KL RICARD: Only KLSystemAdmin can see system admins. To prevent rogue employees kicking out the sys admin ;-)
-	if (!$KL_SystemAdmin){
+
+	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
+	if($_SESSION['AccessLevel'] != 8){
 		$SQL = $SQL . " WHERE fullaccess != '8'";
 	} 
-	// KL RICARD END
-	
+	$SQL = $SQL . " ORDER BY userid";	
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {

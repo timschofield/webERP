@@ -79,7 +79,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
 		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
@@ -861,7 +861,7 @@ function CashStatus($Year,
 	$MyRow = DB_fetch_array($Result);
 	$SaldoADUPayoneerUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
 
-	$Account = "111204030"; // Cash in Agent Aye Cargo in BKK in IDR
+	$Account = "111204030AD"; // Cash in Agent Aye Cargo in BKK in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
