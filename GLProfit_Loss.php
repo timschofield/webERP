@@ -63,8 +63,6 @@ else if ($_POST['Company'] == 'PTBB') {
 }
 // KL RICARD END: prepare the data for each company
 
-
-
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 

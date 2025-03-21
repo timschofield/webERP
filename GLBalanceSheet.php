@@ -1,4 +1,10 @@
 <?php
+
+/*****************************************************************************************
+ * 
+ * KL RICARD: Multicompany options
+ * 
+ ****************************************************************************************/
 // GLBalanceSheet.php
 // This script shows the balance sheet for the company as at a specified date.
 // Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen while the user is selecting the period end of the balance date meanwhile the system is posting any unposted transactions.
@@ -23,7 +29,7 @@ if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in anot
 	include('includes/session.php');
 }
 use Dompdf\Dompdf;
-$Title = _('Balance Sheet');
+$GeneralTitle = _('Balance Sheet');
 $Title2 = _('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BalanceSheet';
@@ -31,6 +37,34 @@ $BookMark = 'BalanceSheet';
 include_once('includes/SQL_CommonFunctions.inc');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+
+// KL RICARD: prepare the data for each company
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'ALL';
+	$Title = _('Balance Sheet for KL group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'ALL') {
+	$Title = _('Balance Sheet for KL Group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'PTADU') {
+	$Title = _('Balance Sheet for PT. Angin Dingin Utara');
+	$Table = 'chartmasterADU';
+}
+else if ($_POST['Company'] == 'PTSMH') {
+	$Title = _('Balance Sheet for PT. Sungai Mutiara Hitam');
+	$Table = 'chartmasterSMH';
+}
+else if ($_POST['Company'] == 'PTBB') {
+	$Title = _('Balance Sheet for PT. Bumi Biru');
+	$Table = 'chartmasterBB';
+}
+
+// KL RICARD END: prepare the data for each company
 
 // Merges GETs into POSTs:
 if(isset($_GET['PeriodTo'])) {
@@ -55,10 +89,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	/* Get the retained earnings amount */
 	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
-									INNER JOIN chartmaster
-										ON gltotals.account=chartmaster.accountcode
+									INNER JOIN " . $Table . "
+										ON gltotals.account=" . $Table . ".accountcode
 									INNER JOIN accountgroups
-										ON chartmaster.group_=accountgroups.groupname
+										ON " . $Table . ".group_=accountgroups.groupname
 									WHERE period<='" . $_POST['PeriodTo'] . "'
 										AND pandl=1";
 	$ThisYearRetainedEarningsResult = DB_query($ThisYearRetainedEarningsSQL);
@@ -66,10 +100,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
-									INNER JOIN chartmaster
-										ON gltotals.account=chartmaster.accountcode
+									INNER JOIN " . $Table . "
+										ON gltotals.account=" . $Table . ".accountcode
 									INNER JOIN accountgroups
-										ON chartmaster.group_=accountgroups.groupname
+										ON " . $Table . ".group_=accountgroups.groupname
 									WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
 										AND pandl=1";
 	$LastYearRetainedEarningsResult = DB_query($LastYearRetainedEarningsSQL);
@@ -80,17 +114,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					sectionname,
 					sectioninaccounts,
 					parentgroupname,
-					chartmaster.accountcode,
+					" . $Table . ".accountcode,
 					group_,
 					accountname,
 					pandl
-				FROM chartmaster
+				FROM " . $Table . "
 				INNER JOIN glaccountusers
-					ON glaccountusers.accountcode=chartmaster.accountcode
+					ON glaccountusers.accountcode=" . $Table . ".accountcode
 					AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
 					AND glaccountusers.canview=1
 				INNER JOIN accountgroups
-					ON accountgroups.groupname=chartmaster.group_
+					ON accountgroups.groupname=" . $Table . ".group_
 				INNER JOIN accountsection
 					ON accountsection.sectionid=accountgroups.sectioninaccounts
 				WHERE pandl=0
@@ -173,6 +207,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$GroupTotal = array(0);
 	$LYGroupTotal = array(0);
 
+	// KL RICARD: adjustement for intercompany accounts
+	$ThisYearAccumulatedAdjustment = 0;
+	$LastYearAccumulatedAdjustment = 0;
+	// KL RICARD END: adjustement for intercompany accounts
+
 	$j = 0; //row counter
 	while ($MyRow = DB_fetch_array($AccountListResult)) {
 		if (isset($ThisYearActuals[$MyRow['accountcode']])) {
@@ -186,10 +225,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$LYAccountBalance = 0;
 		}
 
-		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-			$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
-			$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
+		// KL RICARD: adjustement for intercompany accounts
+		if ($_POST['Company'] == 'ALL'){
+			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
+				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
+				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
+			}
+		}else{
+			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
+				$AccountBalance = -$ThisYearAccumulatedAdjustment;
+				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
+			}else{
+				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
+				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
+			}
 		}
+		// KL RICARD END: adjustement for intercompany accounts
 
 		if ($MyRow['group_'] != $ActGrp and $ActGrp != '') {
 			if ($MyRow['parentgroupname'] != $ActGrp) {
@@ -445,14 +496,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('General Ledger Balance Sheet');
 		include('includes/header.php');
 
 		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
-			$Title2, '" /> ', // Icon title.
+		$Title, '" /> ', // Icon title.
 			// Page title as IAS1 numerals 10 and 51:
-			$Title, '<br />', // Page title, reporting statement.
-			stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
+			$Title, '<br />', // Page title, reporting entity.
 			_('as at'), ' ', $BalanceDate, '<br />'; // Page title, reporting period.
 		echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 
@@ -482,7 +531,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
-		$Title, '</p>'; // Page title.
+		$GeneralTitle, '</p>'; // Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
 		_('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />' .
 		_('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />' .
@@ -492,8 +541,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		// Input table:
 		'<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
-			<field>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	// KL RICARD select the company to include
+	echo FieldToSelectFromFourOptions('ALL', 'All companies', 
+									'PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'Companies to include in P & L', '', '', '', true, false);
+	// KL RICARD END select the company to include
+
+	echo'<field>
 				<label for="PeriodTo">' . _('Select the balance date') . ':</label>
 				<select name="PeriodTo" required="required">';
 
