@@ -79,7 +79,7 @@ $SQL = "CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans` FOR EACH
 				WHERE account = NEW.account AND period = NEW.periodno;
 			END IF;
 		END";
-$Result = DB_query($SQL);
+//$Result = DB_query($SQL);
 
 $SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH ROW
 		BEGIN
@@ -87,7 +87,7 @@ $SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH
 			SET amount = amount - OLD.amount
 			WHERE account = OLD.account AND period = OLD.periodno;
 		END";
-$Result = DB_query($SQL);
+//$Result = DB_query($SQL);
 
 UpdateDBNo(basename(__FILE__, '.php'), _('Create General Ledger totals from gltrans table'));
 

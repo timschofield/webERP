@@ -356,7 +356,7 @@ if ($ProcessSection01){
 		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("THB", "('111205030',
-												'111204030')", 1, $PeriodNow);
+												'111204030AD')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -413,7 +413,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202030",          -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111204030",           0,  500000000, $PeriodNow);
+		BalanceAccountControl("111204030AD",           0,  500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -501,17 +501,17 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -50000000,   10000000, $PeriodNow);
+		BalanceAccountControl("111311100AD",  -50000000,   10000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400", -200000000,          1, $PeriodNow);
+		BalanceAccountControl("211021400AD", -200000000,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1500000000, $PeriodNow);
+		BalanceAccountControl("211021500AD",  500000000, 1500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("612012015",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -1706,7 +1706,7 @@ function CustomerDebtByCurrency($Currency){
 function CustomersDebtControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
-			WHERE chartdetails.accountcode = '111311100'
+			WHERE chartdetails.accountcode = '111311100AD'
 				AND chartdetails.period = ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -2085,7 +2085,7 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
-			WHERE chartdetails.accountcode = '211021400'
+			WHERE chartdetails.accountcode = '211021400AD'
 				AND chartdetails.period = ". $Period . "";
 // EXPLAIN SQL 2014-05-31 OK!
 //prnMsg($SQL);

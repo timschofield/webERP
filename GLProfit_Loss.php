@@ -617,7 +617,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 									'PTADU', 'PT Angin Dingin Utara', 
 									'PTSMH', 'PT Sungai Mutiara Hitam',
 									'PTBB', 'PT Bumi Biru',
-									'Company', $_POST['Company'], 'Companies to include in P & L', '', '', '', true, false);
+									'Company', $_POST['Company'], 'profit and Loss for company', '', '', '', true, false);
 	// KL RICARD END select the company to include
 
 	// Content of the body of the input table:

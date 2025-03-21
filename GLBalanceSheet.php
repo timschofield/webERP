@@ -371,7 +371,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td></td>
 					</tr>';
 				++$j;
-			} elseif ($AccountBalance != 0 or $LYAccountBalance != 0) {
+				 
+			} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0 
+					or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
 				$HTML .= '<tr class="striped_row">
@@ -492,7 +494,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_Balance_Sheet_' . date('Y-m-d') . '.pdf', array(
+		$dompdf->stream($Title . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} else {
@@ -548,7 +550,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 									'PTADU', 'PT Angin Dingin Utara', 
 									'PTSMH', 'PT Sungai Mutiara Hitam',
 									'PTBB', 'PT Bumi Biru',
-									'Company', $_POST['Company'], 'Companies to include in P & L', '', '', '', true, false);
+									'Company', $_POST['Company'], 'Balance Sheet for company', '', '', '', true, false);
 	// KL RICARD END select the company to include
 
 	echo'<field>

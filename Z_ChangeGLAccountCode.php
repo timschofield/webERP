@@ -36,7 +36,7 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-	<legend>', _('GEneral Ledger Code To Change'), '</legend>
+	<legend>', _('General Ledger Code To Change'), '</legend>
 	<field>
 		<label>' . _('Existing GL Account Code') . ':</label>
 		<input type="text" name="OldAccountCode" size="20" maxlength="20" />

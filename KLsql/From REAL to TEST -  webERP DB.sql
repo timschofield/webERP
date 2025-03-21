@@ -174,6 +174,7 @@ INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers
 TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
 
+TRUNCATE test_erp.`gltotals`;
 TRUNCATE test_erp.`gltrans`;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
@@ -193,7 +194,6 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
-
 
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
