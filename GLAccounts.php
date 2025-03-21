@@ -218,9 +218,9 @@ if(isset($_POST['submit'])) {
 
 									$SQL = "DELETE FROM gltotals WHERE account='" . $SelectedAccount ."'";
 									$Result = DB_query($SQL);
-									$SQL = "DELETE FROM gltotals WHERE account= '" . $SelectedAccount ."'";
+									$SQL = "DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
 									$Result = DB_query($SQL);
-									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'succes');
+									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'success'); 
 									// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
 									UpdateMultiCompanyAccounts();
 								}
