@@ -40,7 +40,7 @@ define("VERSIONFILE", "4.50"); //
 include('includes/DefineCartClass.php');
 include('includes/session.php');
 
-$Title = _('Retail POS '. VERSIONFILE);
+$Title = _('POS '. $_SESSION['locationname']);
 
 include('includes/header.php');
 include('includes/GetPrice.inc');
