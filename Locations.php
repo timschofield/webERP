@@ -13,6 +13,9 @@ $Title = _('Location Maintenance');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Locations';// Anchor's id in the manual's html document.
 include('includes/header.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="',// Icon image.
 	_('Inventory'), '" /> ',// Icon title.
@@ -110,7 +113,8 @@ if(isset($_POST['submit'])) {
 									alldisc20items = '" . $_POST['AllDisc20Items'] . "',
 									alldisc50items = '" . $_POST['AllDisc50Items'] . "',
 									alldisc80items = '" . $_POST['AllDisc80Items'] . "',
-									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
+									allowinvoicing = '" . $_POST['AllowInvoicing'] . "',
+									departmentid = '" . $_POST['DepartmentID'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
@@ -170,6 +174,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AllDisc50Items']);
 		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
+		unset($_POST['DepartmentID']);
 
 
 	} elseif($InputError !=1) {
@@ -225,7 +230,8 @@ if(isset($_POST['submit'])) {
 										alldisc20items,
 										alldisc50items,
 										alldisc80items,
-										allowinvoicing)
+										allowinvoicing,
+										departmentid)
 						VALUES ('" . $_POST['LocCode'] . "',
 								'" . $_POST['LocationName'] . "',
 								'" . $_POST['DelAdd1'] ."',
@@ -267,7 +273,8 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['AllDisc20Items'] . "',
 								'" . $_POST['AllDisc50Items'] . "',
 								'" . $_POST['AllDisc80Items'] . "',
-								'" . $_POST['AllowInvoicing'] . "')";
+								'" . $_POST['AllowInvoicing'] . "',
+								'" . $_POST['DepartmentID'] . "')";
 
 		$ErrMsg = _('An error occurred inserting the new location record because');
 		$DbgMsg = _('The SQL used to insert the location record was');
@@ -358,6 +365,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AllDisc50Items']);
 		unset($_POST['AllDisc80Items']);
 		unset($_POST['AllowInvoicing']);
+		unset($_POST['DepartmentID']);
 	}
 
 	/* Go through the tax authorities for all Locations deleting or adding TaxAuthRates records as necessary */
@@ -702,7 +710,8 @@ if(!isset($_GET['delete'])) {
 					alldisc20items,
 					alldisc50items,
 					alldisc80items,
-					allowinvoicing
+					allowinvoicing,
+					departmentid
 				FROM locations
 				WHERE loccode='" . $SelectedLocation . "'";
 
@@ -751,6 +760,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['AllDisc50Items'] = $MyRow['alldisc50items'];
 		$_POST['AllDisc80Items'] = $MyRow['alldisc80items'];
 		$_POST['AllowInvoicing'] = $MyRow['allowinvoicing'];
+		$_POST['DepartmentID'] = $MyRow['departmentid'];
 
 		echo '<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
@@ -874,6 +884,9 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['RLDaysForPackaging'])) {
 		$_POST['RLDaysForPackaging'] = 7;
+	}
+	if(!isset($_POST['DepartmentID'])) {
+		$_POST['DepartmentID'] = '';
 	}
 	// KL RICARD END
 	echo '<field>
@@ -1185,8 +1198,11 @@ if(!isset($_GET['delete'])) {
 		</field>';
 
 	// KL RICARD END
+
+	echo FieldToSelectOneDepartment('DepartmentID', $_POST['DepartmentID'], 'Department for internal stock requests', '', '', '', true, false);
+
 	echo '<field>
-			<label for="InternalRequest">' . _('Allow internal requests?') . ':</label>
+			<label for="InternalRequest">' . _('Allow internal requests from this location?') . ':</label>
 			<select name="InternalRequest">';
 	if($_POST['InternalRequest']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1216,12 +1232,16 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select>
 		</field>';
+	
+	/* KL RICARD no need this field
 	// Location's ledger account:
 	echo '<field title="">
 			<label for="GLAccountCode">', _('GL Account Code'), ':</label>
 			<input data-type="no-illegal-chars" id="GLAccountCode" maxlength="20" name="GLAccountCode" size="20" type="text" value="', $_POST['GLAccountCode'], '" />
 			<fieldhelp>', _('Enter the GL account for this location, or leave it blank if not needed'), '</fieldhelp>
 		</field>';
+	KL RICARD no need this field */
+
 	// Allow or deny the invoicing of items in this location:
 	echo '<field>
 			<label for="AllowInvoicing">', _('Allow Invoicing'), ':</label>
@@ -1231,7 +1251,7 @@ if(!isset($_GET['delete'])) {
 			</select>
 			<fieldhelp>', _('Use this parameter to indicate whether these inventory location allows or denies the invoicing of its items.'), '</fieldhelp>
 		</field>';
-
+	
 	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />

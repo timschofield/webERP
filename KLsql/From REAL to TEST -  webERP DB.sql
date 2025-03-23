@@ -173,7 +173,7 @@ INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers
 
 TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
-
+/*
 DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
 TRUNCATE test_erp.`gltotals`;
 INSERT INTO test_erp.gltotals SELECT * FROM kurakura_kl_erp.gltotals;
@@ -206,6 +206,7 @@ BEGIN
     ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
 END //
 DELIMITER ;
+*/
 		
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
@@ -505,10 +506,10 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 600000; 
+INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 700000; 
 
 TRUNCATE test_erp.`salesorders`;
-INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 600000; 
+INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 700000; 
 
 TRUNCATE test_erp.`salestypes`;
 INSERT INTO test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;

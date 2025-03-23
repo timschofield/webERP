@@ -241,6 +241,7 @@ or deletion of the records*/
 		echo'<tr class="striped_row">
 				<td class="number">', $MyRow['salesmancode'], '</td>
 				<td>', $MyRow['salesmanname'], '</td>
+				<td>', $ActiveText, '</td>
 				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', _('Edit'), '</a></td>
 				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 			</tr>';
