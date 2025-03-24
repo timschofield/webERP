@@ -35,6 +35,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (!isset($_POST['SelectedBudget'])) {
 		$_POST['SelectedBudget'] = 0; // Default value when not selected
 	}
+
+	// Sets PeriodFrom and PeriodTo from Period:
+	if(isset($_POST['Period']) and $_POST['Period'] != '') {
+		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] , 'From');
+		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] , 'To');
+	}
 	
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
