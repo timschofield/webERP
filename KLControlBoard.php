@@ -47,6 +47,7 @@
 * ItemsWithoutWeightOrVolume - Lists items without weight or volume data
 * ItemsWithStockKantorButReorderLevelTokoZero - Lists items with stock at Kantor but zero reorder level at shops
 * ItemsWithStockLocationButNoStockAvailable - Lists items with locations but no available stock
+* ItemsWithWrongNumberOfPreferredSuppliers - Lists items with wrong number of preferred suppliers
 * ItemsShouldBeInWebsite - Lists items that should be in the website
 * MinimumOutletStockAvailable - Checks minimum outlet stock availability
 * NotDiscountedItemsWithDiscount - Lists non-discounted items with discount
@@ -686,7 +687,10 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+
 		ItemsWithoutPurchasingData($RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithWrongNumberOfPreferredSuppliers($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -3196,40 +3200,99 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 }
 
 function ItemsWithoutPurchasingData($RootPath){
-/* EXPLAIN SQL	2014-05-20	
+	/* EXPLAIN SQL	2014-05-20	
+	
+	id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
+	1	SIMPLE		purchdata	ref		StockID,Preferred	Preferred	1		const								4387	Using where; Using temporary; Using filesort
+	1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kurakura_kl_erp.purchdata.stockid	1	Using where
+	
+	*/
+		
+		$SQL = "SELECT purchdata.stockid,
+					purchdata.supplierno,
+					price,
+					conversionfactor,
+					supplierdescription,
+					suppliersuom,
+					suppliers_partno,
+					leadtime,
+					MAX(purchdata.effectivefrom) AS latesteffectivefrom
+				FROM purchdata, stockmaster
+				WHERE purchdata.stockid = stockmaster.stockid 
+					AND purchdata.preferred = 1
+					AND stockmaster.discontinued = 0
+					AND ((supplierdescription = '' AND suppliers_partno = '')
+						OR suppliersuom = '')
+				GROUP BY purchdata.price,
+						purchdata.conversionfactor,
+						purchdata.supplierdescription,
+						purchdata.suppliersuom,
+						purchdata.suppliers_partno,
+						purchdata.leadtime
+				ORDER BY purchdata.stockid, latesteffectivefrom DESC";
+	
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
+			$TableTitleText = _('Items without full purchasing data');
+			ShowTableTitle($TableTitleText);
+			echo '<div>';
+			echo '<table class="selection">
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('Supplier Part #') . '</th>
+							<th class="SortedColumn">' . _('Supplier Description') . '</th>
+							<th class="SortedColumn">' . _('UOM') . '</th>
+							<th class="SortedColumn">' . _('Leadtime') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+			$i = 1;
+			while ($MyRow = DB_fetch_array($Result)) {
+				$CodeLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '">'. $MyRow['stockid'] .'</a>';
+				$SupplierLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . 
+																'&SupplierID=' . $MyRow['supplierno'] . 
+																'&Edit=1' .
+																'&EffectiveFrom=' . $MyRow['latesteffectivefrom'] . '">'. $MyRow['supplierno'] .'</a>';
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $SupplierLink . '</td>
+						<td>' . $MyRow['latesteffectivefrom'] . '</td>
+						<td>' . $MyRow['suppliers_partno'] . '</td>
+						<td>' . $MyRow['supplierdescription'] . '</td>
+						<td>' . $MyRow['suppliersuom'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['leadtime'],0) . '</td>
+						</tr>';
+				$i++;
+			}
+			echo '</tbody>
+				</table>
+				</div>';
+		}
+	}
+	
 
-id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
-1	SIMPLE		purchdata	ref		StockID,Preferred	Preferred	1		const								4387	Using where; Using temporary; Using filesort
-1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kurakura_kl_erp.purchdata.stockid	1	Using where
-
-*/
+function ItemsWithWrongNumberOfPreferredSuppliers($RootPath){
 	
 	$SQL = "SELECT purchdata.stockid,
-				purchdata.supplierno,
-				price,
-				conversionfactor,
-				supplierdescription,
-				suppliersuom,
-				suppliers_partno,
-				leadtime,
-				MAX(purchdata.effectivefrom) AS latesteffectivefrom
-			FROM purchdata, stockmaster
-			WHERE purchdata.stockid = stockmaster.stockid 
-				AND purchdata.preferred = 1
-				AND stockmaster.discontinued = 0
-				AND ((supplierdescription = '' AND suppliers_partno = '')
-					OR suppliersuom = '')
-			GROUP BY purchdata.price,
-					purchdata.conversionfactor,
-					purchdata.supplierdescription,
-					purchdata.suppliersuom,
-					purchdata.suppliers_partno,
-					purchdata.leadtime
-			ORDER BY purchdata.stockid, latesteffectivefrom DESC";
+				description,
+				COUNT(*) AS pref
+			FROM purchdata
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = purchdata.stockid
+			WHERE preferred = 1
+				AND discontinued = 0
+			GROUP BY stockid
+			HAVING pref != 1
+			ORDER BY purchdata.stockid";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Items without full purchasing data');
+		$TableTitleText = _('Items with wrong number of preferred suppliers');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
@@ -3237,31 +3300,19 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 					<tr>
 						<th class="SortedColumn">' . _('#') . '</th>
 						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Supplier') . '</th>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Supplier Part #') . '</th>
-						<th class="SortedColumn">' . _('Supplier Description') . '</th>
-						<th class="SortedColumn">' . _('UOM') . '</th>
-						<th class="SortedColumn">' . _('Leadtime') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('# Preferred Suppliers') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '">'. $MyRow['stockid'] .'</a>';
-			$SupplierLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . 
-															'&SupplierID=' . $MyRow['supplierno'] . 
-															'&Edit=1' .
-															'&EffectiveFrom=' . $MyRow['latesteffectivefrom'] . '">'. $MyRow['supplierno'] .'</a>';
 			echo '<tr class="striped_row">
 					<td class="number">' . $i . '</td>
 					<td>' . $CodeLink . '</td>
-					<td>' . $SupplierLink . '</td>
-					<td>' . $MyRow['latesteffectivefrom'] . '</td>
-					<td>' . $MyRow['suppliers_partno'] . '</td>
-					<td>' . $MyRow['supplierdescription'] . '</td>
-					<td>' . $MyRow['suppliersuom'] . '</td>
-					<td class="number">' . locale_number_format($MyRow['leadtime'],0) . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['pref'],0) . '</td>
 					</tr>';
 			$i++;
 		}

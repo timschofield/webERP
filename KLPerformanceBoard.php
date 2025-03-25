@@ -365,8 +365,8 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-		ShowKPIHistory(90);
-		$NumberOfTestExecuted++;
+//		ShowKPIHistory(90);
+//		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath);
 		$NumberOfTestExecuted++;
 		EmptyAccountsGLTransTX(15, $RootPath);
