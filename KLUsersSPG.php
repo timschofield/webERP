@@ -34,7 +34,7 @@ $SupplierID = '';
 $SPGFullName = '';
 $CustomerID = '';
 $BranchCode = '';
-$Timeout = 15;
+$Timeout = 30;
 
 // Make an array of the security roles 17 and 22 ONLY
 $SQL = "SELECT secroleid,
@@ -380,11 +380,11 @@ $SPGCodeName = trim(substr($SalesmanName,0,strpos($SalesmanName, '-') -1));
 $SPGFullName = trim(substr($SalesmanName, strpos($SalesmanName, '-') + 1));
 
 if (isset($SelectedUser)) {	
-	echo '<fieldset><legend>'  . $SelectedUser. '  User Details' . '</legend>';
+	echo '<fieldset><legend>'  . $SelectedUser. '  webERP User Details' . '</legend>';
 	echo FixedField('Salesman', $_POST['Salesman'], 'SPG Code', ''); 
 	echo FixedField('RealName', $SPGFullName, 'SPG Name', ''); 
 } else {
-	echo '<fieldset><legend>' . _('New SPG User') . '</legend>';
+	echo '<fieldset><legend>' . _('New SPG webERP User') . '</legend>';
 	echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), '', 'CURRENT', false, 1, true, true);
 }
 echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '', 2, false, true);

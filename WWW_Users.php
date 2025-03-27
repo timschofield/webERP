@@ -475,7 +475,7 @@ if(isset($SelectedUser)) {
 	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Update User Details'), '</legend>
+			<legend>', _('Update webERP User Details'), '</legend>
 			<field>
 				<label for="UserID">' . _('User Code') . ':</label>
 				<fieldtext>' . $_POST['UserID'] . '</fieldtext>
@@ -484,7 +484,7 @@ if(isset($SelectedUser)) {
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
 	echo '<fieldset>
-			<legend>', _('Create New User (except KL SPG)'), '</legend>
+			<legend>', _('Create New webERP User (except KL SPG)'), '</legend>
 			<field>
 				<label for="UserID">' . _('User Login') . ':</label>
 				<input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="" />
@@ -522,7 +522,7 @@ if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
 if(!isset($_POST['Timeout'])) {
-	$_POST['Timeout'] = 15;
+	$_POST['Timeout'] = 30;
 }
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
@@ -772,6 +772,7 @@ foreach($ModuleList as $ModuleName) {
 	$i++;
 }// END foreach($ModuleList as $ModuleName).
 
+/* KL RICARD Do not show these fields
 // Turn off/on dashboard:
 echo '<field>
 		<label for="ShowDashboard">', _('Display dashboard'), ':</label>
@@ -786,6 +787,8 @@ if($_POST['ShowDashboard']==0) {
 echo '</select>', fShowFieldHelp(_('Show dashboard page after login')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'
 	</field>';
+KL RICARD Do not show these fields */
+
 // Turn off/on page help:
 echo '<field>
 		<label for="ShowPageHelp">', _('Display page help'), ':</label>
