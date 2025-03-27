@@ -30,6 +30,7 @@ function UpdateSelect() {
 	document.getElementById("CompanyNameField").value=this.id;
 	document.getElementById("CompanySelect").value=document.getElementById("CompanyNameField").options[document.getElementById("CompanyNameField").selectedIndex].text;
 	document.getElementById("dropdownlist").style.maxHeight="0px"
+	document.getElementById("dropdownlist").style.display="none";
 	document.getElementById("CompanySelect").style.background = "url(\'css/descending.png\') no-repeat right transparent";
 	document.getElementById("CompanySelect").style.backgroundSize = "contain";
 }
