@@ -683,7 +683,7 @@ UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  
 UPDATE  test_erp.`config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
 
 UPDATE test_erp.www_users SET theme = "gel";
-UPDATE test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
+UPDATE test_erp.www_users SET blocked = 0 WHERE userid = "SPG-999";
 
 UPDATE  test_erp.`klonlinepartners` SET  `paypaltest` =  1;
 

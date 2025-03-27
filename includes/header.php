@@ -271,7 +271,15 @@ KL RICARD END No show the Dashboard */
 //}
 // KL RICARD END Show the mani menu on every page
 
-echo '<br /><div class="ScriptTitle">', $Title, '</div>';
+// KL RICARD Show the location name for SPG users on every page
+if ($KL_SPGSeniorOrSupport 
+	OR $KL_SPGJunior){
+	echo '<br /><div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
+}else{
+	echo '<br /><div class="ScriptTitle">', $Title, '</div>';
+}
+// KL RICARD END Show the location name for SPG users on every page
+
 if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 /*	KL RICARD No show the Font Size
