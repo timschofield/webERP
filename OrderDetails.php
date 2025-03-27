@@ -53,11 +53,13 @@ $DbgMsg = _('The SQL that failed to get the order header was');
 $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
+
+	echo '<a class="toplink" href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/><br/>
+		<a class="toplink" href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
+
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
-		</p>
-		<a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/>
-		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
+		</p>';
 
 	$MyRow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -75,8 +77,6 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			$Inv .= '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $Value . '&InvOrCredit=Invoice">'.$Value.'</a>  ';
 		}
 	}
-
-
 
 	echo '<table class="selection">
 			<tr>
@@ -182,7 +182,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="9"><h3>' . _('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
+				<th colspan="13"><h3>' . _('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
 				<th>' . _('PO Line') . '</th>
@@ -229,8 +229,8 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$DisplayVolume = locale_number_format($OrderTotalVolume,2);
 		$DisplayWeight = locale_number_format($OrderTotalWeight,2);
 
-		echo '<tr>
-				<td colspan="5" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+		echo '<tr class="total_row">
+				<td colspan="6" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="2" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
