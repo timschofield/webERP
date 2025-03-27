@@ -311,16 +311,16 @@ if ($ProcessSection03){
 		OR $KL_OperationalManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("OPEN", 0);
+		MaintenanceTasksDistribution("OPEN", 0, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_OperationalManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("CLOSED", 30);
+		MaintenanceTasksDistribution("CLOSED", 30, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 30);
+		MaintenanceTasksDistribution("TOTAL", 30, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
