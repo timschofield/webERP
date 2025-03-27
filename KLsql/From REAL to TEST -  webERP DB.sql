@@ -174,7 +174,10 @@ INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers
 TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
 
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
 TRUNCATE test_erp.`gltotals`;
+INSERT INTO test_erp.gltotals SELECT * FROM kurakura_kl_erp.gltotals;
+
 TRUNCATE test_erp.`gltrans`;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
@@ -194,7 +197,16 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
+DELIMITER //
 
+CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
+BEGIN
+    INSERT INTO gltotals (account, period, amount)
+    VALUES (NEW.account, NEW.periodno, NEW.amount)
+    ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+END //
+DELIMITER ;
+		
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
 
@@ -358,7 +370,7 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-/*INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2025-01-01'; */
+INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2025-01-01'; 
 
 TRUNCATE test_erp.`pcashdetailtaxes`;
 INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
@@ -671,10 +683,8 @@ UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  
 UPDATE  test_erp.`config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
 
 UPDATE test_erp.www_users SET theme = "gel";
-UPDATE test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
+UPDATE test_erp.www_users SET blocked = 0 WHERE userid = "SPG-999";
 
 UPDATE  test_erp.`klonlinepartners` SET  `paypaltest` =  1;
 
 SET FOREIGN_KEY_CHECKS=1;
-
-UPDATE test_erp.`config` SET `confvalue` = '16' WHERE `confname` = 'DBUpdateNumber';

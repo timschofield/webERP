@@ -3,7 +3,25 @@
 KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts 
 ***************************************************************************/
 
-// HARDCODED FOR KL 
+include('includes/session.php');
+
+$Title = _('KL SPG User Maintenance');
+
+$ViewTopic= 'GettingStarted';
+$BookMark = 'UserMaintenance';
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.inc');
+include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLEmails.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
+	<br />';
+
+	
+// HARDCODED FOR KL SPG
 $ModulesAllowed = "1,0,0,0,1,0,0,1,0,0,0,0,";
 $PDFLanguage = 0;
 $Language = "en_GB.utf8";
@@ -13,25 +31,10 @@ $CanCreateTender = 0;
 $Email = '';
 $Phone = '';
 $SupplierID = '';
-$RealName = '';
+$SPGFullName = '';
 $CustomerID = '';
 $BranchCode = '';
-
-include('includes/session.php');
-
-$Title = _('KL SPG Username Maintenance');
-
-$ViewTopic= 'GettingStarted';
-$BookMark = 'UserMaintenance';
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/KLDefines.php');
-include('includes/KLEmails.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<br />';
+$Timeout = 30;
 
 // Make an array of the security roles 17 and 22 ONLY
 $SQL = "SELECT secroleid,
@@ -57,16 +60,18 @@ if (isset($_GET['SelectedUser'])){
 if (isset($_POST['submit'])) {
 
 	// Calculate fields
-	$_POST['UserID'] = $_POST['Salesman'] . '-' . substr($_POST['DefaultLocation'], 3,2);
+	$_POST['UserID'] = 'SPG-' . $_POST['Salesman']; // one only username per SPG
 
 	$SQL = "SELECT cashsalecustomer,
-					locationname
+					locationname,
+					departmentid
 			FROM locations 
 			WHERE loccode = '".$_POST['DefaultLocation']."'";
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
 		$CustomerID = $MyRow['cashsalecustomer'];
 		$BranchCode = $MyRow['cashsalecustomer'];
+		$DepartmentID = $MyRow['departmentid'];
 		$LocationName = $MyRow['locationname'];
 	}
 
@@ -78,9 +83,8 @@ if (isset($_POST['submit'])) {
 		$SalesmanName = $MyRow['salesmanname'];
 	}
 
-	$SPGName = substr($SalesmanName,0,strpos($SalesmanName, '-') -1);
-	$Shopname = substr($LocationName,11,strlen($LocationName)-11);
-	$RealName = 'SPG'. $_POST['Salesman'] . '-' . $SPGName . ' in ' . substr($_POST['DefaultLocation'],-2);
+	$SPGCodeName = trim(substr($SalesmanName,0,strpos($SalesmanName, '-') -1));
+	$SPGFullName = trim(substr($SalesmanName, strpos($SalesmanName, '-') + 1));
 	$Email = "spg". strtolower($_POST['Salesman']) . "@kapal-laut.com";
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
@@ -124,7 +128,9 @@ if (isset($_POST['submit'])) {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
 
-		$SQL = "UPDATE www_users SET realname='" . $RealName . "',
+
+
+		$SQL = "UPDATE www_users SET realname='" . $SPGFullName . "',
 						customerid='" . $CustomerID ."',
 						phone='" . $Phone ."',
 						email='" . $Email ."',
@@ -132,16 +138,10 @@ if (isset($_POST['submit'])) {
 						branchcode='" . $BranchCode . "',
 						supplierid='" . $SupplierID . "',
 						salesman='" . $_POST['Salesman'] . "',
-						pagesize='" . $PageSize . "',
 						fullaccess='" . $_POST['Access'] . "',
-						cancreatetender='" . $CanCreateTender . "',
-						theme='" . $ThemeSPG . "',
-						language ='" . $Language . "',
 						defaultlocation='" . $_POST['DefaultLocation'] ."',
-						modulesallowed='" . $ModulesAllowed . "',
 						blocked='" . $_POST['Blocked'] . "',
-						pdflanguage='" . $PDFLanguage . "',
-						department='" . $_POST['Department'] . "'
+						department='" . $DepartmentID . "'
 					WHERE userid = '". $SelectedUser . "'";
 
 		prnMsg( _('The selected user record has been updated'), 'success');
@@ -195,9 +195,10 @@ if (isset($_POST['submit'])) {
 						theme,
 						language,
 						pdflanguage,
+						timeout,
 						department)
 					VALUES ('" . $_POST['UserID'] . "',
-						'" . $RealName ."',
+						'" . $SPGFullName ."',
 						'" . $CustomerID ."',
 						'" . $BranchCode ."',
 						'" . $SupplierID ."',
@@ -214,7 +215,8 @@ if (isset($_POST['submit'])) {
 						'" . $ThemeSPG . "',
 						'" . $Language ."',
 						'" . $PDFLanguage ."',
-						'" . $_POST['Department'] . "')";
+						'" . $Timeout ."',
+						'" . $DepartmentID . "')";
 		prnMsg( _('A new user record has been inserted'), 'success' );
 
 		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
@@ -223,7 +225,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
-		$ErrMsg = _('The user alterations could not be processed because');
+		$ErrMsg = _('The user update could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user and failed was');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
@@ -233,7 +235,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Access']);
 		unset($_POST['DefaultLocation']);
 		unset($_POST['Blocked']);
-		unset($_POST['Department']);
 		unset($SelectedUser);
 	}
 
@@ -275,21 +276,20 @@ if (!isset($SelectedUser)) {
 	echo '<table class="selection">';
 	echo '<thead>';
 	echo '<tr>
-			<th>' . _('User Login') . '</th>
-			<th>' . _('SPG') . '</th>
-			<th>' . _('Shop') . '</th>
-			<th>' . _('Last Login') . '</th>
-			<th>' . _('Access Level')  . '</th>
-			<th>' . _('Status') . '</th>
+			<th class="SortedColumn">' . _('SPG Username') . '</th>
+			<th class="SortedColumn">' . _('SPG') . '</th>
+			<th class="SortedColumn">' . _('Shop') . '</th>
+			<th class="SortedColumn">' . _('Last Login') . '</th>
+			<th class="SortedColumn">' . _('Access Level')  . '</th>
+			<th class="SortedColumn">' . _('Status') . '</th>
 		</tr>';
 	echo '</thead>';
 	echo '<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">';
 
 		if ($MyRow['lastvisitdate']=='') {
-			$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
+			$LastVisitDate = 'Never';
 		} else {
 			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
@@ -302,7 +302,8 @@ if (!isset($SelectedUser)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		echo '<td>' . $MyRow['userid'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $MyRow['userid'] . '</td>
 				<td>' . $MyRow['salesmanname'] . '</td>
 				<td>' . $MyRow['locationname'] . '</td>
 				<td>' . $LastVisitDate . '</td>
@@ -310,7 +311,7 @@ if (!isset($SelectedUser)) {
 				<td>' . $Status . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedUser=' . $MyRow['userid'] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedUser=' . $MyRow['userid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
-				</tr>';
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody>';
@@ -338,16 +339,9 @@ if (isset($SelectedUser)) {
 			branchcode,
 			supplierid,
 			salesman,
-			pagesize,
 			fullaccess,
-			cancreatetender,
 			defaultlocation,
-			modulesallowed,
-			blocked,
-			theme,
-			language,
-			pdflanguage,
-			department
+			blocked
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
@@ -355,26 +349,50 @@ if (isset($SelectedUser)) {
 	$MyRow = DB_fetch_array($Result);
 
 	$_POST['UserID'] = $MyRow['userid'];
+	$_POST['RealName'] = $MyRow['realname'];
 	$_POST['Salesman'] = $MyRow['salesman'];
 	$_POST['Access'] = $MyRow['fullaccess'];
 	$_POST['DefaultLocation'] = $MyRow['defaultlocation'];
 	$_POST['Blocked'] = $MyRow['blocked'];
-	$_POST['Department'] = $MyRow['department'];
 
 	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
+	echo '<input type="hidden" name="RealName" value="' . $_POST['RealName'] . '" />';
+	echo '<input type="hidden" name="Salesman" value="' . $_POST['Salesman'] . '" />';
 }
 
-echo '<fieldset><legend>' . _('SPG User Details') . '</legend>';
+if(!isset($_POST['Password'])) {
+	$_POST['Password']='';
+}
+if(!isset($_POST['Salesman'])) {
+	$_POST['Salesman']='';
+	$SalesmanName = '';
+}
+$SQL = "SELECT salesmanname
+		FROM salesman 
+		WHERE salesmancode = '".$_POST['Salesman']."'";
+$Result = DB_query($SQL);
+while ($MyRow=DB_fetch_array($Result)){
+	$SalesmanName = $MyRow['salesmanname'];
+}
 
-echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), false, '', '', '', true, true);
-echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', LIST_BALI_SHOPS_BY_TYPE);
-echo FieldToSelectOneDepartment('Department', isset($_POST['Department']) ? $_POST['Department'] : '', _('KL Shop for Internal Requests'), '', 'departmentid <> 1');
-echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '');
+$SPGCodeName = trim(substr($SalesmanName,0,strpos($SalesmanName, '-') -1));
+$SPGFullName = trim(substr($SalesmanName, strpos($SalesmanName, '-') + 1));
+
+if (isset($SelectedUser)) {	
+	echo '<fieldset><legend>'  . $SelectedUser. '  webERP User Details' . '</legend>';
+	echo FixedField('Salesman', $_POST['Salesman'], 'SPG Code', ''); 
+	echo FixedField('RealName', $SPGFullName, 'SPG Name', ''); 
+} else {
+	echo '<fieldset><legend>' . _('New SPG webERP User') . '</legend>';
+	echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), '', 'CURRENT', false, 1, true, true);
+}
+echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '', 2, false, true);
+echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', LIST_BALI_SHOPS_BY_TYPE, 3, true, false);
 echo FieldToSelectOneEntryFromArray($SecurityRoles, 'Access', isset($_POST['Access']) ? $_POST['Access'] : '', _('Access Level'));
 echo FieldToSelectFromTwoOptions('0', _('Open'),
 								'1', _('Blocked'), 'Blocked', 
-								isset($_POST['Blocked']) ? $_POST['Blocked'] : '0', _('Account Status'), '', '', '', true);
+								isset($_POST['Blocked']) ? $_POST['Blocked'] : '0', _('Account Status'), '', '', 5, true, false);
 
 echo '</fieldset>';
 

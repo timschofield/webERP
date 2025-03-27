@@ -311,16 +311,16 @@ if ($ProcessSection03){
 		OR $KL_OperationalManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("OPEN", 0);
+		MaintenanceTasksDistribution("OPEN", 0, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_OperationalManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("CLOSED", 30);
+		MaintenanceTasksDistribution("CLOSED", 30, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 30);
+		MaintenanceTasksDistribution("TOTAL", 30, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -365,8 +365,8 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
-		ShowKPIHistory(90);
-		$NumberOfTestExecuted++;
+//		ShowKPIHistory(90);
+//		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath);
 		$NumberOfTestExecuted++;
 		EmptyAccountsGLTransTX(15, $RootPath);

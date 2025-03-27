@@ -68,6 +68,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (!isset($Days)) {
 		$Days = 30;
 	}
+	$SucessfullyAuthorized = 0;
 
 	//Limit expenses history to X days
 	echo '<fieldset>
@@ -352,7 +353,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 					WHERE counterindex = '" . $MyRow['counterindex'] . "'";
 			$Resultupdate = DB_query($SQL, '', '', true);
 			DB_Txn_Commit();
-			prnMsg(_('Expenses have been correctly authorised'), 'success');
+			$SucessfullyAuthorized++;
 		}
 
 		$SQLDes = "SELECT description
@@ -432,6 +433,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		</tfoot>';
 	// Do the postings
 	include('includes/GLPostings.inc');
+
+	// show the success message
+	if($SucessfullyAuthorized > 0) {
+		prnMsg($SucessfullyAuthorized . ' ' . _('Expenses have been correctly authorised'), 'success');
+	} else {
+		prnMsg(_('No expenses were authorised'), 'warning');
+	}
+
 	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="', _('Update'), '" />

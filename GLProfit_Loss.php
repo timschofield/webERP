@@ -64,6 +64,17 @@ else if ($_POST['Company'] == 'PTBB') {
 // KL RICARD END: prepare the data for each company
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
+	// Initialize SelectedBudget if not set
+	if (!isset($_POST['SelectedBudget'])) {
+		$_POST['SelectedBudget'] = 0; // Default value when not selected
+	}
+
+	// Sets PeriodFrom and PeriodTo from Period:
+	if(isset($_POST['Period']) and $_POST['Period'] != '') {
+		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] , 'From');
+		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] , 'To');
+	}
+	
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";

@@ -4,13 +4,14 @@
 *
 * KL RICARD: Send emails to admin, allow usage of group os scripts Personalia
 * 			Simplify table display, add some fields to the user table
+*			Exclude SPG users, as they are maintained in KLUsersSPG.php
 *
 ***************************************************************************************/
 
 // Entry of users and security settings of users.
 
 include('includes/session.php');
-$Title = _('Users Maintenance');
+$Title = _('Users Maintenance (except SPG)');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 
@@ -80,14 +81,18 @@ $PDFLanguages = array(
 include('includes/SQL_CommonFunctions.inc');
 
 // Make an array of the security roles
+// KL RICARD: Exclude SPG, as they are maintained in KLUsersSPG.php
 $SQL = "SELECT secroleid,
 				secrolename
 		FROM securityroles
+		WHERE secroleid != 17 
+			AND secroleid != 22
 		ORDER BY secrolename";
+// KL RICARD: Exclude SPG, as they are maintained in KLUsersSPG.php
 
 $Sec_Result = DB_query($SQL);
 $SecurityRoles = array();
-// Now load it into an a ray using Key/Value pairs
+// Now load it into an array using Key/Value pairs
 while( $Sec_row = DB_fetch_row($Sec_Result) ) {
 	$SecurityRoles[$Sec_row[0]] = $Sec_row[1];
 }
@@ -344,9 +349,6 @@ if(!isset($SelectedUser)) {
 				<th class="SortedColumn">', _('Telephone'), '</th>
 				<th class="SortedColumn">', _('Email'), '</th>
 				<th class="SortedColumn">', _('Timeout'), '</th>
-				<th class="SortedColumn">', _('Customer Code'), '</th>
-				<th class="SortedColumn">', _('Branch Code'), '</th>
-				<th class="SortedColumn">', _('SPG Code'), '</th>
 				<th class="SortedColumn">', _('Last Visit'), '</th>
 				<th class="SortedColumn">', _('Security Role'), '</th>
 				<th class="noPrint" colspan="2">&nbsp;</th>
@@ -354,6 +356,7 @@ if(!isset($SelectedUser)) {
 		</thead>
 		<tbody>';
 
+	// KL RICARD Exclude SPG users, as they are maintained in KLUsersSPG.php
 	$SQL = "SELECT userid,
 					realname,
 					phone,
@@ -369,7 +372,10 @@ if(!isset($SelectedUser)) {
 					pagesize,
 					theme,
 					language
-				FROM www_users";
+				FROM www_users
+				WHERE fullaccess != 17
+					AND fullaccess != 22";
+	// KL RICARD END Exclude SPG users, as they are maintained in KLUsersSPG.php
 
 	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
 	if($_SESSION['AccessLevel'] != 8){
@@ -380,7 +386,7 @@ if(!isset($SelectedUser)) {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if(!isset($MyRow['lastvisitdate'])) {
-			$LastVisitDate = _('No login record');
+			$LastVisitDate = _('Never');
 		} else {
 			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
@@ -391,9 +397,6 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
 				<td class="number">', $MyRow['timeout'], ' ' , _('mins') , '</td>
-				<td class="text">', $MyRow['customerid'], '</td>
-				<td class="text">', $MyRow['branchcode'], '</td>
-				<td class="text">', $MyRow['salesman'], '</td>
 				<td class="centre">', $LastVisitDate, '</td>
 				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', _('Edit'), '</a></td>
@@ -472,7 +475,7 @@ if(isset($SelectedUser)) {
 	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Amend User Details'), '</legend>
+			<legend>', _('Update webERP User Details'), '</legend>
 			<field>
 				<label for="UserID">' . _('User Code') . ':</label>
 				<fieldtext>' . $_POST['UserID'] . '</fieldtext>
@@ -481,7 +484,7 @@ if(isset($SelectedUser)) {
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
 	echo '<fieldset>
-			<legend>', _('Create New User'), '</legend>
+			<legend>', _('Create New webERP User (except KL SPG)'), '</legend>
 			<field>
 				<label for="UserID">' . _('User Login') . ':</label>
 				<input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="" />
@@ -519,7 +522,7 @@ if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
 if(!isset($_POST['Timeout'])) {
-	$_POST['Timeout'] = 15;
+	$_POST['Timeout'] = 30;
 }
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
@@ -575,6 +578,7 @@ echo '</select>';
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />
 	</field>';
 
+/* KL RICARD Do not show these fields
 echo '<field>
 		<label for="CanCreateTender">' . _('User Can Create Tenders') . ':</label>
 		<select name="CanCreateTender">';
@@ -588,6 +592,7 @@ if($_POST['CanCreateTender']==0) {
 }
 echo '</select>
 	</field>';
+KL RICARD Do not show these fields */
 
 echo '<field>
 		<label for="DefaultLocation">' . _('Default Location') . ':</label>
@@ -616,6 +621,7 @@ if(!isset($_POST['BranchCode'])) {
 if(!isset($_POST['SupplierID'])) {
 	$_POST['SupplierID']='';
 }
+/* KL RICARD Do not show these fields
 echo '<field>
 		<label for="Cust">' . _('Customer Code') . ':</label>
 		<input type="text" name="Cust" data-type="no-ilLegal-chars" title="" size="10" maxlength="10" value="' . $_POST['Cust'] . '" />
@@ -656,6 +662,8 @@ while($MyRow=DB_fetch_array($Result)) {
 
 echo '</select>
 	</field>';
+
+
 
 echo '<field>
 		<label for="PageSize">' . _('Reports Page Size') .':</label>
@@ -743,6 +751,7 @@ foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 }
 echo '</select>
 	</field>';
+ KL RICARD Do not show these fields */
 
 /*Make an array out of the comma separated list of modules allowed*/
 $ModulesAllowed = explode(',',$_POST['ModulesAllowed']);
@@ -763,6 +772,7 @@ foreach($ModuleList as $ModuleName) {
 	$i++;
 }// END foreach($ModuleList as $ModuleName).
 
+/* KL RICARD Do not show these fields
 // Turn off/on dashboard:
 echo '<field>
 		<label for="ShowDashboard">', _('Display dashboard'), ':</label>
@@ -777,6 +787,8 @@ if($_POST['ShowDashboard']==0) {
 echo '</select>', fShowFieldHelp(_('Show dashboard page after login')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
 		'
 	</field>';
+KL RICARD Do not show these fields */
+
 // Turn off/on page help:
 echo '<field>
 		<label for="ShowPageHelp">', _('Display page help'), ':</label>
@@ -809,6 +821,7 @@ echo '</select>', fShowFieldHelp(_('Show field help when available')), // Functi
 if(!isset($_POST['PDFLanguage'])) {
 	$_POST['PDFLanguage']=0;
 }
+/* KL RICARD Do not show these fields
 echo '<field>
 		<label for="PDFLanguage">', _('PDF Language Support'), ':</label>
 		<select id="PDFLanguage" name="PDFLanguage">';
@@ -822,7 +835,8 @@ for($i=0;$i<count($PDFLanguages);$i++) {
 echo '</select>
 	</field>';
 
-/* Allowed Department for Internal Requests */
+
+// Allowed Department for Internal Requests
 
 echo '<field>
 		<label for="Department">' . _('Allowed Department for Internal Requests') . ':</label>';
@@ -848,6 +862,7 @@ while($MyRow=DB_fetch_array($Result)) {
 }
 echo '</select>
 	</field>';
+KL RICARD Do not show these fields */
 
 /* Account status */
 

@@ -6,15 +6,14 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "019";
+$KLCodeVersion = "020";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
-//	$ErrorReportingType = 'PRODUCTION'; // even if it is TEST, for the time being do not overload with warnings, better than DEVELOPMENT
-	$ErrorReportingType = 'DEVELOPMENT'; 
+	$ErrorReportingType = 'DEBUGGING'; 
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
 	$OpenCartDBHost = '202.157.184.151';
@@ -30,7 +29,7 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 		if (URLWithoutScriptNameContains("TEST")){
 			// development environment with the test DB (safe)
 			$webERPType = 'TEST';
-			$ErrorReportingType = 'DEVELOPMENT';
+			$ErrorReportingType = 'DEBUGGING';
 			$Theme = 'xenos'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu-development.com/TEST/';
 		}else{
@@ -106,7 +105,14 @@ if ($ErrorReportingType == 'PRODUCTION'){
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	error_reporting (E_ALL & ~E_NOTICE & ~E_STRICT & ~E_WARNING & ~E_DEPRECATED);
-}else{
+}elseif ($ErrorReportingType == 'DEVELOPMENT'){
+	// reportonly errors
+	// error_reporting (-1);
+	// error_reporting (E_ALL);
+	// error_reporting (E_ALL & ~E_NOTICE);
+	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_STRICT & ~E_WARNING & ~E_DEPRECATED);
+}elseif ($ErrorReportingType == 'DEBUGGING'){
 	// report everything, or almost
 	error_reporting (-1);
 	// error_reporting (E_ALL);

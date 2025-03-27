@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.50 Using just one userid for SPG, not one per shop
 v 4.41 Code cleaning
 v 4.40 Added BNI payments
 v 4.30 Added PTADU retail sales
@@ -34,12 +35,12 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "4.41"); // 
+define("VERSIONFILE", "4.50"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
 
-$Title = _('Retail POS '. VERSIONFILE);
+$Title = _('POS '. $_SESSION['locationname']);
 
 include('includes/header.php');
 include('includes/GetPrice.inc');
@@ -141,14 +142,14 @@ if (isset($_POST['CancelOrder'])) {
 
 	echo '<br /><br />';
 	prnMsg(_('This sale has been cancelled as requested'),'success');
-	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
+	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale in ') . $_SESSION['Items'.$identifier]->LocationName . '</a>';
 	include('includes/footer.php');
 	exit;
 
 } else { /*Not cancelling the order */
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Retail Sales') . '" alt="" />' . ' ';
-	echo _('Retail Sale') . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
+	echo _('Retail Sale in ') . $_SESSION['Items'.$identifier]->LocationName . ' (' . _('all amounts in') . ' ' . $_SESSION['Items'.$identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
 
@@ -1757,7 +1758,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
 
-		echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
+		echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' .  _('Start a new Retail Sale in ') . $_SESSION['Items'.$identifier]->LocationName . '</a></div>';
 
 	}else{
 		// There were input errors so don't process nuffin

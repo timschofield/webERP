@@ -3842,7 +3842,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 	}
 }
 
-function MaintenanceTasksDistribution($Status, $NumDays){
+function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
@@ -4052,13 +4052,14 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 		
 		echo '</tbody></table>
 			</div>';
-
-		if ($Status == "OPEN"){
-			InsertKPI("Maintenance", "Open Maintenance Tasks", $TotalIssues);
-		}elseif ($Status == "CLOSED"){
-			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
-		}elseif ($Status == "TOTAL"){
-			InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+		if ($UserIsSystemAdmin){
+			if ($Status == "OPEN"){
+				InsertKPI("Maintenance", "Open Maintenance Tasks", $TotalIssues);
+			}elseif ($Status == "CLOSED"){
+				InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+			}elseif ($Status == "TOTAL"){
+				InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+			}
 		}
 	}
 }
