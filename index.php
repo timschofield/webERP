@@ -29,8 +29,10 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 	/*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
 	setcookie('Module', $_GET['Application'], time() + 3600 * 24 * 30);
-} else {
+} elseif (isset($_COOKIE['Module'])) {
 	$_SESSION['Module'] = $_COOKIE['Module'];
+} else {
+	$_SESSION['Module'] = '';
 }
 
 include ('includes/header.php');
