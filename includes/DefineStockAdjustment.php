@@ -26,7 +26,7 @@ class StockAdjustment {
 		$this->DecimalPlaces = 0;
 		$this->SerialItems = array();
 		$this->Quantity = 0;
-		$this->tag=0;
+		$this->Tag=0;
 	}
 
 	function StockAdjustment() {
