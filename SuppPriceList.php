@@ -201,7 +201,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	$PDF->OutputD( $_SESSION['DatabaseName'] . '_SupplierPriceList_' . Date('Y-m-d') . '.pdf');
 	} else {
 		$Title = _('View supplier price');
-		include('includes/header.inc');
+		include('includes/header.php');
 		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],'ENT_QUTOES','UTF-8').'">'._('return').'</a>';
 		echo '<p class="page_title_text">'. _('Supplier Price List for').' : '.$CurrentOrAllPrices . '<br/>'
 			._('Supplier').'   : '.$SupplierName.' <br/>'._('Category').' : '.$Categoryname.
@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		}
 
 		echo '</tbody></table>';
-		include('includes/footer.inc');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */

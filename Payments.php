@@ -377,12 +377,12 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		//check the cheque number
 		if (empty($_POST['ChequeNum'])) {
 			prnMsg(_('There are no Check Number input') , 'error');
-			include ('includes/footer.inc');
+			include ('includes/footer.php');
 			exit;
 		}
 		elseif (!is_numeric($_POST['ChequeNum'])) { //check if this cheque no has been used
 			prnMsg(_('The cheque no should be numeric') , 'error');
-			include ('includes/footer.inc');
+			include ('includes/footer.php');
 			exit;
 		}
 		else {
@@ -392,7 +392,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			$ChequeRow = DB_fetch_row($ChequeResult);
 			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'error');
-				include ('includes/footer.inc');
+				include ('includes/footer.php');
 				exit;
 			}
 		}

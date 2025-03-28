@@ -178,7 +178,7 @@ if (isset($_GET['ModifyOrderNumber'])
 		}
 		if ($CustomerLogin == 1 AND $_SESSION['CustomerID'] != $MyRow['debtorno']) {
 			echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 
 		}
