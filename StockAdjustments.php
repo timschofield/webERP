@@ -72,7 +72,7 @@ if ($NewAdjustment==true){
 
 } //end if it's a new adjustment
 if (isset($_POST['tag'])){
-	$_SESSION['Adjustment' . $identifier]->tag = $_POST['tag'];
+	$_SESSION['Adjustment' . $identifier]->Tag = $_POST['tag'];
 }
 if (isset($_POST['Narrative'])){
 	$_SESSION['Adjustment' . $identifier]->Narrative = $_POST['Narrative'];
@@ -374,7 +374,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			if($_SESSION['SmtpSetting']==0){
-			      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+				mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 			}else{
 				include('includes/htmlMimeMail.php');
 				$mail = new htmlMimeMail();
