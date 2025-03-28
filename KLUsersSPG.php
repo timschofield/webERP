@@ -144,38 +144,12 @@ if (isset($_POST['submit'])) {
 						department='" . $DepartmentID . "'
 					WHERE userid = '". $SelectedUser . "'";
 
+		AssignLocationsToSPG($_POST['UserID'], $_POST['DefaultLocation']);
+
 		prnMsg( _('The selected user record has been updated'), 'success');
-		
 		KLSendEmail("SpgUsernameUpdated", "Silent", $SelectedUser, $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 		
 	} elseif ($InputError !=1) {
-
-		$LocationSql = "INSERT INTO locationusers (loccode,
-													userid,
-													canview,
-													canupd
-												) VALUES (
-													'" . $_POST['DefaultLocation'] . "',
-													'" . $_POST['UserID'] . "',
-													1,
-													1
-												)";
-		$ErrMsg = _('The default user locations could not be processed because');
-		$DbgMsg = _('The SQL that was used to update the user locations and failed was');
-		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
-
-		// Give SPG rights ALSO to KANTO location (needed for internal requests)
-		$LocationSql = "INSERT INTO locationusers (loccode,
-													userid,
-													canview,
-													canupd
-												) VALUES (
-													" . CODE_KANTOR . ",
-													'" . $_POST['UserID'] . "',
-													1,
-													0
-												)";
-		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 
 		$SQL = "INSERT INTO www_users (userid,
 						realname,
@@ -217,8 +191,10 @@ if (isset($_POST['submit'])) {
 						'" . $PDFLanguage ."',
 						'" . $Timeout ."',
 						'" . $DepartmentID . "')";
-		prnMsg( _('A new user record has been inserted'), 'success' );
 
+		AssignLocationsToSPG($_POST['UserID'], $_POST['DefaultLocation']);
+
+		prnMsg( _('A new user record has been inserted'), 'success' );
 		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 
 	}
@@ -388,7 +364,7 @@ if (isset($SelectedUser)) {
 	echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), '', 'CURRENT', false, 1, true, true);
 }
 echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '', 2, false, true);
-echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', LIST_BALI_SHOPS_BY_TYPE, 3, true, false);
+echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', 'BALISHOPS', 3, true, false);
 echo FieldToSelectOneEntryFromArray($SecurityRoles, 'Access', isset($_POST['Access']) ? $_POST['Access'] : '', _('Access Level'));
 echo FieldToSelectFromTwoOptions('0', _('Open'),
 								'1', _('Blocked'), 'Blocked', 
@@ -404,4 +380,45 @@ echo '</div>
 	</form>';
 
 include('includes/footer.php');
+
+function AssignLocationsToSPG($UserID, $LocationCode) {
+
+	// Delete all previous locations for this user
+	$LocationSql = "DELETE FROM locationusers 
+					WHERE userid = '" . $_POST['UserID'] . "'";
+
+	$ErrMsg = _('The default user locations could not be deleted because');
+	$DbgMsg = _('The SQL that was used to update the user locations and failed was');
+	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+
+	// Assign the default location to the user
+	$LocationSql = "INSERT INTO locationusers (loccode,
+		userid,
+		canview,
+		canupd
+	) VALUES (
+		'" . $LocationCode . "',
+		'" . $UserID . "',
+		1,
+		1
+	)";
+	$ErrMsg = _('The default user locations could not be processed because');
+	$DbgMsg = _('The SQL that was used to update the user locations and failed was');
+	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+
+	// Give SPG rights ALSO to KANTO location (needed for internal requests)
+	$LocationSql = "INSERT INTO locationusers (loccode,
+		userid,
+		canview,
+		canupd
+	) VALUES (
+		" . CODE_KANTOR . ",
+		'" . $UserID . "',
+		1,
+		0
+	)";
+	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+
+}
+
 ?>
