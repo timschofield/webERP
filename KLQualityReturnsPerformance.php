@@ -14,6 +14,10 @@ $NumberOfTestExecuted = 0;
 
 if ($KL_SystemAdmin 
 	OR $KL_BusinessDevelopmentManager) {
+	QualityIssuesByReason(30, $RootPath);
+	$NumberOfTestExecuted++;
+	QualityIssuesByReason(90, $RootPath);
+	$NumberOfTestExecuted++;
 	QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath);
 	$NumberOfTestExecuted++;
 	QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath);
@@ -218,4 +222,55 @@ function ReturnsBySPG($SPG, $NumDays) {
 	}
 }
 
+
+function QualityIssuesByReason($Days, $RootPath){
+		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
+	
+		$SQL = "SELECT reasonname,
+					COUNT(*) AS totalreturned
+				FROM returneditems
+				INNER JOIN returnitemreasons
+					ON returneditems.reasonid = returnitemreasons.reasonid
+				WHERE returneditems.returndate >= '" . $StartDate . "'
+				GROUP BY returnitemreasons.reasonid";
+	
+		$TotalReturned = 0;
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
+			$TableTitleText = _('Customer Returned Items by Reason during the last ') . $Days . ' days';
+			ShowTableTitle($TableTitleText);
+			echo '<div>';
+			echo '<table class="selection">
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('Reason') . '</th>
+							<th class="SortedColumn">' . _('# Items returned') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+			while ($MyRow = DB_fetch_array($Result)) {
+				echo '<tr class="striped_row">
+						<td>' . $MyRow['reasonname'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['totalreturned'],0) . '</td>
+					</tr>';
+
+				$TotalReturned += $MyRow['totalreturned'];
+			}
+		}
+		echo '</tbody>
+			<tfooter>';
+		echo '<tr class="striped_row">
+				<td>Total</td>
+				<td class="number">' . locale_number_format($TotalReturned, 0) . '</td>
+			</tr>';
+		echo '<tr class="striped_row">
+				<td>Returned Items / day </td>
+				<td class="number">' . locale_number_format($TotalReturned/ $Days, 1) . '</td>
+			</tr>';
+		
+		 echo '</tfooter>
+			</table>
+			</div>';
+	}
+	
 ?>
