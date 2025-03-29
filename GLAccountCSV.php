@@ -171,10 +171,10 @@ if (isset($_POST['MakeCSV'])) {
 					AND periodno<='" . $LastPeriodSelected . "'";
 
 		if (isset($_POST['tag']) and $_POST['tag'] != -1) {
-			$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
+			$SQL .= " AND gltags.tagref='" . $_POST['tag'] . "'";
 		}
-					
-		$SQL = " ORDER BY periodno,
+
+		$SQL .= " ORDER BY periodno,
 					gltrans.trandate,
 					gltrans.counterindex";
 
@@ -243,6 +243,9 @@ if (isset($_POST['MakeCSV'])) {
 			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
 			$TagResult = DB_query($TagSQL);
 			$TagRow = DB_fetch_array($TagResult);
+			if (!isset($TagRow['tagdescription'])) {
+				$TagRow['tagdescription'] = '';
+			}
 			if ($MyRow['amount'] < 0) {
 				fwrite($fp, $SelectedAccount . ',' . $MyRow['periodno'] . ', ' . $MyRow['typename'] . ',' . $MyRow['typeno'] . ',' . $FormatedTranDate . ',,' . -$MyRow['amount'] . ',' . $MyRow['narrative'] . ',' . $TagRow['tagdescription'] . "\n");
 			}
