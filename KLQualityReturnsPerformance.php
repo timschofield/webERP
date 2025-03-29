@@ -1,19 +1,19 @@
 <?php
 define("VERSIONFILE", "1.00");
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Kapal-Laut Quality and Returns Performance Board '. VERSIONFILE);
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$begintime = time_start();
+$BeginTime = time_start();
 $NumberOfTestExecuted = 0;
 
 if ($KL_SystemAdmin 
-	OR $KL_BusinessDevelopmentManager){
+	OR $KL_BusinessDevelopmentManager) {
 	QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath);
 	$NumberOfTestExecuted++;
 	QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath);
@@ -22,30 +22,30 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 }
 
-prnMsg("Performed ". $NumberOfTestExecuted . " Quality and Returns tests",'success');
+prnMsg("Performed ". $NumberOfTestExecuted . " Quality and Returns tests", 'success');
 
-if ($KL_SystemAdmin){
-	time_finish($begintime);
+if ($KL_SystemAdmin) {
+	time_finish($BeginTime);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
-function QualityIssuesByItem($Typereport, $numdays, $RootPath){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
+function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDays + 1));
 
-	if ($Typereport == "QualityIssuesByItem"){
-		$SQL = "SELECT itemcodes AS item, 
-					COUNT(*) AS incidences,
+	if ($TypeReport == "QualityIssuesByItem") {
+		$SQL = "SELECT itemcode AS Item, 
+					COUNT(*) AS Incidences,
 					(SELECT SUM(salesorderdetails.qtyinvoiced)
 						FROM salesorderdetails
-						WHERE salesorderdetails.stkcode = returneditems.itemcodes
+						WHERE salesorderdetails.stkcode = returneditems.itemcode
 							AND salesorderdetails.completed = 1
-							AND salesorderdetails.itemdue >= '". $StartDate . "') AS qtysold
+							AND salesorderdetails.itemdue >= '". $StartDate . "') AS QtySold
 				FROM returneditems
 				WHERE (reasonid = 4 OR reasonid = 5)
 					AND oldinvoicedate >= '". $StartDate . "'
-				GROUP BY itemcodes";
-		$TitleReport = 'Customer Quality Issues by items on the last ' . $numdays . ' days';
+				GROUP BY itemcode";
+		$TitleReport = 'Customer Quality Issues by items on the last ' . $NumDays . ' days';
 		$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -55,19 +55,19 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 								<th class="SortedColumn">' . _('%Incidences') . '</th>
 							</tr>
 						</thead>';
-	}elseif ($Typereport == "QualityIssuesByFamily"){
-		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
-						COUNT(*) AS incidences,
+	} elseif ($TypeReport == "QualityIssuesByFamily") {
+		$SQL = "SELECT SUBSTRING(returneditems.itemcode,1,2) AS Item, 
+						COUNT(*) AS Incidences,
 						(SELECT SUM(salesorderdetails.qtyinvoiced)
 						FROM salesorderdetails
-						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcodes,1,2)
+						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcode,1,2)
 							AND salesorderdetails.completed = 1
-							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+							AND salesorderdetails.itemdue > '". $StartDate . "') AS QtySold
 				FROM returneditems
 				WHERE (returneditems.reasonid = 4 OR returneditems.reasonid = 5)
 					AND returneditems.oldinvoicedate >= '". $StartDate . "'
-				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
-		$TitleReport = 'Customer Quality Issues by Families of items on the last ' . $numdays . ' days';
+				GROUP BY SUBSTRING(returneditems.itemcode,1,2)";
+		$TitleReport = 'Customer Quality Issues by Families of items on the last ' . $NumDays . ' days';
 		$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -77,19 +77,19 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 								<th class="SortedColumn">' . _('%Incidences') . '</th>
 							</tr>
 						</thead>';
-	}elseif ($Typereport == "ChangeOfMindByFamily"){
-		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
-						COUNT(*) AS incidences,
+	} elseif ($TypeReport == "ChangeOfMindByFamily") {
+		$SQL = "SELECT SUBSTRING(returneditems.itemcode,1,2) AS Item, 
+						COUNT(*) AS Incidences,
 						(SELECT SUM(salesorderdetails.qtyinvoiced)
 						FROM salesorderdetails
-						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcodes,1,2)
+						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcode,1,2)
 							AND salesorderdetails.completed = 1
-							AND salesorderdetails.itemdue > '". $StartDate . "') AS qtysold
+							AND salesorderdetails.itemdue > '". $StartDate . "') AS QtySold
 				FROM returneditems
 				WHERE (returneditems.reasonid = 1 OR returneditems.reasonid = 2 OR returneditems.reasonid = 3)
 					AND returneditems.oldinvoicedate >= '". $StartDate . "'
-				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
-		$TitleReport = 'Change Of Mind by Families of items on the last ' . $numdays . ' days';
+				GROUP BY SUBSTRING(returneditems.itemcode,1,2)";
+		$TitleReport = 'Change Of Mind by Families of items on the last ' . $NumDays . ' days';
 		$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -99,9 +99,9 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 								<th class="SortedColumn">' . _('%Incidences') . '</th>
 							</tr>
 						</thead>';
-	}					
+	}
 	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
+	if (DB_num_rows($Result) != 0) {
 		$TableTitleText = $TitleReport;
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
@@ -110,13 +110,13 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 		echo '<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$PercentIncidences = ($MyRow['qtysold'] != 0) ? $MyRow['incidences']/$MyRow['qtysold'] : 0;
+			$PercentIncidences = ($MyRow['QtySold'] != 0) ? $MyRow['Incidences'] / $MyRow['QtySold'] : 0;
 			echo '<tr class="striped_row">
-					<td class="number">'.$i.'</td>
-					<td>'.$MyRow['item'].'</td>
-					<td class="number">'.locale_number_format($MyRow['incidences'],0).'</td>
-					<td class="number">'.locale_number_format($MyRow['qtysold'],0).'</td>
-					<td class="number">'.locale_number_format($PercentIncidences*100,1).'%'.'</td>
+					<td class="number">' . $i . '</td>
+					<td>' . $MyRow['Item'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['Incidences'], 0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['QtySold'], 0) . '</td>
+					<td class="number">' . locale_number_format($PercentIncidences * 100, 1) . '%' . '</td>
 					</tr>';
 			$i++;
 		}
@@ -125,28 +125,30 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 }
 
 
-function ReturnsBySPG($SPG, $NumDays){
+function ReturnsBySPG($SPG, $NumDays) {
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDays));
 
-	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-
-	if ($SPG != "ALL"){
+	if ($SPG != "ALL") {
 		$WhereSPG = " AND salesman.salesmancode = " . $SPG . " ";
-	}else{
+	} else {
 		$WhereSPG = " ";
 	}
+	
+	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -1));
+	
 	$SQL = "SELECT salesorders.salesperson,
 				salesman.salesmanname,
 				(SELECT COUNT(*)
 					FROM returneditems,
 					WHERE returneditems.returndate >= '". $StartDate ."'
-						AND so2.salesperson = salesorders.salesperson) AS totalorders,
+						AND so2.salesperson = salesorders.salesperson) AS TotalOrders,
 				(SELECT SUM(qtyinvoiced)
 					FROM salesorderdetails, salesorders AS so2
 					WHERE salesorderdetails.orderno = so2.orderno
 						AND so2.orddate >= '". $StartDate ."'
 						AND so2.orddate <= '". $Yesterday ."'
 						AND so2.salesperson = salesorders.salesperson
-						AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS onlinevipcards 
+						AND salesorderdetails.stkcode = 'ONLINE-VIP-PACK') AS OnlineVipCards 
 			FROM salesorders, salesman
 			WHERE salesman.salesmancode = salesorders.salesperson " . 
 				$WhereSPG . "
@@ -156,8 +158,9 @@ function ReturnsBySPG($SPG, $NumDays){
 			ORDER BY salesorders.salesperson";
 	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
+	if (DB_num_rows($Result) != 0) {
+		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . 
+						locale_number_format($NumDays, 0) . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
@@ -179,18 +182,36 @@ function ReturnsBySPG($SPG, $NumDays){
 		echo $TableHeader;
 		echo '<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
+			// Fixed divide by zero errors by checking denominators before division
+			$HarvestedPercent = ($MyRow['TotalOrders'] > 0) ? 
+								($MyRow['Harvested'] / $MyRow['TotalOrders']) * 100 : 0;
+			$FirstNamePercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['FirstNames'] / $MyRow['Harvested']) * 100 : 0;
+			$LastNamePercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['LastNames'] / $MyRow['Harvested']) * 100 : 0;
+			$CountriesPercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['Countries'] / $MyRow['Harvested']) * 100 : 0;
+			$DOBPercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['Date_Of_Births'] / $MyRow['Harvested']) * 100 : 0;
+			$EmailsPercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['Emails'] / $MyRow['Harvested']) * 100 : 0;
+			$SexsPercent = ($MyRow['Harvested'] > 0) ? 
+								($MyRow['Sexs'] / $MyRow['Harvested']) * 100 : 0;
+			$VIPPercent = ($MyRow['TotalOrders'] > 0) ? 
+								($MyRow['OnlineVipCards'] / $MyRow['TotalOrders']) * 100 : 0;
+				
 			echo '<tr class="striped_row">
-				<td>'.$MyRow['salesperson'].'</td>
-				<td>'.$MyRow['salesmanname'].'</td>
-				<td class="number">'.locale_number_format($MyRow['totalorders'],0).'</td>
-				<td class="number">'.locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%'.'</td>
-				<td class="number">'.locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'.'</td>
+				<td>' . $MyRow['salesperson'] . '</td>
+				<td>' . $MyRow['salesmanname'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['TotalOrders'], 0) . '</td>
+				<td class="number">' . locale_number_format($HarvestedPercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($FirstNamePercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($LastNamePercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($CountriesPercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($DOBPercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($EmailsPercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($SexsPercent, 0) . '%' . '</td>
+				<td class="number">' . locale_number_format($VIPPercent, 0) . '%' . '</td>
 				</tr>';
 		}
 		echo '</tbody></table></div></form>';

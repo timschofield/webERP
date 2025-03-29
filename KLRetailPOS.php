@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.60 Split returned items into several rows when inserting into DB
 v 4.50 Using just one userid for SPG, not one per shop
 v 4.41 Code cleaning
 v 4.40 Added BNI payments
@@ -1641,23 +1642,34 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			OR ($_POST['AmountVouchers'] <> 0 ) 
 			OR (stripcslashes($_SESSION['Items'.$identifier]->Comments) != "" )){
 			if ($_POST['AmountReturnedGoods'] <> 0 ){
-				// Record the information of the returned items
-				$SQL = "INSERT INTO returneditems (	orderno,
-												reasonid,
-												itemcodes,
-												returndate,
-												oldinvoice,
-												oldinvoicedate
-												)
-											VALUES ( '" . $OrderNo . "',
-												'" . $_POST['ReturnedGoodsReason'] . "',
-												'" . mb_strtoupper($_POST['ReturnedGoodsItems']) . "',
-												CURRENT_DATE,
-												'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
-												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The returned goods record could not be inserted because');
-				$DbgMsg = _('The following SQL to insert returned goods record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+
+				// Get the returned items string and sanitize it
+				$returnedItems = trim($_POST['ReturnedGoodsItems']);
+
+				// Split the string into an array of individual item codes
+				$itemCodesArray = explode(',', $returnedItems);
+
+				foreach ($itemCodesArray as $itemCode) {
+					$ReturnedItemCode = trim($itemCode);
+					if (!empty($ReturnedItemCode)) {
+						$SQL = "INSERT INTO returneditems (orderno,
+											reasonid,
+											itemcode,
+											returndate,
+											oldinvoice,
+											oldinvoicedate
+											)
+								VALUES ( '" . $OrderNo . "',
+									'" . $_POST['ReturnedGoodsReason'] . "',
+									'" . mb_strtoupper($ReturnedItemCode) . "',
+									CURRENT_DATE,
+									'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
+									'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
+						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The returned goods record could not be inserted because');
+						$DbgMsg = _('The following SQL to insert returned goods record was used');
+						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					}
+				}
 				
 				// and send email about it
 				$ReturnReasonText = FindReasonOfReturn($_POST['ReturnedGoodsReason']);
