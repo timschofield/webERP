@@ -724,3 +724,44 @@ function fShowPageHelp($HelpText) {
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
+
+function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=array()) {
+	$SQL = "SELECT host,
+					port,
+					username,
+					password,
+					auth
+				FROM emailsettings";
+	$Result = DB_query($SQL);
+	$MyEmailRow = DB_fetch_array($Result);
+	$MailObj->isSMTP();
+	$MailObj->Host = $MyEmailRow['host'];
+	if ($MyEmailRow['auth'] == 1) {
+		$MailObj->SMTPAuth = true;
+	} else {
+		$MailObj->SMTPAuth = false;
+	}
+	$MailObj->Username = $MyEmailRow['username'];
+	$MailObj->Password = $MyEmailRow['password'];
+	$MailObj->Port = $MyEmailRow['port'];
+	$MailObj->setFrom($From, '');
+	$Recipients = '';
+	$RecipientNames = '';
+	foreach ($To as $ToAddress => $ToName) {
+		$Recipients .= $ToAddress . ',';
+		$RecipientNames .= $ToName . ',';
+	}
+	foreach ($Attachments as $Attachment) {
+		$MailObj->addAttachment($Attachment, basename($Attachment));
+	}
+	$MailObj->addAddress(substr($Recipients, 0, -1), substr($RecipientNames, 0, -1));
+	$MailObj->isHTML(false);
+	$MailObj->Subject = $Subject;
+	$MailObj->Body = $Body;
+	if (!$MailObj->send()) {
+		prnMsg( _('Email not sent. An error was encountered: ' . $MailObj->ErrorInfo), 'error');
+	} else {
+		prnMsg( _('Message has been sent.'), 'success');
+	}
+	$MailObj->smtpClose();
+}
