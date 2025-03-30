@@ -124,23 +124,42 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['DefaultDateFormat'] != $_POST['X_DefaultDateFormat'] ) {
 			$SQL[] = "UPDATE config SET confvalue = '".$_POST['X_DefaultDateFormat']."' WHERE confname = 'DefaultDateFormat'";
 		}
-		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
+		if($DefaultTheme != $_POST['X_DefaultTheme']) {			
 			// BEGIN: Update the config.php file:
-			$FileHandle = fopen('config.php', 'r');
-			if($FileHandle) {
-				$Content = fread($FileHandle, filesize('config.php'));
-				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
-				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
-				$FileHandle = fopen('config.php','w');
-				if(!fwrite($FileHandle,$Content)) {
-					prnMsg(_('Cannot write to the configuration file.'), 'error');
-				} else {
-					prnMsg(_('The configuration file was updated.'), 'info');
-				}
-				fclose($FileHandle);
-			} else {
-				prnMsg(_('Cannot open the configuration file.'), 'error');
+
+			$DefaultTheme = $_POST['X_DefaultTheme'];
+			// Path to the configuration file
+			$configFile = 'config.php';
+
+			// Read the contents of the configuration file
+			$fileContents = file_get_contents($configFile);
+			if ($fileContents === false) {
+				die("Failed to read the configuration file.");
 			}
+			
+			// Use a regex to find and replace the $DefaultTheme line
+			$pattern = '/^\s*\$DefaultTheme\s*=\s*["\'].*?["\'];/m';
+			$replacement = "\$DefaultTheme = '$DefaultTheme';";
+			
+			if (preg_match($pattern, $fileContents)) {
+				// Replace the line
+				$updatedContents = preg_replace($pattern, $replacement, $fileContents);				
+			} else {
+				// If $DefaultTheme is not found, insert it at the 5th line
+				$lines = explode("\n", $fileContents);
+				$insertLine = "\$DefaultTheme = '$DefaultTheme';";
+			
+				// Insert on the 10th line (index 9 in the array)
+				array_splice($lines, 9, 0, $insertLine);
+			
+				// Rejoin the lines into a single string
+				$updatedContents = implode("\n", $lines);
+			}
+			// Save the updated content back to the file
+			if (file_put_contents($configFile, $updatedContents) === false) {
+				die("Failed to write to the configuration file.");
+			}			
+			// echo "Theme updated successfully.";
 			// END: Update the config.php file.
 		}
 		if ($_SESSION['PastDueDays1'] != $_POST['X_PastDueDays1'] ) {
