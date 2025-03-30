@@ -23,11 +23,15 @@ class Import implements AtRule
 
     /**
      * @var int
+     *
+     * @internal since 8.8.0
      */
     protected $iLineNo;
 
     /**
      * @var array<array-key, Comment>
+     *
+     * @internal since 8.8.0
      */
     protected $aComments;
 
@@ -72,6 +76,8 @@ class Import implements AtRule
 
     /**
      * @return string
+     *
+     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
      */
     public function __toString()
     {
@@ -79,9 +85,11 @@ class Import implements AtRule
     }
 
     /**
+     * @param OutputFormat|null $oOutputFormat
+     *
      * @return string
      */
-    public function render(OutputFormat $oOutputFormat)
+    public function render($oOutputFormat)
     {
         return $oOutputFormat->comments($this) . "@import " . $this->oLocation->render($oOutputFormat)
             . ($this->sMediaQuery === null ? '' : ' ' . $this->sMediaQuery) . ';';

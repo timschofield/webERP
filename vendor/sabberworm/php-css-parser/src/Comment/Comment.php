@@ -9,11 +9,15 @@ class Comment implements Renderable
 {
     /**
      * @var int
+     *
+     * @internal since 8.8.0
      */
     protected $iLineNo;
 
     /**
      * @var string
+     *
+     * @internal since 8.8.0
      */
     protected $sComment;
 
@@ -55,6 +59,8 @@ class Comment implements Renderable
 
     /**
      * @return string
+     *
+     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
      */
     public function __toString()
     {
@@ -62,9 +68,11 @@ class Comment implements Renderable
     }
 
     /**
+     * @param OutputFormat|null $oOutputFormat
+     *
      * @return string
      */
-    public function render(OutputFormat $oOutputFormat)
+    public function render($oOutputFormat)
     {
         return '/*' . $this->sComment . '*/';
     }
