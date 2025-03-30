@@ -4,6 +4,11 @@
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 $Title = _('Stock Adjustments');
 
 /* webERP manual links before header.php */
@@ -376,11 +381,14 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			if($_SESSION['SmtpSetting']==0){
 				mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 			}else{
-				include('includes/htmlMimeMail.php');
-				$mail = new htmlMimeMail();
-				$mail->setSubject($EmailSubject);
-				$mail->setText($ConfirmationText);
-				$Result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
+				$mail = new PHPMailer(true);
+				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+				SendEmailBySmtp($mail,
+								$SysAdminEmail,
+								array($_SESSION['InventoryManagerEmail'] =>  ''),
+								$EmailSubject,
+								$ConfirmationText
+							);
 			}
 
 		}
