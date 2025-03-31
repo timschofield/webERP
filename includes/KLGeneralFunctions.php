@@ -4,6 +4,99 @@
 			GENERAL KL FUNCTIONS
 **************************************************************************************************/
 
+/**************************************************************************************************************
+FUNCTIONS INCLUDED IN ALPHABETICAL ORDER:
+
+AdjustBulatan                     - Calculates the rounding adjustment amount
+BrandTextFromCode                 - Returns the text description of a brand code
+CapitalizeName                    - Properly capitalizes a name with exceptions for common prefixes
+ChangeGLAcoountCode               - Changes a GL account code throughout the system
+ClassicalSize                     - Determines the classical size (XS, S, M, L, XL) from an item code
+CleanStringForWebERP              - Removes single quotes from strings for safe database use
+CodeModel                         - Returns the model code (first 6 characters) of an item
+CodeModelRing                     - Returns the model code for a ring, handling size variations
+ConvertExcelDate                  - Converts Excel date format to a standard date format
+CreateConsignmentInvoiceNumber    - Creates a formatted consignment invoice number
+DataExistsInWebERP                - Checks if specific data exists in a WebERP table
+DaysBetween                       - Calculates the number of days between two dates
+DeleteWeberpUser                  - Deletes a user from the system with proper validation
+EnsureNumberIsNegativeNumber      - Ensures a number is negative or returns 0 if not numeric
+EnsureNumberIsPositiveNumber      - Ensures a number is positive or returns 0 if not numeric
+FindReasonOfReturn                - Retrieves the reason description for a return code
+FindWebsiteBrand                  - Determines the appropriate brand for an item for website use
+function_finish                   - Records and displays the execution time of a function
+getDirectoryTree                  - Gets a directory listing excluding . and ..
+GetAreaFromCustomer               - Retrieves the area code for a customer
+GetCategoryNameFromCode           - Gets the description of a stock category
+GetCurrencyFromCustomer           - Gets the currency code for a customer
+GetDayNameFromWeekDay             - Converts a day number to day name
+GetDefaultLocationFromUser        - Gets the default location code for a user
+GetItemDescriptionFromCode        - Gets the description of a stock item
+GetItemStandardCostFromCode       - Gets the standard cost of a stock item
+GetLastKPIValue                   - Gets the most recent KPI value for a class/concept
+GetLocationNameFromCode           - Gets the location name from a location code
+GetOnlinePartnerFromArea          - Gets the online partner code for an area
+GetTotalItemsChangingPrice        - Counts items with changing price flag
+GetTotalItemsMovingToDiscount     - Counts items moving to a specific discount level
+GLAccountBelongsTo                - Determines which company a GL account belongs to
+InsertIntoGLTrans                 - Inserts a transaction into the GL transaction table
+InsertKPI                         - Inserts a KPI record if it doesn't already exist
+isAnklet                          - Checks if an item is an anklet
+isBag                             - Checks if an item is a bag
+isBankAccount                     - Checks if a GL account is a bank account
+isBead                            - Checks if an item is a bead
+isBracelet                        - Checks if an item is a bracelet
+isBrooche                         - Checks if an item is a brooch
+isEarcuff                         - Checks if an item is an ear cuff
+isEarring                         - Checks if an item is an earring
+isFaceMask                        - Checks if an item is a face mask
+isFamily                          - Checks if an item belongs to a specific family
+isFoulard                         - Checks if an item is a foulard
+isJewelleryBox                    - Checks if an item is a jewellery box
+isJewelleryRoll                   - Checks if an item is a jewellery roll
+isKeyHolder                       - Checks if an item is a key holder
+isNecklace                        - Checks if an item is a necklace
+isPackagingBox                    - Checks if an item is a packaging box
+isPackagingPaperInsideBox         - Checks if an item is packaging paper for inside a box
+isPendant                         - Checks if an item is a pendant
+isPiercing                        - Checks if an item is a piercing
+isPlasticBag                      - Checks if an item is a plastic bag
+isPolishingCloth                  - Checks if an item is a polishing cloth
+isRing                            - Checks if an item is a ring
+isSlimRing                        - Checks if an item is a slim ring
+isTali                            - Checks if an item is a tali
+isToeRing                         - Checks if an item is a toe ring
+ItemCodeAvgPriceInvoiced          - Calculates average price invoiced for an item
+ItemCodeQOH                       - Gets the quantity on hand for an item
+ItemCodeQOO_PurchaseOrders        - Gets the quantity on order from purchase orders
+ItemCodeQOO_WorkOrders            - Gets the quantity on order from work orders
+ItemCodeQuantityInvoiced          - Gets the quantity invoiced for an item
+ItemImagesURL                     - Gets the URL for item images
+ItemInList                        - Checks if an item is in a comma-separated list
+ListToArray                       - Converts a list with separators to an array
+locale_number_format_kpi          - Formats numbers for KPI display with appropriate decimals
+locale_number_format_zero_blank   - Formats a number but returns blank for zero
+NumberOfItemsInList               - Counts items in a comma-separated list
+NumberOfRegularShopsSellingDiscount - Counts shops of a type that sell discount items
+NumberOfShops                     - Counts shops of a specific type
+NumberSize                        - Determines the numerical size from an item code
+NumItemsSoldPerBrand              - Counts items sold per brand in a date range
+OptimumOrderQuantity              - Calculates the optimum order quantity
+ProcessPaymentOnlineOrder         - Processes payment for an online order
+ReviseEmailAddress                - Corrects email addresses with known domain issues
+RingSize                          - Determines the ring size from an item code
+StartEvenOrOddRow                 - Alternates between even and odd table rows
+StartSameColourRow                - Maintains the same table row color
+time_finish                       - Records and displays the execution time of a script
+time_start                        - Records the start time for timing execution
+TotalDisplayItems                 - Counts total display items for a brand
+TotalItems                        - Counts total items for a brand
+TotalItemsToBeReceivedByPO        - Counts items to be received by purchase order
+TotalItemsToBeReceivedByWO        - Counts items to be received by work order
+TotalModels                       - Counts total models for a brand
+TypeOfItem                        - Returns the type description of an item
+**************************************************************************************************************/
+
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
@@ -425,7 +518,7 @@ function locale_number_format_zero_blank($num,$dec){
 }
 
 function locale_number_format_kpi($num){
-	if(abs($num) >= 1000){
+	if(abs($num) >= 100){
 		return locale_number_format($num,0);
 	}elseif(abs($num) >= 10){
 		return locale_number_format($num,1);
@@ -1505,5 +1598,182 @@ function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
 	return $OptimumOrderQuantity;
 }
 
+
+function ChangeGLAcoountCode($NewGL, $OldGL) {
+	/*First check the code exists */
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
+	if(DB_num_rows($Result) == 0) {
+		prnMsg(_('The GL account code') . ': ' . $OldGL . ' ' . _('does not currently exist as a GL account code in the system'), 'error');
+		$InputError = 1;
+	}
+
+	if(ContainsIllegalCharacters($NewGL)) {
+		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'), 'error');
+		$InputError = 1;
+	}
+
+	if($NewGL == '') {
+		prnMsg(_('The new GL account code to change the old code to must be entered as well'), 'error');
+		$InputError = 1;
+	}
+
+	/*Now check that the new code doesn't already exist */
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
+	if(DB_num_rows($Result) != 0) {
+		echo '<br /><br />';
+		prnMsg(_('The replacement GL account code') . ': ' . $NewGL . ' ' . _('already exists as a GL account code in the system') . ' - ' . 
+			_('a unique GL account code must be entered for the new code'), 'error');
+		$InputError = 1;
+	}
+
+	if($InputError == 0) {// no input errors
+		DB_Txn_Begin();
+		echo '<br />' . _('Adding the new chartmaster record');
+		$SQL = "INSERT INTO chartmaster (accountcode,
+										accountname,
+										group_,
+										cashflowsactivity,
+										controlled)
+				SELECT '" . $NewGL . "',
+					accountname,
+					group_,
+					cashflowsactivity,
+					controlled
+				FROM chartmaster
+				WHERE accountcode='" . $OldGL . "'";
+
+		$DbgMsg = _('The SQL statement that failed was');
+		$ErrMsg = _('The SQL to insert the new chartmaster record failed');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		echo ' ... ' . _('completed');
+
+		DB_IgnoreForeignKeys();
+
+		ChangeFieldInTable("bankaccounts", "accountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("bankaccountusers", "accountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("banktrans", "bankact", $OldGL, $NewGL);
+
+		ChangeFieldInTable("chartdetails", "accountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("cogsglpostings", "glcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("companies", "debtorsact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "pytdiscountact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "creditorsact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "payrollact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "grnact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "exchangediffact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "commissionsact", $OldGL, $NewGL);
+
+		ChangeFieldInTable("fixedassetcategories", "costact", $OldGL, $NewGL);
+		ChangeFieldInTable("fixedassetcategories", "depnact", $OldGL, $NewGL);
+		ChangeFieldInTable("fixedassetcategories", "disposalact", $OldGL, $NewGL);
+		ChangeFieldInTable("fixedassetcategories", "accumdepnact", $OldGL, $NewGL);
+
+		ChangeFieldInTable("glaccountusers", "accountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("glbudgetdetails", "account", $OldGL, $NewGL);
+
+		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
+		
+		ChangeFieldInTable("gltotals", "account", $OldGL, $NewGL);
+
+		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
+		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
+
+		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL);// Location's ledger account.
+
+		ChangeFieldInTable("pcexpenses", "glaccount", $OldGL, $NewGL);
+
+		ChangeFieldInTable("pctabs", "glaccountassignment", $OldGL, $NewGL);
+		ChangeFieldInTable("pctabs", "glaccountpcash", $OldGL, $NewGL);
+
+		ChangeFieldInTable("purchorderdetails", "glcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("regularpayments", "glcode", $OldGL, $NewGL);
+		ChangeFieldInTable("regularpayments", "bankaccountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("salesman", "glaccount", $OldGL, $NewGL);
+
+		ChangeFieldInTable("salesglpostings", "discountglcode", $OldGL, $NewGL);
+		ChangeFieldInTable("salesglpostings", "salesglcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("stockcategory", "stockact", $OldGL, $NewGL);
+		ChangeFieldInTable("stockcategory", "adjglact", $OldGL, $NewGL);
+		ChangeFieldInTable("stockcategory", "issueglact", $OldGL, $NewGL);
+		ChangeFieldInTable("stockcategory", "purchpricevaract", $OldGL, $NewGL);
+		ChangeFieldInTable("stockcategory", "materialuseagevarac", $OldGL, $NewGL);
+		ChangeFieldInTable("stockcategory", "wipact", $OldGL, $NewGL);
+
+		ChangeFieldInTable("taxauthorities", "taxglcode", $OldGL, $NewGL);
+		ChangeFieldInTable("taxauthorities", "purchtaxglaccount", $OldGL, $NewGL);
+		ChangeFieldInTable("taxauthorities", "bankacctype", $OldGL, $NewGL);
+
+		ChangeFieldInTable("workcentres", "overheadrecoveryact", $OldGL, $NewGL);
+
+		DB_ReinstateForeignKeys();
+		// KL RICARD tables
+		DB_IgnoreForeignKeys();
+
+		ChangeFieldInTable("chartmasterADU", "accountcode", $OldGL, $NewGL);
+		ChangeFieldInTable("chartmasterSMH", "accountcode", $OldGL, $NewGL);
+		ChangeFieldInTable("chartmasterBB", "accountcode", $OldGL, $NewGL);
+		ChangeFieldInTable("chartmasterIK", "accountcode", $OldGL, $NewGL);
+		ChangeFieldInTable("chartmasterPI", "accountcode", $OldGL, $NewGL);
+		
+		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankbni", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
+
+		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalaud", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionaud", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalusd", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionusd", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypaleur", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissioneur", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountxenditidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountxenditcomissionidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountcomissionppn", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accounttransfermandiri", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accounttransferbca", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accounttransferdanamon", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountmidtransidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accounttokopediaidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accounttokopediacomissionidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountshopeeidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL);
+		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL);
+
+		DB_ReinstateForeignKeys();
+
+		DB_Txn_Commit();
+
+		echo '<br />' . _('Deleting the old chartmaster record');
+		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
+		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		echo ' ... ' . _('completed');
+
+		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
+	}//only do the stuff above if  $InputError==0
+}
 
 ?>

@@ -19,6 +19,10 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/SQL_CommonFunctions.inc');
 
+// RICARD KL: Use the function ChangeGLAcoountCode
+include('includes/KLGeneralFunctions.php');
+// RICARD KL END: Use the function ChangeGLAcoountCode
+
 if(isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
