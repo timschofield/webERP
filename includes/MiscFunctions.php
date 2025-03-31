@@ -766,6 +766,12 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	$MailObj->smtpClose();
 }
 
+/******************************************************************************************************************
+ * 
+ * 
+ * 
+ ******************************************************************************************************************/
+
 function ChangeGLAcoountCode ($NewGL, $OldGL){
 	/*First check the code exists */
 	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
@@ -810,6 +816,7 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 				WHERE accountcode='" . $OldGL . "'";
 
 		$DbgMsg = _('The SQL statement that failed was');
+		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
@@ -884,6 +891,8 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 
 		DB_ReinstateForeignKeys();
 		// KL RICARD tables
+		DB_IgnoreForeignKeys();
+
 		ChangeFieldInTable("chartmasterADU", "accountcode", $OldGL, $NewGL);
 		ChangeFieldInTable("chartmasterSMH", "accountcode", $OldGL, $NewGL);
 		ChangeFieldInTable("chartmasterBB", "accountcode", $OldGL, $NewGL);
@@ -938,7 +947,6 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 
 		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
 	}//only do the stuff above if  $InputError==0
-	$MailObj->smtpClose();
 }
 
 ?>
