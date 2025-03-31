@@ -7,7 +7,7 @@ $Title = _('Bill Of Materials Maintenance');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
-include('includes/header.inc');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 function display_children($Parent, $Level, &$BOMTree) {
@@ -727,7 +727,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		if (DB_num_rows($Result)==0){
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
 			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
-			include('includes/footer.inc');
+			include('includes/footer.php');
 			exit;
 		}
 
@@ -964,5 +964,5 @@ function arrayUnique($array, $preserveKeys = false)
 	return $arrayRewrite;
 }
 
-include('includes/footer.inc');
+include('includes/footer.php');
 ?>

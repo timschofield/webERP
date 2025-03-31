@@ -39,13 +39,13 @@ class Value
      */
     public static function isRef(mixed $value, ?Cell $cell = null): bool
     {
-        if ($cell === null || $value === $cell->getCoordinate()) {
+        if ($cell === null) {
             return false;
         }
 
         $cellValue = Functions::trimTrailingRange($value);
         if (preg_match('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/ui', $cellValue) === 1) {
-            [$worksheet, $cellValue] = Worksheet::extractSheetTitle($cellValue, true);
+            [$worksheet, $cellValue] = Worksheet::extractSheetTitle($cellValue, true, true);
             if (!empty($worksheet) && $cell->getWorksheet()->getParentOrThrow()->getSheetByName($worksheet) === null) {
                 return false;
             }
@@ -210,10 +210,11 @@ class Value
 
         $fullCellReference = Functions::trimTrailingRange($fullCellReference);
 
-        preg_match('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/i', $fullCellReference, $matches);
-
-        $fullCellReference = $matches[6] . $matches[7];
-        $worksheetName = str_replace("''", "'", trim($matches[2], "'"));
+        $worksheetName = '';
+        if (1 == preg_match('/^' . Calculation::CALCULATION_REGEXP_CELLREF . '$/i', $fullCellReference, $matches)) {
+            $fullCellReference = $matches[6] . $matches[7];
+            $worksheetName = str_replace("''", "'", trim($matches[2], "'"));
+        }
 
         $worksheet = (!empty($worksheetName))
             ? $cell->getWorksheet()->getParentOrThrow()->getSheetByName($worksheetName)
@@ -281,7 +282,7 @@ class Value
     public static function type($value = null): int
     {
         $value = Functions::flattenArrayIndexed($value);
-        if (is_array($value) && (count($value) > 1)) {
+        if (count($value) > 1) {
             end($value);
             $a = key($value);
             //    Range of cells is an error

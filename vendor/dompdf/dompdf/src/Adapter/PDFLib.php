@@ -234,7 +234,7 @@ class PDFLib implements Canvas
         }
 
         // fetch PDFLib version information for the producer field
-        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->__get('version'), $this->getPDFLibMajorVersion()));
+        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->version, $this->getPDFLibMajorVersion()));
 
         // Silence pedantic warnings about missing TZ settings
         $tz = @date_default_timezone_get();
@@ -242,14 +242,25 @@ class PDFLib implements Canvas
         $this->_pdf->set_info("Date", date("Y-m-d"));
         date_default_timezone_set($tz);
 
+        $doc_options = "";
+
+        if ($options->isPdfAEnabled()) {
+            $doc_options = "pdfa=PDF/A-3b autoxmp";
+        }
+
         if (self::$IN_MEMORY) {
-            $this->_pdf->begin_document("", "");
+            $this->_pdf->begin_document("", $doc_options);
         } else {
             $tmp_dir = $options->getTempDir();
             $tmp_name = @tempnam($tmp_dir, "libdompdf_pdf_");
             @unlink($tmp_name);
             $this->_file = "$tmp_name.pdf";
-            $this->_pdf->begin_document($this->_file, "");
+            $this->_pdf->begin_document($this->_file, $doc_options);
+        }
+
+        if ($options->isPdfAEnabled()) {
+            $iccProfilePath = $options->getRootDir() . '/lib/res/sRGB2014.icc';
+            $this->_pdf->load_iccprofile($iccProfilePath, "usage=outputintent");
         }
 
         $this->_pdf->begin_page_ext($this->_width, $this->_height, "");
@@ -967,26 +978,26 @@ class PDFLib implements Canvas
 
     public function rotate($angle, $x, $y)
     {
-        $PDF = $this->_pdf;
-        $PDF->translate($x, $this->_height - $y);
-        $PDF->rotate(-$angle);
-        $PDF->translate(-$x, -$this->_height + $y);
+        $pdf = $this->_pdf;
+        $pdf->translate($x, $this->_height - $y);
+        $pdf->rotate(-$angle);
+        $pdf->translate(-$x, -$this->_height + $y);
     }
 
     public function skew($angle_x, $angle_y, $x, $y)
     {
-        $PDF = $this->_pdf;
-        $PDF->translate($x, $this->_height - $y);
-        $PDF->skew($angle_y, $angle_x); // Needs to be inverted
-        $PDF->translate(-$x, -$this->_height + $y);
+        $pdf = $this->_pdf;
+        $pdf->translate($x, $this->_height - $y);
+        $pdf->skew($angle_y, $angle_x); // Needs to be inverted
+        $pdf->translate(-$x, -$this->_height + $y);
     }
 
     public function scale($s_x, $s_y, $x, $y)
     {
-        $PDF = $this->_pdf;
-        $PDF->translate($x, $this->_height - $y);
-        $PDF->scale($s_x, $s_y);
-        $PDF->translate(-$x, -$this->_height + $y);
+        $pdf = $this->_pdf;
+        $pdf->translate($x, $this->_height - $y);
+        $pdf->scale($s_x, $s_y);
+        $pdf->translate(-$x, -$this->_height + $y);
     }
 
     public function translate($t_x, $t_y)
@@ -1295,7 +1306,7 @@ class PDFLib implements Canvas
      * The callback function receives the four parameters `int $pageNumber`,
      * `int $pageCount`, `Canvas $canvas`, and `FontMetrics $fontMetrics`, in
      * that order. If a script is passed as string, the variables `$PAGE_NUM`,
-     * `$PAGE_COUNT`, `$PDF`, and `$fontMetrics` are available instead. Passing
+     * `$PAGE_COUNT`, `$pdf`, and `$fontMetrics` are available instead. Passing
      * a script as string is deprecated and will be removed in a future version.
      *
      * This function can be used to add page numbers to all pages after the
@@ -1309,7 +1320,7 @@ class PDFLib implements Canvas
             $this->processPageScript(function (
                 int $PAGE_NUM,
                 int $PAGE_COUNT,
-                self $PDF,
+                self $pdf,
                 FontMetrics $fontMetrics
             ) use ($callback) {
                 eval($callback);
