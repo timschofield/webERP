@@ -174,6 +174,22 @@ background-size:18px 18px;
 padding-left:28px;
 min-width:110px;
 }
+form input[title~="Email"] {
+background-image:url(images/Email.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+min-width:110px;
+padding-left:28px;
+}
+form input[title~="Email"]:hover {
+background-image:url(images/Email.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+min-width:110px;
+padding-left:28px;
+}
 form input[name^="Search"] {
 background-image:url(images/search.png);
 background-repeat: no-repeat;
