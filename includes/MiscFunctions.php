@@ -3,6 +3,11 @@
 /*
  * included from includes/ConnectDB.inc
  * ******************************************  */
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
@@ -765,6 +770,23 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	}
 	$MailObj->smtpClose();
 }
+
+function SendEmailFromWebERP($From, $To, $Subject, $Body){
+	
+	if($_SESSION['SmtpSetting']==0){
+		mail($To,$Subject,$Body);
+	}else{
+		$mail = new PHPMailer(true);
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		SendEmailBySmtp($mail,
+						$From,
+						array($To =>  ''),
+						$Subject,
+						$Body
+					);
+	}
+}
+
 
 /******************************************************************************************************************
  * 

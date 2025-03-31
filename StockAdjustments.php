@@ -11,10 +11,6 @@ include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
 
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
-
 $Title = _('Stock Adjustments');
 
 /* webERP manual links before header.php */
@@ -401,24 +397,13 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		prnMsg( $ConfirmationText,'success');
 
 		// KL RICARD: Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
-		if (($_SESSION['InventoryManagerEmail']!='') 
+/*		if (($_SESSION['InventoryManagerEmail']!='') 
 			OR (!$KL_SystemAdmin)
 			OR (!$KL_BusinessDevelopmentManager)){
+*/		if (($_SESSION['InventoryManagerEmail']!='') ){
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
-			if($_SESSION['SmtpSetting']==0){
-				mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
-			}else{
-				$mail = new PHPMailer(true);
-				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				SendEmailBySmtp($mail,
-								$SysAdminEmail,
-								array($_SESSION['InventoryManagerEmail'] =>  ''),
-								$EmailSubject,
-								$ConfirmationText
-							);
-			}
-
+			SendEmailFromWebERP($SysAdminEmail, $_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
 		}
 		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);
