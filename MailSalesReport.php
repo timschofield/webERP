@@ -47,7 +47,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 		$Result = $mail->send($Recipients);
 	}else{
-		$Result = SendmailBySmtp($mail,$Recipients);
+		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 	}
 } else {
 	$mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
@@ -55,7 +55,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 		$Result = $mail->send($Recipients);
 	}else{
-		$Result = SendmailBySmtp($mail,$Recipients);
+		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 	}
 
 }

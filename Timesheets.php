@@ -317,7 +317,7 @@ if(isset($_POST['SubmitForApproval'])) {
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Result = $mail->send($Recipients);
 		}else{
-			$Result = SendmailBySmtp($mail,$Recipients);
+			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 		}
 		prnMsg(_('This timesheet has been submitted to your manager for approval'),'success', _('Timesheet submitted'));
 	}

@@ -119,7 +119,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 		$mail->setFrom("");
 		$Result = $mail->send($Recipients);
 	}else{
-		$Result = SendmailBySmtp($mail,$Recipients);
+		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 	}
 
 } else {
@@ -128,7 +128,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 		$mail->setFrom("Do_not_reply_".$_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 		$Result = $mail->send($Recipients);
 	}else{
-		$Result = SendmailBySmtp($mail,$Recipients);
+		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 	}
 }
 ?>

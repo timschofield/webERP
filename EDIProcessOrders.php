@@ -547,7 +547,7 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 		if($_SESSION['SmtpSetting']==0){
 			$MessageSent = $mail->send($Recipients);
 		}else{
-			$MessageSent = SendmailBySmtp($mail,$Recipients);
+			$MessageSent = SendEmailByHTMLMimeMail($mail,$Recipients);
 		}
 
 

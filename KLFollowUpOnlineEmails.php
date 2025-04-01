@@ -273,7 +273,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 			$mail = new htmlMimeMail();
 			$mail->setSubject($MailSubject);
 			$mail->setHTML($MailMessage);
-			$Result = SendmailBySmtp($mail,array($MailTo));
+			$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
 		}
 		echo '<h1>Email sent to ' . $MailTo. '</h1><br />';
 	}
@@ -315,7 +315,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 			$mail = new htmlMimeMail();
 			$mail->setSubject($MailSubject);
 			$mail->setHTML($MailMessage);
-			$Result = SendmailBySmtp($mail,array($MailTo));
+			$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
 		}
 	}
 	// update the sales order, as we send the payment confirmation

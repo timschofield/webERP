@@ -822,7 +822,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 				$mail = new htmlMimeMail();
 				$mail->setSubject($EmailSubject);
 				$mail->setHTML($EmailText);
-				$Result = SendmailBySmtp($mail,array($GLAccountEmail));
+				$Result = SendEmailByHTMLMimeMail($mail,array($GLAccountEmail));
 			}
 		}
 		// KL RICARD End

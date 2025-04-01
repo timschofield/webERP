@@ -308,7 +308,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
 				}else{
-					$MessageSent = SendmailBySmtp($mail,array($CustDetails['ediaddress']));
+					$MessageSent = SendEmailByHTMLMimeMail($mail,array($CustDetails['ediaddress']));
 				}
 
 

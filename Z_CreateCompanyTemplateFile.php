@@ -214,7 +214,7 @@ if (isset($_POST['CreateTemplate'])){
 		 	 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 			 $Result = $mail->send($Recipients);
 		   }else{
-			$Result = SendmailBySmtp($mail,$Recipients);
+			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 		   }
           /*end of SQL Script creation */
       }/*end if Input error*/

@@ -156,7 +156,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 				$mail = new htmlMimeMail();
 				$mail->setSubject($EmailSubject);
 				$mail->setText($ConfirmationText);
-				$Result = SendmailBySmtp($mail, array($MyEmail['email']));
+				$Result = SendEmailByHTMLMimeMail($mail, array($MyEmail['email']));
 			}
 		}
  RICARD KL END: DO not send these emails any more, as authorization is done automatically every day. */

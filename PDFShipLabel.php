@@ -340,7 +340,7 @@ if ($NoOfLabels > 0) {
 				$_POST['EmailTo']
 			));
 		} else if ($_SESSION['SmtpSetting'] == 1) {
-			$Success = SendmailBySmtp($Mail, array(
+			$Success = SendEmailByHTMLMimeMail($Mail, array(
 				$_POST['EmailTo']
 			));
 
