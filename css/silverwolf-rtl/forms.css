@@ -152,7 +152,7 @@ min-width:110px;
 padding-left:28px;
 }
 form input[title~="Email"] {
-background-image:url(images/Email.png);
+background-image:url(images/EmailButton.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
