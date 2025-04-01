@@ -158,7 +158,7 @@ Class Offer {
 		if($_SESSION['SmtpSetting']==0){
 			$Result = mail($_SESSION['PurchasingManagerEmail'], $Subject, $Message, $Headers);
 		}else{
-			$Result = SendmailBySmtp($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
+			$Result = SendEmailByHTMLMimeMail($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
 		}
 		return $Result;
 	}

@@ -242,7 +242,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Result = $mail->send($Recipients);
 		}else{
-			$Result = SendMailBySmtp($mail,$Recipients);
+			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 		}
 		if($Result){
 			prnMsg(_('The accepted offers from').' ' . $SupplierName.' ' . _('have been converted to purchase orders and an email sent to')
@@ -285,7 +285,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Result = $mail->send($Recipients);
 		}else{
-			$Result = SendmailBySmtp($mail,$Recipients);
+			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
 		}
 		if($Result){
 			prnMsg(_('The rejected offers from').' ' . $SupplierName.' ' . _('have been removed from the system and an email sent to')

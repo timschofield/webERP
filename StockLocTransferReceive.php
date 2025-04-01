@@ -438,7 +438,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$mail = new htmlMimeMail();
 						$mail->setSubject($EmailSubject);
 						$mail->setText($ConfirmationText);
-						$Result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
+						$Result = SendEmailByHTMLMimeMail($mail,array($_SESSION['InventoryManagerEmail']));
 					}
 				}
 			}

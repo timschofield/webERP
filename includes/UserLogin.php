@@ -277,7 +277,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);
 							$mail->setText($EmailText);
-							$Result = SendmailBySmtp($mail,array($SysAdminEmail));
+							$Result = SendEmailByHTMLMimeMail($mail,array($SysAdminEmail));
 					}
 
 				}

@@ -186,7 +186,7 @@ if ($NoOfLabels >0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Success = $mail->send(array($_POST['EmailTo']));
 		}else if($_SESSION['SmtpSetting'] == 1) {
-			$Success = SendmailBySmtp($mail,array($_POST['EmailTo']));
+			$Success = SendEmailByHTMLMimeMail($mail,array($_POST['EmailTo']));
 
 		}else{
 			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'),'error');

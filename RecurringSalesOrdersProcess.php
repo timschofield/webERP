@@ -712,7 +712,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 			$Result = $mail->send(array($RecurrOrderRow['email']));
 		}else{
-			$Result = SendmailBySmtp($mail,array($RecurrOrderRow['email']));
+			$Result = SendEmailByHTMLMimeMail($mail,array($RecurrOrderRow['email']));
 
 		}
 		unset($mail);

@@ -542,7 +542,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					include('includes/htmlMimeMail.php');
 					$mail = new htmlMimeMail();
 					$mail->setSubject($EmailSubject);
-					$Result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+					$Result = SendEmailByHTMLMimeMail($mail,array($_SESSION['FactoryManagerEmail']));
 				}
 
 			}//end if with this sales order there is a shortfall of stock - need to create the WO

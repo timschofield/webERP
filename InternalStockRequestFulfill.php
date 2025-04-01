@@ -210,7 +210,7 @@ if (isset($_POST['UpdateAll'])) {
 						$mail = new htmlMimeMail();
 						$mail->setSubject($EmailSubject);
 						$mail->setText($ConfirmationText);
-						$Result = SendmailBySmtp($mail, array(
+						$Result = SendEmailByHTMLMimeMail($mail, array(
 							$_SESSION['InventoryManagerEmail']
 						));
 					}

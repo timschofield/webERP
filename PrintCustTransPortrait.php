@@ -538,7 +538,7 @@ if(isset($PrintPDF)
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 			$Result = $mail->send(array($_GET['Email']));
 		} else {
-			$Result = SendmailBySmtp($mail,array($_GET['Email']));
+			$Result = SendEmailByHTMLMimeMail($mail,array($_GET['Email']));
 		}
 
 		unlink($FileName); //delete the temporary file

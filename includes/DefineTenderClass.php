@@ -66,7 +66,7 @@ Class Tender {
 		 if($_SESSION['SmtpSetting']==0){
 			 $Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 		 }else{
-			 $Result = SendmailBySmtp($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
+			 $Result = SendEmailByHTMLMimeMail($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
 		 }
 		}
 	}

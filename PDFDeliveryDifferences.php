@@ -332,7 +332,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			));
 		}
 		else {
-			$Result = SendmailBySmtp($mail, array(
+			$Result = SendEmailByHTMLMimeMail($mail, array(
 				$_SESSION['FactoryManagerEmail']
 			));
 		}

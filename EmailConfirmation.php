@@ -277,7 +277,7 @@ $MailMessage .= '</table>
 		$mail = new htmlMimeMail();
 		$mail->setSubject($MailSubject);
 		$mail->setHTML($MailMessage);
-		$Result = SendmailBySmtp($mail,array($MailTo));
+		$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
 	}
 
 if($Result){

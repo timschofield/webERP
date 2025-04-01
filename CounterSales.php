@@ -1277,7 +1277,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);
-							$Result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+							$Result = SendEmailByHTMLMimeMail($mail,array($_SESSION['FactoryManagerEmail']));
 					}
 
 				} //end if with this sales order there is a shortfall of stock - need to create the WO

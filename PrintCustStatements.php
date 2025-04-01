@@ -477,7 +477,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
 					$Result = $mail->send($RecipientArray);
 				} else{
-					$Result = SendmailBySmtp($mail,array($RecipientArray));
+					$Result = SendEmailByHTMLMimeMail($mail,array($RecipientArray));
 				}
 				echo '<tr>
 						<td>' , $StmtHeader['debtorno'], '</td>
