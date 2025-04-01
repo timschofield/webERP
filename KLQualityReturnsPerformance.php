@@ -280,8 +280,17 @@ function QualityIssuesByReason($Days, $RootPath){
 					</tr>';
 
 				$TotalReturned += $MyRow['totalreturned'];
+
+				if ($Days == 30) {
+					InsertKPI('Returned Items', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totalreturned']);
+				}
 			}
 		}
+
+		if ($Days == 30) {
+			InsertKPI('Returned Items', 'Total Returned Items Last 30 days (PCS)', $TotalReturned);
+		}		
+
 		echo '</tbody>
 			<tfooter>';
 		echo '<tr class="striped_row">
@@ -289,7 +298,6 @@ function QualityIssuesByReason($Days, $RootPath){
 				<td class="number">' . locale_number_format($TotalReturned, 0) . '</td>
 				<td class="number">' . locale_number_format($TotalReturned / $Days, 1) . '</td>
 			</tr>';
-		
 		 echo '</tfooter>
 			</table>
 			</div>';
@@ -333,8 +341,16 @@ function StockAdjustmentsByReason($Days, $RootPath){
 				</tr>';
 
 			$TotalAdjusted += $MyRow['totaladjusted'];
+			if ($Days == 30) {
+				InsertKPI('Stock Adjustments', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totaladjusted']);
+			}
 		}
 	}
+
+	if ($Days == 30) {
+		InsertKPI('Stock Adjustments', 'Total Stock Adjustments Last 30 days (PCS)', $TotalAdjusted);
+	}
+
 	echo '</tbody>
 		<tfooter>';
 	echo '<tr class="striped_row">
@@ -342,7 +358,6 @@ function StockAdjustmentsByReason($Days, $RootPath){
 			<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
 			<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
 		</tr>';
-	
 	echo '</tfooter>
 		</table>
 		</div>';
