@@ -1,8 +1,45 @@
 <?php
-// MiscFunctions.php
-/*
- * included from includes/ConnectDB.inc
- * ******************************************  */
+ 
+/************************************************************* 
+ * MiscFunctions.php included from includes/ConnectDB.inc
+ *
+ *  * ******************** FUNCTION INDEX ********************
+ * AddCarriageReturns - Adds carriage returns to a string
+ * ChangeFieldInTable - Changes value of specific field across a table
+ * checkLanguageChoice - Validates language choice format
+ * ContainsIllegalCharacters - Checks if a string contains special characters
+ * Convert_CRLF - Replaces text line breaks with specified line break
+ * Convert_line_breaks - Replaces HTML and text line breaks with specified line break
+ * fShowFieldHelp - Shows field help text based on session settings
+ * fShowPageHelp - Shows page help text based on session settings
+ * FYStartPeriod - Gets starting period for fiscal year
+ * GetCurrencyRate - Calculates currency exchange rate
+ * GetECBCurrencyRates - Gets currency rates from European Central Bank
+ * GetMailList - Gets email list for a mail group
+ * google_currency_rate - Gets currency rate from Google Finance
+ * http_file_exists - Checks if a URL exists
+ * indian_number_format - Formats numbers in Indian numbering system
+ * IsEmailAddress - Validates email address format
+ * locale_number_format - Formats numbers according to locale
+ * LogBackTrace - Logs debug backtrace information
+ * filter_number_format - Converts formatted number to SQL format
+ * prnMsg - Displays formatted messages
+ * PrintCompanyTo - Prints company info on PDF
+ * PrintDetail - Prints text detail on PDF with page break handling
+ * PrintDeliverTo - Prints delivery info on PDF
+ * PrintOurCompanyInfo - Prints company info in PDF format
+ * quote_oanda_currency - Gets currency exchange rate from Oanda
+ * ReportPeriod - Determines date period for reports
+ * ReportPeriodList - Generates period selection list for reports
+ * reverse_escape - Reverses escaped strings
+ * SendEmailBySmtp - Sends email using SMTP
+ * SendEmailByStandardMailFunction - Sends email using PHP mail function
+ * SendEmailFromWebERP - Main email sending function for WebERP
+ * SendEmailByHTMLMimeMail - Legacy email sending function
+ * wikiLink - Generates wiki application links
+ * XmlElement - Class for XML elements in currency rate parsing
+ * ******************** END FUNCTION INDEX ********************
+ */
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
@@ -732,24 +769,46 @@ function checkLanguageChoice($language) {
 
 
 function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
-	/* This function sends an email using either the standard mail function or SMTP.
-	 * It uses the PHPMailer library for SMTP functionality.
-	 * $From: The sender's email address
-	 * $To: The recipient's email address
-	 * $Subject: The subject of the email
-	 * $Body: The body of the email
-	 * $Attachments: An array of file paths to attach to the email
-	 * $Silent: If true, suppresses error messages
+	/**
+	 * Main email sending function for WebERP
+	 * 
+	 * This function serves as the primary interface for sending emails from WebERP.
+	 * It determines whether to use standard PHP mail() function or SMTP based on system configuration
+	 * and handles different input formats for recipients and attachments.
+	 * 
+	 * @param string $From        Email address of the sender
+	 * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
+	 * @param string $Subject     Subject of the email
+	 * @param string $Body        Body content of the email
+	 * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
+	 * @param bool   $Silent      If true, suppresses success/error messages (default: false)
+	 * 
+	 * @return mixed Returns true if email was sent successfully, or error message if failed
 	 */
+	
+	// Convert $To to array if it's a string
+	if (!is_array($To)) {
+		$To = array($To => ''); // Using empty string as recipient name
+	}
+	
+	// Convert $Attachments to array if it's a string
+	if (!is_array($Attachments) && !empty($Attachments)) {
+		$Attachments = array($Attachments);
+	}
+	
 	$EmailSent = false;
 	if($_SESSION['SmtpSetting'] == 0){
-		$EmailSent = SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments);
+		$EmailSent = SendEmailByStandardMailFunction($From,
+													$To,
+													$Subject,
+													$Body,
+													$Attachments);
 	} else {
 		$mail = new PHPMailer(true);
 		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 		$EmailSent = SendEmailBySmtp($mail,
 						$From,
-						array($To =>  ''),
+						$To,
 						$Subject,
 						$Body,
 						$Attachments);
@@ -760,9 +819,8 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 		} else {
 			prnMsg( _('Email not sent. An error was encountered: ' . $EmailSent), 'error');
 		}
-	} else {
-		return $EmailSent;
 	}
+	return $EmailSent;
 }
 
 function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=array()) {
@@ -801,7 +859,6 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	if (!$MailObj->send()) {
 		$EmailSent = $MailObj->ErrorInfo;
 	} else {
-		prnMsg( _('Message has been sent.'), 'success');
 		$EmailSent = true;
 	}
 	$MailObj->smtpClose();

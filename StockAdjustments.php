@@ -397,13 +397,18 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		prnMsg( $ConfirmationText,'success');
 
 		// KL RICARD: Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
-/*		if (($_SESSION['InventoryManagerEmail']!='') 
+		if (($_SESSION['InventoryManagerEmail']!='') 
 			OR (!$KL_SystemAdmin)
 			OR (!$KL_BusinessDevelopmentManager)){
-*/		if (($_SESSION['InventoryManagerEmail']!='') ){
+		// KL RICARD END Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
-			SendEmailFromWebERP($SysAdminEmail, $_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
+			SendEmailFromWebERP($SysAdminEmail, 
+								$_SESSION['InventoryManagerEmail'],
+								$EmailSubject,
+								$ConfirmationText,
+								'',
+								false);
 		}
 		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);
