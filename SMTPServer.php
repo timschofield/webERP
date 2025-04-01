@@ -116,7 +116,7 @@ echo '<field>
 	</field>
 	<field>
 		<label for="Password">' . _('Password') . '</label>
-		<input type="password" required="required" name="Password" value="' . $MyRow['password'] . '" />
+		<input type="password" required="required" name="Password" size="50" maxlength="101" value="' . $MyRow['password'] . '" />
 	</field>
 	<field>
 		<label for="Timeout">' . _('Timeout (seconds)') . '</label>
