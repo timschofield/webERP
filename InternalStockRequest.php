@@ -149,15 +149,12 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 		if ($MyEmail = DB_fetch_array($EmailResult)) {
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
-			if ($_SESSION['SmtpSetting'] == 0) {
-				mail($MyEmail['email'], $EmailSubject, $ConfirmationText);
-			} else {
-				include ('includes/htmlMimeMail.php');
-				$mail = new htmlMimeMail();
-				$mail->setSubject($EmailSubject);
-				$mail->setText($ConfirmationText);
-				$Result = SendEmailByHTMLMimeMail($mail, array($MyEmail['email']));
-			}
+			SendEmailFromWebERP($SysAdminEmail, 
+								$MyEmail['email'],
+								$EmailSubject,
+								$ConfirmationText,
+								'',
+								false);
 		}
  RICARD KL END: DO not send these emails any more, as authorization is done automatically every day. */
 	}
