@@ -5,7 +5,6 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-include('includes/htmlMimeMail.php');
 
 $Title = _('Email Salary Slips To Employees');
 
@@ -15,7 +14,6 @@ if (isset($_POST['submit'])) {
 	display($Title);
 }
 
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
@@ -88,26 +86,20 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 				// prepare the email fields to employees
 				$Subject  = $MyRow['codename'] . " " . $PageTitle;
-				$Text = EmailTextForEmployee($MyRow['fullname'],$Company, $SalaryType);
-				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
-				$Text = $Text . 'Email sent by ' . $AdminTeam . ' at '.date('d/M/Y H:i:s').'';
 				
-				$mail = new htmlMimeMail();
-				$mail->setText($Text);
-				$mail->setSubject($Subject);
-
-				$Attachment = $mail->getFile($PathFileName);
-				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
+				$Text = EmailTextForEmployee($MyRow['fullname'],$Company, $SalaryType);
+				$Text .= "\n---\r\n"; // \r is needed for signature separating
+				$Text .= 'Email sent by ' . $AdminTeam . ' at '.date('d/M/Y H:i:s').'';
 				
 				// set the from address depending on the company
 				if ($Company == 'PTBB'){
-					$mail->setFrom('accounting@bumibiru.com', $AdminTeam);
+					$SendFrom = 'accounting@bumibiru.com';
 					$SendTo = 'accounting@bumibiru.com'; // default SendTo address in case employee has no email
 				}elseif ($Company == 'PTSMH'){
-					$mail->setFrom('accounting@ptsmh.com', $AdminTeam);
+					$SendFrom = 'accounting@ptsmh.com';
 					$SendTo = 'accounting@ptsmh.com'; // default SendTo address in case employee has no email
 				}else{
-					$mail->setFrom('accounting@ptadu.com', $AdminTeam);
+					$SendFrom = 'accounting@ptadu.com';
 					$SendTo = 'accounting@ptadu.com'; // default SendTo address in case employee has no email
 				}
 	
@@ -117,13 +109,13 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 					$SendTo = $MyRow['email'];
 				}
 
-				// KL RICARD Send to a dummy address depending on the code version
-				if (KLwebERPScriptCalledFromTEST()){
-					// the current script filename contains TEST, we are on TEST code
-					$SendTo = 'webmaster@kapal-laut.com';
-				}
+				$ResultEmailEmployee = SendEmailFromWebERP($SendFrom, 
+														$SendTo,
+														$Subject,
+														$Text,
+														$PathFileName,
+														true);
 
-				$ResultEmailEmployee = $mail->send(array($SendTo));
 				if($ResultEmailEmployee){
 					$TextAdmin = $TextAdmin . "Slip gaji for ". $MyRow['codename'] . " sent to " . $SendTo . " at " . date('d/M/Y H:i:s') ." \n";
 				}else{
@@ -137,28 +129,25 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			$TextAdmin = $TextAdmin . "\n---\r\n"; // \r is needed for signature separating
 			$TextAdmin = $TextAdmin . 'Email sent by ' . $AdminTeam . ' at '. date('d/M/Y H:i:s') .'';
 			
-			$mail = new htmlMimeMail();
-			$mail->setText($TextAdmin);
-			$mail->setSubject($Subject);
-			// set the from address depending on the company
+			// set the from and to addresses depending on the company
 			if ($Company == 'PTBB'){
-				$mail->setFrom('accounting@bumibiru.com', $AdminTeam);
+				$SendFrom = 'accounting@bumibiru.com';
 				$SendTo = 'accounting@bumibiru.com';
 			}elseif ($Company == 'PTSMH'){
-				$mail->setFrom('accounting@ptsmh.com', $AdminTeam);
+				$SendFrom = 'accounting@ptsmh.com';
 				$SendTo = 'accounting@ptsmh.com';
 			}else{
-				$mail->setFrom('accounting@ptadu.com', $AdminTeam);
+				$SendFrom = 'accounting@ptadu.com';
 				$SendTo = 'accounting@ptadu.com';
 			}
 			
-			// KL RICARD Send to a dummy address depending on the code version
-			if (KLwebERPScriptCalledFromTEST()){
-				// the current script filename contains TEST, we are on TEST code
-				$SendTo = 'webmaster@kapal-laut.com';
-			}
-
-			$ResultEmailAdmin = $mail->send(array($SendTo));
+			$ResultEmailAdmin = SendEmailFromWebERP($SendFrom, 
+													$SendTo,
+													$Subject,
+													$TextAdmin,
+													'',
+													true);
+			
 			if($ResultEmailAdmin){
 				prnMsg("Details of slip gaji distribution sent to " . $SendTo);
 			}else{

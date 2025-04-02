@@ -266,15 +266,12 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	// now don't send to customer as all communications handled by opencart
 	// but we still want to  inform the team some lines below these
 	if ($SendEmail){
-		if($_SESSION['SmtpSetting']==0){
-			$Result = mail( $MailTo, $MailSubject, $MailMessage, $Headers );
-		}else{
-			include('includes/htmlMimeMail.php');
-			$mail = new htmlMimeMail();
-			$mail->setSubject($MailSubject);
-			$mail->setHTML($MailMessage);
-			$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
-		}
+		SendEmailFromWebERP($SysAdminEmail, 
+							$MailTo,
+							$MailSubject,
+							$MailMessage,
+							'',
+							false);
 		echo '<h1>Email sent to ' . $MailTo. '</h1><br />';
 	}
 	echo $MailMessage . "<br />";
@@ -308,14 +305,12 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 		// now only for orders that are imported into webERP as quotation, payment processed in webERP manually and we don't want to bother the customer
 		$MailTo = "kl-onlinesupport@kapal-laut.com";
 		$MailSubject = "New order online. Process ASAP.";
-		if($_SESSION['SmtpSetting']==0){
-			$Result = mail( $MailTo, $MailSubject, $MailMessage, $Headers );
-		}else{
-			include('includes/htmlMimeMail.php');
-			$mail = new htmlMimeMail();
-			$mail->setSubject($MailSubject);
-			$mail->setHTML($MailMessage);
-			$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
+		SendEmailFromWebERP($SysAdminEmail, 
+							$MailTo,
+							$MailSubject,
+							$MailMessage,
+							'',
+							false);
 		}
 	}
 	// update the sales order, as we send the payment confirmation
