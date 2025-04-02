@@ -1267,18 +1267,14 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 						$UpdateSQL="UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'";
 						$UpdateNextSerialNoResult = DB_query($UpdateSQL,$ErrMsg,$DbgMsg,true);
 					} // end if the item is serialised and nextserialno is set
-
+					// Send email to the Factory Manager
 					$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
-					//Send email to the Factory Manager
-					if($_SESSION['SmtpSetting']==0) {
-							mail($_SESSION['FactoryManagerEmail'],$EmailSubject,$FactoryManagerEmail);
-
-					}else{
-							include('includes/htmlMimeMail.php');
-							$mail = new htmlMimeMail();
-							$mail->setSubject($EmailSubject);
-							$Result = SendEmailByHTMLMimeMail($mail,array($_SESSION['FactoryManagerEmail']));
-					}
+					SendEmailFromWebERP($SysAdminEmail, 
+										$_SESSION['FactoryManagerEmail'],
+										$EmailSubject,
+										$FactoryManagerEmail,
+										'',
+										false);
 
 				} //end if with this sales order there is a shortfall of stock - need to create the WO
 			}//end if auto create WOs in on

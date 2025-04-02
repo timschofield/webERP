@@ -431,15 +431,12 @@ if(isset($_POST['ProcessTransfer'])) {
 										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] .
 										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
-					if($_SESSION['SmtpSetting']==0) {
-						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
-					} else{
-						include('includes/htmlMimeMail.php');
-						$mail = new htmlMimeMail();
-						$mail->setSubject($EmailSubject);
-						$mail->setText($ConfirmationText);
-						$Result = SendEmailByHTMLMimeMail($mail,array($_SESSION['InventoryManagerEmail']));
-					}
+					SendEmailFromWebERP($SysAdminEmail, 
+										$_SESSION['InventoryManagerEmail'],
+										$EmailSubject,
+										$ConfirmationText,
+										'',
+										false);
 				}
 			}
 			$i++;

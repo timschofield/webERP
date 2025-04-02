@@ -265,21 +265,16 @@ if($_GET['POLine'] == 1){
 			$i++;
 		} //end while there are line items to print out
 	} /*end if there are order details to show on the order*/
-$MailMessage .= '</table>
+	$MailMessage .= '</table>
 				</body>
 				</html>';
-	// echo $MailMessage . "=mailMessage<br />";
-	if($_SESSION['SmtpSetting']==0){
-		$Result = mail( $MailTo, $MailSubject, $MailMessage, $Headers );
 
-	}else{
-		include('includes/htmlMimeMail.php');
-		$mail = new htmlMimeMail();
-		$mail->setSubject($MailSubject);
-		$mail->setHTML($MailMessage);
-		$Result = SendEmailByHTMLMimeMail($mail,array($MailTo));
-	}
-
+	SendEmailFromWebERP($SysAdminEmail, 
+						$MailTo,
+						$MailSubject,
+						$MailMessage,
+						'',
+						false);
 if($Result){
 	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }

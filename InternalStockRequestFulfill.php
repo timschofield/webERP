@@ -202,19 +202,12 @@ if (isset($_POST['UpdateAll'])) {
 				if ($_SESSION['InventoryManagerEmail'] != '') {
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Internal Stock Request Fulfillment for') . ' ' . $StockID;
-					if ($_SESSION['SmtpSetting'] == 0) {
-						mail($_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
-					}
-					else {
-						include ('includes/htmlMimeMail.php');
-						$mail = new htmlMimeMail();
-						$mail->setSubject($EmailSubject);
-						$mail->setText($ConfirmationText);
-						$Result = SendEmailByHTMLMimeMail($mail, array(
-							$_SESSION['InventoryManagerEmail']
-						));
-					}
-
+					SendEmailFromWebERP($SysAdminEmail, 
+										$_SESSION['InventoryManagerEmail'],
+										$EmailSubject,
+										$ConfirmationText,
+										'',
+										false);
 				}
 			}
 			else {
