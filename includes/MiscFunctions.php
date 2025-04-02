@@ -1,6 +1,6 @@
 <?php
- 
-/************************************************************* 
+
+/*************************************************************
  * MiscFunctions.php included from includes/ConnectDB.inc
  *
  *  * ******************** FUNCTION INDEX ********************
@@ -189,7 +189,7 @@ function GetECBCurrencyRates() {
 		//return an array of the currencies and rates
 		return $Currencies;
 	} else {
-		return false;
+		return array();
 	}
 }
 
@@ -771,31 +771,31 @@ function checkLanguageChoice($language) {
 function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
 	/**
 	 * Main email sending function for WebERP
-	 * 
+	 *
 	 * This function serves as the primary interface for sending emails from WebERP.
 	 * It determines whether to use standard PHP mail() function or SMTP based on system configuration
 	 * and handles different input formats for recipients and attachments.
-	 * 
+	 *
 	 * @param string $From        Email address of the sender
 	 * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
 	 * @param string $Subject     Subject of the email
 	 * @param string $Body        Body content of the email
 	 * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
 	 * @param bool   $Silent      If true, suppresses success/error messages (default: false)
-	 * 
+	 *
 	 * @return mixed Returns true if email was sent successfully, or error message if failed
 	 */
-	
+
 	// Convert $To to array if it's a string
 	if (!is_array($To)) {
 		$To = array($To => ''); // Using empty string as recipient name
 	}
-	
+
 	// Convert $Attachments to array if it's a string
 	if (!is_array($Attachments) && !empty($Attachments)) {
 		$Attachments = array($Attachments);
 	}
-	
+
 	$EmailSent = false;
 	if($_SESSION['SmtpSetting'] == 0){
 		$EmailSent = SendEmailByStandardMailFunction($From,
@@ -873,18 +873,18 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 	} else {
 		// Create a boundary for the email
 		$boundary = md5(time());
-		
+
 		// Headers for a MIME email with attachments
 		$headers = "From: $From\r\n";
 		$headers .= "MIME-Version: 1.0\r\n";
 		$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
-		
+
 		// Email body with attachments
 		$message = "--$boundary\r\n";
 		$message .= "Content-Type: text/plain; charset=utf-8\r\n";
 		$message .= "Content-Transfer-Encoding: base64\r\n\r\n";
 		$message .= chunk_split(base64_encode($Body)) . "\r\n";
-		
+
 		// Attach each file
 		$allFilesExist = true;
 		foreach($Attachments as $Attachment) {
