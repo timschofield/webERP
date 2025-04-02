@@ -785,7 +785,15 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 	 * 
 	 * @return mixed Returns true if email was sent successfully, or error message if failed
 	 */
-	
+
+	// KL RICARD Send to a dummy address depending on the webERP code version
+	if (KLwebERPScriptCalledFromTEST()){
+		$To = 'webmaster@kapal-laut.com';
+		$Subject = 'TEST webERP: ' . $Subject;
+		$Body = 'THIS IS A TEST MESSAGE ' . "\r\n\r\n" . $Body;
+	}
+	// KL RICARD END Send to a dummy address depending on the webERP code version
+
 	// Convert $To to array if it's a string
 	if (!is_array($To)) {
 		$To = array($To => ''); // Using empty string as recipient name
