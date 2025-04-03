@@ -13,9 +13,6 @@ and an array of the receipients and the company database to use*/
 $ReportID = 4;
 
 
-
-
-
 /* ----------------------------------------------------------------------------------------------*/
 
 $AllowAnyone = true;
@@ -27,26 +24,18 @@ $DatabaseName = $_SESSION['DatabaseName'];
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.php');
-	prnMsg( _('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	include('includes/header.php');
+	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit;
 }
 include('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include('includes/CSVSalesAnalysis.inc');
 
+$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
+$Subject = _('Sales Analysis') . ' - ' . _('CSV Format');
+$Body = _('Please find herewith the comma separated values sales report');
+$Attachment = $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
 
-include('includes/htmlMimeMail.php');
-
-$mail = new htmlMimeMail();
-$Attachment = $mail->getFile( $_SESSION['reports_dir'] . '/SalesAnalysis.csv');
-$mail->setText(_('Please find herewith the comma separated values sales report'));
-$mail->addAttachment($Attachment, 'SalesAnalysis.csv', 'application/csv');
-$mail->setSubject(_('Sales Analysis') . ' - ' . _('CSV Format'));
-if($_SESSION['SmtpSetting']==0){
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$Result = $mail->send($Recipients);
-}else{
-	$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-}
+$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $Attachment, true);
 ?>

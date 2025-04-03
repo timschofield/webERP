@@ -3,35 +3,35 @@
 
 $AllowAnyone = true;
 
-$FromCriteria ='1'; /*Category From */
-$ToCriteria ='zzzzzzzz'; /*Category To */
-$Location =  'All';  /* Location to report on */
-$DetailedReport = 'Yes';  /* Total by category or complete listing */
+$FromCriteria = '1'; /*Category From */
+$ToCriteria = 'zzzzzzzz'; /*Category To */
+$Location = 'All'; /* Location to report on */
+$DetailedReport = 'Yes'; /* Total by category or complete listing */
 
 $_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['FromCriteria']=$FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['ToCriteria']=$ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
+$_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
+$_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
 $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
 
 include('includes/session.php');
-include ('includes/class.pdf.php');
+include('includes/class.pdf.php');
 $Recipients = GetMailList('InventoryValuationRecipients');
 
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.php');
-	prnMsg( _('There are no members of the Inventory Valuation Recipients email group'), 'warn');
+	include('includes/header.php');
+	prnMsg(_('There are no members of the Inventory Valuation Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit;
 }
 /* A4_Portrait */
 
-$Page_Width=595;
-$Page_Height=842;
-$Top_Margin=30;
-$Bottom_Margin=30;
-$Left_Margin=40;
-$Right_Margin=30;
+$Page_Width = 595;
+$Page_Height = 842;
+$Top_Margin = 30;
+$Bottom_Margin = 30;
+$Left_Margin = 40;
+$Right_Margin = 30;
 
 // Javier: now I use the native constructor
 // Javier: better to not use references
@@ -43,8 +43,8 @@ $pdf = new Cpdf('P', 'pt', 'A4');
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addInfo('Creator','WebERP http://www.weberp.org');
-$pdf->addInfo('Author','WebERP ' . $Version);
+$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+$pdf->addInfo('Author', 'WebERP ' . $Version);
 
 
 // $FontSize=10;
@@ -65,7 +65,7 @@ $PageNumber = 1;
 $LineHeight = 12;
 
 /*Now figure out the inventory data to report for the category range under review */
-if ($Location=='All'){
+if ($Location == 'All') {
 
 	$SQL = "SELECT stockmaster.categoryid,
 				stockcategory.categorydescription,
@@ -112,15 +112,15 @@ if ($Location=='All'){
 				stockmaster.stockid";
 
 }
-$InventoryResult = DB_query($SQL,'','',false,true);
+$InventoryResult = DB_query($SQL, '', '', false, true);
 $ListCount = DB_num_rows($InventoryResult);
 
-if (DB_error_no() !=0) {
+if (DB_error_no() != 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.php');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
-	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	if ($Debug==1){
+	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+	if ($Debug == 1) {
 		echo '<br />' . $SQL;
 	}
 
@@ -128,87 +128,88 @@ include('includes/footer.php');
 exit;
 }
 
-include ('includes/PDFInventoryValnPageHeader.inc');
+include('includes/PDFInventoryValnPageHeader.inc');
 
-$Tot_Val=0;
+$Tot_Val = 0;
 $Category = '';
-$CatTot_Val=0;
-While ($InventoryValn = DB_fetch_array($InventoryResult)){
+$CatTot_Val = 0;
+While ($InventoryValn = DB_fetch_array($InventoryResult)) {
 
-	if ($Category!=$InventoryValn['categoryid']){
-		$FontSize=10;
-		if ($Category!=''){ /*Then it's NOT the first time round */
+	if ($Category != $InventoryValn['categoryid']) {
+		$FontSize = 10;
+		if ($Category != '') { /*Then it's NOT the first time round */
 
 		/* need to print the total of previous category */
-			if ($_POST['DetailedReport']=='Yes'){
-				$YPos -= (2*$LineHeight);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
+			if ($_POST['DetailedReport'] == 'Yes') {
+				$YPos -= (2 * $LineHeight);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin, $FontSize, _('Total for') . ' ' . $Category . " - " . $CategoryName);
 			}
 
-			$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
-			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-			$YPos -=$LineHeight;
+			$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
+			$LeftOvers = $pdf->addTextWrap(500, $YPos, 60, $FontSize, $DisplayCatTotVal, 'right');
+			$YPos -= $LineHeight;
 
-			If ($_POST['DetailedReport']=='Yes'){
+			If ($_POST['DetailedReport'] == 'Yes') {
 			/*draw a line under the CATEGORY TOTAL*/
-				$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
-				$YPos -=(2*$LineHeight);
+				$pdf->line($Left_Margin, $YPos+$LineHeight-2, $Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+				$YPos -= (2 * $LineHeight);
 			}
-			$CatTot_Val=0;
+			$CatTot_Val = 0;
 		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . " - " . $InventoryValn['categorydescription']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin, $FontSize, $InventoryValn['categoryid'] . " - " . $InventoryValn['categorydescription']);
 		$Category = $InventoryValn['categoryid'];
 		$CategoryName = $InventoryValn['categorydescription'];
 	}
 
-	if ($_POST['DetailedReport']=='Yes'){
-		$YPos -=$LineHeight;
-		$FontSize=8;
+	if ($_POST['DetailedReport'] == 'Yes') {
+		$YPos -= $LineHeight;
+		$FontSize = 8;
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
-		$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],0);
-		$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryValn['stockid']);
+		$LeftOvers = $pdf->addTextWrap(120, $YPos, 260, $FontSize, $InventoryValn['description']);
+		$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'], $_SESSION['CompanyRecord']['decimalplaces']);
+		$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'], 0);
+		$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'], $_SESSION['CompanyRecord']['decimalplaces']);
 
-		$LeftOvers = $pdf->addTextWrap(380,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
-		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
-		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
+		$LeftOvers = $pdf->addTextWrap(380, $YPos, 60, $FontSize, $DisplayQtyOnHand, 'right');
+		$LeftOvers = $pdf->addTextWrap(440, $YPos, 60, $FontSize, $DisplayUnitCost, 'right');
+		$LeftOvers = $pdf->addTextWrap(500, $YPos, 60, $FontSize, $DisplayItemTotal, 'right');
 
 	}
 	$Tot_Val += $InventoryValn['itemtotal'];
 	$CatTot_Val += $InventoryValn['itemtotal'];
 
-	if ($YPos < $Bottom_Margin + $LineHeight){
+	if ($YPos < $Bottom_Margin + $LineHeight) {
 		include('includes/PDFInventoryValnPageHeader.inc');
 	}
 
 } /*end inventory valn while loop */
 
-$FontSize =10;
+$FontSize = 10;
 /*Print out the category totals */
-if ($_POST['DetailedReport']=='Yes'){
-	$YPos -=$LineHeight;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
+if ($_POST['DetailedReport'] == 'Yes') {
+	$YPos -= $LineHeight;
+	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin, $FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 }
 
-$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
+$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
+$LeftOvers = $pdf->addTextWrap(500, $YPos, 60, $FontSize, $DisplayCatTotVal, 'right');
 
-If ($_POST['DetailedReport']=='Yes'){
+If ($_POST['DetailedReport'] == 'Yes') {
 	/*draw a line under the CATEGORY TOTAL*/
-	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
-	$YPos -=(2*$LineHeight);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2, $Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -= (2 * $LineHeight);
 }
 
-$YPos -= (2*$LineHeight);
+$YPos -= (2 * $LineHeight);
 
 /*Print out the grand totals */
-$LeftOvers = $pdf->addTextWrap(80, $YPos,260-$Left_Margin,$FontSize, _('Grand Total Value'), 'right');
-$DisplayTotalVal = locale_number_format($Tot_Val,2);
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-If ($_POST['DetailedReport']=='Yes'){
-	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
-	$YPos -=(2*$LineHeight);
+$LeftOvers = $pdf->addTextWrap(80, $YPos, 260-$Left_Margin, $FontSize, _('Grand Total Value'), 'right');
+$DisplayTotalVal = locale_number_format($Tot_Val, 2);
+$LeftOvers = $pdf->addTextWrap(500, $YPos, 60, $FontSize, $DisplayTotalVal, 'right');
+If ($_POST['DetailedReport'] == 'Yes') {
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2, $Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -= (2 * $LineHeight);
 }
 
 if ($ListCount == 0) {
@@ -219,39 +220,35 @@ if ($ListCount == 0) {
 	include('includes/footer.php');
 	exit; // Javier: needs check
 } else {
-	include('includes/htmlMimeMail.php');
-
+	
 	$pdf->Output($_SESSION['reports_dir'] . '/InventoryReport.pdf', 'F');
-	$pdf-> __destruct();
+	$pdf->__destruct();
 
-	$mail = new htmlMimeMail();
-	$Attachment = $mail->getFile( $_SESSION['reports_dir'] . '/InventoryReport.pdf');
-	$mail->setText(_('Please find herewith the stock valuation report'));
-	$mail->setSubject(_('Inventory Valuation Report'));
-	$mail->addAttachment($Attachment, 'InventoryReport.pdf', 'application/pdf');
-	if($_SESSION['SmtpSetting']==0){
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$Result = $mail->send($Recipients);
-	}else{
-		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-	}
-	if($Result){
-			$Title = _('Print Inventory Valuation');
-			include('includes/header.php');
-			prnMsg(_('The Inventory valuation report has been mailed'),'success');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			include('includes/footer.php');
-			exit;
-
+	$From = $_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>';
+	$Subject = _('Inventory Valuation Report');
+	$Body = _('Please find herewith the stock valuation report');
+	
+	$Result = SendEmailFromWebERP($From,
+								$Recipients,
+								$Subject,
+								$Body,
+								$_SESSION['reports_dir'] . '/InventoryReport.pdf',
+								false);
+	
+	if ($Result) {
+		$Title = _('Print Inventory Valuation');
+		include('includes/header.php');
+		prnMsg(_('The Inventory valuation report has been mailed'), 'success');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		include('includes/footer.php');
+		exit;
 	} else {
-			$Title = _('Print Inventory Valuation Error');
-			include('includes/header.php');
-			prnMsg(_('There are errors lead to mails not sent'),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			include('includes/footer.php');
-			exit;
-
+		$Title = _('Print Inventory Valuation Error');
+		include('includes/header.php');
+		prnMsg(_('There are errors lead to mails not sent'), 'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		include('includes/footer.php');
+		exit;
 	}
-
 }
 ?>

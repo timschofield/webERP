@@ -3,86 +3,94 @@
 $AllowAnyone = true;
 include('includes/session.php');
 $Title = _('Send maintenance reminders');
-include('includes/htmlMimeMail.php');
 
-$SQL="SELECT 	description,
-				taskdescription,
-				ADDDATE(lastcompleted,frequencydays) AS duedate,
-				userresponsible,
-				email
+
+$SQL = "SELECT description,
+			taskdescription,
+			ADDDATE(lastcompleted,frequencydays) AS duedate,
+			userresponsible,
+			email
 		FROM fixedassettasks
 		INNER JOIN fixedassets
-		ON fixedassettasks.assetid=fixedassets.assetid
+			ON fixedassettasks.assetid = fixedassets.assetid
 		INNER JOIN www_users
-		ON fixedassettasks.userresponsible=www_users.userid
-		WHERE ADDDATE(lastcompleted,frequencydays-10)> CURDATE()
+			ON fixedassettasks.userresponsible = www_users.userid
+		WHERE ADDDATE(lastcompleted,frequencydays-10) > CURDATE()
 		ORDER BY userresponsible";
 
 $Result = DB_query($SQL);
 $LastUserResponsible = '';
+$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
 
-while ($MyRow = DB_fetch_array($Result)){
-	if (!isset(${'Mail' . $MyRow['userresponsible']}) AND IsEmailAddress($MyRow['email'])) {
-		if ($LastUserResponsible!=''){
-			${'Mail' . $MyRow['userresponsible']}->setText($MailText);
-			$SendResult = ${'Mail' . $MyRow['userresponsible']}->send(array($LastUserEmail));
-			$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
-		}
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($LastUserResponsible != '' && $LastUserResponsible != $MyRow['userresponsible'] && IsEmailAddress($LastUserEmail)) {
+		// Send email to the previous user before moving to the next one
+		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastUserEmail, 'Maintenance Tasks Reminder', $MailText);
+		// Reset mail text for new recipient
+		$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
+	}
+	
+	if ($LastUserResponsible != $MyRow['userresponsible']) {
 		$LastUserResponsible = $MyRow['userresponsible'];
 		$LastUserEmail = $MyRow['email'];
-		${'Mail' . $MyRow['userresponsible']} = new htmlMimeMail();
-		${'Mail' . $MyRow['userresponsible']}->setSubject('Maintenance Tasks Reminder');
-		${'Mail' . $MyRow['userresponsible']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .= 'Asset' . ': ' . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: " . ConvertSQLDate($MyRow['duedate']);
-	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']),Date($_SESSION['DefaultDateFormat']))) {
+	
+	$MailText .= 'Asset' . ': ' . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: " 
+		. ConvertSQLDate($MyRow['duedate']);
+	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']), Date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= _('NB: THIS JOB IS OVERDUE');
 	}
 	$MailText .= "\n\n";
 }
-if (DB_num_rows($Result)>0){
-	${'Mail' . $LastUserResponsible}->setText($MailText);
-	$SendResult = ${'Mail' . $LastUserResponsible}->send(array(${'Mail' . $LastUserResponsible}));
+
+// Send email to the last user if there were results
+if (DB_num_rows($Result) > 0 && IsEmailAddress($LastUserEmail)) {
+	$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastUserEmail, 'Maintenance Tasks Reminder', $MailText);
 }
 
 /* Now do manager emails for overdue jobs */
-$SQL="SELECT 	description,
-				taskdescription,
-				ADDDATE(lastcompleted,frequencydays) AS duedate,
-				realname,
-				manager,
-				email
+$SQL = "SELECT description,
+			taskdescription,
+			ADDDATE(lastcompleted,frequencydays) AS duedate,
+			realname,
+			manager,
+			email
 		FROM fixedassettasks
 		INNER JOIN fixedassets
-		ON fixedassettasks.assetid=fixedassets.assetid
+			ON fixedassettasks.assetid = fixedassets.assetid
 		INNER JOIN www_users
-		ON fixedassettasks.userresponsible=www_users.userid
-		WHERE ADDDATE(lastcompleted,frequencydays)> CURDATE()
+			ON fixedassettasks.userresponsible = www_users.userid
+		WHERE ADDDATE(lastcompleted,frequencydays) > CURDATE()
 		ORDER BY manager";
 
 $Result = DB_query($SQL);
 $LastManager = '';
-while ($MyRow = DB_fetch_array($Result)){
-	if (!isset(${'Mail' . $MyRow['userresponsible']})) {
-		if ($LastUserResponsible!=''){
-			${'Mail' . $MyRow['userresponsible']}->setText($MailText);
-			$SendResult = ${'Mail' . $MyRow['manager']}->send(array($LastManagerEmail));
-			$MailText = "Your staff have failed to complete the following tasks by the due date:\n";
-		}
+$ManagerMailText = "Your staff have failed to complete the following tasks by the due date:\n";
+
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($LastManager != '' && $LastManager != $MyRow['manager'] && IsEmailAddress($LastManagerEmail)) {
+		// Send email to the previous manager before moving to the next one
+		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastManagerEmail, 'Overdue Maintenance Tasks Reminder', $ManagerMailText);
+		// Reset mail text for new recipient
+		$ManagerMailText = "Your staff have failed to complete the following tasks by the due date:\n";
+	}
+	
+	if ($LastManager != $MyRow['manager']) {
 		$LastManager = $MyRow['manager'];
 		$LastManagerEmail = $MyRow['email'];
-		${'Mail' . $MyRow['manager']} = new htmlMimeMail();
-		${'Mail' . $MyRow['manager']}->setSubject('Overdue Maintenance Tasks Reminder');
-		${'Mail' . $MyRow['manager']}->setFrom('Do_not_reply <>');
 	}
-	$MailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task:') . ' ' . $MyRow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
-	$MailText .= "\n\n";
+	
+	$ManagerMailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task:') . ' ' . $MyRow['taskdescription'] . "\n"
+		. _('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
+	$ManagerMailText .= "\n\n";
 }
-if (DB_num_rows($Result)>0){
+
+if (DB_num_rows($Result) > 0) {
 	include('includes/header.php');
-	${'Mail' . $LastManager}->setText($MailText);
-	$SendResult = ${'Mail' . $LastManager}->send(array($LastManagerEmail));
-	prnMsg(_('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
+	if (IsEmailAddress($LastManagerEmail)) {
+		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastManagerEmail, 'Overdue Maintenance Tasks Reminder', $ManagerMailText);
+		prnMsg(_('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
+	}
 	include('includes/footer.php');
 } else {
 	include('includes/header.php');

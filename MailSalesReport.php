@@ -20,39 +20,28 @@ $DatabaseName = $_SESSION['DatabaseName'];
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-      	include('includes/header.php');
-	prnMsg( _('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	include('includes/header.php');
+	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit;
 }
-include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
-include ('includes/PDFSalesAnalysis.inc');
+include('includes/ConstructSQLForUserDefinedSalesReport.inc');
+include('includes/PDFSalesAnalysis.inc');
 
-include('includes/htmlMimeMail.php');
-$mail = new htmlMimeMail();
+$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
+$Subject = _('Sales Analysis Report');
 
-if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie there is a report to send! */
-	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file
+if ($Counter > 0) { /* the number of lines of the sales report is more than 0  ie there is a report to send! */
+	$pdf->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
 	$pdf->__destruct();
-	$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
-	$mail->setText(_('Please find herewith sales report'));
-	$mail->SetSubject(_('Sales Analysis Report'));
-	$mail->addAttachment($Attachment, 'SalesAnalysis_' . date('Y-m-d') . '.pdf', 'application/pdf');
-	if($_SESSION['SmtpSetting']==0){
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$Result = $mail->send($Recipients);
-	}else{
-		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-	}
-} else {
-	$mail->setText(_('Error running automated sales report number') . ' ' . $ReportID);
-	if($_SESSION['SmtpSetting']==0){
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$Result = $mail->send($Recipients);
-	}else{
-		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-	}
+	
+	$Body = _('Please find herewith sales report');
+	$AttachmentPath = $_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf';
 
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $AttachmentPath, true);
+} else {
+	$Body = _('Error running automated sales report number') . ' ' . $ReportID;
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
 }
 
 ?>
