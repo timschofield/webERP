@@ -311,7 +311,6 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 							$MailMessage,
 							'',
 							false);
-		}
 	}
 	// update the sales order, as we send the payment confirmation
 	$SQL = "UPDATE salesorders 
