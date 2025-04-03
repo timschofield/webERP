@@ -14,7 +14,7 @@ CREATE TABLE `suppliers` (
   `suppliersince` date NOT NULL DEFAULT '1000-01-01',
   `paymentterms` char(2) NOT NULL DEFAULT '',
   `lastpaid` double NOT NULL DEFAULT '0',
-  `lastpaiddate` datetime DEFAULT NULL,
+  `lastpaiddate` date DEFAULT NULL,
   `bankact` varchar(30) NOT NULL DEFAULT '',
   `bankref` varchar(12) NOT NULL DEFAULT '',
   `bankpartics` varchar(12) NOT NULL DEFAULT '',
