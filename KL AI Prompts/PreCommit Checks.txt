@@ -1,7 +1,7 @@
 For all files in the working set:
 1) Trailing whitespaces: Remove all trailing whitespaces
 2) Indentation: Convert indentation spaces into tab with size 1 tab = 4 spaces.
-3) PascalCase: All variables must be written in PascalCase style and fix the wrong ones. Except variabes starting with $webERP*, $SQL or counters like $i, $j.
+3) PascalCase: All variables must be written in PascalCase style and fix the wrong ones. Except variabes starting with $webERP*, $SQL, $HTML or counters like $i, $j.
 4) Binary Operators: ensure are surrounded by one space on each side
 5) Unary Operators: ensure no spaces after the operators
 6) Ternary Operators: Must have a space before and after the ? and the :
