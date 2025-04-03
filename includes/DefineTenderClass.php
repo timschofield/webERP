@@ -52,21 +52,15 @@ Class Tender {
 		}
 		$Subject=(_('Tender received from').' '.$_SESSION['CompanyRecord']['coyname'] );
 		$Headers = 'From: '. $_SESSION['PurchasingManagerEmail']. "\r\n" . 'Reply-To: ' . $_SESSION['PurchasingManagerEmail'] . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-		if($_SESSION['SmtpSetting']==1){
-			include('includes/htmlMimeMail.php');
-			$mail = new htmlMimeMail();
-			$mail->setText($EmailText);
-			$mail->setSubject($Subject);
-			$mail->setFrom($_SESSION['PurchasingManagerEmail']);
-			$mail->setHeader('Reply-To',$_SESSION['PurchasingManagerEmail']);
-			$mail->setCc($_SESSION['PurchasingManagerEmail']); //Set this as a copy for filing purpose
-
-		}
 		foreach ($this->Suppliers as $Supplier) {
 		 if($_SESSION['SmtpSetting']==0){
-			 $Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
+			$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 		 }else{
-			 $Result = SendEmailByHTMLMimeMail($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
+			$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
+										$Supplier->EmailAddress,
+										$Subject,
+										$EmailText
+									);
 		 }
 		}
 	}
