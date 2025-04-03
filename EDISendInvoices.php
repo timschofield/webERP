@@ -6,7 +6,6 @@ $ViewTopic = 'EDI';
 $BookMark = '';
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
-include('includes/htmlMimeMail.php'); // need for sending email attachments
 
 /*Get the Customers who are enabled for EDI invoicing */
 $SQL = "SELECT debtorno,
@@ -212,17 +211,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport']=='email'){
 
-				$mail = new htmlMimeMail();
-				$Attachment = $mail->getFile( $_SESSION['EDI_MsgPending'] . "/EDI_INV_" . $EDITransNo);
-				$mail->SetSubject('EDI Invoice/Credit Note ' . $EDITransNo);
-				$mail->addAttachment($Attachment, 'EDI_INV_' . $EDITransNo, 'application/txt');
-				$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-				if($_SESSION['SmtpSetting']==0){
-					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
-				}else{
-					$MessageSent = SendEmailByHTMLMimeMail($mail,array($CustDetails['ediaddress']));
-				}
+				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">", 
+												CustDetails['ediaddress'],
+												'EDI Invoice/Credit Note ' . $EDITransNo,
+												'',
+												$_SESSION['EDI_MsgPending'] . "/EDI_INV_" . $EDITransNo,
+												false);
 
 				if ($MessageSent==True){
 					echo '<br /><br />';

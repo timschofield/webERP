@@ -758,7 +758,6 @@ function fShowPageHelp($HelpText) {
 	return;
 }
 
-
 /*
  * Improve language check to avoid potential LFI issue.
  * Reported by: https://lyhinslab.org

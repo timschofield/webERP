@@ -9,7 +9,6 @@ $BookMark = '';
 
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
-include('includes/htmlMimeMail.php'); // need for sending email attachments
 include('includes/DefineCartClass.php');
 
 
@@ -515,9 +514,6 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 	/*Thats the end of the message or had to abort */
 	if (mb_strlen($EmailText)>10){
 		/*Now send the email off to the appropriate person */
-		$mail = new htmlMimeMail();
-		$mail->setText($EmailText);
-		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 
 		if ($TryNextFile==True){ /*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
@@ -535,41 +531,32 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 					$i++;
 				}
 			}
-			$TryNextFile=False; /*reset the abort to false before hit next file*/
-			$mail->setSubject(_('EDI Order Message Error'));
+			$TryNextFile = False; /*reset the abort to false before hit next file*/
+			$MailSubject = _('EDI Order Message Error');
 		} else {
-
-			$mail->setSubject(_('EDI Order Message') . ' ' . $Order->CustRef);
+			$MailSubject = _('EDI Order Message') . ' ' . $Order->CustRef;
 			$EDICustServPerson = $_SESSION['PurchasingManagerEmail'];
 			$Recipients = array($EDICustServPerson);
 		}
 
-		if($_SESSION['SmtpSetting']==0){
-			$MessageSent = $mail->send($Recipients);
-		}else{
-			$MessageSent = SendEmailByHTMLMimeMail($mail,$Recipients);
-		}
-
-
+		SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">",
+							$Recipients,
+							$MailSubject,
+							$EmailText,
+							'',
+							false);
 
 		echo $EmailText;
-	} /* nothing in the email text to send - the message file is a complete dud - maybe directory */
+	}
+}/*end of the loop around all the incoming order files in the incoming orders directory */
 
-	/*Now create the order from the $Order object  and commit to the DB*/
+include('includes/footer.php');
 
-
-
- } /*end of the loop around all the incoming order files in the incoming orders directory */
-
-
-include ('includes/footer.php');
-
-function StripTrailingComma ($StringToStrip){
-
-	if (strrpos($StringToStrip,"'")){
-		Return mb_substr($StringToStrip,0,strrpos($StringToStrip,"'"));
+function StripTrailingComma($StringToStrip) {
+	if (strrpos($StringToStrip, "'")) {
+		return mb_substr($StringToStrip, 0, strrpos($StringToStrip, "'"));
 	} else {
-		Return $StringToStrip;
+		return $StringToStrip;
 	}
 }
 
