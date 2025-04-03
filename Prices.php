@@ -7,6 +7,16 @@ $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
 include('includes/header.php');
+
+/* Check at least one sales type exists */
+$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
+$TypeResult = DB_query($SQL);
+if (DB_num_rows($TypeResult) == 0) {
+	prnMsg( _('There are no sales types setup. Click') . '<a href="' . $RootPath . '/SelectProduct.php" target="_blank">' . ' ' . _('here') . ' ' . '</a>' . _('to create them'), 'warn');
+	include('includes/footer.php');
+	exit;
+}
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/money_add.png" title="' .
 		_('Search') . '" />' . ' ' .
@@ -303,10 +313,7 @@ echo '<field>
 		<label for="TypeAbbrev">' . _('Sales Type Price List') . ':</label>
 		<select name="TypeAbbrev">';
 
-$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
-$Result = DB_query($SQL);
-
-while ($MyRow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($TypeResult)) {
 	echo '<option ';
 	if ($MyRow['typeabbrev']==$_POST['TypeAbbrev']) {
 		echo 'selected="selected" ';
