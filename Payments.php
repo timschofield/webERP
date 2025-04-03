@@ -813,17 +813,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
 			$EmailSubject = _('GL transaction to be controlled'); 
 			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';
-			//Send email to the Admin
-			if($_SESSION['SmtpSetting']==0) {
-				mail($GLAccountEmail,$EmailSubject,$EmailText);
-
-			} else {
-				include('includes/htmlMimeMail.php');
-				$mail = new htmlMimeMail();
-				$mail->setSubject($EmailSubject);
-				$mail->setHTML($EmailText);
-				$Result = SendEmailByHTMLMimeMail($mail,array($GLAccountEmail));
-			}
+			SendEmailFromWebERP($SysAdminEmail, $GLAccountEmail, $EmailSubject, $EmailText);
 		}
 		// KL RICARD End
 
