@@ -153,6 +153,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		if ($MyRowAccExp['klretentionpph21'] != 0){
 			// gross up method
 			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
+		}else{
 			$HutangPPH21 = 0;
 		}
 		if ($MyRowAccExp['klretentionpph23'] != 0){
