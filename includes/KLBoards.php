@@ -32,10 +32,12 @@ POStatusControl - Shows purchase orders status control by type
 PositionTopSalesItem - Returns the position of an item in top sales
 PurchaseOrdersProcessTime - Shows process time for purchase orders
 PurchaseOrdersWrongPlannedDates - Shows purchase orders with wrong planned dates
+QualityIssuesByReason - Shows quality issues by reason during the last X days
 RecentlyClosedTransferStatus - Shows recently closed transfers status
 RoundPackagingTransfer - Rounds packaging transfer quantity
 SQLFilterStockmasterForOnlineShop - Provides SQL filtering for online shop
 ShowTotalItemsMoving - Shows total items moving to discount
+StockAdjustmentsByReason - Shows stock adjustments by reason during the last X days
 TransfersDelayed - Shows transfers delayed more than specified days
 WrongStandardCost - Shows items with wrong standard cost
 **************************************************************************************************/
@@ -4063,6 +4065,124 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 		}
 	}
 }
+
+function QualityIssuesByReason($Days, $RootPath){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
+
+	$SQL = "SELECT reasonname,
+				COUNT(*) AS totalreturned
+			FROM returneditems
+			INNER JOIN returnitemreasons
+				ON returneditems.reasonid = returnitemreasons.reasonid
+			WHERE returneditems.returndate >= '" . $StartDate . "'
+			GROUP BY returnitemreasons.reasonid
+			ORDER BY totalreturned DESC";
+
+	$TotalReturned = 0;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$TableTitleText = _('# Items returned by customer by Reason during the last ') . $Days . ' days';
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Reason') . '</th>
+						<th class="SortedColumn">' . _('# Items returned') . '</th>
+						<th class="SortedColumn">' . _('Daily Average') . '</th>
+				</tr>
+				</thead>	
+				<tbody>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['reasonname'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['totalreturned'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['totalreturned'] / $Days, 1) . '</td>
+				</tr>';
+
+			$TotalReturned += $MyRow['totalreturned'];
+
+			if ($Days == 30) {
+				InsertKPI('Returned Items', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totalreturned']);
+			}
+		}
+	}
+
+	if ($Days == 30) {
+		InsertKPI('Returned Items', 'Total Returned Items Last 30 days (PCS)', $TotalReturned);
+	}		
+
+	echo '</tbody>
+		<tfooter>';
+	echo '<tr class="striped_row">
+			<td>Total</td>
+			<td class="number">' . locale_number_format($TotalReturned, 0) . '</td>
+			<td class="number">' . locale_number_format($TotalReturned / $Days, 1) . '</td>
+		</tr>';
+	 echo '</tfooter>
+		</table>
+		</div>';
+}
+
+function StockAdjustmentsByReason($Days, $RootPath){
+$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
+
+$SQL = "SELECT reasonname,
+			SUM(qty) AS totaladjusted
+		FROM stockmoves
+		INNER JOIN stockadjustments
+			ON stockmoves.transno = stockadjustments.transno
+			AND stockmoves.type = 17
+		INNER JOIN stockadjustmentreasons
+			ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
+		WHERE stockmoves.trandate >= '" . $StartDate . "'
+		GROUP BY stockadjustmentreasons.reasonid
+		ORDER BY ABS(SUM(qty)) DESC";
+
+$TotalAdjusted = 0;
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) != 0){
+	$TableTitleText = _('# stock adjustments by Reason during the last ') . $Days . ' days';
+	ShowTableTitle($TableTitleText);
+	echo '<div>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('Reason') . '</th>
+					<th class="SortedColumn">' . _('Qty adjusted') . '</th>
+					<th class="SortedColumn">' . _('Daily Average') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<tr class="striped_row">
+				<td>' . $MyRow['reasonname'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['totaladjusted'],0) . '</td>
+				<td class="number">' . locale_number_format($MyRow['totaladjusted'] / $Days, 1) . '</td>
+			</tr>';
+
+		$TotalAdjusted += $MyRow['totaladjusted'];
+		if ($Days == 30) {
+			InsertKPI('Stock Adjustments', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totaladjusted']);
+		}
+	}
+}
+
+if ($Days == 30) {
+	InsertKPI('Stock Adjustments', 'Total Stock Adjustments Last 30 days (PCS)', $TotalAdjusted);
+}
+
+echo '</tbody>
+	<tfooter>';
+echo '<tr class="striped_row">
+		<td>Total</td>
+		<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
+		<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
+	</tr>';
+echo '</tfooter>
+	</table>
+	</div>';
+}	
 
 
 ?>

@@ -201,11 +201,15 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY");
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPKL", 75, 150, $KL_SystemAdmin);
+		StockByBrand("SHOPKL", 75, 150, false);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPBL", 75, 150, $KL_SystemAdmin);
+		StockByBrand("SHOPBL", 75, 150, false);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 75, 150, $KL_SystemAdmin);
+		StockByBrand("SHOPOU", 75, 150, false);
+		$NumberOfTestExecuted++;
+		StockAdjustmentsByReason(30, $RootPath);
+		$NumberOfTestExecuted++;
+		QualityIssuesByReason(30, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 

@@ -303,7 +303,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERSW', 15, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInLocationForMoreThan('SERDE', 10, $RootPath);
+		ItemsInLocationForMoreThan('SERDE', 90, $RootPath);
 		$NumberOfTestExecuted++;
 		
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
