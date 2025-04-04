@@ -52,7 +52,8 @@ form fieldset field input,textarea,select {
 background-color:#FEFEBB;
 border-radius: 5px;
 border: 1px solid #8DCDEB;
-padding:2px;
+margin-bottom:3px;
+padding:4px;
 color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;

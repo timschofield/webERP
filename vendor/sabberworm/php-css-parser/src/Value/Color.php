@@ -30,6 +30,8 @@ class Color extends CSSFunction
      *
      * @throws UnexpectedEOFException
      * @throws UnexpectedTokenException
+     *
+     * @internal since V8.8.0
      */
     public static function parse(ParserState $oParserState, $bIgnoreCase = false)
     {
@@ -153,6 +155,8 @@ class Color extends CSSFunction
 
     /**
      * @return string
+     *
+     * @deprecated in V8.8.0, will be removed in V9.0.0. Use `render` instead.
      */
     public function __toString()
     {
@@ -160,9 +164,11 @@ class Color extends CSSFunction
     }
 
     /**
+     * @param OutputFormat|null $oOutputFormat
+     *
      * @return string
      */
-    public function render(OutputFormat $oOutputFormat)
+    public function render($oOutputFormat)
     {
         // Shorthand RGB color values
         if ($oOutputFormat->getRGBHashNotation() && implode('', array_keys($this->aComponents)) === 'rgb') {

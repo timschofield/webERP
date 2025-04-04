@@ -1,8 +1,8 @@
 <?php
-define("VERSIONFILE", "1.00");
+define("VERSIONFILE", "2.00");
 
 include('includes/session.php');
-$Title = _('Kapal-Laut Quality and Returns Performance Board '. VERSIONFILE);
+$Title = _('KL Stock Adjustment and Customer Returns Board '. VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -13,7 +13,18 @@ $BeginTime = time_start();
 $NumberOfTestExecuted = 0;
 
 if ($KL_SystemAdmin 
-	OR $KL_BusinessDevelopmentManager) {
+	OR $KL_OperationalManager
+	OR $KL_BusinessDevelopmentManager
+	OR $KL_SalesDirector
+	OR $KL_PurchasingTeam
+	OR $KL_ShopSupportLeader) {
+
+	StockAdjustmentsByReason(30, $RootPath);
+	$NumberOfTestExecuted++;
+	StockAdjustmentsByReason(90, $RootPath);
+	$NumberOfTestExecuted++;
+	StockAdjustmentsByItemAndReason(30, $RootPath);
+	$NumberOfTestExecuted++;
 	QualityIssuesByReason(30, $RootPath);
 	$NumberOfTestExecuted++;
 	QualityIssuesByReason(90, $RootPath);
@@ -49,7 +60,7 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 				WHERE (reasonid = 4 OR reasonid = 5)
 					AND oldinvoicedate >= '". $StartDate . "'
 				GROUP BY itemcode";
-		$TitleReport = 'Customer Quality Issues by items on the last ' . $NumDays . ' days';
+		$TableTitleText = 'Items returned by customers due to Quality Issues in the last ' . $NumDays . ' days';
 		$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -60,18 +71,24 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 							</tr>
 						</thead>';
 	} elseif ($TypeReport == "QualityIssuesByFamily") {
-		$SQL = "SELECT SUBSTRING(returneditems.itemcode,1,2) AS Item, 
-						COUNT(*) AS Incidences,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-						FROM salesorderdetails
-						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcode,1,2)
-							AND salesorderdetails.completed = 1
-							AND salesorderdetails.itemdue > '". $StartDate . "') AS QtySold
-				FROM returneditems
-				WHERE (returneditems.reasonid = 4 OR returneditems.reasonid = 5)
-					AND returneditems.oldinvoicedate >= '". $StartDate . "'
-				GROUP BY SUBSTRING(returneditems.itemcode,1,2)";
-		$TitleReport = 'Customer Quality Issues by Families of items on the last ' . $NumDays . ' days';
+		//2025-03-31: SQL query optimized by GitHib Copilot, around 30 times faster than the original one
+		$SQL = "SELECT SUBSTRING(r.itemcode, 1, 2) AS Item, 
+					COUNT(*) AS Incidences, 
+					COALESCE(s.QtySold, 0) AS QtySold 
+				FROM returneditems r
+				LEFT JOIN (
+					SELECT SUBSTRING(stkcode, 1, 2) AS ItemPrefix,
+						SUM(qtyinvoiced) AS QtySold
+					FROM salesorderdetails
+					WHERE completed = 1 
+					AND itemdue >= '". $StartDate . "'
+					GROUP BY SUBSTRING(stkcode, 1, 2)
+				) s ON SUBSTRING(r.itemcode, 1, 2) = s.ItemPrefix
+				WHERE r.reasonid IN (4, 5)
+				AND r.oldinvoicedate >= '". $StartDate . "'
+				GROUP BY SUBSTRING(r.itemcode, 1, 2)";
+
+		$TableTitleText = 'Items returned by customers due to Quality Issues of items in the last ' . $NumDays . ' days (grouped by family)';
 		$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -82,19 +99,24 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 							</tr>
 						</thead>';
 	} elseif ($TypeReport == "ChangeOfMindByFamily") {
-		$SQL = "SELECT SUBSTRING(returneditems.itemcode,1,2) AS Item, 
-						COUNT(*) AS Incidences,
-						(SELECT SUM(salesorderdetails.qtyinvoiced)
-						FROM salesorderdetails
-						WHERE SUBSTRING(salesorderdetails.stkcode,1,2) = SUBSTRING(returneditems.itemcode,1,2)
-							AND salesorderdetails.completed = 1
-							AND salesorderdetails.itemdue > '". $StartDate . "') AS QtySold
-				FROM returneditems
-				WHERE (returneditems.reasonid = 1 OR returneditems.reasonid = 2 OR returneditems.reasonid = 3)
-					AND returneditems.oldinvoicedate >= '". $StartDate . "'
-				GROUP BY SUBSTRING(returneditems.itemcode,1,2)";
-		$TitleReport = 'Change Of Mind by Families of items on the last ' . $NumDays . ' days';
-		$TableHeader = '<thead>
+		//2025-03-31: SQL query optimized by GitHib Copilot, around 30 times faster than the original one
+		$SQL = "SELECT SUBSTRING(r.itemcode, 1, 2) AS Item, 
+					COUNT(*) AS Incidences, 
+					COALESCE(s.QtySold, 0) AS QtySold 
+				FROM returneditems r
+				LEFT JOIN (
+					SELECT SUBSTRING(stkcode, 1, 2) AS ItemPrefix,
+						SUM(qtyinvoiced) AS QtySold
+					FROM salesorderdetails
+					WHERE completed = 1 
+					AND itemdue >= '". $StartDate . "'
+					GROUP BY SUBSTRING(stkcode, 1, 2)
+				) s ON SUBSTRING(r.itemcode, 1, 2) = s.ItemPrefix
+				WHERE r.reasonid IN (1, 2, 3)
+				AND r.oldinvoicedate >= '". $StartDate . "'
+				GROUP BY SUBSTRING(r.itemcode, 1, 2)";
+				$TableTitleText = 'Items returned by customers due to Change of Mind of items in the last ' . $NumDays . ' days (grouped by family)';
+				$TableHeader = '<thead>
 							<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
 								<th class="SortedColumn">' . _('Family') . '</th>
@@ -104,9 +126,9 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 							</tr>
 						</thead>';
 	}
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
-		$TableTitleText = $TitleReport;
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
@@ -222,55 +244,65 @@ function ReturnsBySPG($SPG, $NumDays) {
 	}
 }
 
+function StockAdjustmentsByItemAndReason($Days, $RootPath){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
-function QualityIssuesByReason($Days, $RootPath){
-		$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
-	
-		$SQL = "SELECT reasonname,
-					COUNT(*) AS totalreturned
-				FROM returneditems
-				INNER JOIN returnitemreasons
-					ON returneditems.reasonid = returnitemreasons.reasonid
-				WHERE returneditems.returndate >= '" . $StartDate . "'
-				GROUP BY returnitemreasons.reasonid";
-	
-		$TotalReturned = 0;
-		$Result = DB_query($SQL);
-		if (DB_num_rows($Result) != 0){
-			$TableTitleText = _('Customer Returned Items by Reason during the last ') . $Days . ' days';
-			ShowTableTitle($TableTitleText);
-			echo '<div>';
-			echo '<table class="selection">
-					<thead>
-						<tr>
-							<th class="SortedColumn">' . _('Reason') . '</th>
-							<th class="SortedColumn">' . _('# Items returned') . '</th>
-						</tr>
-					</thead>
-					<tbody>';
-			while ($MyRow = DB_fetch_array($Result)) {
-				echo '<tr class="striped_row">
-						<td>' . $MyRow['reasonname'] . '</td>
-						<td class="number">' . locale_number_format($MyRow['totalreturned'],0) . '</td>
-					</tr>';
+	$SQL = "SELECT stockmoves.stockid,
+				stockadjustmentreasons.reasonname,
+				SUM(qty) AS totaladjusted
+			FROM stockmoves
+			INNER JOIN stockadjustments
+				ON stockmoves.transno = stockadjustments.transno
+				AND stockmoves.type = 17
+			INNER JOIN stockadjustmentreasons
+				ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
+			WHERE stockmoves.trandate >= '" . $StartDate . "'
+			GROUP BY stockmoves.stockid,
+				stockadjustmentreasons.reasonid
+			ORDER BY stockmoves.stockid,
+				ABS(SUM(qty)) DESC";
 
-				$TotalReturned += $MyRow['totalreturned'];
-			}
+	$TotalAdjusted = 0;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$TableTitleText = _('# stock adjustments by Item and Reason during the last ') . $Days . ' days';
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Reason') . '</th>
+						<th class="SortedColumn">' . _('Qty adjusted') . '</th>
+						<th class="SortedColumn">' . _('Daily Average') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['stockid'] . '</td>
+					<td>' . $MyRow['reasonname'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaladjusted'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaladjusted'] / $Days, 1) . '</td>
+				</tr>';
+
+			$TotalAdjusted += $MyRow['totaladjusted'];
 		}
-		echo '</tbody>
-			<tfooter>';
-		echo '<tr class="striped_row">
-				<td>Total</td>
-				<td class="number">' . locale_number_format($TotalReturned, 0) . '</td>
-			</tr>';
-		echo '<tr class="striped_row">
-				<td>Returned Items / day </td>
-				<td class="number">' . locale_number_format($TotalReturned/ $Days, 1) . '</td>
-			</tr>';
-		
-		 echo '</tfooter>
-			</table>
-			</div>';
 	}
+	echo '</tbody>
+		<tfooter>';
+	echo '<tr class="striped_row">
+			<td>Total</td>
+			<td></td>
+			<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
+			<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
+		</tr>';
 	
+	echo '</tfooter>
+		</table>
+		</div>';
+}	
+
+
+
 ?>

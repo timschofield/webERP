@@ -392,7 +392,7 @@ class Xls extends BaseWriter
         }
 
         ob_start();
-        call_user_func($renderingFunction, $drawing->getImageResource());
+        call_user_func($renderingFunction, $drawing->getImageResource()); // @phpstan-ignore-line
         $blipData = ob_get_contents();
         ob_end_clean();
 
@@ -467,7 +467,7 @@ class Xls extends BaseWriter
 
     private function processBaseDrawing(BstoreContainer &$bstoreContainer, BaseDrawing $drawing): void
     {
-        if ($drawing instanceof Drawing) {
+        if ($drawing instanceof Drawing && $drawing->getPath() !== '') {
             $this->processDrawing($bstoreContainer, $drawing);
         } elseif ($drawing instanceof MemoryDrawing) {
             $this->processMemoryDrawing($bstoreContainer, $drawing, $drawing->getRenderingFunction());

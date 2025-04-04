@@ -136,6 +136,15 @@ class Xlsx extends BaseWriter
 
     private bool $explicitStyle0 = false;
 
+    private bool $useCSEArrays = false;
+
+    private bool $useDynamicArray = false;
+
+    public const DEFAULT_FORCE_FULL_CALC = false;
+
+    // Default changed from null in PhpSpreadsheet 4.0.0.
+    private ?bool $forceFullCalc = self::DEFAULT_FORCE_FULL_CALC;
+
     /**
      * Create a new Xlsx Writer.
      */
@@ -167,6 +176,7 @@ class Xlsx extends BaseWriter
         $this->numFmtHashTable = new HashTable();
         $this->styleHashTable = new HashTable();
         $this->stylesConditionalHashTable = new HashTable();
+        $this->determineUseDynamicArrays();
     }
 
     public function getWriterPartChart(): Chart
@@ -247,6 +257,7 @@ class Xlsx extends BaseWriter
     public function save($filename, int $flags = 0): void
     {
         $this->processFlags($flags);
+        $this->determineUseDynamicArrays();
 
         // garbage collect
         $this->pathNames = [];
@@ -277,6 +288,10 @@ class Xlsx extends BaseWriter
         $zipContent = [];
         // Add [Content_Types].xml to ZIP file
         $zipContent['[Content_Types].xml'] = $this->getWriterPartContentTypes()->writeContentTypes($this->spreadSheet, $this->includeCharts);
+        $metadataData = (new Xlsx\Metadata($this))->writeMetadata();
+        if ($metadataData !== '') {
+            $zipContent['xl/metadata.xml'] = $metadataData;
+        }
 
         //if hasMacros, add the vbaProject.bin file, Certificate file(if exists)
         if ($this->spreadSheet->hasMacros()) {
@@ -332,7 +347,7 @@ class Xlsx extends BaseWriter
         $zipContent['xl/styles.xml'] = $this->getWriterPartStyle()->writeStyles($this->spreadSheet);
 
         // Add workbook to ZIP file
-        $zipContent['xl/workbook.xml'] = $this->getWriterPartWorkbook()->writeWorkbook($this->spreadSheet, $this->preCalculateFormulas);
+        $zipContent['xl/workbook.xml'] = $this->getWriterPartWorkbook()->writeWorkbook($this->spreadSheet, $this->preCalculateFormulas, $this->forceFullCalc);
 
         $chartCount = 0;
         // Add worksheets
@@ -445,7 +460,9 @@ class Xlsx extends BaseWriter
 
                 // Media
                 foreach ($this->spreadSheet->getSheet($i)->getHeaderFooter()->getImages() as $image) {
-                    $zipContent['xl/media/' . $image->getIndexedFilename()] = file_get_contents($image->getPath());
+                    if ($image->getPath() !== '') {
+                        $zipContent['xl/media/' . $image->getIndexedFilename()] = file_get_contents($image->getPath());
+                    }
                 }
             }
 
@@ -461,6 +478,9 @@ class Xlsx extends BaseWriter
             if ($this->getDrawingHashTable()->getByIndex($i) instanceof WorksheetDrawing) {
                 $imageContents = null;
                 $imagePath = $this->getDrawingHashTable()->getByIndex($i)->getPath();
+                if ($imagePath === '') {
+                    continue;
+                }
                 if (str_contains($imagePath, 'zip://')) {
                     $imagePath = substr($imagePath, 6);
                     $imagePathSplitted = explode('#', $imagePath);
@@ -477,7 +497,6 @@ class Xlsx extends BaseWriter
                 $zipContent['xl/media/' . $this->getDrawingHashTable()->getByIndex($i)->getIndexedFilename()] = $imageContents;
             } elseif ($this->getDrawingHashTable()->getByIndex($i) instanceof MemoryDrawing) {
                 ob_start();
-                /** @var callable $callable */
                 $callable = $this->getDrawingHashTable()->getByIndex($i)->getRenderingFunction();
                 call_user_func(
                     $callable,
@@ -654,6 +673,9 @@ class Xlsx extends BaseWriter
     {
         $data = null;
         $filename = $drawing->getPath();
+        if ($filename === '') {
+            return null;
+        }
         $imageData = getimagesize($filename);
 
         if (!empty($imageData)) {
@@ -708,6 +730,41 @@ class Xlsx extends BaseWriter
     public function setExplicitStyle0(bool $explicitStyle0): self
     {
         $this->explicitStyle0 = $explicitStyle0;
+
+        return $this;
+    }
+
+    public function setUseCSEArrays(?bool $useCSEArrays): void
+    {
+        if ($useCSEArrays !== null) {
+            $this->useCSEArrays = $useCSEArrays;
+        }
+        $this->determineUseDynamicArrays();
+    }
+
+    public function useDynamicArrays(): bool
+    {
+        return $this->useDynamicArray;
+    }
+
+    private function determineUseDynamicArrays(): void
+    {
+        $this->useDynamicArray = $this->preCalculateFormulas && Calculation::getInstance($this->spreadSheet)->getInstanceArrayReturnType() === Calculation::RETURN_ARRAY_AS_ARRAY && !$this->useCSEArrays;
+    }
+
+    /**
+     * If this is set when a spreadsheet is opened,
+     * values may not be automatically re-calculated,
+     * and a button will be available to force re-calculation.
+     * This may apply to all spreadsheets open at that time.
+     * If null, this will be set to the opposite of $preCalculateFormulas.
+     * It is likely that false is the desired setting, although
+     * cases have been reported where true is required (issue #456).
+     * Nevertheless, default is set to false in PhpSpreadsheet 4.0.0.
+     */
+    public function setForceFullCalc(?bool $forceFullCalc): self
+    {
+        $this->forceFullCalc = $forceFullCalc;
 
         return $this;
     }
