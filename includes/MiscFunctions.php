@@ -529,7 +529,7 @@ function indian_number_format($Number, $DecimalPlaces) {
 	}
 }
 
-function SendMailBySmtp(&$mail, $To) {
+function SendEmailByHTMLMimeMail(&$mail, $To) {
 	if (IsEmailAddress($_SESSION['SMTPSettings']['username'])) { //user has set the fully mail address as user name
 		$SendFrom = $_SESSION['SMTPSettings']['username'];
 	} else { //user only set it's name instead of fully mail address
