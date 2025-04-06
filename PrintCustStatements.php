@@ -3,7 +3,6 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-include ('includes/htmlMimeMail.php');
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerStatements';
 $Title = _('Print Customer Statements');
@@ -468,17 +467,13 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			if ($_POST['EmailOrPrint']=='email'){
 				$FileName = $_SESSION['reports_dir'] . '/' .'Statement_Account_' . $StmtHeader['debtorno']  . '.pdf';
 				$pdf->Output($FileName,'F');
-				$mail = new htmlMimeMail();
-				$Attachment = $mail->getFile($FileName);
-				$mail->setText(_('Please find a statement or your account attached') );
-				$mail->SetSubject($_SESSION['CompanyRecord']['coyname'] . ' ' . _('Customer Account Statement'));
-				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-				if($_SESSION['SmtpSetting'] == 0){
-					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
-					$Result = $mail->send($RecipientArray);
-				} else{
-					$Result = SendEmailByHTMLMimeMail($mail,array($RecipientArray));
-				}
+
+				SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>',
+									array($RecipientArray),
+									$_SESSION['CompanyRecord']['coyname'] . ' ' . _('Customer Account Statement'),
+									_('Please find a statement or your account attached'),
+									$FileName,
+									false);
 				echo '<tr>
 						<td>' , $StmtHeader['debtorno'], '</td>
 						<td>' , $StmtHeader['name'], '</td>

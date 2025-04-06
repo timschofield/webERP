@@ -521,22 +521,15 @@ if (isset($PrintPDF)
 
 	if (isset($_GET['Email'])){ //email the invoice to address supplied
 
-
-		include ('includes/htmlMimeMail.php');
-		$FileName = $_SESSION['reports_dir'] . '/' .$_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
+		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
 		$pdf->Output($FileName,'F');
-		$mail = new htmlMimeMail();
 
-		$Attachment = $mail->getFile($FileName);
-		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo );
-		$mail->SetSubject($InvOrCredit . ' ' . $FromTransNo);
-		$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-		if($_SESSION['SmtpSetting'] == 0){
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
-			$Result = $mail->send(array($_GET['Email']));
-		}else{
-			$Result = SendEmailByHTMLMimeMail($mail,array($_GET['Email']));
-		}
+		$Body = _('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo;
+		$Subject = $InvOrCredit . ' ' . $FromTransNo;
+		$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
+		$To = $_GET['Email'];
+
+		$Result = SendEmailFromWebERP($From, $To, $Subject, $Body, array($FileName));
 
 		unlink($FileName); //delete the temporary file
 

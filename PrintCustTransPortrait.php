@@ -525,27 +525,27 @@ if(isset($PrintPDF)
 	$FromTransNo--;
 
 	if(isset($_GET['Email'])) { //email the invoice to address supplied
-		include ('includes/htmlMimeMail.php');
 		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $_GET['FromTransNo'] . '.pdf';
 		$pdf->Output($FileName,'F');
-		$mail = new htmlMimeMail();
 
-		$Attachment = $mail->getFile($FileName);
-		$mail->setText(_('Please find attached') . ' ' . $InvOrCredit . ' ' . $_GET['FromTransNo'] );
-		$mail->SetSubject($InvOrCredit . ' ' . $_GET['FromTransNo']);
-		$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-		if($_SESSION['SmtpSetting'] == 0) {
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
-			$Result = $mail->send(array($_GET['Email']));
-		} else {
-			$Result = SendEmailByHTMLMimeMail($mail,array($_GET['Email']));
-		}
+		$EmailSubject = $InvOrCredit . ' ' . $FromTransNo;
+		$EmailBody = _('Please find attached') . ' ' . $InvOrCredit . ' ' . $FromTransNo;
+		$EmailFrom = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
+		$EmailTo = $_GET['Email'];
+		$Attachments = array(array($FileName, 'application/pdf'));
+
+		$Result = SendEmailFromWebERP($EmailFrom, $EmailTo, $EmailSubject, $EmailBody, $Attachments);
 
 		unlink($FileName); //delete the temporary file
 
 		$Title = _('Emailing') . ' ' .$InvOrCredit . ' ' . _('Number') . ' ' . $FromTransNo;
 		include('includes/header.php');
-		echo '<p>' . $InvOrCredit . ' ' . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
+		// Adjust message based on SendEmailFromWebERP result
+		if ($Result) {
+			echo '<p>' . $InvOrCredit . ' ' . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'] . '</p>';
+		} else {
+			echo '<p>' . _('Failed to email') . ' ' . $InvOrCredit . ' ' . _('number') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_GET['Email'] . '</p>';
+		}
 		include('includes/footer.php');
 		exit;
 

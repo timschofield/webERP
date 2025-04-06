@@ -26,7 +26,6 @@ $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
-include('includes/htmlMimeMail.php');
 
 $SQL = "SELECT recurringsalesorders.recurrorderno,
 			recurringsalesorders.debtorno,
@@ -704,18 +703,15 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	} /*end if the recurring order is set to auto invoice */
 
 	if (IsEmailAddress($RecurrOrderRow['email'])){
-		$mail = new htmlMimeMail();
-		$mail->setText($EmailText);
-		$mail->setSubject(_('Recurring Order Created Advice'));
-		if($_SESSION['SmtpSetting']==0){
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
+		$From = $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">";
+		$To = $RecurrOrderRow['email'];
+		$Subject = _('Recurring Order Created Advice');
+		$Body = $EmailText;
 
-			$Result = $mail->send(array($RecurrOrderRow['email']));
-		}else{
-			$Result = SendEmailByHTMLMimeMail($mail,array($RecurrOrderRow['email']));
-
+		if (!SendEmailFromWebERP($From, $To, $Subject, $Body)) {
+			prnMsg(_('Failed to send email advice for this order to') . ' ' . $To, 'error');
 		}
-		unset($mail);
+
 	} else {
 		prnMsg(_('No email advice was sent for this order because the location has no email contact defined with a valid email address'),'warn');
 	}

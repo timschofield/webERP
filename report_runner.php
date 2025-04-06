@@ -86,10 +86,6 @@ chdir($weberp_home);
 
 $_GET['ReportID'] = $reportnumber;
 $Recipients = explode(";",$emailaddresses);
-//wrap in angles so that mail can accept it
-for ($i=0;$i<count($Recipients); $i++) {
-	$Recipient[$i]="<".$Recipient[$i].">";
-}
 
 $AllowAnyone = true;
 include('includes/session.php');
@@ -97,33 +93,24 @@ include('includes/session.php');
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
 include ('includes/PDFSalesAnalysis.inc');
 
-include('includes/htmlMimeMail.php');
-$mail = new htmlMimeMail();
-
 if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie there is a report to send! */
 	$pdfcode = $pdf->output();
 	$fp = fopen( $_SESSION['reports_dir']. "/".$reportname,"wb");
 	fwrite ($fp, $pdfcode);
 	fclose ($fp);
 
-	$Attachment = $mail->getFile( $_SESSION['reports_dir'] . "/".$reportname);
-	$mail->setText($mailtext."\nPlease find herewith ".$reportname."  report");
-	$mail->setSubject($reportname." Report");
-	$mail->addAttachment($Attachment, $reportname, 'application/pdf');
-	if($_SESSION['SmtpSetting']==0){
-		$mail->setFrom("");
-		$Result = $mail->send($Recipients);
-	}else{
-		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-	}
+	$Subject = $reportname." Report";
+	$Body = $mailtext."\nPlease find herewith ".$reportname." report";
+	$AttachmentPath = $_SESSION['reports_dir'] . "/" . $reportname;
+	$From = $_SESSION['CompanyRecord']['email']; // Use company email as sender
+
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, array($AttachmentPath));
 
 } else {
-	$mail->setText("Error running automated sales report number $ReportID");
-	if($_SESSION['SmtpSetting']==0){
-		$mail->setFrom("Do_not_reply_".$_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
-		$Result = $mail->send($Recipients);
-	}else{
-		$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-	}
+	$Subject = "Error running automated sales report";
+	$Body = "Error running automated sales report number " . $reportnumber; // Use $reportnumber instead of $ReportID
+	$From = $_SESSION['CompanyRecord']['email']; // Use company email as sender
+
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
 }
 ?>
