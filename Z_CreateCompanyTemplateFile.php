@@ -197,26 +197,23 @@ if (isset($_POST['CreateTemplate'])){
           }
 		  $SQLScript .= "SET FOREIGN_KEY_CHECKS=1;";
           /*Now write $SQLScript to a file */
-          $FileHandle = fopen("./companies/" . $_SESSION['DatabaseName'] . "/reports/" . $_POST['TemplateName'] .".sql","w");
+          $FilePath = './companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql';
+          $FileHandle = fopen($FilePath,"w");
            fwrite ($FileHandle, $SQLScript);
            fclose ($FileHandle);
 
-           echo '<P><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . _('Show the sql template file produced') . '</a>';
-		   include('includes/htmlMimeMail.php');
-		   $Recipients = array('"Submissions" <submissions@weberp.org>');
-		   $mail = new htmlMimeMail();
-		   $Host = $_SERVER['HTTP_HOST'];
-		   $Attachment = $mail->getFile( '//'.$Host.$RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
-		   $mail->setText('Please find company template ' . $_POST['TemplateName']);
-		   $mail->addAttachment($Attachment, 'CompanyTemplate.sql', 'application/txt');
-		   $mail->setSubject('Company Template Submission');
-		   if($_SESSION['SmtpSetting']==0){
-		 	 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			 $Result = $mail->send($Recipients);
-		   }else{
-			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-		   }
-          /*end of SQL Script creation */
+           echo '<p><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . _('Show the sql template file produced') . '</a></p>';
+
+           /* Send email with the template file */
+           $To = array('"Submissions" <submissions@weberp.org>');
+           $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
+           $Subject = _('Company Template Submission');
+           $Body = _('Please find company template') . ' ' . $_POST['TemplateName'];
+           $Attachments = array('CompanyTemplate.sql' => $FilePath);
+
+           $Result = SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments, false);
+
+		   /*end of SQL Script creation */
       }/*end if Input error*/
 } /*end submit button hit */
 

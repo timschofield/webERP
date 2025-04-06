@@ -308,18 +308,24 @@ if(isset($_POST['SubmitForApproval'])) {
 									WHERE employees.id='" . $EmployeeRow['manager'] . "'");
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$Recipients = array($ManagerRow['email']);
-		include('includes/htmlMimeMail.php');
-		$mail = new htmlMimeMail();
-		$mail->setText($EmployeeRow['firstname'] . ' ' . $EmployeeRow['firstname'] . ' ' . _('timesheet submitted for the week ending') . ' ' . $_POST['WeekEnding']);
-		$mail->SetSubject('<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=' . $SelectedEmployee  . '&WeekEnding=' . $_POST['WeekEnding'] . '" ' . _('Review and approve this timesheet') . '</a>');
+		// Prepare email content
+		$EmailSubject = $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . _('timesheet submitted for the week ending') . ' ' . $_POST['WeekEnding'];
+		$EmailBody = '<p>' . $EmailSubject . '</p>';
+		$EmailBody .= '<p><a href="' . $RootPath . '/Timesheets.php?SelectedEmployee=' . $SelectedEmployee  . '&WeekEnding=' . $_POST['WeekEnding'] . '">' . _('Review and approve this timesheet') . '</a></p>';
 
-		if($_SESSION['SmtpSetting']==0){
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			$Result = $mail->send($Recipients);
-		}else{
-			$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
+		// Send email using SendEmailFromWebERP
+		$Result = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+									$Recipients,
+									$EmailSubject,
+									$EmailBody,
+									'',
+									true);
+
+		if ($Result == 1) { // SendEmailFromWebERP returns 1 on success
+			prnMsg(_('This timesheet has been submitted to your manager for approval'),'success', _('Timesheet submitted'));
+		} else {
+			prnMsg(_('Failed to send the submission email to the manager.'), 'error');
 		}
-		prnMsg(_('This timesheet has been submitted to your manager for approval'),'success', _('Timesheet submitted'));
 	}
 } // end submit for approval
 
