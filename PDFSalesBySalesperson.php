@@ -4,6 +4,9 @@ $DatabaseName='weberp';
 $AllowAnyone = true;
 
 include ('includes/session.php');
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/class.pdf.php');
 $_POST['FromDate']=date('Y-m-01');
@@ -136,22 +139,19 @@ while ($MyRow=DB_fetch_array($Result)){
 
 } //while
 
-include('includes/htmlMimeMail.php');
 $FileName=$_SESSION['reports_dir'] .  '/SalesBySalesperson.pdf';
 $pdf->Output($FileName, 'F');
 $pdf->__destruct();
-$mail = new htmlMimeMail();
-$Attachment = $mail->getFile($FileName);
-$mail->setText(_('Please find the Sales By Salesperson report'));
-$mail->setSubject(_('Sales By Salesperson Report'));
-$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-//echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '</div>';
-if($_SESSION['SmtpSetting']==0){
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$Result = $mail->send($Recipients);
-}else{
-	$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-}
+
+$mail = new PHPMailer(true);
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+SendEmailFromWebERP($SysAdminEmail,
+					$Recipients,
+					_('Sales By Salesperson Report'),
+					_('Please find the Sales By Salesperson report'),
+					array($FileName)
+				);
 if($Result){
 		$Title = _('Print Weekly Orders');
 		include('includes/header.php');

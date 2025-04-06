@@ -186,21 +186,20 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col7,$YPos,$Col8-$Col7-5,$FontSize,
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,locale_number_format($TotalSalesCost,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,locale_number_format($TotalGP,2), 'right');
 
-include('includes/htmlMimeMail.php');
 $FileName=$_SESSION['reports_dir'] .  '/WeeklyOrders.pdf';
 $pdf->Output($FileName, 'F');
 $pdf->__destruct();
-$mail = new htmlMimeMail();
+$mail = new PHPMailer(true);
+$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
 $Attachment = $mail->getFile($FileName);
-$mail->setText(_('Please find the weekly order report'));
-$mail->setSubject(_('Weekly Orders Report'));
-$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-if($_SESSION['SmtpSetting']==0){
-	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$Result = $mail->send($Recipients);
-}else{
-	$Result = SendEmailByHTMLMimeMail($mail,$Recipients);
-}
+SendEmailFromWebERP($SysAdminEmail,
+					$Recipients,
+					_('Weekly Orders Report'),
+					_('Please find the weekly order report'),
+					array($FileName)
+				);
+
 if($Result){
 		$Title = _('Print Weekly Orders');
 		include('includes/header.php');
