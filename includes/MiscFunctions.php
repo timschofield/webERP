@@ -792,11 +792,32 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 
 	$EmailSent = false;
 	if($_SESSION['SmtpSetting'] == 0){
-		$EmailSent = SendEmailByStandardMailFunction($From,
+		// Handle both string and array formats for $To
+		if (is_array($To)) {
+			$EmailSent = true; // Start with true, will be set to false if any email fails
+			// Send individual emails to each recipient
+			foreach ($To as $ToAddress => $ToName) {
+				// If the key is numeric, the $ToAddress is actually the value
+				if (is_numeric($ToAddress)) {
+					$ToAddress = $ToName;
+				}
+				$Result = SendEmailByStandardMailFunction($From,
+													$ToAddress,
+													$Subject,
+													$Body,
+													$Attachments);
+				// If any email fails, mark the whole operation as failed
+				if (!$Result) {
+					$EmailSent = false;
+				}
+			}
+		} else {
+			$EmailSent = SendEmailByStandardMailFunction($From,
 													$To,
 													$Subject,
 													$Body,
 													$Attachments);
+		}
 	} else {
 		// Convert $To to array if it's a string
 		if (!is_array($To)) {
