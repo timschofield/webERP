@@ -785,11 +785,6 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 	 * @return mixed Returns true if email was sent successfully, or error message if failed
 	 */
 
-	// Convert $To to array if it's a string
-	if (!is_array($To)) {
-		$To = array($To => ''); // Using empty string as recipient name
-	}
-
 	// Convert $Attachments to array if it's a string
 	if (!is_array($Attachments) && !empty($Attachments)) {
 		$Attachments = array($Attachments);
@@ -803,6 +798,11 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 													$Body,
 													$Attachments);
 	} else {
+		// Convert $To to array if it's a string
+		if (!is_array($To)) {
+			$To = array($To => ''); // Using empty string as recipient name
+		}
+
 		$mail = new PHPMailer(true);
 		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 		$EmailSent = SendEmailBySmtp($mail,
