@@ -808,12 +808,12 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 						$ControlledRow['accountname'] . ' ==> ' . 
 						$PaymentItem->Narrative . "\n" ;
 		}
-
-		if (($emailToBeSent) AND (!KLwebERPScriptCalledFromTEST())){
+		
+		if($emailToBeSent) {
 			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
 			$EmailSubject = _('GL transaction to be controlled'); 
 			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';
-			SendEmailFromWebERP($SysAdminEmail, $GLAccountEmail, $EmailSubject, $EmailText);
+			SendEmailFromWebERP($SysAdminEmail, $GLAccountEmail, $EmailSubject, $EmailText, '', true);
 		}
 		// KL RICARD End
 
