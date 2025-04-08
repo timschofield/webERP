@@ -1447,6 +1447,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SPECIAL_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_UNIFORM_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ")";
 		$TitleQOH = "QOH Available";
 	}
