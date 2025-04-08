@@ -695,7 +695,7 @@ function GenerateStockmasterQuery(array $post): string {
 
     // Common JOIN and WHERE clauses.
     $JoinsSQL = "";
-    $WhereSQL = "WHERE stockmaster.stockid = locstock.stockid "; // Corrected initial where clause
+    $WhereSQL = " WHERE stockmaster.stockid = locstock.stockid "; // Corrected initial where clause
 
     // Determine the filter and build the query.
     if (isset($post['Keywords']) && mb_strlen($post['Keywords']) > 0) {
