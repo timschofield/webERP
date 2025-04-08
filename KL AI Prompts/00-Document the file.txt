@@ -1,6 +1,6 @@
 At the beginning of the file:
 
-1) write an alphabetical list of the functions included in the file and a very short description of what they do.
+1) write an alphabetical list of the functions included in the file and a very short description of what they do, for the functions still not in the list.
 
 2) inside each function write the documentation of the function, including:
 2.1) Brief description
