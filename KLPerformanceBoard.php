@@ -28,7 +28,8 @@ if (!isset($_GET['Section'])){
 	}
 }
 
-include ('includes/header.php');
+include('includes/header.php');
+include('includes/GLFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -639,43 +640,14 @@ function CashStatus($Year,
 
 	// Sales Cash PT ADU during the year
 	$Account = "410000000AD";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SalesCashADU = -$MyRow[0];
+	$SalesCashADU = -GetGLAccountValueBetweenTwoDates($Account, "ALL", $StartDateYTD, $EndOfYear);
 
 	// Cash sales still floating (still not received in kantor)
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account IN (SELECT klposcashaccount
-										FROM locations
-										WHERE partnercode = 'PTADU'
-											AND typeloc LIKE 'SHOP%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$FloatingCashADU = $MyRow[0];
+	$FloatingCashADU = GetCashSalesValueStillFloating('PTADU', $StartDateYTD, $EndOfYear);
 	
 	// Cash Danamon IDR PTADU to Cash Kantor
 	$Account = "111121105AD";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'
-				AND (gltrans.narrative LIKE '%CASH TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO SUPP%'
-					OR gltrans.narrative LIKE '%BANK TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO BANK%'
-					OR gltrans.narrative LIKE '%UANG KECIL%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$BankToCashADU = -$MyRow[0];
+	$BankToCashADU = -GetGLAccountValueBetweenTwoDates($Account, "TO_CASH_KANTOR", $StartDateYTD, $EndOfYear);
 
 	// Expenses ADU Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "AD";
@@ -694,7 +666,7 @@ function CashStatus($Year,
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$ExpensesADUPaidCash = -$MyRow[0];
+	$ExpensesADUPaidCash = -($MyRow[0] ?? 0);
 	
 	// Cash in Kantor to Small Suppliers PTADU
 	$Account = "510010070AD";
@@ -707,7 +679,7 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToSmallSuppliersADU = $MyRow[0];
+	$CashToSmallSuppliersADU = $MyRow[0] ?? 0;
 
 	// Cash in Kantor to Pay rents PTADU
 	$Account = "211030200AD";
@@ -719,7 +691,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToRentADU = $MyRow[0];
+	$CashToRentADU = $MyRow[0] ?? 0;
 
 	// Cash in Kantor to Pay dividends PTADU
 	$Account = "614012400AD";
@@ -731,7 +703,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToDividendsADU = $MyRow[0];
+	$CashToDividendsADU = $MyRow[0] ?? 0;
 
 	$CurrentBalanceADU = $CashEndOfPreviousYearADU
 						+$SalesCashADU
@@ -846,34 +818,13 @@ function CashStatus($Year,
 	$CurrentUSDRate = $MyRow['rate'];
 	
 	$Account = "111203010AD"; // Danamon PTADU USD in IDR
-	$SQL = "SELECT (bfwd + actual) as saldo
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $Account . "'
-				AND chartdetails.period = ". $Period . "";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SaldoADUDanamonUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
+	$SaldoADUDanamonUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
 
 	$Account = "111203020AD"; // Payoneer PTADU USD in IDR
-	$SQL = "SELECT (bfwd + actual) as saldo
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $Account . "'
-				AND chartdetails.period = ". $Period . "";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SaldoADUPayoneerUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
+	$SaldoADUPayoneerUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
 
 	$Account = "111204030AD"; // Cash in Agent Aye Cargo in BKK in IDR
-	$SQL = "SELECT (bfwd + actual) as saldo
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $Account . "'
-				AND chartdetails.period = ". $Period . "";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SaldoAyeCargoUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
+	$SaldoAyeCargoUSD = round(GetGLAccountBalance($Account, $Period) * $CurrentUSDRate, 0);
 
 	$Account = "111203010AD"; // USD already exchanged current month
 	$SQL = "SELECT SUM(banktrans.amount) AS saldo
@@ -883,7 +834,7 @@ function CashStatus($Year,
 				AND banktrans.amount > 0";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$USDAlreadyExhangedThisMonth = round($MyRow['saldo'], 0);
+	$USDAlreadyExhangedThisMonth = round(($MyRow['saldo'] ?? 0), 0);
 
 	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
@@ -999,59 +950,18 @@ function CashStatus($Year,
 
 	// Sales Cash PT SMH during the year
 	$Account = "410000000SM";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SalesCashSMH = -$MyRow[0];
+	$SalesCashSMH = -GetGLAccountValueBetweenTwoDates($Account, "ALL", $StartDateYTD, $EndOfYear);
 
 	// Cash sales still floating (still not received in kantor)
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account IN (SELECT klposcashaccount
-										FROM locations
-										WHERE partnercode = 'PTSMH'
-											AND typeloc LIKE 'SHOP%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$FloatingCashSMH = $MyRow[0];
+	$FloatingCashSMH = GetCashSalesValueStillFloating('PTSMH', $StartDateYTD, $EndOfYear);
 	
 	// Cash Danamon IDR PTSMH to Cash Kantor
 	$Account = "111121105SM";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'
-				AND (gltrans.narrative LIKE '%CASH TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO SUPP%'
-					OR gltrans.narrative LIKE '%BANK TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO BANK%'
-					OR gltrans.narrative LIKE '%UANG KECIL%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$BankToCashSMH = -$MyRow[0];
+	$BankToCashSMH = -GetGLAccountValueBetweenTwoDates($Account, "TO_CASH_KANTOR", $StartDateYTD, $EndOfYear);
 	
 	// Cash Mandiri IDR PTSMH to Cash Kantor
 	$Account = "111121100SM";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'
-				AND (gltrans.narrative LIKE '%CASH TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO SUPP%'
-					OR gltrans.narrative LIKE '%BANK TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO BANK%'
-					OR gltrans.narrative LIKE '%UANG KECIL%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$BankToCashSMH -= $MyRow[0];
+	$BankToCashSMH -= GetGLAccountValueBetweenTwoDates($Account, "TO_CASH_KANTOR", $StartDateYTD, $EndOfYear);
 
 	// Expenses SMH Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "SM";
@@ -1070,7 +980,7 @@ function CashStatus($Year,
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$ExpensesSMHPaidCash = -$MyRow[0];
+	$ExpensesSMHPaidCash = -($MyRow[0] ?? 0);
 	
 	// Cash in Kantor to Small Suppliers PTSMH
 	$Account = "510010070SM";
@@ -1083,7 +993,7 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToSmallSuppliersSMH = $MyRow[0];
+	$CashToSmallSuppliersSMH = $MyRow[0] ?? 0;
 
 	// Cash in Kantor to Pay rents PTSMH
 	$Account = "211030200SM";
@@ -1095,7 +1005,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToRentSMH = $MyRow[0];
+	$CashToRentSMH = $MyRow[0] ?? 0;
 
 	// Cash in Kantor to Pay dividends PTSMH
 	$Account = "614012400SM";
@@ -1107,7 +1017,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToDividendsSMH = $MyRow[0];
+	$CashToDividendsSMH = $MyRow[0] ?? 0;
 
 	$CurrentBalanceSMH = $CashEndOfPreviousYearSMH
 						+$SalesCashSMH
@@ -1216,43 +1126,14 @@ function CashStatus($Year,
 
 	// Sales PTBB in Cash during the Year
 	$Account = "410000000BB";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SalesCashBB = -$MyRow[0];
+	$SalesCashBB = -GetGLAccountValueBetweenTwoDates($Account, "ALL", $StartDateYTD, $EndOfYear);
 
 	// Cash sales still floating (still not received in kantor)
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account IN (SELECT klposcashaccount
-										FROM locations
-										WHERE partnercode = 'PTBB'
-											AND typeloc LIKE 'SHOP%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$FloatingCashBB = $MyRow[0];
+	$FloatingCashBB = GetCashSalesValueStillFloating('PTBB', $StartDateYTD, $EndOfYear);
 
 	// Cash Danamon IDR PTBB to Cash Kantor
 	$Account = "111121105BB";
-	$SQL = "SELECT SUM(gltrans.amount)
-			FROM gltrans
-			WHERE gltrans.trandate >= '" . $StartDateYTD . "'
-				AND gltrans.trandate <= '" . $EndOfYear . "'
-				AND gltrans.account = '" . $Account . "'
-				AND (gltrans.narrative LIKE '%CASH TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO SUPP%'
-					OR gltrans.narrative LIKE '%BANK TO CASH%'
-					OR gltrans.narrative LIKE '%CASH TO BANK%'
-					OR gltrans.narrative LIKE '%UANG KECIL%')";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$BankToCashBB = -$MyRow[0];
+	$BankToCashBB = -GetGLAccountValueBetweenTwoDates($Account, "TO_CASH_KANTOR", $StartDateYTD, $EndOfYear);
 
 	// Expenses PT Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "BB";
@@ -1271,7 +1152,7 @@ function CashStatus($Year,
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$ExpensesBBPaidCash = -$MyRow[0];
+	$ExpensesBBPaidCash = -($MyRow[0] ?? 0);
 	
 	// Cash in Kantor to Small Suppliers PTBB
 	$Account = "510010070BB";
@@ -1284,7 +1165,7 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToSmallSuppliersBB = $MyRow[0];
+	$CashToSmallSuppliersBB = $MyRow[0] ?? 0;
 
 	// Cash in Kantor to Pay rents PTBB
 	$Account = "211030200BB";
@@ -1296,7 +1177,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToRentBB = $MyRow[0];
+	$CashToRentBB = $MyRow[0] ?? 0;
 	
 	// Cash in Kantor to Pay dividends PTBB
 	$Account = "614012400BB";
@@ -1308,7 +1189,7 @@ function CashStatus($Year,
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	$CashToDividendsBB = $MyRow[0];
+	$CashToDividendsBB = $MyRow[0] ?? 0;
 
 	$CurrentBalanceBB = $CashEndOfPreviousYearBB
 						+$SalesCashBB
@@ -1416,25 +1297,10 @@ function CashStatus($Year,
 	////////////////////////////////////////////////////////
 
 	$Account = "111111200";
-	$SQL = "SELECT (bfwd + actual) as saldo, accountname
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $Account . "'
-				AND chartdetails.period = ". $Period . "";
-				
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SaldoBrankasKantor = $MyRow['saldo'];
+	$SaldoBrankasKantor = round(GetGLAccountBalance($Account, $Period), 0);
 
 	$Account = "111131100";
-	$SQL = "SELECT (bfwd + actual) as saldo, accountname
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $Account . "'
-				AND chartdetails.period = ". $Period . "";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$SaldoBrankasShareholders = $MyRow['saldo'];
+	$SaldoBrankasShareholders = round(GetGLAccountBalance($Account, $Period), 0);
 		
 	////////////////////////////////////////////////////////
 	// CASH STATUS STATUS BRANKAS KANTOR & SHAREHOLDERS IDR SHOW TABLE
