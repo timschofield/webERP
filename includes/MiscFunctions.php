@@ -833,11 +833,14 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 						$Body,
 						$Attachments);
 	}
+	
 	if (!$Silent) {
-		if ($EmailSent) {
+		// Check if $EmailSent is a boolean true or a string (error message)
+		if ($EmailSent === true) {
 			prnMsg( _('Email has been sent.'), 'success');
 		} else {
-			prnMsg( _('Email not sent. An error was encountered: ' . $EmailSent), 'error');
+			$ErrorMessage = is_string($EmailSent) ? $EmailSent : _('Unknown error');
+			prnMsg( _('Email not sent. An error was encountered: ') . $ErrorMessage, 'error');
 		}
 	}
 	return $EmailSent;
@@ -869,8 +872,11 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 		$Recipients .= $ToAddress . ',';
 		$RecipientNames .= $ToName . ',';
 	}
-	foreach ($Attachments as $Attachment) {
-		$MailObj->addAttachment($Attachment, basename($Attachment));
+	// Ensure Attachments is an array before looping
+	if (is_array($Attachments)) {
+		foreach ($Attachments as $Attachment) {
+			$MailObj->addAttachment($Attachment, basename($Attachment));
+		}
 	}
 	$MailObj->addAddress(substr($Recipients, 0, -1), substr($RecipientNames, 0, -1));
 	$MailObj->isHTML(false);
