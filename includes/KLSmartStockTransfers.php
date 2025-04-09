@@ -400,12 +400,12 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 								   $Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
 				}
 				/*Print out the grand totals */
+				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
+				$FileName = $Subject . '.pdf';
 
 				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
 				$pdf-> __destruct();
 
-				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
-				$FileName = $Subject . '.pdf';
 				$Text = 'Please prepare this transfer ASAP';
 				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 				$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
