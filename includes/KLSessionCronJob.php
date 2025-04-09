@@ -18,7 +18,7 @@ if (!isset($PathPrefix)) {
 }
 
 // KL RICARD: Include the specific KL session functions
-include ($PathPrefix . 'KLsession.php');
+include ($PathPrefix . 'includes/KLsession.php');
 // KL RICARD END: Include the specific KL session functions
 
 // KL RICARD Select the database depending on the code version
@@ -51,7 +51,7 @@ if (isset($SessionSavePath)) {
 }
 
 if (!isset($SysAdminEmail)) {
-	$SysAdminEmail = '';
+	$SysAdminEmail = 'webmaster.kapal-laut.com';
 }
 
 ini_set('session.gc_maxlifetime', $SessionLifeTime);
@@ -281,26 +281,9 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 	}
 }
 
-// Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
-// arrays defining access for each group of users. These definitions can be modified by a system admin under setup
-
-
-if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobToBeRun)) {
-	$Title = _('Account Error Report');
-	include ($PathPrefix . 'includes/header.php');
-	echo '<br /><br /><br />';
-	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
-	include ($PathPrefix . 'includes/footer.php');
-	exit;
-}
-
 /*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
  * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
 */
-if (!isset($PageSecurity)) {
-	//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
-	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME']) ];
-}
 
 if (!isset($AllowCronJobToBeRun)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
@@ -324,34 +307,10 @@ if (!isset($AllowCronJobToBeRun)){
 }
 
 /* KL RICARD for CronJobs, always $SupplierLogin = 0; $CustomerLogin = 0; $Debug = 0; */ 
-//$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
-/*if (in_array(9, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
-	$SupplierLogin = 1;
-} else {
-*/
-	$SupplierLogin = 0; //false
-/*
-}
-
-
-if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
-	$CustomerLogin = 1;
-} else {
-*/
-	$CustomerLogin = 0;
-/*}
-if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { //System administrator login
-	$Debug = 1; //allow debug messages
-
-} else {
-*/	$Debug = 0; //don't allow debug messages
-/*
-}
-KL RICARD for CronJobs, always $SupplierLogin = 0; $CustomerLogin = 0; $Debug = 0; */
-
-if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
-	header('Location: ' . $PathPrefix . 'Dashboard.php');
-}
+$SupplierLogin = 0; //false
+$CustomerLogin = 0;
+$Debug = 0; //don't allow debug messages
+/* KL RICARD for CronJobs, always $SupplierLogin = 0; $CustomerLogin = 0; $Debug = 0; */
 
 if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
@@ -408,8 +367,8 @@ function quote_smart($Value) {
 }
 
 function SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, $EmailHeaders, $begintime, $TitleScriptRunning){
-	include ($PathPrefix . 'KLConfig.php');
-	
+	include ('KLConfig.php');
+
 	/* Getting time now to calculate time needed for cron job*/
 	$time = microtime();
 	$time = explode(" ", $time);
