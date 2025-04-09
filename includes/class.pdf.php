@@ -206,7 +206,7 @@ if (!class_exists('Cpdf', false)) {
 			}
 		}
 
-		function addJpegFromFile($file, $x, $YPos, $width=0, $height) {
+		function addJpegFromFile($file, $x, $YPos, $width, $height) {
 			// Puts an image in the page.
 			// $file (string) Name of the file containing the image.
 			// $x (float) Abscissa from left border to the upper-left corner (LTR).
