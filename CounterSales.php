@@ -1267,7 +1267,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 						$UpdateSQL="UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'";
 						$UpdateNextSerialNoResult = DB_query($UpdateSQL,$ErrMsg,$DbgMsg,true);
 					} // end if the item is serialised and nextserialno is set
-
+					// Send email to the Factory Manager
 					$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 					SendEmailFromWebERP($SysAdminEmail, 
 										$_SESSION['FactoryManagerEmail'],

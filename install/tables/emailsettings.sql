@@ -4,7 +4,7 @@ CREATE TABLE `emailsettings` (
   `port` char(5) NOT NULL,
   `heloaddress` varchar(20) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
-  `password` varchar(30) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
   `timeout` int DEFAULT '5',
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT '0',
