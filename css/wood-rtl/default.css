@@ -27,7 +27,7 @@ img.StockImage {
 	/* width will be controlled by HTML attributes */
 	transition: transform .5s;
 }
-img.StockImage:hover {
+img.StockImage:active {
 transform: scale(5);
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
