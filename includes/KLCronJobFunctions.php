@@ -17,7 +17,6 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/OCOpenCartToWeberpSync.php');
 	include ('includes/OCOpenCartConnectDB.php');
 	include ('includes/KLSmartStockTransfers.php');
-	include ('includes/htmlMimeMail.php');
 
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);

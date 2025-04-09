@@ -296,17 +296,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
 					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' .
 								Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
-					if($_SESSION['SmtpSetting']==0){
-							mail($SysAdminEmail,$EmailSubject,$EmailText);
-
-					} else{
-							include('includes/htmlMimeMail.php');
-							$mail = new htmlMimeMail();
-							$mail->setSubject($EmailSubject);
-							$mail->setText($EmailText);
-							$Result = SendmailBySmtp($mail,array($SysAdminEmail));
-					}
-
+					SendEmailFromWebERP($SysAdminEmail, 
+										$SysAdminEmail,
+										$EmailSubject,
+										$EmailText,
+										'',
+										false);
 				}
 				// KL RICARD: log the script running time
 				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name); 

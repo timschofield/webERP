@@ -401,35 +401,31 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				}
 				/*Print out the grand totals */
 
+				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
+				$pdf-> __destruct();
+
 				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
 				$FileName = $Subject . '.pdf';
 				$Text = 'Please prepare this transfer ASAP';
 				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 				$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
-				
-				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
-				$pdf-> __destruct();
+				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
 
-				$mail = new htmlMimeMail();
-				$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
-				$mail->setText($Text);
-				$mail->setSubject($Subject);
-				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-				$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
-				// if we are in TEST environment send to test user, if we are on real environment, send to shop support
-				if (KLwebERPScriptCalledFromTEST()){
-					$Result = $mail->send(array('webmaster@kapal-laut.com'));
-				} else {
-					$Result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
-				}
+				$Result = $ResultEmailEmployee = SendEmailFromWebERP($SysAdminEmail, 
+												'kl-shopsupport@kapal-laut.com',
+												$Subject,
+												$Text,
+												$PathFileName,
+												true);
+
 				if($Result){
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
 				}else{
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
 				}
-// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
-// and we don't risk to be considered spam by the server and blocked
-//				sleep(2);
+				// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
+				// and we don't risk to be considered spam by the server and blocked
+				// sleep(2);
 				// End of preparation of PDF, email and transfer records 
 			}else{
 				// NOT Enough models available for transfer
