@@ -325,30 +325,15 @@ if ($NoOfLabels > 0) {
 		$pdf->__destruct();
 	} else {
 		$PdfFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
-		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
+		$pdf->Output(sys_get_temp_dir() . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		include('includes/htmlMimeMail.php');
-		$Mail = new htmlMimeMail();
-		$Attachment = $Mail->getFile($_SESSION['reports_dir'] . '/' . $PdfFileName);
-		$Mail->setText(_('Please Process this Work order number') . ' ' . $SelectedORD);
-		$Mail->setSubject(_('Work Order Number') . ' ' . $SelectedORD);
-		$Mail->addAttachment($Attachment, $PdfFileName, 'application/pdf');
-		//since sometime the mail server required to verify the users, so must set this information.
-		if ($_SESSION['SmtpSetting'] == 0) { //use the mail service provice by the server.
-			$Mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			$Success = $Mail->send(array(
-				$_POST['EmailTo']
-			));
-		} else if ($_SESSION['SmtpSetting'] == 1) {
-			$Success = SendEmailByHTMLMimeMail($Mail, array(
-				$_POST['EmailTo']
-			));
 
-		} else {
-			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'), 'error');
-			include('includes/footer.php');
-			exit;
-		}
+		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+										array($_POST['EmailTo'] => ''),
+										_('Work Order Number') . ' ' . $SelectedORD,
+										_('Please Process this Work order number') . ' ' . $SelectedORD,
+										array(sys_get_temp_dir() . '/' . $PdfFileName)
+									);
 
 		if ($Success == 1) {
 			$Title = _('Email a Work Order');
@@ -361,6 +346,7 @@ if ($NoOfLabels > 0) {
 			prnMsg(_('Emailing Work order') . ' ' . $SelectedORD . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
 		}
 	}
+	unlink(sys_get_temp_dir() . '/' . $PdfFileName);
 	include('includes/footer.php');
 
 } else { //there were not labels to print
