@@ -4,7 +4,8 @@
 Functions in this file:
 
 GetDescriptionsFromTagArray() - Retrieves descriptions for an array of tag references
-InsertGLTags()              - Inserts tags into the GL tags table for a journal line
+InsertGLTags() - Inserts tags into the GL tags table for a journal line
+GetGLAccountBalance() - Retrieves the balance for a GL account up to a specific period
 *************************************************************************************************************/
 
 /*************************************************************************************************************
@@ -51,6 +52,24 @@ function GetDescriptionsFromTagArray($TagArray) {
 		}
 	}
 	return $TagDescriptions;
+}
+
+/*************************************************************************************************************
+Brief Description: Retrieves the balance for a GL account up to a specific period
+Parameters:
+    $AccountCode - The GL account code
+    $PeriodNo - The period number up to which the balance is calculated
+Returns:
+    float - The calculated balance for the account up to the specified period, or 0 if no records found
+*************************************************************************************************************/
+function GetGLAccountBalance($AccountCode, $PeriodNo){
+	$SQL = "SELECT SUM(amount) AS total
+			FROM gltotals
+			WHERE account = '" . $AccountCode . "'
+				AND period <= ". $PeriodNo . "";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return ($MyRow['total'] ?? 0);
 }
 
 ?>
