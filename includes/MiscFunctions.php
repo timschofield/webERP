@@ -41,6 +41,19 @@
  * ******************** END FUNCTION INDEX ********************
  */
 
+// Check if PHPMailer is available before trying to use it
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer', false)) {
+    // Try to load via autoloader if possible
+    if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
+        require_once dirname(__DIR__) . '/vendor/autoload.php';
+    } else {
+        // Manual inclusion of PHPMailer files if necessary
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/SMTP.php';
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/Exception.php';
+    }
+}
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
