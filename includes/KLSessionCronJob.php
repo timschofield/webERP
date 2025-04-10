@@ -182,6 +182,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 		$_SESSION['CompanyName'] = $DefaultDatabase;
 	}
+	$_SESSION['UserID'] = "CronJobKL";
 	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	include ($PathPrefix . 'includes/GetConfig.php');
 } else {

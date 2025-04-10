@@ -104,14 +104,16 @@ if ($ErrorReportingType == 'PRODUCTION'){
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
-	error_reporting (E_ALL & ~E_NOTICE & ~E_STRICT & ~E_WARNING & ~E_DEPRECATED);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
 }elseif ($ErrorReportingType == 'DEVELOPMENT'){
 	// reportonly errors
 	// error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
-	// error_reporting (E_ALL & ~E_NOTICE & ~E_STRICT & ~E_WARNING & ~E_DEPRECATED);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
 }elseif ($ErrorReportingType == 'DEBUGGING'){
 	// report everything, or almost
 	error_reporting (-1);
@@ -119,6 +121,7 @@ if ($ErrorReportingType == 'PRODUCTION'){
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
 }
 
 ?>

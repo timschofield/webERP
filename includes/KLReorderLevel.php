@@ -694,8 +694,6 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 		$EmailText = $EmailText . "\n" . "Set RL For " . $ShopType . " items in the bottom " . $BottomPercentTopSales . "% Top Sales with RL higher than " . $maxRL . " and available stock <= " . $minavailablestock . "\n";
 	}
 
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
-
 	if ($ShopType == "SHOPKL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
@@ -847,6 +845,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
 					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
+		$ErrMsg =_('Error in function OnlineReorderLevelAdjustments');
+		$DbgMsg = _('The following SQL to update reorder levels was used');
 		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
 		if ($ShowMessages){
 			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');

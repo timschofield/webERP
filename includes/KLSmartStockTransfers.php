@@ -289,10 +289,13 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				if(!isset($Trf_ID) and $ReportType == 'Batch') {
 					$Trf_ID = GetNextTransNo(16);
 					$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
+				}else{
+					$Trf_ID = '';
+					$EmailText = $EmailText . "Report only. No transfer created.\n";
 				}
 
-				PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-							$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+				PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+											$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 
 				$FontSize=8;
 				$ModelInTransfer = 0;
@@ -321,7 +324,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 					}
 
 					if ($YPos < $Bottom_Margin + $LineHeight + 200){
-						PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+						PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+													$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 					}
 
 					if ($ReportType == 'Batch') {
@@ -396,22 +400,21 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				$pdf->addTextWrap(480,$YPos-150,200,$FontSize,':__________________','left',0,$Fill);
 
 				if ($YPos < $Bottom_Margin + $LineHeight){
-					   PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-								   $Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+					   PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+													$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 				}
 				/*Print out the grand totals */
 				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
 				$FileName = $Subject . '.pdf';
-
-				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
-				$pdf-> __destruct();
+				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
+				$pdf->Output($PathFileName, 'F');
+				$pdf->__destruct();
 
 				$Text = 'Please prepare this transfer ASAP';
 				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 				$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
-				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
 
-				$Result = $ResultEmailEmployee = SendEmailFromWebERP($SysAdminEmail, 
+				$Result = $ResultEmailEmployee = SendEmailFromWebERP('webmaster@kapal-laut.com', 
 												'kl-shopsupport@kapal-laut.com',
 												$Subject,
 												$Text,
@@ -444,8 +447,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 }
 
 
-function PrintHeaderSmartStockDispatch(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription) {
+function PrintHeaderSmartStockDispatch(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+					 $FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy) {
 
 
 	/*PDF page header for Stock Dispatch report */
