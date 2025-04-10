@@ -55,11 +55,6 @@ $EmailText = $EmailText . "\n---\r\n" .
 						'-ADU ' . $KLCodeVersion .
 						'-PHP ' . phpversion() .
 						' CRON JOB at '.date('d/M/Y H:i:s').' Seconds needed: '. $runningtime;
-if ($EmailHeaders = ''){
-	$EmailHeaders = 'From: webmaster@kapal-laut.com' . "\r\n" .
-					'Reply-To: webmaster@kapal-laut.com' . "\r\n" .
-					'X-Mailer: PHP/' . phpversion();
-}
 
 SendEmailFromWebERP('webmaster@kapal-laut.com',
 					$EmailTo,
@@ -67,7 +62,5 @@ SendEmailFromWebERP('webmaster@kapal-laut.com',
 					$EmailText,
 					'',
 					true);
-// mail($EmailTo,$EmailSubject,$EmailText,$EmailHeaders);
-// SendEmailFromCron($EmailTo, $EmailSubject, $EmailText, '', $begintime, $ScriptTile);
 
 ?>
