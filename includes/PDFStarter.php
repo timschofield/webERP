@@ -20,7 +20,7 @@ require_once (dirname(__FILE__).'/class.pdf.php');
 $PageNumber = 0; // Each page header function pre-increments variable $PageNumber before printing it.
 
 if (!isset($PaperSize)){				// Javier: Results True, it's not set.
-	$PaperSize = $_SESSION['DefaultPageSize'];	// Javier: DefaultPageSize is taken from DB, www_users, pagesize = A4
+	$PaperSize = $_SESSION['PageSize'];	// Javier: DefaultPageSize is taken from DB, www_users, pagesize = A4
 }
 
 /* Javier: TCPDF supports 45 standard ISO (DIN) paper formats and 4 american common formats and does this cordinates calculation.
