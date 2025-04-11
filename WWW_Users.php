@@ -379,7 +379,7 @@ if(!isset($SelectedUser)) {
 
 	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
 	if($_SESSION['AccessLevel'] != 8){
-		$SQL = $SQL . " WHERE fullaccess != '8'";
+		$SQL = $SQL . " AND fullaccess != '8'";
 	} 
 	$SQL = $SQL . " ORDER BY userid";	
 	$Result = DB_query($SQL);
