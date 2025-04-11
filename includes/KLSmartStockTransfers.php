@@ -25,7 +25,7 @@ function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
 	}
 	
 	$DispatchPercent = 0;
-	$_SESSION['DefaultPageSize'] = 'A4';
+	$_SESSION['PageSize'] = 'A4';
 	$DaysSalesForOrder = 2;
 	
 	/* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
