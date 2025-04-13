@@ -42,6 +42,7 @@ if(isset($_POST['submit'])) {
 
 		$SQL = "UPDATE klretailpartners
 				SET partnername ='" . $_POST['PartnerName'] . "',
+					partneremail ='" . $_POST['PartnerEmail'] . "', 
 					partnernameinvoice ='" . $_POST['PartnerNameInvoice'] . "',
 					partneraddress ='" . $_POST['PartnerAddress'] . "',
 					partneraddressjalan ='" . $_POST['partneraddressjalan'] . "',
@@ -101,6 +102,7 @@ if(isset($_POST['submit'])) {
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
 		unset($_POST['PartnerName']);
+		unset($_POST['PartnerEmail']);
 		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
 		unset($_POST['partneraddressjalan']);
@@ -156,6 +158,7 @@ if(isset($_POST['submit'])) {
 		$SQL = "INSERT INTO klretailpartners
 								(partnercode,
 								partnername,
+								partneremail,
 								partnernameinvoice,
 								partneraddress,
 								partneraddressjalan,
@@ -205,6 +208,7 @@ if(isset($_POST['submit'])) {
 								counterinvoicec)
 						VALUES ('" . $_POST['PartnerCode'] . "',
 								'" . $_POST['PartnerName'] . "',
+								'" . $_POST['PartnerEmail'] . "',
 								'" . $_POST['PartnerNameInvoice'] . "',
 								'" . $_POST['PartnerAddress'] ."',
 								'" . $_POST['partneraddressjalan'] ."',
@@ -262,6 +266,7 @@ if(isset($_POST['submit'])) {
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
 		unset($_POST['PartnerName']);
+		unset($_POST['PartnerEmail']);
 		unset($_POST['PartnerNameInvoice']);
 		unset($_POST['PartnerAddress']);
 		unset($_POST['partneraddressjalan']);
@@ -341,6 +346,7 @@ or deletion of the records*/
 
 	$SQL = "SELECT partnercode,
 				partnername,
+				partneremail,
 				ppn,
 				cashsalesreported,
 				comissionccdanamon,
@@ -421,6 +427,7 @@ if(!isset($_GET['delete'])) {
 
 		$SQL = "SELECT partnercode,
 					partnername,
+					partneremail,
 					partnernameinvoice,
 					partneraddress,
 					partneraddressjalan,
@@ -476,6 +483,7 @@ if(!isset($_GET['delete'])) {
 
 		$_POST['PartnerCode'] = $MyRow['partnercode'];
 		$_POST['PartnerName'] = $MyRow['partnername'];
+		$_POST['PartnerEmail'] = $MyRow['partneremail'];
 		$_POST['PartnerNameInvoice'] = $MyRow['partnernameinvoice'];
 		$_POST['PartnerAddress'] = $MyRow['partneraddress'];
 		$_POST['partneraddressjalan'] = $MyRow['partneraddressjalan'];
@@ -541,6 +549,9 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['PartnerName'])) {
 		$_POST['PartnerName'] = '';
+	}
+	if(!isset($_POST['PartnerEmail'])) {
+		$_POST['PartnerEmail'] = '';
 	}
 	if(!isset($_POST['PartnerNameInvoice'])) {
 		$_POST['PartnerNameInvoice'] = '';
@@ -711,6 +722,7 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, _('Kode Pos in Consignment Invoice/FP'));
 	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, _('NPWP in Consignment Invoice/FP'));
+	echo FieldToSelectOneEmail('PartnerEmail', $_POST['PartnerEmail'], 51, 50, _('Partner Email'), '');
 	echo '</fieldset>';
 
 	echo '<fieldset><legend>' . _('Tax Information') . '</legend>';

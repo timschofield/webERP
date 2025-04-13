@@ -23,6 +23,7 @@
  * - FieldToSelectOneSysType() - Creates a dropdown for selecting a system type
  * - FieldToSelectOneText() - Creates a text input field
  * - FieldToSelectOneTextArea() - Creates a text area input field
+ * - FieldToSelectOneEmail() - Creates an email input field
  * - FixedField() - Creates a read-only field displaying a value
  * - OneButtonCenteredForm() - Creates a centered form with one submit button
  * - TwoButtonsCenteredForm() - Creates a centered form with submit and reset buttons
@@ -447,6 +448,18 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 				<input type="text"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+			</field>';
+	return $HTML;
+}
+
+function FieldToSelectOneEmail($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<fieldhelp>' . $HelpText . '</fieldhelp>
+				<input type="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= ' name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
 			</field>';
 	return $HTML;
 }
