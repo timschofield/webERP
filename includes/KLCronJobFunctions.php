@@ -17,7 +17,6 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/OCOpenCartToWeberpSync.php');
 	include ('includes/OCOpenCartConnectDB.php');
 	include ('includes/KLSmartStockTransfers.php');
-	include ('includes/htmlMimeMail.php');
 
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
@@ -330,6 +329,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
 				AND enddate > CURRENT_DATE";
+	$ErrMsg =_('Error in function SetEndDatePriceToObsolete because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("Stock", "Models moved to obsolete (MODELS)", $MyRow['items']);
@@ -420,6 +420,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$SQL = "SELECT COUNT(*) AS total
 			FROM stockrequest
 			WHERE authorised !='1'";
+	$ErrMsg =_('Error in function AuthorizeAllInternalStockRequest because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("Shops", "Internal Requests", $MyRow['total']);

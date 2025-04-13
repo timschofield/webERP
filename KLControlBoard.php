@@ -292,8 +292,7 @@ if ($ProcessSection01){
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_PurchasingTeam 
-		OR $KL_ShopSupportLeader){	
+		OR $KL_PurchasingTeam){	
 
 		ItemsInLocationForMoreThan('SERVI', 10, $RootPath);
 		$NumberOfTestExecuted++;
@@ -305,7 +304,13 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERDE', 90, $RootPath);
 		$NumberOfTestExecuted++;
-		
+	}
+
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam 
+		OR $KL_ShopSupportLeader){	
+
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
 		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC2B", "20", $RootPath);
@@ -1447,6 +1452,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 							AND l.loccode NOT IN " . LIST_SERVICE_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_CONSIGNMENT_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SPECIAL_LOCATIONS . "
+							AND l.loccode NOT IN " . LIST_UNIFORM_LOCATIONS . "
 							AND l.loccode NOT IN " . LIST_SAMPLE_LOCATIONS . ")";
 		$TitleQOH = "QOH Available";
 	}

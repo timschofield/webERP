@@ -25,7 +25,7 @@ function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
 	}
 	
 	$DispatchPercent = 0;
-	$_SESSION['DefaultPageSize'] = 'A4';
+	$_SESSION['PageSize'] = 'A4';
 	$DaysSalesForOrder = 2;
 	
 	/* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
@@ -289,10 +289,13 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				if(!isset($Trf_ID) and $ReportType == 'Batch') {
 					$Trf_ID = GetNextTransNo(16);
 					$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
+				}else{
+					$Trf_ID = '';
+					$EmailText = $EmailText . "Report only. No transfer created.\n";
 				}
 
-				PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-							$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+				PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+											$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 
 				$FontSize=8;
 				$ModelInTransfer = 0;
@@ -321,7 +324,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 					}
 
 					if ($YPos < $Bottom_Margin + $LineHeight + 200){
-						PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+						PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+													$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 					}
 
 					if ($ReportType == 'Batch') {
@@ -396,40 +400,35 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				$pdf->addTextWrap(480,$YPos-150,200,$FontSize,':__________________','left',0,$Fill);
 
 				if ($YPos < $Bottom_Margin + $LineHeight){
-					   PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-								   $Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription);
+					   PrintHeaderSmartStockDispatch($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+													$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy);
 				}
 				/*Print out the grand totals */
-
 				$Subject  = 'Transfer-' . Date('Y-m-d') .  '-' . $FromLocCode . '-' . $ToLocCode;
 				$FileName = $Subject . '.pdf';
+				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
+				$pdf->Output($PathFileName, 'F');
+				$pdf->__destruct();
+
 				$Text = 'Please prepare this transfer ASAP';
 				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 				$Text = $Text . 'Email sent by webERP KL CRON JOB at '.date('d/M/Y H:i:s').'';
-				
-				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
-				$pdf-> __destruct();
 
-				$mail = new htmlMimeMail();
-				$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
-				$mail->setText($Text);
-				$mail->setSubject($Subject);
-				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
-				$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
-				// if we are in TEST environment send to test user, if we are on real environment, send to shop support
-				if (KLwebERPScriptCalledFromTEST()){
-					$Result = $mail->send(array('webmaster@kapal-laut.com'));
-				} else {
-					$Result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
-				}
+				$Result = $ResultEmailEmployee = SendEmailFromWebERP('webmaster@kapal-laut.com', 
+												'kl-shopsupport@kapal-laut.com',
+												$Subject,
+												$Text,
+												$PathFileName,
+												true);
+
 				if($Result){
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
 				}else{
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email FAILED " . $FileName . "\n";
 				}
-// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
-// and we don't risk to be considered spam by the server and blocked
-//				sleep(2);
+				// we don't need to sleep as this is a heavy process script, so from email to email there is already a few secs
+				// and we don't risk to be considered spam by the server and blocked
+				// sleep(2);
 				// End of preparation of PDF, email and transfer records 
 			}else{
 				// NOT Enough models available for transfer
@@ -448,8 +447,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 }
 
 
-function PrintHeaderSmartStockDispatch(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription) {
+function PrintHeaderSmartStockDispatch(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$Trf_ID,
+					 $FromLocCode,$FromLocation,$ToLocCode,$ToLocation,$CategoryDescription, $Strategy) {
 
 
 	/*PDF page header for Stock Dispatch report */

@@ -9,7 +9,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
         if ($_SESSION['ShowStockidOnImages'] == '0'){
 			$ImageLink = '<img class="StockImage" src="GetStockImage.php?automake=1' .
                                                     '&textcolor=FFFFFF' .
-                                                    '&bgcolor=CCCCCC' .
+                                                    '&bgcolor=000000' .
                                                     '&width=' . $Width .
                                                     '&height=' . $Height .
                                                     '&StockID=' . urlencode($Item) .
@@ -17,7 +17,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
         } else {
             $ImageLink = '<img class="StockImage" src="GetStockImage.php?automake=1' .
                                                     '&textcolor=FFFFFF' .
-                                                    '&bgcolor=CCCCCC' .
+                                                    '&bgcolor=000000' .
                                                     '&text='. $Item .
                                                     '&width=' . $Width .
                                                     '&height=' . $Height .

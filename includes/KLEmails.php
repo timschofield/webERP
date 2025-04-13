@@ -415,22 +415,13 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 	}
 
-	/* If sent from TEST weberp, add some text to not confuse the receiver */
-	if (KLwebERPScriptCalledFromTEST()){
-		// the current script filename contains TEST, we are on TEST database
-		$EmailSubject = "TEST webERP " . $EmailSubject;
-		$EmailText = "TEST webERP " . $EmailText;
-		$EmailAddress = "webmaster@kapal-laut.com";
-	}
-
 	/* Final formatting bits */
 	$EmailSubject  = trim($EmailSubject); // just for sure
 	$EmailText = $EmailText . "\n---\r\n"; // \r is needed for signature separating
 	$EmailText = $EmailText . 'Email sent by Kapal-Laut webERP at '.date('d/M/Y H:i:s').'';
-	$EmailHeaders  = 'From: Kapal-Laut webERP';
 	
-	mail($EmailAddress,$EmailSubject,$EmailText,$EmailHeaders);
-	
+	SendEmailFromWebERP('webmaster@kapal-laut.com', $EmailAddress, $EmailSubject, $EmailText, '', true);
+
 	if ($ShowDetails == "ShortConfirmation"){
 		prnMsg("Email sent to " . $EmailAddress . " about " . $EmailSubject,'info');
 	}elseif ($ShowDetails == "FullConfirmation"){

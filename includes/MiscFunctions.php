@@ -1,8 +1,63 @@
 <?php
-// MiscFunctions.php
-/*
- * included from includes/ConnectDB.inc
- * ******************************************  */
+ 
+/************************************************************* 
+ * MiscFunctions.php included from includes/ConnectDB.inc
+ *
+ *  * ******************** FUNCTION INDEX ********************
+ * AddCarriageReturns - Adds carriage returns to a string
+ * ChangeFieldInTable - Changes value of specific field across a table
+ * checkLanguageChoice - Validates language choice format
+ * ContainsIllegalCharacters - Checks if a string contains special characters
+ * Convert_CRLF - Replaces text line breaks with specified line break
+ * Convert_line_breaks - Replaces HTML and text line breaks with specified line break
+ * fShowFieldHelp - Shows field help text based on session settings
+ * fShowPageHelp - Shows page help text based on session settings
+ * FYStartPeriod - Gets starting period for fiscal year
+ * GetCurrencyRate - Calculates currency exchange rate
+ * GetECBCurrencyRates - Gets currency rates from European Central Bank
+ * GetMailList - Gets email list for a mail group
+ * google_currency_rate - Gets currency rate from Google Finance
+ * http_file_exists - Checks if a URL exists
+ * indian_number_format - Formats numbers in Indian numbering system
+ * IsEmailAddress - Validates email address format
+ * locale_number_format - Formats numbers according to locale
+ * LogBackTrace - Logs debug backtrace information
+ * filter_number_format - Converts formatted number to SQL format
+ * prnMsg - Displays formatted messages
+ * PrintCompanyTo - Prints company info on PDF
+ * PrintDetail - Prints text detail on PDF with page break handling
+ * PrintDeliverTo - Prints delivery info on PDF
+ * PrintOurCompanyInfo - Prints company info in PDF format
+ * quote_oanda_currency - Gets currency exchange rate from Oanda
+ * ReportPeriod - Determines date period for reports
+ * ReportPeriodList - Generates period selection list for reports
+ * reverse_escape - Reverses escaped strings
+ * SendEmailBySmtp - Sends email using SMTP
+ * SendEmailByStandardMailFunction - Sends email using PHP mail function
+ * SendEmailFromWebERP - Main email sending function for WebERP
+ * SendEmailByHTMLMimeMail - Legacy email sending function
+ * wikiLink - Generates wiki application links
+ * XmlElement - Class for XML elements in currency rate parsing
+ * ******************** END FUNCTION INDEX ********************
+ */
+
+// Check if PHPMailer is available before trying to use it
+if (!class_exists('PHPMailer\PHPMailer\PHPMailer', false)) {
+    // Try to load via autoloader if possible
+    if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
+        require_once dirname(__DIR__) . '/vendor/autoload.php';
+    } else {
+        // Manual inclusion of PHPMailer files if necessary
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/SMTP.php';
+        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/Exception.php';
+    }
+}
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
@@ -147,7 +202,7 @@ function GetECBCurrencyRates() {
 		//return an array of the currencies and rates
 		return $Currencies;
 	} else {
-		return false;
+		return array();
 	}
 }
 
@@ -487,7 +542,7 @@ function indian_number_format($Number, $DecimalPlaces) {
 	}
 }
 
-function SendMailBySmtp(&$mail, $To) {
+function SendEmailByHTMLMimeMail(&$mail, $To) {
 	if (IsEmailAddress($_SESSION['SMTPSettings']['username'])) { //user has set the fully mail address as user name
 		$SendFrom = $_SESSION['SMTPSettings']['username'];
 	} else { //user only set it's name instead of fully mail address
@@ -716,13 +771,98 @@ function fShowPageHelp($HelpText) {
 	return;
 }
 
-
 /*
  * Improve language check to avoid potential LFI issue.
  * Reported by: https://lyhinslab.org
  */
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
+}
+
+
+function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
+	/**
+	 * Main email sending function for WebERP
+	 * This function serves as the primary interface for sending emails from WebERP.
+	 * It determines whether to use standard PHP mail() function or SMTP based on system configuration
+	 * and handles different input formats for recipients and attachments.
+	 * @param string $From        Email address of the sender
+	 * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
+	 * @param string $Subject     Subject of the email
+	 * @param string $Body        Body content of the email
+	 * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
+	 * @param bool   $Silent      If true, suppresses success/error messages (default: false)
+	 *
+	 * @return mixed Returns true if email was sent successfully, or error message if failed
+	 */
+
+	// KL RICARD Send to a dummy address depending on the webERP code version
+	if (KLwebERPScriptCalledFromTEST()){
+		$To = 'webmaster@kapal-laut.com';
+		$Subject = 'TEST webERP: ' . $Subject;
+		$Body = 'THIS IS A TEST MESSAGE ' . "\r\n\r\n" . $Body;
+	}
+	// KL RICARD END Send to a dummy address depending on the webERP code version
+
+	// Convert $Attachments to array if it's a string
+	if (!is_array($Attachments) && !empty($Attachments)) {
+		$Attachments = array($Attachments);
+	}
+	
+	$EmailSent = false;
+	if($_SESSION['SmtpSetting'] == 0){
+		// Handle both string and array formats for $To
+		if (is_array($To)) {
+			$EmailSent = true; // Start with true, will be set to false if any email fails
+			// Send individual emails to each recipient
+			foreach ($To as $ToAddress => $ToName) {
+				// If the key is numeric, the $ToAddress is actually the value
+				if (is_numeric($ToAddress)) {
+					$ToAddress = $ToName;
+				}
+				$Result = SendEmailByStandardMailFunction($From,
+													$ToAddress,
+													$Subject,
+													$Body,
+													$Attachments);
+				// If any email fails, mark the whole operation as failed
+				if (!$Result) {
+					$EmailSent = false;
+				}
+			}
+		} else {
+			$EmailSent = SendEmailByStandardMailFunction($From,
+													$To,
+													$Subject,
+													$Body,
+													$Attachments);
+		}
+	} else {
+		// Convert $To to array if it's a string
+		if (!is_array($To)) {
+			$To = array($To => ''); // Using empty string as recipient name
+		}
+
+		$mail = new PHPMailer(true);
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+		$EmailSent = SendEmailBySmtp($mail,
+						$From,
+						$To,
+						$Subject,
+						$Body,
+						$Attachments);
+	}
+	
+	if (!$Silent) {
+		// Check if $EmailSent is a boolean true or a string (error message)
+		if ($EmailSent === true) {
+			prnMsg( _('Email has been sent.'), 'success');
+		} else {
+			$ErrorMessage = is_string($EmailSent) ? $EmailSent : _('Unknown error');
+			prnMsg( _('Email not sent. An error was encountered: ') . $ErrorMessage, 'error');
+		}
+	}
+	return $EmailSent;
 }
 
 function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=array()) {
@@ -751,19 +891,71 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 		$Recipients .= $ToAddress . ',';
 		$RecipientNames .= $ToName . ',';
 	}
-	foreach ($Attachments as $Attachment) {
-		$MailObj->addAttachment($Attachment, basename($Attachment));
+	// Ensure Attachments is an array before looping
+	if (is_array($Attachments)) {
+		foreach ($Attachments as $Attachment) {
+			$MailObj->addAttachment($Attachment, basename($Attachment));
+		}
 	}
 	$MailObj->addAddress(substr($Recipients, 0, -1), substr($RecipientNames, 0, -1));
 	$MailObj->isHTML(false);
 	$MailObj->Subject = $Subject;
 	$MailObj->Body = $Body;
 	if (!$MailObj->send()) {
-		prnMsg( _('Email not sent. An error was encountered: ' . $MailObj->ErrorInfo), 'error');
+		$EmailSent = $MailObj->ErrorInfo;
 	} else {
-		prnMsg( _('Message has been sent.'), 'success');
+		$EmailSent = true;
 	}
 	$MailObj->smtpClose();
+	return $EmailSent;
+}
+
+function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments=array()){
+	// If no attachments, use simple mail function
+	if(empty($Attachments)) {
+		$result = mail($To, $Subject, $Body, "From: $From\r\n");
+		return $result;
+	} else {
+		// Create a boundary for the email
+		$boundary = md5(time());
+
+		// Headers for a MIME email with attachments
+		$headers = "From: $From\r\n";
+		$headers .= "MIME-Version: 1.0\r\n";
+		$headers .= "Content-Type: multipart/mixed; boundary=\"$boundary\"\r\n";
+
+		// Email body with attachments
+		$message = "--$boundary\r\n";
+		$message .= "Content-Type: text/plain; charset=utf-8\r\n";
+		$message .= "Content-Transfer-Encoding: base64\r\n\r\n";
+		$message .= chunk_split(base64_encode($Body)) . "\r\n";
+
+		// Attach each file
+		$allFilesExist = true;
+		foreach($Attachments as $Attachment) {
+			if(file_exists($Attachment)) {
+				$file_content = file_get_contents($Attachment);
+				$message .= "--$boundary\r\n";
+				$message .= "Content-Type: application/octet-stream; name=\"" . basename($Attachment) . "\"\r\n";
+				$message .= "Content-Transfer-Encoding: base64\r\n";
+				$message .= "Content-Disposition: attachment; filename=\"" . basename($Attachment) . "\"\r\n\r\n";
+				$message .= chunk_split(base64_encode($file_content)) . "\r\n";
+			} else {
+				$allFilesExist = false;
+			}
+		}
+		$message .= "--$boundary--";
+
+		// Only attempt to send if all files existed
+		if($allFilesExist) {
+			// Send the email with attachments
+			$result = mail($To, $Subject, $message, $headers);
+			return $result;
+		} else {
+			// Return false if any attachment file was missing
+			return false;
+		}
+	}
 }
 
 ?>

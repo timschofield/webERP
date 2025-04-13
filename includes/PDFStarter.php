@@ -20,7 +20,7 @@ require_once (dirname(__FILE__).'/class.pdf.php');
 $PageNumber = 0; // Each page header function pre-increments variable $PageNumber before printing it.
 
 if (!isset($PaperSize)){				// Javier: Results True, it's not set.
-	$PaperSize = $_SESSION['DefaultPageSize'];	// Javier: DefaultPageSize is taken from DB, www_users, pagesize = A4
+	$PaperSize = $_SESSION['PageSize'];	// Javier: PageSize is taken from DB, www_users, pagesize = A4
 }
 
 /* Javier: TCPDF supports 45 standard ISO (DIN) paper formats and 4 american common formats and does this cordinates calculation.
@@ -194,7 +194,7 @@ switch ($PaperSize) {
 //	$pdf = new Cpdf($PageSize);
 $pdf = new Cpdf($DocumentOrientation, 'pt', $DocumentPaper);
 $pdf->addInfo('Creator', 'webERP http://www.weberp.org');
-$pdf->addInfo('Author', 'WebERP ' . $Version);
+$pdf->addInfo('Author', 'WebERP');
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,

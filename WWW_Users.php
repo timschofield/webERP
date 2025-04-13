@@ -127,8 +127,8 @@ if(isset($_POST['submit'])) {
 	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= False) {
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'), 'error');
-	} elseif((mb_strlen($_POST['Cust'])>0)
-				AND (mb_strlen($_POST['BranchCode'])==0)) {
+	} elseif((mb_strlen($_POST['Cust'] ?? '')>0)
+				AND (mb_strlen($_POST['BranchCode'] ?? '')==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'), 'error');
 	} elseif($AllowDemoMode AND $_POST['UserID'] == 'admin') {
@@ -145,12 +145,12 @@ if(isset($_POST['submit'])) {
 		}
 	}
 
-	if((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
+	if((mb_strlen($_POST['BranchCode'] ?? '')>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
 		$SQL = "SELECT custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.debtorno='" . $_POST['Cust'] . "'
-				AND custbranch.branchcode='" . $_POST['BranchCode'] . "'";
+				WHERE custbranch.debtorno='" . ($_POST['Cust'] ?? '') . "'
+				AND custbranch.branchcode='" . ($_POST['BranchCode'] ?? '') . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
@@ -171,6 +171,11 @@ if(isset($_POST['submit'])) {
 		$i++;
 	}
 	$_POST['ModulesAllowed']= $ModulesAllowed;
+	/* KL RICARD these variables are fixed for KL users */
+	$_POST['PageSize'] = 'A4';
+	$_POST['Theme'] = 'default';
+	$_POST['UserLanguage'] = 'en_GB.utf8';
+	/* KL RICARD END these variables are fixed for KL users */
 
 	if(isset($SelectedUser) AND $InputError !=1) {
 
@@ -379,7 +384,7 @@ if(!isset($SelectedUser)) {
 
 	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
 	if($_SESSION['AccessLevel'] != 8){
-		$SQL = $SQL . " WHERE fullaccess != '8'";
+		$SQL = $SQL . " AND fullaccess != '8'";
 	} 
 	$SQL = $SQL . " ORDER BY userid";	
 	$Result = DB_query($SQL);
