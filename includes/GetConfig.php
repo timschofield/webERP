@@ -82,13 +82,6 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
 	}
 
-	if ($_SESSION['DBUpdateNumber'] > 1) {
-		$SQL = "SELECT creditorsact FROM companies";
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_array($Result);
-		$_SESSION['CompanyRecord']['creditorsact'] = $MyRow['creditorsact'];
-	}
-
 	/*Now read in smtp email settings - not needed in a properly set up server environment - but helps for those who can't control their server .. I think! */
 
 	$SQL="SELECT id,
