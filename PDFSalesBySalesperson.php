@@ -146,7 +146,7 @@ $pdf->__destruct();
 $mail = new PHPMailer(true);
 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
-SendEmailFromWebERP($SysAdminEmail,
+$Result = SendEmailFromWebERP($SysAdminEmail,
 					$Recipients,
 					_('Sales By Salesperson Report'),
 					_('Please find the Sales By Salesperson report'),
