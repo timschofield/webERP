@@ -884,7 +884,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidWeChat'] > 0){
-		$TextToPrint .= 'Paid WeChat/Alipay: ' . number_format($_POST['AmountPaidWeChat'],0) . $NewLine;
+		$TextToPrint .= 'Paid Alipay/WeChat: ' . number_format($_POST['AmountPaidWeChat'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidQRIS'] > 0){
 		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRIS'],0) . $NewLine;

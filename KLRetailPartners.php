@@ -745,10 +745,10 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, _('% AMEX Comission Bank BCA'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('WeChat Information') . '</legend>';
-	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('WeChat GL Account'));
-	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission WeChat'));
-	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('WeChat Comission GL Account'));
+	echo '<fieldset><legend>' . _('AliPay/WeChat Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('AliPay/WeChat GL Account'));
+	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission AliPay/WeChat'));
+	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('AliPay/WeChat Comission GL Account'));
 	echo '</fieldset>';
 
 	echo '<fieldset><legend>' . _('QRIS Information') . '</legend>';

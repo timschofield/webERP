@@ -82,7 +82,7 @@ echo '</tr>';
 if ($_SESSION['ComissionWeChat'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid WeChat/Alipay') . ':</td>
+	echo '<td>' . _('Amount Paid Alipay/WeChat') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidWeChat" maxlength="12" size="12" value="' . $_POST['AmountPaidWeChat'] . '" /></td>';
 	echo '</tr>';
 }
