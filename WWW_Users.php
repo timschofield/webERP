@@ -402,7 +402,7 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
 				<td class="number">', $MyRow['timeout'], ' ' , _('mins') , '</td>
-				<td class="centre">', $LastVisitDate, '</td>
+				<td class="date">', $LastVisitDate, '</td>
 				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', _('Edit'), '</a></td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
