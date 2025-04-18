@@ -171,6 +171,49 @@ function SetSortingEvent() {
 	}
 }
 
+function convertDate(dS, dF) {
+	// Converts a date in DefaultDateFormat into a javascript date-object.
+	// dS: Date to convert.
+	// dF: Date format. Formats: "d/m/Y", "d.m.Y", "m/d/Y", "Y-m-d", "Y/m/d".
+	var y, m, d;
+	switch(dF) {
+		case "d/m/Y":
+			dA = dS.split("/");
+			d = parseInt(dA[0], 10);
+			m = parseInt(dA[1], 10)-1;
+			y = parseInt(dA[2], 10);
+			break;
+		case "d.m.Y":
+			dA = dS.split(".");
+			d = parseInt(dA[0], 10);
+			m = parseInt(dA[1], 10)-1;
+			y = parseInt(dA[2], 10);
+			break;
+		case "m/d/Y":
+			dA = dS.split("/");
+			m = parseInt(dA[0], 10)-1;
+			d = parseInt(dA[1], 10);
+			y = parseInt(dA[2], 10);
+			break;
+		case "Y-m-d":
+			dA = dS.split("-");
+			y = parseInt(dA[0], 10);
+			m = parseInt(dA[1], 10)-1;
+			d = parseInt(dA[2], 10);
+			break;
+		case "Y/m/d":
+			dA = dS.split("/");
+			y = parseInt(dA[0], 10);
+			m = parseInt(dA[1], 10)-1;
+			d = parseInt(dA[2], 10);
+			break;
+		default:
+			alert("Unknown date format " + dF);
+			return false;
+	}
+return new Date(y, m, d);
+}
+
 function initial() {
 	if(document.getElementsByTagName) {
 		var as=document.getElementsByTagName("a");
@@ -198,7 +241,7 @@ function initial() {
 	}
 	var ds=document.getElementsByTagName("th");
 	for(i=0;i<ds.length;i++) {
-		if(ds[i].className=="ascending") ds[i].onclick=SortSelect;
+		if(ds[i].className=="SortedColumn") ds[i].onclick=SortSelect;
 	}
 
 	/* Notification messages */
