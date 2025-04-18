@@ -153,22 +153,21 @@ if (!isset($_POST['Show'])) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Transaction type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Narrative') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Amount in') . ' ' . $BankDetailRow['currcode'] . '</th>
-						<th>' . _('Balance') . ' ' . $BankDetailRow['currcode'] . '</th>';
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Transaction type') . '</th>
+						<th class="SortedColumn">' . _('Number') . '</th>
+						<th class="SortedColumn">' . _('Type') . '</th>
+						<th class="SortedColumn">' . _('Reference') . '</th>
+						<th class="SortedColumn">' . _('Narrative') . '</th>
+						<th class="SortedColumn">' . _('Number') . '</th>
+						<th class="SortedColumn">' . _('Amount in') . ' ' . $BankDetailRow['currcode'] . '</th>
+						<th class="SortedColumn">' . _('Balance') . ' ' . $BankDetailRow['currcode'] . '</th>';
 		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
-			echo '<th>' . _('Amount in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-				<th>' . _('Balance') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+			echo '<th class="SortedColumn">' . _('Amount in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+				<th class="SortedColumn">' . _('Balance') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 		}
-		echo '<th>' . _('Matched') . '</th>
-			</tr>
-		</thead>';
+		echo '<th class="SortedColumn">' . _('Matched') . '</th>
+			</tr>';
 
 		$AccountCurrTotal = $BalancesRow['balance'];
 		$LocalCurrTotal = $BalancesRow['fbalance'];
@@ -187,7 +186,7 @@ if (!isset($_POST['Show'])) {
 					<td></td>
 				</tr>';
 		}
-
+		echo '</thead>';
 		$RowCounter = 0;
 
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -203,7 +202,7 @@ if (!isset($_POST['Show'])) {
 
 			if ($_POST['ShowType'] == 'All' or ($_POST['ShowType'] == 'Unmatched' and $Matched == _('No')) or ($_POST['ShowType'] == 'Matched' and $Matched == _('Yes'))) {
 				echo '<tr class="striped_row">
-						<td>' . ConvertSQLDate($MyRow['transdate']) . '</td>
+						<td class="date">' . ConvertSQLDate($MyRow['transdate']) . '</td>
 						<td>' . _($MyRow['typename']) . '</td>
 						<td class="number"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['typeid'] . '&amp;TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 						<td>' . $MyRow['banktranstype'] . '</td>
@@ -221,13 +220,15 @@ if (!isset($_POST['Show'])) {
 			}
 		}
 		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
-			echo '<tr class="total_row">
-					<td colspan="8">' . _('Balances Carried Forward') . '</td>
-					<td class="number">' . locale_number_format($AccountCurrTotal, $BankDetailRow['decimalplaces']) . '</td>
-					<td></td>
-					<td class="number">' . locale_number_format($LocalCurrTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td></td>
-				</tr>';
+			echo '<tfoot>
+					<tr class="total_row">
+						<td colspan="8">' . _('Balances Carried Forward') . '</td>
+						<td class="number">' . locale_number_format($AccountCurrTotal, $BankDetailRow['decimalplaces']) . '</td>
+						<td></td>
+						<td class="number">' . locale_number_format($LocalCurrTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
+					</tr>
+				</tfoot>';
 		} else {
 			echo '<tr class="total_row">
 					<td colspan="8">' . _('Balances Carried Forward') . '</td>

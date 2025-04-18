@@ -380,12 +380,12 @@ if(!isset($SelectedUser)) {
 					theme,
 					language
 				FROM www_users";
-	
+
 	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
 	if($_SESSION['AccessLevel'] != 8){
 		$SQL = $SQL . " WHERE fullaccess != '8'";
-	} 
-	$SQL = $SQL . " ORDER BY userid";	
+	}
+	$SQL = $SQL . " ORDER BY userid";
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -405,7 +405,7 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['branchcode'], '</td>
 				<td class="text">', $MyRow['supplierid'], '</td>
 				<td class="text">', $MyRow['salesman'], '</td>
-				<td class="centre">', $LastVisitDate, '</td>
+				<td class="date">', $LastVisitDate, '</td>
 				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
 				<td class="text">', $MyRow['pagesize'], '</td>
 				<td class="text">', $MyRow['theme'], '</td>
