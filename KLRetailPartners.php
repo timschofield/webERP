@@ -94,7 +94,9 @@ if(isset($_POST['submit'])) {
 					accountposreceivable ='" . $_POST['AccountPOSReceivable'] . "',
 					counterinvoicea = '" . $_POST['CounterInvoiceA'] . "',
 					counterinvoiceb = '" . $_POST['CounterInvoiceB'] . "',
-					counterinvoicec = '" . $_POST['CounterInvoiceC'] . "'
+					counterinvoicec = '" . $_POST['CounterInvoiceC'] . "',
+					settlementdelaywechat='" . filter_number_format($_POST['SettlementDelayWeChat']) . "',
+					settlementdelayqris='" . filter_number_format($_POST['SettlementDelayQRIS']) . "'
 				WHERE partnercode = '" . $SelectedPartner . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('retail partner record because');
@@ -160,6 +162,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
+		unset($_POST['SettlementDelayWeChat']);
+		unset($_POST['SettlementDelayQRIS']);
 
 	} elseif($InputError !=1) {
 
@@ -220,7 +224,9 @@ if(isset($_POST['submit'])) {
 								accountposreceivable,
 								counterinvoicea,
 								counterinvoiceb,
-								counterinvoicec)
+								counterinvoicec,
+								settlementdelaywechat,
+								settlementdelayqris)
 						VALUES ('" . $_POST['PartnerCode'] . "',
 								'" . $_POST['PartnerName'] . "',
 								'" . $_POST['PartnerEmail'] . "',
@@ -275,7 +281,9 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['AccountPOSReceivable'] . "',
 								'" . $_POST['CounterInvoiceA'] . "',
 								'" . $_POST['CounterInvoiceB'] . "',
-								'" . $_POST['CounterInvoiceC'] . "')";
+								'" . $_POST['CounterInvoiceC'] . "',
+								'" . filter_number_format($_POST['SettlementDelayWeChat']) . "',
+								'" . filter_number_format($_POST['SettlementDelayQRIS']) . "')";
 
 		$ErrMsg = _('An error occurred inserting the new retail partner record because');
 		$DbgMsg = _('The SQL used to insert the retail partner record was');
@@ -337,6 +345,8 @@ if(isset($_POST['submit'])) {
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
+		unset($_POST['SettlementDelayWeChat']);
+		unset($_POST['SettlementDelayQRIS']);
 	}
 
 } elseif(isset($_GET['delete'])) {
@@ -502,7 +512,9 @@ if(!isset($_GET['delete'])) {
 					counterinvoicea,
 					counterinvoiceb,
 					counterinvoicec,
-					accountposreceivable
+					accountposreceivable,
+					settlementdelaywechat,
+					settlementdelayqris
 				FROM klretailpartners
 				WHERE partnercode='" . $SelectedPartner . "'";
 
@@ -564,6 +576,8 @@ if(!isset($_GET['delete'])) {
 		$_POST['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
 		$_POST['CounterInvoiceC'] = $MyRow['counterinvoicec'];
 		$_POST['AccountPOSReceivable'] = $MyRow['accountposreceivable'];
+		$_POST['SettlementDelayWeChat'] = $MyRow['settlementdelaywechat'];
+		$_POST['SettlementDelayQRIS'] = $MyRow['settlementdelayqris'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="PartnerCode" value="' . $_POST['PartnerCode'] . '" />';
@@ -742,6 +756,12 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AccountPOSReceivable'])) {
 		$_POST['AccountPOSReceivable'] = '';
 	}
+	if(!isset($_POST['SettlementDelayWeChat'])) {
+		$_POST['SettlementDelayWeChat'] = 1;
+	}
+	if(!isset($_POST['SettlementDelayQRIS'])) {
+		$_POST['SettlementDelayQRIS'] = 1;
+	}
 
 	echo '<fieldset><legend>' . _('Partner POS Parameters') . '</legend>';
 	echo FieldToSelectOneText('PartnerName', $_POST['PartnerName'], 51, 50, _('Partner Name in POS Slip'), '');
@@ -779,6 +799,12 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneGLAccount('AccountPPN', $_POST['AccountPPN'], _('PPN GL Account'));
 	echo '</fieldset>';
 
+	echo '<fieldset><legend>' . _('PTADU Consignment Information') . '</legend>';
+	echo FieldToSelectOneText('PercentConsignmentPTADU', $_POST['PercentConsignmentPTADU'], 5, 5, _('% Consignment to PT ADU'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentSalesPTADU', $_POST['AccountConsignmentSalesPTADU'], _('Consignment Sales PT. ADU GL Account'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], _('Consignment COGS Partner GL Account'));
+	echo '</fieldset>';
+
 	echo '<fieldset><legend>' . _('EDC Comission Information') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], _('Credit Card Comission GL Account'));
 	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], _('Bank Danamon GL Account'));
@@ -798,22 +824,18 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, _('% AMEX Comission Bank BCA'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('AliPay/WeChat Information') . '</legend>';
-	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('AliPay/WeChat GL Account'));
-	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission AliPay/WeChat'));
-	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('AliPay/WeChat Comission GL Account'));
-	echo '</fieldset>';
-
 	echo '<fieldset><legend>' . _('QRIS Information') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountQRIS', $_POST['AccountQRIS'], _('QRIS Mandiri GL Account'));
+	echo FieldToSelectOneText('SettlementDelayQRIS', $_POST['SettlementDelayQRIS'], 3, 3, _('Settlement Delay QRIS Mandiri (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionQRIS', $_POST['ComissionQRIS'], 5, 5, _('% Comission QRIS Mandiri'));
 	echo FieldToSelectOneGLAccount('AccountComissionQRIS', $_POST['AccountComissionQRIS'], _('QRIS Mandiri Comission GL Account'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('PTADU Consignment Information') . '</legend>';
-	echo FieldToSelectOneText('PercentConsignmentPTADU', $_POST['PercentConsignmentPTADU'], 5, 5, _('% Consignment to PT ADU'));
-	echo FieldToSelectOneGLAccount('AccountConsignmentSalesPTADU', $_POST['AccountConsignmentSalesPTADU'], _('Consignment Sales PT. ADU GL Account'));
-	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], _('Consignment COGS Partner GL Account'));
+	echo '<fieldset><legend>' . _('AliPay/WeChat Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('AliPay/WeChat GL Account'));
+	echo FieldToSelectOneText('SettlementDelayWeChat', $_POST['SettlementDelayWeChat'], 3, 3, _('Settlement Delay AliPay/WeChat (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission AliPay/WeChat'));
+	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('AliPay/WeChat Comission GL Account'));
 	echo '</fieldset>';
 
 	echo '<fieldset><legend>' . _('HPP Compensation (Obsolete)') . '</legend>';

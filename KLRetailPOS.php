@@ -1553,7 +1553,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$WeChatNetPayment,
 								$Tag,
 								$_SESSION['AccountComissionWeChat'],
-								0,
+								$_SESSION['SettlementDelayWeChat'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,
@@ -1590,7 +1590,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$QRISNetPayment,
 								$Tag,
 								$_SESSION['AccountComissionQRIS'],
-								0,
+								$_SESSION['SettlementDelayQRIS'],
 								$ExRate);
 
 			$ReceiptNumber = AccountDebtorPayment($ReceiptNumber,

@@ -59,6 +59,8 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.settlementdelaybni,
 					klretailpartners.settlementdelaybca,
 					klretailpartners.settlementdelaymandiri,
+					klretailpartners.settlementdelayqris,
+					klretailpartners.settlementdelaywechat,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -165,6 +167,8 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
 		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
 		$_SESSION['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
+		$_SESSION['SettlementDelayQRIS'] = $MyRow['settlementdelayqris'];
+		$_SESSION['SettlementDelayWeChat'] = $MyRow['settlementdelaywechat'];
 		
 	}
 }
