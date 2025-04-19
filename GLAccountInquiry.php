@@ -166,12 +166,15 @@ if (isset($_POST['Show'])) {
 				narrative,
 				amount,
 				periodno,
-				gltags.tagref
+				gltags.tagref,
+				tags.tagdescription
 			FROM gltrans
 			INNER JOIN systypes
 				ON systypes.typeid=gltrans.type
 			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
+			LEFT JOIN tags
+				ON tags.tagref=gltags.tagref
 			WHERE gltrans.account = '" . $SelectedAccount . "'
 				AND posted=1
 				AND periodno>='" . $FirstPeriodSelected . "'
@@ -216,17 +219,17 @@ if (isset($_POST['Show'])) {
 		$RunningTotal = 0;
 	}
 	else {
-		// added to fix bug with Brought Forward Balance always being zero
-		$Sql = "SELECT bfwd,
-					actual,
-					period
-				FROM chartdetails
-				WHERE chartdetails.accountcode='" . $SelectedAccount . "'
-				AND chartdetails.period='" . $FirstPeriodSelected . "'";
-		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-		$ChartDetailsResult = DB_query($Sql, $ErrMsg);
-		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
-		$RunningTotal = $ChartDetailRow['bfwd'];
+		$SQL = "SELECT SUM(amount) AS bfwdamount
+				FROM gltotals
+				WHERE gltotals.account = '" . $SelectedAccount . "'
+				AND gltotals.period < '" . $FirstPeriodSelected . "'";
+		$ErrMsg = _('Could not retrieve the brought forward balance for account') . ' ' . $SelectedAccount;
+		$BfwdResult = DB_query($SQL, $ErrMsg);
+		$BfwdRow = DB_fetch_array($BfwdResult);
+		$RunningTotal = $BfwdRow['bfwdamount'];
+		if (is_null($RunningTotal)) {
+			$RunningTotal = 0;
+		}
 		echo '<tr>
 					<td colspan="4"><b>', _('Brought Forward Balance') , '</b></td>';
 		if ($RunningTotal < 0) { // It is a credit balance b/fwd
@@ -248,18 +251,22 @@ if (isset($_POST['Show'])) {
 	while ($MyRow = DB_fetch_array($TransResult)) {
 		if ($MyRow['periodno'] != $PeriodNo) {
 			if ($PeriodNo != - 9999) { //ie its not the first time around
-				/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
+				$SQL = "SELECT amount
+						FROM gltotals
+						WHERE gltotals.account = '" . $SelectedAccount . "'
+						AND gltotals.period = '" . $PeriodNo . "'";
 
-				$SQL = "SELECT bfwd,
-						actual,
-						period
-					FROM chartdetails
-					WHERE chartdetails.accountcode='" . $SelectedAccount . "'
-					AND chartdetails.period='" . $PeriodNo . "'";
-
-				$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-				$ChartDetailsResult = DB_query($SQL, $ErrMsg);
-				$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+				$ErrMsg = _('Could not retrieve the GL total for account') . ' ' . $SelectedAccount . ' ' . _('and period') . ' ' . $PeriodNo;
+				$GLTotalResult = DB_query($SQL, $ErrMsg);
+				if (DB_num_rows($GLTotalResult) == 0) {
+					$PeriodActual = 0; // No GL total record, assume zero movement
+				} else {
+					$GLTotalRow = DB_fetch_array($GLTotalResult);
+					$PeriodActual = $GLTotalRow['amount'];
+					if (is_null($PeriodActual)) {
+						$PeriodActual = 0;
+					}
+				}
 
 				echo '<tr>
 					<td colspan="4"><b>' . _('Total for period') . ' ' . $PeriodNo . '</b></td>';
@@ -276,9 +283,9 @@ if (isset($_POST['Show'])) {
 				}
 				echo '<td colspan="5">&nbsp;</td>
 						</tr>';
-				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo . _('Account movement per transaction') . ': ' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per ChartDetails record') . ': ' . locale_number_format($ChartDetailRow['actual'], $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal - $ChartDetailRow['actual'], 3);
+				$IntegrityReport .= '<br />' . _('Period') . ': ' . $PeriodNo . _('Account movement per transaction') . ': ' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Movement per GL Totals record') . ': ' . locale_number_format($PeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('Period difference') . ': ' . locale_number_format($PeriodTotal - $PeriodActual, 3);
 
-				if (ABS($PeriodTotal - $ChartDetailRow['actual']) > 0.01) {
+				if (ABS($PeriodTotal - $PeriodActual) > 0.01) {
 					$ShowIntegrityReport = True;
 				}
 			}
@@ -386,7 +393,7 @@ if (isset($ShowIntegrityReport) AND $ShowIntegrityReport == True AND $_POST['tag
 	if (!isset($IntegrityReport)) {
 		$IntegrityReport = '';
 	}
-	prnMsg(_('There are differences between the sum of the transactions and the recorded movements in the ChartDetails table') . '. ' . _('A log of the account differences for the periods report shows below') , 'warn');
+	prnMsg(_('There are differences between the sum of the transactions and the recorded movements in the GL Totals table') . '. ' . _('A log of the account differences for the periods report shows below') , 'warn');
 	echo '<p>' . $IntegrityReport;
 }
 include ('includes/footer.php');
