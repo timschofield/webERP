@@ -87,6 +87,7 @@ if(isset($_POST['submit'])) {
 					accountqris='" . $_POST['AccountQRIS'] . "',
 					comissionqris = '" . $_POST['ComissionQRIS'] . "',
 					accountcomissionqris ='" . $_POST['AccountComissionQRIS'] . "',
+					accountposreceivable ='" . $_POST['AccountPOSReceivable'] . "',
 					counterinvoicea = '" . $_POST['CounterInvoiceA'] . "',
 					counterinvoiceb = '" . $_POST['CounterInvoiceB'] . "',
 					counterinvoicec = '" . $_POST['CounterInvoiceC'] . "'
@@ -147,6 +148,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountQRIS']);
 		unset($_POST['ComissionQRIS']);
 		unset($_POST['AccountComissionQRIS']);
+		unset($_POST['AccountPOSReceivable']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -203,6 +205,7 @@ if(isset($_POST['submit'])) {
 								accountqris,
 								comissionqris,
 								accountcomissionqris,
+								accountposreceivable,
 								counterinvoicea,
 								counterinvoiceb,
 								counterinvoicec)
@@ -253,6 +256,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['AccountQRIS'] . "',
 								'" . $_POST['ComissionQRIS'] . "',
 								'" . $_POST['AccountComissionQRIS'] . "',
+								'" . $_POST['AccountPOSReceivable'] . "',
 								'" . $_POST['CounterInvoiceA'] . "',
 								'" . $_POST['CounterInvoiceB'] . "',
 								'" . $_POST['CounterInvoiceC'] . "')";
@@ -311,6 +315,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountQRIS']);
 		unset($_POST['ComissionQRIS']);
 		unset($_POST['AccountComissionQRIS']);
+		unset($_POST['AccountPOSReceivable']);
 		unset($_POST['CounterInvoiceA']);
 		unset($_POST['CounterInvoiceB']);
 		unset($_POST['CounterInvoiceC']);
@@ -474,7 +479,8 @@ if(!isset($_GET['delete'])) {
 					accountcomissionqris,
 					counterinvoicea,
 					counterinvoiceb,
-					counterinvoicec
+					counterinvoicec,
+					accountposreceivable
 				FROM klretailpartners
 				WHERE partnercode='" . $SelectedPartner . "'";
 
@@ -531,6 +537,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['CounterInvoiceA'] = $MyRow['counterinvoicea'];
 		$_POST['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
 		$_POST['CounterInvoiceC'] = $MyRow['counterinvoicec'];
+		$_POST['AccountPOSReceivable'] = $MyRow['accountposreceivable'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="PartnerCode" value="' . $_POST['PartnerCode'] . '" />';
@@ -694,6 +701,9 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['CounterInvoiceC'])) {
 		$_POST['CounterInvoiceC'] = 0;
 	}
+	if(!isset($_POST['AccountPOSReceivable'])) {
+		$_POST['AccountPOSReceivable'] = '';
+	}
 
 	echo '<fieldset><legend>' . _('Partner POS Parameters') . '</legend>';
 	echo FieldToSelectOneText('PartnerName', $_POST['PartnerName'], 51, 50, _('Partner Name in POS Slip'), '');
@@ -703,6 +713,7 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneSalesArea('AreaSalesCash', $_POST['AreaSalesCash'], _('Cash Sales Area'));
 	echo FieldToSelectOneSalesArea('AreaSalesCashOthers', $_POST['AreaSalesCashOthers'], _('Other Cash Sales Area'));
 	echo FieldToSelectOneText('CashSalesReported', $_POST['CashSalesReported'], 5, 5, _('% cash Sales Reported'));
+	echo FieldToSelectOneGLAccount('AccountPOSReceivable', $_POST['AccountPOSReceivable'], _('POS Receivable GL Account'));
 	echo FieldToSelectOneSysType('CounterInvoiceA', $_POST['CounterInvoiceA'], _('Counter Invoices Credit Card'));
 	echo FieldToSelectOneSysType('CounterInvoiceB', $_POST['CounterInvoiceB'], _('Counter Invoices Cash'));
 	echo FieldToSelectOneSysType('CounterInvoiceC', $_POST['CounterInvoiceC'], _('Counter Invoices Other Cash'));

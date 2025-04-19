@@ -1,6 +1,7 @@
 <?php
 
 /************************************************************************
+v 4.70 Asign customer debt and payment to different account for each retail partner 
 v 4.60 Split returned items into several rows when inserting into DB
 v 4.50 Using just one userid for SPG, not one per shop
 v 4.41 Code cleaning
@@ -36,7 +37,7 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "4.50"); // 
+define("VERSIONFILE", "4.70"); // 
 
 include('includes/DefineCartClass.php');
 include('includes/session.php');
@@ -893,7 +894,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
-//				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
+				// $AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				// when a retail partner sells PTADU items COGS should go to PTADU
 				$AccountCOGS = ACCOUNT_COGS_ADU;
 				
@@ -1038,7 +1039,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 							$InvoiceNo, 
 							Date('Y-m-d'),
 							$PeriodNo,
-							$_SESSION['CompanyRecord']['debtorsact'],
+							$_SESSION['AccountPOSReceivable'],
 							$DescriptionText,
 							round(($_SESSION['Items'.$identifier]->total + $_POST['TaxTotal'] - $_POST['AmountVouchers'] - $_POST['AmountReturnedGoods'])/$ExRate),
 							$Tag,
