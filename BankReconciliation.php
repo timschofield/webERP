@@ -37,8 +37,9 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		$SQL = "SELECT rate,
 						bankaccountname,
 						decimalplaces AS currdecimalplaces
-				FROM bankaccounts INNER JOIN currencies
-				ON bankaccounts.currcode = currencies.currabrev
+				FROM bankaccounts
+				INNER JOIN currencies
+					ON bankaccounts.currcode = currencies.currabrev
 				WHERE bankaccounts.accountcode = '" . $_POST['BankAccount'] . "'";
 
 		$ErrMsg = _('Could not retrieve the exchange rate for the selected bank account');
@@ -106,7 +107,8 @@ $SQL = "SELECT
 			bankaccounts.accountcode,
 			bankaccounts.bankaccountname,
 			bankaccounts.currcode
-		FROM bankaccounts, bankaccountusers
+		FROM bankaccounts,
+			bankaccountusers
 		WHERE bankaccounts.accountcode = bankaccountusers.accountcode
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 		ORDER BY bankaccounts.bankaccountname";
@@ -153,8 +155,9 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 					bankaccounts.currcode,
 					bankaccounts.bankaccountname,
 					currencies.decimalplaces AS currdecimalplaces
-			FROM bankaccounts INNER JOIN currencies
-			ON bankaccounts.currcode = currencies.currabrev
+			FROM bankaccounts
+			INNER JOIN currencies
+				ON bankaccounts.currcode = currencies.currabrev
 			WHERE bankaccounts.accountcode = '" . $_POST['BankAccount'] . "'";
 	$ErrMsg = _('Could not retrieve the currency and exchange rate for the selected bank account');
 	$CurrencyResult = DB_query($SQL);
@@ -232,7 +235,8 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 				ON banktrans.type = systypes.typeid
 			WHERE banktrans.bankact = '" . $_POST['BankAccount'] . "'
 				AND amount > 0
-				AND ABS((amount / exrate) - amountcleared) > 0.009 ORDER BY transdate";
+				AND ABS((amount / exrate) - amountcleared) > 0.009
+			ORDER BY transdate";
 
 	$ErrMsg = _('The uncleared deposits could not be retrieved by the SQL because');
 
