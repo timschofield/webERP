@@ -303,7 +303,7 @@ if ($Edit == false) {
 					<td class="number">', locale_number_format($MyRow['conversionfactor'],'Variable'), '</td>
 					<td class="number">', locale_number_format($MyRow['price']/$MyRow['conversionfactor'],$UPriceDecimalPlaces), '</td>
 					<td>', $MyRow['currcode'], '</td>
-					<td>', ConvertSQLDate($MyRow['effectivefrom']), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['effectivefrom']), '</td>
 					<td>', locale_number_format($MyRow['minorderqty'],'Variable'), '</td>
 					<td>', locale_number_format($MyRow['minorderqty'],'Variable'), ' ' . _('days') . '</td>
 					<td>', $DisplayPreferred, '</td>
@@ -683,8 +683,8 @@ if (!isset($SuppliersResult)) {
 					<td><input type="text" name="DiscountNarrative', $i, '" value="', $MyRow['discountnarrative'], '" maxlength="20" size="20" /></td>
 					<td><input type="text" class="number" name="DiscountAmount', $i, '" value="', locale_number_format($MyRow['discountamount'],$CurrDecimalPlaces), '" maxlength="10" size="11" /></td>
 					<td><input type="text" class="number" name="DiscountPercent', $i, '" value="', locale_number_format($MyRow['discountpercent']*100,2), '" maxlength="5" size="6" /></td>
-					<td><input type="date" name="DiscountEffectiveFrom', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectivefrom']), '" /></td>
-					<td><input type="date" name="DiscountEffectiveTo', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectiveto']), '" /></td>
+					<td class="date"><input type="date" name="DiscountEffectiveFrom', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectivefrom']), '" /></td>
+					<td class="date"><input type="date" name="DiscountEffectiveTo', $i, '" maxlength="10" size="11" value="', ConvertSQLDate($MyRow['effectiveto']), '" /></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?DeleteDiscountID=', $MyRow['id'], '&amp;StockID=', $StockID, '&amp;EffectiveFrom=', $EffectiveFrom, '&amp;SupplierID=', $SupplierID, '&amp;Edit=1">' . _('Delete') . '</a></td>
 				</tr>';
 

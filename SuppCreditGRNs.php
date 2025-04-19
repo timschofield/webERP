@@ -237,7 +237,7 @@ if (DB_num_rows($GRNResults)>0){
 					<td>' . $MyRow['orderno'] . '</td>
 					<td>' . $MyRow['itemcode'] . '</td>
 					<td>' . $MyRow['itemdescription'] . '</td>
-					<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
+					<td class="date">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 					<td class="number">' . locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($MyRow['quantityinv'],$MyRow['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($MyRow['qtyrecd'] - $MyRow['quantityinv'],$MyRow['decimalplaces']) . '</td>

@@ -811,7 +811,7 @@ function initMap() {
 			echo '<tbody>';
 			while ($MyRow = DB_fetch_array($Result)) {
 				echo '<tr class="striped_row">
-						<td>', ConvertSQLDate($MyRow['date']), '</td>
+						<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $MyRow['note'], '</td>
 						<td><a href="', $MyRow['href'], '">', $MyRow['href'], '</a></td>
 						<td>', $MyRow['priority'], '</td>
@@ -857,7 +857,7 @@ function initMap() {
 			echo '<tbody>';
 			while ($MyRow = DB_fetch_array($Result)) {
 				echo '<tr class="striped_row">
-						<td>', $MyRow[4], '</td>
+						<td class="date">', $MyRow[4], '</td>
 						<td>', $MyRow[3], '</td>
 						<td>', $MyRow[2], '</td>
 						<td>', $MyRow[5], '</td>

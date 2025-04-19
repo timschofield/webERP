@@ -383,8 +383,8 @@ if (!isset($StockID)) {
 					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
-					<td>', $FormatedStartDate, '</td>
-					<td>', $FormatedRequiredByDate, '</td>
+					<td class="date">', $FormatedStartDate, '</td>
+					<td class="date">', $FormatedRequiredByDate, '</td>
 				</tr>';
 		}
 		//end of while loop

@@ -1004,8 +1004,8 @@ if (isset($StockItemsResult)
 			 				<td>', $MyRow['name'], '</td>
 			 				<td>', $MyRow['brname'], '</td>
 							<td>', $CustomerRef, '</td>
-			 				<td>', $FormatedOrderDate, '</td>
-			 				<td>', $FormatedDelDate, '</td>
+			 				<td class="date">', $FormatedOrderDate, '</td>
+			 				<td class="date">', $FormatedDelDate, '</td>
 			 				<td>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
 			 				<td class="number">', $FormatedOrderValue, '</td>
 			 				<td class="centre">';

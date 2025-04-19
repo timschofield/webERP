@@ -571,7 +571,7 @@ if (!isset($SelectedSampleID)) {
 						<td>' . $MyRow['lotkey'] . '</td>
 						<td>' .  $MyRow['identifier']  . '</td>
 						<td>' .  $MyRow['createdby']  . '</td>
-						<td>' . $FormatedSampleDate . '</td>
+						<td class="date">' . $FormatedSampleDate . '</td>
 						<td>' . $MyRow['comments'] . '</td>
 						<td>' . $CertAllowed . '</td>
 						<td>' . $Edit . '</td>

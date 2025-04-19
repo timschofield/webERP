@@ -250,8 +250,8 @@ if (DB_num_rows($Result) > 0) {
 				<td>' . $CurrencyName[$MyRow['currabrev']] . '</td>
 				<td>' .  $MyRow['sales_type'] . '</td>
 				<td class="number">' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']+2) . '</td>
-				<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
-				<td>' . $EndDateDisplay . '</td>';
+				<td class="date">' . ConvertSQLDate($MyRow['startdate']) . '</td>
+				<td class="date">' . $EndDateDisplay . '</td>';
 
 		/*Only allow access to modify prices if securiy token 5 is allowed */
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) {

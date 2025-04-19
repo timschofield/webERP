@@ -243,7 +243,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 	}
 
 	// Prints first 8 columns that are in common (columns 1-8):
-	echo '<td class="centre">', ConvertSQLDate($MyRow['trandate']), '</td>
+	echo '<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
 		<td class="text">', _($MyRow['typename']), '</td>
 		<td class="number"><a href="', $RootPath, '/SuppWhereAlloc.php?TransType=', $MyRow['type'], '&TransNo=', $MyRow['transno'], '">', $MyRow['transno'], '</a></td>
 		<td class="text">', $MyRow['suppreference'], '</td>
