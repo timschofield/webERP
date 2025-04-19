@@ -1,30 +1,31 @@
 <?php
 define("VERSIONFILE", "1.02");
 
-include ('includes/session.php');
-$Title = _('Kapal-Laut SPG Performance Report '. VERSIONFILE);
+include('includes/session.php');
+$Title = _('Kapal-Laut SPG Performance Report ' . VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$begintime = time_start();
+$BeginTime = time_start();
 $NumberOfTestExecuted = 0;
 
-if ($KL_SystemAdmin){
+if ($KL_SystemAdmin) {
+
 }
 
 if ($KL_OperationalManager 
 	OR $KL_SalesDirector
-	OR $KL_ShopManager){
+	OR $KL_ShopManager) {
 
 	SPGPerformanceMonthy();
 	$NumberOfTestExecuted++;
 }
 
 if ($KL_SalesDirector
-	OR $KL_ShopManager){
+	OR $KL_ShopManager) {
 
 	SPGPerformanceWeekly();
 	$NumberOfTestExecuted++;
@@ -34,14 +35,14 @@ if ($KL_SystemAdmin
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector
-	OR $KL_ShopManager){
+	OR $KL_ShopManager) {
 
 	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All");
 	$NumberOfTestExecuted++;
 }
 	
 if ($KL_OperationalManager 
-	OR $KL_ShopManager){
+	OR $KL_ShopManager) {
 
 	SPGPerformanceAllShops(15, 30, 45);
 	$NumberOfTestExecuted++;
@@ -50,45 +51,43 @@ if ($KL_OperationalManager
 if ($KL_SystemAdmin 
 	OR $KL_OperationalManager 
 	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector){
+	OR $KL_SalesDirector) {
 		
-	HourlySales(15,$RootPath);
+	HourlySales(15, $RootPath);
 	$NumberOfTestExecuted++;
-	HourlySales(30,$RootPath);
+	HourlySales(30, $RootPath);
 	$NumberOfTestExecuted++;
 	
-	DaysOfWeekSales(180,$RootPath);
-	$NumberOfTestExecuted++;
-
-}
-
-if ($KL_SystemAdmin){	
-
-	RetailTypePayments("SPG",90);
+	DaysOfWeekSales(180, $RootPath);
 	$NumberOfTestExecuted++;
 }
 
-prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Report",'success');
-
-if ($KL_SystemAdmin){
-	time_finish($begintime);
+if ($KL_SystemAdmin) {	
+	RetailTypePayments("SPG", 90);
+	$NumberOfTestExecuted++;
 }
 
-include ('includes/footer.php');
+prnMsg("Performed " . $NumberOfTestExecuted . " SPG Performance Report", 'success');
+
+if ($KL_SystemAdmin) {
+	time_finish($BeginTime);
+}
+
+include('includes/footer.php');
 
 /********************************************************************************************
 FUNCTIONS ONLY USED IN SPG PERFORMANCE BOARD
 *********************************************************************************************/
 
-function RetailTypePayments($Typereport, $maxdays){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$Totalcash = 0;
-	$Totalcredit = 0;
-	$Totalreturned = 0;
-	$Totalvouchers = 0;
+function RetailTypePayments($TypeReport, $MaxDays) {
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$MaxDays));
+	$TotalCash = 0;
+	$TotalCredit = 0;
+	$TotalReturned = 0;
+	$TotalVouchers = 0;
 	$Total = 0;
 
-	if ($Typereport == "Shop"){
+	if ($TypeReport == "Shop") {
 		$SQL = "SELECT salesorders.debtorno AS reportunit,
 					debtorsmaster.name AS reportname,
 					SUM(salesorders.klpaidcash) AS cashshop, 
@@ -98,11 +97,11 @@ function RetailTypePayments($Typereport, $maxdays){
 					SUM(salesorders.klpaidcash+salesorders.klpaidcreditcard+salesorders.klreturnedgoods+salesorders.klvouchers) AS totalshop
 			FROM salesorders, debtorsmaster
 			WHERE salesorders.debtorno = debtorsmaster.debtorno
-				AND salesorders.orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND salesorders.orddate >= '" . $StartDate . "' 
+				AND debtorsmaster.typeid IN (" . CUSTOMER_TYPE_RETAIL . ")
 			GROUP BY salesorders.debtorno
 			ORDER BY salesorders.debtorno";
-	}else{
+	} else {
 		$SQL = "SELECT salesorders.salesperson AS reportunit, 
 					salesman.salesmanname AS reportname,
 					SUM(klpaidcash) AS cashshop, 
@@ -113,21 +112,21 @@ function RetailTypePayments($Typereport, $maxdays){
 			FROM salesorders, salesman, debtorsmaster
 			WHERE salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorders.salesperson = salesman.salesmancode
-				AND orddate >= '". $StartDate. "'
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+				AND orddate >= '" . $StartDate . "' 
+				AND debtorsmaster.typeid IN (" . CUSTOMER_TYPE_RETAIL . ")
 			GROUP BY salesorders.salesperson
 			ORDER BY salesorders.salesperson";
 	}
 	
 	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$Typereport;
+	if (DB_num_rows($Result) != 0) {
+		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $MaxDays . _(' days by ') . $TypeReport;
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . $Typereport . '</th>
+						<th class="SortedColumn">' . $TypeReport . '</th>
 						<th class="SortedColumn">' . _('Name') . '</th>
 						<th class="SortedColumn">' . _('% Cash') . '</th>
 						<th class="SortedColumn">' . _('% Credit') . '</th>
@@ -138,42 +137,42 @@ function RetailTypePayments($Typereport, $maxdays){
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($MyRow['totalshop'] != 0){
-				$Percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
-				$Percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
-				$Percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
-				$Percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
+			if ($MyRow['totalshop'] != 0) {
+				$PercentCash = locale_number_format(($MyRow['cashshop'] / $MyRow['totalshop']) * 100, 1);
+				$PercentCredit = locale_number_format(($MyRow['creditshop'] / $MyRow['totalshop']) * 100, 1);
+				$PercentReturns = locale_number_format(($MyRow['returnedgoodsshop'] / $MyRow['totalshop']) * 100, 1);
+				$PercentVouchers = locale_number_format(($MyRow['vouchersshop'] / $MyRow['totalshop']) * 100, 1);
 				
-				$Totalcash = $Totalcash + $MyRow['cashshop'];
-				$Totalcredit = $Totalcredit + $MyRow['creditshop'];
-				$Totalreturned = $Totalreturned + $MyRow['returnedgoodsshop'];
-				$Totalvouchers = $Totalvouchers + $MyRow['vouchersshop'];
+				$TotalCash = $TotalCash + $MyRow['cashshop'];
+				$TotalCredit = $TotalCredit + $MyRow['creditshop'];
+				$TotalReturned = $TotalReturned + $MyRow['returnedgoodsshop'];
+				$TotalVouchers = $TotalVouchers + $MyRow['vouchersshop'];
 				$Total = $Total + $MyRow['totalshop'];
 				
 				echo '<tr class="striped_row">
 						<td>' . $MyRow['reportunit'] . '</td>
 						<td>' . $MyRow['reportname'] . '</td>
-						<td class="number">' . $Percentcash . '</td>
-						<td class="number">' . $Percentcredit . '</td>
-						<td class="number">' . $Percentreturns . '</td>
-						<td class="number">' . $Percentvouchers . '</td>
+						<td class="number">' . $PercentCash . '</td>
+						<td class="number">' . $PercentCredit . '</td>
+						<td class="number">' . $PercentReturns . '</td>
+						<td class="number">' . $PercentVouchers . '</td>
 						</tr>';
 				$i++;
 			}
 		}
 
-		$Percentcash = locale_number_format(($Totalcash/$Total)*100,1);
-		$Percentcredit = locale_number_format(($Totalcredit/$Total)*100,1);
-		$Percentreturns = locale_number_format(($Totalreturned/$Total)*100,1);
-		$Percentvouchers = locale_number_format(($Totalvouchers/$Total)*100,1);
+		$PercentCash = $Total > 0 ? locale_number_format(($TotalCash / $Total) * 100, 1) : '0.0';
+		$PercentCredit = $Total > 0 ? locale_number_format(($TotalCredit / $Total) * 100, 1) : '0.0';
+		$PercentReturns = $Total > 0 ? locale_number_format(($TotalReturned / $Total) * 100, 1) : '0.0';
+		$PercentVouchers = $Total > 0 ? locale_number_format(($TotalVouchers / $Total) * 100, 1) : '0.0';
 		
 		echo '<tr class="striped_row">
 				<td>' . "" . '</td>
 				<td>' . "Average" . '</td>
-				<td class="number">' . $Percentcash . '</td>
-				<td class="number">' . $Percentcredit . '</td>
-				<td class="number">' . $Percentreturns . '</td>
-				<td class="number">' . $Percentvouchers . '</td>
+				<td class="number">' . $PercentCash . '</td>
+				<td class="number">' . $PercentCredit . '</td>
+				<td class="number">' . $PercentReturns . '</td>
+				<td class="number">' . $PercentVouchers . '</td>
 				</tr>';
 		
 		echo '</tbody>
@@ -182,7 +181,7 @@ function RetailTypePayments($Typereport, $maxdays){
 	}
 }
 
-function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC){
+function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC) {
 	$SQL = "SELECT locations.cashsalecustomer
 			FROM locations
 			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
@@ -194,128 +193,166 @@ function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC){
 	}
 }
 
-function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
+function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC) {
+	// Calculate date ranges
+	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -1));
+	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA));
 
-	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
+	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA - 1));
+	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysB));
 
-	$YesterdayB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
-	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB));
+	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysB - 1));
+	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysC));
 
-	$YesterdayC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
-	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysC));
+	// Get shop name for display purposes
+	$ShopNameSQL = "SELECT name FROM debtorsmaster WHERE debtorno = '" . $Shop . "'";
+	$ShopNameResult = DB_query($ShopNameSQL);
+	$ShopNameRow = DB_fetch_array($ShopNameResult);
+	$ShopName = isset($ShopNameRow['name']) ? $ShopNameRow['name'] : $Shop;
 
-	$SQL = "SELECT salesmancode,
-				salesmanname,
-				securityroles.secrolename,
-				(SELECT COUNT(DISTINCT(salesorders.orddate))
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateA . "'
-						AND salesorders.orddate <= '". $YesterdayA . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS daysA,
-				(SELECT SUM(linenetprice)
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateA . "'
-						AND salesorders.orddate <= '". $YesterdayA . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS salesA,
-				(SELECT COUNT(DISTINCT(salesorders.orddate))
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateB . "'
-						AND salesorders.orddate <= '". $YesterdayB . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS daysB,
-				(SELECT SUM(linenetprice)
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateB . "'
-						AND salesorders.orddate <= '". $YesterdayB . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS salesB,
-				(SELECT COUNT(DISTINCT(salesorders.orddate))
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateC . "'
-						AND salesorders.orddate <= '". $YesterdayC . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS daysC,
-				(SELECT SUM(linenetprice)
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateC . "'
-						AND salesorders.orddate <= '". $YesterdayC . "'
-						AND salesorders.salesperson = salesman.salesmancode) AS salesC
-			FROM salesman, www_users, securityroles
-			WHERE www_users.salesman = salesman.salesmancode
-				AND www_users.fullaccess = securityroles.secroleid
-				AND www_users.customerid = '" . $Shop . "'
-				AND ((SELECT SUM(linenetprice)
-					FROM salesorderdetails, salesorders
-					WHERE salesorderdetails.orderno = salesorders.orderno
-						AND salesorderdetails.completed = 1
-						AND salesorders.debtorno = '" . $Shop . "'
-						AND salesorders.orddate >= '". $StartDateA . "'
-						AND salesorders.orddate <= '". $YesterdayA . "'
-						AND salesorders.salesperson = salesman.salesmancode) > 0)
-			ORDER BY salesman.salesmancode";
-				
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days";
-		ShowTableTitle($TableTitleText);
-		echo '<div>';
-		echo '<table class="selection">
-				<thead>
-					<tr>
-						<th colspan="3">' . _('SPG') . '</th>
-						<th colspan="2">' . $NumDaysA . ' last days' . '</th>
-						<th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' previous days' . '</th>
-						<th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' previous days' . '</th>
-					</tr>
-					<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Name') . '</th>
-						<th>' . _('Role') . '</th>
-						<th class="SortedColumn">' . _('Days') . '</th>
-						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
-						<th class="SortedColumn">' . _('Days') . '</th>
-						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
-						<th class="SortedColumn">' . _('Days') . '</th>
-						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
-					</tr>
-				</thead>
-				<tbody>';
-		while ($MyRow = DB_fetch_array($Result)) {
-			$DailyA = ($MyRow['daysA'] != 0) ? ($MyRow['salesA']/$MyRow['daysA']) : 0;
-			$DailyB = ($MyRow['daysB'] != 0) ? ($MyRow['salesB']/$MyRow['daysB']) : 0;
-			$DailyC = ($MyRow['daysC'] != 0) ? ($MyRow['salesC']/$MyRow['daysC']) : 0;
-			echo '<tr class="striped_row">
-					<td>' . $MyRow['salesmancode'] . '</td>
-					<td>' . $MyRow['salesmanname'] . '</td>
-					<td>' . $MyRow['secrolename'] . '</td>
-					<td class="number">' . locale_number_format_zero_blank($MyRow['daysA'],0) . '</td>
-					<td class="number">' . locale_number_format_zero_blank($DailyA,0) . '</td>
-					<td class="number">' . locale_number_format_zero_blank($MyRow['daysB'],0) . '</td>
-					<td class="number">' . locale_number_format_zero_blank($DailyB,0) . '</td>
-					<td class="number">' . locale_number_format_zero_blank($MyRow['daysC'],0) . '</td>
-					<td class="number">' . locale_number_format_zero_blank($DailyC,0) . '</td>
-					</tr>';
-		}
-		echo '</tbody>
-				</table>
-				</div>';
-	}
+    // Use JOIN approach instead of WITH clause for compatibility with older MariaDB versions
+    $SQL = "SELECT sm.salesmancode,
+               sm.salesmanname,
+               sr.secrolename,
+               COALESCE(periodA.days, 0) AS daysA,
+               COALESCE(periodA.sales, 0) AS salesA,
+               COALESCE(periodB.days, 0) AS daysB,
+               COALESCE(periodB.sales, 0) AS salesB,
+               COALESCE(periodC.days, 0) AS daysC,
+               COALESCE(periodC.sales, 0) AS salesC
+        FROM salesman sm
+        JOIN www_users wu ON wu.salesman = sm.salesmancode
+        JOIN securityroles sr ON wu.fullaccess = sr.secroleid
+        LEFT JOIN (
+            SELECT salesorders.salesperson, 
+                   COUNT(DISTINCT(salesorders.orddate)) AS days,
+                   SUM(salesorderdetails.linenetprice) AS sales
+            FROM salesorderdetails, salesorders
+            WHERE salesorderdetails.orderno = salesorders.orderno
+                AND salesorderdetails.completed = 1
+                AND salesorders.debtorno = '" . $Shop . "'
+                AND salesorders.orddate >= '". $StartDateA . "'
+                AND salesorders.orddate <= '". $YesterdayA . "'
+            GROUP BY salesorders.salesperson
+        ) AS periodA ON sm.salesmancode = periodA.salesperson
+        LEFT JOIN (
+            SELECT salesorders.salesperson, 
+                   COUNT(DISTINCT(salesorders.orddate)) AS days,
+                   SUM(salesorderdetails.linenetprice) AS sales
+            FROM salesorderdetails, salesorders
+            WHERE salesorderdetails.orderno = salesorders.orderno
+                AND salesorderdetails.completed = 1
+                AND salesorders.debtorno = '" . $Shop . "'
+                AND salesorders.orddate >= '". $StartDateB . "'
+                AND salesorders.orddate <= '". $YesterdayB . "'
+            GROUP BY salesorders.salesperson
+        ) AS periodB ON sm.salesmancode = periodB.salesperson
+        LEFT JOIN (
+            SELECT salesorders.salesperson, 
+                   COUNT(DISTINCT(salesorders.orddate)) AS days,
+                   SUM(salesorderdetails.linenetprice) AS sales
+            FROM salesorderdetails, salesorders
+            WHERE salesorderdetails.orderno = salesorders.orderno
+                AND salesorderdetails.completed = 1
+                AND salesorders.debtorno = '" . $Shop . "'
+                AND salesorders.orddate >= '". $StartDateC . "'
+                AND salesorders.orddate <= '". $YesterdayC . "'
+            GROUP BY salesorders.salesperson
+        ) AS periodC ON sm.salesmancode = periodC.salesperson
+        WHERE wu.customerid = '" . $Shop . "'
+            AND (COALESCE(periodA.sales, 0) > 0 OR COALESCE(periodB.sales, 0) > 0 OR COALESCE(periodC.sales, 0) > 0)
+        ORDER BY sm.salesmancode";
+                
+    $Result = DB_query($SQL);
+    if (DB_num_rows($Result) != 0){
+        $TableTitleText = _('SPG Performance in ') . $ShopName . ' (' . $Shop . ') ' . _('during the last ') . $NumDaysA . _(' days and ') . ($NumDaysB - $NumDaysA) . _(' previous days');
+        ShowTableTitle($TableTitleText);
+        echo '<div>';
+        echo '<table class="selection">
+                <thead>
+                    <tr>
+                        <th colspan="3">' . _('SPG') . '</th>
+                        <th colspan="2">' . $NumDaysA . ' ' . _('last days') . '</th>
+                        <th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' ' . _('previous days') . '</th>
+                        <th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' ' . _('previous days') . '</th>
+                    </tr>
+                    <tr>
+                        <th>' . _('Code') . '</th>
+                        <th>' . _('Name') . '</th>
+                        <th>' . _('Role') . '</th>
+                        <th class="SortedColumn">' . _('Days') . '</th>
+                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+                        <th class="SortedColumn">' . _('Days') . '</th>
+                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+                        <th class="SortedColumn">' . _('Days') . '</th>
+                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+                    </tr>
+                </thead>
+                <tbody>';
+        while ($MyRow = DB_fetch_array($Result)) {
+            $DailyA = ($MyRow['daysA'] != 0) ? ($MyRow['salesA']/$MyRow['daysA']) : 0;
+            $DailyB = ($MyRow['daysB'] != 0) ? ($MyRow['salesB']/$MyRow['daysB']) : 0;
+            $DailyC = ($MyRow['daysC'] != 0) ? ($MyRow['salesC']/$MyRow['daysC']) : 0;
+            
+            echo '<tr class="striped_row">
+                    <td>' . $MyRow['salesmancode'] . '</td>
+                    <td>' . $MyRow['salesmanname'] . '</td>
+                    <td>' . $MyRow['secrolename'] . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($MyRow['daysA'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($DailyA,0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($MyRow['daysB'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($DailyB,0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($MyRow['daysC'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($DailyC,0) . '</td>
+                    </tr>';
+        }
+        
+        // Add shop summary row by calculating totals - use a simpler query for compatibility
+        $ShopSummarySQL = "SELECT 
+            (SELECT COUNT(DISTINCT(orddate)) FROM salesorders 
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateA' AND orddate <= '$YesterdayA') AS totalDaysA,
+            (SELECT SUM(linenetprice) FROM salesorders 
+             JOIN salesorderdetails ON salesorders.orderno = salesorderdetails.orderno
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateA' 
+             AND orddate <= '$YesterdayA' AND salesorderdetails.completed = 1) AS totalA,
+            
+            (SELECT COUNT(DISTINCT(orddate)) FROM salesorders 
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateB' AND orddate <= '$YesterdayB') AS totalDaysB,
+            (SELECT SUM(linenetprice) FROM salesorders 
+             JOIN salesorderdetails ON salesorders.orderno = salesorderdetails.orderno
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateB' 
+             AND orddate <= '$YesterdayB' AND salesorderdetails.completed = 1) AS totalB,
+            
+            (SELECT COUNT(DISTINCT(orddate)) FROM salesorders 
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateC' AND orddate <= '$YesterdayC') AS totalDaysC,
+            (SELECT SUM(linenetprice) FROM salesorders 
+             JOIN salesorderdetails ON salesorders.orderno = salesorderdetails.orderno
+             WHERE debtorno = '$Shop' AND orddate >= '$StartDateC' 
+             AND orddate <= '$YesterdayC' AND salesorderdetails.completed = 1) AS totalC";
+        
+        $SummaryResult = DB_query($ShopSummarySQL);
+        if ($SummaryRow = DB_fetch_array($SummaryResult)) {
+            $ShopDailyA = ($SummaryRow['totalDaysA'] > 0) ? $SummaryRow['totalA'] / $SummaryRow['totalDaysA'] : 0;
+            $ShopDailyB = ($SummaryRow['totalDaysB'] > 0) ? $SummaryRow['totalB'] / $SummaryRow['totalDaysB'] : 0;
+            $ShopDailyC = ($SummaryRow['totalDaysC'] > 0) ? $SummaryRow['totalC'] / $SummaryRow['totalDaysC'] : 0;
+            
+            echo '<tr class="striped_row" style="font-weight:bold;">
+                    <td colspan="3">' . _('SHOP TOTAL') . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($SummaryRow['totalDaysA'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($ShopDailyA,0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($SummaryRow['totalDaysB'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($ShopDailyB,0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($SummaryRow['totalDaysC'],0) . '</td>
+                    <td class="number">' . locale_number_format_zero_blank($ShopDailyC,0) . '</td>
+                    </tr>';
+        }
+        
+        echo '</tbody>
+                </table>
+                </div>';
+    } else {
+        prnMsg(_('No performance data available for shop ') . $ShopName . ' (' . $Shop . ')', 'info');
+    }
 }
 
 function SPGPerformanceMonthy(){
@@ -340,190 +377,79 @@ function SPGPerformanceMonthy(){
 	$Last60D     = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-150));
 	$StartMonthD = substr($YesterdayD,0,7). '-01';	
 
-	$SQL = "SELECT locations.zone,
-					locations.loccode,
-					salesman.salesmancode,
-					salesman.salesmanname,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30A . "'
-							AND salesorders.orddate <= '". $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30A,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last60A . "'
-							AND salesorders.orddate <= '". $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days60A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last60A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last60A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthA . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdA,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30B . "'
-							AND salesorders.orddate <= '". $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30B . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30B,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last60B . "'
-							AND salesorders.orddate <= '". $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days60B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last60B . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last60B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthB . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdB,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30C . "'
-							AND salesorders.orddate <= '". $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30C . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30C,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last60C . "'
-							AND salesorders.orddate <= '". $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days60C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last60C . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last60C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthC . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdC,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30D . "'
-							AND salesorders.orddate <= '". $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30D . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30D,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last60D . "'
-							AND salesorders.orddate <= '". $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days60D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last60D . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last60D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthD . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdD
-			FROM locations, www_users, salesman
-			WHERE locations.loccode = www_users.defaultlocation 
-				AND www_users.salesman = salesman.salesmancode
-				AND ((SELECT SUM(linenetprice)
-								FROM salesorderdetails, salesorders
-								WHERE salesorderdetails.orderno = salesorders.orderno
-									AND salesorderdetails.completed = 1
-									AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last60A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-									AND salesorders.salesperson = salesman.salesmancode) > 0)
-			ORDER BY locations.zone,
-				locations.loccode,
-				salesman.salesmancode";
+	// SQL Query optimized by Claude 3.7, around 10X faster than the previous one
+	$SQL = "SELECT 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode,
+		salesman.salesmanname,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30D ."' AND so.orddate <= '". $YesterdayD ."' THEN so.orddate END) AS days30D,
+		SUM(CASE WHEN so.orddate >= '". $Last30D ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS last30D,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last60D ."' AND so.orddate <= '". $YesterdayD ."' THEN so.orddate END) AS days60D,
+		SUM(CASE WHEN so.orddate >= '". $Last60D ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS last60D,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthD ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS mtdD,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30C ."' AND so.orddate <= '". $YesterdayC ."' THEN so.orddate END) AS days30C,
+		SUM(CASE WHEN so.orddate >= '". $Last30C ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS last30C,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last60C ."' AND so.orddate <= '". $YesterdayC ."' THEN so.orddate END) AS days60C,
+		SUM(CASE WHEN so.orddate >= '". $Last60C ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS last60C,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthC ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS mtdC,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30B ."' AND so.orddate <= '". $YesterdayB ."' THEN so.orddate END) AS days30B,
+		SUM(CASE WHEN so.orddate >= '". $Last30B ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS last30B,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last60B ."' AND so.orddate <= '". $YesterdayB ."' THEN so.orddate END) AS days60B,
+		SUM(CASE WHEN so.orddate >= '". $Last60B ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS last60B,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthB ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS mtdB,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30A ."' AND so.orddate <= '". $YesterdayA ."' THEN so.orddate END) AS days30A,
+		SUM(CASE WHEN so.orddate >= '". $Last30A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS last30A,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last60A ."' AND so.orddate <= '". $YesterdayA ."' THEN so.orddate END) AS days60A,
+		SUM(CASE WHEN so.orddate >= '". $Last60A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS last60A,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthA ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS mtdA
+	FROM locations
+	JOIN salesorders so 
+		ON so.fromstkloc = locations.loccode
+	JOIN salesorderdetails sod
+		ON sod.orderno = so.orderno
+			AND sod.completed = 1
+	JOIN salesman 
+		ON so.salesperson = salesman.salesmancode
+	WHERE 
+		so.orddate >= '". $Last60D ."'
+		AND so.orddate <= '". $YesterdayA ."'
+		AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+	GROUP BY 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode
+	HAVING 
+		SUM(CASE WHEN so.orddate >= '". $Last60A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) > 0
+	ORDER BY 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = "SPG Monthly performance";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
+		$TableHeader = '<tr>
+							<th>' . 'Zone' . '</th>
+							<th>' . 'Shop' . '</th>
+							<th>' . 'SPG' . '</th>
+							<th>' . 'Name' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 30d' . '</th>
+							<th>' . 'last 60d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 30d' . '</th>
+							<th>' . 'last 60d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 30d' . '</th>
+							<th>' . 'last 60d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 30d' . '</th>
+							<th>' . 'last 60d' . '</th>
+						</tr>';
+
 		echo '<table class="selection">
 				<thead>
 					<tr>
@@ -533,32 +459,14 @@ function SPGPerformanceMonthy(){
 						<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
 						<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
 					</tr>
-					<tr>
-						<th>' . 'Zone' . '</th>
-						<th>' . 'Shop' . '</th>
-						<th>' . 'SPG' . '</th>
-						<th>' . 'Name' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 30d' . '</th>
-						<th>' . 'last 60d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 30d' . '</th>
-						<th>' . 'last 60d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 30d' . '</th>
-						<th>' . 'last 60d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 30d' . '</th>
-						<th>' . 'last 60d' . '</th>
-					</tr>
 				</thead>
 				<tbody>';
-		$k = 0; //row colour counter
-		$lastshop = "";
+		$LastShop = "";
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($lastshop != $MyRow['loccode']){
+			if ($LastShop != $MyRow['loccode']){
 				echo $TableHeader;
-			}
+				$LastShop = $MyRow['loccode'];
+		}
 			$Last30D = ($MyRow['days30D'] != 0) ? ($MyRow['last30D']/$MyRow['days30D']) : 0;
 			$Last60D = ($MyRow['days60D'] != 0) ? ($MyRow['last60D']/$MyRow['days60D']) : 0;
 			$Last30C = ($MyRow['days30C'] != 0) ? ($MyRow['last30C']/$MyRow['days30C']) : 0;
@@ -585,7 +493,6 @@ function SPGPerformanceMonthy(){
 					<td class="number">' . locale_number_format_zero_blank($Last30A,0) . '</td>
 					<td class="number">' . locale_number_format_zero_blank($Last60A,0) . '</td>
 					</tr>';
-			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
 				</table>
@@ -615,189 +522,78 @@ function SPGPerformanceWeekly(){
 	$Last30D     = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-51));
 	$StartMonthD = substr($YesterdayD,0,7). '-01';	
 
-	$SQL = "SELECT locations.zone,
-					locations.loccode,
-					salesman.salesmancode,
-					salesman.salesmanname,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last7A . "'
-							AND salesorders.orddate <= '". $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days7A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last7A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last7A,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30A . "'
-							AND salesorders.orddate <= '". $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30A,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthA . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdA,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last7B . "'
-							AND salesorders.orddate <= '". $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days7B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last7B . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last7B,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30B . "'
-							AND salesorders.orddate <= '". $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30B . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30B,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthB . "'
-							AND salesorders.orddate <= '" . $YesterdayB . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdB,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last7C . "'
-							AND salesorders.orddate <= '". $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days7C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last7C . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last7C,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30C . "'
-							AND salesorders.orddate <= '". $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30C . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30C,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthC . "'
-							AND salesorders.orddate <= '" . $YesterdayC . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdC,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last7D . "'
-							AND salesorders.orddate <= '". $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days7D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last7D . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last7D,
-					(SELECT COUNT(DISTINCT(salesorders.orddate))
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '". $Last30D . "'
-							AND salesorders.orddate <= '". $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS days30D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30D . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS last30D,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $StartMonthD . "'
-							AND salesorders.orddate <= '" . $YesterdayD . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS mtdD
-			FROM locations, www_users, salesman
-			WHERE locations.loccode = www_users.defaultlocation 
-				AND www_users.salesman = salesman.salesmancode
-				AND ((SELECT SUM(linenetprice)
-								FROM salesorderdetails, salesorders
-								WHERE salesorderdetails.orderno = salesorders.orderno
-									AND salesorderdetails.completed = 1
-									AND salesorders.fromstkloc = locations.loccode
-							AND salesorders.orddate >= '" . $Last30A . "'
-							AND salesorders.orddate <= '" . $YesterdayA . "'
-									AND salesorders.salesperson = salesman.salesmancode) > 0)
-			ORDER BY locations.zone,
-				locations.loccode,
-				salesman.salesmancode";
+	// SQL Query optimized by Claude 3.7, around 10X faster than the previous one
+	$SQL = "SELECT 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode,
+		salesman.salesmanname,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last7D ."' AND so.orddate <= '". $YesterdayD ."' THEN so.orddate END) AS days7D,
+		SUM(CASE WHEN so.orddate >= '". $Last7D ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS last7D,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30D ."' AND so.orddate <= '". $YesterdayD ."' THEN so.orddate END) AS days30D,
+		SUM(CASE WHEN so.orddate >= '". $Last30D ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS last30D,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthD ."' AND so.orddate <= '". $YesterdayD ."' THEN sod.linenetprice ELSE 0 END) AS mtdD,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last7C ."' AND so.orddate <= '". $YesterdayC ."' THEN so.orddate END) AS days7C,
+		SUM(CASE WHEN so.orddate >= '". $Last7C ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS last7C,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30C ."' AND so.orddate <= '". $YesterdayC ."' THEN so.orddate END) AS days30C,
+		SUM(CASE WHEN so.orddate >= '". $Last30C ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS last30C,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthC ."' AND so.orddate <= '". $YesterdayC ."' THEN sod.linenetprice ELSE 0 END) AS mtdC,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last7B ."' AND so.orddate <= '". $YesterdayB ."' THEN so.orddate END) AS days7B,
+		SUM(CASE WHEN so.orddate >= '". $Last7B ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS last7B,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30B ."' AND so.orddate <= '". $YesterdayB ."' THEN so.orddate END) AS days30B,
+		SUM(CASE WHEN so.orddate >= '". $Last30B ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS last30B,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthB ."' AND so.orddate <= '". $YesterdayB ."' THEN sod.linenetprice ELSE 0 END) AS mtdB,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last7A ."' AND so.orddate <= '". $YesterdayA ."' THEN so.orddate END) AS days7A,
+		SUM(CASE WHEN so.orddate >= '". $Last7A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS last7A,
+		COUNT(DISTINCT CASE WHEN so.orddate >= '". $Last30A ."' AND so.orddate <= '". $YesterdayA ."' THEN so.orddate END) AS days30A,
+		SUM(CASE WHEN so.orddate >= '". $Last30A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS last30A,
+		SUM(CASE WHEN so.orddate >= '". $StartMonthA ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) AS mtdA
+	FROM locations
+	JOIN salesorders so
+		ON so.fromstkloc = locations.loccode
+	JOIN salesorderdetails sod 
+		ON sod.orderno = so.orderno
+			AND sod.completed = 1
+	JOIN salesman 
+		ON so.salesperson = salesman.salesmancode
+	WHERE so.orddate >= '". $Last30D ."'
+		AND so.orddate <= '". $YesterdayA ."'
+		AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+	GROUP BY 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode
+	HAVING 
+		SUM(CASE WHEN so.orddate >= '". $Last30A ."' AND so.orddate <= '". $YesterdayA ."' THEN sod.linenetprice ELSE 0 END) > 0
+	ORDER BY 
+		locations.zone,
+		locations.loccode,
+		salesman.salesmancode";
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = "SPG Weekly performance";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
+		$TableHeader = '<tr>
+							<th>' . 'Zone' . '</th>
+							<th>' . 'Shop' . '</th>
+							<th>' . 'SPG' . '</th>
+							<th>' . 'Name' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 7d' . '</th>
+							<th>' . 'last 30d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 7d' . '</th>
+							<th>' . 'last 30d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 7d' . '</th>
+							<th>' . 'last 30d' . '</th>
+							<th>' . 'MTD' . '</th>
+							<th>' . 'Last 7d' . '</th>
+							<th>' . 'last 30d' . '</th>
+						</tr>';
+
 		echo '<table class="selection">
 				<thead>
 					<tr>
@@ -807,31 +603,13 @@ function SPGPerformanceWeekly(){
 						<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
 						<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
 					</tr>
-					<tr>
-						<th>' . 'Zone' . '</th>
-						<th>' . 'Shop' . '</th>
-						<th>' . 'SPG' . '</th>
-						<th>' . 'Name' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 7d' . '</th>
-						<th>' . 'last 30d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 7d' . '</th>
-						<th>' . 'last 30d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 7d' . '</th>
-						<th>' . 'last 30d' . '</th>
-						<th>' . 'MTD' . '</th>
-						<th>' . 'Last 7d' . '</th>
-						<th>' . 'last 30d' . '</th>
-					</tr>
 				</thead>
 				<tbody>';
-		$k = 0; //row colour counter
-		$lastshop = "";
+		$LastShop = "";
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($lastshop != $MyRow['loccode']){
+			if ($LastShop != $MyRow['loccode']){
 				echo $TableHeader;
+				$LastShop = $MyRow['loccode'];
 			}
 			$Last30D = ($MyRow['days30D'] != 0) ? ($MyRow['last30D']/$MyRow['days30D']) : 0;
 			$Last7D = ($MyRow['days7D'] != 0) ? ($MyRow['last7D']/$MyRow['days7D']) : 0;
@@ -859,7 +637,6 @@ function SPGPerformanceWeekly(){
 					<td class="number">' . locale_number_format_zero_blank($Last7A,0) . '</td>
 					<td class="number">' . locale_number_format_zero_blank($Last30A,0) . '</td>
 					</tr>';
-			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
 				</table>
@@ -873,143 +650,44 @@ function HourlySales($numDays, $RootPath){
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
-	$SQL = "SELECT debtorsmaster.debtorno,
-				locations.zone,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime < '08:00:00') AS sales07,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '08:00:00'
-					AND salesorders.ordtime < '09:00:00') AS sales08,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '09:00:00'
-					AND salesorders.ordtime < '10:00:00') AS sales09,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '10:00:00'
-					AND salesorders.ordtime <  '11:00:00') AS sales10,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '11:00:00'
-					AND salesorders.ordtime <  '12:00:00') AS sales11,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '12:00:00'
-					AND salesorders.ordtime <  '13:00:00') AS sales12,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '13:00:00'
-					AND salesorders.ordtime <  '14:00:00') AS sales13,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '14:00:00'
-					AND salesorders.ordtime <  '15:00:00') AS sales14,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '15:00:00'
-					AND salesorders.ordtime <  '16:00:00') AS sales15,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '16:00:00'
-					AND salesorders.ordtime <  '17:00:00') AS sales16,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '17:00:00'
-					AND salesorders.ordtime <  '18:00:00') AS sales17,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '18:00:00'
-					AND salesorders.ordtime <  '19:00:00') AS sales18,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '19:00:00'
-					AND salesorders.ordtime <  '20:00:00') AS sales19,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '20:00:00'
-					AND salesorders.ordtime <  '21:00:00') AS sales20,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '21:00:00'
-					AND salesorders.ordtime <  '22:00:00') AS sales21,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '22:00:00'
-					AND salesorders.ordtime <  '23:00:00') AS sales22,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime >= '23:00:00'
-					AND salesorders.ordtime <  '24:00:00') AS sales23,
-				(SELECT MIN(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS firstsale,
-				(SELECT MAX(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS lastsale					
-			FROM debtorsmaster, custbranch, locations
-			WHERE debtorsmaster.debtorno = custbranch.debtorno
-				AND custbranch.defaultlocation = locations.loccode
-				AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			ORDER BY locations.zone, 
-				debtorsmaster.debtorno";
+	// Optimized query using CASE WHEN for conditional aggregation
+	$SQL = "SELECT dm.debtorno,
+				loc.zone,
+				MIN(so.ordtime) AS firstsale,
+				MAX(so.ordtime) AS lastsale,
+				SUM(CASE WHEN so.ordtime < '08:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales07,
+				SUM(CASE WHEN so.ordtime >= '08:00:00' AND so.ordtime < '09:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales08,
+				SUM(CASE WHEN so.ordtime >= '09:00:00' AND so.ordtime < '10:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales09,
+				SUM(CASE WHEN so.ordtime >= '10:00:00' AND so.ordtime < '11:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales10,
+				SUM(CASE WHEN so.ordtime >= '11:00:00' AND so.ordtime < '12:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales11,
+				SUM(CASE WHEN so.ordtime >= '12:00:00' AND so.ordtime < '13:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales12,
+				SUM(CASE WHEN so.ordtime >= '13:00:00' AND so.ordtime < '14:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales13,
+				SUM(CASE WHEN so.ordtime >= '14:00:00' AND so.ordtime < '15:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales14,
+				SUM(CASE WHEN so.ordtime >= '15:00:00' AND so.ordtime < '16:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales15,
+				SUM(CASE WHEN so.ordtime >= '16:00:00' AND so.ordtime < '17:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales16,
+				SUM(CASE WHEN so.ordtime >= '17:00:00' AND so.ordtime < '18:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales17,
+				SUM(CASE WHEN so.ordtime >= '18:00:00' AND so.ordtime < '19:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales18,
+				SUM(CASE WHEN so.ordtime >= '19:00:00' AND so.ordtime < '20:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales19,
+				SUM(CASE WHEN so.ordtime >= '20:00:00' AND so.ordtime < '21:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales20,
+				SUM(CASE WHEN so.ordtime >= '21:00:00' AND so.ordtime < '22:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales21,
+				SUM(CASE WHEN so.ordtime >= '22:00:00' AND so.ordtime < '23:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales22,
+				SUM(CASE WHEN so.ordtime >= '23:00:00' THEN (so.klpaidcash + so.klpaidcreditcard) ELSE 0 END) AS sales23
+			FROM debtorsmaster dm
+			JOIN custbranch cb 
+				ON dm.debtorno = cb.debtorno
+			JOIN locations loc 
+				ON cb.defaultlocation = loc.loccode
+			JOIN salesorders so 
+				ON so.debtorno = dm.debtorno
+			WHERE so.orddate >= '". $InitialDate ."'
+				AND so.orddate <= '". $Yesterday ."'
+				AND loc.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
+				AND dm.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
+			GROUP BY dm.debtorno,
+				loc.zone
+			ORDER BY loc.zone,
+				dm.debtorno";
+
 
 	$Result = DB_query($SQL);
 	$ShowHeader = TRUE;

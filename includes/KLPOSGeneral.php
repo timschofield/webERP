@@ -359,9 +359,11 @@ function AccountPaymentRetail($PaymentMethod,
 							$NetPayment,
 							$Tag,
 							$GLAccountBankCommission,
+							$DaysDelaySettlement,
 							$ExRate){
 
 	$ReceiptNumber = GetNextTransNo(12);
+	$SettlementDate = date('Y-m-d', strtotime("+" . (int)$DaysDelaySettlement . " days"));
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $CustomerReference  . 
@@ -377,7 +379,7 @@ function AccountPaymentRetail($PaymentMethod,
 
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
-					Date('Y-m-d'),
+					$SettlementDate,
 					$PeriodNo,
 					$BankAccount,
 					$Description,
@@ -390,7 +392,7 @@ function AccountPaymentRetail($PaymentMethod,
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		InsertIntoGLTrans("12", 
 						$ReceiptNumber, 
-						Date('Y-m-d'),
+						$SettlementDate,
 						$PeriodNo,
 						$GLAccountBankCommission,
 						$Description,
@@ -402,9 +404,9 @@ function AccountPaymentRetail($PaymentMethod,
 	/* Now Credit Debtors account with receipt */
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
-					Date('Y-m-d'),
+					$SettlementDate,
 					$PeriodNo,
-					$_SESSION['CompanyRecord']['debtorsact'],
+					$_SESSION['AccountPOSReceivable'],
 					$Description,
 					round(-$AmountPaid/$ExRate),
 					$Tag,
@@ -412,7 +414,6 @@ function AccountPaymentRetail($PaymentMethod,
 					);
 	return $ReceiptNumber;
 }
-
 
 function AccountDiscountOnOrderRetail($TypeDiscount,
 							$ReceiptNumber,
@@ -884,7 +885,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 		$TextToPrint .= 'Paid AMEX EDC BCA: ' . number_format($_POST['AmountPaidAmexBCA'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidWeChat'] > 0){
-		$TextToPrint .= 'Paid WeChat/Alipay: ' . number_format($_POST['AmountPaidWeChat'],0) . $NewLine;
+		$TextToPrint .= 'Paid Alipay/WeChat: ' . number_format($_POST['AmountPaidWeChat'],0) . $NewLine;
 	}
 	if ($_POST['AmountPaidQRIS'] > 0){
 		$TextToPrint .= 'Paid QRIS Mandiri: ' . number_format($_POST['AmountPaidQRIS'],0) . $NewLine;

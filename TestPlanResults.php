@@ -300,7 +300,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 							<td>' . $MyRow['lotkey'] . '</td>
 							<td>' .  $MyRow['identifier']  . '</td>
 							<td>' .  $MyRow['createdby']  . '</td>
-							<td>' . $FormatedSampleDate . '</td>
+							<td class="date">' . $FormatedSampleDate . '</td>
 							<td>' . $MyRow['comments'] . '</td>
 							<td>' . $CertAllowed . '</td>
 							</tr>';
@@ -914,7 +914,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . $MyRow['method'] . '</td>
 			<td>' . $RangeDisplay . '</td>
 			<td>' . $MyRow['targetvalue'] . ' ' . $MyRow['units'] . '</td>
-			<td><input type="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
+			<td class="date"><input type="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
 			<td><select name="TestedBy' .$x .'"/>';
 	while ($TechRow = DB_fetch_array($TechResult)) {
 		if ($TechRow['userid'] == $MyRow['testedby']){

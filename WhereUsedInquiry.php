@@ -101,8 +101,8 @@ if (isset($StockID)) {
 					<td>' . $MyRow['workcentreadded']. '</td>
 					<td>' . $MyRow['loccode']. '</td>
 					<td class="number">' . locale_number_format($MyRow['quantity'],'Variable') . '</td>
-					<td>' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
-					<td>' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
+					<td class="date">' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
+					<td class="date">' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
                 </tr>';
 
 			//end of page full new headings if

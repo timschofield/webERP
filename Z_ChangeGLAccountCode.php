@@ -29,7 +29,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
 		DB_Txn_Begin();
-	ChangeGLAcoountCode ($_POST['NewAccountCode'], $_POST['OldAccountCode']);
+	ChangeGLAcoountCode($_POST['NewAccountCode'], $_POST['OldAccountCode']);
 
 		DB_Txn_Commit();
 

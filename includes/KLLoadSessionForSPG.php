@@ -29,6 +29,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.areasalescashothers,
 					klretailpartners.cashsalesreported,
 					klretailpartners.hppcompensation,
+					klretailpartners.accountposreceivable,
 					klretailpartners.accounthppcompensation,
 					klretailpartners.accountbankdanamon,
 					klretailpartners.accountbankbni,
@@ -54,6 +55,12 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
 					klretailpartners.counterinvoicec,
+					klretailpartners.settlementdelaydanamon,
+					klretailpartners.settlementdelaybni,
+					klretailpartners.settlementdelaybca,
+					klretailpartners.settlementdelaymandiri,
+					klretailpartners.settlementdelayqris,
+					klretailpartners.settlementdelaywechat,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -131,6 +138,7 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['CashSalesReported'] = $MyRow['cashsalesreported'];
 		$_SESSION['HPPCompensation'] = $MyRow['hppcompensation'];
 		$_SESSION['AccountHPPCompensation'] = $MyRow['accounthppcompensation'];
+		$_SESSION['AccountPOSReceivable'] = $MyRow['accountposreceivable'];
 		$_SESSION['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
 		$_SESSION['AccountBankBNI'] = $MyRow['accountbankbni'];
 		$_SESSION['AccountBankMandiri'] = $MyRow['accountbankmandiri'];
@@ -155,6 +163,12 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['CounterInvoiceA'] = $MyRow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
 		$_SESSION['CounterInvoiceC'] = $MyRow['counterinvoicec'];
+		$_SESSION['SettlementDelayDanamon'] = $MyRow['settlementdelaydanamon'];
+		$_SESSION['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
+		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
+		$_SESSION['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
+		$_SESSION['SettlementDelayQRIS'] = $MyRow['settlementdelayqris'];
+		$_SESSION['SettlementDelayWeChat'] = $MyRow['settlementdelaywechat'];
 		
 	}
 }

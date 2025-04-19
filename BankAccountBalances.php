@@ -37,15 +37,21 @@ if (DB_num_rows($Result) == 0) {
 	echo _('There are no bank accounts defined that you have authority to see');
 } else {
 	while ($MyBankRow = DB_fetch_array($Result)) {
-		$CurrBalanceSQL = "SELECT SUM(amount) AS balance FROM banktrans WHERE bankact='" . $MyBankRow['accountcode'] . "'";
+		$CurrBalanceSQL = "SELECT SUM(amount) AS balance
+							FROM banktrans
+							WHERE bankact='" . $MyBankRow['accountcode'] . "'";
 		$CurrBalanceResult = DB_query($CurrBalanceSQL);
 		$CurrBalanceRow = DB_fetch_array($CurrBalanceResult);
 
-		$FuncBalanceSQL = "SELECT SUM(amount) AS balance FROM gltrans WHERE account='" . $MyBankRow['accountcode'] . "'";
+		$FuncBalanceSQL = "SELECT SUM(amount) AS balance
+							FROM gltotals 
+							WHERE account='" . $MyBankRow['accountcode'] . "'";
 		$FuncBalanceResult = DB_query($FuncBalanceSQL);
 		$FuncBalanceRow = DB_fetch_array($FuncBalanceResult);
 
-		$DecimalPlacesSQL = "SELECT decimalplaces FROM currencies WHERE currabrev='" . $MyBankRow['currcode'] . "'";
+		$DecimalPlacesSQL = "SELECT decimalplaces
+							FROM currencies
+							WHERE currabrev='" . $MyBankRow['currcode'] . "'";
 		$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
 		$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
 

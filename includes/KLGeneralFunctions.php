@@ -1728,6 +1728,7 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 		
 		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountposreceivable", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankbni", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);

@@ -354,6 +354,7 @@ if ($_GET['Action'] == 'Enter'){
 	if (isset($_POST['DEL']) AND is_array($_POST['DEL']) ){
 		foreach ($_POST['DEL'] as $id=>$val){
 			if ($val == 'on'){
+				$id = (int)$id;
 				$SQL = "DELETE FROM stockcounts WHERE id='".$id."'";
 				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
 				$EnterResult = DB_query($SQL,$ErrMsg);

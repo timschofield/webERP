@@ -1436,7 +1436,7 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPath){
 	
-	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Special Kantor Request, Service, Shop Online and Return to Supplier)";
+	$Exclusions = " (excluding items in Active Transfers, Pending of Transfer, Change of Price, Move to Discount, Special Kantor Request, Service, Shop Online and Return to Supplier)";
 	if ($WhereisQOH == "KANTOR"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' but with QOH >= ' . $MinQOH .' in KANTOR' . $Exclusions;
 		$SQLQty = "(SELECT SUM(l.quantity)

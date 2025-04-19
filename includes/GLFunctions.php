@@ -8,6 +8,8 @@ GetDescriptionsFromTagArray() - Retrieves descriptions for an array of tag refer
 GetGLAccountBalance() - Retrieves the balance for a GL account up to a specific period
 GetGLAccountValueBetweenTwoDates() - Retrieves the total value for a GL account between two dates, with an optional filter
 InsertGLTags() - Inserts tags into the GL tags table for a journal line
+RelativeChange() - Calculates the relative change between selected and previous periods
+
 *************************************************************************************************************/
 
 /*************************************************************************************************************
@@ -130,5 +132,22 @@ function GetCashSalesValueStillFloating($Company, $DateFrom, $DateTo){
 	return ($MyRow['total'] ?? 0);
 }
 
+/*************************************************************************************************************
+Brief Description: Calculates the relative change between selected and previous periods. Uses percent with locale number format.
+Parameters:
+	$SelectedPeriod - The value for the selected period
+	$PreviousPeriod - The value for the previous period
+Returns:
+	string - The relative change formatted as a percentage, or 'N/A' if the previous period is zero
+*************************************************************************************************************/
+function RelativeChange($SelectedPeriod, $PreviousPeriod) {
+	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
+	if (ABS($PreviousPeriod) >= 0.01) {
+		return locale_number_format(($SelectedPeriod - $PreviousPeriod) * 100 / $PreviousPeriod,
+			$_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	} else {
+		return _('N/A');
+	}
+}
 
 ?>
