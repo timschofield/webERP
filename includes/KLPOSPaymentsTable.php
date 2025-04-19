@@ -18,7 +18,7 @@ echo '</tr>';
 /* Always show cash payments*/
 echo '<tr>';
 echo '<th>' . _('Cash Payments') . '</th>'; 
-echo '<td>' . _('Amount Paid Cash') . ':</td>
+echo '<td>' . _('Amount Cash') . ':</td>
 	  <td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>';
 echo '</tr>';
 
@@ -26,7 +26,7 @@ echo '</tr>';
 echo '<tr>';
 echo '<th>' . _('Credit Card Payments') . '</th>'; 
 if ($_SESSION['ComissionCCBNI'] != 0){
-	echo '<td>' . _('Amount Paid CC EDC BNI') . ':</td>
+	echo '<td>' . _('Amount CC EDC BNI') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCBNI" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBNI'] . '" /></td>';
 }
 echo '</tr>';
@@ -34,7 +34,7 @@ echo '</tr>';
 if ($_SESSION['ComissionCCBCA'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC BCA') . ':</td>
+	echo '<td>' . _('Amount CC EDC BCA') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>';
 	echo '</tr>';
 }
@@ -42,7 +42,7 @@ if ($_SESSION['ComissionCCBCA'] != 0){
 if ($_SESSION['ComissionCCMandiri'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Mandiri') . ':</td>
+	echo '<td>' . _('Amount CC EDC Mandiri') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>';
 	echo '</tr>';
 }
@@ -50,7 +50,7 @@ if ($_SESSION['ComissionCCMandiri'] != 0){
 if ($_SESSION['ComissionCCDanamon'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid CC EDC Danamon') . ':</td>
+	echo '<td>' . _('Amount CC EDC Danamon') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>';
 	echo '</tr>';
 }
@@ -58,7 +58,7 @@ if ($_SESSION['ComissionCCDanamon'] != 0){
 echo '<tr>';
 echo '<th>' . _('AMEX Payments') . '</th>'; 
 if ($_SESSION['ComissionAmexBCA'] != 0){
-	echo '<td>' . _('Amount Paid AMEX EDC BCA') . ':</td>
+	echo '<td>' . _('Amount AMEX EDC BCA') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
 }
 echo '</tr>';
@@ -66,7 +66,7 @@ echo '</tr>';
 if ($_SESSION['ComissionAmexBNI'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid AMEX EDC BNI') . ':</td>
+	echo '<td>' . _('Amount AMEX EDC BNI') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidAmexBNI" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBNI'] . '" /></td>';
 	echo '</tr>';
 }
@@ -74,7 +74,7 @@ if ($_SESSION['ComissionAmexBNI'] != 0){
 echo '<tr>';
 echo '<th>' . _('Other Payments') . '</th>'; 
 if ($_SESSION['ComissionQRIS'] != 0){
-	echo '<td>' . _('Amount Paid QRIS Mandiri') . ':</td>
+	echo '<td>' . _('Amount QRIS Mandiri') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
 }
 echo '</tr>';
@@ -82,7 +82,7 @@ echo '</tr>';
 if ($_SESSION['ComissionWeChat'] != 0){
 	echo '<tr>';
 	echo '<td></td>';
-	echo '<td>' . _('Amount Paid Alipay/WeChat') . ':</td>
+	echo '<td>' . _('Amount Alipay/WeChat') . ':</td>
 		  <td><input type="text" class="number" name="AmountPaidWeChat" maxlength="12" size="12" value="' . $_POST['AmountPaidWeChat'] . '" /></td>';
 	echo '</tr>';
 }
