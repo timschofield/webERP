@@ -55,6 +55,10 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 					klretailpartners.counterinvoicea,
 					klretailpartners.counterinvoiceb,
 					klretailpartners.counterinvoicec,
+					klretailpartners.settlementdelaydanamon,
+					klretailpartners.settlementdelaybni,
+					klretailpartners.settlementdelaybca,
+					klretailpartners.settlementdelaymandiri,
 					custbranch.brname,
 					custbranch.braddress1,
 					custbranch.specialinstructions,
@@ -157,6 +161,10 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		$_SESSION['CounterInvoiceA'] = $MyRow['counterinvoicea'];
 		$_SESSION['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
 		$_SESSION['CounterInvoiceC'] = $MyRow['counterinvoicec'];
+		$_SESSION['SettlementDelayDanamon'] = $MyRow['settlementdelaydanamon'];
+		$_SESSION['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
+		$_SESSION['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
+		$_SESSION['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
 		
 	}
 }

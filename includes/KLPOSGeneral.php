@@ -359,9 +359,11 @@ function AccountPaymentRetail($PaymentMethod,
 							$NetPayment,
 							$Tag,
 							$GLAccountBankCommission,
+							$DaysDelaySettlement,
 							$ExRate){
 
 	$ReceiptNumber = GetNextTransNo(12);
+	$SettlementDate = date('Y-m-d', strtotime("+" . (int)$DaysDelaySettlement . " days"));
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $CustomerReference  . 
@@ -377,7 +379,7 @@ function AccountPaymentRetail($PaymentMethod,
 
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
-					Date('Y-m-d'),
+					$SettlementDate,
 					$PeriodNo,
 					$BankAccount,
 					$Description,
@@ -390,7 +392,7 @@ function AccountPaymentRetail($PaymentMethod,
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		InsertIntoGLTrans("12", 
 						$ReceiptNumber, 
-						Date('Y-m-d'),
+						$SettlementDate,
 						$PeriodNo,
 						$GLAccountBankCommission,
 						$Description,
@@ -402,7 +404,7 @@ function AccountPaymentRetail($PaymentMethod,
 	/* Now Credit Debtors account with receipt */
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
-					Date('Y-m-d'),
+					$SettlementDate,
 					$PeriodNo,
 					$_SESSION['AccountPOSReceivable'],
 					$Description,
@@ -412,7 +414,6 @@ function AccountPaymentRetail($PaymentMethod,
 					);
 	return $ReceiptNumber;
 }
-
 
 function AccountDiscountOnOrderRetail($TypeDiscount,
 							$ReceiptNumber,

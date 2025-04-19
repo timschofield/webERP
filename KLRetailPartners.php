@@ -67,9 +67,13 @@ if(isset($_POST['submit'])) {
 					hppcompensation ='" . $_POST['HPPCompensation'] . "',
 					accounthppcompensation='" . $_POST['AccountHPPCompensation'] . "',
 					accountbankdanamon='" . $_POST['AccountBankDanamon'] . "',
+					settlementdelaydanamon='" . filter_number_format($_POST['SettlementDelayDanamon']) . "',
 					accountbankbni='" . $_POST['AccountBankBNI'] . "',
+					settlementdelaybni='" . filter_number_format($_POST['SettlementDelayBNI']) . "',
 					accountbankmandiri = '" . $_POST['AccountBankMandiri'] . "',
+					settlementdelaymandiri='" . filter_number_format($_POST['SettlementDelayMandiri']) . "',
 					accountbankbca ='" . $_POST['AccountBankBCA'] . "',
+					settlementdelaybca='" . filter_number_format($_POST['SettlementDelayBCA']) . "',
 					accountcomissioncreditcard ='" . $_POST['AccountComissionCreditCard'] . "',
 					comissionccdanamon = '" . $_POST['ComissionCCDanamon'] . "',
 					comissionamexdanamon = '" . $_POST['ComissionAmexDanamon'] . "',
@@ -128,9 +132,13 @@ if(isset($_POST['submit'])) {
 		unset($_POST['HPPCompensation']);
 		unset($_POST['AccountHPPCompensation']);
 		unset($_POST['AccountBankDanamon']);
+		unset($_POST['SettlementDelayDanamon']);
 		unset($_POST['AccountBankBNI']);
+		unset($_POST['SettlementDelayBNI']);
 		unset($_POST['AccountBankMandiri']);
+		unset($_POST['SettlementDelayMandiri']);
 		unset($_POST['AccountBankBCA']);
+		unset($_POST['SettlementDelayBCA']);
 		unset($_POST['AccountComissionCreditCard']);
 		unset($_POST['ComissionCCDanamon']);
 		unset($_POST['ComissionAmexDanamon']);
@@ -185,9 +193,13 @@ if(isset($_POST['submit'])) {
 								hppcompensation,
 								accounthppcompensation,
 								accountbankdanamon,
+								settlementdelaydanamon,
 								accountbankbni,
+								settlementdelaybni,
 								accountbankmandiri,
+								settlementdelaymandiri,
 								accountbankbca,
+								settlementdelaybca,
 								accountcomissioncreditcard,
 								comissionccdanamon,
 								comissionamexdanamon,
@@ -236,9 +248,13 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['HPPCompensation'] . "',
 								'" . $_POST['AccountHPPCompensation'] . "',
 								'" . $_POST['AccountBankDanamon'] . "',
+								'" . filter_number_format($_POST['SettlementDelayDanamon']) . "',
 								'" . $_POST['AccountBankBNI'] . "',
+								'" . filter_number_format($_POST['SettlementDelayBNI']) . "',
 								'" . $_POST['AccountBankMandiri'] . "',
+								'" . filter_number_format($_POST['SettlementDelayMandiri']) . "',
 								'" . $_POST['AccountBankBCA'] . "',
+								'" . filter_number_format($_POST['SettlementDelayBCA']) . "',
 								'" . $_POST['AccountComissionCreditCard'] . "',
 								'" . $_POST['ComissionCCDanamon'] . "',
 								'" . $_POST['ComissionAmexDanamon'] . "',
@@ -298,13 +314,15 @@ if(isset($_POST['submit'])) {
 		unset($_POST['AccountBankBCA']);
 		unset($_POST['AccountComissionCreditCard']);
 		unset($_POST['AccountBankDanamon']);
+		unset($_POST['SettlementDelayDanamon']);
 		unset($_POST['AccountBankBNI']);
+		unset($_POST['SettlementDelayBNI']);
 		unset($_POST['ComissionCCDanamon']);
 		unset($_POST['ComissionAmexDanamon']);
 		unset($_POST['ComissionCCBNI']);
 		unset($_POST['ComissionAmexBNI']);
-		unset($_POST['Priority']);
 		unset($_POST['ComissionCCBCA']);
+		unset($_POST['SettlementDelayBCA']);
 		unset($_POST['ComissionAmexBCA']);
 		unset($_POST['PercentConsignmentPTADU']);
 		unset($_POST['AccountConsignmentSalesPTADU']);
@@ -454,12 +472,16 @@ if(!isset($_GET['delete'])) {
 					areasalescash,
 					areasalescashothers,
 					accountbankdanamon,
+					settlementdelaydanamon,
 					accountbankbni,
+					settlementdelaybni,
 					hppcompensation,
 					cashsalesreported,
 					accounthppcompensation,
 					accountbankmandiri,
+					settlementdelaymandiri,
 					accountbankbca,
+					settlementdelaybca,
 					accountcomissioncreditcard,
 					comissionccdanamon,
 					comissionamexdanamon,
@@ -511,12 +533,16 @@ if(!isset($_GET['delete'])) {
 		$_POST['AreaSalesCash'] = $MyRow['areasalescash'];
 		$_POST['AreaSalesCashOthers'] = $MyRow['areasalescashothers'];
 		$_POST['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
+		$_POST['SettlementDelayDanamon'] = $MyRow['settlementdelaydanamon'];
 		$_POST['AccountBankBNI'] = $MyRow['accountbankbni'];
+		$_POST['SettlementDelayBNI'] = $MyRow['settlementdelaybni'];
 		$_POST['CashSalesReported'] = $MyRow['cashsalesreported'];
 		$_POST['HPPCompensation'] = $MyRow['hppcompensation'];
 		$_POST['AccountHPPCompensation'] = $MyRow['accounthppcompensation'];
 		$_POST['AccountBankMandiri'] = $MyRow['accountbankmandiri'];
+		$_POST['SettlementDelayMandiri'] = $MyRow['settlementdelaymandiri'];
 		$_POST['AccountBankBCA'] = $MyRow['accountbankbca'];
+		$_POST['SettlementDelayBCA'] = $MyRow['settlementdelaybca'];
 		$_POST['AccountComissionCreditCard'] = $MyRow['accountcomissioncreditcard'];
 		$_POST['ComissionCCDanamon'] = $MyRow['comissionccdanamon'];
 		$_POST['ComissionAmexDanamon'] = $MyRow['comissionamexdanamon'];
@@ -632,14 +658,26 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AccountBankDanamon'])) {
 		$_POST['AccountBankDanamon'] = '';
 	}
+	if(!isset($_POST['SettlementDelayDanamon'])) {
+		$_POST['SettlementDelayDanamon'] = 1;
+	}
 	if(!isset($_POST['AccountBankBNI'])) {
 		$_POST['AccountBankBNI'] = '';
+	}
+	if(!isset($_POST['SettlementDelayBNI'])) {
+		$_POST['SettlementDelayBNI'] = 1;
 	}
 	if(!isset($_POST['AccountBankMandiri'])) {
 		$_POST['AccountBankMandiri'] = '';
 	}
+	if(!isset($_POST['SettlementDelayMandiri'])) {
+		$_POST['SettlementDelayMandiri'] = 1;
+	}
 	if(!isset($_POST['AccountBankBCA'])) {
 		$_POST['AccountBankBCA'] = '';
+	}
+	if(!isset($_POST['SettlementDelayBCA'])) {
+		$_POST['SettlementDelayBCA'] = 1;
 	}
 	if(!isset($_POST['AccountComissionCreditCard'])) {
 		$_POST['AccountComissionCreditCard'] = '';
@@ -744,14 +782,18 @@ if(!isset($_GET['delete'])) {
 	echo '<fieldset><legend>' . _('EDC Comission Information') . '</legend>';
 	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], _('Credit Card Comission GL Account'));
 	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], _('Bank Danamon GL Account'));
+	echo FieldToSelectOneText('SettlementDelayDanamon', $_POST['SettlementDelayDanamon'], 3, 3, _('Settlement Delay Danamon (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCDanamon', $_POST['ComissionCCDanamon'], 5, 5, _('% Credit Card Comission Bank Danamon'));
 	echo FieldToSelectOneText('ComissionAmexDanamon', $_POST['ComissionAmexDanamon'], 5, 5, _('% AMEX Comission Bank Danamon'));
 	echo FieldToSelectOneGLAccount('AccountBankBNI', $_POST['AccountBankBNI'], _('Bank BNI GL Account'));
+	echo FieldToSelectOneText('SettlementDelayBNI', $_POST['SettlementDelayBNI'], 3, 3, _('Settlement Delay BNI (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCBNI', $_POST['ComissionCCBNI'], 5, 5, _('% Credit Card Comission Bank BNI'));
 	echo FieldToSelectOneText('ComissionAmexBNI', $_POST['ComissionAmexBNI'], 5, 5, _('% AMEX Comission Bank BNI'));
 	echo FieldToSelectOneGLAccount('AccountBankMandiri', $_POST['AccountBankMandiri'], _('Bank Mandiri GL Account'));
+	echo FieldToSelectOneText('SettlementDelayMandiri', $_POST['SettlementDelayMandiri'], 3, 3, _('Settlement Delay Mandiri (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCMandiri', $_POST['ComissionCCMandiri'], 5, 5, _('% Credit Card Comission Bank Mandiri'));
 	echo FieldToSelectOneGLAccount('AccountBankBCA', $_POST['AccountBankBCA'], _('Bank BCA GL Account'));
+	echo FieldToSelectOneText('SettlementDelayBCA', $_POST['SettlementDelayBCA'], 3, 3, _('Settlement Delay BCA (days)'), '', 'number');
 	echo FieldToSelectOneText('ComissionCCBCA', $_POST['ComissionCCBCA'], 5, 5, _('% Credit Card Comission Bank BCA'));
 	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, _('% AMEX Comission Bank BCA'));
 	echo '</fieldset>';
