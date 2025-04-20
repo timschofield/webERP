@@ -40,7 +40,7 @@ if (isset($_GET['OrderNo'])) {
 elseif (isset($_POST['OrderNo'])) {
 	$OrderNo = $_POST['OrderNo'];
 }
-$Title = _('Print Purchase Order Number') . ' ' . $OrderNo;
+$Title = _('Print Purchase Order');
 
 if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' AND !IsEmailAddress($_POST['EmailTo'])) {

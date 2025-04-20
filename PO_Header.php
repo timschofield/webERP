@@ -18,7 +18,7 @@ if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_P
 if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);};
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modify Purchase Order');
 } else {
 	$Title = _('Purchase Order Entry');
 }
