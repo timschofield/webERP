@@ -207,8 +207,8 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					<td>' . $MyRow['description'] . '</td>
 					<td>' . $MyRow['customer'] . '</td>
 					<td>' . $MyRow['branch'] . '</td>
-					<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
-					<td>' . $EndDateDisplay . '</td>
+					<td class="date">' . ConvertSQLDate($MyRow['startdate']) . '</td>
+					<td class="date">' . $EndDateDisplay . '</td>
 					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
 					<td class="number">' . locale_number_format($ProposedPrice, $MyRow['decimalplaces']) . '</td>

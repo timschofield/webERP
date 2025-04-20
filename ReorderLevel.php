@@ -162,15 +162,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			if($_SESSION['SmtpSetting']==0){
 				mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
 			}else{
-				$mail = new PHPMailer(true);
-				$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-				SendEmailBySmtp($mail,
-								$SysAdminEmail,
-								array($_SESSION['InventoryManagerEmail'] =>  ''),
-								$EmailSubject,
-								$ConfirmationText,
-								array(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf')
-							);
+				SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+									array($_SESSION['InventoryManagerEmail'] =>  ''),
+									$EmailSubject,
+									$ConfirmationText,
+									array(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf')
+								);
 			}
 			unlink(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');
 		}
