@@ -398,192 +398,106 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	}
 
 	if ($TypeReport == "Shop"){
-		$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateA . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateB . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateC . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateE . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateF . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >=  '". $StartDateMTD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
-				FROM debtorsmaster
-				WHERE debtorsmaster.typeid = 2
-				ORDER BY (SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateSort . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
+		// Optimized SQL using conditional aggregation
+		$SQL = "SELECT
+					dm.debtorno,
+					dm.name,
+					COALESCE(s.salesA, 0) AS salesA,
+					COALESCE(s.salesB, 0) AS salesB,
+					COALESCE(s.salesC, 0) AS salesC,
+					COALESCE(s.salesD, 0) AS salesD,
+					COALESCE(s.salesE, 0) AS salesE,
+					COALESCE(s.salesF, 0) AS salesF,
+					COALESCE(s.salesMTD, 0) AS salesMTD
+				FROM debtorsmaster dm
+				LEFT JOIN (
+					SELECT
+						so.debtorno,
+						SUM(CASE WHEN so.orddate >= '". $StartDateA . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesA,
+						SUM(CASE WHEN so.orddate >= '". $StartDateB . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesB,
+						SUM(CASE WHEN so.orddate >= '". $StartDateC . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesC,
+						SUM(CASE WHEN so.orddate >= '". $StartDateD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesD,
+						SUM(CASE WHEN so.orddate >= '". $StartDateE . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesE,
+						SUM(CASE WHEN so.orddate >= '". $StartDateF . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesF,
+						SUM(CASE WHEN so.orddate >= '". $StartDateMTD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesMTD,
+						SUM(CASE WHEN so.orddate >= '". $StartDateSort . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesSort
+					FROM salesorders so
+					INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+					WHERE sod.completed = 1
+					  AND so.orddate >= '". $StartDateA . "' -- Use the earliest start date to limit initial scan
+					  AND so.orddate <= '". $Yesterday . "'
+					GROUP BY so.debtorno
+				) s ON dm.debtorno = s.debtorno
+				WHERE dm.typeid = 2
+				ORDER BY COALESCE(s.salesSort, 0) DESC";
 	}elseif ($TypeReport == "Online"){
-		$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateA . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateB . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateC . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesC,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesD,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateE . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesE,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateF . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesF,
-					(SELECT SUM(linenetprice)/currencies.rate
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >=  '". $StartDateMTD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesMTD
-				FROM debtorsmaster
-				INNER JOIN currencies
-					ON debtorsmaster.currcode = currencies.currabrev
-				WHERE debtorsmaster.typeid = 9
-					OR debtorsmaster.typeid = 10
-				ORDER BY debtorsmaster.debtorno";
+		// Optimized SQL using conditional aggregation
+		// Note: Assumes MySQL syntax. Adjust for other DBs if needed (e.g., CROSS APPLY for SQL Server).
+		$SQL = "SELECT
+					dm.debtorno,
+					dm.name,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesA_unconverted / cur.rate ELSE 0 END, 0) AS salesA,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesB_unconverted / cur.rate ELSE 0 END, 0) AS salesB,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesC_unconverted / cur.rate ELSE 0 END, 0) AS salesC,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesD_unconverted / cur.rate ELSE 0 END, 0) AS salesD,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesE_unconverted / cur.rate ELSE 0 END, 0) AS salesE,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesF_unconverted / cur.rate ELSE 0 END, 0) AS salesF,
+					COALESCE(CASE WHEN cur.rate <> 0 THEN s.salesMTD_unconverted / cur.rate ELSE 0 END, 0) AS salesMTD
+				FROM debtorsmaster dm
+				INNER JOIN currencies cur ON dm.currcode = cur.currabrev
+				LEFT JOIN (
+					SELECT
+						so.debtorno,
+						SUM(CASE WHEN so.orddate >= '". $StartDateA . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesA_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateB . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesB_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateC . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesC_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesD_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateE . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesE_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateF . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesF_unconverted,
+						SUM(CASE WHEN so.orddate >= '". $StartDateMTD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesMTD_unconverted
+					FROM salesorders so
+					INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+					WHERE sod.completed = 1
+					  AND so.orddate >= '". $StartDateA . "' -- Use the earliest start date
+					  AND so.orddate <= '". $Yesterday . "'
+					GROUP BY so.debtorno
+				) s ON dm.debtorno = s.debtorno
+				WHERE dm.typeid IN (9, 10)
+				ORDER BY dm.debtorno";
 	}else{
-		$SQL = "SELECT salesmancode,
-					salesmanname,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateA . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesA,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateB . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesB,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateC . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesC,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesD,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateE . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesE,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >= '". $StartDateF . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesF,
-					(SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1 ".
-							$SQLByShop . "
-							AND salesorders.orddate >=  '". $StartDateMTD . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) AS salesMTD
-				FROM salesman
-				WHERE salesman.current = 1
-				ORDER BY (SELECT SUM(linenetprice)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDateSort . "'
-							AND salesorders.orddate <= '". $Yesterday . "'
-							AND salesorders.salesperson = salesman.salesmancode) DESC";
+		// Optimized SQL using conditional aggregation
+		$SQL = "SELECT
+					sm.salesmancode,
+					sm.salesmanname,
+					COALESCE(s.salesA, 0) AS salesA,
+					COALESCE(s.salesB, 0) AS salesB,
+					COALESCE(s.salesC, 0) AS salesC,
+					COALESCE(s.salesD, 0) AS salesD,
+					COALESCE(s.salesE, 0) AS salesE,
+					COALESCE(s.salesF, 0) AS salesF,
+					COALESCE(s.salesMTD, 0) AS salesMTD
+				FROM salesman sm
+				LEFT JOIN (
+					SELECT
+						so.salesperson,
+						SUM(CASE WHEN so.orddate >= '". $StartDateA . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesA,
+						SUM(CASE WHEN so.orddate >= '". $StartDateB . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesB,
+						SUM(CASE WHEN so.orddate >= '". $StartDateC . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesC,
+						SUM(CASE WHEN so.orddate >= '". $StartDateD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesD,
+						SUM(CASE WHEN so.orddate >= '". $StartDateE . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesE,
+						SUM(CASE WHEN so.orddate >= '". $StartDateF . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesF,
+						SUM(CASE WHEN so.orddate >= '". $StartDateMTD . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesMTD,
+						SUM(CASE WHEN so.orddate >= '". $StartDateSort . "' AND so.orddate <= '". $Yesterday . "' THEN sod.linenetprice ELSE 0 END) AS salesSort
+					FROM salesorders so
+					INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+					WHERE sod.completed = 1
+					  AND so.orddate >= '". $StartDateA . "' -- Use the earliest start date
+					  AND so.orddate <= '". $Yesterday . "'
+					  " . $SQLByShop . " -- Apply shop filter here if needed
+					GROUP BY so.salesperson
+				) s ON sm.salesmancode = s.salesperson
+				WHERE sm.current = 1
+				ORDER BY COALESCE(s.salesSort, 0) DESC";
 	}
 
 	$Result = DB_query($SQL);
@@ -796,14 +710,14 @@ function MaintenanceTasksList($Status, $NumDays){
 				klmaintenancetasks.closeuser,
 				klmaintenancetasks.closedate
 			FROM klmaintenancetasks
-				INNER JOIN locations
-					ON locations.loccode = klmaintenancetasks.loccode
-				INNER JOIN klmaintenancetypes
-					ON klmaintenancetypes.maintenancetype = klmaintenancetasks.maintenancetype
-				INNER JOIN locationusers
-					ON locationusers.loccode = klmaintenancetasks.loccode
-						AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
-						AND locationusers.canview = 1 " .
+			INNER JOIN locations
+				ON locations.loccode = klmaintenancetasks.loccode
+			INNER JOIN klmaintenancetypes
+				ON klmaintenancetypes.maintenancetype = klmaintenancetasks.maintenancetype
+			INNER JOIN locationusers
+				ON locationusers.loccode = klmaintenancetasks.loccode
+					AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
+					AND locationusers.canview = 1 " .
 			$WhereStatus . "
 			ORDER BY klmaintenancetasks.counterindex";
 	$Result = DB_query($SQL);
