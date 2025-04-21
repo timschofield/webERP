@@ -27,6 +27,8 @@ class Worksheet extends WriterPart
 
     private string $formula = '';
 
+    private string $formulaRange = '';
+
     private string $twoDigitTextYear = '';
 
     private string $evalError = '';
@@ -50,6 +52,7 @@ class Worksheet extends WriterPart
         $worksheet->calculateArrays($this->getParentWriter()->getPreCalculateFormulas());
         $this->numberStoredAsText = '';
         $this->formula = '';
+        $this->formulaRange = '';
         $this->twoDigitTextYear = '';
         $this->evalError = '';
         // Create XML writer
@@ -180,6 +183,7 @@ class Worksheet extends WriterPart
         $started = false;
         $this->writeIgnoredError($objWriter, $started, 'numberStoredAsText', $this->numberStoredAsText);
         $this->writeIgnoredError($objWriter, $started, 'formula', $this->formula);
+        $this->writeIgnoredError($objWriter, $started, 'formulaRange', $this->formulaRange);
         $this->writeIgnoredError($objWriter, $started, 'twoDigitTextYear', $this->twoDigitTextYear);
         $this->writeIgnoredError($objWriter, $started, 'evalError', $this->evalError);
         if ($started) {
@@ -1392,6 +1396,9 @@ class Worksheet extends WriterPart
                             if ($worksheet->getCell($coord)->getIgnoredErrors()->getFormula()) {
                                 $this->formula .= " $coord";
                             }
+                            if ($worksheet->getCell($coord)->getIgnoredErrors()->getFormulaRange()) {
+                                $this->formulaRange .= " $coord";
+                            }
                             if ($worksheet->getCell($coord)->getIgnoredErrors()->getTwoDigitTextYear()) {
                                 $this->twoDigitTextYear .= " $coord";
                             }
@@ -1597,7 +1604,7 @@ class Worksheet extends WriterPart
         $mappedType = $pCell->getDataType();
         if ($mappedType === DataType::TYPE_FORMULA) {
             if ($this->useDynamicArrays) {
-                if (preg_match(PhpspreadsheetWorksheet::FUNCTION_LIKE_GROUPBY, $cellValue) === 1) {
+                if (preg_match(PhpspreadsheetWorksheet::FUNCTION_LIKE_GROUPBY, $cellValueString) === 1) {
                     $tempCalc = [];
                 } else {
                     $tempCalc = $pCell->getCalculatedValue();
