@@ -96,18 +96,17 @@ if (isset($_POST['RunReport'])) {
 			$RunningTotal = 0;
 		}
 		else {
-			$SQL = "SELECT bfwd,
-						actual,
-						period
-					FROM chartdetails
-					WHERE chartdetails.accountcode='" . $SelectedAccount . "'
-					AND chartdetails.period='" . $FirstPeriodSelected . "'";
+			// Calculate the brought forward balance from gltotals
+			$SQL = "SELECT SUM(amount) AS bfwd
+					FROM gltotals
+					WHERE gltotals.account = '" . $SelectedAccount . "'
+					AND gltotals.period < '" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($SQL, $ErrMsg);
-			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+			$ErrMsg = _('The brought forward balance for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+			$BfwdResult = DB_query($SQL, $ErrMsg);
+			$BfwdRow = DB_fetch_array($BfwdResult);
+			$RunningTotal = $BfwdRow['bfwd'];
 
-			$RunningTotal = $ChartDetailRow['bfwd'];
 			$YPos -= $LineHeight;
 			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Brought Forward Balance'));
 
