@@ -175,6 +175,9 @@ TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
 
 DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_update;
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_delete;
+
 TRUNCATE test_erp.`gltotals`;
 INSERT INTO test_erp.gltotals SELECT * FROM kurakura_kl_erp.gltotals;
 
@@ -197,6 +200,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
+
 DELIMITER //
 
 CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
@@ -205,6 +209,31 @@ BEGIN
     VALUES (NEW.account, NEW.periodno, NEW.amount)
     ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
 END //
+
+CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans`
+ FOR EACH ROW BEGIN
+			IF NEW.account <> OLD.account OR NEW.periodno <> OLD.periodno THEN
+				UPDATE gltotals
+				SET amount = amount - OLD.amount
+				WHERE account = OLD.account AND period = OLD.periodno;
+
+				INSERT INTO gltotals (account, period, amount)
+				VALUES (NEW.account, NEW.periodno, NEW.amount)
+				ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+			ELSE
+				UPDATE gltotals
+				SET amount = amount - OLD.amount + NEW.amount
+				WHERE account = NEW.account AND period = NEW.periodno;
+			END IF;
+		END //
+		
+CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans`
+ FOR EACH ROW BEGIN
+			UPDATE gltotals
+			SET amount = amount - OLD.amount
+			WHERE account = OLD.account AND period = OLD.periodno;
+		END //
+		
 DELIMITER ;
 		
 TRUNCATE test_erp.`grns`;
