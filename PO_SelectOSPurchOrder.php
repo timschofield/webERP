@@ -697,13 +697,13 @@ else {
 		}
 
 		echo '<tr class="striped_row">
-			<td><a href="' . $ModifyPage . '">' . $MyRow['orderno'] . '</a></td>
-			<td>' . $FormatedOrderDate . '</td>
-			<td>' . $FormatedDeliveryDate . '</td>
-			<td>' . $InitiatorName . '</td>
-			<td>' . $MyRow['suppname'] . '</td>
-			' . $BalRow . '
-			<td>' . $MyRow['currcode'] . '</td>';
+				<td><a href="' . $ModifyPage . '">' . $MyRow['orderno'] . '</a></td>
+				<td class="date">' . $FormatedOrderDate . '</td>
+				<td class="date">' . $FormatedDeliveryDate . '</td>
+				<td>' . $InitiatorName . '</td>
+				<td>' . $MyRow['suppname'] . '</td>
+				' . $BalRow . '
+				<td>' . $MyRow['currcode'] . '</td>';
 		if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 			echo '<td class="number">' . $FormatedOrderValue . '</td>';
 		}

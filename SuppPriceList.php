@@ -2,21 +2,13 @@
 /*  */
 
 include('includes/session.php');
+use Dompdf\Dompdf;
 
 if (isset($_GET['SelectedSupplier'])) {
 	$_POST['supplierid']=$_GET['SelectedSupplier'];
 }
 
-if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
-
-	include('includes/PDFStarter.php');
-
-	$FontSize=9;
-	$PDF->addInfo('Title',_('Supplier Price List'));
-	$PDF->addInfo('Subject',_('Price List of goods from a Supplier'));
-
-	$PageNumber=1;
-	$LineHeight=12;
+if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])) {
 
 	//get supplier
 	$SQLsup = "SELECT suppname,
@@ -131,7 +123,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			}
 		}
 	}
-	$Result = DB_query($SQL,'','',false,true);
+	$PricesResult = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report');
@@ -145,7 +137,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		exit;
 	}
 
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($PricesResult)==0) {
 
 		$Title = _('Supplier Price List') . '-' . _('Report');
 		include('includes/header.php');
@@ -153,87 +145,125 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		include('includes/footer.php');
 		exit;
 	}
-	if (!isset($_POST['View'])) {
-	PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-				$Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
+	$HTML = '';
 
-	$FontSize=8;
-	$Code='';
-	while ($MyRow = DB_fetch_array($Result)){
-		$YPos -=$LineHeight;
-
-		$PriceDated=ConvertSQLDate($MyRow[4]);
-
-		//if item has more than 1 price, write only price, date and supplier code for the old ones
-		if ($Code==$MyRow['stockid']){
-
-			$PDF->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
-			$PDF->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
-			$PDF->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
-			$Code=$MyRow['stockid'];
-		} else {
-			$Code=$MyRow['stockid'];
-			$PDF->addTextWrap(30,$YPos,100,$FontSize,$MyRow['stockid'],'left');
-			$PDF->addTextWrap(135,$YPos,160,$FontSize,$MyRow['description'],'left');
-			$PDF->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($MyRow['conversionfactor'],'Variable'),'right');
-			$PDF->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
-			$PDF->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
-			$PDF->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
-		}
-
-
-		if ($YPos < $Bottom_Margin + $LineHeight){
-
-			PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-						$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
-		}
-
-
-	} /*end while loop  */
-
-
-	if ($YPos < $Bottom_Margin + $LineHeight){
-		   PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
+	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Supplier Price List for').' '.$CurrentOrAllPrices . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . _('Supplier') . ' - ' . $_POST['supplier'] . ' - ' . $SupplierName . '<br />
+					' . _('Category') . ' - ' . $Categoryname . '<br />
+					' . _('Currency') . ' - ' . $CurrCode . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Conv Factor') . '</th>
+							<th class="SortedColumn">' . _('Price') . '</th>
+							<th class="SortedColumn">' . _('Date From') . '</th>
+							<th class="SortedColumn">' . _('Supp Code') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
-	$PDF->OutputD( $_SESSION['DatabaseName'] . '_SupplierPriceList_' . Date('Y-m-d') . '.pdf');
+		while ($MyRow = DB_fetch_array($PricesResult)) {
+			$HTML .= '<tr class="striped_row">
+						<td>' . $MyRow['stockid'] . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . $MyRow['conversionfactor'] . '</td>
+						<td class="number">' . $MyRow['price'] . '</td>
+						<td class="date">' . ConvertSQLDate($MyRow['dateprice']) . '</td>
+						<td>' . $MyRow['suppliers_partno'] . '</td>
+					</tr>';
+
+		}
+
+		$HTML .= '</tbody>
+			</table>';
+
+	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} elseif (isset($_POST['Email'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to a temporary file
+		$output = $dompdf->output();
+		file_put_contents(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf', $output);
+		if ($_SESSION['InventoryManagerEmail']!=''){
+			$ConfirmationText = _('Please find attached the Supplier Price List, generated by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
+			$EmailSubject = $_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf';
+			if($_SESSION['SmtpSetting']==0){
+				mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
+			}else{
+				SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+									array($_SESSION['InventoryManagerEmail'] =>  ''),
+									$EmailSubject,
+									$ConfirmationText,
+									array(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf')
+								);
+			}
+			unlink(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_SupplierPriceList_' . date('Y-m-d') . '.pdf');
+		}
+		$Title = _('Send Report By Email');
+		include('includes/header.php');
+		echo '<div class="centre">
+				<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+			</div>';
+		include('includes/footer.php');
 	} else {
 		$Title = _('View supplier price');
 		include('includes/header.php');
-		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],'ENT_QUTOES','UTF-8').'">'._('return').'</a>';
-		echo '<p class="page_title_text">'. _('Supplier Price List for').' : '.$CurrentOrAllPrices . '<br/>'
-			._('Supplier').'   : '.$SupplierName.' <br/>'._('Category').' : '.$Categoryname.
-			'</p>';
-
-		echo '<table class="selection">
-			<thead>
-				<tr>
-					<th class="SortedColumn">' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Conv Factor') . '</th>
-				<th>' . _('Price') . '</th>
-				<th class="SortedColumn">' . _('Date From') . '</th>
-				<th>' . _('Supp Code') . '</th>
-				</tr>
-			</thead>
-			<tbody>';
-
-		while ($MyRow = DB_fetch_array($Result)){
-			echo '<tr class="striped_row">
-				<td>' . $MyRow['stockid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td>' . $MyRow['conversionfactor'] . '</td>
-				<td>' . $MyRow['price'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['dateprice']) . '</td>
-				<td>' . $MyRow['suppliers_partno'] . '</td>
-				</tr>';
-
-		}
-
-		echo '</tbody></table>';
-		include('includes/footer.php');
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />
+		'. _('Supplier Price List').'</p>';
+		echo $HTML;
+		include ('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -247,7 +277,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		</p>';
 	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT supplierid,suppname FROM `suppliers`";
@@ -293,7 +323,9 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+			<input type="submit" name="Email" title="Email Report" value="' . _('Email') . '" />
 		</div>';
 
 	echo '</form>';
@@ -316,33 +348,6 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos= $Page_Height-$Top_Margin;
 	$YPos -=(3*$LineHeight);
 
-	$PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize+2,$_SESSION['CompanyRecord']['coyname']);
-	$YPos -=$LineHeight;
-
-	$PDF->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Supplier Price List for').' '.$CurrentOrAllPrices);
-
-	$PDF->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -= $LineHeight;
-	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Supplier').'   ');
-	$PDF->addTextWrap(95,$YPos,150,$FontSize,': '.$SupplierName);
-
-	$YPos -= $LineHeight;
-	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category').' ');
-
-	$PDF->addTextWrap(95,$YPos,150,$FontSize,': '.$Categoryname);
-	$YPos -= $LineHeight;
-	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Currency').'  ');
-	$PDF->addTextWrap(95,$YPos,50,$FontSize,': '.$CurrCode);
-	$YPos -=(2*$LineHeight);
-	/*set up the headings */
-
-	$PDF->addTextWrap(30,$YPos,80,$FontSize,_('Code'), 'left');
-	$PDF->addTextWrap(135,$YPos,80,$FontSize,_('Description'), 'left');
-	$PDF->addTextWrap(300,$YPos,50,$FontSize,_('Conv Factor'), 'left');
-	$PDF->addTextWrap(370,$YPos,50,$FontSize,_('Price'), 'left');
-	$PDF->addTextWrap(410,$YPos,80,$FontSize,_('Date From'), 'left');
-	$PDF->addTextWrap(470,$YPos,80,$FontSize,_('Supp Code'), 'left');
 
 	$FontSize=8;
 	$PageNumber++;
