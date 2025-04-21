@@ -170,7 +170,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<th>' . _('Business Purpose') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Receipt Attachment') . '</th>
-					<th class="SortedColumn">' . _('Date Authorised') . '</th>
+					<th>' . _('Date Authorised') . '</th>
 				</tr>
 			</thead>
 			</tbody>';
@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$ReceiptText = _('No attachment');
 		}
 
-		if ($MyRow['authorized'] == '1000-01-01') {
+		if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
@@ -235,16 +235,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		$HTML .=  '<tr class="striped_row">
-				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
-				<td>' . $ExpenseCodeDes . '</td>
-				<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
-				<td class="number">' . $TaxesTaxAmount . '</td>
-				<td>' . $TaxesDescription . '</td>
-				<td>' . $MyRow['purpose'] . '</td>
-				<td>' . $MyRow['notes'] . '</td>
-				<td>' . $ReceiptText . '</td>
-				<td>' . $AuthorisedDate . '</td>
-			</tr>';
+					<td class="date">' . ConvertSQLDate($MyRow['date']) . '</td>
+					<td>' . $ExpenseCodeDes . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
+					<td class="number">' . $TaxesTaxAmount . '</td>
+					<td>' . $TaxesDescription . '</td>
+					<td>' . $MyRow['purpose'] . '</td>
+					<td>' . $MyRow['notes'] . '</td>
+					<td>' . $ReceiptText . '</td>
+					<td class="date">' . $AuthorisedDate . '</td>
+				</tr>';
 	}
 
 	$SQLAmount="SELECT sum(amount)
