@@ -1422,17 +1422,16 @@ function GetTotalQtyItemsForSale(){
 }
 
 function GetTotalValueItemsForSale($period){
-	$SQL = "SELECT SUM(bfwd + actual) as saldo
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode IN ('111515000AD',
-												'111516000AD',
-												'111517000AD',
-												'111518000AD',
-												'111518900AD',
-												'111519000AD',
-												'111519100AD')
-				AND chartdetails.period = ". $period . "";
+	$SQL = "SELECT SUM(amount) as saldo
+			FROM gltotals
+			WHERE account IN ('111515000AD',
+							'111516000AD',
+							'111517000AD',
+							'111518000AD',
+							'111518900AD',
+							'111519000AD',
+							'111519100AD')
+				AND period = ". $period . "";
 	$ErrMsg = _('Error in function GetTotalValueItemsForSale()');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
