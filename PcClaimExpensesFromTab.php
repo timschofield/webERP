@@ -405,9 +405,7 @@ if (!isset($SelectedTabs)) {
 		</div>';
 	echo '</form>';
 } else { // isset($SelectedTabs)
-	echo '<div class="centre">
-			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
-		</div>';
+	echo '<a class="toplink" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>';
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
@@ -471,7 +469,7 @@ if (!isset($SelectedTabs)) {
 						<th>', _('Business Purpose'), '</th>
 						<th>', _('Notes'), '</th>
 						<th>', _('Receipt Attachment'), '</th>
-						<th class="SortedColumn">', _('Date Authorised'), '</th>
+						<th>', _('Date Authorised'), '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -489,7 +487,7 @@ if (!isset($SelectedTabs)) {
 					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
 
-			if ($MyRow['authorized'] == '1000-01-01') {
+			if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
 				$AuthorisedDate = _('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
@@ -547,7 +545,7 @@ if (!isset($SelectedTabs)) {
 			if (($MyRow['authorized'] == '1000-01-01') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
 				// only movements NOT authorised can be modified or deleted
 				echo '<tr class="striped_row">
-						<td>', ConvertSQLDate($MyRow['date']), '</td>
+						<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td class="number">', $TaxesTaxAmount, '</td>
@@ -562,7 +560,7 @@ if (!isset($SelectedTabs)) {
 					</tr>';
 			} else {
 				echo '<tr class="striped_row">
-						<td>', ConvertSQLDate($MyRow['date']), '</td>
+						<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 						<td>', $ExpenseCodeDes, '</td>
 						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 						<td class="number">', $TaxesTaxAmount, '</td>
