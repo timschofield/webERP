@@ -127,13 +127,13 @@ function submit($ListCategories, $Location) {
 				$ActiveSheet->setCellValue('B'.$i, $MyRow['description']);
 				$ActiveSheet->setCellValue('C'.$i, $MyRow['categoryid']);
 
-				$ActiveSheet->setCellValue('D'.$i, round($MyRow['quantity'],0));
-				$ActiveSheet->setCellValue('E'.$i, round($MyRow['intransitout'],0));
-				$ActiveSheet->setCellValue('F'.$i, round($MyRow['intransitin'],0));
+				$ActiveSheet->setCellValue('D'.$i, round($MyRow['quantity'] ?? 0, 0)); // Also added null coalescing here for consistency
+				$ActiveSheet->setCellValue('E'.$i, round($MyRow['intransitout'] ?? 0, 0));
+				$ActiveSheet->setCellValue('F'.$i, round($MyRow['intransitin'] ?? 0, 0));
 
 // We need to count whatever is in QOH - transit OUT, not transit IN
 //				$Available = $MyRow['quantity']+$MyRow['intransitin']-$MyRow['intransitout'];
-				$Available = $MyRow['quantity']-$MyRow['intransitout'];
+				$Available = ($MyRow['quantity'] ?? 0) - ($MyRow['intransitout'] ?? 0); // Added null coalescing here too
 
 				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
 //				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');

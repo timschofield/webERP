@@ -41,6 +41,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 	//initialise no input errors
 	$InputError = 0;
+	ob_start(); // Start output buffering
 
 	//first off validate inputs sensible
 
@@ -290,6 +291,9 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$SpreadSheet->setActiveSheetIndex(0);
 
+			 // Clean (erase) the output buffer and turn off output buffering
+			ob_end_clean();
+
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -315,6 +319,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
+			exit; // Ensure no further output is sent
 
 		}else{
 			$Title = _('Excel file for Sales Analysis');
