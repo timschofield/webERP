@@ -163,11 +163,10 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 } else {
 
 	$Graph = new PHPlot(950, 450);
-	$SelectClause = '';
 	$WhereClause = '';
 	$GraphTitle = '';
 
-	$GraphTitle = _('GL Account Graph - Actual vs. Budget') . "\n\r";
+	$GraphTitle = _('GL Account Graph - Actual Transactions') . "\n\r";
 	//$GraphTitle .= $SelectedAccount . " - " . $SelectedAccountName . "\n\r";
 	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year, MONTHNAME(`lastdate_in_period`) AS month
 			  FROM `periods`
@@ -183,20 +182,19 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 
 	$GraphTitle.= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
 
-	$WhereClause = "WHERE " . $WhereClause . " periods.periodno>='" . $_POST['PeriodFrom'] . "' AND periods.periodno <= '" . $_POST['PeriodTo'] . "'";
+	$WhereClause = "WHERE periods.periodno>='" . $_POST['PeriodFrom'] . "' AND periods.periodno <= '" . $_POST['PeriodTo'] . "'";
 
 	$SQL = "SELECT periods.periodno,
 				periods.lastdate_in_period,
-				chartmaster.group_ AS group_,
-				chartdetails.budget AS budget,
-				(CASE WHEN chartdetails.actual=0 THEN 0 ELSE chartdetails.actual END) AS actual
-		FROM periods
-		INNER JOIN chartdetails ON periods.periodno=chartdetails.period
-		INNER JOIN chartmaster ON chartdetails.accountcode=chartmaster.accountcode " . $WhereClause . "
-		AND chartdetails.accountcode = '" . $SelectedAccount . "'
-		GROUP BY periods.periodno,
-			periods.lastdate_in_period
-		ORDER BY periods.periodno";
+				COALESCE(gltotals.amount, 0) AS actual
+			FROM periods
+			LEFT JOIN gltotals ON periods.periodno = gltotals.period
+				AND gltotals.account = '" . $SelectedAccount . "'
+			" . $WhereClause . "
+			GROUP BY periods.periodno,
+					 periods.lastdate_in_period,
+					 gltotals.amount
+			ORDER BY periods.periodno";
 
 	$Graph->SetTitle($GraphTitle);
 	$Graph->SetTitleColor('blue');
@@ -234,18 +232,18 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$i = 0;
 	while ($MyRow = DB_fetch_array($SalesResult)) {
 		if (!isset($_POST['InvertGraph'])) {
-			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), $MyRow['actual'], $MyRow['budget']);
+			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), $MyRow['actual']);
 		} else {
-			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), -$MyRow['actual'], $MyRow['budget']);
+			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), -$MyRow['actual']);
 		}
 		++$i;
 	}
 
 	$Graph->SetDataValues($GraphArray);
-	$Graph->SetDataColors(array('grey', 'wheat'), //Data Colors
+	$Graph->SetDataColors(array('grey'), //Data Colors
 	array('black') //Border Colors
 	);
-	$Graph->SetLegend(array(_('Actual'), _('Budget')));
+	$Graph->SetLegend(array(_('Actual')));
 	$Graph->SetYDataLabelPos('plotin');
 
 	//Draw it

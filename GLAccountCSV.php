@@ -187,18 +187,17 @@ if (isset($_POST['MakeCSV'])) {
 			$RunningTotal = 0;
 		}
 		else {
-			$SQL = "SELECT bfwd,
-					actual,
-					period
-				FROM chartdetails
-				WHERE chartdetails.accountcode= '" . $SelectedAccount . "'
-				AND chartdetails.period='" . $FirstPeriodSelected . "'";
+			// Get the opening balance using gltotals
+			$SQL = "SELECT SUM(amount) AS bfwd
+					FROM gltotals
+					WHERE gltotals.account = '" . $SelectedAccount . "'
+					AND gltotals.period < '" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($SQL, $ErrMsg);
-			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+			$ErrMsg = _('The opening balance for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+			$BalanceResult = DB_query($SQL, $ErrMsg);
+			$BalanceRow = DB_fetch_array($BalanceResult);
+			$RunningTotal = $BalanceRow['bfwd'];
 
-			$RunningTotal = $ChartDetailRow['bfwd'];
 			if ($RunningTotal < 0) {
 				fwrite($fp, $SelectedAccount . ', ' . $FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,,' . -$RunningTotal . "\n");
 			}
@@ -213,17 +212,7 @@ if (isset($_POST['MakeCSV'])) {
 
 			if ($MyRow['periodno'] != $PeriodNo) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
-					/*Get the ChartDetails balance b/fwd and the actual movement in the account for the period as recorded in the chart details - need to ensure integrity of transactions to the chart detail movements. Also, for a balance sheet account it is the balance carried forward that is important, not just the transactions*/
-					$SQL = "SELECT bfwd,
-									actual,
-									period
-							FROM chartdetails
-							WHERE chartdetails.accountcode= '" . $SelectedAccount . "'
-							AND chartdetails.period='" . $PeriodNo . "'";
-
-					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($SQL, $ErrMsg);
-					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+					// Removed the query to chartdetails here as it's no longer needed
 					if ($PeriodTotal < 0) {
 						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal . "\n");
 					}
