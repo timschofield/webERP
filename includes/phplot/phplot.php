@@ -6857,7 +6857,7 @@ class PHPlot
 
                 default:
                     // Draw color boxes:
-                    ImageFilledRectangle($this->img, $dot_left_x, $y1, $dot_right_x, $y2,
+                    ImageFilledRectangle($this->img, (int)$dot_left_x, (int)$y1, (int)$dot_right_x, (int)$y2,
                                          $this->ndx_data_colors[$color_index]);
                    // Draw a rectangle around the box, if enabled.
                    if ($this->legend_colorbox_borders != 'none') {
@@ -6865,7 +6865,7 @@ class PHPlot
                            $color = $this->ndx_data_border_colors[$color_index];
                        else
                            $color = $this->ndx_text_color;
-                       ImageRectangle($this->img, $dot_left_x, $y1, $dot_right_x, $y2, $color);
+                       ImageRectangle($this->img, (int)$dot_left_x, (int)$y1, (int)$dot_right_x, (int)$y2, $color);
                    }
                 }
                 if (++$color_index > $max_color_index) $color_index = 0;
@@ -7180,12 +7180,15 @@ class PHPlot
         if (isset($shade_color)) {
             $shade = $this->shading;
             if ($shade_top && $shade_side) {
-                $pts = array($x1, $y1,  $x1 + $shade, $y1 - $shade, $x2 + $shade, $y1 - $shade,
-                             $x2 + $shade, $y2 - $shade, $x2, $y2, $x2, $y1);
+                // Add (int) casts to array elements
+                $pts = array((int)$x1, (int)$y1,  (int)($x1 + $shade), (int)($y1 - $shade), (int)($x2 + $shade), (int)($y1 - $shade),
+                             (int)($x2 + $shade), (int)($y2 - $shade), (int)$x2, (int)$y2, (int)$x2, (int)$y1);
             } elseif ($shade_top) {   // Suppress side shading
-                $pts = array($x1, $y1, $x1 + $shade, $y1 - $shade, $x2 + $shade, $y1 - $shade, $x2, $y1);
+                // Add (int) casts to array elements
+                $pts = array((int)$x1, (int)$y1, (int)($x1 + $shade), (int)($y1 - $shade), (int)($x2 + $shade), (int)($y1 - $shade), (int)$x2, (int)$y1);
             } else { // Suppress top shading (Note shade_top==FALSE && shade_side==FALSE is not allowed)
-                $pts = array($x2, $y2, $x2, $y1, $x2 + $shade, $y1 - $shade, $x2 + $shade, $y2 - $shade);
+                // Add (int) casts to array elements
+                $pts = array((int)$x2, (int)$y2, (int)$x2, (int)$y1, (int)($x2 + $shade), (int)($y1 - $shade), (int)($x2 + $shade), (int)($y2 - $shade));
             }
             // Remove explicit count parameter which is deprecated in PHP 8+
             ImageFilledPolygon($this->img, $pts, $shade_color);
