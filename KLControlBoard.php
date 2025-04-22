@@ -22,7 +22,6 @@
 * DiscountedItemsWithWrongDiscount - Lists discounted items with wrong discount percentage
 * ErrorsInTransfers - Lists errors in transfers
 * FlaggedAsObsoleteButStockAvailable - Lists obsolete items that still have stock
-* GetBalanceAccount - Gets the balance of an account
 * GLTransDateControl - Checks for GL transactions with wrong dates
 * GoodsJustArrived - Lists goods just arrived at a location
 * GoodsJustTransferred - Lists goods just transferred between locations
@@ -108,6 +107,8 @@ if (!isset($_GET['Section'])){
 }
 
 include('includes/header.php');
+include('includes/GLFunctions.php');
+
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -1338,12 +1339,13 @@ function ActiveItemsWithoutPicture($RootPath){
 }
 
 function BalanceAccountControl($account, $min, $max, $Period){
-	$SQL = "SELECT (bfwd + actual) as saldo, accountname
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode = '" . $account . "'
-				AND chartdetails.period = ". $Period . "";
-				
+	$SQL = "SELECT SUM(gltotals.amount) as saldo, accountname
+			FROM gltotals, chartmaster
+			WHERE gltotals.account = chartmaster.accountcode
+				AND gltotals.account = '" . $account . "'
+				AND gltotals.period <= ". $Period . "
+			GROUP BY chartmaster.accountname";
+
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
@@ -1358,12 +1360,11 @@ function BalanceAccountControl($account, $min, $max, $Period){
 }
 
 function BalanceListAccountControl($accountlist, $Description, $min, $max, $Period){
-	$SQL = "SELECT SUM(bfwd + actual) as saldo
-			FROM chartdetails, chartmaster
-			WHERE chartdetails.accountcode = chartmaster.accountcode
-				AND chartdetails.accountcode IN " . $accountlist . "
-				AND chartdetails.period = ". $Period . "";
-				
+	$SQL = "SELECT SUM(gltotals.amount) as saldo
+			FROM gltotals
+			WHERE gltotals.account IN " . $accountlist . "
+				AND gltotals.period <= ". $Period . "";
+
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
@@ -1715,10 +1716,10 @@ function CustomerDebtByCurrency($Currency){
 }
 
 function CustomersDebtControl($AcceptedDifference, $Period){
-	$SQL = "SELECT (bfwd + actual) as saldo
-			FROM chartdetails
-			WHERE chartdetails.accountcode = '111311100AD'
-				AND chartdetails.period = ". $Period . "";
+	$SQL = "SELECT SUM(amount) as saldo
+			FROM gltotals
+			WHERE gltotals.account = '111311100AD'
+				AND gltotals.period <= ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
@@ -2094,10 +2095,10 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 }
 
 function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
-	$SQL = "SELECT (bfwd + actual) as saldo
-			FROM chartdetails
-			WHERE chartdetails.accountcode = '211021400AD'
-				AND chartdetails.period = ". $Period . "";
+	$SQL = "SELECT SUM(amount) as saldo
+			FROM gltotals
+			WHERE gltotals.account = '211021400AD'
+				AND gltotals.period <= ". $Period . "";
 // EXPLAIN SQL 2014-05-31 OK!
 //prnMsg($SQL);
 	$Result = DB_query($SQL);
@@ -2137,10 +2138,10 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 	$MyRow = DB_fetch_array($Result);
 	$PettyCashValue = $MyRow['amount_idr'];
 
-	$SQL = "SELECT SUM((bfwd + actual)) as saldo
-			FROM chartdetails
-			WHERE chartdetails.accountcode IN ".$PCGLAccounts."
-				AND chartdetails.period = ". $Period . "";
+	$SQL = "SELECT SUM(amount) as saldo
+			FROM gltotals
+			WHERE gltotals.account IN ".$PCGLAccounts."
+				AND gltotals.period <= ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$ValueAtBalance = $MyRow['saldo'];
@@ -5308,18 +5309,6 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 	}
 }
 
-function GetBalanceAccount($account, $Period){
-	$SQL = "SELECT (bfwd + actual) as saldo
-		FROM chartdetails, chartmaster
-		WHERE chartdetails.accountcode = chartmaster.accountcode
-			AND chartdetails.accountcode = '" . $account . "'
-			AND chartdetails.period = ". $Period . "";
-				
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['saldo'];
-}
-
 function InternalBankTransfers($Company, 
 							$DanamonAccount, $DanamonMin, $DanamonMax,
 							$MandiriAccount, $MandiriMin, $MandiriMax,
@@ -5332,7 +5321,7 @@ function InternalBankTransfers($Company,
 							$TransferBlockFromOnline,
 							$Period){
 
-	$SaldoDanamon = GetBalanceAccount($DanamonAccount, $Period);
+	$SaldoDanamon = GetGLAccountBalance($DanamonAccount, $Period);
 	if ($SaldoDanamon <= $DanamonMin){
 		// Danamon is below minimum balance... transfer from other banks until the Max Danamon
 		$TransferNeededDanamon = $DanamonMax - $SaldoDanamon;
@@ -5409,7 +5398,7 @@ function CalculateTransferFromBankToDanamon($Company,
 											$TransferBlock,
 											$Period){
 	if($TransferNeededDanamon > 0){
-		$Saldo = GetBalanceAccount($Account, $Period);
+		$Saldo = GetGLAccountBalance($Account, $Period);
 		if ($Saldo >= $SaldoMax){
 			$AvailableForTransfer = $Saldo - $SaldoMin;
 			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);

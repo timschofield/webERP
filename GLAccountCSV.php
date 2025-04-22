@@ -217,7 +217,6 @@ if (isset($_POST['MakeCSV'])) {
 
 			if ($MyRow['periodno'] != $PeriodNo) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
-					// Removed the query to chartdetails here as it's no longer needed
 					if ($PeriodTotal < 0) {
 						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal . "\n");
 					}
