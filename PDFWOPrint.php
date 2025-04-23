@@ -517,24 +517,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$PdfFileName = $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		include('includes/htmlMimeMail.php');
-		$mail = new htmlMimeMail();
-		$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $PdfFileName);
-		$mail->setText(_('Please Process this Work order number') . ' ' . $SelectedWO);
-		$mail->setSubject(_('Work Order Number') . ' ' . $SelectedWO);
-		$mail->addAttachment($Attachment, $PdfFileName, 'application/pdf');
-		//since sometime the mail server required to verify the users, so must set this information.
-		if($_SESSION['SmtpSetting'] == 0){//use the mail service provice by the server.
-			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			$Success = $mail->send(array($_POST['EmailTo']));
-		}else if($_SESSION['SmtpSetting'] == 1) {
-			$Success = SendEmailByHTMLMimeMail($mail,array($_POST['EmailTo']));
-
-		}else{
-			prnMsg(_('The SMTP settings are wrong, please ask administrator for help'),'error');
-			include('includes/footer.php');
-			exit;
-		}
+		
+		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
+								array($_POST['EmailTo'] => ''),
+								_('Work Order Number') . ' ' . $SelectedWO,
+								('Please Process this Work order number') . ' ' . $SelectedWO,
+								$_SESSION['reports_dir'] . '/' . $PdfFileName);
 
 		if ($Success == 1) {
 			$Title = _('Email a Work Order');
