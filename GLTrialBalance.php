@@ -385,7 +385,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf', array(
+		$dompdf->stream($_SESSION['DatabaseName'] . '_GLTrialBalance_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} elseif (isset($_POST['Spreadsheet'])) {
