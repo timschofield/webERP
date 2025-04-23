@@ -45,7 +45,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>', $MyRow['realname'], '</td>
 			<td>', $MyRow['email'], '</td>
 			<td>', $MyRow['phone'], '</td>
-			<td>', ConvertSQLDateTime($MyRow['login']), '</td>
+			<td class="date">', ConvertSQLDateTime($MyRow['login']), '</td>
 			<td>', $MyRow['script'], '</td>
 		</tr>';
 }
