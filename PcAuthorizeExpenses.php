@@ -299,23 +299,23 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			}
 
 		echo '<tr class="striped_row">
-			<td>', ConvertSQLDate($MyRow['date']), '</td>
-			<td>', $ExpenseCodeDes, '</td>
-			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-			<td class="number">', $TaxesTaxAmount, '</td>
-			<td>', $TaxesDescription, '</td>
-			<td>', $TagDescription, '</td>
-			<td>', $MyRow['purpose'], '</td>
-			<td>', $MyRow['notes'], '</td>
-			<td>', $ReceiptText, '</td>';
+				<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
+				<td>', $ExpenseCodeDes, '</td>
+				<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+				<td class="number">', $TaxesTaxAmount, '</td>
+				<td>', $TaxesDescription, '</td>
+				<td>', $TagDescription, '</td>
+				<td>', $MyRow['purpose'], '</td>
+				<td>', $MyRow['notes'], '</td>
+				<td>', $ReceiptText, '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
 		} else {
 			//compare against raw SQL format date, then convert for display.
-			if (($MyRow['authorized'] != '1000-01-01')) {
+			if (($MyRow['authorized'] != '1000-01-01') and ($MyRow['authorized'] != '0000-00-00')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td class="number"><input type="checkbox" name="', $MyRow['counterindex'], '" />';
+				echo '<td><input type="checkbox" name="', $MyRow['counterindex'], '" />';
 			}
 		}
 		echo '<input type="hidden" name="SelectedIndex" value="', $MyRow['counterindex'], '" />
