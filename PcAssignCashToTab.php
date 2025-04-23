@@ -246,7 +246,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
 
-			if ($MyRow['authorized'] == '1000-01-01') {
+			if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
 				$AuthorisedDate = _('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
@@ -276,7 +276,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			if (($MyRow['authorized'] == '1000-01-01') and ($ExpenseCodeDes == 'ASSIGNCASH')) {
 				// only cash assignations NOT authorized can be modified or deleted
 				echo '<tr class="striped_row">
-					<td>', ConvertSQLDate($MyRow['date']), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 					<td>', $MyRow['purpose'], '</td>
@@ -288,7 +288,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 				</tr>';
 			} else {
 				echo '<tr class="striped_row">
-					<td>', ConvertSQLDate($MyRow['date']), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 					<td>', $MyRow['purpose'], '</td>
