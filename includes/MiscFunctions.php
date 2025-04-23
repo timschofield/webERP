@@ -35,7 +35,6 @@
  * SendEmailBySmtp - Sends email using SMTP
  * SendEmailByStandardMailFunction - Sends email using PHP mail function
  * SendEmailFromWebERP - Main email sending function for WebERP
- * SendEmailByHTMLMimeMail - Legacy email sending function
  * wikiLink - Generates wiki application links
  * XmlElement - Class for XML elements in currency rate parsing
  * ******************** END FUNCTION INDEX ********************
@@ -540,25 +539,6 @@ function indian_number_format($Number, $DecimalPlaces) {
 	} else {
 		return $IntegerNumber . $DecimalValue;
 	}
-}
-
-function SendEmailByHTMLMimeMail(&$mail, $To) {
-	if (IsEmailAddress($_SESSION['SMTPSettings']['username'])) { //user has set the fully mail address as user name
-		$SendFrom = $_SESSION['SMTPSettings']['username'];
-	} else { //user only set it's name instead of fully mail address
-		if (strpos($_SESSION['SMTPSettings']['host'], 'mail') !== false) {
-			$SubStr = 'mail';
-
-		} elseif (strpos($_SESSION['SMTPSettings']['host'], 'smtp') !== false) {
-			$SubStr = 'smtp';
-		}
-
-		$Domain = substr($_SESSION['SMTPSettings']['host'], strpos($_SESSION['SMTPSettings']['host'], $SubStr) + 5);
-		$SendFrom = $_SESSION['SMTPSettings']['username'] . '@' . $Domain;
-	}
-	$mail->setFrom($SendFrom);
-	$Result = $mail->send($To, 'smtp');
-	return $Result;
 }
 
 function GetMailList($MailGroup) {
