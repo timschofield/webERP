@@ -9,14 +9,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1) {
-/*
-	include('includes/PDFStarter.php');
-	$PDF->addInfo('Title',_('Aged Customer Balance Listing'));
-	$PDF->addInfo('Subject',_('Aged Customer Balances'));
-	$FontSize = 12;
-	$PageNumber = 0;
-	$LineHeight = 12;
-*/
+
 	  /*Now figure out the aged analysis for the customer range under review */
 	if($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
