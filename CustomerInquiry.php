@@ -286,7 +286,7 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			echo '<tr class="striped_row">
 					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '" target="_blank">' . $MyRow['transno'] . '</a></td>
-					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+					<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
 					<td>', $MyRow['reference'], '</td>
 					<td style="width:200px">', $MyRow['invtext'], '</td>
