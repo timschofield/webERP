@@ -48,9 +48,6 @@ INSERT INTO test_erp.bom SELECT * FROM kurakura_kl_erp.bom;
 TRUNCATE test_erp.`buckets`;
 INSERT INTO test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
 
-TRUNCATE test_erp.`chartdetails`;
-INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
-
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
 
