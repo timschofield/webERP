@@ -9,7 +9,6 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
 
 include ('includes/header.php');
-include ('includes/GLPostings.inc');
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
