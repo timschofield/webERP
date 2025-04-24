@@ -125,7 +125,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`account`,
 											`narrative`,
 											`amount`,
-											`posted`,
 											`jobref`)
 									VALUES (NULL,
 											'" . $Type . "',
@@ -136,7 +135,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $AccountFrom . "',
 											'" . $Narrative . "',
 											'" . -$Amount . "',
-											0,
 											'')";
 			$ResultFrom = DB_Query($SQLFrom, '', '', true);
 			$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
@@ -148,7 +146,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`account`,
 										`narrative`,
 										`amount`,
-										`posted`,
 										`jobref`
 									) VALUES (NULL,
 										'" . $Type . "',
@@ -159,7 +156,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $AccountTo . "',
 										'" . $Narrative . "',
 										'" . $Amount . "',
-										0,
 										''
 									)";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
@@ -229,8 +225,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<td colspan="2" class="number">', _('Current balance'), ':</td>
 			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
-	// Do the postings
-	include('includes/GLPostings.inc');
+
 	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="', _('Update'), '" />

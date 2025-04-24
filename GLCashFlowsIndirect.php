@@ -148,7 +148,6 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			$_SESSION['RetainedEarningsAccount'] = $MyRow['retainedearnings'];
 		}
 	}
-	include('includes/GLPostings.inc');// Posts pending GL transactions.
 	// Outputs the table:
 	// Net profit − dividends = Retained earnings:
 	echo '<tr>

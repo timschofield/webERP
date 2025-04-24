@@ -69,7 +69,6 @@ if (isset($_POST['RunReport'])) {
 					LEFT JOIN gltags
 						ON gltrans.counterindex=gltags.counterindex
 					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND posted=1
 						AND periodno>='" . $FirstPeriodSelected . "'
 						AND periodno<='" . $LastPeriodSelected . "'";
 
@@ -208,7 +207,6 @@ if (isset($_POST['RunReport'])) {
 else {
 	$Title = _('General Ledger Account Report');
 	include ('includes/header.php');
-	include ('includes/GLPostings.inc');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 

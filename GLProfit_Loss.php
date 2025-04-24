@@ -686,15 +686,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>',
 		'</fieldset>';
 
-	/*Now do the posting while the user is thinking about the period to select */
-
 	echo '<div class="centre">
 			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
 			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
 		</div>',
 		'</form>';
 
-	include('includes/GLPostings.inc');
 	include('includes/footer.php');
 
 }

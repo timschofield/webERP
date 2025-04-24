@@ -583,21 +583,10 @@ function DeleteRecords($Table, $Criteria) {
 	}
 }
 
-function DropTable($Table, $Field) {
+function DropTable($Table) {
 	$SQL = "SHOW tables WHERE Tables_in_" . $_SESSION['DatabaseName'] . " ='" . $Table . "'";
 	$Result = DB_query($SQL);
-	$CanDrop = False;
 	if (DB_num_rows($Result) > 0) {
-		$CanDrop = True;
-		$SQL = "desc " . $Table . " " . $Field;
-		$Result = DB_query($SQL);
-		if (DB_num_rows($Result) > 0) {
-			$CanDrop = True;
-		} else {
-			$CanDrop = False;
-		}
-	}
-	if ($CanDrop) {
 		$Response = executeSQL("DROP TABLE IF EXISTS `" . $Table . "`");
 		if ($Response == 0) {
 			OutputResult(_('The old table') . ' ' . $Table . ' ' . _('has been removed'), 'success');

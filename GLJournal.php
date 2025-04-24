@@ -326,8 +326,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	/*Set up a newy in case user wishes to enter another */
 	echo '<br />
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
-	/*And post the journal too */
-	include ('includes/GLPostings.inc');
+
 	include ('includes/footer.php');
 	exit;
 
