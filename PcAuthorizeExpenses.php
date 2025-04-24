@@ -416,7 +416,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			if (($MyRow['authorized'] != '1000-01-01')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td class="number"><input type="checkbox" name="', $MyRow['counterindex'], '" />';
+				echo '<td><input type="checkbox" name="', $MyRow['counterindex'], '" />';
 			}
 		}
 		echo '<input type="hidden" name="SelectedIndex" value="', $MyRow['counterindex'], '" />
