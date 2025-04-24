@@ -297,7 +297,7 @@ if ($InputError !=1
 			echo '<tr class="striped_row">
 						<td>', $MyRow['ref'], '</td>
 						<td>', $MyRow['banktranstype'], '</td>
-						<td>', $DisplayTranDate, '</td>
+						<td class="date">', $DisplayTranDate, '</td>
 						<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
 						<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
 						<td colspan="2">', _('Unclear'), '</td>
