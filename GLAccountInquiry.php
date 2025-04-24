@@ -175,7 +175,6 @@ if (isset($_POST['Show'])) {
 			LEFT JOIN tags
 				ON tags.tagref=gltags.tagref
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-				AND posted=1
 				AND periodno>='" . $FirstPeriodSelected . "'
 				AND periodno<='" . $LastPeriodSelected . "'";
 

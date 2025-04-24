@@ -165,7 +165,6 @@ if (isset($_POST['MakeCSV'])) {
 					ON gltrans.counterindex=gltags.counterindex
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 					AND systypes.typeid=gltrans.type
-					AND posted=1
 					AND periodno>='" . $FirstPeriodSelected . "'
 					AND periodno<='" . $LastPeriodSelected . "'";
 

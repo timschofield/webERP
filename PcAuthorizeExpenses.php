@@ -166,7 +166,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`account`,
 											`narrative`,
 											`amount`,
-											`posted`,
 											`jobref`)
 									VALUES (NULL,
 											'" . $Type . "',
@@ -177,7 +176,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $AccountFrom . "',
 											'" . $Narrative . "',
 											'" . $GrossAmount . "',
-											0,
 											'')";
 			$ResultFrom = DB_Query($SQLFrom, '', '', true);
 
@@ -190,7 +188,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`account`,
 										`narrative`,
 										`amount`,
-										`posted`,
 										`jobref`)
 								VALUES (NULL,
 										'" . $Type . "',
@@ -201,7 +198,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $AccountTo . "',
 										'" . $Narrative . "',
 										'" . $NetAmount . "',
-										0,
 										'')";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
 			InsertGLTags($Tags);
@@ -228,7 +224,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												`account`,
 												`narrative`,
 												`amount`,
-												`posted`,
 												`jobref`)
 										VALUES (NULL,
 												'" . $Type . "',
@@ -239,7 +234,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'" . $MyTaxRow['purchtaxglaccount'] . "',
 												'" . $Narrative . "',
 												'" . -$MyTaxRow['amount'] . "',
-												0,
 												'')";
 				$ResultTax = DB_Query($SQLTo, '', '', true);
 			}

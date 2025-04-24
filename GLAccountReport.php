@@ -69,7 +69,6 @@ if (isset($_POST['RunReport'])) {
 					LEFT JOIN gltags
 						ON gltrans.counterindex=gltags.counterindex
 					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND posted=1
 						AND periodno>='" . $FirstPeriodSelected . "'
 						AND periodno<='" . $LastPeriodSelected . "'";
 

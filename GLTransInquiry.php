@@ -35,7 +35,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
-				<th colspan="7"><h2><b>' . _($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
+				<th colspan="6"><h2><b>' . _($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
 			</tr>
 			<tr>
 				<th>' . _('Period') . '</th>
@@ -44,7 +44,6 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				<th>' . _('Description') . '</th>
 				<th>' . _('Debits') . '</th>
 				<th>' . _('Credits') . '</th>
-				<th>' . _('Posted') . '</th>
 			</tr>';
 
 		$SQL = "SELECT
@@ -55,18 +54,17 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 					chartmaster.accountname,
 					gltrans.narrative,
 					gltrans.amount,
-					gltrans.posted,
 					periods.lastdate_in_period
-				FROM gltrans INNER JOIN chartmaster
-				ON gltrans.account = chartmaster.accountcode
+				FROM gltrans
+				INNER JOIN chartmaster
+					ON gltrans.account = chartmaster.accountcode
 				INNER JOIN periods
-				ON periods.periodno=gltrans.periodno
+					ON periods.periodno=gltrans.periodno
 				WHERE gltrans.type= '" . $_GET['TypeID'] . "'
-				AND gltrans.typeno = '" . $_GET['TransNo'] . "'
+					AND gltrans.typeno = '" . $_GET['TransNo'] . "'
 				ORDER BY gltrans.counterindex";
 		$TransResult = DB_query($SQL);
 
-		$Posted = _('Yes');
 		$CreditTotal = 0;
 		$DebitTotal = 0;
 		$AnalysisCompleted = 'Not Yet';
@@ -83,9 +81,6 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				$CreditAmount = locale_number_format(-$TransRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 				$CreditTotal+= $TransRow['amount'];
 				$DebitAmount = '&nbsp;';
-			}
-			if ($TransRow['posted'] == 0) {
-				$Posted = _('No');
 			}
 			if ($TransRow['account'] == $_SESSION['CompanyRecord']['debtorsact'] and $AnalysisCompleted == 'Not Yet') {
 				$URL = $RootPath . '/CustomerInquiry.php?CustomerID=';
@@ -156,7 +151,6 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 
 				echo '	<td class="number">' . $DebitAmount . '</td>
 							<td class="number">' . $CreditAmount . '</td>
-							<td>' . $Posted . '</td>
 						</tr>';
 			}
 
@@ -188,7 +182,6 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 							<td>' . $TransRow['narrative'] . '</td>
 							<td class="number">' . $Debit . '</td>
 							<td class="number">' . $Credit . '</td>
-							<td>' . $Posted . '</td>
 						</tr>';
 				}
 				DB_free_result($DetailResult);
@@ -201,7 +194,6 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 				<td class="number" colspan="4"><b>' . _('Total') . '</b></td>
 				<td class="number"><b>' . locale_number_format(($DebitTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td class="number"><b>' . locale_number_format((-$CreditTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
-				<td>&nbsp;</td>
 			</tr>
 			</table>';
 	}
