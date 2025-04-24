@@ -8,6 +8,8 @@ RemoveScript('Z_RePostGLFromPeriod.php');
 
 DropTable('chartdetails');
 
+DropColumn('posted','gltrans');
+
 if (DB_error_no($Result) == 0) {
 	$_SESSION['Updates']['Successes']++;
 } else {
