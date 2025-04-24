@@ -546,8 +546,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</div>',
 		'</form>';
 
-	// Now do the posting while the user is thinking about the period to select:
-	include('includes/GLPostings.inc');
 	include('includes/footer.php');
 }
 

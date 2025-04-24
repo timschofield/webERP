@@ -331,8 +331,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				<td colspan="7"></td>
 			</tr>
 		</tfoot>';
-	// Do the postings
-	include('includes/GLPostings.inc');
 
 	// show the success message
 	if($SucessfullyAuthorized > 0) {

@@ -208,7 +208,6 @@ if (isset($_POST['RunReport'])) {
 else {
 	$Title = _('General Ledger Account Report');
 	include ('includes/header.php');
-	include ('includes/GLPostings.inc');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 

@@ -10,7 +10,6 @@ include ('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 _('General Ledger Account Inquiry') , '" /> ', // Icon title.
 _('General Ledger Account Inquiry') , '</p>'; // Page title.
-include ('includes/GLPostings.inc');
 
 if (isset($_POST['Account'])) {
 	$SelectedAccount = $_POST['Account'];

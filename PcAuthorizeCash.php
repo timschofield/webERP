@@ -229,8 +229,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<td colspan="2" class="number">', _('Current balance'), ':</td>
 			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
-	// Do the postings
-	include('includes/GLPostings.inc');
+
 	echo '</table>';
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="', _('Update'), '" />
