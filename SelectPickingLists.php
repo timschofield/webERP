@@ -488,10 +488,10 @@ else {
 					<td><a target="_blank" href="', $PrintLabels . '">' . _('Labels') . '</a></td>
 					<td>', $MyRow['orderno'], '</td>
 					<td>', $MyRow['name'], '</td>
-					<td>', $FormatedRequestDate, '</td>
-					<td>', $FormatedShipDate, '</td>
+					<td class="date">', $FormatedRequestDate, '</td>
+					<td class="date">', $FormatedShipDate, '</td>
 					<td>', $MyRow['shippedby'], '</td>
-					<td>', $FormatedInitDate, '</td>
+					<td class="date">', $FormatedInitDate, '</td>
 					<td>', $MyRow['initiator'], '</td>
 					', $Confirm_Invoice, '
 				</tr>';

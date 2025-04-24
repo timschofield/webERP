@@ -23,18 +23,18 @@ if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Category
 3) Mark the process as finished once the labels have been changed at KLMoveToDiscount20Step02 and this script
 */
 
-$Title = 'KL Set the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
+$Title = 'KL Set the ' . $_GET['Discount'] . '% Discount Code';
 
 if ($_GET['Action'] == "New"){
-	$Title = 'Set the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
+	$Title = 'Set the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Change"){
-	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
+	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Finish"){
-	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Labels for item ' . $_GET['Item'];
+	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Labels';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else{

@@ -4,7 +4,7 @@
 include('includes/session.php');
 
 if (isset($_GET['OrderNo'])) {
-	$Title = _('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
+	$Title = _('Reviewing Purchase Order');
 	$_GET['OrderNo']=(int)$_GET['OrderNo'];
 } else {
 	$Title = _('Reviewing A Purchase Order');

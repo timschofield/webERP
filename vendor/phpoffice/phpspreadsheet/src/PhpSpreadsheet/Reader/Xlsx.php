@@ -40,7 +40,6 @@ use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\HeaderFooterDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use SimpleXMLElement;
-use Stringable;
 use Throwable;
 use XMLReader;
 use ZipArchive;
@@ -401,7 +400,7 @@ class Xlsx extends BaseReader
         File::assertFile($filename, self::INITIAL_FILE);
 
         // Initialisations
-        $excel = new Spreadsheet();
+        $excel = $this->newSpreadsheet();
         $excel->setValueBinder($this->valueBinder);
         $excel->removeSheetByIndex(0);
         $addingFirstCellStyleXf = true;
@@ -693,6 +692,7 @@ class Xlsx extends BaseReader
                     $this->styleReader->setNamespace($mainNS);
                     $this->styleReader->setStyleBaseData($theme, $styles, $cellStyles);
                     $dxfs = $this->styleReader->dxfs($this->readDataOnly);
+                    $tableStyles = $this->styleReader->tableStyles($this->readDataOnly);
                     $styles = $this->styleReader->styles();
 
                     // Read content after setting the styles
@@ -1001,7 +1001,7 @@ class Xlsx extends BaseReader
                                 $this->readBackgroundImage($xmlSheetNS, $docSheet, dirname("$dir/$fileWorksheet") . '/_rels/' . basename($fileWorksheet) . '.rels');
                             }
 
-                            $this->readTables($xmlSheetNS, $docSheet, $dir, $fileWorksheet, $zip, $mainNS);
+                            $this->readTables($xmlSheetNS, $docSheet, $dir, $fileWorksheet, $zip, $mainNS, $tableStyles, $dxfs);
 
                             if ($xmlSheetNS && $xmlSheetNS->mergeCells && $xmlSheetNS->mergeCells->mergeCell && !$this->readDataOnly) {
                                 foreach ($xmlSheetNS->mergeCells->mergeCell as $mergeCellx) {
@@ -1179,6 +1179,7 @@ class Xlsx extends BaseReader
                                                 $textboxDirection = Comment::TEXTBOX_DIRECTION_LTR;
                                             }
                                             if (is_array($clientData) && !empty($clientData)) {
+                                                /** @var SimpleXMLElement */
                                                 $clientData = $clientData[0];
 
                                                 if (isset($clientData['ObjectType']) && (string) $clientData['ObjectType'] == 'Note') {
@@ -1208,6 +1209,7 @@ class Xlsx extends BaseReader
 
                                             $fillImageRelNode = $shape->xpath('.//v:fill/@o:relid');
                                             if (is_array($fillImageRelNode) && !empty($fillImageRelNode)) {
+                                                /** @var SimpleXMLElement */
                                                 $fillImageRelNode = $fillImageRelNode[0];
 
                                                 if (isset($fillImageRelNode['relid'])) {
@@ -1217,6 +1219,7 @@ class Xlsx extends BaseReader
 
                                             $fillImageTitleNode = $shape->xpath('.//v:fill/@o:title');
                                             if (is_array($fillImageTitleNode) && !empty($fillImageTitleNode)) {
+                                                /** @var SimpleXMLElement */
                                                 $fillImageTitleNode = $fillImageTitleNode[0];
 
                                                 if (isset($fillImageTitleNode['title'])) {
@@ -1226,7 +1229,7 @@ class Xlsx extends BaseReader
 
                                             if (($column !== null) && ($row !== null)) {
                                                 // Set comment properties
-                                                $comment = $docSheet->getComment([$column + 1, $row + 1]);
+                                                $comment = $docSheet->getComment([(int) $column + 1, (int) $row + 1]);
                                                 $comment->getFillColor()->setRGB($fillColor);
                                                 if (isset($drowingImages[$fillImageRelId])) {
                                                     $objDrawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
@@ -1490,7 +1493,13 @@ class Xlsx extends BaseReader
                                                         $shadow->setAlignment(self::getArrayItemString(self::getAttributes($outerShdw), 'algn'));
                                                         $clr = $outerShdw->srgbClr ?? $outerShdw->prstClr;
                                                         $shadow->getColor()->setRGB(self::getArrayItemString(self::getAttributes($clr), 'val'));
-                                                        $shadow->setAlpha(self::getArrayItem(self::getAttributes($clr->alpha), 'val') / 1000);
+                                                        if ($clr->alpha) {
+                                                            $alpha = StringHelper::convertToString(self::getArrayItem(self::getAttributes($clr->alpha), 'val'));
+                                                            if (is_numeric($alpha)) {
+                                                                $alpha = (int) ($alpha / 1000);
+                                                                $shadow->setAlpha($alpha);
+                                                            }
+                                                        }
                                                     }
 
                                                     $this->readHyperLinkDrawing($objDrawing, $oneCellAnchor, $hyperlinks);
@@ -1595,7 +1604,13 @@ class Xlsx extends BaseReader
                                                         $shadow->setAlignment(self::getArrayItemString(self::getAttributes($outerShdw), 'algn'));
                                                         $clr = $outerShdw->srgbClr ?? $outerShdw->prstClr;
                                                         $shadow->getColor()->setRGB(self::getArrayItemString(self::getAttributes($clr), 'val'));
-                                                        $shadow->setAlpha(self::getArrayItem(self::getAttributes($clr->alpha), 'val') / 1000);
+                                                        if ($clr->alpha) {
+                                                            $alpha = StringHelper::convertToString(self::getArrayItem(self::getAttributes($clr->alpha), 'val'));
+                                                            if (is_numeric($alpha)) {
+                                                                $alpha = (int) ($alpha / 1000);
+                                                                $shadow->setAlpha($alpha);
+                                                            }
+                                                        }
                                                     }
 
                                                     $this->readHyperLinkDrawing($objDrawing, $twoCellAnchor, $hyperlinks);
@@ -2036,7 +2051,7 @@ class Xlsx extends BaseReader
     {
         $retVal = self::getArrayItem($array, $key);
 
-        return ($retVal === null || is_scalar($retVal) || $retVal instanceof Stringable) ? ((string) $retVal) : '';
+        return StringHelper::convertToString($retVal, false);
     }
 
     private static function getArrayItemIntOrSxml(null|array|bool|SimpleXMLElement $array, int|string $key = 0): int|SimpleXMLElement
@@ -2297,12 +2312,14 @@ class Xlsx extends BaseReader
         string $dir,
         string $fileWorksheet,
         ZipArchive $zip,
-        string $namespaceTable
+        string $namespaceTable,
+        array $tableStyles,
+        array $dxfs
     ): void {
         if ($xmlSheet && $xmlSheet->tableParts) {
             $attributes = $xmlSheet->tableParts->attributes() ?? ['count' => 0];
             if (((int) $attributes['count']) > 0) {
-                $this->readTablesInTablesFile($xmlSheet, $dir, $fileWorksheet, $zip, $docSheet, $namespaceTable);
+                $this->readTablesInTablesFile($xmlSheet, $dir, $fileWorksheet, $zip, $docSheet, $namespaceTable, $tableStyles, $dxfs);
             }
         }
     }
@@ -2313,7 +2330,9 @@ class Xlsx extends BaseReader
         string $fileWorksheet,
         ZipArchive $zip,
         Worksheet $docSheet,
-        string $namespaceTable
+        string $namespaceTable,
+        array $tableStyles,
+        array $dxfs
     ): void {
         foreach ($xmlSheet->tableParts->tablePart as $tablePart) {
             $relation = self::getAttributes($tablePart, Namespaces::SCHEMA_OFFICE_DOCUMENT);
@@ -2332,7 +2351,7 @@ class Xlsx extends BaseReader
 
                         if ($this->fileExistsInArchive($this->zip, $relationshipFilePath)) {
                             $tableXml = $this->loadZip($relationshipFilePath, $namespaceTable);
-                            (new TableReader($docSheet, $tableXml))->load();
+                            (new TableReader($docSheet, $tableXml))->load($tableStyles, $dxfs);
                         }
                     }
                 }
@@ -2374,6 +2393,7 @@ class Xlsx extends BaseReader
         $sqref = (string) ($attributes['sqref'] ?? '');
         $numberStoredAsText = (string) ($attributes['numberStoredAsText'] ?? '');
         $formula = (string) ($attributes['formula'] ?? '');
+        $formulaRange = (string) ($attributes['formulaRange'] ?? '');
         $twoDigitTextYear = (string) ($attributes['twoDigitTextYear'] ?? '');
         $evalError = (string) ($attributes['evalError'] ?? '');
         if (!empty($sqref)) {
@@ -2402,6 +2422,9 @@ class Xlsx extends BaseReader
                             }
                             if ($formula === '1') {
                                 $sheet->getCell("$col$row")->getIgnoredErrors()->setFormula(true);
+                            }
+                            if ($formulaRange === '1') {
+                                $sheet->getCell("$col$row")->getIgnoredErrors()->setFormulaRange(true);
                             }
                             if ($twoDigitTextYear === '1') {
                                 $sheet->getCell("$col$row")->getIgnoredErrors()->setTwoDigitTextYear(true);

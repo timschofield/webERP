@@ -89,9 +89,9 @@ while ($MyRow=DB_fetch_array($Result)) {
 		echo '<tr>
 				<td>' . $MyRow['orderno'] . '</td>
 				<td>' . $MyRow['suppname'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
+				<td class="date">' . ConvertSQLDate($MyRow['orddate']) . '</td>
 				<td><a href="mailto:'.$MyRow['email'].'">' . $MyRow['realname'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
+				<td class="date">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 				<td><select name="Status'.$MyRow['orderno'].'">
 					<option selected="selected" value="Pending">' . _('Pending') . '</option>
 					<option value="Authorised">' . _('Authorised') . '</option>

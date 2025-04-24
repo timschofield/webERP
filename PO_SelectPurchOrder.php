@@ -453,8 +453,8 @@ else {
 					<td>' . $MyRow['suppname'] . '</td>
 					<td>' . $MyRow['currcode'] . '</td>
 					<td>' . $MyRow['requisitionno'] . '</td>
-					<td>' . $FormatedOrderDate . '</td>
-					<td>' . $FormatedDeliveryDate . '</td>
+					<td class="date">' . $FormatedOrderDate . '</td>
+					<td class="date">' . $FormatedDeliveryDate . '</td>
 					<td>' . $MyRow['initiator'] . '</td>
 					<td class="number">' . $FormatedOrderValue . '</td>
 					<td>' . _($MyRow['status']) .  '</td>

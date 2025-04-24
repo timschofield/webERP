@@ -473,7 +473,7 @@ if (isset($_POST['AllocTrans'])){
 	    echo '<tr class="striped_row">
 			<td>' . $AllocnItem->TransType . '</td>
 			<td class="number">' . $AllocnItem->TypeNo . '</td>
-			<td>' . $AllocnItem->TransDate . '</td>
+			<td class="date">' . $AllocnItem->TransDate . '</td>
 			<td>' . $AllocnItem->SuppRef . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 			<td class="number">' . locale_number_format($YetToAlloc,$_SESSION['Alloc']->CurrDecimalPlaces) . '<input type="hidden" name="YetToAlloc' . $Counter . '" value="' . $YetToAlloc . '" /></td>';
@@ -573,7 +573,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>', _($MyRow['typename']), '</td>
 			<td>', $MyRow['suppname'], '</td>
 			<td>', $MyRow['transno'], '</td>
-			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
 			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']), '</td>
 			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . _('Allocate')  . '</a></td>
@@ -635,7 +635,7 @@ if (isset($_POST['AllocTrans'])){
 			<td>', _($MyRow['typename']), '</td>
 			<td>', $MyRow['suppname'], '</td>
 			<td>', $MyRow['transno'], '</td>
-			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
 			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
 			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . _('Allocate') . '</a></td>

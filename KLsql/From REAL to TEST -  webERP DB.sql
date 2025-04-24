@@ -1,5 +1,20 @@
 SET FOREIGN_KEY_CHECKS=0;
-  
+
+DROP TRIGGER IF EXISTS test_erp.currencies_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_update;
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_delete;
+DROP TRIGGER IF EXISTS test_erp.klretailcustomers_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.klstockmarketplaces_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.locstock_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.prices_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.relateditems_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salariescalculated_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salescat_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salescatprod_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.stockdescriptiontranslations_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.stockmaster_creation_timestamp;
+
 TRUNCATE test_erp.`accountgroups`;
 INSERT INTO test_erp.accountgroups SELECT * FROM kurakura_kl_erp.accountgroups;
 
@@ -32,9 +47,6 @@ INSERT INTO test_erp.bom SELECT * FROM kurakura_kl_erp.bom;
 
 TRUNCATE test_erp.`buckets`;
 INSERT INTO test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
-
-TRUNCATE test_erp.`chartdetails`;
-INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
 
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
@@ -174,12 +186,11 @@ INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers
 TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
 
-DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
 TRUNCATE test_erp.`gltotals`;
 INSERT INTO test_erp.gltotals SELECT * FROM kurakura_kl_erp.gltotals;
 
 TRUNCATE test_erp.`gltrans`;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+/*INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
@@ -190,23 +201,14 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 140;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 150;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 160; 
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; 
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; */
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 170 AND periodno <= 180;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 180 AND periodno <= 190;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
-DELIMITER //
 
-CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
-BEGIN
-    INSERT INTO gltotals (account, period, amount)
-    VALUES (NEW.account, NEW.periodno, NEW.amount)
-    ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-END //
-DELIMITER ;
-		
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
 
@@ -672,6 +674,74 @@ INSERT INTO test_erp.woserialnos SELECT * FROM kurakura_kl_erp.woserialnos;
 
 TRUNCATE test_erp.`www_users`;
 INSERT INTO test_erp.www_users SELECT * FROM kurakura_kl_erp.www_users;
+
+DELIMITER //
+
+CREATE TRIGGER `currencies_creation_timestamp` BEFORE INSERT ON `currencies`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
+BEGIN
+    INSERT INTO gltotals (account, period, amount)
+    VALUES (NEW.account, NEW.periodno, NEW.amount)
+    ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+END //
+
+CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans`
+ FOR EACH ROW BEGIN
+			IF NEW.account <> OLD.account OR NEW.periodno <> OLD.periodno THEN
+				UPDATE gltotals
+				SET amount = amount - OLD.amount
+				WHERE account = OLD.account AND period = OLD.periodno;
+
+				INSERT INTO gltotals (account, period, amount)
+				VALUES (NEW.account, NEW.periodno, NEW.amount)
+				ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+			ELSE
+				UPDATE gltotals
+				SET amount = amount - OLD.amount + NEW.amount
+				WHERE account = NEW.account AND period = NEW.periodno;
+			END IF;
+		END //
+		
+CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans`
+ FOR EACH ROW BEGIN
+			UPDATE gltotals
+			SET amount = amount - OLD.amount
+			WHERE account = OLD.account AND period = OLD.periodno;
+		END //
+
+CREATE TRIGGER `klretailcustomers_creation_timestamp` BEFORE INSERT ON `klretailcustomers`
+ FOR EACH ROW SET NEW.date_added = NOW() //
+
+CREATE TRIGGER `klstockmarketplaces_creation_timestamp` BEFORE INSERT ON `klstockmarketplaces`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `locstock_creation_timestamp` BEFORE INSERT ON `locstock`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `prices_creation_timestamp` BEFORE INSERT ON `prices`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `relateditems_creation_timestamp` BEFORE INSERT ON `relateditems`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `salariescalculated_creation_timestamp` BEFORE INSERT ON `salariescalculated`
+ FOR EACH ROW SET NEW.date_added = NOW() //
+
+CREATE TRIGGER `salescat_creation_timestamp` BEFORE INSERT ON `salescat`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `salescatprod_creation_timestamp` BEFORE INSERT ON `salescatprod`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `stockdescriptiontranslations_creation_timestamp` BEFORE INSERT ON `stockdescriptiontranslations`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+CREATE TRIGGER `stockmaster_creation_timestamp` BEFORE INSERT ON `stockmaster`
+ FOR EACH ROW SET NEW.date_created = NOW() //
+
+DELIMITER ;
 
 UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
 UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/reports' WHERE  `confname` =  'reports_dir';

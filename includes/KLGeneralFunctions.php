@@ -1655,8 +1655,6 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 
 		ChangeFieldInTable("banktrans", "bankact", $OldGL, $NewGL);
 
-		ChangeFieldInTable("chartdetails", "accountcode", $OldGL, $NewGL);
-
 		ChangeFieldInTable("cogsglpostings", "glcode", $OldGL, $NewGL);
 
 		ChangeFieldInTable("companies", "debtorsact", $OldGL, $NewGL);

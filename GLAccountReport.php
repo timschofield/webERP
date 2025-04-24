@@ -69,7 +69,6 @@ if (isset($_POST['RunReport'])) {
 					LEFT JOIN gltags
 						ON gltrans.counterindex=gltags.counterindex
 					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND posted=1
 						AND periodno>='" . $FirstPeriodSelected . "'
 						AND periodno<='" . $LastPeriodSelected . "'";
 
@@ -96,18 +95,17 @@ if (isset($_POST['RunReport'])) {
 			$RunningTotal = 0;
 		}
 		else {
-			$SQL = "SELECT bfwd,
-						actual,
-						period
-					FROM chartdetails
-					WHERE chartdetails.accountcode='" . $SelectedAccount . "'
-					AND chartdetails.period='" . $FirstPeriodSelected . "'";
+			// Calculate the brought forward balance from gltotals
+			$SQL = "SELECT SUM(amount) AS bfwd
+					FROM gltotals
+					WHERE gltotals.account = '" . $SelectedAccount . "'
+					AND gltotals.period < '" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($SQL, $ErrMsg);
-			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
+			$ErrMsg = _('The brought forward balance for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+			$BfwdResult = DB_query($SQL, $ErrMsg);
+			$BfwdRow = DB_fetch_array($BfwdResult);
+			$RunningTotal = $BfwdRow['bfwd'];
 
-			$RunningTotal = $ChartDetailRow['bfwd'];
 			$YPos -= $LineHeight;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Brought Forward Balance'));
 
@@ -209,7 +207,6 @@ if (isset($_POST['RunReport'])) {
 else {
 	$Title = _('General Ledger Account Report');
 	include ('includes/header.php');
-	include ('includes/GLPostings.inc');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 

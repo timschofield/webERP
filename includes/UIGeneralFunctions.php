@@ -492,6 +492,47 @@ function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $
 	return $HTML;
 }
 
+function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT userid, 
+				realname 
+			FROM www_users";
+
+	$Result = DB_query($SQL);
+
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($AllowAll) {
+		if (!isset($SelectedValue)) {
+			$HTML .= '<option selected="selected" value="All">' . _('All Users') . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="All">' . _('All Users') . '</option>';
+		}
+	} 
+	else {
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	}
+		
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['userid'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['userid'] . '">' . $MyRow['userid'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
 function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	if ($Filter == 'CANVIEW') {    
 		$SQL = "SELECT locations.loccode,
