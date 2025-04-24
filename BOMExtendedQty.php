@@ -1,6 +1,5 @@
 <?php
 
-
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 
 include('includes/session.php');
@@ -317,13 +316,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<select name="Select">
 				<option selected="selected" value="All">' . _('Show All Parts') . '</option>
 				<option value="Shortages">' . _('Only Show Shortages') . '</option>
-			</select>
-		</field>
-		<field>
-			<label for="Fill">' . _('Print Option') . ':</label>
-			<select name="Fill">
-				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-				<option value="no">' . _('Plain Print') . '</option>
 			</select>
 		</field>
 		</fieldset>
