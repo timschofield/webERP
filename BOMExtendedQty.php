@@ -4,16 +4,9 @@
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 
 include('includes/session.php');
+use Dompdf\Dompdf;
 
-if (isset($_POST['PrintPDF'])) {
-
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Quantity Extended BOM Listing'));
-	$pdf->addInfo('Subject',_('Quantity Extended BOM Listing'));
-	$FontSize=9;
-	$PageNumber=1;
-	$LineHeight=12;
-    PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (!$_POST['Quantity'] or !is_numeric(filter_number_format($_POST['Quantity']))) {
 		$_POST['Quantity'] = 1;
@@ -162,8 +155,6 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 	$Tot_Val=0;
-	$Fill = false;
-	$pdf->SetFillColor(224,235,255);
 	$SQL = "SELECT tempbom.component,
 				   SUM(tempbom.quantity) as quantity,
 				   stockmaster.description,
@@ -201,6 +192,41 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag";
 	$Result = DB_query($SQL);
 	$ListCount = DB_num_rows($Result);
+
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Extended Quantity BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
+					' . _('Build Quantity:') . ' ' . locale_number_format($_POST['Quantity'],'Variable') . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>' . _('Part Number') . '</th>
+							<th>' . _('M/B') . '</th>
+							<th>' . _('Part Description') . '</th>
+							<th>' . _('Build') . '<br />' . _('Quantity') . '</th>
+							<th>' . _('On Hand') . '<br />' . _('Quantity') . '</th>
+							<th>' . _('P.O.') . '<br />' . _('Quantity') . '</th>
+							<th>' . _('W.O.') . '<br />' . _('Quantity') . '</th>
+							<th>' . _('Shortage') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+
 	while ($MyRow = DB_fetch_array($Result)){
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -209,43 +235,59 @@ if (isset($_POST['PrintPDF'])) {
 		// and False to set to transparent
 		$Difference = $MyRow['quantity'] - ($MyRow['qoh'] + $MyRow['poqty'] + $MyRow['woqty']);
 		if (($_POST['Select'] == 'All') or ($Difference > 0)) {
-			$YPos -=$LineHeight;
-			$FontSize=8;
-			// Use to alternate between lines with transparent and painted background
-			if ($_POST['Fill'] == 'yes'){
-				$Fill=!$Fill;
-			}
-			$pdf->addTextWrap($Left_Margin+1,$YPos,90,$FontSize,$MyRow['component'],'',0,$Fill);
-			$pdf->addTextWrap(140,$YPos,30,$FontSize,$MyRow['mbflag'],'',0,$Fill);
-			$pdf->addTextWrap(170,$YPos,140,$FontSize,$MyRow['description'],'',0,$Fill);
-			$pdf->addTextWrap(310,$YPos,50,$FontSize,locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),'right',0,$Fill);
-			$pdf->addTextWrap(360,$YPos,40,$FontSize,locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),'right',0,$Fill);
-			$pdf->addTextWrap(400,$YPos,40,$FontSize,locale_number_format($MyRow['poqty'],$MyRow['decimalplaces']),'right',0,$Fill);
-			$pdf->addTextWrap(440,$YPos,40,$FontSize,locale_number_format($MyRow['woqty'],$MyRow['decimalplaces']),'right',0,$Fill);
-			$pdf->addTextWrap(480,$YPos,50,$FontSize,locale_number_format($Difference,$MyRow['decimalplaces']),'right',0,$Fill);
-		}
-		if ($YPos < $Bottom_Margin + $LineHeight){
-			PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
+			$HTML .= '<tr class="striped_row">
+						<td>' . $MyRow['component'] . '</td>
+						<td>' . $MyRow['mbflag'] . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['poqty'],$MyRow['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['woqty'],$MyRow['decimalplaces']) . '</td>
+						<td class="number">' . locale_number_format($Difference,$MyRow['decimalplaces']) . '</td>
+					</tr>';
 		}
 
 	} /*end while loop */
 
-	$FontSize =10;
-	$YPos -= (2*$LineHeight);
 
-	if ($YPos < $Bottom_Margin + $LineHeight){
-		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin);
-	}
-	if ($ListCount == 0) {
-		$Title = _('Print Indented BOM Listing Error');
-		include('includes/header.php');
-		prnMsg(_('There were no items for the selected assembly'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit;
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_BOM_Extended_Qty_' . date('Y-m-d').'.pdf');
-		$pdf->__destruct();
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_BOMExtendedQty_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('BOM Extended Quantity');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -257,7 +299,7 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', _('Report Criteria'), '</legend>
@@ -286,57 +328,13 @@ if (isset($_POST['PrintPDF'])) {
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-        </div>
-        </form>';
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+		</div>
+	</form>';
 
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
 
-
-function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin) {
-
-	/*PDF page header for BOMExtendedQTY report */
-	if ($PageNumber>1){
-		$pdf->newPage();
-	}
-	$LineHeight=12;
-	$FontSize=9;
-	$YPos= $Page_Height-$Top_Margin-5;
-
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-
-	$YPos -=$LineHeight;
-
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Extended Quantity BOM Listing For	   ')
-		. mb_strtoupper($_POST['Part']));
-	$pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,160,$FontSize,_('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Build Quantity:  ') . locale_number_format($_POST['Quantity'],'Variable'),'left');
-
-	$YPos -=(2*$LineHeight);
-
-	/*set up the headings */
-	$Xpos = $Left_Margin+1;
-
-	$pdf->addTextWrap(310,$YPos,50,$FontSize,_('Build'), 'center');
-	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('On Hand'), 'right');
-	$pdf->addTextWrap(400,$YPos,40,$FontSize,_('P.O.'), 'right');
-	$pdf->addTextWrap(440,$YPos,40,$FontSize,_('W.O.'), 'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Xpos,$YPos,90,$FontSize,_('Part Number'), 'left');
-	$pdf->addTextWrap(140,$YPos,30,$FontSize,_('M/B'), 'left');
-	$pdf->addTextWrap(170,$YPos,140,$FontSize,_('Part Description'), 'left');
-	$pdf->addTextWrap(310,$YPos,50,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(360,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(400,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(440,$YPos,40,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(480,$YPos,50,$FontSize,_('Shortage'), 'right');
-
-	$YPos =$YPos - (2*$LineHeight);
-	$PageNumber++;
-} // End of PrintHeader function
 ?>
