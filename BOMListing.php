@@ -3,20 +3,11 @@
 
 include('includes/session.php');
 
-If (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1){
+use Dompdf\Dompdf;
 
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Bill Of Material Listing'));
-	$pdf->addInfo('Subject',_('Bill Of Material Listing'));
-	$FontSize=12;
-	$PageNumber=0;
-	$LineHeight=12;
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-      /*Now figure out the bills to report for the part range under review */
+	  /*Now figure out the bills to report for the part range under review */
 	$SQL = "SELECT bom.parent,
 				bom.component,
 				stockmaster.description as compdescription,
@@ -44,7 +35,7 @@ If (isset($_POST['PrintPDF'])
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($Debug==1){
-	      echo '<br />' . $SQL;
+		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
 	   exit;
@@ -57,52 +48,104 @@ If (isset($_POST['PrintPDF'])
 	   exit;
 	}
 
-	include ('includes/PDFBOMListingPageHeader.inc');
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>' . _('Component Part') . '</th>
+							<th>' . _('Description') . '</th>
+							<th>' . _('Effective After') . '</th>
+							<th>' . _('Effective To') . '</th>
+							<th>' . _('Location') . '</th>
+							<th>' . _('Work') . '<br />' . _('Centre') . '</th>
+							<th>' . _('Quantity') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
 	$ParentPart = '';
 
 	while ($BOMList = DB_fetch_array($BOMResult)){
 
 		if ($ParentPart!=$BOMList['parent']){
-
-			$FontSize=10;
-			if ($ParentPart!=''){ /*Then it's NOT the first time round */
-				/* need to rule off from the previous parent listed */
-				$YPos -=$LineHeight;
-				$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-				$YPos -=$LineHeight;
-			}
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
 			$ParentResult = DB_query($SQL);
 			$ParentRow = DB_fetch_row($ParentResult);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,400-$Left_Margin,$FontSize,$BOMList['parent'] . ' - ' . $ParentRow[0],'left');
+			$HTML .= '<tr class="total_row">
+						<td>' . $BOMList['parent'] . '</td>
+						<td>' . $ParentRow[0] . '</td>
+						<td colspan="5"></td>
+					</tr>';
 			$ParentPart = $BOMList['parent'];
 		}
-
-		$YPos -=$LineHeight;
-		$FontSize=8;
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,80,$FontSize,$BOMList['component'],'left');
-		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$BOMList['compdescription'],'left');
-
-		$DisplayQuantity = locale_number_format($BOMList['quantity'],$BOMList['decimalplaces']);
-		$LeftOvers = $pdf->addTextWrap(320,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_frm']),'left');
-		$LeftOvers = $pdf->addTextWrap(375,$YPos,50,$FontSize,ConvertSQLDate($BOMList['eff_to']),'left');
-		$LeftOvers = $pdf->addTextWrap(430,$YPos,30,$FontSize,$BOMList['loccode'],'left');
-		$LeftOvers = $pdf->addTextWrap(465,$YPos,30,$FontSize,$BOMList['workcentreadded'],'left');
-		$LeftOvers = $pdf->addTextWrap(480,$YPos,60,$FontSize,$DisplayQuantity,'right');
-		$LeftOvers = $pdf->addTextWrap(540,$YPos,20,$FontSize,$BOMList['units'],'left');
-
-		if ($YPos < $Bottom_Margin + $LineHeight){
-		   include('includes/PDFBOMListingPageHeader.inc');
-		}
+		$HTML .= '<tr class="striped_row">
+					<td>' . $BOMList['component'] . '</td>
+					<td>' . $BOMList['compdescription'] . '</td>
+					<td class="date">' . ConvertSQLDate($BOMList['eff_frm']) . '</td>
+					<td class="date">' . ConvertSQLDate($BOMList['eff_to']) . '</td>
+					<td>' . $BOMList['loccode'] . '</td>
+					<td>' . $BOMList['workcentreadded'] . '</td>
+					<td class="number">' . locale_number_format($BOMList['quantity'],$BOMList['decimalplaces']) . ' ' . $BOMList['units'] . '</td>
+				</tr>';
 
 	} /*end BOM Listing while loop */
 
-	$YPos -=$LineHeight;
-	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
 
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');
-    $pdf->__destruct();
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Bill Of Material Listing');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
 
 } else { /*The option to print PDF was not hit */
 
@@ -118,8 +161,8 @@ If (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
+			  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			  <fieldset>
 				<legend>', _('Report Criteria'), '</legend>';
 
@@ -135,10 +178,12 @@ If (isset($_POST['PrintPDF'])
 				<fieldhelp>' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '</fieldhelp>
 			</field>';
 
-
 		echo '</fieldset>
-				<div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
-             </form>';
+				<div class="centre">
+					<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
+					<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+				</div>
+			</form>';
 	}
 	include('includes/footer.php');
 

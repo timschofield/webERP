@@ -72,7 +72,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 					echo '<tr class="striped_row">
 							<td>' . $MyRow['stockid'] . '</td>
 							<td>' . $MyRow['description'] . '</td>
-							<td>' . $MyRow['trandate'] . '</td>
+							<td class="date">' . $MyRow['trandate'] . '</td>
 							<td class="number">' . locale_number_format($IssuedQty,$MyRow['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($IssuedCost,2) . '</td>
 							<td>' . $MyRow['reference'] . '</td>
@@ -511,8 +511,8 @@ if (!isset($StockID)) {
 					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
 					<td class="number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
-					<td>', $FormatedStartDate, '</td>
-					<td>', $FormatedRequiredByDate, '</td>
+					<td class="date">', $FormatedStartDate, '</td>
+					<td class="date">', $FormatedRequiredByDate, '</td>
 				</tr>';
 		//end of page full new headings if
 		}
