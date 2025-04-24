@@ -168,7 +168,6 @@ function PurgetableGltrans($PurgeToPeriod){
 						account,
 						narrative,
 						amount,
-						posted,
 						jobref,
 						tag
 				FROM gltrans
@@ -190,7 +189,6 @@ function PurgetableGltrans($PurgeToPeriod){
 									account,
 									narrative,
 									amount,
-									posted,
 									jobref
 								) VALUES (
 								'" . $MyRow['counterindex'] . "',
@@ -202,7 +200,6 @@ function PurgetableGltrans($PurgeToPeriod){
 								'" . $MyRow['account'] . "',
 								'" . $MyRow['narrative'] . "',
 								'" . $MyRow['amount'] . "',
-								'" . $MyRow['posted'] . "',
 								'" . $MyRow['jobref'] . "')";
 				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
@@ -238,7 +235,6 @@ function PurgetableGltrans($PurgeToPeriod){
 										account,
 										narrative,
 										amount,
-										posted,
 										jobref
 									) VALUES (
 									'1000',
@@ -249,7 +245,6 @@ function PurgetableGltrans($PurgeToPeriod){
 									'" . $MyConsolidatedRow['account'] . "',
 									'CONSOLIDATED ACCOUNTING',
 									'" . $MyConsolidatedRow['consolidated'] . "',
-									'1',
 									'')";
 					$ResultInsert = DB_query($SQLInsert,$ErrMsg,$DbgMsg);
 				}
