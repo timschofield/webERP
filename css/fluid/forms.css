@@ -180,7 +180,7 @@ background-size:18px 18px;
 padding-left:24px;
 }
 form input[type="reset"]{
-background:#0F4254;
+background:#556699;
 background-image:url(images/cross.svg);
 background-repeat: no-repeat;
 background-position:4px center;
@@ -191,6 +191,7 @@ padding-bottom: 4px;
 padding-left:24px;
 padding-right: 16px;
 margin: 1px;
+margin-left:8px;
 border: 1px solid #556699;
 outline-offset:2px;
 outline: 2px solid #303A43;
