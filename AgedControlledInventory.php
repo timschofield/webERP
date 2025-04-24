@@ -78,7 +78,7 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 			<td class="number">', locale_number_format($LocQtyRow['quantity'],$LocQtyRow['decimalplaces']), '</td>
 			<td>', $LocQtyRow['units'], '</td>
 			<td class="number">', $DispVal, '</td>
-			<td>', ConvertSQLDate($LocQtyRow['createdate']), '</td>
+			<td class="date">', ConvertSQLDate($LocQtyRow['createdate']), '</td>
 			<td class="number">', $DaysOld, '</td>
 		</tr>';
 } //while
