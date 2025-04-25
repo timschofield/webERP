@@ -41,13 +41,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] , 'From');
 		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] , 'To');
 	}
-	
+
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
 	$PrdResult = DB_query($SQL);
 	$MyRow = DB_fetch_row($PrdResult);
 	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+
+	$HTML = '';
+
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodFrom'] . "'";
+	$PrdResult = DB_query($SQL);
+	$MyRow = DB_fetch_row($PrdResult);
+	$PeriodFromDate = MonthAndYearFromSQLDate($MyRow[0]);
 
 	$HTML = '';
 
@@ -61,22 +68,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<meta name="Creator" content="webERP //www.weberp.org">
 				</head>
 				<body>';
-//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />'; // Page title . reporting period.
-	$HTML .= '<table class="selection">'.
-		// Content of the header and footer of the output table:
-		'<thead>
-			<tr>';
-	if ($_POST['ShowDetail']=='Detailed') {
-		$HTML .= '<th>' . _('Account') . '</th><th>' . _('Account Name') . '</th>';
-	} else { /*summary */
-		$HTML .= '<th colspan="2">&nbsp;</th>';
-	}
 
-	$HTML .= '<table summary="' . _('General Ledger Profit Loss Inquiry') . '">
+	$HTML .= '<table summary="' . _('General Ledger Profit Loss Inquiry') . ' ' . _('From') . ' ' . $PeriodFromDate . ' ' . _('to') . ' ' . $PeriodToDate . '">
 			<thead>
 				<tr>
-					<th colspan="10">
-						<b>' . _('General Ledger Profit Loss Inquiry') . '</b>
+					<th colspan="8">
+						<b>' . _('General Ledger Profit Loss Inquiry') . ' ' . _('From') . ' ' . $PeriodFromDate . ' ' . _('to') . ' ' . $PeriodToDate . '</b>
 					</th>
 				</tr>';
 
@@ -194,10 +191,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			if ($MyRow['parentgroupname'] != $ActGrp and $ActGrp != '') {
 				while ($MyRow['group_'] != $ParentGroups[$Level] and $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
-						$HTML .= '<tr>
-								<td colspan="2"></td>
-								<td colspan="6"><hr /></td>
-							</tr>';
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
 					} else {
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -231,10 +224,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				} //end while
 				//still need to print out the old group totals
 				if ($_POST['ShowDetail'] == 'Detailed') {
-					$HTML .= '<tr>
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr>';
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
 				} else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -272,14 +261,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			if ($SectionPrdLY + $SectionPrdActual + $SectionPrdBudget != 0) {
 				if ($Section == 1) { /*Income*/
-					$HTML .= '<tr>
-							<td colspan="3"></td>
-							<td><hr /></td>
-							<td>&nbsp;</td>
-							<td><hr /></td>
-							<td>&nbsp;</td>
-							<td><hr /></td>
-						</tr>' . '<tr class="total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h2>' . $Sections[$Section] . '</td>
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -292,14 +274,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$TotalIncomeBudget = - $SectionPrdBudget;
 					$TotalIncomeLY = - $SectionPrdLY;
 				} else {
-					$HTML .= '<tr>
-							<td colspan="2"></td>
-							<td><hr /></td>
-							<td>&nbsp;</td>
-							<td><hr /></td>
-							<td>&nbsp;</td>
-							<td><hr /></td>
-						</tr><tr class="total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h2>' . $Sections[$Section] . '</h2></td>
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -310,10 +285,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						</tr>';
 				}
 				if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
-					$HTML .= '<tr>
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr><tr class="total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format($TotalIncomeActual - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -338,10 +310,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					} else {
 						$GPPercentLY = 0;
 					}
-					$HTML .= '<tr>
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr><tr class="total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
 							<td>&nbsp;</td>
 							<td class="number"><i>' . locale_number_format($GPPercentActual, 1) . '%</i></td>
@@ -354,10 +323,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				}
 
 				if (($Section != 1) and ($Section != 2)) {
-					$HTML .= '<tr>
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr><tr class="total_row">
+					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h4><b>' . _('Profit') . ' - ' . _('Loss') . ' ' . _('after') . ' ' . $Sections[$Section] . '</b></h2></td>
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$PeriodProfitLossActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -391,10 +357,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td>&nbsp;</td>
 							<td class="number"><i>' . locale_number_format($NPPercentLY, 1) . '%</i></td>
 						</tr>
-						<tr><td colspan="6">&nbsp;</td></tr>' . '<tr>
-							<td colspan="2"></td>
-							<td colspan="6"><hr /></td>
-						</tr>';
+						<tr><td colspan="6">&nbsp;</td></tr>';
 				}
 			}
 			$SectionPrdActual = 0;
@@ -403,7 +366,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$Section = $MyRow['sectionid'];
 			if ($_POST['ShowDetail'] == 'Detailed') {
 				$HTML .= '<tr>
-						<td colspan="6"><h2><b>' . $Sections[$MyRow['sectionid']] . '</b></h2></td>
+						<td colspan="8"><h2><b>' . $Sections[$MyRow['sectionid']] . '</b></h2></td>
 					</tr>';
 			}
 		}
@@ -476,10 +439,31 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 	}
 	//end of loop
-	$HTML .= '<tr>
-			<td colspan="2"></td>
-			<td colspan="6"><hr /></td>
-		</tr>';
+
+
+				if ($Section == 1) { /*Income */
+					$HTML .= '<tr class="total_row">
+							<td colspan="2"><h4><i>' . $ActGrp . '</i></h4></td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						</tr>';
+				} else { /*Costs */
+					$HTML .= '<tr class="total_row">
+							<td colspan="2"><h4><i>' . $ActGrp . '</i></h4></td>
+							<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format($GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format($GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+						</tr>';
+				}
+
+
 
 	$HTML .= '<tr class="total_row">
 			<td colspan="2"><h2><b>' . _('Profit') . ' - ' . _('Loss') . '</b></h2></td>
@@ -506,10 +490,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$NPPercentLY = 0;
 	}
-	$HTML .= '<tr>
-			<td colspan="2"></td>
-			<td colspan="6"><hr /></td>
-		</tr><tr class="total_row">
+	$HTML .= '<tr class="total_row">
 				<td colspan="2"><h4><i>' . _('Net Profit Percent') . '</i></h4></td>
 				<td>&nbsp;</td>
 				<td class="number"><i>' . locale_number_format($NPPercentActual, 1) . '%</i></td>
@@ -518,10 +499,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<td>&nbsp;</td>
 				<td class="number"><i>' . locale_number_format($NPPercentLY, 1) . '%</i></td>
 		</tr>
-		<tr><td colspan="6">&nbsp;</td>
-		</tr><tr>
-			<td colspan="2"></td>
-			<td colspan="6"><hr /></td>
+		<tr><td colspan="8">&nbsp;</td>
 		</tr>
 		</tbody></table></div>'; // div id="Report".
 
