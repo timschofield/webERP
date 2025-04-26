@@ -18,28 +18,28 @@ Parameters:
 // BEGIN: Functions division ===================================================
 // END: Functions division =====================================================
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
+include ('includes/session.php');
 use Dompdf\Dompdf;
 
 $Title = _('Profit and Loss');
-$Title2 = _('Statement of Comprehensive Income');// Name as IAS.
-$ViewTopic= 'GeneralLedger';
+$Title2 = _('Statement of Comprehensive Income'); // Name as IAS.
+$ViewTopic = 'GeneralLedger';
 $BookMark = 'ProfitAndLoss';
 
-include_once('includes/SQL_CommonFunctions.inc');
-include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
-include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
-
+include_once ('includes/SQL_CommonFunctions.inc');
+include_once ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include_once ('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Initialize SelectedBudget if not set
 	if (!isset($_POST['SelectedBudget'])) {
 		$_POST['SelectedBudget'] = 0; // Default value when not selected
+
 	}
 
 	// Sets PeriodFrom and PeriodTo from Period:
-	if(isset($_POST['Period']) and $_POST['Period'] != '') {
-		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] , 'From');
-		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] , 'To');
+	if (isset($_POST['Period']) and $_POST['Period'] != '') {
+		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
+		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 	}
 
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
@@ -85,7 +85,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<th colspan="2">' . _('Period Budget') . '</th>
 				<th colspan="2">' . _('Last Year') . '</th>
 			</tr>';
-	} else {
+	}
+	else {
 		/*summary */
 		$HTML .= '<tr>
 				<th colspan="2"></th>
@@ -192,7 +193,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				while ($MyRow['group_'] != $ParentGroups[$Level] and $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
-					} else {
+					}
+					else {
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 					}
 					if ($Section == 1) { /*Income */
@@ -205,7 +207,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								<td>&nbsp;</td>
 								<td class="number">' . locale_number_format(-$GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
-					} else { /*Costs */
+					}
+					else { /*Costs */
 						$HTML .= '<tr>
 								<td colspan="2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 								<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -225,7 +228,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				//still need to print out the old group totals
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
-				} else {
+				}
+				else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 				}
 
@@ -239,7 +243,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-				} else { /*Costs */
+				}
+				else { /*Costs */
 					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h4><i>' . $ActGrpLabel . '</i></h4></td>
 							<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -273,7 +278,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					$TotalIncomeActual = - $SectionPrdActual;
 					$TotalIncomeBudget = - $SectionPrdBudget;
 					$TotalIncomeLY = - $SectionPrdLY;
-				} else {
+				}
+				else {
 					$HTML .= '<tr class="total_row">
 							<td colspan="2"><h2>' . $Sections[$Section] . '</h2></td>
 							<td>&nbsp;</td>
@@ -297,17 +303,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 					if ($TotalIncomeActual != 0) {
 						$GPPercentActual = ($TotalIncomeActual - $SectionPrdActual) / $TotalIncomeActual * 100;
-					} else {
+					}
+					else {
 						$GPPercentActual = 0;
 					}
 					if ($TotalIncomeBudget != 0) {
 						$GPPercentBudget = ($TotalIncomeBudget - $SectionPrdBudget) / $TotalIncomeBudget * 100;
-					} else {
+					}
+					else {
 						$GPPercentBudget = 0;
 					}
 					if ($TotalIncomeLY != 0) {
 						$GPPercentLY = ($TotalIncomeLY - $SectionPrdLY) / $TotalIncomeLY * 100;
-					} else {
+					}
+					else {
 						$GPPercentLY = 0;
 					}
 					$HTML .= '<tr class="total_row">
@@ -335,17 +344,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 					if ($TotalIncomeActual != 0) {
 						$NPPercentActual = (-$PeriodProfitLossActual) / $TotalIncomeActual * 100;
-					} else {
+					}
+					else {
 						$NPPercentActual = 0;
 					}
 					if ($TotalIncomeBudget != 0) {
 						$NPPercentBudget = (-$PeriodProfitLossBudget) / $TotalIncomeBudget * 100;
-					} else {
+					}
+					else {
 						$NPPercentBudget = 0;
 					}
 					if ($TotalIncomeLY != 0) {
 						$NPPercentLY = (-$PeriodProfitLossLY) / $TotalIncomeLY * 100;
-					} else {
+					}
+					else {
 						$NPPercentLY = 0;
 					}
 					$HTML .= '<tr class="total_row">
@@ -353,7 +365,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td>&nbsp;</td>
 							<td class="number"><i>' . locale_number_format($NPPercentActual, 1) . '%</i></td>
 							<td>&nbsp;</td>
-							<td class="number"><i>' . locale_number_format($NPPercentBudget, 1). '%</i></td>
+							<td class="number"><i>' . locale_number_format($NPPercentBudget, 1) . '%</i></td>
 							<td>&nbsp;</td>
 							<td class="number"><i>' . locale_number_format($NPPercentLY, 1) . '%</i></td>
 						</tr>
@@ -387,27 +399,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$AccountPeriodActual = $ThisYearActuals[$MyRow['accountcode']];
 		$AccountPeriodBudget = $PeriodBudgetRow['periodbudget'];
 		$AccountPeriodLY = $LastYearActuals[$MyRow['accountcode']];
-		$PeriodProfitLossActual+= $AccountPeriodActual;
-		$PeriodProfitLossBudget+= $AccountPeriodBudget;
-		$PeriodProfitLossLY+= $AccountPeriodLY;
+		$PeriodProfitLossActual += $AccountPeriodActual;
+		$PeriodProfitLossBudget += $AccountPeriodBudget;
+		$PeriodProfitLossLY += $AccountPeriodLY;
 
 		for ($i = 0;$i <= $Level;$i++) {
 			if (!isset($GrpPrdActual[$i])) {
 				$GrpPrdActual[$i] = 0;
 			}
-			$GrpPrdActual[$i]+= $AccountPeriodActual;
+			$GrpPrdActual[$i] += $AccountPeriodActual;
 			if (!isset($GrpPrdBudget[$i])) {
 				$GrpPrdBudget[$i] = 0;
 			}
-			$GrpPrdBudget[$i]+= $AccountPeriodBudget;
+			$GrpPrdBudget[$i] += $AccountPeriodBudget;
 			if (!isset($GrpPrdLY[$i])) {
 				$GrpPrdLY[$i] = 0;
 			}
-			$GrpPrdLY[$i]+= $AccountPeriodLY;
+			$GrpPrdLY[$i] += $AccountPeriodLY;
 		}
-		$SectionPrdActual+= $AccountPeriodActual;
-		$SectionPrdBudget+= $AccountPeriodBudget;
-		$SectionPrdLY+= $AccountPeriodLY;
+		$SectionPrdActual += $AccountPeriodActual;
+		$SectionPrdBudget += $AccountPeriodBudget;
+		$SectionPrdLY += $AccountPeriodLY;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and ($AccountPeriodActual <> 0 or $AccountPeriodBudget <> 0 or $AccountPeriodLY <> 0))) {
@@ -423,7 +435,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$AccountPeriodLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-				} else {
+				}
+				else {
 					$HTML .= '<tr class="striped_row">
 							<td>' . $ActEnquiryURL . '</td>
 							<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
@@ -441,8 +454,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//end of loop
 
 
-				if ($Section == 1) { /*Income */
-					$HTML .= '<tr class="total_row">
+	if ($Section == 1) { /*Income */
+		$HTML .= '<tr class="total_row">
 							<td colspan="2"><h4><i>' . $ActGrp . '</i></h4></td>
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -451,8 +464,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td>&nbsp;</td>
 							<td class="number">' . locale_number_format(-$GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						</tr>';
-				} else { /*Costs */
-					$HTML .= '<tr class="total_row">
+	}
+	else { /*Costs */
+		$HTML .= '<tr class="total_row">
 							<td colspan="2"><h4><i>' . $ActGrp . '</i></h4></td>
 							<td class="number">' . locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td>&nbsp;</td>
@@ -461,9 +475,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td class="number">' . locale_number_format($GrpPrdLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td>&nbsp;</td>
 						</tr>';
-				}
-
-
+	}
+	$HTML .= '<tr class="total_row">
+							<td colspan="2"><h2>' . $Sections[$Section] . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$SectionPrdBudget, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td>&nbsp;</td>
+							<td class="number">' . locale_number_format(-$SectionPrdLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						</tr>';
 
 	$HTML .= '<tr class="total_row">
 			<td colspan="2"><h2><b>' . _('Profit') . ' - ' . _('Loss') . '</b></h2></td>
@@ -477,17 +498,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if ($TotalIncomeActual != 0) {
 		$NPPercentActual = (-$PeriodProfitLossActual) / $TotalIncomeActual * 100;
-	} else {
+	}
+	else {
 		$NPPercentActual = 0;
 	}
 	if ($TotalIncomeBudget != 0) {
 		$NPPercentBudget = (-$PeriodProfitLossBudget) / $TotalIncomeBudget * 100;
-	} else {
+	}
+	else {
 		$NPPercentBudget = 0;
 	}
 	if ($TotalIncomeLY != 0) {
 		$NPPercentLY = (-$PeriodProfitLossLY) / $TotalIncomeLY * 100;
-	} else {
+	}
+	else {
 		$NPPercentLY = 0;
 	}
 	$HTML .= '<tr class="total_row">
@@ -517,76 +541,74 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_Profit_Loss_' . date('Y-m-d') . '.pdf', array(
-			"Attachment" => false
-		));
-	} else {
+		$dompdf->stream($_SESSION['DatabaseName'] . '_Profit_Loss_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+	}
+	else {
 		$Title = _('General Ledger Profit and Loss');
-		include('includes/header.php');
+		include ('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . _('Profit and Loss Report') . '" alt="" />
 				' . _('Profit and Loss Report') . '
 			</p>';
 		echo $HTML;
-		echo // Shows a form to select an action after the report was shown:
-		'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">',
-		'<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
+		echo
+		// Shows a form to select an action after the report was shown:
+		'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">', '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
 		// Resend report parameters:
-		'<input name="PeriodFrom" type="hidden" value="' . $_POST['PeriodFrom'] . '" />',
-		'<input name="PeriodTo" type="hidden" value="' . $_POST['PeriodTo'] . '" />',
-		'<div class="centre">
+		'<input name="PeriodFrom" type="hidden" value="' . $_POST['PeriodFrom'] . '" />', '<input name="PeriodTo" type="hidden" value="' . $_POST['PeriodTo'] . '" />', '<div class="centre">
 			<input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" />
-		</div>' .
-		'</form>';
+		</div>' . '</form>';
 	}
 
-} else {
+}
+else {
 
-	include('includes/header.php');
+	include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . // Icon image.
-		$Title2 . '" /> ' . // Icon title.
-		$Title . '</p>';// Page title.
-	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the top line) is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the bottom line).') . '<br />' .
-		_('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />' .
-		_('The P&amp;L represents a period of time. This contrasts with the Balance Sheet . which represents a single moment in time.') . '<br />' .
-		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer . and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
-	echo // Shows a form to input the report parameters:
-		'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">',
-		'<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
-		// Input table:
-		'<fieldset>
+	$Title2 . '" /> ' . // Icon title.
+	$Title . '</p>'; // Page title.
+	fShowPageHelp( // Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
+	_('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the top line) is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the bottom line).') . '<br />' . _('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />' . _('The P&amp;L represents a period of time. This contrasts with the Balance Sheet . which represents a single moment in time.') . '<br />' . _('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer . and when expenses are owed based on the supplier invoice date.')); // Function fShowPageHelp() in ~/includes/MiscFunctions.php
+	echo
+	// Shows a form to input the report parameters:
+	'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">', '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
+	// Input table:
+	'<fieldset>
 			<legend>' . _('Report Criteria') . '</legend>',
 	// Content of the body of the input table:
 	// Select period from:
-			'<field>
+	'<field>
 				<label for="PeriodFrom">' . _('Select period from') . '</label>
 		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC');
 
 	if (Date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')));
-	} else {
-		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
+		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+	}
+	else {
+		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
 	}
 
 	$Period = GetPeriod($FromDate);
 
-	while ($MyRow=DB_fetch_array($Periods)) {
-		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
-			if( $_POST['PeriodFrom']== $MyRow['periodno']) {
-				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			} else {
+	while ($MyRow = DB_fetch_array($Periods)) {
+		if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] != '') {
+			if ($_POST['PeriodFrom'] == $MyRow['periodno']) {
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			}
+			else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
-		} else {
-			if($MyRow['lastdate_in_period']== $DefaultFromDate) {
+		}
+		else {
+			if ($MyRow['lastdate_in_period'] == $DefaultFromDate) {
 				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			} else {
+			}
+			else {
 				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		}
@@ -597,7 +619,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	</field>';
 
 	// Select period to:
-	if(!isset($_POST['PeriodTo'])) {
+	if (!isset($_POST['PeriodTo'])) {
 		$PeriodSQL = "SELECT periodno
 						FROM periods
 						WHERE MONTH(lastdate_in_period) = MONTH(CURRENT_DATE())
@@ -610,14 +632,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<label for="PeriodTo">' . _('Select period to') . '</label>
 		 	<select id="PeriodTo" name="PeriodTo" required="required">';
 	DB_data_seek($Periods, 0);
-	while($MyRow = DB_fetch_array($Periods)) {
-		echo '<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ) . ' value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+	while ($MyRow = DB_fetch_array($Periods)) {
+		echo '<option', ($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '') . ' value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 	}
-	echo  '</select>
+	echo '</select>
 		<fieldhelp>' . _('Select the end of the reporting period') . '</fieldhelp>
 	</field>';
 	// OR Select period:
-	if(!isset($_POST['Period'])) {
+	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
@@ -635,7 +657,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 		if ($MyRow['id'] == $_POST['SelectedBudget']) {
 			echo '<option selected="selected" value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
-		} else {
+		}
+		else {
 			echo '<option value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
 		}
 	}
@@ -645,8 +668,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for="Period">' . '<b>' . _('OR') . ' </b>' . _('Select Period') . '</label>
-			' . ReportPeriodList($_POST['Period'], array('l', 't')),
-			'<fieldhelp>' . _('Select a period instead of using the beginning and end of the reporting period.') . '</fieldhelp>
+			' . ReportPeriodList($_POST['Period'], array('l', 't')), '<fieldhelp>' . _('Select a period instead of using the beginning and end of the reporting period.') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
@@ -656,21 +678,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
 			</select>
 		</field>',
-		// Show accounts with zero balance:
-		'<field>',
-			'<label for="ShowZeroBalance">' . _('Show accounts with zero balance') . '</label>
-		 	<input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : '') . ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
+	// Show accounts with zero balance:
+	'<field>', '<label for="ShowZeroBalance">' . _('Show accounts with zero balance') . '</label>
+		 	<input', (isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : '') . ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
 		 	<fieldhelp>' . _('Check this box to show all accounts including those with zero balance') . '</fieldhelp>
-		</field>',
-		'</fieldset>';
+		</field>', '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
-			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
-		</div>',
-		'</form>';
+			<input type="submit" name="PrintPDF" title="PDF" value="' . _('PDF P & L Account') . '" />
+			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') . '" />
+		</div>', '</form>';
 
-	include('includes/footer.php');
+	include ('includes/footer.php');
 
 }
 
