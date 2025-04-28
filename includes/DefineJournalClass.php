@@ -62,8 +62,8 @@ Class JournalGLAnalysis {
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->ID = $id;
-		$this->tag = $Tag;
-		$this->assetid = $AssetID;
+		$this->Tag = $Tag;
+		$this->AssetID = $AssetID;
 	}
 	function JournalGLAnalysis($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID){
 		self::__construct($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID);
