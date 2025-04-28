@@ -35,6 +35,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLUIGeneralFunctions.php');
+include('includes/KLGLFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -1974,6 +1975,7 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 
 function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$TotalAmount = 0;
 	$SQL = "SELECT gltrans.counterindex,
 				gltrans.trandate, 
 				gltrans.type, 
