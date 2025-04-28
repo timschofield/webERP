@@ -336,22 +336,12 @@ if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowA
 }
 
 function CryptPass($Password) {
-	if (PHP_VERSION_ID < 50500) {
-		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-		$Salt = str_replace('+', '.', $Salt);
-		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
-	} else {
-		$Hash = password_hash($Password, PASSWORD_DEFAULT);
-	}
+	$Hash = password_hash($Password, PASSWORD_DEFAULT);
 	return $Hash;
 }
 
 function VerifyPass($Password, $Hash) {
-	if (PHP_VERSION_ID < 50500) {
-		return (crypt($Password, $Hash) == $Hash);
-	} else {
-		return password_verify($Password, $Hash);
-	}
+	return password_verify($Password, $Hash);
 }
 
 function HighestFileName($PathPrefix) {
@@ -361,12 +351,6 @@ function HighestFileName($PathPrefix) {
 }
 
 function quote_smart($Value) {
-	// Stripslashes
-	if (phpversion() < "5.3") {
-		if (get_magic_quotes_gpc()) {
-			$Value = stripslashes($Value);
-		}
-	}
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
