@@ -1,16 +1,53 @@
 <?php
-// GLAccountGraph.php
-/* Shows a graph of GL account transactions */
-/* By Paul Becker */
+/**
+ * GLAccountGraph.php
+ * By Paul Becker
+ *
+ * This script generates a graph visualizing General Ledger (GL) account transactions
+ * over a selected period. It allows users to choose a specific GL account,
+ * define a date range (either by selecting start and end periods or a predefined period),
+ * select the type of graph (bar, line, pie, etc.), and choose whether to display
+ * the periodic variation or the cumulative account value.
+ *
+ * Features:
+ * - Selection of GL account accessible to the user.
+ * - Flexible period selection (From/To periods or predefined report periods).
+ * - Various graph types available (bars, lines, pie, area, etc.).
+ * - Option to display transaction amounts (variation) or cumulative account balance (value).
+ * - Option to invert the graph values.
+ * - Uses the PHPlot library for graph generation.
+ * - Displays the generated graph inline and provides an option to re-select criteria.
+ *
+ * Workflow:
+ * 1. Includes necessary session and header files.
+ * 2. Checks if form data (Account, PeriodFrom, PeriodTo, etc.) is submitted.
+ * 3. If form data is not present or invalid (e.g., PeriodFrom > PeriodTo), it displays the selection form:
+ *    - Fetches available GL accounts for the user.
+ *    - Provides options for graph type, display type (variation/value), and period selection.
+ *    - Includes a submit button to generate the graph.
+ * 4. If valid form data is submitted:
+ *    - Constructs the graph title based on selected criteria.
+ *    - Builds the SQL query based on the selected display type (variation or value).
+ *    - Fetches the GL transaction data for the selected account and period range.
+ *    - Initializes and configures the PHPlot object with selected options (title, type, colors, etc.).
+ *    - Formats the fetched data into an array suitable for PHPlot.
+ *    - Generates the graph image and saves it to the server.
+ *    - Displays the generated graph image on the page.
+ *    - Provides a link to return to the selection form.
+ * 5. Includes the footer file.
+ */
 
-include ('includes/session.php');
-include ('includes/phplot/phplot.php');
+include('includes/session.php');
+include('includes/phplot/phplot.php');
 $Title = _('GL Account Graph');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
-include ('includes/header.php');
+
+include('includes/GLFunctions.php');
+include('includes/header.php');
 
 $NewReport = '';
+$SelectedAccount = '';
 
 if (isset($_POST['Account'])) {
 	$SelectedAccount = $_POST['Account'];
@@ -38,7 +75,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath, '/css/', $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<fieldset>
@@ -51,19 +88,28 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 				bankaccounts.accountcode AS bankact,
 				bankaccounts.currcode,
 				chartmaster.accountname
-			FROM chartmaster LEFT JOIN bankaccounts
-			ON chartmaster.accountcode=bankaccounts.accountcode
-			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			FROM chartmaster
+			LEFT JOIN bankaccounts
+				ON chartmaster.accountcode = bankaccounts.accountcode
+			INNER JOIN glaccountusers
+				ON glaccountusers.accountcode = chartmaster.accountcode
+					AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
+					AND glaccountusers.canview = 1
 			ORDER BY chartmaster.accountcode";
-	$Account = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($Account)) {
+	$AccountResult = DB_query($SQL); 
+	$BankAccount = false;
+	while ($MyRow = DB_fetch_array($AccountResult)) {
 		if ($MyRow['accountcode'] == $SelectedAccount) {
 			if (!is_null($MyRow['bankact'])) {
 				$BankAccount = true;
 			}
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">'
+				. $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false)
+				. '</option>';
 		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] . '">'
+				. $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false)
+				. '</option>';
 		}
 	}
 	echo '</select>
@@ -87,6 +133,14 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			</field>';
 
 	echo '<field>
+			<label for="DisplayType">' . _('Display Type') . '</label>
+			<select name="DisplayType">
+				<option selected="selected" value="variation">' . _('Variation') . '</option>
+				<option value="value">' . _('Value') . '</option>
+			</select>
+		</field>';
+
+	echo '<field>
 			<label for="InvertGraph">', _('Invert Graph'), '</label>
 			<input type="checkbox" name="InvertGraph" />
 		</field>';
@@ -107,15 +161,19 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	while ($MyRow = DB_fetch_array($Periods)) {
 		if (isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] != '') {
 			if ($_POST['PeriodFrom'] == $MyRow['periodno']) {
-				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">'
+					. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">'
+					. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		} else {
 			if ($MyRow['lastdate_in_period'] == $DefaultFromDate) {
-				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">'
+					. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">'
+					. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		}
 	}
@@ -137,9 +195,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	while ($MyRow = DB_fetch_array($Periods)) {
 
 		if ($MyRow['periodno'] == $DefaultPeriodTo) {
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">'
+				. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value ="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			echo '<option value ="' . $MyRow['periodno'] . '">'
+				. MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select>
@@ -158,44 +218,68 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			<div class="centre">
 				<input type="submit" name="ShowGraph" value="' . _('Show Account Graph') . '" />
 			</div>
-        </form>';
-	include ('includes/footer.php');
+		</form>';
+	include('includes/footer.php');
 } else {
 
-	$Graph = new PHPlot(950, 450);
-	$WhereClause = '';
 	$GraphTitle = '';
+	$AccountName = GetGLAccountName($SelectedAccount);
 
-	$GraphTitle = _('GL Account Graph - Actual Transactions') . "\n\r";
-	//$GraphTitle .= $SelectedAccount . " - " . $SelectedAccountName . "\n\r";
-	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year, MONTHNAME(`lastdate_in_period`) AS month
-			  FROM `periods`
-			 WHERE `periodno`='" . $_POST['PeriodFrom'] . "' OR periodno='" . $_POST['PeriodTo'] . "'";
+	if ($_POST['DisplayType'] == 'value') {
+		$GraphTitle = $AccountName . ' ' . _('GL Account Graph - Account Value') . "\n\r";
+	} else {
+		$GraphTitle = $AccountName . ' ' . _('GL Account Graph - Actual Transactions') . "\n\r";
+	}
+	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year,
+					MONTHNAME(`lastdate_in_period`) AS month
+			FROM `periods`
+			WHERE `periodno` = '" . $_POST['PeriodFrom'] . "'
+				OR periodno = '" . $_POST['PeriodTo'] . "'";
 
 	$Result = DB_query($SQL);
 
-	$PeriodFrom = DB_fetch_array($Result);
-	$Starting = $PeriodFrom['month'] . ' ' . $PeriodFrom['year'];
+	$PeriodFromRow = DB_fetch_array($Result);
+	$Starting = $PeriodFromRow['month'] . ' ' . $PeriodFromRow['year'];
 
-	$PeriodTo = DB_fetch_array($Result);
-	$Ending = $PeriodTo['month'] . ' ' . $PeriodTo['year'];
+	$PeriodToRow = DB_fetch_array($Result);
+	$Ending = $PeriodToRow['month'] . ' ' . $PeriodToRow['year'];
 
-	$GraphTitle.= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
+	$GraphTitle .= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
 
-	$WhereClause = "WHERE periods.periodno>='" . $_POST['PeriodFrom'] . "' AND periods.periodno <= '" . $_POST['PeriodTo'] . "'";
+	if ($_POST['DisplayType'] == 'value') {
+		// Calculate cumulative value
+		$SQL = "SELECT p_to.periodno,
+					   p_to.lastdate_in_period,
+					   (SELECT SUM(gltotals.amount)
+						FROM gltotals
+						WHERE gltotals.account = '" . $SelectedAccount . "'
+							AND gltotals.period <= p_to.periodno) AS cumulative_actual
+				FROM periods p_to
+				WHERE p_to.periodno >= '" . $_POST['PeriodFrom'] . "'
+					AND p_to.periodno <= '" . $_POST['PeriodTo'] . "'
+				ORDER BY p_to.periodno";
+		$DataColumn = 'cumulative_actual';
+		$LegendText = _('Value');
+	} else {
+		// Show variation per period (original query)
+		$SQL = "SELECT periods.periodno,
+					periods.lastdate_in_period,
+					COALESCE(gltotals.amount, 0) AS actual
+				FROM periods
+				LEFT JOIN gltotals
+					ON periods.periodno = gltotals.period
+						AND gltotals.account = '" . $SelectedAccount . "'
+				WHERE periods.periodno >= '" . $_POST['PeriodFrom'] . "'
+					AND periods.periodno <= '" . $_POST['PeriodTo'] . "'
+				GROUP BY periods.periodno,
+						 periods.lastdate_in_period,
+						 gltotals.amount
+				ORDER BY periods.periodno";
+		$DataColumn = 'actual';
+		$LegendText = _('Actual');
+	}
 
-	$SQL = "SELECT periods.periodno,
-				periods.lastdate_in_period,
-				COALESCE(gltotals.amount, 0) AS actual
-			FROM periods
-			LEFT JOIN gltotals ON periods.periodno = gltotals.period
-				AND gltotals.account = '" . $SelectedAccount . "'
-			" . $WhereClause . "
-			GROUP BY periods.periodno,
-					 periods.lastdate_in_period,
-					 gltotals.amount
-			ORDER BY periods.periodno";
-
+	$Graph = new PHPlot(1200, 600);
 	$Graph->SetTitle($GraphTitle);
 	$Graph->SetTitleColor('blue');
 	$Graph->SetOutputFile('companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png');
@@ -205,13 +289,13 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$Graph->SetXTickLabelPos('none');
 	$Graph->SetXLabelAngle(90);
 	$Graph->SetBackgroundColor('white');
-	$Graph->SetTitleColor('blue');
 	$Graph->SetFileFormat('png');
 	$Graph->SetPlotType($_POST['GraphType']);
 	$Graph->SetIsInline('1');
 	$Graph->SetShading(5);
 	$Graph->SetDrawYGrid(true);
 	$Graph->SetDataType('text-data');
+	$Graph->TuneYAutoRange(0, 0, 0);
 	$Graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$Graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 
@@ -219,44 +303,42 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	if (DB_error_no() != 0) {
 
 		prnMsg(_('The GL Account graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($SalesResult) == 0) {
 		prnMsg(_('There is not GL Account data for the criteria entered to graph'), 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit;
 	}
 
 	$GraphArray = array();
 	$i = 0;
 	while ($MyRow = DB_fetch_array($SalesResult)) {
-		if (!isset($_POST['InvertGraph'])) {
-			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), $MyRow['actual']);
-		} else {
-			$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), -$MyRow['actual']);
-		}
-		++$i;
+		$Value = isset($_POST['InvertGraph']) ? -$MyRow[$DataColumn] : $MyRow[$DataColumn];
+		$GraphArray[$i] = array(MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), $Value);
+		$i++;
 	}
 
 	$Graph->SetDataValues($GraphArray);
-	$Graph->SetDataColors(array('grey'), //Data Colors
-	array('black') //Border Colors
+	$Graph->SetDataColors(
+		array('grey'), //Data Colors
+		array('black') //Border Colors
 	);
-	$Graph->SetLegend(array(_('Actual')));
+	$Graph->SetLegend(array($LegendText));
 	$Graph->SetYDataLabelPos('plotin');
 
 	//Draw it
 	$Graph->DrawGraph();
 	echo '<table class="selection">
 			<tr>
-				<td><img src="companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt="Sales Report Graph"></img></td>
+				<td><img class="graph" src="companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt="Sales Report Graph"></img></td>
 			</tr>
 		  </table>';
 
 	echo '<div class="noPrint centre">
 			<a href="', basename(__FILE__), '">', _('Select Different Criteria'), '</a>
 		</div>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }
 ?>

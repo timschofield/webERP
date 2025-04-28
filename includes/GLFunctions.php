@@ -5,6 +5,7 @@ Functions in this file:
 
 GetDescriptionsFromTagArray() - Retrieves descriptions for an array of tag references
 GetGLAccountBalance() - Retrieves the balance for a GL account up to a specific period
+GetGLAccountName() - Retrieves the name of a GL account
 InsertGLTags() - Inserts tags into the GL tags table for a journal line
 RelativeChange() - Calculates the relative change between selected and previous periods
 
@@ -72,6 +73,22 @@ function GetGLAccountBalance($AccountCode, $PeriodNo){
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return ($MyRow['total'] ?? 0);
+}
+
+/*************************************************************************************************************
+Brief Description: Retrieves the name of a GL account 
+Parameters:
+    $AccountCode - The GL account code
+Returns:
+    string - The name of the GL account or '' if no records found
+*************************************************************************************************************/
+function GetGLAccountName($AccountCode){
+	$SQL = "SELECT accountname
+			FROM chartmaster
+			WHERE accountcode = '" . $AccountCode . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return ($MyRow['accountname'] ?? '');
 }
 
 /*************************************************************************************************************
