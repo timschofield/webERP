@@ -520,15 +520,10 @@ function HighestFileName($PathPrefix) {
 }
 
 function CryptPass($Password) {
-	if (PHP_VERSION_ID < 50500) {
-		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-		$Salt = str_replace('+', '.', $Salt);
-		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
-	} else {
-		$Hash = password_hash($Password, PASSWORD_DEFAULT);
-	}
+	$Hash = password_hash($Password, PASSWORD_DEFAULT);
 	return $Hash;
 }
+
 function PopulateSQLDataBySQL($File) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
