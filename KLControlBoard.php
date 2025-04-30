@@ -3337,7 +3337,8 @@ function ItemsWithoutStandardCost($RootPath){
 			FROM stockmaster,stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype != 'D'
-				AND (actualcost) = 0
+				AND stockmaster.categoryid != 'ASSETS'
+				AND actualcost = 0
 				AND discontinued = 0";
 // EXPLAIN SQL 2014-05-31
 //	prnMsg($SQL);
