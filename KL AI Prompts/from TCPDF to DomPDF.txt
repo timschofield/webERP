@@ -1,0 +1,43 @@
+Modify this script to use DomPDF instead of TCPDF.
+To create the HTML Code, use the variable $HTML.
+Use the variables $_POST['PrintPDF'], $_POST['Spreadsheet'] and $_POST['View'] to ask the user if he wants to download/print the PDF, download an ODS file or just view the data on the screen
+
+If user has selected $_POST['PrintPDF'] use code similar to:
+
+$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf->loadHtml($HTML);
+
+	// (Optional) Setup the paper size and orientation
+	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+	// Render the HTML as PDF
+	$dompdf->render();
+
+	// Output the generated PDF to Browser
+	$dompdf->stream($_SESSION['DatabaseName'] . '_NameOfReport_' . date('Y-m-d') . '.pdf', array(
+		"Attachment" => false
+	));
+
+If user has selected $_POST['PrintPDF'] use code similar to:
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+	$File = 'NameOfReport-' . Date('Y-m-d') . '.' . 'ods';
+
+	header('Content-Disposition: attachment;filename="' . $File . '"');
+	header('Cache-Control: max-age=0');
+	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+	$spreadsheet = $reader->loadFromString($HTML);
+
+	$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Ods');
+	$writer->save('php://output');
+	
+If user has selected $_POST['View'] use code similar to:
+
+	$Title = _('NameOfReport');
+	include ('includes/header.php');
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo $HTML;
+	include ('includes/footer.php');
+	
+Use FixedAssetRegister.php as example and proof of concept.
+
