@@ -1,6 +1,16 @@
 Modify this script to use DomPDF instead of TCPDF.
 To create the HTML Code, use the variable $HTML.
-Use the variables $_POST['PrintPDF'], $_POST['Spreadsheet'] and $_POST['View'] to ask the user if he wants to download/print the PDF, download an ODS file or just view the data on the screen
+the DomPDF should be loaded via Composer with this line:
+	require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
+
+
+
+
+As this script prints pricetags, keeping the same output size is crucial.
+
+
+
+Use the variables $_POST['PrintPDF'], to ask the user if he wants to download/print the PDF, download an ODS file or just view the data on the screen
 
 If user has selected $_POST['PrintPDF'] use code similar to:
 

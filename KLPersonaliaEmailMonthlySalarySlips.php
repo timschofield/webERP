@@ -58,31 +58,46 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		include('includes/KLPersonaliaSQLSalarySlips.php');
 		
 		if (DB_num_rows($Result) != 0){
+			// Initialize DomPDF
+			require_once 'vendor/autoload.php';
 
 			while ($MyRow = DB_fetch_array($Result)) {
-				// Let's start the real PDF creation 
-				require_once('includes/tcpdf/tcpdf.php');
-
- 				if ($SalaryType == "MONTHLY"){
+				// Prepare filename
+				if ($SalaryType == "MONTHLY"){
 					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . $PeriodMonth;
 				}else{
 					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . $PeriodMonth;
 				}
 				
+				// Generate PDF using DomPDF
+				$HTML = ''; // Initialize HTML with no whitespace
+				
+				ob_start(); // Start output buffering
 				include('includes/KLPersonaliaPDFNewSalarySlip.php');
+				$HTML .= trim(ob_get_clean()); // Get and trim output buffer
+				
+				// Set the first slip flag to true since we're creating individual PDFs
+				$isFirstSlip = true;
+				
 				include('includes/KLPersonaliaPDFCalculatedFields.php');
 				include('includes/KLPersonaliaPDFOneSalarySlip.php');
-
-				// save the pdf file for later attachment
-				$FileName= $CoreFileName . '.pdf';
+				
+				$HTML .= '</body></html>';
+				
+				// Create the PDF
+				$options = new \Dompdf\Options();
+				$options->set('isHtml5ParserEnabled', true);
+				$options->set('isRemoteEnabled', true);
+				$dompdf = new \Dompdf\Dompdf($options);
+				$dompdf->loadHtml($HTML);
+				$dompdf->setPaper('A4', 'portrait');
+				$dompdf->render();
+				
+				// Save the PDF file for later attachment
+				$FileName = $CoreFileName . '.pdf';
 				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
-
-				// KL RICARD for any weird reason it fails in TCPDF 6.2 and 6.7.5. 
-				// as calls to $f = TCPDF_STATIC::fopenLocal($Name, 'wb');
-				// but if changed into $f = fopen($Name, 'wb'); then it works
-
-				$pdf->Output($PathFileName, 'F');
-				$pdf-> __destruct();
+				
+				file_put_contents($PathFileName, $dompdf->output());
 
 				// prepare the email fields to employees
 				$Subject  = $MyRow['codename'] . " " . $PageTitle;

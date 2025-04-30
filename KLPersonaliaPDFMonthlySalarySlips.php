@@ -56,15 +56,21 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
-			require_once('includes/tcpdf/tcpdf.php');
-			
+			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
+		
 			if ($SalaryType == "MONTHLY"){
 				$CoreFileName = $Company . '-MonthlySalarySlips-' . $PeriodMonth;
 			}else{
 				$CoreFileName = $Company . '-THROnlySalarySlips-' . $PeriodMonth;
 			}
 			
+			// Generate initial HTML and CSS styles
+			$HTML = ''; // Initialize HTML with no whitespace
+			// Make sure the included file doesn't start with whitespace or newlines
+			ob_start(); // Start output buffering
+			
 			include('includes/KLPersonaliaPDFNewSalarySlip.php');
+			$HTML .= trim(ob_get_clean()); // Trim to remove any leading/trailing whitespace
 			
 			$EmployeesByBankTransferLLG = 0;
 			$AmountByBankTransferLLG = 0;
@@ -76,6 +82,8 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			$EmployeesByCash = 0;
 			$AmountByCash = 0;
 			$Cash = array();
+
+			$firstSalarySlip = true; // Flag to track first salary slip
 
 			while ($MyRow = DB_fetch_array($Result)) {
 				include('includes/KLPersonaliaPDFCalculatedFields.php');
@@ -101,51 +109,78 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 					$AmountByCash += $TotalBawaPulang;
 				}
 				
-				// add and print one salary slip
+				// add one salary slip HTML
+				// Pass the firstSalarySlip flag to the included file
+				$isFirstSlip = $firstSalarySlip;
 				include('includes/KLPersonaliaPDFOneSalarySlip.php');
+				$firstSalarySlip = false; // After first slip, set flag to false
 			}
 			
 			// prepare page with totals
-			$pdf->AddPage();
+			$HTML .= '<div class="page-break"></div>';
 
 			// Company header
 			include('includes/KLPersonaliaPDFCompanyHeader.php');
 
-			$pdf->SetFont($FontType, '', $FontBigSize);
-			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Salary totals for ' . $PeriodMonth, 0, 'L', 0, 1, '', '', true);
-			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Total Employees by Bank Danamon Transfer LLG: ' .	locale_number_format($EmployeesByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell(0, 0, 'Total Amount by Bank Danamon Transfer LLG: ' .	locale_number_format($AmountByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
-			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Total Employees by Bank Danamon Transfer Payroll: ' .	locale_number_format($EmployeesByBankTransferPayroll), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell(0, 0, 'Total Amount by Bank Danamon Transfer Payroll: ' .	locale_number_format($AmountByBankTransferPayroll), 0, 'L', 0, 1, '', '', true);
-			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Total Employees by Check : ' .	locale_number_format($EmployeesByCheck), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell(0, 0, 'Total Amount by Check: ' .	locale_number_format($AmountByCheck), 0, 'L', 0, 1, '', '', true);
+			$HTML .= '<div class="font-large bold margin-top-5">';
+			$HTML .= 'Salary totals for ' . $PeriodMonth;
+			$HTML .= '</div>';
+			$HTML .= '<div class="margin-top-5">';
+			$HTML .= 'Total Employees by Bank Danamon Transfer LLG: ' . locale_number_format($EmployeesByBankTransferLLG) . '<br>';
+			$HTML .= 'Total Amount by Bank Danamon Transfer LLG: ' . locale_number_format($AmountByBankTransferLLG) . '<br>';
+			$HTML .= '</div>';
+			$HTML .= '<div class="margin-top-5">';
+			$HTML .= 'Total Employees by Bank Danamon Transfer Payroll: ' . locale_number_format($EmployeesByBankTransferPayroll) . '<br>';
+			$HTML .= 'Total Amount by Bank Danamon Transfer Payroll: ' . locale_number_format($AmountByBankTransferPayroll) . '<br>';
+			$HTML .= '</div>';
+			$HTML .= '<div class="margin-top-5">';
+			$HTML .= 'Total Employees by Check: ' . locale_number_format($EmployeesByCheck) . '<br>';
+			$HTML .= 'Total Amount by Check: ' . locale_number_format($AmountByCheck) . '<br>';
+			$HTML .= '</div>';
+
 			$CheckNumber = 1;
-			while($CheckNumber <= $EmployeesByCheck){
-				$pdf->MultiCell($WidthColumn1, 0, $Check[$CheckNumber]['Name'], 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, locale_number_format($Check[$CheckNumber]['Amount']), 1, 'R', 0, 0, '', '', true);
-				$pdf->ln(5);
-				$CheckNumber++;
+			if ($EmployeesByCheck > 0) {
+				$HTML .= '<table class="bordered" style="width: 60%;">'; // Keep bordered class
+				while($CheckNumber <= $EmployeesByCheck) {
+					$HTML .= '<tr>';
+					$HTML .= '<td class="text-right">' . $Check[$CheckNumber]['Name'] . '</td>';
+					$HTML .= '<td class="text-right">' . locale_number_format($Check[$CheckNumber]['Amount']) . '</td>';
+					$HTML .= '</tr>';
+					$CheckNumber++;
+				}
+				$HTML .= '</table>';
 			}
-			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Total Employees by Cash: ' .	locale_number_format($EmployeesByCash), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell(0, 0, 'Total Amount by Cash: ' .	locale_number_format($AmountByCash), 0, 'L', 0, 1, '', '', true);
+
+			$HTML .= '<div class="margin-top-5">';
+			$HTML .= 'Total Employees by Cash: ' . locale_number_format($EmployeesByCash) . '<br>';
+			$HTML .= 'Total Amount by Cash: ' . locale_number_format($AmountByCash) . '<br>';
+			$HTML .= '</div>';
+
 			$CashNumber = 1;
-			while($CashNumber <= $EmployeesByCash){
-				$pdf->MultiCell($WidthColumn1, 0, $Cash[$CashNumber]['Name'], 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, locale_number_format($Cash[$CashNumber]['Amount']), 1, 'R', 0, 0, '', '', true);
-				$pdf->ln(5);
-				$CashNumber++;
+			if ($EmployeesByCash > 0) {
+				$HTML .= '<table class="bordered" style="width: 60%;">'; // Keep bordered class
+				while($CashNumber <= $EmployeesByCash) {
+					$HTML .= '<tr>';
+					$HTML .= '<td class="text-right">' . $Cash[$CashNumber]['Name'] . '</td>';
+					$HTML .= '<td class="text-right">' . locale_number_format($Cash[$CashNumber]['Amount']) . '</td>';
+					$HTML .= '</tr>';
+					$CashNumber++;
+				}
+				$HTML .= '</table>';
 			}
 			
+			// Initialize dompdf and output the PDF
+			$options = new \Dompdf\Options();
+			$options->set('isHtml5ParserEnabled', true);
+			$options->set('isRemoteEnabled', true);
+			$dompdf = new \Dompdf\Dompdf($options);
+			$dompdf->loadHtml($HTML);
+			$dompdf->setPaper('A4', 'portrait');
+			$dompdf->render();
+			
 			// download the pdf file
-			$FileName= $CoreFileName . '.pdf';
-			$pdf->Output($FileName, 'D');
-			$pdf->__destruct();
-		
+			$FileName = $CoreFileName . '.pdf';
+			$dompdf->stream($FileName, array('Attachment' => true));
 		
 		}else{
 			include('includes/header.php');
