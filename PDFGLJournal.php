@@ -1,114 +1,135 @@
 <?php
 
-
 /* $Revision: 1.5 $ */
 
 include('includes/session.php');
+use Dompdf\Dompdf;
 
 if (isset($_POST['JournalNo'])) {
-	$JournalNo=$_POST['JournalNo'];
+	$JournalNo = $_POST['JournalNo'];
 	$Type = $_POST['Type'];
 } else if (isset($_GET['JournalNo'])) {
-	$JournalNo=$_GET['JournalNo'];
+	$JournalNo = $_GET['JournalNo'];
 	$Type = $_GET['Type'];
 } else {
-	$JournalNo='';
+	$JournalNo = '';
 }
-if (empty($JournalNo) OR empty($Type)) {
-	prnMsg(_('This page should be called with Journal No and Type'),'error');
+
+if (isset($_GET['PDF'])) {
+	$_POST['PrintPDF'] = True;
+} else if (isset($_GET['View'])) {
+	$_POST['View'] = True;
+}
+
+if (!isset($JournalNo) OR !isset($Type)) {
+	prnMsg(_('This page should be called with Journal No and Type'), 'error');
 	include('includes/footer.php');
 	exit;
 }
 
-if ($JournalNo=='Preview') {
-	$FormDesign = simplexml_load_file(sys_get_temp_dir().'/Journal.xml');
-} else {
-	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/Journal.xml');
-}
-
-// Set the paper size/orintation
-$PaperSize = $FormDesign->PaperSize;
-$PageNumber=1;
-$LineHeight=$FormDesign->LineHeight;
-include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('General Ledger Journal') );
-
-if ($JournalNo=='Preview') {
-	$LineCount = 2; // UldisN
-} else {
-	$SQL="SELECT gltrans.typeno,
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
+	$SQL = "SELECT gltrans.counterindex,
+				gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
 				chartmaster.accountname,
 				gltrans.narrative,
 				gltrans.amount,
-				gltrans.tag,
-				tags.tagdescription,
 				gltrans.jobref
 			FROM gltrans
 			INNER JOIN chartmaster
-				ON gltrans.account=chartmaster.accountcode
-			LEFT JOIN tags
-				ON gltrans.tag=tags.tagref
-			WHERE gltrans.type='" . $Type . "'
-				AND gltrans.typeno='" . $JournalNo . "'";
+				ON gltrans.account = chartmaster.accountcode
+			WHERE gltrans.type = '" . $Type . "'
+				AND gltrans.typeno = '" . $JournalNo . "'";
 
-	$Result=DB_query($SQL);
-	$LineCount = DB_num_rows($Result); // UldisN
-	$MyRow=DB_fetch_array($Result);
-	$JournalDate=$MyRow['trandate'];
-	DB_data_seek($Result, 0);
-	include('includes/PDFGLJournalHeader.inc');
-}
-$Counter=1;
-$YPos=$FormDesign->Data->y;
-while ($Counter<=$LineCount) {
-	if ($JournalNo=='Preview') {
-		$AccountCode=str_pad('',10,'x');
-		$Date='1/1/1900';
-		$Description=str_pad('',30,'x');
-		$Narrative=str_pad('',30,'x');
-		$Amount='XXXX.XX';
-		$Tag=str_pad('',25,'x');
-		$JobRef=str_pad('',25,'x');
-	} else {
-		$MyRow=DB_fetch_array($Result);
-		if ($MyRow['tag']==0) {
-			$MyRow['tagdescription']='None';
-		}
-		$AccountCode = $MyRow['account'];
-		$Description = $MyRow['accountname'];
-		$Date = $MyRow['trandate'];
-		$Narrative = $MyRow['narrative'];
-		$Amount = $MyRow['amount'];
-		$Tag = $MyRow['tag'].' - '.$MyRow['tagdescription'];
-		$JobRef = $MyRow['jobref'];
+	$Result = DB_query($SQL);
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $AccountCode);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $Description);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Narrative);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, locale_number_format($Amount,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $Tag);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $JobRef, 'left');
-	$YPos += $LineHeight;
-	$Counter++;
-	if ($YPos >= $FormDesign->LineAboveFooter->starty){
-		/* We reached the end of the page so finsih off the page and start a newy */
-		$PageNumber++;
-		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGrnHeader.inc');
-	} //end if need a new page headed up
+
+	$HTML .= '<meta name="author" content="WebERP">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>';
+
+	$HTML .= '<table>';
+	$HTML .= '<tr>
+				<th colspan="7"><h3>' . _('General Ledger Journal') . '</h3></th>
+			</tr>
+			<tr>
+				<th>' . _('Account Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Amount') . '</th>
+				<th>' . _('Tag') . '</th>
+				<th>' . _('Job Reference') . '</th>
+			  </tr>';
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		$TagsSQL = "SELECT gltags.tagref,
+							tags.tagdescription
+						FROM gltags
+						INNER JOIN tags
+							ON gltags.tagref=tags.tagref
+						WHERE gltags.counterindex='" . $MyRow['counterindex'] . "'";
+		$TagsResult = DB_query($TagsSQL);
+
+		$TagDescriptions = '';
+		while ($TagRows = DB_fetch_array($TagsResult)) {
+			$TagDescriptions .= $TagRows['tagref'] . ' - ' . $TagRows['tagdescription'] . '<br />';
+		}
+		$HTML .= '<tr class="striped_row">
+					<td>' . $MyRow['account']. ' </td>
+					<td>' . $MyRow['accountname']. ' </td>
+					<td class="date">' . ConvertSQLDate($MyRow['trandate']). ' </td>
+					<td>' . $MyRow['narrative']. ' </td>
+					<td class="number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td>' . $TagDescriptions. ' </td>
+					<td>' . $MyRow['jobref']. ' </td>
+				  </tr>';
+	}
+
+	$HTML .= '</table>';
 }
 
-if ($LineCount == 0) {   //UldisN
-	$Title = _('Printing Error');
+$HTML .= '</body></html>';
+
+if (isset($_POST['PrintPDF'])) {
+	// Handle PDF generation
+	require 'vendor/autoload.php'; // Ensure DomPDF is installed via Composer
+
+	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf->loadHtml($HTML);
+
+	// (Optional) Setup the paper size and orientation
+	$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+	// Render the HTML as PDF
+	$dompdf->render();
+
+	// Output the generated PDF to Browser
+	$dompdf->stream($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d') . '.pdf', array(
+		"Attachment" => false
+	));
+} elseif (isset($_POST['View'])) {
+	// Handle on-screen view
+	$Title = _('General Ledger Journal');
 	include('includes/header.php');
-	prnMsg(_('There were no Journals to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo $HTML;
+		echo '<div class="centre">
+				<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+			</div>';
+	include('includes/footer.php');
+} else {
+	prnMsg(_('No valid action selected'), 'error');
 	include('includes/footer.php');
 	exit;
-} else {
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_Journal_' . date('Y-m-d').'.pdf');//UldisN
-    $pdf->__destruct(); //UldisN
 }
 ?>
