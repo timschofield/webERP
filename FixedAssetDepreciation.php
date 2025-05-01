@@ -1,7 +1,10 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['ProcessDate'])){$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);};
+// Check if ProcessDate is set before converting it
+if (isset($_POST['ProcessDate'])){
+	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
+};
 $Title = _('Depreciation Journal Entry');
 
 $ViewTopic = 'FixedAssets';
@@ -141,7 +144,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		$DepreciationType = _('DV');
 		$NewDepreciation = $BookValueBfwd * $AssetRow['depnrate']/100/12;
 	}
-	if (Date1GreaterThanDate2($AssetRow['datepurchased'],$_POST['ProcessDate'])){
+	if (Date1GreaterThanDate2(ConvertSQLDate($AssetRow['datepurchased']),$_POST['ProcessDate'])){
 		/*Over-ride calculations as the asset was not purchased at the date of the calculation!! */
 		$NewDepreciation =0;
 	}
