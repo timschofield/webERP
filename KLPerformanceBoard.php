@@ -209,7 +209,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		StockByBrand("SHOPOU", 75, 150, false);
 		$NumberOfTestExecuted++;
-		StockAdjustmentsByReason(30, $RootPath);
+		StockAdjustmentsByReason(30);
 		$NumberOfTestExecuted++;
 		QualityIssuesByReason(30, $RootPath);
 		$NumberOfTestExecuted++;
@@ -229,7 +229,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PurchaseOrdersProcessTime(75, $RootPath);
+		PurchaseOrdersProcessTime(75);
 		$NumberOfTestExecuted++;
 //		PurchaseOrdersWrongPlannedDates($RootPath);
 //		$NumberOfTestExecuted++;

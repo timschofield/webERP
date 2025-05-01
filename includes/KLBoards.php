@@ -225,8 +225,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	$StartDateD = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysD));
 	$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysE));
 	$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysF));
-	$StartDateSort = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysSort));
-	$StartDateMTD = FormatDateForSQL(Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m'), 1, Date('Y'))));
 
 	$SQL = "SELECT bh1.class,
 				bh1.concept,
@@ -276,7 +274,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = "Average Business KPI for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.";
 		ShowTableTitle($TableTitleText);
-		$TitleTarget = "";
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -296,7 +293,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$Target = "";
 			$Code = $MyRow['class'];
 			$Name = $MyRow['concept'];
 
@@ -388,7 +384,6 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$TotalDateE = 0;
 	$TotalDateF = 0;
 	$TotalForecast = 0;
-	$TotalMTD = 0;
 	$TotalDateMTD = 0;
 
 	if ($Shop == "All"){
@@ -504,14 +499,12 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	if (DB_num_rows($Result) != 0){
 		if ($Year == "LastYear"){
 			$TableTitleText = _('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
-			$TitleTarget = "";
 		} else {
 			if ($Shop == "All"){
 				$TableTitleText = _('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			} else {
 				$TableTitleText = _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			}
-			$TitleTarget = "";
 		}
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
@@ -535,7 +528,6 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$Target = "";
 			if (($TypeReport == "Shop") OR ($TypeReport == "Online")){
 				$Code = $MyRow['debtorno'];
 				$Name = $MyRow['name'];
@@ -673,7 +665,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 }
 
 function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
 									labourcost='" . 0 . "',
@@ -684,8 +676,8 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-	$Result = DB_Txn_Commit();
+	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_Txn_Commit();
 	UpdateCost($StockID); //Update any affected BOMs
 }
 
@@ -2186,9 +2178,9 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			// cap the maximum number of boxes to be sent to a shop,
 			// to prevent shipments too bulky for courier to safely bring in one motorbike trip
 			if (isPackagingBox($TableResult[$NumItems]['stockid'])
-				AND ($LocationType = "SHOPKL" OR
-					$LocationType = "SHOPBL" OR
-					$LocationType = "SHOPOU")
+				AND ($LocationType == "SHOPKL" OR
+					$LocationType == "SHOPBL" OR
+					$LocationType == "SHOPOU")
 				AND ($TableResult[$NumItems]['toship'] > MAXIMUM_BOXES_PACKAGING_TRANSFER_TO_SHOP)){
 				$TableResult[$NumItems]['toship'] = MAXIMUM_BOXES_PACKAGING_TRANSFER_TO_SHOP;
 			}
@@ -2752,28 +2744,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td>' . "" . '</td>
 					<td>' . "" . '</td>
 					</tr>';
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "CURRENT STOCK" . '</td>
-					<td>' . "PCS" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($CurrentTotalQtyItemsForSale,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/		}
+		}
 
 		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
 			($TypeOfCode == "ON PRODUCTION") OR
@@ -2820,143 +2791,36 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_array($Result);
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
-			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
+			//Prevent division by zero error
+			$ArrivingPCS = 0;
+			if ($AverageItemCost != 0) {
+				$ArrivingPCS = round($TotalValueAllOrders / $AverageItemCost);
+			}
+			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", $ArrivingPCS);
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($MyRow['cogs'],-6));
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "EXPECTED COGS NEXT " . $maxdays . " DAYS" . '</td>
-					<td>' . "IDR" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "(APPROX)" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank(round($MyRow['cogs'], -6),0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($MyRow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$MyRow['cogs'],-6);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "EXPECTED DIFFERENCE STOCK" . '</td>
-					<td>' . "IDR" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "(APPROX)" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($ExpectedDifferenceValueStock,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/
-			// Fix division by zero error
 			$ExpectedDifferenceQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost, -2);
 			}
-			
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "EXPECTED DIFFERENCE STOCK" . '</td>
-					<td>' . "PCS" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "(APPROX)" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($ExpectedDifferenceQtyStock,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
+			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS" . '</td>
-					<td>' . "IDR" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "(APPROX)" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($ExpectedFutureValueStock,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/
-			// Fix division by zero error
 			$ExpectedFutureQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			}
-			
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
-/*			echo '<tr class="striped_row">
-					<td class="number">' . "" . '</td>
-					<td class="number">' . "" . '</td>
-					<td>' . "EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS" . '</td>
-					<td>' . "PCS" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "(APPROX)" . '</td>
-					<td>' . "" . '</td>
-					<td class="number">' . locale_number_format_zero_blank($ExpectedFutureQtyStock,0) . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					<td>' . "" . '</td>
-					</tr>';
-*/		}
+		}
 		echo '</tfooter>
 				</table>
 				</div>';
 	}
 }
 
-function PurchaseOrdersProcessTime($NumDays, $RootPath){
+function PurchaseOrdersProcessTime($NumDays){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -3456,7 +3320,6 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 												WHERE p2.stockid = purchdata.stockid)
 			ORDER BY stockmaster.stockid";
 // EXPLAIN SQL 2014-05-31
-// prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%';
@@ -3695,7 +3558,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					<td class="number">' . $i . '</td>
 					<td>' . $MyRow['debtorno'] . '</td>
 					<td>' . $MyRow['name'] . '</td>
-					<td class="number">' . $MyRow['orderno'] . '</td>
+					<td class="number">' . $CodeLink . '</td>
 					<td class="number">' . $MyRow['customerref'] . '</td>
 					<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
 					<td class="number">' . locale_number_format($PaymentValue,$DecimalPlaces) . '</td>
@@ -4037,7 +3900,7 @@ function QualityIssuesByReason($Days, $RootPath){
 		</div>';
 }
 
-function StockAdjustmentsByReason($Days, $RootPath){
+function StockAdjustmentsByReason($Days){
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 $SQL = "SELECT reasonname,

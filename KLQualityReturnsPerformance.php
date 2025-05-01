@@ -19,9 +19,9 @@ if ($KL_SystemAdmin
 	OR $KL_PurchasingTeam
 	OR $KL_ShopSupportLeader) {
 
-	StockAdjustmentsByReason(30, $RootPath);
+	StockAdjustmentsByReason(30);
 	$NumberOfTestExecuted++;
-	StockAdjustmentsByReason(90, $RootPath);
+	StockAdjustmentsByReason(90);
 	$NumberOfTestExecuted++;
 	StockAdjustmentsByItemAndReason(30, $RootPath);
 	$NumberOfTestExecuted++;
