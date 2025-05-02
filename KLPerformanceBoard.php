@@ -178,7 +178,7 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
-		ActiveTransfersByLocation($RootPath);
+		ActiveTransfersByLocation();
 		$NumberOfTestExecuted++;
 		ActiveTransferStatus($RootPath);
 		$NumberOfTestExecuted++;

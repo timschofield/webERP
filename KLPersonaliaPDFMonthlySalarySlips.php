@@ -9,18 +9,17 @@ include('includes/KLUIGeneralFunctions.php');
 $Title = _('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
+	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
 
-function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
+function submit($Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 

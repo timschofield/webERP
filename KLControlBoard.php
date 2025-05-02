@@ -5,7 +5,6 @@
 *
 * ActiveItemsNoSales - Lists items with no sales in last X days and no current PO or WO
 * ActiveItemsWithoutPicture - Lists active items without pictures in webERP and QOH > 0
-* ActiveTransfersByLocation - Shows active transfers by location
 * ActiveTransferStatus - Shows active transfer status summary
 * BalanceAccountControl - Checks account balance against min/max limits 
 * BalanceListAccountControl - Checks total balance of a list of accounts against min/max limits
@@ -334,7 +333,7 @@ if ($ProcessSection01){
 	if ($KL_ShopSupportLeader){
 		ActiveTransfersByLocation($RootPath);
 		$NumberOfTestExecuted++;
-		ActiveTransferStatus($RootPath);
+		ActiveTransferStatus();
 		$NumberOfTestExecuted++;
 		RecentlyClosedTransferStatus(1, $RootPath);
 		$NumberOfTestExecuted++;

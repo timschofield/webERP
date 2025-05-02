@@ -10,7 +10,7 @@ include('includes/KLUIGeneralFunctions.php');
 
 TransfersDelayed(2, $RootPath);
 
-ActiveTransfersByLocation($RootPath);
+ActiveTransfersByLocation();
 
 ActiveTransferStatus($RootPath);
 RecentlyClosedTransferStatus(1, $RootPath);

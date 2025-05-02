@@ -45,11 +45,9 @@ WrongStandardCost - Shows items with wrong standard cost
 /**************************************************************************************************************
 * Function: ActiveTransfersByLocation
 * Brief description: Shows pending transfers by location
-* Parameters:
-*   - $RootPath: Root path of the application
 * Returns: None
 **************************************************************************************************************/
-function ActiveTransfersByLocation($RootPath){
+function ActiveTransfersByLocation(){
 	$TotalTransferIn = 0;
 	$TotalTransferOut = 0;
 	$TotalPcsIn = 0;
