@@ -3,6 +3,8 @@
 include('includes/session.php');
 include('includes/phplot/phplot.php');
 include('includes/UIGeneralFunctions.php');
+
+include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
 $Title=_('KPI Graph');
@@ -21,8 +23,8 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
-if (!isset($_POST['Concept'])){
-	$_POST['Concept']='';
+if (!isset($_POST['KPICode'])){
+	$_POST['KPICode']='';
 }
 
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
@@ -34,8 +36,8 @@ if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 
 if (!isset($_POST['FromDate']) 
 	OR !isset($_POST['ToDate'])
-	OR !isset($_POST['Concept'])
-	OR $_POST['Concept']==''
+	OR !isset($_POST['KPICode'])
+	OR $_POST['KPICode']==''
 	OR $ErrorInDates){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -49,7 +51,7 @@ if (!isset($_POST['FromDate'])
 
 	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', '', true, false);
 	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', '', true, false);
-	echo FieldToSelectOneKPIConcept('Concept', $_POST['Concept'], _('KPI Concept to Graph'), '', '', '', true, false);
+	echo FieldToSelectOneKPI('KPICode', $_POST['KPICode'], _('KPI to Graph'), '', '', '', true, false);
 
 	echo '</fieldset>';
 
@@ -64,7 +66,7 @@ if (!isset($_POST['FromDate'])
 	$SQL = "SELECT date,
 				value
 			FROM klkpi 
-			WHERE concept = '".$_POST['Concept']."'
+			WHERE kpicode = '".$_POST['KPICode']."'
 				AND date >='" . FormatDateForSQL($_POST['FromDate']) . "' 
 				AND date <= '" . FormatDateForSQL($_POST['ToDate']) . "'
 			ORDER BY date ASC";
@@ -84,6 +86,8 @@ if (!isset($_POST['FromDate'])
 		exit;
 	}
 
+	$KPIDescription = GetKPIDescription($_POST['KPICode']);
+	
 	$GraphArray = array();
 	$i = 0;
 	$InitialDate = "";
@@ -106,7 +110,7 @@ if (!isset($_POST['FromDate'])
 		$i++;
 	}
 
-	$GraphTitle = $_POST['Concept'] . ' ' . _('From') . ' ' . ConvertSQLDate($InitialDate) . ' ' . _('to') . ' ' . ConvertSQLDate($FinalDate) . "\n\r";
+	$GraphTitle = $KPIDescription . ' ' . _('From') . ' ' . ConvertSQLDate($InitialDate) . ' ' . _('to') . ' ' . ConvertSQLDate($FinalDate) . "\n\r";
 
 	$Range = max(abs($MaxValue), abs($MinValue));
 	if ($Range < 5){
@@ -151,7 +155,8 @@ if (!isset($_POST['FromDate'])
 				<td><p><img class="graph" src="',$RootPath,'/', $_SESSION['reports_dir'], '/kpigraph.png" alt="kpigraph Graph"></img></p></td>
 			</tr>
 		  </table>';
-	unset ($_POST['Concept']);
+	unset ($_POST['KPICode']);
 	include('includes/footer.php');
 }
+
 ?>

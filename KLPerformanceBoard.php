@@ -396,6 +396,8 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
+	$BrandCode = substr($Brand, -2); // Get the 2 rightmost characters of $Brand
+
 	if ($Typereport == "Shop"){
 		$BrandText= BrandTextFromCode($Brand);
 		$SQL = "SELECT debtorsmaster.debtorno,
@@ -593,8 +595,8 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 				</tr>';
 		echo '</tbody></table>
 				</div>';
-		InsertKPI("Sales", "Avg Invoice Value Last " . $NumDaysA . " days (IDR) " . $BrandText, $SumInvoiceSum/$SumInvoiceCount);
-		InsertKPI("Sales", "Avg Invoices Last " . $NumDaysA . " days (INVOICES) " . $BrandText, $SumInvoiceCount/$NumDaysA);
+		InsertKPI("INV-AV-INV-VALUE-" . $NumDaysA . "-IDR-" . $BrandCode, $SumInvoiceSum/$SumInvoiceCount);
+		InsertKPI("INV-AV-INV-NUMBER-" . $NumDaysA . "-INV-" . $BrandCode, $SumInvoiceCount/$NumDaysA);
 	}
 }
 
@@ -837,8 +839,8 @@ function CashStatus($Year,
 	$MyRow = DB_fetch_array($Result);
 	$USDAlreadyExhangedThisMonth = round(($MyRow['saldo'] ?? 0), 0);
 
-	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
-	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
+	$PORunningTotalUSD = round(GetLastKPIValue("PO-ITEMS-NEXT-%-IDR")*$CurrentUSDRate,0);
+	$POPaymentsPendingUSD = round(GetLastKPIValue("PO-PAY-PEND-%")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
@@ -1372,12 +1374,12 @@ function CashStatus($Year,
 		echo '</tbody></table>
 			</div>';	
 
-		InsertKPI("Cash", "Free Cash", $FreeSaldoBrankasShareholders);
+		InsertKPI("CASH-FREE", $FreeSaldoBrankasShareholders);
 	}
 
-	InsertKPI("Cash", "Cash PT ADU", $CurrentBalanceADU);
-	InsertKPI("Cash", "Cash PT SMH", $CurrentBalanceSMH);
-	InsertKPI("Cash", "Cash PT BB", $CurrentBalanceBB);
+	InsertKPI("CASH-PTADU", $CurrentBalanceADU);
+	InsertKPI("CASH-PTSMH", $CurrentBalanceSMH);
+	InsertKPI("CASH-PTBB", $CurrentBalanceBB);
 
 }
 
@@ -1439,6 +1441,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-365));
 
 	$BrandText= BrandTextFromCode($Brand);
+	$BrandCode = substr($Brand, -2); // Get the 2 rightmost characters of $Brand
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -1590,7 +1593,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				</tr>';
 		echo '</tbody></table>
 				</div>';
-		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
+		InsertKPI("INV-AV-ITEMS-INV-" . $NumDaysA . "-ITEM-" . $BrandCode, $TotalItemCount/$TotalInvoiceCount);
 	}
 }
 
@@ -1923,7 +1926,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				</table>
 				</div>';
 		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
-			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);
+			InsertKPI("SALES-TREND-RETAIL-" . $NumDaysA . "D-PERCENT", $Percent);
 		}
 	}
 }
@@ -2029,15 +2032,17 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 
 function ShowKPIHistory($NumDays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-	$SQL = "SELECT class,
-				concept,
+	$SQL = "SELECT kpicode,
+				kpidescripiption,
 				MIN(value) AS minimumvalue,
 				AVG(value) AS averagevalue,
 				MAX(value) AS maximumvalue
 			FROM klkpi
+			INNER JOIN klkpidescriptions
+				ON klkpi.klkpi = klkpidescriptions.klkpi
 			WHERE date >= '" . $StartDate . "'
-			GROUP BY class, concept
-			ORDER BY class, concept";
+			GROUP BY kpicode
+			ORDER BY kpicode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = 'General KPI last ' . $NumDays . ' days';
@@ -2046,8 +2051,7 @@ function ShowKPIHistory($NumDays){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Class') . '</th>
-						<th class="SortedColumn">' . _('Concept') . '</th>
+						<th class="SortedColumn">' . _('KPI') . '</th>
 						<th class="SortedColumn">' . _('Minimum') . '</th>
 						<th class="SortedColumn">' . _('Average') . '</th>
 						<th class="SortedColumn">' . _('Maximum') . '</th>
@@ -2056,7 +2060,6 @@ function ShowKPIHistory($NumDays){
 				<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			echo '<tr class="striped_row">
-					<td>' . $MyRow['class'] . '</td>
 					<td>' . $MyRow['concept'] . '</td>
 					<td class="number">' . locale_number_format_kpi($MyRow['minimumvalue']) . '</td>
 					<td class="number">' . locale_number_format_kpi($MyRow['averagevalue']) . '</td>
@@ -2071,6 +2074,7 @@ function ShowKPIHistory($NumDays){
 function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	$BrandText= BrandTextFromCode($Brand);
+	$BrandCode = substr($Brand, -2); // Get the 2 rightmost characters of $Brand
 
 	$Shops = NumberOfShops($Brand);
 	$NumDaysLastYear = $OptimalDaysStock - $NumDays;
@@ -2219,21 +2223,21 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			</div>
 			</form>';
 
-	InsertKPI("Shops", "Shops Open " . $BrandText, $Shops);
-	InsertKPI("Stock", "Total Models (MODELS) " . $BrandText, $TotalModels);
-	InsertKPI("Stock", "Total Stock (PCS) " . $BrandText, $TotalItems);
-	InsertKPI("Stock", "Stock needed for display (PCS) " . $BrandText, $DisplayItems);
-	InsertKPI("Stock", "Stock available for sale (PCS) " . $BrandText, $AvailableForSaleItems);
-	InsertKPI("Stock", "Average pieces per model (PCS) " . $BrandText, round($AvailableForSaleItems/$TotalModels,2));
-	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItemsThisYearPastDays);
-	InsertKPI("Stock", "Daily Stock forecast for " . $NumDays . " days (PCS) " . $BrandText, $EstimationDailyItemsToBeSoldNextDays);
-	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
-	InsertKPI("Stock", "Stock to be received PO (PCS) " . $BrandText, $ItemsPO);
-	InsertKPI("Stock", "Stock to be received WO (PCS) " . $BrandText, $ItemsWO);
-	InsertKPI("Stock", "Days left of stock+PO+WO(DAYS) " .$BrandText, $DaysStockForSaleIncludingPOWO);
-	InsertKPI("Stock", "Stock needed for optimal (PCS) " . $BrandText, $ItemsToGetOptimalDaysStock);
+	InsertKPI("SHOPS-OPEN-" . $BrandCode, $Shops);
+	InsertKPI("STOCK-MODELS-" . $BrandCode, $TotalModels);
+	InsertKPI("STOCK-TOTAL-PCS-" . $BrandCode, $TotalItems);
+	InsertKPI("STOCK-DISPLAY-PCS-" . $BrandCode, $DisplayItems);
+	InsertKPI("STOCK-FORSALE-PCS-" . $BrandCode, $AvailableForSaleItems);
+	InsertKPI("STOCK-AV-PCS-MODEL-" . $BrandCode, round($AvailableForSaleItems/$TotalModels,2));
+	InsertKPI("STOCK-AV-SOLD-" . $NumDays . "D-PCS-" . $BrandCode, $DailySoldItemsThisYearPastDays);
+	InsertKPI("STOCK-FORECAST-" . $NumDays . "D-PCS-" . $BrandCode, $EstimationDailyItemsToBeSoldNextDays);
+	InsertKPI("STOCK-QOH-DAYS-" .$BrandCode, $DaysStockForSale);
+	InsertKPI("STOCK-PENDING-PO-PCS-" . $BrandCode, $ItemsPO);
+	InsertKPI("STOCK-PENDING-WO-PCS-" . $BrandCode, $ItemsWO);
+	InsertKPI("STOCK-QOH-PO-WO-DAYS-" .$BrandCode, $DaysStockForSaleIncludingPOWO);
+	InsertKPI("STOCK-NEED-OPTIMAL-PCS-" . $BrandCode, $ItemsToGetOptimalDaysStock);
 	if ($Brand != "SHOPOU"){
-		InsertKPI("Stock", "Trend retail ". $NumDays . " days (%) " . $BrandText, $TrendThisYear*100);
+		InsertKPI("SALES-TREND-RETAIL-". $NumDays . "D-" . $BrandCode, $TrendThisYear*100);
 	}
 }
 

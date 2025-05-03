@@ -190,7 +190,7 @@ if ($ProcessSection02){
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
 prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
-InsertKPI("Prices", "Pricing Issues", $IssuesFound);
+InsertKPI("PRICE-ISSUES", $IssuesFound);
 
 if ($KL_SystemAdmin){
 	time_finish($begintime);

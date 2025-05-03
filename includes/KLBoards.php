@@ -126,7 +126,7 @@ function ActiveTransfersByLocation(){
 					<td class="number">' . locale_number_format($TotalPcsIn,0) . '</td>
 					<td class="number">' . locale_number_format($TotalPcsOut+$TotalPcsIn,0) . '</td>
 				</tr>';
-		InsertKPI("Transfers","Goods Pending to be transferred @ shops (pcs)", $TotalPcsOut+$TotalPcsIn);
+		InsertKPI("TRANSFERS-PENDING-SHOP-PCS", $TotalPcsOut+$TotalPcsIn);
 		echo '</tfooter>
 				</table>
 				</div>';
@@ -196,7 +196,7 @@ function ActiveTransferStatus($RootPath){
 				<td>' . 'Total' . '</td>
 				<td class="number">' . locale_number_format($Total, 0) . '</td>
 				</tr>';
-		InsertKPI("Transfers", "Active Transfers (pcs)", $Total);
+		InsertKPI("TRANSFERS-ACT-PCS", $Total);
 		echo '</tfooter>
 			  </table>
 			  </div>';
@@ -224,49 +224,43 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	$StartDateE = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysE));
 	$StartDateF = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysF));
 
-	$SQL = "SELECT bh1.class,
-				bh1.concept,
+	$SQL = "SELECT bh1.kpicode,
+				klkpidescriptions.kpidescription,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateA . "'
 						AND bh2.date <= CURRENT_DATE) AS salesA,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateB . "'
 						AND bh2.date <= CURRENT_DATE) AS salesB,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateC . "'
 						AND bh2.date <= CURRENT_DATE) AS salesC,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateD . "'
 						AND bh2.date <= CURRENT_DATE) AS salesD,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateE . "'
 						AND bh2.date <= CURRENT_DATE) AS salesE,
 				(SELECT AVG(value)
 					FROM klkpi bh2
-					WHERE bh1.class =  bh2.class
-						AND bh1.concept =  bh2.concept
+					WHERE bh1.kpicode =  bh2.kpicode
 						AND bh2.date >= '". $StartDateF . "'
 						AND bh2.date <= CURRENT_DATE) AS salesF
 			FROM klkpi bh1
-			GROUP BY bh1.class,
-					bh1.concept
-			ORDER BY bh1.class,
-					bh1.concept";
+			INNNER JOIN klkpidescriptions
+				ON bh1.kpicode = klkpidescriptions.klkpicode
+			GROUP BY bh1.kpicode
+			ORDER BY bh1.kpicode";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -277,7 +271,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . 'Class' . '</th>
 						<th class="SortedColumn">' . _('Concept') . '</th>
 						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
 						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
@@ -291,8 +284,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$Code = $MyRow['class'];
-			$Name = $MyRow['concept'];
+			$Name = $MyRow['kpidescription'];
 
 			$dailyA = locale_number_format_kpi(($MyRow['salesA']));
 			$dailyB = locale_number_format_kpi(($MyRow['salesB']));
@@ -317,7 +309,6 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 
 			echo '<tr class="striped_row">
 					<td>' . $i . '</td>
-					<td>' . $Code . '</td>
 					<td>' . $Name . '</td>
 					<td class="number">' . $dailyA . '</td>
 					<td class="number">' . $dailyB . '</td>
@@ -653,12 +644,12 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$NumDaysE = str_pad($NumDaysE, 3, '0', STR_PAD_LEFT);
 
 	if (($TypeReport == "Shop") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("SALES-RETAIL-" . $NumDaysD . "D-IDR", $TotalDateD);
+		InsertKPI("SALES-RETAIL-" . $NumDaysE . "D-IDR", $TotalDateE);
 	}
 	if (($TypeReport == "Online") AND ($Year == "CurrentYear")){
-		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
-		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
+		InsertKPI("SALES-ONLINE-" . $NumDaysD . "D-IDR", $TotalDateD);
+		InsertKPI("SALES-ONLINE-" . $NumDaysE . "D-IDR", $TotalDateE);
 	}
 }
 
@@ -860,7 +851,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 
 		}
 	}
-	InsertKPI("Components", "Components not used in any BOM (IDR)", $TotalCost);
+	InsertKPI("COMP-NOT-USED-IDR", $TotalCost);
 }
 
 function ErrorsInTransfers($maxdays, $RootPath){
@@ -1165,7 +1156,7 @@ function FinishedStockDistribution($Kind, $ByReport){
 	}
 
 	if ($Kind == "DISPLAYS"){
-		InsertKPI("Stock", "Stock of Displays (PCS)", $Totalpcs);
+		InsertKPI("STOCK-DISPLAYS-PCS", $Totalpcs);
 	}
 }
 
@@ -1492,13 +1483,13 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	if (DB_num_rows($Result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
 			$TableTitleText = _('Components ready to WO in kantor used ONLY for Discount items');
-			$BusinessConcept = "Components ONLY for Discount items (IDR)";
+			$BusinessConcept = "COMP-ONLY-DISC-ITEM-IDR";
 		}elseif ($ParentCategory == "DISCOUNT"){
 			$TableTitleText = _('Components ready to WO in kantor used for Discount items');
-			$BusinessConcept = "Components for Discount items (IDR)";
+			$BusinessConcept = "COMP-DISC-ITEM-IDR";
 		}else{
 			$TableTitleText = _('Components ready to WO in kantor for any items');
-			$BusinessConcept = "Components for any items (IDR)";
+			$BusinessConcept = "COMP-ANY-ITEM-IDR";
 		}
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
@@ -1543,7 +1534,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 		echo '</tfooter>
 			  </table>
 			  </div>';
-		InsertKPI("Components", $BusinessConcept, $TotalCost);
+		InsertKPI($BusinessConcept, $TotalCost);
 	}
 }
 
@@ -1565,9 +1556,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 	$Year = date('Y', strtotime("-1 days"));
 
-	$TrendThisYearKL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Kapal-Laut") / 100,3);
-	$TrendThisYearBL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Blink") / 100,3);
-	$TrendThisYearOU = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
+	$TrendThisYearKL = round(GetLastKPIValue("SALES-TREND-RETAIL-%D-KL") / 100,3);
+	$TrendThisYearBL = round(GetLastKPIValue("SALES-TREND-RETAIL-%D-BL") / 100,3);
+	$TrendThisYearOU = round(GetLastKPIValue("SALES-TREND-RETAIL-%D-PERCENT") / 100,3);
 
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1885,17 +1876,17 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				</table>
 				</div>';
 
-			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
-			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
-			InsertKPI("Packaging", "Packaging forecast next X days (PCS)", $ForecastXDays);
-			InsertKPI("Packaging", "Packaging QOH total (PCS)", $QOHTotal);
-			InsertKPI("Packaging", "Packaging QOH total (DAYS)", $TotalDaysQOH);
-			InsertKPI("Packaging", "Packaging QOO not received (PCS)", $PendingQOO);
-			InsertKPI("Packaging", "Packaging QOH + QOO total (DAYS)", $TotalDaysQOO);
-			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
-			InsertKPI("Packaging", "Packaging Optimum QOH (PCS)", $TotalQOHOptimum);
-			InsertKPI("Packaging", "Packaging Shortage (PCS)", $MissingTotal);
-			InsertKPI("Packaging", "Packaging Shortage (%)", round($PercentTotalShortage,0));
+			InsertKPI("PACK-DAILY-USE-PCS)", $TotalDailyUse);
+			InsertKPI("PACK-USED-" . $DaysUsage .  "-PCS", $UsageXDays);
+			InsertKPI("PACK-FORE-X-DAYS-PCS", $ForecastXDays);
+			InsertKPI("PACK-QOH-TOTAL-PCS", $QOHTotal);
+			InsertKPI("PACK-QOH-TOTAL-DAYS", $TotalDaysQOH);
+			InsertKPI("PACK-QOO-NOTREC-PCS", $PendingQOO);
+			InsertKPI("PACK-QOH-QOO-TOTAL-DAYS", $TotalDaysQOO);
+			InsertKPI("PACK-OPT-ORDER-PCS", $OptimumOrder);
+			InsertKPI("PACK-OPT-QOH-PCS", $TotalQOHOptimum);
+			InsertKPI("PACK-SHORTAGE-PCS", $MissingTotal);
+			InsertKPI("PACK-SHORTAGE-PERCENT", round($PercentTotalShortage,0));
 		}
 	}
 }
@@ -2711,7 +2702,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					</tr>';
 			if (($TypeOfProduct == "FORSALE")
 				AND ($maxdays > 0)){
-				InsertKPI("Purchase Orders", "Payments pending items for sale in ". $maxdays . " days (IDR)", $TotalValueAllPayments);
+				InsertKPI("PO-PAY-PEND-". $maxdays . "-IDR", $TotalValueAllPayments);
 			}
 		}
 
@@ -2719,8 +2710,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale();
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
-			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
-			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);
+			InsertKPI("STOCK-ITEMS-SALE-IDR", $CurrentTotalValueItemsForSale);
+			InsertKPI("STOCK-ITEMS-SALE-PCS", $CurrentTotalQtyItemsForSale);
 			echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
 					<td class="number">' . "" . '</td>
@@ -2779,7 +2770,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
 			}
 			
-			InsertKPI("Stock", "Average Standard Cost for item for sale (IDR)", $AverageItemCost);
+			InsertKPI("STOCK-AV-STCOST-ITEM-IDR", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans
@@ -2788,29 +2779,29 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 							OR account IN " . GL_COGS_OTHERS . ")";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_array($Result);
-			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
+			InsertKPI("PO-ITEMS-NEXT-". $maxdays."-IDR", $TotalValueAllOrders);
 			//Prevent division by zero error
 			$ArrivingPCS = 0;
 			if ($AverageItemCost != 0) {
 				$ArrivingPCS = round($TotalValueAllOrders / $AverageItemCost);
 			}
-			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", $ArrivingPCS);
-			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($MyRow['cogs'],-6));
-			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($MyRow['cogs']/$AverageItemCost, -2));
+			InsertKPI("PO-ITEMS-NEXT-". $maxdays."-PCS", $ArrivingPCS);
+			InsertKPI("STOCK-COGS-NEXT-". $maxdays . "D-IDR", round($MyRow['cogs'],-6));
+			InsertKPI("STOCK-COGS-NEXT-". $maxdays . "D-PCS", round($MyRow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$MyRow['cogs'],-6);
-			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
+			InsertKPI("STOCK-DIFF-NEXT-". $maxdays . "D-IDR", $ExpectedDifferenceValueStock);
 			$ExpectedDifferenceQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost, -2);
 			}
-			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
+			InsertKPI("STOCK-DIFF-NEXT-". $maxdays . "D-PCS", $ExpectedDifferenceQtyStock);
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
-			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
+			InsertKPI("STOCK-FUTURE-NEXT-". $maxdays . "D-IDR", $ExpectedFutureValueStock);
 			$ExpectedFutureQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			}
-			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
+			InsertKPI("STOCK-FUTURE-NEXT-". $maxdays . "D-PCS", $ExpectedFutureQtyStock);
 		}
 		echo '</tfooter>
 				</table>
@@ -3442,22 +3433,22 @@ function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
 	$WarningTitleText = "# Items changing price: " . $NumItems;
 	ShowWarningTitle($WarningTitleText);
-	InsertKPI("Prices", "Items changing price", $NumItems);
+	InsertKPI("PRICE-ITEM-CHANGE-PRICE", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
 	$WarningTitleText = "# Items moving to 20% discount: " . $NumItems;
 	ShowWarningTitle($WarningTitleText);
-	InsertKPI("Prices", "Items moving to 20% discount", $NumItems);
+	InsertKPI("PRICE-ITEM-CHANGE-20D", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
 	$WarningTitleText = "# Items moving to 50% discount: " . $NumItems;
 	ShowWarningTitle($WarningTitleText);
-	InsertKPI("Prices", "Items moving to 50% discount", $NumItems);
+	InsertKPI("PRICE-ITEM-CHANGE-50D", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
 	$WarningTitleText = "# Items moving to 80% discount: " . $NumItems;
 	ShowWarningTitle($WarningTitleText);
-	InsertKPI("Prices", "Items moving to 80% discount", $NumItems);
+	InsertKPI("PRICE-ITEM-CHANGE-80D", $NumItems);
 }
 
 function OnlineMarketPlacePaymentPending($Days, $RootPath){
@@ -3830,11 +3821,11 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 			</div>';
 		if ($UserIsSystemAdmin){
 			if ($Status == "OPEN"){
-				InsertKPI("Maintenance", "Open Maintenance Tasks", $TotalIssues);
+				InsertKPI("MAINTENANCE-OPEN", $TotalIssues);
 			}elseif ($Status == "CLOSED"){
-				InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+				InsertKPI("MAINTENANCE-CLOSED-" . $NumDays, $TotalIssues);
 			}elseif ($Status == "TOTAL"){
-				InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+				InsertKPI("MAINTENANCE-ALL-" . $NumDays, $TotalIssues);
 			}
 		}
 	}
@@ -3843,13 +3834,15 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 function QualityIssuesByReason($Days, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
-	$SQL = "SELECT reasonname,
+	$SQL = "SELECT returnitemreasons.reasonid,
+				returnitemreasons.reasonname,
 				COUNT(*) AS totalreturned
 			FROM returneditems
 			INNER JOIN returnitemreasons
 				ON returneditems.reasonid = returnitemreasons.reasonid
 			WHERE returneditems.returndate >= '" . $StartDate . "'
-			GROUP BY returnitemreasons.reasonid
+			GROUP BY returnitemreasons.reasonid,
+				returnitemreasons.reasonname
 			ORDER BY totalreturned DESC";
 
 	$TotalReturned = 0;
@@ -3877,13 +3870,13 @@ function QualityIssuesByReason($Days, $RootPath){
 			$TotalReturned += $MyRow['totalreturned'];
 
 			if ($Days == 30) {
-				InsertKPI('Returned Items', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totalreturned']);
+				InsertKPI('RET-'.$MyRow['reasonid'].'-30-PCS', $MyRow['totalreturned']);
 			}
 		}
 	}
 
 	if ($Days == 30) {
-		InsertKPI('Returned Items', 'Total Returned Items Last 30 days (PCS)', $TotalReturned);
+		InsertKPI('RET-TOTAL-30-PCS', $TotalReturned);
 	}		
 
 	echo '</tbody>
@@ -3901,7 +3894,8 @@ function QualityIssuesByReason($Days, $RootPath){
 function StockAdjustmentsByReason($Days){
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
-$SQL = "SELECT reasonname,
+$SQL = "SELECT stockadjustmentreasons.reasonid,
+			stockadjustmentreasons.reasonname,
 			SUM(qty) AS totaladjusted
 		FROM stockmoves
 		INNER JOIN stockadjustments
@@ -3910,7 +3904,8 @@ $SQL = "SELECT reasonname,
 		INNER JOIN stockadjustmentreasons
 			ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
 		WHERE stockmoves.trandate >= '" . $StartDate . "'
-		GROUP BY stockadjustmentreasons.reasonid
+		GROUP BY stockadjustmentreasons.reasonid,
+			stockadjustmentreasons.reasonname
 		ORDER BY ABS(SUM(qty)) DESC";
 
 $TotalAdjusted = 0;
@@ -3937,13 +3932,13 @@ if (DB_num_rows($Result) != 0){
 
 		$TotalAdjusted += $MyRow['totaladjusted'];
 		if ($Days == 30) {
-			InsertKPI('Stock Adjustments', $MyRow['reasonname'] . ' Last 30 days (PCS)', $MyRow['totaladjusted']);
+			InsertKPI('STADJ-' . $MyRow['reasonname'] . '-3D-PCS', $MyRow['totaladjusted']);
 		}
 	}
 }
 
 if ($Days == 30) {
-	InsertKPI('Stock Adjustments', 'Total Stock Adjustments Last 30 days (PCS)', $TotalAdjusted);
+	InsertKPI('STADJ-TOTAL-30D-PCS', $TotalAdjusted);
 }
 
 echo '</tbody>

@@ -33,6 +33,7 @@ GetDayNameFromWeekDay             - Converts a day number to day name
 GetDefaultLocationFromUser        - Gets the default location code for a user
 GetItemDescriptionFromCode        - Gets the description of a stock item
 GetItemStandardCostFromCode       - Gets the standard cost of a stock item
+GetKPIDescription                 - Retrieves the description for a given KPI code
 GetLastKPIValue                   - Gets the most recent KPI value for a class/concept
 GetLocationNameFromCode           - Gets the location name from a location code
 GetOnlinePartnerFromArea          - Gets the online partner code for an area
@@ -1275,18 +1276,16 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
-function InsertKPI($Class, $Concept, $Value){
+function InsertKPI($KPICode, $Value){
 	$Date = date('Y-m-d');
-	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'concept', $Concept)){
+	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'kpicode', $KPICode)){
 		$SQL = "INSERT INTO klkpi 
 				(date,
-				class,
-				concept,
+				kpicode,
 				value)
 			VALUES 
 				('" . $Date . "',
-				'" . $Class . "',
-				'" . $Concept . "',
+				'" . $KPICode . "',
 				'" . $Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
 		$DbgMsg = 'SQL to insert klkpi record: ';
@@ -1334,11 +1333,10 @@ function NumberOfRegularShopsSellingDiscount($ShopType){
 }
 
 function DeleteWeberpUser($SelectedUser, $AdminRole){
-	if($AllowDemoMode AND $SelectedUser == 'admin') {
-		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');
-	}elseif ($SelectedUser == "Ricard"){
+	if ($SelectedUser == "Ricard"){
 		prnMsg('User '. $SelectedUser . ' cannot be deleted as is a super user','error');
 	}elseif ((($SelectedUser == "Laia")
+				OR ($SelectedUser == "Garbi")	
 				OR ($SelectedUser == "Ike1")	
 				OR ($SelectedUser == "Fathus")	
 				OR ($SelectedUser == "RiaResti")	
@@ -1397,11 +1395,10 @@ function GetDayNameFromWeekDay($WeekDay){
 	}
 }
 
-function GetLastKPIValue($Class,$Concept){
+function GetLastKPIValue($KPICode){
 	$SQL = "SELECT value
 			FROM klkpi
-			WHERE class = '".$Class."'
-				AND concept LIKE '".$Concept."'
+			WHERE kpicode LIKE '".$KPICode."'
 			ORDER BY date DESC
 			LIMIT 1";
 	$Result = DB_query($SQL);		
@@ -1773,6 +1770,25 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 
 		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
 	}//only do the stuff above if  $InputError==0
+}
+
+/**
+ * Retrieves the description for a given KPI code
+ * 
+ * @param string $KPICode The KPI code to look up
+ * @return string The KPI description if found, empty string otherwise
+ */
+function GetKPIDescription($KPICode) {
+	$DescSQL = "SELECT kpidescription 
+				FROM klkpidescriptions 
+				WHERE kpicode = '" . $KPICode . "'";
+	$DescResult = DB_query($DescSQL);
+	$KPIDescription = '';
+	if (DB_num_rows($DescResult) > 0) {
+		$DescRow = DB_fetch_array($DescResult);
+		$KPIDescription = $DescRow['kpidescription'];
+	}
+	return $KPIDescription;
 }
 
 ?>

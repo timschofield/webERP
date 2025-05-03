@@ -1615,7 +1615,7 @@ function CheckNegativeStock($RootPath){
 			</table>
 			</div>';
 	}
-	InsertKPI("Stock", "Negative Stock items (PCS)", abs($Total));
+	InsertKPI("STOCK-NEG-PCS", abs($Total));
 }
 
 function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath){
