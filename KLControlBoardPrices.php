@@ -5,7 +5,7 @@ define("VERSIONFILE", "5.01");
 config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut Pricing Control Board '. VERSIONFILE);
+$Title = _('KL Pricing Control Board '. VERSIONFILE);
 include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
