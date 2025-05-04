@@ -303,7 +303,8 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 		$SQL = "SELECT *
 				FROM klretailcustomers
 				WHERE orderno = '" . $OrderNo . "'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,'','',true);
+		
 		if (DB_num_rows($Result)==1){
 			$Action = "UPDATE";
 		} else {
@@ -364,6 +365,7 @@ function AccountPaymentRetail($PaymentMethod,
 
 	$ReceiptNumber = GetNextTransNo(12);
 	$SettlementDate = date('Y-m-d', strtotime("+" . (int)$DaysDelaySettlement . " days"));
+	$SettlementPeriodNo = GetPeriod(ConvertSQLDate($SettlementDate));
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $CustomerReference  . 
@@ -380,7 +382,7 @@ function AccountPaymentRetail($PaymentMethod,
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
 					$SettlementDate,
-					$PeriodNo,
+					$SettlementPeriodNo,
 					$BankAccount,
 					$Description,
 					round($NetPayment/$ExRate),
@@ -393,7 +395,7 @@ function AccountPaymentRetail($PaymentMethod,
 		InsertIntoGLTrans("12", 
 						$ReceiptNumber, 
 						$SettlementDate,
-						$PeriodNo,
+						$SettlementPeriodNo,
 						$GLAccountBankCommission,
 						$Description,
 						round($BankCommision/$ExRate),
@@ -405,7 +407,7 @@ function AccountPaymentRetail($PaymentMethod,
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
 					$SettlementDate,
-					$PeriodNo,
+					$SettlementPeriodNo,
 					$_SESSION['AccountPOSReceivable'],
 					$Description,
 					round(-$AmountPaid/$ExRate),
