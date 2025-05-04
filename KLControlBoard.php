@@ -53,7 +53,6 @@
 * OldOnlineQuotations - Lists old online quotations
 * OldPOStillActive - Lists old purchase orders still active
 * OldWOStillActive - Lists old work orders still active
-* OnlineCustomersNoOrderPlaced - Lists online customers with no orders placed
 * OnlineItemsOnProcess - Lists online items in process
 * OnlineMarketPlacePaymentPending - Lists online marketplace payments pending
 * OnlineOrdersFollowUp - Follow up on outstanding online orders
@@ -333,7 +332,7 @@ if ($ProcessSection01){
 	if ($KL_ShopSupportLeader){
 		ActiveTransfersByLocation($RootPath);
 		$NumberOfTestExecuted++;
-		ActiveTransferStatus();
+		ActiveTransferStatus($RootPath);
 		$NumberOfTestExecuted++;
 		RecentlyClosedTransferStatus(1, $RootPath);
 		$NumberOfTestExecuted++;
@@ -3847,64 +3846,6 @@ function OldWOStillActive($maxdays, $RootPath){
 					<td class="number">' . $i . '</td>
 					<td class="number">' . $CodeLink . '</td>
 					<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
-					</tr>';
-			$i++;
-		}
-		echo '</tbody>
-			</table>
-			</div>';
-	}
-}
-
-function OnlineCustomersNoOrderPlaced($RootPath){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-
-	$SQL = "SELECT 	debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					debtorsmaster.clientsince
-			FROM debtorsmaster
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
-				AND debtorsmaster.klemailnowebshoporder = '1000-01-01'
-				AND NOT EXISTS (SELECT * 
-								FROM salesorders
-								WHERE salesorders.debtorno = debtorsmaster.debtorno)
-				AND debtorsmaster.debtorno != 'Online Shop'
-			ORDER BY debtorsmaster.debtorno";
-
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Online Customers registered but no order placed.');
-		ShowTableTitle($TableTitleText);
-		echo '<div>';
-		echo '<table class="selection">
-				<thead>
-					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Customer') . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . _('Country') . '</th>
-						<th class="SortedColumn">' . _('Currency ') . '</th>
-						<th class="SortedColumn">' . _('Registered on') . '</th>
-						<th class="SortedColumn">' . _('Send Email') . '</th>
-					</tr>
-				</thead>
-				<tbody>';
-		$i = 1;
-		while ($MyRow = DB_fetch_array($Result)) {
-			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . '</a>';
-			$EmailLinkText = 'Send Now';
-			$EmailType = 'NoOrderPlaced';
-			$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['debtorno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $MyRow['debtorno'] . '">'. $EmailLinkText .'</a>';
-			echo '<tr class="striped_row">
-					<td class="number">' . $i . '</td>
-					<td>' . $CodeLink . '</td>
-					<td>' . $MyRow['name'] . '</td>
-					<td>' . $MyRow['address6'] . '</td>
-					<td>' . $MyRow['currcode'] . '</td>
-					<td>' . ConvertSQLDateTime($MyRow['clientsince']) . '</td>
-					<td>' . $EmailLink . '</td>
 					</tr>';
 			$i++;
 		}
