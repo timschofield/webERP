@@ -5,7 +5,7 @@ define("VERSIONFILE", "2.10");
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
 include ('includes/session.php');
-$Title = _('Kapal-Laut Set Online Shop Categories '. VERSIONFILE);
+$Title = _('KL Set Online Shop Categories '. VERSIONFILE);
 include ('includes/header.php');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');

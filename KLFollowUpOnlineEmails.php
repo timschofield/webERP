@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-$Title = _('Kapal-Laut Follow Up Email System');
+$Title = _('KL Follow Up Email System');
 include('includes/header.php');
 
 //Get Out if we have no order number to work with

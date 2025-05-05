@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut General Transfer Status');
+$Title = _('KL General Transfer Status');
 include ('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLDefines.php');
