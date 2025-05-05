@@ -434,7 +434,7 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 7000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
@@ -445,7 +445,8 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
 									'111121110SM',
-									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
+									'111121115SM',
+									'111121117SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100BB', 
