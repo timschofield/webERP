@@ -36,6 +36,7 @@ GetItemStandardCostFromCode       - Gets the standard cost of a stock item
 GetKPIDescription                 - Retrieves the description for a given KPI code
 GetLastKPIValue                   - Gets the most recent KPI value for a class/concept
 GetLocationNameFromCode           - Gets the location name from a location code
+GetNumberOfRecordsInTable         - Counts the number of records in a specified table
 GetOnlinePartnerFromArea          - Gets the online partner code for an area
 GetTotalItemsChangingPrice        - Counts items with changing price flag
 GetTotalItemsMovingToDiscount     - Counts items moving to a specific discount level
@@ -1789,6 +1790,16 @@ function GetKPIDescription($KPICode) {
 		$KPIDescription = $DescRow['kpidescription'];
 	}
 	return $KPIDescription;
+}
+
+function GetNumberOfRecordsInTable($TableName) {
+	$SQL = "SELECT COUNT(*) AS total FROM " . $TableName;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_array($Result);
+		return $Row['total'];
+	}
+	return 0;
 }
 
 ?>

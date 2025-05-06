@@ -6,9 +6,15 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/OldDataConnectDB.php');
 
-$Title = _('Purge Old Data');
+$Title = _('KL Archive Data from Production DB into Old Data DB');
 
-include('includes/header.php');
+if (!isset($_POST['PurgeGltransPeriod'])){
+	$_POST['PurgeGltransPeriod'] = -99;
+}
+
+if (!isset($_POST['PurgeStockmovesPrd'])){
+	$_POST['PurgeStockmovesPrd'] = -99;
+}
 
 if (!isset($_POST['PurgeLoctransfersObsoletes'])){
 	$_POST['PurgeLoctransfersObsoletes'] = 'N';
@@ -23,34 +29,31 @@ if (isset($_POST['submit'])) {
 	display($Title);
 }
 
-include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctransfersObsoletes) {
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
-		'</p>';
 
+	include('includes/header.php');
 	PurgetableGltrans($PurgeGltransPeriod);
 	PurgetableStockmoves($PurgeStockmovesPrd);
 	PurgetableStockmovestaxes($PurgeStockmovesPrd);
-	PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes);
+//	PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes);
+	include('includes/footer.php');
 
 } // End of function submit()
 
 
-function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
-// Display form fields. This function is called the first time
-// the page is called.
+function display($Title) {
+	include('includes/header.php');
+
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>
 			<br/>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$SQL = "SELECT gltransperiod,
@@ -101,7 +104,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	}
 	echo '</select></td></tr>';
 
-	echo '<tr><td>' . _('Purge loctransfers of obsolete items') . ':</td>
+/*	echo '<tr><td>' . _('Purge loctransfers of obsolete items') . ':</td>
 			<td><select name="PurgeLoctransfersObsoletes">
 				<option selected="selected" value="N">' . _('No') . '</option>
 				<option value="Y">' . _('Yes') . '</option>
@@ -109,7 +112,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			</td>
 		</tr>';
 			
-/*	echo '<tr>
+	echo '<tr>
 			<td>' . _('Purge loctransfers table older or equal than') . '</td>
 			<td><input type="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="PurgeLocTransfersRecdate" size="10" maxlength="10" value="' . ConvertSQLDate($AlreadyPurgedLocTransfersRecdate) . '" /></td>
 		</tr>';
@@ -120,7 +123,9 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</table>
 		<br />';
 	echo '</div>
-         </form>';
+    	</form>';
+
+	include('includes/footer.php');
 
 } // End of function display()
 
@@ -128,18 +133,8 @@ function PurgetableGltrans($PurgeToPeriod){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
 	
-	// count how many records are on gltrans in webERP production DB
-	$SQL = "SELECT COUNT(*) AS startrecords
-			FROM gltrans";
-
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$StartRecords = $MyRow['startrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
-
+	$StartRecords = GetNumberOfRecordsInTable('gltrans');
+	
 	// search for the newest date already purged in olddata database table
 	$PeriodAlreadyPurged = -99;
 	$SQL = "SELECT MAX(periodno) AS purgedperiod
@@ -168,11 +163,13 @@ function PurgetableGltrans($PurgeToPeriod){
 						account,
 						narrative,
 						amount,
-						jobref,
-						tag
+						jobref
 				FROM gltrans
 				WHERE periodno > " . $PeriodAlreadyPurged . "
-					AND periodno <= " . $PurgeToPeriod . "";
+					AND periodno <= " . $PurgeToPeriod . "
+				ORDER BY periodno,
+						trandate,
+						account";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the gltrans record');
 		$DbgMsg = _('The SQL that was used to insert the gltrans record was');		
@@ -194,14 +191,14 @@ function PurgetableGltrans($PurgeToPeriod){
 								'" . $MyRow['counterindex'] . "',
 								'" . $MyRow['type'] . "',
 								'" . $MyRow['typeno'] . "',
-								'" . $MyRow['chequeno'] . "',
+								'" . DB_escape_string($MyRow['chequeno'] ?? '') . "',
 								'" . $MyRow['trandate'] . "',
 								'" . $MyRow['periodno'] . "',
-								'" . $MyRow['account'] . "',
-								'" . $MyRow['narrative'] . "',
+								'" . DB_escape_string($MyRow['account'] ?? '') . "',
+								'" . DB_escape_string($MyRow['narrative'] ?? '') . "',
 								'" . $MyRow['amount'] . "',
-								'" . $MyRow['jobref'] . "')";
-				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+								'" . DB_escape_string($MyRow['jobref'] ?? '') . "')";
+				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
 			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of gltrans table");
@@ -215,6 +212,8 @@ function PurgetableGltrans($PurgeToPeriod){
 					WHERE periodno > " . $PeriodAlreadyPurged . "
 						AND periodno <= " . $PurgeToPeriod . "
 					GROUP BY periodno,
+							account
+					ORDER BY periodno,
 							account";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) != 0){
@@ -223,7 +222,7 @@ function PurgetableGltrans($PurgeToPeriod){
 					$SQLDelete = "DELETE FROM gltrans 
 									WHERE periodno = ".$MyConsolidatedRow['periodno']."
 										AND account = '".$MyConsolidatedRow['account']."'";
-					$ResultDelete = DB_query($SQLDelete,$ErrMsg,$DbgMsg);
+					DB_query($SQLDelete,$ErrMsg,$DbgMsg);
 					
 					$Typeno = GetNextTransNo(1000);
 					$SQLInsert = "INSERT INTO gltrans 
@@ -246,12 +245,12 @@ function PurgetableGltrans($PurgeToPeriod){
 									'CONSOLIDATED ACCOUNTING',
 									'" . $MyConsolidatedRow['consolidated'] . "',
 									'')";
-					$ResultInsert = DB_query($SQLInsert,$ErrMsg,$DbgMsg);
+					DB_query($SQLInsert,$ErrMsg,$DbgMsg);
 				}
 				prnMsg("Inserted consolidated accounting records");
 				$SQLUpdate = "UPDATE klolddatapurged SET gltransperiod = ".$PurgeToPeriod."";
-				$ResultUpdate = DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
-				prnMsg("Updated klolsdatapurged records");
+				DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
+				prnMsg("Updated klolddatapurged records");
 			}
 		}
 	}else{
@@ -267,15 +266,7 @@ function PurgetableGltrans($PurgeToPeriod){
 	}
 
 	// count how many records are on gltrans in webERP production DB
-	$SQL = "SELECT COUNT(*) AS endrecords
-			FROM gltrans";
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$EndRecords = $MyRow['endrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$EndRecords = GetNumberOfRecordsInTable('gltrans');
 	prnMsg('gltrans table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
@@ -284,16 +275,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 	$ErrorsFound = FALSE; // hope for the best
 	
 	// count how many records are on stockmoves in webERP production DB
-	$SQL = "SELECT COUNT(*) AS startrecords
-			FROM stockmoves";
-
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$StartRecords = $MyRow['startrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$StartRecords = GetNumberOfRecordsInTable('stockmoves');
 
 	// search for the newest date already purged in olddata database table
 	$PeriodAlreadyPurged = -99;
@@ -363,36 +345,36 @@ function PurgetableStockmoves($PurgeToPeriod){
 									narrative
 								) VALUES (
 								'" . $MyRow['stkmoveno'] . "',
-								'" . $MyRow['stockid'] . "',
+								'" . DB_escape_string($MyRow['stockid'] ?? '') . "',
 								'" . $MyRow['type'] . "',
 								'" . $MyRow['transno'] . "',
-								'" . $MyRow['loccode'] . "',
+								'" . DB_escape_string($MyRow['loccode'] ?? '') . "',
 								'" . $MyRow['trandate'] . "',
-								'" . $MyRow['userid'] . "',
-								'" . $MyRow['debtorno'] . "',
-								'" . $MyRow['branchcode'] . "',
+								'" . DB_escape_string($MyRow['userid'] ?? '') . "',
+								'" . DB_escape_string($MyRow['debtorno'] ?? '') . "',
+								'" . DB_escape_string($MyRow['branchcode'] ?? '') . "',
 								'" . $MyRow['price'] . "',
 								'" . $MyRow['prd'] . "',
-								'" . $MyRow['reference'] . "',
+								'" . DB_escape_string($MyRow['reference'] ?? '') . "',
 								'" . $MyRow['qty'] . "',
 								'" . $MyRow['discountpercent'] . "',
 								'" . $MyRow['standardcost'] . "',
 								'" . $MyRow['show_on_inv_crds'] . "',
 								'" . $MyRow['newqoh'] . "',
 								'" . $MyRow['hidemovt'] . "',
-								'" . $MyRow['narrative'] . "')";
-				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+								'" . DB_escape_string($MyRow['narrative'] ?? '') . "')";
+				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
 			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of stockmoves table");
 			
 			$SQLDelete = "DELETE FROM stockmoves 
 							WHERE prd <= " . $PurgeToPeriod . "";
-			$ResultDelete = DB_query($SQLDelete,$ErrMsg,$DbgMsg);
+			DB_query($SQLDelete,$ErrMsg,$DbgMsg);
 			prnMsg("Deleted stockmoves records in webERP production DB");
 			
 			$SQLUpdate = "UPDATE klolddatapurged SET stockmovesprd = ".$PurgeToPeriod."";
-			$ResultUpdate = DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
+			DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
 			prnMsg("Updated klolsdatapurged records");
 		}
 	}else{
@@ -408,15 +390,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 	}
 
 	// count how many records are on stockmoves in webERP production DB
-	$SQL = "SELECT COUNT(*) AS endrecords
-			FROM stockmoves";
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$EndRecords = $MyRow['endrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$EndRecords = GetNumberOfRecordsInTable('stockmoves');
 	prnMsg('stockmoves table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
@@ -425,15 +399,7 @@ function PurgetableStockmovestaxes(){
 	$ErrorsFound = FALSE; // hope for the best
 	
 	// count how many records are on stockmoves in webERP production DB
-	$SQL = "SELECT COUNT(*) AS startrecords
-			FROM stockmovestaxes";
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$StartRecords = $MyRow['startrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$StartRecords = GetNumberOfRecordsInTable('stockmovestaxes');
 
 	prnMsg('stockmovestaxes table contains '. locale_number_format($StartRecords) . ' records');
 
@@ -464,14 +430,14 @@ function PurgetableStockmovestaxes(){
 								'" . $MyRow['taxrate'] . "',
 								'" . $MyRow['taxontax'] . "',
 								'" . $MyRow['taxcalculationorder'] . "')";
-				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
 			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of stockmovestaxes table");
 			
 			$SQLDelete = "DELETE FROM stockmovestaxes 
 							WHERE stkmoveno NOT IN (SELECT stkmoveno FROM stockmoves)";
-			$ResultDelete = DB_query($SQLDelete,$ErrMsg,$DbgMsg);
+			DB_query($SQLDelete,$ErrMsg,$DbgMsg);
 			prnMsg("Deleted stockmoves records in webERP production DB");
 		}
 	}else{
@@ -486,33 +452,17 @@ function PurgetableStockmovestaxes(){
 
 	}
 
-	// count how many records are on stockmoves in webERP production DB
-	$SQL = "SELECT COUNT(*) AS endrecords
-			FROM stockmovestaxes";
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$EndRecords = $MyRow['endrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	// count how many records are on stockmovestaxes in webERP production DB
+	$EndRecords = GetNumberOfRecordsInTable('stockmovestaxes');
 	prnMsg('stockmovestaxes table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
 function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
+	
 	// count how many records are on loctransfers in webERP production DB
-	$SQL = "SELECT COUNT(*) AS startrecords
-			FROM loctransfers";
-
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$StartRecords = $MyRow['startrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$StartRecords = GetNumberOfRecordsInTable('loctransfers');
 
 	// search for the newest date already purged in olddata database table
 	$PeriodAlreadyPurged = -99;
@@ -531,18 +481,21 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 	prnMsg("loctransfers table already purged until : " . $PeriodAlreadyPurged);
 
 	if ($PurgeLoctransfersObsoletes == "Y"){
-		// select the webERP stockmoves table to be copied into olddata DB
-		$SQL = "SELECT loctransferid,
-						reference,
-						stockid,
-						shipqty,
-						recqty,
-						shipdate,
-						recdate,
-						shiploc,
-						recloc
+		// select the webERP loctransfers table to be copied into olddata DB
+		$SQL = "SELECT loctransfers.loctransferid,
+					loctransfers.reference,
+					loctransfers.stockid,
+					loctransfers.shipqty,
+					loctransfers.recqty,
+					loctransfers.shipdate,
+					loctransfers.recdate,
+					loctransfers.shiploc,
+					loctransfers.recloc
 				FROM loctransfers
-				WHERE stockid IN (SELECT stockid FROM stockmaster WHERE discontinued = 1)";
+				INNER JOIN stockmaster 
+					ON loctransfers.stockid = stockmaster.stockid
+				WHERE stockmaster.discontinued = 1
+					AND loctransfers.recdate <= '" . $PeriodAlreadyPurged . "'";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the stockmoves record');
 		$DbgMsg = _('The SQL that was used to insert the stockmoves record was');		
@@ -561,22 +514,22 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 									recloc
 								) VALUES (
 								'" . $MyRow['loctransferid'] . "',
-								'" . $MyRow['reference'] . "',
-								'" . $MyRow['stockid'] . "',
+								'" . DB_escape_string($MyRow['reference'] ?? '') . "',
+								'" . DB_escape_string($MyRow['stockid'] ?? '') . "',
 								'" . $MyRow['shipqty'] . "',
 								'" . $MyRow['recqty'] . "',
 								'" . $MyRow['shipdate'] . "',
 								'" . $MyRow['recdate'] . "',
-								'" . $MyRow['shiploc'] . "',
-								'" . $MyRow['recloc'] . "')";
-				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+								'" . DB_escape_string($MyRow['shiploc'] ?? '') . "',
+								'" . DB_escape_string($MyRow['recloc'] ?? '') . "')";
+				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
 			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of loctransfers table");
 			
 			$SQLDelete = "DELETE FROM loctransfers 
 							WHERE stockid IN (SELECT stockid FROM stockmaster WHERE discontinued = 1)";
-			$ResultDelete = DB_query($SQLDelete,$ErrMsg,$DbgMsg);
+			DB_query($SQLDelete,$ErrMsg,$DbgMsg);
 			prnMsg("Deleted loctransfers records in webERP production DB");
 
 		}
@@ -593,15 +546,7 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 	}
 
 	// count how many records are on loctransfers in webERP production DB
-	$SQL = "SELECT COUNT(*) AS endrecords
-			FROM loctransfers";
-	$Result = DB_query($SQL);	
-	if (DB_num_rows($Result) != 0){
-		$MyRow = DB_fetch_array($Result);
-		$EndRecords = $MyRow['endrecords'];
-	}else{
-		$ErrorsFound = TRUE;
-	}
+	$EndRecords = GetNumberOfRecordsInTable('loctransfers');
 	prnMsg('loctransfers table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 

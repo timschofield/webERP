@@ -16,3 +16,14 @@ TRUNCATE test_erp_old_data.`stockmovestaxes`;
 INSERT INTO test_erp_old_data.stockmovestaxes SELECT * FROM kl_erp_old_data.stockmovestaxes;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+UPDATE gltrans SET account = REPLACE(account, 'PT', 'BB') WHERE account LIKE '%PT'; 
+
+UPDATE `klolddatapurged` SET `gltransperiod` = 93;
+UPDATE `klolddatapurged` SET `stockmovesprd` = 100;
+DELETE FROM `stockmoves` WHERE prd > 100;
+
+
+
+
+DELETE FROM gltrans WHERE trandate >= "2017-01-01";

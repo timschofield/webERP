@@ -8,6 +8,7 @@
 ***********************************************************************/
 
 Global $KLCodeVersion;
+Global $Messages;
 
 // log the script running time
 include_once ('AuditScriptsFunctions.php');
