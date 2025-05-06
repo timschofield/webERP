@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "025";
+$KLCodeVersion = "026";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains("LOCAL-TEST")){
@@ -99,21 +99,19 @@ if ($webERPType == 'PRODUCTION'){
 }
 
 if ($ErrorReportingType == 'PRODUCTION'){
-	// reportonly errors
+	// report only errors
 	// error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
-	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
-	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
+	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 }elseif ($ErrorReportingType == 'DEVELOPMENT'){
-	// reportonly errors
+	// report some errors
 	// error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
-	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
 }elseif ($ErrorReportingType == 'DEBUGGING'){
 	// report everything, or almost
 	error_reporting (-1);
@@ -121,7 +119,6 @@ if ($ErrorReportingType == 'PRODUCTION'){
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
-	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED & ~E_STRICT);
 }
 
 ?>

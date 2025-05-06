@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-$Title = _('Kapal-Laut Receipt Payment Online');
+$Title = _('KL Receipt Payment Online');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

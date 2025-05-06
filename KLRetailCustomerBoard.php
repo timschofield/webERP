@@ -2,7 +2,7 @@
 define("VERSIONFILE", "1.12");
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut Retail Customer Analysis '. VERSIONFILE);
+$Title = _('KL Retail Customer Analysis '. VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');

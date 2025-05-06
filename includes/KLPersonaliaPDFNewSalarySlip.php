@@ -1,30 +1,20 @@
 <?php
 
 /////////////////////////////////////////////////////////////////////
-//  Creates and sets new PDF document information
+//  Creates initial HTML and CSS styles for PDF document
 /////////////////////////////////////////////////////////////////////
 $AdminTeam = $Company . ' Admin Team';
 
-$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
-// set PDF document information
-$pdf->SetCreator($AdminTeam);
-$pdf->SetAuthor($AdminTeam);
-$pdf->SetTitle($CoreFileName);
-$pdf->SetSubject($CoreFileName);
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-$pdf->setPrintHeader(false);
-$pdf->setPrintFooter(false);
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+// Initialize HTML with CSS styles
+$HTML = '<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>' . $CoreFileName . '</title>
+</head>
+<body>';
 
-$FontType = 'helvetica';
-$FontBigSize = 12;
-$FontNormalSize = 10;
-$FontSmallSize = 8;
+// Include centralized CSS styling
+include('includes/KLPersonaliaPDFCSStyling.php');
 
 ?>

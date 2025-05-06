@@ -7,7 +7,9 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Print Consignment Invoices');
+use Dompdf\Dompdf;
+
+$Title = _('Print PTADU Consignment Invoices');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
@@ -30,13 +32,13 @@ if(!isset($_POST['DraftOrInvoice'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
+	submit($_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
+function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	$EndDate = FormatDateForSQL($EndDate);
 	$InvoiceNumber = CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate);
@@ -44,7 +46,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	//initialise no input errors
 	$InputError = FALSE;
-	
+
 	if(!$InputError){
 		$SQL = "SELECT klconsignment.stockid,
 						stockmaster.description,
@@ -63,54 +65,81 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
-			require_once('includes/tcpdf/tcpdf.php');
-			
-			$pdf = new TCPDF('P', 'mm', 'A4', true, 'UTF-8', false);
+			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
 
-			// set PDF document information
-			$pdf->SetCreator($CompanyFrom);
-			$pdf->SetAuthor($CompanyFrom);
-			$pdf->SetTitle($PageTitle);
-			$pdf->SetSubject($PageTitle);
-			$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-			$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-			$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-			$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-			$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-			$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-			$pdf->setPrintHeader(false);
-			$pdf->setPrintFooter(false);
-			$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-			$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+			// Increase memory limit to avoid exhaustion
+			// ini_set('memory_limit', '512M');
+	
+			// Create a new DOMPDF instance
+			$dompdf = new Dompdf();
 			
-			$FontType = 'helvetica';
-			$FontSizeXL = 16;
-			$FontSizeL = 12;
-			$FontSizeM = 10;
-			$FontSizeS = 8;
+			 // Configure DomPDF options first to optimize memory usage
+			$options = $dompdf->getOptions();
+			$options->set('defaultFont', 'Helvetica');
+			$options->set('isRemoteEnabled', false);
+			$options->set('isJavascriptEnabled', false);
+			$options->set('isHtml5ParserEnabled', true);
+			$options->set('isFontSubsettingEnabled', true);
+			$options->set('tempDir', sys_get_temp_dir());
+			$dompdf->setOptions($options);
 			
-			$pdf->AddPage();
-			// https://tcpdf.org/examples/example_005/
-			// https://tcpdf.org/docs/source_docs/classTCPDF/#aa81d4b585de305c054760ec983ed3ece
+			// Start building the HTML for the PDF
+			$HTML = '<!DOCTYPE html>
+			<html>
+			<head>
+				<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+				<title>' . $PageTitle . '</title>
+				<style>
+					body { font-family: Arial, sans-serif; margin: 20px; font-size: 10pt; }
+					h1 { font-size: 16pt; margin: 0; text-align: center; }
+					.header p { text-align: center; margin: 0; font-size: 8pt; }
+					.draft { text-align: center; font-size: 12pt; margin: 15px 0; }
+					table { width: 100%; border-collapse: collapse; }
+					table.details td { padding: 3px 0; vertical-align: top; }
+					.label { width: 28mm; }
+					table.items { margin-top: 20px; width: 100%; }
+					table.totals { margin-top: 0; border-top: 0; width: 100%; }
+					table.items th, table.items td, table.totals td { border: 1px solid #000; padding: 3px; }
+					table.items th { text-align: center; font-size: 10pt; } /* All headers centered */
+					
+					/* Set explicit widths for each column */
+					.col1 { width: 8mm; }  /* # column - narrower */
+					.col2 { width: 30mm; }  /* Code column */
+					.col3 { width: 85mm; }  /* Description column - wider */
+					.col4 { width: 10mm; }  /* Qty column - narrower */
+					.col5 { width: 25mm; }  /* Unit Price column */
+					.col6 { width: 30mm; }  /* Total column - explicit width instead of auto */
+					
+					/* Additional styles to enforce column widths and alignment */
+					table.items th, table.items td {
+						overflow: hidden;
+						white-space: normal;
+					}
+					/* Right-align numeric columns */
+					.num { text-align: right; }
+					/* Left-align text columns */
+					.left { text-align: left; }
+					/* Center text */
+					.ctr { text-align: center; }
+					.bold { font-weight: bold; }
+				</style>
+			</head>
+			<body>';
 
 			// Invoice header
 			// Company From Information
-			$WidthColumn1 = 0;
+			$HTML .= '<div class="header">';
 			if ($CompanyFrom == 'PTADU'){
-				$pdf->SetFont($FontType, 'B', $FontSizeXL);
-				$pdf->MultiCell($WidthColumn1, 0, 'PT. Angin Dingin Utara', 0, 'C', 0, 1, '', '', true);
-				$pdf->SetFont($FontType, '', $FontSizeS);
-				$pdf->MultiCell($WidthColumn1, 0, 'Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali', 0, 'C', 0, 1, '', '', true);
-				$pdf->MultiCell($WidthColumn1, 0, 'Ph. +62 812 381 6795', 0, 'C', 0, 1, '', '', true);
+				$HTML .= '<h1>PT. Angin Dingin Utara</h1>';
+				$HTML .= '<p>Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali</p>';
+				$HTML .= '<p>Ph. +62 812 381 6795</p>';
 			}elseif ($CompanyFrom == 'CASH'){
-				$pdf->SetFont($FontType, 'B', $FontSizeL);
-				$pdf->MultiCell($WidthColumn1, 0, 'CASH', 0, 'C', 0, 1, '', '', true);
+				$HTML .= '<h1 style="font-size: 12pt;">CASH</h1>';
 			}
+			$HTML .= '</div>';
 
 			if ($DraftOrInvoice == 'DRAFT'){
-				$pdf->ln(6);
-				$pdf->SetFont($FontType, '', $FontSizeL);
-				$pdf->MultiCell($WidthColumn1, 0, 'This is a DRAFT INVOICE', 0, 'C', 0, 1, '', '', true);
+				$HTML .= '<div class="draft">This is a DRAFT INVOICE</div>';
 			}
 
 			// Company To header
@@ -165,106 +194,138 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresskodepos'];
 			}
 			
-			$pdf->ln(6);
-			$WidthColumn1 = 28;
-			$WidthColumn2 = 0;
-			$pdf->SetFont($FontType, '', $FontSizeM);
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $MyCompanyTo['partnernameinvoice'], 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $AddressPartner, 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, '', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $MyCompanyTo['partnernpwpinvoice'], 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $InvoiceNumber, 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Invoice date:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, ConvertSQLDate($EndDate), 0, 'L', 0, 1, '', '', true);
-			$pdf->MultiCell($WidthColumn1, 0, 'Due date:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, DateAdd(ConvertSQLDate($EndDate),'d',+$MyCompanyTo['daysinvoicedue']), 0, 'L', 0, 1, '', '', true);
+			$HTML .= '<table class="details">
+				<tr>
+					<td class="label">Invoice to:</td>
+					<td>' . htmlspecialchars($MyCompanyTo['partnernameinvoice']) . '</td>
+				</tr>
+				<tr>
+					<td class="label">Address:</td>
+					<td>' . htmlspecialchars($AddressPartner) . '</td>
+				</tr>
+				<tr>
+					<td class="label">NPWP:</td>
+					<td>' . htmlspecialchars($MyCompanyTo['partnernpwpinvoice']) . '</td>
+				</tr>
+				<tr>
+					<td class="label">Invoice number:</td>
+					<td>' . htmlspecialchars($InvoiceNumber) . '</td>
+				</tr>
+				<tr>
+					<td class="label">Invoice date:</td>
+					<td>' . ConvertSQLDate($EndDate) . '</td>
+				</tr>
+				<tr>
+					<td class="label">Due date:</td>
+					<td>' . DateAdd(ConvertSQLDate($EndDate),'d',+$MyCompanyTo['daysinvoicedue']) . '</td>
+				</tr>
+			</table>';
 
-			// Line header
-			$pdf->ln(8);
-			$pdf->SetFont($FontType, '', $FontSizeM);
-			$WidthColumn1 = 10;
-			$WidthColumn2 = 30;
-			$WidthColumn3 = 75;
-			$WidthColumn4 = 12;
-			$WidthColumn5 = 25;
-			$WidthColumn6 = 0;
-			$pdf->MultiCell($WidthColumn1, 0, '#', 1, 'C', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, 'Code', 1, 'C', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn3, 0, 'Description', 1, 'C', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn4, 0, 'Qty', 1, 'C', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn5, 0, 'Unit Price', 1, 'C', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn6, 0, 'Total', 1, 'C', 0, 1, '', '', true);
+			// Line header - use colgroup to enforce column widths
+			$HTML .= '<table class="items">
+				<colgroup>
+					<col style="width: 8mm">
+					<col style="width: 30mm">
+					<col style="width: 85mm">
+					<col style="width: 10mm">
+					<col style="width: 25mm">
+					<col style="width: 30mm">
+				</colgroup>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Code</th>
+						<th>Description</th>
+						<th>Qty</th>
+						<th>Unit Price</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 			$TotalInvoice = 0;
 			$TotalItems = 0;
 			$LineNum = 0;
-			$pdf->SetFont($FontType, '', $FontSizeS);
 			
 			while ($MyRow = DB_fetch_array($Result)) {
-
 				$LineNum++;
 				$TotalLine = $MyRow['consignmentsale'];
 				$AveragePrice = round($TotalLine / $MyRow['qty']);
 				$TotalInvoice = $TotalInvoice + $TotalLine;
 				$TotalItems = $TotalItems + $MyRow['qty'];
 				
-				$pdf->MultiCell($WidthColumn1, 0, locale_number_format($LineNum), 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, $MyRow['stockid'], 1, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn3, 0, $MyRow['description'], 1, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn4, 0, locale_number_format($MyRow['qty']), 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn5, 0, locale_number_format($AveragePrice), 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalLine), 1, 'R', 0, 1, '', '', true);
+				$HTML .= '<tr>
+					<td class="num">' . locale_number_format($LineNum) . '</td>
+					<td class="left">' . $MyRow['stockid'] . '</td>
+					<td class="left">' . $MyRow['description'] . '</td>
+					<td class="num">' . locale_number_format($MyRow['qty']) . '</td>
+					<td class="num">' . locale_number_format($AveragePrice) . '</td>
+					<td class="num">' . locale_number_format($TotalLine) . '</td>
+				</tr>';
 			}
+			
+			$HTML .= '</tbody></table>';
 
-			// TOTALS
-			$pdf->SetFont($FontType, 'B', $FontSizeM);
-			$pdf->MultiCell($WidthColumn1+
-							$WidthColumn2+
-							$WidthColumn3, 0, 'Total Qty:', 1, 'R', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn4, 0, locale_number_format($TotalItems), 1, 'R', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn5, 0, 'Total:', 1, 'R', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalInvoice), 1, 'R', 0, 1, '', '', true);
+			// TOTALS - Also use colgroup to maintain same column widths
+			$HTML .= '<table class="items totals">
+				<colgroup>
+					<col style="width: 8mm">
+					<col style="width: 30mm">
+					<col style="width: 85mm">
+					<col style="width: 10mm">
+					<col style="width: 25mm">
+					<col style="width: 30mm">
+				</colgroup>
+				<tr>
+					<td colspan="3" class="bold num">Total Qty:</td>
+					<td class="num bold col4">' . locale_number_format($TotalItems) . '</td>
+					<td class="bold num col5">Total:</td>
+					<td class="num bold col6">' . locale_number_format($TotalInvoice) . '</td>
+				</tr>';
 			
 			if ($CompanyFrom == 'PTADU'){
-				$pdf->SetFont($FontType, '', $FontSizeM);
 				$TotalGoods = $TotalInvoice / ((100 + PPN_PERCENT) / 100);
 				$TotalPPN = $TotalInvoice - $TotalGoods;
-				$pdf->MultiCell($WidthColumn1+
-								$WidthColumn2+
-								$WidthColumn3+
-								$WidthColumn4+
-								$WidthColumn5, 0, 'Total Goods:', 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalGoods), 1, 'R', 0, 1, '', '', true);
-				$pdf->MultiCell($WidthColumn1+
-								$WidthColumn2+
-								$WidthColumn3+
-								$WidthColumn4+
-								$WidthColumn5, 0, 'PPN:', 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalPPN), 1, 'R', 0, 1, '', '', true);
+				
+				$HTML .= '<tr>
+					<td colspan="5" class="num">Total Goods:</td>
+					<td class="num col6">' . locale_number_format($TotalGoods) . '</td>
+				</tr>
+				<tr>
+					<td colspan="5" class="num">PPN:</td>
+					<td class="num col6">' . locale_number_format($TotalPPN) . '</td>
+				</tr>';
 			}
+			
+			$HTML .= '</table>';
 
 			// payment details
-			$pdf->ln(5);
-			$pdf->SetFont($FontType, '', $FontSizeM);
+			$HTML .= '<div class="payment">';
 			if ($CompanyFrom == 'PTADU'){
-				$WidthColumn1 = 33;
-				$WidthColumn2 = 60;
-				$pdf->MultiCell($WidthColumn1 + $WidthColumn2, 0, 'Payment due by bank transfer', 0, 'L', 0, 1, '', '', true);
-				$pdf->MultiCell($WidthColumn1, 0, 'Bank name:', 0, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, 'Bank Danamon Indonesia', 0, 'L', 0, 1, '', '', true);
-				$pdf->MultiCell($WidthColumn1, 0, 'Account number:', 0, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, '3617556887', 0, 'L', 0, 1, '', '', true);
-				$pdf->MultiCell($WidthColumn1, 0, 'Beneficiary name:', 0, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, 'PT. Angin Dingin Utara', 0, 'L', 0, 1, '', '', true);
+				$HTML .= '<p>Payment due by bank transfer</p>
+				<table style="width:auto;">
+					<tr>
+						<td style="width:33mm;">Bank name:</td>
+						<td>Bank Danamon Indonesia</td>
+					</tr>
+					<tr>
+						<td>Account number:</td>
+						<td>3617556887</td>
+					</tr>
+					<tr>
+						<td>Beneficiary name:</td>
+						<td>PT. Angin Dingin Utara</td>
+					</tr>
+				</table>';
 			}elseif ($CompanyFrom == 'CASH'){
-				$WidthColumn1 = 0;
-				$pdf->MultiCell($WidthColumn1, 0, 'Payment by Cash', 0, 'L', 0, 1, '', '', true);
+				$HTML .= '<p>Payment by Cash</p>';
 			}
+			$HTML .= '</div>';
+			
+			$HTML .= '</body></html>';
 
 			if ($DraftOrInvoice == 'INVOICE'){
+				// Processing database operations before PDF generation to free memory
 				DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
 						SET invoicedtopartner = '". $EndDate ."'
@@ -330,10 +391,31 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				DB_Txn_Commit();
 			}
 			
-			// download the pdf file
-			$FileName= $PageTitle . '.pdf';
-			$pdf->Output($FileName, 'D');
-			$pdf->__destruct();
+			try {
+				// Load HTML into DomPDF and free the original HTML variable to save memory
+				$dompdf->loadHtml($HTML);
+				$HTML = null; // Free up memory by releasing the HTML string
+				
+				// Set paper size and orientation
+				$dompdf->setPaper('A4', 'portrait');
+				
+				// Render the PDF with memory optimization
+				$dompdf->render();
+				
+				// Free any resources that might be holding memory
+				gc_collect_cycles();
+				
+				// Output the PDF for download
+				$FileName = $PageTitle . '.pdf';
+				$dompdf->stream($FileName, array('Attachment' => true));
+				exit(); // Important to prevent any further output after PDF is streamed
+			} catch (Exception $e) {
+				// In case of errors, show a user-friendly message
+				include('includes/header.php');
+				prnMsg('An error occurred while generating the PDF: ' . $e->getMessage(), 'error');
+				include('includes/footer.php');
+				exit;
+			}
 		}else{
 			include('includes/header.php');
 			prnMsg('No consignment sales to invoice');

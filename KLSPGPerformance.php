@@ -2,7 +2,7 @@
 define("VERSIONFILE", "1.02");
 
 include('includes/session.php');
-$Title = _('Kapal-Laut SPG Performance Report ' . VERSIONFILE);
+$Title = _('KL SPG Performance Report ' . VERSIONFILE);
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');

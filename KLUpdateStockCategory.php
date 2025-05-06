@@ -2,7 +2,7 @@
 
 include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-$Title = _('Kapal-Laut. Update stock category');
+$Title = _('KL Update stock category');
 include('includes/header.php');
 include('includes/KLBoards.php');
 

@@ -5,7 +5,6 @@
 *
 * ActiveItemsNoSales - Lists items with no sales in last X days and no current PO or WO
 * ActiveItemsWithoutPicture - Lists active items without pictures in webERP and QOH > 0
-* ActiveTransfersByLocation - Shows active transfers by location
 * ActiveTransferStatus - Shows active transfer status summary
 * BalanceAccountControl - Checks account balance against min/max limits 
 * BalanceListAccountControl - Checks total balance of a list of accounts against min/max limits
@@ -54,7 +53,6 @@
 * OldOnlineQuotations - Lists old online quotations
 * OldPOStillActive - Lists old purchase orders still active
 * OldWOStillActive - Lists old work orders still active
-* OnlineCustomersNoOrderPlaced - Lists online customers with no orders placed
 * OnlineItemsOnProcess - Lists online items in process
 * OnlineMarketPlacePaymentPending - Lists online marketplace payments pending
 * OnlineOrdersFollowUp - Follow up on outstanding online orders
@@ -436,7 +434,7 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 7000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
@@ -447,7 +445,8 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
 									'111121110SM',
-									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
+									'111121115SM',
+									'111121117SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100BB', 
@@ -1616,7 +1615,7 @@ function CheckNegativeStock($RootPath){
 			</table>
 			</div>';
 	}
-	InsertKPI("Stock", "Negative Stock items (PCS)", abs($Total));
+	InsertKPI("STOCK-NEG-PCS", abs($Total));
 }
 
 function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath){
@@ -3337,7 +3336,8 @@ function ItemsWithoutStandardCost($RootPath){
 			FROM stockmaster,stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype != 'D'
-				AND (actualcost) = 0
+				AND stockmaster.categoryid != 'ASSETS'
+				AND actualcost = 0
 				AND discontinued = 0";
 // EXPLAIN SQL 2014-05-31
 //	prnMsg($SQL);
@@ -3847,64 +3847,6 @@ function OldWOStillActive($maxdays, $RootPath){
 					<td class="number">' . $i . '</td>
 					<td class="number">' . $CodeLink . '</td>
 					<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
-					</tr>';
-			$i++;
-		}
-		echo '</tbody>
-			</table>
-			</div>';
-	}
-}
-
-function OnlineCustomersNoOrderPlaced($RootPath){
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-
-	$SQL = "SELECT 	debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address6,
-					debtorsmaster.currcode,
-					debtorsmaster.clientsince
-			FROM debtorsmaster
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
-				AND debtorsmaster.klemailnowebshoporder = '1000-01-01'
-				AND NOT EXISTS (SELECT * 
-								FROM salesorders
-								WHERE salesorders.debtorno = debtorsmaster.debtorno)
-				AND debtorsmaster.debtorno != 'Online Shop'
-			ORDER BY debtorsmaster.debtorno";
-
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Online Customers registered but no order placed.');
-		ShowTableTitle($TableTitleText);
-		echo '<div>';
-		echo '<table class="selection">
-				<thead>
-					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Customer') . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . _('Country') . '</th>
-						<th class="SortedColumn">' . _('Currency ') . '</th>
-						<th class="SortedColumn">' . _('Registered on') . '</th>
-						<th class="SortedColumn">' . _('Send Email') . '</th>
-					</tr>
-				</thead>
-				<tbody>';
-		$i = 1;
-		while ($MyRow = DB_fetch_array($Result)) {
-			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . '</a>';
-			$EmailLinkText = 'Send Now';
-			$EmailType = 'NoOrderPlaced';
-			$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['debtorno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $MyRow['debtorno'] . '">'. $EmailLinkText .'</a>';
-			echo '<tr class="striped_row">
-					<td class="number">' . $i . '</td>
-					<td>' . $CodeLink . '</td>
-					<td>' . $MyRow['name'] . '</td>
-					<td>' . $MyRow['address6'] . '</td>
-					<td>' . $MyRow['currcode'] . '</td>
-					<td>' . ConvertSQLDateTime($MyRow['clientsince']) . '</td>
-					<td>' . $EmailLink . '</td>
 					</tr>';
 			$i++;
 		}

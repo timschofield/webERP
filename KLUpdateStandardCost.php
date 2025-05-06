@@ -2,7 +2,7 @@
 
 include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-$Title = _('Kapal-Laut. Update Standard Cost for an item');
+$Title = _('KL Update Standard Cost for an item');
 include('includes/header.php');
 include('includes/KLBoards.php');
 

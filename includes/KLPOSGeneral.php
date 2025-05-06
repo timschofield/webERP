@@ -8,30 +8,30 @@ function zerofill($mStretch, $iLength = 2){
 /*************************************************************************************************
 			FUNCTIONS RELATED TO P.O.S. AT SHOPS
 *************************************************************************************************/
-function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
-	if($PaymentMethod == PAYMENT_BY_CASH){
+function KapalLautRetailAreaSelection($PaymentMethod){
+	if ($PaymentMethod == PAYMENT_BY_CASH){
 		if ($_SESSION['CashSalesReported'] <= 0){
 			// all cash sales go to Others
 			$Area = $_SESSION['AreaSalesCashOthers'];
-		}elseif ($_SESSION['CashSalesReported'] >= 100){
+		} elseif ($_SESSION['CashSalesReported'] >= 100){
 			// all cash sales go to cash PTADU, PTBB or POXX
 			$Area = $_SESSION['AreaSalesCash'];
-		}else{
+		} else {
 			// Needs to be splitted into Cash official and Cash others
 			// We produce a random number between 0 and 100, to separate them.
-			$CashDraw = mt_rand(1,10000)/100;
+			$CashDraw = mt_rand(1, 10000) / 100;
 			if ($CashDraw <= $_SESSION['CashSalesReported']){
 				$Area = $_SESSION['AreaSalesCash'];
-			}else{
+			} else {
 				$Area = $_SESSION['AreaSalesCashOthers'];
 			}
 		}
-	}elseif($PaymentMethod == PAYMENT_BY_CREDITCARD){
+	} elseif ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		// Credit Card
 		$Area = $_SESSION['AreaSalesCreditCard'];
-	}else{
-		$Area = "";	
-		prnMsg(_('Error calculating customer area from payment method. Seek help from the administrator.'),'error');
+	} else {
+		$Area = "";
+		prnMsg(_('Error calculating customer area from payment method. Seek help from the administrator.'), 'error');
 		include('includes/footer.php');
 		exit;
 	}
@@ -192,17 +192,17 @@ function InsertItemSoldIntoSalesAnalysis ($Area,
 			custbranch,
 			stockmaster
 		WHERE salesanalysis.stkcategory=stockmaster.categoryid
-		AND salesanalysis.stockid=stockmaster.stockid
-		AND salesanalysis.cust=custbranch.debtorno
-		AND salesanalysis.custbranch=custbranch.branchcode
-		AND salesanalysis.area='" . $Area ."'
-		AND salesanalysis.salesperson=custbranch.salesman
-		AND salesanalysis.typeabbrev ='" . $SalesType . "'
-		AND salesanalysis.periodno='" . $PeriodNo . "'
-		AND salesanalysis.cust " . LIKE . " '" . $DebtorNo . "'
-		AND salesanalysis.custbranch " . LIKE . " '" . $DebtorBranch . "'
-		AND salesanalysis.stockid " . LIKE . " '" . $StockID . "'
-		AND salesanalysis.budgetoractual=1
+			AND salesanalysis.stockid=stockmaster.stockid
+			AND salesanalysis.cust=custbranch.debtorno
+			AND salesanalysis.custbranch=custbranch.branchcode
+			AND salesanalysis.area='" . $Area ."'
+			AND salesanalysis.salesperson=custbranch.salesman
+			AND salesanalysis.typeabbrev ='" . $SalesType . "'
+			AND salesanalysis.periodno='" . $PeriodNo . "'
+			AND salesanalysis.cust " . LIKE . " '" . $DebtorNo . "'
+			AND salesanalysis.custbranch " . LIKE . " '" . $DebtorBranch . "'
+			AND salesanalysis.stockid " . LIKE . " '" . $StockID . "'
+			AND salesanalysis.budgetoractual=1
 		GROUP BY salesanalysis.stockid,
 			salesanalysis.stkcategory,
 			salesanalysis.cust,
@@ -221,19 +221,19 @@ function InsertItemSoldIntoSalesAnalysis ($Area,
 	if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 		$SQL = "UPDATE salesanalysis
-					SET amt=amt+" . ($Price * $Quantity / $ExRate) . ",
-						cost=cost+" . ($StandardCost * $Quantity) . ",
-						qty=qty +" . $Quantity . ",
-						disc=disc+" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
-					WHERE salesanalysis.area='" . $MyRow[5] . "'
-						AND salesanalysis.salesperson='" . $MyRow[8] . "'
-						AND typeabbrev ='" . $SalesType . "'
-						AND periodno = '" . $PeriodNo . "'
-						AND cust " . LIKE . " '" . $DebtorNo . "'
-						AND custbranch " . LIKE . " '" . $DebtorBranch . "'
-						AND stockid " . LIKE . " '" . $StockID . "'
-						AND salesanalysis.stkcategory ='" . $MyRow[2] . "'
-						AND budgetoractual=1";
+				SET amt=amt+" . ($Price * $Quantity / $ExRate) . ",
+					cost=cost+" . ($StandardCost * $Quantity) . ",
+					qty=qty +" . $Quantity . ",
+					disc=disc+" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
+				WHERE salesanalysis.area='" . $MyRow[5] . "'
+					AND salesanalysis.salesperson='" . $MyRow[8] . "'
+					AND typeabbrev ='" . $SalesType . "'
+					AND periodno = '" . $PeriodNo . "'
+					AND cust " . LIKE . " '" . $DebtorNo . "'
+					AND custbranch " . LIKE . " '" . $DebtorBranch . "'
+					AND stockid " . LIKE . " '" . $StockID . "'
+					AND salesanalysis.stkcategory ='" . $MyRow[2] . "'
+					AND budgetoractual=1";
 
 	} else { /* insert a new sales analysis record */
 
@@ -266,8 +266,8 @@ function InsertItemSoldIntoSalesAnalysis ($Area,
 			FROM stockmaster,
 				custbranch
 			WHERE stockmaster.stockid = '" . $StockID . "'
-			AND custbranch.debtorno = '" . $DebtorNo . "'
-			AND custbranch.branchcode='" . $DebtorBranch . "'";
+				AND custbranch.debtorno = '" . $DebtorNo . "'
+				AND custbranch.branchcode='" . $DebtorBranch . "'";
 	}
 
 	$ErrMsg = _('Sales analysis record could not be added or updated because');
@@ -303,7 +303,8 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 		$SQL = "SELECT *
 				FROM klretailcustomers
 				WHERE orderno = '" . $OrderNo . "'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,'','',true);
+		
 		if (DB_num_rows($Result)==1){
 			$Action = "UPDATE";
 		} else {
@@ -348,12 +349,9 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 
 
 function AccountPaymentRetail($PaymentMethod,
-							$PeriodNo,
 							$BankAccount,
-							$Area,
 							$InvoiceNo,
 							$CustomerReference,
-							$Location,
 							$AmountPaid,
 							$BankCommision,
 							$NetPayment,
@@ -364,6 +362,7 @@ function AccountPaymentRetail($PaymentMethod,
 
 	$ReceiptNumber = GetNextTransNo(12);
 	$SettlementDate = date('Y-m-d', strtotime("+" . (int)$DaysDelaySettlement . " days"));
+	$SettlementPeriodNo = GetPeriod(ConvertSQLDate($SettlementDate));
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $CustomerReference  . 
@@ -380,7 +379,7 @@ function AccountPaymentRetail($PaymentMethod,
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
 					$SettlementDate,
-					$PeriodNo,
+					$SettlementPeriodNo,
 					$BankAccount,
 					$Description,
 					round($NetPayment/$ExRate),
@@ -393,7 +392,7 @@ function AccountPaymentRetail($PaymentMethod,
 		InsertIntoGLTrans("12", 
 						$ReceiptNumber, 
 						$SettlementDate,
-						$PeriodNo,
+						$SettlementPeriodNo,
 						$GLAccountBankCommission,
 						$Description,
 						round($BankCommision/$ExRate),
@@ -405,7 +404,7 @@ function AccountPaymentRetail($PaymentMethod,
 	InsertIntoGLTrans("12", 
 					$ReceiptNumber, 
 					$SettlementDate,
-					$PeriodNo,
+					$SettlementPeriodNo,
 					$_SESSION['AccountPOSReceivable'],
 					$Description,
 					round(-$AmountPaid/$ExRate),
@@ -419,15 +418,10 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 							$ReceiptNumber,
 							$PeriodNo,
 							$BankAccount,
-							$Area,
 							$InvoiceNo,
 							$CustomerReference,
-							$Location,
-							$AmountPaid,
-							$BankCommision,
 							$NetPayment,
 							$Tag,
-							$GLAccountBankCommission,
 							$ExRate){
 
 	if (!isset($ReceiptNumber)){
@@ -455,10 +449,8 @@ function AccountDebtorPayment($ReceiptNumber,
 							$PaymentMethod,
 							$PeriodNo,
 							$BankAccount,
-							$Area,
 							$InvoiceNo,
 							$CustomerReference,
-							$Location,
 							$AmountPaid,
 							$NetPayment,
 							$ExRate,
@@ -575,10 +567,8 @@ function AccountDebtorPayment($ReceiptNumber,
 function AccountDebtorDiscount($ReceiptNumber,
 							$Type,
 							$PeriodNo,
-							$Area,
 							$InvoiceNo,
 							$CustomerReference,
-							$Location,
 							$AmountDiscount,
 							$ExRate,
 							$OrderNo,

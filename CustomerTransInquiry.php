@@ -122,7 +122,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			echo '<tr class="striped_row">
 						<td>', _($MyRow['typename']), '</td>
 						<td>', $MyRow['transno'], '</td>
-						<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+						<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
 						<td>', $MyRow['debtorno'], '</td>
 						<td>', $MyRow['branchcode'], '</td>
 						<td>', $MyRow['reference'], '</td>

@@ -105,6 +105,7 @@ else {
 				<th>' . _('Narrative') . '</th>
 				<th>' . _('Amount') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 				<th>' . _('Tag') . '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 		$LastJournal = 0;
@@ -128,13 +129,13 @@ else {
 				echo '<tr>
 						<td colspan="8"></td>
 					</tr>
-					<tr>
+					<tr class="striped_row">
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
 					<td class="number">' . $MyRow['typeno'] . '</td>';
 
 			}
 			else {
-				echo '<tr>
+				echo '<tr class="striped_row">
 						<td colspan="2"></td>';
 			}
 
@@ -158,18 +159,17 @@ else {
 
 			echo '<td>' . $MyRow['narrative'] . '</td>
 					<td class="number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td valign="top" class="number">', $TagDescriptions, '</td>';
+					<td valign="top">', $TagDescriptions, '</td>';
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
-				if ($_SESSION['Language'] == 'zh_CN.utf8' or $_SESSION['Language'] == 'zh_hk.utf8') {
-					echo '<td class="number"><a href="PDFGLJournalCN.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
-				}
-				else {
-					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
-				}
-
-				$LastJournal = $MyRow['typeno'];
+				echo '<td class="number">
+						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . _('Print') . '</a>
+					</td>';
+				echo '<td class="number">
+						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . _('View') . '</a>
+					</td></tr>';
 			}
+
 			else {
 				echo '<td colspan="1"></td></tr>';
 			}

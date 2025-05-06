@@ -370,12 +370,12 @@ function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $
 	return $HTML;
 }
 
-function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$SQL = "SELECT DISTINCT class,
-				concept 
-			FROM klkpi 
-			ORDER BY class, concept";
+	$SQL = "SELECT kpicode,
+				kpidescription 
+			FROM klkpidescriptions
+			ORDER BY kpidescription";
 	$Result = DB_query($SQL);
 
 	$HTML = '<field>
@@ -392,11 +392,11 @@ function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', 
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($MyRow['concept'] == $SelectedValue) {
-			$HTML .= '<option selected="selected" value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
+		if ($MyRow['kpidescription'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['kpicode'] . '">' . $MyRow['kpidescription'] . '</option>';
 		} 
 		else {
-			$HTML .= '<option value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
+			$HTML .= '<option value="' . $MyRow['kpicode'] . '">' . $MyRow['kpidescription'] . '</option>';
 		}
 	}
 	$HTML .= '</select>

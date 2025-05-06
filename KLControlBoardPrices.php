@@ -5,7 +5,7 @@ define("VERSIONFILE", "5.01");
 config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut Pricing Control Board '. VERSIONFILE);
+$Title = _('KL Pricing Control Board '. VERSIONFILE);
 include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -190,7 +190,7 @@ if ($ProcessSection02){
 
 prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success');
 prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
-InsertKPI("Prices", "Pricing Issues", $IssuesFound);
+InsertKPI("PRICE-ISSUES", $IssuesFound);
 
 if ($KL_SystemAdmin){
 	time_finish($begintime);

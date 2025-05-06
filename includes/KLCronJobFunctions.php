@@ -109,9 +109,9 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	$Text = "Yesterday CPU Usage (Seconds) = ". $MyRow['SecsCPU'];
-	InsertKPI("ServerUsage", "CPU Usage (Seconds)", $MyRow['SecsCPU']);
-	InsertKPI("ServerUsage", "Scripts Run (Scripts)", $MyRow['ScriptsRun']);
-	InsertKPI("ServerUsage", "CPU Usage (Seconds/Script)", round(($MyRow['SecsCPU']/$MyRow['ScriptsRun']),2));
+	InsertKPI("SERVER-CPU-USE-SEC", $MyRow['SecsCPU']);
+	InsertKPI("SERVER-USE-SCRIPT", $MyRow['ScriptsRun']);
+	InsertKPI("SERVER-CPU-USE-SEC-SCRIPT", round(($MyRow['SecsCPU']/$MyRow['ScriptsRun']),2));
 
 	$SQL = "SELECT COUNT(`querystring`) AS QueryString
 			FROM `audittrail` 
@@ -122,7 +122,7 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	$NumInsert = $MyRow['QueryString'];
-	InsertKPI("ServerUsage", "DB Usage Tx INSERT (Tx)", $NumInsert);
+	InsertKPI("SERVER-TX-INS-USE-TX", $NumInsert);
 
 	$SQL = "SELECT COUNT(`querystring`) AS QueryString
 			FROM `audittrail` 
@@ -133,7 +133,7 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	$NumUpdate = $MyRow['QueryString'];
-	InsertKPI("ServerUsage", "DB Usage Tx UPDATE (Tx)", $NumUpdate);
+	InsertKPI("SERVER-TX-UPD-USE-TX", $NumUpdate);
 
 	$SQL = "SELECT COUNT(`querystring`) AS QueryString
 			FROM `audittrail` 
@@ -144,9 +144,9 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	$NumDelete = $MyRow['QueryString'];
-	InsertKPI("ServerUsage", "DB Usage Tx DELETE (Tx)", $NumDelete);
+	InsertKPI("SERVER-TX-DEL-USE-TX", $NumDelete);
 
-	InsertKPI("ServerUsage", "DB Usage Tx (Tx)",$NumInsert + $NumUpdate + $NumDelete);
+	InsertKPI("SERVER-TX-USE-TX",$NumInsert + $NumUpdate + $NumDelete);
 	
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
@@ -332,7 +332,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 	$ErrMsg =_('Error in function SetEndDatePriceToObsolete because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
-	InsertKPI("Stock", "Models moved to obsolete (MODELS)", $MyRow['items']);
+	InsertKPI("STOCK-MOVED-OBS-MOD", $MyRow['items']);
 
 	$SQL = "UPDATE prices
 			SET enddate = CURRENT_DATE
@@ -423,7 +423,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$ErrMsg =_('Error in function AuthorizeAllInternalStockRequest because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
-	InsertKPI("Shops", "Internal Requests", $MyRow['total']);
+	InsertKPI("TRANSFERS-INTREQ", $MyRow['total']);
 
 	$SQL = "UPDATE stockrequest
 					SET authorised='1'
