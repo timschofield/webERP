@@ -75,7 +75,7 @@ if ($webERPType == 'PRODUCTION'){
 	//Use the production old data DB
 	$OldDataDBUser = 'kurakura_kl_0002';
 	$OldDataDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
-	$OldDataDBName = 'kurakura_kl_erpolddata';
+	$OldDataDBName = 'kl_erp_old_data';
 
 }else{
 	// use the TEST DB
@@ -95,7 +95,7 @@ if ($webERPType == 'PRODUCTION'){
 	//Use the TEST old data DB
 	$OldDataDBUser = 'kurakura_kl_0006';
 	$OldDataDBPassword = '7187cd531a6f94ad56b0aad';
-	$OldDataDBName = 'kurakura_kl_test_erpolddata';
+	$OldDataDBName = 'test_erp_old_data';
 }
 
 if ($ErrorReportingType == 'PRODUCTION'){
