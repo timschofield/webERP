@@ -22,9 +22,9 @@ are upgrading an existing installation.
 Detailed instructions for installing these components can be readily found in a web search. XAMPP is
 recommended for development on a Windows(R) platform, see https://www.apachefriends.org/index.html.
 
-webERP supported PostgreSQL at one time but not currently due to lack of of an interested
-community member to do maintenance and testing. If you are interested in the job, please 
-please create a Discussion in the webERP repo!
+webERP supported PostgreSQL at one time but does not currently due to lack of of an interested
+community member for maintenance and testing. If you are interested in the job, please create
+a Discussion topic in the webERP repo!
 
 Required PHP configuration (all are default values at least for XAMPP with PHP v8.2):
 
@@ -43,8 +43,9 @@ Any recent reputable web browser should work with webERP (e.g. Edge, Chrome, Saf
 It may be useful to have a PDF reader avaiable on the system the browser will be run on. Popular
 choices on Windows are Acrobat Reader, Foxit PDF Reader and most web browsers.
 
-It is recommended that PDF preferances be be changed so that PDF documents are opened in a seperate window
-or tab (otherwise the PDF viewer window may replace webERP). 
+It is recommended that PDF preferances be be changed so that PDF documents are opened automatically
+to avoid having to find the file and open it seperately, and in a seperate window or tab (otherwise
+if viewing in a browser the PDF viewer window may replace webERP). 
 
 If you are using webERP with languages that require extended fonts to display you must use Acrobat
 Reader v9.1 or above (webERP uses Adobe CID fonts which are bundled with Acroabat Reader but not
