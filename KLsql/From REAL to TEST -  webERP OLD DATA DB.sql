@@ -17,13 +17,12 @@ INSERT INTO test_erp_old_data.stockmovestaxes SELECT * FROM kl_erp_old_data.stoc
 
 SET FOREIGN_KEY_CHECKS=1;
 
-UPDATE gltrans SET account = REPLACE(account, 'PT', 'BB') WHERE account LIKE '%PT'; 
-
+/* in production */
 UPDATE `klolddatapurged` SET `gltransperiod` = 93;
 UPDATE `klolddatapurged` SET `stockmovesprd` = 100;
+
+
+/* in OLD DATA */
 DELETE FROM `stockmoves` WHERE prd > 100;
+UPDATE gltrans SET account = REPLACE(account, 'PT', 'BB') WHERE account LIKE '%PT'; 
 
-
-
-
-DELETE FROM gltrans WHERE trandate >= "2017-01-01";
