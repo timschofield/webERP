@@ -4,27 +4,29 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/OldDataConnectDB.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+include('includes/ArchiveConnectDB.php');
 
-$Title = _('KL Archive Data from Production DB into Old Data DB');
+$Title = _('KL Archive Data from Production DB into Archive DB');
 
-if (!isset($_POST['PurgeGltransPeriod'])){
-	$_POST['PurgeGltransPeriod'] = -99;
+if (!isset($_POST['ArchiveGltransPeriod'])){
+	$_POST['ArchiveGltransPeriod'] = -99;
 }
 
-if (!isset($_POST['PurgeStockmovesPrd'])){
-	$_POST['PurgeStockmovesPrd'] = -99;
+if (!isset($_POST['ArchiveStockmovesPrd'])){
+	$_POST['ArchiveStockmovesPrd'] = -99;
 }
 
-if (!isset($_POST['PurgeLoctransfersObsoletes'])){
-	$_POST['PurgeLoctransfersObsoletes'] = 'N';
+if (!isset($_POST['ArchiveLoctransfersObsoletes'])){
+	$_POST['ArchiveLoctransfersObsoletes'] = 'N';
 }
 
 if (isset($_POST['submit'])) {
 	submit($Title, 
-			$_POST['PurgeGltransPeriod'], 
-			$_POST['PurgeStockmovesPrd'], 
-			$_POST['PurgeLoctransfersObsoletes']);
+			$_POST['ArchiveGltransPeriod'], 
+			$_POST['ArchiveStockmovesPrd'], 
+			$_POST['ArchiveLoctransfersObsoletes']);
 } else {
 	display($Title);
 }
@@ -32,13 +34,13 @@ if (isset($_POST['submit'])) {
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctransfersObsoletes) {
+function submit($Title, $ArchiveGltransPeriod, $ArchiveStockmovesPrd, $ArchiveLoctransfersObsoletes) {
 
 	include('includes/header.php');
-	PurgetableGltrans($PurgeGltransPeriod);
-	PurgetableStockmoves($PurgeStockmovesPrd);
-	PurgetableStockmovestaxes($PurgeStockmovesPrd);
-//	PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes);
+	ArchivetableGltrans($ArchiveGltransPeriod);
+	ArchivetableStockmoves($ArchiveStockmovesPrd);
+	ArchivetableStockmovestaxes($ArchiveStockmovesPrd);
+//	ArchivetableLoctransfersObsoletes($ArchiveLoctransfersObsoletes);
 	include('includes/footer.php');
 
 } // End of function submit()
@@ -56,72 +58,24 @@ function display($Title) {
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	$SQL = "SELECT gltransperiod,
-					stockmovesprd,
-					loctransfersrecdate
-			FROM klolddatapurged";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$AlreadyPurgedGltransPeriod = $MyRow['gltransperiod'];
-	$AlreadyPurgedStockmovesPrd = $MyRow['stockmovesprd'];
-	$AlreadyPurgedLocTransfersRecdate = $MyRow['loctransfersrecdate'];
+	$AlreadyArchivedGltransPeriod = GetPeriodAlreadyArchived('gltrans');
+	$AlreadyArchivedStockmovesPrd = GetPeriodAlreadyArchived('stockmoves');
+//	$AlreadyArchivedLocTransfersRecdate = GetPeriodAlreadyArchived('loctransfers');
 
-	echo '<table class="selection">';
-	
-	echo '<tr>
-			<td>' . _('Purge gltrans table older or equal than:').'</td>
-			<td><select required="required" name="PurgeGltransPeriod">';
-	$SQL = "SELECT periodno, 
-				   lastdate_in_period 
-			FROM periods
-			WHERE periodno >= " . $AlreadyPurgedGltransPeriod . "
-			ORDER BY periodno DESC";
-	$Periods = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($Periods)){
-		if( $MyRow['periodno']== $AlreadyPurgedGltransPeriod){
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period'])  . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo '<fieldset><legend>' . _('Archive Options') . '</legend>';
+	echo FieldToSelectOnePeriod('ArchiveGltransPeriod', $AlreadyArchivedGltransPeriod, _('Archive gltrans table records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveStockmovesPrd', $AlreadyArchivedStockmovesPrd, _('Archive stockmoves table records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
 
-	echo '<tr>
-			<td>' . _('Purge stockmoves table older or equal than:').'</td>
-			<td><select required="required" name="PurgeStockmovesPrd">';
-	$SQL = "SELECT periodno, 
-				   lastdate_in_period 
-			FROM periods
-			WHERE periodno >= " . $AlreadyPurgedStockmovesPrd . "
-			ORDER BY periodno DESC";
-	$Periods = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($Periods)){
-		if( $MyRow['periodno']== $AlreadyPurgedStockmovesPrd){
-			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period'])  . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-/*	echo '<tr><td>' . _('Purge loctransfers of obsolete items') . ':</td>
-			<td><select name="PurgeLoctransfersObsoletes">
-				<option selected="selected" value="N">' . _('No') . '</option>
-				<option value="Y">' . _('Yes') . '</option>
-				</select>
-			</td>
-		</tr>';
+/*	echo FieldToSelectFromTwoOptions('N', _('No'), 
+									'Y', _('Yes'), 
+									'ArchiveLoctransfersObsoletes', 'N', _('Archive loctransfers of obsolete items') . ':', '', '', '', true, false);
 			
-	echo '<tr>
-			<td>' . _('Purge loctransfers table older or equal than') . '</td>
-			<td><input type="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="PurgeLocTransfersRecdate" size="10" maxlength="10" value="' . ConvertSQLDate($AlreadyPurgedLocTransfersRecdate) . '" /></td>
-		</tr>';
+	echo FieldToSelectOneDate('ArchiveLocTransfersRecdate', ConvertSQLDate($AlreadyArchivedLocTransfersRecdate), _('Archive loctransfers table older or equal than'), '', '', '', true, false);
 */
-	echo '<tr>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo '</fieldset>';
+	
+	echo OneButtonCenteredForm('submit', $Title);
+	
 	echo '</div>
     	</form>';
 
@@ -129,31 +83,31 @@ function display($Title) {
 
 } // End of function display()
 
-function PurgetableGltrans($PurgeToPeriod){
+function ArchivetableGltrans($ArchiveToPeriod){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
 	
 	$StartRecords = GetNumberOfRecordsInTable('gltrans');
 	
-	// search for the newest date already purged in olddata database table
-	$PeriodAlreadyPurged = -99;
-	$SQL = "SELECT MAX(periodno) AS purgedperiod
+	// search for the newest date already archived in Archive database table
+	$PeriodAlreadyArchived = -99;
+	$SQL = "SELECT MAX(periodno) AS archivedperiod
 			FROM gltrans";
 
-	$Result = DB_query_od($SQL);	
+	$Result = DB_query_archive($SQL);	
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$PeriodAlreadyPurged = $MyRow['purgedperiod'];
+		$PeriodAlreadyArchived = $MyRow['archivedperiod'];
 	}else{
 		$ErrorsFound = TRUE;
 	}
 
-	prnMsg('gltrans table contains '. locale_number_format($StartRecords) . ' records');
-	prnMsg("gltrans table already purged until period: " . $PeriodAlreadyPurged);
-	prnMsg('Purge gltrans older or equal than period '. $PurgeToPeriod);
+	prnMsg('gltrans table currently contains '. locale_number_format($StartRecords) . ' records');
+	prnMsg("gltrans table already archived until period " . MonthAndYearFromPeriodNo($PeriodAlreadyArchived));
+	prnMsg('Archiving gltrans records older or equal than period '. MonthAndYearFromPeriodNo($ArchiveToPeriod));
 
-	if ( $PeriodAlreadyPurged < $PurgeToPeriod){
-		// select the webERP gltrans table to be copied into olddata DB
+	if ( $PeriodAlreadyArchived < $ArchiveToPeriod){
+		// select the webERP gltrans table to be copied into Archive DB
 		$SQL = "SELECT counterindex,
 						type,
 						typeno,
@@ -165,8 +119,8 @@ function PurgetableGltrans($PurgeToPeriod){
 						amount,
 						jobref
 				FROM gltrans
-				WHERE periodno > " . $PeriodAlreadyPurged . "
-					AND periodno <= " . $PurgeToPeriod . "
+				WHERE periodno > " . $PeriodAlreadyArchived . "
+					AND periodno <= " . $ArchiveToPeriod . "
 				ORDER BY periodno,
 						trandate,
 						account";
@@ -198,10 +152,10 @@ function PurgetableGltrans($PurgeToPeriod){
 								'" . DB_escape_string($MyRow['narrative'] ?? '') . "',
 								'" . $MyRow['amount'] . "',
 								'" . DB_escape_string($MyRow['jobref'] ?? '') . "')";
-				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+				DB_query_archive($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
-			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of gltrans table");
+			prnMsg("Copied into Archive DB ". locale_number_format($RecordCounter) . " records of gltrans table");
 			
 			// Now calculate consolidated values for each period and account, delete the details and write the consolidated value on webERP database
 			$SQL = "SELECT periodno,
@@ -209,8 +163,8 @@ function PurgetableGltrans($PurgeToPeriod){
 							MAX(trandate) AS maxdate,
 							SUM(amount) AS consolidated
 					FROM gltrans
-					WHERE periodno > " . $PeriodAlreadyPurged . "
-						AND periodno <= " . $PurgeToPeriod . "
+					WHERE periodno > " . $PeriodAlreadyArchived . "
+						AND periodno <= " . $ArchiveToPeriod . "
 					GROUP BY periodno,
 							account
 					ORDER BY periodno,
@@ -247,14 +201,20 @@ function PurgetableGltrans($PurgeToPeriod){
 									'')";
 					DB_query($SQLInsert,$ErrMsg,$DbgMsg);
 				}
-				prnMsg("Inserted consolidated accounting records");
-				$SQLUpdate = "UPDATE klolddatapurged SET gltransperiod = ".$PurgeToPeriod."";
+				prnMsg("Inserted consolidated accounting records in production DB gltrans table");
+				$SQLUpdate = "UPDATE klarchivedtables 
+							SET period = ".$ArchiveToPeriod."
+							WHERE name = 'gltrans'";
 				DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
-				prnMsg("Updated klolddatapurged records");
+				prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
 			}
 		}
+
+		// count how many records are on gltrans in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('gltrans');
+		prnMsg('Production gltrans table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records archived', 'success');
 	}else{
-		prnMsg("gltrans: Nothing to purge", "warn");
+		prnMsg("gltrans table: Nothing to archive", "warn");
 		$ErrorsFound = TRUE;
 	}
 
@@ -262,40 +222,35 @@ function PurgetableGltrans($PurgeToPeriod){
 		$Result = DB_Txn_Commit();
 	}else{
 		$Result = DB_Txn_Rollback();
-
 	}
-
-	// count how many records are on gltrans in webERP production DB
-	$EndRecords = GetNumberOfRecordsInTable('gltrans');
-	prnMsg('gltrans table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
-function PurgetableStockmoves($PurgeToPeriod){
+function ArchivetableStockmoves($ArchiveToPeriod){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
 	
 	// count how many records are on stockmoves in webERP production DB
 	$StartRecords = GetNumberOfRecordsInTable('stockmoves');
 
-	// search for the newest date already purged in olddata database table
-	$PeriodAlreadyPurged = -99;
-	$SQL = "SELECT MAX(prd) AS purgedperiod
+	// search for the newest date already archived in Archive database table
+	$PeriodAlreadyArchived = -99;
+	$SQL = "SELECT MAX(prd) AS archivedperiod
 			FROM stockmoves";
 
-	$Result = DB_query_od($SQL);	
+	$Result = DB_query_archive($SQL);	
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$PeriodAlreadyPurged = $MyRow['purgedperiod'];
+		$PeriodAlreadyArchived = $MyRow['archivedperiod'];
 	}else{
 		$ErrorsFound = TRUE;
 	}
 
 	prnMsg('stockmoves table contains '. locale_number_format($StartRecords) . ' records');
-	prnMsg("stockmoves table already purged until period: " . $PeriodAlreadyPurged);
-	prnMsg('Purge stockmoves older or equal than period '. $PurgeToPeriod);
+	prnMsg("stockmoves table already archived until period: " . MonthAndYearFromPeriodNo($PeriodAlreadyArchived));
+	prnMsg('Archive stockmoves older or equal than period '. MonthAndYearFromPeriodNo($ArchiveToPeriod));
 
-	if ($PeriodAlreadyPurged < $PurgeToPeriod){
-		// select the webERP stockmoves table to be copied into olddata DB
+	if ($PeriodAlreadyArchived < $ArchiveToPeriod){
+		// select the webERP stockmoves table to be copied into Archive DB
 		$SQL = "SELECT stkmoveno,
 						stockid,
 						type,
@@ -316,7 +271,7 @@ function PurgetableStockmoves($PurgeToPeriod){
 						hidemovt,
 						narrative
 				FROM stockmoves
-				WHERE prd <= " . $PurgeToPeriod . "";
+				WHERE prd <= " . $ArchiveToPeriod . "";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the stockmoves record');
 		$DbgMsg = _('The SQL that was used to insert the stockmoves record was');		
@@ -363,22 +318,29 @@ function PurgetableStockmoves($PurgeToPeriod){
 								'" . $MyRow['newqoh'] . "',
 								'" . $MyRow['hidemovt'] . "',
 								'" . DB_escape_string($MyRow['narrative'] ?? '') . "')";
-				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+				DB_query_archive($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
-			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of stockmoves table");
+			prnMsg("Copied into Archive DB ". locale_number_format($RecordCounter) . " records of stockmoves table");
 			
 			$SQLDelete = "DELETE FROM stockmoves 
-							WHERE prd <= " . $PurgeToPeriod . "";
+							WHERE prd <= " . $ArchiveToPeriod . "";
 			DB_query($SQLDelete,$ErrMsg,$DbgMsg);
-			prnMsg("Deleted stockmoves records in webERP production DB");
+			prnMsg("Deleted stockmoves records in Production DB");
 			
-			$SQLUpdate = "UPDATE klolddatapurged SET stockmovesprd = ".$PurgeToPeriod."";
+			$SQLUpdate = "UPDATE klarchivedtables 
+						SET period = ".$ArchiveToPeriod."
+						WHERE name = 'stockmoves'";
 			DB_query($SQLUpdate,$ErrMsg,$DbgMsg);
-			prnMsg("Updated klolsdatapurged records");
+			prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
 		}
+
+		// count how many records are on stockmoves in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('stockmoves');
+		prnMsg('stockmoves table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
+
 	}else{
-		prnMsg("stockmoves: Nothing to purge", 'warn');
+		prnMsg("stockmoves table: Nothing to archive", 'warn');
 		$ErrorsFound = TRUE;
 	}
 
@@ -386,15 +348,10 @@ function PurgetableStockmoves($PurgeToPeriod){
 		$Result = DB_Txn_Commit();
 	}else{
 		$Result = DB_Txn_Rollback();
-
 	}
-
-	// count how many records are on stockmoves in webERP production DB
-	$EndRecords = GetNumberOfRecordsInTable('stockmoves');
-	prnMsg('stockmoves table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
-function PurgetableStockmovestaxes(){
+function ArchivetableStockmovestaxes(){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
 	
@@ -403,45 +360,52 @@ function PurgetableStockmovestaxes(){
 
 	prnMsg('stockmovestaxes table contains '. locale_number_format($StartRecords) . ' records');
 
-	if ( TRUE){
-		// select the webERP stockmoves table to be copied into olddata DB
-		$SQL = "SELECT stkmoveno,
-						taxauthid,
-						taxrate,
-						taxontax,
-						taxcalculationorder
-				FROM stockmovestaxes
-				WHERE stkmoveno NOT IN (SELECT stkmoveno FROM stockmoves)";
-		$Result = DB_query($SQL);	
-		$ErrMsg = _('An error occurred in inserting the stockmovestaxes record');
-		$DbgMsg = _('The SQL that was used to insert the stockmovestaxes record was');		
-		if (DB_num_rows($Result) != 0){
-			$RecordCounter = 0;
-			while ($MyRow = DB_fetch_array($Result)) {
-				$SQLInsert = "INSERT INTO stockmovestaxes 
-									( stkmoveno,
-									taxauthid,
-									taxrate,
-									taxontax,
-									taxcalculationorder
-								) VALUES (
-								'" . $MyRow['stkmoveno'] . "',
-								'" . $MyRow['taxauthid'] . "',
-								'" . $MyRow['taxrate'] . "',
-								'" . $MyRow['taxontax'] . "',
-								'" . $MyRow['taxcalculationorder'] . "')";
-				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
-				$RecordCounter++;
-			}
-			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of stockmovestaxes table");
-			
-			$SQLDelete = "DELETE FROM stockmovestaxes 
-							WHERE stkmoveno NOT IN (SELECT stkmoveno FROM stockmoves)";
-			DB_query($SQLDelete,$ErrMsg,$DbgMsg);
-			prnMsg("Deleted stockmoves records in webERP production DB");
+	$SQL = "SELECT st.stkmoveno,
+				st.taxauthid,
+				st.taxrate,
+				st.taxontax,
+				st.taxcalculationorder
+			FROM stockmovestaxes st
+			LEFT JOIN stockmoves sm ON st.stkmoveno = sm.stkmoveno
+			WHERE sm.stkmoveno IS NULL";
+	$Result = DB_query($SQL);	
+	$ErrMsg = _('An error occurred in inserting the stockmovestaxes record');
+	$DbgMsg = _('The SQL that was used to insert the stockmovestaxes record was');		
+	
+	if (DB_num_rows($Result) != 0){
+		// select the webERP stockmoves table to be copied into Archive DB
+		$RecordCounter = 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$SQLInsert = "INSERT INTO stockmovestaxes 
+								( stkmoveno,
+								taxauthid,
+								taxrate,
+								taxontax,
+								taxcalculationorder
+							) VALUES (
+							'" . $MyRow['stkmoveno'] . "',
+							'" . $MyRow['taxauthid'] . "',
+							'" . $MyRow['taxrate'] . "',
+							'" . $MyRow['taxontax'] . "',
+							'" . $MyRow['taxcalculationorder'] . "')";
+			DB_query_archive($SQLInsert,$ErrMsg,$DbgMsg);
+			$RecordCounter++;
 		}
+		prnMsg("Copied into Archive DB ". locale_number_format($RecordCounter) . " records of stockmovestaxes table");
+		
+		$SQLDelete = "DELETE st 
+					FROM stockmovestaxes st
+					LEFT JOIN stockmoves sm 
+						ON st.stkmoveno = sm.stkmoveno
+					WHERE sm.stkmoveno IS NULL";
+		DB_query($SQLDelete,$ErrMsg,$DbgMsg);
+		prnMsg("Deleted stockmovestaxes records in webERP production DB");
+
+		// count how many records are on stockmovestaxes in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('stockmovestaxes');
+		prnMsg('stockmovestaxes table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records archived', 'success');
 	}else{
-		prnMsg("stockmovestaxes: Nothing to purge", 'warn');
+		prnMsg("stockmovestaxes table: Nothing to archive", 'warn');
 		$ErrorsFound = TRUE;
 	}
 
@@ -449,39 +413,34 @@ function PurgetableStockmovestaxes(){
 		$Result = DB_Txn_Commit();
 	}else{
 		$Result = DB_Txn_Rollback();
-
 	}
-
-	// count how many records are on stockmovestaxes in webERP production DB
-	$EndRecords = GetNumberOfRecordsInTable('stockmovestaxes');
-	prnMsg('stockmovestaxes table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
 
-function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
+function ArchivetableLoctransfersObsoletes($ArchiveLoctransfersObsoletes){
 	DB_Txn_Begin();
 	$ErrorsFound = FALSE; // hope for the best
 	
 	// count how many records are on loctransfers in webERP production DB
 	$StartRecords = GetNumberOfRecordsInTable('loctransfers');
 
-	// search for the newest date already purged in olddata database table
-	$PeriodAlreadyPurged = -99;
-	$SQL = "SELECT MAX(recdate) AS purgedperiod
+	// search for the newest date already archived in Archive database table
+	$PeriodAlreadyArchived = -99;
+	$SQL = "SELECT MAX(recdate) AS archivedperiod
 			FROM loctransfers";
 
-	$Result = DB_query_od($SQL);	
+	$Result = DB_query_archive($SQL);	
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$PeriodAlreadyPurged = $MyRow['purgedperiod'];
+		$PeriodAlreadyArchived = $MyRow['archivedperiod'];
 	}else{
 		$ErrorsFound = TRUE;
 	}
 
 	prnMsg('loctransfers table contains '. locale_number_format($StartRecords) . ' records');
-	prnMsg("loctransfers table already purged until : " . $PeriodAlreadyPurged);
+	prnMsg("loctransfers table already archived until : " . $PeriodAlreadyArchived);
 
-	if ($PurgeLoctransfersObsoletes == "Y"){
-		// select the webERP loctransfers table to be copied into olddata DB
+	if ($ArchiveLoctransfersObsoletes == "Y"){
+		// select the webERP loctransfers table to be copied into Archive DB
 		$SQL = "SELECT loctransfers.loctransferid,
 					loctransfers.reference,
 					loctransfers.stockid,
@@ -495,7 +454,7 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 				INNER JOIN stockmaster 
 					ON loctransfers.stockid = stockmaster.stockid
 				WHERE stockmaster.discontinued = 1
-					AND loctransfers.recdate <= '" . $PeriodAlreadyPurged . "'";
+					AND loctransfers.recdate <= '" . $PeriodAlreadyArchived . "'";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the stockmoves record');
 		$DbgMsg = _('The SQL that was used to insert the stockmoves record was');		
@@ -522,10 +481,10 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 								'" . $MyRow['recdate'] . "',
 								'" . DB_escape_string($MyRow['shiploc'] ?? '') . "',
 								'" . DB_escape_string($MyRow['recloc'] ?? '') . "')";
-				DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
+				DB_query_archive($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
-			prnMsg("Copied into OldData DB ". locale_number_format($RecordCounter) . " records of loctransfers table");
+			prnMsg("Copied into Archive DB ". locale_number_format($RecordCounter) . " records of loctransfers table");
 			
 			$SQLDelete = "DELETE FROM loctransfers 
 							WHERE stockid IN (SELECT stockid FROM stockmaster WHERE discontinued = 1)";
@@ -534,7 +493,7 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 
 		}
 	}else{
-		prnMsg("locatransfers: Nothing to purge", 'warn');
+		prnMsg("locatransfers: Nothing to archive", 'warn');
 		$ErrorsFound = TRUE;
 	}
 
@@ -549,6 +508,23 @@ function PurgetableLoctransfersObsoletes($PurgeLoctransfersObsoletes){
 	$EndRecords = GetNumberOfRecordsInTable('loctransfers');
 	prnMsg('loctransfers table now contains '. locale_number_format($EndRecords) . ' records. '. locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
 }
+
+
+function GetPeriodAlreadyArchived($TableName){
+	$PeriodAlreadyArchived = -99;
+	$SQL = "SELECT period
+			FROM klarchivedtables
+			WHERE name = '".$TableName."'";
+
+	$Result = DB_query($SQL);	
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$PeriodAlreadyArchived = $MyRow['period'];
+	}else{
+		prnMsg("Error: Cannot get period already archived from table ".$TableName, 'error');
+	}
+	return $PeriodAlreadyArchived;
+} // End of function GetPeriodAlreadyArchived()
 
 
 ?>

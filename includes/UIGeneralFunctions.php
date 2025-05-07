@@ -228,9 +228,17 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 
 function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	/* Select One Period, with a dropdown showing the month and Year */
-	$SQL = "SELECT periodno, 
+
+	if ($Filter == 'NEWER_OR_EQUAL_THAN_SELECTED') {
+		$WhereSQL = " WHERE periodno >= " . $SelectedValue . " ";
+	}else {
+		$WhereSQL = " ";
+	}
+
+$SQL = "SELECT periodno, 
 				lastdate_in_period 
-			FROM periods
+			FROM periods" .
+			$WhereSQL . "
 			ORDER BY periodno";
 
 	$Result = DB_query($SQL);
@@ -486,7 +494,7 @@ function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $
     }
     $HTML .= '<textarea name="' . $VariableName . '" cols="' . $Cols . '" rows="' . $Rows . '">' . htmlspecialchars($SelectedValue) . '</textarea>';
     if ($HelpText != '') {
-        $HTML .= '<fieldhelp>' . $helpText . '</fieldhelp>';
+        $HTML .= '<fieldhelp>' . $HelpText . '</fieldhelp>';
     }
     $HTML .= '</field>';
 	return $HTML;

@@ -227,6 +227,9 @@ INSERT INTO test_erp.jnltmpldetails SELECT * FROM kurakura_kl_erp.jnltmpldetails
 TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl;
 
+TRUNCATE test_erp.`klarchivedtables`;
+INSERT INTO test_erp.klarchivedtables SELECT * FROM kurakura_kl_erp.klarchivedtables;
+
 TRUNCATE test_erp.`klchangeprice`;
 INSERT INTO test_erp.klchangeprice SELECT * FROM kurakura_kl_erp.klchangeprice;
 
@@ -262,9 +265,6 @@ INSERT INTO test_erp.klmovetodiscount50 SELECT * FROM kurakura_kl_erp.klmovetodi
 
 TRUNCATE test_erp.`klmovetodiscount80`;
 INSERT INTO test_erp.klmovetodiscount80 SELECT * FROM kurakura_kl_erp.klmovetodiscount80;
-
-TRUNCATE test_erp.`klolddatapurged`;
-INSERT INTO test_erp.klolddatapurged SELECT * FROM kurakura_kl_erp.klolddatapurged;
 
 TRUNCATE test_erp.`klonlinepartners`;
 INSERT INTO test_erp.klonlinepartners SELECT * FROM kurakura_kl_erp.klonlinepartners;
