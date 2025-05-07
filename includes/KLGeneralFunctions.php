@@ -1792,9 +1792,13 @@ function GetKPIDescription($KPICode) {
 	return $KPIDescription;
 }
 
-function GetNumberOfRecordsInTable($TableName) {
+function GetNumberOfRecordsInTable($TableName, $Database) {
 	$SQL = "SELECT COUNT(*) AS total FROM " . $TableName;
-	$Result = DB_query($SQL);
+	if ($Database == 'Production') {
+		$Result = DB_query($SQL);
+	}else if ($Database == 'Archive') {
+		$Result = DB_query_archive($SQL);
+	}
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_array($Result);
 		return $Row['total'];
