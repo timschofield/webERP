@@ -115,10 +115,10 @@ TRUNCATE test_erp.`debtorsmaster`;
 INSERT INTO test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE test_erp.`debtortrans`;
-/*INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; */
+INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; 
 
 TRUNCATE test_erp.`debtortranstaxes`;
-/*INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes; */
+INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
 
 TRUNCATE test_erp.`debtortype`;
 INSERT INTO test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
@@ -190,7 +190,7 @@ TRUNCATE test_erp.`gltotals`;
 INSERT INTO test_erp.gltotals SELECT * FROM kurakura_kl_erp.gltotals;
 
 TRUNCATE test_erp.`gltrans`;
-/*INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
@@ -201,7 +201,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 140;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 150;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 160; 
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; */
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 170 AND periodno <= 180;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 180 AND periodno <= 190;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
@@ -226,6 +226,9 @@ INSERT INTO test_erp.jnltmpldetails SELECT * FROM kurakura_kl_erp.jnltmpldetails
 
 TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl;
+
+TRUNCATE test_erp.`klarchivedtables`;
+INSERT INTO test_erp.klarchivedtables SELECT * FROM kurakura_kl_erp.klarchivedtables;
 
 TRUNCATE test_erp.`klchangeprice`;
 INSERT INTO test_erp.klchangeprice SELECT * FROM kurakura_kl_erp.klchangeprice;
@@ -262,9 +265,6 @@ INSERT INTO test_erp.klmovetodiscount50 SELECT * FROM kurakura_kl_erp.klmovetodi
 
 TRUNCATE test_erp.`klmovetodiscount80`;
 INSERT INTO test_erp.klmovetodiscount80 SELECT * FROM kurakura_kl_erp.klmovetodiscount80;
-
-TRUNCATE test_erp.`klolddatapurged`;
-INSERT INTO test_erp.klolddatapurged SELECT * FROM kurakura_kl_erp.klolddatapurged;
 
 TRUNCATE test_erp.`klonlinepartners`;
 INSERT INTO test_erp.klonlinepartners SELECT * FROM kurakura_kl_erp.klonlinepartners;
@@ -321,7 +321,8 @@ TRUNCATE test_erp.`loctransfercancellations`;
 INSERT INTO test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loctransfercancellations;
 
 TRUNCATE test_erp.`loctransfers`;
-INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE reference >= 200000;
+/*INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE reference >= 200000;*/
+INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers;
 
 TRUNCATE test_erp.`mailgroupdetails`;
 INSERT INTO test_erp.mailgroupdetails SELECT * FROM kurakura_kl_erp.mailgroupdetails;
@@ -375,7 +376,8 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2025-01-01'; 
+/*INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2025-01-01'; */
+INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails; 
 
 TRUNCATE test_erp.`pcashdetailtaxes`;
 INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
@@ -573,10 +575,12 @@ TRUNCATE test_erp.`stockmaster`;
 INSERT INTO test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
 
 TRUNCATE test_erp.`stockmoves`;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE stkmoveno > 8000000;
+/*INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE stkmoveno > 8000000;*/
+INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves;
 
 TRUNCATE test_erp.`stockmovestaxes`;
-INSERT INTO test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes WHERE stkmoveno > 8000000;
+/*INSERT INTO test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes WHERE stkmoveno > 8000000;*/
+INSERT INTO test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes;
 
 TRUNCATE test_erp.`stockrequest`;
 INSERT INTO test_erp.stockrequest SELECT * FROM kurakura_kl_erp.stockrequest WHERE dispatchid >= 30000;
