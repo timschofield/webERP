@@ -115,10 +115,10 @@ TRUNCATE test_erp.`debtorsmaster`;
 INSERT INTO test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE test_erp.`debtortrans`;
-/*INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; */
+INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; 
 
 TRUNCATE test_erp.`debtortranstaxes`;
-/*INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes; */
+INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
 
 TRUNCATE test_erp.`debtortype`;
 INSERT INTO test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;

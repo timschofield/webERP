@@ -17,6 +17,7 @@ CodeModel                         - Returns the model code (first 6 characters) 
 CodeModelRing                     - Returns the model code for a ring, handling size variations
 ConvertExcelDate                  - Converts Excel date format to a standard date format
 CreateConsignmentInvoiceNumber    - Creates a formatted consignment invoice number
+DataExistsInArchive               - Checks if specific data exists in a Archive table
 DataExistsInWebERP                - Checks if specific data exists in a WebERP table
 DaysBetween                       - Calculates the number of days between two dates
 DeleteWeberpUser                  - Deletes a user from the system with proper validation
@@ -1276,6 +1277,32 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	}
 	return $Exists;
 }
+
+function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
+	if ($f2 == ''){
+		/* Primary key is 1 field only */
+		$SQL = "SELECT COUNT(*)
+				FROM " . $Table . "
+				WHERE " . $f1 . " = '" . $v1 . "'";
+	}else{
+		/* Primary key is 2 fields */
+		$SQL = "SELECT COUNT(*)
+				FROM " . $Table . "
+				WHERE " . $f1 . " = '" . $v1 . "'
+					AND " . $f2 . " = '" . $v2 . "'";
+	}
+	$ErrMsg =_('Could not check existence of data in webERP because');
+	$Result = DB_query_archive($SQL,$ErrMsg);
+
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$Exists = ($MyRow[0] > 0);
+	}else{
+		$Exists = false;
+	}
+	return $Exists;
+}
+
 
 function InsertKPI($KPICode, $Value){
 	$Date = date('Y-m-d');
