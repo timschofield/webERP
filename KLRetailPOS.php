@@ -1528,7 +1528,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								$_SESSION['AccountQRIS'],
 								$InvoiceNo,
 								$_SESSION['Items' . $identifier]->CustRef,
-								$_SESSION['Items' . $identifier]->Location,
 								$_POST['AmountPaidQRIS'],
 								$QRISBankComissions,
 								$QRISNetPayment,
