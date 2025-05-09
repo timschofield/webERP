@@ -17,6 +17,7 @@ CodeModel                         - Returns the model code (first 6 characters) 
 CodeModelRing                     - Returns the model code for a ring, handling size variations
 ConvertExcelDate                  - Converts Excel date format to a standard date format
 CreateConsignmentInvoiceNumber    - Creates a formatted consignment invoice number
+DataExistsInArchive               - Checks if specific data exists in a Archive table
 DataExistsInWebERP                - Checks if specific data exists in a WebERP table
 DaysBetween                       - Calculates the number of days between two dates
 DeleteWeberpUser                  - Deletes a user from the system with proper validation
@@ -36,6 +37,7 @@ GetItemStandardCostFromCode       - Gets the standard cost of a stock item
 GetKPIDescription                 - Retrieves the description for a given KPI code
 GetLastKPIValue                   - Gets the most recent KPI value for a class/concept
 GetLocationNameFromCode           - Gets the location name from a location code
+GetNumberOfRecordsInTable         - Counts the number of records in a specified table
 GetOnlinePartnerFromArea          - Gets the online partner code for an area
 GetTotalItemsChangingPrice        - Counts items with changing price flag
 GetTotalItemsMovingToDiscount     - Counts items moving to a specific discount level
@@ -1276,6 +1278,32 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	return $Exists;
 }
 
+function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
+	if ($f2 == ''){
+		/* Primary key is 1 field only */
+		$SQL = "SELECT COUNT(*)
+				FROM " . $Table . "
+				WHERE " . $f1 . " = '" . $v1 . "'";
+	}else{
+		/* Primary key is 2 fields */
+		$SQL = "SELECT COUNT(*)
+				FROM " . $Table . "
+				WHERE " . $f1 . " = '" . $v1 . "'
+					AND " . $f2 . " = '" . $v2 . "'";
+	}
+	$ErrMsg =_('Could not check existence of data in webERP because');
+	$Result = DB_query_archive($SQL,$ErrMsg);
+
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$Exists = ($MyRow[0] > 0);
+	}else{
+		$Exists = false;
+	}
+	return $Exists;
+}
+
+
 function InsertKPI($KPICode, $Value){
 	$Date = date('Y-m-d');
 	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'kpicode', $KPICode)){
@@ -1789,6 +1817,20 @@ function GetKPIDescription($KPICode) {
 		$KPIDescription = $DescRow['kpidescription'];
 	}
 	return $KPIDescription;
+}
+
+function GetNumberOfRecordsInTable($TableName, $Database) {
+	$SQL = "SELECT COUNT(*) AS total FROM " . $TableName;
+	if ($Database == 'Production') {
+		$Result = DB_query($SQL);
+	}else if ($Database == 'Archive') {
+		$Result = DB_query_archive($SQL);
+	}
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_array($Result);
+		return $Row['total'];
+	}
+	return 0;
 }
 
 ?>

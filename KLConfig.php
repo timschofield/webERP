@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "026";
+$KLCodeVersion = "027";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains("LOCAL-TEST")){
@@ -17,13 +17,13 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
 	$OpenCartDBHost = '202.157.184.151';
-	$OldDataDBHost = '202.157.184.151';
+	$ArchiveDBHost = '202.157.184.151';
 	$SessionSavePath = '';
 } else {
 	// we are in the hosted environment in Exabytes, the DB is local to the code
 	$Host = 'localhost';
 	$OpenCartDBHost = 'localhost';
-	$OldDataDBHost = 'localhost';
+	$ArchiveDBHost = 'localhost';
 	if (URLWithoutScriptNameContains("DEVELOPMENT")){
 		// we are on ptadu-development.com (development code)
 		if (URLWithoutScriptNameContains("TEST")){
@@ -72,10 +72,10 @@ if ($webERPType == 'PRODUCTION'){
 	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
 	$OpenCartDBName = 'kl_online_shop';
 	
-	//Use the production old data DB
-	$OldDataDBUser = 'kurakura_kl_0002';
-	$OldDataDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
-	$OldDataDBName = 'kurakura_kl_erpolddata';
+	//Use the production archive DB
+	$ArchiveDBUser = 'kurakura_kl_0002';
+	$ArchiveDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
+	$ArchiveDBName = 'kl_erp_archive';
 
 }else{
 	// use the TEST DB
@@ -92,10 +92,10 @@ if ($webERPType == 'PRODUCTION'){
 	$OpenCartDBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 	$OpenCartDBName = 'test_online_shop';
 	
-	//Use the TEST old data DB
-	$OldDataDBUser = 'kurakura_kl_0006';
-	$OldDataDBPassword = '7187cd531a6f94ad56b0aad';
-	$OldDataDBName = 'kurakura_kl_test_erpolddata';
+	//Use the TEST archive DB
+	$ArchiveDBUser = 'kurakura_kl_0006';
+	$ArchiveDBPassword = '7187cd531a6f94ad56b0aad';
+	$ArchiveDBName = 'test_erp_archive';
 }
 
 if ($ErrorReportingType == 'PRODUCTION'){

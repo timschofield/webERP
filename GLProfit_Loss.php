@@ -615,7 +615,7 @@ else {
 									'PTADU', 'PT Angin Dingin Utara', 
 									'PTSMH', 'PT Sungai Mutiara Hitam',
 									'PTBB', 'PT Bumi Biru',
-									'Company', $_POST['Company'], 'profit and Loss for company', '', '', '', true, false);
+									'Company', $_POST['Company'], 'Profit and Loss for', '', '', '', true, false);
 	// KL RICARD END select the company to include
 
 	// Content of the body of the input table:

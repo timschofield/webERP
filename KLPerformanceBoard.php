@@ -135,8 +135,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30);
-		$NumberOfTestExecuted++;
+//		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -148,8 +148,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GeneralCustomerBehaviour("SHOPBL", 30);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPOU", 30);
-		$NumberOfTestExecuted++;
+//		GeneralCustomerBehaviour("SHOPOU", 30);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -215,7 +215,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-/*	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin){
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath);
@@ -225,7 +225,7 @@ if ($ProcessSection02){
 		ComponentsToObsolete(false, 0, $RootPath);
 		$NumberOfTestExecuted++;
 	}
-*/
+
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
@@ -319,11 +319,6 @@ if ($ProcessSection03){
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-	}
-
-	if ($KL_OperationalManager
-		OR $KL_OperationalLeader
-		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("CLOSED", 30, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("TOTAL", 30, $KL_SystemAdmin);
