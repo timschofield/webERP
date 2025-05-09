@@ -637,12 +637,6 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			  </div>';
 	}
 
-	$NumDaysA = str_pad($NumDaysA, 3, '0', STR_PAD_LEFT);
-	$NumDaysB = str_pad($NumDaysB, 3, '0', STR_PAD_LEFT);
-	$NumDaysC = str_pad($NumDaysC, 3, '0', STR_PAD_LEFT);
-	$NumDaysD = str_pad($NumDaysD, 3, '0', STR_PAD_LEFT);
-	$NumDaysE = str_pad($NumDaysE, 3, '0', STR_PAD_LEFT);
-
 	if (($TypeReport == "Shop") AND ($Year == "CurrentYear")){
 		InsertKPI("SALES-RETAIL-" . $NumDaysD . "D-IDR", $TotalDateD);
 		InsertKPI("SALES-RETAIL-" . $NumDaysE . "D-IDR", $TotalDateE);
@@ -1876,7 +1870,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				</table>
 				</div>';
 
-			InsertKPI("PACK-DAILY-USE-PCS)", $TotalDailyUse);
+			InsertKPI("PACK-DAILY-USE-PCS", $TotalDailyUse);
 			InsertKPI("PACK-USED-" . $DaysUsage .  "-PCS", $UsageXDays);
 			InsertKPI("PACK-FORE-X-DAYS-PCS", $ForecastXDays);
 			InsertKPI("PACK-QOH-TOTAL-PCS", $QOHTotal);
@@ -2710,7 +2704,6 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale();
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
-			InsertKPI("STOCK-ITEMS-SALE-IDR", $CurrentTotalValueItemsForSale);
 			InsertKPI("STOCK-ITEMS-SALE-PCS", $CurrentTotalQtyItemsForSale);
 			echo '<tr class="striped_row">
 					<td class="number">' . "" . '</td>
@@ -2769,8 +2762,6 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			if ($CurrentTotalQtyItemsForSale != 0) {
 				$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
 			}
-			
-			InsertKPI("STOCK-AV-STCOST-ITEM-IDR", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
 					FROM  gltrans
@@ -2787,21 +2778,18 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}
 			InsertKPI("PO-ITEMS-NEXT-". $maxdays."-PCS", $ArrivingPCS);
 			InsertKPI("STOCK-COGS-NEXT-". $maxdays . "D-IDR", round($MyRow['cogs'],-6));
-			InsertKPI("STOCK-COGS-NEXT-". $maxdays . "D-PCS", round($MyRow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$MyRow['cogs'],-6);
 			InsertKPI("STOCK-DIFF-NEXT-". $maxdays . "D-IDR", $ExpectedDifferenceValueStock);
 			$ExpectedDifferenceQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost, -2);
 			}
-			InsertKPI("STOCK-DIFF-NEXT-". $maxdays . "D-PCS", $ExpectedDifferenceQtyStock);
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("STOCK-FUTURE-NEXT-". $maxdays . "D-IDR", $ExpectedFutureValueStock);
 			$ExpectedFutureQtyStock = 0;
 			if ($AverageItemCost != 0) {
 				$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			}
-			InsertKPI("STOCK-FUTURE-NEXT-". $maxdays . "D-PCS", $ExpectedFutureQtyStock);
 		}
 		echo '</tfooter>
 				</table>
@@ -3932,7 +3920,7 @@ if (DB_num_rows($Result) != 0){
 
 		$TotalAdjusted += $MyRow['totaladjusted'];
 		if ($Days == 30) {
-			InsertKPI('STADJ-' . $MyRow['reasonname'] . '-3D-PCS', $MyRow['totaladjusted']);
+			InsertKPI('STADJ-' . $MyRow['reasonid'] . '-3D-PCS', $MyRow['totaladjusted']);
 		}
 	}
 }
