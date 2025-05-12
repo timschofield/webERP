@@ -1356,6 +1356,9 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
 		prnMsg("Deleted klconsignment records in Production DB");
 
+		UpdateArchiveTablePeriod('klconsignment', $ArchiveToPeriod);
+		prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+
 		// count how many records are on klconsignment in webERP production DB
 		$EndRecords = GetNumberOfRecordsInTable('klconsignment', 'Production');
 		prnMsg('klconsignment table now contains ' . locale_number_format($EndRecords) . ' records. ' . locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
