@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a><br />';
 
 echo '<p class="page_title_text">
 	 <img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />
