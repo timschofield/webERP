@@ -3,14 +3,20 @@
 /**************************************************************************************************************
 Functions included in this file:
 -------------------------------
-ArchiveTableGltrans - Archives gltrans records from production DB to archive DB
-ArchiveTableLoctransfersObsoletes - Archives loctransfers for obsolete items from production DB to archive DB
-ArchiveTableStockmoves - Archives stockmoves records from production DB to archive DB
-ArchiveTableStockmovestaxes - Archives stockmovestaxes records with no corresponding stockmoves
-display - Displays the archive data form
-GetPeriodAlreadyArchived - Gets the period already archived for a specific table
-submit - Processes form submission and calls the archive functions
-UpdateArchiveTablePeriod - Updates the archived period for a specific table
+ArchiveTableBanktrans - Archives banktrans records from production DB to archive DB and creates consolidated entries.
+ArchiveTableCustallocns - Archives custallocns records from production DB to archive DB for which there is no corresponding debtortrans record.
+ArchiveTableDebtortrans - Archives debtortrans records from production DB to archive DB and creates consolidated entries.
+ArchiveTableDebtortranstaxes - Archives debtortranstaxes records from production DB to archive DB for which there is no corresponding debtortrans record.
+ArchiveTableGltrans - Archives gltrans records from production DB to archive DB and creates consolidated entries.
+ArchiveTableKlconsignment - Archives klconsignment records from production DB to archive DB.
+ArchiveTableLoctransfersObsoletes - Archives loctransfers records for obsolete items from production DB to archive DB.
+ArchiveTableStockmoves - Archives stockmoves records from production DB to archive DB.
+ArchiveTableStockmovestaxes - Archives stockmovestaxes records from production DB to archive DB for which there is no corresponding stockmoves record.
+display - Displays the archive data form.
+GetPeriodAlreadyArchived - Gets the period already archived for a specific table from the klarchivedtables table.
+ShowTableRows - Displays a table row with the name of a table and its record counts in both production and archive databases.
+submit - Processes form submission and calls the appropriate archive functions.
+UpdateArchiveTablePeriod - Updates the archived period for a specific table in the klarchivedtables table.
 **************************************************************************************************************/
 
 include('includes/session.php');
@@ -27,24 +33,35 @@ if (!isset($_POST['ArchiveGltransPeriod'])) {
 	$_POST['ArchiveGltransPeriod'] = -13;
 }
 
-if (!isset($_POST['ArchiveStockmovesPrd'])) {
-	$_POST['ArchiveStockmovesPrd'] = -13;
+if (!isset($_POST['ArchiveStockmovesPeriod'])) {
+	$_POST['ArchiveStockmovesPeriod'] = -13;
 }
 
-if (!isset($_POST['ArchiveDebtortransPrd'])) {
-	$_POST['ArchiveDebtortransPrd'] = -13;
+if (!isset($_POST['ArchiveDebtortransPeriod'])) {
+	$_POST['ArchiveDebtortransPeriod'] = -13;
 }
 
 if (!isset($_POST['ArchiveLoctransfersObsoletes'])) {
 	$_POST['ArchiveLoctransfersObsoletes'] = -13;
 }
 
+if (!isset($_POST['ArchiveBanktransPeriod'])) {
+	$_POST['ArchiveBanktransPeriod'] = -13;
+}
+
+if (!isset($_POST['ArchiveKlconsignmentPeriod'])) {
+	$_POST['ArchiveKlconsignmentPeriod'] = -13;
+}
+
 if (isset($_POST['submit'])) {
 	submit($Title, 
 		$_POST['ArchiveGltransPeriod'], 
-		$_POST['ArchiveStockmovesPrd'], 
+		$_POST['ArchiveStockmovesPeriod'], 
 		$_POST['ArchiveLoctransfersObsoletes'],
-		$_POST['ArchiveDebtortransPrd']);
+		$_POST['ArchiveDebtortransPeriod'],
+		$_POST['ArchiveBanktransPeriod'],
+		$_POST['ArchiveKlconsignmentPeriod']
+	);
 } else {
 	display($Title);
 }
@@ -52,26 +69,39 @@ if (isset($_POST['submit'])) {
 /**************************************************************************************************************
  * Submit function
  * 
- * Processes the form submission and calls the appropriate archive functions
- * 
- * @param string $Title The page title
- * @param int $ArchiveGltransPeriod The period to archive gltrans records up to
- * @param int $ArchiveStockmovesPrd The period to archive stockmoves records up to
- * @param int $ArchiveLoctransfers The period to archive loctransfers records up to
+ * Processes the form submission and calls the appropriate archive functions.
+ *
+ * @param string $Title The page title.
+ * @param int $ArchiveGltransPeriod The period to archive gltrans records up to.
+ * @param int $ArchiveStockmovesPeriod The period to archive stockmoves records up to.
+ * @param int $ArchiveLoctransfers The period to archive loctransfers records for obsolete items up to.
+ * @param int $ArchiveDebtortransPeriod The period to archive debtortrans records up to.
+ * @param int $ArchiveBanktransPeriod The period to archive banktrans records up to.
+ * @param int $ArchiveKlconsignmentPeriod The period to archive klconsignment records up to.
  * @return void
  **************************************************************************************************************/
-function submit($Title, $ArchiveGltransPeriod, $ArchiveStockmovesPrd, $ArchiveLoctransfers, $ArchiveDebtortransPrd) {
+function submit($Title, 
+				$ArchiveGltransPeriod, 
+				$ArchiveStockmovesPeriod,
+				$ArchiveLoctransfers,
+				$ArchiveDebtortransPeriod,
+				$ArchiveBanktransPeriod,
+				$ArchiveKlconsignmentPeriod) {
 
 	include('includes/header.php');
 	ArchiveTableGltrans($ArchiveGltransPeriod);
 
-	ArchiveTableStockmoves($ArchiveStockmovesPrd);
+	ArchiveTableStockmoves($ArchiveStockmovesPeriod);
 	ArchiveTableStockmovestaxes();
 
 	ArchiveTableLoctransfersObsoletes($ArchiveLoctransfers);
 
-	ArchiveTableDebtortrans($ArchiveDebtortransPrd);
+	ArchiveTableDebtortrans($ArchiveDebtortransPeriod);
 	ArchiveTableDebtortranstaxes();
+	ArchiveTableCustallocns();
+
+	ArchiveTableBanktrans($ArchiveBanktransPeriod);
+	ArchiveTableKlconsignment($ArchiveKlconsignmentPeriod);
 
 	include('includes/footer.php');
 
@@ -80,9 +110,9 @@ function submit($Title, $ArchiveGltransPeriod, $ArchiveStockmovesPrd, $ArchiveLo
 /**************************************************************************************************************
  * Display function
  * 
- * Displays the archive data form with options for selecting periods to archive
+ * Displays the archive data form with options for selecting periods to archive.
  *
- * @param string $Title The page title
+ * @param string $Title The page title.
  * @return void
  **************************************************************************************************************/
 function display($Title) {
@@ -108,54 +138,32 @@ function display($Title) {
 		</thead>
 		<tbody>';
 	
-	echo '<tr class="striped_row">
-			<td>' . _('gltrans') . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('gltrans', 'Production'), 0) . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('gltrans', 'Archive'), 0) . '</td>
-		</tr>';
-	
-	echo '<tr class="striped_row">
-			<td>' . _('stockmoves') . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('stockmoves', 'Production'), 0) . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('stockmoves', 'Archive'), 0) . '</td>
-		</tr>';
-	
-	echo '<tr class="striped_row">
-			<td>' . _('stockmovestaxes') . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('stockmovestaxes', 'Production'), 0) . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('stockmovestaxes', 'Archive'), 0) . '</td>
-		</tr>';
-	
-	echo '<tr class="striped_row">
-			<td>' . _('loctransfers') . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('loctransfers', 'Production'), 0) . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('loctransfers', 'Archive'), 0) . '</td>
-		</tr>';
-
-	echo '<tr class="striped_row">
-			<td>' . _('debtortrans') . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('debtortrans', 'Production'), 0) . '</td>
-			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('debtortrans', 'Archive'), 0) . '</td>
-		</tr>';
-
-	echo '<tr class="striped_row">
-		<td>' . _('debtortranstaxes') . '</td>
-		<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('debtortranstaxes', 'Production'), 0) . '</td>
-		<td class="number">' . locale_number_format(GetNumberOfRecordsInTable('debtortranstaxes', 'Archive'), 0) . '</td>
-	</tr>';
-
+	ShowTableRows('gltrans');
+	ShowTableRows('stockmoves');
+	ShowTableRows('stockmovestaxes');
+	ShowTableRows('loctransfers');
+	ShowTableRows('debtortrans');
+	ShowTableRows('debtortranstaxes');
+	ShowTableRows('custallocns');
+	ShowTableRows('banktrans');
+	ShowTableRows('klconsignment');
 	echo '</tbody></table><br/>';
 
 	$AlreadyArchivedGltransPeriod = GetPeriodAlreadyArchived('gltrans');
-	$AlreadyArchivedStockmovesPrd = GetPeriodAlreadyArchived('stockmoves');
-	$AlreadyArchivedLoctransfersPrd = GetPeriodAlreadyArchived('loctransfers');
+	$AlreadyArchivedStockmovesPeriod = GetPeriodAlreadyArchived('stockmoves');
+	$AlreadyArchivedLoctransfersPeriod = GetPeriodAlreadyArchived('loctransfers');
 	$AlreadyArchivedDebtorTransPeriod = GetPeriodAlreadyArchived('debtortrans');
+	$AlreadyArchivedDebtorTransPeriod = GetPeriodAlreadyArchived('debtortrans');
+	$AlreadyArchivedBankTransPeriod = GetPeriodAlreadyArchived('banktrans');
+	$AlreadyArchivedKlconsignmentPeriod = GetPeriodAlreadyArchived('klconsignment');
 
 	echo '<fieldset><legend>' . _('Archive Options') . '</legend>';
 	echo FieldToSelectOnePeriod('ArchiveGltransPeriod', $AlreadyArchivedGltransPeriod, _('Archive gltrans records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
-	echo FieldToSelectOnePeriod('ArchiveStockmovesPrd', $AlreadyArchivedStockmovesPrd, _('Archive stockmoves records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
-	echo FieldToSelectOnePeriod('ArchiveLoctransfersObsoletes', $AlreadyArchivedLoctransfersPrd, _('Archive loctransfers records for items maked as obsolete before or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
-	echo FieldToSelectOnePeriod('ArchiveDebtortransPrd', $AlreadyArchivedDebtorTransPeriod, _('Archive debtortrans records for customers marked as obsolete'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveStockmovesPeriod', $AlreadyArchivedStockmovesPeriod, _('Archive stockmoves records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveLoctransfersObsoletes', $AlreadyArchivedLoctransfersPeriod, _('Archive loctransfers records for items marked as obsolete before or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveDebtortransPeriod', $AlreadyArchivedDebtorTransPeriod, _('Archive debtortrans records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveBanktransPeriod', $AlreadyArchivedBankTransPeriod, _('Archive banktrans records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
+	echo FieldToSelectOnePeriod('ArchiveKlconsignmentPeriod', $AlreadyArchivedKlconsignmentPeriod, _('Archive klconsignment records older or equal than'), '', 'NEWER_OR_EQUAL_THAN_SELECTED', '', true, false);
 	echo '</fieldset>';
 	
 	echo OneButtonCenteredForm('submit', $Title);
@@ -170,10 +178,10 @@ function display($Title) {
 /**************************************************************************************************************
  * ArchiveTableGltrans function
  * 
- * Archives gltrans records from production DB to archive DB up to the specified period
- * Creates consolidated accounting entries for archived records
+ * Archives gltrans records from production DB to archive DB up to the specified period.
+ * Creates consolidated accounting entries for archived records.
  *
- * @param int $ArchiveToPeriod The period up to which records should be archived
+ * @param int $ArchiveToPeriod The period up to which records should be archived.
  * @return void
  **************************************************************************************************************/
 function ArchiveTableGltrans($ArchiveToPeriod) {
@@ -191,7 +199,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 	$Result = DB_query_archive($SQL);	
 	if (DB_num_rows($Result) != 0) {
 		$MyRow = DB_fetch_array($Result);
-		$PeriodAlreadyArchived = ($MyRow['archivedperiod'] === null) ? $ArchiveToPeriod : $MyRow['archivedperiod'];
+		$PeriodAlreadyArchived = ($MyRow['archivedperiod'] === null) ? -99 : $MyRow['archivedperiod'];
 	} else {
 		$ErrorsFound = true;
 	}
@@ -213,9 +221,9 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 						amount,
 						jobref
 				FROM gltrans
+				ORDER BY periodno,
 				WHERE periodno > " . $PeriodAlreadyArchived . "
 					AND periodno <= " . $ArchiveToPeriod . "
-				ORDER BY periodno,
 						trandate,
 						account";
 		$Result = DB_query($SQL);	
@@ -322,9 +330,9 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 /**************************************************************************************************************
  * ArchiveTableStockmoves function
  * 
- * Archives stockmoves records from production DB to archive DB up to the specified period
+ * Archives stockmoves records from production DB to archive DB up to the specified period.
  *
- * @param int $ArchiveToPeriod The period up to which records should be archived
+ * @param int $ArchiveToPeriod The period up to which records should be archived.
  * @return void
  **************************************************************************************************************/
 function ArchiveTableStockmoves($ArchiveToPeriod) {
@@ -342,7 +350,7 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 	$Result = DB_query_archive($SQL);	
 	if (DB_num_rows($Result) != 0) {
 		$MyRow = DB_fetch_array($Result);
-		$PeriodAlreadyArchived = ($MyRow['archivedperiod'] === null) ? $ArchiveToPeriod : $MyRow['archivedperiod'];
+		$PeriodAlreadyArchived = ($MyRow['archivedperiod'] === null) ? -99 : $MyRow['archivedperiod'];
 	} else {
 		$ErrorsFound = true;
 	}
@@ -456,7 +464,7 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
  * ArchiveTableStockmovestaxes function
  * 
  * Archives stockmovestaxes records from production DB to archive DB for which there is no corresponding
- * stockmoves record
+ * stockmoves record.
  *
  * @return void
  **************************************************************************************************************/
@@ -530,9 +538,9 @@ function ArchiveTableStockmovestaxes() {
 /**************************************************************************************************************
  * ArchiveTableLoctransfersObsoletes function
  * 
- * Archives loctransfers records for obsolete items from production DB to archive DB up to the specified period
+ * Archives loctransfers records for obsolete items from production DB to archive DB up to the specified period.
  *
- * @param int $ArchiveToPeriod The period up to which obsolete item transfers should be archived
+ * @param int $ArchiveToPeriod The period up to which obsolete item transfers should be archived.
  * @return void
  **************************************************************************************************************/
 function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
@@ -624,10 +632,10 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 /**************************************************************************************************************
  * GetPeriodAlreadyArchived function
  * 
- * Gets the period already archived for a specific table from the klarchivedtables table
+ * Gets the period already archived for a specific table from the klarchivedtables table.
  *
- * @param string $TableName The name of the table to get the archived period for
- * @return int The period number already archived for the specified table
+ * @param string $TableName The name of the table to get the archived period for.
+ * @return int The period number already archived for the specified table.
  **************************************************************************************************************/
 function GetPeriodAlreadyArchived($TableName) {
 	$PeriodAlreadyArchived = -13;
@@ -648,10 +656,10 @@ function GetPeriodAlreadyArchived($TableName) {
 /**************************************************************************************************************
  * UpdateArchiveTablePeriod function
  * 
- * Updates the archived period for a specific table in the klarchivedtables table
+ * Updates the archived period for a specific table in the klarchivedtables table.
  *
- * @param string $TableName The name of the table to update the archived period for
- * @param int $Period The new period to set as archived for the table
+ * @param string $TableName The name of the table to update the archived period for.
+ * @param int $Period The new period to set as archived for the table.
  * @return void
  **************************************************************************************************************/
 function UpdateArchiveTablePeriod($TableName, $Period) {
@@ -661,12 +669,14 @@ function UpdateArchiveTablePeriod($TableName, $Period) {
 	DB_query($SQLUpdate);
 } // End of function UpdateArchiveTablePeriod()
 
+
 /**************************************************************************************************************
  * ArchiveTableDebtortrans function
  * 
- * Archives debtortrans records from production DB to archive DB up to the specified period
+ * Archives debtortrans records from production DB to archive DB up to the specified period.
+ * Creates consolidated accounting entries for archived records.
  *
- * @param int $ArchiveToPeriod The period up to which records should be archived
+ * @param int $ArchiveToPeriod The period up to which records should be archived.
  * @return void
  **************************************************************************************************************/
 function ArchiveTableDebtortrans($ArchiveToPeriod) {
@@ -676,15 +686,27 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 	// count how many records are on debtortrans in webERP production DB
 	$StartRecords = GetNumberOfRecordsInTable('debtortrans', 'Production');
 
+	// search for the newest date already archived in Archive database table
+	$PeriodAlreadyArchived = -99;
+	$SQL = "SELECT MAX(prd) AS archivedperiod
+			FROM debtortrans";
+
+	$Result = DB_query_archive($SQL);	
+	if (DB_num_rows($Result) != 0) {
+		$MyRow = DB_fetch_array($Result);
+		$PeriodAlreadyArchived = ($MyRow['archivedperiod'] === null) ? -99 : $MyRow['archivedperiod'];
+	} else {
+		$ErrorsFound = true;
+	}
+
 	prnMsg('debtortrans table contains ' . locale_number_format($StartRecords) . ' records');
-	prnMsg('Archive debtortrans records for customers marked as obsolete ' . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+	prnMsg('Archive debtortrans records for transactions older or equal than period ' . MonthAndYearFromPeriodNo($ArchiveToPeriod));
 
 	// select the webERP debtortrans table to be copied into Archive DB
-	$ArchiveToEndDate = EndDateSQLFromPeriodNo($ArchiveToPeriod);
 	$SQL = "SELECT id,
 					transno,
 					type,
-					debtortrans.debtorno,
+					debtorno,
 					branchcode,
 					trandate,
 					inputdate,
@@ -708,12 +730,13 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 					salesperson,
 					balance
 				FROM debtortrans
-			INNER JOIN debtorsmaster
-				ON debtortrans.debtorno = debtorsmaster.debtorno
-			WHERE debtorsmaster.lastpaiddate <=  '" . $ArchiveToEndDate . "'
-				AND (debtorsmaster.typeid = 7
-				OR debtorsmaster.typeid = 11)";
-	$Result = DB_query($SQL);	
+				WHERE prd > " . $PeriodAlreadyArchived . "
+					AND prd <= " . $ArchiveToPeriod . "
+				ORDER BY prd,
+					trandate,
+					debtorno";
+
+	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the debtortrans record');
 	$DbgMsg = _('The SQL that was used to insert the debtortrans record was');		
 	if (DB_num_rows($Result) != 0) {
@@ -779,16 +802,95 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 			}
 		}
 		prnMsg("Copied into Archive DB " . locale_number_format($RecordCounter) . " records of debtortrans table");
-		
-		$SQLDelete = "DELETE debtortrans 
-					FROM debtortrans 
-					INNER JOIN debtorsmaster
-						ON debtortrans.debtorno = debtorsmaster.debtorno
-					WHERE debtorsmaster.lastpaiddate <= '" . $ArchiveToEndDate . "'
-						AND (debtorsmaster.typeid = 7
-						OR debtorsmaster.typeid = 11)";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
-		prnMsg("Deleted debtortrans records in Production DB");
+
+	// Now calculate consolidated values for each period and account, delete the details and write the consolidated value on webERP database
+		$SQL = "SELECT prd,
+						debtorno,
+						MAX(trandate) AS maxdate,
+						AVG(rate) AS rate_consolidated,
+						SUM(ovamount) AS ovamount_consolidated,
+						SUM(ovgst) AS ovgst_consolidated,
+						SUM(ovfreight) AS ovfreight_consolidated,
+						SUM(ovdiscount) AS ovdiscount_consolidated,
+						SUM(diffonexch) AS diffonexch_consolidated,
+						SUM(alloc) AS alloc_consolidated,
+						SUM(balance) AS balance_consolidated
+				FROM debtortrans
+				WHERE prd > " . $PeriodAlreadyArchived . "
+					AND prd <= " . $ArchiveToPeriod . "
+				GROUP BY prd,
+						debtorno
+				ORDER BY prd ASC,
+						debtorno ASC";
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) != 0) {
+				while ($MyConsolidatedRow = DB_fetch_array($Result)) {
+					
+					$SQLDelete = "DELETE FROM debtortrans 
+									WHERE prd = " . $MyConsolidatedRow['prd'] . "
+										AND debtorno = '" . $MyConsolidatedRow['debtorno'] . "'";
+					DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+
+					$Transno = GetNextTransNo(1001);
+					$SQLInsert = "INSERT INTO debtortrans 
+								(transno,
+								type,
+								debtorno,
+								branchcode,
+								trandate,
+								inputdate,
+								prd,
+								settled,
+								reference,
+								tpe,
+								order_,
+								rate,
+								ovamount,
+								ovgst,
+								ovfreight,
+								ovdiscount,
+								diffonexch,
+								alloc,
+								invtext,
+								shipvia,
+								edisent,
+								consignment,
+								packages,
+								salesperson,
+								balance
+							) VALUES (
+							'" . $Transno . "',
+							'" . '1001' . "',
+							'" . $MyConsolidatedRow['debtorno'] . "',
+							'" . $MyConsolidatedRow['debtorno'] . "',
+							'" . $MyConsolidatedRow['maxdate'] . "',
+							'" . $MyConsolidatedRow['maxdate'] . "',
+							'" . $MyConsolidatedRow['prd'] . "',
+							'" . '0' . "',
+							'" . 'CONSOLIDATED ACCOUNTING' . "',
+							'" . '' . "',
+							'" . '' . "',
+							'" . $MyConsolidatedRow['rate_consolidated'] . "',
+							'" . $MyConsolidatedRow['ovamount_consolidated'] . "',
+							'" . $MyConsolidatedRow['ovgst_consolidated'] . "',
+							'" . $MyConsolidatedRow['ovfreight_consolidated'] . "',
+							'" . $MyConsolidatedRow['ovdiscount_consolidated'] . "',
+							'" . $MyConsolidatedRow['diffonexch_consolidated'] . "',
+							'" . $MyConsolidatedRow['alloc_consolidated'] . "',
+							'" . 'CONSOLIDATED ACCOUNTING' . "',
+							'" . '0' . "',
+							'" . '0' . "',
+							'" . '' . "',
+							'" . '1' . "',
+							'" . '999' . "',
+							'" . $MyConsolidatedRow['balance_consolidated'] . "')";
+					DB_query($SQLInsert, $ErrMsg, $DbgMsg);
+				}
+				prnMsg("Inserted consolidated accounting records in production DB debtortrans table");
+
+				UpdateArchiveTablePeriod('debtortrans', $ArchiveToPeriod);
+				prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+			}
 		
 		UpdateArchiveTablePeriod('debtortrans', $ArchiveToPeriod);
 		prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
@@ -809,11 +911,13 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 	}
 }
 
+
+
 /**************************************************************************************************************
  * ArchiveTableDebtortranstaxes function
  * 
  * Archives debtortranstaxes records from production DB to archive DB for which there is no corresponding
- * debtortrans record
+ * debtortrans record.
  *
  * @return void
  **************************************************************************************************************/
@@ -879,5 +983,393 @@ function ArchiveTableDebtortranstaxes() {
 	}
 }
 
+
+/**************************************************************************************************************
+ * ArchiveTableCustallocns function
+ * 
+ * Archives custallocns records from production DB to archive DB for which there is no corresponding
+ * debtortrans record.
+ *
+ * @return void
+ **************************************************************************************************************/
+function ArchiveTableCustallocns() {
+	DB_Txn_Begin();
+	$ErrorsFound = false; // hope for the best
+
+	// count how many records are on custallocns in webERP production DB
+	$StartRecords = GetNumberOfRecordsInTable('custallocns', 'Production');
+
+	prnMsg('custallocns table contains ' . locale_number_format($StartRecords) . ' records');
+
+	$SQL = "SELECT custallocns.id,
+				custallocns.amt,
+				custallocns.datealloc,
+				custallocns.transid_allocfrom,
+				custallocns.transid_allocto
+			FROM custallocns
+			LEFT JOIN debtortrans
+				ON custallocns.transid_allocfrom = debtortrans.id
+			WHERE debtortrans.id IS NULL";
+	$Result = DB_query($SQL);
+	$ErrMsg = _('An error occurred in inserting the custallocns record');
+	$DbgMsg = _('The SQL that was used to insert the custallocns record was');
+
+	if (DB_num_rows($Result) != 0) {
+		// select the webERP debtortrans table to be copied into Archive DB
+		$RecordCounter = 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (!DataExistsInArchive('custallocns', 'id', $MyRow['id'])){
+				$SQLInsert = "INSERT INTO custallocns
+								(id,
+								amt,
+								datealloc,
+								transid_allocfrom,
+								transid_allocto
+							) VALUES (
+							'" . $MyRow['id'] . "',
+							'" . $MyRow['amt'] . "',
+							'" . $MyRow['datealloc'] . "',
+							'" . $MyRow['transid_allocfrom'] . "',
+							'" . $MyRow['transid_allocto'] . "')";
+				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				$RecordCounter++;
+			}
+		}
+		prnMsg("Copied into Archive DB " . locale_number_format($RecordCounter) . " records of custallocns table");
+
+		$SQLDelete = "DELETE custallocns
+					FROM custallocns
+					LEFT JOIN debtortrans
+						ON custallocns.transid_allocfrom = debtortrans.id
+					WHERE debtortrans.id IS NULL";
+		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		prnMsg("Deleted custallocns records in webERP production DB");
+
+		// count how many records are on custallocns in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('custallocns', 'Production');
+		prnMsg('custallocns table now contains ' . locale_number_format($EndRecords) . ' records. ' . locale_number_format($StartRecords - $EndRecords) . ' records archived', 'success');
+	} else {
+		prnMsg("custallocns table: Nothing to archive", 'warn');
+		$ErrorsFound = true;
+	}
+
+	if (!$ErrorsFound) {
+		$Result = DB_Txn_Commit();
+	} else {
+		$Result = DB_Txn_Rollback();
+	}
+}
+
+
+/**************************************************************************************************************
+ * ArchiveTableBanktrans function
+ * 
+ * Archives banktrans records from production DB to archive DB up to the specified period.
+ * Creates consolidated accounting entries for archived records.
+ *
+ * @param int $ArchiveToPeriod The period up to which records should be archived.
+ * @return void
+ **************************************************************************************************************/
+function ArchiveTableBanktrans($ArchiveToPeriod) {
+	DB_Txn_Begin();
+	$ErrorsFound = false; // hope for the best
+	
+	$ArchiveToDate = EndDateSQLFromPeriodNo($ArchiveToPeriod);
+
+	// count how many records are on banktrans in webERP production DB
+	$StartRecords = GetNumberOfRecordsInTable('banktrans', 'Production');
+
+	// search for the newest date already archived in Archive database table
+	$DateAlreadyArchived = "1000-01-01";
+	$SQL = "SELECT MAX(transdate) AS archiveddate
+			FROM banktrans";
+
+	$Result = DB_query_archive($SQL);	
+	if (DB_num_rows($Result) != 0) {
+		$MyRow = DB_fetch_array($Result);
+		$DateAlreadyArchived = ($MyRow['archiveddate'] === null) ? "1000-01-01" : $MyRow['archiveddate'];
+	} else {
+		$ErrorsFound = true;
+	}
+
+	prnMsg('banktrans table contains ' . locale_number_format($StartRecords) . ' records');
+	prnMsg('Archive banktrans records for transactions older or equal than period ' . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+
+	// select the webERP banktrans table to be copied into Archive DB
+	$SQL = "SELECT banktransid,
+					type,
+					transno,
+					bankact,
+					ref,
+					amountcleared,
+					exrate,
+					functionalexrate,
+					transdate,
+					banktranstype,
+					amount,
+					currcode,
+					chequeno
+				FROM banktrans
+				WHERE transdate > '" . $DateAlreadyArchived . "'
+					AND transdate <= '" . $ArchiveToDate . "'
+				ORDER BY transdate,
+					bankact,
+					currcode";
+
+	$Result = DB_query($SQL);
+	$ErrMsg = _('An error occurred in inserting the banktrans record');
+	$DbgMsg = _('The SQL that was used to insert the banktrans record was');		
+	if (DB_num_rows($Result) != 0) {
+		$RecordCounter = 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (!DataExistsInArchive('banktrans', 'banktransid', $MyRow['banktransid'])){
+				$SQLInsert = "INSERT INTO banktrans 
+								(banktransid,
+								type,
+								transno,
+								bankact,
+								ref,
+								amountcleared,
+								exrate,
+								functionalexrate,
+								transdate,
+								banktranstype,
+								amount,
+								currcode,
+								chequeno
+							) VALUES (
+							'" . $MyRow['banktransid'] . "',
+							'" . $MyRow['type'] . "',
+							'" . $MyRow['transno'] . "',
+							'" . $MyRow['bankact'] . "',
+							'" . DB_escape_string($MyRow['ref'] ?? '') . "',
+							'" . $MyRow['amountcleared'] . "',
+							'" . $MyRow['exrate'] . "',
+							'" . $MyRow['functionalexrate'] . "',
+							'" . $MyRow['transdate'] . "',
+							'" . DB_escape_string($MyRow['banktranstype'] ?? '') . "',
+							'" . $MyRow['amount'] . "',
+							'" . DB_escape_string($MyRow['currcode'] ?? '') . "',
+							'" . $MyRow['chequeno'] . "')";
+				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				$RecordCounter++;
+			}
+		}
+		prnMsg("Copied into Archive DB " . locale_number_format($RecordCounter) . " records of banktrans table");
+
+		// Now calculate consolidated values for each period and bank account, delete the details and write the consolidated value on webERP database
+		$SQL = "SELECT transdate,
+						bankact,
+						SUM(amountcleared) AS amountcleared_consolidated,
+						AVG(exrate) AS exrate_consolidated,
+						AVG(functionalexrate) AS functionalexrate_consolidated,
+						SUM(amount) AS amount_consolidated,
+						currcode
+				FROM banktrans
+				WHERE transdate > '" . $DateAlreadyArchived . "'
+					AND transdate <= '" . $ArchiveToDate . "'
+				GROUP BY transdate,
+						bankact,
+						currcode
+				ORDER BY transdate ASC,
+						bankact ASC,
+						currcode ASC";
+
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) != 0) {
+				while ($MyConsolidatedRow = DB_fetch_array($Result)) {
+
+					$SQLDelete = "DELETE FROM banktrans
+									WHERE transdate = '" . $MyConsolidatedRow['transdate'] . "'
+										AND bankact = '" . $MyConsolidatedRow['bankact'] . "'
+										AND currcode = '" . $MyConsolidatedRow['currcode'] . "'";
+					DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+
+					$Transno = GetNextTransNo(1002);
+					$SQLInsert = "INSERT INTO banktrans 
+								(type,
+								transno,
+								bankact,
+								ref,
+								amountcleared,
+								exrate,
+								functionalexrate,
+								transdate,
+								banktranstype,
+								amount,
+								currcode,
+								chequeno
+							) VALUES (
+							'" . '1002' . "',
+							'" . $Transno . "',
+							'" . $MyConsolidatedRow['bankact'] . "',
+							'" . 'CONSOLIDATED ACCOUNTING' . "',
+							'" . $MyConsolidatedRow['amountcleared_consolidated'] . "',
+							'" . $MyConsolidatedRow['exrate_consolidated'] . "',
+							'" . $MyConsolidatedRow['functionalexrate_consolidated'] . "',
+							'" . $MyConsolidatedRow['transdate'] . "',
+							'" . 'Cash' . "',
+							'" . $MyConsolidatedRow['amount_consolidated'] . "',
+							'" . $MyConsolidatedRow['currcode'] . "',
+							'" . '' . "')";
+					DB_query($SQLInsert, $ErrMsg, $DbgMsg);
+				}
+				prnMsg("Inserted consolidated accounting records in production DB banktrans table");
+
+				UpdateArchiveTablePeriod('banktrans', $ArchiveToPeriod);
+				prnMsg("Updated klarchivedtables records to reflect the new archive period: " . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+			}
+
+		// count how many records are on banktrans in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('banktrans', 'Production');
+		prnMsg('banktrans table now contains ' . locale_number_format($EndRecords) . ' records. ' . locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
+
+	} else {
+		prnMsg("banktrans table: Nothing to archive", 'warn');
+		$ErrorsFound = true;
+	}
+
+	if (!$ErrorsFound) {
+		$Result = DB_Txn_Commit();
+	} else {
+		$Result = DB_Txn_Rollback();
+	}
+}
+
+/**************************************************************************************************************
+ * ShowTableRows function
+ * 
+ * Displays a table row with the name of a table and its record counts in both production and archive databases.
+ *
+ * @param string $TableName The name of the table to display information for.
+ * @return void
+ **************************************************************************************************************/
+function ShowTableRows($TableName) {
+	echo '<tr class="striped_row">
+			<td>' . _($TableName) . '</td>
+			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable($TableName, 'Production'), 0) . '</td>
+			<td class="number">' . locale_number_format(GetNumberOfRecordsInTable($TableName, 'Archive'), 0) . '</td>
+		</tr>';
+}
+
+/**************************************************************************************************************
+ * ArchiveTableKlconsignment function
+ * 
+ * Archives klconsignment records from production DB to archive DB up to the specified period.
+ * The period is used to determine the end date for archiving records based on their 'saledate'.
+ *
+ * @param int $ArchiveToPeriod The period up to which records should be archived.
+ * @return void
+ **************************************************************************************************************/
+function ArchiveTableKlconsignment($ArchiveToPeriod) {
+	DB_Txn_Begin();
+	$ErrorsFound = false; // hope for the best
+	
+	$ArchiveToDate = EndDateSQLFromPeriodNo($ArchiveToPeriod);
+
+	// count how many records are on klconsignment in webERP production DB
+	$StartRecords = GetNumberOfRecordsInTable('klconsignment', 'Production');
+
+	// search for the newest date already archived in Archive database table
+	$DateAlreadyArchived = "1000-01-01";
+	$SQL = "SELECT MAX(saledate) AS archiveddate
+			FROM klconsignment";
+
+	$Result = DB_query_archive($SQL);
+	if (DB_num_rows($Result) != 0) {
+		$MyRow = DB_fetch_array($Result);
+		$DateAlreadyArchived = ($MyRow['archiveddate'] === null) ? "1000-01-01" : $MyRow['archiveddate'];
+	} else {
+		$ErrorsFound = true;
+	}
+
+	prnMsg('klconsignment table contains ' . locale_number_format($StartRecords) . ' records');
+	prnMsg('Archive klconsignment records for transactions older or equal than period ' . MonthAndYearFromPeriodNo($ArchiveToPeriod));
+
+	// select the webERP klconsignment table to be copied into Archive DB
+	$SQL = "SELECT idconsignment,
+					partnercode,
+					companycode,
+					saledate,
+					invoice,
+					debtorno,
+					stockid,
+					qty,
+					retailprice,
+					consignmentprice,
+					cogsadu,
+					standardcost,
+					invoicedtopartner,
+					fakturpajakdate
+				FROM klconsignment
+				WHERE saledate > '" . $DateAlreadyArchived . "'
+					AND saledate <= '" . $ArchiveToDate . "'
+				ORDER BY saledate,
+					idconsignment";
+
+	$Result = DB_query($SQL);
+	$ErrMsg = _('An error occurred in inserting the klconsignment record');
+	$DbgMsg = _('The SQL that was used to insert the klconsignment record was');
+	if (DB_num_rows($Result) != 0) {
+		$RecordCounter = 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (!DataExistsInArchive('klconsignment', 'idconsignment', $MyRow['idconsignment'])){
+				$SQLInsert = "INSERT INTO klconsignment
+								(idconsignment,
+									partnercode,
+									companycode,
+									saledate,
+									invoice,
+									debtorno,
+									stockid,
+									qty,
+									retailprice,
+									consignmentprice,
+									cogsadu,
+									standardcost,
+									invoicedtopartner,
+									fakturpajakdate
+							) VALUES (
+							'" . $MyRow['idconsignment'] . "',
+							'" . $MyRow['partnercode'] . "',
+							'" . $MyRow['companycode'] . "',
+							'" . $MyRow['saledate'] . "',
+							'" . DB_escape_string($MyRow['invoice'] ?? '') . "',
+							'" . $MyRow['debtorno'] . "',
+							'" . $MyRow['stockid'] . "',
+							'" . $MyRow['qty'] . "',
+							'" . $MyRow['retailprice'] . "',
+							'" . $MyRow['consignmentprice'] . "',
+							'" . $MyRow['cogsadu'] . "',
+							'" . $MyRow['standardcost'] . "',
+							'" . $MyRow['invoicedtopartner'] . "',
+							'" . $MyRow['fakturpajakdate'] . "')";
+				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				$RecordCounter++;
+			}
+		}
+		prnMsg("Copied into Archive DB " . locale_number_format($RecordCounter) . " records of klconsignment table");
+
+		$SQLDelete = "DELETE FROM klconsignment
+					WHERE saledate > '" . $DateAlreadyArchived . "'
+						AND saledate <= '" . $ArchiveToDate . "'";
+		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		prnMsg("Deleted klconsignment records in Production DB");
+
+		// count how many records are on klconsignment in webERP production DB
+		$EndRecords = GetNumberOfRecordsInTable('klconsignment', 'Production');
+		prnMsg('klconsignment table now contains ' . locale_number_format($EndRecords) . ' records. ' . locale_number_format($StartRecords - $EndRecords) . ' records saved', 'success');
+
+	} else {
+		prnMsg("klconsignment table: Nothing to archive", 'warn');
+		$ErrorsFound = true;
+	}
+
+	if (!$ErrorsFound) {
+		$Result = DB_Txn_Commit();
+	} else {
+		$Result = DB_Txn_Rollback();
+	}
+}
 
 ?>

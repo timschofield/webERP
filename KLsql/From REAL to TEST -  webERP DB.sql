@@ -40,7 +40,7 @@ TRUNCATE test_erp.`bankaccountusers`;
 INSERT INTO test_erp.bankaccountusers SELECT * FROM kurakura_kl_erp.bankaccountusers;
 
 TRUNCATE test_erp.`banktrans`;
-/*INSERT INTO test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans; */
+INSERT INTO test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans; 
 
 TRUNCATE test_erp.`bom`;
 INSERT INTO test_erp.bom SELECT * FROM kurakura_kl_erp.bom; 
@@ -91,7 +91,7 @@ TRUNCATE test_erp.`currencies`;
 INSERT INTO test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE test_erp.`custallocns`;
-INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2025-01-01'; 
+INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns; 
 
 TRUNCATE test_erp.`custbranch`;
 INSERT INTO test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -237,7 +237,7 @@ TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl; 
 
 TRUNCATE test_erp.`klconsignment`;
-INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment WHERE saledate >= '2025-01-01'; 
+INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment; 
 
 TRUNCATE test_erp.`klfreeexchanges`;
 /*INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;*/

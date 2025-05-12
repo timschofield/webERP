@@ -1,7 +1,22 @@
 SET FOREIGN_KEY_CHECKS=0;
 
+TRUNCATE test_erp_archive.`banktrans`;
+INSERT INTO test_erp_archive.banktrans SELECT * FROM kl_erp_archive.banktrans;
+
+TRUNCATE test_erp_archive.`custallocns`;
+INSERT INTO test_erp_archive.custallocns SELECT * FROM kl_erp_archive.custallocns;
+
+TRUNCATE test_erp_archive.`debtortrans`;
+INSERT INTO test_erp_archive.debtortrans SELECT * FROM kl_erp_archive.debtortrans;
+
+TRUNCATE test_erp_archive.`debtortranstaxes`;
+INSERT INTO test_erp_archive.debtortranstaxes SELECT * FROM kl_erp_archive.debtortranstaxes;
+
 TRUNCATE test_erp_archive.`gltrans`;
 INSERT INTO test_erp_archive.gltrans SELECT * FROM kl_erp_archive.gltrans;
+
+TRUNCATE test_erp_archive.`klconsignment`;
+INSERT INTO test_erp_archive.klconsignment SELECT * FROM kl_erp_archive.klconsignment;
 
 TRUNCATE test_erp_archive.`loctransfers`;
 INSERT INTO test_erp_archive.loctransfers SELECT * FROM kl_erp_archive.loctransfers;
