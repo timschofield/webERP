@@ -642,7 +642,10 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 }
 
 if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edit Component
-	echo '<a class="toplink href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>';
+	# this _should_ work but does not seem to
+    #echo '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>';
+    # so instead will use filename directly (and also save cycles)
+    echo '<a href="' . $RootPath . '/BOMs.php" class="toplink">' . _('Select a Different BOM') . '</a><br />';
 
 	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', $Title, '
