@@ -28,7 +28,7 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 		_('Search') . '" />' . ' ' .
 		$Title . '</p>';
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a><br />';
 
 include('includes/SQL_CommonFunctions.inc');
 
