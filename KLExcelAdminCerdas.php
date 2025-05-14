@@ -93,7 +93,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 				WHERE stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND (stockmaster.discontinued = 0
 						 OR (stockmaster.discontinued = 1
-							AND stockmaster.date_updated >= DATE_SUB(CURRENT_DATE, INTERVAL 30 DAY))
+							AND stockmaster.date_updated >= DATE_SUB(CURRENT_DATE, INTERVAL 10 DAY))
 						)" . 
 					$SQLTypeOfShop . "
 				ORDER BY stockmaster.stockid";
