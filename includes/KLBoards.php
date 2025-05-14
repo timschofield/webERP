@@ -1676,14 +1676,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			
 			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
 
-			// phasing out these codes, don't want to buy anymore
-			if (($MyRow['stockid'] == "PKPB02-L")
-				OR ($MyRow['stockid'] == "PKPB02-M")
-				OR ($MyRow['stockid'] == "PKPB02-S")
-				OR ($MyRow['stockid'] == "PKSB03")){
-				$QtyToOrder = 0;
-			}
-
 			if (($QtyNeeded > 0) OR ($ShowAll)){
 				if ($ShowHeader){
 					if ($Category == 'SHPACK'){
