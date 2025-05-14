@@ -271,18 +271,6 @@ if (isset($_POST['OrderItems'])
 						case 'PKSB04-S':
 							$_POST['BlinkShoppingBag04S']++;
 							break;
-						case 'PKPB02-L':
-							$_POST['OutletPouchBag02L']++;
-							break;
-						case 'PKPB02-M':
-							$_POST['OutletPouchBag02M']++;
-							break;
-						case 'PKPB02-S':
-							$_POST['OutletPouchBag02S']++;
-							break;
-						case 'PKSB03':
-							$_POST['OutletShoppingBag03M']++;
-							break;
 					}
 				} else {
 					// it's not packaging, so a sold item
@@ -493,11 +481,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	$TotalNumberOfBoxes = $_POST['PackagingBox01L'] + $_POST['PackagingBox01M'] + $_POST['PackagingBox01S']
 						+ $_POST['PackagingBox02L'] + $_POST['PackagingBox02M'] + $_POST['PackagingBox02S'];
 	$TotalNumberOfShoppingBags = $_POST['ShoppingBag02S'] + $_POST['ShoppingBag02M'] +
-								$_POST['BlinkShoppingBag04L'] + $_POST['BlinkShoppingBag04M'] + $_POST['BlinkShoppingBag04S'] +
-								$_POST['OutletShoppingBag03M'];
+								$_POST['BlinkShoppingBag04L'] + $_POST['BlinkShoppingBag04M'] + $_POST['BlinkShoppingBag04S'];
 	$TotalNumberOfPouchBags = $_POST['PackagingPouchBag01L'] + $_POST['PackagingPouchBag01M'] + $_POST['PackagingPouchBag01S'] +
-							$_POST['BlinkPouchBag03XL'] + $_POST['BlinkPouchBag03L'] + $_POST['BlinkPouchBag03M'] + $_POST['BlinkPouchBag03S'] +
-							$_POST['OutletPouchBag02L'] + $_POST['OutletPouchBag02M'] + $_POST['OutletPouchBag02S'];
+							$_POST['BlinkPouchBag03XL'] + $_POST['BlinkPouchBag03L'] + $_POST['BlinkPouchBag03M'] + $_POST['BlinkPouchBag03S'];
 
 	//check number of payment systems used in this transaction.
 	$PaymentSystemsUsed = 0;
@@ -1592,15 +1578,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			AdjustPackagingMovement("PKSB04-S", $_POST['BlinkShoppingBag04S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 		}
 
-		if (($_SESSION['TypeLoc'] == "SHOPOU")
-			OR ($_SESSION['TypeLoc'] == "SHOPKL")
-			OR ($_SESSION['TypeLoc'] == "SHOPBL")) {
-			AdjustPackagingMovement("PKPB02-L", $_POST['OutletPouchBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
-			AdjustPackagingMovement("PKPB02-M", $_POST['OutletPouchBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
-			AdjustPackagingMovement("PKPB02-S", $_POST['OutletPouchBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
-
-			AdjustPackagingMovement("PKSB03", $_POST['OutletShoppingBag03M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
-		}
 		/*	End account for the packaging */
 
 		DB_Txn_Commit();

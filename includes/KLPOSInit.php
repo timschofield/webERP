@@ -93,9 +93,6 @@ if (!isset($_POST['BlinkShoppingBag04M'])){
 if (!isset($_POST['BlinkShoppingBag04S'])){
 	$_POST['BlinkShoppingBag04S'] =0;
 }
-if (!isset($_POST['OutletShoppingBag03M'])){
-	$_POST['OutletShoppingBag03M'] =0;
-}
 
 if (!isset($_POST['PackagingPouchBag01L'])){
 	$_POST['PackagingPouchBag01L'] =0;
@@ -117,15 +114,6 @@ if (!isset($_POST['BlinkPouchBag03M'])){
 }
 if (!isset($_POST['BlinkPouchBag03S'])){
 	$_POST['BlinkPouchBag03S'] =0;
-}
-if (!isset($_POST['OutletPouchBag02L'])){
-	$_POST['OutletPouchBag02L'] =0;
-}
-if (!isset($_POST['OutletPouchBag02M'])){
-	$_POST['OutletPouchBag02M'] =0;
-}
-if (!isset($_POST['OutletPouchBag02S'])){
-	$_POST['OutletPouchBag02S'] =0;
 }
 
 ?>

@@ -967,26 +967,6 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 			$TextToPrint .= $NewLine;
 		}
 	}
-	if (($_SESSION['TypeLoc'] == "SHOPOU")
-		OR ($_SESSION['TypeLoc'] == "SHOPKL")
-		OR ($_SESSION['TypeLoc'] == "SHOPBL")){
-		if ($_POST['OutletPouchBag02L'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-L: ". $_POST['OutletPouchBag02L'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletPouchBag02M'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-M: ". $_POST['OutletPouchBag02M'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletPouchBag02S'] != 0){
-			$TextToPrint .= "Outlet Pouchbag-S: ". $_POST['OutletPouchBag02S'] . " pouches";
-			$TextToPrint .= $NewLine;
-		}
-		if ($_POST['OutletShoppingBag03M'] != 0){
-			$TextToPrint .= "Outlet Shopping Bag-M: ". $_POST['OutletShoppingBag03M'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
-	}
 
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 	

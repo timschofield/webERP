@@ -123,7 +123,6 @@ function KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, 
 
 	$EmailText = AdjustPackaging(60, 'SHOPKL', $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = AdjustPackaging(60, 'SHOPBL', $ShowMessages, $updateDB, $RootPath, $EmailText);
-	$EmailText = AdjustPackaging(60, 'SHOPOU', $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = AdjustPackagingGudang('PACKU', FACTOR_GUDANG_PACKAGING, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	
 	return $EmailText;
@@ -1009,8 +1008,8 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootP
 		$ListOfItems = LIST_ITEMS_KAPAL_LAUT_PACKAGING;
 	}elseif ($ShopType == 'SHOPBL'){
 		$ListOfItems = LIST_ITEMS_BLINK_PACKAGING;
-	}elseif ($ShopType == 'SHOPOU'){
-		$ListOfItems = LIST_ITEMS_OUTLET_PACKAGING;
+	}else{
+		return;
 	}
 
 	if ($EmailText!=''){
