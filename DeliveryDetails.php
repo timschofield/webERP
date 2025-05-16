@@ -615,7 +615,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	/*see if this is a contract quotation being changed to an order? */
 	if($_SESSION['Items'.$identifier]->Quotation==0) {//now its being changed? to an order
@@ -759,7 +759,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 	} /* updated line items into sales order details */
 
-	$Result=DB_Txn_Commit();
+	DB_Txn_Commit();
 	$Quotation = $_SESSION['Items'.$identifier]->Quotation;
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);

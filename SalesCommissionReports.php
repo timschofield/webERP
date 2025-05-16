@@ -214,7 +214,7 @@ if (isset($_POST['Submit'])) {
 			<label for="ToPeriod">', _('Select Period To'), ':</label>
 			<select name="ToPeriod">';
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 

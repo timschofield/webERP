@@ -133,7 +133,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo '<option';

@@ -106,7 +106,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$ErrMsg = _('The SQL to update the user records failed');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$Result = DB_IgnoreForeignKeys();
+	DB_IgnoreForeignKeys();
 
 	prnMsg(_('Deleting the salesman code from the Salesman table'), 'info');
 	$SQL = "DELETE FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'";
@@ -115,7 +115,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	DB_Txn_Commit();
-	$Result = DB_ReinstateForeignKeys();
+	DB_ReinstateForeignKeys();
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
