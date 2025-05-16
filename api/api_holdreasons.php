@@ -14,6 +14,7 @@
 		$SQL = 'SELECT reasoncode FROM holdreasons';
 		$Result = DB_query($SQL);
 		$i=0;
+        $HoldReasonList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$HoldReasonList[$i]=$MyRow[0];
 			$i++;

@@ -24,7 +24,7 @@ if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset(
 	prnMsg( _('Incorrect date format used, please re-enter'), 'error');
 	unset($_POST['View']);
 }
-
+$ContainingText = '';
 if (isset($_POST['ContainingText'])){
 	$ContainingText = trim(mb_strtoupper($_POST['ContainingText']));
 } elseif (isset($_GET['ContainingText'])){

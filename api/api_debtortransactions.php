@@ -556,6 +556,7 @@ function ConvertToSQLDate($DateEntry) {
 
 		$TaxTotals =array();
 		$LineCounter =0;
+        $LineTaxes =array();
 
 		foreach ($LineDetails as $CN_Line) {
 
@@ -601,6 +602,7 @@ function ConvertToSQLDate($DateEntry) {
 			}
 
 			$LineTaxAmount = 0;
+            $TaxAuthAmount = 0;
 
 			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {

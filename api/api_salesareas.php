@@ -27,6 +27,7 @@
 		$SQL = 'SELECT areacode FROM areas';
 		$Result = DB_query($SQL);
 		$i=0;
+        $SalesAreaList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$SalesAreaList[$i]=$MyRow[0];
 			$i++;

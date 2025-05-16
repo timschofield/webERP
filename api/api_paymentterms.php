@@ -14,6 +14,7 @@
 		$SQL = 'SELECT termsindicator FROM paymentterms';
 		$Result = DB_query($SQL);
 		$i=0;
+        $PaymentTermsList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$PaymentTermsList[$i]=$MyRow[0];
 			$i++;
@@ -54,6 +55,7 @@
 		$SQL = "SELECT paymentid FROM paymentmethods";
 		$Result = DB_query($SQL);
 		$i=0;
+        $PaymentMethodsList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$PaymentMethodsList[$i]=$MyRow[0];
 			$i++;

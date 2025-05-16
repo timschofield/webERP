@@ -14,6 +14,7 @@
 		$SQL = 'SELECT typeid FROM debtortype';
 		$Result = DB_query($SQL);
 		$i=0;
+        $TaxgroupList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$TaxgroupList[$i]=$MyRow[0];
 			$i++;

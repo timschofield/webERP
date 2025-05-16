@@ -728,6 +728,7 @@ $SOH_DateFields = array ('orddate',
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
 		$LineCounter =0;
+        $LineTaxes = array();
 
 		while ($OrderLineRow = DB_fetch_array($LineItemsResult)) {
 
@@ -759,6 +760,7 @@ $SOH_DateFields = array ('orddate',
 				$Errors[] = TaxRatesFailed;
 			}
 			$LineTaxAmount = 0;
+            $TaxAuthAmount = 0;
 			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 
 				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {

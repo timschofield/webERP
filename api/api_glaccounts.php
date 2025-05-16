@@ -100,6 +100,7 @@
 				ORDER BY accountcode';
 		$Result = DB_query($SQL);
 		$i=0;
+		$GLAccountList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$GLAccountList[$i]['accountcode']=$MyRow[0];
 			$GLAccountList[$i]['accountname']=$MyRow[1];

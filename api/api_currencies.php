@@ -14,6 +14,7 @@
 		$SQL = 'SELECT currabrev FROM currencies';
 		$Result = DB_query($SQL);
 		$i=0;
+        $CurrencyList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$CurrencyList[$i]=$MyRow[0];
 			$i++;
