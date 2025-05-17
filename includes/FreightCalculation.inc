@@ -3,7 +3,7 @@
 Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
 
-Function CalcFreightCost ($TotalValue,
+function CalcFreightCost ($TotalValue,
 							$BrAdd2,
 							$BrAdd3,
 							$BrAdd4,

@@ -188,7 +188,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 	DB_Txn_Commit();
 
-	$Result = DB_IgnoreForeignKeys();
+	DB_IgnoreForeignKeys();
 	prnMsg(_('Deleting the old customer branch record'),'info');
 	$SQL = "DELETE FROM custbranch
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
@@ -196,7 +196,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 	$ErrMsg = _('The SQL to delete the old customer branch record failed because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true,true);
-	$Result = DB_ReinstateForeignKeys();
+	DB_ReinstateForeignKeys();
 
 }
 

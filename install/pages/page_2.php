@@ -36,7 +36,7 @@ $RootPath = '..';
 if (!is_writable($RootPath)) {
 	$InputError = 1;
 	//get the directory where webERP live
-	$webERPHome = dirname(dirname(__FILE__));
+	$webERPHome = dirname(__FILE__, 2);
 	echo '<div class="error">' . _('The directory') . ' ' . $webERPHome . ' ' . _('must be writable by web server') . '</div>';
 } else {
 	echo '<div class="success">' . _('The base webERP directory is writable') . '</div>';
@@ -46,7 +46,7 @@ if (!is_writable($RootPath)) {
 $Companies = $RootPath . '/companies';
 if (!is_writable($Companies)) {
 	$InputError = 1;
-	$webERPHome = dirname(dirname(__FILE__));
+	$webERPHome = dirname(__FILE__, 2);
 	echo '<div class="error">' . _('The directory') . ' ' . $webERPHome . '/companies/' . ' ' . ('must be writable by web server') . '</div>';
 } else {
 	echo '<div class="success">' . _('The companies/ directory is writable') . '</div>';

@@ -14,6 +14,7 @@
 		$SQL = 'SELECT salesmancode FROM salesman';
 		$Result = DB_query($SQL);
 		$i=0;
+        $SalesmanList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$SalesmanList[$i]=$MyRow[0];
 			$i++;
