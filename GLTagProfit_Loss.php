@@ -579,7 +579,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<label for="PeriodTo">' . _('Select Period To') . ':</label>
 			<select name="PeriodTo">';
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 

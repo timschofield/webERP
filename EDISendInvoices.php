@@ -212,7 +212,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			if ($CustDetails['editransport']=='email'){
 
 				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">", 
-												CustDetails['ediaddress'],
+												$CustDetails['ediaddress'],
 												'EDI Invoice/Credit Note ' . $EDITransNo,
 												'',
 												$_SESSION['EDI_MsgPending'] . "/EDI_INV_" . $EDITransNo,

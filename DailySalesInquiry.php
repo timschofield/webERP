@@ -113,9 +113,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	//end of while loop
 	$HTML .= '<tr>';
 	$ColumnCounter = DayOfWeekFromSQLDate($StartDateSQL);
-	for ($i=0;$i<$ColumnCounter;$i++){
-		$HTML .= '<td></td>';
-	}
+    $HTML .= str_repeat('<td></td>', $ColumnCounter);
 	$DayNumber = 1;
 	/*Set up day number headings*/
 	for ($i=$ColumnCounter;$i<=6;$i++){
@@ -123,9 +121,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$DayNumber++;
 	}
 	$HTML .= '</tr><tr>';
-	for ($i=0;$i<$ColumnCounter;$i++){
-		$HTML .= '<td></td>';
-	}
+    $HTML .= str_repeat('<td></td>', $ColumnCounter);
 
 	$LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
 	for ($i=1;$i<=$LastDayOfMonth;$i++){

@@ -738,7 +738,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		if (!isset($PurchItemRow['leadtime'])) {
 			$PurchItemRow['leadtime'] = 1;
 		}
-
+		$_SESSION['PO' . $identifier]->Version = '1.0';
 		$_SESSION['PO' . $identifier]->add_to_order(1,
 													$Purch_Item,
 													$PurchItemRow['serialised'],

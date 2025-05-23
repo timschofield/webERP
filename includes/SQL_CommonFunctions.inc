@@ -4,7 +4,7 @@
 /* Common SQL Functions */
 
 
-Function GetNextTransNo($TransType) {
+function GetNextTransNo($TransType) {
 
 	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
 	Also updates the transaction number
@@ -32,7 +32,7 @@ Function GetNextTransNo($TransType) {
 }
 
 
-Function GetStockGLCode($StockID) {
+function GetStockGLCode($StockID) {
 
 	/*Gets the GL Codes relevant to the stock item account from the stock category record */
 	$QuerySQL = "SELECT stockact,
@@ -53,7 +53,7 @@ Function GetStockGLCode($StockID) {
 	return $MyRow;
 }
 
-Function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
+function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 
 	/*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
@@ -76,7 +76,7 @@ Function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 
 }
 
-Function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
+function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 
 	$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,
@@ -106,9 +106,15 @@ Function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 	}
 }
 
+function GetSalesGLCode($salesarea, $partnumber) {
+    $SQL="SELECT salesglcode FROM salesglpostings
+			WHERE stkcat='any'";
+    $Result=DB_query($SQL);
+    $MyRow=DB_fetch_array($Result);
+    return $MyRow[0];
+}
 
-
-Function GetCreditAvailable($DebtorNo) {
+function GetCreditAvailable($DebtorNo) {
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.creditlimit,

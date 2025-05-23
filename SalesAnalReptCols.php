@@ -10,7 +10,7 @@ $BookMark = 'SalesAnalysis';
 include('includes/header.php');
 
 
-Function DataOptions ($DataX){
+function DataOptions ($DataX){
 
 /*Sales analysis headers group by data options */
  if ($DataX == 'Quantity'){

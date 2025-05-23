@@ -912,7 +912,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete == 0) {
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Deletes LocStock records*/
 		$SQL = "DELETE FROM locstock WHERE stockid='" . $StockID . "'";

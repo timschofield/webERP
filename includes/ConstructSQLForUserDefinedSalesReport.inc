@@ -1,5 +1,5 @@
 <?php
-Function GetDataSQL($SQLData){
+function GetDataSQL($SQLData){
 
 /*This function determines the SQL to use to get the value for the columns defined */
 switch ($SQLData) {
@@ -25,7 +25,7 @@ Case 'Discount':
 }
 
 
-Function GetFieldSQL($Data, $ColNo){
+function GetFieldSQL($Data, $ColNo){
 
 /*This function determines the two columns to get for the group by levels defined in the report heading
 and allocates a Colxx to each  */
@@ -63,7 +63,7 @@ Case 'Sales Person':
 
 }
 
-Function GetHavingSQL($Data){
+function GetHavingSQL($Data){
 
 /*This function determines the field names to search on in the having clause  */
 
@@ -93,7 +93,7 @@ Case 'Sales Person':
 
 }
 
-Function GetGroupBySQL($GByData){
+function GetGroupBySQL($GByData){
 
 /*This function returns the SQL for the group by clause for the group by levels defined in the report header */
 
