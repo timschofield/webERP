@@ -912,7 +912,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		DB_Txn_Begin();
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
-	 * GetPeriod() in includes/DateFunctions.inc */
+	 * GetPeriod() in includes/DateFunctions.php */
 
 		$CreditNoteNo = GetNextTransNo(11);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));

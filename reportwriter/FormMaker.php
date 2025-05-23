@@ -12,7 +12,7 @@ define('DBRptFields','reportfields');	// name of the database holding the report
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 // Fetch necessary include files - Host application specific (webERP)
-require_once($PathPrefix . 'includes/DateFunctions.inc');
+require_once($PathPrefix . 'includes/DateFunctions.php');
 
 // Include files for ReportMaker.php
 require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php

@@ -12,7 +12,7 @@ define('DBRptFields','reportfields');	// name of the database table holding the 
 
 // Fetch necessary include files - Host application specific (webERP)
 require($PathPrefix . 'includes/session.php');
-require_once($PathPrefix . 'includes/DateFunctions.inc');
+require_once($PathPrefix . 'includes/DateFunctions.php');
 
 // Include files for ReportMaker.php
 require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php

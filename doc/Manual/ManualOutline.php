@@ -316,7 +316,7 @@ $TOC_Array = array (
                                  'config.php',
                                  'PDFStarter.php',
                                  'Database abstraction - ConnectDB.inc',
-                                 'DateFunctions.inc',
+                                 'DateFunctions.php',
                                  'SQL_CommonFunctions.inc'),
     'APITutorial'       => array('API Tutorial'),
     'APIFunctions'       => array('API Function reference'),
