@@ -1,7 +1,7 @@
 <?php
 $PageSecurity = 0;
 include('includes/session.php');
-//include('includes/DateFunctions.inc');
+//include('includes/DateFunctions.php');
 
 $SQL = "TRUNCATE gltotals";
 $Result = DB_query($SQL);

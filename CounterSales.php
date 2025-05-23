@@ -1285,7 +1285,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	/* End of insertion of new sales order */
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
-	 * GetPeriod() in includes/DateFunctions.inc */
+	 * GetPeriod() in includes/DateFunctions.php */
 
 
 

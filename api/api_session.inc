@@ -24,7 +24,7 @@ if (isset($_SESSION['DatabaseName']) AND $_SESSION['DatabaseName'] != '' ) {
 	include($PathPrefix . 'includes/ConnectDB.inc');
 	$_SESSION['db'] = $db;
 }
-include($PathPrefix . 'includes/DateFunctions.inc');
+include($PathPrefix . 'includes/DateFunctions.php');
 
 // Un comment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;

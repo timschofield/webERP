@@ -868,7 +868,7 @@ if (!isset($_POST['Submit'])) {
                 <LI>config.php</LI>
                 <LI>PDFStarter.php</LI>
                 <LI>Êý¾Ý¿â³éÏó²ã - ConnectDB.inc</LI>
-                <LI>DateFunctions.inc</LI>
+                <LI>DateFunctions.php</LI>
                 <LI>SQL_CommonFuctions.inc</LI>
               </UL>
               <br />

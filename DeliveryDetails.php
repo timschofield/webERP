@@ -42,7 +42,7 @@ if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 	exit;
 }
 
-/*Calculate the earliest dispacth date in DateFunctions.inc */
+/*Calculate the earliest dispacth date in DateFunctions.php */
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 

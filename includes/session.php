@@ -52,7 +52,7 @@ session_name('PHPSESSIDwebERPteam');
 session_start();
 
 include ($PathPrefix . 'includes/ConnectDB.inc');
-include ($PathPrefix . 'includes/DateFunctions.inc');
+include ($PathPrefix . 'includes/DateFunctions.php');
 
 if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;

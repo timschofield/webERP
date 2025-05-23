@@ -729,7 +729,7 @@ if (!isset($_POST['Submit'])) {
                 <li>config.php</li>
                 <li>PDFStarter.php</li>
                 <li>Datenbank-Abstraktionsschicht - ConnectDB.inc</li>
-                <li>DateFunctions.inc</li>
+                <li>DateFunctions.php</li>
                 <li>SQL_CommonFuctions.inc</li>
               </ul>
               <br />
