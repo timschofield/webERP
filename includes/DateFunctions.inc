@@ -109,6 +109,35 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 	return $MonthAndYear;
 }
 
+function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
+
+	if (mb_strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
+	}
+
+	if (mb_strlen($Date_Array[2])>4) {
+		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
+	}
+
+	$YearAndMonth = '';
+	$TimeStamp = mktime(0,0,0, (int)$Date_Array[1], (int)$Date_Array[2], (int)$Date_Array[0]);
+
+	if ($UseShortYearAndMonth) {
+		// 4-digit year and 2-digit month: 2004-04.
+		$YearAndMonth = date('Y-m', $TimeStamp);
+	} else {
+		$MonthName = GetMonthText(date('n', $TimeStamp));
+		$YearAndMonth = date('Y', $TimeStamp) . ' ' . $MonthName;
+	}
+
+	return $YearAndMonth;
+}
+
+
 function MonthAndYearFromPeriodNo($PeriodNo) {
 	return MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($PeriodNo));
 }

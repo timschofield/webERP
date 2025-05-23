@@ -20,7 +20,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$Today = date('Y-m-d');
+	$YearMonth = YearAndMonthFromSQLDate(EndDateSQLFromPeriodNo($PeriodOfFile), true);
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
@@ -64,9 +64,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			while ($MyRow = DB_fetch_array($Result)) {
 				// Prepare filename
 				if ($SalaryType == "MONTHLY"){
-					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . $PeriodMonth;
+					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . $YearMonth;
 				}else{
-					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . $PeriodMonth;
+					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . $YearMonth;
 				}
 				
 				// Generate PDF using DomPDF
