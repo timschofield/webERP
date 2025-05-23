@@ -5,15 +5,50 @@ date validation and parsing functions
 
 These functions refer to the session variable defining the date format
 The date format is defined in SystemParameters called DefaultDateFormat
-this can be a string either 'd/m/Y' for UK/Australia/New Zealand dates or
+this can be a string either:
+'d/m/Y' for UK/Australia/New Zealand dates or
 'm/d/Y' for US/Canada format dates
-
 or Y/m/d  for Sweden ;) Anders Eriksson anders@weberp.se.
-
 or d.m.Y  for Germany ;) Juergen Ruemmler heinrich@ruemmler.net
 
+Functions in this file (alphabetical order):
+- CalcDueDate - Calculates the due date for a transaction based on terms
+- CalcEarliestDispatchDate - Calculates the earliest possible dispatch date
+- ConvertEDIDate - Converts an EDI format date to the specified format
+- ConvertSQLDate - Converts a SQL date to the specified format
+- ConvertSQLDateTime - Converts a SQL datetime to the specified format
+- ConvertToEDIDate - Converts a date to EDI format
+- CreatePeriod - Creates a new accounting period
+- Date1GreaterThanDate2 - Checks if one date is greater than another
+- DateAdd - Adds a specified interval to a date
+- DateDiff - Calculates the difference between two dates
+- DayOfMonthFromSQLDate - Gets the day of month from a SQL date
+- DayOfWeekFromSQLDate - Gets the day of week from a SQL date
+- DisplayDateTime - Formats the current date and time for display
+- EndDateSQLFromPeriodNo - Gets the end date for a given period
+- EnsureSQLDateFormat - Validates if a date is in SQL format
+- Format_Date - Formats a date according to the system settings
+- FormatDateForSQL - Converts a date to SQL format
+- FormatDateWithTimeForSQL - Converts a datetime to SQL format
+- GetMonthText - Returns the month name from a month number
+- GetPeriod - Returns the period number for a given date
+- GetWeekDayText - Returns the weekday name from a day number
+- Is_date - Validates if a string is a valid date
+- LastDayOfMonth - Gets the last day of the month for a date
+- MonthAndYearFromPeriodNo - Gets the month and year for a period
+- MonthAndYearFromSQLDate - Gets the month and year from a SQL date
+- PeriodExists - Checks if a period exists for a given date
+- SQLDateToEDI - Converts a SQL date to EDI format
+- YearAndMonthFromSQLDate - Gets the year and month from a SQL date 
+- YearEndDate - Gets financial year end date
 */
 
+/**************************************************************************************************************
+* Function: Is_date
+* Description: Validates if a string is a valid date according to the default date format
+* Parameters: $DateEntry - The date string to validate
+* Returns: 1 if date is valid, 0 if invalid
+**************************************************************************************************************/
 function Is_date($DateEntry) {
 
 	$DateEntry = Trim($DateEntry);
@@ -74,6 +109,14 @@ function Is_date($DateEntry) {
 	}
 } //end of Is_Date function
 
+/**************************************************************************************************************
+* Function: MonthAndYearFromSQLDate
+* Description: Extracts and formats the month and year from a SQL date
+* Parameters: 
+*   $DateEntry - The SQL format date to process
+*   $UseShortMonthAndYear - Boolean flag for short format (default false)
+* Returns: String containing formatted month and year
+**************************************************************************************************************/
 function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -103,6 +146,14 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 	return $MonthAndYear;
 }
 
+/**************************************************************************************************************
+* Function: YearAndMonthFromSQLDate
+* Description: Extracts and formats the year and month from a SQL date
+* Parameters: 
+*   $DateEntry - The SQL format date to process
+*   $UseShortYearAndMonth - Boolean flag for short format (default false)
+* Returns: String containing formatted year and month
+**************************************************************************************************************/
 function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -131,11 +182,22 @@ function YearAndMonthFromSQLDate($DateEntry, $UseShortYearAndMonth = false) {
 	return $YearAndMonth;
 }
 
-
+/**************************************************************************************************************
+* Function: MonthAndYearFromPeriodNo
+* Description: Gets the month and year for a specified period number
+* Parameters: $PeriodNo - The period number to get month and year for
+* Returns: String containing the month and year for the period
+**************************************************************************************************************/
 function MonthAndYearFromPeriodNo($PeriodNo) {
 	return MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($PeriodNo));
 }
 
+/**************************************************************************************************************
+* Function: EndDateSQLFromPeriodNo
+* Description: Gets the SQL format end date for a specified period number
+* Parameters: $PeriodNo - The period number to get end date for
+* Returns: String containing the end date in SQL format (YYYY-MM-DD)
+**************************************************************************************************************/
 function EndDateSQLFromPeriodNo($PeriodNo) {
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
 	$Result = DB_query($SQL);
@@ -143,7 +205,12 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 	return $MyRow['lastdate_in_period'];
 }
 
-
+/**************************************************************************************************************
+* Function: GetMonthText
+* Description: Gets the localized text representation of a month number
+* Parameters: $MonthNumber - The month number (1-12)
+* Returns: String containing the month name
+**************************************************************************************************************/
 function GetMonthText($MonthNumber) {
 	switch ($MonthNumber) {
 		case 1:
@@ -189,6 +256,12 @@ function GetMonthText($MonthNumber) {
 	return $Month;
 }
 
+/**************************************************************************************************************
+* Function: GetWeekDayText
+* Description: Gets the localized text representation of a week day number
+* Parameters: $WeekDayNumber - The week day number (0-6, where 0=Sunday)
+* Returns: String containing the day name
+**************************************************************************************************************/
 function GetWeekDayText($WeekDayNumber) {
 	$Day = '';
 	switch ($WeekDayNumber) {
@@ -217,6 +290,12 @@ function GetWeekDayText($WeekDayNumber) {
 	return $Day;
 }
 
+/**************************************************************************************************************
+* Function: DisplayDateTime
+* Description: Formats the current date and time according to locale settings
+* Parameters: None
+* Returns: String containing formatted date and time
+**************************************************************************************************************/
 function DisplayDateTime() {
 	// Long date and time in locale format.
 	// Could be replace by IntlDateFormatter (available on PHP 5.3.0 or later). See http://php.net/manual/en/class.intldateformatter.php
@@ -240,6 +319,12 @@ function DisplayDateTime() {
 	return $LongDateTime;
 }
 
+/**************************************************************************************************************
+* Function: DayOfWeekFromSQLDate
+* Description: Gets the day of week from a SQL format date
+* Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
+* Returns: Integer representing day of week (0-6, where 0=Sunday)
+**************************************************************************************************************/
 function DayOfWeekFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -257,6 +342,12 @@ function DayOfWeekFromSQLDate($DateEntry) {
 	return date('w', mktime(0, 0, 0, (int)$DateArray[1], (int)$DateArray[2], (int)$DateArray[0]));
 }
 
+/**************************************************************************************************************
+* Function: DayOfMonthFromSQLDate
+* Description: Gets the day of month from a SQL format date
+* Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
+* Returns: Integer representing day of month (1-31)
+**************************************************************************************************************/
 function DayOfMonthFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry, '/')) {
@@ -274,11 +365,14 @@ function DayOfMonthFromSQLDate($DateEntry) {
 	return date('j', mktime(0, 0, 0, (int)$DateArray[1], (int)$DateArray[2], (int)$DateArray[0]));
 }
 
-
-// Returns the timestamp for the financial year end. To find other year ends,
-// use $YearIncrement to move back and forward. in -1 gives last year end, 1
-// gives next year end.
-
+/**************************************************************************************************************
+* Function: YearEndDate
+* Description: Calculates the financial year end date
+* Parameters:
+*   $MonthNo - The month number of the financial year end
+*   $YearIncrement - Number of years to add/subtract from current year
+* Returns: Unix timestamp for the financial year end date
+**************************************************************************************************************/
 function YearEndDate($MonthNo, $YearIncrement) {
 	if (Date('m') > $MonthNo) {
 		$Year = Date('Y') + 1 + $YearIncrement;
@@ -288,6 +382,12 @@ function YearEndDate($MonthNo, $YearIncrement) {
 	return mktime(0, 0, 0, $MonthNo + 1, 0, $Year);
 }
 
+/**************************************************************************************************************
+* Function: ConvertSQLDate
+* Description: Converts a date from SQL format to the format specified in DefaultDateFormat
+* Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
+* Returns: String containing formatted date according to DefaultDateFormat
+**************************************************************************************************************/
 function ConvertSQLDate($DateEntry) {
 
 	/* takes a date in a the format yyyy-mm-dd and converts to a format specified in $_SESSION['DefaultDateFormat']*/
@@ -344,10 +444,15 @@ function ConvertSQLDate($DateEntry) {
 	}
 } // end function ConvertSQLDate
 
+/**************************************************************************************************************
+* Function: ConvertSQLDateTime
+* Description: Converts a datetime from SQL format to DefaultDateFormat with time
+* Parameters: $DateEntry - The SQL format datetime (YYYY-MM-DD HH:MM:SS)
+* Returns: String containing formatted datetime according to DefaultDateFormat
+**************************************************************************************************************/
 function ConvertSQLDateTime($DateEntry) {
 
-//for MySQL dates are in the format YYYY-mm-dd H:i:s
-
+	//for MySQL dates are in the format YYYY-mm-dd H:i:s
 
 	if (mb_strpos($DateEntry, '/')) {
 		$DateArray = explode('/', $DateEntry);
@@ -392,6 +497,12 @@ function ConvertSQLDateTime($DateEntry) {
 
 } // end function ConvertSQLDate
 
+/**************************************************************************************************************
+* Function: SQLDateToEDI
+* Description: Converts a SQL format date to EDI format by removing separators
+* Parameters: $DateEntry - The SQL format date (YYYY-MM-DD)
+* Returns: String containing the date in EDI format (YYYYMMDD)
+**************************************************************************************************************/
 function SQLDateToEDI($DateEntry) {
 
 	//for MySQL dates are in the format YYYY-mm-dd
@@ -413,6 +524,12 @@ function SQLDateToEDI($DateEntry) {
 
 } // end function SQLDateToEDI
 
+/**************************************************************************************************************
+* Function: ConvertToEDIDate
+* Description: Converts a date in DefaultDateFormat to EDI format
+* Parameters: $DateEntry - The date in DefaultDateFormat
+* Returns: String containing the date in EDI format (YYYYMMDD)
+**************************************************************************************************************/
 function ConvertToEDIDate($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
@@ -437,7 +554,6 @@ and converts to a yyyymmdd - EANCOM format 102*/
 		$DateArray[2] = mb_substr($DateEntry, 4, 4);
 	}
 
-
 //to modify assumption in 2030
 
 	if ((int)$DateArray[2] < 60) {
@@ -461,6 +577,14 @@ and converts to a yyyymmdd - EANCOM format 102*/
 
 } // end function to convert DefaultDateFormat Date to EDI format 102
 
+/**************************************************************************************************************
+* Function: ConvertEDIDate
+* Description: Converts an EDI format date to DefaultDateFormat
+* Parameters:
+*   $DateEntry - The EDI format date
+*   $EDIFormatCode - Format code (102, 203, 616, 718)
+* Returns: String containing formatted date according to DefaultDateFormat
+**************************************************************************************************************/
 function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 	/*EDI Format codes:
@@ -520,6 +644,12 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 }
 
+/**************************************************************************************************************
+* Function: Format_Date
+* Description: Formats a date according to DefaultDateFormat
+* Parameters: $DateEntry - The date to format
+* Returns: String containing formatted date or 0 if invalid
+**************************************************************************************************************/
 function Format_Date($DateEntry) {
 
 	$DateEntry = trim($DateEntry);
@@ -577,6 +707,12 @@ function Format_Date($DateEntry) {
 	}
 }// end of function
 
+/**************************************************************************************************************
+* Function: EnsureSQLDateFormat
+* Description: Validates if a date is in SQL format (YYYY-MM-DD)
+* Parameters: $Date - The date string to validate
+* Returns: Boolean - true if date is in SQL format, false otherwise
+**************************************************************************************************************/
 function EnsureSQLDateFormat($Date) {
 	// All credit to GitHub Copilot
 	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
@@ -592,6 +728,12 @@ function EnsureSQLDateFormat($Date) {
 	}
 }
 
+/**************************************************************************************************************
+* Function: FormatDateForSQL
+* Description: Converts a date from DefaultDateFormat to SQL format
+* Parameters: $DateEntry - The date in DefaultDateFormat
+* Returns: String containing the date in SQL format (YYYY-MM-DD)
+**************************************************************************************************************/
 function FormatDateForSQL($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
@@ -655,12 +797,24 @@ and converts to a yyyy-mm-dd format */
 
 }// end of function
 
+/**************************************************************************************************************
+* Function: FormatDateWithTimeForSQL
+* Description: Converts a datetime from DefaultDateFormat to SQL format
+* Parameters: $DateTime - The datetime string in DefaultDateFormat with time
+* Returns: String containing the datetime in SQL format (YYYY-MM-DD HH:MM:SS)
+**************************************************************************************************************/
 function FormatDateWithTimeForSQL($DateTime) {
     //  Split the time off, fix date and add the time to returned value.
     $dt = explode(' ', $DateTime);
     return FormatDateForSQL($dt[0]) . ' ' . $dt[1];
 }
 
+/**************************************************************************************************************
+* Function: LastDayOfMonth
+* Description: Calculates the last day of the month for a given date
+* Parameters: $DateEntry - The date in DefaultDateFormat
+* Returns: String containing the last day of month in DefaultDateFormat
+**************************************************************************************************************/
 function LastDayOfMonth($DateEntry) {
 	/*Expects a date in DefaultDateFormat and
 	 * Returns the last day of the month in the entered date
@@ -723,6 +877,14 @@ function LastDayOfMonth($DateEntry) {
 	return Date($_SESSION['DefaultDateFormat'], $DateStamp);
 }// end of Last Day in the month function
 
+/**************************************************************************************************************
+* Function: Date1GreaterThanDate2
+* Description: Compares two dates to determine if first date is greater than second
+* Parameters:
+*   $Date1 - First date in DefaultDateFormat
+*   $Date2 - Second date in DefaultDateFormat
+* Returns: Integer - 1 if Date1 > Date2, 0 otherwise
+**************************************************************************************************************/
 function Date1GreaterThanDate2($Date1, $Date2) {
 
 	/* returns true (1) if Date1 is greater than Date2 */
@@ -792,6 +954,15 @@ function Date1GreaterThanDate2($Date1, $Date2) {
 	return 0;
 }
 
+/**************************************************************************************************************
+* Function: CalcDueDate
+* Description: Calculates the due date based on transaction date and payment terms
+* Parameters:
+*   $TranDate - The transaction date in DefaultDateFormat
+*   $DayInFollowingMonth - Day in the following month when payment is due (0 for days-based)
+*   $DaysBeforeDue - Number of days before payment is due (for days-based terms)
+* Returns: String containing the due date in DefaultDateFormat
+**************************************************************************************************************/
 function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 	$TranDate = trim($TranDate);
@@ -869,6 +1040,15 @@ function CalcDueDate($TranDate, $DayInFollowingMonth, $DaysBeforeDue){
 
 }
 
+/**************************************************************************************************************
+* Function: DateAdd
+* Description: Adds a specified time interval to a date
+* Parameters:
+*   $DateToAddTo - The base date in DefaultDateFormat
+*   $PeriodString - Type of period to add (d=days, w=weeks, m=months, y=years)
+*   $NumberPeriods - Number of periods to add (positive or negative)
+* Returns: String containing the resulting date in DefaultDateFormat
+**************************************************************************************************************/
 function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
 	/*Takes
 	 * DateToAddTo in $_SESSION['DefaultDateFormat'] format
@@ -946,6 +1126,15 @@ function DateAdd($DateToAddTo, $PeriodString, $NumberPeriods){
 	}
 }
 
+/**************************************************************************************************************
+* Function: DateDiff
+* Description: Calculates the difference between two dates in specified units
+* Parameters:
+*   $Date1 - First date in DefaultDateFormat
+*   $Date2 - Second date in DefaultDateFormat
+*   $Period - Unit for difference calculation (d=days, w=weeks, m=months, y=years, s=seconds)
+* Returns: Integer representing the difference in specified units
+**************************************************************************************************************/
 function DateDiff($Date1, $Date2, $Period) {
 
 	/* expects dates in the format specified in $_SESSION['DefaultDateFormat'] - period can be one of 'd','w','y','m'
@@ -1006,16 +1195,16 @@ function DateDiff($Date1, $Date2, $Period) {
 
 }
 
+/**************************************************************************************************************
+* Function: CalcEarliestDispatchDate
+* Description: Calculates the earliest possible dispatch date based on company settings
+* Parameters: None
+* Returns: Unix timestamp of earliest possible dispatch date
+**************************************************************************************************************/
 function CalcEarliestDispatchDate() {
 
-	/*There is a system parameter that allows the number of working days to be defined $_SESSION['WorkingDaysWeek'] if this is set to 5 then the assumption is no delivery on Sat and Sun
-	 * if the number of working days is 6 then it is assumed that there is no delivery on Sunday
-	 * if the number of working days is 7 then there are deliveries every day
-	 */
-
-	$EarliestDispatch = time();
 	/* If the hour is after Dispatch Cut Off Time default dispatch date to tomorrow */
-	$EarliestDispatch = (Date('H') >= $_SESSION['DispatchCutOffTime']) ? ($EarliestDispatch + 24 * 60 * 60) : $EarliestDispatch;
+	$EarliestDispatch = (Date('H') >= $_SESSION['DispatchCutOffTime']) ? (time() + 24 * 60 * 60) : time();
 
 	if ((Date('w', $EarliestDispatch) == 0) AND ($_SESSION['WorkingDaysWeek'] != '7')) {
 
@@ -1036,6 +1225,14 @@ function CalcEarliestDispatchDate() {
 	return $EarliestDispatch;
 }
 
+/**************************************************************************************************************
+* Function: CreatePeriod
+* Description: Creates a new accounting period
+* Parameters:
+*   $PeriodNo - The period number to create
+*   $PeriodEnd - Unix timestamp of the period end date
+* Returns: None
+**************************************************************************************************************/
 function CreatePeriod($PeriodNo, $PeriodEnd) {
 	$GetPrdSQL = "INSERT INTO periods (periodno,
 										lastdate_in_period
@@ -1052,6 +1249,12 @@ function CreatePeriod($PeriodNo, $PeriodEnd) {
 
 }
 
+/**************************************************************************************************************
+* Function: PeriodExists
+* Description: Checks if an accounting period exists for a given date
+* Parameters: $TransDate - Unix timestamp of the date to check
+* Returns: Boolean - true if period exists, false otherwise
+**************************************************************************************************************/
 function PeriodExists($TransDate) {
 
 	/* Find the date a month on */
@@ -1070,6 +1273,14 @@ function PeriodExists($TransDate) {
 
 }
 
+/**************************************************************************************************************
+* Function: GetPeriod
+* Description: Determines the period number for a given date
+* Parameters:
+*   $TransDate - The date to check in DefaultDateFormat
+*   $UseProhibit - Boolean to check against prohibited posting dates (default true)
+* Returns: Integer representing the period number
+**************************************************************************************************************/
 function GetPeriod($TransDate, $UseProhibit = true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
