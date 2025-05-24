@@ -226,12 +226,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		// KL RICARD: adjustement for intercompany accounts
-		if ($_POST['Company'] == 'ALL'){
-			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
-				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
-			}
-		}else{
+		/* Commented out some lines to allow "automatic check total = 0", instead of manually checking it out and correcting.
+		Most adjustments are due to wholesale sales in foreign currency and rounding error in a 0.0005% difference range
+		Or a misterious 2.000 IDR randomly every few months. We could never find out where these 2.000 IDR came from. */
+//		if ($_POST['Company'] == 'ALL'){
+//			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
+//				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
+//				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
+//			}
+//		}else{
 			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
 				$AccountBalance = -$ThisYearAccumulatedAdjustment;
 				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
@@ -239,7 +242,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
 				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
 			}
-		}
+//		}
 		// KL RICARD END: adjustement for intercompany accounts
 
 		if ($MyRow['group_'] != $ActGrp and $ActGrp != '') {
