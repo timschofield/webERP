@@ -8,7 +8,7 @@ include('includes/KLBoards.php');
 include ('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Category']) or !isset($_GET['Action'])){
 	echo '<br />';

@@ -10,7 +10,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'BOMMaintenance';
 
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {
 	global $i;

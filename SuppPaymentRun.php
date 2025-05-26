@@ -12,7 +12,7 @@ Class Allocation {
 
 include('includes/session.php');
 if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);};
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/GetPaymentMethods.php');
 
 
@@ -35,7 +35,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
   /*Now figure out the invoice less credits due for the Supplier range under review */
 
-	include ('includes/PDFPaymentRunPageHeader.inc');
+	include ('includes/PDFPaymentRunPageHeader.php');
 
 	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
@@ -199,7 +199,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$YPos -=$LineHeight;
 			if ($YPos < $Bottom_Margin + $LineHeight){
 				$PageNumber++;
-				include('includes/PDFPaymentRunPageHeader.inc');
+				include('includes/PDFPaymentRunPageHeader.php');
 			}
 		} /*end while there are detail transactions to show */
 	} /* end while there are suppliers to retrieve transactions for */

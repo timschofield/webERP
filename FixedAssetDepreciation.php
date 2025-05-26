@@ -11,7 +11,7 @@ $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetDepreciation';
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */

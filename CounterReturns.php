@@ -13,10 +13,10 @@ $ViewTopic = 'SalesOrders';
 $BookMark = 'CounterReturns';
 include('includes/header.php');
 
-include('includes/GetPrice.inc');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/GetPrice.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
-include('includes/GetSalesTransGLCodes.inc');
+include('includes/GetSalesTransGLCodes.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -426,7 +426,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 					$NewItem = $KitParts['component'];
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
-					include('includes/SelectOrderItems_IntoCart.inc');
+					include('includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 
@@ -437,7 +437,7 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 			} else if ($NewItemQty<=0) {
 				prnMsg(_('Only items entered with a positive quantity can be added to the return'),'warn');
 			} else { /*Its not a kit set item*/
-				include('includes/SelectOrderItems_IntoCart.inc');
+				include('includes/SelectOrderItems_IntoCart.php');
 				$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 			}
 		}
@@ -589,7 +589,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 				$NewItemQty = $KitParts['quantity'] * $ParentQty;
 				$NewPOLine = 0;
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
-				include('includes/SelectOrderItems_IntoCart.inc');
+				include('includes/SelectOrderItems_IntoCart.php');
 				$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 			}
 
@@ -597,7 +597,7 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = 0;
 
-			include('includes/SelectOrderItems_IntoCart.inc');
+			include('includes/SelectOrderItems_IntoCart.php');
 			$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 		}
 
@@ -640,14 +640,14 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])) {
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.inc');
+						include('includes/SelectOrderItems_IntoCart.php');
 						$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 					}
 
 				} else { /*Its not a kit set item*/
 					$NewItemDue = date($_SESSION['DefaultDateFormat']);
 					$NewPOLine = 0;
-					include('includes/SelectOrderItems_IntoCart.inc');
+					include('includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 			} /* end of if its a new item */

@@ -8,7 +8,7 @@ $ViewTopic = 'EDI';
 $BookMark = '';
 
 include ('includes/header.php');
-include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
+include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
 
 

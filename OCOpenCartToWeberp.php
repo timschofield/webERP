@@ -7,7 +7,7 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('OpenCart to webERP Syncrhonizer '. VERSIONFILE);
 include ('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 include ('includes/KLGeneralFunctions.php');
 include ('includes/KLMarketplaceFunctions.php');

@@ -4,7 +4,7 @@ include('includes/session.php');
 $Title = _('SPG Last 10 Shop Tali Exchanges');
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');

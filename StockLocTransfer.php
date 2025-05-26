@@ -12,7 +12,7 @@ $Title = _('Inventory Location Transfer Shipment');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // KL RICARD
 include('includes/KLEmails.php');

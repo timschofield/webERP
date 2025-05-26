@@ -9,11 +9,11 @@ if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	exit;
 }
 
-include('includes/ConstructSQLForUserDefinedSalesReport.inc');
+include('includes/ConstructSQLForUserDefinedSalesReport.php');
 
 if (isset($_GET['ProducePDF'])){
 
-	include ('includes/PDFSalesAnalysis.inc');
+	include ('includes/PDFSalesAnalysis.php');
 
 	if ($Counter >0) {
 		$PDF->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
@@ -34,7 +34,7 @@ if (isset($_GET['ProducePDF'])){
 
 if ($_GET['ProduceCVSFile']==True){
 
-	include('includes/CSVSalesAnalysis.inc');
+	include('includes/CSVSalesAnalysis.php');
 
 	$Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.php');

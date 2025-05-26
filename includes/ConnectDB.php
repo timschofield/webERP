@@ -14,7 +14,7 @@ if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from th
 		}
 		if (is_dir('companies/' . $_POST['CompanyNameField']) and $_POST['CompanyNameField'] != '..') {
 			$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
-			include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
+			include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 		} else {
 			prnMsg(_('The company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is not configured for use with this installation of KwaMoja. Check that a directory named ' . $_POST['CompanyNameField'] . ' is set up under the companies sub-directory.'), 'error');
 			prnMsg(_('Check the company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is the same as the database name.'), 'error');
@@ -23,10 +23,10 @@ if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from th
 	} elseif (isset($DatabaseName)) {
 		/* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
-		include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
+		include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	}
 } else {
-	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
+	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 }
 
 ?>

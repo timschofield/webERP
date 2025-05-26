@@ -17,7 +17,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Change A GL Account Code'), '" /> ',// Icon title.
 	_('Change A GL Account Code'), '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // RICARD KL: Use the function ChangeGLAcoountCode
 include('includes/KLGeneralFunctions.php');

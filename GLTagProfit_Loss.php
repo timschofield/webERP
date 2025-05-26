@@ -4,7 +4,7 @@
 include ('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Income and Expenditure by Tag');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';

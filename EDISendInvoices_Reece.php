@@ -8,7 +8,7 @@ include('includes/session.php');
 $ViewTopic = 'EDI';
 $BookMark = '';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo
+include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 
 // Important: Default value for EDIsent in debtortrans should probably be 1 for non EDI customers
 // updated to 0 only for EDI enabled customers. As it stands run some sql to update all existing
@@ -208,7 +208,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 				if ($LineDetails['section'] == 'Heading') {
 					$MsgLineText = $LineDetails['linetext'];
-					include('includes/EDIVariableSubstitution.inc');
+					include('includes/EDIVariableSubstitution.php');
 					$LastLine = 'Heading';
 				}
 
@@ -282,7 +282,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 						/*now work through the detail line segments */
 						foreach ($DetailLines as $DetailLineText) {
 							$MsgLineText = $DetailLineText;
-							include('includes/EDIVariableSubstitution.inc');
+							include('includes/EDIVariableSubstitution.php');
 						}
 					}
 
@@ -292,7 +292,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 				if ($LineDetails['section'] == 'Summary' AND $LastLine == 'Detail') {
 					$MsgLineText = $LineDetails['linetext'];
-					include('includes/EDIVariableSubstitution.inc');
+					include('includes/EDIVariableSubstitution.php');
 				}
 			} /*end while there are message lines to parse and substitute vbles for */
 			fclose($fp); /*close the file at the end of each transaction */

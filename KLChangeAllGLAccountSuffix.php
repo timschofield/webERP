@@ -10,7 +10,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Change ALL GL Account Code SUFFIX'), '" /> ',// Icon title.
 	_('Change ALL GL Account Code SUFFIX'), '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // RICARD KL: Use the function ChangeGLAcoountCode
 include('includes/KLGeneralFunctions.php');

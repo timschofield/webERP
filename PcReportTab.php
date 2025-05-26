@@ -11,7 +11,7 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
 $Title = _('Petty Cash Management Report');
 
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);

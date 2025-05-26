@@ -8,7 +8,7 @@ $FontSize = 10;
 $pdf->addInfo('Title', _('Top Items Search Result'));
 $PageNumber = 1;
 $LineHeight = 12;
-include ('includes/PDFTopItemsHeader.inc');
+include ('includes/PDFTopItemsHeader.php');
 $FontSize = 10;
 $FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_GET['NumberOfDays']));
 
@@ -106,7 +106,7 @@ if (DB_num_rows($Result)>0){
 		if ($YPos - $LineHeight <= $Bottom_Margin) {
 			/* We reached the end of the page so finish off the page and start a newy */
 			$PageNumber++;
-			include ('includes/PDFTopItemsHeader.inc');
+			include ('includes/PDFTopItemsHeader.php');
 			$FontSize = 10;
 		} //end if need a new page headed up
 		/*increment a line down for the next line item */

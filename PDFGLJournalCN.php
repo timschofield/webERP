@@ -57,7 +57,7 @@ if ($JournalNo=='Preview') {
 	$JournalDate=$MyRow['trandate'];
 	DB_data_seek($Result, 0);
 	$Typemame=$MyRow['typename'];
-	include('includes/PDFGLJournalHeaderCN.inc');
+	include('includes/PDFGLJournalHeaderCN.php');
 }
 $Counter=1;
 $YPos=$FormDesign->Data->y;
@@ -121,7 +121,7 @@ while ($Counter<=$LineCount) {
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
 		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGLJournalHeaderCN.inc');
+		include ('includes/PDFGLJournalHeaderCN.php');
 	}
 }
 $pdf->setlineStyle(array('width'=>0.8));

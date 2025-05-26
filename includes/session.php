@@ -71,7 +71,7 @@ ini_set('session.cookie_httponly', 1);
 session_name('PHPSESSIDwebERPteam');
 session_start();
 
-include ($PathPrefix . 'includes/ConnectDB.inc');
+include ($PathPrefix . 'includes/ConnectDB.php');
 include ($PathPrefix . 'includes/DateFunctions.php');
 
 if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
@@ -185,7 +185,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 		$_SESSION['CompanyName'] = $DefaultDatabase;
 	}
-	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
+	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	include ($PathPrefix . 'includes/GetConfig.php');
 } else {
 	include $PathPrefix . 'includes/UserLogin.php'; /* Login checking and setup */
@@ -278,7 +278,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	// KL RICARD END Check if the user is allowed to access the page
 }
 
-/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
+/*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
 //if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
 //	header('Location: UpgradeDatabase.php');
 //}

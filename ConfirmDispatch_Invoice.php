@@ -22,9 +22,9 @@ $BookMark = 'ConfirmInvoice';
 include ('includes/header.php');
 
 include ('includes/CurrenciesArray.php');
-include ('includes/SQL_CommonFunctions.inc');
-include ('includes/FreightCalculation.inc');
-include ('includes/GetSalesTransGLCodes.inc');
+include ('includes/SQL_CommonFunctions.php');
+include ('includes/FreightCalculation.php');
+include ('includes/GetSalesTransGLCodes.php');
 include ('includes/CommissionFunctions.php');
 // KL RICARD
 include ('includes/KLGeneralFunctions.php');
@@ -1471,7 +1471,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and $OrderLine->StandardCost != 0 and !$IsAsset) {
 
-				/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc */
+				/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.php */
 
 				// KL RICARD 
 				// Begin of Consignment sales for PTADU MODIFICATIONS. 

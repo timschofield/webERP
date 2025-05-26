@@ -1,7 +1,7 @@
 <?php
 
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 
@@ -54,7 +54,7 @@ if (!isset($_POST['Date'])){
 	 exit;
 } else {
 
-	include('includes/ConnectDB.inc');
+	include('includes/ConnectDB.php');
 }
 
 $SQL= "SELECT type,
@@ -104,7 +104,7 @@ $LineHeight=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
-include ('includes/PDFSuppTransListingPageHeader.inc');
+include ('includes/PDFSuppTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
     $CurrDecimalPlaces = $MyRow['currdecimalplaces'];
@@ -121,7 +121,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFChequeListingPageHeader.inc');
+		include ('includes/PDFChequeListingPageHeader.php');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

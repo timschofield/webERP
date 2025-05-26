@@ -12,7 +12,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	_('Review Translated Descriptions') . '" />' .// Icon title.
 	_('Review Translated Descriptions') . '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 //update database if update pressed
 if(isset($_POST['Submit'])) {

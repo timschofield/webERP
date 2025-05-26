@@ -1,6 +1,6 @@
 <?php
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
@@ -87,7 +87,7 @@ if (!isset($_POST['FromDate'])){
 	 exit;
 } else {
 
-	include('includes/ConnectDB.inc');
+	include('includes/ConnectDB.php');
 }
 
 
@@ -184,7 +184,7 @@ switch ($_POST['TransType']) {
 		break;
 }
 
-include ('includes/PDFPeriodStockTransListingPageHeader.inc');
+include ('includes/PDFPeriodStockTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
 
@@ -200,7 +200,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFPeriodStockTransListingPageHeader.inc');
+		  include ('includes/PDFPeriodStockTransListingPageHeader.php');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

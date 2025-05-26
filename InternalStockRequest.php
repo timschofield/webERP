@@ -15,7 +15,7 @@ $Title = _('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include ('includes/KLRoles.php');
 

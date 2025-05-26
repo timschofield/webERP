@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 /* Check that the config variable is set for
  * picking notes and get out if not.
@@ -274,7 +274,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		OR (isset($LineResult)
 		AND DB_num_rows($LineResult)>0)){
 		/*Yes there are line items to start the ball rolling with a page header */
-		include('includes/PDFPickingListHeader.inc');
+		include('includes/PDFPickingListHeader.php');
 		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 			$LinesToShow=DB_num_rows($LineResult);
 			$PickingListNo = GetNextTransNo(19);
@@ -332,7 +332,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			if ($Page_Height-$YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
-				include ('includes/PDFPickingListHeader.inc');
+				include ('includes/PDFPickingListHeader.php');
 			} //end if need a new page headed up
 			else{
 				/*increment a line down for the next line item */

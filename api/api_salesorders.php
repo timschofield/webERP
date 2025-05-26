@@ -1085,7 +1085,7 @@ $SOH_DateFields = array ('orddate',
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
 
-/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc  */
+/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.php  */
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

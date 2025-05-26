@@ -7,7 +7,7 @@ include('includes/DefineSpecialOrderClass.php');
 include('includes/session.php');
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 $ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';

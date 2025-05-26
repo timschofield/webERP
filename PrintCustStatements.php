@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerStatements';
 $Title = _('Print Customer Statements');
@@ -217,7 +217,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					$pdf->newPage();
 		      		}
 
-		      		include('includes/PDFStatementPageHeader.inc');
+		      		include('includes/PDFStatementPageHeader.php');
 
 				$Cust_Name = $StmtHeader['name'];
 				$Cust_No = $StmtHeader['debtorno'];
@@ -259,7 +259,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 								$PageNumber++;
 								$pdf->newPage();
-								include ('includes/PDFStatementPageHeader.inc');
+								include ('includes/PDFStatementPageHeader.php');
 							} //end if need a new page headed up
 
 							/*increment a line down for the next line item */
@@ -275,7 +275,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					if ($YPos-(2 * $LineHeight) <= $Bottom_Margin){
 						$PageNumber++;
 						$pdf->newPage();
-						include ('includes/PDFStatementPageHeader.inc');
+						include ('includes/PDFStatementPageHeader.php');
 					}
 				/*Now the same again for outstanding transactions */
 
@@ -316,7 +316,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 						$PageNumber++;
 						$pdf->newPage();
-						include ('includes/PDFStatementPageHeader.inc');
+						include ('includes/PDFStatementPageHeader.php');
 					} //end if need a new page headed up
 
 					/*increment a line down for the next line item */
@@ -334,7 +334,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			/* head up a new statement page */
 				$PageNumber++;
 				$pdf->newPage();
-				include ('includes/PDFStatementPageHeader.inc');
+				include ('includes/PDFStatementPageHeader.php');
 			}
 				/*Now figure out the aged analysis for the customer under review */
 

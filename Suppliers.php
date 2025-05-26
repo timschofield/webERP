@@ -15,7 +15,7 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = 'NewSupplier';
 include ('includes/header.php');
 
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/CountriesArray.php');
 
 function Is_ValidAccount($ActNo) {

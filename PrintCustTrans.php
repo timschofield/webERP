@@ -317,7 +317,7 @@ if (isset($PrintPDF)
 			}
 
 			if ($InvOrCredit=='Invoice') {
-				/* Calculate Due Date info. This reference is used in the PDFTransPageHeader.inc file. */
+				/* Calculate Due Date info. This reference is used in the PDFTransPageHeader.php file. */
 				$DisplayDueDate = CalcDueDate(ConvertSQLDate($MyRow['trandate']), $MyRow['dayinfollowingmonth'], $MyRow['daysbeforedue']);
 			}
 
@@ -326,7 +326,7 @@ if (isset($PrintPDF)
 				$FontSize = 10;
 				$PageNumber = 1;
 
-				include('includes/PDFTransPageHeader.inc');
+				include('includes/PDFTransPageHeader.php');
 				$FirstPage = False;
 
 
@@ -384,7 +384,7 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeader.inc');
+									include ('includes/PDFTransPageHeader.php');
 								} //end if need a new page headed up
 							}
 						} else {
@@ -395,13 +395,13 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeader.inc');
+									include ('includes/PDFTransPageHeader.php');
 								} //end if need a new page headed up
 							}
 						}
 					}
 
-					PrintDetail($pdf,$MyRow2['narrative'],$Bottom_Margin,$Left_Margin+100,$YPos,245,$FontSize,function(){PrintLinesToBottom ();include ('includes/PDFTransPageHeader.inc');},null);
+					PrintDetail($pdf,$MyRow2['narrative'],$Bottom_Margin,$Left_Margin+100,$YPos,245,$FontSize,function(){PrintLinesToBottom ();include ('includes/PDFTransPageHeader.php');},null);
 
 					$YPos -= ($LineHeight);
 
@@ -409,7 +409,7 @@ if (isset($PrintPDF)
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
 						PrintLinesToBottom ();
-						include ('includes/PDFTransPageHeader.inc');
+						include ('includes/PDFTransPageHeader.php');
 					} //end if need a new page headed up
 
 				} //end while there are line items to print out
@@ -420,7 +420,7 @@ if (isset($PrintPDF)
 			/* check to see enough space left to print the 4 lines for the totals/footer */
 			if (($YPos-$Bottom_Margin)<(2*$LineHeight)) {
 				PrintLinesToBottom ();
-				include ('includes/PDFTransPageHeader.inc');
+				include ('includes/PDFTransPageHeader.php');
 			}
 			/* Print a column vertical line  with enough space for the footer */
 			/* draw the vertical column lines to 4 lines shy of the bottom

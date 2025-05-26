@@ -29,7 +29,7 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include ('includes/GLFunctions.php');
 
@@ -862,7 +862,7 @@ then do the updates and inserts to process the credit note entered */
 					if ($PurchPriceVar !=0){ /* don't bother with this lot if there is no difference ! */
 						if (mb_strlen($EnteredGRN->ItemCode)>0 OR $EnteredGRN->ItemCode != ''){ /*so it is a stock item */
 
-							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
+							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.php */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode);
 
 							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */
