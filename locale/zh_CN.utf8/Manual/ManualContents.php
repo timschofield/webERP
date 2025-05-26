@@ -867,9 +867,9 @@ if (!isset($_POST['Submit'])) {
                 <LI>footer.php</LI>
                 <LI>config.php</LI>
                 <LI>PDFStarter.php</LI>
-                <LI>数据库抽象层 - ConnectDB.inc</LI>
+                <LI>数据库抽象层 - ConnectDB.php</LI>
                 <LI>DateFunctions.php</LI>
-                <LI>SQL_CommonFuctions.inc</LI>
+                <LI>SQL_CommonFuctions.php</LI>
               </UL>
               <br />
             </LI>

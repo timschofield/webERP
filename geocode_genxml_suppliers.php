@@ -4,7 +4,7 @@
 $Title = _('Geocode Generate XML');
 
 include ('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 function parseToXML($htmlStr)
 {

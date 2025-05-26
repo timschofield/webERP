@@ -14,7 +14,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 //initialise no input errors assumed initially before we test
 $InputError = 0;

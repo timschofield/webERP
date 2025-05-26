@@ -43,7 +43,7 @@ If (DB_num_rows($Result)==0){
 
 $NegativesRow = DB_fetch_array($Result);
 
-include ('includes/PDFStockNegativesHeader.inc');
+include ('includes/PDFStockNegativesHeader.php');
 $LineHeight=15;
 $FontSize=10;
 
@@ -59,7 +59,7 @@ do {
 
 	if ($YPos < $Bottom_Margin + $LineHeight) {
 		$PageNumber++;
-		include('includes/PDFStockNegativesHeader.inc');
+		include('includes/PDFStockNegativesHeader.php');
 	}
 
 } while ($NegativesRow = DB_fetch_array($Result));

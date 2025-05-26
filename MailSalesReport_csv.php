@@ -29,8 +29,8 @@ if (sizeOf($Recipients) == 0) {
 	include('includes/footer.php');
 	exit;
 }
-include('includes/ConstructSQLForUserDefinedSalesReport.inc');
-include('includes/CSVSalesAnalysis.inc');
+include('includes/ConstructSQLForUserDefinedSalesReport.php');
+include('includes/CSVSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 $Subject = _('Sales Analysis') . ' - ' . _('CSV Format');

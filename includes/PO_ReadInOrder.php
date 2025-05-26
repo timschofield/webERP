@@ -1,5 +1,5 @@
 <?php
-/*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
+/*PO_ReadInOrder.php is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
 	if (isset($_SESSION['PO'.$identifier])){
 		unset ($_SESSION['PO'.$identifier]->LineItems);

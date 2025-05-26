@@ -5,7 +5,7 @@ $Title = _('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
-include('xmlrpc/lib/xmlrpc.inc');
+include('xmlrpc/lib/xmlrpc.php');
 include('api/api_errorcodes.php');
 
 $weberpuser = $_SESSION['UserID'];

@@ -4,7 +4,7 @@
 
 
 include('includes/DefinePOClass.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
 include('includes/session.php');

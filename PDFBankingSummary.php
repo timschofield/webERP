@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 use Dompdf\Dompdf;
 
 if (isset($_GET['BatchNo'])){

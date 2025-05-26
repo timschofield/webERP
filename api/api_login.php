@@ -12,10 +12,10 @@ function  LoginAPI($databasename, $user, $password) {
 		/* Drag in the code to connect to the DB, and some other
 		 * functions.  If the connection is established, the
 		 * variable $db will be set as the DB connection id.
-		 * NOTE:  This is needed here, as the api_session.inc file
+		 * NOTE:  This is needed here, as the api_session.php file
 		 * does NOT include this if there is no database name set.
 		 */
-		include('../includes/ConnectDB.inc');
+		include('../includes/ConnectDB.php');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
 		    $RetCode[0] = NoAuthorisation;

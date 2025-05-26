@@ -6,7 +6,7 @@ $Title = _('Geocode Generate');
 
 include ('includes/session.php');
 include ('includes/header.php');
-//include ('includes/SQL_CommonFunctions.inc');
+//include ('includes/SQL_CommonFunctions.php');
 
 $SQL = "SELECT * FROM geocode_param WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');

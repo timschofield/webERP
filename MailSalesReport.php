@@ -25,8 +25,8 @@ if (sizeOf($Recipients) == 0) {
 	include('includes/footer.php');
 	exit;
 }
-include('includes/ConstructSQLForUserDefinedSalesReport.inc');
-include('includes/PDFSalesAnalysis.inc');
+include('includes/ConstructSQLForUserDefinedSalesReport.php');
+include('includes/PDFSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 $Subject = _('Sales Analysis Report');

@@ -13,7 +13,7 @@ $BookMark = 'PickingLists';
 $ARSecurity = 3;
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */

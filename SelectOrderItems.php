@@ -17,8 +17,8 @@ $ViewTopic= 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
 
 include('includes/header.php');
-include('includes/GetPrice.inc');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/GetPrice.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 if (isset($_POST['QuickEntry'])){
@@ -930,13 +930,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						$NewItem = $KitParts['component'];
 						$NewItemQty = $KitParts['quantity'] * $ParentQty;
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.inc');
+						include('includes/SelectOrderItems_IntoCart.php');
 					}
 
 				} elseif ($MyRow['mbflag']=='G'){
 					prnMsg(_('Phantom assemblies cannot be sold, these items exist only as bills of materials used in other manufactured items. The following item has not been added to the order:') . ' ' . $NewItem, 'warn');
 				} else { /*Its not a kit set item*/
-					include('includes/SelectOrderItems_IntoCart.inc');
+					include('includes/SelectOrderItems_IntoCart.php');
 				}
 			}
 		 }
@@ -1029,7 +1029,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$NewPOLine = 0;
 			}
 			$NewItem = $AssetStockID;
-			include('includes/SelectOrderItems_IntoCart.inc');
+			include('includes/SelectOrderItems_IntoCart.php');
 		} //end if adding a fixed asset to the order
 	} //end if the fixed asset selection box was set
 
@@ -1239,14 +1239,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					$NewItemQty = $KitParts['quantity'] * $ParentQty;
 					$NewPOLine = 0;
 					$NewItemDue = date($_SESSION['DefaultDateFormat']);
-					include('includes/SelectOrderItems_IntoCart.inc');
+					include('includes/SelectOrderItems_IntoCart.php');
 				}
 
 			} else { /*Its not a kit set item*/
 				$NewItemDue = date($_SESSION['DefaultDateFormat']);
 				$NewPOLine = 0;
 
-				include('includes/SelectOrderItems_IntoCart.inc');
+				include('includes/SelectOrderItems_IntoCart.php');
 			}
 
 		} /* end of if its a new item */
@@ -1288,13 +1288,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							$NewItemQty = $KitParts['quantity'] * $ParentQty;
 							$NewItemDue = date($_SESSION['DefaultDateFormat']);
 							$NewPOLine = 0;
-							include('includes/SelectOrderItems_IntoCart.inc');
+							include('includes/SelectOrderItems_IntoCart.php');
 						}
 
 					} else { /*Its not a kit set item*/
 						$NewItemDue = date($_SESSION['DefaultDateFormat']);
 						$NewPOLine = 0;
-						include('includes/SelectOrderItems_IntoCart.inc');
+						include('includes/SelectOrderItems_IntoCart.php');
 					}
 				} /* end of if its a new item */
 			} /*end of if its a new item */

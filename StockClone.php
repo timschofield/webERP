@@ -6,7 +6,7 @@ $Title = _('Clone Item');
 $ViewTopic= 'Inventory';
 $BookMark = 'CloneItem';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
 	$_POST['OldStockID'] = isset($_GET['OldStockID']) && !empty($_GET['OldStockID']) ? $_GET['OldStockID']:$_POST['OldStockID'];

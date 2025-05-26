@@ -8,7 +8,7 @@ $ViewTopic= 'GeneralLedger';
 $BookMark = 'AccountGroups';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 
 function CheckForRecursiveGroup($ParentGroupName, $GroupName) {

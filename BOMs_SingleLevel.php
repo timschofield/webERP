@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.inc');
+include('includes/session.php');
 
 $Title = _('Bill Of Materials Maintenance');
 
@@ -8,7 +8,7 @@ $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {
 

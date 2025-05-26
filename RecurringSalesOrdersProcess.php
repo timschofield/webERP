@@ -24,8 +24,8 @@ $Title = _('Recurring Orders Process');
 $ViewTopic= "SalesOrders";
 $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/GetSalesTransGLCodes.inc');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GetSalesTransGLCodes.php');
 
 $SQL = "SELECT recurringsalesorders.recurrorderno,
 			recurringsalesorders.debtorno,

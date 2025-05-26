@@ -3,7 +3,7 @@
 	addText and other functions.*/
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
@@ -139,7 +139,7 @@ $ListCount = 0;
 
 if (DB_num_rows($Result)>0){
 	/*Yes there are line items to start the ball rolling with a page header */
-	include('includes/PDFQuotationPageHeader.inc');
+	include('includes/PDFQuotationPageHeader.php');
 
 	$QuotationTotal = 0;
 	$QuotationTotalEx = 0;
@@ -155,7 +155,7 @@ if (DB_num_rows($Result)>0){
 			OR (mb_strlen($MyRow2['narrative']) >1 AND $YPos-$LineHeight <= 62)
 			OR $YPos-$LineHeight <= 50){
 		/* We reached the end of the page so finsih off the page and start a newy */
-			include ('includes/PDFQuotationPageHeader.inc');
+			include ('includes/PDFQuotationPageHeader.php');
 		} //end if need a new page headed up
 
 		$DisplayQty = locale_number_format($MyRow2['quantity'],$MyRow2['decimalplaces']);
@@ -209,7 +209,7 @@ if (DB_num_rows($Result)>0){
 		$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
 
 		//XPos was 145, same as Description. Move it +10, slight tab in to improve readability
-		PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 155, $YPos, $Width2, $FontSize2, null, 'includes/PDFQuotationPageHeader.inc');
+		PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 155, $YPos, $Width2, $FontSize2, null, 'includes/PDFQuotationPageHeader.php');
 
 		$QuotationTotal += $LineTotal;
 		$QuotationTotalEx += $SubTot;
@@ -221,7 +221,7 @@ if (DB_num_rows($Result)>0){
 			OR (mb_strlen($MyRow['comments']) >1 AND $YPos-$LineHeight <= 62)
 			OR $YPos-$LineHeight <= 50){
 		/* We reached the end of the page so finish off the page and start a newy */
-			include ('includes/PDFQuotationPageHeader.inc');
+			include ('includes/PDFQuotationPageHeader.php');
 	} //end if need a new page headed up
 
 	$FontSize = 10;
@@ -248,7 +248,7 @@ if (DB_num_rows($Result)>0){
 	while(mb_strlen($LeftOvers) > 1) {
 		$YPos -= $FontSize;
 		if ($YPos < ($Bottom_Margin)) {// Begins new page.
-			include ('includes/PDFQuotationPageHeader.inc');
+			include ('includes/PDFQuotationPageHeader.php');
 		}
 		$LeftOvers = $pdf->addTextWrap(40, $YPos, $Width2, $FontSize, $LeftOvers);
 	}

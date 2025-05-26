@@ -9,7 +9,7 @@ $ViewTopic = 'Inventory';
 $BookMark = '';
 
 include('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/StockFunctions.php');
 
 if (isset($_GET['StockID'])){

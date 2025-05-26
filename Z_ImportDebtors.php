@@ -6,7 +6,7 @@ $Title = _('Import Debtors And branches');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FormID'])) {
 	if (!isset($_POST['AutoDebtorNo'])) {

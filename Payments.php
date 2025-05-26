@@ -21,7 +21,7 @@ include ('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 $PageTitleText, '" /> ', // Icon title.
 $PageTitleText, '</p>'; // Page title.
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/GLFunctions.php');
 
 if (isset($_POST['PaymentCancelled'])) {

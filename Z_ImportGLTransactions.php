@@ -6,7 +6,7 @@ $Title = _('Import General Ledger Transactions');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		_('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
@@ -203,7 +203,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	fclose($FileHandle);
-	include ('includes/GLPostings.inc');
+	include ('includes/GLPostings.php');
 
 } else { //show file upload form
 

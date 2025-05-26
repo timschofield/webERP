@@ -1,7 +1,7 @@
 <?php
 
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};

@@ -231,7 +231,7 @@ echo '<tr>
 //Do the processing here after the variances are all calculated above
 if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status==2){
 
-	include('includes/SQL_CommonFunctions.inc');
+	include('includes/SQL_CommonFunctions.php');
 
 	$GLCodes = GetStockGLCode($_SESSION['Contract'.$identifier]->ContractRef);
 //Compare actual costs to original budgeted contract costs - if actual > budgeted - CR WIP and DR usage variance
@@ -379,7 +379,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 				/*GL integration with stock is activated so need the GL journals to make it so */
 				/*first the debit the finished stock of the item received from the WO
 				  the appropriate account was already retrieved into the $StockGLCode variable as the Processing code is kicked off
-				  it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.inc*/
+				  it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.php*/
 
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,

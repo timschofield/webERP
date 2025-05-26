@@ -6,7 +6,7 @@
 include('includes/session.php');
 $Title=_('FTP order to Radio Beacon');
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Freight Costs') . '" alt="" />' . ' ' . $Title . '

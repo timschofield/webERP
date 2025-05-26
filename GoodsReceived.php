@@ -8,7 +8,7 @@ include('includes/DefineSerialItems.php');
 include('includes/session.php');
 if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);};
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 /*The identifier makes this goods received session unique so cannot get confused
  * with other sessions of goods received on the same machine/browser
@@ -43,7 +43,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
 
 	$_GET['ModifyOrderNumber'] = intval($_GET['PONumber']);
-	include('includes/PO_ReadInOrder.inc');
+	include('includes/PO_ReadInOrder.php');
 } elseif (isset($_POST['Update'])
 			OR isset($_POST['ProcessGoodsReceived'])) {
 

@@ -25,7 +25,7 @@ echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the t
 echo '<br /><br />&nbsp;' . _('Utility page to rebuild the system default language file');
 
 $PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.pot';
-$FilesToInclude = '*.php api/*.php includes/*.inc includes/*.php install/*.php reportwriter/languages/en_US/reports.php';
+$FilesToInclude = '*.php api/*.php includes/*.php includes/*.php install/*.php reportwriter/languages/en_US/reports.php';
 $xgettextCmd = 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 if (isset($_POST['submit'])) {

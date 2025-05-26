@@ -6,7 +6,7 @@ $Title = _('Import Stock Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
-include('xmlrpc/lib/xmlrpc.inc');
+include('xmlrpc/lib/xmlrpc.php');
 include('api/api_errorcodes.php');
 
 $webERPUser = $_SESSION['UserID'];

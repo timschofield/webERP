@@ -10,7 +10,7 @@ $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if(isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);

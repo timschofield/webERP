@@ -1,6 +1,6 @@
 <?php
 /*Functions to get the GL codes to post the transaction to */
-include ('includes/GetSalesTransGLCodes.inc');
+include ('includes/GetSalesTransGLCodes.php');
 /*defines the structure of the data required to hold the transaction as a session variable */
 include ('includes/DefineCartClass.php');
 include ('includes/DefineSerialItems.php');
@@ -11,7 +11,7 @@ $BookMark = 'CreditNotes';
 
 $Title = _('Credit An Invoice');
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/CommissionFunctions.php');
 
 if (empty($_GET['identifier'])) {

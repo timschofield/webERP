@@ -8,10 +8,10 @@ $ToCriteria = 'zzzzzzzz'; /*Category To */
 $Location = 'All'; /* Location to report on */
 $DetailedReport = 'Yes'; /* Total by category or complete listing */
 
-$_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.inc works too */
-$_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.inc works too */
+$_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.php works too */
+$_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.php works too */
+$_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.php works too */
+$_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.php works too */
 
 include('includes/session.php');
 include('includes/class.pdf.php');
@@ -128,7 +128,7 @@ include('includes/footer.php');
 exit;
 }
 
-include('includes/PDFInventoryValnPageHeader.inc');
+include('includes/PDFInventoryValnPageHeader.php');
 
 $Tot_Val = 0;
 $Category = '';
@@ -180,7 +180,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult)) {
 	$CatTot_Val += $InventoryValn['itemtotal'];
 
 	if ($YPos < $Bottom_Margin + $LineHeight) {
-		include('includes/PDFInventoryValnPageHeader.inc');
+		include('includes/PDFInventoryValnPageHeader.php');
 	}
 
 } /*end inventory valn while loop */

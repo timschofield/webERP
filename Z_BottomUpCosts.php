@@ -6,7 +6,7 @@ $Title = _('Recalculate BOM costs');
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_BottomUpCosts'; // Anchor's id in the manual's html document.
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Run'])){
 	$Run = $_GET['Run'];

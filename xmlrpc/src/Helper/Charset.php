@@ -373,7 +373,7 @@ class Charset
     }
 
     /**
-     * Used only for backwards compatibility (the .inc shims).
+     * Used only for backwards compatibility (the .php shims).
      * @deprecated
      *
      * @param string $charset

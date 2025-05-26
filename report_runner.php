@@ -90,8 +90,8 @@ $Recipients = explode(";",$emailaddresses);
 $AllowAnyone = true;
 include('includes/session.php');
 
-include ('includes/ConstructSQLForUserDefinedSalesReport.inc');
-include ('includes/PDFSalesAnalysis.inc');
+include ('includes/ConstructSQLForUserDefinedSalesReport.php');
+include ('includes/PDFSalesAnalysis.php');
 
 if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie there is a report to send! */
 	$pdfcode = $pdf->output();

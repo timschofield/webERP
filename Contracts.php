@@ -25,7 +25,7 @@ $ViewTopic= 'Contracts';
 $BookMark = 'CreateContract';
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then
  * it must be either a new contract, or the start of a modification of an

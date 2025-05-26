@@ -26,7 +26,7 @@ $Title2 = _('Statement of Comprehensive Income'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ProfitAndLoss';
 
-include_once ('includes/SQL_CommonFunctions.inc');
+include_once ('includes/SQL_CommonFunctions.php');
 include_once ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 include_once ('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

@@ -62,7 +62,7 @@ $PDFLanguages = array(
 	_('Free Serif')
 );
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // Make an array of the security roles
 $SQL = "SELECT secroleid,

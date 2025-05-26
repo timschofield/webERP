@@ -18,7 +18,7 @@ $Title = _('Customer Maintenance');
 $ViewTopic= 'AccountsReceivable';
 $BookMark = 'NewCustomer';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/CountriesArray.php');
 
 echo '<p class="page_title_text">

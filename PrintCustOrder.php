@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 include('includes/class.pdf.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
@@ -209,7 +209,7 @@ if (DB_num_rows($Result)>0){
 	$FontSize=12;
 	$LineHeight=16;
 
-	include('includes/PDFOrderPageHeader.inc');
+	include('includes/PDFOrderPageHeader.php');
 
 	while ($MyRow2=DB_fetch_array($Result)){
 
@@ -228,7 +228,7 @@ if (DB_num_rows($Result)>0){
 	   /* We reached the end of the page so finsih off the page and start a newy */
 
 	      $PageNumber++;
-	      include ('includes/PDFOrderPageHeader.inc');
+	      include ('includes/PDFOrderPageHeader.php');
 
 	   } //end if need a new page headed up
 

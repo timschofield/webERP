@@ -13,7 +13,7 @@ include('includes/header.php');
 
 include_once('includes/CountriesArray.php');// To get the country name from the country code.
 include_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
-include_once('includes/SQL_CommonFunctions.inc');
+include_once('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SelectedCurrency'])) {
 	$SelectedCurrency = $_GET['SelectedCurrency'];

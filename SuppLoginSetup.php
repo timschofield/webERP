@@ -6,7 +6,7 @@ $Title = _('Supplier Login Configuration');
 include('includes/header.php');
 $ViewTopic = 'Setup';
 $BookMark = '';
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/LanguagesArray.php');
 
 

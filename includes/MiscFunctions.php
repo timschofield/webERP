@@ -1,7 +1,7 @@
 <?php
 
 /*************************************************************
- * MiscFunctions.php included from includes/ConnectDB.inc
+ * MiscFunctions.php included from includes/ConnectDB.php
  *
  *  * ******************** FUNCTION INDEX ********************
  * AddCarriageReturns - Adds carriage returns to a string

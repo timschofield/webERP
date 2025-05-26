@@ -14,7 +14,7 @@ $ViewTopic= 'ARTransactions';
 $BookMark = 'CustomerAllocations';
 
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['DebtorNo'])) {
 	// Page called with customer code

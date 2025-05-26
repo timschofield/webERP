@@ -9,7 +9,7 @@ $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['NewShipment']) and $_GET['NewShipment']=='Yes'){
 	unset($_SESSION['Shipment']->LineItems);

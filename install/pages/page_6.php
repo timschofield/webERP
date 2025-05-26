@@ -53,7 +53,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 
 CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
 
-include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.inc');
+include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
 $DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);

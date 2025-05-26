@@ -5,7 +5,7 @@ $Title = _('Receive Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -687,7 +687,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 		/*first the debit the finished stock of the item received from the WO
 		  the appropriate account was already retrieved into the $StockGLCode variable as the Processing code is kicked off
-		  it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.inc*/
+		  it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.php*/
 
 			$SQL = "INSERT INTO gltrans (type,
 									typeno,

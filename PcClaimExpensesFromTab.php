@@ -7,7 +7,7 @@ $Title = _('Claim Petty Cash Expenses From Tab');
 $ViewTopic = 'PettyCash';
 $BookMark = 'ExpenseClaim';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);

@@ -7,7 +7,7 @@ $Title = _('Assignment of Cash to Petty Cash Tab');
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);

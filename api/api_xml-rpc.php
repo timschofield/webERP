@@ -7,9 +7,9 @@
     /* Note api_php.php includes api */
 	include 'api_php.php';
 
-	include '../xmlrpc/lib/xmlrpc.inc';
+	include '../xmlrpc/lib/xmlrpc.php';
 	$xmlrpc_internalencoding='UTF-8';
-	include '../xmlrpc/lib/xmlrpcs.inc';
+	include '../xmlrpc/lib/xmlrpcs.php';
 
 	$Description = _('This function is used to login into the API methods for the specified the database.')
 		 . '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</p>';

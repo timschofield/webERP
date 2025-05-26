@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['KeyValue']))  {
 	$SelectedProdSpec=$_GET['KeyValue'];
@@ -151,7 +151,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	}
 	$TrailerPrinted=1;
 	if ($HeaderPrinted==0) {
-		include('includes/PDFProdSpecHeader.inc');
+		include('includes/PDFProdSpecHeader.php');
 		$HeaderPrinted=1;
 	}
 
@@ -185,7 +185,7 @@ while ($MyRow=DB_fetch_array($Result)){
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
 			$PageNumber++;
-			include ('includes/PDFProdSpecHeader.inc');
+			include ('includes/PDFProdSpecHeader.php');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
 		$YPos -= $LineHeight;
@@ -247,7 +247,7 @@ while ($MyRow=DB_fetch_array($Result)){
 		$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		$PrintTrailer=0;
 		$PageNumber++;
-		include ('includes/PDFProdSpecHeader.inc');
+		include ('includes/PDFProdSpecHeader.php');
 	}
 	//echo 'PrintTrailer'.$PrintTrailer.' '.$PrevTrailer.'<br>' ;
 } //while loop
@@ -265,7 +265,7 @@ if ($SectionTrailer>'') {
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
-	include ('includes/PDFProdSpecHeader.inc');
+	include ('includes/PDFProdSpecHeader.php');
 }
 $Disclaimer= _('The information provided on this datasheet should only be used as a guideline. Actual lot to lot values will vary.');
 $FontSize=8;

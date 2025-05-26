@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDF'])){
 		exit;
 	}
 
-	include ('includes/PDFStockCheckPageHeader.inc');
+	include ('includes/PDFStockCheckPageHeader.php');
 
 	$Category = '';
 
@@ -187,7 +187,7 @@ if (isset($_POST['PrintPDF'])){
 
 		if ($YPos < $Bottom_Margin + $LineHeight){
 			$PageNumber++;
-			include('includes/PDFStockCheckPageHeader.inc');
+			include('includes/PDFStockCheckPageHeader.php');
 		}
 
 	} /*end STOCK SHEETS while loop */

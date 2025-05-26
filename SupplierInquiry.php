@@ -8,7 +8,7 @@ $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inq
 $BookMark = 'AccountsPayable';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // always figure out the SQL required from the inputs available
 

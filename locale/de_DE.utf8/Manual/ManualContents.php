@@ -728,9 +728,9 @@ if (!isset($_POST['Submit'])) {
                 <li>footer.php</li>
                 <li>config.php</li>
                 <li>PDFStarter.php</li>
-                <li>Datenbank-Abstraktionsschicht - ConnectDB.inc</li>
+                <li>Datenbank-Abstraktionsschicht - ConnectDB.php</li>
                 <li>DateFunctions.php</li>
-                <li>SQL_CommonFuctions.inc</li>
+                <li>SQL_CommonFuctions.php</li>
               </ul>
               <br />
             </li>

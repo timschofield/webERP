@@ -8,7 +8,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/GLFunctions.php');
 
 if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' and isset($_SESSION['JournalDetail'])) {

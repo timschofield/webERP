@@ -8,7 +8,7 @@ $BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
-	include('includes/SQL_CommonFunctions.inc');
+	include('includes/SQL_CommonFunctions.php');
 	$InputError =0; //Always hope for the best
 
 	//Make an array of the Items to purchase

@@ -21,7 +21,7 @@ include($PathPrefix . 'includes/LanguageSetup.php');
 //  may not have the same 'value' as any previous connection, so
 //  save the new one in the session variable.
 if (isset($_SESSION['DatabaseName']) AND $_SESSION['DatabaseName'] != '' ) {
-	include($PathPrefix . 'includes/ConnectDB.inc');
+	include($PathPrefix . 'includes/ConnectDB.php');
 	$_SESSION['db'] = $db;
 }
 include($PathPrefix . 'includes/DateFunctions.php');
@@ -41,7 +41,7 @@ if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 }
 
 // Now check that the user as logged in has access to the page being called. The $PageSecurity
-// value must be set in the script before header.inc is included. $SecurityGroups is an array of
+// value must be set in the script before header.php is included. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 

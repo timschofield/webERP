@@ -46,7 +46,7 @@ if (isset($_GET['NewReport'])) {
 	$_POST['NewReport'] = $_GET['NewReport'];
 }
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {

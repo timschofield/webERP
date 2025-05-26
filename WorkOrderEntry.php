@@ -8,7 +8,7 @@ $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 
 $Title = _('Work Order Entry');
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
 echo '<p class="page_title_text">

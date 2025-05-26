@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 $Title = _('Enter GL Budget amounts');
 

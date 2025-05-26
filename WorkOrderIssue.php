@@ -5,7 +5,7 @@ $Title = _('Issue Materials To Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
 if (isset($_GET['WO'])) {
@@ -340,7 +340,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 			/*first the debit the WIP of the item being manufactured from the WO
 			 the appropriate account was already retrieved into the $StockGLCode variable as the Processing code is kicked off
-			 it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.inc*/
+			 it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.php*/
 
 			$SQL = "INSERT INTO gltrans (type,
 							typeno,
@@ -547,7 +547,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 				/*GL integration with stock is activated so need the GL journals to make it so */
 				/*first the debit the WIP of the item being manufactured from the WO
 								the appropriate account was already retrieved into the $StockGLCode variable as the Processing code is kicked off
-								it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.inc*/
+								it is retrieved from the stock category record of the item by a function in SQL_CommonFunctions.php*/
 				$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,

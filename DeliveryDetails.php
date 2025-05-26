@@ -20,8 +20,8 @@ $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-include('includes/FreightCalculation.inc');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/FreightCalculation.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
 

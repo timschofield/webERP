@@ -15,7 +15,7 @@ $Title = _('Enter Supplier Invoice');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/StockFunctions.php');
 include ('includes/GLFunctions.php');
 
@@ -151,7 +151,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 		/* The user has permission to receive goods then lets go */
 
 		$_GET['ModifyOrderNumber'] = intval($_GET['ReceivePO']);
-		include ('includes/PO_ReadInOrder.inc');
+		include ('includes/PO_ReadInOrder.php');
 
 		if ($_SESSION['PO' . $identifier]->Status == 'Authorised') {
 			DB_Txn_Begin();
@@ -1265,7 +1265,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 					if ($PurchPriceVar != 0) { /* don't bother with this lot if there is no difference ! */
 						if (mb_strlen($EnteredGRN->ItemCode) > 0 OR $EnteredGRN->ItemCode != '') { /*so it is a stock item */
 
-							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.inc */
+							/*need to get the stock category record for this stock item - this is function in SQL_CommonFunctions.php */
 							$StockGLCode = GetStockGLCode($EnteredGRN->ItemCode);
 
 							/*We have stock item and a purchase price variance need to see whether we are using Standard or WeightedAverageCosting */

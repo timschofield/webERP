@@ -14,7 +14,7 @@ $BookMark = '';
 
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if(isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];

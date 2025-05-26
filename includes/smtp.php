@@ -1,7 +1,7 @@
 <?php
 /* $Revision: 1.3 $ */
 /**
-* Filename.......: class.smtp.inc
+* Filename.......: class.smtp.php
 * Project........: SMTP Class
 * Version........: 1.0.5
 * Last Modified..: 21 December 2001
