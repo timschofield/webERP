@@ -79,12 +79,13 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		$Title, '" /> ', // Icon title.
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
-	$Result = DB_query("SELECT lastdate_in_period FROM `periods` WHERE `periodno`=" . $_POST['PeriodFrom']);
-	$PeriodFromName = DB_fetch_array($Result);
-	$Result = DB_query("SELECT lastdate_in_period FROM `periods` WHERE `periodno`=" . $_POST['PeriodTo']);
-	$PeriodToName = DB_fetch_array($Result);
-	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName['lastdate_in_period']),
-		' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName['lastdate_in_period']), '<br />'; // Page title, reporting period.
+	
+	// Replace SQL queries with EndDateSQLFromPeriodNo function
+	$PeriodFromDate = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
+	$PeriodToDate = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	
+	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromDate),
+		' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToDate), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>'; // Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',

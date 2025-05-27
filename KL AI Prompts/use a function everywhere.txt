@@ -1,0 +1,10 @@
+Use this function: 
+function EndDateSQLFromPeriodNo($PeriodNo) {
+$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+return $MyRow['lastdate_in_period'];
+}
+defined in includes/DateFunctions.php everywhere possible in my files,
+
+adding the include('includes/DateFunctions.php'); if needed at the beginning of the files, with the other include() statements

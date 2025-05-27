@@ -624,12 +624,7 @@ function CashStatus($Year,
 	$Today = date('Y-m-d');
 	$FirstDateOfMonth = date('Y-m-d', mktime(0, 0, 0, date('m'), 1, date('Y')));
 
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno = '".$Period."'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$LastDateOfMonth = $MyRow['lastdate_in_period'];
+	$LastDateOfMonth = EndDateSQLFromPeriodNo($Period);
 	$DaysUntilEndOfMonth = DaysBetween($Today, $LastDateOfMonth)+1;
 
 	////////////////////////////////////////////////////////
