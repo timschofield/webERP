@@ -722,11 +722,14 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 }
 
 function FYStartPeriod($PeriodNumber) {
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNumber . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$DateArray = explode('-', $MyRow['lastdate_in_period']);
-	if ($DateArray[1] > $_SESSION['YearEnd']) {
+	// Get the end date of the period using EndDateSQLFromPeriodNo
+	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNumber);
+	
+	// Parse the date components from the SQL date
+	$DateArray = explode('-', $LastDateInPeriod);
+	
+	// Determine the financial year start date based on YearEnd setting
+	if ((int)$DateArray[1] > $_SESSION['YearEnd']) {
 		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0]));
 	} else {
 		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0] - 1));

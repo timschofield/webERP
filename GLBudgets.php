@@ -181,9 +181,6 @@ if (!isset($SelectedBudget)) {
 	$Total = 0;
 
 	for ($CurrentPeriod = $MyRow['startperiod'];$CurrentPeriod <= $MyRow['endperiod'];$CurrentPeriod++) {
-		$PeriodSQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $CurrentPeriod . "'";
-		$PeriodResult = DB_query($PeriodSQL);
-		$MyPeriodRow = DB_fetch_array($PeriodResult);
 
 		$AmountSQL = "SELECT amount
 						FROM glbudgetdetails
@@ -210,7 +207,7 @@ if (!isset($SelectedBudget)) {
 		}
 		$Total+= $AmountRow['amount'];
 		echo '<field>
-				<label for="', $CurrentPeriod, '">', MonthAndYearFromSQLDate($MyPeriodRow['lastdate_in_period']), '</label>
+				<label for="', $CurrentPeriod, '">', MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($CurrentPeriod)), '</label>
 				<input type="text" class="number" name="Period', $CurrentPeriod, '" id="Period', $CurrentPeriod, '" value="', $AmountRow['amount'], '" onkeyup="UpdateTotal(', $MyRow['startperiod'], ', ', $MyRow['endperiod'], ')" />
 			</field>';
 	}

@@ -30,12 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		exit;
 	}
 
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.groupname,

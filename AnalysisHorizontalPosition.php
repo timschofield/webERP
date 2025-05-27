@@ -74,10 +74,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$LastDateInPeriod = $MyRow[0];
+	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNo);
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
@@ -124,10 +121,8 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$BalanceDate = ConvertSQLDate($MyRow[0]);
+	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	$BalanceDate = ConvertSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.

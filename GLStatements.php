@@ -95,17 +95,16 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !($_POST['ShowF
 // Main code:
 if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewReport']) {
 	// If PeriodFrom and PeriodTo are set and it is not a NewReport, generates the report:
+
 	echo '<div class="sheet">';// Division to identify the report block.
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		// Page title as IAS1 numerals 10 and 51:
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodFrom']);
-	$PeriodFromName = DB_fetch_array($Result);
-	$Result = DB_query('SELECT lastdate_in_period FROM `periods` WHERE `periodno`=' . $_POST['PeriodTo']);
-	$PeriodToName = DB_fetch_array($Result);
-	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName['lastdate_in_period']), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName['lastdate_in_period']), '<br />'; // Page title, reporting period.
+	$PeriodFromName = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
+	$PeriodToName = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo // Index of this report:

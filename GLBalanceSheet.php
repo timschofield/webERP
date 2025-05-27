@@ -45,12 +45,7 @@ if(isset($_GET['ShowZeroBalance'])) {// Select period from.
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$BalanceDate = ConvertSQLDate($MyRow[0]);
-
-	/*Calculate B/Fwd retained earnings */
+	$BalanceDate = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 
 	/* Get the retained earnings amount */
 	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings

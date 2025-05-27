@@ -198,10 +198,8 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		exit;
 	}
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	$PeriodToDate = MonthAndYearFromSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
