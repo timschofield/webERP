@@ -6,11 +6,7 @@ use Dompdf\Dompdf;
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	/*Get the date of the last day in the period selected */
-
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno = '" . $_POST['PeriodEnd']."'";
-	$PeriodEndResult = DB_query($SQL,_('Could not get the date of the last day in the period selected'));
-	$PeriodRow = DB_fetch_row($PeriodEndResult);
-	$PeriodEndDate = ConvertSQLDate($PeriodRow[0]);
+	$PeriodEndDate = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodEnd']));
 
 	  /*Now figure out the aged analysis for the customer range under review */
 

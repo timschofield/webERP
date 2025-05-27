@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+include('includes/DateFunctions.php');
 use Dompdf\Dompdf;
 $Title = _('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
@@ -9,9 +10,7 @@ $BookMark = '';
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'");
-	$MyRow = DB_fetch_array($Result);
-	$EndDateSQL = $MyRow['lastdate_in_period'];
+	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 	/*Now get and display the sales data returned */
 	if (mb_strpos($EndDateSQL,'/')) {

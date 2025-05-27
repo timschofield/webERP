@@ -35,12 +35,7 @@ if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and $_POST['Period
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsheet'])) {
 
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_row($Result);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
 	$HTML = '';
@@ -87,13 +82,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	}
 
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
-
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 

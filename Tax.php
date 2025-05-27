@@ -2,13 +2,7 @@
 
 include('includes/session.php');
 if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST['NoOfPeriods']) and isset($_POST['ToPeriod'])) {
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$ErrMsg = _('Could not determine the last date of the period selected') . '. ' . _('The sql returned the following error');
-	$PeriodEndResult = DB_query($SQL, $ErrMsg);
-	$PeriodEndRow = DB_fetch_row($PeriodEndResult);
-	$PeriodEnd = ConvertSQLDate($PeriodEndRow[0]);
+	$PeriodEnd = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['ToPeriod']));
 	$Result = DB_query("SELECT description FROM taxauthorities WHERE taxid='" . $_POST['TaxAuthority'] . "'");
 	$TaxAuthDescription = DB_fetch_row($Result);
 	$TaxAuthorityName = $TaxAuthDescription[0];
