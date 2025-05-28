@@ -8,7 +8,7 @@ $Title = _('Select QA Samples');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_GET['SelectedSampleID']);

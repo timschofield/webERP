@@ -8,7 +8,7 @@ $Title = _('Stock Cost Update');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a><br />';
 
 echo '<p class="page_title_text">
 	 <img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />

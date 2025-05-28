@@ -1,4 +1,12 @@
 <?php
+
+
+/*****************************************************************************************
+ * 
+ * KL RICARD: Multicompany options
+ * 
+ ****************************************************************************************/
+
 /* AnalysisHorizontalIncome.php
 Shows the horizontal analysis of the statement of comprehensive income.
 
@@ -26,6 +34,33 @@ $BookMark = 'AnalysisHorizontalIncome';
 include('includes/header.php');
 include('includes/GLFunctions.php');
 
+// KL RICARD: prepare the data for each company
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'ALL';
+	$Title = _('Horizontal Analysis of Statement of Comprehensive Income for KL group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'ALL') {
+	$Title = _('Horizontal Analysis of Statement of Comprehensive Income for for KL Group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'PTADU') {
+	$Title = _('Horizontal Analysis of Statement of Comprehensive Income for PT. Angin Dingin Utara');
+	$Table = 'chartmasterADU';
+}
+else if ($_POST['Company'] == 'PTSMH') {
+	$Title = _('Horizontal Analysis of Statement of Comprehensive Income for for PT. Sungai Mutiara Hitam');
+	$Table = 'chartmasterSMH';
+}
+else if ($_POST['Company'] == 'PTBB') {
+	$Title = _('Horizontal Analysis of Statement of Comprehensive Income for PT. Bumi Biru');
+	$Table = 'chartmasterBB';
+}
+// KL RICARD END: prepare the data for each company
+
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
@@ -46,7 +81,7 @@ if (isset($_GET['NewReport'])) {
 	$_POST['NewReport'] = $_GET['NewReport'];
 }
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/AccountSectionsDef.php');// This loads the $Sections variable.
 
 if (isset($_POST['PeriodFrom']) and ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
@@ -77,6 +112,14 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		'<legend>', _('Report Parameters'), '</legend>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
+
+	// KL RICARD select the company to include
+	echo FieldToSelectFromFourOptions('ALL', 'All companies', 
+									'PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'Report for', '', '', '', true, false);
+	// KL RICARD END select the company to include
 
 	echo	'<field>
 				<label for="PeriodFrom">', _('Select period from'), ':</label>
@@ -133,7 +176,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo '<option';
@@ -199,10 +242,8 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		exit;
 	}
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	$PeriodToDate = MonthAndYearFromSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
@@ -210,9 +251,8 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '<br />', // Page title, reporting statement.
-		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
 		_('For'), ' ', $NumberOfMonths, ' ', _('months to'), ' ', $PeriodToDate, '<br />', // Page title, reporting period.
-		_('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+		_('All amounts stated in'), ' ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="scrollable">
 		<thead>
 		<tr>';
@@ -242,29 +282,29 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
-					chartmaster.accountcode,
-					chartmaster.accountname,
+					" . $Table . ".accountcode,
+					" . $Table . ".accountname,
 					SUM(CASE WHEN gltotals.period >= '" . $_POST['PeriodFrom'] . "' AND gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount ELSE 0 END) AS PeriodActual,
 					SUM(CASE WHEN gltotals.period >= '" . ($_POST['PeriodFrom'] - 12) . "' AND gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount ELSE 0 END) AS LYPeriodActual
-			FROM chartmaster
+			FROM " . $Table . "
 			INNER JOIN accountgroups
-				ON chartmaster.group_ = accountgroups.groupname
+				ON " . $Table . ".group_ = accountgroups.groupname
 			INNER JOIN gltotals
-				ON chartmaster.accountcode = gltotals.account
+				ON " . $Table . ".accountcode = gltotals.account
 			INNER JOIN glaccountusers
-				ON glaccountusers.accountcode = chartmaster.accountcode
+				ON glaccountusers.accountcode = " . $Table . ".accountcode
 					AND glaccountusers.userid = '" .  $_SESSION['UserID'] . "'
 					AND glaccountusers.canview = 1
 			WHERE accountgroups.pandl = 1
 			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
-						chartmaster.accountcode,
-					chartmaster.accountname
+						" . $Table . ".accountcode,
+					" . $Table . ".accountname
 			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
-					chartmaster.accountcode";
+					" . $Table . ".accountcode";
 	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was'));
 
 	$PeriodTotal = 0;

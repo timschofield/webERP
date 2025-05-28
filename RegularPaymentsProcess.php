@@ -1,7 +1,7 @@
 <?php
 include ('includes/session.php');
 
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/GLFunctions.php');
 
 $Title = _('Process regular payments');

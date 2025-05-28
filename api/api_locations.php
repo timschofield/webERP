@@ -71,6 +71,7 @@
 		$SQL = "SELECT loccode FROM locations";
 		$Result = DB_query($SQL);
 		$i=0;
+        $LocationList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$LocationList[$i]=$MyRow[0];
 			$i++;

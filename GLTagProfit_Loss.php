@@ -4,7 +4,7 @@
 include ('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Income and Expenditure by Tag');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';
@@ -30,12 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		exit;
 	}
 
-	$SQL = "SELECT lastdate_in_period
-			FROM periods
-			WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.groupname,
@@ -579,7 +574,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<label for="PeriodTo">' . _('Select Period To') . ':</label>
 			<select name="PeriodTo">';
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 

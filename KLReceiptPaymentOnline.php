@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 $Title = _('KL Receipt Payment Online');
 include('includes/header.php');
 include('includes/KLDefines.php');

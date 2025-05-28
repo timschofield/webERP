@@ -28,8 +28,8 @@ $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-include('includes/FreightCalculation.inc');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/FreightCalculation.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
 
@@ -50,7 +50,7 @@ if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 	exit;
 }
 
-/*Calculate the earliest dispacth date in DateFunctions.inc */
+/*Calculate the earliest dispacth date in DateFunctions.php */
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 
@@ -625,7 +625,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	/*see if this is a contract quotation being changed to an order? */
 	if($_SESSION['Items'.$identifier]->Quotation==0) {//now its being changed? to an order
@@ -769,7 +769,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 	} /* updated line items into sales order details */
 
-	$Result=DB_Txn_Commit();
+	DB_Txn_Commit();
 	$Quotation = $_SESSION['Items'.$identifier]->Quotation;
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);

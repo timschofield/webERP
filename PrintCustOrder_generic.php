@@ -3,7 +3,7 @@
 
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
@@ -204,7 +204,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 	if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling with a page header */
-		include('includes/PDFOrderPageHeader_generic.inc');
+		include('includes/PDFOrderPageHeader_generic.php');
 
 		while ($MyRow2=DB_fetch_array($Result)){
 
@@ -235,13 +235,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
 
 				//XPos was 147, same as Description. Move it +10, slight tab in to improve readability
-				PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 157, $YPos, $Width2, $FontSize2, null, 'includes/PDFOrderPageHeader_generic.inc');
+				PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 157, $YPos, $Width2, $FontSize2, null, 'includes/PDFOrderPageHeader_generic.php');
 			}
 
 			if ($YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a newy */
 				$PageNumber++;
-				include ('includes/PDFOrderPageHeader_generic.inc');
+				include ('includes/PDFOrderPageHeader_generic.php');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
@@ -287,7 +287,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					if ($YPos-$LineHeight <= 50){
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
-						include ('includes/PDFOrderPageHeader_generic.inc');
+						include ('includes/PDFOrderPageHeader_generic.php');
 					} //end if need a new page headed up
 					 else{
 						/*increment a line down for the next line item */

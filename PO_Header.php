@@ -32,7 +32,7 @@ $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then
  * it must be either a new order, or the start of a modification of an
@@ -318,7 +318,7 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
  * these details to be modified */
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	include ('includes/PO_ReadInOrder.inc');
+	include ('includes/PO_ReadInOrder.php');
 }
 
 if (!isset($_SESSION['PO' . $identifier])) {
@@ -738,7 +738,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		if (!isset($PurchItemRow['leadtime'])) {
 			$PurchItemRow['leadtime'] = 1;
 		}
-
+		$_SESSION['PO' . $identifier]->Version = '1.0';
 		$_SESSION['PO' . $identifier]->add_to_order(1,
 													$Purch_Item,
 													$PurchItemRow['serialised'],

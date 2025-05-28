@@ -728,6 +728,7 @@ $SOH_DateFields = array ('orddate',
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
 		$LineCounter =0;
+        $LineTaxes = array();
 
 		while ($OrderLineRow = DB_fetch_array($LineItemsResult)) {
 
@@ -759,6 +760,7 @@ $SOH_DateFields = array ('orddate',
 				$Errors[] = TaxRatesFailed;
 			}
 			$LineTaxAmount = 0;
+            $TaxAuthAmount = 0;
 			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 
 				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
@@ -1083,7 +1085,7 @@ $SOH_DateFields = array ('orddate',
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
 
-/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc  */
+/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.php  */
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

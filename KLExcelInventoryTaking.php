@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');

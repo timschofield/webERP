@@ -31,7 +31,7 @@ $MessageType ='INVOIC';
 
 /*end of testing variables / code */
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 $EDITrans = GetNextTransNo(99);
 

@@ -12,7 +12,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'ViewRequest';
 
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('View Unfulfilled Stock Requests') . '</p>';
 

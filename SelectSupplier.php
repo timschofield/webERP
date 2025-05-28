@@ -7,7 +7,7 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];

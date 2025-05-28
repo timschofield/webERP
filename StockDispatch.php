@@ -11,8 +11,8 @@ KL RICARD MODIFICATIONS:
 // that can be processed using Bulk Inventory Transfer - Receive.
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/GetPrice.inc');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GetPrice.php');
 
 include('includes/KLEmails.php');
 include('includes/KLGeneralFunctions.php');

@@ -1,7 +1,7 @@
 <?php
 include ('includes/DefineTenderClass.php');
 include ('includes/session.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
 if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};

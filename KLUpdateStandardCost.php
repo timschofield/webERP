@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 $Title = _('KL Update Standard Cost for an item');
 include('includes/header.php');
 include('includes/KLBoards.php');

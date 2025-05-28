@@ -7,7 +7,7 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('webERP to OpenCart Hourly Synchronizer '. VERSIONFILE);
 include ('includes/header.php');
-include('includes/GetPrice.inc');
+include('includes/GetPrice.php');
 
 include ('includes/KLGeneralFunctions.php');
 include ('includes/KLDefines.php');

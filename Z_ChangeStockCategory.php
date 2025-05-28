@@ -11,7 +11,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	_('Change A Stock Category Code') . '" /> ' .// Icon title.
 	_('Change A Stock Category Code') . '</p>';// Page title.
 
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['ProcessStockChange'])) {
 	$_POST['NewStockCategory'] = mb_strtoupper($_POST['NewStockCategory']);

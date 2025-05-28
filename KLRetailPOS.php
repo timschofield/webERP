@@ -27,7 +27,7 @@ v 2.06 Add customer data information
 v 2.05 Add packaging products and code cleaning
 v 2.04 Fixed the rollback problem
 v 2.03 Fixed some bugs due to change account GL to varchar(20).
-v 2.02 Moved DEFINES to includes/KLDefines.inc file. use of KLSendEmail() function
+v 2.02 Moved DEFINES to includes/KLDefines.php file. use of KLSendEmail() function
 v 2.01 Mod to include special discount / vouchers
 v 2.00 Mod to include Mandiri CC accounts
 v 1.03 Mod to allow automatic accounting for CC bank charges
@@ -45,9 +45,9 @@ include('includes/session.php');
 $Title = _('POS ' . $_SESSION['locationname']);
 
 include('includes/header.php');
-include('includes/GetPrice.inc');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/GetSalesTransGLCodes.inc');
+include('includes/GetPrice.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GetSalesTransGLCodes.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -274,7 +274,7 @@ if (isset($_POST['OrderItems'])
 					}
 				} else {
 					// it's not packaging, so a sold item
-					include('includes/SelectOrderItems_IntoCart.inc');
+					include('includes/SelectOrderItems_IntoCart.php');
 					$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 				}
 			}
@@ -373,7 +373,7 @@ if (isset($NewItem)) {
 	$Discount = 0; /*By default - can change later or discount category override */
 	$NewItemDue = date($_SESSION['DefaultDateFormat']);
 	$NewPOLine = 0;
-	include('includes/SelectOrderItems_IntoCart.inc');
+	include('includes/SelectOrderItems_IntoCart.php');
 	$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 } /*end of if its a new item */
 
@@ -386,7 +386,7 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])) {
 			$Discount = 0; /*By default - can change later or discount category override */
 			$NewItemDue = date($_SESSION['DefaultDateFormat']);
 			$NewPOLine = 0;
-			include('includes/SelectOrderItems_IntoCart.inc');
+			include('includes/SelectOrderItems_IntoCart.php');
 			$_SESSION['Items' . $identifier]->GetTaxes(($_SESSION['Items' . $identifier]->LineCounter - 1));
 		} /*end of if its a new item */
 	}

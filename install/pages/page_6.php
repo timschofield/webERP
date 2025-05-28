@@ -53,12 +53,12 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 
 CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
 
-include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.inc');
+include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
 $DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
 
-include ('../includes/DateFunctions.inc');
+include ('../includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 $Path_To_Root = '..';
 $Config_File = $Path_To_Root . '/config.php';

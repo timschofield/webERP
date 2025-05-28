@@ -190,7 +190,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			<label for="PeriodTo">' . _('Select Period To') . ':</label>
 			<select name="PeriodTo">';
 
-	$RetResult = DB_data_seek($Periods, 0);
+	DB_data_seek($Periods, 0);
 
 	while ($MyRow = DB_fetch_array($Periods)) {
 

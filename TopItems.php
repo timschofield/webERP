@@ -5,7 +5,7 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Top Items Searching');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 //check if input already

@@ -8,7 +8,7 @@ CREATE TABLE `debtortrans` (
   `inputdate` datetime NOT NULL,
   `prd` smallint NOT NULL DEFAULT '0',
   `settled` tinyint NOT NULL DEFAULT '0',
-  `reference` varchar(20) NOT NULL DEFAULT '',
+  `reference` varchar(50) NOT NULL DEFAULT '',
   `tpe` char(2) NOT NULL DEFAULT '',
   `order_` int NOT NULL DEFAULT '0',
   `rate` double NOT NULL DEFAULT '0',

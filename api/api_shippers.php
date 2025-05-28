@@ -14,6 +14,7 @@
 		$SQL = 'SELECT shipper_id FROM shippers';
 		$Result = DB_query($SQL);
 		$i=0;
+        $ShipperList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$ShipperList[$i]=$MyRow[0];
 			$i++;

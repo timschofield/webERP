@@ -8,7 +8,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php'); // Add this line to include UI functions
 include('includes/KLUIGeneralFunctions.php');

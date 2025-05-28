@@ -32,7 +32,7 @@ $Title2 = _('Statement of Comprehensive Income'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ProfitAndLoss';
 
-include_once ('includes/SQL_CommonFunctions.inc');
+include_once ('includes/SQL_CommonFunctions.php');
 include_once ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 include_once ('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 // KL RICARD: prepare the data for each company
@@ -77,17 +77,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
-
-	$HTML = '';
-
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodFrom'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$PeriodFromDate = MonthAndYearFromSQLDate($MyRow[0]);
+	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
+	$PeriodFromDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodFrom']));
 
 	$HTML = '';
 

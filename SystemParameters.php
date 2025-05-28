@@ -459,7 +459,7 @@ echo '<field>
 	}
 
 	echo '</select>
-		<fieldhelp>' . _('Runs DB_Maintenance function in ConnectDB_XXXX.inc at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login.') . '</fieldhelp>
+		<fieldhelp>' . _('Runs DB_Maintenance function in ConnectDB_XXXX.php at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login.') . '</fieldhelp>
 	</field>';
 echo '</fieldset><br />';
 

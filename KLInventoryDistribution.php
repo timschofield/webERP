@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Inventory Distribution by Type');
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');

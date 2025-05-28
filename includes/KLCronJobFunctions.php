@@ -10,8 +10,8 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
 	include('includes/KLMarketplaceFunctions.php');
-	include('includes/GetPrice.inc');
-	include('includes/SQL_CommonFunctions.inc');
+	include('includes/GetPrice.php');
+	include('includes/SQL_CommonFunctions.php');
 	include ('includes/OCOpenCartGeneralFunctions.php');
 	include ('includes/OCWeberpToOpenCartSync.php');
 	include ('includes/OCOpenCartToWeberpSync.php');

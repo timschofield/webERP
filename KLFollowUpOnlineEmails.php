@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 $Title = _('KL Follow Up Email System');
 include('includes/header.php');
 

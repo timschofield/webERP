@@ -1,4 +1,11 @@
 <?php
+
+/*****************************************************************************************
+ * 
+ * KL RICARD: Multicompany options
+ * 
+ ****************************************************************************************/
+
 /* AnalysisHorizontalPosition.php
 Shows the horizontal analysis of the statement of financial position.
 
@@ -26,6 +33,33 @@ $BookMark = 'AnalysisHorizontalPosition';
 include('includes/header.php');
 include('includes/GLFunctions.php');
 
+// KL RICARD: prepare the data for each company
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'ALL';
+	$Title = _('Horizontal Analysis of Statement of Financial Position for KL group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'ALL') {
+	$Title = _('Horizontal Analysis of Statement of Financial Position for KL Group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'PTADU') {
+	$Title = _('Horizontal Analysis of Statement of Financial Position for PT. Angin Dingin Utara');
+	$Table = 'chartmasterADU';
+}
+else if ($_POST['Company'] == 'PTSMH') {
+	$Title = _('Horizontal Analysis of Statement of Financial Position for PT. Sungai Mutiara Hitam');
+	$Table = 'chartmasterSMH';
+}
+else if ($_POST['Company'] == 'PTBB') {
+	$Title = _('Horizontal Analysis of Statement of Financial Position for PT. Bumi Biru');
+	$Table = 'chartmasterBB';
+}
+// KL RICARD END: prepare the data for each company
+
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
@@ -46,7 +80,7 @@ if (isset($_GET['NewReport'])) {
 	$_POST['NewReport'] = $_GET['NewReport'];
 }
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
@@ -66,6 +100,15 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>', // Content of the header and footer of the input table:
 		'<legend>', _('Report Parameters'), '</legend>';
+
+	// KL RICARD select the company to include
+	echo FieldToSelectFromFourOptions('ALL', 'All companies', 
+									'PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'Report for', '', '', '', true, false);
+	// KL RICARD END select the company to include
+
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
 	// Select period to:
@@ -74,10 +117,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	$LastDateInPeriod = $MyRow[0];
+	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNo);
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
@@ -124,21 +164,18 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$BalanceDate = ConvertSQLDate($MyRow[0]);
+	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
+	$BalanceDate = ConvertSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
-		_('Horizontal Analysis of Statement of Financial Position'), '" /> ', // Icon title.
-		_('Horizontal Analysis of Statement of Financial Position'), '<br />', // Page title, reporting statement.
-		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
+		$Title, '" /> ', // Icon title.
+		$Title, '<br />', // Page title, reporting statement.
 		_('as at'), ' ', $BalanceDate, '<br />', // Page title, reporting period.
-		_('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+		_('All amounts stated in'), ' ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="scrollable">
 		<thead>
 		<tr>';
@@ -169,11 +206,11 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	$SQL = "SELECT
 				SUM(CASE WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount ELSE 0 END) AS accumprofitbfwd,
 				SUM(CASE WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount ELSE 0 END) AS accumprofitbfwdly
-			FROM chartmaster
+			FROM " . $Table . "
 			INNER JOIN accountgroups
-				ON chartmaster.group_ = accountgroups.groupname
+				ON " . $Table . ".group_ = accountgroups.groupname
 			INNER JOIN gltotals
-				ON chartmaster.accountcode = gltotals.account
+				ON " . $Table . ".accountcode = gltotals.account
 			WHERE accountgroups.pandl = 1";
 
 	$AccumProfitResult = DB_query($SQL, _('The accumulated profits brought forward could not be calculated by the SQL because'));
@@ -184,22 +221,22 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				accountgroups.groupname,
 				accountgroups.parentgroupname,
 				gltotals.account AS accountcode,
-				chartmaster.accountname,
+				" . $Table . ".accountname,
 				SUM(CASE WHEN gltotals.period <= '" . $_POST['PeriodTo'] . "' THEN gltotals.amount ELSE 0 END) AS balancecfwd,
 				SUM(CASE WHEN gltotals.period <= '" . ($_POST['PeriodTo'] - 12) . "' THEN gltotals.amount ELSE 0 END) AS balancecfwdly
-			FROM chartmaster
+			FROM " . $Table . "
 			INNER JOIN accountgroups
-				ON chartmaster.group_ = accountgroups.groupname
+				ON " . $Table . ".group_ = accountgroups.groupname
 			INNER JOIN gltotals
-				ON chartmaster.accountcode = gltotals.account
+				ON " . $Table . ".accountcode = gltotals.account
 			INNER JOIN glaccountusers
-				ON glaccountusers.accountcode = chartmaster.accountcode
+				ON glaccountusers.accountcode = " . $Table . ".accountcode
 				AND glaccountusers.userid = '" .  $_SESSION['UserID'] . "'
 				AND glaccountusers.canview = 1
 			WHERE accountgroups.pandl = 0
 			GROUP BY accountgroups.groupname,
 				gltotals.account,
-				chartmaster.accountname,
+				" . $Table . ".accountname,
 				accountgroups.parentgroupname,
 				accountgroups.sequenceintb,
 				accountgroups.sectioninaccounts
@@ -224,6 +261,11 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	$GroupTotal = array(0);
 	$GroupTotalLY = array(0);
 
+	// KL RICARD: adjustement for intercompany accounts
+	$ThisYearAccumulatedAdjustment = 0;
+	$LastYearAccumulatedAdjustment = 0;
+	// KL RICARD END: adjustement for intercompany accounts
+
 	$DrawTotalLine = '<tr>
 		<td colspan="2">&nbsp;</td>
 		<td><hr /></td>
@@ -236,10 +278,17 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$AccountBalance = $MyRow['balancecfwd'];
 		$AccountBalanceLY = $MyRow['balancecfwdly'];
 
+		// KL RICARD: adjustement for intercompany accounts
 		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
 			$AccountBalance += $AccumProfitRow['accumprofitbfwd'];
 			$AccountBalanceLY += $AccumProfitRow['accumprofitbfwdly'];
+			$AccountBalance = -$ThisYearAccumulatedAdjustment;
+			$AccountBalanceLY = -$LastYearAccumulatedAdjustment;
+		}else{
+			$ThisYearAccumulatedAdjustment += $AccountBalance;
+			$LastYearAccumulatedAdjustment += $AccountBalanceLY;
 		}
+		// KL RICARD END: adjustement for intercompany accounts
 
 		if ($MyRow['groupname'] != $ActGrp AND $ActGrp != '') {
 			if ($MyRow['parentgroupname'] != $ActGrp) {
@@ -319,8 +368,6 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 			$GroupTotalLY[$i] += $AccountBalanceLY;
 			$GroupTotal[$i] += $AccountBalance;
 		}
-		$CheckTotal += $AccountBalance;
-		$CheckTotalLY += $AccountBalanceLY;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			if (isset($_POST['ShowZeroBalance']) OR (!isset($_POST['ShowZeroBalance']) AND (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 OR round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {

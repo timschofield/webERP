@@ -213,7 +213,7 @@ if (isset($_POST['DoUpgrade'])){
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
 
-	$Result = DB_IgnoreForeignKeys();
+	DB_IgnoreForeignKeys();
 
 	foreach ($SQLScripts AS $SQLScriptFile) {
 
@@ -291,7 +291,7 @@ if (isset($_POST['DoUpgrade'])){
 		} //end of for loop around the lines of the sql script
 	echo '</table>';
 	} //end of loop around SQLScripts  apply
-	$Result =DB_ReinstateForeignKeys();
+	DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
 	$ForceConfigReload=true;
 	include('includes/GetConfig.php');

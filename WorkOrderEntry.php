@@ -9,7 +9,7 @@ $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 
 $Title = _('Work Order Entry');
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.

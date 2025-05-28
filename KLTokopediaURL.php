@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');

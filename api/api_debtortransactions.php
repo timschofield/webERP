@@ -81,7 +81,7 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 /* Find the period number from the transaction date */
-/* Why use this function over GetPeriod we already have this function included in DateFunctions.inc
+/* Why use this function over GetPeriod we already have this function included in DateFunctions.php
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
@@ -556,6 +556,7 @@ function ConvertToSQLDate($DateEntry) {
 
 		$TaxTotals =array();
 		$LineCounter =0;
+        $LineTaxes =array();
 
 		foreach ($LineDetails as $CN_Line) {
 
@@ -601,6 +602,7 @@ function ConvertToSQLDate($DateEntry) {
 			}
 
 			$LineTaxAmount = 0;
+            $TaxAuthAmount = 0;
 
 			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
@@ -914,7 +916,7 @@ function ConvertToSQLDate($DateEntry) {
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
 
-/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.inc  */
+/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.php  */
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,

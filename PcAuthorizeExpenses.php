@@ -15,7 +15,7 @@ $Title = _('Authorisation of Petty Cash Expenses');
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/GLFunctions.php');
 
 // KL RICARD

@@ -223,6 +223,7 @@
 		$SQL = "SELECT categoryid FROM stockcategory";
 		$Result = DB_query($SQL);
 		$i=0;
+        $StockCategoryList = array();
 		while ($MyRow=DB_fetch_array($Result)) {
 			$StockCategoryList[$i]=$MyRow[0];
 			$i++;

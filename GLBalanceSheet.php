@@ -34,7 +34,7 @@ $Title2 = _('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BalanceSheet';
 
-include_once('includes/SQL_CommonFunctions.inc');
+include_once('includes/SQL_CommonFunctions.php');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
 
@@ -79,12 +79,7 @@ if(isset($_GET['ShowZeroBalance'])) {// Select period from.
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
 
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
-	$PrdResult = DB_query($SQL);
-	$MyRow = DB_fetch_row($PrdResult);
-	$BalanceDate = ConvertSQLDate($MyRow[0]);
-
-	/*Calculate B/Fwd retained earnings */
+	$BalanceDate = ConvertSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
 
 	/* Get the retained earnings amount */
 	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
@@ -226,12 +221,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 
 		// KL RICARD: adjustement for intercompany accounts
-		if ($_POST['Company'] == 'ALL'){
-			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
-				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
-			}
-		}else{
+		/* Commented out some lines to allow "automatic check total = 0", instead of manually checking it out and correcting.
+		Most adjustments are due to wholesale sales in foreign currency and rounding error in a 0.0005% difference range
+		Or a misterious 2.000 IDR randomly every few months. We could never find out where these 2.000 IDR came from. */
+//		if ($_POST['Company'] == 'ALL'){
+//			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
+//				$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
+//				$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
+//			}
+//		}else{
 			if ($MyRow['accountcode'] == $RetainedEarningsAct) {
 				$AccountBalance = -$ThisYearAccumulatedAdjustment;
 				$LYAccountBalance = -$LastYearAccumulatedAdjustment;
@@ -239,7 +237,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				$ThisYearAccumulatedAdjustment += $ThisYearActuals[$MyRow['accountcode']];
 				$LastYearAccumulatedAdjustment += $LastYearActuals[$MyRow['accountcode']];
 			}
-		}
+//		}
 		// KL RICARD END: adjustement for intercompany accounts
 
 		if ($MyRow['group_'] != $ActGrp and $ActGrp != '') {

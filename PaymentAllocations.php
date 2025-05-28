@@ -11,7 +11,7 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = 'PaymentAllocations';
 include('includes/header.php');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 if (!isset($_GET['SuppID'])){
 	prnMsg( _('Supplier ID Number is not Set, can not display result'),'warn');

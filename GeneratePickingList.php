@@ -7,7 +7,7 @@ if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['Tra
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
 $BookMark = 'GeneratePickingList';
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 /* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {
@@ -352,7 +352,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			$LinesToShow = 1;
 		}
 
-		include('includes/GenPickingListHeader.inc');
+		include('includes/GenPickingListHeader.php');
 		$YPos = $FormDesign->Data->y;
 		$Lines = 0;
 
@@ -411,7 +411,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			if ($Page_Height - $YPos - $LineHeight <= 60) {
 				/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
-				include ('includes/GenPickingListHeader.inc');
+				include ('includes/GenPickingListHeader.php');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
@@ -424,7 +424,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
-					include ('includes/GenPickingListHeader.inc');
+					include ('includes/GenPickingListHeader.php');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
@@ -437,7 +437,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
-					include ('includes/GenPickingListHeader.inc');
+					include ('includes/GenPickingListHeader.php');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
@@ -495,7 +495,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 					if ($Page_Height - $YPos - $LineHeight <= 60) {
 						/* We reached the end of the page so finish off the page and start a new */
 						$PageNumber++;
-						include ('includes/GenPickingListHeader.inc');
+						include ('includes/GenPickingListHeader.php');
 					} //end if need a new page headed up
 					else {
 						/*increment a line down for the next line item */

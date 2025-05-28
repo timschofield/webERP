@@ -10,7 +10,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 $Title = _('Export Info for PPH21 Deduction');
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');

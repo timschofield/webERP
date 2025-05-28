@@ -20,7 +20,7 @@ UpdateArchiveTablePeriod - Updates the archived period for a specific table in t
 **************************************************************************************************************/
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');

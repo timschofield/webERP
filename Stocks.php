@@ -12,7 +12,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
 
 include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.inc');
+include ('includes/SQL_CommonFunctions.php');
 include ('includes/StockFunctions.php');
 include ('includes/ImageFunctions.php');
 
@@ -912,7 +912,7 @@ if (isset($_POST['submit'])) {
 
 	}
 	if ($CancelDelete == 0) {
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Deletes LocStock records*/
 		$SQL = "DELETE FROM locstock WHERE stockid='" . $StockID . "'";

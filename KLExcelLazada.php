@@ -7,7 +7,7 @@ use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -15,7 +15,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/GetPrice.inc');
+include('includes/GetPrice.php');
 
 if (!isset($_POST['Format'])) {
     $_POST['Format'] = 'xlsx';

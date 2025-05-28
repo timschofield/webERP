@@ -78,7 +78,7 @@ $PDFLanguages = array(
 	_('Free Serif')
 );
 
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 
 // Make an array of the security roles
 // KL RICARD: Exclude SPG, as they are maintained in KLUsersSPG.php

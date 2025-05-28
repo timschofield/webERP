@@ -6,7 +6,7 @@ $Title = _('Customer Login Configuration');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.inc');
+include('includes/SQL_CommonFunctions.php');
 include ('includes/LanguagesArray.php');
 
 

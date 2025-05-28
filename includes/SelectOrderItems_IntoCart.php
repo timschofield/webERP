@@ -1,7 +1,7 @@
 <?php
 
 
-/*SelectOrderItems_IntoCart.inc
+/*SelectOrderItems_IntoCart.php
 
 This snippet is used to enter order line items into the cart object:
 
