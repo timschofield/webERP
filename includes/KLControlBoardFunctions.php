@@ -1628,121 +1628,139 @@ function ItemsInSetup($Check, $Category, $RootPath){
 	
 	if ($Check == "ReadyToTest"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items ready to change to TEST";
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					(SELECT price
-						FROM prices
-						WHERE stockmaster.stockid = prices.stockid
-							AND prices.typeabbrev = 'RT'
-							AND prices.startdate <= CURRENT_DATE 
-							AND prices.enddate >= CURRENT_DATE
-							AND currabrev = 'IDR') AS price,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = " . CODE_KANTOR . ") AS QOH
-				FROM stockmaster
-				WHERE stockmaster.categoryid = '" . $Category . "'
-					AND discontinued = 0 
-					AND LENGTH(stockmaster.description) > 2
-					AND (SELECT SUM(locstock.quantity)
-							FROM locstock
-							WHERE locstock.stockid = stockmaster.stockid
-								AND locstock.loccode = " . CODE_KANTOR . ") > 0
-					AND (SELECT price
-							FROM prices
-							WHERE stockmaster.stockid = prices.stockid
-								AND prices.startdate <= CURRENT_DATE 
-								AND prices.enddate >= CURRENT_DATE
-								AND prices.typeabbrev = 'RT'
-								AND currabrev = 'IDR') IS NOT NULL
-					AND NOT EXISTS (SELECT *
-							FROM loctransfers 
-							WHERE  pendingqty > 0
-								AND loctransfers.stockid =  stockmaster.stockid)
-				ORDER BY stockid";
+		$SQL = "SELECT sm.stockid,
+					sm.description,
+					p.price,
+					loc.QOH
+				FROM stockmaster sm
+				LEFT JOIN (
+					SELECT stockid, price
+					FROM prices 
+					WHERE typeabbrev = 'RT'
+						AND startdate <= CURRENT_DATE 
+						AND enddate >= CURRENT_DATE
+						AND currabrev = 'IDR'
+				) p ON sm.stockid = p.stockid
+				LEFT JOIN (
+					SELECT stockid, SUM(quantity) as QOH
+					FROM locstock
+					WHERE loccode = " . CODE_KANTOR . "
+					GROUP BY stockid
+				) loc ON sm.stockid = loc.stockid
+				WHERE sm.categoryid = '" . $Category . "'
+					AND sm.discontinued = 0 
+					AND LENGTH(sm.description) > 2
+					AND loc.QOH > 0
+					AND p.price IS NOT NULL
+					AND NOT EXISTS (
+						SELECT 1
+						FROM loctransfers 
+						WHERE pendingqty > 0
+							AND stockid = sm.stockid
+					)
+				ORDER BY sm.stockid";
 	}elseif($Check == "NeedDescription"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing descriptions";
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						(SELECT price
-							FROM prices
-							WHERE stockmaster.stockid = prices.stockid
-								AND prices.typeabbrev = 'RT'
-								AND prices.startdate <= CURRENT_DATE 
-								AND prices.enddate >= CURRENT_DATE
-								AND currabrev = 'IDR') AS price,
-						(SELECT SUM(locstock.quantity)
-							FROM locstock
-							WHERE locstock.stockid = stockmaster.stockid) AS QOH
-					FROM stockmaster
-					WHERE stockmaster.categoryid = '" . $Category . "'
-						AND discontinued = 0 
-						AND LENGTH(stockmaster.description) <= 2
-					ORDER BY stockid";
+		$SQL = "SELECT sm.stockid,
+					sm.description,
+					p.price,
+					loc.QOH
+				FROM stockmaster sm
+				LEFT JOIN (
+					SELECT stockid, price
+					FROM prices 
+					WHERE typeabbrev = 'RT'
+						AND startdate <= CURRENT_DATE 
+						AND enddate >= CURRENT_DATE
+						AND currabrev = 'IDR'
+				) p ON sm.stockid = p.stockid
+				LEFT JOIN (
+					SELECT stockid, SUM(quantity) as QOH
+					FROM locstock
+					GROUP BY stockid
+				) loc ON sm.stockid = loc.stockid
+				WHERE sm.categoryid = '" . $Category . "'
+					AND sm.discontinued = 0 
+					AND LENGTH(sm.description) <= 2
+				ORDER BY sm.stockid";
 
 	}elseif($Check == "NeedPrice"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing price";
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					(SELECT price
+		$SQL = "SELECT sm.stockid,
+					sm.description,
+					NULL as price,
+					loc.QOH
+				FROM stockmaster sm
+				LEFT JOIN (
+					SELECT stockid, SUM(quantity) as QOH
+					FROM locstock
+					GROUP BY stockid
+				) loc ON sm.stockid = loc.stockid
+				WHERE sm.categoryid = '" . $Category . "'
+					AND sm.discontinued = 0
+					AND NOT EXISTS (
+						SELECT 1
 						FROM prices
-						WHERE stockmaster.stockid = prices.stockid
-							AND prices.typeabbrev = 'RT'
-							AND prices.startdate <= CURRENT_DATE 
-							AND prices.enddate >= CURRENT_DATE
-							AND currabrev = 'IDR') AS price,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS QOH
-				FROM stockmaster
-				WHERE stockmaster.categoryid = '" . $Category . "'
-					AND discontinued = 0
-					AND (SELECT price
-						FROM prices
-						WHERE stockmaster.stockid = prices.stockid
-							AND prices.typeabbrev = 'RT'
-							AND currabrev = 'IDR') IS NULL
-				ORDER BY stockid";
+						WHERE stockid = sm.stockid
+							AND typeabbrev = 'RT'
+							AND startdate <= CURRENT_DATE 
+							AND enddate >= CURRENT_DATE
+							AND currabrev = 'IDR'
+					)
+				ORDER BY sm.stockid";
 	}elseif($Check == "WithReorderLevel"){
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items with RL (items in SETUP should not have RL set)";
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					(SELECT price
-						FROM prices
-						WHERE stockmaster.stockid = prices.stockid
-							AND prices.typeabbrev = 'RT'
-							AND prices.startdate <= CURRENT_DATE 
-							AND prices.enddate >= CURRENT_DATE
-							AND currabrev = 'IDR') AS price,
-					(SELECT SUM(locstock.quantity)
+		$SQL = "SELECT sm.stockid,
+					sm.description,
+					p.price,
+					loc.QOH
+				FROM stockmaster sm
+				LEFT JOIN (
+					SELECT stockid, price
+					FROM prices 
+					WHERE typeabbrev = 'RT'
+						AND startdate <= CURRENT_DATE 
+						AND enddate >= CURRENT_DATE
+						AND currabrev = 'IDR'
+				) p ON sm.stockid = p.stockid
+				LEFT JOIN (
+					SELECT stockid, SUM(quantity) as QOH
+					FROM locstock
+					GROUP BY stockid
+				) loc ON sm.stockid = loc.stockid
+				WHERE sm.categoryid = '" . $Category . "'
+					AND sm.discontinued = 0
+					AND EXISTS (
+						SELECT 1
 						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS QOH
-				FROM stockmaster
-				WHERE stockmaster.categoryid = '" . $Category . "'
-					AND discontinued = 0
-					AND (SELECT SUM(reorderlevel)
-						FROM locstock
-						WHERE stockmaster.stockid = locstock.stockid) > 0
-				ORDER BY stockid";
+						WHERE stockid = sm.stockid
+						GROUP BY stockid
+						HAVING SUM(reorderlevel) > 0
+					)
+				ORDER BY sm.stockid";
 	}else{
 		$TableTitleText = GetCategoryNameFromCode($Category) . " Items in SETUP";
-		$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					(SELECT price
-						FROM prices
-						WHERE stockmaster.stockid = prices.stockid
-							AND prices.typeabbrev = 'RT'
-							AND prices.startdate <= CURRENT_DATE 
-							AND prices.enddate >= CURRENT_DATE
-							AND currabrev = 'IDR') AS price,
-					(SELECT SUM(locstock.quantity)
-						FROM locstock
-						WHERE locstock.stockid = stockmaster.stockid) AS QOH
-				FROM stockmaster
-				WHERE stockmaster.categoryid = '" . $Category . "'
-					AND discontinued = 0 
-				ORDER BY stockid";
+		$SQL = "SELECT sm.stockid,
+					sm.description,
+					p.price,
+					loc.QOH
+				FROM stockmaster sm
+				LEFT JOIN (
+					SELECT stockid, price
+					FROM prices 
+					WHERE typeabbrev = 'RT'
+						AND startdate <= CURRENT_DATE 
+						AND enddate >= CURRENT_DATE
+						AND currabrev = 'IDR'
+				) p ON sm.stockid = p.stockid
+				LEFT JOIN (
+					SELECT stockid, SUM(quantity) as QOH
+					FROM locstock
+					GROUP BY stockid
+				) loc ON sm.stockid = loc.stockid
+				WHERE sm.categoryid = '" . $Category . "'
+					AND sm.discontinued = 0 
+				ORDER BY sm.stockid";
 	}
 
 	$Result = DB_query($SQL);
@@ -1788,7 +1806,6 @@ function ItemsInSetup($Check, $Category, $RootPath){
 		}
 	}
 }
-
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
