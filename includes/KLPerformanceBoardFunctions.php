@@ -1,8 +1,33 @@
 <?php
 
 /******************************************************************************************************/
-/*	  FUNCTIONS ASSOCIATED
+/*	  FUNCTIONS LIST (In alphabetical order)
 /******************************************************************************************************/
+/*
+AverageCustomerBehaviourByValueInvoice - Analyzes customer invoice behavior by value ranges for a specific brand
+CashStatus - Manages and displays cash status for different entities (ADU, SMH, BB) with related metrics
+DailySalesRecords - Shows top sales days for a given time period
+EmptyAccountsGLTransTX - Finds transactions with empty account codes in GL transactions
+GeneralCustomerBehaviour - Analyzes general customer behavior metrics for a brand
+PeriodDifferenceSales - Compares sales between different time periods
+PettyCashStatus - Displays petty cash status for a specific currency
+ShowKPIHistory - Shows Key Performance Indicators history for specified days
+StockByBrand - Analyzes stock levels and requirements by brand
+UnbalancedGLTransTX - Detects unbalanced GL transactions
+*/
+
+
+/**************************************************************************************************************
+* AverageCustomerBehaviourByValueInvoice
+*
+* Analyzes and displays customer invoice behavior by value ranges for a specific brand
+* 
+* @param string $Typereport - Type of report (e.g., "Shop")
+* @param string $Brand - Brand code to analyze
+* @param int $NumDaysA - Number of days to analyze
+* 
+* @return void - Outputs HTML table and inserts KPI values
+**************************************************************************************************************/
 function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 	/* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -212,6 +237,36 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 	}
 }
 
+/**************************************************************************************************************
+* CashStatus
+*
+* Analyzes and displays cash status for different entities (ADU, SMH, BB) along with USD calculations
+* 
+* @param int $Year - The year to analyze
+* @param float $CashEndOfPreviousYearADU - Previous year-end cash balance for ADU
+* @param float $YearlyGoalADU - Cash goal for ADU by end of year
+* @param float $MinTransferADU - Minimum transfer amount for ADU
+* @param float $CashEndOfPreviousYearSMH - Previous year-end cash balance for SMH
+* @param float $YearlyGoalSMH - Cash goal for SMH by end of year
+* @param float $MinTransferSMH - Minimum transfer amount for SMH
+* @param float $CashEndOfPreviousYearBB - Previous year-end cash balance for BB
+* @param float $YearlyGoalBB - Cash goal for BB by end of year
+* @param float $MinTransferBB - Minimum transfer amount for BB
+* @param float $MinMoveFree - Minimum amount for free cash movements
+* @param int $USDPODaysSchedule - Days schedule for USD purchase orders
+* @param float $USDSafetyFactor - Safety factor for USD calculations
+* @param float $USDMinPurchase - Minimum USD purchase amount
+* @param float $USDMaxEasyPurchasePerMonth - Maximum easy purchase USD per month
+* @param float $SaldoADUGlobalUSDMax - Maximum global USD balance for ADU
+* @param float $SaldoADUDanamonUSDMin - Minimum Danamon USD balance for ADU
+* @param float $SaldoADUDanamonUSDMax - Maximum Danamon USD balance for ADU
+* @param float $SaldoADUPayoneerUSDMin - Minimum Payoneer USD balance for ADU
+* @param float $SaldoADUPayoneerUSDMax - Maximum Payoneer USD balance for ADU
+* @param int $Period - Period number for accounting
+* @param bool $AdminRole - Whether user has admin role
+*
+* @return void - Outputs HTML tables and inserts KPI values
+**************************************************************************************************************/
 function CashStatus($Year, 	
 					$CashEndOfPreviousYearADU, 
 					$YearlyGoalADU, 
@@ -990,6 +1045,17 @@ function CashStatus($Year,
 
 }
 
+/**************************************************************************************************************
+* DailySalesRecords
+*
+* Displays the top sales days within a given date range
+* 
+* @param int $Days - Number of top days to show
+* @param int $NumDays - Number of days back to analyze
+* @param string $Since - Optional date to start analysis from
+* 
+* @return void - Outputs HTML table with top sales days
+**************************************************************************************************************/
 function DailySalesRecords($Days, $NumDays, $Since){
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -1041,6 +1107,17 @@ function DailySalesRecords($Days, $NumDays, $Since){
 	}
 }
 
+/**************************************************************************************************************
+* GeneralCustomerBehaviour
+*
+* Analyzes and displays general customer behavior metrics for a specific brand, comparing current
+* period with same period last year
+* 
+* @param string $Brand - Brand code to analyze
+* @param int $NumDaysA - Number of days to analyze
+* 
+* @return void - Outputs HTML table and inserts KPI values
+**************************************************************************************************************/
 function GeneralCustomerBehaviour($Brand, $NumDaysA){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -1204,6 +1281,15 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 	}
 }
 
+/**************************************************************************************************************
+* PettyCashStatus
+*
+* Displays the status of petty cash accounts for a specific currency
+* 
+* @param string $Currency - Currency code (e.g., "IDR", "USD")
+* 
+* @return void - Outputs HTML table showing petty cash status
+**************************************************************************************************************/
 function PettyCashStatus($Currency){
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
@@ -1252,6 +1338,17 @@ function PettyCashStatus($Currency){
 	}
 }
 
+/**************************************************************************************************************
+* PeriodDifferenceSales
+*
+* Compares sales between two different time periods for shops, online channels, or sales personnel
+* 
+* @param string $Typeperiod - Type of period comparison ("YEAR", "IMMEDIATE", or specific year)
+* @param string $Typereport - Type of report ("Shop", "Online", or other)
+* @param mixed $NumDaysA - Number of days to analyze or "YTD" for year-to-date
+* 
+* @return void - Outputs HTML table and may insert KPI values
+**************************************************************************************************************/
 function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	
 	if ($NumDaysA == "YTD"){
@@ -1270,7 +1367,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 
 		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDateA = $Current_year . '-01-01';
-		$YesterdayB = $Typeperiod . substr($YesterdayA, 4, 6);
+		$YesterdayB  = $Typeperiod . substr($YesterdayA, 4, 6);
 		$StartDateB = $Typeperiod . '-01-01';
 		$Title = _('Difference sales for ') . $Typereport . " YTD (Year To Date) and same period in " . $Typeperiod;
 		$TitleCurrent = $NumDaysA . ' Days This Year';
@@ -1538,6 +1635,16 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	}
 }
 
+/**************************************************************************************************************
+* UnbalancedGLTransTX
+*
+* Finds and displays General Ledger transactions that are unbalanced
+* 
+* @param int $NumDays - Number of days back to analyze
+* @param string $RootPath - Root path of the application for links
+* 
+* @return void - Outputs HTML table of unbalanced transactions
+**************************************************************************************************************/
 function UnbalancedGLTransTX($NumDays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT gltrans.trandate, 
@@ -1583,6 +1690,16 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* EmptyAccountsGLTransTX
+*
+* Finds and displays General Ledger transactions with empty account codes
+* 
+* @param int $NumDays - Number of days back to analyze
+* @param string $RootPath - Root path of the application for links
+* 
+* @return void - Outputs HTML table of transactions with empty accounts
+**************************************************************************************************************/
 function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$TotalAmount = 0;
@@ -1637,6 +1754,15 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* ShowKPIHistory
+*
+* Displays historical Key Performance Indicators for a specified number of days
+* 
+* @param int $NumDays - Number of days of history to show
+* 
+* @return void - Outputs HTML table with KPI history
+**************************************************************************************************************/
 function ShowKPIHistory($NumDays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT kpicode,
@@ -1678,6 +1804,18 @@ function ShowKPIHistory($NumDays){
 	}
 }
 
+/**************************************************************************************************************
+* StockByBrand
+*
+* Analyzes stock levels, sales trends, and inventory requirements for a specific brand
+* 
+* @param string $Brand - Brand code to analyze
+* @param int $NumDays - Number of days for sales analysis
+* @param int $OptimalDaysStock - Target number of days to maintain in stock
+* @param bool $ShowFullDetails - Whether to show detailed information
+* 
+* @return void - Outputs HTML table and inserts KPI values
+**************************************************************************************************************/
 function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	$BrandText= BrandTextFromCode($Brand);
