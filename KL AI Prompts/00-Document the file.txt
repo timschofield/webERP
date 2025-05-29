@@ -2,7 +2,7 @@ At the beginning of the file:
 
 1) write an alphabetical list of the functions included in the file and a very short description of what they do, for the functions still not in the list.
 
-2) inside each function write the documentation of the function, including:
+2) just above each function defined in the file: write the documentation of the function, including:
 2.1) Brief description
 2.2) Parameters
 2.3) Returns
