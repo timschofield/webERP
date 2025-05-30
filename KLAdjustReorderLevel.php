@@ -1,12 +1,11 @@
 <?php
 
-define("VERSIONFILE", "3.02"); 
-define("NUMBER_OF_TESTS", 20); 
+define("NUMBER_OF_TESTS", 7); 
 
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
 include ('includes/session.php');
-$Title = _('KL Reorder Level Adjustments '. VERSIONFILE);
+$Title = _('KL Reorder Level Adjustments');
 include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -14,7 +13,6 @@ include ('includes/KLGeneralFunctions.php');
 include('includes/KLReorderLevel.php');
 
 $begintime = time_start();
-LocationInformationReview($RootPath);
 
 // if testing only and do not want update the DB, set the flag to FALSE. For regular operations set to TRUE.
 //$UpdateDB = false;

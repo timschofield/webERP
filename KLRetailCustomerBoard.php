@@ -1,8 +1,7 @@
 <?php
-define("VERSIONFILE", "1.12");
 
 include ('includes/session.php');
-$Title = _('KL Retail Customer Analysis '. VERSIONFILE);
+$Title = _('KL Retail Customer Analysis');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');

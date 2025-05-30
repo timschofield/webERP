@@ -1,11 +1,7 @@
 <?php
-define("VERSIONFILE", "5.01");
-
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('KL Pricing Control Board '. VERSIONFILE);
+$Title = _('KL Pricing Control Board');
 include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
