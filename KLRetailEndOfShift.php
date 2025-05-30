@@ -1,7 +1,5 @@
 <?php
 
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('SPG End Of Shift Report');
 include ('includes/header.php');

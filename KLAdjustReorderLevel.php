@@ -2,8 +2,6 @@
 
 define("NUMBER_OF_TESTS", 7); 
 
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('KL Reorder Level Adjustments');
 include ('includes/header.php');
