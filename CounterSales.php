@@ -1,11 +1,8 @@
 <?php
-// CounterSales.php
+
 // Allows sales to be entered against a cash sale customer account defined in the users location record.
 
 include('includes/DefineCartClass.php');
-
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php $PageSecurity now comes from session.php (and gets read in by GetConfig.php*/
 
 include('includes/session.php');
 $Title = _('Counter Sales');

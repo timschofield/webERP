@@ -1,11 +1,8 @@
 <?php
-// CounterReturns.php
+
 // This script allows credits and refunds from the default Counter Sale account for an inventory location.
 
 include('includes/DefineCartClass.php');
-
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php $PageSecurity now comes from session.php (and gets read in by GetConfig.php*/
 
 include('includes/session.php');
 $Title = _('Counter Returns');
