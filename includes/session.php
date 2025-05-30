@@ -9,6 +9,16 @@ KL RICARD MODIFICATIONS:
 - Load the KLRoles Variables
 *****************************************************************************************/
 
+/* webERP Session handling
+ * This file is included at the start of every script in webERP
+ * It sets up the session and includes the necessary files for:
+ * - database connection
+ * - language setup
+ * - password checking
+ * - security authorisation level check
+ * - config.php is included in session.php
+ */
+
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
