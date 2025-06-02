@@ -352,7 +352,7 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 6000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 5000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121121AD', 
@@ -832,8 +832,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
+//		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
+//		$NumberOfTestExecuted++;
 		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);

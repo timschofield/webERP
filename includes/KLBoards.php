@@ -53,29 +53,30 @@ function ActiveTransfersByLocation(){
 	$TotalPcsIn = 0;
 	$TotalPcsOut = 0;
 
-	$SQL = "SELECT locations.locationname,
-			(SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.shiploc = locations.loccode) as qtyout,
-			(SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.recloc = locations.loccode) as qtyin,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.shiploc = locations.loccode) as transferout,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.recloc = locations.loccode) as transferin
-			FROM locations
-			WHERE locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-			ORDER BY (SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
+	$SQL = "SELECT l.locationname,
+			COALESCE(lt_ship.qtyout, 0) AS qtyout,
+			COALESCE(lt_rec.qtyin, 0) AS qtyin,
+			COALESCE(lt_ship.transferout, 0) AS transferout,
+			COALESCE(lt_rec.transferin, 0) AS transferin
+		FROM locations l
+		LEFT JOIN (
+			SELECT shiploc AS loccode,
+				SUM(pendingqty) AS qtyout,
+				COUNT(DISTINCT reference) AS transferout
+			FROM loctransfers
+			WHERE pendingqty > 0
+			GROUP BY shiploc
+		) AS lt_ship ON l.loccode = lt_ship.loccode
+		LEFT JOIN (
+			SELECT recloc AS loccode,
+				SUM(pendingqty) AS qtyin,
+				COUNT(DISTINCT reference) AS transferin
+			FROM loctransfers
+			WHERE pendingqty > 0
+			GROUP BY recloc
+		) AS lt_rec ON l.loccode = lt_rec.loccode
+		WHERE l.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
+		ORDER BY (COALESCE(lt_ship.qtyout, 0) + COALESCE(lt_rec.qtyin, 0)) DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('Pending Goods to be transferred by shop');
@@ -141,19 +142,17 @@ function ActiveTransfersByLocation(){
 * Returns: None
 **************************************************************************************************************/
 function ActiveTransferStatus($RootPath){
-	$SQL = "SELECT reference,
-					shipdate,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = shiploc) AS locfrom,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = recloc) AS locto,
-					SUM(pendingqty) AS pendingqty
-			FROM loctransfers
-			WHERE pendingqty > 0
-			GROUP BY reference
-			ORDER BY shipdate ASC, reference ASC";
+	$SQL = "SELECT lt.reference,
+					lt.shipdate,
+					l1.locationname AS locfrom,
+					l2.locationname AS locto,
+					SUM(lt.pendingqty) AS pendingqty
+			FROM loctransfers lt
+			JOIN locations l1 ON l1.loccode = lt.shiploc
+			JOIN locations l2 ON l2.loccode = lt.recloc
+			WHERE lt.pendingqty > 0
+			GROUP BY lt.reference, lt.shipdate, l1.locationname, l2.locationname
+			ORDER BY lt.shipdate ASC, lt.reference ASC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('List of Active Transfers');
@@ -650,12 +649,13 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	DB_Txn_Begin();
 	ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
-	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
-									labourcost='" . 0 . "',
-									overheadcost='" . 0 . "',
-									lastcost='" . $OldCost . "',
-									lastcostupdate = CURRENT_DATE
-							WHERE stockid='" . $StockID . "'";
+	$SQL = "UPDATE stockmaster
+			SET	materialcost='" . $NewCost . "',
+				labourcost='" . 0 . "',
+				overheadcost='" . 0 . "',
+				lastcost='" . $OldCost . "',
+				lastcostupdate = CURRENT_DATE
+			WHERE stockid='" . $StockID . "'";
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
@@ -1686,7 +1686,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 												'<br>' . 
 												'Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . 
 												'<br>' .
-												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%';	
+												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%';	
 												
 							ShowTableSubTitle($TableSubTitleText);
 						}else{
@@ -3461,7 +3461,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					ON salesorders.debtorno = debtorsmaster.debtorno
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
-			WHERE salesorders.klpaidcash= 0
+			WHERE salesorders.klpaidcash = 0
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
 				$WhereStatement . "
 			GROUP BY salesorders.orderno,
