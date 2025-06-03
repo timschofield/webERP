@@ -1799,11 +1799,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		unset($_SESSION['Items' . $identifier]->LineItems);
 		unset($_SESSION['Items' . $identifier]);
 
-		echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
-			_('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a></div>';
+//		Removed these lines to prevent SPG "salah" when they try to print the receipt		
+//		echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
+//			_('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a></div>';
 
 	} else {
-		// There were input errors so don't process nuffin
+		// There were input errors so don't process anything
 	}
 } else {
 	//pretend the user never tried to commit the sale
