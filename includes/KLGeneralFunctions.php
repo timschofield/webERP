@@ -57,7 +57,7 @@ isFamily                          - Checks if an item belongs to a specific fami
 isFoulard                         - Checks if an item is a foulard
 isJewelleryBox                    - Checks if an item is a jewellery box
 isJewelleryRoll                   - Checks if an item is a jewellery roll
-isKeyHolder                       - Checks if an item is a key holder
+isKeyRing                       - Checks if an item is a key holder
 isNecklace                        - Checks if an item is a necklace
 isPackagingBox                    - Checks if an item is a packaging box
 isPackagingPaperInsideBox         - Checks if an item is packaging paper for inside a box
@@ -227,7 +227,7 @@ function isTali($StockID){
 		OR (substr($StockID, 0,4) == "TA15"));
 }
 
-function isKeyHolder($StockID){
+function isKeyRing($StockID){
 	return (substr($StockID, 2,2) == "KI");
 }
 

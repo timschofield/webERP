@@ -184,7 +184,7 @@ function UpdateWeight($StockID, $UpdateDB){
 		$Weight = STANDARD_BAG_WEIGHT;
 	}elseif (isTali($StockID)){
 		$Weight = STANDARD_TALI_WEIGHT;
-	}elseif (isKeyHolder($StockID)){
+	}elseif (isKeyRing($StockID)){
 		$Weight = STANDARD_KEYHOLDER_WEIGHT;
 	}else{
 		$Weight = 0;
@@ -269,7 +269,7 @@ function UpdateVolume($StockID, $UpdateDB){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
-	}elseif (isKeyHolder($StockID)){
+	}elseif (isKeyRing($StockID)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
 		$Height = BOX_S_HEIGHT;
@@ -367,7 +367,7 @@ function UpdatePackaging($StockID, $Category, $Brand, $UpdateDB){
 		$Packaging = "-L";
 	}elseif (isTali($StockID)){
 		$Packaging = "-S";
-	}elseif (isKeyHolder($StockID)){
+	}elseif (isKeyRing($StockID)){
 		$Packaging = "-S";
 	}else{
 		$Packaging = "";
@@ -510,7 +510,7 @@ function WebsiteCategoryBlinkJewellery($StockID, $Description, $Long, $Category)
 	if (($WebCat == BLINK_JEWELLERY) AND isPlasticBag($StockID)){
 		$WebCat = BAGS;	
 	}	
-	if (($WebCat == BLINK_JEWELLERY) AND isKeyHolder($StockID)){
+	if (($WebCat == BLINK_JEWELLERY) AND isKeyRing($StockID)){
 		$WebCat = BLINK_KEYHOLDERS;	
 	}	
 	if (($WebCat == GENERAL_ACCESSORIES) AND isFaceMask($StockID)){

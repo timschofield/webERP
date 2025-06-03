@@ -754,6 +754,8 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 			$CodeSide .= " " . "Cord";
 		}elseif (isPolishingCloth($OrderLine->StockID)){
 			$CodeSide .= " " . "Polishing Cloth";
+		}elseif (isKeyRing($OrderLine->StockID)){
+			$CodeSide .= " " . "Key Ring";
 		}
 
 		if(($OrderLine->Quantity > 1) OR ($OrderLine->DiscountPercent != 0)){
