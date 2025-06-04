@@ -128,7 +128,8 @@ echo '<div id="ExitIcon">
 		</a>
 	</div>';
 
-if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
+// Fix: Ensure AllowedPageSecurityTokens is an array before counting
+if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 

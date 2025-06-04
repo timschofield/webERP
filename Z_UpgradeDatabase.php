@@ -22,7 +22,9 @@ if (!isset($_SESSION['DBVersion'])) {
 //	header('Location: index.php');
 	$_SESSION['DBVersion'] = 0;
 }
-	echo '<div class="title_bar" id="title_bar">', $Title, ' - ', stripslashes($_SESSION['CompanyRecord']['coyname']), '
+	// Fix: Check if CompanyRecord['coyname'] is set before using stripslashes
+	$CompanyName = isset($_SESSION['CompanyRecord']['coyname']) ? stripslashes($_SESSION['CompanyRecord']['coyname']) : '';
+	echo '<div class="title_bar" id="title_bar">', $Title, ' - ', $CompanyName, '
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
 	//include ('includes/header.php');
