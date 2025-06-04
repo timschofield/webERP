@@ -530,6 +530,13 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	}
 
 	// Now deal with the Paypal payment/s of the order...
+
+	// Lock OpenCart tables to ensure consistency during read and subsequent updates within this function's scope
+	$DbgMsg = _('The SQL used to lock tables was:');
+	$ErrMsg = _('Failed to lock OpenCart PayPal related tables.');
+	$LockQuery = "LOCK TABLES oc_paypal_order READ, oc_paypal_order_transaction READ, oc_order WRITE, oc_order_total READ";
+	DB_query_oc($LockQuery, $ErrMsg, $DbgMsg, true);
+
 	$SQL = "SELECT 	oc_paypal_order.paypal_order_id,
 				oc_order.order_id,
 				oc_order.currency_code AS ordercurrency,
@@ -694,6 +701,11 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 					</form>';
 		}
 	}
+	// Unlock OpenCart tables
+	$DbgMsg = _('The SQL used to unlock tables was:');
+	$ErrMsg = _('Failed to unlock OpenCart tables.');
+	DB_query_oc("UNLOCK TABLES", $ErrMsg, $DbgMsg, true);
+
 	if ($ShowMessages){
 		prnMsg(locale_number_format($i,0) . ' ' . _('PayPal Payments synchronized from OpenCart to webERP'),'success');
 	}
