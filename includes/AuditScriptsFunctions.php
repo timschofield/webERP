@@ -21,15 +21,18 @@ function RecordRunningTime($Title, $UserName){
     $EndTime = $Time[1] + $Time[0];
     $RunningTime = round(($EndTime - $BeginTime),5);
     
+    // Ensure $UserName is not null before passing it to trim()
+    $UserName = isset($UserName) ? trim($UserName) : '';
+    
     $AuditSQL = "INSERT INTO auditscripts (executiondate,
                         secondsrunning,
                         userid,
                         scripttitle)
                 VALUES('" . Date('Y-m-d H:i:s') . "',
                     '" . $RunningTime . "',
-                    '" . trim($UserName) . "',
+                    '" . $UserName . "',
                     '" . DB_escape_string($TitleScriptRunning) . "')";
-    $Result = DB_query($AuditSQL);
+    DB_query($AuditSQL);
     
 }
 
