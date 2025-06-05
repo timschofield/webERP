@@ -86,6 +86,11 @@ If there is only one installation of webERP on the web-server - which can be use
 $DefaultClock = 12;
 //$DefaultClock = 24;
 
+// Set a specific session_name to avoid potential default session_name conflicts
+// with other apps using the same host.
+// For an example situation to support this need, see:
+// http://www.weberp.org/forum/showthread.php?tid=8133
+$SessionName = 'PHPSESSIDwebERPteam';
 
 
 // END OF USER CONFIGURABLE VARIABLES
