@@ -19,6 +19,7 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	$OpenCartDBHost = '202.157.184.151';
 	$ArchiveDBHost = '202.157.184.151';
 	$SessionSavePath = '';
+	$SessionName = 'PHPSESSIDwebERPLocal';
 } else {
 	// we are in the hosted environment in Exabytes, the DB is local to the code
 	$Host = 'localhost';
@@ -32,12 +33,14 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 			$ErrorReportingType = 'DEBUGGING';
 			$Theme = 'xenos'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu-development.com/TEST/';
+			$SessionName = 'PHPSESSIDwebERPTest';
 		}else{
 			// development environment with the production DB (risky)
 			$webERPType = 'PRODUCTION';
 			$ErrorReportingType = 'DEVELOPMENT';
 			$Theme = 'professional'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu-development.com/';
+			$SessionName = 'PHPSESSIDwebERPProduction';
 		}
 	} else {
 		// we are on ptadu.com (production code)
@@ -47,12 +50,14 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 			$ErrorReportingType = 'DEVELOPMENT';
 			$Theme = 'gel'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu.com/TEST/';
+			$SessionName = 'PHPSESSIDwebERPTest';
 		}else{
 			// Production environment: we are on production code with the real production DB 
 			$webERPType = 'PRODUCTION';
 			$ErrorReportingType = 'PRODUCTION';
 			$Theme = 'aguapop'; 
 			$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu.com/';
+			$SessionName = 'PHPSESSIDwebERPProduction';
 		}
 	}
 }

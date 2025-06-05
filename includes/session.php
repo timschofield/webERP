@@ -78,7 +78,7 @@ ini_set('session.cookie_httponly', 1);
 // with other apps using the same host.
 // For an example situation to support this need, see:
 // http://www.weberp.org/forum/showthread.php?tid=8133
-session_name('PHPSESSIDwebERPteam');
+session_name($SessionName);
 session_start();
 
 include ($PathPrefix . 'includes/ConnectDB.php');
