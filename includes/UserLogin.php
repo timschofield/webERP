@@ -90,7 +90,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		if ($PasswordVerified) {
 
 			if ($MyRow['blocked']==1){
-			//the account is blocked
+				//the account is blocked
+				unset($_POST['UserNameEntryField']);
+				unset($_POST['Password']);
+				unset($_SESSION['DatabaseName']);
+
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
@@ -276,6 +280,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 										'',
 										false);
 				}
+
+				unset($_POST['UserNameEntryField']);
+				unset($_POST['Password']);
+				unset($_SESSION['DatabaseName']);
+
 
 				return  UL_BLOCKED;
 			}
