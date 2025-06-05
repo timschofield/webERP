@@ -54,6 +54,9 @@ if (isset($_SESSION['Timeout'])) {
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
 
+if (!isset($SessionName)) {
+	$SessionName = 'PHPSESSIDwebERPteam';
+}
 session_name($SessionName);
 session_start();
 
