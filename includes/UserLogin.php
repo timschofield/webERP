@@ -103,7 +103,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		if ($PasswordVerified) {
 
 			if ($MyRow['blocked']==1){
-			//the account is blocked
+				//the account is blocked
+				unset($_POST['UserNameEntryField']);
+				unset($_POST['Password']);
+				unset($_SESSION['DatabaseName']);
+
 				// KL RICARD: log the script running time
 				RecordRunningTime('Login attempt on blocked account', $Name); 
 				return  UL_BLOCKED;
@@ -303,6 +307,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 										'',
 										false);
 				}
+
+				unset($_POST['UserNameEntryField']);
+				unset($_POST['Password']);
+				unset($_SESSION['DatabaseName']);
+
 				// KL RICARD: log the script running time
 				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name); 
 				return  UL_BLOCKED;
