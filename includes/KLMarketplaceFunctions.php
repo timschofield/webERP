@@ -371,7 +371,7 @@ function FindShopeeCategory($StockID, $Name, $Description){
 		$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
 	}elseif (isBag($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_BAG;
-	}elseif (isKeyHolder($StockID)){
+	}elseif (isKeyRing($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_KEYHOLDER;
 	}
 	return $ShopeeCat;
@@ -451,7 +451,7 @@ function WhatsInTheBox($StockID){
 		$Box = "Tali Cord";
 	}elseif (isBag($StockID)){
 		$Box = "Bag";
-	}elseif (isKeyHolder($StockID)){
+	}elseif (isKeyRing($StockID)){
 		$Box = "Key Holder";
 	}
 	return $Box . ", Pouchbag, Jewellery Box";

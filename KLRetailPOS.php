@@ -37,8 +37,6 @@ v 1.00 2011-08-10: Shops start using it.
 v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
-define("VERSIONFILE", "4.70"); //
-
 include('includes/DefineCartClass.php');
 include('includes/session.php');
 

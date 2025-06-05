@@ -1,8 +1,6 @@
 <?php
-define("VERSIONFILE", "1.01");
-
 include ('includes/session.php');
-$Title = _('KL Sales Hourly Report '. VERSIONFILE);
+$Title = _('KL Sales Hourly Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');

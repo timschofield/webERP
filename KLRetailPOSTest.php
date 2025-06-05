@@ -1,8 +1,7 @@
 <?php
-define("VERSIONFILE", "1.00"); 
 include('includes/session.php');
 
-$Title = _('TEST ESCPOS FILE '. VERSIONFILE);
+$Title = _('TEST ESCPOS FILE');
 include ('includes/header.php');
 include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

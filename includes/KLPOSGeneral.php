@@ -121,8 +121,8 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $_SESSION['UserStockLocation'] . "',
 					CURRENT_DATE,
 					'" . $_SESSION['UserID'] . "',
-					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
-					'" . $_SESSION['Items'.$identifier]->Branch . "',
+					'" . (isset($_SESSION['Items'.$identifier]) ? $_SESSION['Items'.$identifier]->DebtorNo : '') . "',
+					'" . (isset($_SESSION['Items'.$identifier]) ? $_SESSION['Items'.$identifier]->Branch : '') . "',
 					'" . 0 . "',
 					'" . $PeriodNo . "',
 					'" . $OrderNo . "',
@@ -754,6 +754,8 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 			$CodeSide .= " " . "Cord";
 		}elseif (isPolishingCloth($OrderLine->StockID)){
 			$CodeSide .= " " . "Polishing Cloth";
+		}elseif (isKeyRing($OrderLine->StockID)){
+			$CodeSide .= " " . "Key Ring";
 		}
 
 		if(($OrderLine->Quantity > 1) OR ($OrderLine->DiscountPercent != 0)){

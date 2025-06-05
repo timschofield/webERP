@@ -43,8 +43,9 @@ WrongStandardCost - Shows items with wrong standard cost
 **************************************************************************************************/
 
 /**************************************************************************************************************
-* Function: ActiveTransfersByLocation
-* Brief description: Shows pending transfers by location
+* Brief description: Displays a table of pending goods transfers, aggregated by shop location.
+* It shows the count of transfers and total pieces for items being shipped out and items to be received.
+* Parameters: None
 * Returns: None
 **************************************************************************************************************/
 function ActiveTransfersByLocation(){
@@ -53,29 +54,30 @@ function ActiveTransfersByLocation(){
 	$TotalPcsIn = 0;
 	$TotalPcsOut = 0;
 
-	$SQL = "SELECT locations.locationname,
-			(SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.shiploc = locations.loccode) as qtyout,
-			(SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.recloc = locations.loccode) as qtyin,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.shiploc = locations.loccode) as transferout,
-			(SELECT COUNT(DISTINCT(reference))
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND loctransfers.recloc = locations.loccode) as transferin
-			FROM locations
-			WHERE locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
-			ORDER BY (SELECT SUM(pendingqty)
-				FROM loctransfers
-				WHERE  pendingqty > 0
-					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
+	$SQL = "SELECT l.locationname,
+			COALESCE(lt_ship.qtyout, 0) AS qtyout,
+			COALESCE(lt_rec.qtyin, 0) AS qtyin,
+			COALESCE(lt_ship.transferout, 0) AS transferout,
+			COALESCE(lt_rec.transferin, 0) AS transferin
+		FROM locations l
+		LEFT JOIN (
+			SELECT shiploc AS loccode,
+				SUM(pendingqty) AS qtyout,
+				COUNT(DISTINCT reference) AS transferout
+			FROM loctransfers
+			WHERE pendingqty > 0
+			GROUP BY shiploc
+		) AS lt_ship ON l.loccode = lt_ship.loccode
+		LEFT JOIN (
+			SELECT recloc AS loccode,
+				SUM(pendingqty) AS qtyin,
+				COUNT(DISTINCT reference) AS transferin
+			FROM loctransfers
+			WHERE pendingqty > 0
+			GROUP BY recloc
+		) AS lt_rec ON l.loccode = lt_rec.loccode
+		WHERE l.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . "
+		ORDER BY (COALESCE(lt_ship.qtyout, 0) + COALESCE(lt_rec.qtyin, 0)) DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('Pending Goods to be transferred by shop');
@@ -134,26 +136,25 @@ function ActiveTransfersByLocation(){
 }
 
 /**************************************************************************************************************
-* Function: ActiveTransferStatus
-* Brief description: Shows status of active transfers
+* Brief description: Displays a table listing all active (pending) stock transfers.
+* For each transfer, it shows the date, reference number (as a link),
+* originating location, destination location, and the total quantity of items pending.
 * Parameters:
 *   - $RootPath: Root path of the application
 * Returns: None
 **************************************************************************************************************/
 function ActiveTransferStatus($RootPath){
-	$SQL = "SELECT reference,
-					shipdate,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = shiploc) AS locfrom,
-					(SELECT locationname
-						FROM locations
-						WHERE locations.loccode = recloc) AS locto,
-					SUM(pendingqty) AS pendingqty
-			FROM loctransfers
-			WHERE pendingqty > 0
-			GROUP BY reference
-			ORDER BY shipdate ASC, reference ASC";
+	$SQL = "SELECT lt.reference,
+					lt.shipdate,
+					l1.locationname AS locfrom,
+					l2.locationname AS locto,
+					SUM(lt.pendingqty) AS pendingqty
+			FROM loctransfers lt
+			JOIN locations l1 ON l1.loccode = lt.shiploc
+			JOIN locations l2 ON l2.loccode = lt.recloc
+			WHERE lt.pendingqty > 0
+			GROUP BY lt.reference, lt.shipdate, l1.locationname, l2.locationname
+			ORDER BY lt.shipdate ASC, lt.reference ASC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('List of Active Transfers');
@@ -204,8 +205,9 @@ function ActiveTransferStatus($RootPath){
 }
 
 /**************************************************************************************************************
-* Function: AverageKPIHistory
-* Brief description: Shows average business KPI history for different time periods
+* Brief description: Displays a table showing the average Key Performance Indicator (KPI) values
+* over several specified historical periods (A-F days ago). It also calculates and displays a trend
+* based on the change between two of these periods (specifically D and C).
 * Parameters:
 *   - $NumDaysA: Number of days for period A
 *   - $NumDaysB: Number of days for period B
@@ -327,8 +329,10 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 }
 
 /**************************************************************************************************************
-* Function: AverageSales
-* Brief description: Shows average sales for different time periods
+* Brief description: Displays a table of moving average daily sales.
+* The report can be generated for different types (Shop, Online, Salesman), various time periods,
+* for the current or last year, and can be filtered by a specific shop or include all shops.
+* It also calculates trends and monthly forecasts.
 * Parameters:
 *   - $TypeReport: Type of report (Shop, Online, etc.)
 *   - $NumDaysA: Number of days for period A
@@ -647,15 +651,29 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Updates the standard cost of a specified stock item.
+* This function initiates a database transaction, calls ItemCostUpdateGL to handle
+* the general ledger implications of the cost change, updates the material cost, labour cost (to 0),
+* overhead cost (to 0), last cost, and last cost update date in the stockmaster table.
+* Finally, it commits the transaction and calls UpdateCost to propagate changes to any affected Bill of Materials.
+* Parameters:
+*   - $StockID (string): The stock ID of the item whose cost is to be updated.
+*   - $NewCost (float): The new standard cost for the item.
+*   - $OldCost (float): The previous standard cost of the item.
+*   - $QOH (float): The current quantity on hand of the item.
+* Returns: None
+**************************************************************************************************************/
 function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	DB_Txn_Begin();
 	ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
-	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
-									labourcost='" . 0 . "',
-									overheadcost='" . 0 . "',
-									lastcost='" . $OldCost . "',
-									lastcostupdate = CURRENT_DATE
-							WHERE stockid='" . $StockID . "'";
+	$SQL = "UPDATE stockmaster
+			SET	materialcost='" . $NewCost . "',
+				labourcost='" . 0 . "',
+				overheadcost='" . 0 . "',
+				lastcost='" . $OldCost . "',
+				lastcostupdate = CURRENT_DATE
+			WHERE stockid='" . $StockID . "'";
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');
 	$DbgMsg = _('The SQL that failed was');
@@ -664,6 +682,16 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	UpdateCost($StockID); //Update any affected BOMs
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a list of maintenance tasks based on their status and creation/closure date.
+* It retrieves tasks from the 'klmaintenancetasks' table, joining with related tables for location names,
+* type descriptions, and user permissions. For each task, it shows details like task ID, location, type,
+* description, creation/closure info, and any updates associated with the task.
+* Parameters:
+*   - $Status (string): The status of tasks to display ('OPEN', or 'CLOSED' to show tasks closed within $NumDays).
+*   - $NumDays (int): The number of past days to consider when $Status is 'CLOSED'.
+* Returns: None
+**************************************************************************************************************/
 function MaintenanceTasksList($Status, $NumDays){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
@@ -770,6 +798,17 @@ function MaintenanceTasksList($Status, $NumDays){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Identifies and displays components that are not used in any active Bill of Materials (BOM).
+* It lists these components along with their stock ID, units, description, standard cost, quantity on hand (QOH),
+* and the total stock value. If $ShowOnlyTotal is true, it only displays a warning if the total cost of these
+* unused components exceeds $ShowLimit. Otherwise, it presents a detailed table.
+* Parameters:
+*   - $ShowOnlyTotal (bool): If true, only shows a warning if $ShowLimit is exceeded. If false, displays a detailed table.
+*   - $ShowLimit (float): The cost limit that triggers a warning when $ShowOnlyTotal is true.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 	$SQL = "SELECT s.stockid,
 					s.units,
@@ -848,20 +887,29 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 	InsertKPI("COMP-NOT-USED-IDR", $TotalCost);
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a report of errors (cancellations) in closed stock transfers.
+* It queries transfers within a specified number of past days that are fully closed (no pending quantity)
+* and calculates the number of models and total quantity shipped versus cancelled for each transfer.
+* Parameters:
+*   - $maxdays (int): The maximum number of past days to check for transfer errors.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function ErrorsInTransfers($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT(loctransfers.reference),
-					loctransfers.shipdate,
-					loctransfers.shiploc,
-					loctransfers.recloc,
-					SUM(loctransfers.shipqty) AS shipped_quantity,
-					COUNT(loctransfers.stockid) AS shipped_models,
-					(SELECT SUM(loctransfercancellations.cancelqty)
-						FROM loctransfercancellations
-						WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_quantity,
-					(SELECT COUNT(loctransfercancellations.stockid)
-						FROM loctransfercancellations
-						WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_models
+				loctransfers.shipdate,
+				loctransfers.shiploc,
+				loctransfers.recloc,
+				SUM(loctransfers.shipqty) AS shipped_quantity,
+				COUNT(loctransfers.stockid) AS shipped_models,
+				(SELECT SUM(loctransfercancellations.cancelqty)
+					FROM loctransfercancellations
+					WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_quantity,
+				(SELECT COUNT(loctransfercancellations.stockid)
+					FROM loctransfercancellations
+					WHERE loctransfercancellations.reference = loctransfers.reference) AS cancelled_models
 			FROM loctransfers
 			WHERE loctransfers.shipdate >= '" . $StartDate . "'
 			GROUP BY loctransfers.reference
@@ -909,7 +957,7 @@ function ErrorsInTransfers($maxdays, $RootPath){
 			if (($MyRow['cancelled_models'] != 0) OR ($MyRow['cancelled_quantity'] != 0)){
 				$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
 				echo '<tr class="striped_row">
-						<td class="number">' . $NumTransfersWithErrors . '</td>
+						<td class="number">' . ($NumTransfersWithErrors + 1) . '</td>
 						<td class="number">' . $TransferLink . '</td>
 						<td>' . ConvertSQLDateTime($MyRow['shipdate']) . '</td>
 						<td>' . $MyRow['shiploc'] . '</td>
@@ -946,6 +994,16 @@ function ErrorsInTransfers($maxdays, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a report on the distribution of finished stock.
+* The report can be filtered by the kind of stock (e.g., 'FORSALE', 'DISPLAYS', 'PACKAGING')
+* and can be grouped by either 'LOCATION' or 'STOCKCATEGORY'. It shows optimal vs. real stock
+* quantities and model counts, along with percentages and pieces per model.
+* Parameters:
+*   - $Kind (string): The type of stock to report on (e.g., 'FORSALE', 'DISPLAYS').
+*   - $ByReport (string): The criteria for grouping the report ('LOCATION' or 'STOCKCATEGORY').
+* Returns: (bool) false if $ByReport is invalid, otherwise None (echos HTML directly).
+**************************************************************************************************************/
 function FinishedStockDistribution($Kind, $ByReport){
 
 	if ($Kind == "FORSALE"){
@@ -1154,6 +1212,13 @@ function FinishedStockDistribution($Kind, $ByReport){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a detailed table showing the distribution of models for sale
+* across different shop locations, broken down by various stock categories (Test, Stable, No PO,
+* Discount levels for KL, Blink, and General brands).
+* Parameters: None
+* Returns: None
+**************************************************************************************************************/
 function FinishedStockDistributionByShopAndCategory(){
 
 	$SQL =	"SELECT locations.loccode,
@@ -1383,6 +1448,13 @@ function FinishedStockDistributionByShopAndCategory(){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Calculates and returns the total quantity of all finished goods items available for sale.
+* This excludes items in categories like 'SHDISP' (Shop Displays), 'SHCONS' (Shop Consumables),
+* 'SHPACK' (Shop Packaging), and 'SHOTHE' (Shop Others).
+* Parameters: None
+* Returns: (float) The total quantity of items for sale.
+**************************************************************************************************************/
 function GetTotalQtyItemsForSale(){
 	$SQL = "SELECT SUM(locstock.quantity) AS realstock
 			FROM locstock, stockmaster, stockcategory
@@ -1396,6 +1468,13 @@ function GetTotalQtyItemsForSale(){
 	return $Row['0'];
 }
 
+/**************************************************************************************************************
+* Brief description: Calculates and returns the total value of items for sale based on GL account balances
+* for a specific accounting period. It sums amounts from a predefined list of stock-related GL accounts.
+* Parameters:
+*   - $period (int): The accounting period number for which to calculate the stock value.
+* Returns: (float) The total value of items for sale for the given period.
+**************************************************************************************************************/
 function GetTotalValueItemsForSale($period){
 	$SQL = "SELECT SUM(amount) as saldo
 			FROM gltotals
@@ -1413,6 +1492,13 @@ function GetTotalValueItemsForSale($period){
 	return $Row['0'];
 }
 
+/**************************************************************************************************************
+* Brief description: Determines the correct database field name to use for top sales queries
+* based on the specified number of days (30, 60, or 90).
+* Parameters:
+*   - $TopItemsDays (int): The number of days for the top sales period (30, 60, or 90).
+* Returns: (string) The corresponding field name (e.g., "topsales30") or "topsales60" as a default if input is invalid.
+**************************************************************************************************************/
 function GetTopSalesField($TopItemsDays){
 	// selects the field to be used in queries of Top Sales depending on the days
 
@@ -1428,6 +1514,16 @@ function GetTopSalesField($TopItemsDays){
 	return $TopSalesField;
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table of components that are ready to be used in Work Orders (WO)
+* to produce sellable goods. The report can be filtered by the component's category and
+* the category of the parent item it's used in (e.g., only for discount items).
+* Parameters:
+*   - $CategoryComponent (string): The category ID of the components to check.
+*   - $ParentCategory (string): Filter for parent item categories ('ONLYDISCOUNT', 'DISCOUNT', or other for any).
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	/* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any component at kantor ready to be transformed into sellable goods */
@@ -1532,6 +1628,19 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a report analyzing shop packaging stock levels.
+* It identifies items with insufficient stock based on past usage, forecasts, and minimum stock requirements,
+* and suggests order quantities. The report can be for 'SHPACK' (shop packaging) or 'ZAPON' (online promotion items).
+* Parameters:
+*   - $Category (string): The stock category of items to analyze (e.g., 'SHPACK', 'ZAPON').
+*   - $DaysUsage (int): Number of past days to consider for calculating current daily usage.
+*   - $DaysMinimumStock (int): Number of days of minimum stock to maintain, used for forecasting.
+*   - $ShowAll (bool): If true, shows all items in the category; otherwise, only those with insufficient stock or needing an order.
+*   - $ExtendedVersion (bool): If true, shows a more detailed table with additional forecast columns.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $ExtendedVersion, $RootPath){
 /* EXPLAIN SQL	2014-05-20
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
@@ -1686,7 +1795,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 												'<br>' . 
 												'Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . 
 												'<br>' .
-												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%';	
+												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%';	
 												
 							ShowTableSubTitle($TableSubTitleText);
 						}else{
@@ -1877,6 +1986,16 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table of items within a specific stock category that do not have an active retail price.
+* It also calculates and suggests a recommended retail price based on the item's standard cost and a given factor.
+* Links are provided to view the product and to set/change the retail price.
+* Parameters:
+*   - $StockCat (string): The stock category ID to check for items without retail prices.
+*   - $factorRetail (float): The factor to multiply with the standard cost to recommend a new retail price.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: (int) The number of items found without an active retail price.
+**************************************************************************************************************/
 function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 	/* Check if there is any item without retail price */
 	$Issues = 0;
@@ -1942,6 +2061,14 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 	return $Issues;
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table reviewing various configuration details for shop locations.
+* This includes information such as location code, name, zone, type, partner code, yearly rent,
+* priority, stock availability for online sales, and flags for different item categories (test, stable, etc.).
+* Parameters:
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function LocationInformationReview($RootPath){
 	$SQL="SELECT loccode,
 				locationname,
@@ -2058,6 +2185,16 @@ function LocationInformationReview($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Iterates through locations that have a 'packagingfrom' source defined (i.e., a parent gudang)
+* and calls the `PackagingToBeRefilledFromGudang` function for each to check and display
+* packaging items that need to be replenished.
+* Parameters:
+*   - $ShowAll (bool): Passed to `PackagingToBeRefilledFromGudang`. If true, shows all packaging items for the location; otherwise, only those needing refill.
+*   - $ShowLinkEmail (bool): Passed to `PackagingToBeRefilledFromGudang`. If true, shows a link to email the transfer request.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath){
 	$SQL = "SELECT  locations.loccode
 			FROM locations
@@ -2075,6 +2212,18 @@ function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table of packaging items for a specific location (`$LocCode`)
+* that need to be refilled from its designated parent gudang. It calculates the optimum quantity,
+* quantity needed, and quantity to ship based on current stock, reorder levels, parent gudang stock,
+* and items already in transit.
+* Parameters:
+*   - $LocCode (string): The location code of the shop or gudang to check for packaging needs.
+*   - $ShowAll (bool): If true, shows all packaging items for the location; otherwise, only those needing refill and available to ship.
+*   - $ShowLinkEmail (bool): If true and items need shipping, displays a link to prepare a packaging transfer email.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $RootPath){
 
 	$TableResult = array();
@@ -2251,6 +2400,15 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Rounds a given quantity (`$n`) for a packaging item (`$StockID`)
+* to appropriate transfer multiples. The rounding rules depend on whether the item is
+* 'paper inside box' or other packaging, and on the quantity itself.
+* Parameters:
+*   - $StockID (string): The stock ID of the packaging item.
+*   - $n (float): The quantity to be rounded.
+* Returns: (float) The rounded quantity suitable for transfer.
+**************************************************************************************************************/
 function RoundPackagingTransfer($StockID, $n){
 	if(isPackagingPaperInsideBox($StockID)){
 		$n = ceil($n/TRANSFER_ROUNDING_PAPER_INSIDE_BOX)*TRANSFER_ROUNDING_PAPER_INSIDE_BOX;
@@ -2268,6 +2426,14 @@ function RoundPackagingTransfer($StockID, $n){
 	return $n;
 }
 
+/**************************************************************************************************************
+* Brief description: Retrieves the sales ranking position of a specific stock item
+* based on a given top sales period (30, 60, or 90 days).
+* Parameters:
+*   - $StockID (string): The stock ID of the item.
+*   - $TopItemsDays (int): The number of days for the top sales period (30, 60, or 90).
+* Returns: (int) The top sales position of the item (or 9999999 if not found/ranked).
+**************************************************************************************************************/
 function PositionTopSalesItem($StockID, $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
@@ -2284,6 +2450,19 @@ function PositionTopSalesItem($StockID, $TopItemsDays){
 	return $TopSalesPosition;
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table of Purchase Orders (POs) based on their KL-specific status code
+* and, optionally, by the type of product in the PO. It shows details like PO number, supplier,
+* relevant dates (order, delivery, payment, shipment, customs, arrival), AWB, quantities, values,
+* supplier's payment balance, and calculated payment needed for each PO.
+* Parameters:
+*   - $TypeOfProduct (string): Filters POs by product type ('PACKAGING', 'OTHERS', 'FORSALE', or empty for all).
+*   - $TypeOfCode (string): The KL status code or a descriptive name representing the PO stage (e.g., 'IN NEGOTIATION WITH SUPPLIER', 'ON PRODUCTION', 'ARRIVING IN NEXT DAYS').
+*   - $maxdays (int): Used primarily for 'ARRIVING IN NEXT DAYS' to specify the look-ahead period for arrival.
+*   - $periodnow (int): The current accounting period, used for KPI insertion when applicable.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None (echos HTML directly), or void if $TypeOfCode is invalid.
+**************************************************************************************************************/
 function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $RootPath){
 
 	if ($TypeOfCode == "IN NEGOTIATION WITH SUPPLIER"){
@@ -2789,6 +2968,14 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table analyzing the average process time for Purchase Orders (POs)
+* that arrived within the last specified number of days. It breaks down the time by stages
+* (production, payment, ready to ship, transit, customs) and by supplier country.
+* Parameters:
+*   - $NumDays (int): The number of past days to consider for POs that have arrived.
+* Returns: None
+**************************************************************************************************************/
 function PurchaseOrdersProcessTime($NumDays){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -2956,6 +3143,13 @@ function PurchaseOrdersProcessTime($NumDays){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table listing Purchase Orders (POs) that have incorrect planned dates
+* (e.g., a delivery date in the past for an open PO) or a status that is inconsistent with their dates.
+* Parameters:
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function PurchaseOrdersWrongPlannedDates($RootPath){
 
 	$SQL = "SELECT purchorders.orderno,
@@ -3098,6 +3292,14 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table listing stock transfers that were closed (fully received)
+* within the specified number of past days.
+* Parameters:
+*   - $maxdays (int): The maximum number of past days to check for closed transfers.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
 	$SQL = "SELECT reference,
@@ -3168,6 +3370,14 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Generates an SQL WHERE clause fragment to filter `stockmaster` records
+* for items suitable for the online shop. It excludes discontinued items, certain discount types (-D),
+* sets (ST in code), and specific item code prefixes (KLBE, GOTA, TM-).
+* Parameters:
+*   - $Type (string): Type of filter ('ALL' for all online-suitable categories, 'KL+BL' for Kapal-Laut and Blink main categories).
+* Returns: (string) The SQL WHERE clause fragment.
+**************************************************************************************************************/
 function SQLFilterStockmasterForOnlineShop($Type){
 	/* Not discontinued
 		Not some items in doscount and some not (items ending with -D)
@@ -3200,6 +3410,14 @@ function SQLFilterStockmasterForOnlineShop($Type){
 	return $SQL;
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table listing stock transfers that are still pending and were shipped
+* more than a specified number of days ago, indicating they are delayed.
+* Parameters:
+*   - $maxdays (int): The number of days after which a pending transfer is considered delayed.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function TransfersDelayed($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT reference,
@@ -3245,6 +3463,21 @@ function TransfersDelayed($maxdays, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Identifies and displays items whose current standard cost deviates from a calculated
+* standard cost (based on purchase price, a standard factor, and exchange rate) beyond a specified tolerance.
+* The report can be filtered by supplier country and stock category.
+* It offers different modes: 'SHOWONLY' (display data), 'SHOWLINK' (display data with links to update cost),
+* or 'UPDATEALL' (automatically update costs for identified items).
+* Parameters:
+*   - $Country (string): Supplier country to filter by (e.g., 'Indonesia').
+*   - $StockCat (string): Stock category ID to filter by (or empty for all).
+*   - $StdFactor (float): Factor to apply to the purchase price for calculating the new standard cost.
+*   - $Tolerance (float): The allowed percentage deviation (e.g., 0.05 for 5%) from the calculated standard cost.
+*   - $Mode (string): Operation mode ('SHOWONLY', 'SHOWLINK', 'UPDATEALL').
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $RootPath){
 /* FunctionMode means
 	SHOWONLY: Shows data only
@@ -3409,6 +3642,13 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays warning messages and inserts Key Performance Indicators (KPIs)
+* for the total number of items currently in various price or discount change processes
+* (i.e., items flagged as changing price, or moving to 20%, 50%, or 80% discount).
+* Parameters: None
+* Returns: None
+**************************************************************************************************************/
 function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
 	$WarningTitleText = "# Items changing price: " . $NumItems;
@@ -3431,6 +3671,15 @@ function ShowTotalItemsMoving(){
 	InsertKPI("PRICE-ITEM-CHANGE-80D", $NumItems);
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table of online marketplace orders (e.g., Tokopedia, Shopee)
+* that are still pending payment. The report can either show all pending orders or only those
+* that have been pending for more than a specified number of days.
+* Parameters:
+*   - $Days (int): If 0, shows all pending orders. If greater than 0, shows orders pending for more than this number of days.
+*   - $RootPath (string): The root path of the application, used for generating links.
+* Returns: None
+**************************************************************************************************************/
 function OnlineMarketPlacePaymentPending($Days, $RootPath){
 	// if $Days = 0 it means all the Online Marketplace Orders still pending of payment
 	// if $Days > 0 it means the same but only show the delayed for more than $Days
@@ -3461,7 +3710,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					ON salesorders.debtorno = debtorsmaster.debtorno
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
-			WHERE salesorders.klpaidcash= 0
+			WHERE salesorders.klpaidcash = 0
 				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
 				$WhereStatement . "
 			GROUP BY salesorders.orderno,
@@ -3589,6 +3838,17 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table showing the distribution of maintenance tasks by location and type
+* (e.g., AC, Bocor, Furniture). The report can be filtered by task status ('OPEN', 'CLOSED', 'TOTAL')
+* and a date range for 'CLOSED' or 'TOTAL' tasks. If the user is a system admin,
+* it also inserts Key Performance Indicators (KPIs) for the task counts.
+* Parameters:
+*   - $Status (string): Task status to filter by ('OPEN', 'CLOSED', 'TOTAL').
+*   - $NumDays (int): Number of past days to consider for 'CLOSED' or 'TOTAL' status.
+*   - $UserIsSystemAdmin (bool): If true, inserts KPIs for the task counts.
+* Returns: None
+**************************************************************************************************************/
 function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
@@ -3811,6 +4071,15 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 	}
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table summarizing items returned by customers, grouped by the reason for return,
+* within a specified number of past days. It also calculates the daily average of returns for each reason
+* and inserts Key Performance Indicators (KPIs) if the period is 30 days.
+* Parameters:
+*   - $Days (int): The number of past days to analyze for returned items.
+*   - $RootPath (string): The root path of the application (currently unused in the function body but kept for consistency).
+* Returns: None
+**************************************************************************************************************/
 function QualityIssuesByReason($Days, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
@@ -3871,6 +4140,14 @@ function QualityIssuesByReason($Days, $RootPath){
 		</div>';
 }
 
+/**************************************************************************************************************
+* Brief description: Displays a table summarizing stock adjustments, grouped by reason,
+* within a specified number of past days. It shows the total quantity adjusted for each reason,
+* the daily average, and inserts Key Performance Indicators (KPIs) if the period is 30 days.
+* Parameters:
+*   - $Days (int): The number of past days to analyze for stock adjustments.
+* Returns: None
+**************************************************************************************************************/
 function StockAdjustmentsByReason($Days){
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 

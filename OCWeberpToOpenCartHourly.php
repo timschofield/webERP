@@ -1,11 +1,7 @@
 <?php
-define("VERSIONFILE", "1.10"); 
-
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('webERP to OpenCart Hourly Synchronizer '. VERSIONFILE);
+$Title = _('webERP to OpenCart Hourly Synchronizer');
 include ('includes/header.php');
 include('includes/GetPrice.php');
 

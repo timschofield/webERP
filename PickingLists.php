@@ -1,7 +1,6 @@
 <?php
 /* Picking List Maintenance */
 
-/* Session started in session.php for password checking and authorisation level check */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 

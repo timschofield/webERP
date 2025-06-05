@@ -97,40 +97,41 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Orders from OpenCart') .'</strong></p>';
 			echo '<div>';
-			$TableHeader = '<tr>
-								<th>' . _('OC #') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('Name') . '</th>
-								<th>' . _('eMail') . '</th>
-								<th>' . _('Shipping Cost') . '</th>
-								<th>' . _('Shipper') . '</th>
-								<th>' . _('Currency') . '</th>
-								<th>' . _('Payment Code') . '</th>
-								<th>' . _('Country') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th>' . _('OC #') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('Name') . '</th>
+									<th>' . _('eMail') . '</th>
+									<th>' . _('Shipping Cost') . '</th>
+									<th>' . _('Shipper') . '</th>
+									<th>' . _('Currency') . '</th>
+									<th>' . _('Payment Code') . '</th>
+									<th>' . _('Country') . '</th>
+									<th>' . _('Action') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 
-			$TableHeaderForItems = '<tr>
-								<th>' . _('OC #') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('OrderLine') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Unit Price') . '</th>
-								<th>' . _('Quantity') . '</th>
-								<th>' . _('Action') . '</th>
-							</tr>';
+			$TableHeaderForItems = '<thead>
+								<tr>
+									<th>' . _('OC #') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('OrderLine') . '</th>
+									<th>' . _('Code') . '</th>
+									<th>' . _('Unit Price') . '</th>
+									<th>' . _('Quantity') . '</th>
+									<th>' . _('Action') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 		}
 		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update OpenCart orders in webERP failed');
 		$InsertErrMsg = _('The SQL to insert OpenCart orders in webERP failed');
 
-		$k = 0; //row colour counter
+		
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($ShowMessages){
-				echo '<table class="selection">';
-				echo $TableHeader;
-				echo '<tr class="EvenTableRows">';
-			}
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['currency_code']);
 			$CustomerName = CleanStringForWebERP(CapitalizeName($MyRow['customerfirstname'] . ' ' . $MyRow['customerlastname']));
@@ -239,31 +240,22 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 									'" . $MyRow['date_modified'] . "',
 									'" . $MyRow['date_modified'] . "',
 									'" . $MyRow['date_modified'] . "')";
-					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+					DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 				}
 				if ($ShowMessages){
-					printf('<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							$MyRow['order_id'],
-							$OrderNo,
-							$ShippingName,
-							$MyRow['email'],
-							$FreightCost,
-							$DefaultShipVia,
-							$MyRow['currency_code'],
-							$PaymentCode,
-							$ShippingCountry,
-							$Action
-							);
+					echo '<table class="selection">' . $TableHeader;
+					echo '<tr class="striped_row">
+							<td>' . $MyRow['order_id'] . '</td>
+							<td>' . $OrderNo . '</td>
+							<td>' . $ShippingName . '</td>
+							<td>' . $MyRow['email'] . '</td>
+							<td>' . $FreightCost . '</td>
+							<td>' . $DefaultShipVia . '</td>
+							<td>' . $MyRow['currency_code'] . '</td>
+							<td>' . $PaymentCode . '</td>
+							<td>' . $ShippingCountry . '</td>
+							<td>' . $Action . '</td>
+						</tr>';
 				}
 				if ($EmailText !=''){
 					$EmailText = $EmailText . $MyRow['order_id'] .
@@ -288,9 +280,10 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				$ResultItemsOrder = DB_query_oc($SQLItemsOrder);
 				$ItemsOrder = 0;
 				if ($ShowMessages){
-					echo '<table class="selection">';
-					echo $TableHeaderForItems;
-					echo '<tr class="OddTableRows">';
+					echo '</table>
+							<table class="selection">
+							' . $TableHeaderForItems;
+					echo '<tr class="striped_row">';
 				}
 				while ($myitems = DB_fetch_array($ResultItemsOrder)) {
 					$ItemsOrder++;
@@ -313,31 +306,23 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $myitems['quantity'] . "',
 											'" . $MyRow['date_modified'] . "',
 											'0')"; // prices come already net from OpenCart
-						$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 
 						// prepare the RL for the items just ordered online
 						$SQLUpdate = "UPDATE locstock
 										SET reorderlevel = reorderlevel + " . $myitems['quantity'] . "
 										WHERE stockid = '" . $myitems['model'] . "'
 										AND loccode = '" . $Location . "'";
-						$ResultUpdate = DB_query($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+						DB_query($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 						if ($ShowMessages){
-							printf('<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									</tr>',
-									$MyRow['order_id'],
-									$OrderNo,
-									$ItemsOrder,
-									$myitems['model'],
-									$Price,
-									$myitems['quantity'],
-									$Action
-									);
+							echo '<td>' . $MyRow['order_id'] . '</td>
+									<td>' . $OrderNo . '</td>
+									<td>' . $ItemsOrder . '</td>
+									<td>' . $myitems['model'] . '</td>
+									<td>' . $Price . '</td>
+									<td>' . $myitems['quantity'] . '</td>
+									<td>' . $Action . '</td>
+									</tr>';
 						}
 						if ($EmailText !=''){
 							$EmailText = $EmailText . "            " . $ItemsOrder .
@@ -400,24 +385,16 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $MyRow['date_modified'] . "',
 											'" . $CouponCode . "',
 											'0')"; // prices come already net from OpenCart
-						$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 						if ($ShowMessages){
-							printf('<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									</tr>',
-									$MyRow['order_id'],
-									$OrderNo,
-									$ItemsOrder,
-									$CouponStockId,
-									$CouponDiscount,
-									$CouponQty,
-									$Action
-									);
+							echo '<td>' . $MyRow['order_id'] . '</td>
+									<td>' . $OrderNo . '</td>
+									<td>' . $ItemsOrder . '</td>
+									<td>' . $CouponStockId . '</td>
+									<td>' . $CouponDiscount . '</td>
+									<td>' . $CouponQty . '</td>
+									<td>' . $Action . '</td>
+									</tr>';
 						}
 						if ($EmailText !=''){
 							$EmailText = $EmailText . "            " . $ItemsOrder .
@@ -469,24 +446,16 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $MyRow['date_modified'] . "',
 											'" . $DiscountCode . "',
 											'0')"; // prices come already net from OpenCart
-						$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 						if ($ShowMessages){
-							printf('<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									</tr>',
-									$MyRow['order_id'],
-									$OrderNo,
-									$ItemsOrder,
-									$DiscountStockId,
-									$OrderDiscount,
-									$DiscountQty,
-									$Action
-									);
+							echo '<td>' . $MyRow['order_id'] . '</td>
+									<td>' . $OrderNo . '</td>
+									<td>' . $ItemsOrder . '</td>
+									<td>' . $DiscountStockId . '</td>
+									<td>' . $OrderDiscount . '</td>
+									<td>' . $DiscountQty . '</td>
+									<td>' . $Action . '</td>
+									</tr>';
 						}
 						if ($EmailText !=''){
 							$EmailText = $EmailText . "            " . $ItemsOrder .
@@ -499,8 +468,9 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 				}
 				$i++;
 				if ($ShowMessages){
-					echo '</table>';
-					echo '</table>';
+					echo '</tbody>
+							</table>
+							</table>';
 				}
 			}else{
 				// Order does not belong to a valid customer for any reason, escape it
@@ -530,6 +500,13 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	}
 
 	// Now deal with the Paypal payment/s of the order...
+
+	// Lock OpenCart tables to ensure consistency during read and subsequent updates within this function's scope
+	$DbgMsg = _('The SQL used to lock tables was:');
+	$ErrMsg = _('Failed to lock OpenCart PayPal related tables.');
+	$LockQuery = "LOCK TABLES oc_paypal_order READ, oc_paypal_order_transaction READ, oc_order WRITE, oc_order_total READ";
+	DB_query_oc($LockQuery, $ErrMsg, $DbgMsg, true);
+
 	$SQL = "SELECT 	oc_paypal_order.paypal_order_id,
 				oc_order.order_id,
 				oc_order.currency_code AS ordercurrency,
@@ -567,40 +544,36 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			echo '<p class="page_title_text" align="center"><strong>' . _('Paypal Payments from OpenCart') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('CustomerID') . '</th>
-								<th>' . _('email') . '</th>
-								<th>' . _('webERP Code') . '</th>
-								<th>' . _('OrderID') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('Order Total') . '</th>
-								<th>' . _('Order Curr') . '</th>
-								<th>' . _('Paypal Total') . '</th>
-								<th>' . _('Shipment') . '</th>
-								<th>' . _('Paypal Curr') . '</th>
-								<th>' . _('Paypal Trx') . '</th>
-								<th>' . _('Trx Total') . '</th>
-								<th>' . _('Commission') . '</th>
-								<th>' . _('Date') . '</th>
-								<th>' . _('Status') . '</th>
-								<th>' . _('Pending reason') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th>' . _('CustomerID') . '</th>
+									<th>' . _('email') . '</th>
+									<th>' . _('webERP Code') . '</th>
+									<th>' . _('OrderID') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('Order Total') . '</th>
+									<th>' . _('Order Curr') . '</th>
+									<th>' . _('Paypal Total') . '</th>
+									<th>' . _('Shipment') . '</th>
+									<th>' . _('Paypal Curr') . '</th>
+									<th>' . _('Paypal Trx') . '</th>
+									<th>' . _('Trx Total') . '</th>
+									<th>' . _('Commission') . '</th>
+									<th>' . _('Date') . '</th>
+									<th>' . _('Status') . '</th>
+									<th>' . _('Pending reason') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update OpenCart Paypal payments in webERP failed');
-		$InsertErrMsg = _('The SQL to insert OpenCart Paypal payments in webERP failed');
-
+	
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowMessages){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
+				
+					echo '<tr class="striped_row">';
+					
 			}
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['ordercurrency']);
@@ -639,42 +612,26 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			}
 
 			if ($ShowMessages){
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$MyRow['customer_id'],
-						$MyRow['email'],
-						$CustomerCode,
-						$MyRow['order_id'],
-						$OrderNo,
-						$TotalOrder,
-						$MyRow['ordercurrency'],
-						$AmountPaid,
-						$FreightCost,
-						$MyRow['paypalcurrency'],
-						$TransactionID,
-						$MyRow['amount'],
-						$Commission,
-						$WebERPDateOrder,
-						$MyRow['payment_status'],
-						$MyRow['pending_reason']
-						);
+				echo '<td class="number">' . $MyRow['customer_id'] . '</td>
+						<td>' . $MyRow['email'] . '</td>
+						<td>' . $CustomerCode . '</td>
+						<td class="number">' . $MyRow['order_id'] . '</td>
+						<td class="number">' . $OrderNo . '</td>
+						<td class="number">' . $TotalOrder . '</td>
+						<td>' . $MyRow['ordercurrency'] . '</td>
+						<td class="number">' . $AmountPaid . '</td>
+						<td class="number">' . $FreightCost . '</td>
+						<td>' . $MyRow['paypalcurrency'] . '</td>
+						<td>' . $TransactionID . '</td>
+						<td class="number">' . $MyRow['amount'] . '</td>
+						<td class="number">' . $Commission . '</td>
+						<td>' . $WebERPDateOrder . '</td>
+						<td>' . $MyRow['payment_status'] . '</td>
+						<td>' . $MyRow['pending_reason'] . '</td>
+						</tr>';
 			}
 			if ($EmailText !=''){
+				$Action = "Paypal Payment Synchronized";
 				$EmailText = $EmailText . $MyRow['customer_id'] .
 									      " = " . $MyRow['email'] .
 									      " = " . $CustomerCode .
@@ -689,11 +646,17 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			$i++;
 		}
 		if ($ShowMessages){
-			echo '</table>
+			echo '</tbody>
+					</table>
 					</div>
 					</form>';
 		}
 	}
+	// Unlock OpenCart tables
+	$DbgMsg = _('The SQL used to unlock tables was:');
+	$ErrMsg = _('Failed to unlock OpenCart tables.');
+	DB_query_oc("UNLOCK TABLES", $ErrMsg, $DbgMsg, true);
+
 	if ($ShowMessages){
 		prnMsg(locale_number_format($i,0) . ' ' . _('PayPal Payments synchronized from OpenCart to webERP'),'success');
 	}
@@ -730,28 +693,25 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 			echo '<p class="page_title_text" align="center"><strong>' . _('Updated Order Status from OpenCart') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('OpenCart #') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('OC Status') . '</th>
-								<th>' . _('webERP Status') . '</th>
-								<th>' . _('Message') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th>' . _('OpenCart #') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('OC Status') . '</th>
+									<th>' . _('webERP Status') . '</th>
+									<th>' . _('Message') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
 
-		$k = 0; //row colour counter
+		
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowMessages){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
+				
+					echo '<tr class="striped_row">';
+					
 			}
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['currency_code']);
@@ -762,31 +722,25 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 			UpdateOpenCartOrderStatusInWeberp($OrderNo, $MyRow['order_status_id']);
 
 			if ($ShowMessages){
-				printf('<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$MyRow['order_id'],
-						$OrderNo,
-						$OCStatusText,
-						$webERPStatusText,
-						$MyRow['comment']
-						);
+				echo '<td class="number">' . $MyRow['order_id'] . '</td>
+						<td class="number">' . $OrderNo . '</td>
+						<td>' . $OCStatusText . '</td>
+						<td>' . $webERPStatusText . '</td>
+						<td>' . $MyRow['comment'] . '</td>
+						</tr>';
 			}
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $MyRow['order_id'] .
 									      " = " . $OrderNo .
 									      " --> " . $OCStatusText .
 									      " = " . $webERPStatusText .
-									      " = " . $MyRow['comment'] .
-									      " = " . $TotalOrder . "\n";
+									      " = " . $MyRow['comment'] . "\n";
 			}
 			$i++;
 		}
 		if ($ShowMessages){
-			echo '</table>
+			echo '</tbody>
+					</table>
 					</div>
 					</form>';
 		}
@@ -826,29 +780,20 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			echo '<p class="page_title_text" align="center"><strong>' . _('Sync Snap (MIDTRANS) OpenCart Order Payments') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('OpenCart #') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('Total Paid') . '</th>
-								<th>' . _('Payment Time') . '</th>
-								<th>' . _('Result') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th>' . _('OpenCart #') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('Total Paid') . '</th>
+									<th>' . _('Payment Time') . '</th>
+									<th>' . _('Result') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
-
-		$k = 0; //row colour counter
+		
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($ShowMessages){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
-			}
 			/* FIELD MATCHING */
 			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['currency_code']);
 			$OrderNo = GetWeberpOrderNo($CustomerCode, $MyRow['order_id']);
@@ -862,18 +807,13 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				$Result = "OK";
 			}
 			if ($ShowMessages){
-				printf('<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						$MyRow['order_id'],
-						$OrderNo,
-						locale_number_format($MyRow['total'],0),
-						$MyRow['date_modified'],
-						$Result
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $MyRow['order_id'] . '</td>
+						<td class="number">' . $OrderNo . '</td>
+						<td>' . locale_number_format($MyRow['total'],0) . '</td>
+						<td>' . $MyRow['date_modified'] . '</td>
+						<td>' . $Result . '</td>
+					</tr>';
 			}
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $MyRow['order_id'] .
@@ -885,7 +825,8 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			$i++;
 		}
 		if ($ShowMessages){
-			echo '</table>
+			echo '</tbody>
+					</table>
 					</div>
 					</form>';
 		}
@@ -946,15 +887,16 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 			echo '<p class="page_title_text" align="center"><strong>' . $SectionTitle .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('OpenCart #') . '</th>
-								<th>' . _('webERP #') . '</th>
-								<th>' . _('Customer') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th>' . _('OpenCart #') . '</th>
+									<th>' . _('webERP #') . '</th>
+									<th>' . _('Customer') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
-		$UpdateErrMsg = 'The SQL to ' . $SectionTitle . ' failed';
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -997,7 +939,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 					ON salesorderdetails.stkcode=stockmaster.stockid
 				WHERE salesorderdetails.orderno=" . $MyRow['orderno'] . "
 				ORDER BY poline";
-			$Result2=DB_query($SQL, $ErrMsg);
+			$Result2=DB_query($SQL);
 			$ProductLines = "";
 			$TotalModels = 0;
 			$TotalPieces = 0;
@@ -1041,17 +983,13 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 					SET klemailpaymentconfirm = CURRENT_DATE
 					WHERE orderno =	'" . $MyRow['orderno'] . "'";
 			$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
-			$ResultUpdate = DB_query($SQLUpdate,$ErrMsg);
+			DB_query($SQLUpdate,$ErrMsg);
 
 			if ($ShowMessages){
-				printf('<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>',
-						$MyRow['customerref'],
-						$MyRow['orderno'],
-						$MyRow['customername']
-						);
+				echo '<td class="number">' . $MyRow['customerref'] . '</td>
+						<td class="number">' . $MyRow['orderno'] . '</td>
+						<td>' . $MyRow['customername'] . '</td>
+						</tr>';
 			}
 			if ($EmailText !=''){
 				$EmailText = $EmailText . $MyRow['customerref'] .

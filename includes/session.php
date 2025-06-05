@@ -9,6 +9,16 @@ KL RICARD MODIFICATIONS:
 - Load the KLRoles Variables
 *****************************************************************************************/
 
+/* webERP Session handling
+ * This file is included at the start of every script in webERP
+ * It sets up the session and includes the necessary files for:
+ * - database connection
+ * - language setup
+ * - password checking
+ * - security authorisation level check
+ * - config.php is included in session.php
+ */
+
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
@@ -64,11 +74,7 @@ if (isset($_SESSION['Timeout'])) {
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
 
-// Set a specific session_name to avoid potential default session_name conflicts
-// with other apps using the same host.
-// For an example situation to support this need, see:
-// http://www.weberp.org/forum/showthread.php?tid=8133
-session_name('PHPSESSIDwebERPteam');
+session_name($SessionName);
 session_start();
 
 include ($PathPrefix . 'includes/ConnectDB.php');
@@ -279,12 +285,13 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 }
 
 /*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
-//if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-//	header('Location: UpgradeDatabase.php');
-//}
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php') and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+if (isset($_SESSION['DBVersion']) 
+	and isset($_SESSION['DBUpdateNumber'])
+	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
+	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
+	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
 	exit;
 }

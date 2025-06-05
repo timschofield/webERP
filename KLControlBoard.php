@@ -1,8 +1,7 @@
 <?php
 
-define("VERSIONFILE", "4.04");
 include('includes/session.php');
-$Title = _('KL General Control Board '. VERSIONFILE);
+$Title = _('KL General Control Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;
@@ -14,7 +13,7 @@ if (!isset($_GET['Section'])){
 	$ProcessSection02 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
-		$Title = 'KL General Control Board Section ' . $_GET['Section'] . ' ' . VERSIONFILE;
+		$Title = 'KL General Control Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
@@ -353,7 +352,7 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 6000000000, $PeriodNow);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 5000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121121AD', 
@@ -833,8 +832,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
+//		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
+//		$NumberOfTestExecuted++;
 		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);

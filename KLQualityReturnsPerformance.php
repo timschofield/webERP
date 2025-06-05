@@ -1,8 +1,7 @@
 <?php
-define("VERSIONFILE", "2.00");
 
 include('includes/session.php');
-$Title = _('KL Stock Adjustment and Customer Returns Board '. VERSIONFILE);
+$Title = _('KL Stock Adjustment and Customer Returns Board');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');

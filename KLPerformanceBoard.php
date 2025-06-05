@@ -1,10 +1,7 @@
 <?php
-define("VERSIONFILE", "4.00");
-
-/* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
 
 include ('includes/session.php');
-$Title = _('KL General Performance Board '. VERSIONFILE);
+$Title = _('KL General Performance Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;
@@ -18,7 +15,7 @@ if (!isset($_GET['Section'])){
 	$ProcessSection03 = TRUE;
 }else{
 	$ShowSectionInfo = TRUE;
-		$Title = 'KL General Performance Board Section ' . $_GET['Section'] . ' ' . VERSIONFILE;
+		$Title = 'KL General Performance Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
 		$ProcessSection01 = TRUE;
 	}elseif($_GET['Section'] == '02'){
