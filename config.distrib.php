@@ -25,8 +25,8 @@ $ShowLogoAtLogin = True;
 $SysAdminEmail = 'admin@mydomain.com';
 
 // The timezone of the business - this allows the possibility of having
-// the web-server on a overseas machine but record local time
-// this is not necessary if you have your own server locally
+// the web-server in a different timezone than the business but in general
+// should always be set correctly (and PHP used to complain if not set)
 //date_default_timezone_set('Europe/London');
 //date_default_timezone_set('America/Los_Angeles');
 date_default_timezone_set('Asia/Shanghai');
@@ -36,7 +36,7 @@ date_default_timezone_set('Asia/Shanghai');
 
 // Connection information for the database
 // $Host is the computer ip address or name where the database is located
-// if the web server is also the database server then 'locahost'
+// if the web server is also the database server then 'localhost'
 $Host = 'localhost';
 $MySQLPort=3306;
 // The type of db server being used
@@ -52,7 +52,7 @@ $DBPassword = 'weberp_db_pwd';
 
 // Login company selection
 //
-// If allowing selection of the company in the login window is not dedired (e.g. in a hosted envionment and seeing other
+// If allowing selection of the company in the login window is not desired (e.g. in a hosted envionment and seeing other
 // users would be distracting, create confusion or violate privacy expectations), change this option to 'ShowInputBox'
 // to have the user enter the company name, or 'Hide' to force using $DefaultCompany.
 //
@@ -86,7 +86,7 @@ $DefaultClock = 12;
 // Path to session files on server
 // This can be useful for multi-host web servers where pages are serviced using load balancing servers, otherwise
 // the session can be lost when the load balancer picks a different server. To prevent this, this option tells the
-// server explicitly where to find the session file.\
+// server explicitly where to find the session file.
 //
 // This option is also useful when a server has multiple webERP installs (e.g. to serve multiple webERP sites using
 // customized or different releases of code) and can are accessed by the same client browser (e.g. by a user of
@@ -99,8 +99,6 @@ $DefaultClock = 12;
 
 // Set a specific session_name to avoid potential default session_name conflicts
 // with other apps using the same host.
-// For an example situation to support this need, see:
-// http://www.weberp.org/forum/showthread.php?tid=8133
 $SessionName = 'PHPSESSIDwebERPteam';
 
 // END OF USER CONFIGURABLE VARIABLES
