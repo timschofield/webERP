@@ -4,11 +4,11 @@
 //---------------------------------------------------
 
 // Default language to use for the login screen and the setup of new users.
-//The users' language selection will override
+// The users' language selection will override
 $DefaultLanguage = 'en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
-//The users' theme selection will override
+// The users' theme selection will override
 //$DefaultTheme = 'professional';
 //$DefaultTheme = 'wood';
 //$DefaultTheme = 'silverwolf';
@@ -46,7 +46,7 @@ $MySQLPort=3306;
 //$DBType = 'postgres'; //DEPRECIATED
 $DBType = 'mysqli';
 
-// sql user & password
+// Database user & password
 $DBUser = 'weberp_db_user';
 $DBPassword = 'weberp_db_pwd';
 
@@ -56,14 +56,8 @@ $DBPassword = 'weberp_db_pwd';
 // users would be distracting, create confusion or violate privacy expectations), change this option to 'ShowInputBox'
 // to have the user enter the company name, or 'Hide' to force using $DefaultCompany.
 //
-// Options:
-// 	'ShowSelectionBox' (default)
-//	'ShowInputBox'
-//	'Hide'
-//
 // If set to 'ShowSelectionBox', webERP examines each sub-directory in companies/ to determine all the companies
 // that can be logged into.
-//
 //$AllowCompanySelectionBox = 'Hide';
 //$AllowCompanySelectionBox = 'ShowInputBox';
 $AllowCompanySelectionBox = 'ShowSelectionBox';
@@ -106,8 +100,8 @@ $SessionName = 'PHPSESSIDwebERPteam';
 // $RootPath is used in most scripts to tell the script the installation details of the files.
 // NOTE: In some windows installation this command doesn't work and the administrator must set this to the
 // path of the installation manually
-// E.g. 1- if the files are under the webserver root directory, then rootpath ='';
-// E.g. 2 -if the files are under webERP, then webERP is the rootpath (note no additional slashes are necessary).
+// E.g. 1 if the files are under the webserver root directory, then rootpath ='';
+// E.g. 2 if the files are under webERP, then webERP is the rootpath (note no additional slashes are necessary).
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
 if (isset($DirectoryLevelsDeep)){
 	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
