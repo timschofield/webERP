@@ -662,7 +662,7 @@ function GetOnlinePartnerFromArea($Area){
 
 function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
-	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
+	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid = '" . $CategoryId . "'";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -673,7 +673,7 @@ function GetCategoryNameFromCode($CategoryId){
 
 function GetDefaultLocationFromUser($UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
-	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
+	$SQL = "SELECT defaultlocation FROM www_users WHERE userid = '".$UserId."'";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -695,7 +695,7 @@ function GetLocationNameFromCode($LocCode){
 
 function GetItemDescriptionFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
-	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$SQL="SELECT description FROM stockmaster WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -706,7 +706,7 @@ function GetItemDescriptionFromCode($StockID){
 
 function GetItemStandardCostFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemStandardCostFromCode()';
-	$SQL = "SELECT actualcost FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$SQL = "SELECT actualcost FROM stockmaster WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -763,7 +763,7 @@ function EnsureNumberIsPositiveNumber($Value){
 
 function FindReasonOfReturn($ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
-	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
+	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid = '" . $ReasonCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -1059,7 +1059,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		$SQL = "UPDATE debtorsmaster
 					SET lastpaiddate = CURRENT_DATE,
-					lastpaid='" . $TotalAmount ."'
+					lastpaid = '" . $TotalAmount ."'
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
 		$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
@@ -1361,6 +1361,7 @@ function NumberOfRegularShopsSellingDiscount($ShopType){
 }
 
 function DeleteWeberpUser($SelectedUser, $AdminRole){
+	// a regular user can't delete some users, so we check if the user is a super user or not
 	if ($SelectedUser == "Ricard"){
 		prnMsg('User '. $SelectedUser . ' cannot be deleted as is a super user','error');
 	}elseif ((($SelectedUser == "Laia")
@@ -1373,28 +1374,36 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 			AND (!$AdminRole )){
 		prnMsg('You do not have enough rights to delete user '. $SelectedUser ,'error');
 	}else{
-		$SQL="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
+		$SQL="SELECT userid FROM audittrail where userid = '" . $SelectedUser ."'";
 		$Result=DB_query($SQL);
 		if(DB_num_rows($Result)!=0) {
 			prnMsg(_('Cannot delete user as entries still exist in the audit trail'), 'error');
 		} else {
-			$SQL="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM locationusers WHERE userid = '" . $SelectedUser . "'";
 			$ErrMsg = _('The Location - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
-			$SQL="DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM glaccountusers WHERE userid = '" . $SelectedUser . "'";
 			$ErrMsg = _('The GL Account - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
-			$SQL="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM bankaccountusers WHERE userid = '" . $SelectedUser . "'";
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
-			$SQL="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM purchorderauth WHERE userid = '" . $SelectedUser . "'";
 			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
-			$SQL="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM sessions WHERE userid = '" . $SelectedUser . "'";
+			$ErrMsg = _('The Sessions User could not be deleted because');
+			$Result = DB_query($SQL,$ErrMsg);
+
+			$SQL="DELETE FROM session_data WHERE userid = '" . $SelectedUser . "'";
+			$ErrMsg = _('The Session Data User could not be deleted because');
+			$Result = DB_query($SQL,$ErrMsg);
+
+			$SQL="DELETE FROM www_users WHERE userid = '" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
