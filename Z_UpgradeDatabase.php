@@ -35,7 +35,7 @@ if (!isset($_SESSION['DBVersion'])) {
 		/* Run an sql statement and return an error code */
 		if (!isset($SQLFile)) {
 			DB_IgnoreForeignKeys();
-			$Result = DB_query($SQL, '', '', false, $TrapErrors);
+			DB_query($SQL, '', '', false, $TrapErrors);
 			$ErrorNumber = DB_error_no();
 			DB_ReinstateForeignKeys();
 			return $ErrorNumber;
