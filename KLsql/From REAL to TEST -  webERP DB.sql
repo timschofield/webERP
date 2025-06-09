@@ -538,6 +538,12 @@ INSERT INTO test_erp.securitytokens SELECT * FROM kurakura_kl_erp.securitytokens
 TRUNCATE test_erp.`sellthroughsupport`;
 INSERT INTO test_erp.sellthroughsupport SELECT * FROM kurakura_kl_erp.sellthroughsupport;
 
+TRUNCATE test_erp.`sessions`;
+/*INSERT INTO test_erp.sessions SELECT * FROM kurakura_kl_erp.sessions;*/
+
+TRUNCATE test_erp.`session_data`;
+/*INSERT INTO test_erp.session_data SELECT * FROM kurakura_kl_erp.session_data; */
+
 TRUNCATE test_erp.`shipmentcharges`;
 INSERT INTO test_erp.shipmentcharges SELECT * FROM kurakura_kl_erp.shipmentcharges;
 
