@@ -209,19 +209,19 @@ function AddColumn($Column, $Table, $Type, $Null, $Default, $After) {
 		$Result = DB_query($SQL);
 		if (isset($SQLFile) or DB_num_rows($Result) == 0) {
 			if ($Type == 'text') {
-				$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`", False);
+				$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`";
 			} else {
-				if (isset($Default)) {
+				if (isset($Default) and $Default != '') {
 					if ($Default == 'CURRENT_TIMESTAMP') {
-						$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT " . $Default . " AFTER `" . $After . "`", False);
+						$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT " . $Default . " AFTER `" . $After . "`";
 					} else {
-						$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`", False);
+						$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`";
 					}
 				} else {
-					$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`", False);
+					$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " AFTER `" . $After . "`";
 				}
 			}
-			$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`";
+			$Response = executeSQL($SQL);
 			if ($Response == 0) {
 				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been inserted'), 'success');
 			} else {
@@ -326,8 +326,13 @@ function ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $A
 			AND COLUMN_NAME='" . $NewName . "'";
 	$NewResult = DB_query($NewSQL);
 	if (DB_num_rows($OldResult) > 0 and DB_num_rows($NewResult) == 0) {
+		if (strtoupper($Type) == 'TIMESTAMP') {
+			$Default = "DEFAULT CURRENT_TIMESTAMP";
+		}else{
+			$Default = "DEFAULT '" . $Default . "'";
+		}
 		if ($AutoIncrement == '') {
-			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", False);
+			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $Default, False);
 		} else {
 			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement, False);
 		}
