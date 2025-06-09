@@ -13,15 +13,16 @@ echo '<p class="page_title_text">
 	'</p>';
 
 $SQL = "SELECT sessionid,
-				login_data.userid,
+				sessions.userid,
+				logintime,
 				realname,
 				email,
 				phone,
-				login,
+				scripttime,
 				script
-			FROM login_data
+			FROM sessions
 			INNER JOIN www_users
-			ON www_users.userid=login_data.userid";
+			ON www_users.userid = sessions.userid";
 $Result = DB_query($SQL);
 
 echo '<table>
@@ -33,7 +34,8 @@ echo '<table>
 				<th class="SortedColumn">', _('Email'), '</th>
 				<th class="SortedColumn">', _('Phone'), '</th>
 				<th class="SortedColumn">', _('Logged in'), '</th>
-				<th class="SortedColumn">', _('Script'), '</th>
+				<th class="SortedColumn">', _('Script name'), '</th>
+				<th class="SortedColumn">', _('Script time'), '</th>
 			</tr>
 		</thead>';
 
@@ -45,8 +47,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>', $MyRow['realname'], '</td>
 			<td>', $MyRow['email'], '</td>
 			<td>', $MyRow['phone'], '</td>
-			<td class="date">', ConvertSQLDateTime($MyRow['login']), '</td>
+			<td class="date">', ConvertSQLDateTime($MyRow['logintime']), '</td>
 			<td>', $MyRow['script'], '</td>
+			<td class="date">', ConvertSQLDateTime($MyRow['scripttime']), '</td>
 		</tr>';
 }
 echo '</tbody>

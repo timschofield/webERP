@@ -5,9 +5,7 @@ $SQL = "DELETE FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND 
 $Result = DB_query($SQL);
 $SQL ="INSERT INTO session_data VALUES('" . $_SESSION['UserID'] . "', 'module', '" . $_SESSION['Module'] . "')";
 $Result = DB_query($SQL);
-$SQL = "DELETE FROM login_data WHERE sessionid='" . session_id() . "'";
-$Result = DB_query($SQL);
-$SQL = "DELETE FROM sessions WHERE sessionid='" . session_id() . "'";
+$SQL = "DELETE FROM sessions WHERE sessionid = '" . session_id() . "'";
 $Result = DB_query($SQL);
 
 // Cleanup
