@@ -538,6 +538,12 @@ INSERT INTO test_erp.securitytokens SELECT * FROM kurakura_kl_erp.securitytokens
 TRUNCATE test_erp.`sellthroughsupport`;
 INSERT INTO test_erp.sellthroughsupport SELECT * FROM kurakura_kl_erp.sellthroughsupport;
 
+TRUNCATE test_erp.`sessions`;
+/*INSERT INTO test_erp.sessions SELECT * FROM kurakura_kl_erp.sessions;*/
+
+TRUNCATE test_erp.`session_data`;
+/*INSERT INTO test_erp.session_data SELECT * FROM kurakura_kl_erp.session_data; */
+
 TRUNCATE test_erp.`shipmentcharges`;
 INSERT INTO test_erp.shipmentcharges SELECT * FROM kurakura_kl_erp.shipmentcharges;
 
@@ -689,9 +695,9 @@ CREATE TRIGGER `currencies_creation_timestamp` BEFORE INSERT ON `currencies`
 
 CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
 BEGIN
-    INSERT INTO gltotals (account, period, amount)
-    VALUES (NEW.account, NEW.periodno, NEW.amount)
-    ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+  INSERT INTO gltotals (account, period, amount)
+  VALUES (NEW.account, NEW.periodno, NEW.amount)
+  ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
 END //
 
 CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans`
@@ -750,18 +756,19 @@ CREATE TRIGGER `stockmaster_creation_timestamp` BEFORE INSERT ON `stockmaster`
 
 DELIMITER ;
 
-UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
-UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/reports' WHERE  `confname` =  'reports_dir';
-UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/logs' WHERE  `confname` =  'LogPath';
-UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'InventoryManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'FactoryManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'PurchasingManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'ShopManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
+UPDATE test_erp.`config` SET `confvalue` = 'companies/test_erp/part_pics' WHERE `confname` = 'part_pics_dir';
+UPDATE test_erp.`config` SET `confvalue` = 'companies/test_erp/reports' WHERE `confname` = 'reports_dir';
+UPDATE test_erp.`config` SET `confvalue` = 'companies/test_erp/logs' WHERE `confname` = 'LogPath';
+UPDATE test_erp.`config` SET `confvalue` = 'webmaster@kapal-laut.com' WHERE `confname` = 'InventoryManagerEmail';
+UPDATE test_erp.`config` SET `confvalue` = 'webmaster@kapal-laut.com' WHERE `confname` = 'FactoryManagerEmail';
+UPDATE test_erp.`config` SET `confvalue` = 'webmaster@kapal-laut.com' WHERE `confname` = 'PurchasingManagerEmail';
+UPDATE test_erp.`config` SET `confvalue` = 'webmaster@kapal-laut.com' WHERE `confname` = 'ShopManagerEmail';
+UPDATE test_erp.`config` SET `confvalue` = 'test' WHERE `confname` = 'ShopMode';
 
 UPDATE test_erp.www_users SET theme = "gel";
 UPDATE test_erp.www_users SET blocked = 0 WHERE userid = "SPG-999";
+UPDATE test_erp.www_users SET fullaccess = 8 WHERE userid = "Garbi"; /* Garbi as Sysadmin in TEST */
 
-UPDATE  test_erp.`klonlinepartners` SET  `paypaltest` =  1;
+UPDATE test_erp.`klonlinepartners` SET `paypaltest` = 1;
 
 SET FOREIGN_KEY_CHECKS=1;

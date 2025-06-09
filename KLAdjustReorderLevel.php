@@ -8,6 +8,7 @@ include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include ('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLReorderLevel.php');
 
 $begintime = time_start();

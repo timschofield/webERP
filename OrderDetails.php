@@ -12,7 +12,7 @@ include('includes/session.php');
 $_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
-	$Title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
+	$Title = _('Reviewing Sales Order');
 } else {
 	include('includes/header.php');
 	echo '<br /><br /><br />';
