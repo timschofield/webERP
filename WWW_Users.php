@@ -303,7 +303,6 @@ if(isset($_POST['submit'])) {
 } elseif(isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-
 	if($AllowDemoMode AND $SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'), 'error');
 	} else {
@@ -324,9 +323,17 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');
 			$Result = DB_query($SQL, $ErrMsg);
 
-			$SQL="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$SQL = "DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
 			$Result = DB_query($SQL, $ErrMsg);
+
+			$SQL = "DELETE FROM sessions WHERE userid = '" . $SelectedUser . "'";
+			$ErrMsg = _('The Sessions User could not be deleted because');
+			$Result = DB_query($SQL,$ErrMsg);
+
+			$SQL = "DELETE FROM session_data WHERE userid = '" . $SelectedUser . "'";
+			$ErrMsg = _('The Session Data User could not be deleted because');
+			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL = "DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');
