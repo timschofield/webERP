@@ -2,6 +2,50 @@
 
 /* Functions related to the cron job tasks for Kapal-Laut */
 
+/*
+Alphabetical list of functions in this file:
+-------------------------------------------
+AuthorizeAllInternalStockRequest - Automatically authorizes all pending internal stock requests
+BlockInactiveUsers - Blocks inactive users based on their access level and days since last login
+CleanDiscountForObsoleteItems - Removes discount categories from obsolete items
+CleanInternalRequestsWithoutItems - Deletes internal stock requests that have no items
+CleanListToPrint - Removes special characters from a string for clean printing
+CleanObsoleteFromWebsite - Removes obsolete items from the website sales categories
+CleanOldDoubleReceivedGoods - Fixes double-received goods in stock transfers
+CleanPurchOrderDetails - Removes purchase order details with order number 0
+CleanWorkOrdersWithoutItems - Removes work orders that have no items associated
+CleanWrongPrices - Deletes prices where start date is greater than end date
+KLCronJobChecks - Main function that runs scheduled tasks based on group parameter
+KL_DailyCleanDB - Runs all database cleaning operations daily
+KL_DailyEmailsToStaff - Sends various emails to staff members
+KL_DailyOptimizationDatabase - Optimizes database tables in small batches
+KL_DailySetObsoleteNoStock - Sets items with zero stock in specific categories to obsolete
+PurgeAuditScriptsTable - Removes old entries from the audit scripts table
+PurgeAuditTrailTable - Removes old entries from the audit trail table
+PurgeKLTable - Generic function to purge old records from Kapal-Laut tables
+PurgePackagingUsedTable - Removes old packaging usage records
+PurgeRelatedItemsFromObsolete - Removes related item links for obsolete items
+PurgeSessionsTable - Removes sessions older than 2 days
+SetEndDatePriceToObsolete - Sets end date of prices to today for obsolete items
+SetObsoleteForCategoryWithoutStock - Marks items with zero stock in specific category as obsolete
+SetRLZeroForLocations - Sets reorder level to zero for specific locations
+SetRLZeroForObsolete - Sets reorder level to zero for obsolete items
+SetStatusCompleteToFinishedOldPurchaseOrders - Marks old purchase orders as complete
+SetTopSalesByGroup - Calculates top sales ranking for items in a specific group
+SetTopSalesRanking - Sets up and calculates sales performance rankings
+ShowOrEmail - Helper function to display or append to email text based on settings
+YesterdayServerUsage - Collects and reports server usage statistics for the previous day
+*/
+
+/**************************************************************************************************************
+* Main function to run scheduled cron job tasks based on the group parameter
+*
+* @param string $Group - The task group identifier to run
+* @param string $RootPath - Path to webERP root directory
+* @param string $EmailText - Email text to append results to (optional)
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
@@ -69,6 +113,14 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	
 }
 
+/**************************************************************************************************************
+* Runs all database cleaning and maintenance operations
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function KL_DailyCleanDB($ShowMessages, $EmailText){
 	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText);
 	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText);
@@ -92,10 +144,19 @@ function KL_DailyCleanDB($ShowMessages, $EmailText){
 	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText);
 	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText);
 	$EmailText = PurgeAuditScriptsTable($ShowMessages, $EmailText);
+	$EmailText = PurgeSessionsTable($ShowMessages, $EmailText);
 	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText); //we keep 2 years of packaging used for analysis. Older usage is not relevant
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Collects and reports server usage statistics for the previous day
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing usage statistics
+**************************************************************************************************************/
 function YesterdayServerUsage($ShowMessages, $EmailText){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
 	$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', 0));
@@ -154,6 +215,14 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 
 
 
+/**************************************************************************************************************
+* Sets items with zero stock in specific discontinued categories to obsolete status
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function KL_DailySetObsoleteNoStock($ShowMessages, $EmailText = ''){
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText);
 	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText);
@@ -172,6 +241,13 @@ function KL_DailySetObsoleteNoStock($ShowMessages, $EmailText = ''){
 }
 
 
+/**************************************************************************************************************
+* Sends various email notifications to staff members
+*
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function KL_DailyEmailsToStaff($EmailText){
 	$EmailText = SendEmailChangePriceReadyForStep02($EmailText);
 	$EmailText = SendEmailMoveToDiscountReadyForStep02("20", $EmailText);
@@ -180,6 +256,15 @@ function KL_DailyEmailsToStaff($EmailText){
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Optimizes database tables in small batches to prevent server overload
+*
+* @param int $TablesPerDay - Number of tables to optimize per day
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText = ''){
 	$ErrMsg ='Could not OPTIMIZE tables because';
 
@@ -193,23 +278,23 @@ function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText =
 		$startIndex = ($CurrentDay * $TablesPerDay) % $TotalTables;
 
 		// Move the result pointer to the starting index
-		$skip = 0;
-		$count = 0;
+		$Skip = 0;
+		$Count = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($skip < $startIndex){
-				$skip++;
+			if ($Skip < $startIndex){
+				$Skip++;
 			}else{
 				$TableName = $MyRow[0];
-				$optimizeSql = "OPTIMIZE TABLE " . $TableName . "";
-				$optimizeResult = DB_query($optimizeSql,$ErrMsg);
-				if (!$optimizeResult) {
+				$OptimizeSQL = "OPTIMIZE TABLE " . $TableName . "";
+				$OptimizeResult = DB_query($OptimizeSQL,$ErrMsg);
+				if (!$OptimizeResult) {
 					$Text .= 'ERROR Optimizing ' . $TableName . "\n";
 				} else {
 					$Text .= 'Optimized ' . $TableName . "\n";
 				}
 
-				$count++;
-				if ($count >= $TablesPerDay) {
+				$Count++;
+				if ($Count >= $TablesPerDay) {
 					break; // Stop after optimizing the desired number of tables
 				}
 			}
@@ -222,39 +307,74 @@ function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText =
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Generic function to purge old records from Kapal-Laut tables
+*
+* @param string $TableName - Name of the table to purge
+* @param string $DateField - Name of the date field to compare
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $SQL = "DELETE FROM " . $TableName . "
 				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
 					AND " . $DateField .  " != '1000-01-01'";
 		$ErrMsg ='Could not purge table ' . $TableName . ' because';
-		$Result = DB_query($SQL,$ErrMsg);
+		DB_query($SQL,$ErrMsg);
 		$Text = "Table " . $TableName . " purged.";
 		$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	}
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes old packaging usage records
+*
+* @param int $DaysToKeep - Number of days of records to keep
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysToKeep));
 	$SQL = "DELETE FROM packagingused
 			WHERE date < '" . $FromDate . "'";
 	$ErrMsg ='Could not purge packagingused table because';
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Table packagingused purged.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes purchase order details with order number 0
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanPurchOrderDetails($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM purchorderdetails WHERE orderno='0'";
 	$ErrMsg ='Could not clean purchorderdetails table because';
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Table purchorderdetails cleaned.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes work orders that have no items associated with them
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanWorkOrdersWithoutItems($ShowMessages, $EmailText){
 	$SQL = "DELETE w
 			FROM workorders w
@@ -262,25 +382,40 @@ function CleanWorkOrdersWithoutItems($ShowMessages, $EmailText){
 				ON w.wo = wi.wo
 			WHERE wi.wo IS NULL;";
 	$ErrMsg ='Could not clean workorders table because';
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Table workorders without items cleaned.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
-
+/**************************************************************************************************************
+* Removes discount categories from obsolete items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanDiscountForObsoleteItems($ShowMessages, $EmailText){
 	$SQL = "UPDATE stockmaster
 			SET discountcategory = ''
 			WHERE discontinued = 1
 				AND discountcategory != ''";
 	$ErrMsg =_('Could not clean discount category for obsolete items  because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Discount Category cleaned for obsolete items.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Marks items with zero stock in specific category as obsolete
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetObsoleteForCategoryWithoutStock($Category, $ShowMessages, $EmailText){
 	$SQL = "UPDATE stockmaster
 			SET discontinued = 1
@@ -290,12 +425,20 @@ function SetObsoleteForCategoryWithoutStock($Category, $ShowMessages, $EmailText
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) = 0";
 	$ErrMsg =_('Could not update items without stock because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Items " . $Category . " with QOH = 0 flagged as obsolete.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Sets reorder level to zero for obsolete items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetRLZeroForObsolete($ShowMessages, $EmailText){
 	$SQL = "UPDATE locstock
 			SET reorderlevel = 0
@@ -304,23 +447,39 @@ function SetRLZeroForObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = locstock.stockid
 						AND stockmaster.discontinued = 1)";
 	$ErrMsg =_('Could not set RL = 0 for obsolete items because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "RL updated to zero for obsolete items.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Sets reorder level to zero for specific locations
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetRLZeroForLocations($ShowMessages, $EmailText){
 	$SQL = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE loccode IN " . LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO;
 	$ErrMsg =_('Could not set RL = 0 for location list because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "RL updated to zero for location list.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Sets end date of prices to today for obsolete items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 	$SQL = "SELECT COUNT(*) AS items
 			FROM prices
@@ -348,42 +507,75 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 	return $EmailText;
 }
 			
+/**************************************************************************************************************
+* Deletes internal stock requests that have no items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM stockrequest 
 			WHERE NOT EXISTS (SELECT *
 								FROM stockrequestitems
 								WHERE stockrequest.dispatchid = stockrequestitems.dispatchid )";
 	$ErrMsg =_('Could not delete empty internal requests because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Empty Internal Requests removed from DB.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }			
 
+/**************************************************************************************************************
+* Removes obsolete items from the website sales categories
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanObsoleteFromWebsite($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM salescatprod
 			WHERE EXISTS (SELECT * FROM stockmaster
 							WHERE discontinued = 1
 							AND stockmaster.stockid = salescatprod.stockid)";
 	$ErrMsg =_('Could not delete obsolete items from sales category for website because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Obsolete items removed from website list.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 	
+/**************************************************************************************************************
+* Deletes prices where start date is greater than end date
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanWrongPrices($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM prices
 			WHERE startdate > enddate
 			AND enddate != '9999-12-31'";
 	$ErrMsg =_('Could not delete wrong prices because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Wrong prices removed from DB";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Fixes double-received goods in stock transfers
+*
+* @param int $NumDays - Number of days to look back for transfers
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "UPDATE loctransfers
@@ -391,13 +583,21 @@ function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText){
 			WHERE recdate <= '" . $StartDate. "'
 				AND recqty = 2 * shipqty";
 	$ErrMsg =_('Could not fix double received goods in shops because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Clean old double received goods in transfers";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
-	
+/**************************************************************************************************************
+* Marks old purchase orders as complete
+*
+* @param int $maxdays - Maximum age of purchase orders to update
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "UPDATE purchorders 
@@ -409,13 +609,21 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 						WHERE purchorderdetails.orderno = purchorders.orderno
 						AND completed = 0)";
 	$ErrMsg =_('Could not update old finshed POs to complete because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Set status = COMPLETED to Finished Purchase Orders older than " . $maxdays . " days.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 
 }		
 
+/**************************************************************************************************************
+* Automatically authorizes all pending internal stock requests
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$SQL = "SELECT COUNT(*) AS total
 			FROM stockrequest
@@ -435,7 +643,16 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	return $EmailText;
 }
 
-
+/**************************************************************************************************************
+* Blocks inactive users based on their access level and days since last login
+*
+* @param int $access - Access level to filter users
+* @param int $maxdays - Maximum days since last login to block user
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 
@@ -448,42 +665,92 @@ function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText){
 				AND blocked = '0'
 				AND userid <> 'TestUser'";
 	$ErrMsg =_('Could not block inactive users because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Blocked inactive users with access level " . $access . " and not logging in for " . $maxdays . " days";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes special characters from a string for clean printing
+*
+* @param string $List - The input string to clean
+*
+* @return string - The cleaned string
+**************************************************************************************************************/
 function CleanListToPrint($List){
 	$ToClean = array("'", "(", ")");
 	$List = str_replace($ToClean, "", $List);
 	return $List;
 }
 
+/**************************************************************************************************************
+* Removes old entries from the audit trail table
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function PurgeAuditTrailTable($ShowMessages, $EmailText){
-	 $SQL = "DELETE FROM audittrail
-			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-	$Result = DB_query($SQL);
+	$SQL = "DELETE FROM audittrail
+			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+	DB_query($SQL);
 	$Text = "Purge Audit Trail table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes old entries from the audit scripts table
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function PurgeAuditScriptsTable($ShowMessages, $EmailText){
-	 $SQL = "DELETE FROM auditscripts
-			WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-	$Result = DB_query($SQL);
+	$SQL = "DELETE FROM auditscripts
+			WHERE  executiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
+	DB_query($SQL);
 	$Text = "Purge Audit Script table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Removes sessions older than 2 days
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
+function PurgeSessionsTable($ShowMessages, $EmailText){
+	$Days = 2;
+	$SomeDaysAgo = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$Days));
+	$SQL = "DELETE FROM sessions
+			WHERE logintime < '" . $SomeDaysAgo . "'";
+	DB_query($SQL);
+	$Text = "Purge Sessions table for entries older than " . $Days . " days";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
+/**************************************************************************************************************
+* Removes related item links for obsolete items
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM relateditems
 			WHERE relateditems.stockid IN (SELECT stockmaster.stockid
 											FROM stockmaster
 											WHERE discontinued = 1)";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	$Text = "Purge Related Items table from obsolete items (stockid)";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 
@@ -491,13 +758,21 @@ function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText){
 			WHERE relateditems.related IN (SELECT stockmaster.stockid
 											FROM stockmaster
 											WHERE discontinued = 1)";
-	$Result = DB_query($SQL);
+	DB_query($SQL);
 	$Text = "Purge Related Items table from obsolete items (related)";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
 
 
+/**************************************************************************************************************
+* Sets up and calculates sales performance rankings
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetTopSalesRanking($ShowMessages, $EmailText){
 
 	if ($EmailText !=''){
@@ -539,7 +814,7 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 									'0',
 									'0'
 									)";
-			$ResultOp = DB_query($SQLOp,$ErrMsg);
+			DB_query($SQLOp,$ErrMsg);
 		}
 	}
 	$Text = "Initialized klsaleseprformace table";
@@ -562,6 +837,16 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Calculates top sales ranking for items in a specific group
+*
+* @param string $Group - The group to calculate top sales for
+* @param int $NumDays - Number of days to consider for top sales
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Email text to append results to
+*
+* @return string - Updated email text containing results of operations
+**************************************************************************************************************/
 function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -589,18 +874,17 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 	$ErrMsg =_('Could not sort items by top sales because');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	$position = 1;
+	$Position = 1;
 	$ErrMsg =_('Could not update items by top sales because');
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			$SQLOp="UPDATE klsalesperformance
-					SET topsales". $NumDays." = '" . $position . "',
+					SET topsales". $NumDays." = '" . $Position . "',
 						valuesales". $NumDays." = '" . $MyRow['valuesales'] . "'
 					WHERE stockid = '" . $MyRow['stkcode'] . "'";
 				
-			$ResultOp = DB_query($SQLOp,$ErrMsg);
-			
-			$position++;
+			DB_query($SQLOp,$ErrMsg);
+			$Position++;
 		}
 	}
 
@@ -609,6 +893,15 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 	return $EmailText;
 }
 
+/**************************************************************************************************************
+* Helper function to display or append to email text based on settings
+*
+* @param bool $ShowMessages - Whether to show messages in the UI
+* @param string $EmailText - Existing email text to append to
+* @param string $Text - New text to add to email or display
+*
+* @return string - Updated email text
+**************************************************************************************************************/
 function ShowOrEmail($ShowMessages, $EmailText, $Text){
 	if ($ShowMessages) prnMsg($Text,"info");
 	if ($EmailText !=''){
