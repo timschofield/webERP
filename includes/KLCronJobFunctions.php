@@ -730,7 +730,7 @@ function PurgeSessionsTable($ShowMessages, $EmailText){
 	$Days = 2;
 	$SomeDaysAgo = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$Days));
 	$SQL = "DELETE FROM sessions
-			WHERE logintime < '" . $SomeDaysAgo . "'";
+			WHERE logintime <= '" . $SomeDaysAgo . "'";
 	DB_query($SQL);
 	$Text = "Purge Sessions table for entries older than " . $Days . " days";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
