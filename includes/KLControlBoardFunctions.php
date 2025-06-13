@@ -2211,7 +2211,7 @@ function ItemsWithoutPurchasingData($RootPath){
 	
 	id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 	1	SIMPLE		purchdata	ref		StockID,Preferred	Preferred	1		const								4387	Using where; Using temporary; Using filesort
-	1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kurakura_kl_erp.purchdata.stockid	1	Using where
+	1	SIMPLE		stockmaster	eq_ref	PRIMARY,StockID		PRIMARY		62		kl_erp.purchdata.stockid	1	Using where
 	
 	*/
 		
@@ -3546,7 +3546,7 @@ function PackagingItemsOnWrongLocation($RootPath){
 
 id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 1	SIMPLE	stockmaster	ref	PRIMARY,CategoryID,StockID	CategoryID	20	const	10	Using where
-1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kurakura_kl_erp.stockmaster.stockid	14	Using where
+1	SIMPLE	locstock	ref	PRIMARY,StockID	StockID	62	kl_erp.stockmaster.stockid	14	Using where
 
 */	
 	$SQL = "SELECT stockmaster.stockid,

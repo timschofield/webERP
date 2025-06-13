@@ -297,8 +297,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		}
 	}else{
 		/* The script is not from TEST*/
-		if ($_SESSION['DatabaseName'] != "kurakura_kl_erp"){
-			/* If DB is not kurakura_kl_erp we have a problem and should stop*/
+		if ($_SESSION['DatabaseName'] != "kl_erp"){
+			/* If DB is not kl_erp we have a problem and should stop*/
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');

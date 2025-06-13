@@ -1081,7 +1081,7 @@ function PurgeDiscountOver50($ShowMessages, $LastTimeRun , $EmailText=''){
 }
 
 function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $EmailText=''){
-// UPDATE `kurakura_kl_erp`.`stockdescriptiontranslations` SET `date_updated` = NOW();
+// UPDATE `kl_erp`.`stockdescriptiontranslations` SET `date_updated` = NOW();
 	$TagSeparator = ", ";
 
 	if ($EmailText !=''){

@@ -17,7 +17,7 @@ function KLDatabaseSelection(){
 			$DefaultDatabase = 'test_erp';
 		}else{
 			// the current script filename does not contain TEST, we are on production code
-			$DefaultDatabase = 'kurakura_kl_erp';
+			$DefaultDatabase = 'kl_erp';
 		}
 	}
 	return $DefaultDatabase;	
