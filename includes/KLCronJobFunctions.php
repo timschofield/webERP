@@ -727,7 +727,7 @@ function PurgeAuditScriptsTable($ShowMessages, $EmailText){
 * @return string - Updated email text containing results of operations
 **************************************************************************************************************/
 function PurgeSessionsTable($ShowMessages, $EmailText){
-	$Days = 2;
+	$Days = 1;
 	$SomeDaysAgo = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$Days));
 	$SQL = "DELETE FROM sessions
 			WHERE logintime <= '" . $SomeDaysAgo . "'";
