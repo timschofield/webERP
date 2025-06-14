@@ -36,7 +36,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		// Show login screen
 		if (!isset($Name) or $Name == '') {
 			$_SESSION['DatabaseName'] = '';
-		    $_SESSION['CompanyName'] = '';
 			return  UL_SHOWLOGIN;
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */

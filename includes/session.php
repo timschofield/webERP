@@ -169,7 +169,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
-		$_SESSION['CompanyName'] = $DefaultDatabase;
 	}
 	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	include ($PathPrefix . 'includes/GetConfig.php');
