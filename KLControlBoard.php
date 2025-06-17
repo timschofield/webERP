@@ -369,7 +369,7 @@ if ($ProcessSection01){
 									'111121105SM',
 									'111121110SM',
 									'111121115SM',
-									'111121117SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
+									'111121117SM')", "Total Banks PT SMH", 1500000000, 4000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100BB', 
