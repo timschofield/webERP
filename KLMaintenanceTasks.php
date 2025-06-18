@@ -29,16 +29,29 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs are sensible
+	
+	// Check if the required POST variables exist before using them
+	if (!isset($_POST['LocCode'])) {
+		$_POST['LocCode'] = '';
+	}
+	
+	if (!isset($_POST['MaintenanceType'])) {
+		$_POST['MaintenanceType'] = '';
+	}
+	
+	if (!isset($_POST['Description'])) {
+		$_POST['Description'] = '';
+	}
 
-	$SQL=	"SELECT COUNT(*)
+	$SQL = "SELECT COUNT(*)
 			FROM klmaintenancetasks 
 			WHERE loccode = '". $_POST['LocCode']. "'
 				AND maintenancetype  = '". $_POST['MaintenanceType']. "'
 				AND closed = 0";
-	$Result=DB_query($SQL);
-	$MyRow=DB_fetch_row($Result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
-	$i=1;
+	$i = 1;
 //	if ($MyRow[0]!=0 and !isset($SelectedIndex)) {
 //		$InputError = TRUE;
 //		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
@@ -46,7 +59,7 @@ if (isset($_POST['submit'])) {
 //		$i++;
 //	}
 
-	$Msg='';
+	$Msg = '';
 
 	if (!$InputError){
 		if (isset($SelectedIndex)) {
@@ -64,31 +77,50 @@ if (isset($_POST['submit'])) {
 
 				$Msg = 'The maintenance task '. $SelectedIndex .' has been updated';
 				$Result = DB_query($SQL);
-				prnMsg($Msg,'success');
-			}else{
-				prnMsg("Trask description update was empty, so no update was recroded",'warn');
+				prnMsg($Msg, 'success');
+			} else {
+				prnMsg("Trask description update was empty, so no update was recroded", 'warn');
 			}
-		}else{
+		} else {
 			/*SelectedIndex is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
-			$SQL = "INSERT INTO klmaintenancetasks 
-						(loccode,
-						maintenancetype,
-						description,
-						closed,
-						creationuser,
-						creationdate)
-					VALUES ('" .$_POST['LocCode'] . "',
-						'".$_POST['MaintenanceType'] . "',
-						'".$_POST['Description'] . "',
-						'0',
-						'".$_SESSION['UserID'] . "',
-						NOW())";
+			
+			// Validate inputs before trying to insert
+			if ($_POST['LocCode'] == '') {
+				prnMsg(_('A location must be selected'), 'error');
+				$InputError = TRUE;
+			}
+			
+			if ($_POST['MaintenanceType'] == '') {
+				prnMsg(_('A maintenance type must be selected'), 'error');
+				$InputError = TRUE;
+			}
+			
+			if ($_POST['Description'] == '') {
+				prnMsg(_('A description must be entered'), 'error');
+				$InputError = TRUE;
+			}
+			
+			if (!$InputError) {
+				$SQL = "INSERT INTO klmaintenancetasks 
+							(loccode,
+							maintenancetype,
+							description,
+							closed,
+							creationuser,
+							creationdate)
+						VALUES ('" . $_POST['LocCode'] . "',
+							'" . $_POST['MaintenanceType'] . "',
+							'" . $_POST['Description'] . "',
+							'0',
+							'" . $_SESSION['UserID'] . "',
+							NOW())";
 
-			$Msg = _('A new maintenance task has been created');
-			$Result = DB_query($SQL);
-			prnMsg($Msg,'success');
-			unset ($SelectedIndex);
-			unset ($_POST['LocCode']);
+				$Msg = _('A new maintenance task has been created');
+				$Result = DB_query($SQL);
+				prnMsg($Msg, 'success');
+				unset($SelectedIndex);
+				unset($_POST['LocCode']);
+			}
 		}
 	}
 } elseif (isset($_GET['close'])) {
@@ -98,14 +130,14 @@ if (isset($_POST['submit'])) {
 					closed = 1,
 					closeuser = '" . $_SESSION['UserID'] . "',
 					closedate = NOW() 
-			WHERE counterindex = '".$SelectedIndex."'";
+			WHERE counterindex = '" . $SelectedIndex . "'";
 	$Msg = 'The maintenance task '. $SelectedIndex .' has been closed';
 	$Result = DB_query($SQL);
-	prnMsg($Msg,'success');
+	prnMsg($Msg, 'success');
 	
 	//end if status code used in customer or supplier accounts
-	unset ($_GET['close']);
-	unset ($SelectedIndex);
+	unset($_GET['close']);
+	unset($SelectedIndex);
 }
 
 if (!isset($SelectedIndex)) {
