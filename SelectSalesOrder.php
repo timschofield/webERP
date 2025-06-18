@@ -258,7 +258,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			  /*Starting a new purchase order with a different supplier */
 					DB_Txn_Begin();
 
-					$PO_OrderNo =  GetNextTransNo(18); //get the next PO number
+					$PO_OrderNo = GetNextTransNo(18); //get the next PO number
 
 					$SupplierID = $ItemRow['supplierno'];
 					$Order_Value = 0;
@@ -342,7 +342,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		  										'" . $SuppRow['paymentterms'] . "',
 		  										0)";
 
-					$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
+					$ErrMsg = _('The purchase order header record could not be inserted into the database because');
 					$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				} //end if it's a new supplier and PO to create
@@ -895,10 +895,14 @@ if (isset($StockItemsResult)
 		$AuthRow = DB_fetch_array($AuthResult);
 
 		echo '<table cellpadding="2" width="95%" class="selection">';
-		if (is_null($AuthRow['cancreate']) or !isset($AuthRow)) {
-			$AuthRow['cancreate'] = 1;
+		if (is_null($AuthRow)) {
+			$canCreate = 1;
+		} else {
+			$canCreate = $AuthRow['cancreate'];
 		}
-
+		if (is_null($canCreate) ) {
+			$canCreate = 1;
+		}
 		$PrintPickLabel = '';
 		if ($_SESSION['RequirePickingNote'] == 1) {
 			$PrintPickLabel = '<th>' . _('Pick Lists') . '</th>';
@@ -922,7 +926,7 @@ if (isset($StockItemsResult)
 								<th class="SortedColumn" >' . _('Delivery To') . '</th>
 								<th class="SortedColumn" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
-			if ($AuthRow['cancreate'] == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
+			if ($canCreate == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
 				echo '<th>' . _('Place PO') . '</th>';
 			}
 
@@ -947,89 +951,90 @@ if (isset($StockItemsResult)
 		$OrdersTotal = 0;
 
 		while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
+			if (isset($MyRow['orderno'])) {
+				$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . urlencode((string) $MyRow['orderno']);
+				$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . urlencode((string) $MyRow['orderno']);
+				$PrintPickList = '';
+				$PrintPickLabel = '';
+				$PrintDummyFlag = '<input type="hidden" name="dummy" value="%s" />';
+				if ($_SESSION['RequirePickingNote'] == 1) {
+					$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']);
+					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+					} else {
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . _('Pick') . '</a></td>';
+					}
+					$PrintDummyFlag = '';
+				}
 
-			$ModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . urlencode($MyRow['orderno']);
-			$Confirm_Invoice = $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . urlencode($MyRow['orderno']);
-			$PrintPickList = '';
-			$PrintPickLabel = '';
-			$PrintDummyFlag = '<input type="hidden" name="dummy" value="%s" />';
-			if ($_SESSION['RequirePickingNote'] == 1) {
-				$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode($MyRow['orderno']);
-				if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
-					$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode($MyRow['orderno']) . '">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+				if ($_SESSION['PackNoteFormat'] == 1) { /*Laser printed A4 default */
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . urlencode((string) $MyRow['orderno']);
+				} else { /*pre-printed stationery default */
+					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode((string) $MyRow['orderno']);
+				}
+				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
+				$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
+				$FormatedDelDate = isset($MyRow['deliverydate']) && $MyRow['deliverydate'] != '' ? ConvertSQLDate($MyRow['deliverydate']) : '';
+				$FormatedOrderDate = isset($MyRow['orddate']) && $MyRow['orddate'] != '' ? ConvertSQLDate($MyRow['orddate']) : '';
+				$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
+				if ($MyRow['customerref'] !== '') {
+					$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?CustomerRef=' . urlencode((string) $MyRow['customerref']) . '" target="_blank">' . $MyRow['customerref'] . '</a>';
 				} else {
-					$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode($MyRow['orderno']) . '">' . _('Pick') . '</a></td>';
+					$CustomerRef = '';
 				}
-				$PrintDummyFlag = '';
-			}
+				$OrdersTotal += $MyRow['ordervalue'];
+				$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo=' . urlencode((string) $MyRow['orderno']);
 
-			if ($_SESSION['PackNoteFormat'] == 1) { /*Laser printed A4 default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder_generic.php?TransNo=' . urlencode($MyRow['orderno']);
-			} else { /*pre-printed stationery default */
-				$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($MyRow['orderno']);
-			}
-			$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode($MyRow['orderno']);
-			$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . urlencode($MyRow['orderno']);
-			$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
-			$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
-			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
-			if ($MyRow['customerref'] !== '') {
-				$CustomerRef = '<a href="' . $RootPath . '/SelectCompletedOrder.php?CustomerRef=' . urlencode($MyRow['customerref']) . '" target="_blank">' . $MyRow['customerref'] . '</a>';
-			} else {
-				$CustomerRef = '';
-			}
-			$OrdersTotal += $MyRow['ordervalue'];
-			$PrintAck = $RootPath . '/PDFAck.php?AcknowledgementNo=' . urlencode($MyRow['orderno']);
-
-			if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
-				$FormatedOrderValue = '---------';
-			}
-
-			if ($MyRow['printedpackingslip'] == 0) {
-			  $PrintText = _('Print');
-			} else {
-			  $PrintText = _('Reprint');
-			}
-
-			$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . urlencode($MyRow['orderno']);
-
-			if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
-				echo '<tr class="striped_row">
-							<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-							<td><a href="', $PrintAck, '">', _('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
-							', $PrintPickLabel, '
-							<td><a href="', $Confirm_Invoice, '">', _('Invoice'), '</a></td>
-			 				<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
-							<td><a href="', $PrintLabels, '">', _('Labels'), '</a></td>
-			 				<td>', $MyRow['name'], '</td>
-			 				<td>', $MyRow['brname'], '</td>
-							<td>', $CustomerRef, '</td>
-			 				<td class="date">', $FormatedOrderDate, '</td>
-			 				<td class="date">', $FormatedDelDate, '</td>
-			 				<td>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
-			 				<td class="number">', $FormatedOrderValue, '</td>
-			 				<td class="centre">';
-			 /*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
-				if ($AuthRow['cancreate'] == 0 AND $MyRow['poplaced'] == 0) { //cancreate == 0 if the user can create POs and not already placed
-					echo '<input type="checkbox" name="PlacePO_[]" value="', $MyRow['orderno'], '"/>';
-				} else {  /*User is not authorised to create POs so don't even show the option */
-					echo '&nbsp;';
+				if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
+					$FormatedOrderValue = '---------';
 				}
-				echo		'</td>
+
+				if ($MyRow['printedpackingslip'] == 0) {
+				$PrintText = _('Print');
+				} else {
+				$PrintText = _('Reprint');
+				}
+
+				$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . urlencode((string) $MyRow['orderno']);
+
+				if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
+					echo '<tr class="striped_row">
+								<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+								<td><a href="', $PrintAck, '">', _('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
+								', $PrintPickLabel, '
+								<td><a href="', $Confirm_Invoice, '">', _('Invoice'), '</a></td>
+								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
+								<td><a href="', $PrintLabels, '">', _('Labels'), '</a></td>
+								<td>', $MyRow['name'], '</td>
+								<td>', $MyRow['brname'], '</td>
+								<td>', $CustomerRef, '</td>
+								<td class="date">', $FormatedOrderDate, '</td>
+								<td class="date">', $FormatedDelDate, '</td>
+								<td>', isset($MyRow['deliverto']) ? html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8') : '', '</td>
+								<td class="number">', $FormatedOrderValue, '</td>
+								<td class="centre">';
+				/*Check authority to create POs if user has authority then show the check boxes to select sales orders to place POs for otherwise don't provide this option */
+					if ($canCreate == 0 AND $MyRow['poplaced'] == 0) { //cancreate == 0 if the user can create POs and not already placed
+						echo '<input type="checkbox" name="PlacePO_[]" value="', $MyRow['orderno'], '"/>';
+					} else {  /*User is not authorised to create POs so don't even show the option */
+						echo '&nbsp;';
+					}
+					echo		'</td>
+							</tr>';
+
+				} else { /*must be quotes only */
+					echo '<tr class="striped_row">
+							<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+							<td><a href="', $PrintQuotation, '" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . _('Portrait') . '</a></td>
+							<td>', $MyRow['name'], '</td>
+							<td>', $MyRow['brname'], '</td>
+							<td>', $MyRow['customerref'], '</td>
+							<td>', $FormatedOrderDate, '</td>
+							<td>', $FormatedDelDate, '</td>
+							<td>', isset($MyRow['deliverto']) ? html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8') : '', '</td>
+							<td class="number">', $FormatedOrderValue, '</td>
 						</tr>';
-
-			} else { /*must be quotes only */
-				echo '<tr class="striped_row">
-						<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-						<td><a href="', $PrintQuotation, '" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . _('Portrait') . '</a></td>
-						<td>', $MyRow['name'], '</td>
-						<td>', $MyRow['brname'], '</td>
-						<td>', $MyRow['customerref'], '</td>
-						<td>', $FormatedOrderDate, '</td>
-						<td>', $FormatedDelDate, '</td>
-						<td>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
-						<td class="number">', $FormatedOrderValue, '</td>
-					</tr>';
+				}
 			}
 		}//end while loop through orders to display
 
@@ -1050,7 +1055,7 @@ if (isset($StockItemsResult)
 		echo ' ' . $_SESSION['CompanyRecord']['currencydefault'] . ':</b></td>
 			<td class="number"><b>' . locale_number_format($OrdersTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>';
 
-		if ($_POST['Quotations'] == 'Orders_Only' AND $AuthRow['cancreate'] == 0) { //cancreate == 0 means can create POs
+		if ($_POST['Quotations'] == 'Orders_Only' AND $canCreate == 0) { //cancreate == 0 means can create POs
 			echo '<td>
 					<input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
 				</td>';
