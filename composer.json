@@ -19,6 +19,7 @@
         "ext-curl": "",
         "ext-ftp": "",
         "ext-gd": "Required to print barcode labels",
+        "ext-gettext": "",
         "ext-mcrypt": "Improves the support for PDF files",
         "ext-iconv": "Required to print barcode labels in PDFs",
         "ext-simplexml": "Required to geocoding integration",
