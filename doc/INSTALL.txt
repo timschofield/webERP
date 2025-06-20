@@ -10,12 +10,12 @@ are upgrading an existing installation.
 
 * Web server (e.g. Apache HTTP Server v2.4 or nginx v1.26).
 
-* PHP interpreter. PHP v8 is recommended (webERP core may still run on PHP v5), with
+* PHP interpreter. PHP v8.1 or later is required, with
     MySQL or MariaDb extension (generally both use "mysqli"), gd, gettext (for translations),
     libxml, mbstring and ftp (optional for file transfer). The web server user must have full
     write privileges to the ./companies/ directory, and at least temporarily to the root
-    directory for the web installer to save the created configuration file ./config.php. 
-  
+    directory for the web installer to save the created configuration file ./config.php.
+
 * MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default but
     you can check my.cnf file to confirm, e.g. /etc/my.cnf or /usr/local/etc/mysql/my.cnf).
 
@@ -45,7 +45,7 @@ choices on Windows are Acrobat Reader, Foxit PDF Reader and most web browsers.
 
 It is recommended that PDF preferances be be changed so that PDF documents are opened automatically
 to avoid having to find the file and open it seperately, and in a seperate window or tab (otherwise
-if viewing in a browser the PDF viewer window may replace webERP). 
+if viewing in a browser the PDF viewer window may replace webERP).
 
 If you are using webERP with languages that require extended fonts to display you must use Acrobat
 Reader v9.1 or above (webERP uses Adobe CID fonts which are bundled with Acroabat Reader but not
@@ -209,7 +209,7 @@ password ""
 but think twice before using this account. For security, the password should be changed to at least have a
 a password, but better would be to configure MySQL or MariaDb for secure operation and create a dedicated user
 for webERP with access only to webERP databases. This prevents a compromise of one database from affecting
-other databases. 
+other databases.
 
 Paraphrased from the MySQL manual:
 
@@ -248,7 +248,7 @@ Also paraphrased from the MySQL manual:
 #### 3.2 Create database schema manually (optional demo data)
 
 Two historical scripts are provided which can be used to manually creating the database schema and load demo
-data. 
+data.
 
 ./sql/mysql/country_sql/demo.sql
 - contains a minimal amount of demonstration data and bogus company setup so that transactions can be tried to

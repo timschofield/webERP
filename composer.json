@@ -6,9 +6,25 @@
     "keywords": [ "erp" ],
     "require": {
         "php": "^8.1",
+        "ext-ctype": "*",
+        "ext-mbstring": "*",
+        "ext-xml": "*",
         "phpmailer/phpmailer": "^6.9",
         "phpoffice/phpspreadsheet": "^4.1",
         "dompdf/dompdf": "^3.1"
+    },
+    "suggest": {
+        "ext-bcmath": "Required to print barcode labels in PDFs",
+        "ext-calendar": "Required to print some reports",
+        "ext-curl": "",
+        "ext-ftp": "",
+        "ext-gd": "Required to print barcode labels",
+        "ext-mcrypt": "Improves the support for PDF files",
+        "ext-iconv": "Required to print barcode labels in PDFs",
+        "ext-simplexml": "Required to geocoding integration",
+        "ext-sqlite3": "For POS data creation",
+        "ext-zip": "For POS data creation",
+        "ext-zlib": "Improves the support for PDF files and XMLRPC API calls"
     },
     "_comment": "Since we ship depepndecies, force Composer not to download anything which requires a bigger php version",
     "config": {
