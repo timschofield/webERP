@@ -10,6 +10,7 @@
 require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -85,7 +86,8 @@ function submit($TypeOfShop, $TypeOfFile) {
 				FROM stockmaster
 				INNER JOIN stockdescriptiontranslations
 					ON stockmaster.stockid = stockdescriptiontranslations.stockid
-				LEFT JOIN prices ON stockmaster.stockid = prices.stockid
+				LEFT JOIN prices 
+					ON stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
 					AND prices.startdate <= CURRENT_DATE
