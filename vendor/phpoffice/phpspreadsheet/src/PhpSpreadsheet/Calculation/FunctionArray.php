@@ -7,7 +7,7 @@ class FunctionArray extends CalculationBase
     /**
      * Array of functions usable on Spreadsheet.
      *
-     * @var array<string, array<string, mixed>>
+     * @var array<string, array{category: string, functionCall: string|string[], argumentCount: string, passCellReference?: bool, passByReference?: bool[], custom?: bool}>
      */
     protected static array $phpSpreadsheetFunctions = [
         'ABS' => [
@@ -277,10 +277,22 @@ class FunctionArray extends CalculationBase
             'functionCall' => [MathTrig\Ceiling::class, 'math'],
             'argumentCount' => '1-3',
         ],
+        // pseudo-function to help with Ods
+        'CEILING.ODS' => [
+            'category' => Category::CATEGORY_MATH_AND_TRIG,
+            'functionCall' => [MathTrig\Ceiling::class, 'mathOds'],
+            'argumentCount' => '1-3',
+        ],
         'CEILING.PRECISE' => [
             'category' => Category::CATEGORY_MATH_AND_TRIG,
             'functionCall' => [MathTrig\Ceiling::class, 'precise'],
             'argumentCount' => '1,2',
+        ],
+        // pseudo-function implemented in Ods
+        'CEILING.XCL' => [
+            'category' => Category::CATEGORY_MATH_AND_TRIG,
+            'functionCall' => [MathTrig\Ceiling::class, 'ceiling'],
+            'argumentCount' => '2',
         ],
         'CELL' => [
             'category' => Category::CATEGORY_INFORMATION,
@@ -914,10 +926,22 @@ class FunctionArray extends CalculationBase
             'functionCall' => [MathTrig\Floor::class, 'math'],
             'argumentCount' => '1-3',
         ],
+        // pseudo-function to help with Ods
+        'FLOOR.ODS' => [
+            'category' => Category::CATEGORY_MATH_AND_TRIG,
+            'functionCall' => [MathTrig\Floor::class, 'mathOds'],
+            'argumentCount' => '1-3',
+        ],
         'FLOOR.PRECISE' => [
             'category' => Category::CATEGORY_MATH_AND_TRIG,
             'functionCall' => [MathTrig\Floor::class, 'precise'],
             'argumentCount' => '1-2',
+        ],
+        // pseudo-function implemented in Ods
+        'FLOOR.XCL' => [
+            'category' => Category::CATEGORY_MATH_AND_TRIG,
+            'functionCall' => [MathTrig\Floor::class, 'floor'],
+            'argumentCount' => '2',
         ],
         'FORECAST' => [
             'category' => Category::CATEGORY_STATISTICAL,

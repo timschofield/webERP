@@ -214,6 +214,13 @@ class Date
             $baseDate = new DateTime('1899-12-30', $timeZone);
         }
 
+        if (is_int($excelTimestamp)) {
+            if ($excelTimestamp >= 0) {
+                return $baseDate->modify("+ $excelTimestamp days");
+            }
+
+            return $baseDate->modify("$excelTimestamp days");
+        }
         $days = floor($excelTimestamp);
         $partDay = $excelTimestamp - $days;
         $hms = 86400 * $partDay;
@@ -464,7 +471,7 @@ class Date
         if (strlen($dateValue) < 2) {
             return false;
         }
-        if (!preg_match('/^(\d{1,4}[ \.\/\-][A-Z]{3,9}([ \.\/\-]\d{1,4})?|[A-Z]{3,9}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?|\d{1,4}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?)( \d{1,2}:\d{1,2}(:\d{1,2})?)?$/iu', $dateValue)) {
+        if (!preg_match('/^(\d{1,4}[ \.\/\-][A-Z]{3,9}([ \.\/\-]\d{1,4})?|[A-Z]{3,9}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?|\d{1,4}[ \.\/\-]\d{1,4}([ \.\/\-]\d{1,4})?)( \d{1,2}:\d{1,2}(:\d{1,2}([.]\d+)?)?)?$/iu', $dateValue)) {
             return false;
         }
 
