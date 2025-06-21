@@ -408,8 +408,8 @@ define("ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less th
 // TOKOPEDIA
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
-define("TOKOPEDIA_BLINK_STOREID", "blinkfashionjewellery");
-define("TOKOPEDIA_KAPAL_LAUT_STOREID", "kapallautjewellery");
+define("TOKOPEDIA_BLINK_STOREID", "9490898");
+define("TOKOPEDIA_KAPAL_LAUT_STOREID", "10418528");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
@@ -450,6 +450,5 @@ define("LAZADA_PREFIX_URL", "https://www.lazada.co.id/products/-i");
 define("DANAMON_ACCOUNT_GAJI_PTADU", '3607556887');
 define("DANAMON_ACCOUNT_GAJI_PTSMH", '3670857030');
 define("DANAMON_ACCOUNT_GAJI_PTBB",  '3568005502');
-
 
 ?>

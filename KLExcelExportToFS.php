@@ -50,10 +50,14 @@ function submit($TypeOfShop, $TypeOfFile) {
 		if ($TypeOfShop == 1){
 			$NameOfShop = "Kapal-Laut";
 			$Brand = "Kapal-Laut. Your Essential Jewellery";
+			$TokopediaAccountId = TOKOPEDIA_KAPAL_LAUT_STOREID;
+			$ShopeeAccountId = SHOPEE_KAPAL_LAUT_STOREID;
 			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT . " ";
 		} else {
 			$NameOfShop = "Blink";
 			$Brand = "Blink by Kapal-Laut";
+			$TokopediaAccountId = TOKOPEDIA_BLINK_STOREID;
+			$ShopeeAccountId = SHOPEE_BLINK_STOREID;
 			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT . " ";
 		}
 
@@ -259,7 +263,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$ActiveSheet->setCellValue('D'.$i, $Brand);
 						$ActiveSheet->setCellValue('E'.$i, $Price);
 						$ActiveSheet->setCellValue('I'.$i, GetTokopediaProductId($StockID));
-						$ActiveSheet->setCellValue('J'.$i, "TOKOPEDIA ACCOUNT ID");
+						$ActiveSheet->setCellValue('J'.$i, $TokopediaAccountId);
 						$i++;
 						// second row for Shopee
 						$ActiveSheet->setCellValue('A'.$i, $StockID);
@@ -268,7 +272,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$ActiveSheet->setCellValue('D'.$i, $Brand);
 						$ActiveSheet->setCellValue('E'.$i, $Price);
 						$ActiveSheet->setCellValue('I'.$i, GetShopeeProductId($StockID));
-						$ActiveSheet->setCellValue('J'.$i, "SHOPEE ACCOUNT ID");
+						$ActiveSheet->setCellValue('J'.$i, $ShopeeAccountId);
 					}
 					$i++;
 				}
