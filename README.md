@@ -1,5 +1,6 @@
 # [webERP - Accounting and Business Administration ERP System](http://http://www.weberp.org/) 
 [![Download Zen Cart&reg;](https://img.shields.io/sourceforge/dm/web-erp.svg)](http://sourceforge.net/projects/web-erp/files/latest/download) [![Download Zen Cart&reg;](https://img.shields.io/sourceforge/dt/web-erp.svg)](http://sourceforge.net/projects/web-erp/files/latest/download) ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/webERP-team/webERP/master.svg) ![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/webERP-team/webERP.svg)
+
 ## Introduction
 webERP is a free open-source ERP system, providing best practise, multi-user business administration and accounting tools over the web. For further information and for a full list of features, please visit the support site at: http://www.weberp.org/
 
@@ -13,7 +14,7 @@ Download the latest official webERP release]([http://sourceforge.net/projects/we
 
 ## Requirements
 - A web server - webERP has been tested on Apache, NGINX, lighthttpd, and Hiawatha
-- PHP version 5.1 and above
+- PHP version 8.1 and above
 - MySQL version 4.3 and above, or MariaDB version 5.1 and above
 - A web browser with HTML5 compatibility
 

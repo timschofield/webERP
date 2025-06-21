@@ -23,10 +23,13 @@ class Styles extends BaseParserClass
      */
     private ?Theme $theme = null;
 
+    /** @var string[] */
     private array $workbookPalette = [];
 
+    /** @var mixed[] */
     private array $styles = [];
 
+    /** @var array<SimpleXMLElement|stdClass> */
     private array $cellStyles = [];
 
     private SimpleXMLElement $styleXml;
@@ -38,6 +41,7 @@ class Styles extends BaseParserClass
         $this->namespace = $namespace;
     }
 
+    /** @param string[] $palette */
     public function setWorkbookPalette(array $palette): void
     {
         $this->workbookPalette = $palette;
@@ -63,6 +67,10 @@ class Styles extends BaseParserClass
         $this->theme = $theme;
     }
 
+    /**
+     * @param mixed[] $styles
+     * @param array<SimpleXMLElement|stdClass> $cellStyles
+     */
     public function setStyleBaseData(?Theme $theme = null, array $styles = [], array $cellStyles = []): void
     {
         $this->theme = $theme;
@@ -96,7 +104,14 @@ class Styles extends BaseParserClass
             $attr = $this->getStyleAttributes($fontStyleXml->strike);
             $fontStyle->setStrikethrough(!isset($attr['val']) || self::boolean((string) $attr['val']));
         }
-        $fontStyle->getColor()->setARGB($this->readColor($fontStyleXml->color));
+        $fontStyle->getColor()
+            ->setARGB(
+                $this->readColor($fontStyleXml->color)
+            );
+        $theme = $this->readColorTheme($fontStyleXml->color);
+        if ($theme >= 0) {
+            $fontStyle->getColor()->setTheme($theme);
+        }
 
         if (isset($fontStyleXml->u)) {
             $attr = $this->getStyleAttributes($fontStyleXml->u);
@@ -310,9 +325,12 @@ class Styles extends BaseParserClass
         if ($style instanceof SimpleXMLElement) {
             $this->readNumberFormat($docStyle->getNumberFormat(), $style->numFmt);
         } else {
-            $docStyle->getNumberFormat()->setFormatCode(self::formatGeneral((string) $style->numFmt));
+            /** @var SimpleXMLElement */
+            $temp = $style->numFmt;
+            $docStyle->getNumberFormat()->setFormatCode(self::formatGeneral((string) $temp));
         }
 
+        /** @var SimpleXMLElement $style */
         if (isset($style->font)) {
             $this->readFontStyle($docStyle->getFont(), $style->font);
         }
@@ -387,6 +405,17 @@ class Styles extends BaseParserClass
         }
     }
 
+    public function readColorTheme(SimpleXMLElement $color): int
+    {
+        $attr = $this->getStyleAttributes($color);
+        $retVal = -1;
+        if (isset($attr['theme']) && is_numeric((string) $attr['theme']) && !isset($attr['tint'])) {
+            $retVal = (int) $attr['theme'];
+        }
+
+        return $retVal;
+    }
+
     public function readColor(SimpleXMLElement $color, bool $background = false): string
     {
         $attr = $this->getStyleAttributes($color);
@@ -416,6 +445,7 @@ class Styles extends BaseParserClass
         return ($background) ? 'FFFFFFFF' : 'FF000000';
     }
 
+    /** @return Style[] */
     public function dxfs(bool $readDataOnly = false): array
     {
         $dxfs = [];
@@ -448,7 +478,7 @@ class Styles extends BaseParserClass
         return $dxfs;
     }
 
-    // get TableStyles
+    /** @return TableDxfsStyle[] */
     public function tableStyles(bool $readDataOnly = false): array
     {
         $tableStyles = [];
@@ -488,6 +518,7 @@ class Styles extends BaseParserClass
         return $tableStyles;
     }
 
+    /** @return mixed[] */
     public function styles(): array
     {
         return $this->styles;
@@ -496,7 +527,7 @@ class Styles extends BaseParserClass
     /**
      * Get array item.
      *
-     * @param mixed $array (usually array, in theory can be false)
+     * @param false|mixed[] $array (usually array, in theory can be false)
      */
     private static function getArrayItem(mixed $array): ?SimpleXMLElement
     {
