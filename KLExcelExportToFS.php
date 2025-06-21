@@ -49,15 +49,15 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 		if ($TypeOfShop == 1){
 			$NameOfShop = "Kapal-Laut";
-			$Brand = "Kapal-Laut. Your Essential Jewellery";
-			$TokopediaAccountId = TOKOPEDIA_KAPAL_LAUT_STOREID;
-			$ShopeeAccountId = SHOPEE_KAPAL_LAUT_STOREID;
+			$Brand = MARKETPLACES_BRAND_KAPAL_LAUT;
+			$TokopediaAccountId = TOKOPEDIA_STOREID_KAPAL_LAUT;
+			$ShopeeAccountId = SHOPEE_STOREID_KAPAL_LAUT;
 			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT . " ";
 		} else {
 			$NameOfShop = "Blink";
-			$Brand = "Blink by Kapal-Laut";
-			$TokopediaAccountId = TOKOPEDIA_BLINK_STOREID;
-			$ShopeeAccountId = SHOPEE_BLINK_STOREID;
+			$Brand = MARKETPLACES_BRAND_BLINK;
+			$TokopediaAccountId = TOKOPEDIA_STOREID_BLINK;
+			$ShopeeAccountId = SHOPEE_STOREID_BLINK;
 			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT . " ";
 		}
 
@@ -176,11 +176,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 					
 					$StockID = $MyRow['stockid'];
 
-
 					$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
 					$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
-					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
-
+/*					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
+*/
 					$OnlySize = ClassicalSize($StockID);
 					if ($OnlySize != "NO SIZE"){
 						$NamaVariant = "Ukuran";
@@ -191,7 +190,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 					$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
 					$Price = round($MyRow['price']);
-					$PriceDiscount = '';
+
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
 								$TextSizeIndonesian . " - "  . 
 								trim($MyRow['longdescription']) . " " . 
@@ -286,7 +285,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$SpreadSheet->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
+			// Redirect output to a client web browser (Excel2007)
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';

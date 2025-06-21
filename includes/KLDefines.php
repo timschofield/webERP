@@ -1,7 +1,5 @@
 <?php
 
-define("MINIMUM_SURVIVAL_CASH", 3000000000);
-
 define("CURRENCY_CODE", 'IDR');
 define("CUSTOMER_TYPE_RETAIL", '2');
 define("CUSTOMER_TYPE_CONSIGNMENT", '6');
@@ -123,8 +121,6 @@ define("LIST_STOCK_CATEGORIES_GENERAL",    "('TESTGA','STABGA','NOPOGA')");
 define("LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50",    "('TESTGA','STABGA','NOPOGA','DISC2G','DISC5G')");
 define("LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT",    "('TESTGA','STABGA','NOPOGA','DISC2G','DISC5G','DISC8G')");
 
-
-
 /* Defines about LOCATIONS*/
 define("CODE_KANTOR",      "'KANTO'");
 define("CODE_ONLINE_SHOP", "'TOKWS'");
@@ -150,7 +146,6 @@ define("LIST_PACAKING_LOCATIONS",    "('PACKA','PACKU')");
 define("FORECAST_DAYS_FOR_PACKAGING_STOCK", 90);
 define("FACTOR_GUDANG_PACKAGING", 1.65);
 define("FACTOR_GUDANG_PACKAGING_PAPER_INSIDE_BOX", 1.10);
-
 
 define("LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO", "('KANTO','PACKA','SUPBA','SERVI','SERSU','SERSV','SERSW','SERDE','SAMPR','SASPG')");
 
@@ -189,6 +184,7 @@ define("ACCOUNT_HUTANG_PPH23_PTADU", "611012005AD"); // GL account for retention
 define("ACCOUNT_HUTANG_PPH23_PTSMH", "611012005SM"); // GL account for retention of PPH23 PTSMH in Petty cash
 
 /* Defines about financial Analysis*/
+define("MINIMUM_SURVIVAL_CASH", 3000000000);
 define("JUTA", 1000000);
 define("GL_INCOME_CC_BB",    "('410000010BB')");
 define("GL_INCOME_CASH_BB",  "('410000000BB')");
@@ -401,15 +397,18 @@ define("META_STORE_NAME_OU", "Outlet by Kapal-Laut");
 // MARKETPLACES
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
-define("ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates
-define("ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
+define("MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X then, we will show QOH=X in marketplaces to avoid unneeded updates
+define("MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
+
+define("MARKETPLACES_BRAND_BLINK", "Blink by Kapal-Laut");
+define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut. Your Essential Jewellery");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
 ///////////////////////////////////////////////////////////////////////////////////////////////
 define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
-define("TOKOPEDIA_BLINK_STOREID", "9490898");
-define("TOKOPEDIA_KAPAL_LAUT_STOREID", "10418528");
+define("TOKOPEDIA_STOREID_BLINK", "9490898");
+define("TOKOPEDIA_STOREID_KAPAL_LAUT", "10418528");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
@@ -436,8 +435,8 @@ define("SHOPEE_CATEGORY_BAG",            'Clutch');
 define("SHOPEE_CATEGORY_KEYHOLDER",      'Hiasan & Gantungan Kunci');
 
 define("SHOPEE_PREFIX_URL", "https://www.shopee.co.id/produk-i.");
-define("SHOPEE_BLINK_STOREID", "303205858");
-define("SHOPEE_KAPAL_LAUT_STOREID", "359256976");
+define("SHOPEE_STOREID_BLINK", "303205858");
+define("SHOPEE_STOREID_KAPAL_LAUT", "359256976");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // LAZADA
