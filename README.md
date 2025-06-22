@@ -1,9 +1,9 @@
 # [webERP - Accounting and Business Administration ERP System](https://www.weberp.org/)
 
-![Download](https://img.shields.io/sourceforge/dm/web-erp.svg)(https://sourceforge.net/projects/web-erp/files/latest/download)
-![Download](https://img.shields.io/sourceforge/dt/web-erp.svg)(https://sourceforge.net/projects/web-erp/files/latest/download)
-![GitHub last commit (master)](https://img.shields.io/github/last-commit/timschofield/webERP/master.svg)
-![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/timschofield/webERP.svg)
+[![Download](https://img.shields.io/sourceforge/dm/web-erp.svg)](https://sourceforge.net/projects/web-erp/files/latest/download)
+[![Download](https://img.shields.io/sourceforge/dt/web-erp.svg)](https://sourceforge.net/projects/web-erp/files/latest/download)
+[![GitHub last commit (master)](https://img.shields.io/github/last-commit/timschofield/webERP/master.svg)](https://github.com/timschofield/webERP/commits/master/)
+[![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/timschofield/webERP.svg)](https://github.com/timschofield/webERP/pulls)
 
 ## Introduction
 
