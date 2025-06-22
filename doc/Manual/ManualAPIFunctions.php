@@ -3,8 +3,6 @@
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 $PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
 
-include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc');
-include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpcs.inc');
 include('api/api_errorcodes.php');
 
 $Title = 'API documentation';
@@ -19,16 +17,18 @@ echo '</head>';
 echo '<body>';
 
 // avoid sending an xml-rpc request to self, interrogate directly the server
-$server = include 'api/api_xml-rpc_server.php';
+$dispatchMap = include 'api/api_xml-rpc_definition.php';
+$server = new PhpXmlRpc\Server($dispatchMap, false);
 $response = PhpXmlRpc\Server::_xmlrpcs_listMethods($server);
 $answer = $response->value();
 
+$encoder = new \PhpXmlRpc\Encoder();
 for ($i=0; $i<sizeof($answer); $i++) {
 	$method = $answer[$i];
 	echo '<br /><table border="1" width="80%"><tr><th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.htmlspecialchars($method->scalarval()).'</b></h4></th></tr>';
-	$msg = new xmlrpcmsg("system.methodHelp", array($method));
-	$response = PhpXmlRpc\Server::_xmlrpcs_methodHelp($server, $msg);
-	$signature = php_xmlrpc_decode($response->value());
+	$request = new PhpXmlRpc\Request("system.methodHelp", array($method));
+	$response = PhpXmlRpc\Server::_xmlrpcs_methodHelp($server, $request);
+	$signature = $encoder->decode($response->value());
 	echo $signature.'<br />';
 }
 

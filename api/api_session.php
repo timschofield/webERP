@@ -1,17 +1,20 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	$PathPrefix='';
+	$PathPrefix = '../';
 }
 
+require $PathPrefix.'vendor/autoload.php';
+
+/// @todo error out if config.php does not yet exist
 include($PathPrefix . 'config.php');
 
 if (isset($SessionSavePath)){
 	session_save_path($SessionSavePath);
 }
 
-ini_set('session.gc_Maxlifetime',$SessionLifeTime);
-ini_set('max_execution_time',$MaximumExecutionTime);
+ini_set('session.gc_Maxlifetime', $SessionLifeTime);
+ini_set('max_execution_time', $MaximumExecutionTime);
 
 session_name('webERPapi');
 session_start();
