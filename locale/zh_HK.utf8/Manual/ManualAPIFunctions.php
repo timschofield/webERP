@@ -1,10 +1,9 @@
 <?php
 
-
 $PageSecurity = 1;
 $PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
 //include('../../includes/session.php');
-include('../../xmlrpc/lib/xmlrpc.php');
+include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc');
 include('../../api/api_errorcodes.php');
 
 $Title = 'API documentation';

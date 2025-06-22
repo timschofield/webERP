@@ -7,9 +7,9 @@
     /* Note api_php.php includes api */
 	include 'api_php.php';
 
-	include '../xmlrpc/lib/xmlrpc.php';
+	include '../vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc';
 	$xmlrpc_internalencoding='UTF-8';
-	include '../xmlrpc/lib/xmlrpcs.php';
+	include '../vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpcs.inc';
 
 	$Description = _('This function is used to login into the API methods for the specified the database.')
 		 . '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</p>';
@@ -19,7 +19,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an integer. ').
+	$ReturnValue = _('This function returns an integer. ').
 		_('Zero means the function was successful. ').
 		_('Otherwise an error code is returned. ');
 
@@ -41,7 +41,7 @@
 
 	$Description = _('This function is used to logout from the API methods. ')
 			. _('It terminates the user\'s session thus freeing the server resources.' );
-	$ReturnValue[0] = _('This function returns an integer. ')
+	$ReturnValue = _('This function returns an integer. ')
 			._('Zero means the function was successful. ')
 			._('Otherwise an error code is returned. ');
 	$Logout_sig = array(array($xmlrpcStruct));
@@ -69,7 +69,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -105,7 +105,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -141,7 +141,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
@@ -177,7 +177,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -209,7 +209,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of branch codes, which may be strings or integers. ')
+	$ReturnValue = _('If successful this function returns an array of branch codes, which may be strings or integers. ')
 			._('If the first element is zero then the function was successful.') . '<p>'
 			._('Otherwise an array of error codes is returned. ');
 
@@ -244,7 +244,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this branch. ')
+	$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this branch. ')
 			._('The key will be identical with field name from the ')
 			 . '<a href="../../Z_DescribeTable.php?table=custbranch">' . _('custbranch table. ') . '</a>'
 			._('All fields will be in the set regardless of whether the value was set.') . '<p>'
@@ -281,7 +281,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this customer. ')
+	$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this customer. ')
 			._('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
 			._('Otherwise an array of error codes is returned. ');
 
@@ -318,7 +318,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of customer IDs, which may be integers or strings. ')
+	$ReturnValue = _('This function returns an array of customer IDs, which may be integers or strings. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -351,7 +351,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of currency abbreviations. ')
+	$ReturnValue = _('This function returns an array of currency abbreviations. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -381,7 +381,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of currency details.');
+	$ReturnValue = _('This function returns an array of currency details.');
 
 /*E*/	$GetCurrencyDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -410,7 +410,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales type abbreviations. ')
+	$ReturnValue = _('This function returns an array of sales type abbreviations. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -442,7 +442,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales type details.');
+	$ReturnValue = _('This function returns an array of sales type details.');
 
 /*E*/	$GetSalesTypeDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -476,7 +476,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -507,7 +507,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of hold reason codes.');
+	$ReturnValue = _('This function returns an array of hold reason codes.');
 
 /*E*/	$GetHoldReasonList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -535,7 +535,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of hold reason details.');
+	$ReturnValue = _('This function returns an array of hold reason details.');
 
 /*E*/	$GetHoldReasonDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -561,7 +561,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of payment terms abbreviations.');
+	$ReturnValue = _('This function returns an array of payment terms abbreviations.');
 
 /*E*/	$GetPaymentTermsList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -591,7 +591,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of payment terms details.');
+	$ReturnValue = _('This function returns an array of payment terms details.');
 
 /*E*/	$GetPaymentTermsDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -620,7 +620,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of payment method codes.');
+	$ReturnValue = _('This function returns an array of payment method codes.');
 
 /*E*/$GetPaymentMethodsList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -648,7 +648,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of payment terms details.');
+	$ReturnValue = _('This function returns an array of payment terms details.');
 
 /*E*/$GetPaymentMethodDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -680,7 +680,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -713,7 +713,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
@@ -747,7 +747,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
+	$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
 			._('The key will be identical with field name from the stockmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
 			._('Otherwise an array of error codes is returned. ');
 
@@ -782,7 +782,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0]=_('Returns an array of stock codes matching the criteria send, or an array of error codes');
+	$ReturnValue=_('Returns an array of stock codes matching the criteria send, or an array of error codes');
 
 /*E*/	$SearchStockItems_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -815,7 +815,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock quantities by location for this stock item. ');
+	$ReturnValue = _('This function returns an array of stock quantities by location for this stock item. ');
 
 /*E*/	$GetStockBalance_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -846,7 +846,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock reorder levels by location for this stock item.');
+	$ReturnValue = _('This function returns an array of stock reorder levels by location for this stock item.');
 
 /*E*/	$GetStockReorderLevel_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -881,7 +881,7 @@
 	$Parameter[3]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[4]['name'] = _('User password');
 	$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
+	$ReturnValue = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
 
 /*E*/	$SetStockReorderLevel_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -916,7 +916,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an integer value of the quantity allocated or an array of error codes if not. ');
+	$ReturnValue = _('This function returns an integer value of the quantity allocated or an array of error codes if not. ');
 
 /*E*/	$GetAllocatedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -947,7 +947,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an integer value of the quantity on order or an array of error codes if not.');
+	$ReturnValue = _('This function returns an integer value of the quantity on order or an array of error codes if not.');
 
 /*E*/	$GetOrderedStock_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1060,7 +1060,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful, and the second element is the receipt number. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -1090,7 +1090,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful.')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -1122,7 +1122,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful, and the second element is the credit note number. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -1158,7 +1158,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful, and the second element is the invoice number. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -1225,7 +1225,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
+	$ReturnValue = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
 
 /*E*/	$InsertSalesOrderHeader_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1255,7 +1255,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
+	$ReturnValue = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
 
 /*E*/$InvoiceSalesOrder_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcInt,$xmlrpcString,$xmlrpcString));
@@ -1288,7 +1288,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
+	$ReturnValue = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
 
 /*E*/	$ModifySalesOrderHeader_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1323,7 +1323,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
+	$ReturnValue = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 
 /*E*/	$InsertSalesOrderLine_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1358,7 +1358,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
+	$ReturnValue = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 
 /*E*/	$ModifySalesOrderLine_sig = array(array($xmlrpcStruct,$xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1481,7 +1481,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock location ids.');
+	$ReturnValue = _('This function returns an array of stock location ids.');
 
 /*E*/	$GetLocationList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1510,7 +1510,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock location details.');
+	$ReturnValue = _('This function returns an array of stock location details.');
 
 /*E*/	$GetLocationDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1539,7 +1539,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock shipper ids.');
+	$ReturnValue = _('This function returns an array of stock shipper ids.');
 
 /*E*/	$GetShipperList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1569,7 +1569,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock shipper details.');
+	$ReturnValue = _('This function returns an array of stock shipper details.');
 
 /*E*/	$GetShipperDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1598,7 +1598,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales area codes.');
+	$ReturnValue = _('This function returns an array of sales area codes.');
 
 /*E*/	$GetSalesAreasList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1628,7 +1628,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales area details.');
+	$ReturnValue = _('This function returns an array of sales area details.');
 
 /*E*/	$GetSalesAreaDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1659,7 +1659,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of sales area details.');
+	$ReturnValue = _('This function returns an array of sales area details.');
 
 /*E*/	$GetSalesAreaDetailsFromName_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1720,7 +1720,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of salesman codes.');
+	$ReturnValue = _('This function returns an array of salesman codes.');
 
 /*E*/	$GetSalesmanList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1750,7 +1750,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of salesman details.');
+	$ReturnValue = _('This function returns an array of salesman details.');
 
 /*E*/	$GetSalesmanDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1781,7 +1781,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of salesman details.');
+	$ReturnValue = _('This function returns an array of salesman details.');
 
 /*E*/	$GetSalesmanDetailsFromName_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1842,7 +1842,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
+	$ReturnValue = _('This function returns an array of tax group IDs.');
 
 /*E*/$GetTaxGroupList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1871,7 +1871,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of tax group details.');
+	$ReturnValue = _('This function returns an array of tax group details.');
 
 /*E*/$GetTaxGroupDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1895,7 +1895,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of tax group IDs.');
+	$ReturnValue = _('This function returns an array of tax group IDs.');
 
 /*E*/$GetTaxAuthorityList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -1923,7 +1923,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of tax authority details.');
+	$ReturnValue = _('This function returns an array of tax authority details.');
 
 /*E*/$GetTaxAuthorityDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1951,7 +1951,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns the tax rates for the authority.');
+	$ReturnValue = _('This function returns the tax rates for the authority.');
 
 /*E*/$GetTaxAuthorityRates_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -1981,7 +1981,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of tax group details.');
+	$ReturnValue = _('This function returns an array of tax group details.');
 
 /*E*/$GetTaxGroupTaxes_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -2007,7 +2007,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of customer types');
+	$ReturnValue = _('This function returns an array of customer types');
 
 /*E*/	$GetCustomerTypeList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -2035,7 +2035,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of customer type details.');
+	$ReturnValue = _('This function returns an array of customer type details.');
 
 /*E*/	$GetCustomerTypeDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -2127,7 +2127,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful, this function returns an array of stock category ids. ')
+	$ReturnValue = _('If successful, this function returns an array of stock category ids. ')
 			._('Otherwise an array of error codes is returned and no stock categories are returned. ');
 
 /*E*/	$GetStockCategoryList_sig = array(array($xmlrpcStruct),
@@ -2157,7 +2157,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of stock category details.');
+	$ReturnValue = _('This function returns an array of stock category details.');
 
 /*E*/	$GetStockCategory_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -2258,7 +2258,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of general ledger account codes.');
+	$ReturnValue = _('This function returns an array of general ledger account codes.');
 
 /*E*/	$GetGLAccountList_sig = array(array($xmlrpcStruct),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -2288,7 +2288,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of general ledger account details.');
+	$ReturnValue = _('This function returns an array of general ledger account details.');
 
 /*E*/	$GetGLAccountDetails_sig = array(array($xmlrpcStruct,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -2321,7 +2321,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of general ledger account details.');
+	$ReturnValue = _('This function returns an array of general ledger account details.');
 
 /*E*/	$GetStockTaxRate_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
 /*x*/					array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
@@ -2357,7 +2357,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -2394,7 +2394,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no modification takes place. ');
 
@@ -2427,7 +2427,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ')
+	$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ')
 			._('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.') . '<p>'
 			._('Otherwise an array of error codes is returned. ');
 
@@ -2462,7 +2462,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of supplier ids. ')
+	$ReturnValue = _('If successful this function returns an array of supplier ids. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$SearchSuppliers_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
@@ -2498,7 +2498,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('Returns a two dimensional array of stock batch details. ')
+	$ReturnValue = _('Returns a two dimensional array of stock batch details. ')
 			._('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
 
 /*E*/	$GetBatches_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
@@ -2538,7 +2538,7 @@
 	$Parameter[4]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[5]['name'] = _('User password');
 	$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ')
+	$ReturnValue = _('If successful this function returns 0. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$StockAdjustment_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcDouble,$xmlrpcString),
@@ -2586,7 +2586,7 @@
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
 	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ')
+	$ReturnValue = _('If successful this function returns 0. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$WorkOrderIssue_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
@@ -2630,7 +2630,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of work order numbers. ')
+	$ReturnValue = _('If successful this function returns an array of work order numbers. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$SearchWorkOrders_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
@@ -2667,7 +2667,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -2703,7 +2703,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -2739,7 +2739,7 @@
 	$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[2]['name'] = _('User password');
 	$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('This function returns an array of integers. ')
+	$ReturnValue = _('This function returns an array of integers. ')
 			._('If the first element is zero then the function was successful. ')
 			._('Otherwise an array of error codes is returned and no insertion takes place. ');
 
@@ -2780,7 +2780,7 @@
 	$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[6]['name'] = _('User password');
 	$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0. ')
+	$ReturnValue = _('If successful this function returns 0. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$WorkOrderReceive_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString),
@@ -2818,7 +2818,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default date format. ')
+	$ReturnValue = _('If successful this function returns a string contain the default date format. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetDefaultDateFormat_sig = array(array($xmlrpcStruct),
@@ -2847,7 +2847,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative array containing the key of confvalue the value of which is the Default_Shipper.')
+	$ReturnValue = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative array containing the key of confvalue the value of which is the Default_Shipper.')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/$GetDefaultShipper_sig = array(array($xmlrpcStruct),
@@ -2878,7 +2878,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default location. ')
+	$ReturnValue = _('If successful this function returns a string contain the default location. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetDefaultCurrency_sig = array(array($xmlrpcStruct),
@@ -2907,7 +2907,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default price list code. ')
+	$ReturnValue = _('If successful this function returns a string contain the default price list code. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetDefaultPriceList_sig = array(array($xmlrpcStruct),
@@ -2936,7 +2936,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string contain the default inventory location. ')
+	$ReturnValue = _('If successful this function returns a string contain the default inventory location. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetDefaultLocation_sig = array(array($xmlrpcStruct),
@@ -2959,7 +2959,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns a string containing the path to the company reports directory') . ' ' . _('Otherwise an array of error codes is returned. ');
+	$ReturnValue = _('If successful this function returns a string containing the path to the company reports directory') . ' ' . _('Otherwise an array of error codes is returned. ');
 
 	$GetReportsDirectory_sig = array(array($xmlrpcStruct),
 									array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
@@ -2988,7 +2988,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns 0 for success and 1 for error. ');
+	$ReturnValue = _('If successful this function returns 0 for success and 1 for error. ');
 
 	$CreatePOSDataFull_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString,$xmlrpcString,$xmlrpcString));
 	$CreatePOSDataFull_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
@@ -3019,7 +3019,7 @@
 	$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[1]['name'] = _('User password');
 	$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('Returns 0 if the delete POS Data was successful');
+	$ReturnValue = _('Returns 0 if the delete POS Data was successful');
 
 /*E*/$DeletePOSData_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString));
 	$DeletePOSData_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
@@ -3051,7 +3051,7 @@
 	$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
 	$Parameter[3]['name'] = _('User password');
 	$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-	$ReturnValue[0] = _('If successful this function returns zero, and the value of the requested property. ')
+	$ReturnValue = _('If successful this function returns zero, and the value of the requested property. ')
 			._('Otherwise an array of error codes is returned. ');
 
 /*E*/	$GetStockCatProperty_sig = array(array($xmlrpcStruct,$xmlrpcString,$xmlrpcString),
@@ -3081,7 +3081,7 @@
 	$Description = _('Returns (possibly translated) error text from error codes');
 	$Parameter[0]['name'] = _('Error codes');
 	$Parameter[0]['description'] = _('An array of error codes to change into text messages. ');
-	$ReturnValue[0] = _('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
+	$ReturnValue = _('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
 	$GetErrorMessages_sig = array(array($xmlrpcStruct,$xmlrpcArray));
 	$GetErrorMessages_doc = apiBuildDocHTML( $Description,$Parameter,$ReturnValue );
 
@@ -3493,9 +3493,7 @@ function apiBuildDocHTML( $description, $parameter, $Return )
 			$parameter[$ii]['description'] . '</td></tr>';
 	}
 	$doc .= '<tr><td valign="top"><b><u>' . _('Return Value');
-	for ($ii=0; $ii<sizeof($Return); $ii++) {
-		$doc .= '<td valign="top">' . $Return[$ii] . '</td></tr>';
-	}
+	$doc .= '<td valign="top">' . $Return[$ii] . '</td></tr>';
 	$doc .= '</table>';
 
 	return  $doc;
