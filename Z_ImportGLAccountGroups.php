@@ -1,21 +1,23 @@
 <?php
 
 include('includes/session.php');
+
+include('api/api_errorcodes.php');
+include('api/glgroups.php');
+
 $Title = _('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
-include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc');
-include('api/api_errorcodes.php');
 
-$weberpuser = $_SESSION['UserID'];
-$SQL="SELECT password FROM www_users WHERE userid='" . $weberpuser . "'";
-$Result=DB_query($SQL);
-$MyRow=DB_fetch_array($Result);
-$weberppassword = $MyRow[0];
+//$weberpuser = $_SESSION['UserID'];
+//$SQL="SELECT password FROM www_users WHERE userid='" . $weberpuser . "'";
+//$Result=DB_query($SQL);
+//$MyRow=DB_fetch_array($Result);
+//$weberppassword = $MyRow[0];
 
-$ServerURL = "//". $_SERVER['HTTP_HOST'].$RootPath."/api/api_xml-rpc.php";
-$DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
+//$ServerURL = "//". $_SERVER['HTTP_HOST'].$RootPath."/api/api_xml-rpc.php";
+//$DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 if (isset($_POST['update'])) {
 	$fp = fopen($_FILES['ImportFile']['tmp_name'], "r");
@@ -26,8 +28,8 @@ if (isset($_POST['update'])) {
    	echo '<table><tr><th>' .  _('Account Group')  . '</th><th>' .  _('Result') . '</th><th>' .  _('Comments')  . '</th></tr>';
    	$successes=0;
    	$failures=0;
-	$user = new xmlrpcval($weberpuser);
-	$password = new xmlrpcval($weberppassword);
+	//$user = new xmlrpcval($weberpuser);
+	//$password = new xmlrpcval($weberppassword);
  	while (!feof ($fp)) {
     	$buffer = fgets($fp, 4096);
     	$FieldValues = explode(',', $buffer);
@@ -35,16 +37,15 @@ if (isset($_POST['update'])) {
     		for ($i=0; $i<sizeof($FieldValues); $i++) {
     			$AccountGroupDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
-			$accountgroup = php_xmlrpc_encode($AccountGroupDetails);
 
-			/// @todo call directly function xmlrpc_InsertGLAccountGroup (or even InsertGLAccountGroup), bypassing the http layer
-			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountGroup", array($accountgroup, $user, $password));
+			//$accountgroup = php_xmlrpc_encode($AccountGroupDetails);
+			//$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountGroup", array($accountgroup, $user, $password));
+			//$client = new xmlrpc_client($ServerURL);
+			//$client->setDebug($DebugLevel);
+			//$response = $client->send($Msg);
+			//$Answer = php_xmlrpc_decode($response->value());
+			$Answer = InsertGLAccountGroup($AccountGroupDetails, '', '');
 
-			$client = new xmlrpc_client($ServerURL);
-			$client->setDebug($DebugLevel);
-
-			$response = $client->send($Msg);
-			$Answer = php_xmlrpc_decode($response->value());
 			if ($Answer[0]==0) {
 				echo '<tr '.$SuccessStyle.'><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Success' . '</td></tr>';
 				$successes++;
