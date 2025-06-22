@@ -119,7 +119,7 @@ class PhpXmlRpc
     /**
      * @var string
      */
-    public static $xmlrpcVersion = "4.11.0";
+    public static $xmlrpcVersion = "4.11.2";
 
     /**
      * @var int
@@ -291,7 +291,7 @@ class PhpXmlRpc
      * to be declared, such as library version etc... and sets them to php classes.
      * It should be used by code which changed the values of those global variables to alter the working of the library.
      * Example code:
-     * 1. include xmlrpc.php
+     * 1. include xmlrpc.inc
      * 2. set the values, e.g. $GLOBALS['xmlrpc_internalencoding'] = 'UTF-8';
      * 3. import them: PhpXmlRpc\PhpXmlRpc::importGlobals();
      * 4. run your own code.

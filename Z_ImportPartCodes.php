@@ -1,12 +1,11 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Import Stock Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
-include('xmlrpc/lib/xmlrpc.php');
+include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');
 
 $webERPUser = $_SESSION['UserID'];
@@ -33,6 +32,8 @@ if (isset($_POST['update'])) {
 			</tr>';
    	$successes=0;
    	$failures=0;
+	$user = new xmlrpcval($webERPUser);
+	$password = new xmlrpcval($weberppassword);
  	while (!feof ($fp)) {
     	$buffer = fgets($fp, 4096);
     	$FieldValues = explode(',', $buffer);
@@ -41,9 +42,8 @@ if (isset($_POST['update'])) {
     			$ItemDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
 			$stockitem = php_xmlrpc_encode($ItemDetails);
-			$user = new xmlrpcval($webERPUser);
-			$password = new xmlrpcval($weberppassword);
 
+			/// @todo call directly function xmlrpc_InsertStockItem, or even InsertStockItem, bypassing the http layer
 			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertStockItem", array($stockitem, $user, $password));
 
 			$client = new xmlrpc_client($ServerURL);
