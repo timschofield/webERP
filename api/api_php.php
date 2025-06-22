@@ -3,7 +3,11 @@
 /* Include session.php, to allow database connection, and access to miscfunctions and datefunctions. */
 
 	// FOLLOWING IS ALWAYS REQUIRED
+
 	$api_DatabaseName = 'weberpdemo';
+	if (isset($_SESSION['DatabaseName'])) {
+		$api_DatabaseName = $_SESSION['DatabaseName'];
+	}
 
 	$AllowAnyone = true;
 	$PathPrefix = dirname(__FILE__).'/../';
@@ -18,6 +22,7 @@
 
 /* Get weberp authentication, and return a valid database connection */
 	function db($user, $password) {
+
 		if (!isset($_SESSION['AccessLevel']) OR
 		           $_SESSION['AccessLevel'] == '') {
 			//  Login to default database = old clients.

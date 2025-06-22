@@ -38,7 +38,7 @@ function apiBuildDocHTML($description, $parameters, $Return)
 $Description = _('This function is used to login into the API methods for the specified the database.')
 	. '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</p>';
 $Parameter[0]['name'] = _('Database Name');
-$Parameter[0]['description'] = _('The name of the database to use for the transactions to come. ');
+$Parameter[0]['description'] = _('The name of the database to use for the requests to come. ');
 $Parameter[1]['name'] = _('User name');
 $Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
 $Parameter[2]['name'] = _('User password');
@@ -50,6 +50,10 @@ $ReturnValue = _('This function returns an integer. ') .
 $Login_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
 $Login_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
+/**
+ * @todo it would make sense to not have callers know the database name, but rather the company name, and have our
+ *       code retrieve the database name from the company name sent by the caller
+ */
 function xmlrpc_Login($request)
 {
 	ob_start('ob_file_callback');
