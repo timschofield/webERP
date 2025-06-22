@@ -36,7 +36,7 @@ function apiBuildDocHTML($description, $parameters, $Return)
 }
 
 $Description = _('This function is used to login into the API methods for the specified the database.')
-	. '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are no longer required.  When calling those functions, leave the last two parameters off.') . '</p>';
+	. '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are not required.  When calling those functions, leave the last two parameters off, and send along a session cookie.') . '</p>';
 $Parameter[0]['name'] = _('Database Name');
 $Parameter[0]['description'] = _('The name of the database to use for the requests to come. ');
 $Parameter[1]['name'] = _('User name');
@@ -45,7 +45,8 @@ $Parameter[2]['name'] = _('User password');
 $Parameter[2]['description'] = _('The weberp password associated with this user name. ');
 $ReturnValue = _('This function returns an integer. ') .
 	_('Zero means the function was successful. ') .
-	_('Otherwise an error code is returned. ');
+	_('Otherwise an error code is returned. ') .
+	_('When the login is successful, a session cookie is also returned in the HTTP headers');
 
 $Login_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
 $Login_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
