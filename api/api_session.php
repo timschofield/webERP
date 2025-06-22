@@ -24,7 +24,7 @@ if (isset($_SESSION['DatabaseName']) AND $_SESSION['DatabaseName'] != '' ) {
 	include($PathPrefix . 'includes/ConnectDB.php');
 	$_SESSION['db'] = $db;
 }
-include($PathPrefix . 'includes/DateFunctions.php');
+include_once($PathPrefix . 'includes/DateFunctions.php');
 
 // Un comment to turn off attempts counter
 //$_SESSION['AttemptsCounter'] = 0;
@@ -45,13 +45,19 @@ if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
-function CryptPass( $Password ) {
-	$hash = password_hash($Password,PASSWORD_DEFAULT);
-	return $hash;
+if (! function_exists('CryptPass')) {
+	function CryptPass($Password)
+	{
+		$hash = password_hash($Password, PASSWORD_DEFAULT);
+		return $hash;
+	}
 }
 
-function VerifyPass($Password,$Hash) {
-	return password_verify($Password,$Hash);
+if (! function_exists('VerifyPass')) {
+	function VerifyPass($Password, $Hash)
+	{
+		return password_verify($Password, $Hash);
+	}
 }
 
 // API wrapper for DB issues - no HTML output, AND remember any error message

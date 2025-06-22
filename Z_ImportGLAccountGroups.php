@@ -17,7 +17,6 @@ $weberppassword = $MyRow[0];
 $ServerURL = "//". $_SERVER['HTTP_HOST'].$RootPath."/api/api_xml-rpc.php";
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
-
 if (isset($_POST['update'])) {
 	$fp = fopen($_FILES['ImportFile']['tmp_name'], "r");
    	$buffer = fgets($fp, 4096);
@@ -27,6 +26,8 @@ if (isset($_POST['update'])) {
    	echo '<table><tr><th>' .  _('Account Group')  . '</th><th>' .  _('Result') . '</th><th>' .  _('Comments')  . '</th></tr>';
    	$successes=0;
    	$failures=0;
+	$user = new xmlrpcval($weberpuser);
+	$password = new xmlrpcval($weberppassword);
  	while (!feof ($fp)) {
     	$buffer = fgets($fp, 4096);
     	$FieldValues = explode(',', $buffer);
@@ -35,9 +36,8 @@ if (isset($_POST['update'])) {
     			$AccountGroupDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
 			$accountgroup = php_xmlrpc_encode($AccountGroupDetails);
-			$user = new xmlrpcval($weberpuser);
-			$password = new xmlrpcval($weberppassword);
 
+			/// @todo call directly function xmlrpc_InsertGLAccountGroup (or even InsertGLAccountGroup), bypassing the http layer
 			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountGroup", array($accountgroup, $user, $password));
 
 			$client = new xmlrpc_client($ServerURL);

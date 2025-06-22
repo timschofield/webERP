@@ -1,10 +1,10 @@
 <?php
 
-var_dump($_SERVER['PHP_SELF']);
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 $PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
 
 include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpc.inc');
+include('vendor/phpxmlrpc/phpxmlrpc/lib/xmlrpcs.inc');
 include('api/api_errorcodes.php');
 
 $Title = 'API documentation';
@@ -18,29 +18,16 @@ echo '</head>';
 
 echo '<body>';
 
-$ServerString = $_SERVER['HTTP_HOST'].$RootPath;
-$FirstBitOfURL = mb_substr($ServerString,0,mb_strpos($ServerString,'/doc/Manual'));
-
-$ServerURL = "//".  $FirstBitOfURL ."/api/api_xml-rpc.php";
-$DebugLevel = 0; // Set to 0,1, or 2 with 2 being the highest level of debug info
-
-$msg = new xmlrpcmsg("system.listMethods", array());
-
-$client = new xmlrpc_client($ServerURL);
-$client->setDebug($DebugLevel);
-
-$response = $client->send($msg);
-$answer = php_xmlrpc_decode($response->value());
+// avoid sending an xml-rpc request to self, interrogate directly the server
+$server = include 'api/api_xml-rpc_server.php';
+$response = PhpXmlRpc\Server::_xmlrpcs_listMethods($server);
+$answer = $response->value();
 
 for ($i=0; $i<sizeof($answer); $i++) {
-	echo '<br /><table border="1" width="80%"><tr><th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.$answer[$i].'</b></h4></th></tr>';
-	$method = php_xmlrpc_encode($answer[$i]);
+	$method = $answer[$i];
+	echo '<br /><table border="1" width="80%"><tr><th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.htmlspecialchars($method->scalarval()).'</b></h4></th></tr>';
 	$msg = new xmlrpcmsg("system.methodHelp", array($method));
-
-	$client = new xmlrpc_client($ServerURL);
-	$client->setDebug($DebugLevel);
-
-	$response = $client->send($msg);
+	$response = PhpXmlRpc\Server::_xmlrpcs_methodHelp($server, $msg);
 	$signature = php_xmlrpc_decode($response->value());
 	echo $signature.'<br />';
 }
