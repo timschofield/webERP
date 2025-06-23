@@ -1,22 +1,23 @@
 <?php
 
 include('includes/session.php');
+
+include('api/api_errorcodes.php');
+include('api/glsections.php');
+
 $Title = _('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
-include('xmlrpc/lib/xmlrpc.php');
-include('api/api_errorcodes.php');
 
-$webERPUser = $_SESSION['UserID'];
-$SQL="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";
-$Result=DB_query($SQL);
-$MyRow=DB_fetch_array($Result);
-$weberppassword = $MyRow[0];
+//$webERPUser = $_SESSION['UserID'];
+//$SQL="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";
+//$Result=DB_query($SQL);
+//$MyRow=DB_fetch_array($Result);
+//$weberppassword = $MyRow[0];
 
-$ServerURL = '//'. $_SERVER['HTTP_HOST'] . $RootPath . '/api/api_xml-rpc.php';
-$DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
-
+//$ServerURL = '//'. $_SERVER['HTTP_HOST'] . $RootPath . '/api/api_xml-rpc.php';
+//$DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 if (isset($_POST['update'])) {
 	$fp = fopen($_FILES['ImportFile']['tmp_name'], "r");
@@ -31,6 +32,8 @@ if (isset($_POST['update'])) {
 			</tr>';
    	$successes=0;
    	$failures=0;
+	//$user = new xmlrpcval($webERPUser);
+	//$password = new xmlrpcval($weberppassword);
  	while (!feof ($fp)) {
     	$buffer = fgets($fp, 4096);
     	$FieldValues = explode(',', $buffer);
@@ -38,17 +41,15 @@ if (isset($_POST['update'])) {
     		for ($i=0; $i<sizeof($FieldValues); $i++) {
     			$AccountSectionDetails[$FieldNames[$i]]=$FieldValues[$i];
     		}
-			$accountsection = php_xmlrpc_encode($AccountSectionDetails);
-			$user = new xmlrpcval($webERPUser);
-			$password = new xmlrpcval($weberppassword);
 
-			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountSection", array($accountsection, $user, $password));
+			//$accountsection = php_xmlrpc_encode($AccountSectionDetails);
+			//$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountSection", array($accountsection, $user, $password));
+			//$client = new xmlrpc_client($ServerURL);
+			//$client->setDebug($DebugLevel);
+			//$response = $client->send($Msg);
+			//$Answer = php_xmlrpc_decode($response->value());
+			$Answer = InsertGLAccountSection($AccountSectionDetails, '', '');
 
-			$client = new xmlrpc_client($ServerURL);
-			$client->setDebug($DebugLevel);
-
-			$response = $client->send($Msg);
-			$Answer = php_xmlrpc_decode($response->value());
 			if ($Answer[0]==0) {
 				echo '<tr '.$SuccessStyle.'><td>' . $AccountSectionDetails['sectionname'] . '</td><td>' . 'Success' . '</td></tr>';
 				$successes++;
