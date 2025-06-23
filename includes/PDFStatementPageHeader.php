@@ -14,7 +14,7 @@ $pdf->Image(
 	0,// Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
 	60,// Height of the image in the page. If not specified or equal to zero, it is automatically calculated.
 	''// Image format. If not specified, the type is inferred from the file extension.
-);// Public function Image() in ~/includes/tcpdf/tcpdf.php
+);// Public function Image() in /tcpdf/tcpdf.php
 
 // Title
 $FontSize =15;
@@ -140,7 +140,7 @@ $pdf->RoundedRect(
 	'',// Style of rendering. See the getPathPaintOperator() function for more information. Default value: empty ("").
 	array(),// Border style of rectangle. Array like for SetLineStyle(). Default value: default line style (empty array).
 	array()// Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
-);// Public function RoundedRect() in ~/includes/tcpdf/tcpdf.php
+);// Public function RoundedRect() in tcpdf/tcpdf.php
 
 // Draws a rounded rectangle around the remittance advice section:
 $pdf->RoundedRect(
@@ -153,7 +153,7 @@ $pdf->RoundedRect(
 	'',// Style of rendering. See the getPathPaintOperator() function for more information. Default value: empty ("").
 	array(),// Border style of rectangle. Array like for SetLineStyle(). Default value: default line style (empty array).
 	array()// Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
-);// Public function RoundedRect() in ~/includes/tcpdf/tcpdf.php
+);// Public function RoundedRect() in tcpdf/tcpdf.php
 
 $YPos -= $LineHeight;
 $FontSize =10;

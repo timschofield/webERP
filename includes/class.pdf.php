@@ -1,6 +1,6 @@
 <?php
 
-     /* -----------------------------------------------------------------------------------------------
+    /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
 	the syntax that WebERP original reports were written in.
 	Due to limitation of R&OS class for foreign character support, this wrapper class was
@@ -12,7 +12,6 @@
 	Work to move from FPDF to TCPDF by:
 		Javier de Lorenzo-Cáceres <info@civicom.eu>
 	----------------------------------------------------------------------------------------------- */
-require_once(dirname(__FILE__).'/tcpdf/tcpdf.php');
 
 if (!class_exists('Cpdf', false)) {
 
@@ -75,8 +74,8 @@ if (!class_exists('Cpdf', false)) {
 			// $YPos = cell vertical coordinate from page bottom side to cell top side in dpi (72dpi = 25.4mm).
 			// $fontsize = font size in dpi (72dpi = 25.4mm).
 	// Javier	$Text = html_entity_decode($Text);
-			$this->SetFontSize($fontsize);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
-			$this->Text($XPos, $this->h-$YPos, $Text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
+			$this->SetFontSize($fontsize);// Public function SetFontSize() in tcpdf/tcpdf.php.
+			$this->Text($XPos, $this->h-$YPos, $Text);// Public function Text() in tcpdf/tcpdf.php.
 		}
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {
@@ -110,7 +109,7 @@ if (!class_exists('Cpdf', false)) {
 				default:
 					$Align = 'L';
 			}
-			$this->SetFontSize($Height);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
+			$this->SetFontSize($Height);// Public function SetFontSize() in tcpdf/tcpdf.php.
 
 			if($Width==0) {
 				$Width = $this->w - $this->rMargin - $this->x;// Line_width = Page_width - Right_margin - Cell_horizontal_coordinate($XPos).
@@ -186,7 +185,7 @@ if (!class_exists('Cpdf', false)) {
 
 	/* Javier: Some scripts set the creator to be WebERP like this
 				$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
-		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in ~/includes/tcpdf/config/tcpdfconfig.php
+		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
 	*/ 			$this->SetCreator(PDF_CREATOR);
 			}
 			if ($label == 'Author') {
@@ -214,7 +213,7 @@ if (!class_exists('Cpdf', false)) {
 			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
 			// $width (float) Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
 	 		// $height (float) Height of the image in the page.
-			$this->Image($file, $x, $this->h-$YPos-$height, $width, $height);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
+			$this->Image($file, $x, $this->h-$YPos-$height, $width, $height);// Public function Image() in tcpdf/tcpdf.php.
 		}
 
 		/*
@@ -333,7 +332,7 @@ if (!class_exists('Cpdf', false)) {
 			// $YPos Ordinate of upper-left corner. WARNING: Measured from bottom left corner!
 			// $width (float) Rectangle width.
 			// $height (float) Rectangle height.
-			$this->Rect($x, $this->h-$YPos, $width, $height);// Public function Rect() in ~/includes/tcpdf/tcpdf.php.
+			$this->Rect($x, $this->h-$YPos, $width, $height);// Public function Rect() in tcpdf/tcpdf.php.
 		}
 
 		function RoundRectangle($x, $YPos, $width, $height, $rx, $ry) {
@@ -345,7 +344,7 @@ if (!class_exists('Cpdf', false)) {
 			// $height (float) Rectangle height.
 			// $rx (float) the x-axis radius of the ellipse used to round off the corners of the rectangle.
 			// $ry (float) the y-axis radius of the ellipse used to round off the corners of the rectangle.
-			$this->RoundedRectXY($x, $this->h-$YPos, $width, $height, $rx, $ry);// Public function RoundedRectXY() in ~/includes/tcpdf/tcpdf.php.
+			$this->RoundedRectXY($x, $this->h-$YPos, $width, $height, $rx, $ry);// Public function RoundedRectXY() in tcpdf/tcpdf.php.
 		}
 
 	} // end of class

@@ -130,7 +130,6 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-			require($PathPrefix . 'includes/tcpdf/tcpdf.php'); // TCPDF class to generate reports
 			require('WriteReport.inc');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);

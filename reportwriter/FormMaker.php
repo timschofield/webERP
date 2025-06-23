@@ -97,7 +97,6 @@ switch ($_POST['todo']) {
 			}
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
-		require($PathPrefix . 'includes/tcpdf.php'); // TCPDF class to generate reports
 		require('WriteForm.inc');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function
