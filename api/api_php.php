@@ -1,24 +1,28 @@
 <?php
 
-/* Include session.php, to allow database connection, and access to
-   miscfunctions, and datefunctions.*/
+/* Include session.php, to allow database connection, and access to miscfunctions and datefunctions. */
+
 	// FOLLOWING IS ALWAYS REQUIRED
-	$api_DatabaseName='weberpdemo';
+
+	$api_DatabaseName = 'weberpdemo';
+	if (isset($_SESSION['DatabaseName'])) {
+		$api_DatabaseName = $_SESSION['DatabaseName'];
+	}
 
 	$AllowAnyone = true;
-	$PathPrefix=dirname(__FILE__).'/../';
+	$PathPrefix = dirname(__FILE__).'/../';
 	include('api_session.php');
 
 	include('api_errorcodes.php');
-	/* Include SQL_CommonFunctions.php, to use GetNextTransNo().*/
+	/* Include SQL_CommonFunctions.php, to use GetNextTransNo(). */
 	include($PathPrefix . 'includes/SQL_CommonFunctions.php');
 	/* Required for creating invoices/credits */
 	include($PathPrefix . 'includes/GetSalesTransGLCodes.php');
 	include($PathPrefix . 'includes/Z_POSDataCreation.php');
 
-/* Get weberp authentication, and return a valid database
-   connection */
+/* Get weberp authentication, and return a valid database connection */
 	function db($user, $password) {
+
 		if (!isset($_SESSION['AccessLevel']) OR
 		           $_SESSION['AccessLevel'] == '') {
 			//  Login to default database = old clients.

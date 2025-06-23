@@ -6,7 +6,7 @@ function  LoginAPI($databasename, $user, $password) {
 	// Include now for the error code values.
 	include  '../includes/UserLogin.php';	/* Login checking and setup */
 	$RetCode = array();		// Return result.
-	if (!isset($_SESSION['DatabaseName']) OR $_SESSION['DatabaseName'] == '' ) {
+	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
 		// Establish the database connection for this session.
 		$_SESSION['DatabaseName'] = $databasename;
 		/* Drag in the code to connect to the DB, and some other

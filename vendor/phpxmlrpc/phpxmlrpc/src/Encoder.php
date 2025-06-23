@@ -45,8 +45,7 @@ class Encoder
      */
     public function decode($xmlrpcVal, $options = array())
     {
-//        switch ($xmlrpcVal->kindOf()) {
-        switch (gettype($xmlrpcVal)) {
+        switch ($xmlrpcVal->kindOf()) {
             case 'scalar':
                 if (in_array('extension_api', $options)) {
                     $val = $xmlrpcVal->scalarVal();
