@@ -1,8 +1,7 @@
-Installing webERP
+# Installing webERP
 
-This document describes how to perform a new webERP installation. See UPGRADING.txt if you
+This document describes how to perform a new webERP installation. See [UPGRADING.md](upgrading.md) if you
 are upgrading an existing installation.
-
 
 ## Pre-requisites
 
@@ -22,7 +21,7 @@ are upgrading an existing installation.
 Detailed instructions for installing these components can be readily found in a web search. XAMPP is
 recommended for development on a Windows(R) platform, see https://www.apachefriends.org/index.html.
 
-webERP supported PostgreSQL at one time but does not currently due to lack of of an interested
+webERP supported PostgreSQL at one time but does not currently due to lack of an interested
 community member for maintenance and testing. If you are interested in the job, please create
 a Discussion topic in the webERP repo!
 
@@ -35,21 +34,20 @@ Required PHP configuration (all are default values at least for XAMPP with PHP v
 Configurating PHP is done by editing the server php.ini file. If you don't have file access on the
 server, webERP provides a .htaccess file which can be used for those web servers that support it.
 
-
 ### Client
 
 Any recent reputable web browser should work with webERP (e.g. Edge, Chrome, Safari, Firefox).
 
-It may be useful to have a PDF reader avaiable on the system the browser will be run on. Popular
+It may be useful to have a PDF reader available on the system the browser will be run on. Popular
 choices on Windows are Acrobat Reader, Foxit PDF Reader and most web browsers.
 
-It is recommended that PDF preferances be be changed so that PDF documents are opened automatically
-to avoid having to find the file and open it seperately, and in a seperate window or tab (otherwise
+It is recommended that PDF preferences be changed so that PDF documents are opened automatically
+to avoid having to find the file and open it separately, and in a separate window or tab (otherwise
 if viewing in a browser the PDF viewer window may replace webERP).
 
 If you are using webERP with languages that require extended fonts to display you must use Acrobat
 Reader v9.1 or above (webERP uses Adobe CID fonts which are bundled with Acroabat Reader but not
-necessaraily other PDF readers.
+necessarily other PDF readers.
 
 
 ## Automatic Web Installer
@@ -82,7 +80,7 @@ The installation consists of:
 1. Copy PHP scripts and include files to a directory under the web server root directory
 2. Configure file level server security (optional)
 3. Access the webERP web installer to create a database (if the specified database does not already exist)
-    and optionally populate with demom data. The installer will also create the webERP configuration
+    and optionally populate with demo data. The installer will also create the webERP configuration
     file (config.php) which contains the database connection details including username and password, and
     the initial "admin" user details.
 4. Log into the system as the initial admin user to update the database
@@ -91,31 +89,30 @@ The installation consists of:
 ### 1.  Copy PHP Scripts
 
 Download and extract a webERP archive to the web server root directory (possibly in a sub-directory to
-keep webERP seperate from other applications). This will vary depending on the server operating system
+keep webERP separate from other applications). This will vary depending on the server operating system
 and installation.
 
 In Windows, the web root may be:
 
-C:\Program Files\Apache Group\Apache\htdocs
+	C:\Program Files\Apache Group\Apache\htdocs
 
-C:\xampp\htcos\
+	C:\xampp\htcos\
 
 or if using apache2triad,
 
-C:\apache2triad\htdocs\
-
+	C:\apache2triad\htdocs\
 
 In Unix/Linux, the web root may be:
 
-/usr/local/httpd/htdocs/
+	/usr/local/httpd/htdocs/
 
-/usr/local/apache2/htdocs/
+	/usr/local/apache2/htdocs/
 
-/srv/www/htdocs
+	/srv/www/htdocs
 
 or
 
-/usr/local/www
+	/usr/local/www
 
 
 Extracting the webERP archive will create the webERP directory under the web server root directory with
@@ -125,12 +122,14 @@ all scripts and other files.
 ### 2. Configure file-level security (optional)
 
 You can add an extra layer of security by restricting access to webERP system using a server level username
-and password, in addition to the username and password authentication authentication built into webERP
+and password, in addition to the username and password authentication built into webERP
 itself. However, configuring the server for TLS encryption and using strong username passwords will likely
 be adequate.
 
-2.1 Assuming you are using a web server that supports .htaccess (e.g. Apache HTTP Server), edit the webERP
-.htaccess file as follows:
+#### 2.1
+
+Assuming you are using a web server that supports .htaccess (e.g. Apache HTTP Server), edit the webERP
+`.htaccess` file as follows:
 
 	php_flag magic_quotes_gpc off
 	php_flag register_globals off
@@ -156,10 +155,16 @@ be adequate.
 	</Files>
 
 
-2.2 Create a password file called .../htdocs/webERP/.htpasswd:
+#### 2.2
+
+Create a password file called .../htdocs/webERP/.htpasswd:
+
 	# htpasswd -n john.smith
 
-2.3 Use command "htpasswd -n" to create sample lines which will be of the format
+#### 2.3
+
+Use command "htpasswd -n" to create sample lines which will be of the format
+
 	john.smith:0123456789012345
 
 Where '0123456789012345' is the encrypted password for john.smith. Create one line for each webERP user.
@@ -170,7 +175,7 @@ the webpages in .../webERP.
 ### 3. Access the webERP web installer
 
 The webERP web installer to create a database (if the specified database does not already exist)
-and optionally populate with demom data. The installer will also create the webERP configuration
+and optionally populate with demo data. The installer will also create the webERP configuration
 file (config.php) which contains the database connection details including username and password, and
 the initial "admin" user details.
 
@@ -181,7 +186,7 @@ will use an existing database if one exists.
 
 webERP requires either MySQL version 4.1 or greater) or MariaDb 10.4+
 
-In webERP each company has its' own database. For example, if you have a company called MyCompany, webERP
+In webERP each company has its own database. For example, if you have a company called MyCompany, webERP
 expects there will be database named mycompany (in lower case). Before starting to install webERP, ensure
 that there is no database on your system with the same name. If there is, you will need to either remove it,
 rename it, or choose a different name for your company.
@@ -250,17 +255,19 @@ Also paraphrased from the MySQL manual:
 Two historical scripts are provided which can be used to manually creating the database schema and load demo
 data.
 
-./sql/mysql/country_sql/demo.sql
-- contains a minimal amount of demonstration data and bogus company setup so that transactions can be tried to
-  see how the system works.
+	./sql/mysql/country_sql/demo.sql
 
-./sql/mysql/country_sql/default.sql
-- contains  only the basic data necessary to start a new company.
+contains a minimal amount of demonstration data and bogus company setup so that transactions can be tried to
+see how the system works.
+
+	./sql/mysql/country_sql/default.sql
+
+contains  only the basic data necessary to start a new company.
 
 Both scripts are from version 4.15 and must be updated manually before using the new automatic update system.
 
-.\sql\mysql\upgrade4.15-4.15.1.sql
-.\sql\mysql\upgrade4.15.1-4.15.2.sql
+	.\sql\mysql\upgrade4.15-4.15.1.sql
+	.\sql\mysql\upgrade4.15.1-4.15.2.sql
 
 To use the default.sql file:
 
@@ -268,8 +275,7 @@ To use the default.sql file:
 
 You can also the following SQL commands to the top of the demo.sql script
 
-	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT
-		COLLATE utf8_unicode_ci;
+	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
 	USE mycompanyname
 
 Instead of mycompanyname use the name of your company. Note that the name of the database must all be in
@@ -277,11 +283,11 @@ lower case.
 
 This creates a weberp database and populates it with only the very basic data to start off.
 
-shell > mysql --user=weberp_db_user -p mysql < /path_to_the_sql_script/demo.sql
+	shell > mysql --user=weberp_db_user -p mysql < /path_to_the_sql_script/demo.sql
 
 or
 
-shell > mysql --user=weberp_db_user --p mysql < /path_to_the_sql_script/demo.sql
+	shell > mysql --user=weberp_db_user --p mysql < /path_to_the_sql_script/demo.sql
 
 as required. You will be prompted for the mysql password that you created earlier.
 
@@ -297,11 +303,11 @@ Copy the ./Companies/weberpdemo to ./Companies/mycompanyname
 
 #### 3.4 Edit config.php
 
-config.php is the low-level configuration file for webERP and is site specific. The config.distrib.php
+`config.php` is the low-level configuration file for webERP and is site specific. The `config.distrib.php`
 file is provided as a template.
 
 Copy config.distrib.php to config.php. Edit config.php with database connection parameters and any
-other relevent data.
+other relevant data.
 
 
 ### 4. Log into the system as the initial admin user to update the database
@@ -311,7 +317,7 @@ Browse to the site URL e.g. http://yourdomain/weberp (if you are using XAMPP htt
 Enter the web access password if file-level security was enabled (see above), accept all cookies and
 enter the initial admin username and password (admin/weberp if you accepted the default).
 
-- Select mycompanyname from the drop downlist.
+- Select mycompanyname from the drop down list.
 - Enter the user name 'admin'
 - Enter password 'weberp'
 
@@ -360,7 +366,7 @@ and a "Companies.php" file in the directory containing the full company name whi
 login screen).
 
 You may also get unexpected behavior attempting to login to a new or upgraded webERP system (e.g. "hey,
-I thought I deleted that company!" or "Why doesn't my password seem to work?"). Also the installer
+I thought I deleted that company!" or "Why doesn't my password seem to work?"). Also, the installer
 (and webERP itself) can store information in the users' browser which can affect the behavior of a new
 or upgraded site, in particular when logging in.
 
@@ -380,7 +386,7 @@ fresh or clean environment.
 ## Security
 
 Note: Once you have installed webERP it is important to remove the installer files by deleting the
-install directory and all the scripts underneath it. It is also wise to change the permissions on the
+installation directory and all the scripts underneath it. It is also wise to change the permissions on the
 config.php file to ensure that it can no longer be written to by the web-server.
 
 
