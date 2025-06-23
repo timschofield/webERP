@@ -64,8 +64,8 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -110,11 +110,15 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
     );
 
     public static $classMap = array (
+        'CachedFileReader' => __DIR__ . '/..' . '/smmoosavi/php-gettext-core/src/streams.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'Dompdf\\Cpdf' => __DIR__ . '/..' . '/dompdf/dompdf/lib/Cpdf.php',
+        'FileReader' => __DIR__ . '/..' . '/smmoosavi/php-gettext-core/src/streams.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
         'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
+        'StreamReader' => __DIR__ . '/..' . '/smmoosavi/php-gettext-core/src/streams.php',
+        'StringReader' => __DIR__ . '/..' . '/smmoosavi/php-gettext-core/src/streams.php',
         'TCPDF' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf.php',
         'TCPDF2DBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_2d.php',
         'TCPDFBarcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_barcodes_1d.php',
@@ -126,6 +130,7 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         'TCPDF_IMPORT' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_import.php',
         'TCPDF_PARSER' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf_parser.php',
         'TCPDF_STATIC' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/tcpdf_static.php',
+        'gettext_reader' => __DIR__ . '/..' . '/smmoosavi/php-gettext-core/src/gettext.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

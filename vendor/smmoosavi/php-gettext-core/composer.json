@@ -1,0 +1,19 @@
+{
+    "name": "smmoosavi/php-gettext-core",
+    "description": "php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
+    "authors": [
+        {
+            "name": "Seyyed Morteza Moosavi",
+            "email": "se.mo.moosavi@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/gettext.php",
+            "src/streams.php"
+        ]
+    }
+}

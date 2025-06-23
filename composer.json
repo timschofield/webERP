@@ -13,7 +13,8 @@
         "phpoffice/phpspreadsheet": "^4.1",
         "dompdf/dompdf": "^3.1",
         "phpxmlrpc/phpxmlrpc": "^4.11.0",
-        "tecnickcom/tcpdf": "=6.7.5"
+        "tecnickcom/tcpdf": "=6.7.5",
+        "smmoosavi/php-gettext-core": "^1.0.11-patch1"
     },
     "suggest": {
         "ext-bcmath": "Required to print barcode labels in PDFs",
@@ -21,7 +22,7 @@
         "ext-curl": "",
         "ext-ftp": "",
         "ext-gd": "Required to print barcode labels",
-        "ext-gettext": "",
+        "ext-gettext": "We provide a polyfill for this, but the php extension has better performances",
         "ext-mcrypt": "Improves the support for PDF files",
         "ext-iconv": "Required to print barcode labels in PDFs",
         "ext-simplexml": "Required to geocoding integration",

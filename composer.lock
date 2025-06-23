@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "251e14ea26166386cec6b6633d061480",
+    "content-hash": "a0fcb6a3667f30d5248f5d9c181ff315",
     "packages": [
         {
             "name": "composer/pcre",
@@ -1014,6 +1014,44 @@
                 "source": "https://github.com/MyIntervals/PHP-CSS-Parser/tree/v8.8.0"
             },
             "time": "2025-03-23T17:59:05+00:00"
+        },
+        {
+            "name": "smmoosavi/php-gettext-core",
+            "version": "v1.0.11-patch1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/smmoosavi/php-gettext-core.git",
+                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/smmoosavi/php-gettext-core/zipball/bfa049b1f1a4e7b8141c95780c51aba90e484188",
+                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/gettext.php",
+                    "src/streams.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Seyyed Morteza Moosavi",
+                    "email": "se.mo.moosavi@gmail.com"
+                }
+            ],
+            "description": "php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
+            "support": {
+                "issues": "https://github.com/smmoosavi/php-gettext-core/issues",
+                "source": "https://github.com/smmoosavi/php-gettext-core/tree/v1.0.11-patch1"
+            },
+            "time": "2015-10-27T19:27:20+00:00"
         },
         {
             "name": "tecnickcom/tcpdf",
