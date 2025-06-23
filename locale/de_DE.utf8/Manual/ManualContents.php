@@ -1,11 +1,12 @@
-<!-- This table of contents allows the choice to display one section or select multiple sections to format for print.
-     Selecting multiple sections is for printing
--->
+<?php
+/*
+This table of contents allows the choice to display one section or select multiple sections to format for print.
+Selecting multiple sections is for printing
 
-<!-- The individual topics in the manual are in straight html files that are called along with the header and foot from here.
-     No style, inline style or style sheet on purpose.
-     In this way the help can be easily broken into sections for online context-sensitive help.
-		 The only html used in them are:
+The individual topics in the manual are in straight html files that are called along with the header and foot from here.
+No style, inline style or style sheet on purpose.
+In this way the help can be easily broken into sections for online context-sensitive help.
+The only html used in them are:
 		 <br />
 		 <div>
 		 <table>
@@ -15,16 +16,17 @@
 		 <ul>
 		 <ol>
 
-		 Comments beginning with Help Begin and Help End denote the beginning and end of a section that goes into the online help.
-		 What section is named after Help Begin: and there can be multiple sections separated with a comma.
--->
+Comments beginning with Help Begin and Help End denote the beginning and end of a section that goes into the online help.
+What section is named after Help Begin: and there can be multiple sections separated with a comma.
+*/
 
-<?php
 //check for XSS
 if(strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')) {
 	//if so chop off the XSS code and just return the appropriate URL
 	header('Location: ' . 'http' . (($_SERVER['SERVER_PORT'] == 443) ? 's' : '')  . '://' . $_SERVER['HTTP_HOST'] . substr($_SERVER['REQUEST_URI'],0,strpos($_SERVER['REQUEST_URI'],'/%22%3E%3C')));
 }
+
+header('Content-Type: text/html; charset=windows-1252');
 
 include('ManualHeader.html');
 
@@ -33,7 +35,7 @@ include('ManualHeader.html');
 <?php
 if (((!isset($_POST['Submit'])) AND (!isset($_GET['ViewTopic']))) OR
      ((isset($_POST['Submit'])) AND (isset($_POST['SelectTableOfContents'])))) {
-// if not submittws then coming into manual to look at TOC
+// if not submitted then coming into manual to look at TOC
 // if SelectTableOfContents set then user wants it displayed
 ?>
 <?php
