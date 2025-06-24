@@ -121,7 +121,4 @@ error_reporting(E_ALL && ~E_NOTICE && E_WARNING);
 //error_reporting (-1);
 
 // Installed companies
-$CompanyList[0] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
-$CompanyList[1] = array('database'=>'your_db' ,'company'=>'Your Company inc' );
-/*Make sure there is nothing - not even spaces after this last ?> */
-?>
+// - see companies/dbname/Companies.php
