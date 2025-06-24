@@ -20,18 +20,30 @@ if (isset($_POST['install'])) {
 	}
 }
 
+/**
+ * @todo we miss the PORT setting!
+ * @return string[] error messages
+ */
 function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
+	$Errors = [];
+
 	$DB = @mysqli_connect($HostName, $UserName, $Password);
 
 	if (!$DB) {
 		$Errors[] = _('Failed to connect the database management system');
+		return;
 	} else {
+		// avoid exceptions being thrown on query errors
+		mysqli_report(MYSQLI_REPORT_ERROR);
+
+		mysqli_set_charset($DB, 'utf8');
+
 		$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
 		$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 	}
 
-	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . $DataBaseName . "'";
-	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . $UserName . "'@'" . $HostName . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
+	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
+	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
 
 	$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
 	$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
@@ -42,21 +54,30 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 		if ($Privileges == 0) {
 			$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
 		} else { /* Then we can create the database */
+			/// @todo add utf8-mb4 as default charset
 			$SQL = "CREATE DATABASE " . $DataBaseName;
-			$Result = @mysqli_query($DB, $SQL);
+			if (!@mysqli_query($DB, $SQL)) {
+				$Errors[] = _('Failed treating the database');
+			}
 		}
 	} else { /* Need to make sure any data is removed from existing DB */
+		/// @todo this is incomplete - and dangerous!
 		$SQL = "SELECT 'TRUNCATE TABLE ' + table_name + ';' FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
 		$Result = @mysqli_query($DB, $SQL);
 	}
+
+	return $Errors;
 }
 
-CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
+$Errors = CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
+
+/// @todo exit if any errors
 
 include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
-$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
+// gg: unused variable?
+//$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
 
 include ('../includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
@@ -211,7 +232,7 @@ function CreateTables($Path_To_Root) {
 	foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
-		$Result = DB_query($SQLScriptFile);
+		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no($Result);
 	}
 	if ($DBErrors > 0) {
