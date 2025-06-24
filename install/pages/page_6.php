@@ -57,7 +57,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 			/// @todo add utf8-mb4 as default charset
 			$SQL = "CREATE DATABASE " . $DataBaseName;
 			if (!@mysqli_query($DB, $SQL)) {
-				$Errors[] = _('Failed treating the database');
+				$Errors[] = _('Failed creating the database');
 			}
 		}
 	} else { /* Need to make sure any data is removed from existing DB */
@@ -232,6 +232,7 @@ function CreateTables($Path_To_Root) {
 	foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
+		// avoid the standard error-handling kicking in
 		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no($Result);
 	}
