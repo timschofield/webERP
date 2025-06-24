@@ -10,6 +10,7 @@ if (isset($_POST['test'])) {
 	$_SESSION['Installer']['Password'] = $_POST['Password'];
 	$_SESSION['Installer']['DBMS'] = $_POST['dbms'];
 	try {
+		/// @todo we lost the PORT!
 		$conn = mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], 'information_schema');
 		$Result = 'valid';
 		$Message = _('Database connection working');
