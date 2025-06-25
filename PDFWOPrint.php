@@ -128,7 +128,7 @@ if (!isset($_GET['WO']) AND !isset($_POST['WO'])) {
 
 	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a Work order number to print');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
-	exit;
+	exit();
 }
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -142,7 +142,7 @@ if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 		include('includes/header.php');
 		prnMsg(_('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -517,7 +517,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$PdfFileName = $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		
+
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								_('Work Order Number') . ' ' . $SelectedWO,

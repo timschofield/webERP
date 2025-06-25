@@ -27,7 +27,7 @@ if (isset($StockID)){
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<div class="centre"><h3>' . $StockID . ' - ' . $MyRow[0] . '  (' . _('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
 }

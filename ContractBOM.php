@@ -15,7 +15,7 @@ $identifier=$_GET['identifier'];
 
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . $RootPath . '/Contracts.php');
-	exit;
+	exit();
 }
 
 $ViewTopic= 'Contracts';
@@ -42,7 +42,7 @@ if (isset($_POST['BackToHeader'])){
 	echo '<br />';
 	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['Search'])){  /*ie seach for stock items */
@@ -210,7 +210,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 			} /* end of if not already on the contract BOM */
 		} /* the quantity of the item is > 0 */
@@ -359,7 +359,7 @@ if (isset($SearchResult)) {
         $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($Glob);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
-		
+
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>

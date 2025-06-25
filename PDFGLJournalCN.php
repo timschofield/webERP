@@ -146,10 +146,9 @@ if ($LineCount == 0) {   //UldisN
 	prnMsg(_('There were no GRN to print'),'warn');
 	echo '<br /><a href="'.$RootPath.'/index.php">'. _('Back to the menu').'</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
     $pdf->__destruct(); //UldisN
 }
 ?>
-

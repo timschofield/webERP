@@ -33,13 +33,13 @@ unset($_SESSION['WarnOnce']);
 if(!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['Items'.$identifier]->DebtorNo)) {
 	prnMsg(_('This page can only be read if an order has been entered') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 	prnMsg(_('This page can only be read if an there are items on the order') . '. ' . _('To enter an order select customer transactions then sales order entry'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Calculate the earliest dispacth date in DateFunctions.php */
@@ -173,7 +173,7 @@ if(isset($_POST['Update'])
 				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if(!isset($_POST['SpecialInstructions'])) {
 			$_POST['SpecialInstructions']='';
@@ -279,7 +279,7 @@ if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors) {
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier='.$identifier  . '&amp;NewRecurringOrder=Yes">';
 	prnMsg(_('You should automatically be forwarded to the entry of recurring order details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier='.$identifier . '&amp;NewRecurringOrder=Yes">' . _('click here') . '</a> '. _('to continue'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -288,7 +288,7 @@ if(isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==_('Modify
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier  . '">';
 	prnMsg(_('You should automatically be forwarded to the entry of the order line details page') . '. ' . _('If this does not happen') . '(' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier . '">' . _('click here') . '</a> '. _('to continue'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 
 }
 
@@ -535,12 +535,12 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 				//Send email to the Factory Manager
-				SendEmailFromWebERP($SysAdminEmail, 
+				SendEmailFromWebERP($SysAdminEmail,
 									$_SESSION['FactoryManagerEmail'],
 									$EmailSubject,
 									$FactoryManagerEmail,
 									'',
-									false);	
+									false);
 
 			}//end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
@@ -605,7 +605,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 
 } elseif(isset($OK_to_PROCESS) AND ($OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$identifier]!=0)) {
 
@@ -804,7 +804,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		</fieldset>';
 	}//end of print orders
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 

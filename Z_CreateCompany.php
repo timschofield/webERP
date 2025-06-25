@@ -20,7 +20,7 @@ if ($MyRow[0]==0){
 } else {
 	prnMsg(_('An existing company record is set up already. No alterations have been made'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Need to have a sales order record set up */

@@ -60,7 +60,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
@@ -70,7 +70,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg (_('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$Head++;
 	}
@@ -88,7 +88,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)

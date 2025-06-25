@@ -171,12 +171,12 @@ if (isset($_GET['ModifyOrderNumber'])
 		if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$MyRow['salesman']){
 			prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to modify this order'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if ($CustomerLogin == 1 AND $_SESSION['CustomerID'] != $MyRow['debtorno']) {
 			echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
 			include('includes/footer.php');
-			exit;
+			exit();
 
 		}
 		$_SESSION['Items'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
@@ -467,7 +467,7 @@ if (isset($SelectedCustomer)) {
 				prnMsg( _('The SQL that failed to get the branch details was') . ':<br />' . $SQL . 'warning');
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		// add echo
 		echo '<br />';
@@ -475,7 +475,7 @@ if (isset($SelectedCustomer)) {
 		if ($_SESSION['SalesmanLogin']!=NULL AND $_SESSION['SalesmanLogin']!=$MyRow['salesman']){
 			prnMsg(_('Your login is only set up for a particular salesperson. This customer has a different salesperson.'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$_SESSION['Items'.$identifier]->DeliverTo = $MyRow['brname'];
 		$_SESSION['Items'.$identifier]->DelAdd1 = $MyRow['braddress1'];
@@ -508,7 +508,7 @@ if (isset($SelectedCustomer)) {
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
 				prnMsg(_('No more orders can be placed by') . ' ' . htmlspecialchars($MyRow[0], ENT_QUOTES, 'UTF-8', false) . ' ' . _(' their account is currently at or over their credit limit'),'warn');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 
@@ -582,7 +582,7 @@ if (isset($SelectedCustomer)) {
 		} else {
 			prnMsg(_('Sorry, your account has been put on hold for some reason, please contact the credit control personnel.'),'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 }
@@ -709,7 +709,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<br /><br />';
 			prnMsg(_('This sales order has been cancelled as requested'),'success');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	} else { /*Not cancelling the order */
 
@@ -1200,7 +1200,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">';
 		prnMsg(_('You should automatically be forwarded to the entry of the delivery details page') . '. ' . _('if this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
 		   '<a href="' . $RootPath . '/DeliveryDetails.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
-	   	exit;
+	   	exit();
 	}
 
 

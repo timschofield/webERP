@@ -33,7 +33,7 @@ if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 While ($MyRow = DB_fetch_row($Result)){

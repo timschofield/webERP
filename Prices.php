@@ -20,7 +20,7 @@ if (DB_num_rows($TypeResult) == 0) {
 		' <a href="' . $RootPath . '/SelectProduct.php" target="_blank">' .
 		' ' . _('here') . ' ' . '</a>' . _('to create them'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
@@ -67,7 +67,7 @@ if (!isset($Item)) {
 	prnMsg(_('An item must first be selected before this page is called') . '. ' .
 		_('The product selection page should call this page with a valid product code'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $PartDescription = $MyRow[0];
@@ -76,7 +76,7 @@ if ($MyRow[1] == 'K') {
 	prnMsg(_('The part selected is a kit set item') . ', ' .
 		_('these items explode into their components when selected on an order') . ', ' .
 		_('prices must be set up for the components and no price can be set for the whole kit'), 'error');
-	exit;
+	exit();
 }
 
 if (isset($_POST['submit'])) {
@@ -354,7 +354,7 @@ while ($MyRow = DB_fetch_array($TypeResult)) {
 echo '</select>
 	</field>';
 
-DB_free_result($TypeResult); 
+DB_free_result($TypeResult);
 
 if (!isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -432,7 +432,7 @@ function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {
 									AND startdate ='" . $StartDate . "'
 									AND enddate = '" . $EndDate . "'
 									AND debtorno =''";
-					DB_query($SQL); 
+					DB_query($SQL);
 				}
 			} //end of if startdate  after NextStartDate - we have a new NextStartDate
 		} //end of if set NextStartDate

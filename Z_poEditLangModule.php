@@ -26,7 +26,7 @@ if (isset($_POST['ReMergePO'])){
 /*update the messages.po file with any new strings */
 	if (!function_exists('msgmerge')) {
 		prnMsg(_('The gettext utilities must be present on your server for these language utilities to work'),'error');
-		exit;
+		exit();
 	} else {
 /*first rebuild the en_GB default with xgettext */
 
@@ -41,7 +41,7 @@ if (isset($_POST['ReMergePO'])){
 
 		system($MsgMergeCmd);
 		//$Result = rename($PathToNewLanguage, $PathToLanguage);
-		exit;
+		exit();
 	}
 }
 

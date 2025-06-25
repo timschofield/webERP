@@ -96,7 +96,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	if (!is_numeric($_POST['PeriodFrom']) OR !is_numeric($_POST['PeriodTo'])) {
 		prnMsg(_('The period to and period from must both be entered as numbers'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$PeriodFromName = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
 	$PeriodToName = EndDateSQLFromPeriodNo($_POST['PeriodTo']);

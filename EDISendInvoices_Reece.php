@@ -30,7 +30,7 @@ $SQL = 'SELECT debtorno,
 $EDIInvCusts = DB_query($SQL);
 
 if (DB_num_rows($EDIInvCusts) == 0) {
-	exit;
+	exit();
 }
 
 while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
@@ -103,12 +103,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 		$ShipToFreight = number_format(round($TransDetails['ovfreight'], 2), 2, '.', '');
 		$SegCount = 1;
 
-		$DatePaymentDue = ConvertToEDIDate(CalcDueDate(ConvertSQLDate($TransDetails['trandate']), 
+		$DatePaymentDue = ConvertToEDIDate(CalcDueDate(ConvertSQLDate($TransDetails['trandate']),
 			$CustDetails['dayinfollowingmonth'], $CustDetails['daysbeforedue']));
 
-		$TotalAmountExclTax = number_format(($TransDetails['ovamount'] + $TransDetails['ovfreight'] + 
+		$TotalAmountExclTax = number_format(($TransDetails['ovamount'] + $TransDetails['ovfreight'] +
 			$TransDetails['ovdiscount']), 2, '.', '');
-		$TotalAmountInclTax = number_format(($TransDetails['ovamount'] + $TransDetails['ovfreight'] + 
+		$TotalAmountInclTax = number_format(($TransDetails['ovamount'] + $TransDetails['ovfreight'] +
 			$TransDetails['ovdiscount'] + $TransDetails['ovgst']), 2, '.', '');
 
 		// **************Need to get delivery address as may be diff from branch address
@@ -173,7 +173,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 		if ($ShipToFreight > 0) {
 			$FreightTax = number_format(round(($ShipToFreight * $TaxRate / 100), 2), 2, '.', '');
-			$Freight_YN = "ALC+C" . "'" . "MOA+64:" . $ShipToFreight . "'" . "TAX+7+GST+++:::" . $TaxRate . "'" . 
+			$Freight_YN = "ALC+C" . "'" . "MOA+64:" . $ShipToFreight . "'" . "TAX+7+GST+++:::" . $TaxRate . "'" .
 				"MOA+124:" . $FreightTax . "'";
 			$SegCount = $SegCount + 3;
 		} else {
@@ -184,9 +184,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 
 		// Get the message lines, replace variable names with data, write the output to a file one line at a time
 
-		$SQL = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] . 
+		$SQL = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] .
 			"' AND messagetype='INVOIC' ORDER BY sequenceno";
-		$ErrMsg = _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . 
+		$ErrMsg = _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' .
 			_('because');
 		$MessageLinesResult = DB_query($SQL, $ErrMsg);
 
@@ -271,12 +271,12 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 						$ItemDescription = $TransLines['description'];
 						$QtyInvoiced = $TransLines['quantity'];
 						$LineTotalExclTax = number_format(round($TransLines['fxnet'], 3), 2, '.', '');
-						$UnitPriceExclTax = number_format(round($TransLines['fxnet'] / $TransLines['quantity'], 3), 
+						$UnitPriceExclTax = number_format(round($TransLines['fxnet'] / $TransLines['quantity'], 3),
 							2, '.', '');
 						$LineTaxAmount = number_format(round($TaxRate / 100 * $TransLines['fxnet'], 3), 2, '.', '');
-						$LineTotalInclTax = number_format(round((1 + $TaxRate / 100) * $LineTotalExclTax, 3), 
+						$LineTotalInclTax = number_format(round((1 + $TaxRate / 100) * $LineTotalExclTax, 3),
 							2, '.', '');
-						$UnitPriceInclTax = number_format(round((1 + $TaxRate / 100) * $UnitPriceExclTax, 2), 
+						$UnitPriceInclTax = number_format(round((1 + $TaxRate / 100) * $UnitPriceExclTax, 2),
 							2, '.', '');
 
 						/*now work through the detail line segments */
@@ -299,8 +299,8 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			DB_query("UPDATE debtortrans SET EDISent=1 WHERE ID=" . $TransDetails['id']);
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport'] == 'email') {
-				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . 
-					$_SESSION['CompanyRecord']['email'] . ">", 
+				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" .
+					$_SESSION['CompanyRecord']['email'] . ">",
 					$CustDetails['ediaddress'],
 					'EDI Invoice/Credit Note ' . $TransNo,
 					'',
@@ -312,33 +312,33 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 					prnMsg(_('EDI Message') . ' ' . $TransNo . ' ' . _('was sucessfully emailed'), 'success');
 				} else {
 					echo '<BR><BR>';
-					prnMsg(_('EDI Message') . ' ' . $TransNo . _('could not be emailed to') . ' ' . 
+					prnMsg(_('EDI Message') . ' ' . $TransNo . _('could not be emailed to') . ' ' .
 						$CustDetails['ediaddress'], 'error');
 				}
 			} else { /*it must be ftp transport */
 
-				// Godaddy limitations make it impossible to sftp using ssl or curl, so save to EDI_Sent file and 
+				// Godaddy limitations make it impossible to sftp using ssl or curl, so save to EDI_Sent file and
 				// 'rsynch' back to sftp server
 
 				/* set up basic connection
 				$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
-				$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); 
+				$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']);
 				// check connection
 				if ((!$conn_id) || (!$login_result)) {
-					prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' . 
+					prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' .
 						$CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
-				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 
+				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo,
 					'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
 				if (!$MessageSent) {
 					echo '<BR><BR>';
-					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' . 
+					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' .
 						$CustDetails['ediaddress'],'error');
 				} else {
 					echo '<BR><BR>';
-					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . 
+					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' .
 						$CustDetails['ediaddress'],'success');
 				} // close the FTP stream
 				ftp_quit($conn_id);
@@ -353,7 +353,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			}
 
 		} else {
-			prnMsg(_('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' . 
+			prnMsg(_('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' .
 				$CustDetails['debtorno'], 'error');
 		} /*End if there is a message template defined for the customer invoic*/
 

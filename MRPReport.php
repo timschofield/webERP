@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($Result) == 0) {
@@ -45,7 +45,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$Requirements = array();
@@ -146,7 +146,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (count($Supplies)) {
@@ -531,7 +531,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (DB_num_rows($Result1) == 0) {
 		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
 		echo '<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		exit;
+		exit();
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">

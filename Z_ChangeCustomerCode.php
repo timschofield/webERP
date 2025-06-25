@@ -18,21 +18,21 @@ if (isset($_POST['ProcessCustomerChange'])){
 	if (DB_num_rows($Result)==0){
 		prnMsg ('<br /><br />' . _('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . _('does not currently exist as a customer code in the system'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
 	if ($_POST['NewDebtorNo']==''){
 		prnMsg(_('The new customer code to change the old code to must be entered as well'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 /*Now check that the new code doesn't already exist */
 	$Result=DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['NewDebtorNo'] . "'");
 	if (DB_num_rows($Result)!=0){
 		prnMsg(_('The replacement customer code') .': ' . $_POST['NewDebtorNo'] . ' ' . _('already exists as a customer code in the system') . ' - ' . _('a unique customer code must be entered for the new code'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	DB_Txn_Begin();

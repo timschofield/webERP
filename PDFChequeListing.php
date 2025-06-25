@@ -54,13 +54,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	} elseif (DB_num_rows($Result) == 0){
 		$Title = _('Payment Listing');
 		include('includes/header.php');
 		prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$HTML = '';
@@ -123,7 +123,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL, 'error');
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		while ($GLRow=DB_fetch_array($GLTransResult)){
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
@@ -240,6 +240,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</form>';
 
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 ?>

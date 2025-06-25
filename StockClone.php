@@ -284,7 +284,7 @@ if (isset($_POST['submit'])) {
 			if (DB_num_rows($Result)==1){
 				prnMsg(_('The stock code entered is already in the database - duplicate stock codes are prohibited by the system. Try choosing an alternative stock code'),'error');
 				$Errors[$i] = 'DuplicateStockID';
-				//exit;
+				//exit();
 			} else {
 				DB_Txn_Begin();
 				$SQL = "INSERT INTO stockmaster (stockid,
@@ -508,7 +508,7 @@ if (isset($_POST['submit'])) {
 
 					//now update cloned item costs
 						DB_Txn_Begin();
-						$SQL = "UPDATE stockmaster 	
+						$SQL = "UPDATE stockmaster
 								SET	materialcost ='" . $OldRow['materialcost'] . "',
 									labourcost ='" . $OldRow['labourcost'] . "',
 									overheadcost ='" . $OldRow['overheadcost'] . "',

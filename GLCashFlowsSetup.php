@@ -138,7 +138,7 @@ switch($_POST['Action']) {
 		break;// END Automatic.
 	case 'Manual':
 		echo "<script>window.location = 'GLAccounts.php';</script>";
-		die();
+		exit();
 	default:
 		// No reset , nor Automatic
 }

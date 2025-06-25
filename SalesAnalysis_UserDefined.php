@@ -6,7 +6,7 @@ include('includes/session.php');
 
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . _('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
-	exit;
+	exit();
 }
 
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
@@ -26,7 +26,7 @@ if (isset($_GET['ProducePDF'])){
 		echo '<br /><a href="' . $RootPath . '/SalesAnalRepts.php?SelectedReport=' . $_GET['ReportID'] . '">' . _('Look at the design of this report') . '</a>';
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 } /* end if we wanted a PDF file */
 

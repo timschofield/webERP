@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	  /*Now figure out the data to report for the category range under review */
@@ -91,7 +91,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($ClaimsResult) == 0) {
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		prnMsg(_('No sell through support items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$HTML .= '<table>';

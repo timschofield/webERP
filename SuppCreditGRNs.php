@@ -27,7 +27,7 @@ if (!isset($_SESSION['SuppTrans'])){
 	echo '<br />
 		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 	/*It all stops here if there aint no supplier selected and credit note initiated ie $_SESSION['SuppTrans'] started off*/
 }
 

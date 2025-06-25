@@ -38,7 +38,7 @@ If (DB_num_rows($Result)==0){
 	include ('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $NegativesRow = DB_fetch_array($Result);

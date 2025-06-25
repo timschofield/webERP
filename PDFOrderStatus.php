@@ -175,13 +175,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	} elseif (DB_num_rows($Result)==0){
 		$Title=_('Order Status Report - No Data');
 		include('includes/header.php');
 		prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$OrderNo =0; /*initialise */

@@ -151,7 +151,7 @@ if (isset($_POST['CheckCode'])) {
 	}
 	echo '</table>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
@@ -374,7 +374,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		if ($_SESSION['InventoryManagerEmail']!=''){
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
-			SendEmailFromWebERP($SysAdminEmail, 
+			SendEmailFromWebERP($SysAdminEmail,
 								$_SESSION['InventoryManagerEmail'],
 								$EmailSubject,
 								$ConfirmationText,

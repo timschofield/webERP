@@ -37,7 +37,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	  /*Now figure out the data to report for the category range under review */
@@ -75,7 +75,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($LowGPSalesResult) == 0) {
@@ -87,7 +87,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$HTML .= '<table>
 				<tr>

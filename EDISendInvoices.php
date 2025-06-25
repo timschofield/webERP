@@ -22,7 +22,7 @@ $SQL = "SELECT debtorno,
 $EDIInvCusts = DB_query($SQL);
 
 if (DB_num_rows($EDIInvCusts)==0){
-	exit;
+	exit();
 }
 
 while ($CustDetails = DB_fetch_array($EDIInvCusts)){
@@ -211,7 +211,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport']=='email'){
 
-				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">", 
+				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">",
 												$CustDetails['ediaddress'],
 												'EDI Invoice/Credit Note ' . $EDITransNo,
 												'',
@@ -233,7 +233,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				if ((!$conn_id) || (!$login_result)) {
 					prnMsg( _('Ftp connection has failed'). '<br />' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
 				if (!$MessageSent) {

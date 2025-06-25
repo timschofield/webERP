@@ -195,7 +195,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 			_('it cannot do this if a period of more than 12 months is specified') . '. ' .
 			_('Please select an alternative period range'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
