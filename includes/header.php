@@ -2,11 +2,11 @@
 // Titles and screen header
 // $Title - should be defined in the page this file is included with, before the include to this header.php
 
-Global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
-Global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
+global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
+global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
 
 if (!isset($RootPath)) {
-	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
+	$RootPath = htmlspecialchars(dirname($_SERVER['PHP_SELF']), ENT_QUOTES, 'UTF-8');
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
@@ -25,7 +25,7 @@ if ($LanguagesArray[$_SESSION['Language']]['Direction'] == 'rtl' and mb_substr($
 	$_SESSION['Theme'] = $_SESSION['Theme'] . '-rtl';
 }
 
-if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
+if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify header information in CopyBOM.php scripts
 	ob_start();
 }
 
