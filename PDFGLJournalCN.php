@@ -151,5 +151,3 @@ if ($LineCount == 0) {   //UldisN
     $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . date('Y-m-d').'.pdf');//UldisN
     $pdf->__destruct(); //UldisN
 }
-?>
-

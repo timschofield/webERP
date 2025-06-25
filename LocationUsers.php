@@ -264,4 +264,3 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 }
 
 include('includes/footer.php');
-?>

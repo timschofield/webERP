@@ -179,5 +179,3 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 }
 
 include('includes/footer.php');
-
-?>

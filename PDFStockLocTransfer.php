@@ -112,4 +112,3 @@ do {
 } while ($TransferRow = DB_fetch_array($Result));
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-?>

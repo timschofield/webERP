@@ -128,5 +128,3 @@ $pdf->line($Page_Width - $Right_Margin + 10, $Bottom_Margin + 10, $Page_Width - 
 $YPos -= $LineHeight * 2;
 
 $FontSize = 12;
-
-?>

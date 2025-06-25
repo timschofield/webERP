@@ -102,5 +102,3 @@ if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier){
 }
 
 include('includes/footer.php');
-exit;
-?>

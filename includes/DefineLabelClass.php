@@ -172,4 +172,3 @@ function abortMsg($Msg) {
     include ('includes/footer.php');
     exit;
 }
-?>

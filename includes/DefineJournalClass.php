@@ -70,5 +70,3 @@ Class JournalGLAnalysis {
 
 	}
 }
-
-?>

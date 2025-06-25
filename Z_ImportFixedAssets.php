@@ -316,4 +316,3 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 }
 
 include('includes/footer.php');
-?>

@@ -613,5 +613,3 @@ if(isset($_POST['SupplierID'])) {
 	include('includes/footer.php');
 	exit;
 }
-
-?>

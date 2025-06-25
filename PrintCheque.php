@@ -191,5 +191,3 @@ function number_to_words($Number) {
 
 	return $NumberInWords;
 }
-
-?>

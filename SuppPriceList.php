@@ -333,8 +333,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 
 } /*end of else not PrintPDF */
 
-
-
 function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices) {
 
@@ -352,4 +350,3 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$FontSize=8;
 	$PageNumber++;
 } // End of PrintHeader() function
-?>

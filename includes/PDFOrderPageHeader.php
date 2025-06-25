@@ -77,5 +77,3 @@ if (mb_strlen($LeftOvers)>1){
 }
 
 $YPos = 414;
-
-?>

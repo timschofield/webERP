@@ -239,4 +239,3 @@ if ($AlreadyOnThisOrder!=1){
 	     }
 	}
 } /* end of if not already on the order */
-?>

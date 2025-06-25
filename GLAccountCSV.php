@@ -271,4 +271,3 @@ if (isset($_POST['MakeCSV'])) {
 } /* end of if CreateCSV button hit */
 
 include ('includes/footer.php');
-?>

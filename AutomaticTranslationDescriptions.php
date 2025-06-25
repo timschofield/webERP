@@ -100,4 +100,3 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 }
 
 include ('includes/footer.php');
-?>

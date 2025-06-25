@@ -70,7 +70,7 @@
 		}
 		if (sizeof($Errors)==0) {
 			$SQL = 'INSERT INTO chartmaster ('.mb_substr($FieldNames,0,-2).') '.
-		  		"VALUES ('".mb_substr($FieldValues,0,-2)."') ";
+				"VALUES ('".mb_substr($FieldValues,0,-2)."') ";
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -126,5 +126,3 @@
 		$Result = DB_query($SQL);
 		return DB_fetch_array($Result);
 	}
-
-?>

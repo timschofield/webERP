@@ -183,4 +183,3 @@ else {
 	echo '</form>';
 }
 include ('includes/footer.php');
-?>

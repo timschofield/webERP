@@ -614,5 +614,3 @@ if (isset($_POST['AllocTrans'])) {
 }
 
 include('includes/footer.php');
-
-?>

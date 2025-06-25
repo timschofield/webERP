@@ -288,4 +288,3 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	</form>';
 }
 include('includes/footer.php');
-?>

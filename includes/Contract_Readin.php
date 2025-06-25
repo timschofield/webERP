@@ -104,4 +104,3 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 		} /* add other contract requirments lines*/
 	} //end is there are contract other contract requirments to add
 } // end if there was a header for the contract
-?>

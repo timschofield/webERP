@@ -200,4 +200,3 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
  echo '</table>';
 }
 include('includes/footer.php');
-?>

@@ -117,4 +117,3 @@ if (DB_num_rows($Result)>0){
 	$pdf->__destruct();
 }
 /*end of else not PrintPDF */
-?>

@@ -768,7 +768,7 @@ class Mail_mimePart
             $add_len = strlen($prefix . $suffix) + strlen($name) + 6;
             $len = $add_len + strlen($Value);
 
-            while ($len > $maxLength) { 
+            while ($len > $maxLength) {
                 // We can cut base64-encoded string every 4 characters
                 $real_len = floor(($maxLength - $add_len) / 4) * 4;
                 $_quote = substr($Value, 0, $real_len);

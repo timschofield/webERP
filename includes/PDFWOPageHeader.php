@@ -72,4 +72,3 @@ $pdf->addText($FormDesign->Headings->Column5->x,$Page_Height - $FormDesign->Head
 $pdf->addText($FormDesign->Headings->Column6->x,$Page_Height - $FormDesign->Headings->Column6->y, $FormDesign->Headings->Column6->FontSize, _('Units') );
 /*draw a rectangle to hold the data lines */
 $pdf->Rectangle($FormDesign->DataRectangle->x, $Page_Height - $FormDesign->DataRectangle->y, $FormDesign->DataRectangle->width,$FormDesign->DataRectangle->height);
-?>

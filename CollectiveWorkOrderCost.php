@@ -530,4 +530,3 @@ if (!isset($StockID)) {
 }
 
 include('includes/footer.php');
-?>

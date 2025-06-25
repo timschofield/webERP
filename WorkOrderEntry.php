@@ -650,7 +650,7 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				
+
 				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 				echo '<tr class="striped_row">
@@ -674,4 +674,3 @@ if (isset($SearchResult)) {
 } //end if SearchResults to show
 echo '</form>';
 include ('includes/footer.php');
-?>

@@ -10,5 +10,3 @@ if (DB_error_no($Result) == 0) {
 }
 
 UpdateDBNo(basename(__FILE__, '.php'), _('Change column lastpaiddate in suppliers table to be of type date, not datetime'));
-
-?>

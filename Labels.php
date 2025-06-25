@@ -20,8 +20,6 @@ $PaperSize['Letter']['PageWidth'] = 215.9;
 $PaperSize['Legal']['PageHeight'] = 355.6;
 $PaperSize['Legal']['PageWidth'] = 215.9;
 
-
-
 $LabelPaper['DPS01 *']['PageWidth'] = 210;
 $LabelPaper['DPS01 *']['PageHeight']= 297;
 $LabelPaper['DPS01 *']['Height'] 	= 297;
@@ -616,5 +614,3 @@ echo '<br />
 	</form>';
 
 include('includes/footer.php');
-
-?>

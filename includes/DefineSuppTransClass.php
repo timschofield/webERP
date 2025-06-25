@@ -354,8 +354,6 @@ all the info to do the necessary entries without looking up ie additional querie
 					$GRNBatchNo,
 					$SupplierRef=''){
 
-
-
 	/* Constructor function to add a new GRNs object with passed params */
 		$this->GRNNo = $GRNNo;
 		$this->PODetailItem = $PODetailItem;
@@ -590,4 +588,3 @@ Class Tax {
 	}
 
 }
-?>

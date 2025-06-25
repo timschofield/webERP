@@ -59,4 +59,3 @@ while ($MyRow=DB_fetch_array($AccountsResult)) {
 
 echo '</table>';
 include('includes/footer.php');
-?>

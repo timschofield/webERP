@@ -1178,4 +1178,3 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 
 echo '</form>';
 include ('includes/footer.php');
-?>

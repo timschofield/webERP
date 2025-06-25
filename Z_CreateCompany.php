@@ -98,4 +98,3 @@ if ($MyRow[0]==0){
 prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
 
 include('includes/footer.php');
-?>

@@ -430,5 +430,3 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 }
 
 include ('includes/footer.php');
-
-?>

@@ -349,4 +349,3 @@ if (!class_exists('Cpdf', false)) {
 
 	} // end of class
 } //end if  Cpdf class exists already
-?>

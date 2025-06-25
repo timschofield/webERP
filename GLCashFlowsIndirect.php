@@ -538,4 +538,3 @@ echo	'</form>';
 if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/footer.php');
 }
-?>
