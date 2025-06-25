@@ -1,5 +1,5 @@
-﻿<?php
-/* CountriesArray.php */
+<?php
+
 /* Country codes based on the two-letter alphabetic code from ISO 3166-1:2013 Codes for the representation of names of countries and their subdivisions. Part 1: Country codes. */
 
 $CountriesArray =  array();
