@@ -7,4 +7,4 @@ CREATE TABLE `mrprequirements` (
   `directdemand` smallint DEFAULT NULL,
   `whererequired` char(20) DEFAULT NULL,
   KEY `part` (`part`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

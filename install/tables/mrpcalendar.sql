@@ -4,4 +4,4 @@ CREATE TABLE `mrpcalendar` (
   `manufacturingflag` smallint NOT NULL DEFAULT '1',
   PRIMARY KEY (`calendardate`),
   KEY `daynumber` (`daynumber`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

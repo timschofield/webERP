@@ -8,4 +8,4 @@ CREATE TABLE `currencies` (
   `webcart` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'If 1 shown in weberp cart. if 0 no show',
   PRIMARY KEY (`currabrev`),
   KEY `Country` (`country`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -7,4 +7,4 @@ CREATE TABLE `mrpparameters` (
   `usemrpdemands` varchar(5) DEFAULT NULL,
   `userldemands` varchar(5) DEFAULT NULL,
   `leeway` smallint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

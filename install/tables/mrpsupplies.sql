@@ -9,4 +9,4 @@ CREATE TABLE `mrpsupplies` (
   `updateflag` smallint DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `part` (`part`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
