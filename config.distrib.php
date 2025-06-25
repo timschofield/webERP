@@ -29,10 +29,10 @@ $SysAdminEmail = 'admin@mydomain.com';
 // should always be set correctly (and PHP used to complain if not set)
 //date_default_timezone_set('Europe/London');
 //date_default_timezone_set('America/Los_Angeles');
-date_default_timezone_set('Asia/Shanghai');
+//date_default_timezone_set('Asia/Shanghai');
 //date_default_timezone_set('Australia/Melbourne');
 //date_default_timezone_set('Australia/Sydney');
-//date_default_timezone_set('Pacific/Auckland');
+date_default_timezone_set('Pacific/Auckland');
 
 // Connection information for the database
 // $Host is the computer ip address or name where the database is located
@@ -121,7 +121,4 @@ error_reporting(E_ALL && ~E_NOTICE && E_WARNING);
 //error_reporting (-1);
 
 // Installed companies
-$CompanyList[0] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
-$CompanyList[1] = array('database'=>'your_db' ,'company'=>'Your Company inc' );
-/*Make sure there is nothing - not even spaces after this last ?> */
-?>
+// - see companies/dbname/Companies.php

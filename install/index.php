@@ -74,7 +74,9 @@ echo '<body>';
 echo '<div class="wizard">
 		<header>', $Title, '</header>
 		<img id="main_icon" src="images/installer.png" />';
+
 include('pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+
 echo '<footer>';
 
 if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer']['License_Agreed'] and $_SESSION['Installer']['CurrentPage'] == 1) {

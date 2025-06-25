@@ -101,6 +101,11 @@ if (isset($_SESSION['DatabaseName'])) {
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue, ENT_QUOTES, 'UTF-8'));
+		} else {
+			foreach ($GetValue as $GetArrayKey => $GetArrayValue) {
+				$_POST[$GetVariableName][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
+
+			}
 		}
 	}
 
