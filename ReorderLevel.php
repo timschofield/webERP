@@ -3,10 +3,8 @@
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 include ('includes/session.php');
+
 use Dompdf\Dompdf;
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])) {
 

@@ -40,22 +40,7 @@
  * ******************** END FUNCTION INDEX ********************
  */
 
-// Check if PHPMailer is available before trying to use it
-if (!class_exists('PHPMailer\PHPMailer\PHPMailer', false)) {
-    // Try to load via autoloader if possible
-    if (file_exists(dirname(__DIR__) . '/vendor/autoload.php')) {
-        require_once dirname(__DIR__) . '/vendor/autoload.php';
-    } else {
-        // Manual inclusion of PHPMailer files if necessary
-        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/PHPMailer.php';
-        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/SMTP.php';
-        require_once dirname(__DIR__) . '/vendor/phpmailer/phpmailer/src/Exception.php';
-    }
-}
-
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
 
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
@@ -724,10 +709,10 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 function FYStartPeriod($PeriodNumber) {
 	// Get the end date of the period using EndDateSQLFromPeriodNo
 	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNumber);
-	
+
 	// Parse the date components from the SQL date
 	$DateArray = explode('-', $LastDateInPeriod);
-	
+
 	// Determine the financial year start date based on YearEnd setting
 	if ((int)$DateArray[1] > $_SESSION['YearEnd']) {
 		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0]));
@@ -829,7 +814,7 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 						$Body,
 						$Attachments);
 	}
-	
+
 	if (!$Silent) {
 		// Check if $EmailSent is a boolean true or a string (error message)
 		if ($EmailSent === true) {

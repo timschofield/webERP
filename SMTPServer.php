@@ -2,6 +2,7 @@
 /* This script is <create a description for script table>. */
 
 include('includes/session.php');
+
 $Title = _('SMTP Server details');// Screen identification.
 $ViewTopic = 'CreatingNewSystem';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'SMTPServer';// Anchor's id in the manual's html document.
@@ -46,7 +47,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	$DbgMsg = _('The SQL failed to insert the email information is');
 	$Result2 = DB_query($SQL);
 	unset($_POST['MailServerSetting']);
-	prnMsg(_('The settings for the SMTP server have been sucessfully inserted'),'success');
+	prnMsg(_('The settings for the SMTP server have been successfully inserted'),'success');
 	echo '<br/>';
 }
 
