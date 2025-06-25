@@ -13,7 +13,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 
 if($AllowDemoMode) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	exit;
+	exit();
 }
 
 if(isset($_GET['SelectedRole'])) {

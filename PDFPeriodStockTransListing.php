@@ -84,7 +84,7 @@ if (!isset($_POST['FromDate'])){
 	echo '</form>';
 
 	 include('includes/footer.php');
-	 exit;
+	 exit();
 } else {
 
 	include('includes/ConnectDB.php');
@@ -140,14 +140,14 @@ if (DB_error_no()!=0){
 	include('includes/header.php');
 	prnMsg(_('An error occurred getting the transactions'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Transaction Listing');
 	include('includes/header.php');
 	echo '<br />';
 	prnMsg (_('There were no transactions found in the database between the dates') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' '. $_POST['ToDate']  . '<br />' ._('Please try again selecting a different date'), 'info');
 	include('includes/footer.php');
-  	exit;
+  	exit();
 }
 
 include('includes/PDFStarter.php');

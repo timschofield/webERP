@@ -227,20 +227,20 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$SQL = "DELETE FROM offers WHERE offerid = '" . $AcceptID . "'";
 			$Result = DB_query($SQL);
 		}
-		
+
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(_('There are no members of the Offers Received Result Recipients email group'), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		array_push($Recipients, $Email);
-		
+
 		$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 		$Subject = _('Your offer to') . ' ' . $_SESSION['CompanyRecord']['coyname'] . ' ' . _('has been accepted');
-		
+
 		$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $MailText);
-		
+
 		if ($Result) {
 			prnMsg(_('The accepted offers from') . ' ' . $SupplierName . ' ' . _('have been converted to purchase orders and an email sent to')
 				. ' ' . $Email . "\n" . _('Please review the order contents') . ' ' . '<a href="' . $RootPath .
@@ -267,25 +267,25 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			$SQL = "DELETE FROM offers WHERE offerid = '" . $RejectID . "'";
 			$Result = DB_query($SQL);
 		}
-		
+
 		$Recipients = GetMailList('OffersReceivedResultRecipients');
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(_('There are no members of the Offers Received Result Recipients email group'), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		array_push($Recipients, $Email);
-		
+
 		$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 		$Subject = _('Your offer to') . ' ' . $_SESSION['CompanyRecord']['coyname'] . ' ' . _('has been rejected');
-		
+
 		$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $MailText);
-		
+
 		if ($Result) {
-			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' . 
+			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' .
 				_('have been removed from the system and an email sent to') . ' ' . $Email, 'success');
 		} else {
-			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' . 
+			prnMsg(_('The rejected offers from') . ' ' . $SupplierName . ' ' .
 				_('have been removed from the system and but no email was not sent to') . ' ' . $Email, 'warn');
 		}
 	}

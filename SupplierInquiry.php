@@ -19,7 +19,7 @@ if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 				<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
 			</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	if(isset($_GET['SupplierID'])) {
 		$_SESSION['SupplierID'] = $_GET['SupplierID'];
@@ -194,7 +194,7 @@ if(DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*show a table of the transactions returned by the SQL */

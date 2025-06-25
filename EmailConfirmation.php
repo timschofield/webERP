@@ -33,7 +33,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $MailTo = $_GET['EMail'];
@@ -106,7 +106,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 } elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
 	$MyRow = DB_fetch_array($Result);
@@ -141,7 +141,7 @@ if (DB_num_rows($Result)==0){
 			<br />';
 
 		include('includes/footer.php');
-		exit;
+		exit();
 	}//packing slip has been printed.
 	$MailSubject = _('Order Confirmation-Sales Order') . ' ' .  $_GET['TransNo'] . ' - '. _('Your PO') . ' ' . $MyRow['customerref'] ;
 }
@@ -269,7 +269,7 @@ if($_GET['POLine'] == 1){
 				</body>
 				</html>';
 
-	SendEmailFromWebERP($SysAdminEmail, 
+	SendEmailFromWebERP($SysAdminEmail,
 						$MailTo,
 						$MailSubject,
 						$MailMessage,

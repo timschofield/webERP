@@ -19,7 +19,7 @@ include('includes/header.php');
 if (!isset($_GET['InvoiceNo'])){
         prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . _('This page should not be run by non-system administrators'),'info');
         include('includes/footer.php');
-        exit;
+        exit();
 }
 /*Get the order number that was invoiced */
 

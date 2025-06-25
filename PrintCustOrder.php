@@ -32,7 +32,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*retrieve the order details from the database to print */
@@ -135,7 +135,7 @@ if (DB_num_rows($Result)==0){
 				<br />';
 
       		include('includes/footer.php');
-		exit;
+		exit();
    	}//packing slip has been printed.
 }
 /* Then there's an order to print and it has not been printed already (or its been flagged for reprinting)
@@ -240,7 +240,7 @@ if (DB_num_rows($Result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$SQL = "UPDATE salesorders 
+	$SQL = "UPDATE salesorders
 			SET printedpackingslip = 1,
 				datepackingslipprinted = CURRENT_DATE
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
@@ -252,6 +252,6 @@ if (DB_num_rows($Result)>0){
 		'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
 		'</a>' . '<br />' .  '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } /*end if there are order details to show on the order*/
 ?>

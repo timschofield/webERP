@@ -11,7 +11,7 @@ if ( !DB_table_exists('mrprequirements') ) {
 	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click').' ' . '<a href="'.$RootPath .'/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_POST['PrintPDF'])) {
 
@@ -45,7 +45,7 @@ if (isset($_POST['PrintPDF'])) {
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	if (DB_num_rows($Result) == 0) {
@@ -57,7 +57,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,

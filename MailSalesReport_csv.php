@@ -27,7 +27,7 @@ if (sizeOf($Recipients) == 0) {
 	include('includes/header.php');
 	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/CSVSalesAnalysis.php');

@@ -75,7 +75,7 @@ if (!isset($_POST['RunReport'])){
 		</div>
 	</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_POST['Customer']!='') {
@@ -221,7 +221,7 @@ if (isset($_POST['CreateCSV'])){
     header("Expires: 0");
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVFile;
-	exit;
+	exit();
 }
 
 include('includes/footer.php');

@@ -10,7 +10,7 @@ if (isset($_GET['SelectedSalesPerson'])) {
 	include ('includes/header.php');
 	prnMsg(_('This script can only be called from') . ' ' . '<a href="' . $RootPath . '/SalesPeople.php">' . _('here') . '</a>', 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='" . $SelectedSalesPerson . "'";

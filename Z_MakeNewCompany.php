@@ -9,7 +9,7 @@ include ('includes/SQL_CommonFunctions.php');
 if (isset($_POST['EnterCompanyDetails'])) {
 
 	header ('Location:' . $RootPath . '/CompanyPreferences.php');
-	exit;
+	exit();
 }
 $Title = _('Make New Company Database Utility');
 $ViewTopic = 'SpecialUtilities';
@@ -22,7 +22,7 @@ include('includes/header.php');
 if (! is_writeable('./companies/')){
 		prnMsg(_('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 }
 
 if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
@@ -173,7 +173,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			echo '</div>
 				</form>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 
@@ -227,7 +227,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			</div>
 		</form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 }

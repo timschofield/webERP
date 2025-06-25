@@ -18,7 +18,7 @@ if (!isset($_SESSION['Transfer'])) {
 	prnMsg( _('This page can only be opened if a Stock Transfer for a Controlled Item has been initiated'),'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -46,7 +46,7 @@ if ($LineItem->Controlled != 1 ){
 	}
 	prnMsg(_('Notice') . ' - ' . _('The transferred item must be defined as controlled to require input of the batch numbers or serial numbers being transferred'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<div class="centre">';
@@ -87,5 +87,5 @@ $LineItem->Quantity = $TotalQuantity;
 /*Also a multi select box for adding bundles to the Transfer without keying */
 
 include('includes/footer.php');
-exit;
+exit();
 ?>

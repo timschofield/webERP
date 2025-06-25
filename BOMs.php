@@ -28,7 +28,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				$BOMTree[$i]['Level'] = $Level; // Level
 				if ($Level > 15) {
 					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed') , 'error');
-					exit;
+					exit();
 				}
 				$BOMTree[$i]['Parent'] = $Parent; // Assemble
 				$BOMTree[$i]['Component'] = $MyRow['component']; // Component
@@ -43,7 +43,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				prnMsg(_('The component and the parent is the same') , 'error');
 				echo $MyRow['component'], '<br/>';
 				include ('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 	}
@@ -310,7 +310,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	echo '<input type="hidden" name="StockCat" value="', $_POST['StockCat'], '" />';
 	echo '</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* SelectedComponent could also come from a post or a get */
@@ -558,7 +558,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 			prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
 			echo '<a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance') , '</a></field></fieldset>';
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		echo '<field>
 				<label for="WorkCentreAdded">', _('Work Centre Added') , ': </label>';
@@ -638,7 +638,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 			</div>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edit Component

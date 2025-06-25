@@ -117,7 +117,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 		if ($MyEmail = DB_fetch_array($EmailResult)) {
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
-			SendEmailFromWebERP($SysAdminEmail, 
+			SendEmailFromWebERP($SysAdminEmail,
 								$MyEmail['email'],
 								$EmailSubject,
 								$ConfirmationText,
@@ -130,7 +130,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 	echo '<br /><div class="centre"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?New=Yes">', _('Create another request'), '</a></div>';
 	include ('includes/footer.php');
 	unset($_SESSION['Request']);
-	exit;
+	exit();
 } elseif (isset($_POST['Submit'])) {
 	prnMsg(_('There are no items added to this request'), 'error');
 }
@@ -169,7 +169,7 @@ if (isset($_GET['Edit'])) {
 		</div>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
@@ -241,7 +241,7 @@ echo '</select>
 
 if (!isset($_SESSION['Request']->Location)) {
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
@@ -299,7 +299,7 @@ $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
 	echo '<p class="bad">', _('Problem Report'), ':<br />', _('There are no stock categories currently defined please use the link below to set them up'), '</p>
 		<a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
-	exit;
+	exit();
 }
 
 echo '<fieldset>

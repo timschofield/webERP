@@ -206,7 +206,7 @@ if(isset($_GET['StockID'])){
 }elseif(!isset($StockID)){
 	prnMsg(_('You must select a stock item first before set a price maxtrix'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 if (!isset($_POST['StartDate'])){

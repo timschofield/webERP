@@ -273,7 +273,7 @@ if (isset($_POST['submit'])) {
 			'<a href="' . $RootPath . '/CustomerBranches.php?DebtorNo=' . $_POST['DebtorNo']  . '"></a></div>';
 
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	} else {
 		prnMsg( _('Validation failed') . '. ' . _('No updates or deletes took place'),'error');
@@ -348,7 +348,7 @@ if (isset($_POST['submit'])) {
 		prnMsg( _('Customer') . ' ' . $_POST['DebtorNo'] . ' ' . _('has been deleted - together with all the associated branches and contacts'),'success');
 		include('includes/footer.php');
 		unset($_SESSION['CustomerID']);
-		exit;
+		exit();
 	} //end if Delete Customer
 }
 
@@ -438,7 +438,7 @@ if (!isset($DebtorNo)) {
 	if ($SetupErrors>0) {
 		echo '<br /><div class="centre"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" >' . _('Click here to continue') . '</a></div>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />

@@ -15,7 +15,7 @@ if (sizeOf($Recipients) == 0) {
       	include('includes/header.php');
 	prnMsg( _('There are no members of the Weekly Orders Recipients email group'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $SQL= "SELECT salesorders.orderno,
@@ -52,7 +52,7 @@ if (DB_error_no()!=0){
 		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 	}
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 $PaperSize="Letter_Landscape";
 include('includes/PDFStarter.php');
@@ -206,7 +206,7 @@ if($Result){
 		prnMsg(_('The Weekly Orders report has been mailed'),'success');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 
 }else{
 		$Title = _('Print Weekly Orders Error');
@@ -214,7 +214,7 @@ if($Result){
 		prnMsg(_('There are errors lead to mails not sent'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 
 }
 ?>

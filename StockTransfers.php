@@ -62,7 +62,7 @@ if(isset($_POST['CheckCode'])) {
 	}
 	echo '</tbody></table>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $NewTransfer = false; /*initialise this first then determine from form inputs */
@@ -168,7 +168,7 @@ if($NewTransfer) {
 			echo '<a href="' . $RootPath . '/StockTransfers.php?NewTransfer=Yes">' . _('Enter another Transfer') . '</a>';
 			unset($_SESSION['Transfer']);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 }
@@ -272,7 +272,7 @@ if(isset($_POST['EnterTransfer']) ) {
 			AND $QtyOnHandPrior<$_SESSION['Transfer']->TransferItem[0]->Quantity) {
 			prnMsg( _('There is insufficient stock to make this transfer and webERP is setup to prevent negative stock'), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
 		if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
@@ -592,7 +592,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . _('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 }

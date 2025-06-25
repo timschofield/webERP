@@ -96,7 +96,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 					AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
 					AND glaccountusers.canview = 1
 			ORDER BY chartmaster.accountcode";
-	$AccountResult = DB_query($SQL); 
+	$AccountResult = DB_query($SQL);
 	$BankAccount = false;
 	while ($MyRow = DB_fetch_array($AccountResult)) {
 		if ($MyRow['accountcode'] == $SelectedAccount) {
@@ -304,12 +304,12 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 
 		prnMsg(_('The GL Account graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($SalesResult) == 0) {
 		prnMsg(_('There is not GL Account data for the criteria entered to graph'), 'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$GraphArray = array();

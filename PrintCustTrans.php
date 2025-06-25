@@ -230,7 +230,7 @@ if (isset($PrintPDF)
 				prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $SQL,'error');
 			}
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (DB_num_rows($Result)==1) {
 			$MyRow = DB_fetch_array($Result);
@@ -240,14 +240,14 @@ if (isset($PrintPDF)
 				include('includes/header.php');
 					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
 				include('includes/footer.php');
-					exit;
+					exit();
 			}
 			if ( $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID'] ){
 				$Title=_('Select Invoices/Credit Notes To Print');
 				include('includes/header.php');
 					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
 				include('includes/footer.php');
-					exit;
+					exit();
 				}
 
 			$ExchRate = $MyRow['rate'];
@@ -307,7 +307,7 @@ if (isset($PrintPDF)
 					echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $SQL;
 				}
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 
 			if ($InvOrCredit=='Invoice') {
@@ -537,7 +537,7 @@ if (isset($PrintPDF)
 		include('includes/header.php');
 		echo '<p>' . $InvOrCredit . ' '  . _('number') . ' ' . $FromTransNo . ' ' . _('has been emailed to') . ' ' . $_GET['Email'];
 		include('includes/footer.php');
-		exit;
+		exit();
 
 	} else { //its not an email just print the invoice to PDF
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf');
@@ -750,7 +750,7 @@ if (isset($PrintPDF)
 				}
 				break;
 				include('includes/footer.php');
-				exit;
+				exit();
 			} elseif (DB_num_rows($Result)==1) {
 	/* Then there's an invoice (or credit note) to print. So print out the invoice header and GST Number from the company record */
 
@@ -759,12 +759,12 @@ if (isset($PrintPDF)
 				if ($_SESSION['SalesmanLogin']!='' AND $_SESSION['SalesmanLogin']!=$MyRow['salesman']){
 					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 				if( $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID']) {
 					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company');
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 
 				$ExchRate = $MyRow['rate'];
@@ -958,7 +958,7 @@ if (isset($PrintPDF)
 					if ($Debug==1){
 						 echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' .$SQL;
 					}
-					exit;
+					exit();
 				}
 
 				if (DB_num_rows($Result)>0){

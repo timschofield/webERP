@@ -23,7 +23,7 @@ if(!isset($TaxAuthority)) {
 		$RootPath . '/TaxAuthorities.php">' . _('click here') . '</a> ' .
 		_('to go to the Tax Authority page'), 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if(isset($_POST['UpdateRates'])) {

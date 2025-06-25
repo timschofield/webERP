@@ -41,7 +41,7 @@ if (!isset($SelectedWO) OR !isset($StockID)) {
 		</div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
 	include ('includes/footer.php');
-	exit;
+	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';
 	$_POST['WO']=$SelectedWO;
@@ -87,7 +87,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		echo '</div>';
 		echo '</form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$WORow = DB_fetch_array($WOResult);
 
@@ -630,7 +630,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 						} else {
 							prnMsg(_('The input quantity should not be negative since there are no this lot no existed'),'error');
 							include('includes/footer.php');
-							exit;
+							exit();
 						}
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
 						$DbgMsg =  _('The following SQL to insert the serial stock item records was used');
@@ -765,7 +765,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		echo '</form>';
 		/*end of process work order goods received entry */
 		include('includes/footer.php');
-		exit;
+		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 } //end of if the user hit the process button
 
@@ -803,7 +803,7 @@ if (DB_num_rows($WOResult)==0){
 	echo '</div>';
 	echo '</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $WORow = DB_fetch_array($WOResult);
 
@@ -812,7 +812,7 @@ if ($WORow['closed']==1){
 	echo '</div>';
 	echo '</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_POST['ReceivedDate'])){

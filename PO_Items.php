@@ -17,7 +17,7 @@ $identifier=$_GET['identifier'];
 /* If a purchase order header doesn't exist, then go to PO_Header.php to create one */
 if (!isset($_SESSION['PO'.$identifier])){
 	header('Location:' . $RootPath . '/PO_Header.php');
-	exit;
+	exit();
 }
 
 /* webERP manual links before header.php */
@@ -311,7 +311,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						 * field PODetailRec is given to the session for that POLine
 						 * So it will only be a new POLine if PODetailRec is empty
 						*/
-					$SQL = "INSERT INTO purchorderdetails 
+					$SQL = "INSERT INTO purchorderdetails
 										( orderno,
 										itemcode,
 										deliverydate,
@@ -346,7 +346,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					} else {
 						$CompletedLine = 0;
 					}
-					$SQL = "UPDATE purchorderdetails 
+					$SQL = "UPDATE purchorderdetails
 							SET itemcode='" . $POLine->StockID . "',
 									deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
 									itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
@@ -390,7 +390,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		include('includes/footer.php');
-		exit;
+		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
 
@@ -450,7 +450,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $SQL,'error');
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
 			$AllowUpdate = false;
@@ -683,7 +683,7 @@ if (isset($_POST['NewItem'])
 						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 			} /* end of if not already on the order */
 		} /* end if the $_POST has NewQty in the variable name */
@@ -1397,7 +1397,7 @@ if (isset($SearchResult)) {
 		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($ImageFilearray);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
-		
+
 		/*Get conversion factor and supplier units if any */
 		$SQL =  "SELECT purchdata.conversionfactor,
 						purchdata.suppliersuom

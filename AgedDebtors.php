@@ -253,7 +253,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
@@ -384,7 +384,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $SQL;
 				}
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 
 			$HTML .= '<tr>

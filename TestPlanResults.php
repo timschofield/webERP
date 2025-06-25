@@ -312,7 +312,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			 '<input type="checkbox" name="OverRide"><input type="submit" name="Copy" value="' . _('Copy') . '" />
 			  </form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$SQL = "SELECT sampleresults.testid,
 						sampleresults.defaultvalue,
@@ -554,7 +554,7 @@ if (isset($_GET['ListTests'])) {
 		</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }  //ListTests
 if (isset($_POST['AddTests'])) {
 	for ($i=0;$i<=$_POST['AddTestsCounter'];$i++){
@@ -690,7 +690,7 @@ if (!isset($SelectedSampleID)) {
 		</div>';
 	prnMsg(_('This page can only be opened if a QA Sample has been selected. Please select a sample first'),'info');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<div class="centre"><a href="' . $RootPath . '/SelectQASamples.php">' . _('Back to Samples') . '</a></div>';

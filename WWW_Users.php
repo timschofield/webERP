@@ -27,7 +27,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 if($AllowDemoMode) {
 	prnMsg(_('Demo mode is currently active, which disables the security model administration'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $ModuleList = array(
 	_('Sales'),

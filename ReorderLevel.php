@@ -231,7 +231,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up') , 'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<field>

@@ -556,7 +556,7 @@ If (isset($SalesOrdersResult)) {
 			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
-		exit;
+		exit();
 	}
 
 /*show a table of the orders returned by the SQL */

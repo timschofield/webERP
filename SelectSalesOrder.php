@@ -458,7 +458,7 @@ if (isset($OrderNumber) AND $OrderNumber != '') {
 			<br />';
 		unset ($OrderNumber);
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		echo _('Order Number') . ' - ' . $OrderNumber;
 	}

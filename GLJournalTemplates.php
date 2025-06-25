@@ -57,7 +57,7 @@ if (DB_num_rows($Result) == 0) {
 
 	echo '</table>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 include ('includes/footer.php');

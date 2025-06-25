@@ -111,7 +111,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 	if (DB_num_rows($LocalTaxProvinceResult) == 0) {
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province') , 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$LocalTaxProvinceRow = DB_fetch_row($LocalTaxProvinceResult);
@@ -131,7 +131,7 @@ elseif (!isset($_SESSION['SuppTrans'])) {
 	prnMsg(_('To enter a supplier invoice the supplier must first be selected from the supplier selection screen') , 'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 
 	/*It all stops here if there ain't no supplier selected */
 }
@@ -560,32 +560,32 @@ if (!isset($_POST['PostInvoice'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppInvGRNs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against goods received page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppInvGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '</div>
 			<br />';
-		exit;
+		exit();
 	}
 	if (isset($_POST['Shipts']) AND $_POST['Shipts'] == _('Shipments')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppShiptChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against shipments page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
-		exit;
+		exit();
 	}
 	if (isset($_POST['GL']) AND $_POST['GL'] == _('General Ledger')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SuppTransGLAnalysis.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against the general ledger page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.</div><br />';
-		exit;
+		exit();
 	}
 	if (isset($_POST['Contracts']) AND $_POST['Contracts'] == _('Contracts')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppContractChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoices against contracts page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</div>
 			<br />';
-		exit;
+		exit();
 	}
 	if (isset($_POST['FixedAssets']) AND $_POST['FixedAssets'] == _('Fixed Assets')) {
 		/*This ensures that any changes in the page are stored in the session before calling the shipments page */
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/SuppFixedAssetChgs.php">';
 		echo '<div class="centre">' . _('You should automatically be forwarded to the entry of invoice amounts against fixed assets page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.</DIV><br />';
-		exit;
+		exit();
 	}
 	/* everything below here only do if a Supplier is selected
 	 fisrt add a header to show who we are making an invoice for */
@@ -1276,7 +1276,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 								- How many in stock now
 								- The quantity being invoiced here - $EnteredGRN->This_QuantityInv
 								- The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate */
-								
+
 								$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 								/*The cost adjustment is the price variance / the total quantity in stock

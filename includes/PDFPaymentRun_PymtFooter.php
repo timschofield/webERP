@@ -61,7 +61,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		}
 		DB_Txn_Rollback();
 		include('footer.php');
-		exit;
+		exit();
 	}
 
 	$PaymentTransID = DB_Last_Insert_ID('supptrans','id');
@@ -91,7 +91,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			}
 			DB_Txn_Rollback();
 			include('footer.php');
-			exit;
+			exit();
 		}
 	} /*end of the loop to insert the allocation records */
 
@@ -121,7 +121,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		}
 		DB_Txn_Rollback();
 		include('footer.php');
-		exit;
+		exit();
 	}
 
 	/*If the General Ledger Link is activated */
@@ -158,7 +158,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			}
 			DB_Txn_Rollback();
 			include('footer.php');
-			exit;
+			exit();
 		}
 
 		/*Do the GL trans for the payment DR creditors */
@@ -189,7 +189,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			}
 			DB_Txn_Rollback();
 			include('footer.php');
-			exit;
+			exit();
 		}
 
 		/*Do the GL trans for the exch diff */
@@ -220,7 +220,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				}
 				DB_Txn_Rollback();
 				include('footer.php');
-				exit;
+				exit();
 			}
 		}
 		EnsureGLEntriesBalance(22,$SuppPaymentNo);

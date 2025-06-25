@@ -16,13 +16,13 @@ include('includes/SQL_CommonFunctions.php');
 if (!isset($_GET['SuppID'])){
 	prnMsg( _('Supplier ID Number is not Set, can not display result'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_GET['InvID'])){
 	prnMsg( _('Invoice Number is not Set, can not display result'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
@@ -55,7 +55,7 @@ if (DB_num_rows($Result) == 0){
 	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
 	echo '<br /><a href ="javascript:history.back()">' . _('Go back') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<table cellpadding="2" width="80%" class="selection">';

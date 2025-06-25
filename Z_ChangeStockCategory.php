@@ -22,19 +22,19 @@ if (isset($_POST['ProcessStockChange'])) {
 	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('The stock Category') . ': ' . $_POST['OldStockCategory'] . ' ' . _('does not currently exist as a stock category in the system'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (ContainsIllegalCharacters($_POST['NewStockCategory'])) {
 		prnMsg(_('The new stock category to change the old code to contains illegal characters - no changes will be made'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if ($_POST['NewStockCategory'] == '') {
 		prnMsg(_('The new stock category to change the old code to must be entered as well'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Now check that the new code doesn't already exist */
@@ -44,7 +44,7 @@ if (isset($_POST['ProcessStockChange'])) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement stock category') . ': ' . $_POST['NewStockCategory'] . ' ' . _('already exists as a stock category in the system') . ' - ' . _('a unique stock category must be entered for the new stock category'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
     DB_Txn_Begin();
 	echo '<br />' . _('Adding the new stock Category record');

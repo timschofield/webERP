@@ -103,7 +103,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 		$LineItem->SerialItemsValid=false;
 		echo '</td></tr></table>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$_SESSION['CurImportFile']['Processed']=false;
 	if ($_FILES['ImportFile']['name']!=''){

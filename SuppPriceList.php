@@ -134,7 +134,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($PricesResult)==0) {
@@ -143,7 +143,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		include('includes/header.php');
 		prnMsg(_('There are no result so the PDF is empty'));
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$HTML = '';
 

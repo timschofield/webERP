@@ -28,7 +28,7 @@ if (!isset($_SESSION['PO'.$identifier])) {
 		<br />';
 	prnMsg( _('This page can only be opened if a purchase order and line item has been selected') . '. ' . _('Please do that first'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
@@ -41,7 +41,7 @@ if (isset($_GET['LineNo']) AND $_GET['LineNo']>0){
 		</div>';
 	prnMsg( _('This page can only be opened if a Line Item on a PO has been selected') . '. ' . _('Please do that first'), 'error');
 	include( 'includes/footer.php');
-	exit;
+	exit();
 }
 
 global $LineItem;
@@ -54,7 +54,7 @@ if ($LineItem->Controlled !=1 ){ /*This page only relavent for controlled items 
 		</div>';
 	prnMsg( _('The line being received must be controlled as defined in the item definition'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /********************************************
