@@ -39,11 +39,11 @@ date_default_timezone_set('Pacific/Auckland');
 // if the web server is also the database server then 'localhost'
 $Host = 'localhost';
 $MySQLPort=3306;
-// The type of db server being used
-//$DBType = 'mysql';
-//$DBType = 'mysqli'; //PHP 5 and MySQL > 4.1
-//$DBType = 'mariadb';
-//$DBType = 'postgres'; //DEPRECIATED
+// The type of db connector to use.
+// For both mariadb and mysql servers, use 'mysqli', unless you only have the php extension 'mysql' available
+//$DBType = 'mysql'; // DEPRECATED
+//$DBType = 'mysqli';
+//$DBType = 'postgres'; // UNSUPPORTED
 $DBType = 'mysqli';
 
 // Database user & password

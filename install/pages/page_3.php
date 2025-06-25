@@ -37,15 +37,19 @@ echo '<form method="post" action="index.php?Page=3">
 					<label for="dbms">' . _('DBMS Driver') . ': </label>
 					<select name="dbms">';
 
-if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
-	echo '<option value="mysqli" selected="selected">MYSQLI</option>';
-} else {
-	echo '<option value="mysqli">MYSQLI</option>';
+if (function_exists('mysqli_connect')) {
+	if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
+		echo '<option value="mysqli" selected="selected">MySQLI</option>';
+	} else {
+		echo '<option value="mysqli">MYSQLI</option>';
+	}
 }
-if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
-	echo '<option value="mariadb" selected="selected">MariaDB</option>';
-} else {
-	echo '<option value="mariadb">MariaDB</option>';
+if (function_exists('mysql_connect')) {
+	if ($_SESSION['Installer']['DBMS'] == 'mysql') {
+		echo '<option value="mysqli" selected="selected">MySQL (deprecated)</option>';
+	} else {
+		echo '<option value="mysqli">MySQL (deprecated)</option>';
+	}
 }
 
 echo '</select>
