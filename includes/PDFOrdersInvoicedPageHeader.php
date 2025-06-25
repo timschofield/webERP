@@ -33,4 +33,3 @@ $YPos -= $LineHeight*2;
 $FontSize=8;
 
 $NewPage=true;
-?>

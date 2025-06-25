@@ -88,6 +88,3 @@ if ($Result != '') {
 }
 echo '</fieldset>
 	</form>';
-
-
-?>

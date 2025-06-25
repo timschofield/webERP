@@ -1267,4 +1267,3 @@ if (!isset($SupplierID)) {
 		</form>';
 } // end of main ifs
 include ('includes/footer.php');
-?>

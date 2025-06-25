@@ -219,9 +219,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 					}
 				} else {
 					// it is not a new session, update the script name
-					$SQL = "UPDATE sessions 
+					$SQL = "UPDATE sessions
 							SET script = '" . basename($_SERVER['SCRIPT_NAME']) . "',
-								scripttime = NOW()		
+								scripttime = NOW()
 							WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
@@ -258,7 +258,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 /*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (isset($_SESSION['DBVersion']) 
+if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])
 	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
@@ -387,5 +387,3 @@ function quote_smart($Value) {
 	}
 	return $Value;
 }
-
-?>

@@ -353,4 +353,3 @@ if ($ListCount == 0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 }
-?>

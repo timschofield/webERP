@@ -240,7 +240,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 				AND ($_SESSION['PO'.$identifier]->Status=='Authorised'
 				OR $_SESSION['PO'.$identifier]->Status=='Printed')){
 
-			      echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
+				echo '<br /><div class="centre"><a target="_blank" href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo=' . $_SESSION['PO'.$identifier]->OrderNo . '">' . _('Print Purchase Order') . '</a></div>';
 			}
 
 		} else { /*its an existing order need to update the old order info */
@@ -311,7 +311,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 						 * field PODetailRec is given to the session for that POLine
 						 * So it will only be a new POLine if PODetailRec is empty
 						*/
-					$SQL = "INSERT INTO purchorderdetails 
+					$SQL = "INSERT INTO purchorderdetails
 										( orderno,
 										itemcode,
 										deliverydate,
@@ -346,7 +346,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					} else {
 						$CompletedLine = 0;
 					}
-					$SQL = "UPDATE purchorderdetails 
+					$SQL = "UPDATE purchorderdetails
 							SET itemcode='" . $POLine->StockID . "',
 									deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
 									itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
@@ -460,7 +460,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			$GLAccountName = $MyRow[0];
 		}
 	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
-	 else {
+	else {
 		$_POST['GLCode']=0;
 	}
 	if ($_POST['AssetID'] !='Not an Asset'){
@@ -482,8 +482,8 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			}
 		}
 	} /*end if an AssetID is entered */
-	  else {
-		  $_POST['AssetID'] = 0; // cannot commit a string to an integer field so make it 0 if AssetID = 'Not an Asset'
+	else {
+		$_POST['AssetID'] = 0; // cannot commit a string to an integer field so make it 0 if AssetID = 'Not an Asset'
 	}
 	if (mb_strlen($_POST['ItemDescription'])<=3){
 		$AllowUpdate = false;
@@ -515,7 +515,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 												1,
 												'',
 												$_POST['AssetID']);
-	   include ('includes/PO_UnsetFormVbls.php');
+		include ('includes/PO_UnsetFormVbls.php');
 	}
 }
  /*end if Enter line button was hit - adding non stock items */
@@ -1374,8 +1374,6 @@ if (isset($SearchResult)) {
 		$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
 	$PageBar .= '</td></tr>';
 
-
-
 	echo '<table cellpadding="1" class="selection">';
 	echo $PageBar;
 	$TableHeader = '<tr>
@@ -1397,7 +1395,7 @@ if (isset($SearchResult)) {
 		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($ImageFilearray);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
-		
+
 		/*Get conversion factor and supplier units if any */
 		$SQL =  "SELECT purchdata.conversionfactor,
 						purchdata.suppliersuom
@@ -1440,4 +1438,3 @@ if (isset($SearchResult)) {
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

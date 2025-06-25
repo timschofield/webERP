@@ -120,4 +120,3 @@ function checkNewCode($Code) {
 	}
 	return true;
 }
-?>

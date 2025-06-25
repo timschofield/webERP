@@ -229,4 +229,3 @@ function DB_table_exists($TableName) {
 		return False;
 	}
 }
-?>

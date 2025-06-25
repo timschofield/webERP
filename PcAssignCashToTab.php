@@ -387,4 +387,3 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	} // end if user wish to delete
 }
 include('includes/footer.php');
-?>

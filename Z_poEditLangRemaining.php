@@ -143,8 +143,4 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		echo '</div>';
 	}
 
-
-
 include('includes/footer.php');
-
-?>

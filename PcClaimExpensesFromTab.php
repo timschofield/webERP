@@ -780,4 +780,3 @@ if (!isset($SelectedTabs)) {
 	} // end if user wish to delete
 }
 include('includes/footer.php');
-?>

@@ -418,4 +418,3 @@ echo '</select>
 		<div class="centre"><input tabindex="9" type="submit" name="submit" value="'. _('Enter Information') .'" /></div>
 		</form>';
 include('includes/footer.php');
-?>

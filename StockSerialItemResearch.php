@@ -109,4 +109,3 @@ if ($SerialNo!='') {
 echo '</div>';
 
 include('includes/footer.php');
-?>

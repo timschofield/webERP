@@ -302,4 +302,3 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	</form>';
 } /*end of else not submit */
 include ('includes/footer.php');
-?>

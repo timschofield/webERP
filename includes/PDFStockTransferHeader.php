@@ -42,5 +42,3 @@ $FontSize=8;
 $YPos -= (1.5 * $LineHeight);
 
 $PageNumber++;
-
-?>

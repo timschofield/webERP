@@ -385,5 +385,3 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

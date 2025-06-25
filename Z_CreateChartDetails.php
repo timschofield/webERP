@@ -95,4 +95,3 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 }
 
 include('includes/footer.php');
-?>

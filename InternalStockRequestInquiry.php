@@ -552,4 +552,3 @@ function GetSearchItems ($SQLConstraint='') {
 	return $StockItemsResult;
 
 	}
-?>

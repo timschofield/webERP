@@ -36,4 +36,3 @@ if (!is_writable('./locale/' . $_SESSION['Language'])) {
 }
 
 include('includes/footer.php');
-?>

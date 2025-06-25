@@ -91,5 +91,3 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	}
 
 	echo '</table>';
-
-?>

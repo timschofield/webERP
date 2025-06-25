@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['GLAccount'])){
 		$_POST['GLAccount']='';
 	}
-	
+
 	if (isset($SelectedSalesPerson) AND $InputError !=1) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -421,7 +421,7 @@ if (! isset($_GET['delete'])) {
 	</field>';
 
 	echo '</fieldset>';
-	
+
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
         </div>
@@ -430,4 +430,3 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

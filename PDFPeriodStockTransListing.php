@@ -210,5 +210,3 @@ $YPos-=$LineHeight;
 $ReportFileName = $_SESSION['DatabaseName'] . '_StockTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
 $pdf->__destruct();
-
-?>

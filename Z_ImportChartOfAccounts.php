@@ -136,5 +136,3 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 }
 
 include('includes/footer.php');
-
-?>

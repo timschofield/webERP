@@ -594,5 +594,3 @@ $SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH
 		END";
 $Result = DB_query($SQL);
 }
-
-?>

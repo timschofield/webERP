@@ -383,7 +383,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				  $Result = DB_query($SQL, $ErrMsg,'',TRUE);
 						 }
 
-				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){ 
+				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){
 					/*Only ever a standard costing option
 					 Weighted average costing implies cost updates taking place automatically */
 
@@ -678,4 +678,3 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 }
 
 include('includes/footer.php');
-?>

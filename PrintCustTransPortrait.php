@@ -1197,5 +1197,3 @@ function PrintLinesToBottom () {
 
 	$PageNumber++;
 }
-
-?>

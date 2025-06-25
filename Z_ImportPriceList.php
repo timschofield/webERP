@@ -177,5 +177,3 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 }
 
 include('includes/footer.php');
-
-?>

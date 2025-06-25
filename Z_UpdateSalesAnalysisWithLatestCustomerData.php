@@ -48,4 +48,3 @@ if (isset($_POST['UpdateSalesAnalysis'])){
 	prnMsg(_('Updated the sales analysis with all the latest sales areas, salesman and sales types as set up now'),'success');
 }
 include('includes/footer.php');
-?>

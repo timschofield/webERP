@@ -79,4 +79,3 @@ function api_DB_query( $SQL, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=
 
     return  $Result;
 }
-?>

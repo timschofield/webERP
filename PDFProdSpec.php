@@ -289,5 +289,3 @@ while (mb_strlen($LeftOvers) > 1) {
 
 $pdf->OutputI($_SESSION['DatabaseName'] . '_ProductSpecification_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-
-?>

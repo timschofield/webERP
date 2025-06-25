@@ -398,4 +398,3 @@ if ($_GET['Action'] == 'Enter'){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

@@ -719,4 +719,3 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 }/*end while there are recurring orders due to have a new order created */
 
 include('includes/footer.php');
-?>

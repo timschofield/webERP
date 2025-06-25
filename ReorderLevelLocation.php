@@ -195,4 +195,3 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 } /*end of else not submit */
 include('includes/footer.php');
-?>

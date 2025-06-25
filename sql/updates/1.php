@@ -57,5 +57,3 @@ NewSysType(39, 'Sales Commision Accruals');
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Database updates for new sales commission functionality'));
 }
-
-?>

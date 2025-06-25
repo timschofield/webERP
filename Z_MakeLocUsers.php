@@ -27,4 +27,3 @@ echo '<p />';
 prnMsg(_('Any users that may not have had user location records have now been given new location user records'),'info');
 
 include('includes/footer.php');
-?>

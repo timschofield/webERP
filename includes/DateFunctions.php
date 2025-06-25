@@ -39,7 +39,7 @@ Functions in this file (alphabetical order):
 - MonthAndYearFromSQLDate - Gets the month and year from a SQL date
 - PeriodExists - Checks if a period exists for a given date
 - SQLDateToEDI - Converts a SQL date to EDI format
-- YearAndMonthFromSQLDate - Gets the year and month from a SQL date 
+- YearAndMonthFromSQLDate - Gets the year and month from a SQL date
 - YearEndDate - Gets financial year end date
 */
 
@@ -112,7 +112,7 @@ function Is_date($DateEntry) {
 /**************************************************************************************************************
 * Function: MonthAndYearFromSQLDate
 * Description: Extracts and formats the month and year from a SQL date
-* Parameters: 
+* Parameters:
 *   $DateEntry - The SQL format date to process
 *   $UseShortMonthAndYear - Boolean flag for short format (default false)
 * Returns: String containing formatted month and year
@@ -149,7 +149,7 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 /**************************************************************************************************************
 * Function: YearAndMonthFromSQLDate
 * Description: Extracts and formats the year and month from a SQL date
-* Parameters: 
+* Parameters:
 *   $DateEntry - The SQL format date to process
 *   $UseShortYearAndMonth - Boolean flag for short format (default false)
 * Returns: String containing formatted year and month
@@ -392,7 +392,7 @@ function ConvertSQLDate($DateEntry) {
 
 	/* takes a date in a the format yyyy-mm-dd and converts to a format specified in $_SESSION['DefaultDateFormat']*/
 	$ErrorInFormat = false;
-	
+
 	if (!EnsureSQLDateFormat($DateEntry)){
 		// if is not in SQL format, there's nothing to do
 		$ErrorInFormat = true;
@@ -1389,5 +1389,3 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 
 	return $MyRow[0];
 }
-
-?>

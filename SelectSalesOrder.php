@@ -1124,4 +1124,3 @@ function GetSearchItems ($SqlConstraint = '') {
 
 	return $StockItemsResult;
 }
-?>
