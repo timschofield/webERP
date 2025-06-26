@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = '../';
+	$PathPrefix = __DIR__ . '/../';
 }
 
 require $PathPrefix.'vendor/autoload.php';

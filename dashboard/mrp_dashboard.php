@@ -1,10 +1,12 @@
 <?php
-$PathPrefix = '../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	// allow dashboard applet to run standalone
+	$DirectoryLevelsDeep = 1;
+	$PathPrefix = __DIR__ . '/../';
 	require_once ($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
-	}
+}
 
 	$ScriptTitle = _('MRP dashboard');
 

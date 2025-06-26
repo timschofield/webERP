@@ -11,6 +11,8 @@ if (!extension_loaded('mbstring')) {
 	exit;
 }
 
+$PathPrefix = __DIR__ . '/../';
+
 if (isset($_GET['Page'])) {
 	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
 	$_SESSION['Installer']['CurrentPage'] = $_GET['Page'];
@@ -44,11 +46,10 @@ if (isset($_GET['Agreed'])) {
 	$_SESSION['Installer']['License_Agreed'] = True;
 }
 
-$PathPrefix = '../';
-include ('../includes/MiscFunctions.php');
-include ('../includes/LanguagesArray.php');
+include ($PathPrefix . 'includes/MiscFunctions.php');
+include ($PathPrefix . 'includes/LanguagesArray.php');
 $DefaultLanguage = $_SESSION['Installer']['Language']; // Need the language in this variable as this is the variable used elsewhere in webERP
-include ('../includes/LanguageSetup.php');
+include ($PathPrefix . 'includes/LanguageSetup.php');
 
 /*
  * Web ERP Installer

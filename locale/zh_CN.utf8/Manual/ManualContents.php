@@ -21,7 +21,8 @@ What section is named after Help Begin: and there can be multiple sections separ
 */
 
 // $PageSecurity=1;
-$PathPrefix='../../';
+$PathPrefix =  __DIR__ . '/../../../';
+
 //include($PathPrefix.'includes/session.php');
 
 header('Content-Type: text/html; charset=gb2312');
