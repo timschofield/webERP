@@ -3,31 +3,33 @@
 
 define ('LIKE', 'LIKE');
 
-if(!isset($MySQLPort)) {
+if (!isset($MySQLPort)) {
 	$MySQLPort = 3306;
 }
 global $db;	// Make sure it IS global, regardless of our context
 
-$db = mysqli_connect($Host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $MySQLPort);
+// since php 8.1, failures to connect will throw an exception, preventing our own error handling. Reset that
+mysqli_report(MYSQLI_REPORT_ERROR);
 
-
-//this statement sets the charset to be used for sending data to and from the db server
-//if not set, both mysqli server and mysqli client/library may assume otherwise
-mysqli_set_charset($db, 'utf8');
+$db = mysqli_connect($Host , $DBUser, $DBPassword, $_SESSION['DatabaseName'], $MySQLPort);
 
 /* check connection */
-if(mysqli_connect_errno()) {
+if (mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	session_unset();
 	session_destroy();
 	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
-	exit();
+	exit(1);
 }
 
-if(!$db) {
+if (!$db) {
 	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
-	exit;
+	exit(1);
 }
+
+//this statement sets the charset to be used for sending data to and from the db server
+//if not set, both mysqli server and mysqli client/library may assume otherwise
+mysqli_set_charset($db, 'utf8');
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if(isset($DatabaseName)) {
