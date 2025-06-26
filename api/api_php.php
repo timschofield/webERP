@@ -10,7 +10,7 @@
 	}
 
 	$AllowAnyone = true;
-	$PathPrefix = dirname(__FILE__).'/../';
+	$PathPrefix = __DIR__ . '/../';
 	include('api_session.php');
 
 	include('api_errorcodes.php');
