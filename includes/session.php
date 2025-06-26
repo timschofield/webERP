@@ -356,7 +356,7 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 }
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
-	header('Location: :' . $RootPath . '/Dashboard.php');
+	header('Location: ' . $RootPath . '/Dashboard.php');
 }
 
 if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
