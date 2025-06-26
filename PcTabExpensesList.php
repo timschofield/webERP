@@ -1,8 +1,7 @@
 <?php
 
-require_once 'vendor/autoload.php';
-
 include('includes/session.php');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 include('includes/SQL_CommonFunctions.php');
@@ -225,7 +224,7 @@ if (isset($_POST['submit'])) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$SpreadSheet->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientâ€™s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'ExpensesList-' . $TabToShow. '.' . $_POST['Format'];
 			header('Content-Disposition: attachment;filename="' . $File . '"');
