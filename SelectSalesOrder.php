@@ -4,10 +4,10 @@ $PricesSecurity = 12;
 
 include ('includes/session.php');
 
-if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);};
-if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);};
-if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);};
-if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);};
+if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);}
+if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);}
+if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);}
+if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);}
 $Title = _('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';

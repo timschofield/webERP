@@ -3,10 +3,10 @@
 include('includes/session.php');
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
-};
+}
 if (isset($_POST['EndDate'])) {
 	$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);
-};
+}
 $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/

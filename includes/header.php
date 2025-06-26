@@ -12,8 +12,8 @@ if (!isset($RootPath)) {
 	}
 }
 
-if (!isset($ViewTopic)) {$ViewTopic = 'Contents';};
-if (!isset($BookMark)) {$BookMark = '';};
+if (!isset($ViewTopic)) {$ViewTopic = 'Contents';}
+if (!isset($BookMark)) {$BookMark = '';}
 
 if (isset($_GET['Theme'])) {
 	$_SESSION['Theme'] = $_GET['Theme'];

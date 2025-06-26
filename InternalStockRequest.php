@@ -3,7 +3,7 @@
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
-if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);};
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 $Title = _('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';

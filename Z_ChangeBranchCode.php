@@ -173,7 +173,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$SQL = "UPDATE www_users
 					SET branchcode='" . $_POST['NewBranchCode'] . "'
 					WHERE customerid='" . $_POST['DebtorNo'] . "'
-					AND branchcode='" . $_POST['OldBranchCode'] . "'";;
+					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update the user records failed');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);

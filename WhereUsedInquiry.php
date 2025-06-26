@@ -68,7 +68,7 @@ if (isset($StockID)) {
                 AND bom.effectiveto > '" . date('Y-m-d') . "'
 			ORDER BY stockmaster.discontinued, bom.parent";
 
-	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
+	$ErrMsg = _('The parents for the selected part could not be retrieved because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');

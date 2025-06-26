@@ -2,8 +2,8 @@
 
 include('includes/session.php');
 
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 $Title = _('Audit Trail');
 $ViewTopic = 'Setup';
@@ -148,7 +148,7 @@ if (isset($_POST['View'])) {
 		$SQLString = trim(str_replace("WHERE", '', $SQLString));
 		$Assigment = explode('=', $SQLString);
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
-		if (isset($Assigment[1])) {$_SESSION['SQLString']['values'][0] = $Assigment[1];};
+		if (isset($Assigment[1])) {$_SESSION['SQLString']['values'][0] = $Assigment[1];}
 	}
 
 	if (mb_strlen($ContainingText) > 0) {
