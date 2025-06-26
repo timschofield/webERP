@@ -104,7 +104,7 @@ $SessionName = 'PHPSESSIDwebERPteam';
 
 // $RootPath is used in most scripts to build links to assets and other scripts.
 // It is the path to the webERP directory as "seen" from the user's browser (excluding the hostname and port).
-// NOTE: In some windows installations, or when the web server sits behind a reverse proxy the default, calculated value
+// NOTE: In some windows installations, or when the web server sits behind a reverse proxy, the default, calculated value
 // doesn't work and the administrator must set this to a fixed path manually.
 // NOTE: no trailing slashes are necessary.
 // E.g. if the files are under the webserver root directory
