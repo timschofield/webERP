@@ -18,9 +18,9 @@ function  LoginAPI($databasename, $user, $password) {
 		include('../includes/ConnectDB.php');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
-		    $RetCode[0] = NoAuthorisation;
+			$RetCode[0] = NoAuthorisation;
 		    $RetCode[1] = UL_CONFIGERR;
-		    return  $RetCode;
+			return  $RetCode;
 		}
 		$_SESSION['db'] = $db;		// Set in above include
 	}
@@ -77,14 +77,14 @@ function GetAPIErrorMessages( $errcodes )
     foreach ($errcodes as $errnum) {
 	$rm = array ($errnum );
 	if (isset ($ErrorDescription[$errnum]) ) {
-	    if ($errnum == DatabaseUpdateFailed &&
+		if ($errnum == DatabaseUpdateFailed &&
 			isset ($_SESSION['db_err_msg']) &&
 			mb_strlen ($_SESSION['db_err_msg']) > 0 )
 		$rm[] = $ErrorDescription[$errnum] . ":\n" . $_SESSION['db_err_msg'];
 	    else
 		$rm[] = $ErrorDescription[$errnum];
 	} else {
-	    $rm[] = _('** Error Code Not Defined **');
+		$rm[] = _('** Error Code Not Defined **');
 	}
 	// Add this array to returned array.
 	$retmsg[] = $rm;
@@ -107,46 +107,45 @@ function DoSetup()
 
     $db = $_SESSION['db'];	    // Used a bit in the following.
     if(isset($_SESSION['DB_Maintenance'])){
-	    if ($_SESSION['DB_Maintenance']>0)  {
+		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				    ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-				    ,'d')	> 	$_SESSION['DB_Maintenance']){
+				 	ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
+					,'d') > $_SESSION['DB_Maintenance']){
 
 			    /*Do the DB maintenance routing for the DB_type selected */
-			    DB_Maintenance();
+				DB_Maintenance();
 			    //purge the audit trail if necessary
-			    if (isset($_SESSION['MonthsAuditTrail'])){
+				if (isset($_SESSION['MonthsAuditTrail'])){
 				     $SQL = "DELETE FROM audittrail
 						    WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-				    $ErrMsg = _('There was a problem deleting expired audit-trail history');
+					$ErrMsg = _('There was a problem deleting expired audit-trail history');
 				    $Result = DB_query($SQL);
-			    }
+				}
 			    $_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
-		    }
+			}
 	    }
     }
 
     /*Check to see if currency rates need to be updated */
     if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
-	    if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
+		if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-				    ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
-				    ,'d')> 0){
+				 	ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
+					,'d')> 0){
 
 			    $CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
-			    /*Loop around the defined currencies and get the rate from ECB */
+				/*Loop around the defined currencies and get the rate from ECB */
 			    $CurrenciesResult = DB_query('SELECT currabrev FROM currencies');
-			    while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
+				while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 				    if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
-					    $UpdateCurrRateResult = DB_query("UPDATE currencies SET
+						$UpdateCurrRateResult = DB_query("UPDATE currencies SET
 											    rate='" . GetCurrencyRate ($CurrencyRow[0],$CurrencyRates) . "'
 											    WHERE currabrev='" . $CurrencyRow[0] . "'");
-				    }
+					}
 			    }
-			    $_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
+				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
 			    $UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
-		    }
+			}
 	    }
     }
 }
-?>

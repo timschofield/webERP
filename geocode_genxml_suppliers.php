@@ -38,5 +38,3 @@ while ($MyRow = DB_fetch_array($Result)){
 
 // End XML file
 echo '</markers>';
-
-?>

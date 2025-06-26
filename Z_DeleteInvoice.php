@@ -179,4 +179,3 @@ DB_Txn_Commit();
 prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
 
 include('includes/footer.php');
-?>

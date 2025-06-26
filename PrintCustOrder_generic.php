@@ -1,7 +1,5 @@
 <?php
 
-
-
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
@@ -359,5 +357,3 @@ if ($ListCount == 0) {
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
 }
-
-?>

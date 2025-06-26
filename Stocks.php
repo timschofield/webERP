@@ -1459,4 +1459,3 @@ if ($New == 1) {
 echo '</div>
 	</form>';
 include ('includes/footer.php');
-?>

@@ -227,4 +227,3 @@ while ($MyRow = DB_fetch_array($Result)) {
 	} // end if user wish to delete
 }
 include('includes/footer.php');
-?>

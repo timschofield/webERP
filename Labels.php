@@ -614,5 +614,3 @@ echo '<br />
 	</form>';
 
 include('includes/footer.php');
-
-?>

@@ -57,4 +57,3 @@ if (isset($_POST['submit'])) {
 }
 
 include('includes/footer.php');
-?>

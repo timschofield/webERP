@@ -347,4 +347,3 @@ if(isset($SelectedAccount)) {
 }
 
 include('includes/footer.php');
-?>

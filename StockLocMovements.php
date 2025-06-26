@@ -165,5 +165,3 @@ if (DB_num_rows($MovtsResult) > 0) {
 echo '</form>';
 
 include ('includes/footer.php');
-
-?>

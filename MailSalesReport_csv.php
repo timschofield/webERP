@@ -38,4 +38,3 @@ $Body = _('Please find herewith the comma separated values sales report');
 $Attachment = $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
 
 $Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $Attachment, true);
-?>

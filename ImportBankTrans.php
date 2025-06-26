@@ -56,7 +56,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	 echo '</select>
 		</field>';
-		
+
 	echo ' <field>
 			 <label for="ImportFile">' .  _('MT940 format Bank Statement File to import') . '</label>
 				<td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . _('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
@@ -474,8 +474,6 @@ if (isset($_POST['ProcessBankTrans'])) {
 	} // there were no input errors - the exchange rate was entered
 }
 
-
-
 if (isset($_SESSION['Statement'])) {
 
 	//print_r($_SESSION['Statement']);
@@ -564,4 +562,3 @@ if (isset($_SESSION['Statement'])) {
 }
 
 include ('includes/footer.php');
-?>

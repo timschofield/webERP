@@ -150,8 +150,6 @@ prnMsg(_('Deleted the credit note stock movements'), 'info');
 echo '<br /><br />';
 
 
-
-
 $SQL = "DELETE FROM gltrans WHERE type=11 AND typeno= '" . $_GET['CreditNoteNo'] . "'";
 $ErrMsg = _('SQL to delete the gl transaction records failed with the message');
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -161,4 +159,3 @@ DB_Txn_Commit();
 prnMsg(_('Credit note number') . ' ' . $_GET['CreditNoteNo'] . ' ' . _('has been completely deleted') . '. ' . _('To ensure the integrity of the general ledger transactions must be reposted from the period the credit note was created'), 'info');
 
 include('includes/footer.php');
-?>

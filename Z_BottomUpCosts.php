@@ -65,4 +65,3 @@ if (isset($Run)) { //start bom processing
 }
 
 include('includes/footer.php');
-?>

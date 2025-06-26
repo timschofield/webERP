@@ -145,5 +145,3 @@
 		}
 		return $Errors;
 	}
-
-?>

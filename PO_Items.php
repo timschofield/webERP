@@ -1438,4 +1438,3 @@ if (isset($SearchResult)) {
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

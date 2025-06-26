@@ -823,4 +823,3 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 echo '</div>';
 echo '</form>';
 include('includes/footer.php');
-?>

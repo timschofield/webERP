@@ -21,4 +21,3 @@ while (($data = fgetcsv($Handle, 1000, ",")) !== FALSE) {
 	}
     }
 }
-?>

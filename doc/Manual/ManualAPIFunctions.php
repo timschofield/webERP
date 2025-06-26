@@ -32,5 +32,3 @@ for ($i=0; $i<sizeof($answer); $i++) {
 }
 
 echo '</body>';
-
-?>

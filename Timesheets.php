@@ -507,8 +507,6 @@ if(isset($_POST['ApproveTimesheet'])) {
 	} //end of if the timesheet has a full working week
 } // end approval
 
-
-
 if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityTokens'])) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of employees will be displayed with links to select one. These will call the same page again and allow input of the timesheet or deletion of the records*/
@@ -581,11 +579,7 @@ if (isset($SelectedEmployee)){
 
 	//Entry of Timesheets - populate the employee's details
 
-
-
 	echo '<h2>' . _('For') . ' ' . $EmployeeRow['firstname'] . ' ' . $EmployeeRow['surname'] . ' ' . _('For the week ending') . ': <select name="WeekEnding" onChange="ReloadForm(TimesheetForm.RefreshWeek)" >';
-
-
 
 	if (!isset($_POST['WeekEnding'])) {
 		echo '<option selected="selected" value="' . $LatestWeekEndingDate . '">' . $LatestWeekEndingDate . '</option>';
@@ -692,8 +686,6 @@ if (isset($SelectedEmployee)){
 						$EditableRowNo++; //increment the row number
 				}
 
-
-
 				$Day1 += $TimesheetRow['day1'];
 				$Day2 += $TimesheetRow['day2'];
 				$Day3 += $TimesheetRow['day3'];
@@ -776,8 +768,6 @@ if (isset($SelectedEmployee)){
 			$_POST['Day7'] = 0;
 		}
 
-
-
 		echo '</select></td>
 			<td><input type="text" required="required" class="number" name="Day1" value="' . locale_number_format($_POST['Day1'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
 			<td><input type="text" required="required" class="number" name="Day2" value="' . locale_number_format($_POST['Day2'],$EmployeeRow['decimalplaces']) . '" minlength="1" maxlength="4" size="4" /></td>
@@ -810,4 +800,3 @@ echo '</div>
 	</form>';
 
 include('includes/footer.php');
-?>

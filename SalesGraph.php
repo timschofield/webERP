@@ -370,4 +370,3 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		  </table>';
 	include('includes/footer.php');
 }
-?>

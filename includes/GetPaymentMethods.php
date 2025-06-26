@@ -21,4 +21,3 @@ while( $PMrow = DB_fetch_array($PMResult) ) {
 	}
 }
 DB_free_result($PMResult); // no longer needed
-?>

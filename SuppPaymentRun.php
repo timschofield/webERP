@@ -379,4 +379,3 @@ Payment types can be modified by editing that file */
 	echo '</form>';
 	include ('includes/footer.php');
 } /*end of else not PrintPDF */
-?>

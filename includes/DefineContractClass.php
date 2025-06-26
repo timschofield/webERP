@@ -36,7 +36,7 @@ Class Contract {
 		$this->RequirementsCounter=0;
 		$this->Status = 0;
 	}
-	
+
 	function Contract() {
 		self::__construct();
 	}
@@ -171,4 +171,3 @@ Class ContractRequirement {
 									$ContractReqID=0);
 	}
 }
-?>

@@ -354,7 +354,7 @@ while ($MyRow = DB_fetch_array($TypeResult)) {
 echo '</select>
 	</field>';
 
-DB_free_result($TypeResult); 
+DB_free_result($TypeResult);
 
 if (!isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -379,7 +379,7 @@ echo '<field>
 		<label for="Price">' . _('Price') . ':</label>
 		<input type="text" class="number" required="required" name="Price" size="12" maxlength="11" value="';
 if (isset($_POST['Price'])) {
-	 echo $_POST['Price'];
+	echo $_POST['Price'];
 }
 echo '" />
 	</field>
@@ -432,7 +432,7 @@ function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {
 									AND startdate ='" . $StartDate . "'
 									AND enddate = '" . $EndDate . "'
 									AND debtorno =''";
-					DB_query($SQL); 
+					DB_query($SQL);
 				}
 			} //end of if startdate  after NextStartDate - we have a new NextStartDate
 		} //end of if set NextStartDate
@@ -473,5 +473,3 @@ function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {
 	} // end of loop around duplicate no end date prices
 
 } // end function ReSequenceEffectiveDates
-
-?>

@@ -338,5 +338,3 @@ $TOC_Array = array (
     'Contributors'     => array('Contributors - Acknowledgements')
     )
 );
-
-?>

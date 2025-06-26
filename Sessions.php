@@ -15,5 +15,3 @@ if ($MyRow['time_interval'] > 60) {
 
 $SQL = "UPDATE sessions SET logintime = NOW() WHERE sessionid='" . $_GET['Id'] . "'";
 $Result = DB_query($SQL);
-
-?>

@@ -14,12 +14,12 @@ include('includes/SQL_CommonFunctions.php');
 if(isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError = 0;
-	
+
 	if($_POST['FromUserID'] == $_POST['ToUserID']) {
 		prnMsg(_('User FROM must be different from user TO'), 'error');
 		$InputError = 1;
 	}
-	
+
 	if($InputError == 0) {// no input errors
 		DB_Txn_Begin();
 
@@ -68,7 +68,7 @@ if($_SESSION['AccessLevel'] == 8) {
 						FROM www_users
 						WHERE fullaccess != '8'
 						ORDER BY userid");
-} 
+}
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while($MyRow = DB_fetch_array($Result)) {
@@ -95,7 +95,7 @@ if($_SESSION['AccessLevel'] == 8) {
 						FROM www_users
 						WHERE fullaccess != '8'
 						ORDER BY userid");
-} 
+}
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while($MyRow = DB_fetch_array($Result)) {
@@ -111,4 +111,3 @@ echo '<div class="centre"><input type="submit" name="ProcessCopyAuthority" value
 	</form>';
 
 include('includes/footer.php');
-?>

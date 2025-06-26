@@ -263,5 +263,3 @@ function BuildCriteria($FieldListings) {
 	$CriteriaString .= $EndString.'</tr>';
 	return $CriteriaString;
 }
-
-?>

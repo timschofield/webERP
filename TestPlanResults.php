@@ -947,4 +947,3 @@ if ($CanCert==1){
 }
 
 include('includes/footer.php');
-?>

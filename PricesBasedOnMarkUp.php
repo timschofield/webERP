@@ -380,4 +380,3 @@ if (isset($_POST['UpdatePrices'])){
 	}
 }
 include('includes/footer.php');
-?>

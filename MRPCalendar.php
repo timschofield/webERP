@@ -319,4 +319,3 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 } // End of function ShowInputForm()
 
 include('includes/footer.php');
-?>

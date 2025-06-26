@@ -94,5 +94,3 @@ if (!in_array('mbstring', $Extensions)) {
 } else {
 	echo '<div class="success">' . _('The database extension is installed') . '</div>';
 }
-
-?>

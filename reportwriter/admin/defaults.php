@@ -189,5 +189,3 @@ $TextProcessing = array(
 	'com-sp' => FRM_COMMASP,
 	'nl' => FRM_NEWLINE,
 	'semi-sp' => FRM_SEMISP);
-
-?>

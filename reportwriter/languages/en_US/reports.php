@@ -369,4 +369,3 @@ define('RPT_NEXTWEEK',_('Next Week'));
 define('RPT_NEXTMONTH',_('Next Month'));
 define('RPT_NEXTQUARTER',_('Next Quarter'));
 define('RPT_NEXTYEAR',_('Next Year'));
-?>
