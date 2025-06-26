@@ -12,4 +12,4 @@ CREATE TABLE `shipments` (
   KEY `ShipperRef` (`voyageref`),
   KEY `Vessel` (`vessel`),
   CONSTRAINT `shipments_ibfk_1` FOREIGN KEY (`supplierid`) REFERENCES `suppliers` (`supplierid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

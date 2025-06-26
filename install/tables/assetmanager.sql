@@ -8,4 +8,4 @@ CREATE TABLE `assetmanager` (
   `datepurchased` date NOT NULL DEFAULT '1000-01-01',
   `disposalvalue` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

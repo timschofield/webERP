@@ -11,4 +11,4 @@ CREATE TABLE `pcashdetails` (
   `receipt` text COMMENT 'Column redundant. Replaced by receipt file upload. Nov 2017.',
   PRIMARY KEY (`counterindex`),
   UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

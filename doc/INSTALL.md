@@ -9,14 +9,19 @@ are upgrading an existing installation.
 
 * Web server (e.g. Apache HTTP Server v2.4 or nginx v1.26).
 
-* PHP interpreter. PHP v8.1 or later is required, with
-    MySQL or MariaDb extension (generally both use "mysqli"), gd, gettext (for translations),
+* PHP interpreter. PHP v8.1 or later is required, with MySQLi extension, gd, gettext (for translations),
     libxml, mbstring and ftp (optional for file transfer). The web server user must have full
     write privileges to the ./companies/ directory, and at least temporarily to the root
     directory for the web installer to save the created configuration file ./config.php.
 
-* MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default but
-    you can check my.cnf file to confirm, e.g. /etc/my.cnf or /usr/local/etc/mysql/my.cnf).
+* MySQL v5.5+ or MariaDb 10.4+
+
+  InnoDB tables MUST be enabled, which should be the default, but you can check my.cnf file to confirm,
+  e.g. /etc/my.cnf or /usr/local/etc/mysql/my.cnf).
+
+  The utf8mb4 character set is required.
+
+  The DB user account must have privileges sufficient to create triggers.
 
 Detailed instructions for installing these components can be readily found in a web search. XAMPP is
 recommended for development on a Windows(R) platform, see https://www.apachefriends.org/index.html.

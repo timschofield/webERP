@@ -13,4 +13,4 @@ CREATE TABLE `employees` (
   KEY `stockid` (`stockid`),
   KEY `manager` (`manager`),
   KEY `userid` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
