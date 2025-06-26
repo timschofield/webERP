@@ -32,7 +32,7 @@ echo '<body>
 			<div class="logo logo-left">web</div><div class="logo logo-right">ERP</div>
 		</div>
 		<div id="login_box">
-			<form action="index.php" name="LogIn" method="post" class="noPrint">
+			<form action="' . $RootPath . '/index.php" name="LogIn" method="post" class="noPrint">
 			<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (isset($_COOKIE['Login'])) {
