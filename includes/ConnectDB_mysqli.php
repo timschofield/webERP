@@ -18,7 +18,7 @@ if (mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
 	exit(1);
 }
 
@@ -35,14 +35,14 @@ mysqli_set_charset($db, 'utf8');
 if(isset($DatabaseName)) {
 	if(!mysqli_select_db($db,$DatabaseName)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset ($DatabaseName);
 		exit;
 	}
 } else {
 	if(!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset ($_SESSION['DatabaseName']);
 		exit;
 	}
