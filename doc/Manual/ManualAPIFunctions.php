@@ -1,7 +1,5 @@
 <?php
 
-/// @todo fixme
-$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 $PathPrefix = __DIR__ . '/../../';
 
 include('api/api_errorcodes.php');
