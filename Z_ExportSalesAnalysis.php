@@ -160,5 +160,3 @@ if (!$upload) {
 ftp_close($conn_id);
 
 include('includes/footer.php');
-
-?>

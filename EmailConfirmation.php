@@ -269,7 +269,7 @@ if($_GET['POLine'] == 1){
 				</body>
 				</html>';
 
-	SendEmailFromWebERP($SysAdminEmail, 
+	SendEmailFromWebERP($SysAdminEmail,
 						$MailTo,
 						$MailSubject,
 						$MailMessage,
@@ -361,4 +361,3 @@ for( $j=0; $j<$i; $j++){
 echo '</table>
 	</body>
 	</html>';
-?>

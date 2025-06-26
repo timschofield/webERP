@@ -202,5 +202,3 @@ echo '<br />
 echo '</div>
 	</form>';
 include('includes/footer.php');
-
-?>

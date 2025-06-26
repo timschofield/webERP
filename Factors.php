@@ -347,4 +347,3 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 }
 
 include('includes/footer.php');
-?>

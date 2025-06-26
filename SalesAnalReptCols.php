@@ -64,8 +64,6 @@ if (isset($_GET['ReportID'])){
 	$ReportID = $_POST['ReportID'];
 }
 
-
-
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -541,4 +539,3 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

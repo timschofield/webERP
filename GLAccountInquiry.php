@@ -182,8 +182,8 @@ if (isset($_POST['Show'])) {
 		$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 	}
 
-	$SQL = $SQL . " ORDER BY periodno, 
-						gltrans.trandate, 
+	$SQL = $SQL . " ORDER BY periodno,
+						gltrans.trandate,
 						counterindex";
 
 	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
@@ -395,4 +395,3 @@ if (isset($ShowIntegrityReport) AND $ShowIntegrityReport == True AND $_POST['tag
 	echo '<p>' . $IntegrityReport;
 }
 include ('includes/footer.php');
-?>

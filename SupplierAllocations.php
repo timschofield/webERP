@@ -655,4 +655,3 @@ if (isset($_POST['AllocTrans'])){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

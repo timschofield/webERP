@@ -296,5 +296,3 @@ Class Supplier {
 
 
 }
-
-?>

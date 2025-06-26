@@ -27,5 +27,3 @@ DropColumn('tag', 'gltrans');
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Database update necessary for multi tagging GL transactions'));
 }
-
-?>

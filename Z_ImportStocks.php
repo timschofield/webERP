@@ -302,4 +302,3 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 
 include('includes/footer.php');
-?>

@@ -234,4 +234,3 @@ if (! isset($_GET['delete'])) {
 } // end if user wish to delete
 
 include('includes/footer.php');
-?>

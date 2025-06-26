@@ -1276,7 +1276,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 								- How many in stock now
 								- The quantity being invoiced here - $EnteredGRN->This_QuantityInv
 								- The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate */
-								
+
 								$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 								/*The cost adjustment is the price variance / the total quantity in stock
@@ -1893,4 +1893,3 @@ if (isset($InputError) AND $InputError == true) { //add a link to return if user
 	echo '<div class="centre"><a href="' . $RootPath . '/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
 include ('includes/footer.php');
-?>

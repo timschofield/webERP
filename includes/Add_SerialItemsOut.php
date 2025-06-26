@@ -57,5 +57,3 @@ if (isset($_GET['Delete'])){
 if (isset($_GET['DELETEALL'])){
 	$LineItem->SerialItems=array();
 }
-
-?>

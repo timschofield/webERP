@@ -457,4 +457,3 @@ if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order be
 }
 
 include('includes/footer.php');
-?>

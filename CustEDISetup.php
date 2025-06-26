@@ -160,4 +160,3 @@ echo '</fieldset>
 	</form>';
 
 include ('includes/footer.php');
-?>

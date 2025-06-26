@@ -251,6 +251,3 @@ function beginning_of_month($Date){
 	$Y = $Date2[0];
 	$FirstOfMonth = $Y . '-' . $M . '-01';
 	return $FirstOfMonth;
-}
-
-?>

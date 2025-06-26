@@ -583,4 +583,3 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 }
 
 include('includes/footer.php');
-?>

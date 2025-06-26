@@ -82,4 +82,3 @@ if (isset($_POST['update'])) {
           </form>';
 }
 include('includes/footer.php');
-?>

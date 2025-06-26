@@ -25,4 +25,3 @@ echo '<p />';
 prnMsg(_('Any stock items that may not have had stock location records have now been given new location stock records'),'info');
 
 include('includes/footer.php');
-?>

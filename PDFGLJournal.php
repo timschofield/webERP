@@ -129,4 +129,3 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/footer.php');
 	exit;
 }
-?>

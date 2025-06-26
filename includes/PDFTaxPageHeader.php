@@ -33,4 +33,3 @@ $pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize
 $YPos -= $FontSize;
 
 $FontSize = $FontSizeLast;// Resets to the main font size.
-?>

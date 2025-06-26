@@ -163,4 +163,3 @@ echo '</td>
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>
 </script>'; /*end of nested table */
-?>

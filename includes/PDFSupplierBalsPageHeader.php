@@ -35,5 +35,3 @@ $LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,_('FX'),'centre');
 $LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Currency'),'centre');
 
 $YPos =$YPos - (2*$LineHeight);
-
-?>

@@ -131,5 +131,3 @@
 		$Errors[1]=$Answer;
 		return $Errors;
 	}
-
-?>

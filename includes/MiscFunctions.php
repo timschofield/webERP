@@ -724,10 +724,10 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 function FYStartPeriod($PeriodNumber) {
 	// Get the end date of the period using EndDateSQLFromPeriodNo
 	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNumber);
-	
+
 	// Parse the date components from the SQL date
 	$DateArray = explode('-', $LastDateInPeriod);
-	
+
 	// Determine the financial year start date based on YearEnd setting
 	if ((int)$DateArray[1] > $_SESSION['YearEnd']) {
 		$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, $DateArray[0]));
@@ -829,7 +829,7 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 						$Body,
 						$Attachments);
 	}
-	
+
 	if (!$Silent) {
 		// Check if $EmailSent is a boolean true or a string (error message)
 		if ($EmailSent === true) {
@@ -934,5 +934,3 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 		}
 	}
 }
-
-?>

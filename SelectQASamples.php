@@ -591,4 +591,3 @@ if (isset($SelectedSampleID)) {
 }
 
 include('includes/footer.php');
-?>

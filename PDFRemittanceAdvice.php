@@ -318,4 +318,3 @@ function PageHeader(){
 	$XPos = $Left_Margin;
 
 }
-?>

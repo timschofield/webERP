@@ -301,4 +301,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include ('includes/footer.php');
 
 }
-?>

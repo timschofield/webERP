@@ -107,5 +107,3 @@ if (isset($_POST['Show'])) {
 }
 
 include('includes/footer.php');
-
-?>

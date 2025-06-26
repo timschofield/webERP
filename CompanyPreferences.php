@@ -514,4 +514,3 @@ echo '</fieldset>
 echo '</form>';
 
 include('includes/footer.php');
-?>

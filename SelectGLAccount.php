@@ -176,4 +176,3 @@ if (!isset($AccountID)) {
 } //end AccountID already selected
 
 include('includes/footer.php');
-?>

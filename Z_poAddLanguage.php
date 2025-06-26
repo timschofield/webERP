@@ -98,5 +98,3 @@ echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />&n
 echo '</form>';
 
 include('includes/footer.php');
-
-?>

@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 			$MyRow = DB_fetch_array($Result);
 
 			if ($MyRow[0] == 0) {
-			  $SQL = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+				$SQL = "UPDATE debtorsmaster SET name='" . $_POST['CustName'] . "',
 												address1='" . $_POST['Address1'] . "',
 												address2='" . $_POST['Address2'] . "',
 												address3='" . $_POST['Address3'] ."',
@@ -166,14 +166,14 @@ if (isset($_POST['submit'])) {
 					  WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 			} else {
 
-			  $CurrSQL = "SELECT currcode
+				$CurrSQL = "SELECT currcode
 					  		FROM debtorsmaster
 							where debtorno = '" . $_POST['DebtorNo'] . "'";
-			  $CurrResult = DB_query($CurrSQL);
-			  $CurrRow = DB_fetch_array($CurrResult);
-			  $OldCurrency = $CurrRow[0];
+				$CurrResult = DB_query($CurrSQL);
+				$CurrRow = DB_fetch_array($CurrResult);
+				$OldCurrency = $CurrRow[0];
 
-			  $SQL = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
+				$SQL = "UPDATE debtorsmaster SET	name='" . $_POST['CustName'] . "',
 												address1='" . $_POST['Address1'] . "',
 												address2='" . $_POST['Address2'] . "',
 												address3='" . $_POST['Address3'] ."',
@@ -195,9 +195,9 @@ if (isset($_POST['submit'])) {
 												language_id='" . $_POST['LanguageID'] . "'
 						WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
-			  if ($OldCurrency != $_POST['CurrCode']) {
-			  	prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
-			  }
+				if ($OldCurrency != $_POST['CurrCode']) {
+					prnMsg( _('The currency code cannot be updated as there are already transactions for this customer'),'info');
+				}
 			}
 
 			$ErrMsg = _('The customer could not be updated because');
@@ -486,7 +486,7 @@ if (!isset($DebtorNo)) {
 		</field>';
 
 	if (!isset($_POST['Address6'])) {
-		 $_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
+		$_POST['Address6'] = $CountriesArray[$_SESSION['CountryOfOperation']];
 	}
 	echo '<field>
 			<label for="Address6">' . _('Country') . ':</label>
@@ -514,7 +514,7 @@ if (!isset($DebtorNo)) {
 				<select tabindex="9" name="SalesType" required="required">';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-		   echo '<option value="'. $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
+			echo '<option value="'. $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 		} //end while loopre
 		DB_data_seek($Result,0);
 		echo '</select>
@@ -524,9 +524,9 @@ if (!isset($DebtorNo)) {
 // Show Customer Type drop down list
 	$Result=DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	if (DB_num_rows($Result)==0){
-	   $DataError =1;
-	   echo '<a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a>';
-	   echo '<field>
+		$DataError =1;
+		echo '<a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a>';
+		echo '<field>
 				<td colspan="2">' . prnMsg(_('No Customer types/price lists defined'),'error') . '</td>
 			</field>';
 	} else {
@@ -1173,4 +1173,3 @@ if (!isset($DebtorNo)) {
 } // end of main ifs
 
 include('includes/footer.php');
-?>

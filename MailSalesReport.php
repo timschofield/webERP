@@ -34,7 +34,7 @@ $Subject = _('Sales Analysis Report');
 if ($Counter > 0) { /* the number of lines of the sales report is more than 0  ie there is a report to send! */
 	$pdf->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
 	$pdf->__destruct();
-	
+
 	$Body = _('Please find herewith sales report');
 	$AttachmentPath = $_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf';
 
@@ -43,5 +43,3 @@ if ($Counter > 0) { /* the number of lines of the sales report is more than 0  i
 	$Body = _('Error running automated sales report number') . ' ' . $ReportID;
 	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
 }
-
-?>

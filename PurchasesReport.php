@@ -218,7 +218,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 } else {
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
@@ -266,10 +266,9 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 }
 echo '<div class="centre">',
 		'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-		'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 	'</div>';
 
 echo	'</form>';
 include('includes/footer.php');
 // END Procedure division ======================================================
-?>

@@ -17,5 +17,3 @@ if (DB_error_no($Result) == 0) {
 }
 
 UpdateDBNo(basename(__FILE__, '.php'), _('Use of gltotals instead of chartdetails'));
-
-?>

@@ -289,4 +289,3 @@ echo '<div class="centre">
 	</div>
 	</form>';
 include('includes/footer.php');
-?>
