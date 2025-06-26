@@ -8,7 +8,7 @@ include('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
 include('includes/session.php');
-if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 $Title = _('Purchase Order Items');
 

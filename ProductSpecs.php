@@ -168,7 +168,7 @@ if (isset($_GET['ListTests'])) {
 				</tr>
 			</thead>
 			<tbody>';
-	};
+	}
 
 	$x=0;
 	while ($MyRow=DB_fetch_array($Result)) {

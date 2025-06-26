@@ -418,7 +418,7 @@ if (!isset($_GET['delete'])) {
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
-		$ErrMsg = _('An error occurred in retrieving the currency information');;
+		$ErrMsg = _('An error occurred in retrieving the currency information');
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_array($Result);
 
