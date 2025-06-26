@@ -672,4 +672,3 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 
 echo '</tbody></table>';
 include('includes/footer.php');
-?>

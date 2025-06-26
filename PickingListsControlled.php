@@ -84,4 +84,3 @@ of the item selected for dispatch */
 $_SESSION['Items' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
 include('includes/footer.php');
-?>

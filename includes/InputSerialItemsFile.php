@@ -205,5 +205,3 @@ if ($InvalidImports>0 AND !$_SESSION['CurImportFile']['Processed']){
 	}
 	echo '</table></form>';
 }
-
-?>

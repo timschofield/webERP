@@ -47,5 +47,3 @@ if ($DataSaved != '') {
 }
 echo '</fieldset>
 	</form>';
-
-?>

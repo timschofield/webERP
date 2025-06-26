@@ -228,5 +228,3 @@ if (isset($_POST['View'])) {
 	echo '</table>';
 }
 include('includes/footer.php');
-
-?>

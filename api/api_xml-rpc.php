@@ -4,5 +4,3 @@
 
 	$server = new \PhpXmlRpc\Server($dispatchMap, false);
 	$server->service();
-
-?>

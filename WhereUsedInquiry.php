@@ -112,4 +112,3 @@ if (isset($StockID)) {
 } // StockID is set
 echo '</form>';
 include('includes/footer.php');
-?>

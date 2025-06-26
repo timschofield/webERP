@@ -241,4 +241,3 @@ echo		'<button onclick="window.location=\'index.php?Application=GL\'" type="butt
 	</form>';
 
 include('includes/footer.php');
-?>

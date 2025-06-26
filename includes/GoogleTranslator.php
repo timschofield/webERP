@@ -28,5 +28,3 @@ function translate_via_google_translator($Text,$Target,$Source=false){
 	}
 	return $TranslatedText;
 }
-
-?>

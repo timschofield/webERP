@@ -14,5 +14,3 @@ echo '<form id="license_form" action="index.php?Next=Yes">
 		<span id="license_agree">
 			<input onclick="toggle_button(this)" id="agreed" type="checkbox"" ', $Checked, ' />', _('I have read the license and agree to the terms and conditions within it'), '
 		</span>';
-
-?>

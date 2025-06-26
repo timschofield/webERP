@@ -387,4 +387,3 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos =$YPos - (2*$LineHeight);
 	$PageNumber++;
 } // End of PrintHeader function
-?>

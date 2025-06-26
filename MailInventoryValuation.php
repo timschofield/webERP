@@ -220,21 +220,21 @@ if ($ListCount == 0) {
 	include('includes/footer.php');
 	exit; // Javier: needs check
 } else {
-	
+
 	$pdf->Output($_SESSION['reports_dir'] . '/InventoryReport.pdf', 'F');
 	$pdf->__destruct();
 
 	$From = $_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>';
 	$Subject = _('Inventory Valuation Report');
 	$Body = _('Please find herewith the stock valuation report');
-	
+
 	$Result = SendEmailFromWebERP($From,
 								$Recipients,
 								$Subject,
 								$Body,
 								$_SESSION['reports_dir'] . '/InventoryReport.pdf',
 								false);
-	
+
 	if ($Result) {
 		$Title = _('Print Inventory Valuation');
 		include('includes/header.php');
@@ -251,4 +251,3 @@ if ($ListCount == 0) {
 		exit;
 	}
 }
-?>

@@ -29,5 +29,3 @@ $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
 }
-
-?>

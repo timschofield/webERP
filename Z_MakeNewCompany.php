@@ -264,4 +264,3 @@ echo '<br /><br />
 	</form>';
 
 include('includes/footer.php');
-?>

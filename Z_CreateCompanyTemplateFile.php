@@ -249,4 +249,3 @@ echo '<div class="centre"><input type="submit" name="CreateTemplate" value="' . 
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

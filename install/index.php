@@ -131,5 +131,3 @@ echo '</footer>
 
 echo '</body>
 	</html>';
-
-?>

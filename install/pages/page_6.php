@@ -592,5 +592,3 @@ function CreateGLTriggers($Path_To_Root)
 
 	return $DBErrors;
 }
-
-?>

@@ -1,7 +1,5 @@
 <?php
 
-
-
 include('includes/session.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
@@ -655,4 +653,3 @@ if ( isset($_POST['pricelist']) ) {
 
 	include('includes/footer.php');
 }
-?>

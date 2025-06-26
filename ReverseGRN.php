@@ -433,4 +433,3 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	}
 }
 include ('includes/footer.php');
-?>

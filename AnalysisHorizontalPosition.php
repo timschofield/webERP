@@ -401,4 +401,3 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	// END ReportDocEndButtons.
 }
 include('includes/footer.php');
-?>

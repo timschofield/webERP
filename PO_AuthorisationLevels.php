@@ -280,4 +280,3 @@ if (isset($_GET['Edit'])) {
 echo '</div>
         </form>';
 include('includes/footer.php');
-?>

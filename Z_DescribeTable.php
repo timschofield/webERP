@@ -20,6 +20,3 @@ while ($MyRow=DB_fetch_row($Result)) {
 }
 echo '</table>';
 include('includes/footer.php');
-
-
-?>
