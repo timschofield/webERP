@@ -249,6 +249,7 @@ CreateTables($Path_To_Root);
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
 	if (isset($Demo) and $Demo != 'Yes') {
 		DB_IgnoreForeignKeys();
+		/* Create the admin user */
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
 										realname,
@@ -304,7 +305,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0
 									)";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
 		} else {
@@ -359,6 +359,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		ob_flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
 		$Result = DB_query($SQL);
@@ -385,7 +386,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName('../') . ")";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The database update revision has been inserted.') . '</div>';
 		} else {
@@ -422,7 +422,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 											'5600'
 										)";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The company record has been inserted.') . '</div>';
 		} else {
@@ -430,16 +429,20 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 		ob_flush();
 
-	/* Create the admin user */
 	} else {
 		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
-		PopulateSQLDataBySQL('demo.sql');
+
+		PopulateSQLDataBySQL(__DIR__ . '/../..sql/mysql/country_sql/demo.sql');
+
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);
+
+		// gg: there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . 'companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
+
 //		copy("companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
