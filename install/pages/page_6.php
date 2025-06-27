@@ -163,7 +163,7 @@ CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root);
 /**
  * IMPORTANT!!
  * Must match the variables found inside config.distrib.php.
- *  */
+ */
 $configArray = $_SESSION['Installer'];
 $configArray += [
     'Host'            => $_SESSION['Installer']['HostName'],

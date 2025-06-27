@@ -16,7 +16,7 @@ $identifier=$_GET['identifier'];
 
 /* If a purchase order header doesn't exist, then go to PO_Header.php to create one */
 if (!isset($_SESSION['PO'.$identifier])){
-	header('Location:' . $RootPath . '/PO_Header.php');
+	header('Location:' . htmlspecialchars_decode($RootPath) . '/PO_Header.php');
 	exit;
 }
 
