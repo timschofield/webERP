@@ -88,7 +88,7 @@ if (!in_array('libxml', $Extensions)) {
 }
 
 //Check that the DBMS driver is installed
-if (!in_array('mbstring', $Extensions)) {
+if (!in_array('mysqli', $Extensions)) {
 	$InputError = 1;
 	echo '<div class="error">' . _('You do not have the correct database extension installed for PHP') . '</div>';
 } else {
