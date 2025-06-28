@@ -7,6 +7,10 @@ namespace Composer\Autoload;
 class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
 {
     public static $prefixLengthsPsr4 = array (
+        'w' => 
+        array (
+            'webERP\\' => 7,
+        ),
         'Z' => 
         array (
             'ZipStream\\' => 10,
@@ -46,6 +50,10 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
     );
 
     public static $prefixDirsPsr4 = array (
+        'webERP\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
+        ),
         'ZipStream\\' => 
         array (
             0 => __DIR__ . '/..' . '/maennchen/zipstream-php/src',
@@ -64,8 +72,8 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
