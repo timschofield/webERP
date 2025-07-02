@@ -1,8 +1,8 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 
 $Title = _('All Stock Movements By Location');
 
@@ -165,5 +165,3 @@ if (DB_num_rows($MovtsResult) > 0) {
 echo '</form>';
 
 include ('includes/footer.php');
-
-?>

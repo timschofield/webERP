@@ -19,7 +19,7 @@ include ('includes/session.php');
 
 //ob_start(); /*what is this for? */
 if (!isset($_SESSION['DBVersion'])) {
-//	header('Location: index.php');
+//	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php');
 	$_SESSION['DBVersion'] = 0;
 }
 	// Fix: Check if CompanyRecord['coyname'] is set before using stripslashes
@@ -158,4 +158,3 @@ if (!isset($_SESSION['DBVersion'])) {
 	}
 
 	include ('includes/footer.php');
-?>

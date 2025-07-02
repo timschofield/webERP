@@ -16,13 +16,15 @@ require $PathPrefix.'vendor/autoload.php';
 $DefaultDatabase = 'weberp';
 
 if (!file_exists($PathPrefix . 'config.php')) {
-	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
+	$RootPath = dirname($_SERVER['PHP_SELF']);
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
 	exit;
 }
+
 include ($PathPrefix . 'config.php');
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
@@ -42,14 +44,6 @@ if (!isset($SysAdminEmail)) {
 if (isset($_SESSION['Timeout'])) {
 	ini_set('session.gc_maxlifetime', (60 * $_SESSION['Timeout'] + 1));
 }
-
-//INI directive 'safe_mode' is deprecated since PHP 5.3 and removed since PHP 5.4
-/*
- * if (!ini_get('safe_mode')) {
- *	set_time_limit($MaximumExecutionTime);
- *	ini_set('max_execution_time', $MaximumExecutionTime);
- *}
-*/
 
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
@@ -167,9 +161,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		}
 	}
 
-	header('Location: index.php'); //go back to the main index/login
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
-} elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
+} elseif (isset($AllowAnyone)) { /* only do security checks if AllowAnyone is not true */
 	if (!isset($_SESSION['DatabaseName'])){
 
 		$_SESSION['AllowedPageSecurityTokens'] = array();
@@ -260,15 +254,15 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 }
 
-/*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
-/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+/* If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
+/* If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
 if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])
 	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
-	header('Location: Z_UpgradeDatabase.php');
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
 	exit;
 }
 // else {
@@ -285,7 +279,6 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$_SESSION['Theme'] = $DefaultTheme;
 }
 
-
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -296,7 +289,6 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
-
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
@@ -306,9 +298,10 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) 
 	exit;
 }
 
-/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
+/*
+ * The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
  * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
-*/
+ */
 if (!isset($PageSecurity)) {
 	//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
 	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME']) ];
@@ -335,11 +328,11 @@ if (!isset($AllowAnyone)) {
 	}
 }
 
-//$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
+// $PageSecurity = 9 hard coded for supplier access. Supplier access must have just 9 and 0 tokens
 if (in_array(9, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
 	$SupplierLogin = 1;
 } else {
-	$SupplierLogin = 0; //false
+	$SupplierLogin = 0; // false
 
 }
 if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
@@ -352,11 +345,10 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 
 } else {
 	$Debug = 0; //don't allow debug messages
-
 }
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
-	header('Location: ' . $PathPrefix . 'Dashboard.php');
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
 }
 
 if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
@@ -392,5 +384,3 @@ function quote_smart($Value) {
 	}
 	return $Value;
 }
-
-?>

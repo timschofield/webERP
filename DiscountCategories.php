@@ -270,4 +270,3 @@ if (!isset($_POST['SelectChoice'])) {
 }
 
 include('includes/footer.php');
-?>

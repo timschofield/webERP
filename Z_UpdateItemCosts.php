@@ -125,5 +125,3 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 }
 
 include('includes/footer.php');
-
-?>

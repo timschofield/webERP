@@ -17,4 +17,3 @@ echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
 		</form>';
 
 include('includes/footer.php');
-?>

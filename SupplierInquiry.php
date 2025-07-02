@@ -2,7 +2,7 @@
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');
-if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);};
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 $Title = _('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
@@ -300,4 +300,3 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 echo '</tbody></table>';
 include('includes/footer.php');
-?>

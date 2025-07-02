@@ -1,7 +1,6 @@
 <?php
 
-$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
-$PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
+$PathPrefix = $_SERVER['HTTP_HOST'].$RootPath.'/../../';
 
 include('api/api_errorcodes.php');
 
@@ -33,5 +32,3 @@ for ($i=0; $i<sizeof($answer); $i++) {
 }
 
 echo '</body>';
-
-?>

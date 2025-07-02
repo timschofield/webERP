@@ -16,5 +16,3 @@ prnMsg( _('The file') . ' ' . $HTTP_POST_FILES['userfile']['name'] . ' ' . _('wa
 move_uploaded_file($HTTP_POST_FILES['userfile']['tmp_name'], '/tmp/temp');
 
 include('includes/footer.php');
-
-?>

@@ -227,9 +227,9 @@ else {
 	$SQL = "SELECT chartmaster.accountcode,
 				   chartmaster.accountname
 			FROM chartmaster
-			INNER JOIN glaccountusers 
-				ON glaccountusers.accountcode=chartmaster.accountcode 
-				AND glaccountusers.userid='" . $_SESSION['UserID'] . "' 
+			INNER JOIN glaccountusers
+				ON glaccountusers.accountcode=chartmaster.accountcode
+				AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
 				AND glaccountusers.canview=1
 			ORDER BY chartmaster.accountcode";
 	$AccountsResult = DB_query($SQL);
@@ -338,4 +338,3 @@ function NewPageHeader() {
 
 	$YPos = $YPos - (2 * $LineHeight);
 }
-?>

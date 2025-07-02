@@ -214,4 +214,3 @@
 			 } /* line PO from purchase order details */
 	  } //end is there were lines on the order
    } // end if there was a header for the order
-?>

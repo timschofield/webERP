@@ -262,4 +262,3 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 }
 /*end of else not submit */
 include('includes/footer.php');
-?>

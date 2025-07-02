@@ -1,8 +1,8 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);};
-if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);};
+if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
+if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
 $Title=_('Update Pricing');
 $ViewTopic = 'Sales';
 $BookMark = '';
@@ -380,4 +380,3 @@ if (isset($_POST['UpdatePrices'])){
 	}
 }
 include('includes/footer.php');
-?>

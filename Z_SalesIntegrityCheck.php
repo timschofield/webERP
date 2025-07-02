@@ -212,4 +212,3 @@ echo '<br /><br />' . _('Sales Integrity Check completed.') . '<br /><br />';
 prnMsg(_('Sales Integrity Check completed.'),'info');
 
 include('includes/footer.php');
-?>

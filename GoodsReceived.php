@@ -6,7 +6,7 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
-if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);};
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -823,4 +823,3 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 echo '</div>';
 echo '</form>';
 include('includes/footer.php');
-?>

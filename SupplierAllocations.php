@@ -328,7 +328,7 @@ If (isset($_GET['AllocTrans'])){
 
 	$_SESSION['Alloc']->AllocTrans = $_SESSION['AllocTrans'];
 	$_SESSION['Alloc']->SupplierID = $MyRow['supplierno'];
-	$_SESSION['Alloc']->SuppName = $MyRow['suppname'];;
+	$_SESSION['Alloc']->SuppName = $MyRow['suppname'];
 	$_SESSION['Alloc']->TransType = $MyRow['type'];
 	$_SESSION['Alloc']->TransTypeName = _($MyRow['typename']);
 	$_SESSION['Alloc']->TransNo = $MyRow['transno'];
@@ -655,4 +655,3 @@ if (isset($_POST['AllocTrans'])){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

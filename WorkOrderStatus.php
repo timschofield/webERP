@@ -163,5 +163,3 @@ echo '<table cellpadding="2" class="selection">
 
 	echo '</table>';
 	include('includes/footer.php');
-
-?>

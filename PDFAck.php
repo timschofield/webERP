@@ -282,4 +282,3 @@ if ($ListCount == 0) {
 	$pdf->OutputI($_SESSION['DatabaseName'] . '_Acknowledgement_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 }
-?>

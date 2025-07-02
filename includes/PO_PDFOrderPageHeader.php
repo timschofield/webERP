@@ -80,4 +80,3 @@ $pdf->addText($FormDesign->Headings->Column6->x,$Page_Height - $FormDesign->Head
 $pdf->addText($FormDesign->Headings->Column7->x,$Page_Height - $FormDesign->Headings->Column7->y, $FormDesign->Headings->Column7->FontSize, _('Total') );
 /*draw a rectangle to hold the data lines */
 $pdf->Rectangle($FormDesign->DataRectangle->x, $Page_Height - $FormDesign->DataRectangle->y, $FormDesign->DataRectangle->width,$FormDesign->DataRectangle->height);
-?>

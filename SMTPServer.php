@@ -129,5 +129,3 @@ echo '<field>
 	</form>';
 
 include('includes/footer.php');
-
-?>

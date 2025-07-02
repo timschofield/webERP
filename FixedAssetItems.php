@@ -416,7 +416,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 	$_POST['DepnType']  = 0;
 	$_POST['BarCode']  = '';
 	$_POST['DepnRate']  = 0;
-	
+
 	echo '<legend>', _('Create New Asset Details'), '</legend>';
 
 } elseif ($InputError!=1) { // Must be modifying an existing item and no changes made yet - need to lookup the details
@@ -580,7 +580,7 @@ while ($MyRow=DB_fetch_array($Result)){
 echo '</select>
 	<a target="_blank" href="'. $RootPath . '/FixedAssetLocations.php">' . ' ' . _('Add Asset Location') . '</a>
 	</field>';
-	
+
 echo '<field>
 		<label for="BarCode">' . _('Bar Code') . ':</label>
 		<input ' . (in_array('BarCode',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" name="BarCode" size="22" maxlength="20" value="' . $_POST['BarCode'] . '" />
@@ -606,7 +606,7 @@ if ($_POST['DepnType']==0){ //straight line
 
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="DepnRate">' . _('Depreciation Rate') . ':</label>
 		<input ' . (in_array('DepnRate',$Errors) ?  'class="inputerror number"' : 'class="number"' ) .'  type="text" name="DepnRate" size="4" maxlength="4" value="' . $_POST['DepnRate'] . '" />%
@@ -682,4 +682,3 @@ if (isset($New)) {
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

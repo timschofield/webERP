@@ -8,5 +8,3 @@ AddColumn('scripttime', 'sessions', 'timestamp', 'NULL','', 'script');
 DropTable('login_data');
 
 UpdateDBNo(basename(__FILE__, '.php'), _('Improved session control'));
-
-?>

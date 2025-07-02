@@ -56,4 +56,3 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 } /*Dont do upgrade */
 
 include('includes/footer.php');
-?>

@@ -539,5 +539,3 @@
 		}
 		return $DebtorList;
 	}
-
-?>

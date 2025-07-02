@@ -150,4 +150,3 @@ echo '</tbody>
 		</div>
 		</form>';
 include('includes/footer.php');
-?>

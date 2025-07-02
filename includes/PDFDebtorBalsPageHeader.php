@@ -38,5 +38,3 @@ $pdf->line(282, $YPos+$LineHeight, 282, $Bottom_Margin);
 $pdf->line(342, $YPos+$LineHeight, 342, $Bottom_Margin);
 
 $YPos =$YPos - (2*$LineHeight);
-
-?>

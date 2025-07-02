@@ -3,7 +3,7 @@
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
-if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);};
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 $Title = _('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
@@ -117,7 +117,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 		if ($MyEmail = DB_fetch_array($EmailResult)) {
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
-			SendEmailFromWebERP($SysAdminEmail, 
+			SendEmailFromWebERP($SysAdminEmail,
 								$MyEmail['email'],
 								$EmailSubject,
 								$ConfirmationText,
@@ -581,4 +581,3 @@ if (isset($SearchResult)) {
 } #end if SearchResults to show
 //*********************************************************************************************************
 include ('includes/footer.php');
-?>

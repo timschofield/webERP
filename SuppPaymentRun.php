@@ -11,7 +11,7 @@ Class Allocation {
 }
 
 include('includes/session.php');
-if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);};
+if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);}
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetPaymentMethods.php');
 
@@ -379,4 +379,3 @@ Payment types can be modified by editing that file */
 	echo '</form>';
 	include ('includes/footer.php');
 } /*end of else not PrintPDF */
-?>

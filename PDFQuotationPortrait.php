@@ -270,4 +270,3 @@ if ($ListCount == 0){
     $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . $_GET['QuotationNo'] . '_' . date('Y-m-d') . '.pdf');
     $pdf->__destruct();
 }
-?>

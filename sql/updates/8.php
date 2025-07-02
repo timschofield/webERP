@@ -9,5 +9,3 @@ AddCalculatedColumn('linenetprice', 'salesorderdetails', 'double', ' NOT NULL ',
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Create calculated fields to improve speed of access'));
 }
-
-?>

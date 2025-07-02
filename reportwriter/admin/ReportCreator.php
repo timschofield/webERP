@@ -693,4 +693,3 @@ if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($FormParams['IncludePage']);
 include ($PathPrefix . 'includes/footer.php');
 // End main body
-?>

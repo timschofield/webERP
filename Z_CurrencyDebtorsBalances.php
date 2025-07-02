@@ -47,4 +47,3 @@ echo '<tr>
 echo '</table>';
 
 include('includes/footer.php');
-?>

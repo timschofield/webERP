@@ -323,4 +323,3 @@ if ($AllowGLAnalysis==false){
 }
 echo '</form>';
 include('includes/footer.php');
-?>

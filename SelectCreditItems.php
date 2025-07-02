@@ -1992,4 +1992,3 @@ then debit the expense account the stock is to written off to */
 } /*end of process credit note */
 
 include('includes/footer.php');
-?>

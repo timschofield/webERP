@@ -81,4 +81,3 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 }
 
 include('includes/footer.php');
-?>

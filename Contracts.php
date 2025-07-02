@@ -2,7 +2,7 @@
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');
-if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);};
+if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);}
 
 if (isset($_GET['ModifyContractNo'])) {
 	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
@@ -129,7 +129,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
-		 	$UploadTheFile ='No';
+		$UploadTheFile ='No';
 	}
 	foreach ($SupportedImgExt as $Ext) {
 		$File = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $Ext;
@@ -173,7 +173,7 @@ if (isset($_GET['ModifyContractRef'])){
 
 if (isset($_POST['CancelContract'])) {
 /*The cancel button on the header screen - to delete the contract */
-	$OK_to_delete = true;	 //assume this in the first instance
+	$OK_to_delete = true; //assume this in the first instance
 	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
 		/* need to check that not already ordered by the customer - status = 100  */
 		if($_SESSION['Contract'.$identifier]->Status==2){
@@ -1110,4 +1110,3 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 } /*end of if customer selected  and entering contract header*/
 
 include('includes/footer.php');
-?>

@@ -238,5 +238,3 @@ if (isset($SelectedRole)) {
 }
 
 include('includes/footer.php');
-
-?>

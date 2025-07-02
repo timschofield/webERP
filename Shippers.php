@@ -106,7 +106,7 @@ if ( isset($_POST['submit']) ) {
 				$SQL="DELETE FROM shippers WHERE shipper_id='".$SelectedShipper."'";
 				$Result = DB_query($SQL);
 				echo '<br />';
-				prnMsg( _('The shipper record has been deleted'), 'success');;
+				prnMsg( _('The shipper record has been deleted'), 'success');
 			}
 		}
 	}
@@ -201,4 +201,3 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

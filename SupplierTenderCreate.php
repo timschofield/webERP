@@ -4,7 +4,7 @@ include ('includes/session.php');
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
-if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};
+if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);}
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
@@ -836,7 +836,7 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 			$ImageFile = reset($Glob);
 			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
-			
+
 			echo '<tr class="striped_row">
 					<td>' . $MyRow['stockid'] . '</td>
 					<td>' . $MyRow['description'] . '</td>
@@ -865,5 +865,3 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 
 } //end of if search
 include ('includes/footer.php');
-
-?>

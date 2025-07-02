@@ -9,4 +9,3 @@
                     unset($_POST['ReqDelDate']);
                     unset($_POST['ShiptRef']);
                     unset($_POST['Jobref']);
-?>
