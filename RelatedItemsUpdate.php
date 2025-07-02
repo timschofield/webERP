@@ -45,7 +45,7 @@ if (!isset($Item)){
 	echo '<p>';
 	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $PartDescription = $MyRow[0];

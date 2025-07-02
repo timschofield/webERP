@@ -77,7 +77,7 @@ $RecurrOrdersDueResult = DB_query($SQL,_('There was a problem retrieving the rec
 if (DB_num_rows($RecurrOrdersDueResult)==0){
 	prnMsg(_('There are no recurring order templates that are due to have another recurring order created'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 prnMsg(_('The number of recurring orders to process is') .' : ' . DB_num_rows($RecurrOrdersDueResult),'info');

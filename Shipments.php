@@ -25,7 +25,7 @@ if (!isset($_SESSION['SupplierID']) AND !isset($_SESSION['Shipment']) AND !isset
 			<li><a href="'. $RootPath . '/SelectSupplier.php">' . _('Select the Supplier') . '</a></li>
 			</td></tr></table></div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['SelectedShipment'])){
@@ -67,7 +67,7 @@ if (isset($_GET['SelectedShipment'])){
 			prnMsg( _('Shipment No.') .' '. $_GET['SelectedShipment'] .': '.
 				_('The selected shipment is already closed and no further modifications to the shipment are possible'), 'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$_SESSION['Shipment']->ShiptRef = $_GET['SelectedShipment'];
 		$_SESSION['Shipment']->SupplierID = $MyRow['supplierid'];

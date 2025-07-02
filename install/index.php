@@ -8,7 +8,7 @@ session_start();
 
 if (!extension_loaded('mbstring')) {
 	echo 'The php-mbstring extension has not been installed or loaded, please correct your php configuration first';
-	exit;
+	exit();
 }
 
 if (isset($_GET['Page'])) {

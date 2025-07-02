@@ -16,7 +16,7 @@ if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
 	echo '<br />';
 	prnMsg( _('This page must be given the supplier code to look for shipments for'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $SQL = "SELECT shiptref,
@@ -30,7 +30,7 @@ $ShiptsResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($ShiptsResult)==0){
        prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
 	include('includes/footer.php');
-       exit;
+       exit();
 }
 /*show a table of the shipments returned by the SQL */
 

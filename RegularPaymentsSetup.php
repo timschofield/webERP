@@ -247,7 +247,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 	</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 } else {
 	echo '<option value=""></option>';
 	while ($MyRow = DB_fetch_array($AccountsResults)) {

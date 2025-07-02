@@ -114,7 +114,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $PaperSize = 'Letter';
 

@@ -29,7 +29,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				_('to avoid this message in future'),
 			'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$InputError = 0;
@@ -487,7 +487,7 @@ if (isset($_POST['AllocTrans'])) {
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	 echo '<table class="selection">';
 	echo $TableHeader;

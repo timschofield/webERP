@@ -20,7 +20,7 @@ if (!isset($_GET['SelectedContract'])){
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the contract reference to show the costing for'), 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$ContractRef = $_GET['SelectedContract'];
 	$_SESSION['Contract'.$identifier] = new Contract;

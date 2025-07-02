@@ -10,7 +10,7 @@ if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from th
 		if (ContainsIllegalCharacters($_POST['CompanyNameField'])) {
 			prnMsg(_('The company database being logged into cannot contain any of the illegal characters'), 'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
-			exit;
+			exit();
 		}
 		if (is_dir('companies/' . $_POST['CompanyNameField']) and $_POST['CompanyNameField'] != '..') {
 			$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];

@@ -19,7 +19,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			echo '<p />';
 			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 
@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	      echo '<br />' .  $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	if(DB_num_rows($CustomersResult) == 0) {
@@ -242,7 +242,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
 	  echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
 	  include('includes/footer.php');
-	  exit;
+	  exit();
 	}
 
 	$HTML = '';

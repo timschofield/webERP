@@ -22,7 +22,7 @@ if (sizeOf($Recipients) == 0) {
 	include('includes/header.php');
 	prnMsg(_('There are no members of the Inventory Valuation Recipients email group'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 /* A4_Portrait */
 
@@ -125,7 +125,7 @@ if (DB_error_no() != 0) {
 	}
 
 include('includes/footer.php');
-exit;
+exit();
 }
 
 include('includes/PDFInventoryValnPageHeader.php');
@@ -218,7 +218,7 @@ if ($ListCount == 0) {
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit; // Javier: needs check
+	exit(); // Javier: needs check
 } else {
 
 	$pdf->Output($_SESSION['reports_dir'] . '/InventoryReport.pdf', 'F');
@@ -241,13 +241,13 @@ if ($ListCount == 0) {
 		prnMsg(_('The Inventory valuation report has been mailed'), 'success');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.php');
 		prnMsg(_('There are errors lead to mails not sent'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }

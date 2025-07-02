@@ -206,7 +206,7 @@ if (empty($_POST['FormName'])) {
 		</table>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 } // End of if (empty($_POST['FormName']))
 /* If we are not previewing the form then load up the simplexml object from the main xml file */
 if (empty($_POST['preview'])) {

@@ -26,7 +26,7 @@ if (isset($_GET['LineNo'])) {
 		</div>';
 	prnMsg(_('This page can only be opened if a pick list has been selected') . '. ' . _('Please do that first'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_SESSION['Items' . $identifier]) OR !isset($_SESSION['ProcessingPick'])) {
@@ -36,7 +36,7 @@ if (!isset($_SESSION['Items' . $identifier]) OR !isset($_SESSION['ProcessingPick
 		</div>';
 	prnMsg(_('This page can only be opened if a pick list has been selected'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -49,7 +49,7 @@ if ($LineItem->Controlled != 1) {
 	echo '<div class="centre"><a href="' . $RootPath . '/PickingLists.php">' . _('Back to the Sales Order') . '</a></div>';
 	prnMsg(_('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /********************************************

@@ -104,7 +104,7 @@ if (isset($_POST['PrintPDF'])) {
 	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,Date('m'),Date('d'),Date('Y'))));
@@ -183,7 +183,7 @@ if (isset($_POST['PrintPDF'])) {
 	   		}
 
 	   		include('includes/footer.php');
-	   		exit;
+	   		exit();
 		}
 
 		$ListCount = DB_num_rows($SalesResult);
@@ -252,7 +252,7 @@ if (isset($_POST['PrintPDF'])) {
 		prnMsg( _('There were no items in the range and location specified'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_' . Date('Y-m-d') . '.pdf');
 		$pdf-> __destruct();
@@ -361,7 +361,7 @@ if (isset($_POST['PrintPDF'])) {
     header("Expires: 0");
     echo "\xEF\xBB\xBF"; // UTF-8
 	echo $CSVListing;
-	exit;
+	exit();
 
 } else { /*The option to print PDF was not hit */
 

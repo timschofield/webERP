@@ -25,7 +25,7 @@ if (!isset($_GET['SelectedShipment'])){
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the shipment number to show the costing for'), 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $ShipmentHeaderSQL = "SELECT shipments.supplierid,
@@ -45,7 +45,7 @@ if (DB_num_rows($GetShiptHdrResult)==0) {
 	echo '<br />';
 	prnMsg( _('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('could not be located in the database') , 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $HeaderData = DB_fetch_array($GetShiptHdrResult);
@@ -84,7 +84,7 @@ if (DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg (_('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $MyRow = DB_fetch_row($GetShiptCostsResult);
@@ -104,7 +104,7 @@ if (DB_error_no() !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
 	prnMsg ( _('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . _('in the database'), 'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $MyRow = DB_fetch_row($GetShiptCostsResult);

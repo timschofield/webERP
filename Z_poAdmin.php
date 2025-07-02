@@ -20,7 +20,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 if (!function_exists('gettext')){
 	prnMsg (_('gettext is not installed on this system') . '. ' . _('You cannot use the language files without it'),'error');
-	exit;
+	exit();
 }
 
 if (!is_writable('./locale/' . $_SESSION['Language'])) {

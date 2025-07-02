@@ -28,7 +28,7 @@ if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
 
 	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
-	exit;
+	exit();
 }
 if (isset($_GET['OrderNo'])) {
 	$OrderNo = $_GET['OrderNo'];
@@ -43,7 +43,7 @@ if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 		include('includes/header.php');
 		prnMsg(_('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 $ViewingOnly = 0;
@@ -138,7 +138,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 			include('includes/header.php');
 			prnMsg(_('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($POHeader['status']), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		if ($ViewingOnly == 0) {
@@ -155,7 +155,7 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					<li><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 
 				include('includes/footer.php');
-				exit;
+				exit();
 			} //AllowedToPrint
 		} //not ViewingOnly
 	} // 1 valid record

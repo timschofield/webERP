@@ -27,7 +27,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range') , 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));

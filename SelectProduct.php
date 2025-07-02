@@ -47,7 +47,7 @@ if (DB_num_rows($Result1) == 0) {
 	prnMsg (_('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
 	echo '<a class="toplink" href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a><br /><br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 // end of showing search facilities
 /* displays item options if there is one and only one selected */

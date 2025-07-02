@@ -70,7 +70,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('stockid') . ',' .
@@ -123,7 +123,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 
 } elseif ( isset($_POST['custlist']) ) {
 	$SQL = "SELECT debtorsmaster.debtorno,
@@ -166,7 +166,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('debtorno') . ',' .
@@ -234,7 +234,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 
 } elseif ( isset($_POST['salesmanlist']) ) {
 	$SQL = "SELECT salesmancode,
@@ -257,7 +257,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('salesmancode') . ',' .
@@ -290,7 +290,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['imagelist']) ) {
 	$SQL = "SELECT stockid
 		FROM stockmaster
@@ -306,7 +306,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('stockid') . ','.
@@ -328,7 +328,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['sectokenlist']) ) {
 	$SQL = "SELECT tokenid,
 			tokenname
@@ -345,7 +345,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('tokenid') . ',' .
@@ -364,7 +364,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secrolelist']) ) {
 	$SQL = "SELECT secroleid,
 			secrolename
@@ -381,7 +381,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('secroleid') . ',' .
@@ -400,7 +400,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secgrouplist']) ) {
 	$SQL = "SELECT secroleid,
 			tokenid
@@ -417,7 +417,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('secroleid') . ',' .
@@ -436,7 +436,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secuserlist']) ) {
 	$SQL = "SELECT userid,
 			password,
@@ -469,7 +469,7 @@ if ( isset($_POST['pricelist']) ) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CSVContent = stripcomma('userid') . ',' .
@@ -520,7 +520,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } else {
 	$Title = _('Data Exports');
 	$ViewTopic = 'SpecialUtilities';

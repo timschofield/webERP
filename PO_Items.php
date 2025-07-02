@@ -17,7 +17,7 @@ $identifier=$_GET['identifier'];
 /* If a purchase order header doesn't exist, then go to PO_Header.php to create one */
 if (!isset($_SESSION['PO'.$identifier])){
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/PO_Header.php');
-	exit;
+	exit();
 }
 
 /* webERP manual links before header.php */
@@ -390,7 +390,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		include('includes/footer.php');
-		exit;
+		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the PO object to the database  - user hit the place PO*/
 
@@ -450,7 +450,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $SQL,'error');
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
 			$AllowUpdate = false;
@@ -683,7 +683,7 @@ if (isset($_POST['NewItem'])
 						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 			} /* end of if not already on the order */
 		} /* end if the $_POST has NewQty in the variable name */

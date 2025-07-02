@@ -296,7 +296,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 		prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' .  _('has been created.') . ' ' . _('Total order value of') . ': ' . locale_number_format($OrderValue,$SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode']  ,'success');
 		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '">' . _('Print Order') . '</a>
 				<br /><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . _('Edit Order') . '</a>';
-		exit;
+		exit();
 	} else {
 		prnMsg(_('Unable to create the order'),'error');
 	}
@@ -406,7 +406,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		//head up a new table
 		echo '<table>
@@ -457,7 +457,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 		      			echo '<br />'. $SQL;
 		   		}
 		   		include('includes/footer.php');
-		   		exit;
+		   		exit();
 			}
 
 			$SalesRow = DB_fetch_array($SalesResult);

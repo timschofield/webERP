@@ -142,7 +142,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL, 'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	elseif (DB_num_rows($Result) == 0) {
 		$Title = _('Delivery Differences Log Report Error');
@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
