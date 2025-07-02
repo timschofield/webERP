@@ -5,8 +5,8 @@
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Sales Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';

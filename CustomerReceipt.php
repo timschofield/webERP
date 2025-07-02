@@ -3,7 +3,7 @@
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.php');
-if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);};
+if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);}
 
 include('includes/GetPaymentMethods.php');
 

@@ -1,7 +1,7 @@
 <?php
 include ('includes/session.php');
-if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);};
-if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);};
+if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
+if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
 
 $Title = _('Setup regular payments');
 $ViewTopic = 'GeneralLedger';

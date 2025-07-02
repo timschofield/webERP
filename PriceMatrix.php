@@ -3,8 +3,8 @@
 //The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
 include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
 $Title = _('Price break matrix Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';

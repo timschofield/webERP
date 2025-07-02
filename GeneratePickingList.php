@@ -3,7 +3,7 @@
 // Generate a picking list.
 
 include('includes/session.php');
-if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);};
+if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
 $BookMark = 'GeneratePickingList';

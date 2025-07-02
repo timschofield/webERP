@@ -17,7 +17,7 @@ return $xmlStr;
 }
 
 $SQL = "SELECT * FROM suppliers WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');;
+$ErrMsg = _('An error occurred in retrieving the information');
 $Result = DB_query($SQL, $ErrMsg);
 
 header("Content-type: text/xml");

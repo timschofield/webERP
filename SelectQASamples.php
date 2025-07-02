@@ -1,9 +1,9 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['SampleDate'])){$_POST['SampleDate'] = ConvertSQLDate($_POST['SampleDate']);};
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['SampleDate'])){$_POST['SampleDate'] = ConvertSQLDate($_POST['SampleDate']);}
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Select QA Samples');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
@@ -210,7 +210,7 @@ if (isset($_POST['submit'])) {
 							WHERE sampleid = '" . $SelectedSampleID . "'
 							AND showoncert='1'
 							AND testvalue=''");
-		$MyRow = DB_fetch_row($Result);;
+		$MyRow = DB_fetch_row($Result);
 		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
 			 $_POST['Cert']='0';
 			 $Msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
@@ -220,7 +220,7 @@ if (isset($_POST['submit'])) {
 							WHERE sampleid = '".$SelectedSampleID."'
 							AND showoncert='1'
 							AND isinspec='0'");
-		$MyRow = DB_fetch_row($Result);;
+		$MyRow = DB_fetch_row($Result);
 		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
 			 $Msg = _('Some Results are out of Spec');
 			 prnMsg($Msg , 'warning');
@@ -239,7 +239,7 @@ if (isset($_POST['submit'])) {
 		if ( $_POST['Cert']==1) {
 			$Result = DB_query("SELECT prodspeckey, lotkey FROM qasamples
 							WHERE sampleid = '".$SelectedSampleID."'");
-			$MyRow = DB_fetch_row($Result);;
+			$MyRow = DB_fetch_row($Result);
 			if($MyRow[0]>'') {
 				$SQL = "UPDATE qasamples SET cert='0'
 						WHERE sampleid <> '".$SelectedSampleID . "'

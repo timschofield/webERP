@@ -81,7 +81,7 @@ include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
 include ('../includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
-$Path_To_Root = '..';
+$Path_To_Root = __DIR__ . '/../..';
 $Config_File = $Path_To_Root . '/config.php';
 
 function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
@@ -163,7 +163,7 @@ CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root);
 /**
  * IMPORTANT!!
  * Must match the variables found inside config.distrib.php.
- *  */
+ */
 $configArray = $_SESSION['Installer'];
 $configArray += [
     'Host'            => $_SESSION['Installer']['HostName'],
@@ -229,7 +229,7 @@ if (file_put_contents($NewConfigFile, $NewConfigContent)) {
 
 function CreateTables($Path_To_Root) {
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
+	foreach (glob($Path_To_Root . "/install/sql/tables/*.sql") as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		// avoid the standard error-handling kicking in
@@ -249,6 +249,7 @@ CreateTables($Path_To_Root);
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
 	if (isset($Demo) and $Demo != 'Yes') {
 		DB_IgnoreForeignKeys();
+		/* Create the admin user */
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
 										realname,
@@ -304,7 +305,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0
 									)";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
 		} else {
@@ -359,6 +359,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		ob_flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
 		$Result = DB_query($SQL);
@@ -370,7 +371,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		ob_flush();
 
 		$DBErrors = 0;
-		foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
+		foreach (glob($Path_To_Root . "/install/sql/data/*.sql") as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
 			DB_IgnoreForeignKeys();
 			$Result = DB_query($SQLScriptFile);
@@ -385,7 +386,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName('../') . ")";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The database update revision has been inserted.') . '</div>';
 		} else {
@@ -422,7 +422,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 											'5600'
 										)";
 		$Result = DB_query($SQL);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . _('The company record has been inserted.') . '</div>';
 		} else {
@@ -430,16 +429,20 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 		ob_flush();
 
-	/* Create the admin user */
 	} else {
 		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
-		PopulateSQLDataBySQL('demo.sql');
+
+		PopulateSQLDataBySQL(__DIR__ . '/../..sql/mysql/country_sql/demo.sql');
+
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);
+
+		// gg: there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . 'companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
+
 //		copy("companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
@@ -508,7 +511,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	}
 }
 
-CreateGLTriggers();
+CreateGLTriggers($Path_To_Root);
 
 UploadData($_SESSION['Installer']['Demo'],
 			$_SESSION['Installer']['AdminPassword'],
@@ -526,7 +529,6 @@ $Result = DB_query($SQL);
 $CompanyFileHandler = fopen($Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
 $Contents = "<?php\n\n";
 $Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
-$Contents.= "?>";
 
 if (!fwrite($CompanyFileHandler, $Contents)) {
 	fclose($CompanyFileHandler);
@@ -576,43 +578,20 @@ function PopulateSQLDataBySQL($File) {
 
 }
 
-function CreateGLTriggers() {
+function CreateGLTriggers($Path_To_Root)
+{
+	$DBErrors = 0;
+	foreach (glob($Path_To_Root . "/install/sql/triggers/*.sql") as $FileName) {
+		$SQLScriptFile = file_get_contents($FileName);
+		DB_IgnoreForeignKeys();
+		$Result = DB_query($SQLScriptFile);
+		$DBErrors += DB_error_no();
+	}
+	if ($DBErrors > 0) {
+		echo '<div class="error">' . _("Database triggers could not be created") . '</div>';
+	} else {
+		echo '<div class="success">' . _("All database triggers have been created") . '</div>';
+	}
 
-$SQL = "CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
-		BEGIN
-			INSERT INTO gltotals (account, period, amount)
-			VALUES (NEW.account, NEW.periodno, NEW.amount)
-			ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-		END";
-$Result = DB_query($SQL);
-
-$SQL = "CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans` FOR EACH ROW
-		BEGIN
-			IF NEW.account <> OLD.account OR NEW.periodno <> OLD.periodno THEN
-				-- Handle account or period changes.
-				-- Deduct the old amount from the old account/period.
-				UPDATE gltotals
-				SET amount = amount - OLD.amount
-				WHERE account = OLD.account AND period = OLD.periodno;
-
-				-- Add the new amount to the new account/period.
-				INSERT INTO gltotals (account, period, amount)
-				VALUES (NEW.account, NEW.periodno, NEW.amount)
-				ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-			ELSE
-				-- Just update the amount if account and period are the same.
-				UPDATE gltotals
-				SET amount = amount - OLD.amount + NEW.amount
-				WHERE account = NEW.account AND period = NEW.periodno;
-			END IF;
-		END";
-$Result = DB_query($SQL);
-
-$SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH ROW
-		BEGIN
-			UPDATE gltotals
-			SET amount = amount - OLD.amount
-			WHERE account = OLD.account AND period = OLD.periodno;
-		END";
-$Result = DB_query($SQL);
+	return $DBErrors;
 }
