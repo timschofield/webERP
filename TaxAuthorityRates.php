@@ -111,4 +111,3 @@ echo '<div class="centre">
 	</div>';
 
 include('includes/footer.php');
-?>

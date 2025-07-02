@@ -4,7 +4,7 @@
 include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
 use Dompdf\Dompdf;
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
@@ -204,4 +204,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	 include('includes/footer.php');
 }
-?>

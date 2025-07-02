@@ -19,8 +19,6 @@ $FontSize =10;
 
 $pdf->addText($Left_Margin, $YPos, $FontSize, _('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria']);
 
-
-
 $FontSize = 8;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
@@ -45,4 +43,3 @@ $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Quantity'),'right');
 $YPos =$YPos - (2*$LineHeight);
 
 $FontSize=10;
-?>

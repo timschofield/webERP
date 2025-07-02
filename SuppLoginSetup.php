@@ -302,4 +302,3 @@ echo '</fieldset>
 echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
 
 include('includes/footer.php');
-?>

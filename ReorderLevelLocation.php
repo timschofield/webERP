@@ -30,7 +30,8 @@ if (isset($_POST['submit'])){
 if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	if ($_POST['NumberOfDays']==''){
-		header('Location: ReorderLevelLocation.php');
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/ReorderLevelLocation.php');
+		exit;
 	}
 
 	if($_POST['Sequence']==1){
@@ -195,4 +196,3 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 } /*end of else not submit */
 include('includes/footer.php');
-?>

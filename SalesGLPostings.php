@@ -410,4 +410,3 @@ if (!isset($_GET['delete'])) {
 
 
 include('includes/footer.php');
-?>

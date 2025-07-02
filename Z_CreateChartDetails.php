@@ -16,7 +16,7 @@ $LastPeriodResult = DB_query("SELECT MAX(periodno) FROM periods");
 $LastPeriodRow = DB_fetch_row($LastPeriodResult);
 
 $CreateFrom = $FirstPeriodRow[0];
-$CreateTo = $LastPeriodRow[0];;
+$CreateTo = $LastPeriodRow[0];
 
 
 /*First off see if there are any chartdetails missing create recordset of */
@@ -95,4 +95,3 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 }
 
 include('includes/footer.php');
-?>

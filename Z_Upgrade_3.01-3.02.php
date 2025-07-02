@@ -40,4 +40,3 @@ DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk pri
 
 prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02'),'success');
 include('includes/footer.php');
-?>

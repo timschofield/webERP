@@ -809,7 +809,7 @@ $SOH_DateFields = array ('orddate',
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
-               	$SQL="SELECT locstock.quantity
+            	$SQL="SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.stockid='" . $OrderLineRow['stkcode'] . "'
 						AND loccode= '" . $OrderHeader['fromstkloc'] . "'";
@@ -889,7 +889,7 @@ $SOH_DateFields = array ('orddate',
 					$Result = api_DB_query($SQL);
 					if (DB_num_rows($Result)==1){
 						$LocQtyRow = DB_fetch_row($Result);
-	                  	$QtyOnHandPrior = $LocQtyRow[0];
+	                	$QtyOnHandPrior = $LocQtyRow[0];
 					} else {
 						/*There must be some error this should never happen */
 						$QtyOnHandPrior = 0;
@@ -1371,5 +1371,3 @@ $SOH_DateFields = array ('orddate',
 
 		return $MyRow[0];
 	}
-
-?>

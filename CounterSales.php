@@ -1266,7 +1266,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 					} // end if the item is serialised and nextserialno is set
 					// Send email to the Factory Manager
 					$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
-					SendEmailFromWebERP($SysAdminEmail, 
+					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['FactoryManagerEmail'],
 										$EmailSubject,
 										$FactoryManagerEmail,
@@ -1283,8 +1283,6 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.php */
-
-
 
 		$DefaultDispatchDate = Date('Y-m-d');
 
@@ -2345,4 +2343,3 @@ if (!isset($_POST['ProcessSale'])) {
 </script>
 <?php
 include('includes/footer.php');
-?>

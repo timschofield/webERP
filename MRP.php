@@ -121,10 +121,10 @@ if (isset($_POST['submit'])) {
 			$Level = $MyRow['level'];
 			$ctr = 0;
 			foreach ($Parts as $Part) {
-			   $ctr++;
-			   $Newlevel = $Level - $ctr;
-			   $SQL = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $Newlevel . "')";
-			   $Result2 = DB_query($SQL);
+				$ctr++;
+				$Newlevel = $Level - $ctr;
+				$SQL = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $Newlevel . "')";
+				$Result2 = DB_query($SQL);
 			} // End of foreach
 	}  //end of while loop
 
@@ -675,7 +675,6 @@ if (isset($_POST['submit'])) {
 }  // End of Main program logic -------------------------------------------------------
 
 
-
 function LevelNetting($Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 		// Create an array of mrprequirements and an array of mrpsupplies, then read through
 		// them seeing if all requirements are covered by supplies. Create a planned order
@@ -939,4 +938,3 @@ function CreateLowerLevelRequirement($TopPart,
 }  // End of CreateLowerLevelRequirement
 
 include('includes/footer.php');
-?>

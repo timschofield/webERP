@@ -3,8 +3,8 @@
 include('includes/session.php');
 use Dompdf\Dompdf;
 
-if (isset($_POST['FromDate'])) {$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])) {$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
@@ -40,7 +40,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		exit;
 	}
 
-	  /*Now figure out the data to report for the category range under review */
+	/*Now figure out the data to report for the category range under review */
 	$SQL = "SELECT stockmaster.categoryid,
 					stockmaster.stockid,
 					stockmoves.transno,
@@ -68,11 +68,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_error_no() !=0) {
 
-	  include('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($Debug==1){
-		  echo '<br />' . $SQL;
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
 		exit;
@@ -84,7 +84,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		if ($Debug==1){
-		  echo '<br />' .  $SQL;
+			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
 		exit;
@@ -203,5 +203,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

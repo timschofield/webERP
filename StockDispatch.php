@@ -514,4 +514,3 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$FontSize=8;
 	$PageNumber++;
 } // End of PrintHeader() function
-?>

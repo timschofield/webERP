@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 $Title = _('Assignment of Cash to Petty Cash Tab');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
@@ -387,4 +387,3 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	} // end if user wish to delete
 }
 include('includes/footer.php');
-?>

@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);};
+if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);}
 $Title = _('Issue Materials To Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
@@ -445,7 +445,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 				prnMsg(_('The work order is closed - no more materials or components can be issued to it.'), 'error');
 				$InputError = true;
 			}
-			$QuantityIssued = filter_number_format($Value);;
+			$QuantityIssued = filter_number_format($Value);
 			//Need to get the current standard cost for the item being issued
 			$SQL = "SELECT actualcost AS cost,
 									controlled,
@@ -1161,4 +1161,3 @@ echo '</div>
 	  </form>';
 
 include ('includes/footer.php');
-?>

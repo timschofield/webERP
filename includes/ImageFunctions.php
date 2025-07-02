@@ -33,5 +33,3 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
     }
    return $ImageLink;
 }
-
-?>

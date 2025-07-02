@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);};
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
 $Title = _('Search All Sales Orders');
 
@@ -600,5 +600,3 @@ If (isset($SalesOrdersResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-
-?>

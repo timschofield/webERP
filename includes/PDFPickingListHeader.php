@@ -85,5 +85,3 @@ $pdf->line($FormDesign->ColumnLine2->startx, $Page_Height -$FormDesign->ColumnLi
 $pdf->line($FormDesign->ColumnLine3->startx, $Page_Height -$FormDesign->ColumnLine3->starty,$FormDesign->ColumnLine3->endx, $Page_Height -$FormDesign->ColumnLine3->endy);
 $pdf->line($FormDesign->ColumnLine4->startx, $Page_Height -$FormDesign->ColumnLine4->starty,$FormDesign->ColumnLine4->endx, $Page_Height -$FormDesign->ColumnLine4->endy);
 $pdf->line($FormDesign->ColumnLine5->startx, $Page_Height -$FormDesign->ColumnLine5->starty,$FormDesign->ColumnLine5->endx, $Page_Height -$FormDesign->ColumnLine5->endy);
-
-?>

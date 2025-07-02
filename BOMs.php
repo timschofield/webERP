@@ -2,8 +2,8 @@
 
 include ('includes/session.php');
 
-if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);};
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
+if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 $Title = _('Multi-Level Bill Of Materials Maintenance');
 $ViewTopic = 'Inventory';
@@ -137,10 +137,9 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 		}
 
 		if ($MyRow['mbflag'] == 'D' //dummy orservice
-		 or $MyRow['mbflag'] == 'K' //kit-set
-		 or $MyRow['mbflag'] == 'A' // assembly
-		 or $MyRow['mbflag'] == 'G') /* ghost */ {
-
+			or $MyRow['mbflag'] == 'K' //kit-set
+			or $MyRow['mbflag'] == 'A' // assembly
+			or $MyRow['mbflag'] == 'G') /* ghost */ {
 			$QuantityOnHand = _('N/A');
 		}
 		else {
@@ -1250,4 +1249,3 @@ function arrayUnique($Array, $PreserveKeys = false) {
 }
 
 include ('includes/footer.php');
-?>

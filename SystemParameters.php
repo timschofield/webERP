@@ -1386,5 +1386,3 @@ echo '</select>
 	</form>';
 
 include('includes/footer.php');
-
-?>

@@ -298,4 +298,3 @@ if (isset($_POST['DoUpgrade'])){
 } /*Dont do upgrade */
 
 include('includes/footer.php');
-?>

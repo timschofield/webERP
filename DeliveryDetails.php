@@ -11,9 +11,9 @@ include('includes/DefineCartClass.php');
 
 include('includes/session.php');
 
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
-if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);};
-if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);};
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
+if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);}
+if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);}
 
 $Title = _('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
@@ -535,12 +535,12 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
 				//Send email to the Factory Manager
-				SendEmailFromWebERP($SysAdminEmail, 
+				SendEmailFromWebERP($SysAdminEmail,
 									$_SESSION['FactoryManagerEmail'],
 									$EmailSubject,
 									$FactoryManagerEmail,
 									'',
-									false);	
+									false);
 
 			}//end if with this sales order there is a shortfall of stock - need to create the WO
 		}//end if auto create WOs in on
@@ -1172,4 +1172,3 @@ if($_SESSION['ExistingOrder'.$identifier]==0) {
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

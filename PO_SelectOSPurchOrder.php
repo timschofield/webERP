@@ -4,8 +4,8 @@
 $PricesSecurity = 12;
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 $Title = _('Search Outstanding Purchase Orders');
 
@@ -719,4 +719,3 @@ else {
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

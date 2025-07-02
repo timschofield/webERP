@@ -97,13 +97,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			break;
 			case 'M':
 			case 'B':
-				// get the QOH for the location user can view. 
+				// get the QOH for the location user can view.
 				$QOH = GetQuantityOnHand($MyRow['stkcode'], 'USER_CAN_VIEW');
-				// Get the QOO due to Purchase orders for all locations. 
+				// Get the QOO due to Purchase orders for all locations.
 				$QOO = GetQuantityOnOrder($MyRow['stkcode'], 'ALL');
 			break;
 		}
-	        if(is_numeric($QOH) and is_numeric($QOO)){
+		if(is_numeric($QOH) and is_numeric($QOO)){
 			$DaysOfStock = ($QOH + $QOO) / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		}elseif(is_numeric($QOH)){
 			$DaysOfStock = $QOH/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
@@ -283,4 +283,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	</form>';
 include ('includes/footer.php');
 }
-?>

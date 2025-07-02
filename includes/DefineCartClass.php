@@ -616,5 +616,3 @@ Class Tax {
 			$TaxGLCode);
 	}
 }
-
-?>

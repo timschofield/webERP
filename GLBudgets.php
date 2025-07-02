@@ -236,5 +236,3 @@ echo '<script>
 	</script>';
 
 include ('includes/footer.php');
-
-?>

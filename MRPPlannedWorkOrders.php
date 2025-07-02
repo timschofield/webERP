@@ -3,7 +3,7 @@
 // work orders created for them
 
 include('includes/session.php');
-if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);};
+if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
@@ -387,4 +387,3 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos =$YPos - (2*$LineHeight);
 	$PageNumber++;
 } // End of PrintHeader function
-?>

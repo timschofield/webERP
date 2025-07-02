@@ -237,5 +237,3 @@ function ProcessAllocation() {
 		unset($_POST['AllocTrans']);
 	}
 }
-
-?>

@@ -1,6 +1,5 @@
 <?php
 
-
 include ('includes/session.php');
 
 $Title = _('Process EDI Orders');
@@ -10,7 +9,7 @@ $BookMark = '';
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
-
+require_once ('includes/MiscFunctions.php');
 
 /*The logic outline is this ....
 
@@ -31,11 +30,57 @@ Read the next line of the flat file ...
 
 If the order processed ok then move the file to processed and go on to next file.
 
-*/
-
+Order segements:
+          ALI Additional information
+          APR Additional price information
+          BGM Beginning of message
+          CAV Characteristic value
+          CCI Characteristic/class id
+          CNT Control total
+          COM Communication contact
+          CTA Contact information
+          CUX Currencies
+          DGS Dangerous goods
+          DOC Document/message details
+          DTM Date/time/period
+          EQD Equipment details
+          FII Financial institution information
+          FTX Free text
+          GIN Goods identity number
+          GIR Related identification numbers
+       X  GIS General indicator
+          HAN Handling instructions
+          IMD Item description
+          LIN Line item
+          LOC Place/location identification
+          MEA Measurements
+          MOA Monetary amount
+          NAD Name and address
+          PAC Package
+          PAI Payment instructions
+       X  PAT Payment terms basis
+          PCD Percentage details
+          PCI Package identification
+          PIA Additional product id
+          PRI Price details
+          QTY Quantity
+          QVR Quantity variances
+          RCS Requirements and conditions
+          RFF Reference
+          RJL Accounting journal identification
+          RNG Range details
+          RTE Rate details
+          SCC Scheduling conditions
+          STG Stages
+          TAX Duty/tax/fee details
+          TDT Details of transport
+          TOD Terms of delivery or transport
+          UNH Message header
+          UNS Section control
+          UNT Message trailer
+----------------------------------------------------------------------*/
 
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
-
 
 $SQL = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
 $OrderSeg = DB_query($SQL);
@@ -49,19 +94,41 @@ while ($SegRow=DB_fetch_array($OrderSeg)){
 
 $TotalNoOfSegments = $i-1;
 
-/*get the list of files in the incoming orders directory - from config.php */
-$DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
+$ediordersdir = $_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders'];
+echo '<br />' . $ediOrdersdir;
+if (!is_dir($ediordersdir)) {
+	error_log("EDI orders directory error " . $ediordersdir, 0); // php logging
+	exit;
 
- while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the incoming orders dir */
+}
+//	error_log("EDI orders directory " . $ediordersdir , 0);
+
+/*get the list of files in the incoming orders directory - from config.php */
+//$DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
+$DirHandle = opendir($ediordersdir);
+
+//if $DirHandle = false {
+//error_log("EDI orders directory error", 0);
+//}
+
+while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the incoming orders dir */
 
 	$TryNextFile = False;
+ 
+    if ($OrderFile == "." || $OrderFile == "..") {
+		continue;
+	}	
+	
+//	  error_log("EDI orders file " . $OrderFile , 0);
+
 	echo '<br />' . $OrderFile;
 
 	/*Counter that keeps track of the array pointer for the 1st seg in the current seg group */
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$RootPath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
+//	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$RootPath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
+	$fp = fopen($ediordersdir.'/'.$OrderFile,'r');
 
 	$SegID = 0;
 	$SegCounter =0;
@@ -70,7 +137,8 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 	$FirstSegInGroup = 0;
 	$EmailText =''; /*Text of email to send to customer service person */
 	$CreateOrder = True; /*Assume that we are to create a sales order in the system for the message read */
-
+    $LinCount = 0; // LIN segments 
+    $ErrorCount=0;
 	$Order = new cart;
 
 	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
@@ -117,16 +185,28 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 		}
 
 		echo '<br />' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
+		
 		switch ($SegTag){
+			case 'UNB';
+				$UNB = explode ('+',mb_substr($LineText,4));			
+				if (mb_substr($UNB[6],0,6)!='ORDERS'){
+					$EmailText .= "\n" . _('This message is not an edi order');
+					$TryNextFile = True;
+				}
+				
+			break;
+			
 			case 'UNH':
 				$UNH_elements = explode ('+',mb_substr($LineText,4));
+				$UNH2 = explode (':',$UNH_elements[1]);
+				$EdiMsgVer = $UNH2[1] . '.' . $UNH2[2] ; // fex D.00A
+//				echo '<br />' . $EdiMsgVer;
 				$Order->Comments .= _('Customer EDI Ref') . ': ' . $UNH_elements[0];
 				$EmailText .= "\n" . _('EDI Message Ref') . ': ' . $UNH_elements[0];
 				if (mb_substr($UNH_elements[1],0,6)!='ORDERS'){
-					$EmailText .= "\n" . _('This message is not an order');
+					$EmailText .= "\n" . _('This message is not an EDI order');
 					$TryNextFile = True;
 				}
-
 				break;
 			case 'BGM':
 				$BGM_elements = explode('+',mb_substr($LineText,4));
@@ -188,7 +268,6 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 					$BGM_1225 = explode(':',$BGM_elements[2]);
 					$MsgFunction = $BGM_1225[0];
 
-
 					switch ($MsgFunction){
 						case '5':
 							$EmailText .= "\n\n" . _('REPLACEMENT order') . ' - ' . _('MUST DELETE THE ORIGINAL ORDER MANUALLY');
@@ -241,16 +320,24 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 				/*explode into an arrage all items delimited by the : - only after the + */
 				$DTM_C507 = explode(':',mb_substr($LineText,4));
 				$LocalFormatDate = ConvertEDIDate($DTM_C507[1],$DTM_C507[2]);
-
 				switch ($DTM_C507[0]){
 					case '2': /*Delivery date */
+						$Order->DeliveryDate = $LocalFormatDate;
+						$EmailText .= "\n" . _('Delivery date') . ' ' . $Order->DeliveryDate;
+						break;
 					case '10': /*shipment date requested */
 					case '11': /*dispatch date */
 					case 'X14': /*Reguested delivery week commencing EAN code */
 					case '64': /*Earliest delivery date */
+					case '8': /* Order received date/time */
+					case '4': /*orig order date */
+						$Order->Orig_OrderDate = $LocalFormatDate;
+						$Order->OrdDate = $LocalFormatDate;
+						$EmailText .= "\n" . _('Orig,.order date') . ' ' . $Order->Orig_OrderDate;
+						break;
 					case '69': /*Promised delivery date */
 						$Order->DeliveryDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Requested delivery date') . ' ' . $Order->DeliveryDate;
+						$EmailText .= "\n" . _('Promised delivery date') . ' ' . $Order->DeliveryDate;
 						break;
 					case '15': /*promotion start date */
 						$EmailText .= "\n" . _('Promotion start date') . ' ' . $LocalFormatDate;
@@ -266,7 +353,8 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 						break;
 					case '137': /*Order date */
 						$Order->Orig_OrderDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Order date') . ' ' . $LocalFormatDate;
+						$Order->OrdDate = $LocalFormatDate;
+						$EmailText .= "\n" . _('Order date') . ':  ' . $LocalFormatDate;
 						break;
 					case '171': /*A date relating to a RFF seg */
 						/*This DTM segment follows a RFF seg so $RFF will be set
@@ -274,21 +362,30 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 						order */
 						$EmailText .= "\n" . _('dated') . ' ' . $LocalFormatDate;
 						if ($SegGroup == 1){
-							$Order->Comments .= ' ' . _('dated') . ' ' . $LocalFormatDate;
+							$Order->Comments .= ' ' . _('dated') . ': ' . $LocalFormatDate;
 						}
 						break;
 					case '200': /*Pickup collection date/time */
-						$EmailText .= "\n\n" . _('Pickup date') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n\n" . _('Pickup date') . ':  ' . $LocalFormatDate;
 						$Order->DeliveryDate = $LocalFormatDate;
 						break;
 					case '263': /*Invoicing period */
-						$EmailText .= "\n" . _('Invoice period') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . _('Invoice period') . ':  ' . $LocalFormatDate;
 						break;
 					case '273': /*Validity period */
-						$EmailText .= "\n" . _('Valid period') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . _('Valid period') . ':  ' . $LocalFormatDate;
 						break;
 					case '282': /*Confirmation date lead time */
 						$EmailText .= "\n" . _('Confirmation of date lead time') . ' ' . $LocalFormatDate;
+						break;
+					case '132': /*depature date/time */
+						$EmailText .= "\n" . _('Departure date') . ': ' . $LocalFormatDate;
+						break;
+					case '133': /*arrival date/time */
+						$EmailText .= "\n" . _('Arrival date') . ': ' . $LocalFormatDate;
+						break;
+					case '134': /*Rate of exchange date/time */
+						$EmailText .= "\n" . _('Rate of exchange date / time') . ': ' . $LocalFormatDate;
 						break;
 				}
 				break;
@@ -397,6 +494,10 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 					case 'ANJ':
 						$MsgText =  "\n" . _('Authorisation') . ' # ' . $RFF[1];
 						break;
+					case 'VA':
+					// VA    VAT registration number
+						$MsgText =  "\n" . _('VAT registration number') . ' # ' . $RFF[1];
+						break;
 				}
 				if ($SegGroup == 1){
 					$Order->Comments .= $MsgText;
@@ -429,18 +530,17 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 							$Order->CustomerName = $NAD_C080[0];
 						}
 						break;
-
 					case 'SU':
 						/*Supplier party details. This should be our EAN IANA number if not the message is not for us!! */
+//					  error_log("SU/EDIReference " . $_SESSION['EDIReference'] , 0);
 						if ($NAD_C082[0]!= $_SESSION['EDIReference']){
 							/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
 							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('This implies that the EDI message is for some other supplier') . '. ' . _('No further processing will be done');
 							$TryNextFile = True; /* Look for other EDI msgs */
-							$CreateOrder = False; /*Dont create order in system */						}
+							$CreateOrder = False; /* Don't create order in system */						}
 						break;
 					case 'DP':
 						/*Delivery Party - get the address and name etc */
-
 						/*Snag here - how do I figure out what branch to charge */
 						if (mb_strlen($NAD_C080[0])>0){
 							$Order->DeliverTo = $NAD_C080[0];
@@ -489,7 +589,51 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 						}
 						break;
 					case 'BY':
+					//BY    Buyer
+					//Party to whom merchandise and/or service is sold.
+//					NAD+BY+1234567890123::9++Buyer Company Ltd+123 Buyer St+Citytown++12345+DE'
 						/* The buyer details - don't think we care about this */
+						$ByResult = DB_query("SELECT  name,
+													 address1,
+													 address2,
+													 address3,
+													 address4,
+													 address5,
+													 address6,
+													 salestype,
+													 edireference,
+													 currcode,
+													 taxref,
+													 custbranch.branchcode,
+ 													 custbranch.debtorno,
+													 custbranch.phoneno,
+													 custbranch.email,
+													 custbranch.defaultlocation,
+													 custbranch.defaultshipvia
+												FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno WHERE debtorsmaster.edireference='" . $NAD_C082[0] . "' AND debtorsmaster.ediorders=1");
+			
+					 if (DB_num_rows($ByResult)!=1){
+							$EmailText .= "\n" . _('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . _('or several that match this ediref code. This order could not be processed further');
+							$TryNextFile = True; /* Look for other EDI msgs */
+							$CreateOrder = False; /* Dont create order in system */
+					} else {
+							$ByRow = DB_fetch_array($ByResult);
+							$Order->BranchCode = $ByRow['branchcode'];
+							$Order->DebtorNo = $ByRow['debtorno'];
+							$Order->DeliverTo = $ByRow['name'];
+							$Order->DelAdd1 = $ByRow['address1'];
+							$Order->DelAdd2 = $ByRow['address2'];
+							$Order->DelAdd3 = $ByRow['address3'];
+							$Order->DelAdd4 = $ByRow['address4'];
+							$Order->DelAdd5 = $BranchRow['address5'];
+							$Order->DelAdd6 = $ByRow['address6'];
+							$Order->PhoneNo = $ByRow['phoneno'];
+							$Order->Email = $ByRow['email'];
+							$Order->Location = $ByRow['defaultlocation'];
+							$Order->ShipVia = $ByRow['defaultshipvia'];
+						
+			//			error_log("nad/by: " . DB_num_rows($ByResult) . ' '  . $NAD_C082[0] . ' ' . $ByRow['email'] , 0); // php logging
+						}
 						break;
 					case 'CO':
 						/* The coporate office details - don't think we care about this either*/
@@ -504,13 +648,381 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 				break; /*end of NAD segment */
 
 
+			// added more segments ...... 
 
-			/* UP TO HERE NEED TESTER */
+			// CUX+2:GBP:9+3:EUR:4+1.67
+			// CUX+2:EUR:9'
+			case 'CUX':
+				$CUX = explode(':',mb_substr($LineText,4));
+				// $Order->Currency = $CUX[1];
+				$EmailText .= "\n" . _('Currency') . ' ' . $CUX[1];				
+		    	break;
 
+			// TDT+20++30+31'
+			case 'TDT':
+				$EmailText .= "\n" . _('Details of transport');				
+				break;
+	
+		     // TOD+3++CIF:2E:9'
+			case 'TOD':
+			// Terms of delivery or transport				
+				$EmailText .= "\n" . _('Terms of delivery or transport');				
+
+			    break;
+					
+			// LOC+1+BE-BRU
+			case 'LOC':
+//			Place/location identification
+					/*
+					4     Goods receipt place
+          			   Place at which the goods have been received.
+  		  		   5     Place of departure
+ 		             (3214) Port, airport or other location from which a
+		              means of transport or transport equipment is scheduled
+     		         to depart or has departed.
+		          7     Place of delivery
+                   (3246) Place to which the goods are to be finally
+                   delivered under transport contract terms (operational
+                   term).
+					 */
+					$LOC = explode('+',mb_substr($LineText,4));
+					switch ($LOC[2]){
+						case '1': /*Place of terms of delivery*/
+							$EmailText .= "\n" . _('Place of terms of delivery (LOC/1)') . ': ' . $LOC[2];
+							break;
+						case '7': /*Place/location identification*/
+							$EmailText .= "\n" . _('Place of terms of delivery (LOC/7)') . ': ' . $LOC[2];
+							break;
+							
+					}
+					break;
+           
+		   /* -----------------------------------------------------------------  
+		     order lines.... 
+			 Segment group 28: LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIS-GIN-
+                         GIR-QVR-DOC-PAI-FTX-SG29-SG30-SG32-SG33-SG34-
+                         SG37-SG38-SG39-SG43-SG49-SG51-SG52-SG53-SG55-
+                         SG56-SG58
+				A group of segments providing details of the individual ordered
+				items. This segment group may be repeated to give sub-line details.
+		   -----------------------------------------------------------------------*/
+			case 'LIN':
+				//echo '<br />' . 'Line# ' . $Order->ItemsOrdered;
+			     
+					if ($LinCount > 0) {
+						$UpdateDB='NO';
+						// add prev processed line to cart;
+				       // echo '<br />' . 'LinCount ' . $LinCount;
+						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
+					}
+					
+					$LIN = explode('+',mb_substr($LineText,4));
+					$LIN2 = explode(':', $LIN[2]);
+					$EmailText .= "\n" . _('Line item') . ': ' . $LIN[0] . ' ' . $LIN2[0] ;				
+					$LinCount++;
+					$Order->LineCounter = $LinCount;
+					// init order line data ffu....
+					$UpdateDB='NO';
+					$StockID=$LIN2[0];
+					$Descr='';
+					$LongDescr='';
+					$Qty=0;
+					$Price=1;
+					$Disc=0;
+					$UOM=''; // units
+					$Volume=0;
+					$Weight=0;
+					$QOHatLoc=0;
+					$MBflag='B';
+					$ActDispatchDate=NULL;
+					$QtyInvoiced=0;
+					$DiscCat='';
+					$Controlled=0;
+					$Serialised=0;
+					$DecimalPlaces=2;
+					$Narrative='';
+					$TaxCategory=0;
+					$ItemDue='';
+					$POLine='';
+					$StandardCost=0;
+					$EOQ=1;
+					$NextSerialNo=0;
+					$ExRate=1;
+					$identifier=0;
+					break;
+					
+			case 'PIA':
+					$PIA = explode('+',mb_substr($LineText,4));
+					$PIA2 = explode(':',$PIA[1]);
+					switch ($PIA[0]){	
+					   case '1'; // additional item id
+//					      $Qty=$QTY2[1];
+					   break;
+					}					
+					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA2[0] ;				
+					break;
+		
+			case 'IMD':
+					$IMD = explode('+',mb_substr($LineText,4));
+					$IMD2 = explode(':',mb_substr($LineText,4));
+					switch ($IMD[1]){	
+					   case 'F'; //  
+					   //   $Qty=$QTY2[1];
+					   break;
+					}					
+					
+					$Descr=$IMD2[3];
+					$EmailText .= "\n" . _('Item description') . ': ' . $IMD2[3] ;				
+					break;
+
+			case 'QTY':
+					$QTY = explode('+',mb_substr($LineText,4));
+					$QTY2 = explode(':',$QTY[0]);
+					switch ($QTY2[0]){	
+					   case '21'; // ordered qty
+					      $Qty=$QTY2[1];
+					   break;
+					}					
+					$EmailText .= "\n" . _('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;				
+					break;
+	  
+			case 'MOA':
+					$MOA = explode('+',mb_substr($LineText,4));
+					$MOA2 = explode(':',$MOA[0]);
+					switch ($MOA[0]){	
+					   case '203'; // Line item amount
+					   break;
+					   case '39'; // total amount
+					   break;
+					}					
+					$EmailText .= "\n" . _('Monetary amount'). ': ' . $MOA2[1];				
+					break;
+
+			case 'PRI':
+					$PRI = explode('+',mb_substr($LineText,4));
+					$PRI2 = explode(':',$PRI[0]);
+					switch ($PRI2[0]){	
+					   case 'AAA'; // Calculation net
+					     $Price = $PRI2[1];
+					   break;
+					}					
+					$EmailText .= "\n" . _('Price details') . ': ' . $PRI2[1] ;				
+					break;
+
+			case 'PAC':
+					$PAC = explode('+',mb_substr($LineText,4));
+					$EmailText .= "\n" . _('Package') . ': ' . $PAC[1];				
+					break;
+					
+			case 'PIA': // ADDITIONAL PRODUCT ID
+					// SA    Supplier's article number
+					$PIA = explode('+',mb_substr($LineText,4));
+					$PIA2 = explode(':',$PIA[1]);
+					switch ($PIA2[1]){	
+					   case 'SA'; // Supplier's article number
+					   break;
+					}					
+					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA[3];				
+					break;
+
+			case 'PCI':
+					$EmailText .= "\n" . _('Package identification');				
+					break;
+					
+			case 'TAX':
+			// Duty/tax/fee details
+					$TAX = explode('+',mb_substr($LineText,4));
+					$TAX2 = explode(':',mb_substr($LineText,4));
+					$TAX3 = explode('+',mb_substr($TAX2[3],1));
+					switch ($TAX[0]){	
+					   case '7'; // tax
+					   break;
+					}					
+					$EmailText .= "\n" . _('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];				
+					break;
+
+			case 'MEA':
+					$MEA = explode('+',mb_substr($LineText,4));
+					// MEA+AAE+G+10' 
+					// AAE measurement
+					switch ($MEA[2]){	
+					   case 'G'; // gross weight
+					   break;
+					   case 'K'; // netweight kg
+					   break;
+					}					
+					$EmailText .= "\n" . _('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;				
+					break;
+
+			case 'UNS':
+			// LIN END					
+			// lin end
+			// add last lin into chart
+					if ($LinCount > 0) {
+						$UpdateDB='NO';
+						// add prev processed line to cart;
+				       // echo '<br />' . 'LinCount ' . $LinCount;
+						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
+					}
+
+					$EmailText .= "\n" . _('Section control/Order line count') . ': ' . $LinCount;				
+					break;
+			case 'CNT':
+			// control total
+					$CNT = explode('+',mb_substr($LineText,4));
+					$CNT2 = explode(':',mb_substr($LineText,4));
+					switch ($CNT[0]){	
+					   case '2'; // lin count 
+					   break;
+					}					
+					
+					$EmailText .= "\n" . _('Control total') . ': ' . $CNT[0] ;				
+					break;
+					
+          // message end
+			case 'UNT':
+			// end of msg  number of segments / message id
+				IF ($ErrorCount > 0) {
+					$CreateOrder = false;
+				}
+/* 
+echo '<pre>';
+print_r($Order);
+echo '</pre>';	
+*/ 
+				if ($CreateOrder = true) { 
+					//	UpdateOrder($Order);
+					DB_Txn_Begin();
+				//$Order->OrdDate = Date("Y-m-d");
+					$OrderNo = GetNextTransNo(30); // next order number
+					$DelDate = FormatDateforSQL($Order->DeliveryDate);
+					$OrderDate = FormatDateforSQL($Order->OrdDate);
+					if ($Order->OrderType == "") {
+						$Order->OrderType = $_SESSION['DefaultOrdertype'];
+					}
+					if ($Order->SalesPerson == "") {
+						$Order->SalesPerson = $_SESSION['DefaultSalesperson'];
+					}
+				
+				//echo '<br />' . 'ordertype ' . $Order->OrderType . ' / ' . $_SESSION['DefaultOrdertype'];
+				//echo '<br />' . 'salesperon ' . $Order->SalesPerson . ' / ' . $_SESSION['DefaultSalesperson'];
+					$HeaderSQL = "INSERT INTO salesorders (
+								orderno,
+								debtorno,
+								branchcode,
+								customerref,
+								comments,
+								orddate,
+								ordertype,
+								shipvia,
+								deliverto,
+								deladd1,
+								deladd2,
+								deladd3,
+								deladd4,
+								deladd5,
+								deladd6,
+								contactphone,
+								contactemail,
+								salesperson,
+								freightcost,
+								fromstkloc,
+								deliverydate,
+								quotedate,
+								confirmeddate,
+								quotation,
+								deliverblind
+								)
+							VALUES (
+								'". $OrderNo . "',
+								'" . $Order->DebtorNo . "',
+								'" . $Order->BranchCode . "',
+								'". DB_escape_string($Order->CustRef) ."',
+								'". DB_escape_string($Order->Comments) ."',
+								'" . $OrderDate . "',
+								'" . $Order->OrderType . "',
+								'" . $Order->ShipVia ."',
+								'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
+								'" . DB_escape_string($Order->DelAdd1) . "',
+								'" . DB_escape_string($Order->DelAdd2) . "',
+								'" . DB_escape_string($Order->DelAdd3) . "',
+								'" . DB_escape_string($Order->DelAdd4) . "',
+								'" . DB_escape_string($Order->DelAdd5) . "',
+								'" . DB_escape_string($Order->DelAdd6) . "',
+								'" . $Order->PhoneNo . "',
+								'" . $Order->Email . "',
+								'" . $Order->SalesPerson . "',
+								'" . $Order->FreightCost ."',
+								'" . $Order->Location ."',
+								'" . $DelDate . "',
+								'" . $QuotDate . "',
+								'" . $ConfDate . "',
+								'" . $Order->Quotation . "',
+								'" . $Order->DeliverBlind ."'
+								)";
+						$ErrMsg = _('The order cannot be created because');
+						$InsertQryResult = DB_query($HeaderSQL,$ErrMsg);
+						// update salesorderdetails too here ..
+						$xi=0;
+						foreach ($Order->LineItems as $lineNumber => $linedetail) {
+							$xi++;
+							/*
+							echo "Line: " . $xi . "<br>";
+							echo "StockID: " . $linedetail->StockID . "<br>";
+							  echo "Line Number: " . $lineNumber . "<br>";
+							  echo "qty: " . $linedetail->Quantity . "<br>";
+							  echo "price: " . $linedetail->Price . "<br>";
+                           */
+							
+							$orderlineno = $linedetail->LineNumber;
+							$quantity = $linedetail->Quantity;
+							$stkcode = trim(mb_strtoupper($linedetail->StockID));
+							$unitprice = $linedetail->Price;							
+							$discountpercent = $linedetail->Disc;
+							$itemdue = FormatDateForSQL($linedetail->ItemDue);
+							if ($linedetail->ItemDue == null) {
+								$itemdue = Date("Y-m-d");
+							}
+							//  echo "itemdue: " . $itemdue . "<br>";
+							
+							$poline = $linedetail->POLine;
+							$LINSQL = "INSERT INTO salesorderdetails (orderlineno,
+														orderno,
+														stkcode,
+														quantity,
+														unitprice,
+														discountpercent,
+														itemdue,
+														poline)
+													VALUES('" . $orderlineno . "',
+														'" . $OrderNo  . "',
+														'" . $stkcode ."',
+														'" . $quantity . "',
+														'" . $unitprice . "',
+														'" . $discountpercent . "',
+														'" . $itemdue . "',
+														'" . $poline . "')";
+							$LinResult = DB_query($LINSQL,
+							_('The order line for') . ' ' . $xi . ' ' ._('could not be inserted'));
+						
+						}
+						DB_Txn_Commit();
+						// prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been created'),'success');
+						$EmailText .= "\n" . _('Order number: ') . $OrderNo . _(' has been created from edi orders.') ;
+				}
+					$UNT = explode('+',mb_substr($LineText,4));
+					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNT[0] ;				
+					break;
+			case 'UNZ':
+					$UNZ = explode('+',mb_substr($LineText,4)); // nbr of mesages
+					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNZ[0] ;				
+					break;
 
 
 		} /*end case  Seg Tag*/
+
 	} /*end while get next line of message */
+
 	/*Thats the end of the message or had to abort */
 	if (mb_strlen($EmailText)>10){
 		/*Now send the email off to the appropriate person */
@@ -538,14 +1050,17 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 			$EDICustServPerson = $_SESSION['PurchasingManagerEmail'];
 			$Recipients = array($EDICustServPerson);
 		}
-
-		SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">",
-							$Recipients,
+//		$From = $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">";
+		$From = $_SESSION['CompanyRecord']['email'];
+		$To = array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>');
+//	error_log("Emailing: " . $From . ' -> ' .$To[0] . $To[1] . ' / ' . $MailSubject, 0); // php logging
+		SendEmailFromWebERP($From,
+							$_SESSION['UserEmail'], //$Recipients,
 							$MailSubject,
 							$EmailText,
 							'',
 							false);
-
+		
 		echo $EmailText;
 	}
 }/*end of the loop around all the incoming order files in the incoming orders directory */
@@ -560,4 +1075,30 @@ function StripTrailingComma($StringToStrip) {
 	}
 }
 
-?>
+function AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight) {
+	$Order->add_to_cart($StockID,
+						$Qty,
+						$Descr,
+						$LongDescr,
+						$Price,
+						$Disc,
+						$UOM,
+						$Volume,
+						$Weight);
+	//echo '<br />' . 'Line2# ' . $StockID . ' ' . ' ' . $Qty . ' ' . $Order->ItemsOrdered;
+
+/*
+echo '<pre>';
+print_r($Order);
+echo '</pre>';	
+*/
+}
+
+function UpdateOrder($Order){ 
+//include 'DeliveryDetails.php';
+/*
+echo '<pre>';
+print_r($Order);
+echo '</pre>';	
+*/
+}

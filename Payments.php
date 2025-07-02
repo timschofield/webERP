@@ -4,7 +4,7 @@
 include ('includes/DefinePaymentClass.php');
 
 include ('includes/session.php');
-if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);};
+if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -1459,4 +1459,3 @@ echo '</div>
 	</form>';
 
 include ('includes/footer.php');
-?>

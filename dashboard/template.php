@@ -65,5 +65,3 @@ while ($MyRow = DB_fetch_array($DashboardResult)) {
 echo '</tbody>
 	</table>';
 /* Don't forget to close off the table */
-
-?>

@@ -919,5 +919,3 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 		}
 	}
 }
-
-?>

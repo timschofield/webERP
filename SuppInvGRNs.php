@@ -316,4 +316,3 @@ if (!isset($_GET['Modify'])){
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

@@ -73,4 +73,3 @@ if (DB_num_rows($Result)>0){
 	prnMsg(_('There are no negative stocks to list'),'info');
 	include('includes/footer.php');
 }
-?>

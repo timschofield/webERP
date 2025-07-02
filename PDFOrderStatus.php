@@ -1,7 +1,7 @@
 <?php
 include ('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 use Dompdf\Dompdf;
 include ('includes/SQL_CommonFunctions.php');
 
@@ -384,4 +384,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include ('includes/footer.php');
 
 } /*end of else not PrintPDF */
-?>

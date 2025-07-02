@@ -10,8 +10,8 @@ $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.php');
 $Title = _('Recurring Orders');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);}
 
 
 /* webERP manual links before header.php */
@@ -528,4 +528,3 @@ if ($NewRecurringOrder=='Yes'){
 echo '</div>';
 echo '</form>';
 include('includes/footer.php');
-?>

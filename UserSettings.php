@@ -130,12 +130,12 @@ echo '<fieldset>
 			<label for="UserID">', _('User ID'), ':</label>
 			<fieldtext>', $_SESSION['UserID'], '</fieldtext>
 		</field>';
-		
+
 echo '<field>
 		<label for="UsersRealName">', _('User Name'), ':</label>
 		<fieldtext>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></fieldtext>
 	</field>';
-	
+
 echo '<field>
 		<label for="DisplayRecordsMax">', _('Maximum Number of Records to Display'), ':</label>
 		<input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" />
@@ -184,19 +184,19 @@ if(!isset($_POST['Password'])) {
 }
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="Password">', _('New Password'), ':</label>
 		<input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
 		<fieldhelp>', _('If you leave the password boxes empty your password will not change'), '</fieldhelp>
 	</field>';
-	
+
 echo '<field>
 		<label for="PasswordCheck">', _('Confirm Password'), ':</label>
 		<input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
 		<fieldhelp>', _('Confirm the password you entered above'), '</fieldhelp>
 	</field>';
-	
+
 echo '<field>
 		<label for="email">', _('Email'), ':</label>
 		<input name="email" size="40" type="email" value="', $_POST['email'], '" />
@@ -247,7 +247,7 @@ for($i=0; $i<count($PDFLanguages); $i++) {
 }
 echo '</select>
 	</field>';
-	
+
 echo '</fieldset>';
 
 echo '<div class="centre">
@@ -255,4 +255,3 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
-?>

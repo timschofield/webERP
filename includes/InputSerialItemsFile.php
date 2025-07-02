@@ -107,7 +107,7 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND 
 	}
 	$_SESSION['CurImportFile']['Processed']=false;
 	if ($_FILES['ImportFile']['name']!=''){
-		prnMsg( _('Successfully received'), 'success');;
+		prnMsg( _('Successfully received'), 'success');
 		$ShowFileInfo = true;
 	}
 } elseif (isset($_SESSION['CurImportFile']) and $_SESSION['CurImportFile']['Processed'] ) {
@@ -205,5 +205,3 @@ if ($InvalidImports>0 AND !$_SESSION['CurImportFile']['Processed']){
 	}
 	echo '</table></form>';
 }
-
-?>

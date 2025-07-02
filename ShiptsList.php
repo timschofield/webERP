@@ -56,5 +56,3 @@ while ($MyRow=DB_fetch_array($ShiptsResult)) {
 echo '</table>';
 
 include('includes/footer.php');
-
-?>

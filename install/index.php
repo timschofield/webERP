@@ -1,15 +1,18 @@
 <?php
-// index.php
+
+require __DIR__.'/../vendor/autoload.php';
 
 ini_set('max_execution_time', "6000");
 session_name('weberp_installation');
 session_start();
 
-if(!extension_loaded('mbstring')){
+if (!extension_loaded('mbstring')) {
 	echo 'The php-mbstring extension has not been installed or loaded, please correct your php configuration first';
 	exit;
 }
+
 if (isset($_GET['Page'])) {
+	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
 	$_SESSION['Installer']['CurrentPage'] = $_GET['Page'];
 } else {
 	unset($_SESSION['Installer']);
@@ -40,6 +43,7 @@ if (isset($_GET['Page'])) {
 if (isset($_GET['Agreed'])) {
 	$_SESSION['Installer']['License_Agreed'] = True;
 }
+
 $PathPrefix = '../';
 include ('../includes/MiscFunctions.php');
 include ('../includes/LanguagesArray.php');
@@ -127,5 +131,3 @@ echo '</footer>
 
 echo '</body>
 	</html>';
-
-?>

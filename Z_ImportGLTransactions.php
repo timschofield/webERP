@@ -273,5 +273,3 @@ function IsBankAccount($Account) {
 		return true;
 	}
 }
-
-?>

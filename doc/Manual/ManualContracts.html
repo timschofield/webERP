@@ -4,11 +4,11 @@
 
 <p>The Contracts module allows for construction of costings for specific customer projects where a bill of materials to be taken from inventory for the contract can be defined, together with a costed list of other requirements. By entering a gross profit percentage figure a price can then be arrived at to charge the customer. The contract can then be converted to a quotation. While the contract is at the quotation stage it is possible to modify the stock components and other requirements - the quotation will be updated with the new costing on commital. The quotation can then be resubmitted to the customer.</p>
 
-<p>When a contract is converted to a quotation the system actually creates a manuafactured inventory item with the name of the contract refence and with the description from the contract description.</p>
+<p>When a contract is converted to a quotation the system actually creates a manuafactured inventory item with the name of the contract reference and with the description from the contract description.</p>
 
 <p>When (if) the quotation is accepted by the customer, the quotation can be converted to an order in the usual way by modifying the quotation flag from quotation to order. Committing this change then changes the status of the contract to ordered so that changes are no longer allowed. This process also creates a work order so that stock required for the contract can be issued to it. By using the work order issue functionality the stock is reduced and work in progress is increased.</p>
 
-<p>When supplier invoices (accounts payable) are entered there is the option to specify the contract that is to be charged with the cost. The cost of contract charges also goes to the work in progress account (as determined from the stock category record of the contract). Any number of contract charges can be entered against a supplier invoice (or credit note). In entering contract charges there is also the possibility of flagging whether or not the charge was orignially envisaged and costed into the contract or not. Contract charges records are created for each entry.</p>
+<p>When supplier invoices (accounts payable) are entered there is the option to specify the contract that is to be charged with the cost. The cost of contract charges also goes to the work in progress account (as determined from the stock category record of the contract). Any number of contract charges can be entered against a supplier invoice (or credit note). In entering contract charges there is also the possibility of flagging whether or not the charge was originally envisaged and costed into the contract or not. Contract charges records are created for each entry.</p>
 
 <p>The original contract costing can be compared against the actual charges against the contract, to see how much was made on the contract. When all charges are entered against the contract it needs the status of the contract to be changed to complete. This process closes the work order and compares the original contract cost against actual costs and takes the value not charged to cost of sales to the usage variances account (based on the stock category of the contract item) and clears the balance that would otherwise be left in work in progress.</p>
 
@@ -22,11 +22,11 @@
 
 <p>The gross profit percentage entered is the factor used based on the cost to arrive at the contract price.</p>
 
-<p>The date that the customer requires the contract to be completed is also specified in the contract. This propogates through to the quotation and order.</p>
+<p>The date that the customer requires the contract to be completed is also specified in the contract. This propagates through to the quotation and order.</p>
 
-<p>If the contract is for a customer that is invoiced in a foriegn currency the currency exchange rate can also be specified - it is defaulted based on the current table of exchange rates at the time the contract is created.</p>
+<p>If the contract is for a customer that is invoiced in a foreign currency the currency exchange rate can also be specified - it is defaulted based on the current table of exchange rates at the time the contract is created.</p>
 
-<p>There are two buttons on the contract setup page that allow the stock required for the contract to be specified and the requirments that are not stock items to be recorded.</p>
+<p>There are two buttons on the contract setup page that allow the stock required for the contract to be specified and the requirements that are not stock items to be recorded.</p>
 
 <p>Entering the bill of materials for the contract is done from a screen that shows a stock selection options - it is possible to choose by stock category or search for individual items by code or description. The list of items matching the criteria entered displays and the quantity of each item required should be entered in the box next to the item. There is no limit to how many items can be selected. Once all the items from stock have been selected there is a button that brings back the contract details (Back to Contract Header). The contract screen will now show the bill of materials as selected and the cost of each together with the quantity of each required extending to the total value of all stock items required for the contract.</p>
 
@@ -81,13 +81,13 @@
 
     <li>Produce the quotation for customer based on the contract costing created</li>
 
-    <li>If the quotation is accepted by the customer turn the quotation to a sales order - this initates the contract costing</li>
+    <li>If the quotation is accepted by the customer turn the quotation to a sales order - this initiates the contract costing</li>
 
     <li>Issue stock to the contract</li>
 
     <li>Enter supplier invoices against the contract</li>
 
-    <li>When the contract has been delivered to the customer, recieve the contract item against the contract work order. If the contract is closed through the contract costing screen, this step happens automatically.</li>
+    <li>When the contract has been delivered to the customer, receieve the contract item against the contract work order. If the contract is closed through the contract costing screen, this step happens automatically.</li>
 
     <li>Invoice the contract item to the customer</li>
 

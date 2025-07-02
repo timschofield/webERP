@@ -34,4 +34,3 @@ function GetReports($GroupID) {
 	$RptForm .= '</table></form>';
 	return $RptForm;
 }
-?>

@@ -8,5 +8,3 @@ NewMenuItem('system', 'Maintenance', _('Logged in users'), '/LoggedInUsers.php',
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Change Menu Items'));
 }
-
-?>

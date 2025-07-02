@@ -15,5 +15,3 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	file_put_contents('install/tables/' . $CreateRow[0] . '.sql', $CreateRow[1]);
 }
-
-?>

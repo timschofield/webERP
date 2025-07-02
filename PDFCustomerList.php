@@ -4,7 +4,7 @@
 include('includes/session.php');
 use Dompdf\Dompdf;
 
-if (isset($_POST['ActivitySince'])){$_POST['ActivitySince'] = ConvertSQLDate($_POST['ActivitySince']);};
+if (isset($_POST['ActivitySince'])){$_POST['ActivitySince'] = ConvertSQLDate($_POST['ActivitySince']);}
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerListing';
 
@@ -517,4 +517,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-?>

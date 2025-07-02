@@ -185,10 +185,7 @@ if (isset($_POST['module'])) {
 /* This is a messy way of producing a directory listing of ./locale to fish out */
 /* the language directories that have been set up */
 /* The other option would be to define an array of the languages you want */
-/* and check for the existance of the directory */
-
-/* $ListDirCmd should probably be defined in config.php as a global value */
-/* You'll need to change it if you are running a Windows server - sorry !! */
+/* and check for the existence of the directory */
 
 	if ($Handle = opendir('.')) {
     	$i=0;
@@ -249,5 +246,3 @@ else
 }
 
 include('includes/footer.php');
-
-?>

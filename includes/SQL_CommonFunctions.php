@@ -374,7 +374,7 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 								GROUP BY counterindex");
 			$MyRow = DB_fetch_array($Result);
 			$TransToAmend = $MyRow['counterindex'];
-			$Result = DB_query("UPDATE gltrans 
+			$Result = DB_query("UPDATE gltrans
 								SET amount = amount - " . $Difference . "
 								WHERE counterindex = '" . $TransToAmend . "'");
 
@@ -460,5 +460,3 @@ function PettyCashTabCurrentBalance($Tab) {
 	}
 	return $Balance;
 }
-
-?>

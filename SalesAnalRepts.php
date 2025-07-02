@@ -131,8 +131,6 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('Group by Level 4 is set but the lower limit is greater than the upper limit') . ' - ' . _('the report will have no output'),'error',_('Lower Limit > Upper Limit'));
 	}
 
-
-
 	if (isset($SelectedReport) AND $InputError !=1) {
 
 		/*SelectedReport could also exist if submit had not been clicked this code
@@ -304,8 +302,6 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 
 //end of ifs and buts!
-
-
 
 if (isset($SelectedReport)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Defined Reports') . '</a>';
@@ -502,4 +498,3 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

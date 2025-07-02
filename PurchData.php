@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 
 $Title = _('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
@@ -725,4 +725,3 @@ if (!isset($SuppliersResult)) {
 }
 
 include ('includes/footer.php');
-?>

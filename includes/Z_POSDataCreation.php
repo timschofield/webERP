@@ -214,5 +214,3 @@ function Delete_POS_Data($PathPrefix){
 		return 0;
 	}
 }
-
-?>

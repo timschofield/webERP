@@ -23,4 +23,3 @@ if (isset($_POST['RemovePOBackOrders'])){
 }
 
 include('includes/footer.php');
-?>
