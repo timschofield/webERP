@@ -2,7 +2,7 @@
 
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];

@@ -4,7 +4,7 @@ include('includes/session.php');
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
 	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
-};
+}
 $Title = _('Depreciation Journal Entry');
 
 $ViewTopic = 'FixedAssets';

@@ -4,7 +4,7 @@ include ('includes/session.php');
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/ImageFunctions.php');
 
-if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};
+if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);}
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */

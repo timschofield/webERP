@@ -2,8 +2,8 @@
 
 include ('includes/session.php');
 
-if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);};
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
+if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 $Title = _('Multi-Level Bill Of Materials Maintenance');
 $ViewTopic = 'Inventory';

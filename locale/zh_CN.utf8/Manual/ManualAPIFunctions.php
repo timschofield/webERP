@@ -2,7 +2,6 @@
 
 $PageSecurity = 1;
 $PathPrefix = __DIR__ . '/../../../';
-
 //include('../../includes/session.php');
 include('../../api/api_errorcodes.php');
 

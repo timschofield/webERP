@@ -3,7 +3,7 @@
 // Assign cash from one tab to another.
 
 include('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = _('Assignment of Cash from Tab to Tab');

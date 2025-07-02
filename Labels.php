@@ -609,7 +609,7 @@ echo '<br />
 		</div>
 	<br />
 		<div class="centre">
-			<a href="' . $RootPath  . '/PDFPrintLabel.php">' . _('Print Labels') . '</a>
+			<a href="' . $RootPath . '/PDFPrintLabel.php">' . _('Print Labels') . '</a>
 		</div>
 	</form>';
 

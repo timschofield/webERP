@@ -14,7 +14,7 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	header('Location:' . $RootPath . '/Contracts.php');
+	header('Location:' . htmlspecialchars_decode($RootPath) . '/Contracts.php');
 	exit;
 }
 

@@ -5,7 +5,7 @@
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
