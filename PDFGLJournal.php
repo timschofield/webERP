@@ -1,8 +1,7 @@
 <?php
 
-/* $Revision: 1.5 $ */
-
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['JournalNo'])) {
@@ -101,8 +100,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 $HTML .= '</body></html>';
 
 if (isset($_POST['PrintPDF'])) {
-	// Handle PDF generation
-	require 'vendor/autoload.php'; // Ensure DomPDF is installed via Composer
 
 	$dompdf = new Dompdf(['chroot' => __DIR__]);
 	$dompdf->loadHtml($HTML);
