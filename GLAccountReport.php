@@ -17,12 +17,12 @@ if (isset($_POST['RunReport'])) {
 	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	include ('includes/PDFStarter.php');
@@ -195,7 +195,7 @@ if (isset($_POST['RunReport'])) {
 	if (count($_POST['Account']) == 0) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 
 	}
 	else { //print the report
@@ -294,7 +294,7 @@ else {
 		</form>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 function NewPageHeader() {

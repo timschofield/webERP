@@ -51,7 +51,7 @@ if (!isset($_POST['Date'])){
      echo '</form>';
 
 	 include('includes/footer.php');
-	 exit;
+	 exit();
 } else {
 
 	include('includes/ConnectDB.php');
@@ -84,14 +84,14 @@ if (DB_error_no()!=0){
 			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.php');
-  	exit;
+  	exit();
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	echo '<br />';
   	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
 	include('includes/footer.php');
-  	exit;
+  	exit();
 }
 
 include('includes/PDFStarter.php');

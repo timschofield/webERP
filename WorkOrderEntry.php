@@ -72,7 +72,7 @@ if (isset($_POST['AddToOrder'])) {
 		prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $_SESSION['WorkOrder' . $Identifier]->LocationCode, 'error');
 		echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	foreach ($_POST as $Key => $Value) {
 		if (substr($Key, 0, 7) == 'StockID') {
@@ -269,7 +269,7 @@ if (isset($_POST['delete'])) {
 			unset($_POST['WOComments' . $i]);
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 

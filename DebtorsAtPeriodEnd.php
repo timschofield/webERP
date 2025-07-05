@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($CustomerResult) == 0) {
@@ -55,7 +55,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		prnMsg(_('The customer details listing has no clients to report on'),'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$HTML = '';

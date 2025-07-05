@@ -178,7 +178,7 @@ If (DB_num_rows($ColsResult)== 0) {
     echo '<br /><a href="' . $RootPath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Enter Columns for this report') . '</a>';
     echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.php');
-    Exit;
+    exit();
 } elseif (DB_num_rows($ColsResult) >10){
     $Title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.php');
@@ -186,7 +186,7 @@ If (DB_num_rows($ColsResult)== 0) {
     echo '<br /><a href="' . $RootPath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Maintain Columns for this report') . '</a>';
     echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.php');
-    exit;
+    exit();
 }
 
 
@@ -266,7 +266,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	     prnMsg(_('Calculated fields must use columns defined in the report specification') . '. ' . _('The numerator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Column'));
 	     echo '<br /><a href="' . $RootPath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . _('Maintain Columns for this report') . '</a>';
 	     include('includes/footer.php');
-	     exit;
+	     exit();
 	 }
 	 $strt_ColNum = 9; /* Start searching after SELECT */
 
@@ -290,7 +290,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	$Length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
 	 If ($Length_ColDen == 0){
 	     prnMsg (_('Calculated fields must use columns defined in the report specification') . '. ' . _('The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
-	     Exit;
+	     exit();
 	}
 
 	 $strt_ColDen = 7; /* start searching after SELECT */
@@ -326,7 +326,7 @@ $SQLTheLot =	$SQLSelectCls . ' ' . $SQLFromCls . ' ' . $SQLWhereCls . ' ' . $SQL
 
 /*For the purposes of debugging */
 /*echo '<P>' .  $SQLTheLot;
-exit;
+exit();
 */
 
 /*Now let her go .... */
@@ -342,5 +342,5 @@ if (DB_num_rows($Result)==0){
     echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
     include('includes/footer.php');
 
-   exit;
+   exit();
 }

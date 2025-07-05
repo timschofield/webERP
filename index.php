@@ -9,7 +9,7 @@ include ('includes/MainMenuLinksArray.php');
 if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FirstRun'] = true;
 	echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/InitialScripts.php">';
-	exit;
+	exit();
 } else {
 	$_SESSION['FirstRun'] = false;
 }

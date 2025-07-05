@@ -39,7 +39,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				prnMsg (_('File contains') . ' '. count($MyRow) . ' ' . _('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 
 			// cleanup the data (csv files often import with empty strings and such)

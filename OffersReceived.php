@@ -232,7 +232,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(_('There are no members of the Offers Received Result Recipients email group'), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		array_push($Recipients, $Email);
 
@@ -272,7 +272,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		if (sizeOf($Recipients) == 0) {
 			prnMsg(_('There are no members of the Offers Received Result Recipients email group'), 'warn');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		array_push($Recipients, $Email);
 

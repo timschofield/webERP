@@ -28,7 +28,7 @@ if (!isset($_POST['SupplierID'])) {
 	if ($MyRow['supplierid']=='') {
 		prnMsg(_('This functionality can only be accessed via a supplier login.'), 'warning');
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$_POST['SupplierID']=$MyRow['supplierid'];
 	}
@@ -151,7 +151,7 @@ if (isset($_POST['Process'])) {
 		</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* If the supplierID is set then it must be a login from the supplier but if nothing else is
@@ -252,7 +252,7 @@ if (isset($_POST['Update'])) {
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['Save'])) {
@@ -280,7 +280,7 @@ if (isset($_POST['Save'])) {
 	$_SESSION['offer'.$identifier]->EmailOffer();
 	unset($_SESSION['offer'.$identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*The supplier has chosen option 1
@@ -391,7 +391,7 @@ if (isset($_POST['TenderType'])
 		echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' .
 			_('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a></p>';
-		exit;
+		exit();
 	}
 	echo '<fieldset>
 			<legend class="search">', _('Stock Item Search'), '</legend>

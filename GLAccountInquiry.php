@@ -139,7 +139,7 @@ if (isset($_POST['Show'])) {
 	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	/*Is the account a balance sheet or a profit and loss account */
 	$Result = DB_query("SELECT pandl

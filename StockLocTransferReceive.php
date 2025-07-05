@@ -59,7 +59,7 @@ if(isset($_POST['ProcessTransfer'])) {
 		prnMsg( _('All quantities entered are less than zero') . '. ' . _('Please correct that and try again'), 'error' );
 		$InputError = True;
 	}
-//exit;
+//exit();
 	if(!$InputError) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
@@ -487,7 +487,7 @@ if(isset($_GET['Trf_ID'])) {
 	if(DB_num_rows($Result) == 0) {
 		echo '<h3>' . _('Transfer') . ' #' . $_GET['Trf_ID'] . ' '. _('Does Not Exist') . '</h3><br />';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$MyRow=DB_fetch_array($Result);

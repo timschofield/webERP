@@ -151,7 +151,7 @@ if (isset($_POST['CheckCode'])) {
 	}
 	echo '</table>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){

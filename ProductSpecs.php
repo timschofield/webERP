@@ -49,7 +49,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 			</div>
 			</form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$SQL = "INSERT IGNORE INTO prodspecs
 							(keyval,
@@ -226,7 +226,7 @@ if (isset($_GET['ListTests'])) {
 		</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }  //ListTests
 if (isset($_POST['AddTests'])) {
 	for ($i=0;$i<=$_POST['AddTestsCounter'];$i++){

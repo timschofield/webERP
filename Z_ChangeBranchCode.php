@@ -22,18 +22,18 @@ if (isset($_POST['ProcessCustomerChange'])){
 	if (DB_num_rows($Result)==0){
 		prnMsg (_('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . _('does not currently exist as a customer branch code in the system'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if ($_POST['NewBranchCode']==''){
 		prnMsg(_('The new customer branch code to change the old code to must be entered as well'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (ContainsIllegalCharacters($_POST['NewBranchCode']) OR mb_strstr($_POST['NewBranchCode'],' ')){
 		prnMsg(_('The new customer branch code cannot contain') . ' - & . ' . _('or a space'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
@@ -42,7 +42,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	if (DB_num_rows($Result)!=0){
 		prnMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
