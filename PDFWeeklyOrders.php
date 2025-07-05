@@ -4,6 +4,9 @@ $DatabaseName='weberp';
 $AllowAnyone = true;
 
 include ('includes/session.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+
 include('includes/SQL_CommonFunctions.php');
 include ('includes/class.pdf.php');
 $_POST['FromDate']=date('Y-m-01');
@@ -12,7 +15,7 @@ $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate
 $Recipients = GetMailList('WeeklyOrders');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Weekly Orders') . ' - ' . _('Problem Report');
-      	include('includes/header.php');
+	include('includes/header.php');
 	prnMsg( _('There are no members of the Weekly Orders Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit;
