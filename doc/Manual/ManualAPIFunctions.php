@@ -1,6 +1,6 @@
 <?php
 
-$PathPrefix = $_SERVER['HTTP_HOST'].$RootPath.'/../../';
+$PathPrefix = __DIR__ . '/../../';
 
 include('api/api_errorcodes.php');
 
