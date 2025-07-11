@@ -645,16 +645,6 @@ LOCK TABLES `loctransfers` WRITE;
 UNLOCK TABLES;
 
 --
--- Dumping data for table `login_data`
---
-
-LOCK TABLES `login_data` WRITE;
-/*!40000 ALTER TABLE `login_data` DISABLE KEYS */;
-INSERT INTO `login_data` (`sessionid`, `userid`, `login`, `script`) VALUES ('359hsckg6f39s0bngtqmu6n19j','admin','2025-03-19 20:57:41','SelectCustomer.php'),('6gc4g920mbnh0nji5o2j4kcdou','admin','2024-12-23 07:06:42','index.php'),('if3q4ken9q537ltc4mc0h1k3vc','admin','2025-02-25 08:24:51','SelectCustomer.php'),('ucrgk89tq1ta7oivr53ehimgme','admin','2025-02-26 17:00:23','SelectCompletedOrder.php');
-/*!40000 ALTER TABLE `login_data` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `mailgroupdetails`
 --
 
@@ -1311,16 +1301,6 @@ LOCK TABLES `session_data` WRITE;
 /*!40000 ALTER TABLE `session_data` DISABLE KEYS */;
 INSERT INTO `session_data` (`userid`, `field`, `value`) VALUES ('admin','module','AR'),('tims','module','system'),('timschofield','module','Sales');
 /*!40000 ALTER TABLE `session_data` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `sessions`
---
-
-LOCK TABLES `sessions` WRITE;
-/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
-INSERT INTO `sessions` (`sessionid`, `last_poll`) VALUES ('6gc4g920mbnh0nji5o2j4kcdou','2024-12-23 07:06:42'),('if3q4ken9q537ltc4mc0h1k3vc','2025-02-25 08:24:51'),('ucrgk89tq1ta7oivr53ehimgme','2025-02-26 17:00:23'),('359hsckg6f39s0bngtqmu6n19j','2025-03-19 20:57:41');
-/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
