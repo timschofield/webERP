@@ -24,42 +24,19 @@ if (!isset($_POST['Format'])) {
 if (!isset($_POST['TypeOfFile'])) {
 	$_POST['TypeOfFile'] = 'FSMaster';
 }
-if (!isset($_POST['TypeOfShop'])) {
-	$_POST['TypeOfShop'] = 1;
-}
 
 if (isset($_POST['submit'])) {
-    submit($_POST['TypeOfShop'], $_POST['TypeOfFile']);
+    submit($_POST['TypeOfFile']);
 } else {
     display($RootPath, $Theme);
 }
 
-function submit($TypeOfShop, $TypeOfFile) {
+function submit($TypeOfFile) {
 
 	//initialise no input errors
 	$InputError = 0;
 
-	// Validate inputs
-	if (($TypeOfShop < 1) OR ($TypeOfShop > 2)) {
-		$InputError = 1;
-		prnMsg("Type of marketplace should be Kapal-Laut or Blink only", 'error');
-	}
-
 	if ($InputError == 0){
-
-		if ($TypeOfShop == 1){
-			$NameOfShop = "Kapal-Laut";
-			$Brand = MARKETPLACES_BRAND_KAPAL_LAUT;
-			$TokopediaAccountId = TOKOPEDIA_STOREID_KAPAL_LAUT;
-			$ShopeeAccountId = SHOPEE_STOREID_KAPAL_LAUT;
-			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT . " ";
-		} else {
-			$NameOfShop = "Blink";
-			$Brand = MARKETPLACES_BRAND_BLINK;
-			$TokopediaAccountId = TOKOPEDIA_STOREID_BLINK;
-			$ShopeeAccountId = SHOPEE_STOREID_BLINK;
-			$SQLTypeOfShop = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT . " ";
-		}
 
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.categoryid,
@@ -77,8 +54,8 @@ function submit($TypeOfShop, $TypeOfFile) {
 						prices.price
 				FROM stockmaster, prices, stockdescriptiontranslations
 				WHERE stockmaster.stockid = prices.stockid
-					AND stockmaster.stockid = stockdescriptiontranslations.stockid " . 
-					$SQLTypeOfShop . "
+					AND stockmaster.stockid = stockdescriptiontranslations.stockid
+					AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND stockmaster.discontinued = 0 
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
@@ -107,7 +84,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 			// Add title data
 			$SpreadSheet->setActiveSheetIndex(0);
-			$SpreadSheet->getActiveSheet()->setTitle(("FORSTOK " . $NameOfShop));
+			$SpreadSheet->getActiveSheet()->setTitle("FORSTOK " . $TypeOfFile);
 			$ActiveSheet = $SpreadSheet->getActiveSheet();
 
 			if ($TypeOfFile == "FSMaster"){
@@ -171,110 +148,126 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 			while ($MyRow = DB_fetch_array($Result)) {
 				
-				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
-					// we don't send discounted items to marketplaces
-					
-					$StockID = $MyRow['stockid'];
+				if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT)){
+					$Brand = MARKETPLACES_BRAND_KAPAL_LAUT;
+					$TokopediaAccountId = TOKOPEDIA_STOREID_KAPAL_LAUT;
+					$TokopediaStoreName = TOKOPEDIA_STORENAME_KAPAL_LAUT;
+					$ShopeeAccountId = SHOPEE_STOREID_KAPAL_LAUT;
+					$ShopeeStoreName = SHOPEE_STORENAME_KAPAL_LAUT;
+				} else {
+					$Brand = MARKETPLACES_BRAND_BLINK;
+					$TokopediaAccountId = TOKOPEDIA_STOREID_BLINK;
+					$TokopediaStoreName = TOKOPEDIA_STORENAME_BLINK;
+					$ShopeeAccountId = SHOPEE_STOREID_BLINK;
+					$ShopeeStoreName = SHOPEE_STORENAME_BLINK;
+				}
 
-					$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
-					$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
+				$StockID = $MyRow['stockid'];
+
+				$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
+				$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
 /*					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
 */
-					$OnlySize = ClassicalSize($StockID);
-					if ($OnlySize != "NO SIZE"){
-						$NamaVariant = "Ukuran";
-					}else{
-						$NamaVariant = "";
-						$OnlySize = "";
-					}
-
-					$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
-					$Price = round($MyRow['price']);
-
-					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
-								$TextSizeIndonesian . " - "  . 
-								trim($MyRow['longdescription']) . " " . 
-								$TextSizeEnglish;
-					
-					$QOH = ItemMarketplaceQOH($StockID);
-					$Category = FindShopeeCategory($StockID, $Name, $Description);
-/*					$Material = FindLazadaMaterial($TypeOfFile, $Name);
-					$Stone = FindLazadaStone($Name);
-					$WhatsInTheBox = WhatsInTheBox($StockID);
-					$Color = FindLazadaColor($Name);
-*/
-					if ($MyRow['unitsdimension'] == 'mm'){
-						$FactorLenght = 10;
-					}elseif ($MyRow['unitsdimension'] == 'cm'){
-						$FactorLenght = 1;
-					}else{
-						// should be meter
-						$FactorLenght = 0.1;
-					}
-					$Length = $MyRow['length']/$FactorLenght; 
-					$Width = $MyRow['width']/$FactorLenght; 
-					$Height = $MyRow['height']/$FactorLenght; 
-					$Weight = $MyRow['grossweight'] * 1000; // weight in grams
-
-					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockID,   4, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockID,   5, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_6, $PackagingImage) = ItemImagesURL($StockID,   6, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_7, $PackagingImage) = ItemImagesURL($StockID,   7, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_8, $PackagingImage) = ItemImagesURL($StockID, 999, $PackagingImage, $MyRow['klpackaging']);
-					// only a packaging pic for the 8th URL (if not yet)
-
-					if ($TypeOfFile == "FSMaster"){
-						$ActiveSheet->setCellValue('A'.$i, $StockID);
-						$ActiveSheet->setCellValue('B'.$i, $Name);
-						$ActiveSheet->setCellValue('C'.$i, $Brand);
-						$ActiveSheet->setCellValue('D'.$i, $Category);
-						$ActiveSheet->setCellValue('E'.$i, $NamaVariant);
-						$ActiveSheet->setCellValue('F'.$i, $OnlySize);
-						$ActiveSheet->setCellValue('I'.$i, $Weight);
-						$ActiveSheet->setCellValue('J'.$i, $Length);
-						$ActiveSheet->setCellValue('K'.$i, $Width);
-						$ActiveSheet->setCellValue('L'.$i, $Height);
-						$ActiveSheet->setCellValue('M'.$i, $Price);
-						$ActiveSheet->setCellValue('O'.$i, $QOH);
-						$ActiveSheet->setCellValue('Q'.$i, $Description);
-						$ActiveSheet->setCellValue('R'.$i, $Url_1);
-						$ActiveSheet->setCellValue('S'.$i, $Url_2);
-						$ActiveSheet->setCellValue('T'.$i, $Url_3);
-						$ActiveSheet->setCellValue('U'.$i, $Url_4);
-						$ActiveSheet->setCellValue('V'.$i, $Url_5);
-						$ActiveSheet->setCellValue('W'.$i, $Url_6);
-						$ActiveSheet->setCellValue('X'.$i, $Url_7);
-						$ActiveSheet->setCellValue('Y'.$i, $Url_8);
-					}elseif($TypeOfFile == "FSQOH"){
-						$ActiveSheet->setCellValue('A'.$i, $StockID);
-						$ActiveSheet->setCellValue('B'.$i, $Name);
-						$ActiveSheet->setCellValue('C'.$i, $QOH);
-						$ActiveSheet->setCellValue('D'.$i, $QOH);
-					}elseif($TypeOfFile == "FSPrice"){
-						// one row per channel (1st Tokopedia)
-						$ActiveSheet->setCellValue('A'.$i, $StockID);
-						$ActiveSheet->setCellValue('B'.$i, $Name);
-						$ActiveSheet->setCellValue('C'.$i, "Tokopedia");
-						$ActiveSheet->setCellValue('D'.$i, $Brand);
-						$ActiveSheet->setCellValue('E'.$i, $Price);
-						$ActiveSheet->setCellValue('I'.$i, GetTokopediaProductId($StockID));
-						$ActiveSheet->setCellValue('J'.$i, $TokopediaAccountId);
-						$i++;
-						// second row for Shopee
-						$ActiveSheet->setCellValue('A'.$i, $StockID);
-						$ActiveSheet->setCellValue('B'.$i, $Name);
-						$ActiveSheet->setCellValue('C'.$i, "Shopee");
-						$ActiveSheet->setCellValue('D'.$i, $Brand);
-						$ActiveSheet->setCellValue('E'.$i, $Price);
-						$ActiveSheet->setCellValue('I'.$i, GetShopeeProductId($StockID));
-						$ActiveSheet->setCellValue('J'.$i, $ShopeeAccountId);
-					}
-					$i++;
+				$OnlySize = ClassicalSize($StockID);
+				if ($OnlySize != "NO SIZE"){
+					$NamaVariant = "Ukuran";
+				}else{
+					$NamaVariant = "";
+					$OnlySize = "";
 				}
+
+				$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
+				$Price = round($MyRow['price']);
+
+				$Description = trim($MyRow['longdescriptiontranslation']). " " . 
+							$TextSizeIndonesian . " - "  . 
+							trim($MyRow['longdescription']) . " " . 
+							$TextSizeEnglish;
+				
+				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+					// we don't sell discounted items in marketplaces, so we mark as QOH = 0
+					$QOH = 0;
+				} else {
+					$QOH = ItemMarketplaceQOH($MyRow['stockid']);
+				}
+
+				$Category = FindShopeeCategory($StockID, $Name, $Description);
+/*					$Material = FindLazadaMaterial($TypeOfFile, $Name);
+				$Stone = FindLazadaStone($Name);
+				$WhatsInTheBox = WhatsInTheBox($StockID);
+				$Color = FindLazadaColor($Name);
+*/
+				if ($MyRow['unitsdimension'] == 'mm'){
+					$FactorLenght = 10;
+				}elseif ($MyRow['unitsdimension'] == 'cm'){
+					$FactorLenght = 1;
+				}else{
+					// should be meter
+					$FactorLenght = 0.1;
+				}
+				$Length = ceil($MyRow['length']/$FactorLenght);
+				$Width = ceil($MyRow['width']/$FactorLenght);
+				$Height = ceil($MyRow['height']/$FactorLenght);
+				$Weight = ceil($MyRow['grossweight'] * 1000); // weight in grams
+
+				$PackagingImage = FALSE;
+				list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_4, $PackagingImage) = ItemImagesURL($StockID,   4, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_5, $PackagingImage) = ItemImagesURL($StockID,   5, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_6, $PackagingImage) = ItemImagesURL($StockID,   6, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_7, $PackagingImage) = ItemImagesURL($StockID,   7, $PackagingImage, $MyRow['klpackaging']);
+				list($Url_8, $PackagingImage) = ItemImagesURL($StockID, 999, $PackagingImage, $MyRow['klpackaging']);
+				// only a packaging pic for the 8th URL (if not yet)
+
+				if ($TypeOfFile == "FSMaster"){
+					$ActiveSheet->setCellValue('A'.$i, $StockID);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, $Brand);
+					$ActiveSheet->setCellValue('D'.$i, $Category);
+					$ActiveSheet->setCellValue('E'.$i, $NamaVariant);
+					$ActiveSheet->setCellValue('F'.$i, $OnlySize);
+					$ActiveSheet->setCellValue('I'.$i, $Weight);
+					$ActiveSheet->setCellValue('J'.$i, $Length);
+					$ActiveSheet->setCellValue('K'.$i, $Width);
+					$ActiveSheet->setCellValue('L'.$i, $Height);
+					$ActiveSheet->setCellValue('M'.$i, $Price);
+					$ActiveSheet->setCellValue('O'.$i, $QOH);
+					$ActiveSheet->setCellValue('Q'.$i, $Description);
+					$ActiveSheet->setCellValue('R'.$i, $Url_1);
+					$ActiveSheet->setCellValue('S'.$i, $Url_2);
+					$ActiveSheet->setCellValue('T'.$i, $Url_3);
+					$ActiveSheet->setCellValue('U'.$i, $Url_4);
+					$ActiveSheet->setCellValue('V'.$i, $Url_5);
+					$ActiveSheet->setCellValue('W'.$i, $Url_6);
+					$ActiveSheet->setCellValue('X'.$i, $Url_7);
+					$ActiveSheet->setCellValue('Y'.$i, $Url_8);
+				}elseif($TypeOfFile == "FSQOH"){
+					$ActiveSheet->setCellValue('A'.$i, $StockID);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, $QOH);
+					$ActiveSheet->setCellValue('D'.$i, $QOH);
+				}elseif($TypeOfFile == "FSPrice"){
+					// one row per channel (1st Tokopedia aka TikTok, 2nd Shopee)
+					$ActiveSheet->setCellValue('A'.$i, $StockID);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, "TikTok");
+					$ActiveSheet->setCellValue('D'.$i, $TokopediaStoreName);
+					$ActiveSheet->setCellValue('E'.$i, $Price);
+					$ActiveSheet->setCellValue('I'.$i, GetTokopediaProductId($StockID));
+					$ActiveSheet->setCellValue('J'.$i, $TokopediaAccountId);
+					$i++;
+					// second row for Shopee
+					$ActiveSheet->setCellValue('A'.$i, $StockID);
+					$ActiveSheet->setCellValue('B'.$i, $Name);
+					$ActiveSheet->setCellValue('C'.$i, "Shopee");
+					$ActiveSheet->setCellValue('D'.$i, $ShopeeStoreName);
+					$ActiveSheet->setCellValue('E'.$i, $Price);
+					$ActiveSheet->setCellValue('I'.$i, GetShopeeProductId($StockID));
+					$ActiveSheet->setCellValue('J'.$i, $ShopeeAccountId);
+				}
+				$i++;
 			}
 
 			// Auto Size columns
@@ -288,10 +281,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Redirect output to a client web browser (Excel2007)
 			if ($_POST['Format'] == 'xlsx') {
 				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			} else if ($_POST['Format'] == 'ods') {
 				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
-				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.ods';
+				$File = "FORSTOK" . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.ods';
 			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
@@ -341,9 +334,6 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	echo '<fieldset>
 			<legend>' . _('FORSTOK Export Options') . '</legend>';
-	
-	// Marketplace shop selection
-	echo FieldToSelectOneBrand('TypeOfShop', $_POST['TypeOfShop'], _('Marketplace kind of shop'), '', '', 1, true, false);
 
 	// FORSTOK File type selection
 	echo FieldToSelectFromThreeOptions('FSMaster', _('Master FORSTOK'),

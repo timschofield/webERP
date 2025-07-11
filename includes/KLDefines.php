@@ -401,7 +401,7 @@ define("MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES",     10); // if we have more than X
 define("MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES", 3); // if we have less than X then we consider QOH = 0 for the marketplaces to avoid cancelled orders and bad reviews 
 
 define("MARKETPLACES_BRAND_BLINK", "Blink by Kapal-Laut");
-define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut. Your Essential Jewellery");
+define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut Jewellery");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // TOKOPEDIA
@@ -409,6 +409,8 @@ define("MARKETPLACES_BRAND_KAPAL_LAUT", "Kapal-Laut. Your Essential Jewellery");
 define("TOKOPEDIA_PREFIX_URL", "https://www.tokopedia.com/");
 define("TOKOPEDIA_STOREID_BLINK", "9490898");
 define("TOKOPEDIA_STOREID_KAPAL_LAUT", "10418528");
+define("TOKOPEDIA_STORENAME_BLINK", "TikTok BLINK");
+define("TOKOPEDIA_STORENAME_KAPAL_LAUT", "TikTok KL");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // SHOPEE
@@ -437,6 +439,8 @@ define("SHOPEE_CATEGORY_KEYHOLDER",      'Hiasan & Gantungan Kunci');
 define("SHOPEE_PREFIX_URL", "https://www.shopee.co.id/produk-i.");
 define("SHOPEE_STOREID_BLINK", "303205858");
 define("SHOPEE_STOREID_KAPAL_LAUT", "359256976");
+define("SHOPEE_STORENAME_BLINK", "Shopee BLINK");
+define("SHOPEE_STORENAME_KAPAL_LAUT", "Shopee KL");
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 // LAZADA
