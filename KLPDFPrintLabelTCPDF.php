@@ -214,9 +214,6 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 }
 if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
-	// Let's start the real PDF creation 
-	require_once('includes/tcpdf/tcpdf.php');
-
 	// set the variables depending on the label type
 	if ($_POST['LabelID'] == 'T570'){
 		// Pricetags T570 general
