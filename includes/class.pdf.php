@@ -17,6 +17,9 @@ if (!class_exists('Cpdf', false)) {
 
 	class Cpdf extends TCPDF {
 
+		public $cMargin = 0;
+		public $ws = 0;
+
 		public function __construct($DocOrientation='P', $DocUnits='pt', $DocPaper='A4') {
 
 			parent::__construct($DocOrientation, $DocUnits, $DocPaper, true, 'utf-8', false);
