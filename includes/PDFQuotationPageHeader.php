@@ -19,7 +19,7 @@ $pdf->Image(
 	0,// Width of the image in the page. If not specified or equal to zero, it is automatically calculated.
 	60,// Height of the image in the page. If not specified or equal to zero, it is automatically calculated.
 	''// Image format. If not specified, the type is inferred from the file extension.
-);// Public function Image() in ~/includes/tcpdf/tcpdf.php.
+);// Public function Image() in tcpdf/tcpdf.php.
 
 // Prints 'Quotation' title:
 $pdf->addTextWrap(0, $Page_Height-$Top_Margin-18, $Page_Width, 18, _('Quotation'), 'center');
