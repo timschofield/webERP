@@ -184,7 +184,7 @@ function submit($TypeOfFile) {
 							trim($MyRow['longdescription']) . " " . 
 							$TextSizeEnglish;
 				
-				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+				if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't sell discounted items in marketplaces, so we mark as QOH = 0
 					$QOH = 0;
 				} else {
