@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);};
+if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);}
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 	$ViewTopic = 'AccountsReceivable';

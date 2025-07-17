@@ -490,7 +490,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
 		$PeriodResult = DB_query($PeriodSQL);
 		$PeriodRow = DB_fetch_array($PeriodResult);
-		$_POST['PeriodTo'] = $PeriodRow['periodno'];;
+		$_POST['PeriodTo'] = $PeriodRow['periodno'];
 	}
 	echo '<field>
 			<label for="PeriodTo">' . _('Select period to') . '</label>

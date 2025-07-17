@@ -19,7 +19,7 @@ include ('includes/SQL_CommonFunctions.php');
 include ('includes/StockFunctions.php');
 include ('includes/GLFunctions.php');
 
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');

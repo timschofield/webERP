@@ -3,8 +3,8 @@
 
 include('includes/session.php');
 
-if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);};
-if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);};
+if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);}
+if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);}
 
 $Title = _('Search Work Orders');
 $ViewTopic = 'Manufacturing';

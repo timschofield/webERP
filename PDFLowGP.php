@@ -3,8 +3,8 @@
 include('includes/session.php');
 use Dompdf\Dompdf;
 
-if (isset($_POST['FromDate'])) {$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])) {$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');

@@ -8,7 +8,7 @@
 ***************************************************************************************/
 
 include ('includes/session.php');
-if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);};
+if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
 $Title = _('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';

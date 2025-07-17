@@ -10,12 +10,12 @@
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
 
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
-if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);};
-if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);};
-if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);};
-if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);};
-if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);};
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
+if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);}
+if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);}
+if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);}
+if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);}
+if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);}
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order');

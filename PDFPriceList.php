@@ -15,7 +15,7 @@ Please note that addTextWrap() YPos is a font-size-height further down than addT
 All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
 */
 include('includes/session.php');
-if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 use Dompdf\Dompdf;
 
 // Merges gets into posts:
@@ -254,9 +254,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
 			/*Need to show to which branch the price relates */
 			if ($PriceList['branchcode']!='') {
-				$HTML .= '<td>' . $PriceList['brname'] . '</td>';;
+				$HTML .= '<td>' . $PriceList['brname'] . '</td>';
 			} else {
-				$HTML .= '<td>' . _('All') . '</td>';;
+				$HTML .= '<td>' . _('All') . '</td>';
 			}
 
 		} elseif ($_POST['CustomerSpecials']=='Full Description') {

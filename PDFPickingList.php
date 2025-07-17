@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 include('includes/SQL_CommonFunctions.php');
 
 /* Check that the config variable is set for

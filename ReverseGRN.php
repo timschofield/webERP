@@ -3,7 +3,7 @@
 include ('includes/DefineSerialItems.php');
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
-if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);};
+if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
 
 $Title = _('Reverse Goods Received');
 $ViewTopic = 'Inventory';

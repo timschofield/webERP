@@ -3,7 +3,7 @@
 
 include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){

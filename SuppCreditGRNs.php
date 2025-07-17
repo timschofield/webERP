@@ -10,7 +10,7 @@ include('includes/DefineSuppTransClass.php');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);};
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
 $Title = _('Enter Supplier Credit Note Against Goods Received');
 $ViewTopic = 'AccountsPayable';

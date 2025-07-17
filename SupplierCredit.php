@@ -23,7 +23,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 
 include('includes/session.php');
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 $Title = _('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';

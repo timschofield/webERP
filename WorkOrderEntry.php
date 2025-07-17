@@ -2,8 +2,8 @@
 /* Entry of new work orders */
 
 include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 

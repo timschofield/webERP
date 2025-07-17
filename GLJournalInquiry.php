@@ -1,8 +1,8 @@
 <?php
 // GLJournalInquiry.php
 include ('includes/session.php');
-if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);};
-if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);};
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 $Title = _('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
