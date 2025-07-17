@@ -509,4 +509,3 @@ if ($_POST['Status'] == 'New') {
 }
 
 include('includes/footer.php');
-?>

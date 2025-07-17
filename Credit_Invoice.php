@@ -1701,4 +1701,3 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 echo '</div>';
 echo '</form>';
 include ('includes/footer.php');
-?>

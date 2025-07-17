@@ -158,4 +158,3 @@ if (!isset($_SESSION['DBVersion'])) {
 	}
 
 	include ('includes/footer.php');
-?>

@@ -527,4 +527,3 @@ if ($ListCount == 0) {
 	$pdf->__destruct();
 	DB_Txn_Commit();
 }
-?>

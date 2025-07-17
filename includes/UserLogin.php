@@ -299,7 +299,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
 					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' .
 								Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
-					SendEmailFromWebERP($SysAdminEmail, 
+					SendEmailFromWebERP($SysAdminEmail,
 										$SysAdminEmail,
 										$EmailSubject,
 										$EmailText,
@@ -326,5 +326,3 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	return   UL_OK;		    /* All is well */
 }
-
-?>

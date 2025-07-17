@@ -16,8 +16,8 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 
 
 if (isset($_GET['Complete'])) {
-	$Result = DB_query("UPDATE fixedassettasks 
-						SET lastcompleted = CURRENT_DATE 
+	$Result = DB_query("UPDATE fixedassettasks
+						SET lastcompleted = CURRENT_DATE
 						WHERE taskid='" . $_GET['TaskID'] . "'");
 }
 
@@ -81,4 +81,3 @@ while ($MyRow=DB_fetch_array($Result)) {
 echo '</table><br /><br />';
 
 include('includes/footer.php');
-?>

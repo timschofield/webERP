@@ -76,4 +76,3 @@ if ( isset($_GET['CurrencyToShow']) ){
 		</table>';
 
 include('includes/footer.php');
-?>

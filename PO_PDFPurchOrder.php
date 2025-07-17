@@ -331,7 +331,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$PdfFileName = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		
+
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								_('Purchase Order Number') . ' ' . $OrderNo,
@@ -452,4 +452,3 @@ else {
 
 	include('includes/footer.php');
 }
-?>

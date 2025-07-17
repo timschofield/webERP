@@ -75,4 +75,3 @@ $_SESSION['Adjustment'.$identifier]->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the adjustment without keying, showing only when keying */
 include('includes/footer.php');
-?>

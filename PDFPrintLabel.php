@@ -360,5 +360,3 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

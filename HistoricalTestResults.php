@@ -157,4 +157,3 @@ if ($TotResults>0) {
 }
 
 include('includes/footer.php');
-?>

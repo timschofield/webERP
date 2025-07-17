@@ -517,7 +517,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$PdfFileName = $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		
+
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								_('Work Order Number') . ' ' . $SelectedWO,
@@ -765,4 +765,3 @@ else {
 	}
 	include('includes/footer.php');
 }
-?>

@@ -473,4 +473,3 @@ if (!isset($DebtorsMasterResult)) {
 }
 
 include ('includes/footer.php');
-?>

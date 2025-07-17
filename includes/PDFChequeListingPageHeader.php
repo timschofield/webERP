@@ -41,4 +41,3 @@ $YPos-=$LineHeight;
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
 $YPos -= ($LineHeight);
-?>

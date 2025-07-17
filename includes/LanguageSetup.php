@@ -101,5 +101,3 @@ if (!function_exists('gettext')) {
 
 $DecimalPoint = $LanguagesArray[$_SESSION['Language']]['DecimalPoint'];
 $ThousandsSeparator = $LanguagesArray[$_SESSION['Language']]['ThousandsSeparator'];
-
-?>

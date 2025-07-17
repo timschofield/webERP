@@ -280,4 +280,3 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 }
 
 include('includes/footer.php');
-?>

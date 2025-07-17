@@ -290,4 +290,3 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 }
 // KL RICARD END
 
-?>

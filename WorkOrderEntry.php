@@ -1057,4 +1057,3 @@ if(isset($SearchResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-?>

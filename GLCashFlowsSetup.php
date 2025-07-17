@@ -220,4 +220,3 @@ echo				'</select>
 
 include('includes/footer.php');
 // END: Procedure division -----------------------------------------------------
-?>

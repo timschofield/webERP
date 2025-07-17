@@ -46,5 +46,3 @@ fclose($fp);
 echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . _('click here') . '</a> ' . _('to view the file') . '</div>';
 
 include('includes/footer.php');
-
-?>

@@ -203,5 +203,3 @@ function PrintFooterSlip($pdf, $Column1, $Column2, $Column3, $YPos, $FontSize, $
 	$pdf->addTextWrap(400, $YPos - 150, 100, $FontSize, _('Signature'), 'left');
 	$pdf->addTextWrap(440, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
 }
-
-?>

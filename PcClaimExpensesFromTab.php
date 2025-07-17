@@ -822,4 +822,3 @@ KL RICARD END Do not show purpose */
 	} // end if user wish to delete
 }
 include('includes/footer.php');
-?>

@@ -165,4 +165,3 @@ echo '<table class="selection">
 		</form>';
 
 include('includes/footer.php');
-?>

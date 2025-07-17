@@ -80,8 +80,6 @@ if (isset($_POST['PrintPDF'])){
 	$PageNumber=1;
 	$LineHeight=12;
 
-
-
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.php');
@@ -274,4 +272,3 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-?>

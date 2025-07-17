@@ -3841,5 +3841,3 @@ return array(
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
 );
-
-?>

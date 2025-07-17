@@ -160,7 +160,7 @@ if(!isset($_GET['Edit'])){//display the input form
 	include('includes/footer.php');
 }
 ?>
-<?php
+
 function GetMailGroup () {
 //GET the mailing group data if there are any
 $SQL = "SELECT groupname, id FROM mailgroups ORDER BY groupname";

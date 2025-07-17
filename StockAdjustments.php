@@ -330,8 +330,6 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			}/* foreach controlled item in the serialitems array */
 		} /*end if the adjustment item is a controlled item */
 
-
-
 		$SQL = "UPDATE locstock SET quantity = quantity + " . floatval($_SESSION['Adjustment' . $identifier]->Quantity) . "
 				WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'
 				AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'";
@@ -403,7 +401,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		// KL RICARD END Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
 			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
-			SendEmailFromWebERP($SysAdminEmail, 
+			SendEmailFromWebERP($SysAdminEmail,
 								$_SESSION['InventoryManagerEmail'],
 								$EmailSubject,
 								$ConfirmationText,
@@ -573,4 +571,3 @@ echo '<br />
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

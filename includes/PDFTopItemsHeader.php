@@ -56,5 +56,3 @@ $LeftOvers = $pdf->addTextWrap($Xpos+480,$YPos,300-$Left_Margin,$FontSize,  _('O
 $FontSize=8;
 $pdf->Rectangle($Left_Margin, $YPos-$LineHeight,$Page_Width-$Left_Margin-$Right_Margin,$YPos-$Bottom_Margin);
 $YPos -= (1.5 * $LineHeight);
-
-?>

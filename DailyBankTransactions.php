@@ -244,4 +244,3 @@ if (!isset($_POST['Show'])) {
 	echo '</form>';
 }
 include ('includes/footer.php');
-?>

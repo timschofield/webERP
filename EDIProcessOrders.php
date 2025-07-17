@@ -503,11 +503,7 @@ $DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSI
 				}
 				break; /*end of NAD segment */
 
-
-
 			/* UP TO HERE NEED TESTER */
-
-
 
 		} /*end case  Seg Tag*/
 	} /*end while get next line of message */
@@ -559,5 +555,3 @@ function StripTrailingComma($StringToStrip) {
 		return $StringToStrip;
 	}
 }
-
-?>

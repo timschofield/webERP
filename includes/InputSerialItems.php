@@ -145,4 +145,3 @@ if ($_POST['EntryType'] == 'FILE'){
 } else { /*KEYED or BARCODE */
 	include('includes/InputSerialItemsKeyed.php');
 }
-?>

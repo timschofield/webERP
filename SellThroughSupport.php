@@ -470,4 +470,3 @@ if (isset($SupplierID)) { //not selecting a supplier
 }
 
 include ('includes/footer.php');
-?>

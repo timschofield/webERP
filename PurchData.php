@@ -725,4 +725,3 @@ if (!isset($SuppliersResult)) {
 }
 
 include ('includes/footer.php');
-?>

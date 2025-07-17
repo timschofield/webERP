@@ -149,7 +149,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 		if ($MyEmail = DB_fetch_array($EmailResult)) {
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
-			SendEmailFromWebERP($SysAdminEmail, 
+			SendEmailFromWebERP($SysAdminEmail,
 								$MyEmail['email'],
 								$EmailSubject,
 								$ConfirmationText,
@@ -621,4 +621,3 @@ if (isset($SearchResult)) {
 } #end if SearchResults to show
 //*********************************************************************************************************
 include ('includes/footer.php');
-?>

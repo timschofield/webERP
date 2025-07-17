@@ -37,5 +37,3 @@ while ($Cols=DB_fetch_array($ColsResult)){
     $LeftOvers = $pdf->addTextWrap($Xpos,$Ypos - $LineHeight,60,$FontSize,$Cols['heading2'], 'centre');
 }
 $Ypos =$Ypos - (2*$LineHeight);
-
-?>

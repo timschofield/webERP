@@ -297,4 +297,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 }
 echo '</form>';
 // END Procedure division ======================================================
-?>

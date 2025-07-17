@@ -68,7 +68,7 @@ if (isset($_POST['Submit'])) {
 		$WhereInvoiceNo = " AND suppinv LIKE '%" . $InvoiceNo . "%'";
 		$Where .= $WhereInvoiceNo;
 	}
-	$SQL = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno 
+	$SQL = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno
 		FROM grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem
 		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 		WHERE supplierid='" . $SupplierID . "'" . $Where;
@@ -101,4 +101,3 @@ if (isset($_POST['Submit'])) {
 
 }
 include('includes/footer.php');
-?>

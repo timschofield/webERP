@@ -482,4 +482,3 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 		$OldStartDate = $MyRow['startdate'];
 	} // end of loop around duplicate no end date prices
 }
-?>

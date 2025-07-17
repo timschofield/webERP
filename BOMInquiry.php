@@ -231,4 +231,3 @@ if (isset($StockID) and $StockID!=""){
 }
 
 include('includes/footer.php');
-?>

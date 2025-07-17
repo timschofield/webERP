@@ -32,4 +32,3 @@
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,_('Period Budget'),'right');
 	$pdf->setFont('','');
 	$YPos -= (2 * $LineHeight);
-?>

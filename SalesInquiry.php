@@ -1283,4 +1283,3 @@ function TempStockmoves() {
 } // End of function TempStockmoves
 
 include('includes/footer.php');
-?>

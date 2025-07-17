@@ -766,4 +766,3 @@ if(isset($_SESSION['Transfer'])) {
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

@@ -446,4 +446,3 @@ function PageHeaderSummary() {
 	$pdf->addTextWrap($Left_Margin, $YPos - $FontSize, $Page_Width - $Left_Margin - $Right_Margin, $FontSize, _('Summary'), 'center');
 	$YPos -= $FontSize * 2;
 }
-?>

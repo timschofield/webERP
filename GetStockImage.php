@@ -95,9 +95,6 @@ if( isset($_GET['notextbg']) ) {
 }
 
 
-
-
-
 // Extension requirements and Stock ID Isolation
 if($StockID == '') {
 	$StockID = $DefaultImage;
@@ -348,4 +345,3 @@ $func = 'image'.$functype;
 $func($im);
 // Destroy image
 imagedestroy($im);
-?>

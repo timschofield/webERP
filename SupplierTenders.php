@@ -753,5 +753,3 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 } //end of if search
 
 include('includes/footer.php');
-
-?>

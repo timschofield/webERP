@@ -267,4 +267,3 @@ $HTML .= '</table>';
 	</form>';
 }
 include('includes/footer.php');
-?>

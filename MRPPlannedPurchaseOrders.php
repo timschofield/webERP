@@ -459,5 +459,3 @@ function GetPartInfo($Part) {
 		return array('','','',1);
 	}
 }
-
-?>

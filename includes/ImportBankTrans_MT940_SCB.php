@@ -99,4 +99,3 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 		 }
 		 $TransactionLine = false;
 	  }
-?>

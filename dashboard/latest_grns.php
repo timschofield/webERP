@@ -64,5 +64,3 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	echo '</tbody>
 	</table>';
 	/* Don't forget to close off the table */
-
-?>

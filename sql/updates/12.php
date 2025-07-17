@@ -7,5 +7,3 @@ $Result = DB_query($SQL, $ErrMsg);
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Default end date for pricematrix set to 9999-12-31'));
 }
-
-?>

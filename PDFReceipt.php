@@ -121,4 +121,3 @@ $YPos=$YPos-($LineHeight*10);
 $LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,'______________________________________________________________________________');
 
 $pdf->Output('Receipt-'.$_GET['ReceiptNumber'], 'I');
-?>

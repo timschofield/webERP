@@ -371,4 +371,3 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		</form>';
 	include('includes/footer.php');
 }
-?>

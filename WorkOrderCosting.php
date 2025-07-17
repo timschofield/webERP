@@ -593,4 +593,3 @@ echo '</table>
 	</form>';
 
 include('includes/footer.php');
-?>

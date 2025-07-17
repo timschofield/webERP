@@ -359,7 +359,7 @@ if (isset($SearchResult)) {
         $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($Glob);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
-		
+
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>
@@ -393,4 +393,3 @@ echo '<hr />
     </div>
 	</form>';
 include('includes/footer.php');
-?>

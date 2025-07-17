@@ -1285,4 +1285,3 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 	}
 }
 // KL RICARD END
-?>

@@ -226,4 +226,3 @@ echo '<div class="centre">
 echo '</form>';
 
 include('includes/footer.php');
-?>

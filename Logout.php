@@ -66,6 +66,5 @@ unset($_COOKIE[$Name]);
     cookies in the browser's debugger, one can witness that the cookie with the
     session name is removed.
 
-    I verifed this behavior with Firefox and Chrome.
+    I verified this behavior with Firefox and Chrome.
 */
-?>

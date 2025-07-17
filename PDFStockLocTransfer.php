@@ -117,4 +117,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, '# Pieces in
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-?>

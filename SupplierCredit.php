@@ -1332,4 +1332,3 @@ then do the updates and inserts to process the credit note entered */
 echo '</div>
 	  </form>';
 include('includes/footer.php');
-?>

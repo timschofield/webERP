@@ -1011,4 +1011,3 @@ if($WORow['controlled']==1){ //controlled
 echo '</form>';
 
 include('includes/footer.php');
-?>

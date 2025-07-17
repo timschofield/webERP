@@ -250,4 +250,3 @@ if (isset($_POST['ShowSales'])){
 
 } //end of if user hit show sales
 include('includes/footer.php');
-?>

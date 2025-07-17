@@ -104,5 +104,3 @@ Class GLAnalysis {
 		self::__construct($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag);
 	}
 }
-
-?>

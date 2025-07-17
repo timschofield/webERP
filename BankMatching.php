@@ -327,4 +327,3 @@ if ($InputError !=1
 }
 echo '</form>';
 include('includes/footer.php');
-?>

@@ -77,5 +77,3 @@ Class LineDetails {
 	}
 
 }
-
-?>

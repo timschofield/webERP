@@ -326,4 +326,3 @@ if (isset($_POST['BankAccount'])) {
 }
 echo '</form>';
 include('includes/footer.php');
-?>

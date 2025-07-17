@@ -125,4 +125,3 @@ echo '<fieldset>
 	</div>
 	</form>';
 include ('includes/footer.php');
-?>

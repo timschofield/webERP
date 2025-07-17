@@ -133,4 +133,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') .
 $ReportFileName = $_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
 $pdf->__destruct();
-?>

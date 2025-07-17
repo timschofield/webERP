@@ -207,16 +207,16 @@ if (! isset($_GET['delete'])) {
 
 	}
 	if (!isset($_POST['QATestName'])){
-	  $_POST['QATestName']='';
+		$_POST['QATestName']='';
 	}
 	if (!isset($_POST['Method'])){
-	  $_POST['Method']='';
+		$_POST['Method']='';
 	}
 	if (!isset($_POST['GroupBy'])){
-	  $_POST['GroupBy']='';
+		$_POST['GroupBy']='';
 	}
 	if (!isset($_POST['Units'])){
-	  $_POST['Units']='';
+		$_POST['Units']='';
 	}
 	if (!isset($_POST['Type'])) {
 		$_POST['Type']=4;
@@ -456,11 +456,11 @@ or deletion of the records*/
 	}
 
 	switch ($MyRow['type']) {
-	 	case 0; //textbox
-	 		$TypeDisp='Text Box';
-	 		break;
-	 	case 1; //select box
-	 		$TypeDisp='Select Box';
+		case 0; //textbox
+			$TypeDisp='Text Box';
+			break;
+		case 1; //select box
+			$TypeDisp='Select Box';
 			break;
 		case 2; //checkbox
 			$TypeDisp='Check Box';
@@ -494,4 +494,3 @@ or deletion of the records*/
 	echo '</tbody></table>';
 } //end of ifs and buts!
 include('includes/footer.php');
-?>

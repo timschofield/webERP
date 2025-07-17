@@ -146,5 +146,3 @@ Class LineDetails {
 							$DecimalPlaces=2);
 	}
 }
-
-?>

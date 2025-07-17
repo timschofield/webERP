@@ -38,4 +38,3 @@ if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 }
 $FontSize=10;
 $YPos -=($LineHeight);
-?>

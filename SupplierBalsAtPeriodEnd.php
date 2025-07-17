@@ -161,4 +161,3 @@ $BookMark = '';
 	echo '</form>';
 	include('includes/footer.php');
 }/*end of else not PrintPDF */
-?>

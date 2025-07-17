@@ -217,4 +217,3 @@ $CountriesArray['ZM'] = _('Zambia');
 $CountriesArray['ZW'] = _('Zimbabwe');
 
 asort($CountriesArray);
-?>

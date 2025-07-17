@@ -88,4 +88,3 @@ $j=1;
   echo '</table>';
 
 include('includes/footer.php');
-?>

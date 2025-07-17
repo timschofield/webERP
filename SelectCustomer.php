@@ -881,4 +881,3 @@ function initMap() {
 
 } // isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != ''
 include ('includes/footer.php');
-?>

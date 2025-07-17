@@ -53,5 +53,3 @@ echo '<fieldset>
 					</field>
 				</ul>
 		</fieldset>';
-
-?>

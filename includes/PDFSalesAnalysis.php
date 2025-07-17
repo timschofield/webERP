@@ -546,5 +546,3 @@ if (isset($_GET['ProduceCVSFile'])){
 	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue')  . '<br />';
 	 include('includes/footer.php');
 }
-
-?>

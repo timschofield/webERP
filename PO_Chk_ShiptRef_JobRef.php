@@ -39,4 +39,3 @@ by the EnterLine button when a new purchase order line item is entered
                      }
               }
 	*/
-?>

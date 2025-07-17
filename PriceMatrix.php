@@ -374,8 +374,4 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 			$Price = $MyRow['price'];
 		} // end of loop around all prices
 
-
-
 } // end function ReSequenceEffectiveDates
-
-?>

@@ -327,8 +327,6 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course cos the order aint even started !!*/
 
-
-
 	if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])
 		AND ($_SESSION['Items'.$identifier]->DebtorNo==''
 		OR !isset($_SESSION['Items'.$identifier]->DebtorNo))){
@@ -1875,4 +1873,3 @@ function GetCustBranchDetails($identifier) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 		return $Result;
 }
-?>

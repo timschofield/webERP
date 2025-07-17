@@ -1391,4 +1391,3 @@ KL RICARD COMMENTED OUT END */
 
 echo '</form>';
 include ('includes/footer.php');
-?>

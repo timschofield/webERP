@@ -24,7 +24,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 		$WhereCurrency = ' ';
 	}
 
-	/* look for suppliers with active PO's */ 
+	/* look for suppliers with active PO's */
 	$SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
 				suppliers.currcode,
@@ -33,17 +33,17 @@ function submit($Country, $Currency, $RootPath, $Title) {
 				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
 					FROM supptrans
 					WHERE suppliers.supplierid = supptrans.supplierno) AS balance
-			FROM suppliers 
-			INNER JOIN purchorders 
-				ON  purchorders.supplierno = suppliers.supplierid 
+			FROM suppliers
+			INNER JOIN purchorders
+				ON  purchorders.supplierno = suppliers.supplierid
 			INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			WHERE purchorderdetails.completed=0
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" .
-				$WhereCountry . 	
-				$WhereCurrency . "	
+				$WhereCountry .
+				$WhereCurrency . "
 			GROUP BY suppliers.supplierid
 			ORDER BY suppliers.supplierid ASC";
 
@@ -72,10 +72,10 @@ function submit($Country, $Currency, $RootPath, $Title) {
 
 		$TotalValueOrders = 0;
 		$TotalValuePending = 0;
-		
+
 		while ($mySupplier = DB_fetch_array($ResultSuppliers)) {
 			echo $TableHeader;
-			
+
 			echo '<tr class="striped_row">
 					<td>' . $mySupplier['supplierid'] . '</td>
 					<td>' . $mySupplier['suppname'] . '</td>
@@ -98,24 +98,24 @@ function submit($Country, $Currency, $RootPath, $Title) {
 							FROM purchorders INNER JOIN purchorderdetails
 								ON purchorders.orderno = purchorderdetails.orderno
 							WHERE purchorderdetails.completed=0
-								AND purchorders.status IN ('Authorised', 'Printed', 'Pending')		
+								AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
 								AND purchorders.supplierno = '" . $mySupplier['supplierid'] . "'
 							GROUP BY purchorders.orderno
 							ORDER BY purchorders.orderno ASC";
-					 
+
 			$ErrMsg = _('The bill of material could not be retrieved because');
 			$SupplierResult = DB_query ($SQLSupplier,$ErrMsg);
-			
+
 			$TotalSupplierOwnCurrency = 0;
 			$TotalSupplierFunctionalCurrency = 0;
-			
+
 			while ($myPOs = DB_fetch_array($SupplierResult)) {
-				
+
 				$TotalSupplierOwnCurrency += $myPOs['ordervalue'];
 				$OrderValueFuntionalCurrency = $myPOs['ordervalue'] / $mySupplier['rate'];
 				$TotalSupplierFunctionalCurrency += $OrderValueFuntionalCurrency;
 				$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myPOs['orderno'] . '">' . $myPOs['orderno'] . '</a>';
-				
+
 				echo '<tr class="striped_row">
 						<td></td>
 						<td></td>
@@ -181,7 +181,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 	}
 }
 
-function display($Title) 
+function display($Title)
 {
 	// Display form fields. This function is called the first time the page is called.
 
@@ -232,4 +232,3 @@ function display($Title)
 } // End of function display()
 
 include('includes/footer.php');
-?>

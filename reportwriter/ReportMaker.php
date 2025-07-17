@@ -552,4 +552,3 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 	$Rtn['result'] = 'success';
 	return $Rtn;
 }
-?>

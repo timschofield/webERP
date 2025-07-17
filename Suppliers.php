@@ -1282,4 +1282,3 @@ KL RICARD END */
 		</form>';
 } // end of main ifs
 include ('includes/footer.php');
-?>

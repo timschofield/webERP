@@ -1181,10 +1181,6 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	}
 }
 
-
-
-
-
 /*if either a customer is selected or its a GL Entry then set out
 the fields for entry of receipt amt, disc, payee details, narrative */
 
@@ -1296,4 +1292,3 @@ if (isset($_SESSION['ReceiptBatch' . $identifier]->Items) AND count($_SESSION['R
 }
 echo '</form>';
 include('includes/footer.php');
-?>

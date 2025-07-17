@@ -299,5 +299,3 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

@@ -236,4 +236,3 @@ function GetRptLinks($GroupID) {
 	}
 	return $RptLinks;
 }
-?>

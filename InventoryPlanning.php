@@ -197,7 +197,7 @@ if (isset($_POST['PrintPDF'])) {
 
 		// get the demand of the item
 		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
-		
+
 		// Get the QOO of the item
 		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
@@ -219,8 +219,6 @@ if (isset($_POST['PrintPDF'])) {
 			$MaxMthSales = max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4'], $SalesRow['prd5']);
 		}
 
-
-
 		$IdealStockHolding = ceil($MaxMthSales * $NumberMonths);
 		$LeftOvers = $pdf->addTextWrap(497, $YPos, 40,$FontSize,locale_number_format($IdealStockHolding,0),'right');
 		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
@@ -236,8 +234,6 @@ if (isset($_POST['PrintPDF'])) {
 
 			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
 		}
-
-
 
 		if ($YPos < $Bottom_Margin + $LineHeight){
 		   $PageNumber++;
@@ -437,5 +433,3 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

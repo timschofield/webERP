@@ -19,15 +19,11 @@ $EDI_MsgPending = 'EDI_Pending';
 
 $EDI_MsgSent = 'EDI_Sent';
 
-
-
 //Testing variables
 include ('includes/session.php');
 include ('includes/header.php');
 $PartnerCode='WALMON';
 $MessageType ='INVOIC';
-
-
 
 /*end of testing variables / code */
 
@@ -83,5 +79,3 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 fclose($fp);
 
 include ('includes/footer.php');
-
-?>

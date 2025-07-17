@@ -186,8 +186,6 @@ if (isset($_GET['SelectedParent'])){
 	$SelectedParent = $_POST['SelectedParent'];
 }
 
-
-
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])){
 	$SelectedComponent = $_GET['SelectedComponent'];
@@ -965,4 +963,3 @@ function arrayUnique($array, $preserveKeys = false)
 }
 
 include('includes/footer.php');
-?>

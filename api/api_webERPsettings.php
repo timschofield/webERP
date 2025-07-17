@@ -113,7 +113,7 @@
 		$Errors = array();
 		$db = db($User, $Password);
 		if (gettype($db)=='integer') {
-			 return NoAuthorisation;
+			return NoAuthorisation;
 		}
 		$Result = Create_POS_Data_Full($POSDebtorNo,$POSBranchCode,dirname(__FILE__).'/../');
 		if ($Result==1) {
@@ -137,5 +137,3 @@
 			return $Result;
 		}
 	}
-
-?>

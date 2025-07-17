@@ -249,4 +249,3 @@ echo '<tr class="total_row">
 	</table>';
 
 include ('includes/footer.php');
-?>

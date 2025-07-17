@@ -187,4 +187,3 @@ $CurrencyName['ZMW'] = _('Zambian kwacha');
 // END: AlphabeticCode and CurrencyName data.
 
 asort($CurrencyName);
-?>

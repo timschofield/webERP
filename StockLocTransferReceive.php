@@ -441,7 +441,7 @@ if(isset($_POST['ProcessTransfer'])) {
 										"\r\n" . _('By user') . ': ' . $_SESSION['UserID'] .
 										"\r\n" . _('At') . ': ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Cancelled balance of transfer'). ' ' . $_SESSION['Transfer']->TrfID;
-					SendEmailFromWebERP($SysAdminEmail, 
+					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['InventoryManagerEmail'],
 										$EmailSubject,
 										$ConfirmationText,
@@ -715,4 +715,3 @@ function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty)
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 }
-?>

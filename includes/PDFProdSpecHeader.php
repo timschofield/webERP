@@ -17,8 +17,6 @@ $YPos -= $LineHeight;
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$_SESSION['CompanyRecord']['regoffice1'].$_SESSION['CompanyRecord']['regoffice2'],'center');
 $pdf->SetLineWidth(.2);
 
-
-
 $YPos = 720;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
@@ -42,4 +40,3 @@ $FontSize=12;
 $LineHeight=$FontSize*1.25;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
-?>

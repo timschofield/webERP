@@ -121,5 +121,3 @@ Class PaymentGLAnalysis {
 								$Cheque);
 	}
 }
-
-?>

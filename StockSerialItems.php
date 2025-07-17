@@ -175,4 +175,3 @@ echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . locale_numbe
 
 echo '</form>';
 include('includes/footer.php');
-?>

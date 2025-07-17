@@ -349,4 +349,3 @@ if (DB_num_rows($GRNResults)>0){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

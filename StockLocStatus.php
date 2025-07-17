@@ -250,4 +250,3 @@ if(isset($_POST['ShowStatus'])) {
 echo '</form>';
 
 include('includes/footer.php');
-?>

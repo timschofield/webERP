@@ -28,5 +28,3 @@ if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from th
 } else {
 	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 }
-
-?>

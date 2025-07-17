@@ -60,4 +60,3 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 echo '</table>';
 
 include('includes/footer.php');
-?>

@@ -369,9 +369,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td></td>
 					</tr>';
 				++$j;
-				 
-			} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0 
-					or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
+		} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0
+			or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
 				$HTML .= '<tr class="striped_row">
@@ -605,5 +604,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	include('includes/footer.php');
 }
-
-?>

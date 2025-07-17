@@ -355,5 +355,3 @@ NewMenuItem('Utilities', 'Maintenance', _('Remove all purchase back orders'), '/
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Move the menu and module strings to the database'));
 }
-
-?>

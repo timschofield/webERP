@@ -46,5 +46,3 @@ NewScript('DashboardConfig.php', 15);
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('New database updates for the new dashboard system'));
 }
-
-?>

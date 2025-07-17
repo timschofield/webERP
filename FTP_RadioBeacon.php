@@ -278,4 +278,3 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 } /*end of if page called with a OrderNo - OrderNo*/
 
 include('includes/footer.php');
-?>

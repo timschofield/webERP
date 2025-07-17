@@ -841,5 +841,3 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$PageNumber++;
 
 } // End of PrintHeader function
-
-?>

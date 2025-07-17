@@ -606,5 +606,3 @@ If (isset($SalesOrdersResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-
-?>

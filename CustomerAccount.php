@@ -398,4 +398,3 @@ echo '</tbody></table>
 	</table>';
 
 include('includes/footer.php');
-?>

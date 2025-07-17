@@ -600,4 +600,3 @@ if (isset($SelectedSampleID)) {
 		$_POST['SampleDate'] = ConvertSQLDate($MyRow['sampledate']);
 		$_POST['Cert'] = $MyRow['cert'];
 include('includes/footer.php');
-?>

@@ -142,5 +142,3 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		<td class="number">', locale_number_format($TotalOutstanding, $DecimalPlaces), '</td>
 	</tr>
 </table>';
-
-?>

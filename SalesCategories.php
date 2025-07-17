@@ -534,5 +534,3 @@ if (!isset($_GET['Select'])) {
 }
 
 include ('includes/footer.php');
-
-?>

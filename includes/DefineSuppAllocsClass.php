@@ -86,5 +86,3 @@ Class Allocn {
 
 	}
 }
-
-?>

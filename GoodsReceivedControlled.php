@@ -82,4 +82,3 @@ of the item selected for dispatch */
 $_SESSION['PO'.$identifier]->LineItems[$LineItem->LineNo]->ReceiveQty = $TotalQuantity;
 
 include( 'includes/footer.php');
-?>

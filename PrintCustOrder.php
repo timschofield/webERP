@@ -240,7 +240,7 @@ if (DB_num_rows($Result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$SQL = "UPDATE salesorders 
+	$SQL = "UPDATE salesorders
 			SET printedpackingslip = 1,
 				datepackingslipprinted = CURRENT_DATE
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
@@ -254,4 +254,3 @@ if (DB_num_rows($Result)>0){
 	include('includes/footer.php');
 	exit;
 } /*end if there are order details to show on the order*/
-?>

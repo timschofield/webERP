@@ -211,7 +211,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			/*Now send the file using the customer transport */
 			if ($CustDetails['editransport']=='email'){
 
-				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">", 
+				$MessageSent = SendEmailFromWebERP($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">",
 												$CustDetails['ediaddress'],
 												'EDI Invoice/Credit Note ' . $EDITransNo,
 												'',
@@ -262,4 +262,3 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 } /*loop around all the customers enabled for EDI Invoices */
 
 include ('includes/footer.php');
-?>

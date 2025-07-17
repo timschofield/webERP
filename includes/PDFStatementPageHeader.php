@@ -178,5 +178,3 @@ $pdf->line($Page_Width-$Right_Margin, $YPos,$XPos, $YPos);
 
 $YPos -= $LineHeight;
 $XPos = $Left_Margin;
-
-?>

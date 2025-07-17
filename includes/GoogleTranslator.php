@@ -100,5 +100,3 @@ function KLTranslationFixes($TranslatedText, $Target){
 	return $TranslatedText;
 }
 
-
-?>

@@ -10,8 +10,6 @@
  * Need to allow adding serial numbers/batches and deleting batches/serial numbers
  */
 
-
-
 include('includes/session.php');
 
 
@@ -356,4 +354,3 @@ echo '</div>
       </form>';
 
 include('includes/footer.php');
-?>

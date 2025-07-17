@@ -252,4 +252,3 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	}
 
 include('includes/footer.php');
-?>

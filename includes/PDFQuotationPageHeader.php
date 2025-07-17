@@ -90,5 +90,3 @@ $LineYPos = $YPos - $FontSize -1;
 $pdf->line($Page_Width-$Right_Margin, $LineYPos, $Left_Margin, $LineYPos);
 
 $YPos -= $FontSize;// This is to use addTextWrap's $YPos instead of normal $YPos.
-
-?>

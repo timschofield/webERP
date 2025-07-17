@@ -257,9 +257,9 @@ if (isset($_POST['PrintPDF'])){
 			$LocationCode = $_POST['Location'];
 		}
 
-		// Get the demand 
+		// Get the demand
 		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
-		// Get the QOO 
+		// Get the QOO
 		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
 		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
@@ -384,4 +384,3 @@ if (isset($_POST['PrintPDF'])){
 
 	include('includes/footer.php');
 } /*end of else not PrintPDF */
-?>

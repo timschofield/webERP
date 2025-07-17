@@ -195,4 +195,3 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 }
 
 include ('includes/footer.php');
-?>

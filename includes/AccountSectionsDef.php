@@ -6,4 +6,3 @@ while( $SecRow = DB_fetch_array($SectionResult) ) {
 	$Sections[$SecRow['sectionid']] = $SecRow['sectionname'];
 }
 DB_free_result($SectionResult); // no longer needed
-?>

@@ -358,4 +358,3 @@ Class LineDetails {
 						$AssetID);
 	}
 }
-?>

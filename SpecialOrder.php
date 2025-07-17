@@ -755,4 +755,3 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
-?>

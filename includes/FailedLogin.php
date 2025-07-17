@@ -13,4 +13,3 @@ echo '<html>
     </div>
 </body>
 </html>';
-?>

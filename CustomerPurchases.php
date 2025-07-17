@@ -119,4 +119,3 @@ else {
 echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.php');
-?>

@@ -193,4 +193,3 @@ echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" va
 
 echo '</form>';
 include('includes/footer.php');
-?>

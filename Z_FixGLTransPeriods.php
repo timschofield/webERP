@@ -23,5 +23,3 @@ if (DB_num_rows($GLTrans)>0){
 }
 
 include('includes/footer.php');
-
-?>

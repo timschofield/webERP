@@ -544,7 +544,7 @@ if (isset($_POST['submit'])) {
 
 					//now update cloned item costs
 						DB_Txn_Begin();
-						$SQL = "UPDATE stockmaster 	
+						$SQL = "UPDATE stockmaster
 								SET	materialcost ='" . $OldRow['materialcost'] . "',
 									labourcost ='" . $OldRow['labourcost'] . "',
 									overheadcost ='" . $OldRow['overheadcost'] . "',
@@ -1260,5 +1260,3 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 echo '</div>
 	</form>';
 include('includes/footer.php');
-
-?>

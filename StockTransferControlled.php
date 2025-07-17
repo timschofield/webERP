@@ -87,5 +87,3 @@ $LineItem->Quantity = $TotalQuantity;
 /*Also a multi select box for adding bundles to the Transfer without keying */
 
 include('includes/footer.php');
-exit;
-?>

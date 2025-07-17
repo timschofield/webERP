@@ -241,4 +241,3 @@ if (isset($_GET['Edit'])) {
 }
 echo '</form>';
 include('includes/footer.php');
-?>

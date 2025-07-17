@@ -441,4 +441,3 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 } // End of function display()
 
 include('includes/footer.php');
-?>

@@ -394,4 +394,3 @@ if ($RemAll == 'YES'){
 if (isset($_GET['Delete'])){
         unset($LineItem->SerialItems[$_GET['Delete']]);
 }
-?>

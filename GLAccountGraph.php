@@ -96,7 +96,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 					AND glaccountusers.userid = '" . $_SESSION['UserID'] . "'
 					AND glaccountusers.canview = 1
 			ORDER BY chartmaster.accountcode";
-	$AccountResult = DB_query($SQL); 
+	$AccountResult = DB_query($SQL);
 	$BankAccount = false;
 	while ($MyRow = DB_fetch_array($AccountResult)) {
 		if ($MyRow['accountcode'] == $SelectedAccount) {
@@ -341,4 +341,3 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		</div>';
 	include('includes/footer.php');
 }
-?>

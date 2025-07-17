@@ -20,12 +20,12 @@ include('includes/KLEmails.php');
 if(isset($_POST['ProcessCopyAuthority'])) {
 
 	$InputError = 0;
-	
+
 	if($_POST['FromUserID'] == $_POST['ToUserID']) {
 		prnMsg(_('User FROM must be different from user TO'), 'error');
 		$InputError = 1;
 	}
-	
+
 	if($InputError == 0) {// no input errors
 		DB_Txn_Begin();
 
@@ -43,9 +43,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the auhority in locationusers record failed');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		prnMsg(_('Copied the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' 
-			. _('to user') . ' ' . $_POST['ToUserID'], 'success');
-	
+		prnMsg(_('Copied the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to user') . ' ' . $_POST['ToUserID'], 'success');
+
 		// KL RICARD: Send confirmation email to sys admin
 		KLSendEmail("LocationUserRightsCopied", "Silent", $_SESSION['UserID'], $_POST['FromUserID'], $_POST['ToUserID']);
 		DB_Txn_Commit();
@@ -77,7 +76,7 @@ if ($_SESSION['AccessLevel'] == 8) {
 						FROM www_users
 						WHERE fullaccess != '8'
 						ORDER BY userid");
-} 
+}
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
@@ -104,7 +103,7 @@ if ($_SESSION['AccessLevel'] == 8) {
 						FROM www_users
 						WHERE fullaccess != '8'
 						ORDER BY userid");
-} 
+}
 
 echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
@@ -113,7 +112,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 } //end while loop
 echo '</select>';
 echo '</field>';
-		
+
 echo '</fieldset>';
 
 echo '<div class="centre"><input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Authority') . '" />
@@ -121,4 +120,3 @@ echo '<div class="centre"><input type="submit" name="ProcessCopyAuthority" value
 	</form>';
 
 include('includes/footer.php');
-?>

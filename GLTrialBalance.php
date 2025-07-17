@@ -2,7 +2,7 @@
 /*Through deviousness and cunning, this system allows trial balances for
  * any date range that recalcuates the p & l balances and shows the balance
  * sheets as at the end of the period selected - so first off need to show
- * the input of criteria screen 
+ * the input of criteria screen
 */
 $PageSecurity = 1;
 include ('includes/session.php');
@@ -522,5 +522,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	echo '</form>';
 	include ('includes/footer.php');
 }
-
-?>

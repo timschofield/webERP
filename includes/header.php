@@ -329,5 +329,3 @@ if ($ScriptName != 'index.php') {
 }
 
 echo '<div id="MessageContainerHead"></div>';
-
-?>

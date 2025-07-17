@@ -78,5 +78,3 @@
 		}
 		return $Errors;
 	}
-
-?>
