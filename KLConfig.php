@@ -70,7 +70,6 @@ if ($webERPType == 'PRODUCTION'){
 
 	// use the production company folder
 	$DefaultCompany = 'kurakura_kl_erp';
-	$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut' );
 	
 	// use the production Opencart DB
 	$OpenCartDBUser = 'DBU_kl_shop';
@@ -90,7 +89,6 @@ if ($webERPType == 'PRODUCTION'){
 	
 	// use the TEST company folder
 	$DefaultCompany  = 'test_erp';
-	$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
 	
 	// use the TEST Opencart DB
 	$OpenCartDBUser = 'DBU_ptadu_test';

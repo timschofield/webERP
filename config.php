@@ -132,9 +132,5 @@ turning on NOTICES destroys things */
 /* For Development Use */
 //error_reporting(-1);
 
-// Moved to KLConfig.php
-//Installed companies
-//$CompanyList[0] = array('database' => 'test_erp', 'company' => 'Kapal-Laut TEST');
-
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
