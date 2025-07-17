@@ -57,7 +57,7 @@ function GenerateReport($LocationForm) {
 			include('includes/header.php');
 			prnMsg(_('No Pending Authorized Internal Stock Requests found for the selected location.'), 'info');
 			include('includes/footer.php');
-			exit; // Stop script execution
+			exit(); // Stop script execution
 		}
 
 		// Start building the HTML
@@ -178,7 +178,7 @@ function GenerateReport($LocationForm) {
 			$PDFFileName = $_SESSION['DatabaseName'] . '_InternalStockRequest_' . date('Y-m-d') . '.pdf';
 			// Setting Attachment to false streams inline, true forces download
 			$dompdf->stream($PDFFileName, array("Attachment" => false));
-			exit; // Stop script after PDF output
+			exit(); // Stop script after PDF output
 
 		} elseif (isset($_POST['Spreadsheet'])) {
 			// Use PhpSpreadsheet
@@ -207,7 +207,7 @@ function GenerateReport($LocationForm) {
 			    // Provide a fallback or error message
 			    echo "Error creating spreadsheet from HTML content.";
 			}
-			exit; // Stop script after ODS output
+			exit(); // Stop script after ODS output
 
 		} else { // Default to 'View' which corresponds to the 'submit' button
 			$Title = _('View Authorized Internal Stock Request still not fulfilled');

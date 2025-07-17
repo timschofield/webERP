@@ -319,7 +319,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
-			exit; // Ensure no further output is sent
+			exit(); // Ensure no further output is sent
 
 		}else{
 			$Title = _('Excel file for Sales Analysis');

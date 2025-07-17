@@ -53,7 +53,7 @@ function CalculateCommissionTokopedia($CustomerCode,
 	if ($CustomerCode != "TOKOPEDIA") {
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = tokopedia", "error");
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	// X% from all order for Tokopedia
 	$CommissionTPGlobal = round($TotalAmount * $CommissionTokopediaPercent / 100, 0); // this commission still includes PPN
@@ -86,7 +86,7 @@ function CalculateCommissionTokopedia($CustomerCode,
 	} else {
 		prnMsg("ERROR: Could not extract shipper information for order = " . $OrderNo, "error");
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	
 	$Commission = $CommissionTPGlobal + $CommissionTPFreeShipping; // this commission still has PPN
@@ -119,7 +119,7 @@ function CalculateCommissionShopee($CustomerCode,
 	if ($CustomerCode != "SHOPEE") {
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = shopee", "error");
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	// X% from all order for Shopee
 	$CommissionTPGlobal = round($TotalAmount * $CommissionShopeePercent / 100, 0); // this commission still includes PPN
@@ -152,7 +152,7 @@ function CalculateCommissionShopee($CustomerCode,
 	} else {
 		prnMsg("ERROR: Could not extract shipper information for order = " . $OrderNo, "error");
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	
 	$Commission = $CommissionTPGlobal + $CommissionTPFreeShipping; // this commission still has PPN
@@ -178,7 +178,7 @@ function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount, $Commi
 	if ($CustomerCode != "LAZADA") {
 		prnMsg("ERROR: Customer code = " . $CustomerCode . " and Payment Code = lazada", "error");
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	// 1,80 from all order for lazada
 	$Commission = round($TotalAmount * $CommissionLazadaPercent / 100, 0); // this commission still includes PPN

@@ -89,20 +89,20 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$MyRow = DB_fetch_array($Result); //get the only row returned
 
 		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']==''){
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location.'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		if ($MyRow['partnercode']=='NORETAIL'){
 			prnMsg(_('To use this script it is first necessary to define a retail partner for the location that is your default location. '),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$_SESSION['ShopAddress1'] = $MyRow['deladd1'];

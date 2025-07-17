@@ -11,7 +11,7 @@ include('includes/KLEmails.php');
 if (!isset($_GET['From'])){
 	prnMsg( _('This page must be given the gudang location code.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }else{
 	$EmailText = "From: " . $_GET['From'] . " " . GetLocationNameFromCode($_GET['From']) . "\n";
 }
@@ -19,7 +19,7 @@ if (!isset($_GET['From'])){
 if (!isset($_GET['To'])){
 	prnMsg( _('This page must be given the destination location code.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }else{
 	$LocationNameTo = GetLocationNameFromCode($_GET['To']);
 	$EmailText = $EmailText . "To: " . $_GET['To'] . " " . $LocationNameTo . "\n\n" ;

@@ -65,7 +65,7 @@ function KapalLautRetailAreaSelection($PaymentMethod){
 		$Area = "";
 		prnMsg(_('Error calculating customer area from payment method. Seek help from the administrator.'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	return $Area;
 }

@@ -117,14 +117,14 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		prnMsg(_('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($LabelsResult) == 0){
 		prnMsg(_('There were no price labels to print out for the category specified'), 'warn');
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . 
 			_('Back') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -197,7 +197,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $LabelsToBePrinted = false;
@@ -437,7 +437,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. 
 			You will most likely experience problems with this script until the GD module is enabled.'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (!isset($_POST['StockCategory'])) {

@@ -413,7 +413,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				include('includes/header.php');
 				prnMsg('An error occurred while generating the PDF: ' . $e->getMessage(), 'error');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}else{
 			include('includes/header.php');

@@ -14,7 +14,7 @@ if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Category
 	echo '<br />';
 	prnMsg( _('This page must be given the item code and its new Discount Code.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* The process of changing a price to discount has 3 steps:
@@ -41,7 +41,7 @@ if ($_GET['Action'] == "New"){
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 DB_Txn_Begin();

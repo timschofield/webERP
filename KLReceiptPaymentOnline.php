@@ -14,22 +14,22 @@ include('includes/OCOpenCartConnectDB.php');
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	prnMsg( _('We need an order number to process the payment of online order') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (!isset($_GET['PaymentCode']) OR $_GET['PaymentCode']==''){
 	prnMsg( _('We need a payment code to process the payment of online order') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (!isset($_GET['CustomerCode']) OR $_GET['CustomerCode']==''){
 	prnMsg( _('We need a customer code to process the payment of online order') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (!isset($_GET['Amount']) OR $_GET['Amount']==''){
 	prnMsg( _('We need an amount to process the payment of online order') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (($_GET['CustomerCode'] != "WEB-KL-IDR") 
 	AND ($_GET['CustomerCode'] != "WEB-WH-IDR") 
@@ -38,7 +38,7 @@ if (($_GET['CustomerCode'] != "WEB-KL-IDR")
 	AND ($_GET['CustomerCode'] != "SHOPEE")){
 	prnMsg( _('Script ready to process IDR online orders only') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $Result = ProcessPaymentOnlineOrder($_GET['OrderNo'], $_GET['PaymentCode'], $_GET['CustomerCode'], $_GET['Amount']);

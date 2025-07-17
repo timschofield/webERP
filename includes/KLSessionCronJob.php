@@ -33,7 +33,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
-	exit;
+	exit();
 }
 
 include ($PathPrefix . 'config.php');
@@ -208,7 +208,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 		case UL_SHOWLOGIN:
 			include ($PathPrefix . 'includes/Login.php');
-			exit;
+			exit();
 	
 		case UL_BLOCKED:
 			die(include ($PathPrefix . 'includes/FailedLogin.php'));
@@ -219,7 +219,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			echo '<br /><br /><br />';
 			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
 			include ($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 	
 		case UL_NOTVALID:
 			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
@@ -240,7 +240,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	}else{
 		/* The script is not from TEST*/
@@ -249,7 +249,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 	// KL RICARD END Check if the user is allowed to access the page
@@ -267,7 +267,7 @@ if (isset($_SESSION['DBVersion'])
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
-	exit;
+	exit();
 }
 // else {
 //	unset($_SESSION['DBVersion']);
@@ -279,7 +279,7 @@ $_SESSION['Theme'] = KLThemeSelection();
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
-		exit;
+		exit();
 	}
 }
 
@@ -304,7 +304,7 @@ if (!isset($AllowCronJobToBeRun)){
 			</tr>';
 
 		include ($PathPrefix . 'includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -321,7 +321,7 @@ if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 		include ('includes/header.php');
 		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 

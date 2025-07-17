@@ -146,7 +146,7 @@ if (isset($_POST['CancelOrder'])) {
 	echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
 		_('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 
 } else { /*Not cancelling the order */
 
@@ -595,7 +595,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg(_('The company information and preferences could not be retrieved. Please call the office inmediately'), 'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// *************************************************************************
@@ -626,7 +626,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
 			$Result = DB_Txn_Rollback();
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// Process the header of the sales order
@@ -796,7 +796,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		// Check if an error occurred during tax insertion before proceeding
 		if ($InputError) {
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 
@@ -1090,7 +1090,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		// Check if an error occurred during order line processing
 		if ($InputError) {
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		/*Post debtors transaction to GL debit debtors, credit freight re-charged and credit sales */
@@ -1114,7 +1114,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				$InputError = true;
 				DB_Txn_Rollback();
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 
@@ -1245,7 +1245,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 		// Check if an error occurred during tax GL posting
 		if ($InputError) {
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 
