@@ -1,6 +1,6 @@
-Upgrading webERP
+# Upgrading webERP
 
-This document describes upgrading an existing webERP installation. Refer top INSTALL.txt
+This document describes upgrading an existing webERP installation. Refer to [INSTALL.md](INSTALL.md)
 if you are performing a new installation.
 
 A new version of webERP can introduce new database tables or columns or modify existing
@@ -10,10 +10,10 @@ correspond to the new scripts.
 Always make a backup of the database BEFORE starting an upgrade!
 
 In webERP v4.1 a new automated database upgrade procedure was introduced. To perform a system
-upgrade, extract the new archive into the existing installation directory (or "git pull" if
+upgrade, extract the new archive into the existing installation directory (or `git pull` if
 the source was git cloned from the webERP project repository), browse to the webERP site and
 login as a user with admin privileges. webERP will determine if any database updates are necessary
-and prompt for approval before applying them. 
+and prompt for approval before applying them.
 
 
 ## General upgrade procedure
@@ -23,21 +23,21 @@ and prompt for approval before applying them.
      work in process that has not been saved when the system goes down will be lost and will need
      to be re-entered when webERP is back online.
 
-2. Stop new users from logging in by setting [Main Menu > Settings > System Parameters > Perform
-     Database Maintenance at Login] to "Allow SysAdmin Access Only"
+2. Stop new users from logging in by setting `[Main Menu > Settings > System Parameters > Perform
+     Database Maintenance at Login]` to "Allow SysAdmin Access Only"
 
 3. (Optional) Stop webERP site. For the highest degree of database integrity, you may consider
      stopping the system during the upgrade. The results are unpredictable when an upgrade involves
-     upgrading the database schema and an already-logged user performs a transation using new
+     upgrading the database schema and an already-logged user performs a transaction using new
      PHP code, which exercise expected new database features, but before the database schema
      has been upgraded.
-     
-     Also, the files of the new version are not updated simultanously. There is a finite risk a
+
+     Also, the files of the new version are not updated simultaneously. There is a finite risk a
      transaction involving multiple PHP files could be executed using some new files and some
      old files, also with unpredictable results. However, depending on the number of users and the
      upgrade itself, this risk may be too low to consider (e.g. server hardware failure might be
      more likely to occur).
-     
+
      Also note that caching (e.g. PHP code, web page, database queries, etc.) can also have an
      affect the actual or perceived stability of an upgrade.
 
@@ -45,14 +45,15 @@ and prompt for approval before applying them.
      during the upgrade procedure.
 
 5. Upgrade webERP files by either:
-- extract the new archive into the webERP directory and overwrite existing files, or
-- if git was used to clone the webERP Git source repo (i.e. if the installation was done by cloning
-  the GitHub project repo), you can use "git pull" to update.
 
-6. Put web site back online (e.g. restart web server)
+    - extract the new archive into the webERP directory and overwrite existing files, or
+    - if git was used to clone the webERP Git source repo (i.e. if the installation was done by cloning
+      the GitHub project repo), you can use "git pull" to update.
+
+6. Put the web site back online (e.g. restart web server)
 
 7. Log into each company as an admin user to trigger the automatic database upgrade procedure. Each
-     database (company) must be upgraded invidually.
+     database (company) must be upgraded individually.
 
 The new upgrade system cannot identify database schema versions prior to 3.11 and will prompt for
 the database version (the upgrade system is compatible with version 3.00 onwards).
@@ -63,7 +64,7 @@ you must manually copy any site-specific files from the old version yourself, su
 1. config.php
 2. webERP/companies/*
 3. any modified scripts (any modified scripts should be saved in a separate directory to aid updating
-   as required. 
+   as required.
 
 
 ## Upgrading from a previous version
@@ -113,19 +114,18 @@ Use the following shell command to run the script:
 
     $ mysql --user=weberp_db_user --password='some_pass'  < upgradeXX.X-YY.Y.sql
 
-    where:
+where:
 
-      - "weberp_db_user" is the mysql user name
-      - "some_pass" is the password for weberp_db_user
-      - "upgradeXX.X-YY.Y.sql" is the SQL upgrade script.
-          - XX.XX is the old version number
-          - YY.YY is the new version number
+  - "weberp_db_user" is the mysql user name
+  - "some_pass" is the password for weberp_db_user
+  - "upgradeXX.X-YY.Y.sql" is the SQL upgrade script.
+	  - XX.XX is the old version number
+	  - YY.YY is the new version number
 
-    Note you may need to give a full path to the mysql utility (e.g. /usr/local/mysql/bin/mysql) as well as
-    the SQL upgrade script (e.g. sql/mysql/upgrade4.15.1-4.15.2.sql).
+Note you may need to give a full path to the mysql utility (e.g. /usr/local/mysql/bin/mysql) as well as
+the SQL upgrade script (e.g. sql/mysql/upgrade4.15.1-4.15.2.sql).
 
-
-    and "upgradescriptname.sql" is the name of an SQL uprade script.
+and "upgradescriptname.sql" is the name of an SQL upgrade script.
 
 
 ### Upgrading from database version 3.04 to 3.05
@@ -136,7 +136,7 @@ retaining integrated general ledger stock values. This requires cost information
 table.
 
 The upgrade script Z_Upgrade_3.04-3.05.php applies all the additional tables to the database and does the data
-conversions required wihtout any manual intervention.
+conversions required without any manual intervention.
 
 
 ### Upgrading from database version 3.01 to 3.02
@@ -162,9 +162,7 @@ IMPORTANT: Note that mysql version 4.1.8 or greater is required because from the
 
 ### Upgrading from database version 2.8 to 2.9
 
-Unfortunately I was over zealous with the foreign keys and made up one for StockID in ShipmentCharges
-this needs to be dropped but the name of this key is generated by Innodb so I cannot create a script to ditch it!!
+Unfortunately I was overzealous with the foreign keys and made up one for StockID in ShipmentCharges;
+this needs to be dropped but the name of this key is generated by Innodb, so I cannot create a script to ditch it!!
 You will need to remove this yourself - otherwise you will not be able to create shipment charges.
 Using the new db scripts will of course generate dbs without this foreign key.
-
--END-

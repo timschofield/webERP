@@ -437,6 +437,8 @@ class Server
                 header('Content-Length: ' . (int)strlen($payload));
             }
         } else {
+            /// @todo allow the user to easily subclass this in a way which allows the resp. headers to be already sent
+            ///       by now without flagging it as an error. Possibly check for presence of Content-Type header
             $this->getLogger()->error('XML-RPC: ' . __METHOD__ . ': http headers already sent before response is fully generated. Check for php warning or error messages');
         }
 
@@ -461,7 +463,7 @@ class Server
      * @param int $exceptionHandling @see $this->exception_handling
      * @return void
      *
-     * @todo raise a warning if the user tries to register a 'system.' method
+     * @todo raise a warning if the user tries to register a 'system.' method - but allow users to do that
      */
     public function addToMap($methodName, $function, $sig = null, $doc = false, $sigDoc = false, $parametersType = false,
         $exceptionHandling = false)
@@ -716,7 +718,7 @@ class Server
             $_xh = $xmlRpcParser->parse($data, $this->functions_parameters_type, XMLParser::ACCEPT_REQUEST, $options);
             // BC
             if (!is_array($_xh)) {
-                $_xh = $xmlRpcParser->__get('_xh');
+                $_xh = $xmlRpcParser->_xh;
             }
         } catch (NoSuchMethodException $e) {
             return new static::$responseClass(0, $e->getCode(), $e->getMessage());
@@ -1102,7 +1104,8 @@ class Server
         $outAr = array(
             // xml-rpc spec: always supported
             'xmlrpc' => array(
-                'specUrl' => 'http://www.xmlrpc.com/spec', // NB: the spec sits now at http://xmlrpc.com/spec.md
+                // NB: the spec sits now at https://xmlrpc.com/spec.md
+                'specUrl' => 'http://www.xmlrpc.com/spec',
                 'specVersion' => 1
             ),
             // if we support system.xxx functions, we always support multicall, too...
@@ -1314,13 +1317,13 @@ class Server
             }
         }
 
-        $Result = $server->execute($req);
+        $result = $server->execute($req);
 
-        if ($Result->faultCode() != 0) {
-            return static::_xmlrpcs_multicall_error($Result); // Method returned fault.
+        if ($result->faultCode() != 0) {
+            return static::_xmlrpcs_multicall_error($result); // Method returned fault.
         }
 
-        return new Value(array($Result->value()), 'array');
+        return new Value(array($result->value()), 'array');
     }
 
     /**
@@ -1364,13 +1367,13 @@ class Server
             }
         }
 
-        $Result = $server->execute($call['methodName'], $call['params'], $pt);
+        $result = $server->execute($call['methodName'], $call['params'], $pt);
 
-        if ($Result->faultCode() != 0) {
-            return static::_xmlrpcs_multicall_error($Result); // Method returned fault.
+        if ($result->faultCode() != 0) {
+            return static::_xmlrpcs_multicall_error($result); // Method returned fault.
         }
 
-        return new Value(array($Result->value()), 'array');
+        return new Value(array($result->value()), 'array');
     }
 
     /**
@@ -1382,21 +1385,21 @@ class Server
      */
     public static function _xmlrpcs_multicall($server, $req)
     {
-        $Result = array();
+        $result = array();
         // let's accept a plain list of php parameters, beside a single xml-rpc msg object
         if (is_object($req)) {
             $calls = $req->getParam(0);
             foreach ($calls as $call) {
-                $Result[] = static::_xmlrpcs_multicall_do_call($server, $call);
+                $result[] = static::_xmlrpcs_multicall_do_call($server, $call);
             }
         } else {
             $numCalls = count($req);
             for ($i = 0; $i < $numCalls; $i++) {
-                $Result[$i] = static::_xmlrpcs_multicall_do_call_phpvals($server, $req[$i]);
+                $result[$i] = static::_xmlrpcs_multicall_do_call_phpvals($server, $req[$i]);
             }
         }
 
-        return new static::$responseClass(new Value($Result, 'array'));
+        return new static::$responseClass(new Value($result, 'array'));
     }
 
     /**
@@ -1416,9 +1419,13 @@ class Server
             return;
         }
 
-        //if ($errCode != E_NOTICE && $errCode != E_WARNING && $errCode != E_USER_NOTICE && $errCode != E_USER_WARNING)
-        if ($errCode != E_STRICT) {
+        // From PHP 8.4 the E_STRICT constant has been deprecated and will emit deprecation notices.
+        // PHP core and core extensions since PHP 8.0 and later do not emit E_STRICT notices at all.
+        // On PHP 7 series before PHP 7.4, some functions conditionally emit E_STRICT notices.
+        if (PHP_VERSION_ID >= 70400) {
             static::error_occurred($errString);
+        } elseif ($errCode != E_STRICT) {
+                static::error_occurred($errString);
         }
 
         // Try to avoid as much as possible disruption to the previous error handling mechanism in place
@@ -1499,8 +1506,8 @@ class Server
                 /// @todo throw instead? There are very few other places where the lib trigger errors which can potentially reach stdout...
                 $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
                 trigger_error('Undefined property via __get(): ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . $trace[0]['line'], E_USER_WARNING);
-                $Result = null;
-                return $Result;
+                $result = null;
+                return $result;
         }
     }
 
