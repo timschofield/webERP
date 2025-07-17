@@ -21,7 +21,7 @@ to represent one KPI.</p>
 <h2><a id="NewReport">Creating a new mini report</a></h2>
 <p>A few sample reports are included with webERP, but it is envisaged that
 companies will wish to extend the dashboard by writing their own mini reports.
-This only requires a small amiunt of knowledge regarding of SQL and HTML, and
+This only requires a small amount of knowledge regarding of SQL and HTML, and
 can easily be picked up.</p>
 <p>To facilitate this webERP comes with a template designed to be used for
 creating new mini reports. This template can be found at dashboard/template.php.
@@ -35,7 +35,7 @@ dashboard sub folder.</p>
 	<pre>
 		<xmp>
 /**********************************************************/
-$PathPrefix = '../';
+$PathPrefix = __DIR__ . '/../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	require_once ($PathPrefix . 'includes/session.php');

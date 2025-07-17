@@ -1,7 +1,7 @@
 <?php
 
 $PageSecurity = 1;
-$PathPrefix = $_SERVER['HTTP_HOST'].$RootPath.'/../../';
+$PathPrefix = __DIR__ . '/../../../';
 //include('../../includes/session.php');
 include('../../api/api_errorcodes.php');
 

@@ -20,7 +20,7 @@ KL RICARD MODIFICATIONS:
  */
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = '';
+	$PathPrefix = __DIR__ . '/../';
 }
 require $PathPrefix.'vendor/autoload.php';
 // KL RICARD: Include the specific KL session functions

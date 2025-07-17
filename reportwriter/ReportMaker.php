@@ -1,7 +1,7 @@
 <?php
 
-$DirectoryLevelsDeep =1;
-$PathPrefix = '../';
+$DirectoryLevelsDeep = 1;
+$PathPrefix = __DIR__ . '/../';
 
 // TBD The followiung line needs to be replace when more translations are available
 $ReportLanguage = 'en_US';					// default language file
