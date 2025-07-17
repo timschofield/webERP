@@ -268,17 +268,17 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CustomersDebtControl(10000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("IDR", "('111111209',
+		PettyCashBalanceControl("IDR", "('111111209',
 												'111111309')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("USD", "('111205010')", 1, $PeriodNow);
+		PettyCashBalanceControl("USD", "('111205010')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $PeriodNow);
+		PettyCashBalanceControl("EUR", "('111205020')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("THB", "('111205030',
+		PettyCashBalanceControl("THB", "('111205030',
 												'111204030AD')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $PeriodNow);
+		PettyCashBalanceControl("HKD", "('111205040')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 
