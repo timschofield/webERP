@@ -31,7 +31,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 
 //	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
 //		header('Location: ' . htmlspecialchars_decode($RootPath) . '/UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
-		exit();
+//		exit();
 //	}
 
 	/*Load the pagesecurity settings from the database */
