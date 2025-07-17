@@ -198,6 +198,9 @@ function CalculateCommissionLazada($CustomerCode, $OrderNo, $TotalAmount, $Commi
 * @return string Cleaned URL
 **************************************************************************************************************/
 function ClearUrl($Url) {
+	if ($Url === null) {
+		return '';
+	}
 	$Clean = str_replace("/", "\\/", $Url);
 	return $Clean;
 }
