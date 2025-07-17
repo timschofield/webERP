@@ -427,11 +427,11 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111800000AD",  17500000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100AD",  -50000000,   10000000, $PeriodNow);
+		BalanceAccountControl("111311100AD",  -50000000,   20000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
