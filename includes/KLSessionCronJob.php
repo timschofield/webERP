@@ -27,13 +27,15 @@ $DatabaseName = $DefaultDatabase;
 // KL RICARD END Select the database depending on the code version
 
 if (!file_exists($PathPrefix . 'config.php')) {
-	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
+	$RootPath = dirname($_SERVER['PHP_SELF']);
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
 	exit;
 }
+
 include ($PathPrefix . 'config.php');
 
 // KL RICARD: Include the specific KL config file
@@ -55,11 +57,6 @@ if (!isset($SysAdminEmail)) {
 }
 
 ini_set('session.gc_maxlifetime', $SessionLifeTime);
-
-if (!ini_get('safe_mode')) {
-	set_time_limit($MaximumExecutionTime);
-	ini_set('max_execution_time', $MaximumExecutionTime);
-}
 
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
@@ -173,10 +170,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		}
 	}
 
-	header('Location: index.php'); //go back to the main index/login
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
-} elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
-	if (!isset($_SESSION['DatabaseName'])){
+} elseif (isset($AllowCronJobToBeRun)) { /* only do security checks if AllowCronJobToBeRun is not true */
+	if (!isset($_SESSION['DatabaseName'])) {
 
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
@@ -264,8 +261,13 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 //}
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
-	header('Location: Z_UpgradeDatabase.php');
+if (isset($_SESSION['DBVersion'])
+	and isset($_SESSION['DBUpdateNumber'])
+	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
+	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
+	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
+	exit;
 }
 // else {
 //	unset($_SESSION['DBVersion']);
@@ -328,13 +330,7 @@ $_SESSION['UserID'] = "CronJobKL";
 
 
 function CryptPass($Password) {
-	if (PHP_VERSION_ID < 50500) {
-		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-		$Salt = str_replace('+', '.', $Salt);
-		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
-	} else {
-		$Hash = password_hash($Password, PASSWORD_DEFAULT);
-	}
+	$Hash = password_hash($Password, PASSWORD_DEFAULT);
 	return $Hash;
 }
 
@@ -353,12 +349,6 @@ function HighestFileName($PathPrefix) {
 }
 
 function quote_smart($Value) {
-	// Stripslashes
-	if (phpversion() < "5.3") {
-		if (get_magic_quotes_gpc()) {
-			$Value = stripslashes($Value);
-		}
-	}
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
