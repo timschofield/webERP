@@ -22,11 +22,11 @@ $usrMsg = array(); // setup array for return messages
 if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form
 	$_POST['todo'] = RPT_BTN_CONT; // fake the code to think the continue button was pressed
 	$_POST['ReportID'] = (int) $_GET['reportid']; // convert Report ID to a POST variable
-	$GoBackURL = $RootPath.'/index.php'; // set the return path to the index.php page
+	$GoBackURL = htmlspecialchars_decode($RootPath) . '/index.php'; // set the return path to the index.php page
 } elseif (isset($_POST['GoBackURL'])) {
-	$GoBackURL = $_POST['GoBackURL']; // set the return path to the index.php page because entered from a link
+	$GoBackURL = htmlspecialchars_decode($_POST['GoBackURL']); // set the return path to the index.php page because entered from a link
 } else {
-	$GoBackURL=''; // unset the return path to default
+	$GoBackURL = ''; // unset the return path to default
 }
 //check to see how script was entered
 if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
@@ -76,7 +76,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 
 		case RPT_BTN_CANCEL:
 			if ($GoBackURL<>'') { // then the cancel button needs to return to homepage
-				header("Location: ".$GoBackURL);
+				header('Location: '.$GoBackURL);
 				exit();
 			} else { // return to report list page
 				$DefReportList = GetReports($Def = true);
