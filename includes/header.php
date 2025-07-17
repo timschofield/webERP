@@ -143,11 +143,14 @@ if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
 	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
 }
 
-echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-if ($CompanyLogo != '')
+/* KL RICARD: Do NOT Show the company logo
+echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">';
+if ($CompanyLogo != ''){
 	echo '	<img src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>';
+}
+KL RICARD END: Do NOT Show the company logo */
+
 echo '</div>';
- KL RICARD END */
  
 echo '<div id="Info">
 		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $RootPath, '/UserSettings.php">
