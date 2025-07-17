@@ -267,5 +267,3 @@ function DisplayOptions() {
 	include('includes/footer.php');
 
 } // End of function DisplayOptions()
-
-?>

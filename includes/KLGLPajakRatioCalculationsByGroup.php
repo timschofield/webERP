@@ -8,4 +8,3 @@ if ($ActGrp == "Biaya Karyawan"){
 	$PajakRatio_Salaries = $GrpPrdActual[$Level];
 	$PajakRatio_Salaries_LY = $GrpPrdLY[$Level];
 }
-?>

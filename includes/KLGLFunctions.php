@@ -63,5 +63,3 @@ function GetCashSalesValueStillFloating($Company, $DateFrom, $DateTo){
 	$MyRow = DB_fetch_array($Result);
 	return ($MyRow['total'] ?? 0);
 }
-
-?>

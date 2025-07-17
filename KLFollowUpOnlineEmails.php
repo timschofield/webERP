@@ -354,5 +354,3 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 }
 
 include('includes/footer.php');
-
-?>

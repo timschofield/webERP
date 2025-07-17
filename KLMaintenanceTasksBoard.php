@@ -14,5 +14,3 @@ MaintenanceTasksDistribution("TOTAL", 30, false);
 MaintenanceTasksList("CLOSED", 60);
 
 include ('includes/footer.php');
-
-?>

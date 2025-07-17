@@ -52,5 +52,3 @@ prnMsg("Updated date of email for packaging transfer to shop to today");
 DB_Txn_Commit();
  
 include('includes/footer.php');
-
-?>

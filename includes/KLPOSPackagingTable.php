@@ -158,5 +158,3 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 
 	echo '</table>';	//end of column/row/master table
 }
-
-?>

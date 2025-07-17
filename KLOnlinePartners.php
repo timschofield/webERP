@@ -1001,4 +1001,4 @@ if(!isset($_GET['delete'])) {
 }//end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>
+

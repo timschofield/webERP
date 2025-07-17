@@ -909,5 +909,3 @@ function ShowOrEmail($ShowMessages, $EmailText, $Text){
 	}	
 	return $EmailText;
 }
-
-?>

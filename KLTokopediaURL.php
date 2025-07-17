@@ -142,8 +142,3 @@ function display($RootPath, $Theme, $Title)
 		</form>';
 
 } // End of function display()
-
-
-
-
-?>

@@ -48,5 +48,3 @@ KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 DB_Txn_Commit();
 
 include('includes/footer.php');
-
-?>

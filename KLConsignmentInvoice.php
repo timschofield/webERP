@@ -463,5 +463,3 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

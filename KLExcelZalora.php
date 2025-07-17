@@ -191,5 +191,3 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

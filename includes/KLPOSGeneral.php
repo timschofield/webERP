@@ -1211,4 +1211,4 @@ function GetItemPackagingDescription($StockID){
 		return $MyRow[0];
 	}
 }
-?>
+

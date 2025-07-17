@@ -405,4 +405,4 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 }
 echo '</form>';
 include('includes/footer.php');
-?>
+

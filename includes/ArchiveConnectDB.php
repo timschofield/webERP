@@ -59,4 +59,3 @@ function DB_query_archive($SQL, $ErrorMessage = '', $DebugMessage = '', $Transac
 
 }
 
-?>

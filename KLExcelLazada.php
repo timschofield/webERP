@@ -359,6 +359,4 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '</div>
          </form>';
 	include('includes/footer.php');
-} 
-
-?>
+}

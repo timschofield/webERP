@@ -47,4 +47,3 @@ echo '</tbody>
 	</table>';
 
 include ('includes/footer.php');
-?>

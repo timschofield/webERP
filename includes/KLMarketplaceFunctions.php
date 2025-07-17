@@ -740,4 +740,3 @@ function FindLazadaColor($Text) {
 	return $Color;
 }
 
-?>

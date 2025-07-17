@@ -325,5 +325,3 @@ function display($RootPath, $Theme) {
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

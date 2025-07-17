@@ -420,5 +420,3 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 
 }
-
-?>

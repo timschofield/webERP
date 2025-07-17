@@ -114,4 +114,3 @@ echo '<tr class="TotalTableRows">
 
 echo '<input type="hidden" name="TaxTotal" value="' . $TaxTotal . '" />';
 
-?>

@@ -1041,5 +1041,3 @@ function DaysOfWeekSales($numDays, $RootPath){
 			</table>
 			</div>';
 }
-
-?>

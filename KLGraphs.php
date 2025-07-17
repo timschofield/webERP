@@ -159,4 +159,3 @@ if (!isset($_POST['FromDate'])
 	include('includes/footer.php');
 }
 
-?>

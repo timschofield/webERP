@@ -167,8 +167,3 @@ function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPL
 		</form>';
 
 } // End of function display()
-
-
-
-
-?>

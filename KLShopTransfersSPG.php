@@ -165,4 +165,3 @@ echo '</tbody></table>';
 echo '<br />';
 
 include ('includes/footer.php');
-?>

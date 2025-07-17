@@ -21,5 +21,3 @@ echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
 							isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
 							_('Type Of Salary') . ':');
 
-
-?>

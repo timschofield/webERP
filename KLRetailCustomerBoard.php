@@ -108,5 +108,3 @@ if ($KL_SystemAdmin){
 }
 
 include ('includes/footer.php');
-
-?>

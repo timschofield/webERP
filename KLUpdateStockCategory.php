@@ -165,5 +165,3 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 
 	$Result = DB_Txn_Commit();
 }
-
-?>

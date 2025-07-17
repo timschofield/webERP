@@ -24,5 +24,3 @@ if ($Section == 800){
 	$PajakRatio_ProfitAfterTax = -$PeriodProfitLoss;
 	$PajakRatio_ProfitAfterTax_LY = -$PeriodLYProfitLoss;
 }
-
-?>

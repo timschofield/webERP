@@ -213,4 +213,3 @@ $CountriesForRetail['ZA'] = _('South Africa');
 $CountriesForRetail['ZW'] = _('Zimbabwe');
 
 asort($CountriesForRetail);
-?>

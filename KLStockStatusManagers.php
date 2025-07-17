@@ -109,4 +109,3 @@ echo '</tfooter>
 	</form>';
 include('includes/footer.php');
 
-?>

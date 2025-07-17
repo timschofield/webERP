@@ -17,5 +17,3 @@ if ($Company == 'PTBB'){
 	$HTML .= '<div class="header-small">Jl. Raya Kesambi No. 1B, Kerobokan Kuta Utara, Badung - Bali</div>';
 	$HTML .= '<div class="header-small">Ph. +62 812 381 6795</div>';
 }				
-
-?>

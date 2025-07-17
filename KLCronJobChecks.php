@@ -62,5 +62,3 @@ SendEmailFromWebERP('webmaster@kapal-laut.com',
 					$EmailText,
 					'',
 					true);
-
-?>

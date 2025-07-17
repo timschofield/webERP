@@ -16,4 +16,3 @@
 	$CenteredJustified = $esc . 'a' . '0x01'; 
 	$RightJustified = $esc . 'a' . '0x02'; 
 
-?>

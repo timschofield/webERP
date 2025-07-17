@@ -164,8 +164,3 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
         </form>';
 
 } // End of function display()
-
-
-
-
-?>

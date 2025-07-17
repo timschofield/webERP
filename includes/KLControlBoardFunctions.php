@@ -4354,5 +4354,3 @@ function CalculateTransferFromBankToDanamon($Company,
 	}
 	return $TransferNeededDanamon;
 }
-
-?>

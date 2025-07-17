@@ -696,4 +696,3 @@ function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $Butt
 	return $HTML;
 }
 
-?>

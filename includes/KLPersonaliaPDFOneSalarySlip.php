@@ -230,4 +230,3 @@ $HTML .= '</div>';
 
 $HTML .= '<div class="signature-space">Tanda tangan: ' . $MyRow['fullname'] . '</div>';
 
-?>

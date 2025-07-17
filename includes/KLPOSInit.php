@@ -118,4 +118,3 @@ if (!isset($_POST['BlinkPouchBag03S'])){
 	$_POST['BlinkPouchBag03S'] = 0;
 }
 
-?>

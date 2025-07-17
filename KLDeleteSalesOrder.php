@@ -39,4 +39,3 @@ $Result = DB_Txn_Commit();
 
 include('includes/footer.php');
 
-?>

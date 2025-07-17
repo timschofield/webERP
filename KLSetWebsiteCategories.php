@@ -544,5 +544,3 @@ function ItemExcludedFromWebsite($StockID, $Category){
 	}
 	return false;
 }
-
-?>

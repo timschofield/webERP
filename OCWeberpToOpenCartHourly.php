@@ -15,5 +15,3 @@ include ('includes/OCOpenCartConnectDB.php');
 WeberpToOpenCartHourlySync(TRUE , TRUE, '');
 
 include ('includes/footer.php');
-
-?>

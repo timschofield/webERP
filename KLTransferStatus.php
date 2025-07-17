@@ -20,10 +20,3 @@ FinishedStockDistribution("FORSALE", "LOCATION");
 prnMsg("Performed 5 transfer status checks",'success');
 
 include ('includes/footer.php');
-
-/******************************************************************************************************/
-/*      FUNCTIONS ASSOCIATED
-/******************************************************************************************************/
-
-
-?>

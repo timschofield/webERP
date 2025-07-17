@@ -22,4 +22,3 @@ include ('includes/KLSilentPrinting.php');
 
 
 include ('includes/footer.php');
-?>

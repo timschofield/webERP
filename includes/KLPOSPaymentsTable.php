@@ -176,4 +176,3 @@ echo '<table class="selection">
 		</tr>
 	</table>';
 
-?>

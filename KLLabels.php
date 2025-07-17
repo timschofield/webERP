@@ -544,5 +544,3 @@ function rewrite($list) {
 	if (!$Result)
 		abortMsg(_('Could not create the new XML file.').': '.LABELS_FILE);
 }
-
-?>

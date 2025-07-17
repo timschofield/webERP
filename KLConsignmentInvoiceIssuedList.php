@@ -136,5 +136,3 @@ function display($Title) {
 	echo '</form>';
 
 } // End of function display()
-
-?>

@@ -232,5 +232,3 @@ function EmailTextForEmployee($Name, $Company, $SalaryType){
 	}
 	return $Text;
 }
-
-?>

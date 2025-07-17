@@ -16,5 +16,3 @@ include ('includes/OCOpenCartConnectDB.php');
 OpenCartToWeberpSync(TRUE , '');
 
 include ('includes/footer.php');
-
-?>

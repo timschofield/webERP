@@ -57,5 +57,3 @@ echo '</table>';	//end of table of final show of order
 	
 include('includes/footer.php');
 
-
-?>

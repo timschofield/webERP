@@ -49,5 +49,3 @@ if ($_GET['Action'] == "Finish"){
 DB_Txn_Commit();
 
 include('includes/footer.php');
-
-?>

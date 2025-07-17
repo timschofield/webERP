@@ -262,5 +262,3 @@ function display($RootPath, $Theme) {
          </form>';
 	include('includes/footer.php');
 } // End of function display()
-
-?>

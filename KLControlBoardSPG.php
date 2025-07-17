@@ -270,5 +270,3 @@ function lastSalesSPG($spg, $NumDaysA){
 			</form>';
 	}
 }
-
-?>

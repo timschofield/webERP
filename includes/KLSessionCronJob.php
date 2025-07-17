@@ -365,5 +365,3 @@ function quote_smart($Value) {
 	} 
 	return $Value;
 }
-
-?>

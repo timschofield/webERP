@@ -666,5 +666,3 @@ function generateBarcode128($code, $barcodeLength = null, $barcodeWidth = null) 
 function drawBar(\GdImage $im, int $x, int $y, int $width, int $height, int $color): void {
     imagefilledrectangle($im, (int)$x, (int)$y, (int)($x + $width - 1), (int)($y + $height - 1), $color);
 }
-
-?>

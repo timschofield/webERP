@@ -152,4 +152,3 @@ if ($StockID != ''){
 }
 include('includes/footer.php');
 
-?>

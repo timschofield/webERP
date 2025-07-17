@@ -172,5 +172,3 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 		
 	}
 }
-
-?>

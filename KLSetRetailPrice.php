@@ -19,5 +19,3 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 UpdateTablePrice($_GET['Item'], $_GET['NewPrice']);
 
 include('includes/footer.php');
-
-?>

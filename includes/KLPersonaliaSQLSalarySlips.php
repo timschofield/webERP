@@ -43,5 +43,3 @@ $SQL = "SELECT 	codename,
 		ORDER BY paymentmethod,
 			codename";
 $Result = DB_query($SQL);
-
-?>

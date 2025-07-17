@@ -1847,4 +1847,3 @@ if (!isset($_POST['ProcessSale'])) {
 }
 echo '</form>';
 include('includes/footer.php');
-?>

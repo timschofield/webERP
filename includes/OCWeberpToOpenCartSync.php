@@ -1707,5 +1707,3 @@ function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 				
 	$ResultDelete = DB_query_oc($SQL,$DeleteErrMsg,$DbgMsg,true);
 }
-
-?>

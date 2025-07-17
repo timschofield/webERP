@@ -59,4 +59,3 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 
 }
 
-?>
