@@ -20,7 +20,7 @@ KL RICARD MODIFICATIONS:
  */
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = __DIR__ . '/../';
+	$PathPrefix = '';
 }
 require $PathPrefix.'vendor/autoload.php';
 // KL RICARD: Include the specific KL session functions
@@ -291,7 +291,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	}else{
 		/* The script is not from TEST*/
@@ -300,7 +300,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 	// KL RICARD END Check if the user is allowed to access the page
