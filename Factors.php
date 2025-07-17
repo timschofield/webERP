@@ -47,7 +47,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 	if ($InputError>0) {
 		prnMsg(_('Validation failed no insert or update took place'),'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/* If no input errors have been recieved */

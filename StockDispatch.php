@@ -143,7 +143,7 @@ if (isset($_POST['PrintPDF'])) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($Result) ==0) {
 		$Title = _('Stock Dispatch - Problem Report');
@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<br />
 				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
@@ -400,7 +400,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '</div>
 			  </form>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<field>

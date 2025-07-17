@@ -38,7 +38,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				_('try to use the navigation links provided rather than the back button, to avoid this message in future'),
 			'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 /*1st off run through and update the array with the amounts allocated
@@ -321,7 +321,7 @@ If (isset($_GET['AllocTrans'])){
 		if ($Debug == 1){
 			echo '<br />' . _('The SQL that was used to retrieve the transaction information was') . ' :<br />'  . $SQL;
 		}
-		exit;
+		exit();
 	}
 
 	$MyRow = DB_fetch_array($Result);
@@ -547,7 +547,7 @@ if (isset($_POST['AllocTrans'])){
   if (DB_num_rows($Result) == 0){
 	prnMsg(_('There are no outstanding payments or credits yet to be allocated for this supplier'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
   }
   echo '<table class="selection">';
 

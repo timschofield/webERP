@@ -206,7 +206,7 @@ if (isset($_POST['SearchSupplier'])) {
 			</div>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($SupplierID)) { /* Then display all the sell through support for the supplier */

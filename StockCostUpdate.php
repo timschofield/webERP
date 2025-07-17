@@ -152,7 +152,7 @@ if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
    }
    prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
    include('includes/footer.php');
-   exit;
+   exit();
 }
 
 echo '<field>';

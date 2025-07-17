@@ -38,7 +38,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
-	exit;
+	exit();
 }
 
 include ($PathPrefix . 'config.php');
@@ -259,7 +259,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 		case UL_SHOWLOGIN:
 			include ($PathPrefix . 'includes/Login.php');
-			exit;
+			exit();
 
 		case UL_BLOCKED:
 			die(include ($PathPrefix . 'includes/FailedLogin.php'));
@@ -270,7 +270,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			echo '<br /><br /><br />';
 			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
 			include ($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 
 		case UL_NOTVALID:
 			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
@@ -315,7 +315,7 @@ if (isset($_SESSION['DBVersion'])
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
-	exit;
+	exit();
 }
 // else {
 //	unset($_SESSION['DBVersion']);
@@ -327,7 +327,7 @@ $_SESSION['Theme'] = KLThemeSelection();
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
-		exit;
+		exit();
 	}
 }
 
@@ -340,7 +340,7 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobTo
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include ($PathPrefix . 'includes/footer.php');
-	exit;
+	exit();
 }
 
 /*
@@ -369,7 +369,7 @@ if (!isset($AllowCronJobToBeRun)){
 			</tr>';
 
 		include ($PathPrefix . 'includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -403,7 +403,7 @@ if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 		include ('includes/header.php');
 		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 

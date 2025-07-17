@@ -571,7 +571,7 @@ $SOH_DateFields = array ('orddate',
 			//	" orderlineno='.$OrderLine['orderlineno'];
 		$SQL = mb_substr($SQL,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
 				//echo $SQL;
-				//exit;
+				//exit();
 		if (sizeof($Errors)==0) {
 			$Result = api_DB_Query($SQL);
 			echo DB_error_no();

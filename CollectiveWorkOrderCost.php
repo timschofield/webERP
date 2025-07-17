@@ -89,12 +89,12 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 			} else {
 				prnMsg(_('There are no data available'),'error');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}//end of the work orders are not empty
 		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select Other Work Orders') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 
 }
 
@@ -126,7 +126,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
 		  include('includes/footer.php');
-		  exit;
+		  exit();
 	} else {
 		echo _('Work Order Number') . ' - ' . $SelectedWO;
 	}

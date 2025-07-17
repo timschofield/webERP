@@ -23,7 +23,7 @@ if (isset($_GET['New']) and $_SESSION['CanCreateTender'] == 0) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . $Title . '" alt="" />  ' . $Title . '</p>';
 	prnMsg(_('You do not have authority to create supplier tenders for this company.') . '<br />' . _('Please see your system administrator'), 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['Edit']) and $_SESSION['CanCreateTender'] == 0) {
@@ -32,7 +32,7 @@ if (isset($_GET['Edit']) and $_SESSION['CanCreateTender'] == 0) {
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . $Title . '" alt="" />  ' . $Title . '</p>';
 	prnMsg(_('You do not have authority to amend supplier tenders for this company.') . '<br />' . _('Please see your system administrator'), 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['Close'])) {
@@ -151,7 +151,7 @@ if (isset($_GET['Edit'])) {
 	}
 	echo '</table>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 } else if (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
 	$Title = _('Edit an Existing Supplier Tender Request');
 	$ViewTopic = 'SupplierTenders';
@@ -172,7 +172,7 @@ if (isset($_POST['Save'])) {
 	$_SESSION['tender' . $identifier]->EmailSuppliers();
 	prnMsg(_('The tender has been successfully saved'), 'success');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['DeleteSupplier'])) {
@@ -461,7 +461,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	echo '</div>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['SearchSupplier']) or isset($_POST['Go']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
@@ -646,7 +646,7 @@ if (isset($_POST['Items'])) {
 	if (DB_num_rows($Result) == 0) {
 		echo '<br /><p class="bad">' . _('Problem Report') . ':</p><br />' . _('There are no stock categories currently defined please use the link below to set them up');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		exit;
+		exit();
 	}
 	echo '<fieldset>
 			<legend class="search">', _('Item Search Criteria'), '</legend>

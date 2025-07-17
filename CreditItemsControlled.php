@@ -25,7 +25,7 @@ if (!isset($_GET['identifier'])){
 	prnMsg( _('This page must be called with the identifier to uniquely identify the credit note being entered. This is a programming error that should not occur.') , 'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$identifier=$_GET['identifier'];
 	$CreditLink .= '?identifier=' . $identifier;
@@ -40,7 +40,7 @@ if (isset($_GET['LineNo'])){
 	prnMsg( _('This page can only be opened if a Line Item on a credit note has been selected.') . ' ' . _('Please do that first'), 'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_SESSION['CreditItems' . $identifier])) {
@@ -51,7 +51,7 @@ if (!isset($_SESSION['CreditItems' . $identifier])) {
 	prnMsg( _('This page can only be opened if a controlled credit note line item has been selected.') . ' ' . _('Please do that first'),'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -64,7 +64,7 @@ if ( $LineItem->Controlled != 1 ){
 	echo '<br />';
 	prnMsg( _('Notice') . ' - ' . _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Now add serial items entered - there is debate about whether or not to validate these entries against

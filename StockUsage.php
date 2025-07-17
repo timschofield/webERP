@@ -18,7 +18,7 @@ if (isset($_POST['ShowGraphUsage'])) {
 	prnMsg(_('You should automatically be forwarded to the usage graph') .
 			'. ' . _('If this does not happen') .' (' . _('if the browser does not support META Refresh') . ') ' .
 			'<a href="' . $RootPath . '/StockUsageGraph.php?StockLocation=' . $_POST['StockLocation'] .'&amp;StockID=' . $StockID . '">' . _('click here') . '</a> ' . _('to continue'),'info');
-	exit;
+	exit();
 }
 
 $ViewTopic = 'Inventory';
@@ -148,7 +148,7 @@ if (isset($_POST['ShowUsage'])){
 		if ($Debug==1){
 		echo '<br />' . _('The SQL that failed was') . $SQL;
 		}
-		exit;
+		exit();
 	}
 
 	echo '<table class="selection">

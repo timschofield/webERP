@@ -279,7 +279,7 @@ if (!isset($_POST['Location'])) {
 	echo '</div>
 		  </form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* Retrieve the requisition header information
@@ -309,7 +309,7 @@ if (isset($_POST['Location'])) {
 		echo '<br />';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select another location') . '</a></div>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';

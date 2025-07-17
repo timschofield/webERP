@@ -18,7 +18,7 @@ if(isset($_POST['Enter'])){ //user has input a new value
 	}else{
 		$InputError = 1;
 		prnMsg(_('The Mail Group should be less than 100 characters and cannot contain illegal characters and cannot be null'),'error');
-		exit;
+		exit();
 		include('includes/footer.php');
 	}
 	if($InputError == 0){
@@ -37,14 +37,14 @@ if(isset($_GET['Add']) and isset($_GET['UserId'])){
 	}else{
 		prnMsg(_('The User Id should be set and must be less than 21 and cannot contains illegal characters'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if(isset($_GET['GroupId']) and is_numeric($_GET['GroupId'])){
 		$GroupId = (int)$_GET['GroupId'];
 	}else{
 		prnMsg(_('The Group Id must be integer'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if(!empty($_GET['GroupName']) and mb_strlen($_GET['GroupName'])<=100 and !ContainsIllegalCharacters($_GET['GroupName'])){
 		$GroupName = trim($_GET['GroupName']);
@@ -52,7 +52,7 @@ if(isset($_GET['Add']) and isset($_GET['UserId'])){
 	}else{
 		prnMsg(_('The Group name should be set and must be less than 100 characters and cannot contains illegal characters'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$SQL = "INSERT INTO mailgroupdetails (groupname, userid) VALUES ('".$GroupName."',
 									'".$UserId."')";
@@ -72,7 +72,7 @@ if(isset($_GET['Delete'])){
 	}else{
 		prnMsg(_('The group id must be numeric'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 
 	}
 
@@ -88,13 +88,13 @@ if(isset($_GET['Edit'])){
 		}else{
 			prnMsg(_('The Group Name should be less than 100 and cannot contains illegal characters'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 	}else{
 		prnMsg(_('The page must be called with a group id'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	GetUsers($GroupId,$GroupName);
 	include('includes/footer.php');
@@ -108,7 +108,7 @@ if(isset($_GET['Remove'])){
 	}else{
 			prnMsg(_('The Group Name should be less than 100 and cannot contains illegal characters'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 
 	}
 	if(isset($_GET['UserId']) and mb_strlen($_GET['UserId'])<21 and !ContainsIllegalCharacters($_GET['UserId'])){
@@ -116,7 +116,7 @@ if(isset($_GET['Remove'])){
 	}else{
 		prnMsg(_('The User Id should be set and must be less than 21 and cannot contains illegal characters'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if(isset($_GET['GroupId']) and is_numeric($_GET['GroupId'])){
@@ -126,7 +126,7 @@ if(isset($_GET['Remove'])){
 		}else{
 			prnMsg(_('The Group Name should be less than 100 and cannot contains illegal characters'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 	}
@@ -253,7 +253,7 @@ function GetUsers ($GroupId,$GroupName) {
 	}else{
 		prnMsg(_('There are no user set up, please set up user first'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 ?>

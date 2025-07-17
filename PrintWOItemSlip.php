@@ -116,7 +116,7 @@ if (isset($WO) and isset($StockID) and $WO != '') {
 		prnMsg($SQL);
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 
 	}
 }

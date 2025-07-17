@@ -105,7 +105,7 @@ if (DB_error_no() != 0) {
         echo '<br />' . _('The SQL that failed was') . $SQL;
     }
     include('includes/footer.php');
-    exit;
+    exit();
 }
 
 if (DB_num_rows($MovtsResult) == 0) {
@@ -113,7 +113,7 @@ if (DB_num_rows($MovtsResult) == 0) {
     include ('includes/header.php');
     prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
     include('includes/footer.php');
-    exit;
+    exit();
 }
 
 $UsageArray = array();

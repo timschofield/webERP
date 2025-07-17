@@ -98,7 +98,7 @@ $ediordersdir = $_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['EDI_Inc
 echo '<br />' . $ediOrdersdir;
 if (!is_dir($ediordersdir)) {
 	error_log("EDI orders directory error " . $ediordersdir, 0); // php logging
-	exit;
+	exit();
 
 }
 //	error_log("EDI orders directory " . $ediordersdir , 0);
@@ -114,11 +114,11 @@ $DirHandle = opendir($ediordersdir);
 while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the incoming orders dir */
 
 	$TryNextFile = False;
- 
+
     if ($OrderFile == "." || $OrderFile == "..") {
 		continue;
-	}	
-	
+	}
+
 //	  error_log("EDI orders file " . $OrderFile , 0);
 
 	echo '<br />' . $OrderFile;
@@ -137,7 +137,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 	$FirstSegInGroup = 0;
 	$EmailText =''; /*Text of email to send to customer service person */
 	$CreateOrder = True; /*Assume that we are to create a sales order in the system for the message read */
-    $LinCount = 0; // LIN segments 
+    $LinCount = 0; // LIN segments
     $ErrorCount=0;
 	$Order = new cart;
 
@@ -185,17 +185,17 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 		}
 
 		echo '<br />' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
-		
+
 		switch ($SegTag){
 			case 'UNB';
-				$UNB = explode ('+',mb_substr($LineText,4));			
+				$UNB = explode ('+',mb_substr($LineText,4));
 				if (mb_substr($UNB[6],0,6)!='ORDERS'){
 					$EmailText .= "\n" . _('This message is not an edi order');
 					$TryNextFile = True;
 				}
-				
+
 			break;
-			
+
 			case 'UNH':
 				$UNH_elements = explode ('+',mb_substr($LineText,4));
 				$UNH2 = explode (':',$UNH_elements[1]);
@@ -611,7 +611,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 													 custbranch.defaultlocation,
 													 custbranch.defaultshipvia
 												FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno WHERE debtorsmaster.edireference='" . $NAD_C082[0] . "' AND debtorsmaster.ediorders=1");
-			
+
 					 if (DB_num_rows($ByResult)!=1){
 							$EmailText .= "\n" . _('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . _('or several that match this ediref code. This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
@@ -631,7 +631,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 							$Order->Email = $ByRow['email'];
 							$Order->Location = $ByRow['defaultlocation'];
 							$Order->ShipVia = $ByRow['defaultshipvia'];
-						
+
 			//			error_log("nad/by: " . DB_num_rows($ByResult) . ' '  . $NAD_C082[0] . ' ' . $ByRow['email'] , 0); // php logging
 						}
 						break;
@@ -648,28 +648,28 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				break; /*end of NAD segment */
 
 
-			// added more segments ...... 
+			// added more segments ......
 
 			// CUX+2:GBP:9+3:EUR:4+1.67
 			// CUX+2:EUR:9'
 			case 'CUX':
 				$CUX = explode(':',mb_substr($LineText,4));
 				// $Order->Currency = $CUX[1];
-				$EmailText .= "\n" . _('Currency') . ' ' . $CUX[1];				
+				$EmailText .= "\n" . _('Currency') . ' ' . $CUX[1];
 		    	break;
 
 			// TDT+20++30+31'
 			case 'TDT':
-				$EmailText .= "\n" . _('Details of transport');				
+				$EmailText .= "\n" . _('Details of transport');
 				break;
-	
+
 		     // TOD+3++CIF:2E:9'
 			case 'TOD':
-			// Terms of delivery or transport				
-				$EmailText .= "\n" . _('Terms of delivery or transport');				
+			// Terms of delivery or transport
+				$EmailText .= "\n" . _('Terms of delivery or transport');
 
 			    break;
-					
+
 			// LOC+1+BE-BRU
 			case 'LOC':
 //			Place/location identification
@@ -693,12 +693,12 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 						case '7': /*Place/location identification*/
 							$EmailText .= "\n" . _('Place of terms of delivery (LOC/7)') . ': ' . $LOC[2];
 							break;
-							
+
 					}
 					break;
-           
-		   /* -----------------------------------------------------------------  
-		     order lines.... 
+
+		   /* -----------------------------------------------------------------
+		     order lines....
 			 Segment group 28: LIN-PIA-IMD-MEA-QTY-PCD-ALI-DTM-MOA-GIS-GIN-
                          GIR-QVR-DOC-PAI-FTX-SG29-SG30-SG32-SG33-SG34-
                          SG37-SG38-SG39-SG43-SG49-SG51-SG52-SG53-SG55-
@@ -708,17 +708,17 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 		   -----------------------------------------------------------------------*/
 			case 'LIN':
 				//echo '<br />' . 'Line# ' . $Order->ItemsOrdered;
-			     
+
 					if ($LinCount > 0) {
 						$UpdateDB='NO';
 						// add prev processed line to cart;
 				       // echo '<br />' . 'LinCount ' . $LinCount;
 						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
 					}
-					
+
 					$LIN = explode('+',mb_substr($LineText,4));
 					$LIN2 = explode(':', $LIN[2]);
-					$EmailText .= "\n" . _('Line item') . ': ' . $LIN[0] . ' ' . $LIN2[0] ;				
+					$EmailText .= "\n" . _('Line item') . ': ' . $LIN[0] . ' ' . $LIN2[0] ;
 					$LinCount++;
 					$Order->LineCounter = $LinCount;
 					// init order line data ffu....
@@ -750,112 +750,112 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					$ExRate=1;
 					$identifier=0;
 					break;
-					
+
 			case 'PIA':
 					$PIA = explode('+',mb_substr($LineText,4));
 					$PIA2 = explode(':',$PIA[1]);
-					switch ($PIA[0]){	
+					switch ($PIA[0]){
 					   case '1'; // additional item id
 //					      $Qty=$QTY2[1];
 					   break;
-					}					
-					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA2[0] ;				
+					}
+					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA2[0] ;
 					break;
-		
+
 			case 'IMD':
 					$IMD = explode('+',mb_substr($LineText,4));
 					$IMD2 = explode(':',mb_substr($LineText,4));
-					switch ($IMD[1]){	
-					   case 'F'; //  
+					switch ($IMD[1]){
+					   case 'F'; //
 					   //   $Qty=$QTY2[1];
 					   break;
-					}					
-					
+					}
+
 					$Descr=$IMD2[3];
-					$EmailText .= "\n" . _('Item description') . ': ' . $IMD2[3] ;				
+					$EmailText .= "\n" . _('Item description') . ': ' . $IMD2[3] ;
 					break;
 
 			case 'QTY':
 					$QTY = explode('+',mb_substr($LineText,4));
 					$QTY2 = explode(':',$QTY[0]);
-					switch ($QTY2[0]){	
+					switch ($QTY2[0]){
 					   case '21'; // ordered qty
 					      $Qty=$QTY2[1];
 					   break;
-					}					
-					$EmailText .= "\n" . _('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;				
+					}
+					$EmailText .= "\n" . _('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;
 					break;
-	  
+
 			case 'MOA':
 					$MOA = explode('+',mb_substr($LineText,4));
 					$MOA2 = explode(':',$MOA[0]);
-					switch ($MOA[0]){	
+					switch ($MOA[0]){
 					   case '203'; // Line item amount
 					   break;
 					   case '39'; // total amount
 					   break;
-					}					
-					$EmailText .= "\n" . _('Monetary amount'). ': ' . $MOA2[1];				
+					}
+					$EmailText .= "\n" . _('Monetary amount'). ': ' . $MOA2[1];
 					break;
 
 			case 'PRI':
 					$PRI = explode('+',mb_substr($LineText,4));
 					$PRI2 = explode(':',$PRI[0]);
-					switch ($PRI2[0]){	
+					switch ($PRI2[0]){
 					   case 'AAA'; // Calculation net
 					     $Price = $PRI2[1];
 					   break;
-					}					
-					$EmailText .= "\n" . _('Price details') . ': ' . $PRI2[1] ;				
+					}
+					$EmailText .= "\n" . _('Price details') . ': ' . $PRI2[1] ;
 					break;
 
 			case 'PAC':
 					$PAC = explode('+',mb_substr($LineText,4));
-					$EmailText .= "\n" . _('Package') . ': ' . $PAC[1];				
+					$EmailText .= "\n" . _('Package') . ': ' . $PAC[1];
 					break;
-					
+
 			case 'PIA': // ADDITIONAL PRODUCT ID
 					// SA    Supplier's article number
 					$PIA = explode('+',mb_substr($LineText,4));
 					$PIA2 = explode(':',$PIA[1]);
-					switch ($PIA2[1]){	
+					switch ($PIA2[1]){
 					   case 'SA'; // Supplier's article number
 					   break;
-					}					
-					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA[3];				
+					}
+					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA[3];
 					break;
 
 			case 'PCI':
-					$EmailText .= "\n" . _('Package identification');				
+					$EmailText .= "\n" . _('Package identification');
 					break;
-					
+
 			case 'TAX':
 			// Duty/tax/fee details
 					$TAX = explode('+',mb_substr($LineText,4));
 					$TAX2 = explode(':',mb_substr($LineText,4));
 					$TAX3 = explode('+',mb_substr($TAX2[3],1));
-					switch ($TAX[0]){	
+					switch ($TAX[0]){
 					   case '7'; // tax
 					   break;
-					}					
-					$EmailText .= "\n" . _('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];				
+					}
+					$EmailText .= "\n" . _('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];
 					break;
 
 			case 'MEA':
 					$MEA = explode('+',mb_substr($LineText,4));
-					// MEA+AAE+G+10' 
+					// MEA+AAE+G+10'
 					// AAE measurement
-					switch ($MEA[2]){	
+					switch ($MEA[2]){
 					   case 'G'; // gross weight
 					   break;
 					   case 'K'; // netweight kg
 					   break;
-					}					
-					$EmailText .= "\n" . _('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;				
+					}
+					$EmailText .= "\n" . _('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;
 					break;
 
 			case 'UNS':
-			// LIN END					
+			// LIN END
 			// lin end
 			// add last lin into chart
 					if ($LinCount > 0) {
@@ -865,32 +865,32 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
 					}
 
-					$EmailText .= "\n" . _('Section control/Order line count') . ': ' . $LinCount;				
+					$EmailText .= "\n" . _('Section control/Order line count') . ': ' . $LinCount;
 					break;
 			case 'CNT':
 			// control total
 					$CNT = explode('+',mb_substr($LineText,4));
 					$CNT2 = explode(':',mb_substr($LineText,4));
-					switch ($CNT[0]){	
-					   case '2'; // lin count 
+					switch ($CNT[0]){
+					   case '2'; // lin count
 					   break;
-					}					
-					
-					$EmailText .= "\n" . _('Control total') . ': ' . $CNT[0] ;				
+					}
+
+					$EmailText .= "\n" . _('Control total') . ': ' . $CNT[0] ;
 					break;
-					
+
           // message end
 			case 'UNT':
 			// end of msg  number of segments / message id
 				IF ($ErrorCount > 0) {
 					$CreateOrder = false;
 				}
-/* 
+/*
 echo '<pre>';
 print_r($Order);
-echo '</pre>';	
-*/ 
-				if ($CreateOrder = true) { 
+echo '</pre>';
+*/
+				if ($CreateOrder = true) {
 					//	UpdateOrder($Order);
 					DB_Txn_Begin();
 				//$Order->OrdDate = Date("Y-m-d");
@@ -903,7 +903,7 @@ echo '</pre>';
 					if ($Order->SalesPerson == "") {
 						$Order->SalesPerson = $_SESSION['DefaultSalesperson'];
 					}
-				
+
 				//echo '<br />' . 'ordertype ' . $Order->OrderType . ' / ' . $_SESSION['DefaultOrdertype'];
 				//echo '<br />' . 'salesperon ' . $Order->SalesPerson . ' / ' . $_SESSION['DefaultSalesperson'];
 					$HeaderSQL = "INSERT INTO salesorders (
@@ -973,18 +973,18 @@ echo '</pre>';
 							  echo "qty: " . $linedetail->Quantity . "<br>";
 							  echo "price: " . $linedetail->Price . "<br>";
                            */
-							
+
 							$orderlineno = $linedetail->LineNumber;
 							$quantity = $linedetail->Quantity;
 							$stkcode = trim(mb_strtoupper($linedetail->StockID));
-							$unitprice = $linedetail->Price;							
+							$unitprice = $linedetail->Price;
 							$discountpercent = $linedetail->Disc;
 							$itemdue = FormatDateForSQL($linedetail->ItemDue);
 							if ($linedetail->ItemDue == null) {
 								$itemdue = Date("Y-m-d");
 							}
 							//  echo "itemdue: " . $itemdue . "<br>";
-							
+
 							$poline = $linedetail->POLine;
 							$LINSQL = "INSERT INTO salesorderdetails (orderlineno,
 														orderno,
@@ -1004,18 +1004,18 @@ echo '</pre>';
 														'" . $poline . "')";
 							$LinResult = DB_query($LINSQL,
 							_('The order line for') . ' ' . $xi . ' ' ._('could not be inserted'));
-						
+
 						}
 						DB_Txn_Commit();
 						// prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been created'),'success');
 						$EmailText .= "\n" . _('Order number: ') . $OrderNo . _(' has been created from edi orders.') ;
 				}
 					$UNT = explode('+',mb_substr($LineText,4));
-					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNT[0] ;				
+					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNT[0] ;
 					break;
 			case 'UNZ':
 					$UNZ = explode('+',mb_substr($LineText,4)); // nbr of mesages
-					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNZ[0] ;				
+					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNZ[0] ;
 					break;
 
 
@@ -1060,7 +1060,7 @@ echo '</pre>';
 							$EmailText,
 							'',
 							false);
-		
+
 		echo $EmailText;
 	}
 }/*end of the loop around all the incoming order files in the incoming orders directory */
@@ -1090,15 +1090,15 @@ function AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM
 /*
 echo '<pre>';
 print_r($Order);
-echo '</pre>';	
+echo '</pre>';
 */
 }
 
-function UpdateOrder($Order){ 
+function UpdateOrder($Order){
 //include 'DeliveryDetails.php';
 /*
 echo '<pre>';
 print_r($Order);
-echo '</pre>';	
+echo '</pre>';
 */
 }

@@ -39,7 +39,7 @@ if (!isset($_GET['OrderNo'])) {
 				<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $ErrMsg = _('The order requested could not be retrieved') . ' - ' . _('the SQL returned the following error');
@@ -80,7 +80,7 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 				</table>';
 
 	include('includes/footer.php');
-	exit;
+	exit();
 }
  // the checks all good get the order now
 

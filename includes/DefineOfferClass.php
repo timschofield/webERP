@@ -101,7 +101,7 @@ Class Offer {
 					} else {
 						prnMsg(_('The offer for') . ' ' . $LineItems->StockID . ' ' . _('could not be inserted into the database'), 'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				}
 			}
@@ -123,7 +123,7 @@ Class Offer {
 					} else {
 						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('could not be updated in the database'), 'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				} else { // the LineItem is Deleted flag is true so delete it
 					$SQL = "DELETE from offers WHERE offerid='" . $LineItem->LineNo . "'";

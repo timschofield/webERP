@@ -21,7 +21,7 @@ if ($_SESSION['RequirePickingNote'] == 0) {
 	prnMsg(_('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
 	/*prnMsg(_('The system is configured to NOT use picking lists. In order for a picking note to occur before an order can be delivered, a configuration parameter must be activated. Please, consult your system administrator.'), 'info');*/
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* Show selection screen if we have no orders to work with */
@@ -521,7 +521,7 @@ if ($ListCount == 0) {
 	include('includes/header.php');
 	prnMsg( _('There are no picking lists to print'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();

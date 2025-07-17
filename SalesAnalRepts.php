@@ -263,7 +263,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Report Deleted') ,'info');
 	unset($SelectedReport);
 	include ('includes/footer.php');
-	exit;
+	exit();
 
 }
 

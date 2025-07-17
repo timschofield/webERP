@@ -35,7 +35,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	if ($_POST['NumberOfDays']==''){
 		header('Location: ' . htmlspecialchars_decode($RootPath) . '/ReorderLevelLocation.php');
-		exit;
+		exit();
 	}
 
 	if($_POST['Sequence']==1){

@@ -30,7 +30,7 @@ $SQL = 'SELECT debtorno,
 $EDIInvCusts = DB_query($SQL);
 
 if (DB_num_rows($EDIInvCusts) == 0) {
-	exit;
+	exit();
 }
 
 while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
@@ -328,7 +328,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 					prnMsg( _('Ftp connection has failed'). '<BR>' . _('Attempted to connect to') . ' ' .
 						$CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo,
 					'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status

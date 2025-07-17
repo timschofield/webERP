@@ -11,7 +11,7 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if ($_POST['Margin'] == '') {
 		header('Location: ' . htmlspecialchars_decode($RootPath) . '/PricesByCost.php');
-		exit;
+		exit();
 	}
 	if ($_POST['Comparator'] == 1) {
 		$Comparator = '<=';

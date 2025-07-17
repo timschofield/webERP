@@ -44,13 +44,13 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($LabelsResult)==0){
 		prnMsg(_('There were no price labels to print out for the category specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -108,7 +108,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $NoOfLabels = 0;

@@ -15,7 +15,7 @@ if (!isset($_SESSION['SupplierID'])){
 		<br />';
 	prnMsg(_('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a supplier') . '</a>','info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $ModuleList = array(_('Orders'),
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 		prnMsg( _('A new supplier login has been created'), 'success' );
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -181,7 +181,7 @@ if (!$FoundTheSupplierRole){
 		  </form>';
 	prnMsg(_('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 

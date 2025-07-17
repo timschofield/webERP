@@ -173,5 +173,5 @@ function abortMsg($Msg) {
     echo '<br />';
     prnMsg( $Msg, 'error');
     include ('includes/footer.php');
-    exit;
+    exit();
 }

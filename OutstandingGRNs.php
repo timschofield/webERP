@@ -49,7 +49,7 @@ if (isset($_POST['FromCriteria'])
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 	if (DB_num_rows($GRNsResult) == 0) {
 		$Title = _('Outstanding GRN Valuation') . ' - ' . _('Problem Report');
@@ -57,7 +57,7 @@ if (isset($_POST['FromCriteria'])
 		prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 

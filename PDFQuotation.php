@@ -97,7 +97,7 @@ if (DB_num_rows($Result)==0){
 				<br />
 				<br />';
         include('includes/footer.php');
-        exit;
+        exit();
 } elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
         $MyRow = DB_fetch_array($Result);
@@ -263,7 +263,7 @@ if ($ListCount == 0){
 	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  _('Print Another Quotation'). '</a>
 			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
     $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . $_GET['QuotationNo'] . '_' . date('Y-m-d') . '.pdf');
     $pdf->__destruct();

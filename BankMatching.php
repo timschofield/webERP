@@ -35,7 +35,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 
 	prnMsg(_('This page must be called with a bank transaction type') . '. ' . _('It should not be called directly'),'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['Account'])) {

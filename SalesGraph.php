@@ -338,12 +338,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 
 		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($SalesResult)==0){
 		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$GraphArray = array();
