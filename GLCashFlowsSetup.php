@@ -214,7 +214,7 @@ echo				'</select>
 			'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
 			'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
 			'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
-			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 

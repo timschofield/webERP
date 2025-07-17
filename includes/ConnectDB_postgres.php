@@ -25,7 +25,7 @@ if( !$db ) {
 		echo '<br>' . $PgConnStr . '<br>';
 	}
 	echo '<br>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . _(' Try logging in with an alternative company name.');
-	echo '<br><a href="index.php">' . _('Back to login page') . '</a>';
+	echo '<br><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 	unset($_SESSION['DatabaseName']);
 	exit;
 }
