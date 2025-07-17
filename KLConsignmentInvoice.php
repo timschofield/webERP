@@ -65,7 +65,6 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
-			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
 
 			// Increase memory limit to avoid exhaustion
 			// ini_set('memory_limit', '512M');

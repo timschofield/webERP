@@ -163,7 +163,7 @@ function GenerateReport($LocationForm) {
 		// Now process the generated $HTML based on the button pressed
 		if (isset($_POST['PrintPDF'])) {
 			// Use DomPDF
-			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
+			 // Ensure DomPDF is loaded via Composer
 
 			$dompdf = new Dompdf(['chroot' => __DIR__, 'isRemoteEnabled' => true]); // chroot for local assets, remote enabled if using external images/css
 			$dompdf->loadHtml($HTML);
@@ -182,7 +182,7 @@ function GenerateReport($LocationForm) {
 
 		} elseif (isset($_POST['Spreadsheet'])) {
 			// Use PhpSpreadsheet
-			require_once 'vendor/autoload.php'; // Ensure PhpSpreadsheet is loaded via Composer
+			 // Ensure PhpSpreadsheet is loaded via Composer
 
 			// Set Headers for ODS download
 			header('Content-Type: application/vnd.oasis.opendocument.spreadsheet'); // Correct mime type for ODS

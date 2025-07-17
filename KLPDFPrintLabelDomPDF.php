@@ -218,7 +218,7 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 	// Let's start the real PDF creation with DomPDF
-	require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
+	 // Ensure DomPDF is loaded via Composer
 
 	// set the variables depending on the label type
 	if ($_POST['LabelID'] == 'T570'){

@@ -7,7 +7,6 @@
  * (Marketplace Shop, File Type) and outputs a spreadsheet file for download.
  * It supports different file types: Full Update, QOH Only, and Prices Only.
  */
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
 
