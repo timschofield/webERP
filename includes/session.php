@@ -20,9 +20,11 @@ KL RICARD MODIFICATIONS:
  */
 
 if (!isset($PathPrefix)) {
+//	$PathPrefix = __DIR__ . '//'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
 	$PathPrefix = '';
 }
 require $PathPrefix.'vendor/autoload.php';
+
 // KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
@@ -149,37 +151,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 				} else {
 					unset($_SESSION['Favourites'][$MyRow['href']]);
 				}
-			}
-			if (count($_SESSION['Favourites']) > 0) {
-				$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-				$k = 0;
-				foreach ($_SESSION['Favourites'] as $url => $ttl) {
-					if ($k) {
-						$SQLi.= ",";
-					}
-					$SQLi.= "('" . $url . "', '" . $ttl . "', '" . $_SESSION['UserID'] . "')";
-					$k++;
-				}
-			}
-			foreach ($SQL as $sq) {
-//				$Result = DB_query($sq);
-			}
-			if (isset($SQLi)) {
-//				$Result = DB_query($SQLi);
-			}
-		} else {
-
-			$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-			$k = 0;
-			foreach ($_SESSION['Favourites'] as $url => $ttl) {
-				if ($k) {
-					$SQLi.= ",";
-				}
-				$SQLi.= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
-				$k++;
-			}
-			if ($k) {
-//				$Result = DB_query($SQLi);
 			}
 		}
 	}
