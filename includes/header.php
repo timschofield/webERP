@@ -127,7 +127,6 @@ echo '<style>
 				}
 			</style>';
 KL RICARD END */
-$ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
 echo '<header class="noPrint">';
 
@@ -168,9 +167,8 @@ echo '<div id="ExitIcon">
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
-	/* KL RICARD Customized Action Icons on every page */
-	include('includes/KLRoles.php');
 
+	/* KL RICARD Customized Action Icons on every page */
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
@@ -276,7 +274,7 @@ if ($ScriptName != 'Dashboard.php') {
 }
 KL RICARD END No show the Dashboard */
 
-// KL RICARD Show the mani menu on every page
+// KL RICARD Show the main menu on every page
 //if ($ScriptName != 'index.php') {
 	echo '<div id="ActionIcon">
 			<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
