@@ -69,22 +69,12 @@ if (isset($_SESSION['DatabaseName'])) {
 
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
-			/*    if(get_magic_quotes_gpc()) {
-						$_POST['name'] = stripslashes($_POST['name']);
-					}
-			*/
 			$_POST[$PostVariableName] = quote_smart($_POST[$PostVariableName]);
 			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				/*
-				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
-					}
-				*/
 				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
 				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
-
 			}
 		}
 	}
@@ -122,41 +112,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			while ($MyRow = DB_fetch_array($Result)) {
 				if (!isset($_SESSION['Favourites'][$MyRow['href']])) { //The script is removed;
 					$SQL[] = "DELETE FROM favourites WHERE href='" . $MyRow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
-
 				} else {
 					unset($_SESSION['Favourites'][$MyRow['href']]);
 				}
-			}
-			if (count($_SESSION['Favourites']) > 0) {
-				$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-				$k = 0;
-				foreach ($_SESSION['Favourites'] as $url => $ttl) {
-					if ($k) {
-						$SQLi.= ",";
-					}
-					$SQLi.= "('" . $url . "', '" . $ttl . "', '" . $_SESSION['UserID'] . "')";
-					$k++;
-				}
-			}
-			foreach ($SQL as $sq) {
-//				$Result = DB_query($sq);
-			}
-			if (isset($SQLi)) {
-//				$Result = DB_query($SQLi);
-			}
-		} else {
-
-			$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-			$k = 0;
-			foreach ($_SESSION['Favourites'] as $url => $ttl) {
-				if ($k) {
-					$SQLi.= ",";
-				}
-				$SQLi.= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
-				$k++;
-			}
-			if ($k) {
-//				$Result = DB_query($SQLi);
 			}
 		}
 	}
@@ -265,9 +223,6 @@ if (isset($_SESSION['DBVersion'])
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
 	exit();
 }
-// else {
-//	unset($_SESSION['DBVersion']);
-//}
 
 if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
