@@ -183,20 +183,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	if (!$KL_SPGSeniorOrSupport 
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
-			</a>
-		</div>';
-
-		echo '<div id="ActionIcon">
 			<a class="FontSize" data-title="', _('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
 				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', _('Items'), '" />', _('Items'), '
-			</a>
-		</div>';
-
-		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
 			</a>
 		</div>';
 	}
