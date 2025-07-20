@@ -4,7 +4,7 @@
 *
 * KL RICARD: Custom main menu, not show theme selection, Favourites, Dashboard. Always show main menu
 *
-************************************************************************************************/
+***********************************************************************************************/
 
 // echo the html header and page title
 
@@ -62,6 +62,146 @@ echo '<script>
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>';
 echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
+
+// Mobile menu styles and functionality
+echo '<style>
+	/* Header layout fix */
+	.header-container {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: space-between !important;
+		width: 100% !important;
+	}
+	
+	/* Enhanced mobile menu styling */
+	.mobile-menu-select {
+		display: none;
+		width: auto;
+		min-width: 120px;
+		font-size: 16px;
+		font-weight: bold;
+		padding: 6px 6px;
+		border: 2px solid #007bff;
+		border-radius: 6px;
+		background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+		color: #333;
+		cursor: pointer;
+		margin: 0;
+		box-shadow: 0 2px 4px rgba(0,123,255,0.15);
+		transition: all 0.3s ease;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+	}
+	
+	.mobile-menu-select:hover {
+		border-color: #0056b3;
+		box-shadow: 0 4px 8px rgba(0,123,255,0.25);
+		background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+	}
+	
+	.mobile-menu-select:focus {
+		outline: none;
+		border-color: #007bff;
+		box-shadow: 0 0 0 3px rgba(0,123,255,0.25), 0 3px 6px rgba(0,123,255,0.15);
+	}
+	
+	@media (max-width: 768px) {
+		.mobile-menu-select {
+			display: block !important;
+		}
+		
+		.action-icons-desktop {
+			display: none !important;
+		}
+		
+		/* Hide desktop logout button on mobile */
+		#ExitIcon {
+			display: none !important;
+		}
+		
+		/* Ensure mobile menu is at same level as username */
+		.mobile-menu-container {
+			display: flex;
+			align-items: center;
+			margin: 0;
+			padding: 0;
+		}
+	}
+	
+	@media (min-width: 769px) {
+		.mobile-menu-select {
+			display: none !important;
+		}
+		
+		.action-icons-desktop {
+			display: flex !important;
+			align-items: center !important;
+			gap: 0px !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		
+		/* Ensure action icons are vertically centered with their text */
+		#ActionIcon {
+			display: flex !important;
+			align-items: center !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		
+		#ActionIcon a {
+			display: flex !important;
+			align-items: center !important;
+			gap: 0px !important;
+			text-decoration: none !important;
+		}
+		
+		#ActionIcon img {
+			vertical-align: middle !important;
+			margin: 0 !important;
+		}
+		
+		/* Ensure proper header layout on desktop - remove auto margin */
+		.header-container {
+			align-items: center !important;
+		}
+		
+		#ExitIcon {
+			display: flex !important;
+			align-items: center !important;
+			margin: 0 !important;
+			padding: 0 !important;
+		}
+		
+		/* Reduce spacing between header and script title */
+		.ScriptTitle {
+			margin-top: 0px !important;
+			margin-bottom: 0 !important;
+			padding-top: 0 !important;
+		}
+		
+		header.noPrint {
+			margin-bottom: 0px !important;
+			padding-bottom: 0 !important;
+		}
+	}
+</style>
+
+<script>
+	function navigateToSelected(select) {
+		var url = select.value;
+		if (url) {
+			// Special handling for logout with confirmation
+			if (url.indexOf("Logout.php") !== -1) {
+				if (confirm("Are you sure you wish to logout?")) {
+					window.location.href = url;
+				}
+				select.value = ""; // Reset dropdown
+			} else {
+				window.location.href = url;
+			}
+		}
+	}
+</script>';
 
 if ($_SESSION['ShowPageHelp'] == 0) {
 	echo '<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
@@ -128,7 +268,8 @@ echo '<style>
 			</style>';
 KL RICARD END */
 
-echo '<header class="noPrint">';
+echo '<header class="noPrint">
+	<div class="header-container" style="display: flex; align-items: center; justify-content: space-between; padding: 5px; width: 100%;">';
 
 $CompanyLogo = '';
 /// @todo move the scanning for a logo file to a dedicated function
@@ -149,37 +290,49 @@ if ($CompanyLogo != ''){
 }
 KL RICARD END: Do NOT Show the company logo */
 
-echo '</div>';
- 
-echo '<div id="Info">
+// User info section - left side of header
+echo '<div id="Info" style="display: flex; align-items: center;">
 		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $RootPath, '/UserSettings.php">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', stripslashes($_SESSION['UsersRealName']), '" />', $_SESSION['UsersRealName'], '
 		</a>
 	</div>';
 
-echo '<div id="ExitIcon">
-		<a data-title="', _('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', _('Logout'), '" />
-		</a>
-	</div>';
+// Action icons and controls section - right side of header  
+echo '<div style="display: flex; align-items: center; gap: 10px;">';
 
 // Fix: Ensure AllowedPageSecurityTokens is an array before counting
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 
+	// Mobile menu - enhanced select dropdown
+	echo '<div class="mobile-menu-container">
+		<select class="mobile-menu-select" onchange="navigateToSelected(this)">
+			<option value="" disabled selected>📱 ', _('Top Menu'), '</option>
+			<option value="', $RootPath, '/index.php">� ', _('Main Menu'), '</option>';
+			
+	if (!$KL_SPGSeniorOrSupport AND !$KL_SPGJunior){
+		echo '<option value="', $RootPath, '/SelectProduct.php">📦 ', _('Items'), '</option>';
+	}
+	
+	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', _('Intranet'), '</option>
+			<option value="https://kapal-laut.com">🛒 ', _('Online Shop'), '</option>
+			<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">🚪 ', _('Logout'), '</option>
+		</select>
+	</div>';
+
+	// Desktop action icons container
+	echo '<div class="action-icons-desktop">';
+
 	/* KL RICARD Customized Action Icons on every page */
+	// 1st - Main menu
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
+		<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
 		</a>
 	</div>';
 
-	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Intranet'), '" href="https://ptadu.com/wiki/index.php">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', _('Intranet'), '" />', _('Intranet'), '
-		</a>
-	</div>';
+	// 2nd - Items (only for non-SPG users)
 	if (!$KL_SPGSeniorOrSupport 
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
@@ -200,7 +353,22 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 			</a>
 		</div>';
 	}
-	/* KL RICARD END Customized action icons on every page */
+
+	// 3rd - Intranet
+	echo '<div id="ActionIcon">
+		<a class="FontSize" data-title="', _('Intranet'), '" href="https://ptadu.com/wiki/index.php">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', _('Intranet'), '" />', _('Intranet'), '
+		</a>
+	</div>';
+
+	// 4th - Online Shop
+	echo '<div id="ActionIcon">
+		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
+		</a>
+	</div>';
+
+	echo '</div>'; // Close desktop container
 
 	/* KL RICARD No show the Manual Link
 	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
@@ -263,6 +431,17 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	}
 	KL RICARD END  No show the Favourites */
 }
+
+// Logout button - always visible on the right
+echo '<div id="ExitIcon">
+		<a data-title="', _('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', _('Logout'), '" />
+		</a>
+	</div>';
+
+echo '</div>'; // Close action icons and controls section
+echo '</div>'; // Close header-container
+
 /* KL RICARD No show the Dashboard
 if ($ScriptName != 'Dashboard.php') {
 	echo '<div id="ActionIcon">
@@ -274,23 +453,12 @@ if ($ScriptName != 'Dashboard.php') {
 }
 KL RICARD END No show the Dashboard */
 
-// KL RICARD Show the main menu on every page
-//if ($ScriptName != 'index.php') {
-	echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
-			</a>
-		</div>'; //take off inline formatting, use CSS instead ===HJ===
-
-//}
-// KL RICARD END Show the mani menu on every page
-
 // KL RICARD Show the location name for SPG users on every page
 if ($KL_SPGSeniorOrSupport 
 	OR $KL_SPGJunior){
-	echo '<br /><div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
+	echo '<div class="ScriptTitle">', $_SESSION['locationname'], '</div>';
 }else{
-	echo '<br /><div class="ScriptTitle">', $Title, '</div>';
+	echo '<div class="ScriptTitle">', $Title, '</div>';
 }
 // KL RICARD END Show the location name for SPG users on every page
 
