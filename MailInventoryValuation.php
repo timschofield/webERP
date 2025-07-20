@@ -20,7 +20,7 @@ $Recipients = GetMailList('InventoryValuationRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.php');
-	prnMsg(_('There are no members of the Inventory Valuation Recipients email group'), 'warn');
+	prnMsg(_('There are no members of the "InventoryValuationRecipients" email group'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
