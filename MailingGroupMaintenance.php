@@ -70,10 +70,22 @@ if (isset($_GET['Add']) and isset($_GET['UserId'])) {
 if (isset($_GET['Delete'])) {
 	if (is_numeric($_GET['Id'])) {
 		$id = (int)$_GET['Id'];
-		$SQL = "DELETE FROM mailgroups WHERE id = '" . $id . "'";
-		$ErrMsg = _('Failed to delete the mail group which id is ' . $id);
-		$Result = DB_query($SQL, $ErrMsg);
-		GetMailGroup();
+		$SQL = "SELECT userid
+					FROM mailgroupdetails
+					INNER JOIN mailgroups
+						ON mailgroupdetails.groupname=mailgroups.groupname
+					WHERE id='" . $id . "'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) == 0) {
+			$SQL = "DELETE FROM mailgroups WHERE id = '" . $id . "'";
+			$ErrMsg = _('Failed to delete the mail group which id is ' . $id);
+			$Result = DB_query($SQL, $ErrMsg);
+			GetMailGroup();
+		} else {
+			prnMsg(_('The group id has users associated with it. Please remove these first and try again'), 'error');
+			include ('includes/footer.php');
+			exit();
+		}
 	} else {
 		prnMsg(_('The group id must be numeric'), 'error');
 		include ('includes/footer.php');
