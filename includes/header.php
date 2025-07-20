@@ -312,7 +312,9 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 			<option value="', $RootPath, '/index.php">� ', _('Main Menu'), '</option>';
 			
 	if (!$KL_SPGSeniorOrSupport AND !$KL_SPGJunior){
+		echo '<option value="', $RootPath, '/SelectCustomer.php">👥 ', _('Customers'), '</option>';
 		echo '<option value="', $RootPath, '/SelectProduct.php">📦 ', _('Items'), '</option>';
+		echo '<option value="', $RootPath, '/SelectSupplier.php">🏢 ', _('Suppliers'), '</option>';
 	}
 	
 	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', _('Intranet'), '</option>
@@ -336,8 +338,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	if (!$KL_SPGSeniorOrSupport 
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
+			<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
 			</a>
 		</div>';
 
@@ -348,10 +350,11 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		</div>';
 
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
+			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
 			</a>
 		</div>';
+
 	}
 
 	// 3rd - Intranet
