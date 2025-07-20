@@ -257,4 +257,3 @@ echo '</fieldset>
 
 
 include('includes/footer.php');
-?>

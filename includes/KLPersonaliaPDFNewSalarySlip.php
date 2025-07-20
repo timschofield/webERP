@@ -16,5 +16,3 @@ $HTML = '<!DOCTYPE html>
 
 // Include centralized CSS styling
 include('includes/KLPersonaliaPDFCSStyling.php');
-
-?>

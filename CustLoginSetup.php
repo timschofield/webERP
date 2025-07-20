@@ -15,7 +15,7 @@ if (!isset($_SESSION['CustomerID'])){
 		<br />';
 	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 			prnMsg( _('A new customer login has been created'), 'success' );
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 
@@ -288,4 +288,3 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
-?>

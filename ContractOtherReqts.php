@@ -12,8 +12,8 @@ $identifier=$_GET['identifier'];
  */
 
 if (!isset($_SESSION['Contract'.$identifier])){
-	header('Location:' . $RootPath . '/Contracts.php');
-	exit;
+	header('Location:' . htmlspecialchars_decode($RootPath) . '/Contracts.php');
+	exit();
 }
 
 $ViewTopic= 'Contracts';
@@ -44,7 +44,7 @@ if (isset($_POST['BackToHeader'])){
 	echo '<br />';
 	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') .	'<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -165,4 +165,3 @@ echo '<table class="selection">
 		</form>';
 
 include('includes/footer.php');
-?>

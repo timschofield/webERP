@@ -13,4 +13,3 @@ if (!isset($_GET['UserID']) OR $_GET['UserID']==''){
 }
 
 include ('includes/footer.php');
-?>

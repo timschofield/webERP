@@ -2,7 +2,7 @@
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');
-if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);};
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 $Title = _('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
@@ -19,7 +19,7 @@ if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
 				<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
 			</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	if(isset($_GET['SupplierID'])) {
 		$_SESSION['SupplierID'] = $_GET['SupplierID'];
@@ -194,7 +194,7 @@ if(DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*show a table of the transactions returned by the SQL */
@@ -300,4 +300,3 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 echo '</tbody></table>';
 include('includes/footer.php');
-?>

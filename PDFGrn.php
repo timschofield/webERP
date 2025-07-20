@@ -179,4 +179,3 @@ if ($NoOfGRNs >0){
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }
-?>

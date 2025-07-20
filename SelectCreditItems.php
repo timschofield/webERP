@@ -30,7 +30,7 @@ if (isset($_POST['ProcessCredit']) AND !isset($_SESSION['CreditItems'.$identifie
 	prnMsg(_('This credit note has already been processed. Refreshing the page will not enter the credit note again') . '<br />' . _('Please use the navigation links provided rather than using the browser back button and then having to refresh'),'info');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-  exit;
+  exit();
 }
 
 if (isset($_GET['NewCredit'])){
@@ -1090,7 +1090,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 		  prnMsg(_('For credit notes created to write off the stock a general ledger account is required to be selected. Please select an account to write the cost of the stock off to then click on Process again'),'error');
 		  include('includes/footer.php');
-		  exit;
+		  exit();
 	 }
 
 
@@ -1992,4 +1992,3 @@ then debit the expense account the stock is to written off to */
 } /*end of process credit note */
 
 include('includes/footer.php');
-?>

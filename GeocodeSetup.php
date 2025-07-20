@@ -279,4 +279,3 @@ echo '<a href="' . $RootPath . '/geo_displaymap_customers.php">' . _('Display Ma
 echo '<a href="' . $RootPath . '/geo_displaymap_suppliers.php">' . _('Display Map of Suppliers') . '</a></div>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.php');
-?>

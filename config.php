@@ -6,29 +6,27 @@
 ********************************************************************************/
 
 // User configurable variables
-//---------------------------------------------------
 
 // type of webERP (TEST or Production)
 // Moved to KLConfig.php 
-// $webERPType = 'TEST';
 
-//DefaultLanguage to use for the login screen and the setup of new users
-//the users language selection will override
+// DefaultLanguage to use for the login screen and the setup of new users
+// the users language selection will override
 $DefaultLanguage = 'en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
-//The users' theme selection will override
-//$DefaultTheme = 'professional';
-//$DefaultTheme = 'wood';
-//$DefaultTheme = 'silverwolf';
+// The users' theme selection will override
+// $DefaultTheme = 'professional';
+// $DefaultTheme = 'wood';
+// $DefaultTheme = 'silverwolf';
 $DefaultTheme = 'gel';
-//$DefaultTheme = 'xenos';
+// $DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
-$AllowDemoMode = False;
+$AllowDemoMode = false;
 
 // Whether to display company logo in drop down list at login
-$ShowLogoAtLogin = False;
+$ShowLogoAtLogin = false;
 
 // email address of the system administrator
 $SysAdminEmail = 'webmaster@kapal-laut.com';
@@ -45,16 +43,14 @@ date_default_timezone_set('Asia/Singapore');
 // $Host = 'localhost';
 $MySQLPort = 3306;
 
-//The type of db server being used
-//$DBType = 'postgres' - now DEPRECIATED;
-//$DBType = 'mysql';
-//$DBType = 'mysqli';
+// The type of db server being used
+// $DBType = 'postgres' - now DEPRECIATED;
+// $DBType = 'mysql';
+// $DBType = 'mysqli';
 $DBType = 'mariadb';
 
 // sql user & password
 // Moved to KLConfig.php
-//$DBUser = 'DBU_ptadu_test';
-//$DBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched
 // to 'ShowInputBox' or 'Hide' depending if you allow the user to select the name of the company or must use the default one
@@ -64,52 +60,35 @@ $DBType = 'mariadb';
 // in some environments to show the name of the company (database name) --> Choose 'Hide'.
 // Options:
 // 	'ShowSelectionBox' (default)
-//	'ShowInputBox'
-//	'Hide'
-
+// 	'ShowInputBox'
+// 	'Hide'
 $AllowCompanySelectionBox = 'Hide';
 
-//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen
-//as a default otherwise the user is expected to know the name of the company to log into.
-// KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
+// If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen
+// as a default otherwise the user is expected to know the name of the company to log into.
 
-// Moved to KLConfig.php
-//$DefaultCompany = 'test_erp';
-//$DefaultDatabase = 'test_erp';
-
-//The maximum time that a login session can be idle before automatic logout
-//time is in seconds  3600 seconds in an hour
+// The maximum time that a login session can be idle before automatic logout
+// time is in seconds  3600 seconds in an hour
 $SessionLifeTime = 3600;
 
-//The maximum time that a script can execute for before the web-server should terminate it
+// The maximum time that a script can execute for before the web-server should terminate it
 $MaximumExecutionTime = 720;
 
-//The path to which session files should be stored in the server - useful for some multi-host web servers
-//this can be left commented out
-//$SessionSavePath = '/tmp';
+// The path to which session files should be stored in the server - useful for some multi-host web servers
+// this can be left commented out
+// $SessionSavePath = '/tmp';
 
 
 // which encryption function should be used
-//$CryptFunction = "md5"; // MD5 Hash
+// $CryptFunction = "md5"; // MD5 Hash
 $CryptFunction = "sha1"; // SHA1 Hash
-//$CryptFunction = ""; // Plain Text
+// $CryptFunction = ""; // Plain Text
 
-//Setting to 12 or 24 determines the format of the clock display at the end of all screens
-//$DefaultClock = 12;
+// Setting to 12 or 24 determines the format of the clock display at the end of all screens
+// $DefaultClock = 12;
 $DefaultClock = 24;
 
-
-
-// END OF USER CONFIGURABLE VARIABLES
-
-
-
-/*The $RootPath is used in most scripts to tell the script the installation details of the files.
-
-NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the
-installation manually: eg. if the files are under the webserver root directory then rootpath =''; if they are under
-weberp then weberp is the rootpath - notice no additional slashes are necessary.
-*/
+// The $RootPath is used in most scripts to tell the script the installation details of the files.
 
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 if (isset($DirectoryLevelsDeep)) {
@@ -121,20 +100,5 @@ if (isset($DirectoryLevelsDeep)) {
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
 }
-
-/* Report all errors except E_NOTICE
-This is the default value set in php.ini for most installations but just to be sure it is forced here
-turning on NOTICES destroys things */
-
+// Report all errors except E_NOTICE
 // Moved to KLConfig.php
-//error_reporting(E_ALL & ~E_NOTICE);
-//error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
-/* For Development Use */
-//error_reporting(-1);
-
-// Moved to KLConfig.php
-//Installed companies
-//$CompanyList[0] = array('database' => 'test_erp', 'company' => 'Kapal-Laut TEST');
-
-/*Make sure there is nothing - not even spaces after this last ?> */
-?>

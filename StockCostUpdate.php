@@ -68,7 +68,7 @@ if (isset($_POST['UpdateData'])){
 		DB_Txn_Begin();
 		ItemCostUpdateGL($StockID, $NewCost, $OldCost, $_POST['QOH']);
 
-		$SQL = "UPDATE stockmaster 
+		$SQL = "UPDATE stockmaster
 				SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
 					labourcost='" . filter_number_format($_POST['LabourCost']) . "',
 					overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
@@ -152,7 +152,7 @@ if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
    }
    prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
    include('includes/footer.php');
-   exit;
+   exit();
 }
 
 echo '<field>';
@@ -209,4 +209,3 @@ if ($MyRow['mbflag']!='D'){
 echo '</div>
 	  </form>';
 include('includes/footer.php');
-?>

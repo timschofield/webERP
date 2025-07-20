@@ -1,8 +1,8 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title=_('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.*/
 $ViewTopic = 'ARInquiries';
@@ -75,7 +75,7 @@ if (!isset($_POST['RunReport'])){
 		</div>
 	</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_POST['Customer']!='') {
@@ -221,7 +221,7 @@ if (isset($_POST['CreateCSV'])){
     header("Expires: 0");
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVFile;
-	exit;
+	exit();
 }
 
 include('includes/footer.php');
@@ -229,4 +229,3 @@ include('includes/footer.php');
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
-?>

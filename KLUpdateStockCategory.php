@@ -10,7 +10,7 @@ include('includes/KLBoards.php');
 If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
 	prnMsg( _('We need an item code and Old Category and New Category codes') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
@@ -165,5 +165,3 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 
 	$Result = DB_Txn_Commit();
 }
-
-?>

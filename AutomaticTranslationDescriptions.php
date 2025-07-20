@@ -10,7 +10,7 @@ include ('includes/header.php');
 if (!function_exists("curl_init")){
 	prnMsg("This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available","error");
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 include ('includes/GoogleTranslator.php');
@@ -102,4 +102,3 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 }
 
 include ('includes/footer.php');
-?>

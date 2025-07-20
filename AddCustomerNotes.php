@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);};
+if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
 $Title = _('Customer Notes');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'CustomerNotes';
@@ -236,4 +236,3 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

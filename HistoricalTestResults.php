@@ -1,8 +1,8 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Historical Test Results');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_HistoricalResults';// Anchor's id in the manual's html document.
@@ -157,4 +157,3 @@ if ($TotResults>0) {
 }
 
 include('includes/footer.php');
-?>

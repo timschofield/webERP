@@ -25,8 +25,6 @@ $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x+3,$Page_Height 
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x+3,$Page_Height - $FormDesign->Headings->Column5->y, $FormDesign->Headings->Column5->Length,$FormDesign->Headings->Column5->FontSize,  '千百十万千.百十元角分', 'right');
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x+3,$Page_Height - $FormDesign->Headings->Column6->y, $FormDesign->Headings->Column6->Length,$FormDesign->Headings->Column6->FontSize,  '千百十万千.百十元角分', 'right');
 
-
-
 $LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x+3,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, '记账日期: '.ConvertSQLDate($JournalDate));
 
 $tmpX=$FormDesign->SignedFor->x+3;
@@ -120,4 +118,3 @@ $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column10->x+3,$Page_Height
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column11->x+3,$Page_Height - $FormDesign->Headings->Column11->y, $FormDesign->Headings->Column11->Length,$FormDesign->Headings->Column11->FontSize,  '件', 'right');
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column12->x+3,$Page_Height - $FormDesign->Headings->Column12->y, $FormDesign->Headings->Column12->Length,$FormDesign->Headings->Column12->FontSize,  '张', 'right');
 $PageNumber++;
-?>

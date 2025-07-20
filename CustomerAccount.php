@@ -15,7 +15,7 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	prnMsg(_('To display the account a customer must first be selected from the customer selection screen'), 'info');
 	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', _('Select a Customer Account to Display'), '</a></div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	if (isset($_GET['CustomerID'])) {
 		$_SESSION['CustomerID'] = stripslashes($_GET['CustomerID']);
@@ -37,12 +37,12 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	} else {
 		prnMsg(_('There is no salesman data set for this customer'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (!$ViewAllowed) {
 		prnMsg(_('You have no authority to review this customer account'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -398,4 +398,3 @@ echo '</tbody></table>
 	</table>';
 
 include('includes/footer.php');
-?>

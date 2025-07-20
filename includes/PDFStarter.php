@@ -206,5 +206,3 @@ $pdf->setPrintFooter(false);
 $pdf->AddPage();
 $pdf->cMargin = 0;
 /* END Brought from class.pdf.php constructor */
-
-?>

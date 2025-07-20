@@ -36,4 +36,3 @@ function RecordRunningTime($Title, $UserName){
     
 }
 
-?>

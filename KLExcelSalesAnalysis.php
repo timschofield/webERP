@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-require_once 'vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -319,7 +319,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
-			exit; // Ensure no further output is sent
+			exit(); // Ensure no further output is sent
 
 		}else{
 			$Title = _('Excel file for Sales Analysis');
@@ -370,5 +370,3 @@ function display($RootPath, $Theme){
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

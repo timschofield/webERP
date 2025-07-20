@@ -67,5 +67,3 @@ $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100, $YPos, 100, $FontS
 
 $FontSize=10;
 $YPos -= 30;
-
-?>

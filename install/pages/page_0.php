@@ -138,4 +138,3 @@ echo '<ol>
 echo '<p>', _('These are all standard extensions, but if you are using an external web hosting company then check with them that they have the correct extensions installed.'), '</p>';
 
 echo '</section>';
-?>

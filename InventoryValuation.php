@@ -66,7 +66,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 }
 
@@ -80,15 +80,13 @@ if (isset($_POST['PrintPDF'])){
 	$PageNumber=1;
 	$LineHeight=12;
 
-
-
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.php');
 		prnMsg(_('There were no items with any value to print out for the location specified'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	include ('includes/PDFInventoryValnPageHeader.php');
@@ -203,7 +201,7 @@ if (isset($_POST['PrintPDF'])){
     header("Expires: 0");
     echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVListing;
-	exit;
+	exit();
 
 } else { /*The option to print PDF nor to create the CSV was not hit */
 
@@ -274,4 +272,3 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-?>

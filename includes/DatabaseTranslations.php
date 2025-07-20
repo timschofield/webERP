@@ -61,5 +61,3 @@ $TaxCategoriesTaxCatName[6] = _('Handling');
 
 // General purpose:
 $General_purpose = _('Default');
-
-?>

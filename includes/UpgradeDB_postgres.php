@@ -713,5 +713,3 @@ function OutputResult($Msg, $Status) {
 		$_SESSION['Updates']['Warnings']++;
 	}
 }
-
-?>

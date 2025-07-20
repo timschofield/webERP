@@ -1,8 +1,9 @@
 <?php
-/**********************************************************/
-$PathPrefix = '../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	// allow dashboard applet to run standalone
+	$DirectoryLevelsDeep = 1;
+	$PathPrefix = __DIR__ . '/../';
 	require_once ($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 }
@@ -65,5 +66,3 @@ while ($MyRow = DB_fetch_array($DashboardResult)) {
 echo '</tbody>
 	</table>';
 /* Don't forget to close off the table */
-
-?>

@@ -36,4 +36,3 @@ class StockAdjustment {
 		self::__construct();
 	}
 }
-?>

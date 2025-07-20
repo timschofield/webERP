@@ -90,7 +90,7 @@ if (DB_num_rows($Result) == 0){
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
 	echo '<a href="PDFStockTransfer.php">' . _('Try Again')  . '</a>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 //get the first stock movement which will be the quantity taken from the initiating location
 while ($MyRow=DB_fetch_array($Result)) {
@@ -153,4 +153,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-?>

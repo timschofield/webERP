@@ -481,7 +481,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . _('here') . '</a>', 'error');
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
 		$API_key = $MyRow['geocode_key'];
@@ -881,4 +881,3 @@ function initMap() {
 
 } // isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != ''
 include ('includes/footer.php');
-?>

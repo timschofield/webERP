@@ -11,8 +11,7 @@
 include ('includes/DefinePaymentClass.php');
 
 include ('includes/session.php');
-
-if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);};
+if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -104,7 +103,7 @@ if (isset($_GET['SupplierID'])) {
 
 		prnMsg(_('The supplier code that this payment page was called with is not a currently defined supplier code') . '. ' . _('If this page is called from the selectSupplier page then this assures that a valid supplier is selected') , 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 
 	}
 	else {
@@ -348,13 +347,13 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 	if ($TotalAmount == 0 AND ($_SESSION['PaymentDetail' . $identifier]->Discount + $_SESSION['PaymentDetail' . $identifier]->Amount) / $_SESSION['PaymentDetail' . $identifier]->ExRate == 0) {
 		prnMsg(_('This payment has no amounts entered and will not be processed') , 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if ($_POST['BankAccount'] == '') {
 		prnMsg(_('No bank account has been selected so this payment cannot be processed') , 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Make an array of the defined bank accounts */
@@ -386,12 +385,12 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		if (empty($_POST['ChequeNum'])) {
 			prnMsg(_('There are no Check Number input') , 'error');
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		elseif (!is_numeric($_POST['ChequeNum'])) { //check if this cheque no has been used
 			prnMsg(_('The cheque no should be numeric') , 'error');
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		else {
 			$ChequeSQL = "SELECT count(chequeno) FROM  supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
@@ -401,7 +400,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'error');
 				include ('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 		//store the paid array here;
@@ -856,7 +855,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 	}
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 
 }
 elseif (isset($_GET['Delete'])) {
@@ -1033,7 +1032,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 		<p />';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') , 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 else {
 	echo '<option value=""></option>';
@@ -1518,4 +1517,3 @@ echo '</div>
 	</form>';
 
 include ('includes/footer.php');
-?>

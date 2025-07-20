@@ -55,7 +55,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
-			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
+			 // Ensure DomPDF is loaded via Composer
 		
 			if ($SalaryType == "MONTHLY"){
 				$CoreFileName = $Company . '-MonthlySalarySlips-' . $PeriodMonth;
@@ -226,5 +226,3 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

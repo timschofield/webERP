@@ -10,12 +10,12 @@
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
 
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
-if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);};
-if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);};
-if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);};
-if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);};
-if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);};
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
+if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);}
+if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);}
+if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);}
+if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);}
+if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);}
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order');
@@ -305,7 +305,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	} // end if reprint not allowed
 
 } //isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])
@@ -543,7 +543,7 @@ if (isset($_POST['Select'])) {
 
 		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	// end of added for suppliers lookup fields
@@ -1391,4 +1391,3 @@ KL RICARD COMMENTED OUT END */
 
 echo '</form>';
 include ('includes/footer.php');
-?>

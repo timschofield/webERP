@@ -4,10 +4,10 @@ include ('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
-};
+}
 if (isset($_POST['ToDate'])) {
 	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
-};
+}
 include ('includes/SQL_CommonFunctions.php');
 
 $InputError = 0;
@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the days between requested delivery and actual invoice dates was') . "<br />$SQL", 'error');
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	} elseif (DB_num_rows($Result) == 0) {
 		$Title = _('DIFOT Report Error');
 		include ('includes/header.php');
@@ -126,7 +126,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if ($_POST['CategoryID']!='All') {
@@ -378,4 +378,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	include ('includes/footer.php');
 }
-?>

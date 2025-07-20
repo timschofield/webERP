@@ -77,13 +77,13 @@ if (!isset($_POST['FromDate'])
 		prnMsg(_('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		prnMsg($SQL);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($KPIResult)==0){
 		prnMsg(_('There is not KPI data for the criteria entered to graph'),'info');
 		prnMsg($SQL);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$KPIDescription = GetKPIDescription($_POST['KPICode']);
@@ -159,4 +159,3 @@ if (!isset($_POST['FromDate'])
 	include('includes/footer.php');
 }
 
-?>

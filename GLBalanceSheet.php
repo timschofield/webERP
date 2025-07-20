@@ -369,9 +369,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td></td>
 					</tr>';
 				++$j;
-				 
-			} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0 
-					or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
+		} elseif (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0
+			or round($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) != 0) {
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
 				$HTML .= '<tr class="striped_row">
@@ -561,7 +560,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
 		$PeriodResult = DB_query($PeriodSQL);
 		$PeriodRow = DB_fetch_array($PeriodResult);
-		$PeriodNo = $PeriodRow['periodno'];;
+		$PeriodNo = $PeriodRow['periodno'];
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
@@ -605,5 +604,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	include('includes/footer.php');
 }
-
-?>

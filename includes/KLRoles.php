@@ -65,5 +65,3 @@ if (isset($_SESSION['AccessLevel'])){
 		$KL_MarketingManager = TRUE;
 	}
 }
-
-?>

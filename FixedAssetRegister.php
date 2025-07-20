@@ -369,5 +369,3 @@ else {
 
 	include ('includes/footer.php');
 }
-
-?>

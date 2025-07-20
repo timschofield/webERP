@@ -11,7 +11,7 @@ for controlled items - used in:
 
 //we start with a batch or serial no header and need to display something for verification...
 if (!isset($_SESSION['DatabaseName'])){
-	die;
+	exit();
 }
 
 global $Tableheader;
@@ -56,4 +56,3 @@ echo '</table>';
 echo '<br /><center><input type="submit" name="AddSequence" value="'. _('Enter'). '"></center><br />';
 echo '</form></td><td valign="top">';
 //echo '</td></tr></table>'; /*end of nested table */
-?>

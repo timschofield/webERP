@@ -77,4 +77,3 @@ if (DB_num_rows($Result) > 0) {
 }
 
 include ('includes/footer.php');
-?>

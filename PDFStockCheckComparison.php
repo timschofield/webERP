@@ -38,7 +38,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	      			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
@@ -64,7 +64,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					echo '<br />' .  $SQL;
 				}
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 
 			$StkCountResult = DB_query($SQL);
@@ -215,7 +215,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		prnMsg(_('There is no inventory check data to report on'), 'warn');
 		echo '<p>' .  _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">' .  _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$FirstRow = DB_fetch_array($CheckedItems);
 	$LocationName = $FirstRow['locationname'];
@@ -274,7 +274,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	      			echo '<br />' .  $SQL;
 	   		}
 	   		include('includes/footer.php');
-	   		exit;
+	   		exit();
 		}
 		if ($CheckItemRow['qoh']!=0 OR DB_num_rows($Counts)>0) {
 			$YPos -=$LineHeight;
@@ -385,5 +385,3 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

@@ -10,7 +10,7 @@ include('includes/DefineSuppTransClass.php');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);};
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
 $Title = _('Enter Supplier Credit Note Against Goods Received');
 $ViewTopic = 'AccountsPayable';
@@ -27,7 +27,7 @@ if (!isset($_SESSION['SuppTrans'])){
 	echo '<br />
 		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 	/*It all stops here if there aint no supplier selected and credit note initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
@@ -349,4 +349,3 @@ if (DB_num_rows($GRNResults)>0){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

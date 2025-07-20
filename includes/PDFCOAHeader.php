@@ -37,4 +37,3 @@ $FontSize=12;
 $LineHeight=$FontSize*1.25;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
-?>

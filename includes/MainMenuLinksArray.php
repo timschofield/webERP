@@ -75,5 +75,3 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
 	}
 }
-
-?>

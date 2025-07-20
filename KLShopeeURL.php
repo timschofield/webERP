@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-require_once 'vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -103,9 +103,9 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				$MyRow = DB_fetch_array($Result);
 				
 				if ($MyRow['manufacturers_id'] == "1"){
-					$ShopeeStoreId = SHOPEE_KAPAL_LAUT_STOREID;
+					$ShopeeStoreId = SHOPEE_STOREID_KAPAL_LAUT;
 				}else if ($MyRow['manufacturers_id'] == "2"){
-					$ShopeeStoreId = SHOPEE_BLINK_STOREID;
+					$ShopeeStoreId = SHOPEE_STOREID_BLINK;
 				}else{
 					$Error = "STORE";
 				}
@@ -167,8 +167,3 @@ function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPL
 		</form>';
 
 } // End of function display()
-
-
-
-
-?>

@@ -1,12 +1,12 @@
 /* Miscellaneous JavaScript functions. */
 
 function defaultControl(c) {
-c.select();
-c.focus();
+	c.select();
+	c.focus();
 }
 
 function ReloadForm(fB) {
-fB.click();
+	fB.click();
 }
 
 function rTN(event) {
@@ -160,8 +160,8 @@ function SortSelect() {
 			}
 		}
 	}
-	return
 }
+
 function SetSortingEvent() {
 	var n = document.getElementsByTagName("th");
 	for (i = 0; i < n.length; i++) {
@@ -211,7 +211,7 @@ function convertDate(dS, dF) {
 			alert("Unknown date format " + dF);
 			return false;
 	}
-return new Date(y, m, d);
+	return new Date(y, m, d);
 }
 
 function initial() {
@@ -248,12 +248,14 @@ function initial() {
 	SetSortingEvent();
 
 	/* Move messages from footer div into header div */
-	document.getElementById('MessageContainerHead').appendChild(
-    document.getElementById('MessageContainerFoot')
-	);
+	if (document.getElementById('MessageContainerFoot') != null) {
+		document.getElementById('MessageContainerHead').appendChild(
+			document.getElementById('MessageContainerFoot')
+		);
 
-	/* Show footer div after it has been moved to header div */
-	document.getElementById('MessageContainerFoot').style["display"] = "block";
+		/* Show footer div after it has been moved to header div */
+		document.getElementById('MessageContainerFoot').style["display"] = "block";
+	}
 
 	/* Close button dynamic styling*/
 	var close = document.getElementsByClassName("MessageCloseButton");
@@ -276,12 +278,14 @@ function AddAmount(t, Target, d) {
 		if(d) document.getElementById(d).required="";
 	}
 }
+
 function update1(s) {
 	var ss=s.split(';');
 	var sss=ss.map((a)=>document.getElementById(a).value);
 	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b));
 	document.getElementById('ttl').value = ttl;
 }
+
 function payVerify(b,a) {
 	var s=document.getElementById('update');
 	var s=s.getAttribute('data-ids');
@@ -346,7 +350,8 @@ function ping() {
 	}
 	xmlhttp.open("GET", Target, true);
 	xmlhttp.send();
-	return false}
+	return false
+}
 
 function unload() {
 //	alert(localStorage.Theme);

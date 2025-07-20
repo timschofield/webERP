@@ -533,4 +533,3 @@ $MailMessage .= '<tr>
 
 $MailMessage .= '</table>';
 
-?>

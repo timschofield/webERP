@@ -83,5 +83,3 @@ $LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize, _('Prev Dels'),'right');
 $YPos -= $LineHeight;
 
 $FontSize =12;
-
-?>

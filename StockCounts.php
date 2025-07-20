@@ -57,7 +57,7 @@ if (isset($_GET['gettemplate'])) //download an import template
 	echo '"' . implode('","',$FieldHeadings) . '"';
 
 	// exit cleanly to prevent any unwanted outputs
-	exit;
+	exit();
 }
 
 if ($_GET['Action'] == 'Enter'){
@@ -139,7 +139,7 @@ if ($_GET['Action'] == 'Enter'){
 			prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		//test header row field name and sequence
@@ -149,7 +149,7 @@ if ($_GET['Action'] == 'Enter'){
 				prnMsg (_('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 				fclose($FileHandle);
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 			$Head++;
 		}
@@ -167,7 +167,7 @@ if ($_GET['Action'] == 'Enter'){
 				prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 
 			// cleanup the data (csv files often import with empty strings and such)
@@ -398,4 +398,3 @@ if ($_GET['Action'] == 'Enter'){
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

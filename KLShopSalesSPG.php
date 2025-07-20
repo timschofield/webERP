@@ -50,4 +50,3 @@ echo '</tbody>
 	</form>';
 
 include ('includes/footer.php');
-?>

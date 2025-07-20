@@ -5,8 +5,8 @@
 include ('includes/session.php');
 use Dompdf\Dompdf;
 
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
 $Title = _('Petty Cash Management Report');
@@ -375,5 +375,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 }
-
-?>

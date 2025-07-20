@@ -167,4 +167,4 @@ echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_form
 echo '</table>';
 
 include('includes/footer.php');
-?>
+

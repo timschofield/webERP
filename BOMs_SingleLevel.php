@@ -29,7 +29,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				$BOMTree[$i]['Level'] = $Level; 		// Level
 				if ($Level > 15) {
 					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'),'error');
-					exit;
+					exit();
 				}
 				$BOMTree[$i]['Parent'] = $Parent;		// Assemble
 				$BOMTree[$i]['Component'] = $Row['component'];	// Component
@@ -185,8 +185,6 @@ if (isset($_GET['SelectedParent'])){
 }else if (isset($_POST['SelectedParent'])){
 	$SelectedParent = $_POST['SelectedParent'];
 }
-
-
 
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])){
@@ -728,7 +726,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.','warn');
 			echo '<a href="' . $RootPath . '/WorkCentres.php">' . _('Work Centre Maintenance') . '</a></td></tr></table><br />';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		echo '<select tabindex="3" name="WorkCentreAdded">';
@@ -965,4 +963,3 @@ function arrayUnique($array, $preserveKeys = false)
 }
 
 include('includes/footer.php');
-?>

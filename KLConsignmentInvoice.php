@@ -65,7 +65,6 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
-			require_once 'vendor/autoload.php'; // Ensure DomPDF is loaded via Composer
 
 			// Increase memory limit to avoid exhaustion
 			// ini_set('memory_limit', '512M');
@@ -414,7 +413,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				include('includes/header.php');
 				prnMsg('An error occurred while generating the PDF: ' . $e->getMessage(), 'error');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}else{
 			include('includes/header.php');
@@ -463,5 +462,3 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	include('includes/footer.php');
 
 } // End of function display()
-
-?>

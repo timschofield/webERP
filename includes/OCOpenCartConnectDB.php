@@ -18,7 +18,7 @@ mysqli_set_charset($db_oc, 'utf8');
 
 if ( !$db_oc ) {
 	prnMsg(_('The configuration in the file KLConfig.php for the OpenCart database user name, password and host do not provide the information required to connect to the OpenCart database server'),'error');
-	exit;
+	exit();
 }
 
 function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction = false, $TrapErrors = true) {
@@ -51,7 +51,7 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 		}
 		if ($TrapErrors) {
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 
@@ -59,4 +59,3 @@ function DB_query_oc($SQL, $ErrorMessage = '', $DebugMessage = '', $Transaction 
 
 }
 
-?>

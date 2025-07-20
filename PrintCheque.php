@@ -11,7 +11,7 @@ if (isset($_GET['identifier'])){
 }else{
 	prnMsg(_('Something was wrong without an identifier, please ask administrator for help'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Print Cheque'));
@@ -30,7 +30,7 @@ If (DB_num_rows($Result) == 0){
 	include ('includes/header.php');
 	prnMsg(_('Can not get hundreds name'), 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $CurrencyRow = DB_fetch_array($Result);
@@ -103,7 +103,7 @@ $LeftOvers = $pdf->addTextWrap(350,$YPos,75,$FontSize,locale_number_format($_SES
 $pdf->OutputD($_SESSION['DatabaseName'] . '_Cheque_' . date('Y-m-d') . '_ChequeNum_' . $_GET['ChequeNum'] . '.pdf');
 $pdf->__destruct();
 
-exit;
+exit();
 /* ****************************************************************************************** */
 
 function number_to_words($Number) {
@@ -191,5 +191,3 @@ function number_to_words($Number) {
 
 	return $NumberInWords;
 }
-
-?>

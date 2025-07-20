@@ -4,7 +4,7 @@ include('includes/session.php');
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
 	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
-};
+}
 $Title = _('Depreciation Journal Entry');
 
 $ViewTopic = 'FixedAssets';
@@ -266,7 +266,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' ._('Return to main menu') . '</a>';
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -288,4 +288,3 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	</form>';
 }
 include('includes/footer.php');
-?>

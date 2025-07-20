@@ -106,5 +106,3 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</table>';
 
 include ('includes/footer.php');
-
-?>

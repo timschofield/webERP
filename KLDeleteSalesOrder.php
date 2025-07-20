@@ -12,7 +12,7 @@ include('includes/OCOpenCartConnectDB.php');
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	prnMsg( _('We need an order number to delete it') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $Result = DB_Txn_Begin();
@@ -39,4 +39,3 @@ $Result = DB_Txn_Commit();
 
 include('includes/footer.php');
 
-?>

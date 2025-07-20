@@ -322,5 +322,3 @@ function FindBeneficiaryBankCode($ExcelBankCode){
 	}
 	return $BeneficiaryBankCode;
 }
-
-?>

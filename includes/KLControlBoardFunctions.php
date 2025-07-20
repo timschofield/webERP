@@ -64,7 +64,7 @@
 * OvestockAtSamples - Lists overstock at samples location
 * PackagingItemsOnWrongLocation - Lists packaging items in wrong locations
 * PettyCashBalance - Checks petty cash balance
-* PettyCashBalanceControlControl - Controls petty cash balance accounts
+* PettyCashBalanceControl - Controls petty cash balance accounts
 * PettyCashToBeAuthorized - Lists petty cash to be authorized
 * POStatusControl - Controls purchase order status
 * PurchaseOrdersWrongPlannedDates - Lists purchase orders with wrong planned dates
@@ -1047,7 +1047,7 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	}
 }
 
-function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $Period){
+function PettyCashBalanceControl($Currency, $PCGLAccounts, $AcceptedDifference, $Period){
 	$SQL = "SELECT SUM(pcashdetails.amount)/currencies.rate as amount_idr
 			FROM pcashdetails,pctabs,currencies	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
@@ -4354,5 +4354,3 @@ function CalculateTransferFromBankToDanamon($Company,
 	}
 	return $TransferNeededDanamon;
 }
-
-?>

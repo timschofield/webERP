@@ -1335,5 +1335,3 @@ function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOn
 	}
 }
 
-
-?>

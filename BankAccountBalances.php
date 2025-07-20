@@ -44,7 +44,7 @@ if (DB_num_rows($Result) == 0) {
 		$CurrBalanceRow = DB_fetch_array($CurrBalanceResult);
 
 		$FuncBalanceSQL = "SELECT SUM(amount) AS balance
-							FROM gltotals 
+							FROM gltotals
 							WHERE account='" . $MyBankRow['accountcode'] . "'";
 		$FuncBalanceResult = DB_query($FuncBalanceSQL);
 		$FuncBalanceRow = DB_fetch_array($FuncBalanceResult);
@@ -66,4 +66,3 @@ if (DB_num_rows($Result) == 0) {
 	echo '</table>';
 }
 include('includes/footer.php');
-?>

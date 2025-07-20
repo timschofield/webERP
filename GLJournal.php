@@ -9,7 +9,7 @@
 include ('includes/DefineJournalClass.php');
 
 include ('includes/session.php');
-if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);};
+if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
 $Title = _('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
@@ -124,7 +124,7 @@ if (isset($_POST['LoadTemplate'])) {
 
 		echo '</table>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -158,7 +158,7 @@ if (isset($_POST['SaveTemplate'])) {
 			if (DB_error_no() != 0) {
 				prnMsg(_('The journal template header info could not be saved') , 'error');
 				include ('includes/footer.php');
-				exit;
+				exit();
 			}
 			$LineNumber = 0;
 			foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
@@ -181,7 +181,7 @@ if (isset($_POST['SaveTemplate'])) {
 				if (DB_error_no() != 0) {
 					prnMsg(_('The journal template line info could not be saved') , 'error');
 					include ('includes/footer.php');
-					exit;
+					exit();
 				}
 			}
 			prnMsg(_('The template has been successfully saved') , 'success');
@@ -258,7 +258,7 @@ if (isset($_POST['ConfimSave'])) {
 	echo '</form>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Process Journal')) {
@@ -335,7 +335,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 
 }
 elseif (isset($_GET['Delete'])) {
@@ -652,4 +652,3 @@ else {
 echo '</div>
 	</form>';
 include ('includes/footer.php');
-?>

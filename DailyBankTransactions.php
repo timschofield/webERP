@@ -3,8 +3,8 @@
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
 include ('includes/session.php');
 
-if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);};
-if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);};
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 
 $Title = _('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
@@ -60,7 +60,7 @@ if (!isset($_POST['Show'])) {
 			</table>';
 		prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		while ($MyRow = DB_fetch_array($AccountsResults)) {
 			// Lists bank accounts order by bankaccountname
@@ -244,4 +244,3 @@ if (!isset($_POST['Show'])) {
 	echo '</form>';
 }
 include ('includes/footer.php');
-?>

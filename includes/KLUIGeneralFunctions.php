@@ -622,5 +622,3 @@ function ShowWarningTitle($Text){
 		</p>';
 }
 
-
-?>

@@ -440,4 +440,4 @@ function RepeatText($char, $long){
 	}
 	return $Text;
 }
-?>
+

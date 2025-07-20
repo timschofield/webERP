@@ -35,7 +35,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include ('includes/header.php');
 		prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	/* OK get the row of receipt batch header info from the BankTrans table */
 	$MyRow = DB_fetch_array($Result);
@@ -67,7 +67,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
 	  	}
 		include('includes/footer.php');
-	  	exit;
+	  	exit();
 	}
 	$SQL = "SELECT narrative,
 			amount
@@ -86,7 +86,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br />' . $SQL,'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$HTML = '';
@@ -241,7 +241,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	</form>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
-
-?>

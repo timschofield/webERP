@@ -10,7 +10,8 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 
 if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if ($_POST['Margin'] == '') {
-		header('Location: PricesByCost.php');
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/PricesByCost.php');
+		exit();
 	}
 	if ($_POST['Comparator'] == 1) {
 		$Comparator = '<=';
@@ -302,4 +303,3 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	</form>';
 } /*end of else not submit */
 include ('includes/footer.php');
-?>

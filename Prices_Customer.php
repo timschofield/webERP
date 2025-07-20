@@ -1,8 +1,8 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
 
 $Result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
@@ -36,7 +36,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 			. _('The product selection page should call this page with a valid product code'),'info');
 	echo '<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
@@ -347,7 +347,7 @@ if (DB_num_rows($Result)==0){
 }
 if ($MyRow[1]=='K'){
 	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
-	exit;
+	exit();
 }
 
 echo $Item . ' - ' . $MyRow[0] . '</b></legend>';
@@ -393,7 +393,7 @@ echo '<div class="centre">
 </form>';
 
 include('includes/footer.php');
-exit;
+exit();
 
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) {
 
@@ -482,4 +482,3 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 		$OldStartDate = $MyRow['startdate'];
 	} // end of loop around duplicate no end date prices
 }
-?>

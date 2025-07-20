@@ -28,4 +28,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin + 480,$YPos,60,$FontSize,_('Claim'),
 
 $FontSize=8;
 $PageNumber++;
-?>

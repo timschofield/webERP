@@ -22,7 +22,7 @@ if (!isset($_SESSION['Adjustment'.$identifier])) {
 	prnMsg( _('This page can only be opened if a stock adjustment for a controlled item has been entered') . '<br />','error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_SESSION['Adjustment'.$identifier])){
 	if (isset($_GET['AdjType']) and $_GET['AdjType']!=''){
@@ -38,7 +38,7 @@ if ( $LineItem->Controlled != 1 ){
 	echo '<a href="' . $RootPath . '/StockAdjustments.php?NewAdjustment=Yes">' . _('Enter A Stock Adjustment') . '</a>';
 	prnMsg('<br />' .  _('Notice') . ' - ' . _('The adjusted item must be defined as controlled to require input of the batch numbers or serial numbers being adjusted'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*****  get the page going now... *****/
@@ -64,7 +64,7 @@ if ($LineItem->AdjustmentType == 'ADD'){
 } else {
 	prnMsg( _('The Adjustment Type needs to be set') . '. ' . _('Please try again'). '.' );
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 echo '</b></div>';
 include ('includes/InputSerialItems.php');
@@ -75,4 +75,3 @@ $_SESSION['Adjustment'.$identifier]->Quantity = $TotalQuantity;
 
 /*Also a multi select box for adding bundles to the adjustment without keying, showing only when keying */
 include('includes/footer.php');
-?>

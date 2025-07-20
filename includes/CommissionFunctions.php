@@ -329,5 +329,3 @@ function CalculateCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency
 	}
 
 }
-
-?>

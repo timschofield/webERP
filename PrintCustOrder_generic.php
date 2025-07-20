@@ -1,7 +1,5 @@
 <?php
 
-
-
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
@@ -10,9 +8,9 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$Title = _('Select Order To Print');
 	include('includes/header.php');
 	echo '<div class="centre">
-         <br />
-         <br />
-         <br />';
+		 <br />
+		 <br />
+		 <br />';
 	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
@@ -20,10 +18,10 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-            <ul>
-			    <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			    <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-            </ul>
+			<ul>
+				<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			</ul>
 			</td>
 			</tr>
 			</table>
@@ -32,14 +30,14 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
 $SQL = "SELECT salesorders.debtorno,
-    		salesorders.customerref,
+			salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
 			salesorders.deliverto,
@@ -106,39 +104,40 @@ if (DB_num_rows($Result)==0){
 	exit();
 } elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
-        $MyRow = DB_fetch_array($Result);
-        /* Place the deliver blind variable into a hold variable to used when
-        producing the packlist */
-        $DeliverBlind = $MyRow['deliverblind'];
-        if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
-                $Title = _('Print Packing Slip Error');
-                include('includes/header.php');
-                echo '<p>';
-                prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) .
-                        '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-              echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
-                . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+		$MyRow = DB_fetch_array($Result);
+		/* Place the deliver blind variable into a hold variable to used when
+		producing the packlist */
+		$DeliverBlind = $MyRow['deliverblind'];
+		if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+				$Title = _('Print Packing Slip');
+				$DatePrinted = $MyRow['datepackingslipprinted'];
+				include('includes/header.php');
+				echo '<p>';
+				prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
+						_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($DatePrinted) .
+						'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+			  echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
+				. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
+				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
 
-                echo '<br /><br /><br />';
-                echo  _('Or select another Order Number to Print');
-                echo '<table class="table_index">
+				echo '<br /><br /><br />';
+				echo  _('Or select another Order Number to Print');
+				echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-                        <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-                        <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                        </td>
-                        </tr>
-                        </table>
-                        </div>
-                        <br />
-                        <br />
-                        <br />';
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						</td>
+						</tr>
+						</table>
+						</div>
+						<br />
+						<br />
+						<br />';
 
-                include('includes/footer.php');
-                exit;
-        }//packing slip has been printed.
+				include('includes/footer.php');
+				exit();
+		}//packing slip has been printed.
 }
 
 /*retrieve the order details from the database to print */
@@ -208,7 +207,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 		while ($MyRow2=DB_fetch_array($Result)){
 
-            $ListCount ++;
+			$ListCount ++;
 			$Volume += $MyRow2['quantity'] * $MyRow2['volume'];
 			$Weight += $MyRow2['quantity'] * $MyRow2['grossweight'];
 
@@ -349,7 +348,7 @@ if ($ListCount == 0) {
 			'</a>
 			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
@@ -359,5 +358,3 @@ if ($ListCount == 0) {
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
 }
-
-?>

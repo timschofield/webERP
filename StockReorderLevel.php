@@ -104,4 +104,3 @@ echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockIte
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

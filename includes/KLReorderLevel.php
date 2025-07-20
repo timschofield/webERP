@@ -1277,4 +1277,4 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $Upd
 	}
 	return $EmailText;
 }
-?>
+

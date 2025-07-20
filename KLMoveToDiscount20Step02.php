@@ -120,4 +120,3 @@ include('includes/KLUIGeneralFunctions.php');
 	}
 
 include('includes/footer.php');
-?>

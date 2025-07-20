@@ -16,12 +16,12 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	echo '<br />';
 	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }elseif ((ItemCodeQOH($_GET['Item'],'CODE_FULL', "ALL") != 0) AND (GetTotalItemsChangingPrice() >= MAX_ITEMS_CHANGING_PRICE) AND (!$KL_SystemAdmin)) {
 	echo '<br />';
 	prnMsg(_('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 DB_Txn_Begin();
@@ -48,5 +48,3 @@ KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 DB_Txn_Commit();
 
 include('includes/footer.php');
-
-?>

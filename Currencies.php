@@ -422,7 +422,7 @@ if (!isset($_GET['delete'])) {
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
-		$ErrMsg = _('An error occurred in retrieving the currency information');;
+		$ErrMsg = _('An error occurred in retrieving the currency information');
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_array($Result);
 
@@ -529,4 +529,3 @@ if (!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

@@ -223,13 +223,13 @@ echo '<field>
 		<input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
 		<fieldhelp>', _('If you leave the password boxes empty your password will not change'), '</fieldhelp>
 	</field>';
-	
+
 echo '<field>
 		<label for="PasswordCheck">', _('Confirm Password'), ':</label>
 		<input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
 		<fieldhelp>', _('Confirm the password you entered above'), '</fieldhelp>
 	</field>';
-	
+
 echo '<field>
 		<label for="email">', _('Email'), ':</label>
 		<input name="email" size="40" type="email" value="', $_POST['email'], '" />
@@ -292,5 +292,3 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
-
-?>

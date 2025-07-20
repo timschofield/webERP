@@ -12,8 +12,8 @@ This script is "mirror-symmetric" to script PurchasesReport.php.
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
-if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);};
-if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);};
+if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);}
+if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
 use Dompdf\Dompdf;
 $Title = _('Sales to Customers');
 $ViewTopic = 'Sales';
@@ -297,4 +297,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 }
 echo '</form>';
 // END Procedure division ======================================================
-?>

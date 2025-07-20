@@ -47,7 +47,7 @@ if (!isset($_GET['TransferNo'])){
     echo '</form>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
@@ -84,7 +84,7 @@ If (DB_num_rows($Result)==0){
 	include ('includes/header.php');
 	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 $TransferRow = DB_fetch_array($Result);
@@ -117,4 +117,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, '# Pieces in
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-?>

@@ -2,8 +2,8 @@
 
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Sales By Category By Item Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';
@@ -225,4 +225,3 @@ if (isset($_POST['ShowSales'])){
 
 } //end of if user hit show sales
 include('includes/footer.php');
-?>

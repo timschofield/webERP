@@ -483,4 +483,3 @@ if (!isset($_GET['delete'])) {
 	echo '</form>';
 } // end if user wish to delete
 include('includes/footer.php');
-?>

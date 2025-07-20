@@ -83,5 +83,3 @@ Class Receipt {
 		self::__construct($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag);
 	}
 }
-
-?>

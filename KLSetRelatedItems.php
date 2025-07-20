@@ -118,4 +118,3 @@ if (DB_num_rows($Result) != 0){
 	prnMsg("Number of related items pairs in website catalog: " . locale_number_format($i));
 }
 include ('includes/footer.php');
-?>

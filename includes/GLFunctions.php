@@ -23,7 +23,7 @@ function InsertGLTags($TagArray) {
 		$ErrMsg = _('Cannot insert a GL tag for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL tag record was');
 		foreach ($TagArray as $Tag) {
-			$SQL = "INSERT INTO gltags 
+			$SQL = "INSERT INTO gltags
 					VALUES ( LAST_INSERT_ID(),
 							'" . $Tag . "')";
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -43,8 +43,8 @@ function GetDescriptionsFromTagArray($TagArray) {
 	$TagDescriptions = '';
 	if (isset($TagArray)){
 		foreach ($TagArray as $Tag) {
-			$TagSql = "SELECT tagdescription 
-						FROM tags 
+			$TagSql = "SELECT tagdescription
+						FROM tags
 						WHERE tagref='" . $Tag . "'";
 			$TagResult = DB_query($TagSql);
 			$TagRow = DB_fetch_array($TagResult);
@@ -76,7 +76,7 @@ function GetGLAccountBalance($AccountCode, $PeriodNo){
 }
 
 /*************************************************************************************************************
-Brief Description: Retrieves the name of a GL account 
+Brief Description: Retrieves the name of a GL account
 Parameters:
     $AccountCode - The GL account code
 Returns:
@@ -108,5 +108,3 @@ function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 		return _('N/A');
 	}
 }
-
-?>

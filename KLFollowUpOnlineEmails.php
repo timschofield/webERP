@@ -9,12 +9,12 @@ include('includes/header.php');
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	prnMsg( _('We need an order number to send an email to online customer') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
 	prnMsg( _('We need an email type to send an email to online customer') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_GET['EmailType']!='NoSendThankYou'){
@@ -226,7 +226,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	if (DB_num_rows($Result)==0){
 		prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 		$MyRow = DB_fetch_array($Result);
 		$DeliverBlind = $MyRow['deliverblind'];
@@ -234,7 +234,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	}else{
 		prnMsg( _('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	
 	$MailMessage = '
@@ -354,5 +354,3 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 }
 
 include('includes/footer.php');
-
-?>

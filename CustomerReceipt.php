@@ -10,7 +10,7 @@ customers. It needs to take shipment into account as well (currently it doesn't.
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.php');
-if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);};
+if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);}
 
 include('includes/GetPaymentMethods.php');
 
@@ -92,7 +92,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 	} elseif (DB_num_rows($Result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (!Is_Date($_POST['DateBanked'])){
@@ -267,7 +267,7 @@ if (isset($_POST['CommitBatch'])){
 	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(_('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the batch') . '. ' . _('Processing has been cancelled'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Make an array of the defined bank accounts */
@@ -610,7 +610,7 @@ if (isset($_POST['CommitBatch'])){
 
 	unset($_SESSION['ReceiptBatch' . $identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 
 } /* End of commit batch */
 
@@ -835,7 +835,7 @@ if (DB_num_rows($AccountsResults)==0){
 		</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined') . '. ' . _('You must first') . ' ' . '<a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a>' . _('and general ledger accounts to be affected'),'info');
 	include('includes/footer.php');
-	 exit;
+	 exit();
 } else {
 	echo '<option value=""></option>';
 	while ($MyRow=DB_fetch_array($AccountsResults)){
@@ -1181,10 +1181,6 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	}
 }
 
-
-
-
-
 /*if either a customer is selected or its a GL Entry then set out
 the fields for entry of receipt amt, disc, payee details, narrative */
 
@@ -1296,4 +1292,3 @@ if (isset($_SESSION['ReceiptBatch' . $identifier]->Items) AND count($_SESSION['R
 }
 echo '</form>';
 include('includes/footer.php');
-?>

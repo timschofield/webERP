@@ -167,4 +167,3 @@ if (isset($SelectedAccount)) {
 echo '<p />';
 
 include('includes/footer.php');
-?>

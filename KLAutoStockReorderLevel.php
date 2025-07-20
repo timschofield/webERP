@@ -156,4 +156,4 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 echo '</tbody></table></div></form>';
 include('includes/footer.php');
-?>
+

@@ -54,4 +54,3 @@ echo '</tr></table>';
 //end of while loop
 
 include('includes/footer.php');
-?>

@@ -25,7 +25,7 @@ if (!isset($DebtorNo)) {
 		<br />' . _('When the pages is called from within the system this will always be the case').' <br />' .
 			_('Select a customer first then select the link to add/edit/delete branches'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -731,7 +731,7 @@ if (!isset($_GET['delete'])) {
 			prnMsg(_('There are no sales people defined as yet') . ' - ' . _('customer branches must be allocated to a sales person') . '. ' . _('Please use the link below to define at least one sales person'),'error');
 			echo '<p align="center"><a href="' . $RootPath . '/SalesPeople.php">' . _('Define Sales People') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		echo '<field>
@@ -758,7 +758,7 @@ if (!isset($_GET['delete'])) {
 		prnMsg(_('There are no areas defined as yet') . ' - ' . _('customer branches must be allocated to an area') . '. ' . _('Please use the link below to define at least one sales area'),'error');
 		echo '<br /><a href="' . $RootPath. '/Areas.php">' . _('Define Sales Areas') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<field>
@@ -793,7 +793,7 @@ if (!isset($_GET['delete'])) {
 		prnMsg(_('There are no stock locations defined for which this user has access to as yet') . ' - ' . _('customer branches must refer to a default location where stock is normally drawn from') . '. ' . _('Please use the link below to define at least one stock location'),'error');
 		echo '<br /><a href="', $RootPath, '/Locations.php">', _('Define Stock Locations'), '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<field>
@@ -845,7 +845,7 @@ if (!isset($_GET['delete'])) {
 		prnMsg(_('There are no tax groups defined - these must be set up first before any branches can be set up') . '
 				<br /><a href="' . $RootPath . '/TaxGroups.php">' . _('Define Tax Groups') . '</a>','error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<field>
 			<label for="TaxGroup">' . _('Tax Group').':</label>
@@ -885,7 +885,7 @@ if (!isset($_GET['delete'])) {
 		prnMsg(_('There are no shippers defined - these must be set up first before any branches can be set up') . '
 				<br /><a href="' . $RootPath . '/Shippers.php">' . _('Define Shippers') . '</a>','error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<field>
 			<label for="DefaultShipVia">' . _('Default freight/shipper method') . ':</label>
@@ -974,4 +974,3 @@ if (!isset($_GET['delete'])) {
 }//end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

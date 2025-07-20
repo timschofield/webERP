@@ -40,7 +40,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				ORDER BY prices.startdate DESC";
 
 		$Result = DB_query($SQL, $ErrMsg);
-		
+
 		if (DB_num_rows($Result) == 0) {
 
 			/*No special customer specific pricing found. Now, try the customers normal price list but look for special limited time prices */
@@ -77,7 +77,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				if (DB_num_rows($Result) == 0) {
 
 					/* Now check the price matrix */
-					$SQL = "SELECT max(pricematrix.price) 
+					$SQL = "SELECT max(pricematrix.price)
 							FROM pricematrix,
 								debtorsmaster
 							WHERE pricematrix.stockid = '" . $StockID . "'
@@ -87,11 +87,11 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 								AND pricematrix.startdate <= CURRENT_DATE
 								AND pricematrix.enddate >= CURRENT_DATE";
 					$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
-	
+
 					$Result = DB_query($SQL, $ErrMsg);
 
 					if (DB_num_rows($Result) == 0) {
-						$SQL = "SELECT pricematrix.price 
+						$SQL = "SELECT pricematrix.price
 								FROM pricematrix,
 									debtorsmaster
 								WHERE debtorsmaster.salestype = pricematrix.salestype
@@ -121,4 +121,3 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 		return 0;
 	}
 }
-?>

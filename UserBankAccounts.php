@@ -240,4 +240,3 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 }
 
 include('includes/footer.php');
-?>

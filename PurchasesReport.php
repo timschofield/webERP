@@ -12,8 +12,8 @@ This script is "mirror-symmetric" to script SalesReport.php.
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
-if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);};
-if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);};
+if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);}
+if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
 $Title = _('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
@@ -218,7 +218,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>';
 } else {
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
@@ -266,10 +266,9 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 }
 echo '<div class="centre">',
 		'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-		'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		'<button onclick="window.location=\'' . $RootPath . '/index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 	'</div>';
 
 echo	'</form>';
 include('includes/footer.php');
 // END Procedure division ======================================================
-?>

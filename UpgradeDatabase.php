@@ -161,7 +161,7 @@ if (isset($_POST['DoUpgrade'])){
 					if (!is_writable('config.php')) {
 						prnMsg( _('To perform this upgrade the web server must have write access to the config.php file. Currently the web-server is reporting that it does not have appropriate permission. Please ensure config.php is writable and run the upgrade again'), 'warning');
 						include('includes/footer.php');
-						exit;
+						exit();
 					} else {
 						$ConfigFileContents = file_get_contents('config.php');
 						$ConfigFileContents = str_replace('dbuser','DBUser', $ConfigFileContents);
@@ -298,4 +298,3 @@ if (isset($_POST['DoUpgrade'])){
 } /*Dont do upgrade */
 
 include('includes/footer.php');
-?>

@@ -1,8 +1,8 @@
 <?php
 //Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Internal Stock Request Inquiry');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
@@ -22,7 +22,7 @@ if (isset($_POST['RequestNo'])) {
 if (isset($_POST['Search']) and $RequestNo == '') {
 	prnMsg( _('An internal request number must be entered'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['SearchPart'])) {
@@ -107,7 +107,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 			} else {
 				prnMsg(_('You have no authority to do the internal request inquiry'),'error');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 		echo '<input type="hidden" name="Locations" value="' . serialize($Locations) . '" />';//store the locations for later using;
@@ -166,7 +166,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 	} else {
 		prnMsg(_('There are no internal request result available for your or your department'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 		//now lets add the time period option
@@ -274,7 +274,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
 		echo '<br />
 			<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		exit;
+		exit();
 	}
 
 
@@ -503,7 +503,7 @@ if(isset($StockItemsResult)){
 }
 
 include('includes/footer.php');
-exit;
+exit();
 
 function GetSearchItems ($SQLConstraint='') {
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
@@ -552,4 +552,3 @@ function GetSearchItems ($SQLConstraint='') {
 	return $StockItemsResult;
 
 	}
-?>

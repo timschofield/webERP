@@ -1374,5 +1374,3 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 		$Result = DB_Txn_Rollback();
 	}
 }
-
-?>

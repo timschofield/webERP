@@ -49,7 +49,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 			</div>
 			</form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$SQL = "INSERT IGNORE INTO prodspecs
 							(keyval,
@@ -168,7 +168,7 @@ if (isset($_GET['ListTests'])) {
 				</tr>
 			</thead>
 			<tbody>';
-	};
+	}
 
 	$x=0;
 	while ($MyRow=DB_fetch_array($Result)) {
@@ -226,7 +226,7 @@ if (isset($_GET['ListTests'])) {
 		</div>
 		</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }  //ListTests
 if (isset($_POST['AddTests'])) {
 	for ($i=0;$i<=$_POST['AddTestsCounter'];$i++){
@@ -635,4 +635,3 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

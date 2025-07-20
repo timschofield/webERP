@@ -188,4 +188,3 @@ if(isset($Printer)) {
 		'</div>';
 }
 include('includes/footer.php');
-?>

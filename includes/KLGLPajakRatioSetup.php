@@ -24,5 +24,3 @@ $PajakRatio_HPP_LY = 0;
 $PajakRatio_Taxes_LY = 0;
 $PajakRatio_ProfitAfterTax_LY = 0;
 $PajakRatio_Salaries_LY = 0;
-
-?>

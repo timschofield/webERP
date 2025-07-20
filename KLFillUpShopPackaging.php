@@ -12,4 +12,3 @@ include('includes/KLUIGeneralFunctions.php');
 CheckPackagingToBeRefilled(TRUE, TRUE, $RootPath);
 
 include ('includes/footer.php');
-?>

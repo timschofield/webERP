@@ -45,4 +45,3 @@ $pdf->Line($FormDesign->Column4->startx, $Page_Height - $FormDesign->Column4->st
 $pdf->Line($FormDesign->Column5->startx, $Page_Height - $FormDesign->Column5->starty, $FormDesign->Column5->endx,$Page_Height - $FormDesign->Column5->endy);
 
 $PageNumber++;
-?>

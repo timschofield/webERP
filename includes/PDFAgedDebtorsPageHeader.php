@@ -52,5 +52,3 @@ $LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueD
 $LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over'),'centre');
 
 $YPos =$YPos - (2*$LineHeight);
-
-?>

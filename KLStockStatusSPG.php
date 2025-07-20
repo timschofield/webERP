@@ -27,10 +27,25 @@ $Result = DB_query("SELECT description,
 
 $MyRow = DB_fetch_array($Result);
 
-$DecimalPlaces = $MyRow['decimalplaces'];
+// Check if $MyRow is valid before accessing its elements
+if ($MyRow) {
+	$DecimalPlaces = $MyRow['decimalplaces'];
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
-	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $MyRow['description'] . ' : ' . _('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
+		'" alt="" /><b>' . ' ' . $StockID . ' - ' . $MyRow['description'] . ' : ' . _('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
+} else {
+	// Set a default value for $DecimalPlaces when no stock item is found
+	$DecimalPlaces = 0;
+	
+	if ($StockID != '') {
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
+			'" alt="" /><b>' . ' ' . $StockID . ' - ' . _('Item Not Found') . '</b></p>';
+		prnMsg(_('The item with code') . ' ' . $StockID . ' ' . _('does not exist in the database'), 'error');
+	} else {
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
+			'" alt="" /><b>' . _('Stock Status') . '</b></p>';
+	}
+}
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -40,7 +55,6 @@ echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Availabil
 
 echo '<table class="selection">
 		<thead>
-			<th></th>
 			<th class="SortedColumn">' . _('Location') . '</th>
 			<th class="SortedColumn">' . _('QOH') . '</th>
 			<th class="SortedColumn">' . _('In Transit') . '</th>
@@ -63,7 +77,7 @@ if ($StockID != ''){
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	echo $TableHeader;
+//	echo $TableHeader;
 	while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
@@ -97,7 +111,7 @@ if ($StockID != ''){
 				<td>' . $MyRow['locationname'] . '</td>
 				<td class="number">' . locale_number_format_zero_blank($Available, $DecimalPlaces) . '</td>
 				<td class="number">' . locale_number_format_zero_blank($InTransit, $DecimalPlaces) . '</td>
-				</tr>';
+			</tr>';
 
 	}
 }
@@ -108,4 +122,3 @@ echo '</tfooter>
 	</form>';
 include('includes/footer.php');
 
-?>

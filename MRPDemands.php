@@ -6,7 +6,7 @@
 // to pass value of $StockID to functions.
 
 include('includes/session.php');
-if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);};
+if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);}
 $Title = _('MRP Demands');
 $ViewTopic= 'MRP';
 $BookMark = 'MRP_MasterSchedule';
@@ -441,4 +441,3 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 } // End of function display()
 
 include('includes/footer.php');
-?>

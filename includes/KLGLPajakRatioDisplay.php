@@ -112,4 +112,3 @@ echo '<tr class="striped_row">
 echo '</tbody>
 	</table>
 	</div>';
-?>

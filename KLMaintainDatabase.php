@@ -14,4 +14,3 @@ KL_DailyCleanDB(TRUE, '');
 
 
 include ('includes/footer.php');
-?>

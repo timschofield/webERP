@@ -175,7 +175,7 @@ if ($NoOfLabels >0){
 		$PdfFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		
+
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								_('Work Order Number') . ' ' . $SelectedWO,
@@ -205,4 +205,3 @@ if ($NoOfLabels >0){
 	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }
-?>

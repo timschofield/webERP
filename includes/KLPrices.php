@@ -448,5 +448,3 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $EmailText){
 	}
 	return $EmailText;
 }
-
-?>

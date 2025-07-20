@@ -1,6 +1,6 @@
 <?php
 include ('includes/session.php');
-if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);};
+if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 $Title = _('Stock On Hand By Date');
 $ViewTopic = 'Inventory';
 $BookMark = '';
@@ -195,4 +195,3 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 }
 
 include ('includes/footer.php');
-?>

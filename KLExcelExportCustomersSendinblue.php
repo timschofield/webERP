@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-require_once 'vendor/autoload.php';
+
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -262,5 +262,3 @@ function display($RootPath, $Theme) {
          </form>';
 	include('includes/footer.php');
 } // End of function display()
-
-?>

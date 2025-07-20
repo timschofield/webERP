@@ -17,7 +17,7 @@ function parseToXML($htmlStr)
 }
 
 $SQL = "SELECT * FROM custbranch WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');;
+$ErrMsg = _('An error occurred in retrieving the information');
 $Result = DB_query($SQL, $ErrMsg);
 
 header("Content-type: text/xml");
@@ -38,4 +38,3 @@ while ($MyRow = DB_fetch_array($Result)){
 
 // End XML file
 echo '</markers>';
-?>

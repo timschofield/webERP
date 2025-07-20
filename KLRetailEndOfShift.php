@@ -161,4 +161,3 @@ include ('includes/KLSilentPrinting.php');
 //################## PRINTING STUFF ##################### 
 
 include ('includes/footer.php');
-?>

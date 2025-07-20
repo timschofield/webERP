@@ -151,4 +151,3 @@ if (($StockID != '') AND ($ServiceCode != '')){
 }
 include('includes/footer.php');
 
-?>

@@ -589,5 +589,3 @@ function UpdateMultiCompanyAccounts(){
 	prnMsg('      Adjusting groups into ChartmasterPI table', 'info');
 }
 
-
-?>

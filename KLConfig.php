@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "032";
+$KLCodeVersion = "033";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains("LOCAL-TEST")){
@@ -70,7 +70,6 @@ if ($webERPType == 'PRODUCTION'){
 
 	// use the production company folder
 	$DefaultCompany = 'kurakura_kl_erp';
-	$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut' );
 	
 	// use the production Opencart DB
 	$OpenCartDBUser = 'DBU_kl_shop';
@@ -90,7 +89,6 @@ if ($webERPType == 'PRODUCTION'){
 	
 	// use the TEST company folder
 	$DefaultCompany  = 'test_erp';
-	$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
 	
 	// use the TEST Opencart DB
 	$OpenCartDBUser = 'DBU_ptadu_test';
@@ -125,5 +123,3 @@ if ($ErrorReportingType == 'PRODUCTION'){
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 }
-
-?>

@@ -29,5 +29,3 @@ CreateTable('glbudgetdetails', "CREATE TABLE IF NOT EXISTS `glbudgetdetails` (
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Move the budget amounts to new tables, separating budgets into 2 tables'));
 }
-
-?>

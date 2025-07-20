@@ -10,8 +10,6 @@
  * Need to allow adding serial numbers/batches and deleting batches/serial numbers
  */
 
-
-
 include('includes/session.php');
 
 
@@ -31,7 +29,7 @@ if (isset($_GET['StockID'])){ //the page was called for the first time - get var
 if (!isset($WO) OR $WO==''){
 	prnMsg(_('This page must to be called from the work order entry screen'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if ($Serialised==1){
 	$Title = _('Work Order Serial Numbers in Progress');
@@ -356,4 +354,3 @@ echo '</div>
       </form>';
 
 include('includes/footer.php');
-?>

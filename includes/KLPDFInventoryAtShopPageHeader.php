@@ -36,5 +36,3 @@ $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Check pricetags'), 'lef
 $YPos =$YPos - (2*$LineHeight);
 
 $PageNumber++;
-
-?>

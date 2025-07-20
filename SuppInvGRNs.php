@@ -22,7 +22,7 @@ if (!isset($_SESSION['SuppTrans'])){
 	echo '<br />
 			<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
@@ -200,7 +200,7 @@ if (DB_num_rows($GRNResults)==0){
 	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
 	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive')  . '</a></p></div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Set up a table to show the GRNs outstanding for selection */
@@ -316,4 +316,3 @@ if (!isset($_GET['Modify'])){
 echo '</div>
 	</form>';
 include('includes/footer.php');
-?>

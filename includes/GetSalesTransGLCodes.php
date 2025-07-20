@@ -295,5 +295,3 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 	$MyRow = DB_fetch_array($Result);
 	return $MyRow;
 }
-
-?>

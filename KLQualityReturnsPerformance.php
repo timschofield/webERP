@@ -301,7 +301,3 @@ function StockAdjustmentsByItemAndReason($Days, $RootPath){
 		</table>
 		</div>';
 }	
-
-
-
-?>

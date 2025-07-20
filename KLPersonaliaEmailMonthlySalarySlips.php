@@ -59,7 +59,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		
 		if (DB_num_rows($Result) != 0){
 			// Initialize DomPDF
-			require_once 'vendor/autoload.php';
+			
 
 			while ($MyRow = DB_fetch_array($Result)) {
 				// Prepare filename
@@ -232,5 +232,3 @@ function EmailTextForEmployee($Name, $Company, $SalaryType){
 	}
 	return $Text;
 }
-
-?>

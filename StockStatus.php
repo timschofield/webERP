@@ -312,5 +312,3 @@ if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
 
 echo '</div></form>';
 include('includes/footer.php');
-
-?>

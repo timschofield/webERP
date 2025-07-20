@@ -3,10 +3,10 @@
 include('includes/session.php');
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
-};
+}
 if (isset($_POST['EndDate'])) {
 	$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);
-};
+}
 $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
@@ -20,7 +20,7 @@ if (DB_num_rows($TypeResult) == 0) {
 		' <a href="' . $RootPath . '/SelectProduct.php" target="_blank">' .
 		' ' . _('here') . ' ' . '</a>' . _('to create them'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
@@ -67,7 +67,7 @@ if (!isset($Item)) {
 	prnMsg(_('An item must first be selected before this page is called') . '. ' .
 		_('The product selection page should call this page with a valid product code'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $PartDescription = $MyRow[0];
@@ -76,7 +76,7 @@ if ($MyRow[1] == 'K') {
 	prnMsg(_('The part selected is a kit set item') . ', ' .
 		_('these items explode into their components when selected on an order') . ', ' .
 		_('prices must be set up for the components and no price can be set for the whole kit'), 'error');
-	exit;
+	exit();
 }
 
 if (isset($_POST['submit'])) {
@@ -354,7 +354,7 @@ while ($MyRow = DB_fetch_array($TypeResult)) {
 echo '</select>
 	</field>';
 
-DB_free_result($TypeResult); 
+DB_free_result($TypeResult);
 
 if (!isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -379,7 +379,7 @@ echo '<field>
 		<label for="Price">' . _('Price') . ':</label>
 		<input type="text" class="number" required="required" name="Price" size="12" maxlength="11" value="';
 if (isset($_POST['Price'])) {
-	 echo $_POST['Price'];
+	echo $_POST['Price'];
 }
 echo '" />
 	</field>
@@ -432,7 +432,7 @@ function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {
 									AND startdate ='" . $StartDate . "'
 									AND enddate = '" . $EndDate . "'
 									AND debtorno =''";
-					DB_query($SQL); 
+					DB_query($SQL);
 				}
 			} //end of if startdate  after NextStartDate - we have a new NextStartDate
 		} //end of if set NextStartDate
@@ -473,5 +473,3 @@ function ReSequenceEffectiveDates($Item, $PriceList, $CurrAbbrev) {
 	} // end of loop around duplicate no end date prices
 
 } // end function ReSequenceEffectiveDates
-
-?>

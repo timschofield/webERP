@@ -27,5 +27,3 @@ $TotalPotongan = $MyRow['potonganjht'] +
 				$MyRow['potonganlain2'];
 
 $TotalBawaPulang = $TotalPenerimaan + $TotalPotongan + $MyRow['bulatan'];
-
-?>

@@ -31,4 +31,3 @@ While ($MyRow = DB_fetch_row($Result)){
 	}
 }
 fclose($fp);
-?>

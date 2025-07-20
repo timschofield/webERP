@@ -3,7 +3,7 @@
 // Assign cash from one tab to another.
 
 include('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = _('Assignment of Cash from Tab to Tab');
@@ -386,8 +386,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			$SelectedTabsTo = array(0,$SelectedTabsTo);
 		}
 
-
-
 		echo '</tbody>
 			<tfoot>
 				<tr>
@@ -404,8 +402,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
         echo '</div>
               </form>';
 	}
-
-
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -457,4 +453,3 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 }
 
 include('includes/footer.php');
-?>

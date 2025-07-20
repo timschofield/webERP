@@ -89,11 +89,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 */
 }
 
-
-
-
 /***************************************************************************************
-* SECTION 1         
+* SECTION 1
 ***************************************************************************************/
 
 if ($ProcessSection01){
@@ -102,7 +99,7 @@ if ($ProcessSection01){
 	}
 
 	/***************************************************************************************
-	* STANDARD COST         
+	* STANDARD COST
 	***************************************************************************************/
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
@@ -136,7 +133,7 @@ if ($ProcessSection01){
 	}
 
 	/***************************************************************************************
-	* RETAIL PRICE         
+	* RETAIL PRICE
 	***************************************************************************************/
 
 	if ($KL_SystemAdmin
@@ -259,7 +256,7 @@ if ($ProcessSection01){
 	}
 
 	/***************************************************************************************
-	* BALANCE ACCOUNTS         
+	* BALANCE ACCOUNTS
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
 		GLTransDateControl();
@@ -268,17 +265,17 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		CustomersDebtControl(10000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("IDR", "('111111209',
+		PettyCashBalanceControl("IDR", "('111111209',
 												'111111309')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("USD", "('111205010')", 1, $PeriodNow);
+		PettyCashBalanceControl("USD", "('111205010')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $PeriodNow);
+		PettyCashBalanceControl("EUR", "('111205020')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("THB", "('111205030',
+		PettyCashBalanceControl("THB", "('111205030',
 												'111204030AD')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $PeriodNow);
+		PettyCashBalanceControl("HKD", "('111205040')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 
@@ -336,7 +333,6 @@ if ($ProcessSection01){
 		BalanceAccountControl("111204030AD",           0,  500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
-	
 
 	if ($KL_SystemAdmin){
 		BalanceListAccountControl("('111121101AD',
@@ -427,11 +423,11 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  22500000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100AD",  -50000000,   10000000, $PeriodNow);
+		BalanceAccountControl("111311100AD",  -50000000,   20000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -446,7 +442,7 @@ if ($ProcessSection01){
 	}
 
 	/***************************************************************************************
-	* STOCK CONTROL         
+	* STOCK CONTROL
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
@@ -607,7 +603,6 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
@@ -675,9 +670,8 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-
 	/***************************************************************************************
-	* PACKAGING CONTROL         
+	* PACKAGING CONTROL
 	***************************************************************************************/
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
@@ -690,7 +684,7 @@ if ($ProcessSection02){
 	}
 
 	/***************************************************************************************
-	* SALES CONTROL         
+	* SALES CONTROL
 	***************************************************************************************/
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
@@ -778,7 +772,7 @@ if ($ProcessSection02){
 	}
 
 	/***************************************************************************************
-	* PO, Sales Orders         
+	* PO, Sales Orders
 	***************************************************************************************/
 
 	if ($KL_BusinessDevelopmentManager
@@ -978,8 +972,9 @@ if ($ProcessSection02){
 	}
 
 	/***************************************************************************************
-	* Other tests     
+	* Other tests
 	***************************************************************************************/
+
 	if ($KL_ITSupport
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
@@ -1078,5 +1073,3 @@ if ($KL_SystemAdmin){
 }
 
 include ('includes/footer.php');
-
-?>

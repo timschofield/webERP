@@ -2,8 +2,8 @@
 /* Entry of new work orders */
 
 include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 
@@ -53,7 +53,7 @@ if(is_null($LocRow['loccode']) OR $LocRow['loccode']=='') {
 	prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $LocCode,'error');
 	echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
 	include('includes/footer.php');
-	exit;
+		exit();
 }
 
 foreach ($_POST as $key=>$value) {
@@ -128,6 +128,7 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 						ORDER BY stockmaster.stockid
 							";
 	} elseif(mb_strlen($_POST['CustomerRef'])>0) {
+		exit();
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units,
@@ -1057,4 +1058,3 @@ if(isset($SearchResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-?>

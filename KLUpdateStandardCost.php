@@ -10,12 +10,12 @@ include('includes/KLBoards.php');
 If (!isset($_GET['StockId']) OR $_GET['StockId']==''){
 	prnMsg( _('We need an item code to change the standrd cost') , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 If (!isset($_GET['NewCost']) OR $_GET['NewCost']==''){
 	prnMsg( _('We need anew standard cost to apply to the item ') . $_GET['StockId'] , 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $SQL = "SELECT materialcost,
 				labourcost,
@@ -51,5 +51,3 @@ if (DB_num_rows($Result)==0) {
 }
 
 include('includes/footer.php');
-
-?>

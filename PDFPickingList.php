@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 include('includes/SQL_CommonFunctions.php');
 
 /* Check that the config variable is set for
@@ -14,7 +14,7 @@ if ($_SESSION['RequirePickingNote']==0) {
 	echo '<br />';
 	prnMsg( _('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* Show selection screen if we have no orders to work with */
@@ -348,9 +348,8 @@ if ($ListCount == 0){
 	$Title = _('Print Picking List Error');
 	include('includes/header.php');
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 }
-?>

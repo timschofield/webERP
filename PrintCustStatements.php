@@ -551,5 +551,3 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

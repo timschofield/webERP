@@ -13,11 +13,9 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 UpdateTablePrice($_GET['Item'], $_GET['NewPrice']);
 
 include('includes/footer.php');
-
-?>

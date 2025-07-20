@@ -15,7 +15,3 @@ include ('includes/OCWeberpToOpenCartSync.php');
 WeberpToOpenCartDailySync(TRUE );
 
 include ('includes/footer.php');
-
-
-
-?>

@@ -217,4 +217,3 @@ if (isset($_POST['View'])) {
 }
 include('includes/footer.php');
 
-?>

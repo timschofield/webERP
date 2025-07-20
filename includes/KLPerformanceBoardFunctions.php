@@ -1927,5 +1927,3 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		InsertKPI("SALES-TREND-RETAIL-". $NumDays . "D-" . $BrandCode, $TrendThisYear*100);
 	}
 }
-
-?>

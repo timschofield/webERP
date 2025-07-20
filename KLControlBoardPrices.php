@@ -695,5 +695,3 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 	}
 	return $Issues;
 }
-
-?>

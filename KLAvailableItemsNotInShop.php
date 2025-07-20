@@ -92,4 +92,3 @@ if (!(isset($_POST['Search']))) {
 
 }
 include ('includes/footer.php');
-?>

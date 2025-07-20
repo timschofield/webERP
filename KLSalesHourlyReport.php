@@ -259,5 +259,3 @@ function HourlyPerformance($numDays, $RootPath){
 		}
 	}
 }
-
-?>

@@ -14,7 +14,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action']
 	echo '<br />';
 	prnMsg( _('This page must be given the item code, Retail price and action due.'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_GET['Action'] == "New"){
@@ -30,7 +30,7 @@ if ($_GET['Action'] == "New"){
 	echo '<br />';
 	prnMsg( _('Action unknown'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 DB_Txn_Begin();
@@ -49,5 +49,3 @@ if ($_GET['Action'] == "Finish"){
 DB_Txn_Commit();
 
 include('includes/footer.php');
-
-?>

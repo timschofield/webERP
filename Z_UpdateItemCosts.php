@@ -33,7 +33,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) ,'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
@@ -43,7 +43,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 			prnMsg (_('The file to import the item cost updates from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('The column headings must be') . ' StockID, Material Cost, Labour Cost, Overhead Cost','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$HeadingColumnNumber++;
 	}
@@ -125,5 +125,3 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 }
 
 include('includes/footer.php');
-
-?>

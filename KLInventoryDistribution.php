@@ -284,4 +284,3 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 } // End of function display()
 
 include('includes/footer.php');
-?>

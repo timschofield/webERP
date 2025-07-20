@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDF'])){
 	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	NewPageHeader();
@@ -246,7 +246,7 @@ if (isset($_POST['PrintPDF'])){
 	      			echo '<br />' .  $SQL;
 	   		}
 	   		include('includes/footer.php');
-	   		exit;
+	   		exit();
 		}
 
 		$SalesRow = DB_fetch_array($SalesResult);
@@ -257,9 +257,9 @@ if (isset($_POST['PrintPDF'])){
 			$LocationCode = $_POST['Location'];
 		}
 
-		// Get the demand 
+		// Get the demand
 		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
-		// Get the QOO 
+		// Get the QOO
 		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
 		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
@@ -310,12 +310,12 @@ if (isset($_POST['PrintPDF'])){
 		prnMsg( _('There were no items in the range and location specified'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$PDF->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_PrefSupplier_' . Date('Y-m-d') . '.pdf');
 		$PDF-> __destruct();
 	}
-	exit; // Javier: needs check
+	exit(); // Javier: needs check
 
 } else { /*The option to print PDF was not hit */
 
@@ -384,4 +384,3 @@ if (isset($_POST['PrintPDF'])){
 
 	include('includes/footer.php');
 } /*end of else not PrintPDF */
-?>

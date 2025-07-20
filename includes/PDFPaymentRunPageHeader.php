@@ -40,4 +40,3 @@ $LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,$_POST['Currency'] . ' ' .
 $LeftOvers = $pdf->addTextWrap(415,$YPos,60,$FontSize,_('Ex Diff') . ' ' . $_SESSION['CompanyRecord']['currencydefault'], 'centre');
 
 $YPos =$YPos - (2*$LineHeight);
-?>

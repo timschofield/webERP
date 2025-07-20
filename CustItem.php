@@ -228,7 +228,7 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 			</div>
 		</form>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -473,4 +473,3 @@ if (!isset($DebtorsMasterResult)) {
 }
 
 include ('includes/footer.php');
-?>

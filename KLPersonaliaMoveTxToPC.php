@@ -268,5 +268,3 @@ function display($Title)
          </form>';
 
 } // End of function display()
-
-?>

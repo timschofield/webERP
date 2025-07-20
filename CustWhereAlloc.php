@@ -228,4 +228,3 @@ if(isset($Printer)) {
 		'</div>';// "Print This" button.
 }
 include('includes/footer.php');
-?>

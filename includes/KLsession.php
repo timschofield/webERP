@@ -69,5 +69,3 @@ function URLWithoutScriptNameContains($keyword) {
     // Check if the URL contains the keyword
     return strpos(strtoupper($urlWithoutScript), strtoupper($keyword)) !== false;
 }
-
-?>

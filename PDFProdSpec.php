@@ -114,7 +114,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $PaperSize = 'Letter';
 
@@ -289,5 +289,3 @@ while (mb_strlen($LeftOvers) > 1) {
 
 $pdf->OutputI($_SESSION['DatabaseName'] . '_ProductSpecification_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-
-?>

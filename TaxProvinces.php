@@ -242,4 +242,3 @@ echo '<br />
 	</div>';
 
 include('includes/footer.php');
-?>

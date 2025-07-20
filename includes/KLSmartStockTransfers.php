@@ -507,6 +507,3 @@ function PrintHeaderSmartStockDispatch(&$pdf,&$YPos,&$PageNumber,$Page_Height,$T
 
 	$PageNumber++;
 } // End of PrintHeaderSmartStockDispatch() function
-
-
-?>

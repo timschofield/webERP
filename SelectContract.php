@@ -209,4 +209,3 @@ echo '</table>
       </form>
       <br />';
 include('includes/footer.php');
-?>

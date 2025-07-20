@@ -650,4 +650,3 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 	}
 }
 
-?>

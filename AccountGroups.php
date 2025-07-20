@@ -348,7 +348,7 @@ if(!isset($_GET['delete'])) {
 		if(DB_num_rows($Result) == 0) {
 			prnMsg( _('The account group name does not exist in the database'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
 
@@ -467,4 +467,3 @@ if(!isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>
