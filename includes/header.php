@@ -77,10 +77,10 @@ echo '<style>
 	.mobile-menu-select {
 		display: none;
 		width: auto;
-		min-width: 200px;
+		min-width: 120px;
 		font-size: 16px;
 		font-weight: bold;
-		padding: 8px 12px;
+		padding: 6px 6px;
 		border: 2px solid #007bff;
 		border-radius: 6px;
 		background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
@@ -135,7 +135,7 @@ echo '<style>
 		.action-icons-desktop {
 			display: flex !important;
 			align-items: center !important;
-			gap: 5px !important;
+			gap: 0px !important;
 			margin: 0 !important;
 			padding: 0 !important;
 		}
@@ -151,7 +151,7 @@ echo '<style>
 		#ActionIcon a {
 			display: flex !important;
 			align-items: center !important;
-			gap: 5px !important;
+			gap: 0px !important;
 			text-decoration: none !important;
 		}
 		
@@ -174,13 +174,13 @@ echo '<style>
 		
 		/* Reduce spacing between header and script title */
 		.ScriptTitle {
-			margin-top: 5px !important;
+			margin-top: 0px !important;
 			margin-bottom: 0 !important;
 			padding-top: 0 !important;
 		}
 		
 		header.noPrint {
-			margin-bottom: 5px !important;
+			margin-bottom: 0px !important;
 			padding-bottom: 0 !important;
 		}
 	}
