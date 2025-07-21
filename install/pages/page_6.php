@@ -4,6 +4,7 @@ $Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
+$MySQLPort = $_SESSION['Installer']['Port'];
 $_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
 $DefaultDatabase = 'default';
 
@@ -27,7 +28,7 @@ if (isset($_POST['install'])) {
 function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 	$Errors = [];
 
-	$DB = @mysqli_connect($HostName, $UserName, $Password);
+	$DB = @mysqli_connect($HostName, $UserName, $Password, null, $MySQLPort);
 
 	if (!$DB) {
 		$Errors[] = _('Failed to connect the database management system');
