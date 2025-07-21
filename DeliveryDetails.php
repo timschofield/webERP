@@ -226,7 +226,7 @@ if(isset($_POST['Update'])
 			$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 			$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 			$_SESSION['Items'.$identifier]->SalesPerson = $_POST['SalesPerson'];
-			$_SESSION['Items'.$identifier]->FreightCost = round($_POST['FreightCost'],2);
+			$_SESSION['Items'.$identifier]->FreightCost = round(floatval($_POST['FreightCost']),2);
 			$_SESSION['Items'.$identifier]->Quotation = $_POST['Quotation'];
 		}
 		/*$_SESSION['DoFreightCalc'] is a setting in the config.php file that the user can set to false to turn off freight calculations if necessary */
