@@ -15,3 +15,6 @@ Thumbs.db
 # Ignore everything in the companies directory
 # except for weberpdemo
 companies/test_erp/logs/weberp.log
+
+#ignore the cache files
+includes/WebClientPrint/wcpcahe/
