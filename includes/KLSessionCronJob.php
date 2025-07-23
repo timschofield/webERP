@@ -16,6 +16,7 @@ $AllowCronJobToBeRun = true;
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
+require $PathPrefix.'vendor/autoload.php';
 
 // KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'includes/KLsession.php');
@@ -23,7 +24,7 @@ include ($PathPrefix . 'includes/KLsession.php');
 
 // KL RICARD Select the database depending on the code version
 $DefaultDatabase = KLDatabaseSelection();
-$DatabaseName = $DefaultDatabase;
+
 // KL RICARD END Select the database depending on the code version
 
 if (!file_exists($PathPrefix . 'config.php')) {
@@ -32,7 +33,9 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
-	header('Location:' . $RootPath . '/install/index.php');
+	// KL RICARD: If the config.php file does not exist, DO NOT redirect to install/index.php as it is a cron job. Something is off, just exit
+	//	header('Location:' . htmlspecialchars_decode($RootPath) . '/install/index.php');
+	// KL RICARD END: If the config.php file does not exist, DO NOT redirect to install/index.php as it is a cron job. Something is off, just exit
 	exit();
 }
 
@@ -53,7 +56,7 @@ if (isset($SessionSavePath)) {
 }
 
 if (!isset($SysAdminEmail)) {
-	$SysAdminEmail = 'webmaster.kapal-laut.com';
+	$SysAdminEmail = 'webmaster@kapal-laut.com';
 }
 
 ini_set('session.gc_maxlifetime', $SessionLifeTime);
@@ -83,22 +86,12 @@ if (isset($_SESSION['DatabaseName'])) {
 	
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
-			/*    if(get_magic_quotes_gpc()) {
-						$_POST['name'] = stripslashes($_POST['name']);
-					}
-			*/
 			$_POST[$PostVariableName] = quote_smart($_POST[$PostVariableName]);
 			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				/*
-				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
-					}
-				*/
 				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
 				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
-
 			}
 		}
 	}
@@ -109,6 +102,11 @@ if (isset($_SESSION['DatabaseName'])) {
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue, ENT_QUOTES, 'UTF-8'));
+		} else {
+			foreach ($GetValue as $GetArrayKey => $GetArrayValue) {
+				$_POST[$GetVariableName][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
+
+			}
 		}
 	}
 
@@ -131,41 +129,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			while ($MyRow = DB_fetch_array($Result)) {
 				if (!isset($_SESSION['Favourites'][$MyRow['href']])) { //The script is removed;
 					$SQL[] = "DELETE FROM favourites WHERE href='" . $MyRow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
-
 				} else {
 					unset($_SESSION['Favourites'][$MyRow['href']]);
 				}
-			}
-			if (count($_SESSION['Favourites']) > 0) {
-				$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-				$k = 0;
-				foreach ($_SESSION['Favourites'] as $url => $ttl) {
-					if ($k) {
-						$SQLi.= ",";
-					}
-					$SQLi.= "('" . $url . "', '" . $ttl . "', '" . $_SESSION['UserID'] . "')";
-					$k++;
-				}
-			}
-			foreach ($SQL as $sq) {
-				$Result = DB_query($sq);
-			}
-			if (isset($SQLi)) {
-				$Result = DB_query($SQLi);
-			}
-		} else {
-
-			$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-			$k = 0;
-			foreach ($_SESSION['Favourites'] as $url => $ttl) {
-				if ($k) {
-					$SQLi.= ",";
-				}
-				$SQLi.= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
-				$k++;
-			}
-			if ($k) {
-				$Result = DB_query($SQLi);
 			}
 		}
 	}
@@ -256,22 +222,18 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 }
 
 /*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
-//if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-//	header('Location: UpgradeDatabase.php');
-//}
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+/* RICARD KL No need to check for updates in cronjobs, just set the DBVersion to the highest file name */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (isset($_SESSION['DBVersion'])
-	and isset($_SESSION['DBUpdateNumber'])
-	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
-	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
-	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
-	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
-	exit();
-}
-// else {
-//	unset($_SESSION['DBVersion']);
+//if (isset($_SESSION['DBVersion'])
+//	and isset($_SESSION['DBUpdateNumber'])
+//	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
+//	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
+//	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+//	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
 //}
+//	exit();
+/* KL RICARD END: No need to check for updates in cronjobs, just set the DBVersion to the highest file name} */
 
 /* RICARD KL Set up the theme for production, test, development, development test webERP */
 $_SESSION['Theme'] = KLThemeSelection();
@@ -327,8 +289,6 @@ if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 
 $_SESSION['UserID'] = "CronJobKL";
 
-
-
 function CryptPass($Password) {
 	$Hash = password_hash($Password, PASSWORD_DEFAULT);
 	return $Hash;
@@ -343,9 +303,10 @@ function VerifyPass($Password, $Hash) {
 }
 
 function HighestFileName($PathPrefix) {
-	$files = glob('sql/updates/*.php');
+	$files = glob($PathPrefix.'sql/updates/*.php');
 	natsort($files);
-	return basename(array_pop($files), ".php");
+	$LastFile = array_pop($files);
+	return $LastFile ? basename($LastFile, ".php") : '';
 }
 
 function quote_smart($Value) {
