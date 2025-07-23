@@ -241,8 +241,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				/* find a logo in companies/CompanyDir */
 				if (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
 					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.png';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.jpeg';
 				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
 					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.jpg';
+				} elseif (file_exists($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
+					$_SESSION['LogoFile'] = 'companies/' .  $_SESSION['DatabaseName'] . '/logo.gif';
 				}
 			}
 
@@ -272,7 +276,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
 					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' .
 								Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
-					SendEmailFromWebERP($SysAdminEmail, 
+					SendEmailFromWebERP($SysAdminEmail,
 										$SysAdminEmail,
 										$EmailSubject,
 										$EmailText,
@@ -294,5 +298,3 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	return   UL_OK;		    /* All is well */
 }
-
-?>

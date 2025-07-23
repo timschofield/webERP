@@ -134,7 +134,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (DB_num_rows($PricesResult)==0) {
@@ -143,7 +143,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		include('includes/header.php');
 		prnMsg(_('There are no result so the PDF is empty'));
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$HTML = '';
 
@@ -333,8 +333,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 
 } /*end of else not PrintPDF */
 
-
-
 function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices) {
 
@@ -352,4 +350,3 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$FontSize=8;
 	$PageNumber++;
 } // End of PrintHeader() function
-?>

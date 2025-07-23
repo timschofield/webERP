@@ -102,7 +102,7 @@ if (isset($_POST['Submit'])) {
 	}
 	echo '<a class="noPrint" href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select different report criteria'), '</a><br />';
 	include ('includes/footer.php');
-	exit;
+	exit();
 
 } else {
 
@@ -248,4 +248,3 @@ if (isset($_POST['Submit'])) {
 }
 
 include ('includes/footer.php');
-?>

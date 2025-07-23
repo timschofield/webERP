@@ -27,7 +27,7 @@ if (isset($StockID)){
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<div class="centre"><h3>' . $StockID . ' - ' . $MyRow[0] . '  (' . _('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
 }
@@ -68,7 +68,7 @@ if (isset($StockID)) {
                 AND bom.effectiveto > '" . date('Y-m-d') . "'
 			ORDER BY stockmaster.discontinued, bom.parent";
 
-	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
+	$ErrMsg = _('The parents for the selected part could not be retrieved because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');
@@ -112,4 +112,3 @@ if (isset($StockID)) {
 } // StockID is set
 echo '</form>';
 include('includes/footer.php');
-?>

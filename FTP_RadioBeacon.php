@@ -118,7 +118,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 		/*CompanyRecord will be 0 if the company information could not be retrieved */
 		prnMsg(_('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Now get the order header info */
@@ -164,7 +164,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
 			echo '<p><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		 }
 
 		/*Now get the line items */
@@ -246,14 +246,14 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			if ((!$conn_id) || (!$login_result)) {
 				echo '<br />' . _('Ftp connection has failed');
 				echo '<br />' . _('Attempted to connect to') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . _('for user') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
-				die;
+				exit();
 			} else {
 				echo '<br />' . _('Connected to Radio Beacon FTP server at') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . _('with user name') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
 			} // upload the file
 			$upload = ftp_put($conn_id, $FilePrefix .  $FileNumber . '.txt', $FileName, FTP_ASCII); // check upload status
 			if (!$upload) {
 				prnMsg(_('FTP upload has failed'),'success');
-				exit;
+				exit();
 			} else {
 				echo '<br />' . _('Uploaded') . ' ' . $FileName . ' ' . _('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];
 			} // close the FTP stream
@@ -278,4 +278,3 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 } /*end of if page called with a OrderNo - OrderNo*/
 
 include('includes/footer.php');
-?>

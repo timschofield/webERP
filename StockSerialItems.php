@@ -15,13 +15,13 @@ if (isset($_GET['StockID'])){
 	if (ContainsIllegalCharacters ($_GET['StockID'])){
 		prnMsg(_('The stock code sent to this page appears to be invalid'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } else {
 	prnMsg( _('This page must be called with parameters specifying the item to show the serial references and quantities') . '. ' . _('It cannot be displayed without the proper parameters being passed'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $Result = DB_query("SELECT description,
@@ -48,7 +48,7 @@ if ($MyRow['mbflag']=='K' OR $MyRow['mbflag']=='A' OR $MyRow['mbflag']=='D'){
 
 	prnMsg(_('This item is either a kitset or assembly or a dummy part and cannot have a stock holding') . '. ' . _('This page cannot be displayed') . '. ' . _('Only serialised or controlled items can be displayed in this page'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $Result = DB_query("SELECT locationname
@@ -175,4 +175,3 @@ echo '<div class="centre"><br /><b>' . _('Total quantity') . ': ' . locale_numbe
 
 echo '</form>';
 include('includes/footer.php');
-?>

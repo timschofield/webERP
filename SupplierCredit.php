@@ -23,7 +23,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 
 include('includes/session.php');
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 $Title = _('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
@@ -118,7 +118,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 	if(DB_num_rows($LocalTaxProvinceResult)==0){
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$LocalTaxProvinceRow = DB_fetch_row($LocalTaxProvinceResult);
@@ -138,7 +138,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 	prnMsg(_('To enter a supplier credit note the supplier must first be selected from the supplier selection screen'),'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Credit Note For') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 	/*It all stops here if there aint no supplier selected */
 }
 
@@ -210,7 +210,7 @@ if (isset($_POST['GRNS'])
 		_('You should automatically be forwarded to the entry of credit notes against goods received page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppCreditGRNs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_POST['Shipts'])){
 
@@ -221,7 +221,7 @@ if (isset($_POST['Shipts'])){
 		' . _('You should automatically be forwarded to the entry of credit notes against shipments page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppShiptChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_POST['GL'])
 	AND $_POST['GL'] == _('General Ledger')){
@@ -233,7 +233,7 @@ if (isset($_POST['GL'])
 		' . _('You should automatically be forwarded to the entry of credit notes against the general ledger page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SuppTransGLAnalysis.php">' . _('click here') . '</a> ' . _('to continue') . '.
 		<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_POST['Contracts'])
 	AND $_POST['Contracts'] == _('Contracts')){
@@ -243,7 +243,7 @@ if (isset($_POST['Contracts'])
 				' . _('You should automatically be forwarded to the entry of supplier credit notes against contracts page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppContractChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 			</div>
 			<br />';
-		exit;
+		exit();
 }
 if (isset($_POST['FixedAssets'])
 	AND $_POST['FixedAssets'] == _('Fixed Assets')){
@@ -253,7 +253,7 @@ if (isset($_POST['FixedAssets'])
 				' . _('You should automatically be forwarded to the entry of invoices against fixed assets page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh'). ') ' . '<a href="' . $RootPath . '/SuppFixedAssetChgs.php">' . _('click here') . '</a> ' . _('to continue') . '.
 			</div>
 			<br />';
-		exit;
+		exit();
 }
 /* everything below here only do if a Supplier is selected
    fisrt add a header to show who we are making an credit note for */
@@ -1332,4 +1332,3 @@ then do the updates and inserts to process the credit note entered */
 echo '</div>
 	  </form>';
 include('includes/footer.php');
-?>

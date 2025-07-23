@@ -96,4 +96,3 @@ $pdf->line($FormDesign->ColumnLine5->startx, $Page_Height - $FormDesign->ColumnL
 $pdf->setFont('', 'B');
 $pdf->addText($FormDesign->DeliveryAddressBox->x, $Page_Height - $FormDesign->ColumnLine5->endy, $FormDesign->Heading->FontSize, _('NOT A PACKING LIST.      DO NOT USE FOR SHIPMENT.      DRIVER DO NOT ACCEPT'));
 $pdf->setFont('', '');
-?>

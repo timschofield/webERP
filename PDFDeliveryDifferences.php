@@ -4,10 +4,10 @@ include ('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
-};
+}
 if (isset($_POST['ToDate'])) {
 	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
-};
+}
 include ('includes/SQL_CommonFunctions.php');
 
 $InputError = 0;
@@ -142,19 +142,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL, 'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	elseif (DB_num_rows($Result) == 0) {
 		$Title = _('Delivery Differences Log Report Error');
 		include('includes/header.php');
-		prnMsg(_('There were no variances between deliveries and orders found in the database within the period from') . ' ' . 
-			$_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . 
+		prnMsg(_('There were no variances between deliveries and orders found in the database within the period from') . ' ' .
+			$_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' .
 			_('Please try again selecting a different date range'), 'info');
 		if ($Debug == 1) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
@@ -177,7 +177,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	if ($_POST['CategoryID'] != 'All') {
-		$Heading = _('For Inventory Category') . ' ' . $_POST['CategoryID'] . ' ' . _('From') . ' ' . 
+		$Heading = _('For Inventory Category') . ' ' . $_POST['CategoryID'] . ' ' . _('From') . ' ' .
 			$_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'];
 	} else {
 		$Heading = _('From') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'];
@@ -254,7 +254,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ON salesorderdetails.orderno = salesorders.orderno
 		INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc
-			AND locationusers.userid='" . $_SESSION['UserID'] . "' 
+			AND locationusers.userid='" . $_SESSION['UserID'] . "'
 			AND locationusers.canview=1
 		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -271,7 +271,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ON salesorderdetails.orderno = salesorders.orderno
 		INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc
-			AND locationusers.userid='" . $_SESSION['UserID'] . "' 
+			AND locationusers.userid='" . $_SESSION['UserID'] . "'
 			AND locationusers.canview=1
 		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -288,7 +288,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		ON salesorderdetails.orderno = salesorders.orderno
 		INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc
-			AND locationusers.userid='" . $_SESSION['UserID'] . "' 
+			AND locationusers.userid='" . $_SESSION['UserID'] . "'
 			AND locationusers.canview=1
 		INNER JOIN stockmaster
 			ON salesorderdetails.stkcode = stockmaster.stockid
@@ -308,7 +308,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$MyRow = DB_fetch_row($Result);
 	$HTML .= '<tr class="total_row">
-				<th colspan="3" style="text-align:left">' . _('Total number of order lines') . ' ' . 
+				<th colspan="3" style="text-align:left">' . _('Total number of order lines') . ' ' .
 					locale_number_format($MyRow[0]) . '</th>
 				<th colspan="4"></th>
 			<tr>';
@@ -321,7 +321,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<tr class="total_row">
-				<th colspan="3" style="text-align:left">' . _('DIFOT') . ' ' . 
+				<th colspan="3" style="text-align:left">' . _('DIFOT') . ' ' .
 					locale_number_format($DifotPercentage, 2) . '%' . '</th>
 				<th colspan="4"></th>
 			<tr>';
@@ -453,4 +453,3 @@ else {
 	}
 	include ('includes/footer.php');
 }
-?>

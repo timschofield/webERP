@@ -16,7 +16,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if(isset($_POST['Submit'])) {
+if (isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];
 	$NewOrExisting = $_POST['NewOrExisting'];
 	$NewStockID = '';
@@ -154,8 +154,9 @@ if(isset($_POST['Submit'])) {
 
 		UpdateCost($NewStockID);
 
-		header('Location: BOMs.php?Select='.$NewStockID);
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
 		ob_end_flush();
+		exit();
 	} //end  if there is no input error
 } else {
 
@@ -217,4 +218,3 @@ if(isset($_POST['Submit'])) {
 
 	include('includes/footer.php');
 }
-?>

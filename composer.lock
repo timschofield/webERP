@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0fcb6a3667f30d5248f5d9c181ff315",
+    "content-hash": "bf39c09e847fda1e6c962f1315f44ca5",
     "packages": [
         {
             "name": "composer/pcre",
@@ -239,6 +239,78 @@
                 "source": "https://github.com/dompdf/php-svg-lib/tree/1.0.0"
             },
             "time": "2024-04-29T13:26:35+00:00"
+        },
+        {
+            "name": "gggeek/polyfill-gettext",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/polyfill-gettext.git",
+                "reference": "5623ccada6349dd00d81860cc46082cf59bc0945"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/5623ccada6349dd00d81860cc46082cf59bc0945",
+                "reference": "5623ccada6349dd00d81860cc46082cf59bc0945",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "provide": {
+                "ext-gettext": "*"
+            },
+            "require-dev": {
+                "ext-gettext": "*",
+                "ext-mbstring": "*",
+                "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "suggest": {
+                "ext-mbstring": "Necessary when using specific character encodings (charsets) for translated messages"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/polyfill.php"
+                ],
+                "psr-4": {
+                    "PGettext\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Segan",
+                    "email": "danilo@kvota.net"
+                },
+                {
+                    "name": "Nico Kaiser",
+                    "email": "nico@siriux.net"
+                },
+                {
+                    "name": "Steven Armstrong",
+                    "email": "sa@c-area.ch"
+                },
+                {
+                    "name": "Gaetano Giunta"
+                }
+            ],
+            "description": "A replacement for the php gettext extension. Based on php-gettext by Danilo Segan.",
+            "keywords": [
+                "gettext",
+                "l10n",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/polyfill-gettext/issues",
+                "source": "https://github.com/gggeek/polyfill-gettext/tree/main"
+            },
+            "time": "2025-07-20T08:02:10+00:00"
         },
         {
             "name": "maennchen/zipstream-php",
@@ -1016,59 +1088,22 @@
             "time": "2025-03-23T17:59:05+00:00"
         },
         {
-            "name": "smmoosavi/php-gettext-core",
-            "version": "v1.0.11-patch1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/smmoosavi/php-gettext-core.git",
-                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/smmoosavi/php-gettext-core/zipball/bfa049b1f1a4e7b8141c95780c51aba90e484188",
-                "reference": "bfa049b1f1a4e7b8141c95780c51aba90e484188",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "classmap": [
-                    "src/gettext.php",
-                    "src/streams.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "authors": [
-                {
-                    "name": "Seyyed Morteza Moosavi",
-                    "email": "se.mo.moosavi@gmail.com"
-                }
-            ],
-            "description": "php-gettext by danilo segan. This library provides PHP functions to read MO files even when gettext is not compiled in or when appropriate locale is not present on the system.",
-            "support": {
-                "issues": "https://github.com/smmoosavi/php-gettext-core/issues",
-                "source": "https://github.com/smmoosavi/php-gettext-core/tree/v1.0.11-patch1"
-            },
-            "time": "2015-10-27T19:27:20+00:00"
-        },
-        {
             "name": "tecnickcom/tcpdf",
-            "version": "6.7.5",
+            "version": "6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36"
+                "reference": "14ffa0e308f5634aa2489568b4b90b24073b6731"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
-                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/14ffa0e308f5634aa2489568b4b90b24073b6731",
+                "reference": "14ffa0e308f5634aa2489568b4b90b24073b6731",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "ext-curl": "*",
+                "php": ">=7.1.0"
             },
             "type": "library",
             "autoload": {
@@ -1115,7 +1150,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tecnickcom/TCPDF/issues",
-                "source": "https://github.com/tecnickcom/TCPDF/tree/6.7.5"
+                "source": "https://github.com/tecnickcom/TCPDF/tree/6.8.0"
             },
             "funding": [
                 {
@@ -1123,19 +1158,29 @@
                     "type": "custom"
                 }
             ],
-            "time": "2024-04-20T17:25:10+00:00"
+            "time": "2024-12-23T13:34:57+00:00"
         }
     ],
     "packages-dev": [],
-    "aliases": [],
+    "aliases": [
+        {
+            "package": "gggeek/polyfill-gettext",
+            "version": "dev-main",
+            "alias": "1.99.99",
+            "alias_normalized": "1.99.99.0"
+        }
+    ],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "gggeek/polyfill-gettext": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
         "ext-ctype": "*",
         "ext-mbstring": "*",
+        "ext-mysqli": "*",
         "ext-xml": "*"
     },
     "platform-dev": [],

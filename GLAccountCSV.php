@@ -108,12 +108,12 @@ if (isset($_POST['MakeCSV'])) {
 	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (!file_exists($_SESSION['reports_dir'])) {
@@ -127,7 +127,7 @@ if (isset($_POST['MakeCSV'])) {
 	if ($fp == FALSE) {
 		prnMsg(_('Could not open or create the file under') . ' ' . $FileName, 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	foreach ($_POST['Account'] as $SelectedAccount) {
@@ -271,4 +271,3 @@ if (isset($_POST['MakeCSV'])) {
 } /* end of if CreateCSV button hit */
 
 include ('includes/footer.php');
-?>

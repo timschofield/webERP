@@ -55,7 +55,7 @@ If (isset($_POST['PrintPDF'])
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($SupplierResult) ==0) {
 		$Title = _('Supplier Balances - Problem Report');
@@ -63,7 +63,7 @@ If (isset($_POST['PrintPDF'])
 		prnMsg(_('There are no supplier balances to list'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	include ('includes/PDFSupplierBalsPageHeader.php');
@@ -161,4 +161,3 @@ $BookMark = '';
 	echo '</form>';
 	include('includes/footer.php');
 }/*end of else not PrintPDF */
-?>

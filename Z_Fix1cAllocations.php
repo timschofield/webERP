@@ -21,4 +21,3 @@ if (isset($_POST['FixAllocations'])){
 }
 
 include('includes/footer.php');
-?>

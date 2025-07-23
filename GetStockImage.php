@@ -95,9 +95,6 @@ if( isset($_GET['notextbg']) ) {
 }
 
 
-
-
-
 // Extension requirements and Stock ID Isolation
 if($StockID == '') {
 	$StockID = $DefaultImage;
@@ -141,7 +138,7 @@ if( !$automake && !isset($FileName) ) {
 		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 }
 
 // See if we need to automake this image
@@ -348,4 +345,3 @@ $func = 'image'.$functype;
 $func($im);
 // Destroy image
 imagedestroy($im);
-?>

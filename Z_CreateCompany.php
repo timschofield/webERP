@@ -20,7 +20,7 @@ if ($MyRow[0]==0){
 } else {
 	prnMsg(_('An existing company record is set up already. No alterations have been made'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Need to have a sales order record set up */
@@ -98,4 +98,3 @@ if ($MyRow[0]==0){
 prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
 
 include('includes/footer.php');
-?>

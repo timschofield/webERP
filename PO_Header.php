@@ -2,7 +2,7 @@
 
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
@@ -240,7 +240,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	} // end if reprint not allowed
 
 } //isset($_POST['EnterLines']) OR isset($_POST['AllowRePrint'])
@@ -457,7 +457,7 @@ if (isset($_POST['Select'])) {
 
 		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	// end of added for suppliers lookup fields
@@ -1178,4 +1178,3 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 
 echo '</form>';
 include ('includes/footer.php');
-?>

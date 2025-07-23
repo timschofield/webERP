@@ -31,7 +31,7 @@ if (isset($_POST['Show'])) {
 		echo '<br />';
 		prnMsg( _('You must enter a purchase order number in the box above'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$SQL="SELECT count(orderno)
 				FROM purchorders
@@ -42,7 +42,7 @@ if (isset($_POST['Show'])) {
 		echo '<br />';
 		prnMsg( _('This purchase order does not exist on the system. Please try again.'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$SQL="SELECT grnbatch,
 				grns.grnno,
@@ -69,7 +69,7 @@ if (isset($_POST['Show'])) {
 		echo '<br />';
 		prnMsg( _('There are no GRNs for this purchase order that can be reprinted.'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<br />
@@ -107,5 +107,3 @@ if (isset($_POST['Show'])) {
 }
 
 include('includes/footer.php');
-
-?>

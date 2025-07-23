@@ -10,8 +10,8 @@ $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.php');
 $Title = _('Recurring Orders');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);}
 
 
 /* webERP manual links before header.php */
@@ -167,7 +167,7 @@ if (isset($_GET['NewRecurringOrder'])){
 if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder=='Yes'){
 	prnMsg(_('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . _('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -187,7 +187,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 If (isset($_POST['Process'])) {
 	DB_Txn_Begin();
@@ -312,7 +312,7 @@ If (isset($_POST['Process'])) {
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
 	include('includes/footer.php');
-	exit;
+	exit();
 
 	}
 }
@@ -528,4 +528,3 @@ if ($NewRecurringOrder=='Yes'){
 echo '</div>';
 echo '</form>';
 include('includes/footer.php');
-?>

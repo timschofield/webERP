@@ -27,7 +27,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 if($AllowDemoMode) {
 	prnMsg(_('Demo mode is currently active, which disables the security model administration'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $ModuleList = array(
 	_('Sales'),
@@ -324,7 +324,7 @@ if(isset($_POST['submit'])) {
 			$Result = DB_query($SQL, $ErrMsg);
 
 			$SQL = "DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
-			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
+			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');
 			$Result = DB_query($SQL, $ErrMsg);
 
 			$SQL = "DELETE FROM sessions WHERE userid = '" . $SelectedUser . "'";
@@ -876,4 +876,3 @@ echo '</fieldset>
 	</form>';
 
 include('includes/footer.php');
-?>

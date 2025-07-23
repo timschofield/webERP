@@ -1,7 +1,7 @@
 <?php
 include ('includes/session.php');
-if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);};
-if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);};
+if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
+if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
 
 $Title = _('Setup regular payments');
 $ViewTopic = 'GeneralLedger';
@@ -247,7 +247,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 	</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 	include ('includes/footer.php');
-	exit;
+	exit();
 } else {
 	echo '<option value=""></option>';
 	while ($MyRow = DB_fetch_array($AccountsResults)) {
@@ -430,5 +430,3 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 }
 
 include ('includes/footer.php');
-
-?>

@@ -66,7 +66,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 	if (DB_num_rows($TestAlreadyDoneResult)>0){
 		prnMsg(_('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 
@@ -77,4 +77,3 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 } /*Dont do upgrade */
 
 include('includes/footer.php');
-?>

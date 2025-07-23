@@ -1,15 +1,20 @@
 <?php
-// index.php
+
+require __DIR__.'/../vendor/autoload.php';
 
 ini_set('max_execution_time', "6000");
 session_name('weberp_installation');
 session_start();
 
-if(!extension_loaded('mbstring')){
+if (!extension_loaded('mbstring')) {
 	echo 'The php-mbstring extension has not been installed or loaded, please correct your php configuration first';
-	exit;
+	exit();
 }
+
+$PathPrefix = __DIR__ . '/../';
+
 if (isset($_GET['Page'])) {
+	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
 	$_SESSION['Installer']['CurrentPage'] = $_GET['Page'];
 } else {
 	unset($_SESSION['Installer']);
@@ -40,11 +45,11 @@ if (isset($_GET['Page'])) {
 if (isset($_GET['Agreed'])) {
 	$_SESSION['Installer']['License_Agreed'] = True;
 }
-$PathPrefix = '../';
-include ('../includes/MiscFunctions.php');
-include ('../includes/LanguagesArray.php');
+
+include ($PathPrefix . 'includes/MiscFunctions.php');
+include ($PathPrefix . 'includes/LanguagesArray.php');
 $DefaultLanguage = $_SESSION['Installer']['Language']; // Need the language in this variable as this is the variable used elsewhere in webERP
-include ('../includes/LanguageSetup.php');
+include ($PathPrefix . 'includes/LanguageSetup.php');
 
 /*
  * Web ERP Installer
@@ -74,7 +79,9 @@ echo '<body>';
 echo '<div class="wizard">
 		<header>', $Title, '</header>
 		<img id="main_icon" src="images/installer.png" />';
+
 include('pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+
 echo '<footer>';
 
 if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer']['License_Agreed'] and $_SESSION['Installer']['CurrentPage'] == 1) {
@@ -125,5 +132,3 @@ echo '</footer>
 
 echo '</body>
 	</html>';
-
-?>

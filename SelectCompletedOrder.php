@@ -2,7 +2,7 @@
 
 
 include('includes/session.php');
-if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);};
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
 $Title = _('Search All Sales Orders');
 
@@ -556,7 +556,7 @@ If (isset($SalesOrdersResult)) {
 			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
-		exit;
+		exit();
 	}
 
 /*show a table of the orders returned by the SQL */
@@ -600,5 +600,3 @@ If (isset($SalesOrdersResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-
-?>

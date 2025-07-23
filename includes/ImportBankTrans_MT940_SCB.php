@@ -29,7 +29,7 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 			prnMsg(_('The bank statement currency is a currency not defined in the system. Please see you system administrator'),'warn');
 			prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
 	        include('includes/footer.php');
-	        exit;
+	        exit();
 			$ReadTheFile ='No';
 		}
 		 if ($DebitOrCredit =='D'){
@@ -99,4 +99,3 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 		 }
 		 $TransactionLine = false;
 	  }
-?>

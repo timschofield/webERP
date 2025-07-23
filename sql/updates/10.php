@@ -5,5 +5,3 @@ NewMenuItem('manuf', 'Reports', 'WO Items ready to produce', '/WOCanBeProducedNo
 if ($_SESSION['Updates']['Errors'] == 0) {
 	UpdateDBNo(basename(__FILE__, '.php'), _('Add menu entry'));
 }
-
-?>

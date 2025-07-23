@@ -213,7 +213,7 @@ if (isset($SearchResult)) {
 		</div>';
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 } //end if SearchResults to show
 if (isset($_POST['SubmitCategory'])) {
 	//initialise no input errors assumed initially before we test
@@ -534,5 +534,3 @@ if (!isset($_GET['Select'])) {
 }
 
 include ('includes/footer.php');
-
-?>

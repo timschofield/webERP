@@ -3,7 +3,7 @@
 include ('includes/DefineSerialItems.php');
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
-if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);};
+if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
 
 $Title = _('Reverse Goods Received');
 $ViewTopic = 'Inventory';
@@ -19,7 +19,7 @@ if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') or (!isse
 if (!isset($_POST['SupplierID']) or $_POST['SupplierID'] == "") {
 	echo '<br />' . _('This page is expected to be called after a supplier has been selected');
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectSupplier.php">';
-	exit;
+	exit();
 } elseif (!isset($_POST['SuppName']) or $_POST['SuppName'] == "") {
 	$SQL = "SELECT suppname FROM suppliers WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 	$SuppResult = DB_query($SQL, _('Could not retrieve the supplier name for') . ' ' . $_SESSION['SupplierID']);
@@ -65,7 +65,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		echo '<br />
 				<br />' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*If the item is a stock item then need to check for Controlled or not ...
@@ -103,7 +103,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 				 or transfered so cannot reverse the GRN */
 				prnMsg(_('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . _('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . _('only') . ' ' . $GetQOH[0] . ' ' . _('remain') . '. ' . _('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into'), 'error');
 				include ('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 		/*reset the pointer on this resultset ... will need it later */
@@ -433,4 +433,3 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	}
 }
 include ('includes/footer.php');
-?>

@@ -84,4 +84,3 @@ if ($i < 6) {
 
 include ('includes/footer.php');
 echo '<script async type="text/javascript" src = "', $RootPath, '/dashboard/javascript/dashboard.js"></script>';
-?>

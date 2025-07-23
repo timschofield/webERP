@@ -150,7 +150,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$Tot_Val=0;
@@ -328,5 +328,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

@@ -47,7 +47,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $WORow = DB_fetch_array($WOResult);
 
@@ -163,5 +163,3 @@ echo '<table cellpadding="2" class="selection">
 
 	echo '</table>';
 	include('includes/footer.php');
-
-?>

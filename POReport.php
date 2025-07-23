@@ -6,8 +6,8 @@
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $ViewTopic = 'PurchaseOrdering';/* ?????????? */
 $BookMark = 'POReport';
 $Title = _('Purchase Order Report');
@@ -145,10 +145,10 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 		if ($_POST['DateType'] == 'Order') {
 			$WhereLineStatus = " AND IF(purchorderdetails.quantityord = purchorderdetails.qtyinvoiced ||
 			  purchorderdetails.completed = 1,'Completed','Open') = '" . $_POST['LineStatus'] . "'";
-		 } else {
+		} else {
 			$WhereLineStatus = " AND IF(grns.qtyrecd - grns.quantityinv <> 0,'Open','Completed') = '"
 			. $_POST['LineStatus'] . "'";
-		 }
+		}
 	}
 
 
@@ -1587,4 +1587,3 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 
 include('includes/footer.php');
-?>

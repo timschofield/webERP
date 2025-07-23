@@ -89,9 +89,8 @@ echo '</select>
 echo '</fieldset>
 		<div class="centre">
 			<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
-			'<button formaction="index.php?Application=Utilities" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'<button formaction="' . $RootPath . '/index.php?Application=Utilities" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';
 
 include('includes/footer.php');
-?>

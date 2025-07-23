@@ -12,7 +12,7 @@ if (isset($_GET['SelectedSupplier'])) {
 	prnMsg(_('The page must be called from suppliers selected interface, please click following link to select the supplier'),'error');
 	echo '<a href="' . $RootPath . '/SelectSupplier.php">'. _('Select Supplier') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_GET['SupplierName'])) {
 	$SupplierName = $_GET['SupplierName'];
@@ -101,4 +101,3 @@ if (isset($_POST['Submit'])) {
 
 }
 include('includes/footer.php');
-?>

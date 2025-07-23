@@ -31,23 +31,21 @@ if (version_compare(PHP_VERSION, '5.1.0') < 0) {
 	echo '<div class="success">' . _('Your PHP version is suitable for webERP') . '</div>';
 }
 
-//Check the write access of the root path
-$RootPath = '..';
-if (!is_writable($RootPath)) {
+//Check the write access of the root directory
+$RootDir = substr(dirname(__DIR__), 0, -8);
+if (!is_writable($RootDir)) {
 	$InputError = 1;
 	//get the directory where webERP live
 	$webERPHome = dirname(__FILE__, 2);
-	echo '<div class="error">' . _('The directory') . ' ' . $webERPHome . ' ' . _('must be writable by web server') . '</div>';
-} else {
-	echo '<div class="success">' . _('The base webERP directory is writable') . '</div>';
+	$webERPHome = dirname(dirname(__FILE__));echo '<div class="success">' . _('The base webERP directory is writable') . '</div>';
 }
 
-//Check the write access of the companies path
-$Companies = $RootPath . '/companies';
-if (!is_writable($Companies)) {
+//Check the write access of the companies directory
+$CompaniesDir = $RootDir . '/companies';
+if (!is_writable($CompaniesDir)) {
 	$InputError = 1;
 	$webERPHome = dirname(__FILE__, 2);
-	echo '<div class="error">' . _('The directory') . ' ' . $webERPHome . '/companies/' . ' ' . ('must be writable by web server') . '</div>';
+	echo '<div class="error">' . _('The directory') . ' ' . $CompaniesDir . '/companies/' . ' ' . ('must be writable by web server') . '</div>';
 } else {
 	echo '<div class="success">' . _('The companies/ directory is writable') . '</div>';
 }
@@ -88,11 +86,9 @@ if (!in_array('libxml', $Extensions)) {
 }
 
 //Check that the DBMS driver is installed
-if (!in_array('mbstring', $Extensions)) {
+if (!in_array('mysqli', $Extensions)) {
 	$InputError = 1;
 	echo '<div class="error">' . _('You do not have the correct database extension installed for PHP') . '</div>';
 } else {
 	echo '<div class="success">' . _('The database extension is installed') . '</div>';
 }
-
-?>

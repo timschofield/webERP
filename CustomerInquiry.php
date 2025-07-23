@@ -2,7 +2,7 @@
 /* Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes. */
 
 include('includes/session.php');
-if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);};
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 $Title = _('Customer Inquiry');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'CustomerInquiry';// Anchor's id in the manual's html document.
@@ -14,7 +14,7 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	prnMsg(_('To display the enquiry a customer must first be selected from the customer selection screen'), 'info');
 	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', _('Select a Customer to Inquire On'), '</a></div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	if (isset($_GET['CustomerID'])) {
 		$_SESSION['CustomerID'] = stripslashes($_GET['CustomerID']);
@@ -36,12 +36,12 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	} else {
 		prnMsg(_('There is no salesman data set for this debtor'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (!$ViewAllowed){
 		prnMsg(_('You have no authority to review this data'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -55,7 +55,7 @@ if (isset($_GET['Status'])) {
 		$Status = $_POST['Status'];
 	} else {
 		prnMsg(_('The balance status should be all or zero balance or not zero balance'), 'error');
-		exit;
+		exit();
 	}
 } else {
 	$_POST['Status'] = '';
@@ -240,7 +240,7 @@ $TransResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($TransResult) == 0) {
 	echo '<div class="centre">', _('There are no transactions to display since'), ' ', $_POST['TransAfterDate'], '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /* Show a table of the invoices returned by the SQL. */
@@ -672,4 +672,3 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 
 echo '</tbody></table>';
 include('includes/footer.php');
-?>

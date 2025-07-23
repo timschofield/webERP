@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 		echo '<div class="centre"><input type="submit" name="Return" value="', _('Return to list of tab types'), '" /></div>';
 		echo '</form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$SQL = "DELETE FROM pctypetabs WHERE typetabcode='" . $SelectedTab . "'";
 		$ErrMsg = _('The Tab Type record could not be deleted because');
@@ -174,4 +174,3 @@ if (!isset($_GET['delete'])) {
 	</form>';
 } // end if user wish to delete
 include('includes/footer.php');
-?>

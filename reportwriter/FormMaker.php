@@ -1,13 +1,13 @@
 <?php
 
 $DirectoryLevelsDeep = 1;
-$PathPrefix = '../';
+$PathPrefix = __DIR__ . '/../';
 
 require($PathPrefix . 'includes/session.php');
 
-// TBD The followiung line needs to be replace when more translations are available
+// TBD The following line needs to be replaced when more translations are available
 $ReportLanguage = 'en_US';					// default language file
-define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
+define('DBReports','reports');			// name of the databsse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
@@ -19,7 +19,6 @@ require('languages/'.$ReportLanguage.'/reports.php'); // include translation bef
 require('admin/defaults.php'); // load default values
 
 $usrMsg = array(); // setup array for return messages
-$GoBackURL = $RootPath.'/index.php'; // set the return path to the index.php page
 
 if (isset($_GET['id'])) { // then entered with form group requested
 	$QueryString = '?'.$_SERVER['QUERY_STRING']; // save the passed parameters
@@ -29,7 +28,7 @@ if (isset($_GET['id'])) { // then entered with form group requested
 
 switch ($_POST['todo']) {
 	case RPT_BTN_CANCEL:
-		header("Location: ".$GoBackURL);
+		header('Location: ' . htmlspecialchars_decode($RootPath) .'/index.php');
 		exit();
 
 	default: // determine how we entered the script to show correct form list information
@@ -264,5 +263,3 @@ function BuildCriteria($FieldListings) {
 	$CriteriaString .= $EndString.'</tr>';
 	return $CriteriaString;
 }
-
-?>

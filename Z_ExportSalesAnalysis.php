@@ -45,7 +45,7 @@ if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 fputs($fp, '"Item Code", "Category ID", "Item Description"'  . "\n");
 While ($MyRow = DB_fetch_row($Result)){
@@ -74,7 +74,7 @@ if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 fputs($fp, '"Customer Code", "Customer Name", "Branch Code", "Branch Name", "Price List", "Sales Area", "Salesman"'  . "\n");
 While ($MyRow = DB_fetch_row($Result)){
@@ -118,7 +118,7 @@ if ($fp==FALSE){
 
 	prnMsg(_('Could not open or create the file under') . ' ' . $SalesFileName,'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
 While ($MyRow = DB_fetch_row($Result)){
@@ -139,7 +139,7 @@ $login_result = ftp_login($conn_id, $FTP_User, $FTP_Password);
 if ((!$conn_id) || (!$login_result)) {
     echo "FTP connection has failed!";
     echo "Attempted to connect to $FTP_Server  with user $FTP_User";
-    exit;
+    exit();
 } else {
     echo "Connected to ftp_server";
 }
@@ -160,5 +160,3 @@ if (!$upload) {
 ftp_close($conn_id);
 
 include('includes/footer.php');
-
-?>

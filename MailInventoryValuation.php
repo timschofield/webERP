@@ -20,9 +20,9 @@ $Recipients = GetMailList('InventoryValuationRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
 	include('includes/header.php');
-	prnMsg(_('There are no members of the Inventory Valuation Recipients email group'), 'warn');
+	prnMsg(_('There are no members of the "InventoryValuationRecipients" email group'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 /* A4_Portrait */
 
@@ -125,7 +125,7 @@ if (DB_error_no() != 0) {
 	}
 
 include('includes/footer.php');
-exit;
+exit();
 }
 
 include('includes/PDFInventoryValnPageHeader.php');
@@ -218,37 +218,36 @@ if ($ListCount == 0) {
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit; // Javier: needs check
+	exit(); // Javier: needs check
 } else {
-	
+
 	$pdf->Output($_SESSION['reports_dir'] . '/InventoryReport.pdf', 'F');
 	$pdf->__destruct();
 
 	$From = $_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>';
 	$Subject = _('Inventory Valuation Report');
 	$Body = _('Please find herewith the stock valuation report');
-	
+
 	$Result = SendEmailFromWebERP($From,
 								$Recipients,
 								$Subject,
 								$Body,
 								$_SESSION['reports_dir'] . '/InventoryReport.pdf',
 								false);
-	
+
 	if ($Result) {
 		$Title = _('Print Inventory Valuation');
 		include('includes/header.php');
 		prnMsg(_('The Inventory valuation report has been mailed'), 'success');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.php');
 		prnMsg(_('There are errors lead to mails not sent'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
-?>

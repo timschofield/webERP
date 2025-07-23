@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = '../';
+	$PathPrefix = __DIR__ . '/../';
 }
 
 require $PathPrefix.'vendor/autoload.php';
@@ -39,7 +39,7 @@ if (!isset($_SESSION['AttemptsCounter'])){
 if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
-		exit;
+		exit();
 	}
 }
 
@@ -79,4 +79,3 @@ function api_DB_query( $SQL, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=
 
     return  $Result;
 }
-?>

@@ -17,7 +17,8 @@ Import: Handled in action=step8, calls an import function to read the setup info
 */
 
 $DirectoryLevelsDeep = 2;
-$PathPrefix = '../../';
+$PathPrefix = __DIR__ . '/../../';
+
 $PageSecurity = 2; // set security level for webERP
 // Fetch necessary include files for webERP
 require ($PathPrefix . 'includes/session.php');
@@ -693,4 +694,3 @@ if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
 include ($FormParams['IncludePage']);
 include ($PathPrefix . 'includes/footer.php');
 // End main body
-?>

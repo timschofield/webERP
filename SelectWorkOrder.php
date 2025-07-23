@@ -40,7 +40,7 @@ if (isset($SelectedWO) AND $SelectedWO!='') {
 		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
 		  include('includes/footer.php');
-		  exit;
+		  exit();
 	} else {
 		echo _('Work Order Number') . ' - ' . $SelectedWO;
 	}
@@ -397,4 +397,3 @@ if (!isset($StockID)) {
 }
 
 include('includes/footer.php');
-?>

@@ -69,7 +69,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$Salesmen=array();
 	$SQL = "SELECT salesmancode
@@ -114,7 +114,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$Head++;
 	}
@@ -137,7 +137,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -359,7 +359,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$NotExistDebtorNos[]=$_POST['DebtorNo'];
 						prnMsg(_('The Debtor No') . $_POST['DebtorNo'] . ' ' . _('has not existed, and its branches data cannot be imported'),'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				}
 				$SQL = "SELECT 1
@@ -556,4 +556,3 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 
 include('includes/footer.php');
-?>

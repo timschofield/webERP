@@ -32,7 +32,7 @@ if (isset($_GET['LineNo'])){
 	prnMsg( _('This page can only be opened if a line item on a sales order to be invoiced has been selected') . '. ' . _('Please do that first'),'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'])) {
@@ -43,7 +43,7 @@ if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'
 	prnMsg( _('This page can only be opened if a sales order and line item has been selected Please do that first'),'error');
 	echo '</div>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -57,7 +57,7 @@ if ( $LineItem->Controlled != 1 ){
 	echo '<br />';
 	prnMsg( _('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /********************************************
@@ -91,5 +91,3 @@ of the item selected for dispatch */
 $_SESSION['Items'.$identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
 include('includes/footer.php');
-exit;
-?>

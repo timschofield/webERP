@@ -10,7 +10,7 @@
 	}
 
 	$AllowAnyone = true;
-	$PathPrefix = dirname(__FILE__).'/../';
+	$PathPrefix = __DIR__ . '/../';
 	include('api_session.php');
 
 	include('api_errorcodes.php');
@@ -27,9 +27,9 @@
 		           $_SESSION['AccessLevel'] == '') {
 			//  Login to default database = old clients.
 			if ($user != '' AND $password != '') {
-			    global  $api_DatabaseName;
+				global  $api_DatabaseName;
 			    $rc = LoginAPI ($api_DatabaseName, $user, $password);
-			    if ($rc[0] == UL_OK ) {
+				if ($rc[0] == UL_OK ) {
 					return $_SESSION['db'];
 			    }
 			}
@@ -63,5 +63,3 @@
 	include 'api_purchdata.php';
 	include 'api_workorders.php';
 	include 'api_webERPsettings.php';
-
-?>

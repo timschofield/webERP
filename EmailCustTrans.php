@@ -28,7 +28,7 @@ if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 
 		prnMsg(_('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . _('click here') . '</a> ' . _('to email the customer transaction'),'success');
 	}
-	exit;
+	exit();
 } elseif (isset($_POST['DoIt'])) {
 	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];
 	$_GET['FromTransNo'] = $_POST['FromTransNo'];
@@ -74,4 +74,3 @@ echo '</div>
       </div>
       </form>';
 include ('includes/footer.php');
-?>

@@ -154,5 +154,3 @@ include('includes/header.php');
           </form>';
 
 include('includes/footer.php');
-
-?>

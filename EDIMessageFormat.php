@@ -152,9 +152,6 @@ or deletion of the records*/
 	}
 } //end of ifs SelectedLine is not set
 
-
-
-
 if (isset($SelectedMessageLine)) {
 	//editing an existing message line
 
@@ -243,4 +240,3 @@ if (isset($_GET['SelectedMessageLine'])) {
 echo '</form>';
 
 include('includes/footer.php');
-?>

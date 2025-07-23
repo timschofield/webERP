@@ -43,7 +43,7 @@ if (isset($_POST['PrintPDF'])){
 		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 
@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF'])){
 		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$SQL = "INSERT INTO stockcheckfreeze (stockid,
@@ -94,14 +94,14 @@ if (isset($_POST['PrintPDF'])){
 		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		} else {
 			$Title = _('Stock Check Freeze Update');
 			include('includes/header.php');
 			echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
 			prnMsg( _('Added to the stock check file successfully'),'success');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 
@@ -136,7 +136,7 @@ if (isset($_POST['PrintPDF'])){
 		  	echo '<br />' . $SQL;
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($InventoryResult) ==0) {
 		$Title = _('Stock Count Sheets - Problem Report');
@@ -144,7 +144,7 @@ if (isset($_POST['PrintPDF'])){
 		prnMsg(_('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	include ('includes/PDFStockCheckPageHeader.php');
@@ -293,5 +293,3 @@ if (isset($_POST['PrintPDF'])){
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

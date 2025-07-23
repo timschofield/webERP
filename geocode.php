@@ -144,4 +144,3 @@ while ($Row2 = DB_fetch_array($Result2)) {
 }
 echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
 include ('includes/footer.php');
-?>

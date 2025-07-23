@@ -77,7 +77,7 @@ if (DB_num_rows($Result) == 0) {
 			</tr>
 			</table>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } elseif (DB_num_rows($Result) == 1) {
 	/*There is only one order header returned - thats good! */
 	$MyRow = DB_fetch_array($Result);
@@ -277,9 +277,8 @@ if ($ListCount == 0) {
 	include('includes/header.php');
 	echo '<p>' . _('There were no items on the Acknowledgement') . '. ' . _('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">' . _('Print Another Acknowledgement') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$pdf->OutputI($_SESSION['DatabaseName'] . '_Acknowledgement_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 }
-?>

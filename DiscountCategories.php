@@ -70,7 +70,7 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 	}else{
 		prnMsg(_('There are no stock defined for this stock category, you must define stock for it first'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -270,4 +270,3 @@ if (!isset($_POST['SelectChoice'])) {
 }
 
 include('includes/footer.php');
-?>

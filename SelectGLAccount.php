@@ -53,7 +53,7 @@ if (isset($_POST['Search'])){
 		} elseif (mb_strlen($_POST['GLCode'])>0){
 			if (!empty($_POST['GLCode'])) {
 				echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
-				exit;
+				exit();
 			}
 
 			$SQL = "SELECT chartmaster.accountcode,
@@ -74,8 +74,8 @@ if (isset($_POST['Search'])){
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 1) {
 				$AccountRow = DB_fetch_row($Result);
-				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountRow[0] . '&Show=Yes');
-				exit;
+				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?Account=' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show=Yes');
+				exit();
 			}
 		}
 } //end of if search
@@ -176,4 +176,3 @@ if (!isset($AccountID)) {
 } //end AccountID already selected
 
 include('includes/footer.php');
-?>

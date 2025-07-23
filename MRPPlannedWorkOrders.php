@@ -3,7 +3,7 @@
 // work orders created for them
 
 include('includes/session.php');
-if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);};
+if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
@@ -12,7 +12,7 @@ if ( !DB_table_exists('mrprequirements') ) {
 	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
 			_('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
@@ -99,7 +99,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 	if (DB_num_rows($Result)==0){ //then there is nothing to print
@@ -108,7 +108,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		prnMsg(_('There were no items with demand greater than supply'),'info');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if (isset($_POST['PrintPDF'])) { // Print planned work orders
@@ -387,4 +387,3 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$YPos =$YPos - (2*$LineHeight);
 	$PageNumber++;
 } // End of PrintHeader function
-?>

@@ -124,4 +124,3 @@ echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' .
       </form>';
 
 include('includes/footer.php');
-?>

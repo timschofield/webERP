@@ -1,8 +1,7 @@
 <?php
 
-/* $Revision: 1.5 $ */
-
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['JournalNo'])) {
@@ -24,7 +23,7 @@ if (isset($_GET['PDF'])) {
 if (!isset($JournalNo) OR !isset($Type)) {
 	prnMsg(_('This page should be called with Journal No and Type'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -101,8 +100,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 $HTML .= '</body></html>';
 
 if (isset($_POST['PrintPDF'])) {
-	// Handle PDF generation
-	require 'vendor/autoload.php'; // Ensure DomPDF is installed via Composer
 
 	$dompdf = new Dompdf(['chroot' => __DIR__]);
 	$dompdf->loadHtml($HTML);
@@ -130,6 +127,5 @@ if (isset($_POST['PrintPDF'])) {
 } else {
 	prnMsg(_('No valid action selected'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
-?>

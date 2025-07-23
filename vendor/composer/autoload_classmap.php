@@ -6,15 +6,11 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'CachedFileReader' => $vendorDir . '/smmoosavi/php-gettext-core/src/streams.php',
     'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'Datamatrix' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
     'Dompdf\\Cpdf' => $vendorDir . '/dompdf/dompdf/lib/Cpdf.php',
-    'FileReader' => $vendorDir . '/smmoosavi/php-gettext-core/src/streams.php',
     'PDF417' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
     'QRcode' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
-    'StreamReader' => $vendorDir . '/smmoosavi/php-gettext-core/src/streams.php',
-    'StringReader' => $vendorDir . '/smmoosavi/php-gettext-core/src/streams.php',
     'TCPDF' => $vendorDir . '/tecnickcom/tcpdf/tcpdf.php',
     'TCPDF2DBarcode' => $vendorDir . '/tecnickcom/tcpdf/tcpdf_barcodes_2d.php',
     'TCPDFBarcode' => $vendorDir . '/tecnickcom/tcpdf/tcpdf_barcodes_1d.php',
@@ -26,5 +22,4 @@ return array(
     'TCPDF_IMPORT' => $vendorDir . '/tecnickcom/tcpdf/tcpdf_import.php',
     'TCPDF_PARSER' => $vendorDir . '/tecnickcom/tcpdf/tcpdf_parser.php',
     'TCPDF_STATIC' => $vendorDir . '/tecnickcom/tcpdf/include/tcpdf_static.php',
-    'gettext_reader' => $vendorDir . '/smmoosavi/php-gettext-core/src/gettext.php',
 );

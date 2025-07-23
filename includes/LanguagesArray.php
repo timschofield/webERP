@@ -226,4 +226,3 @@ $LanguagesArray['zh_TW.utf8']['ThousandsSeparator'] = ',';
 $LanguagesArray['zh_TW.utf8']['Direction'] = 'ltr';
 
 /*asort($LanguagesArray);*/
-?>

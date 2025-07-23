@@ -30,7 +30,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 		<br />';
 	prnMsg(_('This page can only be opened if a pick list has been selected Please select a pick list first'), 'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 } elseif (isset($_GET['Prid']) and $_GET['Prid'] > 0) {
 
 	unset($_SESSION['Items' . $identifier]->LineItems);
@@ -252,7 +252,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 				</div>';
 			prnMsg(_('There are no ordered items with a quantity left to deliver. There is nothing left to invoice'));
 			include('includes/footer.php');
-			exit;
+			exit();
 
 		} //end of checks on returned data set
 		DB_free_result($LineItemsResult);
@@ -265,7 +265,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 			</div>';
 		prnMsg(_('This pick list item could not be retrieved. Please select another pick list'), 'warn');
 		include('includes/footer.php');
-		exit;
+		exit();
 	} //valid order returned from the entered pick number
 }
 else {
@@ -461,7 +461,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 					<input type="submit" name="Update" value="' . _('Update') . '" />
 				</div>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	} //end of testing for negative stocks
 
@@ -486,7 +486,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 		/*The company data and preferences could not be retrieved for some reason */
 		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Now need to check that the order details are the same as they were when they were read into the Items array. If they've changed then someone else may have invoiced them */
@@ -522,7 +522,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 		unset($_SESSION['Items' . $identifier]);
 		unset($_SESSION['ProcessingPick']);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -539,7 +539,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 			unset($_SESSION['Items' . $identifier]);
 			unset($_SESSION['ProcessingPick']);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 	}
 	/*loop through all line items of the order to ensure none have been invoiced since started looking at this order*/
@@ -758,4 +758,3 @@ else {
 echo '</form>';
 
 include('includes/footer.php');
-?>

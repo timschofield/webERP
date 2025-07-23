@@ -48,7 +48,7 @@ if (isset($_GET['DebtorNo'])) {
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	 echo '<table class="selection">';
 	echo $TableHeader;
@@ -237,5 +237,3 @@ function ProcessAllocation() {
 		unset($_POST['AllocTrans']);
 	}
 }
-
-?>

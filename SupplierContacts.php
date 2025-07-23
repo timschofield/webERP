@@ -23,7 +23,7 @@ if (!isset($SupplierID)) {
 	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br />' . _('When the page is called from within the system this will always be the case') .
 	'<br />' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['SelectedContact'])){
@@ -284,4 +284,3 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

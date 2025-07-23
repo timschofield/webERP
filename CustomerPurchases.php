@@ -15,7 +15,7 @@ if(isset($_GET['DebtorNo'])) {
 } else {
 	prnMsg(_('This script must be called with a customer code.'), 'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $SQL = "SELECT debtorsmaster.name,
@@ -119,4 +119,3 @@ else {
 echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.php');
-?>

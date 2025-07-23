@@ -35,7 +35,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
@@ -45,7 +45,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 			prnMsg (_('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$HeadingColumnNumber++;
 	}
@@ -63,7 +63,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 			prnMsg (count($FieldHeadings) . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -136,5 +136,3 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 }
 
 include('includes/footer.php');
-
-?>

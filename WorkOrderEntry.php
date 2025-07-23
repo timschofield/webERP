@@ -1,8 +1,8 @@
 <?php
 include ('includes/DefineWOClass.php');
 include ('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
-if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);};
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 
@@ -72,7 +72,7 @@ if (isset($_POST['AddToOrder'])) {
 		prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $_SESSION['WorkOrder' . $Identifier]->LocationCode, 'error');
 		echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	foreach ($_POST as $Key => $Value) {
 		if (substr($Key, 0, 7) == 'StockID') {
@@ -269,7 +269,7 @@ if (isset($_POST['delete'])) {
 			unset($_POST['WOComments' . $i]);
 		}
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -650,7 +650,7 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				
+
 				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 				echo '<tr class="striped_row">
@@ -674,4 +674,3 @@ if (isset($SearchResult)) {
 } //end if SearchResults to show
 echo '</form>';
 include ('includes/footer.php');
-?>

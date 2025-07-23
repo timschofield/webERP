@@ -38,14 +38,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 	if (DB_num_rows($BOMResult)==0){
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.php');
 	   prnMsg( _('The Bill of Material listing has no bills to report on'),'warn');
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 
 
@@ -188,5 +188,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

@@ -328,4 +328,3 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 echo '</div>
       </form>';
 include('includes/footer.php');
-?>

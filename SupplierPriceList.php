@@ -67,7 +67,7 @@ if(isset($_POST['StockSearch'])) {
 		</div>
 	</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
@@ -299,7 +299,7 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
               </div>
               </form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -419,7 +419,7 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 			</div>';
         echo '</form>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -486,7 +486,7 @@ if(isset($SuppliersResult)) {
           </form>
           <br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }// END if(isset($SuppliersResult)).
 
 if(isset($_POST['SupplierID'])) {
@@ -611,7 +611,5 @@ if(isset($_POST['SupplierID'])) {
 	echo '</table>';
 	echo '</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
-
-?>

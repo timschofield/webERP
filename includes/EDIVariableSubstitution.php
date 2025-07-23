@@ -29,4 +29,3 @@
 	echo "<BR>$NewLineText";
 
 	fputs($fp, $NewLineText . "\n");
-?>

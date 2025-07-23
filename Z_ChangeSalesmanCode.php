@@ -18,7 +18,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	if ($_POST['OldSalesmanCode']==''){
 		prnMsg(_('An existing salesman code entry must be provided'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 /*First check the salesman code exists */
@@ -26,18 +26,18 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	if (DB_num_rows($Result) == 0){
 		prnMsg('<br /><br />' . _('The salesman code') . ': ' . $_POST['OldSalesmanCode'] . ' ' . _('does not currently exist as a sales person code in the system'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	if ($_POST['NewSalesmanCode']==''){
 		prnMsg(_('A new salesman code entry must be provided'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	else if (ContainsIllegalCharacters($_POST['NewSalesmanCode'])) {
 		prnMsg(_('The new salesman code to change the old code to contains illegal characters - no changes will be made'), 'error');
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$_POST['NewSalesmanCode'] = mb_strtoupper($_POST['NewSalesmanCode']);
@@ -47,7 +47,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	if (DB_num_rows($Result)!=0){
 		prnMsg(_('The replacement salesman code') .': ' . $_POST['NewSalesmanCode'] . ' ' . _('already exists as a salesman code in the system') . ' - ' . _('a unique salesman code must be entered for the new code'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
     DB_Txn_Begin();
@@ -137,4 +137,3 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	</form>';
 
 include('includes/footer.php');
-?>

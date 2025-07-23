@@ -29,7 +29,7 @@ $usage="USAGE\n".$argv[0].":\n".
 
 if ($argc < 7 ) {
         echo $usage;
-        exit;
+        exit();
 }
 for ($i=1;$i<$argc;$i++){
         switch($argv[$i]) {
@@ -60,7 +60,7 @@ for ($i=1;$i<$argc;$i++){
          default:
              echo "unknown option".$argv[$i]."\n";
              echo $usage;
-             exit;
+             exit();
              break;
 	}
 }
@@ -69,7 +69,7 @@ if (( $reportname=="") ||
     ( $reportnumber=="") ||
     ( $emailaddresses=="")) {
              echo $usage;
-             exit;
+             exit();
 }
 // do we have a variable
 if ($WEBERPHOME!="") {
@@ -113,4 +113,3 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 
 	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
 }
-?>

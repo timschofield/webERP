@@ -38,4 +38,3 @@
 		$Result = DB_query($SQL);
 		return DB_fetch_array($Result);
 	}
-?>

@@ -1,4 +1,5 @@
 <?php
+
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
 
@@ -23,7 +24,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	/*Maybe we should check config directories exist and try to create if not */
 
 	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
-		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+		exit();
 	}
 
 	/*Load the pagesecurity settings from the database */
@@ -33,7 +35,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
-		header('Location: UpgradeDatabase.php');
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/UpgradeDatabase.php');
 	}
 	//Populate the PageSecurityArray array for each script's  PageSecurity value
 	while ($MyRow=DB_fetch_array($Result)) {
@@ -77,7 +79,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
 		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
-		exit;
+		exit();
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
 	}
@@ -142,4 +144,3 @@ $RadioBeaconFTP_server = 192.168.2.2
 $RadioBeaconFTP_user_name = RadioBeacon ftp server user name
 $RadionBeaconFTP_user_pass = Radio Beacon remote ftp server password
 */
-?>

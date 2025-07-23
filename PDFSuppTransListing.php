@@ -3,7 +3,7 @@
 
 include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
@@ -51,7 +51,7 @@ if (!isset($_POST['Date'])){
      echo '</form>';
 
 	 include('includes/footer.php');
-	 exit;
+	 exit();
 } else {
 
 	include('includes/ConnectDB.php');
@@ -84,14 +84,14 @@ if (DB_error_no()!=0){
 			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.php');
-  	exit;
+  	exit();
 } elseif (DB_num_rows($Result) == 0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	echo '<br />';
   	prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
 	include('includes/footer.php');
-  	exit;
+  	exit();
 }
 
 include('includes/PDFStarter.php');
@@ -133,4 +133,3 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') .
 $ReportFileName = $_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
 $pdf->__destruct();
-?>

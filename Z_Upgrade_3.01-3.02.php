@@ -11,7 +11,7 @@ $TestAlreadyDoneResult = DB_query('SELECT * FROM salesorderdetails WHERE orderli
 if (DB_num_rows($TestAlreadyDoneResult)>0){
 	prnMsg(_('The upgrade script appears to have been run already successfully - there is no need to re-run it'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 
@@ -40,4 +40,3 @@ DB_query( 'ALTER TABLE salesorderdetails ADD CONSTRAINT salesorderdetails_pk pri
 
 prnMsg(_('The sales orderdetails lines have been numbered appropriately for version 3.02'),'success');
 include('includes/footer.php');
-?>

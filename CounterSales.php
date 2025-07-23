@@ -82,14 +82,14 @@ if (!isset($_SESSION['Items'.$identifier])) {
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	} else {
 		$MyRow = DB_fetch_array($Result); //get the only row returned
 
 		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']=='') {
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (isset($_GET['DebtorNo'])) {
 			$_SESSION['Items'.$identifier]->DebtorNo = $_GET['DebtorNo'];
@@ -167,7 +167,7 @@ if (!isset($_SESSION['Items'.$identifier])) {
 					echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
 				}
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 			// add echo
 			echo '<br />';
@@ -196,7 +196,7 @@ if (!isset($_SESSION['Items'.$identifier])) {
 					prnMsg(_('No more orders can be placed by') . ' ' . $MyRow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
 					$AlreadyWarnedAboutCredit = true;
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 			}
 
@@ -219,7 +219,7 @@ if (isset($_POST['CancelOrder'])) {
 	prnMsg(_('This sale has been cancelled as requested'),'success');
 	echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Start a new Counter Sale') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 
 } else { /*Not cancelling the order */
 
@@ -1083,7 +1083,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 			/*The company data and preferences could not be retrieved for some reason */
 			prnMsg( _('The company information and preferences could not be retrieved. See your system administrator'), 'error');
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 	// *************************************************************************
@@ -1266,7 +1266,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 					} // end if the item is serialised and nextserialno is set
 					// Send email to the Factory Manager
 					$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
-					SendEmailFromWebERP($SysAdminEmail, 
+					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['FactoryManagerEmail'],
 										$EmailSubject,
 										$FactoryManagerEmail,
@@ -1283,8 +1283,6 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.php */
-
-
 
 		$DefaultDispatchDate = Date('Y-m-d');
 
@@ -2345,4 +2343,3 @@ if (!isset($_POST['ProcessSale'])) {
 </script>
 <?php
 include('includes/footer.php');
-?>

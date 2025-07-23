@@ -201,4 +201,3 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 }
 
 include ('includes/footer.php');
-?>

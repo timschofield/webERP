@@ -4,7 +4,7 @@
 include('includes/SQL_CommonFunctions.php');
 include ('includes/session.php');
 use Dompdf\Dompdf;
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
@@ -40,14 +40,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The SQL used to get the transaction information that failed was') . ':<br />' . $SQL,'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	} elseif (DB_num_rows($Result) == 0){
 		$Title = _('Payment Listing');
 		include('includes/header.php');
 		echo '<br />';
 		prnMsg (_('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '._('Please try again selecting a different date'), 'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	switch ($_POST['TransType']) {
@@ -204,4 +204,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	 include('includes/footer.php');
 }
-?>

@@ -1,10 +1,12 @@
 <?php
-$PathPrefix = '../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
+	// allow dashboard applet to run standalone
 	require_once ($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
-	}
+	$DirectoryLevelsDeep = 1;
+	$PathPrefix = __DIR__ . '/../';
+}
 
 	$ScriptTitle = _('Order Summary');
 
@@ -142,5 +144,3 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		<td class="number">', locale_number_format($TotalOutstanding, $DecimalPlaces), '</td>
 	</tr>
 </table>';
-
-?>

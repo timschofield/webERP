@@ -20,8 +20,9 @@ Comments beginning with Help Begin and Help End denote the beginning and end of 
 What section is named after Help Begin: and there can be multiple sections separated with a comma.
 */
 
-// $PageSecurity=1;
-$PathPrefix='../../';
+//$PageSecurity = 1;
+$PathPrefix = __DIR__ . '/../../../';
+
 //include($PathPrefix.'includes/session.php');
 
 header('Content-Type: text/html; charset=gb2312');

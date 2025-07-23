@@ -6,7 +6,7 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
-if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);};
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -37,7 +37,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 		<br />' .  _('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
 
 	include ('includes/footer.php');
-	exit;
+	exit();
 } elseif (isset($_GET['PONumber'])
 			AND !isset($_POST['Update'])) {
 /*Update only occurs if the user hits the button to refresh the data and recalc the value of goods recd*/
@@ -68,7 +68,7 @@ if ($_SESSION['PO'.$identifier]->Status != 'Printed') {
 	prnMsg( _('Purchase orders must have a status of Printed before they can be received').'.<br />' .
 		_('Order number') . ' ' . $_GET['PONumber'] . ' ' . _('has a status of') . ' ' . _($_SESSION['PO'.$identifier]->Status), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 // Always display quantities received and recalc balance for all items on the order
@@ -320,7 +320,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
         echo '</form>';
 		prnMsg(_('The company information and preferences could not be retrieved') . ' - ' . _('see your system administrator') , 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 /*Now need to check that the order details are the same as they were when they were read into the Items array. If they have changed then someone else must have altered them */
@@ -353,7 +353,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		echo '</div>';
 		echo '</form>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
 
@@ -416,7 +416,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
             echo '</div>';
             echo '</form>';
 			include ('includes/footer.php');
-			exit;
+			exit();
 		}
 		$LineNo++;
 	} /*loop through all line items of the order to ensure none have been invoiced */
@@ -804,7 +804,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
     echo '</div>';
     echo '</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 
 } else { /*Process Goods received not set so show a link to allow mod of line items on order and allow input of date goods received*/
 
@@ -823,4 +823,3 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 echo '</div>';
 echo '</form>';
 include('includes/footer.php');
-?>

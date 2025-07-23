@@ -21,7 +21,7 @@ if (!isset($_SESSION['Trans'])){
 	prnMsg(_('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . _('Import Bank Transactions') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
 	 * */
 }
@@ -35,7 +35,7 @@ if (!isset($TransID)){
 	prnMsg(_('This page can only be called from the importation of bank transactions page which sets up the data to receive the analysed general ledger entries'),'info');
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . _('Import Bank Transactions') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_SESSION['Trans'][$TransID]->BankTransID != 0) {
@@ -323,4 +323,3 @@ if ($AllowGLAnalysis==false){
 }
 echo '</form>';
 include('includes/footer.php');
-?>

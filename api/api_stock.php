@@ -354,7 +354,7 @@
 		}
 		if (sizeof($Errors)==0) {
 			$stocksql = 'INSERT INTO stockmaster ('.mb_substr($FieldNames,0,-2).') '.
-		  		'VALUES ('.mb_substr($FieldValues,0,-2).') ';
+				'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 			$locsql = "INSERT INTO locstock (loccode,stockid)
 				SELECT locations.loccode,'" . $StockItemDetails['stockid'] . "' FROM locations";
 			DB_Txn_Begin();
@@ -884,5 +884,3 @@
 			return $Errors;
 		}
 	}
-
-?>

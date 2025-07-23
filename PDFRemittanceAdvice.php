@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['PaymentDate'])){$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);};
+if (isset($_POST['PaymentDate'])){$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);}
 
 If ((isset($_POST['PrintPDF']))
 			AND isset($_POST['FromCriteria'])
@@ -39,7 +39,7 @@ If ((isset($_POST['PrintPDF']))
 		prnMsg(_('There were no remittance advices to print out for the supplier range and payment date specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 /*then print the report */
 
@@ -85,7 +85,7 @@ If ((isset($_POST['PrintPDF']))
 				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 
@@ -318,4 +318,3 @@ function PageHeader(){
 	$XPos = $Left_Margin;
 
 }
-?>

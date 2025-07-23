@@ -226,7 +226,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<field>
 			 <label for="Location">' . _('Select Location') . ':</label>
 			<select name="Location[]" multiple="multiple">
-				<option value="All" selected="selected">' . _('All') . '</option>';;
+				<option value="All" selected="selected">' . _('All') . '</option>';
 	$SQL = "SELECT 	locations.loccode,locationname
 			FROM 	locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -301,4 +301,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include ('includes/footer.php');
 
 }
-?>

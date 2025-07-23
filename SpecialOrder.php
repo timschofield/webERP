@@ -5,7 +5,7 @@
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -36,7 +36,7 @@ if (!isset($_SESSION['SupplierID'])){
 	prnMsg(_('To set up a special') . ', ' . _('the supplier must first be selected from the Select Supplier page'),'info');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select the supplier now') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
@@ -45,7 +45,7 @@ if (!isset($_SESSION['CustomerID']) or $_SESSION['CustomerID']==''){
 		<br />
 		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Select the customer now') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_POST['Cancel'])){
@@ -165,12 +165,12 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 		echo '</div>
               </form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 
 	} else {
 		prnMsg( _('There are no branches defined for the customer selected') . '. ' . _('Please select a customer that has branches defined'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -568,7 +568,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		DB_Txn_Commit();
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
-		exit;
+		exit();
 	} /*end if there were no input errors trapped */
 } /* end of the code to do transfer the SPL object to the database  - user hit the place Order*/
 
@@ -755,4 +755,3 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
-?>

@@ -62,7 +62,7 @@ if(DB_num_rows($Result1)==0) {
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 echo '<field>
@@ -250,4 +250,3 @@ if(isset($_POST['ShowStatus'])) {
 echo '</form>';
 
 include('includes/footer.php');
-?>

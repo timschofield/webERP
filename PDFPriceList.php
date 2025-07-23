@@ -15,7 +15,7 @@ Please note that addTextWrap() YPos is a font-size-height further down than addT
 All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
 */
 include('includes/session.php');
-if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 use Dompdf\Dompdf;
 
 // Merges gets into posts:
@@ -102,7 +102,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
 			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (!Is_Date($_POST['EffectiveDate'])) {
 			$Title = _('Special price List - No Customer Selected');
@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$SQL = "SELECT
@@ -204,7 +204,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (DB_num_rows($PricesResult)==0) {
 		$Title = _('Print Price List Error');
@@ -212,7 +212,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
 		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$CurrCode ='';
@@ -254,9 +254,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
 			/*Need to show to which branch the price relates */
 			if ($PriceList['branchcode']!='') {
-				$HTML .= '<td>' . $PriceList['brname'] . '</td>';;
+				$HTML .= '<td>' . $PriceList['brname'] . '</td>';
 			} else {
-				$HTML .= '<td>' . _('All') . '</td>';;
+				$HTML .= '<td>' . _('All') . '</td>';
 			}
 
 		} elseif ($_POST['CustomerSpecials']=='Full Description') {
@@ -463,5 +463,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 } /*end of else not PrintPDF */
 // END: Procedure division -----------------------------------------------------
-
-?>

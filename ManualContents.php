@@ -143,4 +143,3 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 
 ob_end_flush();
 // END: Procedure division -----------------------------------------------------
-?>

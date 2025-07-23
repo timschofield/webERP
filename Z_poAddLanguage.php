@@ -12,7 +12,7 @@ include ('includes/session.php');
 if (isset($_POST['cancel'])) {
 
 	header ('Location:' . $RootPath . '/Z_poAdmin.php');
-	exit;
+	exit();
 
 }
 
@@ -64,7 +64,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
   			echo '</form>';
 	  		echo '</div>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$PathToNewLanguage = './locale/' . $_POST['NewLanguage'] . '.utf8/LC_MESSAGES/messages.po';
@@ -75,7 +75,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 		echo '</form>';
 		echo '</div>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 }
@@ -98,5 +98,3 @@ echo '<br /><input type="submit" name="submit" value="' . _('Proceed') . '" />&n
 echo '</form>';
 
 include('includes/footer.php');
-
-?>

@@ -3,8 +3,8 @@
 // Allows payments and receipts to be matched off against bank statements.
 
 include('includes/session.php');
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 $Title = _('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
@@ -35,7 +35,7 @@ if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 
 	prnMsg(_('This page must be called with a bank transaction type') . '. ' . _('It should not be called directly'),'error');
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['Account'])) {
@@ -327,4 +327,3 @@ if ($InputError !=1
 }
 echo '</form>';
 include('includes/footer.php');
-?>

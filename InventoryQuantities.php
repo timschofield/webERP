@@ -112,7 +112,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
-	   exit;
+	   exit();
 	}
 	if (DB_num_rows($Result)==0){
 			$Title = _('Print Inventory Quantities Report');
@@ -120,7 +120,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			prnMsg(_('There were no items with inventory quantities'),'error');
 			echo '<br /><a href="'.$RootPath.'/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 	}
 
 	$HoldPart = " ";
@@ -217,7 +217,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<field>
@@ -250,5 +250,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

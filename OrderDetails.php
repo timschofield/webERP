@@ -13,7 +13,7 @@ if (isset($_GET['OrderNumber'])) {
 	echo '<br /><br /><br />';
 	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.','error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $ViewTopic = 'SalesOrders';
@@ -67,7 +67,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
 		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	//retrieve invoice number
 	$Invs = explode(' Inv ',$MyRow['comments']);
@@ -247,4 +247,3 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	}
 
 include('includes/footer.php');
-?>

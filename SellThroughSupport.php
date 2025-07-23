@@ -1,8 +1,8 @@
 <?php
 
 include ('includes/session.php');
-if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 $Title = _('Sell Through Support');
 
@@ -206,7 +206,7 @@ if (isset($_POST['SearchSupplier'])) {
 			</div>
 		</form>';
 	include ('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($SupplierID)) { /* Then display all the sell through support for the supplier */
@@ -470,4 +470,3 @@ if (isset($SupplierID)) { //not selecting a supplier
 }
 
 include ('includes/footer.php');
-?>

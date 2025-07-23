@@ -11,7 +11,7 @@ Class Allocation {
 }
 
 include('includes/session.php');
-if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);};
+if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);}
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetPaymentMethods.php');
 
@@ -114,14 +114,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		if (DB_num_rows($TransResult)==0) {
 			include('includes/header.php');
 			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		unset($Allocs);
@@ -189,7 +189,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					}
 					DB_Txn_Rollback();
 					include('includes/footer.php');
-					exit;
+					exit();
 				}
 			}
 
@@ -220,7 +220,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			}
 			DB_Txn_Rollback();
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
@@ -324,7 +324,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		 if ($Debug==1){
 			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }
-		 exit;
+		 exit();
 	}
 
 	echo '<field>
@@ -338,7 +338,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<p>' . _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') . '.
 			</p>';
 		 include('includes/footer.php');
-		 exit;
+		 exit();
 	} else {
 		while ($MyRow=DB_fetch_array($AccountsResults)){
 			  /*list the bank account names */
@@ -379,4 +379,3 @@ Payment types can be modified by editing that file */
 	echo '</form>';
 	include ('includes/footer.php');
 } /*end of else not PrintPDF */
-?>

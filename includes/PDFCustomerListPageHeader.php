@@ -85,4 +85,3 @@ $LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,_('Branch Contact Informa
 $LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,_('Branch Delivery Address'),'left');
 
 $YPos =$YPos - (2*$LineHeight);
-?>

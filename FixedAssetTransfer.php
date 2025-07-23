@@ -40,7 +40,7 @@ if (isset($_GET['AssetID'])) {
 
 	echo '<fieldset>
 			<legend>', _('Asset Transfer Details'), '</legend>';
-			
+
 	echo '<field>
 			<label for="AssetCat">' .  _('In Asset Category') . ': </label>
 			<select name="AssetCat">';
@@ -59,7 +59,7 @@ if (isset($_GET['AssetID'])) {
 
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="Keywords">' .  _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 
@@ -70,7 +70,7 @@ if (isset($_GET['AssetID'])) {
 	}
 
 	echo '</field>';
-	
+
 	echo '<field>
 			<label for="AssetLocation">' . _('Asset Location') . ':</label>
 			<select name="AssetLocation">';
@@ -107,7 +107,7 @@ if (isset($_GET['AssetID'])) {
 	echo '</td>
 		</field>
 	</fieldset>';
-	
+
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="'. _('Search Now') . '" />
 		</div>
@@ -211,5 +211,3 @@ if (isset($_POST['Search'])) {
 }
 
 include('includes/footer.php');
-
-?>

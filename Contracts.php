@@ -2,7 +2,7 @@
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');
-if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);};
+if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);}
 
 if (isset($_GET['ModifyContractNo'])) {
 	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
@@ -94,7 +94,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		prnMsg(_('You should automatically be forwarded to the entry of the Contract line items page') . '. ' .
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/ContractBOM.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	if (isset($_POST['EnterContractRequirements']) AND !$InputError){
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/ContractOtherReqts.php?identifier='.$identifier. '" />';
@@ -103,7 +103,7 @@ if (isset($_SESSION['Contract'.$identifier]) AND
 		_('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' .
 		'<a href="' . $RootPath . '/ContractOtherReqts.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 } /* end of if going to contract BOM or contract requriements */
 
@@ -129,7 +129,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['Drawing']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
-		 	$UploadTheFile ='No';
+		$UploadTheFile ='No';
 	}
 	foreach ($SupportedImgExt as $Ext) {
 		$File = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $Ext;
@@ -173,7 +173,7 @@ if (isset($_GET['ModifyContractRef'])){
 
 if (isset($_POST['CancelContract'])) {
 /*The cancel button on the header screen - to delete the contract */
-	$OK_to_delete = true;	 //assume this in the first instance
+	$OK_to_delete = true; //assume this in the first instance
 	if(!isset($_SESSION['ExistingContract']) OR $_SESSION['ExistingContract']!=0) {
 		/* need to check that not already ordered by the customer - status = 100  */
 		if($_SESSION['Contract'.$identifier]->Status==2){
@@ -744,7 +744,7 @@ if (isset($_POST['SelectedCustomer'])) {
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $CreditAvailable <=0){
 				prnMsg(_('No more orders can be placed by') . ' ' . $MyRow[0] . ' ' . _(' their account is currently at or over their credit limit'),'warn');
 				include('includes/footer.php');
-				exit;
+				exit();
 			}
 		}
 	} //a customer was retrieved ok
@@ -842,7 +842,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	echo '<fieldset>
@@ -911,7 +911,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'), 'warn');
 		echo '<br /><a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance'), '</a>';
 		include ('includes/footer.php');
-		exit;
+		exit();
 	}
 	echo '<field>
 			<label for="DefaultWorkCentre">', _('Default Work Centre'), ': </label>
@@ -1110,4 +1110,3 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 } /*end of if customer selected  and entering contract header*/
 
 include('includes/footer.php');
-?>

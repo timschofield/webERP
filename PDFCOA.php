@@ -127,7 +127,7 @@ $Result=DB_query($SQL,$ErrMsg);
 if (DB_num_rows($Result)==0){
 	$Title = _('Print Certificate of Analysis Error');
 	include('includes/header.php');
-	 echo '<div class="centre">
+	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
@@ -147,7 +147,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $PaperSize = 'Letter';
 if ($QASampleID>'') {
@@ -319,5 +319,3 @@ while (mb_strlen($LeftOvers) > 1) {
 
 $pdf->OutputI($_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-
-?>

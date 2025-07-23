@@ -18,25 +18,25 @@ if(!$db) {
 	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
+	echo '<p>' . _('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
 
-	exit;
+	exit();
 }
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if(isset($DatabaseName)) {
 	if(! mysql_select_db($_SESSION['DatabaseName'],$db)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset($_SESSION['DatabaseName']);
-		exit;
+		exit();
 	}
 } else {
 	if(! mysql_select_db($_SESSION['DatabaseName'],$db)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset($_SESSION['DatabaseName']);
-		exit;
+		exit();
 	}
 }
 
@@ -72,7 +72,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 		if($TrapErrors) {
 			include($PathPrefix . 'includes/footer.php');
-			exit;
+			exit();
 		}
 	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0)) {
 
@@ -220,4 +220,3 @@ function DB_table_exists($TableName) {
 		return False;
 	}
 }
-?>
