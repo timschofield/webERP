@@ -60,7 +60,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
-		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
+		$highestRow = $worksheet->getHighestRow(); // e.g. 10
 		
 		echo '<div>';
 		echo '<table class="selection">
@@ -78,12 +78,12 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				<tbody>';
 		$i = 1;
 
-		for ($Row = 4; $Row <= $highestRow; ++ $Row) {
+		for ($Row = 6; $Row <= $highestRow; ++ $Row) {
 			// get the data for a product
 			$Error = "";
 			$TokopediaProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
-			$StockID = $worksheet->getCell('K'.$Row)->getCalculatedValue();
-			$URLTokopedia = $worksheet->getCell('I'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('L'.$Row)->getCalculatedValue();
+			$URLTokopedia = $worksheet->getCell('AD'.$Row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
@@ -126,7 +126,7 @@ function display($RootPath, $Theme, $Title)
 		</p>';
 	
 	echo '<fieldset>
-			<legend>' . _('Import file with Tokopedia Information') . '</legend>';
+			<legend>' . _('Import file with Tokopedia Information from TikTok') . '</legend>';
 
 	echo FieldToSelectOneFile("SelectedFile", _('File with Tokopedia Information'),'','', '', true, false);	
 
