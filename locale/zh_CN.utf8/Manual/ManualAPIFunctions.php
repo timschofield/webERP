@@ -8,8 +8,7 @@ include('../../api/api_errorcodes.php');
 $Title = 'API documentation';
 
 echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
-echo '<link REL="shortcut icon" HREF="'. $RootPath.'/favicon.ico">';
-echo '<link REL="icon" HREF="' . $RootPath.'/favicon.ico">';
+echo '<link rel="icon" href="'. $RootPath.'/favicon.ico" type="image/x-icon" />';
 /// @todo change the translation string, as it makes no sense! In zh_CN, we are translating 'iso-8859-1' as 'utf-8'!
 echo '<meta http-equiv="Content-Type" content="text/html; charset=' . _('iso-8859-1') . '">';
 echo '<link href="'.$RootPath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
