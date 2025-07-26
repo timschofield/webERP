@@ -196,6 +196,7 @@ $pdf = new Cpdf($DocumentOrientation, 'pt', $DocumentPaper);
 $pdf->addInfo('Creator', 'webERP https://www.weberp.org');
 $pdf->addInfo('Author', 'webERP ' . $Version);
 
+
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
 	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
