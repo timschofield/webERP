@@ -331,7 +331,7 @@ echo '<tr>
 		<td colspan="3"><hr /></td>
 	</tr>';
 
-If (isset($_POST['Close'])) {
+if (isset($_POST['Close'])) {
 
 	DB_data_seek($WOItemsResult,0);
 	$NoItemsOnWO = DB_num_rows($WOItemsResult);

@@ -171,7 +171,7 @@ $GetColsSQL = "SELECT colno,
 
 $ColsResult = DB_query($GetColsSQL);
 
-If (DB_num_rows($ColsResult)== 0) {
+if (DB_num_rows($ColsResult)== 0) {
     $Title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.php');
     prnMsg (  _('The report does not have any output columns') . '. ' . _('You need to set up the data columns that you wish to show in the report'),'error',_('No Columns'));
@@ -201,7 +201,7 @@ $SQLWhereCls = $SQLWhereCls . GetHavingSQL($ReportSpec['groupbydata1']) . " >= '
 
 $SQLGroupCls = $SQLGroupCls . GetGroupBySQL($ReportSpec['groupbydata1']);
 
-If ($ReportSpec['groupbydata2'] != 'Not Used') {
+if ($ReportSpec['groupbydata2'] != 'Not Used') {
      $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata2'],3);
 
      $SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata2']) . " >= '" . $ReportSpec['lower2'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata2']) . " <= '" . $ReportSpec['upper2'] . "'";
@@ -213,7 +213,7 @@ If ($ReportSpec['groupbydata2'] != 'Not Used') {
  	$ReportSpec['groupbydata3'] = 'Not Used'; /*This is forced if no entry in Group By 2 */
 }
 
-If ($ReportSpec['groupbydata3'] != 'Not Used') {
+if ($ReportSpec['groupbydata3'] != 'Not Used') {
 	 $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata3'],5);
 
 	$SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata3']) . " >= '" . $ReportSpec['lower3'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata3']) . " <= '" . $ReportSpec['upper3'] . "'";
@@ -224,7 +224,7 @@ If ($ReportSpec['groupbydata3'] != 'Not Used') {
 	 $SQLSelectCls = $SQLSelectCls . ', 0 AS col5, 0 AS col6';
 }
 
-If ($ReportSpec['groupbydata4'] != 'Not Used') {
+if ($ReportSpec['groupbydata4'] != 'Not Used') {
 	 $SQLSelectCls = $SQLSelectCls . ', ' . GetFieldSQL($ReportSpec['groupbydata4'],7);
 	$SQLWhereCls = $SQLWhereCls . " AND " . GetHavingSQL($ReportSpec['groupbydata4']) . " >= '" . $ReportSpec['lower4'] . "' AND " . GetHavingSQL($ReportSpec['groupbydata4']) . " <= '" . $ReportSpec['upper4'] . "'";
 
@@ -236,7 +236,7 @@ If ($ReportSpec['groupbydata4'] != 'Not Used') {
 /*Right, now run thro the cols and build the select clause from the defined cols */
 
 while ($Cols = DB_fetch_array($ColsResult)){
-    If ($Cols['calculation']==0){
+    if ($Cols['calculation']==0){
 	 $SQLSelectCls = $SQLSelectCls . ', SUM(CASE WHEN salesanalysis.periodno >= ' . $Cols['periodfrom'] . ' AND salesanalysis.periodno <= ' . $Cols['periodto'];
 	 $SQLSelectCls = $SQLSelectCls . ' AND salesanalysis.budgetoractual = ' . $Cols['budgetoractual'] . ' THEN ' . GetDataSQL($Cols['datatype']) . ' ELSE 0 END) AS col' . ($Cols['colno'] + 8);
     }
@@ -249,7 +249,7 @@ Select clause to have all the non-calc fields in it before start using the calcs
 DB_data_seek($ColsResult,0);
 
 while ($Cols = DB_fetch_array($ColsResult)){
-    If ($Cols['calculation']==1){
+    if ($Cols['calculation']==1){
 
 	/*find the end of the col select clause AS Col# start is 8 because no need to search the SELECT
 	First find out the position in the select statement where 'AS ColX' is
@@ -259,7 +259,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	$Length_ColNum = mb_strpos($SQLSelectCls, 'AS col' . ($Cols['colnumerator'] + 8) , 7);
 
 
-	 If ($Length_ColNum == 0) {
+	 if ($Length_ColNum == 0) {
 
 	     $Title = _('User Defined Sales Analysis Problem') . ' ....';
 	    include('includes/header.php');
@@ -288,7 +288,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	/*The denominator column is also required if the constant is not used so do the same again for the denominator */
 
 	$Length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
-	 If ($Length_ColDen == 0){
+	 if ($Length_ColDen == 0){
 	     prnMsg (_('Calculated fields must use columns defined in the report specification') . '. ' . _('The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
 	     exit();
 	}

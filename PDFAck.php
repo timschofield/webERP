@@ -5,7 +5,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
-If (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
+if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 	$Title = _('Select Acknowledgement To Print');
 	include('includes/header.php');
 	prnMsg(_('Select a Acknowledgement to Print before calling this page'), 'error');

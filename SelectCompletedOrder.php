@@ -549,7 +549,7 @@ if (isset($StockItemsResult)) {
 }
 //end if stock search results to show
 
-If (isset($SalesOrdersResult)) {
+if (isset($SalesOrdersResult)) {
 	if (DB_num_rows($SalesOrdersResult) == 1) {
 		if (!isset($OrderNumber)) {
 			$OrdRow = DB_fetch_array($SalesOrdersResult);

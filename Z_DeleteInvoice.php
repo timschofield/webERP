@@ -61,7 +61,7 @@ $Result = DB_query($SQL);
 
 $i=0;
 
-While ($MyRow = DB_fetch_array($Result)){
+while ($MyRow = DB_fetch_array($Result)){
 	$StockMovement[$i] = $MyRow;
 	$i++;
 }

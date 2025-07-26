@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])){
 				$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 				$YPos -=$LineHeight;
 
-				If ($_POST['DetailedReport']=='Yes'){
+				if ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
 					$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 					$YPos -=(2*$LineHeight);

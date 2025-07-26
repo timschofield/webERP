@@ -85,7 +85,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('categoryid') . ',' .
 			stripcomma('categorydescription') . "\n";
 
-	While ($PriceList = DB_fetch_array($PricesResult)){
+	while ($PriceList = DB_fetch_array($PricesResult)){
 		$Qty = 0;
 		$SQLQty = "SELECT newqoh
 			FROM stockmoves
@@ -189,7 +189,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('disabletrans') . "\n";
 
 
-	While ($CustList = DB_fetch_array($CustResult)){
+	while ($CustList = DB_fetch_array($CustResult)){
 
 		$CreditLimit = $CustList['creditlimit'];
 		if ( mb_strlen($CustList['braddress1']) <= 3 ) {
@@ -269,7 +269,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('commissionrate2') . "\n";
 
 
-	While ($SalesManList = DB_fetch_array($SalesManResult)){
+	while ($SalesManList = DB_fetch_array($SalesManResult)){
 
 		$CommissionRate1 = $SalesManList['commissionrate1'];
 		$BreakPoint 	 = $SalesManList['breakpoint'];
@@ -313,7 +313,7 @@ if ( isset($_POST['pricelist']) ) {
 				  stripcomma('filename') . ','.
 				  stripcomma('url') . "\n";
 	$baseurl = '//'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
-	While ($ImageList = DB_fetch_array($ImageResult)){
+	while ($ImageList = DB_fetch_array($ImageResult)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (
 			stripcomma($ImageList['stockid']) . ',' .
@@ -352,7 +352,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('tokenname') . "\n";
 
 
-	While ($SecTokenList = DB_fetch_array($SecTokenResult)){
+	while ($SecTokenList = DB_fetch_array($SecTokenResult)){
 
 		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ',' .
 			stripcomma($SecTokenList['tokenname']) . "\n");
@@ -388,7 +388,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('secrolename') . "\n";
 
 
-	While ($SecRoleList = DB_fetch_array($SecRoleResult)){
+	while ($SecRoleList = DB_fetch_array($SecRoleResult)){
 
 		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ',' .
 			stripcomma($SecRoleList['secrolename']) . "\n");
@@ -424,7 +424,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('tokenid') . "\n";
 
 
-	While ($SecGroupList = DB_fetch_array($SecGroupResult)){
+	while ($SecGroupList = DB_fetch_array($SecGroupResult)){
 
 		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ',' .
 			stripcomma($SecGroupList['tokenid']) . "\n");
@@ -492,7 +492,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('swipecard') . "\n";
 
 
-	While ($SecUserList = DB_fetch_array($SecUserResult)){
+	while ($SecUserList = DB_fetch_array($SecUserResult)){
 
 		$CSVContent .= (stripcomma($SecUserList['userid']) . ',' .
 			stripcomma($SecUserList['password']) . ',' .

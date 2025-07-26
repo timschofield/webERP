@@ -90,7 +90,7 @@ while ($MyRow = DB_fetch_array($Result)){
 			</tr>';
 
 		$RowCounter++;
-		If ($RowCounter == 12){
+		if ($RowCounter == 12){
 			$RowCounter=1;
 			echo $Tableheader;
 		}
