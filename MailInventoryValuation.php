@@ -43,8 +43,10 @@ $pdf = new Cpdf('P', 'pt', 'A4');
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addInfo('Creator', 'WebERP https://www.weberp.org');
-$pdf->addInfo('Author', 'WebERP ' . $Version);
+
+$pdf->addInfo('Creator', 'webERP https://www.weberp.org');
+$pdf->addInfo('Author', 'webERP ' . $Version);
+
 
 
 // $FontSize=10;
