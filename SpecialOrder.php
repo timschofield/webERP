@@ -175,12 +175,12 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 }
 
 
-If(isset($_GET['Delete'])){  /*User hit the delete link on a line */
+if (isset($_GET['Delete'])){  /*User hit the delete link on a line */
 	$_SESSION['SPL'.$identifier]->remove_from_order($_GET['Delete']);
 }
 
 
-If(isset($_POST['EnterLine'])){
+if (isset($_POST['EnterLine'])){
 
 /*Add the header info to the session variable in any event */
 
@@ -224,7 +224,7 @@ If(isset($_POST['EnterLine'])){
 		$AllowAdd = False;
 		prnMsg( _('Cannot Enter this order line') . '<br />' . _('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
-	If ($AllowAdd == True){
+	if ($AllowAdd == True){
 
 		$_SESSION['SPL'.$identifier]->add_to_order ($_POST['LineNo'],
 										filter_number_format($_POST['Qty']),
@@ -390,7 +390,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$PartAlreadyExists =True; /*assume the worst */
 			$Counter = 0;
-			While ($PartAlreadyExists==True) {
+			while ($PartAlreadyExists==True) {
 				$SQL = "SELECT COUNT(*) FROM stockmaster WHERE stockid = '" . $PartCode . "'";
 				$PartCountResult = DB_query($SQL);
 				$PartCount = DB_fetch_row($PartCountResult);

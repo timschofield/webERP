@@ -125,7 +125,7 @@ if ($fp==FALSE){
 // the BOM is not used much anymore in 2025...
 //fputs($fp,"\xEF\xBB\xBF"); // UTF-8 BOM
 fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
-While ($MyRow = DB_fetch_row($Result)){
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]) . ', ' . stripcomma($MyRow[2]) . ', ' . stripcomma($MyRow[3]) . ', ' . stripcomma($MyRow[4]) . ', ' . stripcomma($MyRow[5]) . ', ' . stripcomma($MyRow[6]) . ', ' . stripcomma($MyRow[7]);
 	fputs($fp, $Line . "\n");
 }

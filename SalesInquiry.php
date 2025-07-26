@@ -825,7 +825,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		echo '  ' . _('Stock Category') . '  - ' . $_POST['Category'] . '<br/>';
 		echo '  ' . _('Salesman') . '  - ' . $_POST['Salesman'] . '<br/>';
 		echo '  ' . _('Sales Area') . '  - ' . $_POST['Area'] . '<br/>';
-		If ($_POST['DateType'] != 'Order') {
+		if ($_POST['DateType'] != 'Order') {
 		    $IType = 'All';
 		    if($_POST['InvoiceType'] == '10') {
 		        $IType = 'Sales Invoice';

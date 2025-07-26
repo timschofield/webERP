@@ -671,7 +671,7 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 		echo '<br />';
 		prnMsg ( _('All variances were posted to the general ledger') );
 	}
-	If (isset($_POST['UpdateCost']) AND $_POST['UpdateCost']=='Yes'){
+	if (isset($_POST['UpdateCost']) AND $_POST['UpdateCost']=='Yes'){
 		echo '<br />';
 		prnMsg ( _('All shipment items have had their standard costs updated') );
 	}
