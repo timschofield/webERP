@@ -191,7 +191,7 @@ if (DB_num_rows($Result)>0){
 
 	$pdf = new Cpdf1('L', 'pt', 'LETTER');
 
-	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
+	$pdf->addInfo('Creator', 'webERP https://www.weberp.org');
 	$pdf->addInfo('Author', 'webERP ' . $Version);
 	$pdf->addInfo('Title', _('Customer Packing Slip') );
 	$pdf->addInfo('Subject', _('Packing slip for order') . ' ' . $_GET['TransNo']);

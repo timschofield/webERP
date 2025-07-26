@@ -43,7 +43,7 @@ $pdf = new Cpdf('P', 'pt', 'A4');
 
 /* Standard PDF file creation header stuff */
 
-$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+$pdf->addInfo('Creator', 'WebERP https://www.weberp.org');
 $pdf->addInfo('Author', 'WebERP ' . $Version);
 
 

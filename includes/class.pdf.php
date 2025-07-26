@@ -184,7 +184,7 @@ if (!class_exists('Cpdf', false)) {
 			if ($label == 'Creator') {
 
 	/* Javier: Some scripts set the creator to be WebERP like this
-				$pdf->addInfo('Creator', 'WebERP http://www.weberp.org');
+				$pdf->addInfo('Creator', 'WebERP https://www.weberp.org');
 		But the Creator is TCPDF by Nicola Asuni, PDF_CREATOR is defined as 'TCPDF' in tcpdf/config/tcpdfconfig.php
 	*/ 			$this->SetCreator(PDF_CREATOR);
 			}
