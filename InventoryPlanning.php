@@ -355,11 +355,12 @@ if (isset($_POST['PrintPDF'])) {
 
 	}
 	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8
+	header('Content-type: text/csv; charset=UTF-8');
+	header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
+	header("Pragma: public");
+	header("Expires: 0");
+	// the BOM is not used much anymore in 2025...
+	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVListing;
 	exit();
 
