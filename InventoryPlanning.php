@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF'])) {
 // Javier: better to not use references
 //	$pdf = & new Cpdf($PageSize);
 	$pdf = new Cpdf('L', 'pt', 'A4');
-	$pdf->addInfo('Creator','webERP http://www.weberp.org');
+	$pdf->addInfo('Creator','webERP https://www.weberp.org');
 	$pdf->addInfo('Author','webERP ' . $Version);
 	$pdf->addInfo('Title',_('Inventory Planning Report') . ' ' . Date($_SESSION['DefaultDateFormat']));
 	$pdf->addInfo('Subject',_('Inventory Planning'));

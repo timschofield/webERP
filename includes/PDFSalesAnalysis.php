@@ -23,7 +23,7 @@ $pdf->cMargin = 0;
 /* Standard PDF file creation header stuff */
 
 $pdf->addInfo('Author','webERP ' . $Version);
-$pdf->addInfo('Creator','webERP http://www.weberp.org');
+$pdf->addInfo('Creator','webERP https://www.weberp.org');
 $pdf->addInfo('Title',$ReportSpec['reportheading']);
 $pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
 

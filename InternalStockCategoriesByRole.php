@@ -1,6 +1,6 @@
 <?php
 
-/* Functionas as described in http://www.weberp.org/forum/showthread.php?tid=171 */
+/* Functionas as described in https://www.weberp.org/forum/showthread.php?tid=171 */
 
 include('includes/session.php');
 $Title = _('Internal Stock Categories Requests By Security Role Maintenance ');
