@@ -4,10 +4,10 @@ namespace PGettext\Streams;
 
 class StringReader implements StreamReaderInterface
 {
-  public $_pos;
-  public $_str;
+  protected $_pos;
+  protected $_str;
 
-  function __construct($str='') {
+  function __construct($str) {
     $this->_str = $str;
     $this->_pos = 0;
   }

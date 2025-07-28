@@ -11,184 +11,176 @@ Evolved from the php-gettext codebase available at https://launchpad.net/php-get
 [![Build Status](https://github.com/gggeek/polyfill-gettext/actions/workflows/ci.yaml/badge.svg)](https://github.com/gggeek/polyfill-gettext/actions/workflows/ci.yaml)
 [![Code Coverage](https://codecov.io/gh/gggeek/polyfill-gettext/branch/master/graph/badge.svg)](https://app.codecov.io/gh/gggeek/phpxmlrpc)
 
-# Original Readme follows (now updated to take into account recent API changes)
+Licensed under the GPLv2 (or any later version), see [LICENSE](LICENSE)
 
-Copyright 2003, 2006, 2009 -- Danilo "angry with PHP[1]" Segan
-Licensed under GPLv2 (or any later version, see COPYING)
+Copyright 2003, 2006, 2009 -- Danilo "angry with PHP[1]" Segan.
 
-[1] PHP is actually cyrillic, and translates roughly to
-"works-doesn't-work" (UTF-8: Ради-Не-Ради)
 
 ## Introduction
 
-How many times did you look for a good translation tool, and
-found out that gettext is best for the job? Many times.
+Polyfill-Gettext implements an API for internationalization of your php application, i.e. it provides methods which can
+be used to translate to different languages the strings displayed by the user interface.
 
-How many times did you try to use gettext in PHP, but failed
-miserably, because either your hosting provider didn't support
-it, or the server didn't have adequate locale? Many times.
+Translations are read from GNU gettext MO files. Those are binary containers for translations, produced by e.g. GNU msgfmt.
 
-Well, this is a solution to your needs. It allows using gettext
-tools for managing translations, yet it doesn't require the gettext
-php extension at all. It parses generated MO files directly, and thus
-might be a bit slower than the (maybe provided) gettext library.
+Note that this library does not provide anything to create, edit or manage the translation files, however it should not
+be too hard to find tutorials on how to do that using a variety of tools and accommodating different workflows.
 
-Polyfill-Gettext is a simple reader for GNU gettext MO files. Those
-are binary containers for translations, produced by GNU msgfmt.
-
-## Why?
-
-I got used to having gettext work even without gettext
-library. It's there in my favourite language Python, so I was
-surprised that I couldn't find it in PHP. I even Googled for it,
-but to no avail.
-
-So, I said, what the heck, I'm going to write it for this
-disgusting language of PHP, because I'm often constrained to it.
 
 ## Features
 
 * Support for simple translations
 
-* Support for `ngettext` calls (plural forms, see a note under bugs)
-  You may also use plural forms. Translations in MO files need to
-  provide this, and they must also provide "plural-forms" header.
-  Please see `info gettext` for more details.
+* Support for `ngettext` calls (plural forms).
 
-* Support for reading translations from straight files, or strings (!!!)
-  Since I can imagine many different backends for reading in the MO
-  file data, a class implementing `StreamReaderInterface` has to be provided to do all
-  the input. For your convenience, I've already
-  implemented two classes for reading files: `FileReader` and
-  `StringReader` (`CachedFileReader` is a combination of the two: it
-  loads entire file contents into a string, and then works on that).
-  See the example below for usage. You can for instance use `StringReader`
-  when you read in data from a database, or you can create your own
-  implementation of StreamReaderInterface for anything you like.
+  You may also use plural forms. Translations in MO files need to provide this, and they must also provide "plural-forms"
+  header. Please see `info gettext` for more details.
 
-## Bugs
+* Support for reading translations from straight files, or strings.
 
-Report them at https://github.com/gggeek/polyfill-gettext/issues
+  Since different backends can conceivably be used for storing and reading in the MO file data, a class implementing
+  `StreamReaderInterface` can be provided to handle all the input. For your convenience, two classes for reading files
+  are already implemented: `FileReader` and `StringReader` (`CachedFileReader` being a combination of the two: it
+  loads entire file contents into a string, and then works on that). You can for instance use `StringReader`
+  when you read in data from a database, or you can create your own  implementation of `StreamReaderInterface` for
+  anything you like.
+
+  See the example below for more details.
+
+
+## Installation
+
+Install the library using Composer, then be sure to require the Composer autoloader in your code before calling any
+gettext function.
+
 
 ## Usage
 
-Install the library using Composer, then be sure to require the Composer autoloader in your code.
+### Standard gettext API emulation
 
-### Standard gettext interface emulation
-
-Check the example in `examples/pigs_dropin.php`.
-
-Basically, you can use all the standard gettext interfaces as documented on:
+Basically, you will be able to use in your code all the standard gettext functions documented on:
 
        https://www.php.net/gettext
 
-The only catch is that you can check the return value of `setlocale()` to see if your locale is system supported or not.
-If it is not, and the native gettext extension is disabled, adding a call to `PgetText\T::setlocale()` will make
-translations work in any case. See the `pigs_dropin.php` example file for more details.
+regardless of the fact that the php gettext extension is available and enabled (via php ini settings) or not.
+
+This makes the polyfill a useful inclusion for every php application which might see widespread usage on shared hosting,
+where there is often little control over php configuration and the installed extensions.
+
+The only improvement you might want to make to your code is to check the return value of the `setlocale()` call to see
+if the chosen locale is system supported or not. If it is not, making a call to `PGettext\T::setlocale($locale)` will make
+translation calls work in any case - but only if the native php gettext extension is disabled.
+
+See the example file `examples/pigs_dropin.php` for more details.
 
 ### Usage as fallback for unsupported locales
 
-Check the example file `examples/pigs_fallback.php`.
-
 By using the functions provided by this library instead of the gettext API, your translations will be used via gettext
-emulation whenever the php gettext extension is not available or the desired locale is not installed in the system.
-If the php gettext extension is available, and the desired locale is installed in the system, the native gettext function
-will be used transparently for maximum execution speed.
+emulation whenever:
+* either the php gettext extension is not available,
+* or the php gettext extension is enabled, but _the desired locale is not installed in the system_.
 
-### Custom library usage
+This is an improvement over the API emulation usage described above, as it allows to use gettext functions regardless
+of the fact that the desired locale has been installed on the system (as a reminder: for gettext to work, the locales
+to be used have to be manually installed on the system. This is achieved separately from php setup/configuration).
 
-Create one 'stream reader' (a class that implements `StreamReaderInterface`) which will
-provide data for the `gettext_reader`, with eg.
+Note that, if the php gettext extension is available, and the desired locale is installed in the system, the native
+gettext functions will be used transparently, for maximum execution speed.
 
-    $streamer = new FileStream('data.mo');
+See the example file `examples/pigs_fallback.php` for more details.
 
-Then, use that as a parameter to gettext_reader constructor:
+### Managing the translation files (.mo, .po)
 
-    $wohoo = new PGetText\gettext_reader($streamer);
+[To be documented...]
 
-If you want to disable pre-loading of entire message catalog in
-memory (if, for example, you have a multi-thousand message catalog
-which you'll use only occasionally), use `false` for second
-parameter to gettext_reader constructor:
+### Customizing library usage
 
-    $wohoo = new PGetText\gettext_reader($streamer, false);
+#### Providing translation files from custom storage
 
-From now on, you have all the benefits of gettext data at your
-disposal, so may run:
+You can create custom 'stream reader' classes (a class that implements `StreamReaderInterface`) which will provide data
+for the `gettext_reader`, and/or custom 'reader' classes (a class that implements `ReaderInterface`).
+
+After having created your custom classes, you can make use of them, in various ways.
+
+The shortest version:
+
+Set the names of your classes to `T::$reader_class` and/or `T::$stream_reader_class`. Done! Note that this requires
+compatibility of your new classes constructor arguments with the existing ones.
+
+The medium version:
+
+Create a subclass of `Pgettext\T`, and override its methods `T::build_reader` and `T::build_stream_reader`. Use your
+subclass in translation calls. Note that this does not support transparent emulation of the php native extension functions.
+
+The long version:
+
+Create one `StreamReaderInterface` instance which will provide data for the `ReaderInterface`, with eg.
+
+    $streamer = new MyFileStream('data.mo');
+
+Then, use that as a parameter to reader constructor:
+
+    $wohoo = new MyGettextReader($streamer, $whatever, $args...);
+
+If you want to disable pre-loading of entire message catalog in memory (if, for example, you have a multi-thousand
+message catalog which you'll use only occasionally), use `false` for the second parameter to the gettext_reader constructor:
+
+    $wohoo = new PGettext\gettext_reader($streamer, false);
+
+From now on, you have all the benefits of gettext data at your disposal, so may run:
 
     print $wohoo->translate("This is a test");
     print $wohoo->ngettext("%d bird", "%d birds", $birds);
 
-You might need to pass parameter `-k` to `xgettext` to make it
-extract all the strings. In above example, try with
+You might need to pass parameter `-k` to `xgettext` to make it extract all the strings from the php source code.
+For the above example, try with
 
     xgettext -ktranslate -kngettext:1,2 file.php
 
-That should create `messages.po` which contains two messages for
-translation.
+That should create `messages.po` which contains two messages for translation.
 
-I suggest creating simple aliases for these functions.
+I suggest creating simple aliases for those functions.
+
 
 ## Examples
 
-See in the `examples/` subdirectory. There are a couple of files.
-`pigs_dropin.php` and `pigs_fallback.php` are example usages, `locale/xx_XX/LC_MESSAGES/messages.po` is a translation for
-each language, and `messages.mo` is the corresponding binary version, generated with
+See in the `examples/` subdirectory, there are a couple of files. `pigs_dropin.php` and `pigs_fallback.php` are example
+usages, `locale/xx_XX/LC_MESSAGES/messages.po` is a translation for each language, and `messages.mo` is the
+corresponding binary version, generated with
 
     msgfmt -o messages.mo messages.po
 
-There is also a simple `update.sh` script that can be used to generate the
-PO and MO files via calls to xgettext and msgfmt.
+There is also a simple `update.sh` script that can be used to generate the PO and MO files via calls to `xgettext` and `msgfmt`.
 
-## TODO
+
+## Known limitations
+
+The following are known limitations in the emulation of the native gettext extension API:
+
+* not all warnings / exceptions are emulated, which would be thrown by the native gettext extension, when invalid
+  parameters are passed to functions such as f.e. passing an empty string to `textdomain` calls
+
+
+## Bugs
+
+Report bugs and feature requests at https://github.com/gggeek/polyfill-gettext/issues
+
+
+## Todo
 
 * support other means than using mbstring of converting between character sets
 
 * expand the test suite and improve the emulation of the native gettext API to cover errors, returned values, support
   for all environment variables, etc...
 
-* Improve speed to be even more comparable to the native gettext
-  implementation.
+* Improve speed
 
-* Try to use hash tables in MO files: with pre-loading, would it
-  be useful at all?
+* Try to use hash tables in MO files: with pre-loading, would it be useful at all?
 
-## Never-asked-questions
 
-* Why did you mark this as version 1.0 when this is the first code
-  release?
+## Frequently asked questions
 
-  Well, it's quite simple. I consider that the first released thing
-  should be labeled "version 1" (first, right?). Zero is there to
-  indicate that there's zero improvement and/or change compared to
-  "version 1".
-
-  I plan to use version numbers 1.0.* for small bugfixes, and to
-  release 1.1 as "first stable release of version 1".
-
-  This may trick someone that this is actually useful software, but
-  as with any other free software, I take NO RESPONSIBILITY for
-  creating such a masterpiece that will smoke crack, trash your
-  hard disk, and make lasers in your CD device dance to the tune of
-  Mozart's 40th Symphony (there is one like that, right?).
-
-* Can I...?
-
-  Yes, you can. This is free software (as in freedom, free speech),
-  and you might do whatever you wish with it, provided you do not
-  limit freedom of others (GPL).
-
-  I'm considering licensing this under LGPL, but I *do* want
-  *every* PHP-gettext user to contribute and respect ideas of free
-  software, so don't count on it happening anytime soon.
-
-  I'm sorry that I'm taking away your freedom of taking others'
-  freedom away, but I believe that's negligible as compared to what
-  freedoms you could take away. ;-)
-
-  Uhm, whatever.
-
-* Why yet another reimplementation of the gettext API?
+* Why yet another reimplementation of the gettext extension API?
 
   Because at the time I was looking for one, I did not find any that fit the bill.
 
@@ -201,6 +193,12 @@ PO and MO files via calls to xgettext and msgfmt.
 
   After starting this, in July 2025, I found out the https://github.com/phpmyadmin/motranslator project, which does in
   fact stay close to the original php-gettext functionality, and might be a good candidate to use instead of this library.
-  The main differences, as far as I can tell from a cursory analysis, are: it does require php 8.2, and symfony/expression-language,
-  while we are self-contained and require php 5.3 or later, and it does not automatically reimplement the php gettext
-  api when the extension is not loaded, registering instead the same functions prefixed with `_`.
+  The main differences, as far as I can tell from a cursory analysis, are: it does require php 8.2, and
+  symfony/expression-language, while we are self-contained and require php 5.3 or later, and it does not automatically
+  reimplement the php gettext api when the extension is not loaded, registering instead the same functions prefixed with
+  `_`.
+
+
+## Original readme
+
+See [README_original.md](README_original.md)

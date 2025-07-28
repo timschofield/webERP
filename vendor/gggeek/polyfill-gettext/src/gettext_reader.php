@@ -36,10 +36,8 @@ use PGettext\Streams\StreamReaderInterface;
  * While the cache is enabled by default, it can be switched off with the
  * second parameter in the constructor (e.g. when using very large MO files
  * that you don't want to keep in memory)
- *
- * @todo implement an interface
  */
-class gettext_reader {
+class gettext_reader implements ReaderInterface {
   public $error = 0; // public variable that holds error code (0 if no error)
 
   protected $BYTEORDER = 0; // 0: low endian, 1: big endian
@@ -115,7 +113,7 @@ class gettext_reader {
    * @param int $bytes
    * @return false|string
    */
-  function read($bytes) {
+  protected function read($bytes) {
     return $this->STREAM->read($bytes);
   }
 
@@ -125,7 +123,7 @@ class gettext_reader {
    * @param int $count How many elements should be read
    * @return int[]
    */
-  function readintarray($count) {
+  protected function readintarray($count) {
     if ($this->BYTEORDER == 0) {
       // low endian
       return unpack('V'.$count, $this->STREAM->read(4 * $count));
@@ -242,39 +240,11 @@ class gettext_reader {
   }
 
   /**
-   * Translates a string
-   *
-   * @param string $string string to be translated
-   * @return string translated string (or original, if not found)
-   */
-  public function translate($string) {
-    if ($this->short_circuit)
-      return $string;
-
-    $this->load_tables();
-
-    if ($this->enable_cache) {
-      // Caching enabled, get translated string from cache
-      if (array_key_exists($string, $this->cache_translations))
-        return $this->cache_translations[$string];
-      else
-        return $string;
-    } else {
-      // Caching not enabled, try to find string
-      $num = $this->find_string($string);
-      if ($num == -1)
-        return $string;
-      else
-        return $this->get_translation_string($num);
-    }
-  }
-
-  /**
    * Parse full PO header and extract only plural forms line.
    *
    * @return string verbatim plural form header field
    */
-  public function extract_plural_forms_header_from_po_header($header) {
+  protected function extract_plural_forms_header_from_po_header($header) {
     if (preg_match("/(^|\n)plural-forms: ([^\n]*)\n/i", $header, $regs))
       $expr = $regs[2];
     else
@@ -306,12 +276,12 @@ class gettext_reader {
   }
 
   /**
-   * Detects which plural form to take
+   * Detects which plural form to take.
    *
    * @param int $n count
-   * @return int array index of the right plural form
+   * @return int array index of the corresponding plural form
    */
-  public function select_string($n) {
+  protected function select_string($n) {
     $plural_header = $this->get_plural_forms();
     $plural = $plural_header->expression->evaluate($n);
 
@@ -328,28 +298,28 @@ class gettext_reader {
   /**
    * Plural version of gettext
    *
-   * @param string $single
+   * @param string $singular
    * @param string $plural
    * @param string $number
    * @return string translated plural form
    */
-  public function ngettext($single, $plural, $number) {
+  public function ngettext($singular, $plural, $number) {
     if ($this->short_circuit) {
       if ($number != 1)
         return $plural;
       else
-        return $single;
+        return $singular;
     }
 
     // find out the appropriate form
     $select = $this->select_string($number);
 
     // this should contain all strings separated by NULLs
-    $key = $single . chr(0) . $plural;
+    $key = $singular . chr(0) . $plural;
 
     if ($this->enable_cache) {
       if (! array_key_exists($key, $this->cache_translations)) {
-        return ($number != 1) ? $plural : $single;
+        return ($number != 1) ? $plural : $singular;
       } else {
         $result = $this->cache_translations[$key];
         $list = explode(chr(0), $result);
@@ -358,7 +328,7 @@ class gettext_reader {
     } else {
       $num = $this->find_string($key);
       if ($num == -1) {
-        return ($number != 1) ? $plural : $single;
+        return ($number != 1) ? $plural : $singular;
       } else {
         $result = $this->get_translation_string($num);
         $list = explode(chr(0), $result);
@@ -367,6 +337,28 @@ class gettext_reader {
     }
   }
 
+  /**
+   * @param string $context
+   * @param string $singular
+   * @param string $plural
+   * @param string $number
+   * @return string
+   */
+  public function npgettext($context, $singular, $plural, $number) {
+    $key = $context . chr(4) . $singular;
+    $ret = $this->ngettext($key, $plural, $number);
+    if (strpos($ret, "\004") !== FALSE) {
+      return $singular;
+    } else {
+      return $ret;
+    }
+  }
+
+  /**
+   * @param string $context
+   * @param string $msgid
+   * @return string
+   */
   public function pgettext($context, $msgid) {
     $key = $context . chr(4) . $msgid;
     $ret = $this->translate($key);
@@ -377,13 +369,31 @@ class gettext_reader {
     }
   }
 
-  public function npgettext($context, $singular, $plural, $number) {
-    $key = $context . chr(4) . $singular;
-    $ret = $this->ngettext($key, $plural, $number);
-    if (strpos($ret, "\004") !== FALSE) {
-      return $singular;
+  /**
+   * Translates a string
+   *
+   * @param string $string string to be translated
+   * @return string translated string (or original, if not found)
+   */
+  public function translate($string) {
+    if ($this->short_circuit)
+      return $string;
+
+    $this->load_tables();
+
+    if ($this->enable_cache) {
+      // Caching enabled, get translated string from cache
+      if (array_key_exists($string, $this->cache_translations))
+        return $this->cache_translations[$string];
+      else
+        return $string;
     } else {
-      return $ret;
+      // Caching not enabled, try to find string
+      $num = $this->find_string($string);
+      if ($num == -1)
+        return $string;
+      else
+        return $this->get_translation_string($num);
     }
   }
 }

@@ -2,12 +2,12 @@
 
 namespace PGettext;
 
-use PGettext\Streams\FileReader;
+use PGettext\Streams\StreamReaderInterface;
 
 class T
 {
   protected static $text_domains = array();
-  protected static $default_domain = 'messages';
+  protected static $current_domain = 'messages';
   /**
    * The keys are locale names
    * @var bool[]
@@ -15,13 +15,28 @@ class T
   protected static $emulate_locales = array();
   protected static $current_locale = '';
   protected static $emulated_functions = array();
-
-    /**
+  /**
+   * Can be changed to implement custom stream readers which do accept the same constructor arguments as gettext_reader
+   * @var string
+   */
+  public static $reader_class = '\PGettext\gettext_reader';
+  /**
+   * Can be changed to implement custom stream readers which do accept the same constructor arguments as FileReader
+   * @var string
+   */
+  public static $stream_reader_class = '\PGettext\Streams\FileReader';
+  /**
+   * Controls whether translation strings will be cached or not (by default, in memory)
+   * @var bool
+   */
+  public static $enable_cache = true;
+  /**
    * Note: the index value is the numeric value of the php constant of the same name as the value
    * @see https://www.php.net/manual/en/function.setlocale.php
    * @var string[]
    */
   protected static $LC_CATEGORIES = array('LC_CTYPE', 'LC_NUMERIC', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_MESSAGES', 'LC_ALL');
+
 
   // *** Custom implementation of the standard gettext related functions, plus a few similar ones ***
 
@@ -39,15 +54,19 @@ class T
    * @return string|false
    */
   public static function _bind_textdomain_codeset($domain, $codeset = null) {
+    // using 0 works for php version up to 7.4
+    if ($domain == '' && ($domain !== 0 || version_compare(PHP_VERSION, '8.0.0', '>='))) {
+      return false;
+    }
     /// @todo throw a ValueError if $domain == ''
-    static::initialize_domain_if_needed($domain);
-    if ($codeset === null) {
-      return static::$text_domains[$domain]->codeset;
-    } else {
-      /// @todo test: what to return?
-      /// @todo if mbstring is not enabled, return false?
+    if (static::initialize_domain_if_needed($domain) < 0) {
+      return false;
+    }
+    if ($codeset !== null) {
+      /// @todo if mbstring and its alternatives are not available, return false?
       static::$text_domains[$domain]->codeset = $codeset;
     }
+    return static::$text_domains[$domain]->codeset;
   }
 
   /**
@@ -57,19 +76,25 @@ class T
    * @return string|false
    */
   public static function _bindtextdomain($domain, $directory = null) {
-    static::initialize_domain_if_needed($domain);
-    // ensure $directory ends with a slash ('/' should work for both, but let's still play nice)
-    if ($directory !== null) {
-      if ($directory === '') {
-        $directory = getcwd();
+    if (static::initialize_domain_if_needed($domain) < 0) {
+      return false;
+    }
+
+    // "An empty string means the current directory"
+    if ($directory === '') {
+      $directory = getcwd();
+    }
+
+    // if $directory is null (or 0), do not set the dir
+    if ($directory != null && $directory !== '0') {
+      $directory = (string)$directory;
+
+      // here was: "ensure $directory ends with a slash ('/' should work for both, but let's still play nice)"
+
+      if (! is_dir($directory)) {
+        return false;
       }
-      if (substr(php_uname(), 0, 7) == "Windows") {
-        if ($directory[strlen($directory) - 1] != '\\' and $directory[strlen($directory) - 1] != '/')
-          $directory .= '\\';
-      } else {
-        if ($directory[strlen($directory) - 1] != '/')
-          $directory .= '/';
-      }
+      $directory = realpath($directory);
       static::$text_domains[$domain]->path = $directory;
     }
     return static::$text_domains[$domain]->path;
@@ -156,10 +181,10 @@ class T
    */
   public static function _textdomain($domain = null) {
     /// @todo throw a ValueError if $domain === ''
-    if ($domain !== null) {
-      static::$default_domain = $domain;
+    if ($domain != null && $domain !== '0') {
+      static::$current_domain = $domain;
     }
-    return static::$default_domain;
+    return static::$current_domain;
   }
 
   // *** 'context' gettext calls ***
@@ -244,11 +269,11 @@ class T
    * @param string|null $directory
    * @return string|false
    */
-  public static function bindtextdomain($domain, $path) {
+  public static function bindtextdomain($domain, $directory) {
     if (static::check_locale_and_function('bindtextdomain'))
-      return bindtextdomain($domain, $path);
+      return bindtextdomain($domain, $directory);
     else
-      return static::_bindtextdomain($domain, $path);
+      return static::_bindtextdomain($domain, $directory);
   }
 
   /**
@@ -258,11 +283,11 @@ class T
    * @param int $category
    * @return string
    */
-  public static function dcgettext($domain, $msgid, $category) {
+  public static function dcgettext($domain, $message, $category) {
     if (static::check_locale_and_function('dcgettext'))
-      return dcgettext($domain, $msgid, $category);
+      return dcgettext($domain, $message, $category);
     else
-      return static::_dcgettext($domain, $msgid, $category);
+      return static::_dcgettext($domain, $message, $category);
   }
 
   /**
@@ -274,11 +299,11 @@ class T
    * @param int $category
    * @return string
    */
-  public static function dcngettext($domain, $singular, $plural, $number, $category) {
+  public static function dcngettext($domain, $singular, $plural, $count, $category) {
     if (static::check_locale_and_function('dcngettext'))
-      return dcngettext($domain, $singular, $plural, $number, $category);
+      return dcngettext($domain, $singular, $plural, $count, $category);
     else
-      return static::_dcngettext($domain, $singular, $plural, $number, $category);
+      return static::_dcngettext($domain, $singular, $plural, $count, $category);
   }
 
   /**
@@ -287,11 +312,11 @@ class T
    * @param string $message
    * @return string
    */
-  public static function dgettext($domain, $msgid) {
+  public static function dgettext($domain, $message) {
     if (static::check_locale_and_function('dgettext'))
-      return dgettext($domain, $msgid);
+      return dgettext($domain, $message);
     else
-      return static::_dgettext($domain, $msgid);
+      return static::_dgettext($domain, $message);
   }
 
   /**
@@ -302,11 +327,11 @@ class T
    * @param int $count
    * @return string
    */
-  public static function dngettext($domain, $singular, $plural, $number) {
+  public static function dngettext($domain, $singular, $plural, $count) {
     if (static::check_locale_and_function('dngettext'))
-      return dngettext($domain, $singular, $plural, $number);
+      return dngettext($domain, $singular, $plural, $count);
     else
-      return static::_dngettext($domain, $singular, $plural, $number);
+      return static::_dngettext($domain, $singular, $plural, $count);
   }
 
   /**
@@ -328,11 +353,11 @@ class T
    * @param int $count
    * @return string
    */
-  public static function ngettext($singular, $plural, $number) {
+  public static function ngettext($singular, $plural, $count) {
     if (static::check_locale_and_function('ngettext'))
-      return ngettext($singular, $plural, $number);
+      return ngettext($singular, $plural, $count);
     else
-      return static::_ngettext($singular, $plural, $number);
+      return static::_ngettext($singular, $plural, $count);
   }
 
   /**
@@ -405,7 +430,6 @@ class T
    *        LC_ALL          6
    * @param string $locale
    * @return string|false
-   * @todo review the support for LC_ALL: does it make sense?
    */
   public static function setlocale($category, $locale) {
     if ($category != 6 && $category != 5) {
@@ -418,22 +442,18 @@ class T
     if ($locale === 0 || $locale === '0') {
       $locale = static::get_current_locale();
       return $category == 6 ? "LC_MESSAGES=" . $locale : $locale;
-      /*if (static::$current_locale != '')
-        return $category == 6 ? "LC_MESSAGES=" . static::$current_locale : static::$current_locale;
-      else
-        // obey LANG variable, maybe extend to support all of LC_* vars
-        // even if we tried to read locale without setting it first
-        /// @todo make sure we avoid loops - $current_locale should never be 0 or '0'
-        return static::get_current_locale($category, static::$current_locale);*/
     } else {
-      // we make sure the `setlocale` function is not the polyfill, to avoid loops!
+      // we make sure the `setlocale` function is not the polyfill one, to avoid loops!
       if (function_exists('setlocale') && !isset(static::$emulated_functions['setlocale'])) {
-/// @todo pass to setlocale all args we received - and modify the check for failure below
-        $ret = setlocale($category, $locale);
-        if (($locale == '' and !$ret) or // failed setting it from env vars
-          ($locale != '' and $ret != $locale)) { // failed setting it
-          // Failed setting it according to environment. Enable emulation for the current locale
-          static::$current_locale = static::get_default_locale($locale);
+        $args = func_get_args();
+        $ret = call_user_func_array('setlocale', $args);
+        if (!$ret) {
+          // Failed setting it. Enable emulation for the current locale
+          if ($category != 5) {
+            trigger_error("Function T::setlocale called with LC_ALL category, but in emulated mode only messages will be translated. Use LC_MESSAGES instead", E_USER_WARNING);
+          }
+          array_shift($args);
+          static::$current_locale = static::get_default_locale($args);
           static::$emulate_locales[static::$current_locale] = true;
         } else {
           // Locale successfully set. Disable emulation for the current locale (this does not mean we will try to call
@@ -442,14 +462,16 @@ class T
           static::$emulate_locales[static::$current_locale] = false;
         }
       } else {
-        // No function setlocale(), emulate it all.
+        // No function setlocale(), emulate it all. NB: this should never happen irl, as setlocale is always defined by
+        // php and never emulated...
         static::$current_locale = static::get_default_locale($locale);
         static::$emulate_locales[static::$current_locale] = true;
       }
 
       // Allow locale to be changed on the go for one translation domain.
-      if (array_key_exists(static::$default_domain, static::$text_domains)) {
-        unset(static::$text_domains[static::$default_domain]->l10n);
+      /// @todo review - is this necessary / correct?
+      if (array_key_exists(static::$current_domain, static::$text_domains)) {
+        unset(static::$text_domains[static::$current_domain]->l10n);
       }
 
       return static::$current_locale;
@@ -553,43 +575,60 @@ class T
    * Utility function to get a StreamReader for the given text domain.
    * @param string|null $domain
    * @param int $category see the LC_ constants. 5 = LC_MESSAGES
-   * @param bool $enable_cache
-   * @return gettext_reader
-   * @todo if this method is called without _bindtextdomain having been called first, it will not find the
-   *       translation files, as it will not have the correct root path set. This does happen f.e. every time
-   *       a method such as _gettext is called from a non-emulation context, where T::bindtextdomain is called
-   *       instead. We could obviate that by forcing T::bindtextdomain and T::bind_textdomain_codeset to always
-   *       set $text_domains[$domain] - even if that means a minor slowdown, it is not expected to be called many
-   *       times per php script...
+   * @param bool|null $enable_cache when null, static::$enable_cache decides whether to cache translation strings or not
+   * @return ReaderInterface
    */
-  protected static function get_reader($domain=null, $category=5, $enable_cache=true) {
-    if (!isset($domain)) $domain = static::$default_domain;
+  protected static function get_reader($domain=null, $category=5, $enable_cache=null) {
+    if (!isset($domain)) $domain = static::$current_domain;
 
-    static::initialize_domain_if_needed($domain);
+    $initialized = static::initialize_domain_if_needed($domain);
+    if ($initialized < 0) {
+/// @todo throw
+    }
 
     if (!isset(static::$text_domains[$domain]->l10n)) {
       // get the current locale (LC_MESSAGES is 5, but we do not presume it to be defined)
       $locale = static::setlocale(5, 0);
-      $bound_path = isset(static::$text_domains[$domain]->path) ?
-        static::$text_domains[$domain]->path : './';
+      /// @todo is it correct to use the current directory as default?
+      $bound_path = isset(static::$text_domains[$domain]->path) ? static::$text_domains[$domain]->path : '.';
       $subpath = static::$LC_CATEGORIES[$category] ."/$domain.mo";
 
       $locale_names = static::get_list_of_locales($locale);
-      $input = null;
+      $stream_reader = null;
       foreach ($locale_names as $locale) {
-        $full_path = $bound_path . $locale . "/" . $subpath;
+        $full_path = $bound_path . '/' . $locale . '/' . $subpath;
         if (file_exists($full_path)) {
-          $input = new FileReader($full_path);
+          $stream_reader = static::build_stream_reader($full_path);
           break;
         }
       }
 
-      /// @todo save the class name in a static variable, so that users can easily change that and swap out
-      ///       gettext_reader with a custom implementation
-      static::$text_domains[$domain]->l10n = new gettext_reader($input, $enable_cache);
+      if ($enable_cache === null) {
+        $enable_cache = static::$enable_cache;
+      }
+      static::$text_domains[$domain]->l10n = static::build_reader($stream_reader, $enable_cache);
     }
 
     return static::$text_domains[$domain]->l10n;
+  }
+
+  /**
+   * Can be overridden in subclasses.
+   * @param string $full_path
+   * @return StreamReaderInterface
+   */
+  protected static function build_stream_reader($full_path) {
+    return new static::$stream_reader_class($full_path);
+  }
+
+  /**
+   * Can be overridden in subclasses.
+   * @param StreamReaderInterface $stream_reader
+   * @param bool $enable_cache
+   * @return ReaderInterface
+   */
+  protected static function build_reader($stream_reader, $enable_cache=true) {
+    return new static::$reader_class($stream_reader, $enable_cache);
   }
 
   /**
@@ -617,7 +656,7 @@ class T
    * @return string
    */
   protected static function get_codeset($domain=null) {
-    if (!isset($domain)) $domain = static::$default_domain;
+    if (!isset($domain)) $domain = static::$current_domain;
     static::initialize_domain_if_needed($domain);
     return isset(static::$text_domains[$domain]->codeset) ? static::$text_domains[$domain]->codeset : (
       (extension_loaded('mbstring') && mb_internal_encoding() != '') ? mb_internal_encoding() : (
@@ -646,7 +685,7 @@ class T
 
   /**
    * Returns passed in $locale, or environment variable $LANG if $locale == ''.
-   * @param string|null $locale if null or empty string, use LANG env var
+   * @param string|string[]|null $locale if null or empty string, use LANG env var
    * @return string|false
    * @todo we should most likely support other env vars, as per
    *       https://www.gnu.org/software/gettext/manual/html_node/Locale-Environment-Variables.html
@@ -654,6 +693,10 @@ class T
    * @todo rename?
    */
   protected static function get_default_locale($locale) {
+/// @todo check what happens in native PHP when an array of locales is passed in, and the 1st element is the empty string
+    if (is_array($locale)) {
+      $locale = reset($locale);
+    }
     if ($locale == '')
       return getenv('LANG');
     else
@@ -698,11 +741,33 @@ class T
     return $ok;
   }
 
+  /**
+   * @param string $domain
+   * @return int 1 when the domain is created on the fly, 0 if it existed, < 0 on failure
+   */
   protected static function initialize_domain_if_needed($domain)
   {
+    if (is_object($domain) || is_array($domain) || is_resource($domain)) {
+      return -1;
+    }
     if (!array_key_exists($domain, static::$text_domains)) {
       // Initialize an empty domain object.
-      static::$text_domains[$domain] = new domain();
+      $domainObj = new domain();
+      if (!isset(static::$emulated_functions['bindtextdomain'])) {
+        $currentDirectory = bindtextdomain($domain, null);
+        if ($currentDirectory !== false) {
+          $domainObj->path = $currentDirectory;
+        }
+      }
+      if (!isset(static::$emulated_functions['bind_textdomain_codeset'])) {
+        $currentCodeset = bind_textdomain_codeset($domain, null);
+        if (is_string($currentCodeset)) {
+          $domainObj->codeset = $currentCodeset;
+        }
+      }
+      static::$text_domains[$domain] = $domainObj;
+      return 1;
     }
+    return 0;
   }
 }

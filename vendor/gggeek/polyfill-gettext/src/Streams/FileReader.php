@@ -4,9 +4,9 @@ namespace PGettext\Streams;
 
 class FileReader implements StreamReaderInterface
 {
-  public $_pos;
-  public $_fd;
-  public $_length;
+  protected $_pos;
+  protected $_fd;
+  protected $_length;
   public $error = 0; // public variable that holds error code (0 if no error)
 
   function __construct($filename) {

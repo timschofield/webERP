@@ -4,15 +4,50 @@ include_once __DIR__ . '/PolyfillTestCase.php';
 
 use PGettext\T;
 
+/**
+ * Tests checking code dealing with setting the locale
+ */
 class LocaleTest extends PGettext_PolyfillTestCase
 {
+  /**
+   * @return string[]|false
+   */
+  protected function list_system_locales()
+  {
+    // for unix-like systems, get the list of available locales using `locale -a`
+    exec('which locale', $output, $retcode);
+    if ($retcode == 0) {
+      $output = array();
+      exec('locale -a', $output, $retcode);
+      if ($retcode == 0) {
+        return $output;
+      }
+    }
+    return false;
+  }
+
+  /**
+   * Returns the first system-installed locale which is not C or POSIX
+   * @return false|string
+   */
+  protected function get_system_available_locale()
+  {
+    if ($locales = $this->list_system_locales()) {
+      foreach ($locales as $locale) {
+        if (!in_array($locale, array('C', 'C.utf8', 'POSIX'))) {
+          return $locale;
+        }
+      }
+    }
+    return false;
+  }
+
   public function test_setlocale_by_env_var()
   {
     if (!function_exists('setlocale') || T::emulate_function('setlocale', null)) {
       $this->markTestSkipped('no native setlocale function found');
     }
-    // T::setlocale defaults to a locale name from environment variable LANG - as long as the native setlocale method
-    // returns false.
+
     $locale = 'C.utf8';
     putenv("LC_ALL=");
     putenv("LANG=$locale");
@@ -42,8 +77,33 @@ class LocaleTest extends PGettext_PolyfillTestCase
     T::setlocale(LC_MESSAGES, $locale);
     $this->assertEquals($locale, T::setlocale(LC_MESSAGES, 0));
     $this->assertEquals('LC_MESSAGES=' . $locale, T::setlocale(LC_ALL, 0));
+    // nb: setlocale is available even when the gettext extension is disabled
     $this->assertNotEquals($locale, setlocale(5, 0));
     $this->assertEquals(true, T::locale_emulation());
+  }
+
+  public function test_setlocale_array()
+  {
+    $locale = $this->get_system_available_locale();
+    if (!$locale) {
+      $this->markTestSkipped('found no system-installed locales except for C and POSIX');
+    }
+    T::setlocale(LC_MESSAGES, 'xxx_XXX', $locale);
+    $this->assertEquals($locale, T::setlocale(LC_MESSAGES, 0));
+    $this->assertEquals('LC_MESSAGES=' . $locale, T::setlocale(LC_ALL, 0));
+    // nb: setlocale is available even when the gettext extension is disabled
+    $this->assertEquals($locale, setlocale(5, 0));
+    $this->assertEquals(!extension_loaded('gettext'), T::locale_emulation());
+  }
+
+  public function test_setlocale_wrong_category()
+  {
+    if (! is_callable(array($this, 'expectWarning'))) {
+      $this->markTestSkipped('current phpunit version has no support for testCase::expectWarning');
+    }
+    $this->expectWarning();
+    $ret = T::setlocale(1, 'C');
+    $this->assertEquals(false, $ret);
   }
 
   public function test_get_list_of_locales()

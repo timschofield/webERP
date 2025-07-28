@@ -253,12 +253,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/polyfill-gettext.git",
-                "reference": "5623ccada6349dd00d81860cc46082cf59bc0945"
+                "reference": "adb65c1511fb93e80564ffda66fb3ab2cc29316c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/5623ccada6349dd00d81860cc46082cf59bc0945",
-                "reference": "5623ccada6349dd00d81860cc46082cf59bc0945",
+                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/adb65c1511fb93e80564ffda66fb3ab2cc29316c",
+                "reference": "adb65c1511fb93e80564ffda66fb3ab2cc29316c",
                 "shasum": ""
             },
             "require": {
@@ -276,7 +276,7 @@
             "suggest": {
                 "ext-mbstring": "Necessary when using specific character encodings (charsets) for translated messages"
             },
-            "time": "2025-07-20T08:02:10+00:00",
+            "time": "2025-07-28T10:26:05+00:00",
             "default-branch": true,
             "type": "library",
             "installation-source": "dist",
