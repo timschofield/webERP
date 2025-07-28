@@ -31,6 +31,7 @@ function rTI(event) {
 }
 
 function rLocaleNumber() {
+	/// @todo we do not have any more a 'Lang' element, but the lang attribute is set on the HTML tag
 	var Lang = document.getElementById('Lang').value;
 	switch(Lang) {
 		case 'US':

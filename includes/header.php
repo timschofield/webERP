@@ -6,7 +6,7 @@
 // $CompanyLogo
 // various $_SESSION items: Theme, DefaultDateFormat, Timeout, ShowPageHelp, ShowFieldHelp, FontSize, UsersRealName, etc...
 
-/// @todo there are any more global variables use in this script than those 3... are ew sure it would work if
+/// @todo there are any more global variables use in this script than those 3... are we sure it would work if
 ///       called within a function?
 global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
 global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
@@ -39,8 +39,8 @@ if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the 
 }
 
 echo '<!DOCTYPE html>';
-
-echo '<html>
+/// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
+echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 		<head>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('webERP'), ' - ', $Title, '</title>
@@ -80,6 +80,7 @@ echo '<div class="help-bubble" id="help-bubble">
 		<div class="help-content" id="help-content"></div>
 	</div>';
 
+/// @todo should we move this to index.php?
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
 				SET fontsize='" . $_GET['FontSize'] . "'
