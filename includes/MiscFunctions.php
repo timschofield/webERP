@@ -742,6 +742,8 @@ function fShowPageHelp($HelpText) {
 /*
  * Improve language check to avoid potential LFI issue.
  * Reported by: https://lyhinslab.org
+ * @todo we could just check that $language is an existing key within $LanguagesArray instead, which has the added
+ *       value of not allowing unsupported language codes
  */
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
