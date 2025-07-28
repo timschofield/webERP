@@ -47,10 +47,11 @@ if ($fp==FALSE){
 	include('includes/footer.php');
 	exit();
 }
+// the BOM is not used much anymore in 2025...
+//fputs($fp, "\xEF\xBB\xBF"); // UTF-8 BOM
 fputs($fp, '"Item Code", "Category ID", "Item Description"'  . "\n");
-While ($MyRow = DB_fetch_row($Result)){
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]) . ', ' . stripcomma($MyRow[2]);
-	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
 	fputs($fp, $Line . "\n");
 }
 
@@ -76,10 +77,11 @@ if ($fp==FALSE){
 	include('includes/footer.php');
 	exit();
 }
+// the BOM is not used much anymore in 2025...
+//fputs($fp, "\xEF\xBB\xBF"); // UTF-8 BOM
 fputs($fp, '"Customer Code", "Customer Name", "Branch Code", "Branch Name", "Price List", "Sales Area", "Salesman"'  . "\n");
-While ($MyRow = DB_fetch_row($Result)){
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]). ', ' . stripcomma($MyRow[2]) . ', ' . stripcomma($MyRow[3]) . ', ' . stripcomma($MyRow[4])  . ', ' . stripcomma($MyRow[5]) . ', ' . stripcomma($MyRow[6]);
-	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
 	fputs($fp, $Line . "\n");
 }
 
@@ -120,10 +122,11 @@ if ($fp==FALSE){
 	include('includes/footer.php');
 	exit();
 }
+// the BOM is not used much anymore in 2025...
+//fputs($fp,"\xEF\xBB\xBF"); // UTF-8 BOM
 fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
-While ($MyRow = DB_fetch_row($Result)){
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]) . ', ' . stripcomma($MyRow[2]) . ', ' . stripcomma($MyRow[3]) . ', ' . stripcomma($MyRow[4]) . ', ' . stripcomma($MyRow[5]) . ', ' . stripcomma($MyRow[6]) . ', ' . stripcomma($MyRow[7]);
-	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
 	fputs($fp, $Line . "\n");
 }
 

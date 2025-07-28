@@ -2,7 +2,7 @@
 echo '<html>
 <head>
     <title>Failed Login</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href="css/default/login.css" type="text/css">
 </head>
 

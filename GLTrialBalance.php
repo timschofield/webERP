@@ -52,7 +52,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<input type="hidden" name="PeriodTo" value="' . $_POST['PeriodTo'] . '" />';
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP http://www.weberp.org">
+					<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>
 				<table>

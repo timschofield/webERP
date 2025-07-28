@@ -12,7 +12,7 @@ if (isset($_GET['KeyValue']))  {
 	$SelectedProdSpec='';
 }
 //Get Out if we have no product specification
-If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
+if (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
         $ViewTopic = 'QualityAssurance';
         $BookMark = '';

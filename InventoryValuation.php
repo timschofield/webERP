@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])){
 				$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 				$YPos -=$LineHeight;
 
-				If ($_POST['DetailedReport']=='Yes'){
+				if ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
 					$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 					$YPos -=(2*$LineHeight);
@@ -195,11 +195,12 @@ if (isset($_POST['PrintPDF'])){
 		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
 	}
 	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['ToCriteria']  .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+	header('Content-type: text/csv; charset=UTF-8');
+	header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['ToCriteria']  .'.csv');
+	header("Pragma: public");
+	header("Expires: 0");
+	// the BOM is not used much anymore in 2025...
+	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVListing;
 	exit();
 

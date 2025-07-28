@@ -127,7 +127,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				$ErrMsg = _('There was a problem retrieving the ship to details because');
 				$ShipToLines = DB_query($SQL, $ErrMsg);
 
-				While ($ShipTo = DB_fetch_array($ShipToLines)) {
+				while ($ShipTo = DB_fetch_array($ShipToLines)) {
 					$ShipToName = $ShipTo[0];
 					$ShipToStreet = $ShipTo[1];
 					$ShipToSuburb = $ShipTo[2];
@@ -193,7 +193,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 		if (DB_num_rows($MessageLinesResult) > 0) {
 			$DetailLines = array();
 			$ArrayCounter = 0;
-			While ($MessageLine = DB_fetch_array($MessageLinesResult)) {
+			while ($MessageLine = DB_fetch_array($MessageLinesResult)) {
 				if ($MessageLine['section'] == 'Detail') {
 					$DetailLines[$ArrayCounter] = $MessageLine['linetext'];
 					$ArrayCounter++;

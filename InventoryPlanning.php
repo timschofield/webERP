@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF'])) {
 // Javier: better to not use references
 //	$pdf = & new Cpdf($PageSize);
 	$pdf = new Cpdf('L', 'pt', 'A4');
-	$pdf->addInfo('Creator','webERP http://www.weberp.org');
+	$pdf->addInfo('Creator','webERP https://www.weberp.org');
 	$pdf->addInfo('Author','webERP ' . $Version);
 	$pdf->addInfo('Title',_('Inventory Planning Report') . ' ' . Date($_SESSION['DefaultDateFormat']));
 	$pdf->addInfo('Subject',_('Inventory Planning'));
@@ -355,11 +355,12 @@ if (isset($_POST['PrintPDF'])) {
 
 	}
 	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8
+	header('Content-type: text/csv; charset=UTF-8');
+	header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
+	header("Pragma: public");
+	header("Expires: 0");
+	// the BOM is not used much anymore in 2025...
+	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVListing;
 	exit();
 

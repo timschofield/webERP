@@ -44,7 +44,7 @@ echo '<html>
 		<head>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('webERP'), ' - ', $Title, '</title>
-			<link rel="icon" href="', $RootPath, '/favicon.ico?v=2" />
+			<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
 			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';

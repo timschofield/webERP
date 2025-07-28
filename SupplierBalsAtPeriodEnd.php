@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 
-If (isset($_POST['PrintPDF'])
+if (isset($_POST['PrintPDF'])
 	AND isset($_POST['FromCriteria'])
 	AND mb_strlen($_POST['FromCriteria'])>=1
 	AND isset($_POST['ToCriteria'])
@@ -70,7 +70,7 @@ If (isset($_POST['PrintPDF'])
 
 	$TotBal=0;
 
-	While ($SupplierBalances = DB_fetch_array($SupplierResult)){
+	while ($SupplierBalances = DB_fetch_array($SupplierResult)){
 
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];

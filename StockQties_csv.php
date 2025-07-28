@@ -36,9 +36,11 @@ if ($fp==FALSE){
 	exit();
 }
 
-While ($MyRow = DB_fetch_row($Result)){
+// the BOM is not used much anymore in 2025...
+//fputs($fp, "\xEF\xBB\xBF"); // UTF-8 BOM
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]);
-	fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
+	fputs($fp, $Line . "\n");
 }
 
 fclose($fp);

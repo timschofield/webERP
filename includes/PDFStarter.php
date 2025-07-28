@@ -193,8 +193,9 @@ switch ($PaperSize) {
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
 //	$pdf = new Cpdf($PageSize);
 $pdf = new Cpdf($DocumentOrientation, 'pt', $DocumentPaper);
-$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
-$pdf->addInfo('Author', 'WebERP ' . $Version);
+$pdf->addInfo('Creator', 'webERP https://www.weberp.org');
+$pdf->addInfo('Author', 'webERP ' . $Version);
+
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
