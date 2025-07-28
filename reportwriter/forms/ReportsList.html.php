@@ -1,4 +1,5 @@
-<html>
+<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<head></head>
 <body>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />

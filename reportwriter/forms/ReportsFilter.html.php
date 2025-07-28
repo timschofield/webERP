@@ -1,7 +1,5 @@
-<html>
-<head>
-</head>
-
+<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<head></head>
 <body>
 <h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
 <form name="reporthome" method="post" action="ReportMaker.php?action=go">

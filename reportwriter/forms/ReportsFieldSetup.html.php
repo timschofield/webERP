@@ -1,4 +1,5 @@
-<html>
+<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<head></head>
 <body>
 <h2 align="center"><?php echo $FormParams['heading'].$reportname.' - '.RPT_BTN_FLDSETUP; ?></h2>
 <table align="center" width="550" border="0" cellspacing="1" cellpadding="1">

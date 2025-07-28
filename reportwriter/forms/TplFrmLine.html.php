@@ -1,4 +1,5 @@
-<html>
+<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<head></head>
 <body>
 <h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
 <form name="DBRptLine" method="post" action="ReportCreator.php?action=step6a">

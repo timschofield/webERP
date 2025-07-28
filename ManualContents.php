@@ -48,13 +48,13 @@ if(file_exists($ManualHeader)) {// Use locale ManualHeader.html if exists. Each 
 	include($ManualHeader);
 } else {// Default page header:
 	echo '<!DOCTYPE html>
-	<html>
+	<html lang="', str_replace('_', '-', substr($Language, 0, 5)), '">
 	<head>
 	  <title>', $Title, '</title>
 	  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	  <link rel="stylesheet" type="text/css" href="', $ManualStyle, '" />
 	</head>
-	<body lang="', str_replace('_', '-', substr($Language, 0, 5)), '">
+	<body>
 		<div id="pagetitle">', $Title, '</div>
 		<div class="right">
 			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a><br />
