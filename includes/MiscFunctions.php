@@ -537,7 +537,7 @@ function GetMailList($MailGroup) {
 	if (DB_num_rows($Result) != 0) {
 		//Create the string which meets the Recipients requirements
 		while ($MyRow = DB_fetch_array($Result)) {
-			$ToList[] = $MyRow['realname'] . '<' . $MyRow['email'] . '>';
+			$ToList[$MyRow['email']] = $MyRow['realname'];
 		}
 	}
 	return $ToList;
