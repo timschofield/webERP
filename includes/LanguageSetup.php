@@ -87,14 +87,13 @@ if (!function_exists('gettext')) {
 } else {
 */
 	include_once($PathPrefix . 'includes/LanguagesArray.php');
-
+var_dump($_SESSION['Language']);
+var_dump(extension_loaded('gettext'));
 	$LocaleSetOk = setlocale(LC_ALL, $_SESSION['Language'], $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
-	/* NB: LC_MESSAGES is always defined now, because of polyfill-gettext - we check for gettext extension being loaded
-       instead. */
-	if ($LocaleSetOk === false && extension_loaded('gettext')) {
-		/// @todo check: is LC_MESSAGES working on Windows? If not, remove $LanguagesArray[$_SESSION['Language']]['WindowsLocale']
-		/// @todo check: is it possible that this call succeeds, and the call with LC_ALL fails?
-		$LocaleSetOk = setlocale(LC_MESSAGES, $_SESSION['Language'], $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
+	if ($LocaleSetOk === false) {
+		// make sure we still enable translations via polyfill-gettext, even if the locale is not installed in the system
+		/* NB: LC_MESSAGES is always defined now, because of polyfill-gettext */
+		$LocaleSetOk = T::setlocale(LC_MESSAGES, $_SESSION['Language']);
 	}
 	// number formatting localization is not carried out using php functions, but using $DecimalPoint and $ThousandsSeparator
 	setlocale(LC_NUMERIC, 'C', 'en_GB.utf8', 'en_GB', 'en_US', 'english-us');
@@ -107,10 +106,6 @@ if (!function_exists('gettext')) {
 	/// @todo to be confirmed...
 	putenv('LANG=' . $_SESSION['Language']);
 	putenv('LANGUAGE=' . $_SESSION['Language']);
-
-	if ($LocaleSetOk === false) {
-		T::setlocale(LC_MESSAGES, $_SESSION['Language']);
-	}
 
 	textdomain ('messages');
 	bindtextdomain ('messages', $PathPrefix . 'locale');

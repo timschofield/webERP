@@ -440,14 +440,19 @@ class T
     /// @todo emit a warning if we get passed a string for $category, as recent php versions do
 
     if ($locale === 0 || $locale === '0') {
-      $locale = static::get_current_locale();
+      $locale = static::get_current_locale(true);
       return $category == 6 ? "LC_MESSAGES=" . $locale : $locale;
     } else {
       // we make sure the `setlocale` function is not the polyfill one, to avoid loops!
       if (function_exists('setlocale') && !isset(static::$emulated_functions['setlocale'])) {
         $args = func_get_args();
         $ret = call_user_func_array('setlocale', $args);
-        if (!$ret) {
+        if ($ret !== false) {
+          // Locale successfully set. Disable emulation for the current locale (this does not mean we will try to call
+          // non-existing gettext methods)
+          static::$current_locale = $ret;
+          static::$emulate_locales[static::$current_locale] = false;
+        } else {
           // Failed setting it. Enable emulation for the current locale
           if ($category != 5) {
             trigger_error("Function T::setlocale called with LC_ALL category, but in emulated mode only messages will be translated. Use LC_MESSAGES instead", E_USER_WARNING);
@@ -455,11 +460,6 @@ class T
           array_shift($args);
           static::$current_locale = static::get_default_locale($args);
           static::$emulate_locales[static::$current_locale] = true;
-        } else {
-          // Locale successfully set. Disable emulation for the current locale (this does not mean we will try to call
-          // non-existing gettext methods)
-          static::$current_locale = $ret;
-          static::$emulate_locales[static::$current_locale] = false;
         }
       } else {
         // No function setlocale(), emulate it all. NB: this should never happen irl, as setlocale is always defined by
@@ -642,7 +642,7 @@ class T
     if ($function and (isset(static::$emulated_functions[$function]) || !function_exists($function)))
       return false;
     if ($locale == '') {
-      $locale = static::get_current_locale();
+      $locale = static::get_current_locale(true);
     }
     if (!isset(static::$emulate_locales[$locale])) {
       static::$emulate_locales[$locale] = static::should_emulate_locale($locale);
@@ -706,9 +706,10 @@ class T
 
   /**
    * NB: end-user code should not call this but T::setlocale(5/6, 0) instead.
+   * @param bool $set_current_if_unset
    * @return string|false
    */
-  protected static function get_current_locale() {
+  protected static function get_current_locale($set_current_if_unset = false) {
     if (static::$current_locale != '') {
       return static::$current_locale;
     }
@@ -717,6 +718,9 @@ class T
     if (function_exists('setlocale') && !isset(static::$emulated_functions['setlocale'])) {
       $locale = setlocale(5, 0);
       if ($locale !== false) {
+        if ($set_current_if_unset) {
+          static::$current_locale = $locale;
+        }
         return $locale;
       }
     }
