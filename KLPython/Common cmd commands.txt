@@ -1,0 +1,5 @@
+Absolute path of the PHP repository
+C:\wamp64\www\local-test-weberp\
+
+Go to the Python scripts
+cd C:\wamp64\www\local-test-weberp\KLPython
