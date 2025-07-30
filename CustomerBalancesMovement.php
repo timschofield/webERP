@@ -1,14 +1,16 @@
 <?php
 
 include('includes/session.php');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
 $Title=_('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.*/
 $ViewTopic = 'ARInquiries';
 $BookMark = '';
 
-if(!isset($_POST['CreateCSV'])) {
+if (!isset($_POST['CreateCSV'])) {
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Customer Activity and Balances') . '" /> ' . _('Customer Activity and Balances') . '</p>';
 }
@@ -217,6 +219,7 @@ if (isset($_POST['CreateCSV'])){
 	header('Content-Encoding: UTF-8');
 	header('Content-type: text/csv; charset=UTF-8');
 	header("Content-disposition: attachment; filename=CustomerBalancesMovement_" . FormatDateForSQL($_POST['FromDate']) . '-' . FormatDateForSQL($_POST['ToDate']) .'.csv');
+	# @todo review these headers - should we not make this uncacheable instead?
 	header("Pragma: public");
 	header("Expires: 0");
 	// the BOM is not used much anymore in 2025...

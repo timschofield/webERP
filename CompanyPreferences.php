@@ -3,7 +3,7 @@
 // Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc.
 
 include('includes/session.php');
-$ViewTopic= 'CreatingNewSystem';
+$ViewTopic = 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 $Title = _('Company Preferences');
 include('includes/header.php');

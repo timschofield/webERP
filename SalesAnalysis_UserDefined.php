@@ -3,7 +3,7 @@
 include('includes/session.php');
 
 if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
-	echo '<html><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . _('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
+	echo '<html><head></head><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . _('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
 	exit();
 }
 

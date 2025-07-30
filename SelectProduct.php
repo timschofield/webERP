@@ -7,7 +7,7 @@ $CostSecurity = 18; //don't show cost info unless security token 18 available to
 
 include('includes/session.php');
 $Title = _('Search Inventory Items');
-$ViewTopic= 'Inventory';
+$ViewTopic = 'Inventory';
 $BookMark = 'SelectingInventory';
 include('includes/header.php');
 

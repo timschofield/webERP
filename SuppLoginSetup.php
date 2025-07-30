@@ -299,6 +299,6 @@ echo '</fieldset>
 	</div>
 	</form>';
 
-echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
+echo '<script>defaultControl(document.forms[0].UserID);</script>';
 
 include('includes/footer.php');

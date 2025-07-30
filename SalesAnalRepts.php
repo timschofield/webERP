@@ -5,7 +5,7 @@ include('includes/session.php');
 
 $Title = _('Sales Analysis Reports Maintenance');
 /* webERP manual links before header.php */
-$ViewTopic= 'SalesAnalysis';
+$ViewTopic = 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
 
 include('includes/header.php');

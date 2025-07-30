@@ -8,7 +8,7 @@ include('includes/DefineSerialItems.php');
 include('includes/session.php');
 
 $Title = _('Create Credit Note');
-$ViewTopic= 'ARTransactions';
+$ViewTopic = 'ARTransactions';
 $BookMark = 'CreateCreditNote';
 
 include('includes/header.php');

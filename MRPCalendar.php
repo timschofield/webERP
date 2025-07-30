@@ -9,7 +9,7 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 if (isset($_POST['ChangeDate'])){$_POST['ChangeDate'] = ConvertSQLDate($_POST['ChangeDate']);}
 
 $Title = _('MRP Calendar');
-$ViewTopic= 'MRP';
+$ViewTopic = 'MRP';
 $BookMark = 'MRP_Calendar';
 include('includes/header.php');
 

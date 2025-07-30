@@ -21,7 +21,7 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 		$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 	}
 }
-$ViewTopic= 'Contracts';
+$ViewTopic = 'Contracts';
 $BookMark = 'CreateContract';
 
 include('includes/header.php');

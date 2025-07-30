@@ -7,7 +7,7 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);}
 
 $Title = _('MRP Create Demands');
-$ViewTopic= 'MRP';
+$ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
 

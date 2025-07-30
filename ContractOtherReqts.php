@@ -3,9 +3,8 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.php');
-$Title = _('Contract Other Requirements');
 
-$identifier=$_GET['identifier'];
+$identifier = $_GET['identifier'];
 
 /* If a contract header doesn't exist, then go to
  * Contracts.php to create one
@@ -16,11 +15,11 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	exit();
 }
 
-$ViewTopic= 'Contracts';
+$Title = _('Contract Other Requirements');
+$ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
 
 include('includes/header.php');
-
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
