@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 /* webERP manual links before header.php */
-$ViewTopic= "Inventory";
+$ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
 
 include('includes/SQL_CommonFunctions.php');
@@ -357,6 +357,7 @@ if (isset($_POST['PrintPDF'])) {
 	header('Content-Encoding: UTF-8');
 	header('Content-type: text/csv; charset=UTF-8');
 	header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
+	/// @todo review caching headers
 	header("Pragma: public");
 	header("Expires: 0");
 	// the BOM is not used much anymore in 2025...

@@ -10,10 +10,10 @@ include('includes/GetPaymentMethods.php');
 $Title = _('Receipt Entry');
 
 if ($_GET['Type']=='GL') {
-	$ViewTopic= 'GeneralLedger';
+	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLReceipts';
 } else {
-	$ViewTopic= 'ARTransactions';
+	$ViewTopic = 'ARTransactions';
 	$BookMark = 'CustomerReceipts';
 }
 

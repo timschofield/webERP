@@ -10,7 +10,7 @@ if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Select Order Items');
 }
 /* webERP manual links before header.php */
-$ViewTopic= 'SalesOrders';
+$ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
 
 include('includes/header.php');

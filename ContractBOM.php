@@ -5,9 +5,7 @@ include('includes/DefineContractClass.php');
 include('includes/session.php');
 include('includes/ImageFunctions.php');
 
-$Title = _('Contract Bill of Materials');
-
-$identifier=$_GET['identifier'];
+$identifier = $_GET['identifier'];
 
 /* If a contract header doesn't exist, then go to
  * Contracts.php to create one
@@ -18,7 +16,8 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	exit();
 }
 
-$ViewTopic= 'Contracts';
+$Title = _('Contract Bill of Materials');
+$ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
 
 include('includes/header.php');

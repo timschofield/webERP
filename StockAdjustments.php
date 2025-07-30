@@ -8,7 +8,7 @@ include('includes/session.php');
 $Title = _('Stock Adjustments');
 
 /* webERP manual links before header.php */
-$ViewTopic= 'Inventory';
+$ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');

@@ -74,6 +74,7 @@ if (isset($_POST['Search'])){
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 1) {
 				$AccountRow = DB_fetch_row($Result);
+				/// @todo BUG this must happen before we include header.php. Either that, or we hould use ob_start...
 				header('location:' . htmlspecialchars_decode($RootPath) . '/GLAccountInquiry.php?Account=' . urlencode(htmlspecialchars_decode($AccountRow[0])) . '&Show=Yes');
 				exit();
 			}

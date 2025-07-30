@@ -3,7 +3,7 @@
 include('includes/session.php');
 
 $Title = _('Inventory Categories Maintenance');
-$ViewTopic= 'Inventory';
+$ViewTopic = 'Inventory';
 $BookMark = 'InventoryCategories';
 include('includes/header.php');
 

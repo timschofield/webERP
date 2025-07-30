@@ -21,7 +21,7 @@ include('includes/session.php');
 
 $Title = _('Recurring Orders Process');
 /* webERP manual links before header.php */
-$ViewTopic= "SalesOrders";
+$ViewTopic = "SalesOrders";
 $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');

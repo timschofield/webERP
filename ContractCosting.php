@@ -5,7 +5,7 @@ include('includes/DefineContractClass.php');
 include('includes/session.php');
 $Title = _('Contract Costing');
 
-$ViewTopic= 'Contracts';
+$ViewTopic = 'Contracts';
 $BookMark = 'ContractCosting';
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');

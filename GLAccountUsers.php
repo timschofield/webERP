@@ -175,16 +175,16 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 			echo '</td>
 				<td class="centre">';
 
-			$ScriptName = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
+			$ScriptNameEscaped = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 			if($MyRow['canupd'] == 1) {
 				echo _('Yes'), '</td>',
-					'<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this user?'), '\');">', _('Remove Update');
+					'<td class="noPrint"><a href="', $ScriptNameEscaped, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this user?'), '\');">', _('Remove Update');
 			} else {
 				echo _('No'), '</td>',
-					'<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this user?'), '\');">', _('Add Update');
+					'<td class="noPrint"><a href="', $ScriptNameEscaped, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this user?'), '\');">', _('Add Update');
 			}
 			echo	'</a></td>',
-					'<td class="noPrint"><a href="', $ScriptName, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this user?'), '\');">', _('Un-authorise'), '</a></td>',
+					'<td class="noPrint"><a href="', $ScriptNameEscaped, '?SelectedGLAccount=', $SelectedGLAccount, '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this user?'), '\');">', _('Un-authorise'), '</a></td>',
 				'</tr>';
 		}// End while list loop.
 	} else {// If the GL account does not have access permissions for users:

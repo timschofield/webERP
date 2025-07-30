@@ -5,7 +5,7 @@ if (isset($_POST['SampleDate'])){$_POST['SampleDate'] = ConvertSQLDate($_POST['S
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $Title = _('Select QA Samples');
-$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
+$ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');

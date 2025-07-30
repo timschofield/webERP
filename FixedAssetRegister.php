@@ -1,11 +1,8 @@
 <?php
+
 // Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
 include('includes/session.php');
 use Dompdf\Dompdf;
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);

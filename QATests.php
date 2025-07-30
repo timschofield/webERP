@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 $Title = _('QA Tests Maintenance');
-$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
+$ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Tests';// Anchor's id in the manual's html document.
 include('includes/header.php');
 

@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-$ViewTopic= 'GeneralLedger';
+$ViewTopic = 'GeneralLedger';
 $BookMark = 'ChequePaymentListing';
 
 $InputError=0;

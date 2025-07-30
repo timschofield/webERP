@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 $Title = _('Sales GL Postings Set Up');
-$ViewTopic= 'CreatingNewSystem';
+$ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';
 include('includes/header.php');
 
