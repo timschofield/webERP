@@ -157,7 +157,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 			<th></th>';
 	}
 	$j++;
-	If ($j == 36){
+	if ($j == 36){
 		$j=1;
 		echo $Tableheader;
 	}

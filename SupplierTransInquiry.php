@@ -189,7 +189,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 		}
 
 		$RowCounter++;
-		If ($RowCounter == 12){
+		if ($RowCounter == 12){
 			$RowCounter=1;
 			echo $Tableheader;
 		}

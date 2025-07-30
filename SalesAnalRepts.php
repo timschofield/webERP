@@ -392,7 +392,7 @@ if (!isset($_GET['delete'])) {
 	if ($_POST['NewPageAfter1']==0){
 	  echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	  echo '<option value="1">' . _('Yes') . '</option>';
-	} Else {
+	} else {
 	  echo '<option value="0">' . _('No') . '</option>';
 	  echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	}
@@ -420,7 +420,7 @@ if (!isset($_GET['delete'])) {
 	if ($_POST['NewPageAfter2']==0){
 	  echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	  echo '<option value="1">' . _('Yes') . '</option>';
-	} Else {
+	} else {
 	  echo '<option value="0">' . _('No') . '</option>';
 	  echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	}

@@ -51,7 +51,7 @@ for ($i=0;$i<=10;$i++){
 	$AccumLvl4[$i]=0;
 }
 
-While ($MyRow = DB_fetch_array($Result)){
+while ($MyRow = DB_fetch_array($Result)){
 
 /*First off check that at least one of the columns of data has some none zero amounts */
 	DB_data_seek($ColsResult,0); /*go back to the beginning */
@@ -513,7 +513,7 @@ if (isset($_GET['ProduceCVSFile'])){
 	$fp = fopen( $_SESSION['reports_dir'] . '/SalesAnalysis.csv', 'w');
 
 
-	While ($MyRow = DB_fetch_row($Result)){
+	while ($MyRow = DB_fetch_row($Result)){
 
 	/*First off check that at least one of the columns of data has some none zero amounts */
 	      $ThisLineHasOutput=False;   /*assume no output to start with */

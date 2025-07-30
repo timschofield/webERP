@@ -272,7 +272,7 @@ if (isset($_POST['SupplierID'])){
 	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
 }
 
-If (isset($_GET['AllocTrans'])){
+if (isset($_GET['AllocTrans'])){
 
 	/*page called with a specific transaction ID for allocating
 	SupplierID may also be set but this is the logic to follow

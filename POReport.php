@@ -1547,7 +1547,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory";
 	$CategoryResult= DB_query($SQL);
 	echo '<option selected="selected" value="All">' . _('All Categories') . '</option>';
-	While ($MyRow = DB_fetch_array($CategoryResult)){
+	while ($MyRow = DB_fetch_array($CategoryResult)){
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	}
 	echo '</select>
