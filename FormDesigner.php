@@ -17,11 +17,11 @@
 /* RCHACON: To Do: standardize the name of the parameters x, y, width, height, font-size, alignment and radius inside the xml files. Non-standard attribute "Length" should be replace with "width". */
 /* RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ? */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Form Designer');
 $ViewTopic = 'Setup';
 $BookMark = 'FormDesigner';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
 _('Form Designer'), '" /> ', // Icon title.
@@ -205,7 +205,7 @@ if (empty($_POST['FormName'])) {
 			</tr>
 		</table>
 		</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } // End of if (empty($_POST['FormName']))
 /* If we are not previewing the form then load up the simplexml object from the main xml file */
@@ -354,4 +354,4 @@ echo '</div>', '</form>';
 // END: Procedure division ----------------------------------------------------
 
 
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -13,7 +13,7 @@ if (!isset($_GET['TransferNo'])){
 
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -46,7 +46,7 @@ if (!isset($_GET['TransferNo'])){
 	echo '</fieldset>';
     echo '</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -81,15 +81,15 @@ $Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($Result)==0){
 
-	include ('includes/header.php');
+	include('includes/header.php');
 	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
 $TransferRow = DB_fetch_array($Result);
 
-include ('includes/PDFStockLocTransferHeader.php');
+include('includes/PDFStockLocTransferHeader.php');
 $LineHeight=30;
 $FontSize=10;
 

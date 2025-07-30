@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Update of Prices By A Multiple Of Cost');
 $ViewTopic= 'Sales';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
 
@@ -302,4 +302,4 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		</div>
 	</form>';
 } /*end of else not submit */
-include ('includes/footer.php');
+include('includes/footer.php');

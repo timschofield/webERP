@@ -178,7 +178,7 @@ If ((isset($_POST['PrintPDF']))
 
     echo '</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */
 
 function PageHeader(){

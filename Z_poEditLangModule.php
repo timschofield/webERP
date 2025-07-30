@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Edit Module');// _('Edit a Language File Module')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.

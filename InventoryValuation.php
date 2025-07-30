@@ -89,7 +89,7 @@ if (isset($_POST['PrintPDF'])){
 		exit();
 	}
 
-	include ('includes/PDFInventoryValnPageHeader.php');
+	include('includes/PDFInventoryValnPageHeader.php');
 
 	$Tot_Val=0;
 	$Category = '';

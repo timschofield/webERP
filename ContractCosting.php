@@ -19,7 +19,7 @@ if (empty($_GET['identifier'])) {
 if (!isset($_GET['SelectedContract'])){
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the contract reference to show the costing for'), 'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } else {
 	$ContractRef = $_GET['SelectedContract'];

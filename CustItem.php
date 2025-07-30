@@ -1,14 +1,14 @@
 <?php
 /* $Id: CustItem.php 1 2014-04-23 05:10:46Z agaluski $*/
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $ViewTopic = 'AccountsReceivable';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 
 $Title = _('Customer Item Data');
 
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = trim(mb_strtoupper($_GET['DebtorNo']));
@@ -227,7 +227,7 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 				<input type="submit" name="Searchcustomer" value="', _('Find Customers Now'), '" />
 			</div>
 		</form>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 }
@@ -471,4 +471,4 @@ if (!isset($DebtorsMasterResult)) {
 	echo '</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

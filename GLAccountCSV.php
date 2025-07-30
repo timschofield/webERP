@@ -2,13 +2,13 @@
 // GLAccountCSV.php
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('General Ledger Account Report');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
 
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
@@ -107,12 +107,12 @@ if (isset($_POST['MakeCSV'])) {
 
 	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -126,7 +126,7 @@ if (isset($_POST['MakeCSV'])) {
 
 	if ($fp == FALSE) {
 		prnMsg(_('Could not open or create the file under') . ' ' . $FileName, 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -270,4 +270,4 @@ if (isset($_POST['MakeCSV'])) {
 	echo '<p><a href="' . $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
-include ('includes/footer.php');
+include('includes/footer.php');

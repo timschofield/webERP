@@ -5,15 +5,15 @@ $PricesSecurity = 12;//don't show pricing info unless security token 12 availabl
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Search Inventory Items');
 $ViewTopic= 'Inventory';
 $BookMark = 'SelectingInventory';
-include ('includes/header.php');
+include('includes/header.php');
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/StockFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
+include('includes/ImageFunctions.php');
 
 
 if (isset($_GET['StockID'])) {
@@ -653,7 +653,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 }
 /* end display list if there is more than one record */
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
 function GenerateStockmasterQuery(array $post): string {
 	/**

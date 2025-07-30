@@ -42,7 +42,7 @@ if (isset($PrintPDF)
 		and $FromTransNo!='') {
 
 	$PaperSize = 'A4_Landscape';
-	include ('includes/PDFStarter.php');
+	include('includes/PDFStarter.php');
 
 	if ($InvOrCredit=='Invoice') {
 		$pdf->addInfo('Title',_('Sales Invoice') . ' ' . $FromTransNo . ' ' . _('to') . ' ' . $_POST['ToTransNo']);
@@ -224,12 +224,12 @@ if (isset($PrintPDF)
 
 		if (DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
-			include ('includes/header.php');
+			include('includes/header.php');
 			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
 			if ($Debug==1) {
 				prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $SQL,'error');
 			}
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		if (DB_num_rows($Result)==1) {
@@ -301,7 +301,7 @@ if (isset($PrintPDF)
 			if(DB_error_no()!=0) {
 
 				$Title = _('Transaction Print Error Report');
-				include ('includes/header.php');
+				include('includes/header.php');
 				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 				if ($Debug==1) {
 					echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $SQL;
@@ -378,7 +378,7 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeader.php');
+									include('includes/PDFTransPageHeader.php');
 								} //end if need a new page headed up
 							}
 						} else {
@@ -389,13 +389,13 @@ if (isset($PrintPDF)
 									/* head up a new invoice/credit note page */
 									/*draw the vertical column lines right to the bottom */
 									PrintLinesToBottom ();
-									include ('includes/PDFTransPageHeader.php');
+									include('includes/PDFTransPageHeader.php');
 								} //end if need a new page headed up
 							}
 						}
 					}
 
-					PrintDetail($pdf,$MyRow2['narrative'],$Bottom_Margin,$Left_Margin+100,$YPos,245,$FontSize,function(){PrintLinesToBottom ();include ('includes/PDFTransPageHeader.php');},null);
+					PrintDetail($pdf,$MyRow2['narrative'],$Bottom_Margin,$Left_Margin+100,$YPos,245,$FontSize,function(){PrintLinesToBottom ();include('includes/PDFTransPageHeader.php');},null);
 
 					$YPos -= ($LineHeight);
 
@@ -403,7 +403,7 @@ if (isset($PrintPDF)
 						/* head up a new invoice/credit note page */
 						/*draw the vertical column lines right to the bottom */
 						PrintLinesToBottom ();
-						include ('includes/PDFTransPageHeader.php');
+						include('includes/PDFTransPageHeader.php');
 					} //end if need a new page headed up
 
 				} //end while there are line items to print out
@@ -414,7 +414,7 @@ if (isset($PrintPDF)
 			/* check to see enough space left to print the 4 lines for the totals/footer */
 			if (($YPos-$Bottom_Margin)<(2*$LineHeight)) {
 				PrintLinesToBottom ();
-				include ('includes/PDFTransPageHeader.php');
+				include('includes/PDFTransPageHeader.php');
 			}
 			/* Print a column vertical line  with enough space for the footer */
 			/* draw the vertical column lines to 4 lines shy of the bottom

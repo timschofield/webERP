@@ -32,7 +32,7 @@ if (!isset($SelectedWO)) {
 	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' .
 		_('Select a work order') . '</a></div>';
 	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';

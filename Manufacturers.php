@@ -8,7 +8,7 @@ $ViewTopic = 'Inventory';
 $BookMark = '';
 
 include('includes/header.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedManufacturer'])){
 	$SelectedManufacturer = $_GET['SelectedManufacturer'];

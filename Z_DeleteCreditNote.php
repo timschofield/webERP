@@ -11,7 +11,7 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 !! */
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Delete Credit Note');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;

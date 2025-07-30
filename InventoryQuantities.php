@@ -178,10 +178,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Inventory Quantities');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<p />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 

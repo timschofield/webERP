@@ -19,7 +19,7 @@ if ($_GET['Type']=='GL') {
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
@@ -84,7 +84,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 		unset($Result);
 	} elseif (DB_num_rows($Result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 

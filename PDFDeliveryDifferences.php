@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -8,7 +8,7 @@ if (isset($_POST['FromDate'])) {
 if (isset($_POST['ToDate'])) {
 	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
 }
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 
 $InputError = 0;
 
@@ -360,10 +360,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Delivery Differences Report');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 	if ($_POST['Email'] == 'Yes') {
@@ -386,7 +386,7 @@ else {
 	$Title = _('Delivery Differences Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Delivery Differences Report') . '</p></div>';
 
@@ -451,5 +451,5 @@ else {
 	if ($InputError == 1) {
 		prnMsg($Msg, 'error');
 	}
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

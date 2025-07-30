@@ -74,13 +74,13 @@ $Errors = CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installe
 
 /// @todo exit if any errors
 
-include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
-include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
+include('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
+include('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
 // gg: unused variable?
 //$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
 
-include ('../includes/DateFunctions.php');
+include('../includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 $Path_To_Root = __DIR__ . '/../..';
 $Config_File = $Path_To_Root . '/config.php';

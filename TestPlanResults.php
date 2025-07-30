@@ -689,7 +689,7 @@ if (!isset($SelectedSampleID)) {
 			<a href="' . $RootPath . '/SelectQASamples.php">' .  _('Select a sample to enter results against') . '</a>
 		</div>';
 	prnMsg(_('This page can only be opened if a QA Sample has been selected. Please select a sample first'),'info');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 

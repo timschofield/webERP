@@ -167,10 +167,10 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 	} // end switch 'todo'
 } // end if (!isset($_POST['todo']))
 
-include ($PathPrefix . 'includes/header.php');
+include($PathPrefix . 'includes/header.php');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
-include ($IncludePage);
-include ( $PathPrefix . 'includes/footer.php');
+include($IncludePage);
+include( $PathPrefix . 'includes/footer.php');
 // End main body
 
 // Begin functions

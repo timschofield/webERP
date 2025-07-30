@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 
 if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
 if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
@@ -9,8 +9,8 @@ $Title = _('Multi-Level Bill Of Materials Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'BOMMaintenance';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {
 	global $i;
@@ -42,7 +42,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 			else {
 				prnMsg(_('The component and the parent is the same') , 'error');
 				echo $MyRow['component'], '<br/>';
-				include ('includes/footer.php');
+				include('includes/footer.php');
 				exit();
 			}
 		}
@@ -308,7 +308,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	echo '<input type="hidden" name="Keywords" value="', $_POST['Keywords'], '" />';
 	echo '<input type="hidden" name="StockCat" value="', $_POST['StockCat'], '" />';
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -556,7 +556,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
 			echo '<a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance') , '</a></field></fieldset>';
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		echo '<field>
@@ -636,7 +636,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 				<input type="reset" name="Cancel" value="', _('Cancel') , '" />
 			</div>
 		</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -1248,4 +1248,4 @@ function arrayUnique($Array, $PreserveKeys = false) {
 	return $ArrayRewrite;
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

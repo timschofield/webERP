@@ -1,7 +1,7 @@
 <?php
 /* This script is an utility to show debtors balances in total by currency. */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Currency Debtor Balances');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_CurrencyDebtorsBalances';// Anchor's id in the manual's html document.

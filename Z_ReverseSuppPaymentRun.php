@@ -4,7 +4,7 @@
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Reverse and Delete Supplier Payments');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;

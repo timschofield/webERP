@@ -2,7 +2,7 @@
 
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
-include ('includes/session.php');
+include('includes/session.php');
 
 use Dompdf\Dompdf;
 
@@ -177,10 +177,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		include('includes/footer.php');
 	} else {
 		$Title = _('Reorder Level Reporting');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -188,7 +188,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 	$Title = _('Reorder Level Reporting');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
@@ -228,7 +228,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up') , 'warn');
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -259,6 +259,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 				<input type="submit" name="Email" title="Email Report" value="' . _('Email') . '" />
 			</div>';
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */

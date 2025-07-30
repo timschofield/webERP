@@ -4,7 +4,7 @@
 
 //$PageSecurity = 15;
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Edit Header');// _('Edit a Language File Header')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangHeader";// Anchor's id in the manual's html document.

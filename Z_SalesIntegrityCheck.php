@@ -5,7 +5,7 @@
 // No SQL updates or Inserts - so safe to run
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Sales Integrity');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;

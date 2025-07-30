@@ -73,7 +73,7 @@ $ItemMustExist = false;
 $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;
-include ('includes/InputSerialItems.php');
+include('includes/InputSerialItems.php');
 
 //echo '<br /><input type="submit" name=\'AddBatches\' value=\'Enter\' /><br />';
 

@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 use Dompdf\Dompdf;
 
@@ -32,7 +32,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_num_rows($Result) == 0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('The receipt batch number') . ' ' . $_POST['BatchNo'] . ' ' . _('was not found in the database') . '. ' . _('Please try again selecting a different batch number'), 'warn');
 		include('includes/footer.php');
 		exit();
@@ -61,7 +61,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$CustRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.php');
+		include('includes/header.php');
 	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($Debug==1){
 	        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$GLRecs=DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
 		if ($Debug==1){
 			prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br />' . $SQL,'error');
@@ -196,10 +196,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Create PDF Print Out For A Batch Of Receipts');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Print Out For A Batch Of Receipts') . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */
@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'ARReports';
 	$BookMark = 'BankingSummary';
 
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -240,6 +240,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 	</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }

@@ -1,7 +1,7 @@
 <?php
 
-include ($PathPrefix . 'includes/LanguageSetup.php');
-include ('LanguagesArray.php');
+include($PathPrefix . 'includes/LanguageSetup.php');
+include('LanguagesArray.php');
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))) {
@@ -62,7 +62,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
 		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-				include ('companies/' . $CompanyEntry . '/Companies.php');
+				include('companies/' . $CompanyEntry . '/Companies.php');
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
@@ -94,7 +94,7 @@ $DirHandle = dir('companies/');
 while (false !== ($CompanyEntry = $DirHandle->read())) {
 	if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 		if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-			include ('companies/' . $CompanyEntry . '/Companies.php');
+			include('companies/' . $CompanyEntry . '/Companies.php');
 		} else {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}

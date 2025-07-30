@@ -1,6 +1,6 @@
 <?php
-include ('includes/session.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/session.php');
+include('includes/SQL_CommonFunctions.php');
 
 $Title = _('Enter GL Budget amounts');
 
@@ -12,7 +12,7 @@ if (isset($_POST['SelectedBudget'])) {
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_POST['Update'])) {
 	$UpdateSQL = array();
@@ -235,4 +235,4 @@ echo '<script>
 	}
 	</script>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

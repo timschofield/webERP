@@ -1,13 +1,13 @@
 <?php
 // GLJournalInquiry.php
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 $Title = _('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -182,4 +182,4 @@ else {
 	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
-include ('includes/footer.php');
+include('includes/footer.php');

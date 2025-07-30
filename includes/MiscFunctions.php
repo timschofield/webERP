@@ -277,7 +277,7 @@ function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 					$NPFunc();
 				}
 				if($NPInc!=null) {
-					include ($NPInc);
+					include($NPInc);
 				}
 			}
 			$YPos=$YPos-$FontSize-$InitialExtraSpace;

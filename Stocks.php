@@ -1,15 +1,15 @@
 <?php
 // Stocks.php
 // Defines an item - maintenance and addition of new parts.
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Item Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/StockFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
+include('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -1458,4 +1458,4 @@ if ($New == 1) {
 
 echo '</div>
 	</form>';
-include ('includes/footer.php');
+include('includes/footer.php');
