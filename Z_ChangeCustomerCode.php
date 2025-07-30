@@ -240,7 +240,7 @@ echo '<fieldset>
 	</field>
 	<field>
 		<label> ' . _('New Debtor Code') . ':</label>
-		<input type="text" name="NewDebtorNo" size="20" maxlength="20" /><
+		<input type="text" name="NewDebtorNo" size="20" maxlength="20" />
 	</field>
 	</fieldset>
 
