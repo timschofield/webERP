@@ -215,11 +215,12 @@ if ($_POST['Customer']==''){ //if there could be several customers being reporte
 if (isset($_POST['CreateCSV'])){
 
 	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=CustomerBalancesMovement_" . FormatDateForSQL($_POST['FromDate']) . '-' . FormatDateForSQL($_POST['ToDate']) .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+	header('Content-type: text/csv; charset=UTF-8');
+	header("Content-disposition: attachment; filename=CustomerBalancesMovement_" . FormatDateForSQL($_POST['FromDate']) . '-' . FormatDateForSQL($_POST['ToDate']) .'.csv');
+	header("Pragma: public");
+	header("Expires: 0");
+	// the BOM is not used much anymore in 2025...
+	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVFile;
 	exit();
 }

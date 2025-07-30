@@ -18,7 +18,7 @@ CREATE TABLE `debtortrans` (
   `ovdiscount` double NOT NULL DEFAULT '0',
   `diffonexch` double NOT NULL DEFAULT '0',
   `alloc` double NOT NULL DEFAULT '0',
-  `invtext` text,
+  `invtext` text DEFAULT NULL,
   `shipvia` int NOT NULL DEFAULT '0',
   `edisent` tinyint NOT NULL DEFAULT '0',
   `consignment` varchar(20) NOT NULL DEFAULT '',

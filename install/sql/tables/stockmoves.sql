@@ -17,7 +17,7 @@ CREATE TABLE `stockmoves` (
   `show_on_inv_crds` tinyint NOT NULL DEFAULT '1',
   `newqoh` double NOT NULL DEFAULT '0',
   `hidemovt` tinyint NOT NULL DEFAULT '0',
-  `narrative` text,
+  `narrative` text DEFAULT NULL,
   PRIMARY KEY (`stkmoveno`),
   KEY `DebtorNo` (`debtorno`),
   KEY `LocCode` (`loccode`),

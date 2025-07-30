@@ -148,7 +148,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP http://www.weberp.org">
+					<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>';
 

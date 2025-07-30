@@ -188,12 +188,12 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         //The users' language selection will overrid
         $DefaultLanguage ='en_GB.utf8';
 
-        // Whether to display the demo login and password or not on the login screen<br>        
+        // Whether to display the demo login and password or not on the login screen<br>
         $AllowDemoMode = false;
 
         // email address of the system administrator
         $SysAdminEmail = 'admin@mydomain.com';
-        
+
         // webERP version
         $Version = '3.04';
 
@@ -226,7 +226,7 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         //The selection box is populated from the list of directories under the companies directory.
         //These directories are created automatically each time a company is created from the Z_MakeNewCompany.php script
         //This script also creates the company databases.
-        
+
         $DefaultDatabase = 'weberpdemo';
 
         //The maximum time that a login session can be idle before automatic logout<br>
@@ -238,7 +238,7 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
 
         /*The path to which session files should be stored in the server - useful for some multi-host web servers where pages are serviced using load balancing servers - when the load picks a different server then the session can be lost unless this option is used - which tells the server explicitly where to find the session file.
         It is also useful where there are several webERP installs where the code is in two different paths on the same server and being used by the same client browser. It is possible in this scenario for the session to be over-written by the two different webERP installations. The solution is to specify different $SessionSavePath in each installations config.php
-        
+
         If there is only one installation of webERP on the web-server - which can be used with many company databases (and there is no load balancing difficulties to circumvent then this can be left commented out
 
         */
@@ -271,17 +271,17 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         if ($RootPath == "/" OR $RootPath == "\\") {
 	       $RootPath = "";
         }
-        
+
         //Report all errors except E_NOTICE This is the default value set in php.ini for most installations
         //but just to be sure it is forced here turning on NOTICES destroys things
 
         error_reporting (E_ALL & ~E_NOTICE);
-        
-        //Installed companies 
+
+        //Installed companies
         $CompanyList[0] = array('database'=>'weberptest' ,'company'=>'My Company' );
         $CompanyList[1] = array('database'=>'weberpdemo' ,'company'=>'WebERP Demo Company' );
         //End Installed companies-do not change this line
-        
+
         /*Make sure there is nothing - not even spaces after this last ?&gt; */ ?&gt;
         ============================================
         end of config.php
@@ -381,4 +381,4 @@ enter password 'weberp'<br></p>
 
 <p>PDFs are produced in utf-8 character set which has 4 bytes for each character. Unfortunately, the CID fonts used in PDFs only have 2 bytes so there is required to be some mapping of CID characters to utf-8 fonts to make everything work. In practise all this means is that the correct language needs also to be selected for the PDF language.</p>
 
-<p>If you are interested in contributing a language pack to webERP - which is always very much appreciated! There are instructions for how to proceed at http://www.weberp.org/wiki/HowToTranslate</p><!-- Help End: WWW_Users -->
+<p>If you are interested in contributing a language pack to webERP - which is always very much appreciated! There are instructions for how to proceed at https://www.weberp.org/wiki/HowToTranslate</p><!-- Help End: WWW_Users -->

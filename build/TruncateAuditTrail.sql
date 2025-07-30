@@ -1,2 +1,2 @@
-USE weberpdemo;
+-- USE weberpdemo;
 TRUNCATE TABLE audittrail;

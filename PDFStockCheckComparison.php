@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 
-If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
+if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Check Comparison Report') );
@@ -226,7 +226,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$Location = '';
 	$Category = '';
 
-	While ($CheckItemRow = DB_fetch_array($CheckedItems)){
+	while ($CheckItemRow = DB_fetch_array($CheckedItems)){
 
 		if ($Location!=$CheckItemRow['loccode']){
 			$FontSize=14;

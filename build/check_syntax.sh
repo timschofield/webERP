@@ -1,17 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-#ROOT_DIR=$PWD
-#cd $ROOT_DIR/..
-for f in `find . -name "*.php" -o -name "*.inc"`
-do
-    newname=`echo $f | cut -c3-`
-    filename="$newname"
-    echo $filename
-    output=$((php -l $filename ) 2>&1)
+BASE_DIR="$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")";
 
-    if [ $? != 0 ]
-    then
-		echo '**Error** '$output >> ~/weberp$(date +%Y%m%d).log
-		echo '' >> ~/weberp$(date +%Y%m%d).log
+cd "$BASE_DIR";
+
+date_suffix="$(date +%Y%m%d)"
+# NB: this will break if some developer starts using spaces in file names...
+files="$(find . -name '*.php' -o -name '*.inc' | grep -v './vendor/' | sort | tr '\n' ' ')"
+
+for filename in $files; do
+	echo "Checking $filename ..."
+	output="$(php -l "$filename" 2>&1)"
+    if [ $? != 0 ]; then
+    	echo "**ERROR** $output" >&2
     fi
 done

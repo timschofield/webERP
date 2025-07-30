@@ -6,7 +6,7 @@ include('includes/class.pdf.php');
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
+if (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 	$Title = _('Select Order To Print');
 	include('includes/header.php');
 	echo '<div class="centre">
@@ -191,7 +191,7 @@ if (DB_num_rows($Result)>0){
 
 	$pdf = new Cpdf1('L', 'pt', 'LETTER');
 
-	$pdf->addInfo('Creator', 'webERP http://www.weberp.org');
+	$pdf->addInfo('Creator', 'webERP https://www.weberp.org');
 	$pdf->addInfo('Author', 'webERP ' . $Version);
 	$pdf->addInfo('Title', _('Customer Packing Slip') );
 	$pdf->addInfo('Subject', _('Packing slip for order') . ' ' . $_GET['TransNo']);

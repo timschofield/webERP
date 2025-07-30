@@ -44,7 +44,6 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 
 	$Target_dir =  $_SESSION['reports_dir'] . '/';
 	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
 	$inputFileType = IOFactory::identify($Target_file);
 	$objReader = IOFactory::createReader($inputFileType);
@@ -61,9 +60,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	
 		$worksheet = $SpreadSheet->getActiveSheet();
 		
-		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
-		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+		$highestRow = $worksheet->getHighestRow(); // e.g. 10
 		
 		echo '<div>';
 		echo '<table class="selection">
@@ -81,13 +78,12 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				<tbody>';
 		$i = 1;
 
-		for ($Row = 4; $Row <= $highestRow; ++ $Row) {
+		for ($Row = 6; $Row <= $highestRow; ++ $Row) {
 			// get the data for a product
 			$Error = "";
-			$TokopediaProductId = $worksheet->getCell('B'.$Row)->getCalculatedValue();
-			$StockID = $worksheet->getCell('K'.$Row)->getCalculatedValue();
-			$TokopediaProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
-			$URLTokopedia = $worksheet->getCell('D'.$Row)->getCalculatedValue();
+			$TokopediaProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('L'.$Row)->getCalculatedValue();
+			$URLTokopedia = $worksheet->getCell('AD'.$Row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
@@ -130,7 +126,7 @@ function display($RootPath, $Theme, $Title)
 		</p>';
 	
 	echo '<fieldset>
-			<legend>' . _('Import file with Tokopedia Information') . '</legend>';
+			<legend>' . _('Import file with Tokopedia Information from TikTok') . '</legend>';
 
 	echo FieldToSelectOneFile("SelectedFile", _('File with Tokopedia Information'),'','', '', true, false);	
 

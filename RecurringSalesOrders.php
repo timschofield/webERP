@@ -189,18 +189,18 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	include('includes/footer.php');
 	exit();
 }
-If (isset($_POST['Process'])) {
+if (isset($_POST['Process'])) {
 	DB_Txn_Begin();
 	$InputErrors =0;
-	If (!Is_Date($_POST['StartDate'])){
+	if (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
 		prnMsg(_('The last recurrence or start date of this recurring order must be a valid date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	If (!Is_Date($_POST['StopDate'])){
+	if (!Is_Date($_POST['StopDate'])){
 		$InputErrors =1;
 		prnMsg(_('The end date of this recurring order must be a valid date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
-	If (Date1GreaterThanDate2 ($_POST['StartDate'],$_POST['StopDate'])){
+	if (Date1GreaterThanDate2 ($_POST['StartDate'],$_POST['StopDate'])){
 		$InputErrors =1;
 		prnMsg(_('The end date of this recurring order must be after the start date'),'error');
 	}

@@ -31,11 +31,11 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-If (isset($_POST['ResetPart'])) {
+if (isset($_POST['ResetPart'])) {
      unset($SelectedStockItem);
 }
 
-If (isset($ShiptRef) AND $ShiptRef!='') {
+if (isset($ShiptRef) AND $ShiptRef!='') {
 	if (!is_numeric($ShiptRef)){
 		  echo '<br />';
 		  prnMsg( _('The Shipment Number entered MUST be numeric') );
@@ -48,7 +48,7 @@ If (isset($ShiptRef) AND $ShiptRef!='') {
 		echo '<h3>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). '</h3>';
 		echo '<input type="hidden" name="SelectedSupplier" value="'. $SelectedSupplier. '" />';
 	}
-	If (isset($SelectedStockItem)) {
+	if (isset($SelectedStockItem)) {
 		echo '<h3>', _('for the part'). ': ' . $SelectedStockItem . '</h3>';
 		echo '<input type="hidden" name="SelectedStockItem" value="'. $SelectedStockItem. '" />';
 	}
@@ -56,7 +56,7 @@ If (isset($ShiptRef) AND $ShiptRef!='') {
 
 if (isset($_POST['SearchParts'])) {
 
-	If ($_POST['Keywords'] AND $_POST['StockCode']) {
+	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		echo '<br />';
 		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
@@ -71,7 +71,7 @@ if (isset($_POST['SearchParts'])) {
 		INNER JOIN purchorderdetails
 			ON stockmaster.stockid=purchorderdetails.itemcode";
 
-	If ($_POST['Keywords']) {
+	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 

@@ -111,7 +111,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 			$DetailLines = array();
 			$ArrayCounter =0;
-			While ($MessageLine = DB_fetch_array($MessageLinesResult)){
+			while ($MessageLine = DB_fetch_array($MessageLinesResult)){
 				if ($MessageLine['section']=='Detail'){
 					$DetailLines[$ArrayCounter]=$MessageLine['linetext'];
 					$ArrayCounter++;
