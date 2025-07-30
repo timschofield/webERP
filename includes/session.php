@@ -210,7 +210,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 		case UL_MAINTENANCE:
 			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
-			include($PathPrefix . 'includes/Login.php')
+			include($PathPrefix . 'includes/Login.php');
 			exit();
 
 	}
