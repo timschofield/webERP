@@ -250,7 +250,7 @@ if (DB_num_rows($Result)>0){
 	while(mb_strlen($LeftOvers) > 1) {
 		$YPos -= $FontSize;
 		if ($YPos < ($Bottom_Margin)) {// Begins new page.
-			include ('includes/PDFQuotationPageHeader.php');
+			include('includes/PDFQuotationPageHeader.php');
 		}
 		$LeftOvers = $pdf->addTextWrap(40, $YPos, $Width2, $FontSize, $LeftOvers);
 	}

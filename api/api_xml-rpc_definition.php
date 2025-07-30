@@ -1,7 +1,7 @@
 <?php
 
 /* Note api_php.php includes api */
-include 'api_php.php';
+include('api_php.php');
 
 PhpXmlRpc\PhpXmlRpc::$xmlrpc_internalencoding = 'UTF-8';
 

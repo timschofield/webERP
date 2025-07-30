@@ -16,7 +16,7 @@ echo '<html>
 echo '<title>', $Title, '</title>';
 echo '<link rel="stylesheet" href="css/dbupgrade.css" type="text/css" />';
 
-include ('includes/session.php');
+include('includes/session.php');
 
 //ob_start(); /*what is this for? */
 if (!isset($_SESSION['DBVersion'])) {
@@ -28,7 +28,7 @@ if (!isset($_SESSION['DBVersion'])) {
 	echo '<div class="title_bar" id="title_bar">', $Title, ' - ', $CompanyName, '
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
-	//include ('includes/header.php');
+	//include('includes/header.php');
 
 
 	function executeSQL($SQL, $TrapErrors = False) {
@@ -54,7 +54,7 @@ if (!isset($_SESSION['DBVersion'])) {
 		}
 	}
 
-	include ('includes/UpgradeDB_' . $DBType . '.php');
+	include('includes/UpgradeDB_' . $DBType . '.php');
 
 	echo '<div class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title, '
@@ -124,7 +124,7 @@ if (!isset($_SESSION['DBVersion'])) {
 			if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
 				$SQL = "SET FOREIGN_KEY_CHECKS=0";
 				$Result = DB_query($SQL);
-				include ('sql/updates/' . $UpdateNumber . '.php');
+				include('sql/updates/' . $UpdateNumber . '.php');
 				$SQL = "SET FOREIGN_KEY_CHECKS=1";
 				$Result = DB_query($SQL);
 			}
@@ -158,4 +158,4 @@ if (!isset($_SESSION['DBVersion'])) {
 		</div>';
 	}
 
-	include ('includes/footer.php');
+	include('includes/footer.php');

@@ -135,7 +135,7 @@ if (isset($_POST['PrintPDF'])){
 		if ($Debug==1){
 		  	echo '<br />' . $SQL;
 		}
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($InventoryResult) ==0) {
@@ -147,7 +147,7 @@ if (isset($_POST['PrintPDF'])){
 		exit();
 	}
 
-	include ('includes/PDFStockCheckPageHeader.php');
+	include('includes/PDFStockCheckPageHeader.php');
 
 	$Category = '';
 

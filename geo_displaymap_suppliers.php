@@ -3,8 +3,8 @@
 
 $Title = _('Geocoded Supplier Report');
 
-include ('includes/session.php');
-include ('includes/header.php');
+include('includes/session.php');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 
 $SQL="SELECT * FROM geocode_param WHERE 1";
@@ -114,6 +114,6 @@ function doNothing() {}
 </body>
 <?php
 echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
-include ('includes/footer.php');
+include('includes/footer.php');
 ?>
 </html>

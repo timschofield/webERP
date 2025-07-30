@@ -1,11 +1,11 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Maintain journal templates');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['delete'])) {
 	// Delete the lines
@@ -56,8 +56,8 @@ if (DB_num_rows($Result) == 0) {
 	}
 
 	echo '</table>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

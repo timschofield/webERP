@@ -243,12 +243,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Sales Report');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else {
 	include('includes/header.php');

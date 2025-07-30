@@ -1,15 +1,15 @@
 <?php
-include ('includes/DefineWOClass.php');
-include ('includes/session.php');
+include('includes/DefineWOClass.php');
+include('includes/session.php');
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 
 $Title = _('Work Order Entry');
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/ImageFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
@@ -71,7 +71,7 @@ if (isset($_POST['AddToOrder'])) {
 	if (is_null($LocRow['loccode']) or $LocRow['loccode'] == '') {
 		prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $_SESSION['WorkOrder' . $Identifier]->LocationCode, 'error');
 		echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	foreach ($_POST as $Key => $Value) {
@@ -268,7 +268,7 @@ if (isset($_POST['delete'])) {
 			unset($_POST['HasWOSerialNos' . $i]);
 			unset($_POST['WOComments' . $i]);
 		}
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 }
@@ -673,4 +673,4 @@ if (isset($SearchResult)) {
 
 } //end if SearchResults to show
 echo '</form>';
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -36,7 +36,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 		</div>
 		<br />' .  _('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } elseif (isset($_GET['PONumber'])
 			AND !isset($_POST['Update'])) {
@@ -352,7 +352,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		unset($_POST['ProcessGoodsReceived']);
 		echo '</div>';
 		echo '</form>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -415,7 +415,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			unset($_POST['ProcessGoodsReceived']);
             echo '</div>';
             echo '</form>';
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		$LineNo++;

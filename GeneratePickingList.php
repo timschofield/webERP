@@ -411,7 +411,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			if ($Page_Height - $YPos - $LineHeight <= 60) {
 				/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
-				include ('includes/GenPickingListHeader.php');
+				include('includes/GenPickingListHeader.php');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
@@ -424,7 +424,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
-					include ('includes/GenPickingListHeader.php');
+					include('includes/GenPickingListHeader.php');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
@@ -437,7 +437,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
-					include ('includes/GenPickingListHeader.php');
+					include('includes/GenPickingListHeader.php');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
@@ -495,7 +495,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 					if ($Page_Height - $YPos - $LineHeight <= 60) {
 						/* We reached the end of the page so finish off the page and start a new */
 						$PageNumber++;
-						include ('includes/GenPickingListHeader.php');
+						include('includes/GenPickingListHeader.php');
 					} //end if need a new page headed up
 					else {
 						/*increment a line down for the next line item */

@@ -1,14 +1,14 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
 $Title = _('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'NewSupplier';
-include ('includes/header.php');
+include('includes/header.php');
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/CountriesArray.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/CountriesArray.php');
 
 function Is_ValidAccount($ActNo) {
 
@@ -1266,4 +1266,4 @@ if (!isset($SupplierID)) {
 	echo '</div>
 		</form>';
 } // end of main ifs
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -1,7 +1,7 @@
 <?php
 /* Utility to change a location code. */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('UTILITY PAGE Change A Location Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeLocationCode';// Anchor's id in the manual's html document.

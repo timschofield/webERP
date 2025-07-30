@@ -31,7 +31,7 @@ $BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/GLFunctions.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);

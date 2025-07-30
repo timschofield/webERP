@@ -11,16 +11,16 @@ $_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.php wor
 $_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.php works too */
 $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.php works too */
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 
 $Recipients = GetMailList('InventoryValuationRecipients');
 
 if (sizeOf($Recipients) == 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	include ('includes/header.php');
+	include('includes/header.php');
 	prnMsg(_('There are no members of the "InventoryValuationRecipients" email group'), 'warn');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -52,14 +52,14 @@ $ListCount = DB_num_rows($InventoryResult);
 
 if (DB_error_no() != 0) {
 	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 	if ($Debug == 1) {
 		echo '<br />' . $SQL;
 	}
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -152,10 +152,10 @@ $HTML .= '</tbody>
 
 if ($ListCount == 0) {
 	$Title = _('Print Inventory Valuation Error');
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p>' . _('There were no items with any value to print out for the location specified');
 	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit(); // Javier: needs check
 
 } else {
@@ -185,7 +185,7 @@ if ($ListCount == 0) {
 		unlink(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf');
 	}
 	$Title = _('Send Report By Email');
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	if ($Result) {
 		$Title = _('Print Inventory Valuation');
@@ -197,5 +197,5 @@ if ($ListCount == 0) {
 		echo '<div class="centre"><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
 	}
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

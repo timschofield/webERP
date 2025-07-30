@@ -9,7 +9,7 @@ $BookMark = 'AssetItems';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 echo '<a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
 

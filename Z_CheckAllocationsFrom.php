@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Identify Allocation Stuff Ups');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+include('includes/header.php');
 
 $SQL = "SELECT debtortrans.type,
 		debtortrans.transno,

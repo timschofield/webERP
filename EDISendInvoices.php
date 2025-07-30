@@ -1,10 +1,10 @@
 <?php
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $ViewTopic = 'EDI';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.php'); //need for EDITransNo
 
 /*Get the Customers who are enabled for EDI invoicing */
@@ -126,7 +126,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 				if ($LineDetails['section']=='Heading'){
 					$MsgLineText = $LineDetails['linetext'];
-					include ('includes/EDIVariableSubstitution.php');
+					include('includes/EDIVariableSubstitution.php');
 					$LastLine ='Heading';
 				} elseif ($LineDetails['section']=='Summary' AND $LastLine=='Heading') {
 					/*This must be the detail section
@@ -194,7 +194,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 						/*now work through the detail line segments */
 						foreach ($DetailLines as $DetailLineText) {
 							$MsgLineText = $DetailLineText;
-							include ('includes/EDIVariableSubstitution.php');
+							include('includes/EDIVariableSubstitution.php');
 						}
 
 					}
@@ -203,7 +203,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					$NoLines = $LineNumber;
 				} elseif ($LineDetails['section']=='Summary'){
 					$MsgLineText = $LineDetails['linetext'];
-					include ('includes/EDIVariableSubstitution.php');
+					include('includes/EDIVariableSubstitution.php');
 				}
 			} /*end while there are message lines to parse and substitute vbles for */
 			fclose($fp); /*close the file at the end of each transaction */
@@ -261,4 +261,4 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 } /*loop around all the customers enabled for EDI Invoices */
 
-include ('includes/footer.php');
+include('includes/footer.php');

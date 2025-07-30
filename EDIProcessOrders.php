@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Process EDI Orders');
 $ViewTopic = 'EDI';
 $BookMark = '';
 
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
 require_once ('includes/MiscFunctions.php');

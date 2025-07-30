@@ -13,7 +13,7 @@ $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other adjustment sessions on the same machine  */

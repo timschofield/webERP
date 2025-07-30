@@ -1,7 +1,7 @@
 <?php
 /* This script is an utility to change a supplier code. */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('UTILITY PAGE To Changes A Supplier Code In All Tables');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeSupplierCode'; // Anchor's id in the manual's html document

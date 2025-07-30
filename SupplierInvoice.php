@@ -5,19 +5,19 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 Also an array of GLCodes objects - only used if the AP - GL link is effective
 Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
-include ('includes/DefineSuppTransClass.php');
-include ('includes/DefinePOClass.php'); //needed for auto receiving code
+include('includes/DefineSuppTransClass.php');
+include('includes/DefinePOClass.php'); //needed for auto receiving code
 /* Session started in header.php for password checking and authorisation level check */
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Enter Supplier Invoice');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/StockFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
+include('includes/GLFunctions.php');
 
 if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 
@@ -110,7 +110,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 
 	if (DB_num_rows($LocalTaxProvinceResult) == 0) {
 		prnMsg(_('The tax province associated with your user account has not been set up in this database. Tax calculations are based on the tax group of the supplier and the tax province of the user entering the invoice. The system administrator should redefine your account with a valid default stocking location and this location should refer to a valid tax province') , 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -130,7 +130,7 @@ elseif (!isset($_SESSION['SuppTrans'])) {
 
 	prnMsg(_('To enter a supplier invoice the supplier must first be selected from the supplier selection screen') , 'warn');
 	echo '<br /><a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter an Invoice For') . '</a>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 
 	/*It all stops here if there ain't no supplier selected */
@@ -151,7 +151,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 		/* The user has permission to receive goods then lets go */
 
 		$_GET['ModifyOrderNumber'] = intval($_GET['ReceivePO']);
-		include ('includes/PO_ReadInOrder.php');
+		include('includes/PO_ReadInOrder.php');
 
 		if ($_SESSION['PO' . $identifier]->Status == 'Authorised') {
 			DB_Txn_Begin();
@@ -1892,4 +1892,4 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 if (isset($InputError) AND $InputError == true) { //add a link to return if users make input errors.
 	echo '<div class="centre"><a href="' . $RootPath . '/SupplierInvoice.php" >' . _('Back to Invoice Entry') . '</a></div>';
 } //end of return link for input errors
-include ('includes/footer.php');
+include('includes/footer.php');

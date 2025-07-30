@@ -1,13 +1,13 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Sales Category Maintenance');
 
 $ViewTopic = 'Setup';
 $BookMark = '';
 
-include ('includes/header.php');
-include ('includes/ImageFunctions.php');
+include('includes/header.php');
+include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -212,7 +212,7 @@ if (isset($SearchResult)) {
 			<input type="submit" name="AddItems", value="', _('Add items to category'), '" />
 		</div>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } //end if SearchResults to show
 if (isset($_POST['SubmitCategory'])) {
@@ -533,4 +533,4 @@ if (!isset($_GET['Select'])) {
 	</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

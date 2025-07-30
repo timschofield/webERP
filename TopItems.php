@@ -1,9 +1,9 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Top Items Searching');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 //check if input already
@@ -166,18 +166,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Top Sales Items List');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Top Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
@@ -281,5 +281,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<input type="submit" name="View" title="View" value="' . _('View') . '" />
 		</div>
 	</form>';
-include ('includes/footer.php');
+include('includes/footer.php');
 }

@@ -248,4 +248,4 @@ echo '<tr class="total_row">
 	</tr>
 	</table>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

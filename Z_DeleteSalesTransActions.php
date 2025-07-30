@@ -1,11 +1,11 @@
 <?php
 /*Script to Delete all sales transactions*/
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Delete Sales Transactions');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_POST['ProcessDeletions'])) {
 
@@ -184,4 +184,4 @@ echo '<input type="submit" name="ProcessDeletions" value="' . _('Process') . '" 
 echo '</div>';
 echo '</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Create Chart Details Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+include('includes/header.php');
 
 /*Script to insert ChartDetails records where one should already exist
 only necessary where manual entry of chartdetails has stuffed the system */

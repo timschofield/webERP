@@ -96,12 +96,12 @@ function NewPageHeader () {
 }
 
 include('includes/session.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 
-    include ('includes/class.pdf.php');
+    include('includes/class.pdf.php');
 
 	/* A4_Landscape */
 

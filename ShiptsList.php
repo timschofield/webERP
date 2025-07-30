@@ -3,7 +3,7 @@
 // Shows a list of all the open shipments for a selected supplier. Linked from POItems.php
 
 //$PageSecurity = 2;
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';
 $BookMark = '';

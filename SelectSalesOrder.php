@@ -2,7 +2,7 @@
 
 $PricesSecurity = 12;
 
-include ('includes/session.php');
+include('includes/session.php');
 
 if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);}
 if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);}
@@ -11,8 +11,8 @@ if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST[
 $Title = _('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Reset'])) {
 	unset($_POST);

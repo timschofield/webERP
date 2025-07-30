@@ -7,7 +7,7 @@ include('includes/header.php');
 $ViewTopic = 'Setup';
 $BookMark = '';
 include('includes/SQL_CommonFunctions.php');
-include ('includes/LanguagesArray.php');
+include('includes/LanguagesArray.php');
 
 
 if (!isset($_SESSION['SupplierID'])){

@@ -1,9 +1,9 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 use Dompdf\Dompdf;
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if ($_POST['CategoryID'] == 'All' AND $_POST['Location'] == 'All') {
@@ -174,7 +174,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($Debug==1){
 			echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 		}
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result)==0){
 		$Title=_('Order Status Report - No Data');
@@ -314,17 +314,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->stream($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	} else {
 		$Title = _('Order Status Report');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Order Status Report') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title = _('Order Status Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
@@ -381,6 +381,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<input type="submit" name="View" title="View" value="' . _('View') . '" />
 			</div>';
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 } /*end of else not PrintPDF */

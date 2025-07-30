@@ -1,8 +1,8 @@
 <?php
 
 
-include ('includes/session.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/session.php');
+include('includes/SQL_CommonFunctions.php');
 
 /* Was the Cancel button pressed the last time through ? */
 

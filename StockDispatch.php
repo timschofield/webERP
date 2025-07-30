@@ -383,7 +383,7 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 

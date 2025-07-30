@@ -6,12 +6,12 @@ include('includes/session.php');
 $ViewTopic= "Inventory";
 $BookMark = "PlanningReport";
 
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])) {
 
-	include ('includes/class.pdf.php');
+	include('includes/class.pdf.php');
 
 	/* A4_Landscape */
 
@@ -114,7 +114,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-4,Date('d'),Date('Y'))));
 	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-5,Date('d'),Date('Y'))));
 
-	include ('includes/PDFInventoryPlanPageHeader.php');
+	include('includes/PDFInventoryPlanPageHeader.php');
 
 	$Category = '';
 

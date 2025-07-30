@@ -9,7 +9,7 @@
 /* Steve Kitchen */
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Rebuild the System Default Language File');
 $ViewTopic = 'SpecialUtilities';// Filename in ManualContents.php's TOC.
 $BookMark = 'Z_poRebuildDefault';// Anchor's id in the manual's html document.

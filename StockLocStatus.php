@@ -12,7 +12,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ',// Icon title.
 	$Title, '</p>';// Page title.
 
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 if(isset($_GET['StockID'])) {
@@ -61,7 +61,7 @@ if(DB_num_rows($Result1)==0) {
 	echo '</table><p>';
 	prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
 	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 

@@ -3,7 +3,7 @@
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue) from .../includes/MiscFunctions.php.*/
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.

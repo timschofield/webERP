@@ -1,6 +1,6 @@
 <?php
 // GLAccountReport.php
-include ('includes/session.php');
+include('includes/session.php');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountReport';
@@ -16,16 +16,16 @@ if (isset($_POST['RunReport'])) {
 
 	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
-	include ('includes/PDFStarter.php');
+	include('includes/PDFStarter.php');
 
 	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
@@ -194,7 +194,7 @@ if (isset($_POST['RunReport'])) {
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account']) == 0) {
 		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 
 	}
@@ -206,7 +206,7 @@ if (isset($_POST['RunReport'])) {
 } /* end of if PrintReport button hit */
 else {
 	$Title = _('General Ledger Account Report');
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
@@ -293,7 +293,7 @@ else {
 		</div>
 		</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
