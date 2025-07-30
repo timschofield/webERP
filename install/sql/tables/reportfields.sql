@@ -7,7 +7,7 @@ CREATE TABLE `reportfields` (
   `displaydesc` varchar(25) NOT NULL DEFAULT '',
   `visible` enum('1','0') NOT NULL DEFAULT '1',
   `columnbreak` enum('1','0') NOT NULL DEFAULT '1',
-  `params` text,
+  `params` text DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
