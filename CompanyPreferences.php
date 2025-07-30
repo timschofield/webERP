@@ -184,7 +184,7 @@ if ($InputError != 1) {
 
 echo '<field>
 		<label for="CoyName">' . _('Name') . ' (' . _('to appear on reports') . '):</label>
-		<input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '"  pattern="?!^ +$"  title="" size="52" maxlength="50" />
+		<input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '"  pattern="(?!^ +$)"  title="" size="52" maxlength="50" />
 		<fieldhelp>' . _('Enter the name of the business. This will appear on all reports and at the top of each screen. ') . '</fieldhelp>
 	</field>';
 
