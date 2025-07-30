@@ -5,7 +5,7 @@ CREATE TABLE `woitems` (
   `qtyrecd` double NOT NULL DEFAULT '0',
   `stdcost` double NOT NULL,
   `nextlotsnref` varchar(20) DEFAULT '',
-  `comments` longblob,
+  `comments` longblob DEFAULT NULL,
   PRIMARY KEY (`wo`,`stockid`),
   KEY `stockid` (`stockid`),
   CONSTRAINT `woitems_ibfk_1` FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`),

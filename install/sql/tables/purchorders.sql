@@ -1,7 +1,7 @@
 CREATE TABLE `purchorders` (
   `orderno` int NOT NULL AUTO_INCREMENT,
   `supplierno` varchar(10) NOT NULL DEFAULT '',
-  `comments` longblob,
+  `comments` longblob DEFAULT NULL,
   `orddate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `rate` double NOT NULL DEFAULT '1',
   `dateprinted` datetime DEFAULT NULL,

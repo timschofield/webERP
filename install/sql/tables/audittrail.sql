@@ -1,7 +1,7 @@
 CREATE TABLE `audittrail` (
   `transactiondate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `userid` varchar(20) NOT NULL DEFAULT '',
-  `querystring` text,
+  `querystring` text DEFAULT NULL,
   KEY `UserID` (`userid`),
   KEY `transactiondate` (`transactiondate`),
   KEY `transactiondate_2` (`transactiondate`),

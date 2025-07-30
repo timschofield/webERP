@@ -12,7 +12,7 @@ CREATE TABLE `supptrans` (
   `ovgst` double NOT NULL DEFAULT '0',
   `diffonexch` double NOT NULL DEFAULT '0',
   `alloc` double NOT NULL DEFAULT '0',
-  `transtext` text,
+  `transtext` text DEFAULT NULL,
   `hold` tinyint NOT NULL DEFAULT '0',
   `chequeno` varchar(16) NOT NULL DEFAULT '',
   `void` tinyint(1) NOT NULL DEFAULT '0',
