@@ -150,7 +150,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['adjglact'] . "',
 								'" . ($MyRow['standardcost'] * -($StockQtyDifference)) . "',
-								'" . $MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check') . "')";
+								'" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -169,7 +169,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['stockact'] . "',
 								'" . $MyRow['standardcost'] * $StockQtyDifference . "',
-                                '" . $MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check') . "')";
+                                '" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				} //END INSERT GL TRANS

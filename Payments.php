@@ -466,7 +466,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$PeriodNo . "','" .
 								$PaymentItem->GLCode . "','" .
-								$PaymentItem->Narrative . "','" .
+								mb_substr($PaymentItem->Narrative, 0, 200) . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
 								$PaymentItem->Cheque . "'
 							)";
@@ -674,7 +674,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							$PeriodNo . "','" .
 							$_SESSION['CompanyRecord']['creditorsact'] . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+							mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
 							$CreditorTotal . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
@@ -697,7 +697,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$PeriodNo . "','" .
 								$_SESSION['CompanyRecord']['pytdiscountact'] . "','" .
-								$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+								mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
 								(-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 							)";
 					$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
@@ -726,7 +726,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							$PeriodNo . "','" .
 							$_SESSION['PaymentDetail' . $identifier]->Account . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->Narrative . "','" .
+							mb_substr($_SESSION['PaymentDetail' . $identifier]->Narrative, 0, 200) . "','" .
 							(-$_SESSION['PaymentDetail' . $identifier]->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');

@@ -189,7 +189,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $AssetRow['depnact'] . "',
-								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
+								'" . mb_substr(_('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'], 0, 200) . "',
 								'" . $NewDepreciation ."')";
 
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
@@ -208,7 +208,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $AssetRow['accumdepnact'] . "',
-								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
+								'" . mb_substr(_('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'], 0, 200) . "',
 								'" . -$NewDepreciation ."')";
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 

@@ -281,7 +281,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					'" . $PeriodNo . "',
 					'" . $JournalItem->GLCode . "',
-					'" . $JournalItem->Narrative . "',
+					'" . mb_substr($JournalItem->Narrative, 0, 200) . "',
 					'" . $JournalItem->Amount . "'
 					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
@@ -302,7 +302,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
-						'" . _('Reversal') . " - " . $JournalItem->Narrative . "',
+						'" . mb_substr(_('Reversal') . " - " . $JournalItem->Narrative, 0, 200) . "',
 						'" . -($JournalItem->Amount) . "'
 						)";
 

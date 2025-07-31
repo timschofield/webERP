@@ -1099,7 +1099,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['orddate'] . "',
 										'" . $PeriodNo . "',
 										'" . GetCOGSGLAccount($OrderHeader['area'], $OrderLineRow['stkcode'], $OrderHeader['ordertype']) . "',
-										'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost . "',
+										'" . mb_substr($OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . ($StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,'','',true);
@@ -1119,7 +1119,7 @@ $SOH_DateFields = array ('orddate',
 										'" . $OrderHeader['orddate'] . "',
 										'" . $PeriodNo . "',
 										'" . $StockGLCode['stockact'] . "',
-										'" . $OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost . "',
+										'" . mb_substr($OrderHeader['debtorno'] . " - " . $OrderLineRow['stkcode'] . " x " . $OrderLineRow['quantity'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . (-$StandardCost * $OrderLineRow['quantity']) . "')";
 
 				$Result = api_DB_query($SQL,'','',true);

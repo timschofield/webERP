@@ -157,7 +157,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['issueglact'] . "',
 												'" . $StandardCost * ($Quantity) . "',
-												'" . $Narrative . "'
+												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -178,7 +178,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['stockact'] . "',
 												'" . $StandardCost * -$Quantity . "',
-												'" . $Narrative . "'
+												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
 					$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');

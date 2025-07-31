@@ -179,8 +179,8 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
+							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . -$ValueOfChange . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
@@ -200,8 +200,8 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
+							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . $ValueOfChange . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '

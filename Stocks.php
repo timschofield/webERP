@@ -523,7 +523,7 @@ if (isset($_POST['submit'])) {
 												'" . Date('Y-m-d') . "',
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $NewStockAct . "',
-												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . ($UnitCost * $StockQtyRow[0]) . "')";
 					$ErrMsg = _('The stock cost journal could not be inserted because');
 					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
@@ -540,7 +540,7 @@ if (isset($_POST['submit'])) {
 												'" . Date('Y-m-d') . "',
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $OldStockAccount . "',
-												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . (-$UnitCost * $StockQtyRow[0]) . "')";
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
@@ -576,7 +576,7 @@ if (isset($_POST['submit'])) {
 													'" . Date('Y-m-d') . "',
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $NewWIPAct . "',
-													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . $WIPValue . "')";
 						$ErrMsg = _('The WIP cost journal could not be inserted because');
 						$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
@@ -593,7 +593,7 @@ if (isset($_POST['submit'])) {
 													'" . Date('Y-m-d') . "',
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $OldWIPAccount . "',
-													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . (-$WIPValue) . "')";
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 					}

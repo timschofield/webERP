@@ -254,7 +254,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . Date('Y-m-d') . "',
 							'" . $PeriodNo . "',
 							'" . $GLCodes['wipact'] . "',
-							'" . _('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef . "',
+							'" . mb_substr(_('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef, 0, 200) . "',
 							'" . -$Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');
@@ -272,7 +272,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . Date('Y-m-d') . "',
 							'" . $PeriodNo . "',
 							'" . $GLCodes['materialuseagevarac'] . "',
-							'" . _('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef . "',
+							'" . mb_substr(_('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef, 0, 200) . "',
 							'" . $Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');

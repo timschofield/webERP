@@ -308,7 +308,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					16,'" .
 					$TransferNumber . "','" .
 					$AccountCode . "','" .
-					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
+					mb_substr($_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 					-$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');
@@ -465,7 +465,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					16,'" .
 					$TransferNumber . "','" .
 					$AccountCode . "','" .
-					$_SESSION['Transfer']->StockLocationTo.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
+					mb_substr($_SESSION['Transfer']->StockLocationTo.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 					$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The incoming inventory GL transacction record could not be inserted because');
 			$DbgMsg =  _('The following SQL to insert records was used');

@@ -1791,7 +1791,7 @@ at standard cost*/
 											'" . $SQLCreditDate . "',
 											'" . $PeriodNo . "',
 											'" . $COGSAccount . "',
-											'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost . "',
+											'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 											'" . ($CreditLine->StandardCost * -$CreditLine->Quantity) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of the stock credited GL posting could not be inserted because');
@@ -1816,7 +1816,7 @@ then debit the expense account the stock is to written off to */
 										'" . $SQLCreditDate . "',
 										'" . $PeriodNo . "',
 										'" . $_POST['WriteOffGLCode'] . "',
-										'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost . "',
+										'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 										'" . ($CreditLine->StandardCost * $CreditLine->Quantity) . "'
 										)";
 
@@ -1839,7 +1839,7 @@ then debit the expense account the stock is to written off to */
 											'" . $SQLCreditDate . "',
 											'" . $PeriodNo . "',
 											'" . $StockGLCode['stockact'] . "',
-											'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost . "',
+											'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 											'" . ($CreditLine->StandardCost * $CreditLine->Quantity) . "'
 											)";
 
@@ -1869,7 +1869,7 @@ then debit the expense account the stock is to written off to */
 											'" . $SQLCreditDate . "',
 											'" . $PeriodNo . "',
 											'" . $SalesGLAccounts['salesglcode'] . "',
-											'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->Price . "',
+											'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->Quantity . " @ " . $CreditLine->Price, 0, 200) . "',
 											'" . (($CreditLine->Price * $CreditLine->Quantity)/$_SESSION['CurrencyRate']) . "'
 											)";
 
@@ -1891,7 +1891,7 @@ then debit the expense account the stock is to written off to */
 										'" . $SQLCreditDate . "',
 										'" . $PeriodNo . "',
 										'" . $SalesGLAccounts['discountglcode'] . "',
-										'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " . ($CreditLine->DiscountPercent * 100) . "%',
+										'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo . " - " . $CreditLine->StockID . " @ " . ($CreditLine->DiscountPercent * 100) . "%", 0, 200) . "',
 										'" . -(($CreditLine->Price * $CreditLine->Quantity * $CreditLine->DiscountPercent)/$_SESSION['CurrencyRate']) . "'
 										)";
 
@@ -1921,7 +1921,7 @@ then debit the expense account the stock is to written off to */
 								'" . $SQLCreditDate . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-								'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
+								'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo, 0, 200) . "',
 								'" . -(($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting for the credit note could not be inserted because');
@@ -1941,7 +1941,7 @@ then debit the expense account the stock is to written off to */
 								'" . $SQLCreditDate . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['freightact'] . "',
-								'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
+								'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo, 0, 200) . "',
 								'" . ($_SESSION['CreditItems'.$identifier]->FreightCost/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting for this credit note could not be inserted because');
@@ -1962,7 +1962,7 @@ then debit the expense account the stock is to written off to */
 											'" . $SQLCreditDate . "',
 											'" . $PeriodNo . "',
 											'" . $TaxGLCodes[$TaxAuthID] . "',
-											'" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "',
+											'" . mb_substr($_SESSION['CreditItems'.$identifier]->DebtorNo, 0, 200) . "',
 											'" . ($TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');

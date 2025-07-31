@@ -325,7 +325,7 @@
 						                                              '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                              '".$wipglact."',
 						                                              '".$cost*-$Quantity."',
-						                                              '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+						                                              '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$glupdatesql2="INSERT INTO gltrans (type,
 						                                                typeno,
 						                                                trandate,
@@ -339,7 +339,7 @@
 						                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                        '".$stockact."',
 						                                        '".$cost*$Quantity."',
-						                                        '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+						                                        '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=28";
 			$batchsql="UPDATE stockserialitems SET quantity=quantity-" . $Quantity.
 				              " WHERE stockid='".$StockID."'
@@ -433,7 +433,7 @@
                                                '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                '".$wipglact."',
                                                '".$cost*$Quantity. "',
-                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+                                               '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$glupdatesql2="INSERT INTO gltrans (type,
                                                 typeno,
                                                 trandate,
@@ -445,8 +445,9 @@
                                                '".$TransactionNo."',
                                                '".$TranDate."',
                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
-                                               '".$stockact.','.$cost*-$Quantity. "',
-                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+                                               '".$stockact."',
+                                               '".$cost*-$Quantity."',
+                                               '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";
 			DB_Txn_Begin();
 			DB_query($stockmovesql);

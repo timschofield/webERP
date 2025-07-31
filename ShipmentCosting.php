@@ -272,7 +272,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 									'" . Date('Y-m-d') . "',
 									'" . $PeriodNo . "',
 							 		'" . $StockGLCodes['purchpricevaract'] . "',
-								 	'" . $MyRow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['deicmalplaces']) . _('shipment quantity > stock held - variance write off') . "',
+								 	'" . mb_substr($MyRow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['deicmalplaces']) . _('shipment quantity > stock held - variance write off'), 0, 200) . "',
 									 " . $WriteOffToVariances . ")";
 
 						$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment variance posting for'). ' ' . $MyRow['itemcode'] . ' '. _('could not be inserted into the database because');
@@ -292,7 +292,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												'" . Date('Y-m-d') . "',
 												'" . $PeriodNo . "',
 										 		'" . $StockGLCodes['stockact'] . "',
-											 	'" . $MyRow['itemcode'] . ' ' . _('shipment avg cost adjt') . "',
+											 	'" . mb_substr($MyRow['itemcode'] . ' ' . _('shipment avg cost adjt'), 0, 200) . "',
 												'" . ($MyRow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit)- $WriteOffToVariances) . "')";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the shipment average cost adjustment for'). ' ' . $MyRow['itemcode'] . ' '. _('could not be inserted into the database because');
@@ -352,7 +352,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 										'" . Date('Y-m-d') . "',
 										'" . $PeriodNo . "',
 										'" . $StockGLCodes['purchpricevaract'] . "',
-										'" . $MyRow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty recd') .' ' . $MyRow['totqtyrecd'] . "',
+										'" . mb_substr($MyRow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty recd') .' ' . $MyRow['totqtyrecd'], 0, 200) . "',
 										" . -$Variance * $MyRow['totqtyrecd'] . ")";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The Positive GL entry for the shipment variance posting for'). ' ' . $MyRow['itemcode'] . ' '. _('could not be inserted into the database because');
@@ -375,7 +375,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 								'" . Date('Y-m-d') . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "',
-								'" . $MyRow['itemcode'] . ' ' ._('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty invoiced') . ' ' . $MyRow['totqtyinvoiced'] . "',
+								'" . mb_substr($MyRow['itemcode'] . ' ' ._('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty invoiced') . ' ' . $MyRow['totqtyinvoiced'], 0, 200) . "',
 								" . ($Variance * $MyRow['totqtyinvoiced']) . ")";
 
 				  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit GL entry for the shipment variance posting for') . ' ' . $MyRow['itemcode'] . ' ' . _('could not be inserted because');
@@ -407,7 +407,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 											'" . Date('Y-m-d') . "',
 											'" . $PeriodNo . "',
 											'" . $StockGLCodes['adjglact'] . "',
-											'" . _('Shipment of') . ' ' . $MyRow['itemcode'] . " " . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
+											'" . mb_substr(_('Shipment of') . ' ' . $MyRow['itemcode'] . " " . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH, 0, 200) . "',
 											" . -$ValueOfChange . ")";
 
 						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg();
@@ -426,7 +426,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 									'" . Date('Y-m-d') . "',
 									'" . $PeriodNo . "',
 									'" . $StockGLCodes['stockact'] . "',
-									'" . _('Shipment of') . ' ' . $MyRow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
+									'" . mb_substr(_('Shipment of') . ' ' . $MyRow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH, 0, 200) . "',
 									" . $ValueOfChange . ")";
 
 						   $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg();

@@ -503,7 +503,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						'" . $DelDate . "',
 						'" . $PeriodNo . "',
 						'" . $SalesGLAccounts['salesglcode'] . "',
-						'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'] . "',
+						'" . mb_substr($RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'], 0, 200) . "',
 						'" . filter_number_format(-$RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity']/$CurrencyRate) . "'
 					)";
 
@@ -530,7 +530,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $DelDate . "',
 							'" . $PeriodNo . "',
 							'" . $SalesGLAccounts['discountglcode'] . "',
-							'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . ' @ ' . ($RecurrOrderLineRow['discountpercent'] * 100) . "%',
+							'" . mb_substr($RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . ' @ ' . ($RecurrOrderLineRow['discountpercent'] * 100) . "%", 0, 200) . "',
 							'" . filter_number_format($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * $RecurrOrderLineRow['discountpercent']/$CurrencyRate) . "'
 						)";
 
@@ -570,7 +570,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 											'" . $DelDate. "',
 											'" . $PeriodNo . "',
 											'" . $Tax['GLCode'] . "',
-											'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
+											'" . mb_substr($RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'], 0, 200) . "',
 											'" . filter_number_format(-$Tax['FXAmount']/$CurrencyRate) . "'
 											)";
 
@@ -597,7 +597,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $DelDate . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-										'" . $RecurrOrderRow['debtorno'] . "',
+										'" . mb_substr($RecurrOrderRow['debtorno'], 0, 200) . "',
 										'" . filter_number_format($TotalInvLocalCurr) . "'
 									)";
 
@@ -623,7 +623,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $DelDate . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['freightact'] . "',
-										'" . $RecurrOrderRow['debtorno'] . "',
+										'" . mb_substr($RecurrOrderRow['debtorno'], 0, 200) . "',
 										'" . filter_number_format(-$RecurrOrderRow['freightcost']/$CurrencyRate) . "'
 									)";
 

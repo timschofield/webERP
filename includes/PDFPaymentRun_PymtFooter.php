@@ -143,7 +143,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					'" . $PeriodNo . "',
 					'" . $_POST['BankAccount'] . "',
-					'" . $SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
+					'" . mb_substr($SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
 					'" . (-$AccumBalance/ filter_number_format($_POST['ExRate'])) . "')";
 
 		$ProcessResult = DB_query($SQL,'','',false,false);
@@ -175,7 +175,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-					'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference . "',
+					'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
 					'" . ($AccumBalance/ filter_number_format($_POST['ExRate'])  + $AccumDiffOnExch) . "')";
 
 		$ProcessResult = DB_query($SQL,'','',false,false);
@@ -206,7 +206,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 							'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 							'" . $PeriodNo . "',
 							'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-							'" . $SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference . "',
+							'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference, 0, 200) . "',
 							'" . (-$AccumDiffOnExch) . "')";
 
 			$ProcessResult = DB_query($SQL,'','',false,false);
