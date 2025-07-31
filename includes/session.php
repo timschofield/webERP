@@ -63,10 +63,6 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
-/* iterate through all elements of the $_POST array and DB_escape_string them
-to limit possibility for SQL injection attacks and cross scripting attacks
-*/
-
 if (isset($_SESSION['DatabaseName'])) {
 
 	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
@@ -123,7 +119,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
 } elseif (isset($AllowAnyone)) { /* only do security checks if AllowAnyone is not true */
-	if (!isset($_SESSION['DatabaseName'])){
+	if (!isset($_SESSION['DatabaseName'])) {
 
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
@@ -212,7 +208,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
-
 	}
 }
 
