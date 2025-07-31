@@ -1,4 +1,5 @@
 <?php
+
 // echo the html header and page title
 
 // Variables which should be defined in the page this file is included with, before the inclusion of this header.php:
@@ -7,9 +8,11 @@
 // various $_SESSION items: Theme, DefaultDateFormat, Timeout, ShowPageHelp, ShowFieldHelp, FontSize, UsersRealName, etc...
 
 /// @todo there are any more global variables use in this script than those 3... are we sure it would work if
+
 ///       called within a function?
-global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
-global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
+global $Language;
+global $Title;
+global $LanguagesArray;
 global $RootPath;
 
 //if (!isset($RootPath)) {
