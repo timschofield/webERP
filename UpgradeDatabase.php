@@ -1,12 +1,12 @@
 <?php
 
-$PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
+$PageSecurity = 15; // hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
 include('includes/session.php');
 $Title = _('Upgrade webERP Database');
 include('includes/header.php');
 
-if (!isset($_POST['DoUpgrade'])){
+if (!isset($_POST['DoUpgrade'])) {
 
 	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
@@ -58,9 +58,9 @@ if (!isset($_POST['DoUpgrade'])){
           </form>';
 }
 
-if (isset($_POST['DoUpgrade'])){
+if (isset($_POST['DoUpgrade'])) {
 
-	if ($DBType=='mysql' OR $DBType =='mysqli'){
+	if ($DBType=='mysql' OR $DBType =='mysqli') {
 
 		$SQLScripts = array();
 
@@ -295,6 +295,7 @@ if (isset($_POST['DoUpgrade'])){
 	/*Now get the modified VersionNumber and script pagesecurities */
 	$ForceConfigReload=true;
 	include('includes/GetConfig.php');
+	$ForceConfigReload=false;
 } /*Dont do upgrade */
 
 include('includes/footer.php');
