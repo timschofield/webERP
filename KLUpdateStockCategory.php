@@ -74,7 +74,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										CURRENT_DATE,
 										'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 										'" . $NewStockAct . "',
-										'" . $StockID . ' ' . _('Change stock category') . "',
+										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 										'" . round($UnitCost * $QOH) . "')";
 			$ErrMsg =  _('The stock cost journal could not be inserted because');
 			$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
@@ -91,7 +91,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										CURRENT_DATE,
 										'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 										'" . $OldStockAccount . "',
-										'" . $StockID . ' ' . _('Change stock category') . "',
+										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 										'" . round(-$UnitCost * $QOH) . "')";
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 
@@ -128,7 +128,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											CURRENT_DATE,
 											'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 											'" . $NewWIPAct . "',
-											'" . $StockID . ' ' . _('Change stock category') . "',
+											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 											'" . $WIPValue . "')";
 				$ErrMsg =  _('The WIP cost journal could not be inserted because');
 				$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
@@ -145,7 +145,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											CURRENT_DATE,
 											'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 											'" . $OldWIPAccount . "',
-											'" . $StockID . ' ' . _('Change stock category') . "',
+											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 											'" . (-$WIPValue) . "')";
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 			}

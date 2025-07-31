@@ -252,7 +252,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 								'" . $MyRow['trandate'] . "',
 								'" . $MyRow['periodno'] . "',
 								'" . DB_escape_string($MyRow['account'] ?? '') . "',
-								'" . DB_escape_string($MyRow['narrative'] ?? '') . "',
+								'" . mb_substr(DB_escape_string($MyRow['narrative'] ?? ''), 0, 200) . "',
 								'" . $MyRow['amount'] . "',
 								'" . DB_escape_string($MyRow['jobref'] ?? '') . "')";
 					DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
@@ -300,7 +300,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 									'" . $MyConsolidatedRow['maxdate'] . "',
 									'" . $MyConsolidatedRow['periodno'] . "',
 									'" . $MyConsolidatedRow['account'] . "',
-									'CONSOLIDATED ACCOUNTING',
+									'" . mb_substr('CONSOLIDATED ACCOUNTING', 0, 200) . "',
 									'" . $MyConsolidatedRow['consolidated'] . "',
 									'')";
 					DB_query($SQLInsert, $ErrMsg, $DbgMsg);

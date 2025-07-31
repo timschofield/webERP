@@ -807,7 +807,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . $Trandate . "',
 				'" . $Period . "',
 				'" . $Account . "',
-				'" . $Narrative . "',
+				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . $Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
 	$DbgMsg = 'SQL to insert GLTrans record: ';
@@ -1105,7 +1105,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				CURRENT_DATE,
 				'" . $PeriodNo . "',
 				'" . $GLAccountTransfer . "',
-				'" . $Narrative . "',
+				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . $NetAmount . "'
 			)";
 		$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
@@ -1126,7 +1126,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommission . "',
-										'" . $Narrative . "',
+										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . $Commission . "'
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
@@ -1148,7 +1148,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommissionPPN . "',
-										'" . $Narrative . "',
+										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . $CommissionPPN . "'
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
@@ -1169,7 +1169,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-									'" . $Narrative . "',
+									'" . mb_substr($Narrative, 0, 200) . "',
 									'" . -$TotalAmount . "'
 									)";
 		$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');

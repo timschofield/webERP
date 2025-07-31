@@ -328,7 +328,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									CURRENT_DATE,
 									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $NewStockAct . "',
-									'" . $StockID . ' ' . $reason . "',
+									'" . mb_substr($StockID . ' ' . $reason, 0, 200) . "',
 									'" . ($UnitCost* $StockQtyRow[0]) . "')";
 		$ErrMsg =  _('The stock cost journal could not be inserted because');
 		$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
@@ -346,7 +346,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									CURRENT_DATE,
 									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $OldStockAccount . "',
-									'" . $StockID . ' ' .$reason . "',
+									'" . mb_substr($StockID . ' ' .$reason, 0, 200) . "',
 									'" . (-$UnitCost* $StockQtyRow[0]) . "')";
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 		prnMsg (_('Changed the value of stock of item: '). $StockID . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
