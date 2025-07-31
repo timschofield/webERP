@@ -238,24 +238,24 @@ if (isset($PrintPDF)
 			if ( $_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $MyRow['salesman'] ){
 				$Title=_('Select Invoices/Credit Notes To Print');
 				include('includes/header.php');
-					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
+				prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
 				include('includes/footer.php');
-					exit();
+				exit();
 			}
 			if ( $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID'] ){
 				$Title=_('Select Invoices/Credit Notes To Print');
 				include('includes/header.php');
-					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
+				echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
 				include('includes/footer.php');
-					exit();
-				}
+				exit();
+			}
 
 			$ExchRate = $MyRow['rate'];
 
-			//Change the language to the customer's language
+			// Change the language to the customer's language
+			/// @todo use a better way to achieve that than setting a value into the session and including a file
 			$_SESSION['Language'] = $MyRow['language_id'];
 			include('includes/LanguageSetup.php');
-
 
 			if ($InvOrCredit=='Invoice') {
 
@@ -277,7 +277,7 @@ if (isset($PrintPDF)
 							AND stockmoves.transno='" . $FromTransNo . "'
 							AND stockmoves.show_on_inv_crds=1";
 			} else {
-		/* only credit notes to be retrieved */
+				/* only credit notes to be retrieved */
 				$SQL = "SELECT stockmoves.stockid,
 								stockmaster.description,
 								stockmoves.qty as quantity,
@@ -544,10 +544,11 @@ if (isset($PrintPDF)
 
 	}
 	$pdf->__destruct();
-	//Change the language back to the user's language
-	$_SESSION['Language'] = $UserLanguage;
-	include('includes/LanguageSetup.php');
 
+	// Change the language back to the user's language
+	/// @todo use a better way to achieve that than setting a value into the session and including a file
+	$_SESSION['Language'] = $UserLanguage;
+	include($PathPrefix . 'includes/LanguageSetup.php');
 
 } else { /*The option to print PDF was not hit */
 

@@ -7,6 +7,7 @@ include('../../api/api_errorcodes.php');
 
 $Title = 'API documentation';
 
+/// @todo move to html5, as the rest of the app uses
 echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
 echo '<link rel="icon" href="'. $RootPath.'/favicon.ico" type="image/x-icon" />';
 /// @todo change the translation string, as it makes no sense! In zh_CN, we are translating 'iso-8859-1' as 'utf-8'!

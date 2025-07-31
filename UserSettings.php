@@ -101,7 +101,7 @@ if(isset($_POST['Modify'])) {
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
 		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 		$_SESSION['PDFLanguage'] = $_POST['PDFLanguage'];
-		include('includes/LanguageSetup.php');// After last changes in LanguageSetup.php, is it required to update?
+		include($PathPrefix . 'includes/LanguageSetup.php'); // After last changes in LanguageSetup.php, is it required to update?
 	}
 }
 

@@ -254,9 +254,10 @@ if(isset($PrintPDF)
 
 			$ExchRate = $MyRow['rate'];
 
-			//Change the language to the customer's language
+			// Change the language to the customer's language
+			/// @todo use a better way to achieve that than setting a value into the session and including a file
 			$_SESSION['Language'] = $MyRow['language_id'];
-			include('includes/LanguageSetup.php');
+			include($PathPrefix . 'includes/LanguageSetup.php');
 
 			if($InvOrCredit == 'Invoice') {
 				$SQL = "SELECT stockmoves.stockid,
@@ -554,9 +555,11 @@ if(isset($PrintPDF)
 
 	}
 	$pdf->__destruct();
-	//Change the language back to the user's language
+
+	// Change the language back to the user's language
+	/// @todo use a better way to achieve that than setting a value into the session and including a file
 	$_SESSION['Language'] = $UserLanguage;
-	include('includes/LanguageSetup.php');
+	include($PathPrefix . 'includes/LanguageSetup.php');
 
 } else { /*The option to print PDF was not hit */
 

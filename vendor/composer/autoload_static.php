@@ -6,6 +6,10 @@ namespace Composer\Autoload;
 
 class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
 {
+    public static $files = array (
+        'b7d00421084cf06d0263087a92fe9aea' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/polyfill.php',
+    );
+
     public static $prefixLengthsPsr4 = array (
         'w' => 
         array (
@@ -28,6 +32,7 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
             'PhpXmlRpc\\' => 10,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
             'PHPMailer\\PHPMailer\\' => 20,
+            'PGettext\\' => 9,
         ),
         'M' => 
         array (
@@ -90,6 +95,10 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'PGettext\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src',
         ),
         'Matrix\\' => 
         array (
