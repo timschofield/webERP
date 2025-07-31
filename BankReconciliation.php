@@ -69,8 +69,9 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
-									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . " " .
-										Date($_SESSION['DefaultDateFormat']) . "','" . $ExchangeDifference . "')";
+									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . " " .
+										Date($_SESSION['DefaultDateFormat']), 0, 200) . "',
+									'" . $ExchangeDifference . "')";
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
@@ -87,7 +88,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . FormatDateForSQL($PostingDate) . "',
 									'" . $PeriodNo . "',
 									'" . $_POST['BankAccount'] . "',
-									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
+									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']), 0, 200) . "',
 									'" . (-$ExchangeDifference) . "')";
 
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);

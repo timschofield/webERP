@@ -303,7 +303,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 									'" . $GRN['deliverydate'] . "',
 									'" . $PeriodNo . "',
 									'" . $GRN['glcode'] . "',
-									'" . _('GRN Reversal for PO') . ": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+									'" . mb_substr(_('GRN Reversal for PO') . ": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 									'" . -($GRN['stdcostunit'] * $QtyToReverse) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted for the reversal of the received item because');
@@ -323,7 +323,8 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 								'" . $_GET['GRNNo'] . "',
 								'" . $GRN['deliverydate'] . "',
 								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['grnact'] . "', '" . _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . $_SESSION['CompanyRecord']['grnact'] . "',
+								'" . mb_substr(_('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . $GRN['stdcostunit'] * $QtyToReverse . "'
 								)";
 

@@ -220,7 +220,7 @@ if (isset($_POST['submit'])) {
 								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $OldDetails['costact'] . "',
-								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+								'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
 								'" . -$OldDetails['cost']. "'
 								)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
@@ -240,7 +240,7 @@ if (isset($_POST['submit'])) {
 								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $NewAccounts['costact'] . "',
-								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+								'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
 								'" . $OldDetails['cost']. "'
 								)";
 				$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
@@ -260,7 +260,7 @@ if (isset($_POST['submit'])) {
 									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $OldDetails['accumdepnact'] . "',
-									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+									'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
 									'" . $OldDetails['accumdepn']. "'
 									)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
@@ -280,7 +280,7 @@ if (isset($_POST['submit'])) {
 									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $NewAccounts['accumdepnact'] . "',
-									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
+									'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
 									'" . -$OldDetails['accumdepn']. "'
 									)";
 					$ErrMsg = _('Cannot insert a GL entry for the change of asset category because');
@@ -445,7 +445,7 @@ if (isset($_POST['submit'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['costact'] . "',
-							'" . _('Delete asset') . ' ' . $AssetID . "',
+							'" . mb_substr(_('Delete asset') . ' ' . $AssetID, 0, 200) . "',
 							'" . -$AssetRow['cost']. "'
 							)";
 			$ErrMsg = _('Cannot insert a GL entry for the deletion of the asset because');
@@ -465,7 +465,7 @@ if (isset($_POST['submit'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['accumdepnact'] . "',
-							'" . _('Delete asset') . ' ' . $AssetID . "',
+							'" . mb_substr(_('Delete asset') . ' ' . $AssetID, 0, 200) . "',
 							'" . $Asset['accumdepn']. "'
 							)";
 			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');

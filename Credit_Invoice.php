@@ -1386,7 +1386,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 							'" . $DefaultDispatchDate . "',
 							'" . $PeriodNo . "',
 							'" . $COGSAccount . "',
-							'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost . "',
+							'" . mb_substr($_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 							'" . -round($CreditLine->StandardCost * $CreditLine->QtyDispatched, $_SESSION['CompanyRecord']['decimalplaces']) . "'
 							)";
 
@@ -1409,7 +1409,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 									'" . $DefaultDispatchDate . "',
 									'" . $PeriodNo . "',
 									'" . $_POST['WriteOffGLCode'] . "',
-									'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost . "',
+									'" . mb_substr($_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 									'" . round($CreditLine->StandardCost * $CreditLine->QtyDispatched, $_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				} else {
 					$StockGLCode = GetStockGLCode($CreditLine->StockID);
@@ -1425,7 +1425,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 									'" . $DefaultDispatchDate . "',
 									'" . $PeriodNo . "',
 									'" . $StockGLCode['stockact'] . "',
-									'" . $_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost . "',
+									'" . mb_substr($_SESSION['CreditItems' . $identifier]->DebtorNo . " - " . $CreditLine->StockID . " x " . $CreditLine->QtyDispatched . " @ " . $CreditLine->StandardCost, 0, 200) . "',
 									'" . round($CreditLine->StandardCost * $CreditLine->QtyDispatched, $_SESSION['CompanyRecord']['decimalplaces']) . "')";
 				}
 

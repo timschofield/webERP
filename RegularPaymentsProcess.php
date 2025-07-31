@@ -96,7 +96,7 @@ if (isset($_POST['Add'])) {
 									'" . FormatDateForSQL($PaymentItem['PaymentDate']) . "',
 									'" . $PeriodNo . "',
 									'" . $PaymentItem['GLCode'] . "',
-									'" . $PaymentItem['Narrative'] . "',
+									'" . mb_substr($PaymentItem['Narrative'], 0, 200) . "',
 									'" . ($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";
@@ -118,7 +118,7 @@ if (isset($_POST['Add'])) {
 									'" . FormatDateForSQL($PaymentItem['PaymentDate']) . "',
 									'" . $PeriodNo . "',
 									'" . $PaymentItem['BankAccount'] . "',
-									'" . $PaymentItem['Narrative'] . "',
+									'" . mb_substr($PaymentItem['Narrative'], 0, 200) . "',
 									'" . -($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";

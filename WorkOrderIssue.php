@@ -354,7 +354,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $WORow['wipact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+						'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 						'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
@@ -374,7 +374,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+						'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 						'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
@@ -560,7 +560,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $WORow['wipact'] . "',
-								'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
@@ -579,7 +579,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
-								'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
