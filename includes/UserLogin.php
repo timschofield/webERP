@@ -9,13 +9,12 @@ define('UL_CONFIGERR', 3);	/* Configuration error in webERP or server */
 define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
-/*	UserLogin
+/*
  *  Function to validate user name,  perform validity checks and initialise
  *  $_SESSION data.
  *  Returns:
  *	See define() statements above.
  */
-
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	global $Debug;
@@ -83,7 +82,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 			}
 		}
-
 
 		// Populate session variables with data base results
 		if ($PasswordVerified) {
@@ -167,10 +165,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				}
 			}
 
-
-			/*User is logged in so get configuration parameters  - save in session*/
+			/* User is logged in so get configuration parameters - save in session */
 			include($PathPrefix . 'includes/GetConfig.php');
-
 
 			if(isset($_SESSION['DB_Maintenance'])){
 				if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
