@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL General Transfer Status');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -19,4 +19,4 @@ FinishedStockDistribution("FORSALE", "LOCATION");
 
 prnMsg("Performed 5 transfer status checks",'success');
 
-include ('includes/footer.php');
+include('includes/footer.php');

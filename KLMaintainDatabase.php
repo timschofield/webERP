@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL DataBase Maintenance');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLBoards.php');
@@ -13,4 +13,4 @@ include('KLDailyChecks.php');
 KL_DailyCleanDB(TRUE, '');
 
 
-include ('includes/footer.php');
+include('includes/footer.php');

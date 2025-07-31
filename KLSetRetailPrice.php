@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Set Initial Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');

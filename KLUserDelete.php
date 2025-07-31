@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Delete webERP User');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
@@ -12,4 +12,4 @@ if (!isset($_GET['UserID']) OR $_GET['UserID']==''){
 	DeleteWeberpUser($_GET['UserID'], $KL_SystemAdmin);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

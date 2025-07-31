@@ -26,7 +26,7 @@ if (!isset($PathPrefix)) {
 require $PathPrefix.'vendor/autoload.php';
 
 // KL RICARD: Include the specific KL session functions
-include ($PathPrefix . 'KLsession.php');
+include($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
 
 // KL RICARD Select the default database depending on the code version
@@ -167,7 +167,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 	
 	// KL RICARD: Include the specific KL config file to assign a KL Role to each user
-	include ($PathPrefix . 'includes/KLRoles.php');
+	include($PathPrefix . 'includes/KLRoles.php');
 	// KL RICARD END: Include the specific KL config file
 
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */

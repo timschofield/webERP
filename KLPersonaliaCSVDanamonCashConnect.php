@@ -269,7 +269,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . _('Parameters') . '</legend>';
 	
-	include ('includes/KLPersonaliaParameterSelection.php');
+	include('includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 	

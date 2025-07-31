@@ -128,8 +128,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	}
 
 	// KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
-	include ($PathPrefix . 'includes/KLRoles.php');
-	include ($PathPrefix . 'includes/KLLoadSessionForSPG.php');
+	include($PathPrefix . 'includes/KLRoles.php');
+	include($PathPrefix . 'includes/KLLoadSessionForSPG.php');
 	// KL RICARD END If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
 
 } //end if force reload or not set already

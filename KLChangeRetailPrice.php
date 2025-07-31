@@ -1,11 +1,11 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Set Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
-include ('includes/KLGeneralFunctions.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 

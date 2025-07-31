@@ -1,7 +1,7 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Shop Inventory Control for SPG');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -46,4 +46,4 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</tbody>
 	</table>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

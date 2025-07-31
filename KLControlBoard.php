@@ -1072,4 +1072,4 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

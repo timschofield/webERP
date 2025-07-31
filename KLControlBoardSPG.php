@@ -1,11 +1,11 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL SPG Control Board');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include ('includes/KLRetailCustomer.php');
+include('includes/KLRetailCustomer.php');
 include('includes/KLUIGeneralFunctions.php');
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -21,7 +21,7 @@ RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15);
 
 prnMsg("Performed 4 SPG control board tests",'success');
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
 /******************************************************************************************************/
 /******************************************************************************************************/

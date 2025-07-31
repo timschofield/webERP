@@ -56,11 +56,11 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLMarketplaceFunctions.php');
 	include('includes/GetPrice.php');
 	include('includes/SQL_CommonFunctions.php');
-	include ('includes/OCOpenCartGeneralFunctions.php');
-	include ('includes/OCWeberpToOpenCartSync.php');
-	include ('includes/OCOpenCartToWeberpSync.php');
-	include ('includes/OCOpenCartConnectDB.php');
-	include ('includes/KLSmartStockTransfers.php');
+	include('includes/OCOpenCartGeneralFunctions.php');
+	include('includes/OCWeberpToOpenCartSync.php');
+	include('includes/OCOpenCartToWeberpSync.php');
+	include('includes/OCOpenCartConnectDB.php');
+	include('includes/KLSmartStockTransfers.php');
 
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);

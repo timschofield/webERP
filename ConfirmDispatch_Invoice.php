@@ -2006,9 +2006,9 @@ include('includes/footer.php');
 
 // KL RICARD
 function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB){
-	include ('includes/KLDefines.php');
-	include ('includes/OCOpenCartGeneralFunctions.php');
-	include ('includes/OCOpenCartConnectDB.php');
+	include('includes/KLDefines.php');
+	include('includes/OCOpenCartGeneralFunctions.php');
+	include('includes/OCOpenCartConnectDB.php');
 
 	$SQL = "SELECT salesorders.debtorno,
 					debtorsmaster.typeid,

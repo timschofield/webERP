@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Set Online Shop Categories');
-include ('includes/header.php');
-include ('includes/KLDefines.php');
-include ('includes/KLBoards.php');
+include('includes/header.php');
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
@@ -132,7 +132,7 @@ if (DB_num_rows($Result) != 0){
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
 /********************************************************************************************************
 				Associated functions 
