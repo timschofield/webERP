@@ -145,7 +145,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
-	exit();
 
 } elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
 	if (!isset($_SESSION['DatabaseName'])){
