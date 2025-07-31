@@ -1,9 +1,7 @@
 <?php
 
 /*************************************************************
- * MiscFunctions.php included from includes/ConnectDB.php
- *
- *  * ******************** FUNCTION INDEX ********************
+ * ******************** FUNCTION INDEX ********************
  * AddCarriageReturns - Adds carriage returns to a string
  * ChangeFieldInTable - Changes value of specific field across a table
  * checkLanguageChoice - Validates language choice format
@@ -117,7 +115,7 @@ function IsEmailAddress($Email) {
 	//  Check for a DNS 'MX' or 'A' record.
 	//  Windows supported from PHP 5.3.0 on - so check.
 	$Ret = true;
-	/*  Apparentely causes some problems on some versions - perhaps bleeding edge just yet
+	/*  Apparently causes some problems on some versions - perhaps bleeding edge just yet
 	if (version_compare(PHP_VERSION, '5.3.0') >= 0 or mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
 		$Ret = checkdnsrr($Domain, 'MX') or checkdnsrr($Domain, 'A');
 	}
@@ -126,7 +124,10 @@ function IsEmailAddress($Email) {
 }
 
 function ContainsIllegalCharacters($CheckVariable) {
-	if (mb_strstr($CheckVariable, "'") or mb_strstr($CheckVariable, '+') or mb_strstr($CheckVariable, '?') or mb_strstr($CheckVariable, '.') or mb_strstr($CheckVariable, "\"") or mb_strstr($CheckVariable, '&') or mb_strstr($CheckVariable, "\\") or mb_strstr($CheckVariable, '"') or mb_strstr($CheckVariable, '>') or mb_strstr($CheckVariable, '<')) {
+	if (mb_strstr($CheckVariable, "'") or mb_strstr($CheckVariable, '+') or mb_strstr($CheckVariable, '?') or
+		mb_strstr($CheckVariable, '.') or mb_strstr($CheckVariable, "\"") or mb_strstr($CheckVariable, '&') or
+		mb_strstr($CheckVariable, "\\") or mb_strstr($CheckVariable, '"') or mb_strstr($CheckVariable, '>') or
+		mb_strstr($CheckVariable, '<')) {
 		return true;
 	} else {
 		return false;
@@ -236,7 +237,8 @@ function google_currency_rate($CurrCode) {
 function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
 }
-//Replace all text/html line breaks with PHP_EOL(default) or given line break.
+
+/// Replace all text/html line breaks with PHP_EOL(default) or given line break.
 function Convert_line_breaks($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
@@ -246,7 +248,7 @@ function Convert_line_breaks($string, $Line_break=PHP_EOL)
     $string = preg_replace($patterns, $Replacements, $string);
     return $string;
 }
-//Replace all text line breaks with PHP_EOL(default) or given line break.
+/// Replace all text line breaks with PHP_EOL(default) or given line break.
 function Convert_CRLF($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(\r\n|\r|\n)/" );
@@ -306,10 +308,9 @@ function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
 		' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
 	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
-
 }
 
-//Generically move down 82 units after printing this
+// Generically move down 82 units after printing this
 function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
@@ -334,7 +335,7 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 		10);// RoundRectangle $RadiusY.
 }
 
-//Generically move down 82 units after printing this
+// Generically move down 82 units after printing this
 function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
@@ -359,7 +360,7 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 		10);// RoundRectangle $RadiusY.
 }
 
-//Assemble URL for configured Wiki Application
+/// Assemble URL for configured Wiki Application
 function wikiLink($WikiType, $WikiPageID) {
 	if (strstr($_SESSION['WikiPath'], 'http:')) {
 		$WikiPath = $_SESSION['WikiPath'];
@@ -378,7 +379,7 @@ function wikiLink($WikiType, $WikiPageID) {
 	}
 }
 
-//  Lindsay debug stuff
+// Lindsay debug stuff
 function LogBackTrace($dest = 0) {
 
 	$stack = debug_backtrace();
@@ -435,8 +436,6 @@ function LogBackTrace($dest = 0) {
 	}
 
 	error_log('++++END STACK BACKTRACE++++', $dest);
-
-	return;
 }
 
 function http_file_exists($url) {
@@ -747,7 +746,6 @@ function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
 
-
 function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
 	/**
 	 * Main email sending function for WebERP
@@ -870,7 +868,7 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	return $EmailSent;
 }
 
-function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments=array()){
+function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachments=array()) {
 	// If no attachments, use simple mail function
 	if(empty($Attachments)) {
 		$result = mail($To, $Subject, $Body, "From: $From\r\n");
