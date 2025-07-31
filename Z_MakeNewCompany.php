@@ -217,7 +217,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 		$ForceConfigReload=true;
 		include('includes/GetConfig.php');
-
+		$ForceConfigReload=false;
 
 		prnMsg (_('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
