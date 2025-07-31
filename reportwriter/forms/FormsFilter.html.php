@@ -2,7 +2,7 @@
 <head></head>
 <body>
 <h2 align="center"><?php echo $Prefs['reportname'].' - '.RPT_BTN_CRIT; ?></h2>
-<form name='formfilter" method="post" action="FormMaker.php<?php echo $QueryString; ?>">
+<form name="formfilter" method="post" action="FormMaker.php<?php echo $QueryString; ?>">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
   <input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">
   <input name="GoBackURL" type="hidden" value="<?php echo $GoBackURL; ?>">
