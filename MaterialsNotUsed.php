@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Raw Materials Not Used Anywhere');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
@@ -66,4 +66,4 @@ if (DB_num_rows($Result) != 0){
 	echo '</table>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

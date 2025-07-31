@@ -6,7 +6,7 @@ $Title = _('Supplier Tendering');
 $ViewTopic = 'SupplierTenders';
 $BookMark = '';
 include('includes/header.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 

@@ -1,5 +1,5 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 if (isset($_GET['SelectedSalesPerson'])) {
 	$SelectedSalesPerson = mb_strtoupper($_GET['SelectedSalesPerson']);
@@ -7,9 +7,9 @@ if (isset($_GET['SelectedSalesPerson'])) {
 	$SelectedSalesPerson = mb_strtoupper($_POST['SelectedSalesPerson']);
 } else {
 	$Title = _('Sales Commission Rates');
-	include ('includes/header.php');
+	include('includes/header.php');
 	prnMsg(_('This script can only be called from') . ' ' . '<a href="' . $RootPath . '/SalesPeople.php">' . _('here') . '</a>', 'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -21,7 +21,7 @@ $SalesPersonName = $MyRow['salesmanname'];
 $Title = _('Sales Commission Maintenance For') . ' ' . $SalesPersonName;
 $ViewTopic = 'SalesCommission';
 $BookMark = 'SalesCommission';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_POST['Submit'])) {
 	$InputError = 0;
@@ -329,4 +329,4 @@ echo '<div class="centre">
 	</div>';
 
 echo '</form>';
-include ('includes/footer.php');
+include('includes/footer.php');

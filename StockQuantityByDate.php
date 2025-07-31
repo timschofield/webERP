@@ -1,10 +1,10 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 $Title = _('Stock On Hand By Date');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text" >
 		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title . '</b>
@@ -194,4 +194,4 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		</table>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

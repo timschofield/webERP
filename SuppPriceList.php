@@ -263,7 +263,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />
 		'. _('Supplier Price List').'</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit so display form */

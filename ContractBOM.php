@@ -3,7 +3,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 $Title = _('Contract Bill of Materials');
 

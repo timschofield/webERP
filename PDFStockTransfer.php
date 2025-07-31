@@ -86,10 +86,10 @@ $SQL="SELECT stockmoves.stockid,
 $Result=DB_query($SQL);
 if (DB_num_rows($Result) == 0){
 	$Title = _('Print Stock Transfer - Error');
-	include ('includes/header.php');
+	include('includes/header.php');
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
 	echo '<a href="PDFStockTransfer.php">' . _('Try Again')  . '</a>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 //get the first stock movement which will be the quantity taken from the initiating location

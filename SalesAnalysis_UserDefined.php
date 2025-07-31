@@ -11,7 +11,7 @@ include('includes/ConstructSQLForUserDefinedSalesReport.php');
 
 if (isset($_GET['ProducePDF'])){
 
-	include ('includes/PDFSalesAnalysis.php');
+	include('includes/PDFSalesAnalysis.php');
 
 	if ($Counter >0) {
 		$PDF->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');

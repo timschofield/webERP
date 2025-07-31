@@ -1,5 +1,5 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
 if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
 
@@ -7,8 +7,8 @@ $Title = _('Setup regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 
-include ('includes/header.php');
-include ('includes/GLFunctions.php');
+include('includes/header.php');
+include('includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
@@ -246,7 +246,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 		</field>
 	</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } else {
 	echo '<option value=""></option>';
@@ -429,4 +429,4 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

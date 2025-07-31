@@ -40,7 +40,7 @@ if (!isset($SelectedWO) OR !isset($StockID)) {
 			<a href="' . $RootPath . '/SelectWorkOrder.php">' .  _('Select a work order to receive') . '</a>
 		</div>';
 	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to receive first'),'info');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' .$SelectedWO . '" />';

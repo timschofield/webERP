@@ -16,7 +16,7 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/GLFunctions.php');
 
 // KL RICARD
 include('includes/KLDefines.php');

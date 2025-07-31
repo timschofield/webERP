@@ -221,7 +221,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$LocationName = $FirstRow['locationname'];
 	DB_data_seek($CheckedItems,0);
 
-	include ('includes/PDFStockComparisonPageHeader.php');
+	include('includes/PDFStockComparisonPageHeader.php');
 
 	$Location = '';
 	$Category = '';

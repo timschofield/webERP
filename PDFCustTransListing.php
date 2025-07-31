@@ -2,7 +2,7 @@
 
 
 include('includes/SQL_CommonFunctions.php');
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
@@ -156,10 +156,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Customer Transactions Listing');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else {
 
@@ -168,7 +168,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'ARReports';
 	$BookMark = 'DailyTransactions';
 
-	 include ('includes/header.php');
+	 include('includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').

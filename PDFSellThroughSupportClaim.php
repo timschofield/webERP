@@ -183,12 +183,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Sales With Low GP');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales With Low G') . '" alt="" />' . ' ' . _('Sales With Low G') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {

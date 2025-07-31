@@ -1,17 +1,17 @@
 <?php
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Search Customers');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', _('Customer'), '" /> ', _('Customers'), '
 	</p>';
 
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Select'])) {
 	$_SESSION['CustomerID'] = $_GET['Select'];
@@ -480,7 +480,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . _('here') . '</a>', 'error');
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		$MyRow = DB_fetch_array($Result);
@@ -880,4 +880,4 @@ function initMap() {
 	} // $_SESSION['Extended_CustomerInfo'] == 1
 
 } // isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != ''
-include ('includes/footer.php');
+include('includes/footer.php');

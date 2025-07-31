@@ -78,7 +78,7 @@ if (isset($TransferItem)){
 	$LineNo=0;
 }
 
-include ('includes/InputSerialItems.php');
+include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */

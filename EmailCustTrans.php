@@ -35,7 +35,7 @@ if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 	prnMsg(_('The email address does not appear to be a valid email address. The transaction was not emailed'),'warn');
 }
 
-include ('includes/header.php');
+include('includes/header.php');
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -73,4 +73,4 @@ echo '<br /><div class="centre"><input type="submit" name="DoIt" value="' . _('O
 echo '</div>
       </div>
       </form>';
-include ('includes/footer.php');
+include('includes/footer.php');

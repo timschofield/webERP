@@ -24,7 +24,7 @@ Parameters:
 // BEGIN: Functions division ===================================================
 // END: Functions division =====================================================
 // BEGIN: Procedure division ===================================================
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 
 $Title = _('Profit and Loss');
@@ -32,9 +32,9 @@ $Title2 = _('Statement of Comprehensive Income'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ProfitAndLoss';
 
-include_once ('includes/SQL_CommonFunctions.php');
-include_once ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
-include_once ('includes/CurrenciesArray.php'); // Array to retrieve currency name.
+include_once('includes/SQL_CommonFunctions.php');
+include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name.
 // KL RICARD: prepare the data for each company
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -569,7 +569,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 	else {
 		$Title = _('General Ledger Profit and Loss');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . _('Profit and Loss Report') . '" alt="" />
 				' . _('Profit and Loss Report') . '
@@ -587,7 +587,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 }
 else {
 
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . // Icon image.
 	$Title2 . '" /> ' . // Icon title.
@@ -722,6 +722,6 @@ else {
 			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') . '" />
 		</div>', '</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 }

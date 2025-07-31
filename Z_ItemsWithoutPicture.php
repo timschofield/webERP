@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('List of Items without picture');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+include('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
@@ -53,4 +53,4 @@ if (DB_num_rows($Result) != 0){
 			</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

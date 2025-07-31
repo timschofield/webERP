@@ -910,7 +910,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if (DB_num_rows($WcResults) == 0) {
 		prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'), 'warn');
 		echo '<br /><a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance'), '</a>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	echo '<field>

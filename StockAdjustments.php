@@ -19,9 +19,9 @@ $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
-include ('includes/UIGeneralFunctions.php');
-include ('includes/KLUIGeneralFunctions.php');
+include('includes/GLFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 
 if (empty($_GET['identifier'])) {

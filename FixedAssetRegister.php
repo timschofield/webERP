@@ -6,7 +6,7 @@
  * 
 **********************************************************************************************************************************/
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -247,10 +247,10 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	}
 	else {
 		$Title = _('Fixed Asset Register');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 }
 else {
@@ -259,7 +259,7 @@ else {
 	$ViewTopic = 'FixedAssets';
 	$BookMark = 'AssetRegister';
 
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$Result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
@@ -367,5 +367,5 @@ else {
 	</div>
 	</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

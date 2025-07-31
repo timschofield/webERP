@@ -7,7 +7,7 @@ KL RICARD MODIFICATIONS:
 - change the account code also in KL tables using this field
 ***************************************************************************************/
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('UTILITY PAGE Change A GL Account Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeGLAccountCode';// Anchor's id in the manual's html document.

@@ -9,10 +9,10 @@
 
 $PageSecurity = 0;
 
-include ('includes/session.php');
+include('includes/session.php');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
-include ('includes/MainMenuLinksArray.php');
+include('includes/MainMenuLinksArray.php');
 
 if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FirstRun'] = true;
@@ -41,7 +41,7 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 	$_SESSION['Module'] = '';
 }
 
-include ('includes/header.php');
+include('includes/header.php');
 
 //=== MainMenuDiv =======================================================================
 echo '<nav class="ModuleList">
@@ -166,7 +166,7 @@ if (isset($MenuItems[$_SESSION['Module']]['Maintenance'])) {
 }
 echo '</ul>
 </fieldset>'; // MaintenanceDive ===HJ===
-include ('includes/footer.php');
+include('includes/footer.php');
 
 function GetRptLinks($GroupID) {
 	/*

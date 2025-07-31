@@ -13,7 +13,7 @@ $BookMark = 'CreateCreditNote';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 include('includes/GetSalesTransGLCodes.php');
 include('includes/GetPrice.php');

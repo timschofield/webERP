@@ -66,7 +66,7 @@ if (isset($_POST['PrintPDF'])
 		exit();
 	}
 
-	include ('includes/PDFSupplierBalsPageHeader.php');
+	include('includes/PDFSupplierBalsPageHeader.php');
 
 	$TotBal=0;
 

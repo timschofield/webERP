@@ -419,4 +419,4 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 		}
 	}
 }
-include ('includes/footer.php');
+include('includes/footer.php');

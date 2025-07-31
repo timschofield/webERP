@@ -4,7 +4,7 @@
 
 include('includes/DefineImportBankTransClass.php');
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Import Bank Transactions');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
@@ -561,4 +561,4 @@ if (isset($_SESSION['Statement'])) {
 		</table>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

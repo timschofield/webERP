@@ -418,7 +418,7 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 				<input name="SearchSupplier" type="submit" value="' . _('Find Suppliers Now') . '" />
 			</div>';
         echo '</form>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 }

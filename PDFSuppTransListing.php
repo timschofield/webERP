@@ -2,7 +2,7 @@
 
 
 include('includes/SQL_CommonFunctions.php');
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
@@ -17,7 +17,7 @@ if (!isset($_POST['Date'])){
 	 $Title = _('Supplier Transaction Listing');
 	 $ViewTopic = 'AccountsPayable';
 	 $BookMark = '';
-	 include ('includes/header.php');
+	 include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. _('Supplier Transaction Listing') . '</p>';
@@ -104,7 +104,7 @@ $LineHeight=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
-include ('includes/PDFSuppTransListingPageHeader.php');
+include('includes/PDFSuppTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
     $CurrDecimalPlaces = $MyRow['currdecimalplaces'];
@@ -121,7 +121,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		/*Then set up a new page */
 		$PageNumber++;
-		include ('includes/PDFChequeListingPageHeader.php');
+		include('includes/PDFChequeListingPageHeader.php');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 

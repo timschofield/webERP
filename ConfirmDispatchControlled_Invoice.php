@@ -84,7 +84,7 @@ if ($_SESSION['RequirePickingNote'] == 1) {
 $InOutModifier=1;
 $ShowExisting=true;
 
-include ('includes/InputSerialItems.php');
+include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for dispatch */

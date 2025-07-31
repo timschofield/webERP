@@ -46,10 +46,10 @@ if (isset($_GET['Agreed'])) {
 	$_SESSION['Installer']['License_Agreed'] = True;
 }
 
-include ($PathPrefix . 'includes/MiscFunctions.php');
-include ($PathPrefix . 'includes/LanguagesArray.php');
+include($PathPrefix . 'includes/MiscFunctions.php');
+include($PathPrefix . 'includes/LanguagesArray.php');
 $DefaultLanguage = $_SESSION['Installer']['Language']; // Need the language in this variable as this is the variable used elsewhere in webERP
-include ($PathPrefix . 'includes/LanguageSetup.php');
+include($PathPrefix . 'includes/LanguageSetup.php');
 
 /*
  * Web ERP Installer

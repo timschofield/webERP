@@ -1,7 +1,7 @@
 <?php
 
 
-include ('includes/session.php');
+include('includes/session.php');
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00

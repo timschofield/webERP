@@ -1,7 +1,7 @@
 <?php
 
 include('includes/SQL_CommonFunctions.php');
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
@@ -17,7 +17,7 @@ if (!isset($_POST['FromDate'])){
 	 $Title = _('Stock Transaction Listing');
 	 $ViewTopic = 'Inventory';
 	 $BookMark = '';
-	 include ('includes/header.php');
+	 include('includes/header.php');
 
 	echo '<div class="centre">
 			<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '. _('Stock Transaction Listing') . '</p>
@@ -184,7 +184,7 @@ switch ($_POST['TransType']) {
 		break;
 }
 
-include ('includes/PDFPeriodStockTransListingPageHeader.php');
+include('includes/PDFPeriodStockTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
 
@@ -200,7 +200,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
-		  include ('includes/PDFPeriodStockTransListingPageHeader.php');
+		  include('includes/PDFPeriodStockTransListingPageHeader.php');
 	  } /*end of new page header  */
 } /* end of while there are customer receipts in the batch to print */
 
