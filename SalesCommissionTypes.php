@@ -1,11 +1,11 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Sales Commission Calculation Methods');
-$ViewTopic= 'SalesCommission';
+$ViewTopic = 'SalesCommission';
 $BookMark = 'SalesCommission';
 
-include ('includes/header.php');
+include('includes/header.php');
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
@@ -226,4 +226,4 @@ if (!isset($_GET['delete'])) {
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
-include ('includes/footer.php');
+include('includes/footer.php');

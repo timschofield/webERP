@@ -228,7 +228,7 @@ if (DB_num_rows($Result)>0){
 	   /* We reached the end of the page so finsih off the page and start a newy */
 
 	      $PageNumber++;
-	      include ('includes/PDFOrderPageHeader.php');
+	      include('includes/PDFOrderPageHeader.php');
 
 	   } //end if need a new page headed up
 

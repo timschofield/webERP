@@ -1,13 +1,13 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 $Title = _('Stock Movements');
 /* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryMovement';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -249,4 +249,4 @@ echo '</table>
 	</div>
 	</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

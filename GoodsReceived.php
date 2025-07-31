@@ -36,7 +36,7 @@ if (isset($_GET['PONumber']) AND $_GET['PONumber']<=0 AND !isset($_SESSION['PO'.
 		</div>
 		<br />' .  _('This page can only be opened if a purchase order has been selected. Please select a purchase order first');
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } elseif (isset($_GET['PONumber'])
 			AND !isset($_POST['Update'])) {
@@ -352,7 +352,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		unset($_POST['ProcessGoodsReceived']);
 		echo '</div>';
 		echo '</form>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -415,7 +415,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			unset($_POST['ProcessGoodsReceived']);
             echo '</div>';
             echo '</form>';
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		$LineNo++;
@@ -735,7 +735,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											$_POST['DefaultReceivedDate'] . "','" .
 											$PeriodNo . "','" .
 											$OrderLine->GLCode . "','" .
-											_('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" .
+											mb_substr(_('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . " @ " . locale_number_format($CurrentStandardCost,$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "','" .
 											$CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted because');
@@ -757,7 +757,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 											$_POST['DefaultReceivedDate'] . "','" .
 											$PeriodNo . "','" .
 											$_SESSION['CompanyRecord']['grnact'] . "','" .
-											_('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']) . "','" .
+											mb_substr(_('PO') . ' ' . $_SESSION['PO'.$identifier]->OrderNo . ': ' . $_SESSION['PO'.$identifier]->SupplierID . ' - ' . $OrderLine->StockID . ' - ' . DB_escape_string($OrderLine->ItemDescription) . ' x ' . $OrderLine->ReceiveQty . ' @ ' . locale_number_format($UnitCost,$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "','" .
 											-$UnitCost * $OrderLine->ReceiveQty . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GRN suspense side of the GL posting could not be inserted because');

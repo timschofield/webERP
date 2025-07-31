@@ -6,7 +6,7 @@
 
 //$PageSecurity = 15;
 
-include ('includes/session.php');
+include('includes/session.php');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_poAdmin';
 $Title = _('Maintain Language Files');

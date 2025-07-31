@@ -1,11 +1,11 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Create GL Budgets');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="createbudget">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -259,4 +259,4 @@ if (DB_num_rows($Result) > 0) {
 		</table>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

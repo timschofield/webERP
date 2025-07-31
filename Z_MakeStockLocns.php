@@ -1,7 +1,7 @@
 <?php
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Make LocStock Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;

@@ -12,11 +12,11 @@ $AllowAnyone=true;
 $PageSecurity=15;
 $_POST['CompanyNameField']= 'yourdatabase';
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
 

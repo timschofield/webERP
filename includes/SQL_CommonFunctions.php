@@ -1,8 +1,6 @@
 <?php
 
-
 /* Common SQL Functions */
-
 
 function GetNextTransNo($TransType) {
 
@@ -28,9 +26,7 @@ function GetNextTransNo($TransType) {
 	$GetTransNoResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];
-
 }
-
 
 function GetStockGLCode($StockID) {
 
@@ -73,7 +69,6 @@ function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 		/*The tax rate is not defined for this Tax Authority and Dispatch Tax Authority */
 		return 0;
 	}
-
 }
 
 function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
@@ -93,7 +88,6 @@ function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 				AND taxauthrates.dispatchtaxprovince='" . $DispatchTaxProvince . "'
 				AND taxauthrates.taxcatid = '" . $TaxCategory . "'
 			ORDER BY taxgrouptaxes.calculationorder";
-
 
 	$ErrMsg = _('The taxes and rate for this tax group could not be retrieved because');
 	$GetTaxesResult = DB_query($SQL, $ErrMsg);
@@ -185,8 +179,8 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
+							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . -$ValueOfChange . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
@@ -206,8 +200,8 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						'" . Date('Y-m-d') . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
+							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . $ValueOfChange . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
@@ -217,7 +211,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 	}
 }
 
-/* Calculates the material cost of a bill of materials, given parent code*/
+/* Calculates the material cost of a bill of materials, given parent code */
 function BomMaterialCost($Parent) {
 	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$Result1 = DB_query($SQL);
@@ -243,7 +237,7 @@ function BomMaterialCost($Parent) {
 	return $MaterialCost;
 }
 
-/*Iterates through the levels of the bom, recalculating each bom it meets*/
+/* Iterates through the levels of the bom, recalculating each bom it meets */
 function UpdateCost($Item) {
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
@@ -349,7 +343,6 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
 	while ($MyRow = DB_fetch_array($Result)) {
 		WoRealRequirements($WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
-
 }
 
 /*Ensures general ledger entries balance for a given transaction */
@@ -381,7 +374,6 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 		}
 	}
 }
-
 
 /*Creates sample and testresults */
 function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {

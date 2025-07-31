@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Page Security Levels');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'PageSecurity';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
@@ -69,4 +69,4 @@ echo '<div class="centre">
     </div>
 	</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

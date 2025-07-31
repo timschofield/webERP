@@ -1,12 +1,12 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 
 $Title = _('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['SupplierID'])) {
     $SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
@@ -366,7 +366,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 					<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
 				</div>
 			</form>';
-        include ('includes/footer.php');
+        include('includes/footer.php');
         exit();
     }
 }
@@ -426,7 +426,7 @@ if (isset($SuppliersResult)) {
 		if (DB_num_rows($Result) == 1) {
 			if ($MyRow[2] == 'D' OR $MyRow[2] == 'A' OR $MyRow[2] == 'K') {
 				prnMsg($StockID . ' - ' . $MyRow[0] . '<p> ' . _('The item selected is a dummy part or an assembly or kit set part') . ' - ' . _('it is not purchased') . '. ' . _('Entry of purchasing information is therefore inappropriate'), 'warn');
-				include ('includes/footer.php');
+				include('includes/footer.php');
 				exit();
 			} else {
  //               echo '<br /><b>' . $StockID . ' - ' . $MyRow[0] . ' </b>  (' . _('In Units of') . ' ' . $MyRow[1] . ' )';
@@ -724,4 +724,4 @@ if (!isset($SuppliersResult)) {
 	echo '</form></div>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

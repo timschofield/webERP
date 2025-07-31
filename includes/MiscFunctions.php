@@ -277,7 +277,7 @@ function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 					$NPFunc();
 				}
 				if($NPInc!=null) {
-					include ($NPInc);
+					include($NPInc);
 				}
 			}
 			$YPos=$YPos-$FontSize-$InitialExtraSpace;
@@ -537,7 +537,7 @@ function GetMailList($MailGroup) {
 	if (DB_num_rows($Result) != 0) {
 		//Create the string which meets the Recipients requirements
 		while ($MyRow = DB_fetch_array($Result)) {
-			$ToList[] = $MyRow['realname'] . '<' . $MyRow['email'] . '>';
+			$ToList[$MyRow['email']] = $MyRow['realname'];
 		}
 	}
 	return $ToList;
@@ -852,8 +852,7 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	$Recipients = '';
 	$RecipientNames = '';
 	foreach ($To as $ToAddress => $ToName) {
-		$Recipients .= $ToAddress . ',';
-		$RecipientNames .= $ToName . ',';
+		$MailObj->addAddress($ToAddress, $ToName);
 	}
 	// Ensure Attachments is an array before looping
 	if (is_array($Attachments)) {
@@ -861,7 +860,6 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 			$MailObj->addAttachment($Attachment, basename($Attachment));
 		}
 	}
-	$MailObj->addAddress(substr($Recipients, 0, -1), substr($RecipientNames, 0, -1));
 	$MailObj->isHTML(false);
 	$MailObj->Subject = $Subject;
 	$MailObj->Body = $Body;

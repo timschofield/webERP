@@ -204,7 +204,7 @@ if (isset($_POST['submit'])) {
 								FormatDateForSQL($PostingDate) . "', '" .
 								$PeriodNo . "', '" .
 								$_SESSION['CompanyRecord']['exchangediffact'] . "', '" .
-								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 								(-$DifferenceToAdjust) . "')";
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 								FormatDateForSQL($PostingDate) . "', '" .
 								$PeriodNo . "', '" .
 								$MyRowBankAccount['accountcode'] . "', '" .
-								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 								($DifferenceToAdjust) . "')";
 
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);

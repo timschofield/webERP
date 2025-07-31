@@ -1,11 +1,8 @@
 <?php
-// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
-include ('includes/session.php');
-use Dompdf\Dompdf;
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
+include('includes/session.php');
+use Dompdf\Dompdf;
 
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -241,10 +238,10 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	}
 	else {
 		$Title = _('Fixed Asset Register');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 }
 else {
@@ -253,7 +250,7 @@ else {
 	$ViewTopic = 'FixedAssets';
 	$BookMark = 'AssetRegister';
 
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$Result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
@@ -360,5 +357,5 @@ else {
 	</div>
 	</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

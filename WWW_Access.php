@@ -1,7 +1,7 @@
 <?php
 /* This script is to maintaining access permissions. */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Access Permissions Maintenance');// Screen identificator.
 $ViewTopic = 'SecuritySchema';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WWW_Access';// Anchor's id in the manual's html document.

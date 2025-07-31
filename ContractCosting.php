@@ -5,7 +5,7 @@ include('includes/DefineContractClass.php');
 include('includes/session.php');
 $Title = _('Contract Costing');
 
-$ViewTopic= 'Contracts';
+$ViewTopic = 'Contracts';
 $BookMark = 'ContractCosting';
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
@@ -19,7 +19,7 @@ if (empty($_GET['identifier'])) {
 if (!isset($_GET['SelectedContract'])){
 	echo '<br />';
 	prnMsg( _('This page is expected to be called with the contract reference to show the costing for'), 'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 } else {
 	$ContractRef = $_GET['SelectedContract'];
@@ -254,7 +254,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . Date('Y-m-d') . "',
 							'" . $PeriodNo . "',
 							'" . $GLCodes['wipact'] . "',
-							'" . _('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef . "',
+							'" . mb_substr(_('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef, 0, 200) . "',
 							'" . -$Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');
@@ -272,7 +272,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . Date('Y-m-d') . "',
 							'" . $PeriodNo . "',
 							'" . $GLCodes['materialuseagevarac'] . "',
-							'" . _('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef . "',
+							'" . mb_substr(_('Variance on contract') . ' ' . $_SESSION['Contract'.$identifier]->ContractRef, 0, 200) . "',
 							'" . $Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');

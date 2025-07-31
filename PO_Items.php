@@ -1,21 +1,22 @@
 <?php
+
 // PO_Items.php
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
-
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/ImageFunctions.php');
 
 include('includes/session.php');
+
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 $Title = _('Purchase Order Items');
 
-$identifier=$_GET['identifier'];
+$identifier = $_GET['identifier'];
 
 /* If a purchase order header doesn't exist, then go to PO_Header.php to create one */
-if (!isset($_SESSION['PO'.$identifier])){
+if (!isset($_SESSION['PO'.$identifier])) {
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/PO_Header.php');
 	exit();
 }
@@ -23,7 +24,7 @@ if (!isset($_SESSION['PO'.$identifier])){
 /* webERP manual links before header.php */
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
-include ('includes/header.php');
+include('includes/header.php');
 
 if (!isset($_POST['Commit'])) {
 	echo '<a href="'.$RootPath.'/PO_Header.php?identifier=' . $identifier. '">' ._('Back To Purchase Order Header') . '</a><br />';
@@ -400,7 +401,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 if(isset($_GET['Delete'])){
 	if($_SESSION['PO'.$identifier]->Some_Already_Received($_GET['Delete'])==0){
 		$_SESSION['PO'.$identifier]->remove_from_order($_GET['Delete']);
-		include ('includes/PO_UnsetFormVbls.php');
+		include('includes/PO_UnsetFormVbls.php');
 	} else {
 		prnMsg( _('This item cannot be deleted because some of it has already been received'),'warn');
 	}
@@ -515,7 +516,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 												1,
 												'',
 												$_POST['AssetID']);
-		include ('includes/PO_UnsetFormVbls.php');
+		include('includes/PO_UnsetFormVbls.php');
 	}
 }
  /*end if Enter line button was hit - adding non stock items */

@@ -1,5 +1,5 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 if (isset($_GET['WO'])) {
 	$WO = filter_number_format($_GET['WO']);
@@ -37,7 +37,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 	$ResultItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ResultItems) != 0) {
-		include ('includes/PDFStarter.php');
+		include('includes/PDFStarter.php');
 
 		$pdf->addInfo('Title', _('WO Production Slip'));
 		$pdf->addInfo('Subject', _('WO Production Slip'));
@@ -111,11 +111,11 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 		$pdf->__destruct();
 	} else {
 		$Title = _('WO Item production Slip');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('There were no items with ready to produce'), 'info');
 		prnMsg($SQL);
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 
 	}

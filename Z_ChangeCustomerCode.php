@@ -1,7 +1,7 @@
 <?php
 /* This script is an utility to change a customer code. */
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('UTILITY PAGE To Changes A Customer Code In All Tables');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeCustomerCode'; // Anchor's id in the manual's html document.
@@ -240,7 +240,7 @@ echo '<fieldset>
 	</field>
 	<field>
 		<label> ' . _('New Debtor Code') . ':</label>
-		<input type="text" name="NewDebtorNo" size="20" maxlength="20" /><
+		<input type="text" name="NewDebtorNo" size="20" maxlength="20" />
 	</field>
 	</fieldset>
 

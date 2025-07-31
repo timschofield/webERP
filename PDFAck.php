@@ -259,7 +259,7 @@ if (DB_num_rows($Result) > 0) {
 
 	//now print T&C
 	//$PageNumber++;
-	//include ('includes/PDFAckPageHeader.php');
+	//include('includes/PDFAckPageHeader.php');
 	//$LeftOvers = $pdf->addTextWrap($XPos, $YPos,700,$FontSize, $Terms, 'left');
 
 	//while (mb_strlen($LeftOvers) > 1) {

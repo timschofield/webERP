@@ -203,7 +203,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	fclose($FileHandle);
-	include ('includes/GLPostings.php');
+	include('includes/GLPostings.php');
 
 } else { //show file upload form
 

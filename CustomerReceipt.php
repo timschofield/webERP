@@ -10,16 +10,16 @@ include('includes/GetPaymentMethods.php');
 $Title = _('Receipt Entry');
 
 if ($_GET['Type']=='GL') {
-	$ViewTopic= 'GeneralLedger';
+	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLReceipts';
 } else {
-	$ViewTopic= 'ARTransactions';
+	$ViewTopic = 'ARTransactions';
 	$BookMark = 'CustomerReceipts';
 }
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
@@ -84,7 +84,7 @@ if (!isset($_GET['Delete']) AND isset($_SESSION['ReceiptBatch' . $identifier])){
 		unset($Result);
 	} elseif (DB_num_rows($Result)==0 AND !$BankAccountEmpty){
 		prnMsg( _('The bank account number') . ' ' . $_POST['BankAccount'] . ' ' . _('is not set up as a bank account'),'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -332,7 +332,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 						'" . $PeriodNo . "',
 						'" . $ReceiptItem->GLCode . "',
-						'" . $ReceiptItem->Narrative . "',
+						'" . mb_substr($ReceiptItem->Narrative, 0, 200) . "',
 						'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate) . "'
 					)";
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
@@ -527,7 +527,7 @@ if (isset($_POST['CommitBatch'])){
 					'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['ReceiptBatch' . $identifier]->Account . "',
-					'" . $_SESSION['ReceiptBatch' . $identifier]->Narrative . "',
+					'" . mb_substr($_SESSION['ReceiptBatch' . $identifier]->Narrative, 0, 200) . "',
 					'" . $BatchReceiptsTotal . "'
 				)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction fro the bank account debit was');
@@ -551,7 +551,7 @@ if (isset($_POST['CommitBatch'])){
 							'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 							'" . $PeriodNo . "',
 							'". $_SESSION['CompanyRecord']['debtorsact'] . "',
-							'" . $_SESSION['ReceiptBatch' . $identifier]->Narrative . "',
+							'" . mb_substr($_SESSION['ReceiptBatch' . $identifier]->Narrative, 0, 200) . "',
 							'" . -$BatchDebtorTotal . "'
 							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
@@ -575,7 +575,7 @@ if (isset($_POST['CommitBatch'])){
 								'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['pytdiscountact'] . "',
-								'" . $_SESSION['ReceiptBatch' . $identifier]->Narrative . "',
+								'" . mb_substr($_SESSION['ReceiptBatch' . $identifier]->Narrative, 0, 200) . "',
 								'" . $BatchDiscount . "'
 							)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction for the payment discount debit was');

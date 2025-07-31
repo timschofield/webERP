@@ -232,7 +232,7 @@ if(isset($_POST['ProcessTransfer'])) {
 							"',16,'" .
 							$_SESSION['Transfer']->TrfID . "','" .
 							$AccountCode . "','" .
-							$_SESSION['Transfer']->StockLocationFrom.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost . "','" .
+							mb_substr($_SESSION['Transfer']->StockLocationFrom.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 							-$TrfLine->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');
@@ -388,7 +388,7 @@ if(isset($_POST['ProcessTransfer'])) {
 							16,'" .
 							$_SESSION['Transfer']->TrfID . "','" .
 							$AccountCode . "','" .
-							$_SESSION['Transfer']->StockLocationTo.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost . "','" .
+							mb_substr($_SESSION['Transfer']->StockLocationTo.' - '.$TrfLine->StockID.' x '.$TrfLine->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 							$TrfLine->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The incoming inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');

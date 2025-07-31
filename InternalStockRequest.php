@@ -1,14 +1,14 @@
 <?php
 
-include ('includes/DefineStockRequestClass.php');
+include('includes/DefineStockRequestClass.php');
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 $Title = _('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
 if (isset($_GET['New'])) {
@@ -128,7 +128,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 	DB_Txn_Commit();
 	prnMsg(_('The internal stock request has been entered and now needs to be authorised'), 'success');
 	echo '<br /><div class="centre"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?New=Yes">', _('Create another request'), '</a></div>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	unset($_SESSION['Request']);
 	exit();
 } elseif (isset($_POST['Submit'])) {
@@ -168,7 +168,7 @@ if (isset($_GET['Edit'])) {
 			<input type="submit" name="Edit" value="', _('Update Line'), '" />
 		</div>
 		</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -240,7 +240,7 @@ echo '</select>
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -580,4 +580,4 @@ if (isset($SearchResult)) {
        </form>';
 } #end if SearchResults to show
 //*********************************************************************************************************
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -4,7 +4,7 @@
 
 include('includes/DefineImportBankTransClass.php');
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Import Bank Transactions');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
@@ -245,7 +245,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . -round($_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the receipt because'),
 										_('The SQL that failed to insert the receipt GL entry was'),
@@ -263,7 +263,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['Statement']->BankGLAccount . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . round($_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the receipt because'),
 										_('The SQL that failed to insert the receipt GL entry was'),
@@ -286,7 +286,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 													'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 													'" . $PeriodNo . "',
 													'" . $GLAnalysis->GLCode . "',
-													'" . DB_escape_string($GLAnalysis->Narrative . ' ' . $_SESSION['Trans'][$i]->Description) . "',
+													'" . mb_substr(DB_escape_string($GLAnalysis->Narrative . ' ' . $_SESSION['Trans'][$i]->Description), 0, 200) . "',
 													'" . -round($GLAnalysis->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 											_('Cannot insert a GL entry for the receipt gl analysis because'),
 											_('The SQL that failed to insert the gl analysis of this receipt was'),
@@ -306,7 +306,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['Statement']->BankGLAccount . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . round($_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the receipt because'),
 										_('The SQL that failed to insert the receipt GL entry was'),
@@ -361,7 +361,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . round(-$_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the supplier payment to creditors control because'),
 										_('The SQL that failed to insert the creditors control GL entry was'),
@@ -380,7 +380,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['Statement']->BankGLAccount . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . round($_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the supplier payment because'),
 										_('The SQL that failed to insert the supplier payment GL entry to the bank account was'),
@@ -404,7 +404,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 													'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 													'" . $PeriodNo . "',
 													'" . $GLAnalysis->GLCode . "',
-													'" . DB_escape_string($GLAnalysis->Narrative . ' ' . $_SESSION['Trans'][$i]->Description) . "',
+													'" . mb_substr(DB_escape_string($GLAnalysis->Narrative . ' ' . $_SESSION['Trans'][$i]->Description), 0, 200) . "',
 													'" . -round($GLAnalysis->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 											_('Cannot insert a GL entry for the payment gl analysis because'),
 											_('The SQL that failed to insert the gl analysis of this payment was'),
@@ -425,7 +425,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 												'" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 												'" . $PeriodNo . "',
 												'" . $_SESSION['Statement']->BankGLAccount . "',
-												'" . DB_escape_string($_SESSION['Trans'][$i]->Description) . "',
+												'" . mb_substr(DB_escape_string($_SESSION['Trans'][$i]->Description), 0, 200) . "',
 												'" . round($_SESSION['Trans'][$i]->Amount/$_POST['ExchangeRate'],$_SESSION['CompanyRecord']['decimalplaces']+1) . "')",
 										_('Cannot insert a GL entry for the payment because'),
 										_('The SQL that failed to insert the payment GL entry was'),
@@ -561,4 +561,4 @@ if (isset($_SESSION['Statement'])) {
 		</table>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

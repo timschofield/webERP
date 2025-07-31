@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Clone Item');
 /* webERP manual links before header.php */
-$ViewTopic= 'Inventory';
+$ViewTopic = 'Inventory';
 $BookMark = 'CloneItem';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');

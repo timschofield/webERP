@@ -88,7 +88,7 @@ $StockID = $LineItem->StockID;
 $InOutModifier=1;
 $ShowExisting = false;
 $IsCredit = true;
-include ('includes/InputSerialItems.php');
+include('includes/InputSerialItems.php');
 
 echo '</tr>
 	</table>';

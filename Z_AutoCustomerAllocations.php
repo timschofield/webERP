@@ -10,7 +10,7 @@ include('includes/DefineCustAllocsClass.php');
 include('includes/session.php');
 $Title = _('Automatic Customer Receipt') . '/' . _('Credit Note Allocations');
 
-$ViewTopic= 'ARTransactions';
+$ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
 
 include('includes/header.php');

@@ -2,11 +2,11 @@
 
 include('includes/session.php');
 
-$Title = _('Stock Check Sheets Entry');
+ob_start();
 
+$Title = _('Stock Check Sheets Entry');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">';
@@ -58,9 +58,11 @@ if (isset($_GET['gettemplate'])) //download an import template
 
 	// exit cleanly to prevent any unwanted outputs
 	exit();
+} else {
+	ob_end_flush();
 }
 
-if ($_GET['Action'] == 'Enter'){
+if ($_GET['Action'] == 'Enter') {
 
 	if (isset($_POST['EnterCounts'])){
 

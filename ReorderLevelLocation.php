@@ -1,15 +1,19 @@
 <?php
 
-
 // ReorderLevelLocation.php - Report of reorder level by category
 
 include('includes/session.php');
+include('includes/StockFunctions.php');
+
+if (isset($_POST['submit']) OR isset($_POST['Update']) && @$_POST['NumberOfDays'] == '') {
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/ReorderLevelLocation.php');
+	exit();
+}
 
 $Title=_('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
-include('includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';
 
@@ -28,11 +32,6 @@ if (isset($_POST['submit'])){
 }
 
 if (isset($_POST['submit']) OR isset($_POST['Update'])) {
-
-	if ($_POST['NumberOfDays']==''){
-		header('Location: ' . htmlspecialchars_decode($RootPath) . '/ReorderLevelLocation.php');
-		exit();
-	}
 
 	if($_POST['Sequence']==1){
 		$Sequence="qtyinvoice DESC, locstock.stockid";

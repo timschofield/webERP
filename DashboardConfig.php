@@ -1,9 +1,10 @@
 <?php
-include ('includes/session.php');
+
+include('includes/session.php');
 $Title = _('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Page Security Levels'), '" alt="" />', ' ', $Title, '
@@ -205,4 +206,4 @@ if (isset($_GET['Edit'])) {
 
 echo '</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

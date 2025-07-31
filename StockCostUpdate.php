@@ -1,6 +1,5 @@
 <?php
 
-
 $UpdateSecurity =10;
 
 include('includes/session.php');

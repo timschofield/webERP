@@ -3,12 +3,12 @@
 $DatabaseName='weberp';
 $AllowAnyone = true;
 
-include ('includes/session.php');
+include('includes/session.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 
 include('includes/SQL_CommonFunctions.php');
-include ('includes/class.pdf.php');
+include('includes/class.pdf.php');
 $_POST['FromDate']=date('Y-m-01');
 $_POST['ToDate']= FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate . ' - 7 days'));
@@ -54,7 +54,7 @@ if (DB_error_no()!=0){
 	if ($Debug==1){
 		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 	}
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 $PaperSize="Letter_Landscape";
@@ -64,7 +64,7 @@ $pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('t
 $LineHeight=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
-include ('includes/PDFWeeklyOrdersPageHeader.php');
+include('includes/PDFWeeklyOrdersPageHeader.php');
 $Col1=2;
 $Col2=40;
 $Col3=160;
@@ -125,7 +125,7 @@ while ($MyRow=DB_fetch_array($Result)){
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col10,$YPos,$Col11-$Col10-5,$FontSize,$Status, 'left');
 	if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		$PageNumber++;
-		include ('includes/PDFWeeklyOrdersPageHeader.php');
+		include('includes/PDFWeeklyOrdersPageHeader.php');
 	} /*end of new page header  */
 	$YPos -= $LineHeight;
 	$TotalSalesValue += $SalesValue;
@@ -144,7 +144,7 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,locale_number_format($TotalGP,2), 'right');
 if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 	$PageNumber++;
-	include ('includes/PDFWeeklyOrdersPageHeader.php');
+	include('includes/PDFWeeklyOrdersPageHeader.php');
 } /*end of new page header  */
 
 $YPos -= $LineHeight;

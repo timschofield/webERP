@@ -20,7 +20,7 @@ function CashFlowsActivityName($Activity) {
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
 $Title = _('General Ledger Accounts');
-$ViewTopic= 'GeneralLedger';
+$ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';
 include('includes/header.php');
 

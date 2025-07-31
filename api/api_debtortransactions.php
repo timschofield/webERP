@@ -385,7 +385,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['debtorsact'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) / $CustCurrRow['rate'],4) . "')";
 
 			$Result = api_DB_query($SQL,'','',true);
@@ -403,7 +403,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['pytdiscountact'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round($Receipt['discountfx'] / $CustCurrRow['rate'],4) . "')";
 
 				$Result = api_DB_query($SQL,'','',true);
@@ -422,7 +422,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'" . $Receipt['bankaccount'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round($Receipt['amountfx'] / $CustCurrRow['rate'],4) . "')";
 
 			$Result = api_DB_query($SQL,'','',true);
@@ -930,7 +930,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
 										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']) . "',
-										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
+										'" . mb_substr($Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . ($StandardCost * $CN_Line['qty']) . "')";
 
 				$Result = api_DB_query($SQL,'','',true);
@@ -950,7 +950,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
 										'" . $StockGLCode['stockact'] . "',
-										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
+										'" . mb_substr($Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . (-$StandardCost * $CN_Line['qty']) . "')";
 
 				$Result = api_DB_query($SQL,'','',true);

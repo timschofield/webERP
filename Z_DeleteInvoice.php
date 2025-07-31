@@ -10,7 +10,7 @@ not included on any menu for obvious reasons
 This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Delete Invoice');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;

@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
@@ -9,7 +9,7 @@ $Title = _('Sell Through Support');
 $ViewTopic = 'Sales';
 $BookMark = '';
 
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
@@ -205,7 +205,7 @@ if (isset($_POST['SearchSupplier'])) {
 				<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
 			</div>
 		</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -469,4 +469,4 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

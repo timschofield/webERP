@@ -3,17 +3,17 @@
 //$PageSecurity = 3;
 $Title = _('Geocode Generate XML');
 
-include ('includes/session.php');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
 function parseToXML($htmlStr)
 {
-$xmlStr=str_replace('<','&lt;',$htmlStr);
-$xmlStr=str_replace('>','&gt;',$xmlStr);
-$xmlStr=str_replace('"','&quot;',$xmlStr);
-$xmlStr=str_replace("'",'&#39;',$xmlStr);
-$xmlStr=str_replace("&",'&amp;',$xmlStr);
-return $xmlStr;
+	$xmlStr = str_replace('<','&lt;',$htmlStr);
+	$xmlStr = str_replace('>','&gt;',$xmlStr);
+	$xmlStr = str_replace('"','&quot;',$xmlStr);
+	$xmlStr = str_replace("'",'&#39;',$xmlStr);
+	$xmlStr = str_replace("&",'&amp;',$xmlStr);
+	return $xmlStr;
 }
 
 $SQL = "SELECT * FROM suppliers WHERE 1";
@@ -23,7 +23,7 @@ $Result = DB_query($SQL, $ErrMsg);
 header("Content-type: text/xml");
 
 // Iterate through the rows, printing XML nodes for each
-echo '<markers>';
+echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . "\n<markers>\n";
 
 while ($MyRow = DB_fetch_array($Result)){
   // ADD TO XML DOCUMENT NODE
@@ -33,7 +33,7 @@ while ($MyRow = DB_fetch_array($Result)){
   echo 'lat="' . $MyRow['lat'] . '" ';
   echo 'lng="' . $MyRow['lng'] . '" ';
   echo 'type="' . $MyRow['supptype'] . '" ';
-  echo '/>';
+  echo "/>\n";
 }
 
 // End XML file

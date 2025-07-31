@@ -7,12 +7,13 @@ function stripcomma($str) { //because we're using comma as a delimiter
     $str = str_replace('"', '""', $str);
     $str = str_replace("\r", "", $str);
     $str = str_replace("\n", '\n', $str);
-    if($str == "" )
+    if ($str == "" )
         return $str;
     else
         return '"'.$str.'"';
 }
 
+/*
 function NULLToZero( &$Field ) {
     if( is_null($Field) )
         return '0';
@@ -26,7 +27,7 @@ function NULLToPrice( &$Field ) {
     else
         return $Field;
 }
-
+*/
 
 // EXPORT FOR PRICE LIST
 if ( isset($_POST['pricelist']) ) {
