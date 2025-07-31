@@ -25,26 +25,6 @@ if (isset($_POST['Language']) && checkLanguageChoice($_POST['Language'])) {
 
 $Language = $_SESSION['Language'];
 
-// Check users' locale format via their language
-// Then pass this information to the js for number validation purpose
-/// @todo move this logic to JS, into the rLocaleNumber
-$Collect = array(
-	'US'=>array('en_US.utf8','en_GB.utf8','ja_JP.utf8','hi_IN.utf8','mr_IN.utf8','sw_KE.utf8','tr_TR.utf8','vi_VN.utf8','zh_CN.utf8','zh_HK.utf8','zh_TW.utf8'),
-	'IN'=>array('en_IN.utf8','hi_IN.utf8','mr_IN.utf8'),
-	/// @todo EE and FR have identical data, even though they are treated differently in the js function...
-	'EE'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
-	'FR'=>array('ar_EG.utf8','cz_CZ.utf8','fr_CA.utf8','fr_FR.utf8','hr_HR.utf8','pl_PL.utf8','ru_RU.utf8','sq_AL.utf8','sv_SE.utf8'),
-	'GM'=>array('de_DE.utf8','el_GR.utf8','es_ES.utf8','fa_IR.utf8','id_ID.utf8','it_IT.utf8','ro_RO.utf8','lv_LV.utf8','nl_NL.utf8','pt_BR.utf8','pt_PT.utf8')
-);
-
-foreach($Collect as $Key => $Value) {
-	if (in_array($Language, $Value)) {
-		$Lang = $Key;
-		$_SESSION['Lang'] = $Lang;
-		/// @todo should we not break out of the loop?
-	}
-}
-
 /*
  Since this file is always loaded after session.php has been loaded, and session.php sets up the composer autoloading,
  when we get here the 'gettext' function is always defined. It can be either the function from the php native
@@ -87,8 +67,7 @@ if (!function_exists('gettext')) {
 } else {
 */
 	include_once($PathPrefix . 'includes/LanguagesArray.php');
-var_dump($_SESSION['Language']);
-var_dump(extension_loaded('gettext'));
+
 	$LocaleSetOk = setlocale(LC_ALL, $_SESSION['Language'], $LanguagesArray[$_SESSION['Language']]['WindowsLocale']);
 	if ($LocaleSetOk === false) {
 		// make sure we still enable translations via polyfill-gettext, even if the locale is not installed in the system
