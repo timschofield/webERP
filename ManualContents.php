@@ -30,13 +30,13 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 include('includes/session.php');
 
 // Set the Cascading Style Sheet for the manual:
-$ManualStyle = 'locale/' . $Language . '/Manual/style/manual.css';
-if(!file_exists($ManualStyle)) {// If locale ccs not exist, use doc/Manual/style/manual.css. Each language can have its own css.
-	$ManualStyle = 'doc/Manual/style/manual.css';
+$ManualStyle = 'locale/' . $Language . '/Manual/css/manual.css';
+if (!file_exists($ManualStyle)) { // If locale ccs not exist, use doc/Manual/css/manual.css. Each language can have its own css.
+	$ManualStyle = 'doc/Manual/css/manual.css';
 }
 // Set the the outline of the webERP manual:
 $ManualOutline = 'locale/' . $Language . '/Manual/ManualOutline.php';
-if(!file_exists($ManualOutline)) {// If locale outline not exist, use doc/Manual/ManualOutline.php. Each language can have its own outline.
+if (!file_exists($ManualOutline)) { // If locale outline not exist, use doc/Manual/ManualOutline.php. Each language can have its own outline.
 	$ManualOutline = 'doc/Manual/ManualOutline.php';
 }
 
@@ -44,7 +44,7 @@ ob_start();
 
 // Output the header part:
 $ManualHeader = 'locale/' . $Language . '/Manual/ManualHeader.html';
-if(file_exists($ManualHeader)) {// Use locale ManualHeader.html if exists. Each language can have its own page header.
+if (file_exists($ManualHeader)) { // Use locale ManualHeader.html if exists. Each language can have its own page header.
 	include($ManualHeader);
 } else {// Default page header:
 	echo '<!DOCTYPE html>

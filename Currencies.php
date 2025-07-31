@@ -337,10 +337,10 @@ or deletion of the records*/
 			echo  '<tr class="striped_row">';
 		}
 		// Lets show the country flag
-		$ImageFile = 'flags/' . mb_strtoupper($MyRow['currabrev']) . '.gif';
+		$ImageFile = mb_strtoupper($MyRow['currabrev']) . '.gif';
 
 		if(!file_exists($ImageFile)) {
-			$ImageFile =  'flags/blank.gif';
+			$ImageFile =  'blank.gif';
 		}
 		if ($MyRow['webcart'] == 1) {
 			$ShowInWebText = _('Yes');
@@ -362,7 +362,7 @@ or deletion of the records*/
 		}
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
-			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+			echo '	<td><img alt="" src="', $RootPath , '/images/flags/', $ImageFile, '" /></td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
@@ -377,7 +377,7 @@ or deletion of the records*/
 					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . _('Graph') . '</a></td>
 				</tr>';
 		} else {
-			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+			echo '	<td><img alt="" src="', $RootPath , '/images/flags/', $ImageFile, '" /></td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['currabrev'], '</td>
 					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
