@@ -4,7 +4,7 @@
 include('includes/session.php');
 
 $Title = _('Sales Area Maintenance');
-$ViewTopic= 'CreatingNewSystem';
+$ViewTopic = 'CreatingNewSystem';
 $BookMark = 'Areas';
 include('includes/header.php');
 

@@ -8,7 +8,7 @@
 include('includes/session.php');
 if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);}
 $Title = _('MRP Demands');
-$ViewTopic= 'MRP';
+$ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
 

@@ -4,7 +4,7 @@
 
 include('includes/session.php');
 $Title = _('Run MRP Calculation');
-$ViewTopic= 'MRP';
+$ViewTopic = 'MRP';
 $BookMark = 'MRP_Overview';
 include('includes/header.php');
 if (isset($_POST['submit'])) {

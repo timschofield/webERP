@@ -1,4 +1,5 @@
 <?php
+
 include('includes/session.php');
 $Title = _('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';

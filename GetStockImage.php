@@ -2,6 +2,7 @@
 
 
 include('includes/session.php');
+
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
@@ -16,8 +17,8 @@ height - if specified scales image to height
 transparent - if specfied uses bgcolor as transparent unless specified
 text - if specified override stockid to be printed on image
 bevel - if specified draws a drop down bevel
-
 */
+
 // Color decode function
 function DecodeBgColor( $ColourStr ) {
 	if ( $ColourStr[0] == '#' ) {
@@ -94,7 +95,6 @@ if( isset($_GET['notextbg']) ) {
 	$notextbg = false;
 }
 
-
 // Extension requirements and Stock ID Isolation
 if($StockID == '') {
 	$StockID = $DefaultImage;
@@ -133,12 +133,12 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 	$IsJpeg = $DefaultIsJpeg;
 }
 if( !$automake && !isset($FileName) ) {
-		$Title = _('Stock Image Retrieval ....');
-		include('includes/header.php');
-		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		include('includes/footer.php');
-		exit();
+	$Title = _('Stock Image Retrieval ....');
+	include('includes/header.php');
+	prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
+	echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
+	include('includes/footer.php');
+	exit();
 }
 
 // See if we need to automake this image
@@ -322,7 +322,7 @@ if( $automake AND !isset($FileName) ) {
 	}
 }
 // Do we need to bevel
-if( $bevel ) {
+if ( $bevel ) {
 	$drgray = imagecolorallocate($im,63,63,63);
 	$silver = imagecolorallocate($im,127,127,127);
 	$white = imagecolorallocate($im,255,255,255);
@@ -336,6 +336,7 @@ if( $bevel ) {
 // Set up headers
 header('Content-Disposition: filename='.$StockID.'.'.$Type);
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+/// @todo review caching header
 header('Pragma: public');
 header('Content-type: image/'.$style);
 // Which function should we use jpeg or png

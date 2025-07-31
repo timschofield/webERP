@@ -1,7 +1,7 @@
 <?php
 
-
 include('includes/session.php');
+
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 
 /*Now figure out the inventory data to report for the category range under review */
@@ -58,15 +58,15 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 	$InventoryResult = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		  echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
+		$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+		include('includes/header.php');
+		prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+		if ($Debug==1){
+			echo '<br />' . $SQL;
+		}
+		include('includes/footer.php');
+		 exit();
 	}
 }
 
@@ -197,6 +197,7 @@ if (isset($_POST['PrintPDF'])){
 	header('Content-Encoding: UTF-8');
 	header('Content-type: text/csv; charset=UTF-8');
 	header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['ToCriteria']  .'.csv');
+	/// @todo review caching header
 	header("Pragma: public");
 	header("Expires: 0");
 	// the BOM is not used much anymore in 2025...

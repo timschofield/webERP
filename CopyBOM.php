@@ -7,14 +7,14 @@
 
 include('includes/session.php');
 
-$Title = _('Copy a BOM to New Item Code');
+include('includes/SQL_CommonFunctions.php');
 
+$Title = _('Copy a BOM to New Item Code');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
+ob_start();
 include('includes/header.php');
-
-include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];
@@ -31,7 +31,7 @@ if (isset($_POST['Submit'])) {
 	} else {
 		$NewStockID = $_POST['ExStockID'];
 	}
-	if ($InputError==0){
+	if ($InputError==0) {
 		DB_Txn_Begin();
 
 		if($NewOrExisting == 'N') {
@@ -155,10 +155,13 @@ if (isset($_POST['Submit'])) {
 		UpdateCost($NewStockID);
 
 		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
-		ob_end_flush();
+		//ob_end_flush();
 		exit();
 	} //end  if there is no input error
+
+	/// @todo what to display if there is an input error?
 } else {
+	ob_end_flush();
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 

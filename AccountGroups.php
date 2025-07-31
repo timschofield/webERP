@@ -4,7 +4,7 @@ Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
 $Title = _('Account Groups');
-$ViewTopic= 'GeneralLedger';
+$ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';
 include('includes/header.php');
 

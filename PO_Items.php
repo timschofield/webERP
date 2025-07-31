@@ -1,4 +1,5 @@
 <?php
+
 // PO_Items.php
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
@@ -7,20 +8,20 @@
 * KL RICARD Added KL fields to control timing, status, etc.
 * 
 **************************************************************************************/
-
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
 include('includes/session.php');
+
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 $Title = _('Purchase Order Items');
 
-$identifier=$_GET['identifier'];
+$identifier = $_GET['identifier'];
 
 /* If a purchase order header doesn't exist, then go to PO_Header.php to create one */
-if (!isset($_SESSION['PO'.$identifier])){
+if (!isset($_SESSION['PO'.$identifier])) {
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/PO_Header.php');
 	exit();
 }

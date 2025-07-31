@@ -1,13 +1,11 @@
 <?php
 
 include('includes/session.php');
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-include('includes/SQL_CommonFunctions.php');
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_POST['submit'])) {
@@ -229,10 +227,8 @@ if (isset($_POST['submit'])) {
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'ExpensesList-' . $TabToShow. '.' . $_POST['Format'];
 			header('Content-Disposition: attachment;filename="' . $File . '"');
+			/// @todo review caching headers
 			header('Cache-Control: max-age=0');
-			// If you're serving to IE 9, then the following may be needed
-			header('Cache-Control: max-age=1');
-
 			// If you're serving to IE over SSL, then the following may be needed
 			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified

@@ -1,8 +1,9 @@
 <?php
+
 /**************************************************************************************************************
 Functions in this file:
 
-GetDemand                                     - Calculates total demand from all sources
+GetDemand                                    - Calculates total demand from all sources
 GetDemandQuantityAsComponentInAssemblyItems  - Gets quantity needed as components in bill of materials
 GetDemandQuantityAsComponentInWorkOrders     - Gets quantity needed as components in work orders
 GetDemandQuantityDueToOutstandingSalesOrders - Gets quantity demanded from outstanding sales orders
@@ -12,9 +13,7 @@ GetQuantityOnOrderDueToPurchaseOrders        - Gets quantity on order from purch
 GetQuantityOnOrderDueToWorkOrders           - Gets quantity to be produced from work orders
 **************************************************************************************************************/
 
-function GetQuantityOnHand($StockID, $Location){
-/****************************************************************************************************
-## GetQuantityOnHand Function
+/**
 Retrieves the total quantity on hand for a specific stock item across specified locations.
 
 ### Parameters
@@ -28,7 +27,8 @@ Retrieves the total quantity on hand for a specific stock item across specified 
 ### Returns
 - `float`: The sum of quantities on hand for the specified stock item in the filtered locations
 - Returns 0 if no quantities are found
- ****************************************************************************************************/
+*/
+function GetQuantityOnHand($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
@@ -74,8 +74,7 @@ Retrieves the total quantity on hand for a specific stock item across specified 
 	}
 }
 
-function GetDemand($StockID, $Location){
-/****************************************************************************************************
+/**
 ## GetDemand Function
 Calculates the total demand for a stock item by aggregating all types of demand.
 
@@ -92,16 +91,15 @@ Calculates the total demand for a stock item by aggregating all types of demand.
 ### Notes
 - Acts as a helper function to combine all demand sources
 - Inherits location filtering behavior from called functions
-****************************************************************************************************/
+*/
+function GetDemand($StockID, $Location) {
 	$TotalDemand = GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location);
 	$TotalDemand += GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location);
 	$TotalDemand += GetDemandQuantityAsComponentInWorkOrders($StockID, $Location);
 	return $TotalDemand;
 }
 
-function GetQuantityOnOrder($StockID, $Location){
-/****************************************************************************************************
-## GetQuantityOnOrder Function
+/**
 Calculates the total quantity on order for a stock item by aggregating all types of incoming orders.
 
 ### Parameters
@@ -116,13 +114,13 @@ Calculates the total quantity on order for a stock item by aggregating all types
 ### Notes
 - Acts as a helper function to combine all order sources
 - Inherits location filtering behavior from called functions
-****************************************************************************************************/
+*/
+function GetQuantityOnOrder($StockID, $Location) {
 	$TotalOnOrder = GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location);
 	$TotalOnOrder += GetQuantityOnOrderDueToWorkOrders($StockID, $Location);
 	return $TotalOnOrder;
 }
 
-function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
 /****************************************************************************************************
 ## GetQuantityOnOrderDueToPurchaseOrders Function
 Calculates the total quantity of a stock item that is currently on order through active purchase orders for specified locations.
@@ -145,8 +143,8 @@ Calculates the total quantity of a stock item that is currently on order through
 ### Security Notes
 - Function automatically filters results based on user location viewing permissions
 - Uses prepared statements to prevent SQL injection
-
- ****************************************************************************************************/
+*/
+function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
 	// All locations to be considered
 		$WhereLocation = "";
@@ -183,9 +181,7 @@ Calculates the total quantity of a stock item that is currently on order through
 	return $QOO;
 }
 
-function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
-/****************************************************************************************************
-## GetQuantityOnOrderDueToWorkOrders Function
+/**
 Calculates the total quantity of a stock item that is currently on order through active work orders for specified locations.
 
 ### Parameters
@@ -201,7 +197,8 @@ Calculates the total quantity of a stock item that is currently on order through
 ### Query Conditions
 - Only includes non-closed work orders (`closed=0`)
 - Filters by user location permissions (canview=1)
-****************************************************************************************************/
+*/
+function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
@@ -234,9 +231,7 @@ Calculates the total quantity of a stock item that is currently on order through
 	return $QOO;
 }
 
-function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location){
-/****************************************************************************************************
-## GetDemandQuantityDueToOutstandingSalesOrders Function
+/**
 Calculates the total quantity of a stock item that is demanded due to outstanding sales orders.
 
 ### Parameters
@@ -255,7 +250,8 @@ Calculates the total quantity of a stock item that is demanded due to outstandin
 - Only includes non-completed order lines (`completed=0`)
 - Excludes quotations (`quotation=0`)
 - Filters by user location permissions when applicable
-****************************************************************************************************/
+*/
+function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
@@ -308,19 +304,17 @@ Calculates the total quantity of a stock item that is demanded due to outstandin
 	}
 }
 
-function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
-/****************************************************************************************************
-## GetDemandQuantityAsComponentInAssemblyItems Function
+/**
 Calculates the total quantity of a stock item that is demanded as a component in Bill of Materials (BOM)
 for outstanding sales orders.
 
 ### Parameters
 - `$StockID` (string): The unique identifier for the stock item
 - `$Location` (string): Location filter parameter with the following options:
-  - `''` or `'ALL'`: Returns demand from all locations
-  - `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
-  - `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
-  - Specific location code: Returns demand from that specific location
+- `''` or `'ALL'`: Returns demand from all locations
+- `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
+- `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
+- Specific location code: Returns demand from that specific location
 
 ### Returns
 - `float`: The sum of quantities needed as components (order quantity * BOM quantity)
@@ -331,7 +325,8 @@ for outstanding sales orders.
 - Only includes outstanding quantities (ordered minus invoiced > 0)
 - Excludes quotations (`quotation=0`)
 - Filters by user location permissions when applicable
-****************************************************************************************************/
+*/
+function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
@@ -390,18 +385,16 @@ for outstanding sales orders.
 	}
 }
 
-function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location){
-/****************************************************************************************************
-## GetDemandQuantityAsComponentInWorkOrders Function
+/**
 Calculates the total quantity of a stock item that is demanded as a component in active work orders.
 
 ### Parameters
 - `$StockID` (string): The unique identifier for the stock item
 - `$Location` (string): Location filter parameter with the following options:
-  - `''` or `'ALL'`: Returns demand from all locations
-  - `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
-  - `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
-  - Specific location code: Returns demand from that specific location
+- `''` or `'ALL'`: Returns demand from all locations
+- `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
+- `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
+- Specific location code: Returns demand from that specific location
 
 ### Returns
 - `float`: The sum of quantities needed as components (quantity per unit * (required - received))
@@ -412,7 +405,8 @@ Calculates the total quantity of a stock item that is demanded as a component in
 - Calculates demand based on remaining quantities to be received
 - Takes into account the quantity per unit (qtypu) from work requirements
 - Filters by user location permissions when applicable
-****************************************************************************************************/
+*/
+function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered

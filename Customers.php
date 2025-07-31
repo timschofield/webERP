@@ -15,7 +15,7 @@ if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 
 $Title = _('Customer Maintenance');
 /* webERP manual links before header.php */
-$ViewTopic= 'AccountsReceivable';
+$ViewTopic = 'AccountsReceivable';
 $BookMark = 'NewCustomer';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');

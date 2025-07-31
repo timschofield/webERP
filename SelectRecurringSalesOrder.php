@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Search Recurring Sales Orders');
 /* webERP manual links before header.php */
-$ViewTopic= 'SalesOrders';
+$ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/header.php');

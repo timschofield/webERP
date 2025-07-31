@@ -985,7 +985,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />';
 
-	echo '<script type="text/javascript">
+	echo '<script>
 		document.forms[0].StockCode.select();
 		document.forms[0].StockCode.focus();
 	</script>';

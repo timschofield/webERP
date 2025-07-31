@@ -1,18 +1,20 @@
 <?php
 
 include('includes/session.php');
+
+if (isset($_POST['submit']) OR isset($_POST['update']) && (@$_POST['Margin'] == '')) {
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/PricesByCost.php');
+	exit();
+}
+
 $Title = _('Update of Prices By A Multiple Of Cost');
-$ViewTopic= 'Sales';
+$ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
 
 if (isset($_POST['submit']) OR isset($_POST['update'])) {
-	if ($_POST['Margin'] == '') {
-		header('Location: ' . htmlspecialchars_decode($RootPath) . '/PricesByCost.php');
-		exit();
-	}
 	if ($_POST['Comparator'] == 1) {
 		$Comparator = '<=';
 	} else {

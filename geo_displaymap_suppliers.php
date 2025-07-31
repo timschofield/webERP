@@ -1,10 +1,7 @@
 <?php
 
-
-$Title = _('Geocoded Supplier Report');
-
 include('includes/session.php');
-include('includes/header.php');
+/// @todo do we need these functions?
 include('includes/SQL_CommonFunctions.php');
 
 $SQL="SELECT * FROM geocode_param WHERE 1";
@@ -12,6 +9,7 @@ $ErrMsg = _('An error occurred in retrieving the currency information');
 $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
 
+/// @todo handle case where there is no data fetched
 $Api_Key = $MyRow['geocode_key'];
 $Center_Long = $MyRow['center_long'];
 $Center_Lat = $MyRow['center_lat'];
@@ -19,37 +17,34 @@ $Map_Height = $MyRow['map_height'];
 $Map_Width = $MyRow['map_width'];
 $Map_Host = $MyRow['map_host'];
 
-?>
-
-<style>
+$Title = _('Geocoded Supplier Report');
+$BodyOnLoad='load();';
+$ExtraHeadContent = '<style>
     html, body, #map-canvas {
         height: 100%;
         width: 100%;
         margin: 0px;
-        padding: 0px
+        padding: 0px;
     }
 </style>
-
-<?php
-echo '<script src="https://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"';
-echo ' type="text/javascript"></script>';?>
-<script type="text/javascript">
+<script src="https://' . $Map_Host . '/maps/api/js?key=' . $Api_Key . '&sensor=false"></script>
+<script>
 //<![CDATA[
 
 var customIcons = {
     4: {
-        icon: '//labs.google.com/ridefinder/images/mm_20_blue.png'
+        icon: "//labs.google.com/ridefinder/images/mm_20_blue.png"
     },
     5: {
-        icon: '//labs.google.com/ridefinder/images/mm_20_red.png'
+        icon: "//labs.google.com/ridefinder/images/mm_20_red.png"
     }
 };
 
 function load() {
     var map = new google.maps.Map(document.getElementById("map"), {
-            <?php echo 'center:new google.maps.LatLng(' . $Center_Lat . ', ' . $Center_Long . '),'; ?>
+            center:new google.maps.LatLng(' . $Center_Lat . ', ' . $Center_Long . '),
             zoom: 4,
-            mapTypeId: 'roadmap'
+            mapTypeId: "roadmap"
         });
         var infoWindow = new google.maps.InfoWindow;
 
@@ -65,7 +60,7 @@ function load() {
                 parseFloat(markers[i].getAttribute("lat")),
                 parseFloat(markers[i].getAttribute("lng")));
                 var html = "<b>" + name + "</b> <br/>" + address;
-                var icon = '//labs.google.com/ridefinder/images/mm_20_blue.png' || {};
+                var icon = "//labs.google.com/ridefinder/images/mm_20_blue.png" || {};
                 var marker = new google.maps.Marker({
                 map: map,
                 position: point,
@@ -76,44 +71,40 @@ function load() {
     });
 }
 
-
 function bindInfoWindow(marker, map, infoWindow, html) {
-google.maps.event.addListener(marker, 'click', function() {
-infoWindow.setContent(html);
-infoWindow.open(map, marker);
-});
+	google.maps.event.addListener(marker, "click", function() {
+		infoWindow.setContent(html);
+		infoWindow.open(map, marker);
+	});
 }
 
 function downloadUrl(url, callback) {
-var request = window.ActiveXObject ?
-new ActiveXObject('Microsoft.XMLHTTP') :
-new XMLHttpRequest;
+	var request = window.ActiveXObject ?
+	new ActiveXObject("Microsoft.XMLHTTP") :
+	new XMLHttpRequest;
 
-request.onreadystatechange = function() {
-if (request.readyState == 4) {
-request.onreadystatechange = doNothing;
-callback(request, request.status);
-}
-};
+	request.onreadystatechange = function() {
+		if (request.readyState == 4) {
+			request.onreadystatechange = doNothing;
+			callback(request, request.status);
+		}
+	}
 
-request.open('GET', url, true);
-request.send(null);
+	request.open("GET", url, true);
+	request.send(null);
 }
 
 function doNothing() {}
 
 //]]>
+</script>';
 
-</script>
-</head>
+include('includes/header.php');
 
-<body onload="load()" onunload="GUnload()">
-    <p>
-    <?php echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
-    </p>
-</body>
-<?php
-echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
-include('includes/footer.php');
 ?>
-</html>
+<p>
+<?php echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
+</p>
+<?php
+	echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
+	include('includes/footer.php');

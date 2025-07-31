@@ -9,7 +9,7 @@ include('includes/DefineCustAllocsClass.php');// Before includes/session.php ***
 
 include('includes/session.php');
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
-$ViewTopic= 'ARTransactions';
+$ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
 include('includes/header.php');
 

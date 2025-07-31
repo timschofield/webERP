@@ -2,7 +2,7 @@
 include('includes/session.php');
 
 $Title = _('Sales Commission Calculation Methods');
-$ViewTopic= 'SalesCommission';
+$ViewTopic = 'SalesCommission';
 $BookMark = 'SalesCommission';
 
 include('includes/header.php');

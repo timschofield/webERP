@@ -571,7 +571,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 
 			// Reference: Google Maps JavaScript API V3, https://developers.google.com/maps/documentation/javascript/reference.
 			echo '
-<script type="text/javascript">
+<script>
 var map;
 function initMap() {
 

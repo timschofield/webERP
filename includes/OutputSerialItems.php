@@ -204,7 +204,7 @@ if ($ShowExisting){
 echo '</td>
 	</tr>
 	</table>
-	<script type="text/javascript">
+	<script>
 //<![CDATA[
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>

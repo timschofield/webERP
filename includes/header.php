@@ -26,6 +26,8 @@ global $RootPath;
 //	}
 //}
 
+$ScriptName = basename($_SERVER['SCRIPT_NAME']);
+
 if (!isset($ViewTopic)) {$ViewTopic = 'Contents';}
 if (!isset($BookMark)) {$BookMark = '';}
 
@@ -40,28 +42,30 @@ if ($LanguagesArray[$_SESSION['Language']]['Direction'] == 'rtl' and mb_substr($
 	$_SESSION['Theme'] = $_SESSION['Theme'] . '-rtl';
 }
 
-/// @todo move this call into CopyBOM.php
-if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify header information in CopyBOM.php scripts
-	ob_start();
+if (!headers_sent()) {
+	header('cache-control: no-cache, no-store, must-revalidate');
+	header('Pragma: no-cache');
+} else {
+	trigger_error('Page output started before header file was included, this should not happen');
 }
 
 echo '<!DOCTYPE html>';
 
 echo '<html>
-		<head>
-			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
-			<title>', _('webERP'), ' - ', $Title, '</title>
-			<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
-			<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
-			<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
-			<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<script async type="text/javascript" src = "', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>';
-echo '<script async type="text/javascript" src = "', $RootPath, '/javascripts/manual.js"></script>';
-echo '<script>
+<head>
+	<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
+	<title>', _('webERP'), ' - ', $Title, '</title>
+	<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
+	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
+	<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">';
+echo '	<script async src="', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>' , "\n";
+echo '	<script async src="', $RootPath, '/javascripts/manual.js"></script>' , "\n";
+echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
-	</script>';
-echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
+	</script>' , "\n";
+echo '	<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />' , "\n";
 
 // Mobile menu styles and functionality
 echo '<style>
@@ -204,19 +208,31 @@ echo '<style>
 </script>';
 
 if ($_SESSION['ShowPageHelp'] == 0) {
-	echo '<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 } else {
-	echo '<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_on.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
 if ($_SESSION['ShowFieldHelp'] == 0) {
-	echo '<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_off.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 } else {
-	echo '<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
-echo '</head>';
-echo '<body onload="initial(); load()">';
+/*
+	echo '	<style>
+		body {
+			font-size: ', $_SESSION['FontSize'], ';
+		}
+	</style>';
+
+if (isset($ExtraHeadContent)) {
+	echo "\n" . $ExtraHeadContent;
+}
+*/
+echo "\n</head>\n";
+
+echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">' . "\n";
  
 /* KL RICARD Comment these lines as only show an X on the left top corner
 echo '<div class="help-bubble" id="help-bubble">
@@ -227,7 +243,6 @@ echo '<div class="help-bubble" id="help-bubble">
 </div>';
 KL RICARD Comment these lines as only show an X on the left top corner */
 
-$ScriptName = basename($_SERVER['SCRIPT_NAME']);
 /* KL RICARD
 echo '<div class="help-bubble" id="help-bubble">
 		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />

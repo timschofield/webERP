@@ -5,7 +5,7 @@ include('includes/DefineCartClass.php');
 
 /* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
 /* webERP manual links before header.php */
-$ViewTopic= 'SalesOrders';
+$ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.php');
@@ -15,7 +15,7 @@ if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopD
 
 
 /* webERP manual links before header.php */
-$ViewTopic= 'SalesOrders';
+$ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 
 include('includes/header.php');
