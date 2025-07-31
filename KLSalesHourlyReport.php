@@ -1,5 +1,5 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Sales Hourly Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
@@ -26,7 +26,7 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
 function HourlyPerformance($numDays, $RootPath){
 

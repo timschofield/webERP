@@ -1,11 +1,11 @@
 <?php
 // GLTagProfit_Loss.php
 //
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Income and Expenditure by Tag');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+include('includes/SQL_CommonFunctions.php');
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';
 
@@ -26,7 +26,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if ($NumberOfMonths > 12) {
 		echo '<br />';
 		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range') , 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -497,16 +497,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Income and Expenditure by Tag');
-		include ('includes/header.php');
+		include('includes/header.php');
 
 		echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else {
 
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
@@ -637,6 +637,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</div>
 		</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 }

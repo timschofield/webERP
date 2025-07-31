@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL General Performance Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
@@ -379,4 +379,4 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

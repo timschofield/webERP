@@ -101,7 +101,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<fieldset>
 		<legend>' . _('Selection Parameters') . '</legend>';
 
-	include ('includes/KLPersonaliaParameterSelection.php');
+	include('includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 	

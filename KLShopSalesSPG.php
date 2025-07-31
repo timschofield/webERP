@@ -1,7 +1,7 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('List of Items Sold in Shop');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -49,4 +49,4 @@ echo '</tbody>
 	</div>
 	</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

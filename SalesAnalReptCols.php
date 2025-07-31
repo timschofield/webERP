@@ -4,7 +4,7 @@
 include('includes/session.php');
 
 $Title = _('Sales Analysis Report Columns');
-$ViewTopic= 'SalesAnalysis';
+$ViewTopic = 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
 
 include('includes/header.php');

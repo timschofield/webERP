@@ -1,14 +1,14 @@
 <?php
 
-include ('includes/DefineSerialItems.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/session.php');
+include('includes/DefineSerialItems.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/session.php');
 if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
 
 $Title = _('Reverse Goods Received');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') or (!isset($_POST['SupplierID']) or $_POST['SupplierID']) == '') {
 
@@ -64,7 +64,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	if ($QtyToReverse == 0) {
 		echo '<br />
 				<br />' . _('The GRN') . ' ' . $_GET['GRNNo'] . ' ' . _('has already been reversed or fully invoiced by the supplier - it cannot be reversed - stock quantities must be corrected by stock adjustments - the stock is paid for');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -102,7 +102,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 				/*Then some of the original goods received must have been sold
 				 or transfered so cannot reverse the GRN */
 				prnMsg(_('Unfortunately, of the original number') . ' (' . $SerialStockMoves['moveqty'] . ') ' . _('that were received on serial number') . ' ' . $SerialStockMoves['serialno'] . ' ' . _('only') . ' ' . $GetQOH[0] . ' ' . _('remain') . '. ' . _('The GRN can only be reversed if all the original serial number items are still in stock in the location they were received into'), 'error');
-				include ('includes/footer.php');
+				include('includes/footer.php');
 				exit();
 			}
 		}
@@ -303,7 +303,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 									'" . $GRN['deliverydate'] . "',
 									'" . $PeriodNo . "',
 									'" . $GRN['glcode'] . "',
-									'" . _('GRN Reversal for PO') . ": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+									'" . mb_substr(_('GRN Reversal for PO') . ": " . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 									'" . -($GRN['stdcostunit'] * $QtyToReverse) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase GL posting could not be inserted for the reversal of the received item because');
@@ -323,7 +323,8 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 								'" . $_GET['GRNNo'] . "',
 								'" . $GRN['deliverydate'] . "',
 								'" . $PeriodNo . "',
-								'" . $_SESSION['CompanyRecord']['grnact'] . "', '" . _('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . $_SESSION['CompanyRecord']['grnact'] . "',
+								'" . mb_substr(_('GRN Reversal PO') . ': ' . $GRN['orderno'] . " " . $_POST['SupplierID'] . " - " . $GRN['itemcode'] . "-" . DB_escape_string($GRN['itemdescription']) . " x " . $QtyToReverse . " @ " . locale_number_format($GRN['stdcostunit'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . $GRN['stdcostunit'] * $QtyToReverse . "'
 								)";
 
@@ -432,4 +433,4 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		}
 	}
 }
-include ('includes/footer.php');
+include('includes/footer.php');

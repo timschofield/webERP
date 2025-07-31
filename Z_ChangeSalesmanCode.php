@@ -1,7 +1,7 @@
 <?php
 /* This script is an utility to change a salesman code. */
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('UTILITY PAGE To Change A Salesman Code In All Tables');// Screen identificator.
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
@@ -36,7 +36,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	}
 	else if (ContainsIllegalCharacters($_POST['NewSalesmanCode'])) {
 		prnMsg(_('The new salesman code to change the old code to contains illegal characters - no changes will be made'), 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 

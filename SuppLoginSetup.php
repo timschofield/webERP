@@ -7,7 +7,7 @@ include('includes/header.php');
 $ViewTopic = 'Setup';
 $BookMark = '';
 include('includes/SQL_CommonFunctions.php');
-include ('includes/LanguagesArray.php');
+include('includes/LanguagesArray.php');
 
 
 if (!isset($_SESSION['SupplierID'])){
@@ -299,6 +299,6 @@ echo '</fieldset>
 	</div>
 	</form>';
 
-echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';
+echo '<script>defaultControl(document.forms[0].UserID);</script>';
 
 include('includes/footer.php');

@@ -23,10 +23,11 @@ if (!isset($PathPrefix)) {
 //	$PathPrefix = __DIR__ . '//'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
 	$PathPrefix = '';
 }
+
 require $PathPrefix.'vendor/autoload.php';
 
 // KL RICARD: Include the specific KL session functions
-include ($PathPrefix . 'KLsession.php');
+include($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
 
 // KL RICARD Select the default database depending on the code version
@@ -43,10 +44,10 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	exit();
 }
 
-include ($PathPrefix . 'config.php');
+include($PathPrefix . 'config.php');
 
 // KL RICARD: Include the specific KL config file
-include ($PathPrefix . 'KLConfig.php');
+include($PathPrefix . 'KLConfig.php');
 // KL RICARD END: Include the specific KL config file
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
@@ -76,8 +77,8 @@ if (!isset($SessionName)) {
 session_name($SessionName);
 session_start();
 
-include ($PathPrefix . 'includes/ConnectDB.php');
-include ($PathPrefix . 'includes/DateFunctions.php');
+include($PathPrefix . 'includes/ConnectDB.php');
+include($PathPrefix . 'includes/DateFunctions.php');
 
 if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
@@ -92,39 +93,38 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 
 if (isset($_SESSION['DatabaseName'])) {
 
+	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
+	to avoid both SQL injection attacks and cross scripting attacks
+	*/
+
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
-			$_POST[$PostVariableName] = quote_smart($_POST[$PostVariableName]);
+			//$_POST[$PostVariableName] = quote_smart($PostVariableValue);
 			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
+				//$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
 				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
 			}
 		}
 	}
 
-	/* iterate through all elements of the $_GET array and DB_escape_string them
-	to limit possibility for SQL injection attacks and cross scripting attacks
-	*/
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($GetValue as $GetArrayKey => $GetArrayValue) {
-				$_POST[$GetVariableName][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
-
+				$_GET[$GetKey][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
 			}
 		}
 	}
 
-} else { //set SESSION['FormID'] before the a user has even logged in
+} else { //set SESSION['FormID'] before a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-include ($PathPrefix . 'includes/LanguageSetup.php');
+include($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
-
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
@@ -152,10 +152,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 	}
-	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
-	include ($PathPrefix . 'includes/GetConfig.php');
+	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+	include($PathPrefix . 'includes/GetConfig.php');
 } else {
-	include $PathPrefix . 'includes/UserLogin.php'; /* Login checking and setup */
+	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
@@ -167,7 +167,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 	
 	// KL RICARD: Include the specific KL config file to assign a KL Role to each user
-	include ($PathPrefix . 'includes/KLRoles.php');
+	include($PathPrefix . 'includes/KLRoles.php');
 	// KL RICARD END: Include the specific KL config file
 
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
@@ -177,7 +177,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 			setcookie('Login', $_SESSION['DatabaseName']);
-			include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 			if ($_SESSION['DBUpdateNumber'] >= 11) {
 				$CheckSQL = "SELECT sessionid
 							FROM sessions
@@ -218,27 +218,30 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		break;
 
 		case UL_SHOWLOGIN:
-			include ($PathPrefix . 'includes/Login.php');
+			include($PathPrefix . 'includes/Login.php');
 			exit();
 
 		case UL_BLOCKED:
-			die(include ($PathPrefix . 'includes/FailedLogin.php'));
+			include($PathPrefix . 'includes/FailedLogin.php');
+			exit();
 
 		case UL_CONFIGERR:
 			$Title = _('Account Error Report');
-			include ($PathPrefix . 'includes/header.php');
+			include($PathPrefix . 'includes/header.php');
 			echo '<br /><br /><br />';
 			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
-			include ($PathPrefix . 'includes/footer.php');
+			include($PathPrefix . 'includes/footer.php');
 			exit();
 
 		case UL_NOTVALID:
 			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
-			die(include ($PathPrefix . 'includes/Login.php'));
+			include($PathPrefix . 'includes/Login.php');
+			exit();
 
 		case UL_MAINTENANCE:
 			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
-			die(include ($PathPrefix . 'includes/Login.php'));
+			include($PathPrefix . 'includes/Login.php');
+			exit();
 
 	}
 
@@ -293,10 +296,10 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobToBeRun)) {
 	$Title = _('Account Error Report');
-	include ($PathPrefix . 'includes/header.php');
+	include($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
-	include ($PathPrefix . 'includes/footer.php');
+	include($PathPrefix . 'includes/footer.php');
 	exit();
 }
 
@@ -312,7 +315,7 @@ if (!isset($PageSecurity)) {
 if (!isset($AllowCronJobToBeRun)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
 		$Title = _('Security Permissions Problem');
-		include ($PathPrefix . 'includes/header.php');
+		include($PathPrefix . 'includes/header.php');
 		echo '<tr>
 				<td class="menu_group_items">
 					<table width="100%" class="table_index">
@@ -325,7 +328,7 @@ if (!isset($AllowCronJobToBeRun)){
 				</td>
 			</tr>';
 
-		include ($PathPrefix . 'includes/footer.php');
+		include($PathPrefix . 'includes/footer.php');
 		exit();
 	}
 }
@@ -357,9 +360,9 @@ if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Session verification error');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 }

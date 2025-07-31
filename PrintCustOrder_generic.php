@@ -240,7 +240,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			if ($YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a newy */
 				$PageNumber++;
-				include ('includes/PDFOrderPageHeader_generic.php');
+				include('includes/PDFOrderPageHeader_generic.php');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
@@ -286,7 +286,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					if ($YPos-$LineHeight <= 50){
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
-						include ('includes/PDFOrderPageHeader_generic.php');
+						include('includes/PDFOrderPageHeader_generic.php');
 					} //end if need a new page headed up
 					 else{
 						/*increment a line down for the next line item */

@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Send email to team to prepare a Packaging Transfer');
 include('includes/header.php');
 include('includes/KLDefines.php');

@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Set Related Items');
-include ('includes/header.php');
-include ('includes/KLDefines.php');
-include ('includes/KLBoards.php');
+include('includes/header.php');
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -117,4 +117,4 @@ if (DB_num_rows($Result) != 0){
 			</div>';
 	prnMsg("Number of related items pairs in website catalog: " . locale_number_format($i));
 }
-include ('includes/footer.php');
+include('includes/footer.php');

@@ -1,6 +1,6 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -8,7 +8,7 @@ if (isset($_POST['FromDate'])) {
 if (isset($_POST['ToDate'])) {
 	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
 }
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 
 $InputError = 0;
 if (isset($_POST['FromDate']) and !Is_Date($_POST['FromDate'])) {
@@ -111,21 +111,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Result = DB_query($SQL, '', '', false, false); //dont error check - see below
 	if (DB_error_no() != 0) {
 		$Title = _('DIFOT Report Error');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('An error occurred getting the days between delivery requested and actual invoice') , 'error');
 		if ($Debug == 1) {
 			prnMsg(_('The SQL used to get the days between requested delivery and actual invoice dates was') . "<br />$SQL", 'error');
 		}
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result) == 0) {
 		$Title = _('DIFOT Report Error');
-		include ('includes/header.php');
+		include('includes/header.php');
 		prnMsg(_('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range') , 'info');
 		if ($Debug == 1) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
 		}
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -296,17 +296,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Delivery In Full On Time (DIFOT) Report');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else {
 
 	$Title = _('Delivery In Full On Time (DIFOT) Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('DIFOT Report') . '</p>';
 
@@ -376,5 +376,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if ($InputError == 1) {
 		prnMsg($Msg, 'error');
 	}
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

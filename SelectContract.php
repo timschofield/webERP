@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 $Title = _('Select Contract');
-$ViewTopic= 'Contracts';
+$ViewTopic = 'Contracts';
 $BookMark = 'SelectContract';
 include('includes/header.php');
 

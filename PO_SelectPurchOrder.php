@@ -1,10 +1,10 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Search Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Purchase Orders') . '" alt=""  />' . ' ' . _('Purchase Orders') .
@@ -467,4 +467,4 @@ else {
 }
 echo '</div>
       </form>';
-include ('includes/footer.php');
+include('includes/footer.php');

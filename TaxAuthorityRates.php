@@ -22,7 +22,7 @@ if(!isset($TaxAuthority)) {
 		_('Please select the Rates link from the tax authority page') . '<br /><a href="' .
 		$RootPath . '/TaxAuthorities.php">' . _('click here') . '</a> ' .
 		_('to go to the Tax Authority page'), 'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 

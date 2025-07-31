@@ -7,7 +7,7 @@ are upgrading an existing installation.
 
 ### Server
 
-* Web server (e.g. Apache HTTP Server v2.4 or nginx v1.26).
+* Web server (e.g. Apache HTTP Server or Nginx).
 
 * PHP interpreter. PHP v8.1 or later is required, with
     MySQL or MariaDb extension (generally both use "mysqli"), gd, gettext (for translations),
@@ -15,7 +15,7 @@ are upgrading an existing installation.
     write privileges to the ./companies/ directory, and at least temporarily to the root
     directory for the web installer to save the created configuration file ./config.php.
 
-* MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default but
+* MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default, but
     you can check my.cnf file to confirm, e.g. /etc/my.cnf or /usr/local/etc/mysql/my.cnf).
 
 Detailed instructions for installing these components can be readily found in a web search. XAMPP is
@@ -31,7 +31,7 @@ Required PHP configuration (all are default values at least for XAMPP with PHP v
 2. magic_quotes_gpc should be set to Off to avoid annoying "\" characters in some fields
 3. session.use_cookies must be enabled
 
-Configurating PHP is done by editing the server php.ini file. If you don't have file access on the
+Configuring PHP is done by editing the server php.ini file. If you don't have file access on the
 server, webERP provides a .htaccess file which can be used for those web servers that support it.
 
 ### Client
@@ -134,11 +134,10 @@ Assuming you are using a web server that supports .htaccess (e.g. Apache HTTP Se
 	php_flag magic_quotes_gpc off
 	php_flag register_globals off
 
-	DirectoryIndex index.htm index.html index.php index.html.en
+	DirectoryIndex index.php index.htm index.html index.html.en
 
 	IndexIgnore .htaccess */.??* *~ *# */HEADER* */README* */_vti
 
-	# Amend this directory to be where you've installed webERP
 	AuthUserFile /var/www/mycompany/webERP/.htpasswd
 	AuthGroupFile /dev/null
 	AuthName webERPPassword
@@ -184,7 +183,7 @@ the initial "admin" user details.
 If desired, the database can be created manually before accessing the webERP web installer. The installer
 will use an existing database if one exists.
 
-webERP requires either MySQL version 4.1 or greater) or MariaDb 10.4+
+webERP requires either MySQL version 4.1 or greater or MariaDb 10.4+
 
 In webERP each company has its own database. For example, if you have a company called MyCompany, webERP
 expects there will be database named mycompany (in lower case). Before starting to install webERP, ensure
@@ -296,9 +295,9 @@ Confirm the mycompanyname database now exists.
 Use the demo.sql file if you wish demo data to be loaded.
 
 
-#### 3.3 Create Companies/ directory
+#### 3.3 Create the companies/ directory
 
-Copy the ./Companies/weberpdemo to ./Companies/mycompanyname
+Copy the ./companies/weberpdemo to ./companies/mycompanyname
 
 
 #### 3.4 Edit config.php

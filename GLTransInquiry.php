@@ -1,9 +1,9 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTransInquiry';
-include ('includes/header.php');
+include('includes/header.php');
 
 $MenuURL = '<div><a href="' . $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
 
@@ -200,4 +200,4 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

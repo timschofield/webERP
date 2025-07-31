@@ -7,7 +7,7 @@
  * 
  ***************************************************************************************/
 
- include ('AuditScriptsFunctions.php');
+ include('AuditScriptsFunctions.php');
 
 /*  Performs login checks and $_SESSION initialisation */
 

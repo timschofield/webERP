@@ -779,7 +779,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $BankAccount . "',
-					'" . $Narrative . "',
+					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . ($AmountPaid) /$Rate . "'
 				)";
 	$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
@@ -799,7 +799,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
-						'" . $Narrative . "',
+						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . -(($AmountPaid) /$Rate). "' )";
 	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
@@ -883,7 +883,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $BankAccount . "',
-					'" . $Narrative . "',
+					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . -($Commission /$Rate) . "'
 				)";
 	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee from the bank account debit was');
@@ -903,7 +903,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'". $CommissionAccount . "',
-						'" . $Narrative . "',
+						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . ($Commission /$Rate). "' )";
 	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee for the commission account credit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');

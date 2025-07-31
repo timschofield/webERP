@@ -1,13 +1,13 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-$ViewTopic= 'GeneralLedger';
+$ViewTopic = 'GeneralLedger';
 $BookMark = 'ChequePaymentListing';
 
 $InputError=0;
@@ -186,16 +186,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			));
 		} else {
 			$Title = _('Create PDF Print Out For A Batch Of Receipts');
-			include ('includes/header.php');
+			include('includes/header.php');
 			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Print Out For A Batch Of Receipts') . '</p>';
 			echo $HTML;
-			include ('includes/footer.php');
+			include('includes/footer.php');
 		}
 	}
 } else {
 
 	$Title = _('Payment Listing');
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
 		$Title . '" alt="" />' . ' ' . $Title . '</p>';

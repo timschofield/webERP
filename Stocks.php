@@ -6,15 +6,15 @@ KL RICARD MODIFICATIONS:
 - management of the extra KL fields in stockmaster
 - For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025
 ***************************************************************************************/
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Item Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/StockFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
+include('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -578,7 +578,7 @@ if (isset($_POST['submit'])) {
 												CURRENT_DATE,
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $NewStockAct . "',
-												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . ($UnitCost * $StockQtyRow[0]) . "')";
 					$ErrMsg = _('The stock cost journal could not be inserted because');
 					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
@@ -595,7 +595,7 @@ if (isset($_POST['submit'])) {
 												CURRENT_DATE,
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $OldStockAccount . "',
-												'" . $StockID . ' ' . _('Change stock category') . "',
+												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . (-$UnitCost * $StockQtyRow[0]) . "')";
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
@@ -631,7 +631,7 @@ if (isset($_POST['submit'])) {
 													CURRENT_DATE,
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $NewWIPAct . "',
-													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . $WIPValue . "')";
 						$ErrMsg = _('The WIP cost journal could not be inserted because');
 						$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
@@ -648,7 +648,7 @@ if (isset($_POST['submit'])) {
 													CURRENT_DATE,
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $OldWIPAccount . "',
-													'" . $StockID . ' ' . _('Change stock category') . "',
+													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . (-$WIPValue) . "')";
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 					}
@@ -1703,4 +1703,4 @@ if ($New == 1) {
 
 echo '</div>
 	</form>';
-include ('includes/footer.php');
+include('includes/footer.php');

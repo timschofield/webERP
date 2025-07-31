@@ -35,7 +35,7 @@ echo  '<field>
 	</div>
 </form>';
 
-echo '<script  type="text/javascript">
+echo '<script>
 		document.getElementById("serialno").focus();
 	</script>';
 

@@ -1,6 +1,6 @@
 <?php
 
-include ('../includes/CountriesArray.php');
+include('../includes/CountriesArray.php');
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=6" method="post" enctype="multipart/form-data">';
 echo '<fieldset>
 			<legend>' . _('Company Settings') . '</legend>
@@ -32,7 +32,7 @@ echo '</select>
 echo '<field>
 			<label for="TimeZone">' . _('Time Zone') . ': </label>
 			<select name="TimeZone">';
-include ('timezone.php');
+include('timezone.php');
 echo '</select>
 	</field>';
 

@@ -7,8 +7,8 @@
  * 
  *************************************************************************************************************/
 
-include ('includes/DefinePOClass.php');
-include ('includes/session.php');
+include('includes/DefinePOClass.php');
+include('includes/session.php');
 
 if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);}
@@ -31,8 +31,8 @@ if (isset($_GET['SupplierID'])) {
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then
  * it must be either a new order, or the start of a modification of an
@@ -304,7 +304,7 @@ if (isset($_POST['EnterLines']) or isset($_POST['AllowRePrint'])) {
 		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">';
 		echo '<p>';
 		prnMsg(_('You should automatically be forwarded to the entry of the purchase order line items page') . '. ' . _('If this does not happen') . ' (' . _('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/PO_Items.php?identifier=' . $identifier . '">' . _('click here') . '</a> ' . _('to continue'), 'info');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	} // end if reprint not allowed
 
@@ -318,7 +318,7 @@ echo '<span style="float:left"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.
  * these details to be modified */
 
 if (isset($_GET['ModifyOrderNumber'])) {
-	include ('includes/PO_ReadInOrder.php');
+	include('includes/PO_ReadInOrder.php');
 }
 
 if (!isset($_SESSION['PO' . $identifier])) {
@@ -542,7 +542,7 @@ if (isset($_POST['Select'])) {
 	} else {
 
 		prnMsg(_('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . _('Please Consult your system administrator for more information.') . '<br />' . _('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . _('here') . '</a>', 'warn');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -1390,4 +1390,4 @@ KL RICARD COMMENTED OUT END */
 /*end of if supplier selected */
 
 echo '</form>';
-include ('includes/footer.php');
+include('includes/footer.php');

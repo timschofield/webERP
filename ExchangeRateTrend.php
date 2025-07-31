@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 $Title = _('View Currency Trend');
-$ViewTopic= 'Currencies';
+$ViewTopic = 'Currencies';
 $BookMark = 'ExchangeRateTrend';
 include('includes/header.php');
 

@@ -29,15 +29,15 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-//	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
-//		header('Location: ' . htmlspecialchars_decode($RootPath) . '/UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
-//		exit();
-//	}
+	if (!isset($_SESSION['VersionNumber'])) { // the config record for VersionNumber is not yet added
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+		exit();
+	}
 
 	/*Load the pagesecurity settings from the database */
 	$SQL="SELECT script, pagesecurity FROM scripts";
 	$Result=DB_query($SQL,'','',false,false);
-	if (DB_error_no()!=0){
+	if (DB_error_no()!=0) {
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
 		 * */
@@ -128,8 +128,8 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	}
 
 	// KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
-	include ($PathPrefix . 'includes/KLRoles.php');
-	include ($PathPrefix . 'includes/KLLoadSessionForSPG.php');
+	include($PathPrefix . 'includes/KLRoles.php');
+	include($PathPrefix . 'includes/KLLoadSessionForSPG.php');
 	// KL RICARD END If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
 
 } //end if force reload or not set already

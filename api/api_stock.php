@@ -815,7 +815,7 @@
                                            '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                            '" .$adjglact."',
                                            '".$Itemdetails['materialcost']*-$Quantity. "',
-                                           '" .$StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost']."')";
+                                           '" .mb_substr($StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost'], 0, 200)."')";
 		$glupdatesql2="INSERT INTO gltrans (type,
                                             typeno,
                                             trandate,
@@ -829,7 +829,7 @@
                         '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                         '" .$stockact."',
                         '" .$Itemdetails['materialcost']*$Quantity. "',
-                        '" .$StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost']."')";
+                        '" .mb_substr($StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost'], 0, 200)."')";
 		$systypessql = "UPDATE systypes set typeno='".GetNextTransNo(17)."' where typeid='17'";
 
 		DB_Txn_Begin();

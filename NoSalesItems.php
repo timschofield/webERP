@@ -1,7 +1,7 @@
 <?php
 
 
-include ('includes/session.php');
+include('includes/session.php');
 use Dompdf\Dompdf;
 
 $Title = _('No Sales Items Searching');
@@ -201,18 +201,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		));
 	} else {
 		$Title = _('Reorder Level Reporting');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {
 	$ViewTopic = 'Sales';
 	$BookMark = '';
-	include ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
@@ -298,6 +298,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		<input type="submit" name="View" title="View" value="' . _('View') . '" />
 	</div>
 	</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 }

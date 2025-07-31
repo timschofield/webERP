@@ -16,7 +16,7 @@ $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $Perishable = $MyRow['perishable'];
 $DecimalPlaces = $MyRow['decimalplaces'];
-include ('includes/Add_SerialItems.php');
+include('includes/Add_SerialItems.php');
 
 /*Setup the Data Entry Types */
 if (isset($_GET['LineNo'])){

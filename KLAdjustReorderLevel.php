@@ -2,12 +2,12 @@
 
 define("NUMBER_OF_TESTS", 7); 
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Reorder Level Adjustments');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
-include ('includes/KLGeneralFunctions.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLReorderLevel.php');
 
@@ -29,4 +29,4 @@ KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $RootPath, $EmailTex
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);
-include ('includes/footer.php');
+include('includes/footer.php');

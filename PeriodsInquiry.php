@@ -1,7 +1,7 @@
 <?php
 
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Periods Inquiry');
 $ViewTopic = 'GeneralLedger';

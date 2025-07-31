@@ -1,11 +1,11 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Sales Commission Reports');
 /* Manual links before header.php */
 $ViewTopic = 'SalesCommission';
 $BookMark = 'Reports';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
@@ -101,7 +101,7 @@ if (isset($_POST['Submit'])) {
 		prnMsg(_('There are no commissions meeting this criteria. Please select different criteria and run the report again.'), 'info');
 	}
 	echo '<a class="noPrint" href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select different report criteria'), '</a><br />';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 
 } else {
@@ -247,4 +247,4 @@ if (isset($_POST['Submit'])) {
 	echo '</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

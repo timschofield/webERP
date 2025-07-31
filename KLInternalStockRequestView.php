@@ -5,14 +5,14 @@
 *            and without showing tags fields.
 ********************************************************************************************************************/
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('View Unfulfilled Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'ViewRequest';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('View Unfulfilled Stock Requests') . '</p>';
 
@@ -76,4 +76,4 @@ if (DB_num_rows($Result) > 0) {
     echo '<p>' . _('There are no unfulfilled internal stock requests.') . '</p>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

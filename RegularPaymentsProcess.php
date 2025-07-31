@@ -1,14 +1,14 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GLFunctions.php');
 
 $Title = _('Process regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
@@ -96,7 +96,7 @@ if (isset($_POST['Add'])) {
 									'" . FormatDateForSQL($PaymentItem['PaymentDate']) . "',
 									'" . $PeriodNo . "',
 									'" . $PaymentItem['GLCode'] . "',
-									'" . $PaymentItem['Narrative'] . "',
+									'" . mb_substr($PaymentItem['Narrative'], 0, 200) . "',
 									'" . ($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";
@@ -118,7 +118,7 @@ if (isset($_POST['Add'])) {
 									'" . FormatDateForSQL($PaymentItem['PaymentDate']) . "',
 									'" . $PeriodNo . "',
 									'" . $PaymentItem['BankAccount'] . "',
-									'" . $PaymentItem['Narrative'] . "',
+									'" . mb_substr($PaymentItem['Narrative'], 0, 200) . "',
 									'" . -($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";
@@ -248,4 +248,4 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 
 echo '</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

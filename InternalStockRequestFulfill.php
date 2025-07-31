@@ -7,15 +7,15 @@
  * 
  ********************************************************************************************************************/
 
-include ('includes/session.php');
+include('includes/session.php');
 
 $Title = _('Fulfill Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'FulfilRequest';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
@@ -164,7 +164,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['issueglact'] . "',
 												'" . $StandardCost * ($Quantity) . "',
-												'" . $Narrative . "'
+												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -185,7 +185,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['stockact'] . "',
 												'" . $StandardCost * -$Quantity . "',
-												'" . $Narrative . "'
+												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
 					$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -278,7 +278,7 @@ if (!isset($_POST['Location'])) {
 	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . _('Show Requests') . '" /></div>';
 	echo '</div>
 		  </form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -308,7 +308,7 @@ if (isset($_POST['Location'])) {
 		prnMsg(_('There are no outstanding authorised requests for this location') , 'info');
 		echo '<br />';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select another location') . '</a></div>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -412,4 +412,4 @@ if (isset($_POST['Location'])) {
 	</form>';
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');

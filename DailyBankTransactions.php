@@ -1,7 +1,7 @@
 <?php
 // DailyBankTransactions.php
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
-include ('includes/session.php');
+include('includes/session.php');
 
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
@@ -10,7 +10,7 @@ $Title = _('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
 
-include ('includes/header.php');
+include('includes/header.php');
 
 if (isset($_GET['BankAccount'])) {
 	$_POST['BankAccount'] = $_GET['BankAccount'];
@@ -59,7 +59,7 @@ if (!isset($_POST['Show'])) {
 				</field>
 			</table>';
 		prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	} else {
 		while ($MyRow = DB_fetch_array($AccountsResults)) {
@@ -243,4 +243,4 @@ if (!isset($_POST['Show'])) {
 	echo '<div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
-include ('includes/footer.php');
+include('includes/footer.php');

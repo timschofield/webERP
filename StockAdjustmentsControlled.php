@@ -67,7 +67,7 @@ if ($LineItem->AdjustmentType == 'ADD'){
 	exit();
 }
 echo '</b></div>';
-include ('includes/InputSerialItems.php');
+include('includes/InputSerialItems.php');
 
 /*TotalQuantity set inside this include file from the sum of the bundles
 of the item selected for adjusting */

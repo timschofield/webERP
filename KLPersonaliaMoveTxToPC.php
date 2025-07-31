@@ -257,7 +257,7 @@ function display($Title)
 
 	echo '<fieldset><legend>' . _('Parameters Selection') . '</legend>';
 	
-	include ('includes/KLPersonaliaParameterSelection.php');
+	include('includes/KLPersonaliaParameterSelection.php');
 
  	echo FieldToSelectOneDate('PaymentDate', ConvertSQLDate(EndDateSQLFromPeriodNo($PeriodNow - 1)), _('Payment date'), '', '', '', true, false);
 	echo '</fieldset>';

@@ -11,7 +11,7 @@ for controlled items - used in:
 
 //we start with a batch or serial no header and need to display something for verification...
 
-include ('includes/Add_SerialItemsOut.php');
+include('includes/Add_SerialItemsOut.php');
 
 global $Tableheader;
 /* Link to clear the list and start from scratch */
@@ -204,7 +204,7 @@ if ($ShowExisting){
 echo '</td>
 	</tr>
 	</table>
-	<script type="text/javascript">
+	<script>
 //<![CDATA[
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>

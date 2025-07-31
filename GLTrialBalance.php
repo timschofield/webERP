@@ -5,7 +5,7 @@
  * the input of criteria screen
 */
 $PageSecurity = 1;
-include ('includes/session.php');
+include('includes/session.php');
 
 use Dompdf\Dompdf;
 
@@ -14,8 +14,8 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 $Title = _('Trial Balance');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
+include('includes/SQL_CommonFunctions.php');
+include('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
@@ -389,20 +389,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$writer->save('php://output');
 	} else {
 		$Title = _('General Ledger Trial Balance');
-		include ('includes/header.php');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . _('Trial Balance Report') . '" alt="" />
 				' . _('Trial Balance Report') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {
 
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'TrialBalance';
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', _('Trial Balance'), '" alt="', _('Print'), '" />', ' ', _('Trial Balance Report'), '
 		</p>';
@@ -520,5 +520,5 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		</div>';
 
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }

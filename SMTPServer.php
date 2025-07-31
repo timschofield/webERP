@@ -2,6 +2,7 @@
 /* This script is <create a description for script table>. */
 
 include('includes/session.php');
+use PHPMailer\PHPMailer\PHPMailer;
 
 $Title = _('SMTP Server details');// Screen identification.
 $ViewTopic = 'CreatingNewSystem';// Filename's id in ManualContents.php's TOC.
@@ -15,6 +16,27 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 
 
 if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are already data setup, Update the table
+
+	$mail = new PHPMailer(true);
+	$mail->SMTPAuth = true;
+	$mail->Username = $_POST['UserName'];
+	$mail->Password = $_POST['Password'];
+	$mail->Host = $_POST['Host'];
+	$mail->Port = $_POST['Port'];
+
+	// This function returns TRUE if authentication
+	// was successful, or throws an exception otherwise
+	try {
+		$Connection = $mail->SmtpConnect();
+	}
+	catch(Exception $error) {
+		prnMsg(_('The connection to the SMPT server cannot be made'), 'error');
+	}
+
+	if ($Connection == 1) {
+		prnMsg(_('The connection to the SMPT server has been made'), 'success');
+	}
+
 	$SQL="UPDATE emailsettings SET
 				host='".$_POST['Host']."',
 				port='".$_POST['Port']."',

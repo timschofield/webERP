@@ -332,7 +332,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			if ($Page_Height-$YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
-				include ('includes/PDFPickingListHeader.php');
+				include('includes/PDFPickingListHeader.php');
 			} //end if need a new page headed up
 			else{
 				/*increment a line down for the next line item */

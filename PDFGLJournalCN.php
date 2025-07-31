@@ -121,7 +121,7 @@ while ($Counter<=$LineCount) {
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
 		$YPos=$FormDesign->Data->y;
-		include ('includes/PDFGLJournalHeaderCN.php');
+		include('includes/PDFGLJournalHeaderCN.php');
 	}
 }
 $pdf->setlineStyle(array('width'=>0.8));

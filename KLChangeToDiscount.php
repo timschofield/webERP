@@ -1,11 +1,11 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Change To Discount');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
-include ('includes/KLGeneralFunctions.php');
+include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/SQL_CommonFunctions.php');

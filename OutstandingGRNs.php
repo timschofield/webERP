@@ -168,7 +168,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else { /*Neither the print PDF nor show on scrren option was hit */

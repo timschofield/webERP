@@ -2,9 +2,9 @@
 
 if (!file_exists('KLConfig.php')){
 	echo '<P>' . _("webERP - Opencart connector can't access the KLConfig.php file");
-	include ('includes/footer.php');
+	include('includes/footer.php');
 } else {
-	include ('KLConfig.php');
+	include('KLConfig.php');
 }
 
 if (!isset($MySQLPort)){

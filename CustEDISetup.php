@@ -1,9 +1,9 @@
 <?php
-include ('includes/session.php');
+include('includes/session.php');
 $ViewTopic = 'EDI';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 $Title = _('Customer EDI Set Up');
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
@@ -159,4 +159,4 @@ echo '</fieldset>
 		</div>
 	</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

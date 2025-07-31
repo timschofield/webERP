@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Pricing Control Board');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -192,7 +192,7 @@ if ($KL_SystemAdmin){
 	time_finish($begintime);
 }
 
-include ('includes/footer.php');
+include('includes/footer.php');
 
 /********************************************************************************************
 FUNCTIONS ONLY USED IN PRICING CONTROL BOARD

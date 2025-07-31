@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('KL Maintenance Tasks Board');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLBoards.php');
@@ -13,4 +13,4 @@ MaintenanceTasksDistribution("CLOSED", 30, false);
 MaintenanceTasksDistribution("TOTAL", 30, false);
 MaintenanceTasksList("CLOSED", 60);
 
-include ('includes/footer.php');
+include('includes/footer.php');

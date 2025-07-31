@@ -8,9 +8,9 @@
 
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
-include ('includes/DefinePaymentClass.php');
+include('includes/DefinePaymentClass.php');
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
@@ -23,17 +23,17 @@ else {
 	$BookMark = 'BankAccountPayments';
 	$PageTitleText = _('Bank Account Payments Entry');
 }
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 $PageTitleText, '" /> ', // Icon title.
 $PageTitleText, '</p>'; // Page title.
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GLFunctions.php');
 
 if (isset($_POST['PaymentCancelled'])) {
 	prnMsg(_('Payment Cancelled since cheque was not printed') , 'warning');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -102,7 +102,7 @@ if (isset($_GET['SupplierID'])) {
 	if (DB_num_rows($Result) == 0) {
 
 		prnMsg(_('The supplier code that this payment page was called with is not a currently defined supplier code') . '. ' . _('If this page is called from the selectSupplier page then this assures that a valid supplier is selected') , 'warn');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 
 	}
@@ -346,13 +346,13 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 
 	if ($TotalAmount == 0 AND ($_SESSION['PaymentDetail' . $identifier]->Discount + $_SESSION['PaymentDetail' . $identifier]->Amount) / $_SESSION['PaymentDetail' . $identifier]->ExRate == 0) {
 		prnMsg(_('This payment has no amounts entered and will not be processed') , 'warn');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
 	if ($_POST['BankAccount'] == '') {
 		prnMsg(_('No bank account has been selected so this payment cannot be processed') , 'warn');
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 
@@ -384,12 +384,12 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		//check the cheque number
 		if (empty($_POST['ChequeNum'])) {
 			prnMsg(_('There are no Check Number input') , 'error');
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		elseif (!is_numeric($_POST['ChequeNum'])) { //check if this cheque no has been used
 			prnMsg(_('The cheque no should be numeric') , 'error');
-			include ('includes/footer.php');
+			include('includes/footer.php');
 			exit();
 		}
 		else {
@@ -399,7 +399,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			$ChequeRow = DB_fetch_row($ChequeResult);
 			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'error');
-				include ('includes/footer.php');
+				include('includes/footer.php');
 				exit();
 			}
 		}
@@ -473,7 +473,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$PeriodNo . "','" .
 								$PaymentItem->GLCode . "','" .
-								$PaymentItem->Narrative . "','" .
+								mb_substr($PaymentItem->Narrative, 0, 200) . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
 								$PaymentItem->Cheque . "'
 							)";
@@ -681,7 +681,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							$PeriodNo . "','" .
 							$_SESSION['CompanyRecord']['creditorsact'] . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+							mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
 							$CreditorTotal . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
@@ -704,7 +704,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$PeriodNo . "','" .
 								$_SESSION['CompanyRecord']['pytdiscountact'] . "','" .
-								$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+								mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
 								(-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 							)";
 					$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
@@ -733,7 +733,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							$PeriodNo . "','" .
 							$_SESSION['PaymentDetail' . $identifier]->Account . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->Narrative . "','" .
+							mb_substr($_SESSION['PaymentDetail' . $identifier]->Narrative, 0, 200) . "','" .
 							(-$_SESSION['PaymentDetail' . $identifier]->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');
@@ -854,7 +854,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		}
 	}
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 
 }
@@ -1031,7 +1031,7 @@ if (DB_num_rows($AccountsResults) == 0) {
 		</table>
 		<p />';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') , 'warn');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 else {
@@ -1071,7 +1071,7 @@ if (DB_num_rows($Result) == 0) {
 		</field>';
 }
 else {
-	include ('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 	if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 		echo '<select name="Currency" onchange="ReloadForm(UpdateHeader)" required="required">';
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1158,7 +1158,7 @@ echo '<field>
 		<label for="Paymenttype">' . _('Payment type') . ':</label>
 		<select name="Paymenttype">';
 
-include ('includes/GetPaymentMethods.php');
+include('includes/GetPaymentMethods.php');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
  payment methods can be modified from the setup tab of the main menu under payment methods*/
 
@@ -1516,4 +1516,4 @@ else {
 echo '</div>
 	</form>';
 
-include ('includes/footer.php');
+include('includes/footer.php');

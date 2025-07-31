@@ -1,12 +1,8 @@
 <?php
+
 /* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
 include('includes/session.php');
-$Title = _('Search Suppliers');
-$ViewTopic = 'AccountsPayable';
-$BookMark = 'SelectSupplier';
-include('includes/header.php');
-
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SupplierID'])) {
@@ -45,26 +41,31 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$map_height = $MyRow['map_height'];
 	$map_width = $MyRow['map_width'];
 	$MapHost = $MyRow['map_host'];
-	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"';
-	echo ' type="text/javascript"></script>';
-	echo ' <script type="text/javascript">';
-	echo 'function load() {
+	$ExtraHeadContent = '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"></script>' . "\n";
+	$ExtraHeadContent .= ' <script>' . "\n";
+	$ExtraHeadContent .= '	function load() {
 		if (GBrowserIsCompatible()) {
 			var map = new GMap2(document.getElementById("map"));
 			map.addControl(new GSmallMapControl());
 			map.addControl(new GMapTypeControl());';
-	echo 'map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);';
-	echo 'var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));';
-	echo 'map.addOverlay(marker);
+	$ExtraHeadContent .= '			map.setCenter(new GLatLng(' . $lat . ', ' . $lng . '), 11);';
+	$ExtraHeadContent .= '			var marker = new GMarker(new GLatLng(' . $lat . ', ' . $lng . '));';
+	$ExtraHeadContent .= '			map.addOverlay(marker);
 			GEvent.addListener(marker, "click", function() {
-			marker.openInfoWindowHtml(WINDOW_HTML);
+				marker.openInfoWindowHtml(WINDOW_HTML);
 			});
 			marker.openInfoWindowHtml(WINDOW_HTML);
-			}
-			}
-			</script>
-			<body onload="load()" onunload="GUnload()" >';
+		}
+	}
+</script>
+';
 }
+
+$Title = _('Search Suppliers');
+$ViewTopic = 'AccountsPayable';
+$BookMark = 'SelectSupplier';
+$BodyOnLoad='load();';
+include('includes/header.php');
 
 if (!isset($_POST['PageOffset'])) {
 	$_POST['PageOffset'] = 1;
@@ -419,4 +420,5 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 		}
 	}
 }
-include ('includes/footer.php');
+
+include('includes/footer.php');

@@ -2,12 +2,12 @@
 include('includes/session.php');
 
 $Title = _('TEST ESCPOS FILE');
-include ('includes/header.php');
-include ('includes/KLDefines.php');
+include('includes/header.php');
+include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
 
-include ('includes/WebClientPrint/WebClientPrint.php');
+include('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/KLESCPOSCommands.php');
 
@@ -18,7 +18,7 @@ $FileName = GetFilenameFromPOSIdentifier($identifier);
 file_put_contents($FileName, $TextToPrint);
 $TextActionToPrint = 'Print the Daily SPG End Of Shift Test';
 
-include ('includes/KLSilentPrinting.php');
+include('includes/KLSilentPrinting.php');
 
 
-include ('includes/footer.php');
+include('includes/footer.php');

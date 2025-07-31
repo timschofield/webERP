@@ -1,8 +1,8 @@
 <?php
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Items with stock available not in shop');
-include ('includes/header.php');
+include('includes/header.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -91,4 +91,4 @@ if (!(isset($_POST['Search']))) {
 	</table>';
 
 }
-include ('includes/footer.php');
+include('includes/footer.php');

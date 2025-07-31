@@ -6,17 +6,17 @@
 *			Not show template options	
 *
 ********************************************************************************************************/
-include ('includes/DefineJournalClass.php');
+include('includes/DefineJournalClass.php');
 
-include ('includes/session.php');
+include('includes/session.php');
 if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
 $Title = _('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/GLFunctions.php');
+include('includes/header.php');
+include('includes/SQL_CommonFunctions.php');
+include('includes/GLFunctions.php');
 
 if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' and isset($_SESSION['JournalDetail'])) {
 
@@ -123,7 +123,7 @@ if (isset($_POST['LoadTemplate'])) {
 		}
 
 		echo '</table>';
-		include ('includes/footer.php');
+		include('includes/footer.php');
 		exit();
 	}
 }
@@ -157,7 +157,7 @@ if (isset($_POST['SaveTemplate'])) {
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				prnMsg(_('The journal template header info could not be saved') , 'error');
-				include ('includes/footer.php');
+				include('includes/footer.php');
 				exit();
 			}
 			$LineNumber = 0;
@@ -180,7 +180,7 @@ if (isset($_POST['SaveTemplate'])) {
 				++$LineNumber;
 				if (DB_error_no() != 0) {
 					prnMsg(_('The journal template line info could not be saved') , 'error');
-					include ('includes/footer.php');
+					include('includes/footer.php');
 					exit();
 				}
 			}
@@ -257,7 +257,7 @@ if (isset($_POST['ConfimSave'])) {
 		</div>';
 	echo '</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
@@ -288,7 +288,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 					'" . $PeriodNo . "',
 					'" . $JournalItem->GLCode . "',
-					'" . $JournalItem->Narrative . "',
+					'" . mb_substr($JournalItem->Narrative, 0, 200) . "',
 					'" . $JournalItem->Amount . "'
 					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
@@ -309,7 +309,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
-						'" . _('Reversal') . " - " . $JournalItem->Narrative . "',
+						'" . mb_substr(_('Reversal') . " - " . $JournalItem->Narrative, 0, 200) . "',
 						'" . -($JournalItem->Amount) . "'
 						)";
 
@@ -334,7 +334,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	echo '<br />
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 
 }
@@ -651,4 +651,4 @@ else {
 
 echo '</div>
 	</form>';
-include ('includes/footer.php');
+include('includes/footer.php');

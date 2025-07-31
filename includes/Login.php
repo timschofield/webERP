@@ -6,8 +6,8 @@
  * 
  *********************************************************************************************/
 
-include ($PathPrefix . 'includes/LanguageSetup.php');
-include ('LanguagesArray.php');
+include($PathPrefix . 'includes/LanguageSetup.php');
+include('LanguagesArray.php');
 
 // KL RICARD Select the default text and css depending on the code version
 if (KLwebERPScriptCalledFromTEST()) {
@@ -34,7 +34,7 @@ echo '<html>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
-		<script async type="text/javascript" src = "', $RootPath, '/javascripts/Login.js"></script>';
+		<script async src="', $RootPath, '/javascripts/Login.js"></script>';
 
 if ($LanguagesArray[$DefaultLanguage]['Direction'] == 'rtl') {
 	echo '<link rel="stylesheet" href="css/login_rtl.css" type="text/css" />';
@@ -79,7 +79,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
 		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-				include ('companies/' . $CompanyEntry . '/Companies.php');
+				include('companies/' . $CompanyEntry . '/Companies.php');
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
@@ -111,7 +111,7 @@ $DirHandle = dir('companies/');
 while (false !== ($CompanyEntry = $DirHandle->read())) {
 	if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 		if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-			include ('companies/' . $CompanyEntry . '/Companies.php');
+			include('companies/' . $CompanyEntry . '/Companies.php');
 		} else {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}

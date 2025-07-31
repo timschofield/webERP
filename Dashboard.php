@@ -1,11 +1,11 @@
 <?php
 $PageSecurity = 0;
 
-include ('includes/session.php');
+include('includes/session.php');
 $Title = _('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';
-include ('includes/header.php');
+include('includes/header.php');
 
 $DashBoardURL = $_SERVER['REQUEST_URI'];
 
@@ -55,7 +55,7 @@ echo '<div class="container" style="--cols:3; --rows:2">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (in_array($MyRow['id'], $ScriptArray) and in_array($MyRow['pagesecurity'], $_SESSION['AllowedPageSecurityTokens'])) {
 		echo '<div draggable="true" class="dashboard_cell" name="', $MyRow['scripts'], '" id="dashboard_cell', $i, '" title="', $MyRow['description'], '" onload="">';
-		include ('dashboard/' . $MyRow['scripts']);
+		include('dashboard/' . $MyRow['scripts']);
 		echo '</div>';
 		++$i;
 	}
@@ -82,5 +82,5 @@ if ($i < 6) {
 	</form>';
 }
 
-include ('includes/footer.php');
-echo '<script async type="text/javascript" src = "', $RootPath, '/dashboard/javascript/dashboard.js"></script>';
+include('includes/footer.php');
+echo '<script async src="', $RootPath, '/dashboard/javascript/dashboard.js"></script>';

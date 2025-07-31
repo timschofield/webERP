@@ -35,7 +35,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
   /*Now figure out the invoice less credits due for the Supplier range under review */
 
-	include ('includes/PDFPaymentRunPageHeader.php');
+	include('includes/PDFPaymentRunPageHeader.php');
 
 	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
@@ -377,5 +377,5 @@ Payment types can be modified by editing that file */
 				<input type="submit" name="PrintPDFAndProcess" value="' . _('Print and Process Payments') . '" />
 			</div>';
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 } /*end of else not PrintPDF */

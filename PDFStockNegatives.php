@@ -35,15 +35,15 @@ $SQL = "SELECT stockmaster.stockid,
 $Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($Result)==0){
-	include ('includes/header.php');
+	include('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'error');
-	include ('includes/footer.php');
+	include('includes/footer.php');
 	exit();
 }
 
 $NegativesRow = DB_fetch_array($Result);
 
-include ('includes/PDFStockNegativesHeader.php');
+include('includes/PDFStockNegativesHeader.php');
 $LineHeight=15;
 $FontSize=10;
 

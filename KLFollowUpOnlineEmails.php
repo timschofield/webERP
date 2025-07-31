@@ -322,9 +322,9 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	include ('includes/KLDefines.php');
-	include ('includes/OCOpenCartGeneralFunctions.php');
-	include ('includes/OCOpenCartConnectDB.php');
+	include('includes/KLDefines.php');
+	include('includes/OCOpenCartGeneralFunctions.php');
+	include('includes/OCOpenCartConnectDB.php');
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_SHIPPED
 	$ReasonChangeStatusId = "webERP --> Order shipped via " . $MyRow['shippername'] . " AWB# = " . $MyRow['consignment'];  
 	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 1, $MyRow['shipvia'], $MyRow['consignment'], $ReasonChangeStatusId);
