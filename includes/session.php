@@ -87,10 +87,6 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 /* KL RICARD Log the script we run so we can optimize CPU time*/	
 $_SESSION['ScriptStartTime'] = microtime();
 
-/* iterate through all elements of the $_POST array and DB_escape_string them
-to limit possibility for SQL injection attacks and cross scripting attacks
-*/
-
 if (isset($_SESSION['DatabaseName'])) {
 
 	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
@@ -147,7 +143,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
 } elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
-	if (!isset($_SESSION['DatabaseName'])){
+	if (!isset($_SESSION['DatabaseName'])) {
 
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
@@ -242,7 +238,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
-
 	}
 
 	// KL RICARD Check if the user is allowed to access the page
