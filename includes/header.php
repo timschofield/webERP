@@ -255,6 +255,7 @@ echo '<div class="help-bubble" id="help-bubble">
 		<div class="help-content" id="help-content"></div>
 	</div>';
 KL RICARD END */
+/* KL RICARD
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
 				SET fontsize='" . $_GET['FontSize'] . "'
@@ -286,6 +287,9 @@ echo '<style>
 KL RICARD END */
 
 echo '<header class="noPrint">';
+/* KL RICARD: Header container with flexbox for better alignment to the right and spacing */
+echo '<div class="header-container" style="display: flex; align-items: center; justify-content: space-between; padding: 0px; width: 100%;">';
+/* KL RICARD END */
 
 $CompanyLogo = '';
 /// @todo move the scanning for a logo file to a dedicated function
