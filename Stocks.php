@@ -892,12 +892,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 if (isset($StockID) && $StockID != '' && $InputError == 0) {
 	echo '<table width="100%">
 			<tr>
-				<td>', '<button ', ($HasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
+				<td>', '<button ', ($HasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.png" />',
 	/*_('Previous Item'),*/
 	'</button>', // "Previous" button.
-	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($HasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
+	'</td>', '<td width="80%">&nbsp;</td>', '<td>', '<button ', ($HasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
 	/*_('Next Item'),*/
-	'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" />', '</button>', // "Next" button.
+	'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.png" />', '</button>', // "Next" button.
 	'</td>
 			</tr>
 		</table>';
