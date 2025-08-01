@@ -339,7 +339,7 @@ or deletion of the records*/
 		// Lets show the country flag
 		$ImageFile = mb_strtoupper($MyRow['currabrev']) . '.gif';
 
-		if(!file_exists($ImageFile)) {
+		if(!file_exists('images/flags/' . $ImageFile)) {
 			$ImageFile =  'blank.gif';
 		}
 		if ($MyRow['webcart'] == 1) {
