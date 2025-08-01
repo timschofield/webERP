@@ -9,43 +9,43 @@ function PrepStep($StepNum) {
 		default:
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP1;
 			$FormParams['heading'] = RPT_ADMIN;
-			$FormParams['IncludePage'] = 'forms/ReportsHome.html';
+			$FormParams['IncludePage'] = 'forms/ReportsHome.html.php';
 			break;
 		case '2': // id, copy, new report name form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP2;
 			$FormParams['heading'] = RPT_RPTID;
-			$FormParams['IncludePage'] = 'forms/ReportsID.html';
+			$FormParams['IncludePage'] = 'forms/ReportsID.html.php';
 			break;
 		case '3': // page setup form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP3;
 			$FormParams['heading'] = RPT_RPTFRM;
-			$FormParams['IncludePage'] = 'forms/ReportsPageSetup.html';
+			$FormParams['IncludePage'] = 'forms/ReportsPageSetup.html.php';
 			break;
 		case '4': // db setup form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP4;
 			$FormParams['heading'] = RPT_RPTFRM;
-			$FormParams['IncludePage'] = 'forms/ReportsDBSetup.html';
+			$FormParams['IncludePage'] = 'forms/ReportsDBSetup.html.php';
 			break;
 		case '5': // field setup form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP5;
 			$FormParams['heading'] = RPT_RPTFRM;
-			$FormParams['IncludePage'] = 'forms/ReportsFieldSetup.html';
+			$FormParams['IncludePage'] = 'forms/ReportsFieldSetup.html.php';
 			break;
 		case 'prop': // Form field properties form
 			global $Params; // we need the form type from the Params variable to load the correct form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_BTN_PROP;
 			$FormParams['heading'] = RPT_RPTFRM;
-			$FormParams['IncludePage'] = 'forms/TplFrm'.$Params['index'].'.html';
+			$FormParams['IncludePage'] = 'forms/TplFrm'.$Params['index'].'.html.php';
 			break;
 		case '6': // criteria setup form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_STEP6;
 			$FormParams['heading'] = RPT_RPTFRM;
-			$FormParams['IncludePage'] = 'forms/ReportsCritSetup.html';
+			$FormParams['IncludePage'] = 'forms/ReportsCritSetup.html.php';
 			break;
 		case 'imp': // import form
 			$FormParams['title'] = RPT_RPRBLDR.RPT_RPTIMPORT;
 			$FormParams['heading'] = RPT_RPTIMPORT;
-			$FormParams['IncludePage'] = 'forms/ReportsImport.html';
+			$FormParams['IncludePage'] = 'forms/ReportsImport.html.php';
 			break;
 	} // end switch $StepNum
 	return $FormParams;

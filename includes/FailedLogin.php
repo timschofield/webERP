@@ -1,5 +1,8 @@
 <?php
-echo '<html>
+
+/// @todo internationalize this page
+
+echo '<html lang="en">
 <head>
     <title>Failed Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">

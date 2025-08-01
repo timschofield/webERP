@@ -1,0 +1,46 @@
+{
+  "name": "gggeek/polyfill-gettext",
+  "description": "A replacement for the php gettext extension. Based on php-gettext by Danilo Segan.",
+  "license": "GPL-2.0-or-later",
+  "keywords": [
+    "gettext", "l10n", "translation"
+  ],
+  "authors": [
+    {
+      "name": "Danilo Segan",
+      "email": "danilo@kvota.net"
+    },
+    {
+      "name": "Nico Kaiser",
+      "email": "nico@siriux.net"
+    },
+    {
+      "name": "Steven Armstrong",
+      "email": "sa@c-area.ch"
+    },
+    {
+      "name": "Gaetano Giunta"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "require-dev": {
+    "ext-gettext": "*",
+    "ext-mbstring": "*",
+    "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+    "yoast/phpunit-polyfills": "*"
+  },
+  "suggest": {
+    "ext-mbstring": "Necessary when using specific character encodings (charsets) for translated messages"
+  },
+  "provide": {
+    "ext-gettext": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "PGettext\\": "src/"
+    },
+    "files": ["src/polyfill.php"]
+  }
+}

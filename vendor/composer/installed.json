@@ -247,6 +247,81 @@
             "install-path": "../dompdf/php-svg-lib"
         },
         {
+            "name": "gggeek/polyfill-gettext",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/polyfill-gettext.git",
+                "reference": "6223f610324582c11a4e1e3b3084a0f3fe1e8863"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/6223f610324582c11a4e1e3b3084a0f3fe1e8863",
+                "reference": "6223f610324582c11a4e1e3b3084a0f3fe1e8863",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "provide": {
+                "ext-gettext": "*"
+            },
+            "require-dev": {
+                "ext-gettext": "*",
+                "ext-mbstring": "*",
+                "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "suggest": {
+                "ext-mbstring": "Necessary when using specific character encodings (charsets) for translated messages"
+            },
+            "time": "2025-07-29T09:58:25+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/polyfill.php"
+                ],
+                "psr-4": {
+                    "PGettext\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Segan",
+                    "email": "danilo@kvota.net"
+                },
+                {
+                    "name": "Nico Kaiser",
+                    "email": "nico@siriux.net"
+                },
+                {
+                    "name": "Steven Armstrong",
+                    "email": "sa@c-area.ch"
+                },
+                {
+                    "name": "Gaetano Giunta"
+                }
+            ],
+            "description": "A replacement for the php gettext extension. Based on php-gettext by Danilo Segan.",
+            "keywords": [
+                "gettext",
+                "l10n",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/polyfill-gettext/issues",
+                "source": "https://github.com/gggeek/polyfill-gettext/tree/main"
+            },
+            "install-path": "../gggeek/polyfill-gettext"
+        },
+        {
             "name": "maennchen/zipstream-php",
             "version": "3.1.1",
             "version_normalized": "3.1.1.0",
