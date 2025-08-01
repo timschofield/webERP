@@ -23,6 +23,7 @@ if (isset($_GET['SelectedCurrency'])) {
 
 $ForceConfigReload = true;
 include('includes/GetConfig.php');
+$ForceConfigReload = false;
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
