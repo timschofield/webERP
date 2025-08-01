@@ -248,7 +248,7 @@ KL RICARD Comment these lines as only show an X on the left top corner */
 
 /* KL RICARD
 echo '<div class="help-bubble" id="help-bubble">
-		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />
+		<link rel="stylesheet" type="text/css" href="doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
 			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
 		</div>
