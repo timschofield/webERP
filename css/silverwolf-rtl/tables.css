@@ -18,6 +18,7 @@ vertical-align:middle;
 }
 table th img {
 vertical-align:middle;
+margin-right:8px;
 }
 table th.SortedColumn {
 cursor:s-resize;
