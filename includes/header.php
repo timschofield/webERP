@@ -9,14 +9,16 @@
 // echo the html header and page title
 
 // Variables which should be defined in the page this file is included with, before the inclusion of this header.php:
+// $Language
 // $Title
-// $CompanyLogo
 // various $_SESSION items: Theme, DefaultDateFormat, Timeout, ShowPageHelp, ShowFieldHelp, FontSize, UsersRealName, etc...
 
-/// @todo there are any more global variables use in this script than those 3... are ew sure it would work if
+/// @todo there are any more global variables use in this script than those 3... are we sure it would work if
+
 ///       called within a function?
-global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
-global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
+global $Language;
+global $Title;
+global $LanguagesArray;
 global $RootPath;
 
 //if (!isset($RootPath)) {
@@ -51,7 +53,8 @@ if (!headers_sent()) {
 
 echo '<!DOCTYPE html>';
 
-echo '<html>
+/// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
+echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 <head>
 	<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 	<title>', _('webERP'), ' - ', $Title, '</title>
@@ -245,7 +248,7 @@ KL RICARD Comment these lines as only show an X on the left top corner */
 
 /* KL RICARD
 echo '<div class="help-bubble" id="help-bubble">
-		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />
+		<link rel="stylesheet" type="text/css" href="doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
 			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
 		</div>
@@ -283,8 +286,10 @@ echo '<style>
 			</style>';
 KL RICARD END */
 
-echo '<header class="noPrint">
-	<div class="header-container" style="display: flex; align-items: center; justify-content: space-between; padding: 5px; width: 100%;">';
+echo '<header class="noPrint">';
+/* KL RICARD: Header container with flexbox for better alignment to the right and spacing */
+echo '<div class="header-container" style="display: flex; align-items: center; justify-content: space-between; padding: 0px; width: 100%;">';
+/* KL RICARD END */
 
 $CompanyLogo = '';
 /// @todo move the scanning for a logo file to a dedicated function

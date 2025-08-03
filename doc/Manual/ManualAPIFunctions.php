@@ -6,6 +6,7 @@ include('api/api_errorcodes.php');
 
 $Title = 'API documentation';
 
+/// @todo move to html5 as the rest of the app
 echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
 echo '<link rel="icon" href="' . $RootPath . '/favicon.ico" type="image/x-icon" />';
 echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';

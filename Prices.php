@@ -1,12 +1,14 @@
 <?php
 
 include('includes/session.php');
+
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
 }
 if (isset($_POST['EndDate'])) {
 	$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);
 }
+
 $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
@@ -17,7 +19,7 @@ $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $TypeResult = DB_query($SQL);
 if (DB_num_rows($TypeResult) == 0) {
 	prnMsg(_('There are no sales types setup. Click') .
-		' <a href="' . $RootPath . '/SelectProduct.php" target="_blank">' .
+		' <a href="' . $RootPath . '/SalesTypes.php" target="_blank">' .
 		' ' . _('here') . ' ' . '</a>' . _('to create them'), 'warn');
 	include('includes/footer.php');
 	exit();

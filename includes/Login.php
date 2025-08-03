@@ -1,5 +1,6 @@
 <?php
 
+/// @todo should we include these two here? This file is included from session.php, which already includes them...
 /*********************************************************************************************
  * 
  * KL RICARD Select the default text and css depending on the code version
@@ -28,7 +29,8 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))
 }
 
 echo '<!DOCTYPE html>';
-echo '<html>
+/// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
+echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<head>
 		<title>webERP ', _('Login'), '</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />

@@ -1,9 +1,6 @@
 <?php
-/* $Version is compared against the value for config.confvalue WHERE confname=VersionNumber in the database
- * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
- * if  VersionNumber is < $Version  then the DB update script is run */
 
-require_once ($PathPrefix .'includes/MiscFunctions.php');
+require_once($PathPrefix .'includes/MiscFunctions.php');
 
 if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from the file structure
 	if (isset($_POST['CompanyNameField'])) {

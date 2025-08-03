@@ -298,7 +298,7 @@ function GetWeekDayText($WeekDayNumber) {
 **************************************************************************************************************/
 function DisplayDateTime() {
 	// Long date and time in locale format.
-	// Could be replace by IntlDateFormatter (available on PHP 5.3.0 or later). See http://php.net/manual/en/class.intldateformatter.php
+	// Could be replaced by IntlDateFormatter (available on PHP 5.3.0 or later). See http://php.net/manual/en/class.intldateformatter.php
 	switch ($_SESSION['Language']) {
 		case 'en_GB.utf8':
 			$LongDateTime = GetWeekDayText(date('w')) . ' ' . date('j') . ' ' . GetMonthText(date('n')) . ' ' . date('Y') . ' ' . date('G:i');

@@ -9,5 +9,5 @@ INSERT INTO stockmoves
 
 1) Search for all PHP files containing "INSERT INTO stockmoves" SQL statements in the workspace
 2) for all the "INSERT INTO stockmoves" selected in point 1, revise if the field "narrative" is being inserted. 
-3) If field "narrative" so, truncate the "narrative" field to a string of lenght 100.
+3) If field "reference" so, truncate the "reference" field to a string of lenght 100.
 4) keep doing points 1,2,3 until php files in the workspace have been processed.

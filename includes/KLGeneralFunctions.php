@@ -1314,10 +1314,10 @@ function InsertKPI($KPICode, $Value){
 			VALUES 
 				('" . $Date . "',
 				'" . $KPICode . "',
-				'" . $Value . "')";
+				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
 		$DbgMsg = 'SQL to insert klkpi record: ';
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 }
 
@@ -1477,7 +1477,7 @@ function TotalItemsToBeReceivedByPO($Brand){
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
-		return $Row['0'];
+		return (int)$Row['0'];
 	}
 	return 0;
 }
@@ -1505,7 +1505,7 @@ function TotalItemsToBeReceivedByWO($Brand){
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
-		return $Row['0'];
+		return (int)$Row['0'];
 	}
 	return 0;
 }
@@ -1525,7 +1525,7 @@ function TotalModels($Brand){
 			FROM stockmaster
 			WHERE discontinued = 0 " . 
 				$Operator1 ."";
-	$Result = DB_query($SQL);
+	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow['0'];
