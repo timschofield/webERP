@@ -1,0 +1,51 @@
+[mysqld]
+
+innodb_buffer_pool_size=5368709120
+#query_cache_limit = 4096M
+#query_cache_size = 3072M
+#net_write_timeout = 3600
+#net_read_timeout = 3600
+
+#innodb_buffer_pool_size=3221225472
+innodb_buffer_pool_instances=4
+innodb_log_file_size = 5242880
+innodb_log_buffer_size = 67108864
+open_files_limit=4294967295
+optimizer_switch='mrr=on'
+optimizer_switch='mrr_cost_based=off'
+join_cache_level = 6
+join_buffer_space_limit = 2147483648
+join_buffer_size = 1073741824
+optimizer_switch='index_merge_sort_intersection=on'
+join_cache_level = 8
+max_allowed_packet = 3247054592
+connect_timeout = 600
+
+#net_write_timeout=0
+#net_read_timeout=0
+
+#innodb_buffer_pool_size=5242880
+skip-name-resolve
+skip-external-locking
+bind-address = 0.0.0.0
+default-time-zone = "+08:00"
+# bind-address = ::ffff:127.0.0.1
+local-infile=0
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+# Settings user and group are ignored when systemd is used.
+# If you need to run mysqld under a different user or group,
+# customize your systemd unit file for mariadb according to the
+# instructions in http://fedoraproject.org/wiki/Systemd
+
+[mysqld_safe]
+log-error=/var/log/mariadb/mariadb.log
+pid-file=/var/run/mariadb/mariadb.pid
+
+open_files_limit=4294967295
+
+# include all files from the config directory
+#
+!includedir /etc/my.cnf.d
