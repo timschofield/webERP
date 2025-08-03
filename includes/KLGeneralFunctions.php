@@ -808,10 +808,10 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . $Period . "',
 				'" . $Account . "',
 				'" . mb_substr($Narrative, 0, 200) . "',
-				'" . $Amount . "')";
+				'" . (float)$Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
 	$DbgMsg = 'SQL to insert GLTrans record: ';
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function GLAccountBelongsTo($Account){
@@ -1046,8 +1046,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					'" . $PeriodNo . "',
 					'" . $Narrative . "',
 					'',
-					'" . ($FunctionalExRate*$ExRate) . "',
-					'" . -$TotalAmount . "',
+					'" . (float)($FunctionalExRate*$ExRate) . "',
+					'" . (float)-$TotalAmount . "',
 					'" . 0 . "',
 					'" . $Narrative. "',
 					''
@@ -1085,7 +1085,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . $FunctionalExRate . "',
 				CURRENT_DATE,
 				'" . $BankTransType . "',
-				'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
+				'" . (float)($NetAmount * $FunctionalExRate * $ExRate) . "',
 				'" . $Currency . "'
 			)";
 		$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
@@ -1127,7 +1127,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommission . "',
 										'" . mb_substr($Narrative, 0, 200) . "',
-										'" . $Commission . "'
+										'" . (float)$Commission . "'
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
@@ -1149,7 +1149,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommissionPPN . "',
 										'" . mb_substr($Narrative, 0, 200) . "',
-										'" . $CommissionPPN . "'
+										'" . (float)$CommissionPPN . "'
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
@@ -1313,7 +1313,7 @@ function InsertKPI($KPICode, $Value){
 				value)
 			VALUES 
 				('" . $Date . "',
-				'" . $KPICode . "',
+				'" . mb_substr($KPICode, 0, 30) . "',
 				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
 		$DbgMsg = 'SQL to insert klkpi record: ';
