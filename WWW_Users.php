@@ -107,8 +107,8 @@ if(isset($_POST['submit'])) {
 	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= False) {
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'), 'error');
-	} elseif((mb_strlen($_POST['Cust'])>0)
-				AND (mb_strlen($_POST['BranchCode'])==0)) {
+	} elseif((mb_strlen($_POST['Cust'] ?? '')>0)
+				AND (mb_strlen($_POST['BranchCode'] ?? '')==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'), 'error');
 	} elseif($AllowDemoMode AND $_POST['UserID'] == 'admin') {
@@ -125,12 +125,12 @@ if(isset($_POST['submit'])) {
 		}
 	}
 
-	if((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
+	if((mb_strlen($_POST['BranchCode'] ?? '')>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
 		$SQL = "SELECT custbranch.debtorno
 				FROM custbranch
-				WHERE custbranch.debtorno='" . $_POST['Cust'] . "'
-				AND custbranch.branchcode='" . $_POST['BranchCode'] . "'";
+				WHERE custbranch.debtorno='" . ($_POST['Cust'] ?? '') . "'
+				AND custbranch.branchcode='" . ($_POST['BranchCode'] ?? '') . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
@@ -143,7 +143,7 @@ if(isset($_POST['submit'])) {
 	}
 
 	/* Make a comma separated list of modules allowed ready to update the database*/
-	$i=0;
+	$i = 0;
 	$ModulesAllowed = '';
 	while($i < count($ModuleList)) {
 		$FormVbl = 'Module_' . $i;
@@ -152,14 +152,30 @@ if(isset($_POST['submit'])) {
 	}
 	$_POST['ModulesAllowed']= $ModulesAllowed;
 
-	if(isset($SelectedUser) AND $InputError !=1) {
+	// Initialize missing POST variables to prevent undefined array key warnings
+	if(!isset($_POST['Cust'])) {
+		$_POST['Cust'] = '';
+	}
+	if(!isset($_POST['BranchCode'])) {
+		$_POST['BranchCode'] = '';
+	}
+	if(!isset($_POST['SupplierID'])) {
+		$_POST['SupplierID'] = '';
+	}
+	if(!isset($_POST['Salesman'])) {
+		$_POST['Salesman'] = '';
+	}
 
-/*SelectedUser could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
+	if(isset($SelectedUser) AND $InputError != 1) {
+
+		/*SelectedUser could also exist if submit had not been clicked this code would not run in this case
+		because submit is false of course see the delete code below*/
 
 		if(!isset($_POST['Cust']) OR $_POST['Cust']==NULL OR $_POST['Cust']=='') {
 			$_POST['Cust']='';
 			$_POST['BranchCode']='';
 		}
+
 		$UpdatePassword = '';
 		if($_POST['Password'] != '') {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
@@ -188,7 +204,12 @@ if(isset($_POST['submit'])) {
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
 						department='" . $_POST['Department'] . "'
 					WHERE userid = '". $SelectedUser . "'";
+		
+		$ErrMsg = _('The user alterations could not be processed because');
+		$DbgMsg = _('The SQL that was used to update the user and failed was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('The selected user record has been updated'), 'success' );
+		
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
 		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 
@@ -241,7 +262,11 @@ if(isset($_POST['submit'])) {
 					'". $_POST['UserLanguage'] ."',
 					'" . $_POST['PDFLanguage'] . "',
 					'" . $_POST['Department'] . "')";
-		prnMsg(_('A new user record has been inserted'), 'success' );
+
+		$ErrMsg = _('The user insertion could not be processed because');
+		$DbgMsg = _('The SQL that was used to insert the user and failed was');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);		
+		prnMsg(_('A new user record has been inserted'), 'success');
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
 													userid,
@@ -253,6 +278,7 @@ if(isset($_POST['submit'])) {
 													1,
 													1
 												)";
+
 		$ErrMsg = _('The default user locations could not be processed because');
 		$DbgMsg = _('The SQL that was used to create the user locations and failed was');
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
@@ -269,11 +295,6 @@ if(isset($_POST['submit'])) {
 	}
 
 	if($InputError!=1) {
-		//run the SQL from either of the above possibilites
-		$ErrMsg = _('The user alterations could not be processed because');
-		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
-
 		unset($_POST['UserID']);
 		unset($_POST['RealName']);
 		unset($_POST['Cust']);
