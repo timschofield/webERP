@@ -76,7 +76,7 @@ if (isset($_POST['AddToOrder'])) {
 	}
 	foreach ($_POST as $Key => $Value) {
 		if (substr($Key, 0, 7) == 'StockID') {
-			$Index = substr($Key, -1);
+			$Index = substr($Key, 7);
 			if ($_POST['Quantity' . $Index] > 0) {
 				$InputError = 0;
 				$CheckItemResult = DB_query("SELECT mbflag,
