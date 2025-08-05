@@ -1,6 +1,6 @@
 <?php
 
-require_once($PathPrefix .'/includes/class.pdf.php');
+require_once($PathPrefix .'/includes/class.cpdf.php');
 
 class PDF extends Cpdf {
 

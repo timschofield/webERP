@@ -1,7 +1,6 @@
 <?php
 
-
-include('includes/class.pdf.php');
+include('includes/class.cpdf.php');
 
 
 /* A4_Landscape */

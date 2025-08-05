@@ -1,6 +1,5 @@
 <?php
 
-
 function standard_deviation($Data){
 	$Total = 0;
 	$Counter = 0;
@@ -101,7 +100,7 @@ include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 
-    include('includes/class.pdf.php');
+    include('includes/class.cpdf.php');
 
 	/* A4_Landscape */
 
@@ -135,7 +134,7 @@ if (isset($_POST['PrintPDF'])){
 	$PDF->AddPage();
 //	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$PDF->cMargin = 0;		// Javier: needs check.
-/* END Brought from class.pdf.php constructor */
+/* END Brought from class.cpdf.php constructor */
 
 
 	$PageNumber= 1;
