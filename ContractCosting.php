@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/DefineContractClass.php');
 include('includes/session.php');
 $Title = _('Contract Costing');

@@ -1,6 +1,5 @@
 <?php
 
-
 $PricesSecurity = 12;
 
 include('includes/session.php');

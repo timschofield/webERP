@@ -1,6 +1,5 @@
 <?php
 
-
 /*This page shows the serial numbers created for a works order
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry
  * - If the item is lot controlled then the lot reference and the quantity in the lot can be entered

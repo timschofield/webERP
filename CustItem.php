@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustItem.php 1 2014-04-23 05:10:46Z agaluski $*/
 
 include('includes/session.php');
 

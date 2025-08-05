@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title=_('Apply Current Customer and Branch Data to Sales Analysis');
 $ViewTopic = 'SpecialUtilities';
