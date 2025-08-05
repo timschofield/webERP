@@ -8,7 +8,7 @@ include('includes/session.php');
 include('includes/header.php');
 //include('includes/SQL_CommonFunctions.php');
 
-$SQL = "SELECT * FROM geocode_param WHERE 1";
+$SQL = "SELECT * FROM geocode_param";
 $ErrMsg = _('An error occurred in retrieving the information');
 $Resultgeo = DB_query($SQL, $ErrMsg);
 $Row = DB_fetch_array($Resultgeo);
@@ -26,7 +26,7 @@ define("KEY", $APIKey);
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers')  . '</p>';
 
 // select all the customer branches
-$SQL = "SELECT * FROM custbranch WHERE 1";
+$SQL = "SELECT * FROM custbranch";
 $ErrMsg = _('An error occurred in retrieving the information');
 $Result = DB_query($SQL, $ErrMsg);
 
