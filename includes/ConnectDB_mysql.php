@@ -195,6 +195,7 @@ function DB_Txn_Commit() {
 
 function DB_Txn_Rollback() {
 	global $db;
+	/// @todo raise a user_error if we are not in a transaction (record the tx start and end in DB_Txn_Begin/DB_Txn_Commit)
 	mysql_query('ROLLBACK',$db);
 }
 

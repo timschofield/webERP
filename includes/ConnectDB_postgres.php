@@ -128,10 +128,6 @@ function DB_escape_string($String) {
 	return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, 'ISO-8859-1'));
 }
 
-function INTERVAL( $val, $Inter ) {
-	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
-}
-
 function DB_show_tables() {
 	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	return $Result;
@@ -145,6 +141,10 @@ function DB_show_fields($TableName) {
 	}
 }
 
+function interval( $val, $Inter ) {
+	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
+}
+
 function DB_Maintenance() {
 
 	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
@@ -155,6 +155,8 @@ function DB_Maintenance() {
 				SET confvalue = CURRENT_DATE
 				WHERE confname = 'DB_Maintenance_LastRun'");
 }
+
+/// @todo add functions DB_Txn_Begin, DB_Txn_Commit, DB_Txn_Rollback, DB_IgnoreForeignKeys, DB_ReinstateForeignKeys
 
 function DB_table_exists($TableName) {
 	global $db;
