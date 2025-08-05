@@ -57,14 +57,11 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $db;
 
 	$Result = mysqli_query($db, $SQL);
+	$ErrNo = DB_error_no();
 
 	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
-	if ($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE') {
-		/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
-		$_SESSION['LastInsertId'] = mysqli_insert_id($db);
-	}
 
-	if (DB_error_no() != 0 AND $TrapErrors) {
+	if ($ErrNo != 0 AND $TrapErrors) {
 		require_once($PathPrefix . 'includes/header.php');
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
@@ -90,17 +87,23 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 		include($PathPrefix . 'includes/footer.php');
 		exit();
-	} elseif (isset($_SESSION['MonthsAuditTrail']) AND $_SESSION['MonthsAuditTrail']>0 AND DB_error_no()==0 AND DB_affected_rows($Result)>0) {
+	} elseif ($ErrNo == 0) {
+		if ($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE') {
+			/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
+			$_SESSION['LastInsertId'] = mysqli_insert_id($db);
+		}
 
-		if (($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE' OR $SQLArray[0] == 'DELETE') AND $SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
-			$AuditSQL = "INSERT INTO audittrail (transactiondate,
-								userid,
-								querystring)
-					VALUES('" . Date('Y-m-d H:i:s') . "',
-						'" . trim($_SESSION['UserID']) . "',
-						'" . DB_escape_string($SQL) . "')";
+		if (isset($_SESSION['MonthsAuditTrail']) AND $_SESSION['MonthsAuditTrail']>0 AND DB_affected_rows($Result)>0) {
+			if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE') and $SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
+				$AuditSQL = "INSERT INTO audittrail (transactiondate,
+									userid,
+									querystring)
+						VALUES('" . Date('Y-m-d H:i:s') . "',
+							'" . trim($_SESSION['UserID']) . "',
+							'" . DB_escape_string($SQL) . "')";
 
-			$AuditResult = mysqli_query($db, $AuditSQL);
+				$AuditResult = mysqli_query($db, $AuditSQL);
+			}
 		}
 	}
 
