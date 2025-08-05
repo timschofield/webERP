@@ -105,7 +105,7 @@ class ean13 extends linearBarcode
 		$biteCode['START'] = $this->codeTable['START'];
 
 		for($i=1;$i<strlen($this->text);$i++) {
-			$biteCode[$saveTo] .= $this->codeTable[$this->text[$i]][$parity{$i-1}];
+			$biteCode[$saveTo] .= $this->codeTable[$this->text[$i]][$parity[$i-1]];
 			if($i==6) {
 				$biteCode['SEPARATOR'] = $this->codeTable['SEPARATOR'];
 				$saveTo = 'DATA2';
@@ -138,9 +138,9 @@ class ean13 extends linearBarcode
 
 		for($i=1;$i<=strlen($text);$i++) {
 			if($i%2==0) {
-				$evensum += (int) $text{$i-1};
+				$evensum += (int) $text[$i-1];
 			} else {
-				$oddsum += (int) $text{$i-1};
+				$oddsum += (int) $text[$i-1];
 			}
 		}
 

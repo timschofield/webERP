@@ -248,17 +248,17 @@
         },
         {
             "name": "gggeek/barcodepack",
-            "version": "1.0.1",
-            "version_normalized": "1.0.1.0",
+            "version": "1.0.2",
+            "version_normalized": "1.0.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/barcodepack.git",
-                "reference": "3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7"
+                "reference": "65c36d2ee39064b1d979a2f693ea06d7322cef8c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gggeek/barcodepack/zipball/3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7",
-                "reference": "3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7",
+                "url": "https://api.github.com/repos/gggeek/barcodepack/zipball/65c36d2ee39064b1d979a2f693ea06d7322cef8c",
+                "reference": "65c36d2ee39064b1d979a2f693ea06d7322cef8c",
                 "shasum": ""
             },
             "require": {
@@ -269,7 +269,7 @@
                 "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
                 "yoast/phpunit-polyfills": "*"
             },
-            "time": "2025-08-05T15:28:55+00:00",
+            "time": "2025-08-05T16:10:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -295,7 +295,7 @@
             ],
             "support": {
                 "issues": "https://github.com/gggeek/barcodepack/issues",
-                "source": "https://github.com/gggeek/barcodepack/tree/1.0.1"
+                "source": "https://github.com/gggeek/barcodepack/tree/1.0.2"
             },
             "install-path": "../gggeek/barcodepack"
         },
