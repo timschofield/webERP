@@ -99,7 +99,7 @@ function submit($RootPath, $Location) {
                         AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($SQLBOM,$ErrMsg);
+			$BOMResult = DB_query($SQLBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
 
 			while ($MyComponent = DB_fetch_array($BOMResult)) {

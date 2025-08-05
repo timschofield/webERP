@@ -141,7 +141,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
@@ -192,7 +192,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 				$ErrMsg = _('The item details could not be retrieved');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$Result1 = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 				if ($MyRow = DB_fetch_array($Result1)){
 
@@ -287,7 +287,7 @@ if (!isset($_GET['Edit'])) {
 			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
-	$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result1 = DB_query($SQL, $ErrMsg, $DbgMsg);
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
 		'</p>';

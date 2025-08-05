@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the QA Test failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 		prnMsg($Msg , 'success');
 
@@ -136,9 +136,9 @@ if (isset($_POST['submit'])) {
 	if ($MyRow[0]>0) {
 		prnMsg(_('Cannot delete this QA Test because Product Specs are using it'),'error');
 	} else {
-		$SQL="DELETE FROM qatests WHERE testid='". $SelectedQATest."'";
+		$SQL = "DELETE FROM qatests WHERE testid='". $SelectedQATest."'";
 		$ErrMsg = _('The QA Test could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('QA Test') . ' ' . $SelectedQATest . ' ' . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);

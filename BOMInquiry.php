@@ -162,7 +162,7 @@ if (isset($StockID) and $StockID!=""){
             AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
-	$BOMResult = DB_query ($SQL,$ErrMsg);
+	$BOMResult = DB_query($SQL,$ErrMsg);
 
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
