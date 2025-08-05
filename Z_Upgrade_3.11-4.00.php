@@ -52,7 +52,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-				$Result = DB_query($SQL, $ErrMsg, $DBMsg, false, false);
+				$Result = DB_query($SQL, $ErrMsg, '', false, false);
 				switch (DB_error_no()) {
 					case 0:
 						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . _('Success') . '</td></tr>';

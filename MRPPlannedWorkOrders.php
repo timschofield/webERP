@@ -88,7 +88,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
-	$Result = DB_query($SQL,'','',false,true);
+	$Result = DB_query($SQL, '', '', false, true);
 
 	if (DB_error_no() !=0) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');

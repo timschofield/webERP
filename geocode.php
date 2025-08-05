@@ -9,8 +9,7 @@ include('includes/header.php');
 //include('includes/SQL_CommonFunctions.php');
 
 $SQL = "SELECT * FROM geocode_param WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');
-$Resultgeo = DB_query($SQL, $ErrMsg);
+$Resultgeo = DB_query($SQL);
 $Row = DB_fetch_array($Resultgeo);
 
 $APIKey = $Row['geocode_key'];
@@ -27,13 +26,11 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 
 // select all the customer branches
 $SQL = "SELECT * FROM custbranch WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');
-$Result = DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL);
 
 // select all the suppliers
 $SQL = "SELECT * FROM suppliers WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');
-$Result2 = DB_query($SQL, $ErrMsg);
+$Result2 = DB_query($SQL);
 
 // Initialize delay in geocode speed
 $delay = 0;

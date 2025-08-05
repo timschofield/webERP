@@ -104,7 +104,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 							ORDER BY purchorders.orderno ASC";
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$SupplierResult = DB_query ($SQLSupplier,$ErrMsg);
+			$SupplierResult = DB_query($SQLSupplier,$ErrMsg);
 
 			$TotalSupplierOwnCurrency = 0;
 			$TotalSupplierFunctionalCurrency = 0;

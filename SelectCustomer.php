@@ -476,8 +476,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 
 		$SQL = "SELECT * FROM geocode_param WHERE 1";
-		$ErrMsg = _('An error occurred in retrieving the information');
-		$Result = DB_query($SQL, $ErrMsg);
+		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . _('here') . '</a>', 'error');
 			include('includes/footer.php');
@@ -508,8 +507,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'
 					AND custbranch.branchcode = '" . $_SESSION['BranchCode'] . "'
 				ORDER BY debtorsmaster.debtorno";
-		$ErrMsg = _('An error occurred in retrieving the information');
-		$Result2 = DB_query($SQL, $ErrMsg);
+		$Result2 = DB_query($SQL);
 		$MyRow2 = DB_fetch_array($Result2);
 		$Lat = $MyRow2['lat'];
 		$Lng = $MyRow2['lng'];
@@ -628,8 +626,7 @@ function initMap() {
 					INNER JOIN debtortype
 						ON debtorsmaster.typeid = debtortype.typeid
 					WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
-			$ErrMsg = _('An error occurred in retrieving the information');
-			$Result = DB_query($SQL, $ErrMsg);
+			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_array($Result);
 			$CustomerType = $MyRow['typeid'];
 			$CustomerTypeName = $MyRow['typename'];

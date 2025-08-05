@@ -97,8 +97,7 @@ if (isset($_POST['submit'])) {
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
 		$SQL = "SELECT * FROM geocode_param WHERE 1";
-		$ErrMsg = _('An error occurred in retrieving the information');
-		$Resultgeo = DB_query($SQL, $ErrMsg);
+		$Resultgeo = DB_query($SQL);
 		$Row = DB_fetch_array($Resultgeo);
 		$APIKey = $Row['geocode_key'];
 		$MapHost = $Row['map_host'];
