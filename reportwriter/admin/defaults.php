@@ -167,7 +167,7 @@ $FormEntries = array(
 	'PgNum' => FRM_PAGENUM);
 
 // The function to process these values is: ProcessData
-// which is located in the file: WriteForm.php
+// which is located in the file: includes/WriteForm.php
 // A case statement needs to be generated to process each new value
 $FormProcessing = array(
 	'' => RPT_NONE,
@@ -179,7 +179,7 @@ $FormProcessing = array(
 	'euro' => FRM_CNVTEURO);
 
 // The function to process these values is: AddSep
-// which is located in the file: WriteForm.php
+// which is located in the file: includes/WriteForm.php
 // A case statement needs to be generated to process each new value
 $TextProcessing = array(
 	'' => RPT_NONE,

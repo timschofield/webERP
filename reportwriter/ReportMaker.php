@@ -130,7 +130,7 @@ if (!isset($_GET['action']) OR (!isset($_POST['ReportID']))) {
 		case RPT_BTN_EXPPDF:
 			$Prefs = ReadPostData($ReportID, $Prefs);
 			// include the necessary files to build report
-			require('WriteReport.inc');
+			require(__DIR__ . '/includes/WriteReport.php');
 			$ReportData = '';
 			$success = BuildSQL($Prefs);
 			if ($success['level']=='success') { // Generate the output data array
