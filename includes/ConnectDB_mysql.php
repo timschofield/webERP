@@ -52,6 +52,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 
 	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
 	if ($SQLArray[0] == 'INSERT') {
+		/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
 		$_SESSION['LastInsertId'] = mysql_insert_id($db);
 	}
 
@@ -138,13 +139,11 @@ function DB_error_msg() {
 }
 
 function DB_Last_Insert_ID($Table, $FieldName) {
-//	return mysql_insert_id($db);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
 	} else {
 		$Last_Insert_ID = 0;
 	}
-//	unset($_SESSION['LastInsertId']);
 	return $Last_Insert_ID;
 }
 

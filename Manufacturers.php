@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 
 		}
 		if (isset($_POST['ClearImage']) ) {
-		foreach ($SupportedImgExt as $Ext) {
+			foreach ($SupportedImgExt as $Ext) {
 				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.' . $Ext;
 				if (file_exists ($File) ) {
 					@unlink($File);
@@ -122,6 +122,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('An error occurred inserting the new manufacturer record because');
 		$DbgMsg =  _('The SQL used to insert the manufacturer record was');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$LastInsertId = DB_Last_Insert_ID('manufacturers', 'manufacturers_id');
 
 		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {
 
@@ -129,7 +130,7 @@ if (isset($_POST['submit'])) {
 		 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 
 			$ImgExt = pathinfo($_FILES['BrandPicture']['name'], PATHINFO_EXTENSION);
-			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.' . $ImgExt;
+			$FileName = $_SESSION['part_pics_dir'] . '/BRAND-' . $LastInsertId . '.' . $ImgExt;
 
 			 //But check for the worst
 			if (!in_array ($ImgExt, $SupportedImgExt)) {
@@ -143,7 +144,7 @@ if (isset($_POST['submit'])) {
 				 	$UploadTheFile ='No';
 			}
 			foreach ($SupportedImgExt as $Ext) {
-				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $_SESSION['LastInsertId'] . '.' . $Ext;
+				$File = $_SESSION['part_pics_dir'] . '/BRAND-' . $LastInsertId . '.' . $Ext;
 				if (file_exists ($File) ) {
 					$Result = unlink($File);
 					if (!$Result){
@@ -157,8 +158,8 @@ if (isset($_POST['submit'])) {
 				$Result  =  move_uploaded_file($_FILES['BrandPicture']['tmp_name'], $FileName);
 				$Message = ($Result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
 				DB_query("UPDATE manufacturers
-					SET  manufacturers_image='" . 'BRAND-' . $_SESSION['LastInsertId'] . "'
-					WHERE manufacturers_id = '" . $_SESSION['LastInsertId'] . "'
+					SET  manufacturers_image='" . 'BRAND-' . $LastInsertId . "'
+					WHERE manufacturers_id = '" . $LastInsertId . "'
 					");
 			}
 		}
