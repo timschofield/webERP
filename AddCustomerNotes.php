@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
 $Title = _('Customer Notes');

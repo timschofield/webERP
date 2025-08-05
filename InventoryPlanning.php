@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 /* webERP manual links before header.php */
 $ViewTopic = "Inventory";

@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');

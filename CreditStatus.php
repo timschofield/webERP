@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Credit Status Code Maintenance');
 $ViewTopic = 'CreditStatus';
