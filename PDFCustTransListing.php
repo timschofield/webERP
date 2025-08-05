@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/SQL_CommonFunctions.php');
 include('includes/session.php');
 use Dompdf\Dompdf;

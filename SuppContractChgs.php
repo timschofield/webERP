@@ -1,6 +1,5 @@
 <?php
 
-
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Contract objects - containing details of all contract charges
 Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item

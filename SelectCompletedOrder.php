@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 

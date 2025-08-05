@@ -1,6 +1,5 @@
 <?php
 
-
 /*Hard coded for currencies with 2 decimal places */
 
 include('includes/DefinePaymentClass.php');

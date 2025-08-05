@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');
 $ViewTopic = 'PurchaseOrdering';
