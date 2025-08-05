@@ -20,7 +20,7 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 }
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
-	$SQL = "SELECT * FROM geocode_param WHERE 1";
+	$SQL = "SELECT * FROM geocode_param";
 	$ErrMsg = _('An error occurred in retrieving the information');
 	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_array($Result);

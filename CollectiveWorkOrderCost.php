@@ -414,7 +414,7 @@ if (!isset($StockID)) {
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE 1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
+						WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
 						AND workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
 								woitems.stockid";
@@ -434,7 +434,7 @@ if (!isset($StockID)) {
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-							WHERE 1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
+							WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
 							AND woitems.stockid='". $SelectedStockItem ."'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,

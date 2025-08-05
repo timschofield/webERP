@@ -402,7 +402,7 @@ if (isset($_POST['submit'])) {
 		$longitude = 0;
 		if ($_SESSION['geocode_integration'] == 1) {
 			// Get the lat/long from our geocoding host
-			$SQL = "SELECT * FROM geocode_param WHERE 1";
+			$SQL = "SELECT * FROM geocode_param";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$Resultgeo = DB_query($SQL, $ErrMsg);
 			$Row = DB_fetch_array($Resultgeo);
