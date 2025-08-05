@@ -1,6 +1,7 @@
 <?php
-// for compatability with extended char sets
-if ($_SESSION['Language']=='zh_CN'){
+
+// was: "for compatability with extended char sets". But those files do not exist anymore...
+/*if ($_SESSION['Language']=='zh_CN'){
 	include($PathPrefix . 'includes/FPDF_Chinese.php');
 } elseif ($_SESSION['Language']=='ja_JP'){
 	include($PathPrefix . 'includes/FPDF_Japanese.php');
@@ -8,7 +9,9 @@ if ($_SESSION['Language']=='zh_CN'){
 	include($PathPrefix . 'includes/FPDF_Korean.php');
 } else {
 	class PDF_Language extends FPDF { }
-}
+}*/
+
+class PDF_Language extends FPDF { }
 
 class PDF extends PDF_Language {
 	var $y0; // current y position
@@ -616,5 +619,3 @@ function AddSep($Process) {
 		default:  // do nothing if Process not recognized
 	}
 }
-
-?>

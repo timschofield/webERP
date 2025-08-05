@@ -1,5 +1,4 @@
 <?php
-/* $Revision: 1.9 $ */
 
 // Include functions needed for ReportCreator.php
 function PrepStep($StepNum) {
@@ -817,5 +816,3 @@ function CreateFieldList($ReportID,$FName,$Type) {
 	} // for
 	return $FieldList;
 }  // CreateFieldList
-
-?>

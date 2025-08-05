@@ -717,7 +717,6 @@ function GeneratePDFFile($Data, $Prefs) {
 	exit(); // needs to be here to properly render the pdf file.
 }
 
-
 function ReplaceNonAllowedCharacters ($String) {
 	$DodgyCharactersArray = array('"',' ', '&',"'");
 	$ContainsDodgyCharacters = true;
@@ -735,4 +734,3 @@ function ReplaceNonAllowedCharacters ($String) {
 	}
 	return $String;
 }
-?>
