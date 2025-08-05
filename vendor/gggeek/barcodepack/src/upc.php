@@ -7,14 +7,10 @@
  * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
  */
 
-
-
-require_once 'class.linearBarcode.php';
+namespace BarcodePack;
 
 // Error code
 define('E_BAD_UPC_LENGTH', 700);
-
-
 
 /**
  * UPC
@@ -22,8 +18,8 @@ define('E_BAD_UPC_LENGTH', 700);
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class upc extends linearBarcode {
-
+class upc extends linearBarcode
+{
 	/** @var array */
 	private $allowedChars = array(
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -42,7 +38,6 @@ class upc extends linearBarcode {
 		'8' => 'LGLGGLRRRRRR',
 		'9' => 'LGGLGLRRRRRR',
 	);
-
 
 	/**
 	 * Zero represents white line
@@ -69,7 +64,6 @@ class upc extends linearBarcode {
 		'STOP' => '101',
 	);
 
-
 	/**
 	 * Constructor
 	 *
@@ -82,25 +76,23 @@ class upc extends linearBarcode {
 			parent::__construct($text, $moduleSize, $this->allowedChars);
 
 			if(strlen($this->text)!=11) {
-				throw new Exception('Chyba: Délka musí být 11 znaků.', E_BAD_UPC_LENGTH);
+				throw new \Exception('Chyba: Délka musí být 11 znaků.', E_BAD_UPC_LENGTH);
 			}
 
-			// Add zero to the beginnign of code (compatibility with EAN)
+			// Add zero to the beginning of code (compatibility with EAN)
 			$this->text = '0'.$this->text;
 
 			$this->biteCode = $this->createBiteCode();
 		}
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			throw $e;
 		}
-
 	}
-
 
 	/**
 	 * Create Bite Code
 	 *
-	 * @return string
+	 * @return array
 	 */
 	private function createBiteCode()
 	{
@@ -133,7 +125,6 @@ class upc extends linearBarcode {
 		return $biteCode;
 	}
 
-
 	/**
 	 * Checksum
 	 *
@@ -158,22 +149,19 @@ class upc extends linearBarcode {
 		return ceil($sum/10)*10 - $sum;
 	}
 
-
 	/**
 	 * Draw
 	 *
 	 * @param bool $showText
-	 * @return image resource
+	 * @return \GdImage|resource resource
 	 */
 	public function draw($showText = true) {
 		$im = parent::draw(false);
 
 		$margin = $this->margin*$this->moduleSize;
 
-
 		$white = Imagecolorallocate ($im,255,255,255);
 		$black = Imagecolorallocate ($im,0,0,0);
-
 
 		if($showText) {
 
@@ -191,7 +179,6 @@ class upc extends linearBarcode {
 				}
 			}
 
-
 			$textWidth = ImageFontWidth($this->fontSize)*strlen($charsB);
 			imagestring ($im2, $this->fontSize,
 					$this->getBarcodeLen()*$this->moduleSize/4-$textWidth/2+2*$margin,
@@ -205,5 +192,4 @@ class upc extends linearBarcode {
 
 		return $im2;
 	}
-
 }

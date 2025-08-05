@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bf39c09e847fda1e6c962f1315f44ca5",
+    "content-hash": "c74350dcf960c28c506bea58484aa7f4",
     "packages": [
         {
             "name": "composer/pcre",
@@ -239,6 +239,56 @@
                 "source": "https://github.com/dompdf/php-svg-lib/tree/1.0.0"
             },
             "time": "2024-04-29T13:26:35+00:00"
+        },
+        {
+            "name": "gggeek/barcodepack",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/barcodepack.git",
+                "reference": "3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/barcodepack/zipball/3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7",
+                "reference": "3c733128bc7ae7ad0aa98a3b378bd42f279cbcd7",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BarcodePack\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tomáš Horáček"
+                },
+                {
+                    "name": "Gaetano Giunta"
+                }
+            ],
+            "description": "BarcodePack is PHP library which allows you to generate the most common types of barcodes",
+            "keywords": [
+                "barcode"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/barcodepack/issues",
+                "source": "https://github.com/gggeek/barcodepack/tree/1.0.1"
+            },
+            "time": "2025-08-05T15:28:55+00:00"
         },
         {
             "name": "gggeek/polyfill-gettext",

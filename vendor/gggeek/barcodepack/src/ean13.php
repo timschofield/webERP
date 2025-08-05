@@ -1,11 +1,16 @@
 <?php
 
-require_once 'class.linearBarcode.php';
+/**
+ * This file is part of the BarcodePack - PHP Barcode Library.
+ * Copyright (c) 2011 Tomáš Horáček (http://www.barcodepack.com)
+ * BarcodePack by Tomáš Horáček is licensed under
+ * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
+ */
+
+namespace BarcodePack;
 
 // Error Codes
 define('E_BAD_EAN_LENGTH', 600);
-
-
 
 /**
  * EAN 13
@@ -13,8 +18,8 @@ define('E_BAD_EAN_LENGTH', 600);
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class ean13 extends linearBarcode {
-
+class ean13 extends linearBarcode
+{
 	/** @var array */
 	private $allowedChars = array(
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -33,7 +38,6 @@ class ean13 extends linearBarcode {
 		'8' => 'LGLGGLRRRRRR',
 		'9' => 'LGGLGLRRRRRR',
 	);
-
 
 	/**
 	 * Zero represents white line
@@ -60,7 +64,6 @@ class ean13 extends linearBarcode {
 		'STOP' => '101',
 	);
 
-
 	/**
 	 * Constructor
 	 *
@@ -73,23 +76,22 @@ class ean13 extends linearBarcode {
 			parent::__construct($text, $moduleSize, $this->allowedChars);
 
 			if(strlen($this->text)!=12) {
-				throw new Exception('Text length must be 12 characters.', E_BAD_EAN_LENGTH);
+				throw new \Exception('Text length must be 12 characters.', E_BAD_EAN_LENGTH);
 			}
 
 			$this->biteCode = $this->createBiteCode();
 		}
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			throw $e;
 		}
 
 	}
 
-
 	/**
 	 * Create Bite Code
 	 * Create bitecode where 1 represents dark module and 0 white module.
 	 *
-	 * @return string
+	 * @return array
 	 */
 	private function createBiteCode()
 	{
@@ -103,7 +105,7 @@ class ean13 extends linearBarcode {
 		$biteCode['START'] = $this->codeTable['START'];
 
 		for($i=1;$i<strlen($this->text);$i++) {
-			$biteCode[$saveTo] .= $this->codeTable[$this->text[$i]][$parity[$i-1]];
+			$biteCode[$saveTo] .= $this->codeTable[$this->text[$i]][$parity{$i-1}];
 			if($i==6) {
 				$biteCode['SEPARATOR'] = $this->codeTable['SEPARATOR'];
 				$saveTo = 'DATA2';
@@ -122,7 +124,6 @@ class ean13 extends linearBarcode {
 		return $biteCode;
 	}
 
-
 	/**
 	 * Checksum
 	 * Count checksum
@@ -137,9 +138,9 @@ class ean13 extends linearBarcode {
 
 		for($i=1;$i<=strlen($text);$i++) {
 			if($i%2==0) {
-				$evensum += (int) $text[$i-1];
+				$evensum += (int) $text{$i-1};
 			} else {
-				$oddsum += (int) $text[$i-1];
+				$oddsum += (int) $text{$i-1};
 			}
 		}
 
@@ -148,33 +149,31 @@ class ean13 extends linearBarcode {
 		return ceil($sum/10)*10 - $sum;
 	}
 
-
 	/**
 	 * Draw
 	 * Add text into barcode
 	 *
 	 * @param bool $showText
-	 * @return image resource
+	 * @return \GdImage|resource resource
 	 */
-	public function draw($showText = true) {
+	public function draw($showText = true)
+	{
 		$im = parent::draw(false);
 
 		$margin = $this->margin*$this->moduleSize;
 
-
 		$white = Imagecolorallocate ($im,255,255,255);
 		$black = Imagecolorallocate ($im,0,0,0);
-
 
 		if($showText) {
 
 			// Increase space between symbol 2x
-			$im2 = ImageCreate($this->getBarcodeLen()*$this->moduleSize+(2*$margin)+$margin,
+			$im2 = imagecreate($this->getBarcodeLen()*$this->moduleSize+(2*$margin)+$margin,
 				$this->height+$this->fontSize+(2*$margin));
 
 			imagecopy($im2, $im, $margin, 0, 0, 0, $this->getBarcodeLen()*$this->moduleSize+(2*$margin), $this->height+$this->fontSize+(2*$margin));
 
-			// Divide text into three parts and each insert to the diffrerent place
+			// Divide text into three parts and each insert to the different place
 			$charsA = $this->text[0];	// first char
 			for($i=1;$i<=strlen($this->text);$i++) {
 				if($i<=6) {
@@ -205,5 +204,4 @@ class ean13 extends linearBarcode {
 
 		return $im2;
 	}
-
 }
