@@ -3,13 +3,13 @@
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
  	This file is included by most of the scripts (47 from 54 at now) that creates a pdf.
-	This file creates a new instance of the PDF object defined in class.pdf.php
+	This file creates a new instance of the PDF object defined in class.cpdf.php
 	The changes applied to the PDF class affected this file that needed some changes too.
 	Javier de Lorenzo-Cáceres <info@civicom.eu>
 	------------------------------------------------------------------------------------- */
 
 
-require_once (dirname(__FILE__).'/class.pdf.php');
+require_once (dirname(__FILE__).'/class.cpdf.php');
 
 /*
 //	Changes to move from FPDF to TCPDF to support UTF-8 by Javier de Lorenzo-Cáceres <info@civicom.eu>
@@ -205,4 +205,4 @@ $pdf->setAutoPageBreak(0);
 $pdf->setPrintFooter(false);
 $pdf->AddPage();
 $pdf->cMargin = 0;
-/* END Brought from class.pdf.php constructor */
+/* END Brought from class.cpdf.php constructor */

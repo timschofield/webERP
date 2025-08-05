@@ -1,16 +1,7 @@
 <?php
-// for compatability with extended char sets
-if ($_SESSION['Language']=='zh_CN'){
-	include($PathPrefix . 'includes/FPDF_Chinese.php');
-} elseif ($_SESSION['Language']=='ja_JP'){
-	include($PathPrefix . 'includes/FPDF_Japanese.php');
-} elseif ($_SESSION['Language']=='ko_KR'){
-	include($PathPrefix . 'includes/FPDF_Korean.php');
-} else {
-	class PDF_Language extends FPDF { }
-}
 
-class PDF extends PDF_Language {
+class PDF extends Cpdf {
+
 	var $y0; // current y position
 	var $x0; // current x position
 	var $pageY; // y value of bottom of page less bottom margin
@@ -20,7 +11,8 @@ class PDF extends PDF_Language {
 		global $Prefs;
 		define('RowSpace',2); // define separation between the heading rows
 		$PaperSize = explode(':',$Prefs['papersize']);
-		$this->PDF_Language($Prefs['paperorientation'], 'mm', $PaperSize[0]);
+		parent::__construct($Prefs['paperorientation'], 'mm', $PaperSize[0]);
+
 		if ($Prefs['paperorientation']=='P') { // Portrait - calculate max page height
 			$this->pageY = $PaperSize[2]-$Prefs['marginbottom'];
 		} else { // Landscape
@@ -616,5 +608,3 @@ function AddSep($Process) {
 		default:  // do nothing if Process not recognized
 	}
 }
-
-?>

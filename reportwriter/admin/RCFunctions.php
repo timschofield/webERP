@@ -816,5 +816,3 @@ function CreateFieldList($ReportID,$FName,$Type) {
 	} // for
 	return $FieldList;
 }  // CreateFieldList
-
-?>

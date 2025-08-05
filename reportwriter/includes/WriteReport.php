@@ -1,6 +1,5 @@
 <?php
-
-require_once($PathPrefix .'/includes/class.pdf.php');
+require_once($PathPrefix .'/includes/class.cpdf.php');
 
 class PDF extends Cpdf {
 
@@ -717,7 +716,6 @@ function GeneratePDFFile($Data, $Prefs) {
 	exit(); // needs to be here to properly render the pdf file.
 }
 
-
 function ReplaceNonAllowedCharacters ($String) {
 	$DodgyCharactersArray = array('"',' ', '&',"'");
 	$ContainsDodgyCharacters = true;
@@ -735,4 +733,3 @@ function ReplaceNonAllowedCharacters ($String) {
 	}
 	return $String;
 }
-?>

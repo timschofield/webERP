@@ -1,17 +1,16 @@
 <?php
 
-    /* -----------------------------------------------------------------------------------------------
-	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
-	the syntax that WebERP original reports were written in.
-	Due to limitation of R&OS class for foreign character support, this wrapper class was
-	written to allow the same code base to use the more functional fpdf.class by Olivier Plathey.
+/* -----------------------------------------------------------------------------------------------
+This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
+the syntax that WebERP original reports were written in.
+Due to limitation of R&OS class for foreign character support, this wrapper class was
+written to allow the same code base to use the more functional fpdf.class by Olivier Plathey.
 
-	However, due to limitations of FPDF class for UTF-8 support, now this class inherits from
-	the TCPDF class by Nicola Asuni.
+However, due to limitations of FPDF class for UTF-8 support, now this class inherits from
+the TCPDF class by Nicola Asuni.
 
-	Work to move from FPDF to TCPDF by:
-		Javier de Lorenzo-Cáceres <info@civicom.eu>
-	----------------------------------------------------------------------------------------------- */
+Work to move from FPDF to TCPDF by: Javier de Lorenzo-Cáceres <info@civicom.eu>
+----------------------------------------------------------------------------------------------- */
 
 if (!class_exists('Cpdf', false)) {
 
@@ -56,7 +55,6 @@ if (!class_exists('Cpdf', false)) {
 			$this->SetFont($UserPdfFont, '', 11);
 			//     SetFont($family, $style='', $size=0, $fontfile='')
 		}
-
 
 		function newPage() {
 	/* Javier: 	$this->setPrintHeader(false);  This is not a removed call but added in. */
