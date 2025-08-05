@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-include('includes/class.pdf.php');
+include('includes/class.cpdf.php');
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
@@ -203,7 +203,7 @@ if (DB_num_rows($Result)>0){
 	$pdf->AddPage();
 //	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$pdf->cMargin = 0;		// Javier: needs check.
-/* END Brought from class.pdf.php constructor */
+/* END Brought from class.cpdf.php constructor */
 	$pdf->setPrintFooter(true);
 	$FontSize=12;
 	$LineHeight=16;

@@ -11,7 +11,7 @@ if($PageNumber>1) {// Inserts a page break if it is not the first page.
 }
 
 // Prints company logo:
-/*$pdf->addJpegFromFile($_SESSION['LogoFile'], 301, 520, 0, 60);// Old function. See ~/includes/class.pdf.php.*/
+/*$pdf->addJpegFromFile($_SESSION['LogoFile'], 301, 520, 0, 60);// Old function. See ~/includes/class.cpdf.php.*/
 $pdf->Image(
 	$_SESSION['LogoFile'],// Name of the file containing the image.
 	301,// Abscissa from left border to the upper-left corner (LTR).
