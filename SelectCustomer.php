@@ -475,7 +475,7 @@ echo '</form>';
 if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 
-		$SQL = "SELECT * FROM geocode_param WHERE 1";
+		$SQL = "SELECT * FROM geocode_param";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('You must first setup the geocode parameters') . ' ' . '<a href="' . $RootPath . '/GeocodeSetup.php">' . _('here') . '</a>', 'error');

@@ -16,7 +16,7 @@ function parseToXML($htmlStr)
 	return $xmlStr;
 }
 
-$SQL = "SELECT * FROM suppliers WHERE 1";
+$SQL = "SELECT * FROM suppliers";
 $Result = DB_query($SQL);
 
 header("Content-type: text/xml");

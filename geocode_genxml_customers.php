@@ -16,7 +16,7 @@ function parseToXML($htmlStr)
     return $xmlStr;
 }
 
-$SQL = "SELECT * FROM custbranch WHERE 1";
+$SQL = "SELECT * FROM custbranch";
 $Result = DB_query($SQL);
 
 header("Content-type: text/xml");
