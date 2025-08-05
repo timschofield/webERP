@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 
 $Title = _('Reorder Level Location Reporting');
@@ -16,7 +15,7 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 if (isset($_POST['submit'])) {
 	for ($i = 1; $i < count($_POST); $i++) { //loop through the returned customers
 		if (isset($_POST['StockID' . $i]) AND is_numeric(filter_number_format($_POST['ReorderLevel' . $i]))) {
-			$SQLUpdate = "UPDATE locstock 
+			$SQLUpdate = "UPDATE locstock
 						SET reorderlevel = '" . filter_number_format($_POST['ReorderLevel' . $i]) . "',
 							bin = '" . strtoupper($_POST['BinLocation' . $i]) . "'
 						WHERE loccode = '" . $_POST['StockLocation'] . "'
@@ -57,7 +56,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			INNER JOIN stockmaster
 				ON locstock.stockid = stockmaster.stockid
 			INNER JOIN locationusers
-				ON locationusers.loccode = locstock.loccode 
+				ON locationusers.loccode = locstock.loccode
 				AND locationusers.userid = '" . $_SESSION['UserID'] . "'
 				AND locationusers.canview = 1
 			WHERE stockmaster.categoryid = '" . $_POST['StockCat'] . "'
@@ -140,7 +139,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				   locationname
 		    FROM locations
 			INNER JOIN locationusers
-				ON locationusers.loccode = locations.loccode 
+				ON locationusers.loccode = locations.loccode
 					AND locationusers.userid = '" . $_SESSION['UserID'] . "'
 					AND locationusers.canview = 1";
 	$ResultStkLocs = DB_query($SQL);

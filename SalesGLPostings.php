@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';

@@ -1,4 +1,5 @@
 <?php
+
 include('includes/session.php');
 $ViewTopic = 'EDI';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.

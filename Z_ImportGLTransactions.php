@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Import General Ledger Transactions');
 $ViewTopic = 'SpecialUtilities';

@@ -2,7 +2,6 @@
 
 include('includes/class.cpdf.php');
 
-
 /* A4_Landscape */
 $DocumentPaper = 'A4';
 $DocumentOrientation ='L';

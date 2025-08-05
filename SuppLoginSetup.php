@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Supplier Login Configuration');
 include('includes/header.php');

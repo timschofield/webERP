@@ -3,9 +3,11 @@ function ShowHelp(ViewTopic, BookMark) {
 	document.getElementById('help-header').innerHTML='<div id="help_exit" class="close_button" onclick="CloseHelp()" title="Close this window">X</div>';
 	GetContent("help-content", "doc/Manual/Manual"+ViewTopic+".html", BookMark);
 }
+
 function CloseHelp() {
 	document.getElementById("help-bubble").style.display="none";
 }
+
 function GetContent(id, section, BookMark="") {
 	if (window.XMLHttpRequest) {// code for IE7+, Firefox, Chrome, Opera, Safari
 		xmlhttp=new XMLHttpRequest();
@@ -27,7 +29,8 @@ function GetContent(id, section, BookMark="") {
 				}
 				document.title=document.getElementById("title_bar").textContent.substring(0, document.getElementById("title_bar").textContent.length - 2);
 			}
-			OverRideClicks();
+			// gggeek 2025/8/5: OverRideClicks can not be found anywhere. Commenting it out
+			//OverRideClicks();
 			SetSortingEvent();
 		}
 	}
@@ -37,4 +40,4 @@ function GetContent(id, section, BookMark="") {
 	xmlhttp.setRequestHeader("Pragma","no-cache");
 	xmlhttp.send();
 	return false;
-};
+}

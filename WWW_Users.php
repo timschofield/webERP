@@ -204,12 +204,12 @@ if(isset($_POST['submit'])) {
 						pdflanguage='" . $_POST['PDFLanguage'] . "',
 						department='" . $_POST['Department'] . "'
 					WHERE userid = '". $SelectedUser . "'";
-		
+
 		$ErrMsg = _('The user alterations could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user and failed was');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('The selected user record has been updated'), 'success' );
-		
+
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
 		$_SESSION['ShowFieldHelp'] = $_POST['ShowFieldHelp'];
 
@@ -265,7 +265,7 @@ if(isset($_POST['submit'])) {
 
 		$ErrMsg = _('The user insertion could not be processed because');
 		$DbgMsg = _('The SQL that was used to insert the user and failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);		
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('A new user record has been inserted'), 'success');
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
@@ -736,6 +736,10 @@ echo '<field>
 		<select required="required" name="Theme">';
 
 $ThemeDirectories = scandir('css/');
+
+if (!isset($_POST['Theme'])) {
+	$_POST['Theme'] = $DefaultTheme;
+}
 
 foreach($ThemeDirectories as $ThemeName) {
 

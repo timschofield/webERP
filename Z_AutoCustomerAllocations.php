@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 Call this page with:
 	1. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
