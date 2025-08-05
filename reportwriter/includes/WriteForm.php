@@ -1,6 +1,7 @@
 <?php
 
 class PDF extends Cpdf {
+
 	var $y0; // current y position
 	var $x0; // current x position
 	var $pageY; // y value of bottom of page less bottom margin
@@ -11,6 +12,7 @@ class PDF extends Cpdf {
 		define('RowSpace',2); // define separation between the heading rows
 		$PaperSize = explode(':',$Prefs['papersize']);
 		parent::__construct($Prefs['paperorientation'], 'mm', $PaperSize[0]);
+
 		if ($Prefs['paperorientation']=='P') { // Portrait - calculate max page height
 			$this->pageY = $PaperSize[2]-$Prefs['marginbottom'];
 		} else { // Landscape
