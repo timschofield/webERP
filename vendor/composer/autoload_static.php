@@ -52,6 +52,10 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
             'Composer\\Pcre\\' => 14,
             'Complex\\' => 8,
         ),
+        'B' => 
+        array (
+            'BarcodePack\\' => 12,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -123,6 +127,10 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         'Complex\\' => 
         array (
             0 => __DIR__ . '/..' . '/markbaker/complex/classes/src',
+        ),
+        'BarcodePack\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/gggeek/barcodepack/src',
         ),
     );
 

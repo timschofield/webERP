@@ -12,6 +12,7 @@
 		"ext-mbstring": "*",
 		"ext-mysqli": "*",
 		"ext-xml": "*",
+		"gggeek/barcodepack": "^1.0.1",
 		"gggeek/polyfill-gettext": "dev-main as 1.99.99",
 		"phpmailer/phpmailer": "^6.9",
 		"phpoffice/phpspreadsheet": "^4.1",
