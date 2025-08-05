@@ -59,7 +59,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	$Result = mysqli_query($db, $SQL);
 
 	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
-	if ($SQLArray[0] == 'INSERT') {
+	if ($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE') {
 		/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
 		$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 	}
