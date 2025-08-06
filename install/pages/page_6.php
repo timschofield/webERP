@@ -153,7 +153,8 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 			}
 			ob_flush();
 		} else {
-			$Result = copy($Path_To_Root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
+			/// @todo generate an image instead, based on company name
+			$Result = copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
 		}
 	}
 }
