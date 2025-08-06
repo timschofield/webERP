@@ -177,7 +177,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				}
 			}
 
-			// Parameters for addTextWrap are defined in /includes/class.pdf.php
+			// Parameters for addTextWrap are defined in /includes/class.cpdf.php
 			$FormatedSupDueDate = ConvertSQLDate($MyRow['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($MyRow['mrpdate']);
 			$ExtCost = $MyRow['supplyquantity'] * $MyRow['computedcost'];

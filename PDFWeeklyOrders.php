@@ -8,7 +8,7 @@ include('includes/session.php');
 use PHPMailer\PHPMailer\PHPMailer;
 
 include('includes/SQL_CommonFunctions.php');
-include('includes/class.pdf.php');
+include('includes/class.cpdf.php');
 $_POST['FromDate']=date('Y-m-01');
 $_POST['ToDate']= FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate . ' - 7 days'));

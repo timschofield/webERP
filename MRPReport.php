@@ -455,7 +455,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			$Fill=!$Fill;
 		}
 		*/
-		// Parameters for addTextWrap are defined in /includes/class.pdf.php
+		// Parameters for addTextWrap are defined in /includes/class.cpdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text To Display  6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set for transparent
