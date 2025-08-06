@@ -335,15 +335,15 @@ if (isset($_POST['CommitBatch'])){
 											account,
 											narrative,
 											amount)
-					VALUES (
-						12,
-						'" . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . "',
-						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
-						'" . $PeriodNo . "',
-						'" . $ReceiptItem->GLCode . "',
-						'" . mb_substr($ReceiptItem->Narrative, 0, 200) . "',
-						'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate) . "'
-					)";
+						VALUES (
+							12,
+							'" . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . "',
+							'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
+							'" . $PeriodNo . "',
+							'" . $ReceiptItem->GLCode . "',
+							'" . mb_substr($ReceiptItem->Narrative, 0, 200) . "',
+							'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate) . "'
+						)";
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -460,7 +460,7 @@ if (isset($_POST['CommitBatch'])){
 						12,
 						'" . $ReceiptItem->Customer . "',
 						'',
-						'" . $ReceiptItem->OrderPaid . "',
+						'" . (is_numeric($ReceiptItem->OrderPaid) && $ReceiptItem->OrderPaid > 0 ? (int)$ReceiptItem->OrderPaid : 0) . "',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
