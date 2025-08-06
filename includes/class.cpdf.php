@@ -88,7 +88,11 @@ if (!class_exists('Cpdf', false)) {
 
 			//some special characters are html encoded
 			//this code serves to make them appear human readable in pdf file
-			$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');// Convert all HTML entities to their applicable characters.
+			if ($Text !== null and $Text !== '') {
+				$Text = html_entity_decode($Text, ENT_QUOTES, 'UTF-8');
+			} else {
+				$Text = '';
+			}
 
 			$this->x = $XPos;
 			$this->y = $this->h - $YPos - $Height;//RChacon: This -$Height is the difference in yPos between AddText() and AddTextWarp(). It is better "$this->y = $this->h-$YPos", but that requires to recode all the pdf generator scripts.
