@@ -619,7 +619,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/phplot",
-                "reference": "8ddccf3d67b717d04f17db6832648ee2d361a61b"
+                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
             },
             "require": {
                 "ext-gd": "*",
@@ -641,7 +641,7 @@
                 }
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
-            "time": "2025-08-06T09:45:41+00:00"
+            "time": "2025-08-06T10:02:49+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

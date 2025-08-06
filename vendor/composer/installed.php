@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '03e9544791b2c965cf010aa3096e20b2239799cd',
+        'reference' => '46567f4e344a1a415e0a4c0295e8dd5838c0dace',
         'name' => 'timschofield/weberp',
         'dev' => true,
     ),
@@ -111,7 +111,7 @@
             'aliases' => array(
                 0 => '8.0.1',
             ),
-            'reference' => '8ddccf3d67b717d04f17db6832648ee2d361a61b',
+            'reference' => '63f0365661becdc66ab1420b2634a263f996504f',
             'dev_requirement' => false,
         ),
         'phpmailer/phpmailer' => array(
@@ -201,7 +201,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '03e9544791b2c965cf010aa3096e20b2239799cd',
+            'reference' => '46567f4e344a1a415e0a4c0295e8dd5838c0dace',
             'dev_requirement' => false,
         ),
     ),

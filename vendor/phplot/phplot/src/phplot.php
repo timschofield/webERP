@@ -62,7 +62,7 @@ class phplot
     /** PHPlot version constant as a string */
     public const version = '8.0.1-rc1';
     /** PHPlot version constant as a number = major * 10000 + minor * 100 + patch */
-    public const version_id = 80000;
+    public const version_id = 80001;
 
     // All class variables are declared here, and initialized (if applicable).
     // Starting with PHPlot-6.0, most variables have 'protected' visibility
