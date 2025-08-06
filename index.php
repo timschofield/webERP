@@ -35,6 +35,62 @@ if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 
 include('includes/header.php');
 
+if (isset($SupplierLogin) AND $SupplierLogin==1){
+	echo '<section class="MainBody clearfix">';
+	echo '<form class="centre" style="width:30%">
+			<fieldset>
+				<legend>', _('Menu Options'), '</legend>';
+	echo '<table style="width:100%">
+			<tr>
+				<td style="width:auto">
+					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=1">' . _('View or Amend outstanding offers') . '</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=2">' . _('Create a new offer') . '</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . '/SupplierTenders.php?TenderType=3">' . _('View any open tenders without an offer') . '</a></p>
+				</td>
+			</tr>
+		</table>';
+	echo '</fieldset>
+		</form>
+	</section>';
+	include('includes/footer.php');
+	exit;
+} elseif (isset($CustomerLogin) AND $CustomerLogin==1){
+	echo '<section class="MainBody clearfix">';
+	echo '<form class="centre" style="width:30%">
+			<fieldset>
+				<legend>', _('Menu Options'), '</legend>';
+	echo '<table style="width:100%">
+			<tr>
+				<td>
+					<p>&bull; <a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $_SESSION['CustomerID'] . '">' . _('Account Status') . '</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Place An Order') . '</a></p>
+				</td>
+			</tr>
+			<tr>
+				<td class="menu_group_item">
+					<p>&bull; <a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedCustomer=' . $_SESSION['CustomerID'] . '">' . _('Order Status') . '</a></p>
+				</td>
+			</tr>
+		</table>';
+	echo '</fieldset>
+		</form>
+	</section>';
+	include('includes/footer.php');
+	exit;
+}
+
 //=== MainMenuDiv =======================================================================
 echo '<nav class="ModuleList">
 		<ul>'; //===HJ===
