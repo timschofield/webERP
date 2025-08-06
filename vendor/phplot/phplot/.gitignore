@@ -1,0 +1,14 @@
+/.idea
+
+/vendor
+/composer.lock
+
+# no phpunit atm
+#/phpunit.xml
+#/.phpunit.result.cache
+
+/phpcs.xml
+/.phpcs-cache
+
+/build
+/tests/results/

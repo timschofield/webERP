@@ -1,11 +1,11 @@
 <?php
 
 include('includes/session.php');
+
 $Result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $MyRow = DB_fetch_row($Result);
 
-include('includes/phplot/phplot.php');
-$graph = new PHPlot(1000, 500);
+$graph = new Phplot\Phplot\phplot(1000, 500);
 $graph->SetTitle($MyRow[0] . ' ' . _('Usage'));
 $graph->SetXTitle(_('Month'));
 $graph->SetYTitle(_('Quantity'));

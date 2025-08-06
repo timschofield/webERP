@@ -1,0 +1,77 @@
+name: PHPlot CI test suite
+run-name: ${{ github.actor }} Testing calling via 'require src/...' and via 'composer vendor/autoload.php', then run the test suite
+on: [push, pull_request]
+jobs:
+  Test-require-and-composer:
+    runs-on: ${{ matrix.operating-system }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # @see https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+          # @todo run some tests on 'windows-latest'
+          - php: '8.4'
+            operating-system: ubuntu-24.04
+          - php: '8.3'
+            operating-system: ubuntu-24.04
+          - php: '8.2'
+            operating-system: ubuntu-22.04
+          - php: '8.1'
+            operating-system: ubuntu-22.04
+          - php: '8.0'
+            operating-system: ubuntu-22.04
+          - php: '7.4'
+            operating-system: ubuntu-24.04
+              # nb: the version of phpunit we use does not support code coverage generation on php 8
+              #code-coverage: true
+          - php: '7.3'
+            operating-system: ubuntu-24.04
+          - php: '7.2'
+            operating-system: ubuntu-22.04
+          - php: '7.1'
+            operating-system: ubuntu-22.04
+          #- php: '7.0'
+          #  operating-system: ubuntu-22.04
+          #- php: '5.6'
+          #  operating-system: ubuntu-22.04
+          #- php: '5.5'
+          #  operating-system: ubuntu-22.04
+          #- php: '5.4'
+          #  operating-system: ubuntu-22.04
+    steps:
+      - run: echo "🎉 Job was automatically triggered by a ${{ github.event_name }} event."
+      - run: echo "🐧 Job is now running on a ${{ runner.os }} server."
+      - run: echo "🔎 Branch is ${{ github.ref }} and Repository is ${{ github.repository }}."
+      - name: Install required packages
+        run: |
+          sudo apt-get -y install fonts-dejavu
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
+      - name: Set up the required php version
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: gd
+      - run: php --version
+      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - name: See if PHPlot works with "require src/phplot.php"
+        run: php -r "require 'src/phplot.php'; \$plot=new Phplot\\Phplot\\phplot(80, 60);"
+      - name: See if PHPlot truecolor works with "require src/phplot_truecolor.php"
+        run: php -r "require 'src/phplot.php'; require 'src/phplot_truecolor.php'; \$plot=new Phplot\\Phplot\\phplot_truecolor(80, 60);"
+      - name: See if PHPlot works with 'composer vendor/autoload.php'
+        run: composer create-project
+      - run: ls ${{ github.workspace }}
+      - run: php -r "require 'vendor/autoload.php'; \$plot=new Phplot\\Phplot\\phplot(80, 60);"
+      - run: php -r "require 'vendor/autoload.php'; \$plot=new Phplot\\Phplot\\phplot_truecolor(80, 60);"
+      - name: Clean up the vendor dir
+        run: rm -rf vendor
+      - name: Run the test suite
+        run: |
+          export PHP="$(which php)"
+          php tests/run_test.php --all -f
+      - name: End Status
+        run: echo "🍏 This job's status is ${{ job.status }}."
