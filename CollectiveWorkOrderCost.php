@@ -49,7 +49,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				AND reference IN (" . $WOSelected . ")
 				ORDER BY reference";
 			$ErrMsg = _('Failed to retrieve wo cost data');
-		       	$Result = DB_query($SQL,$ErrMsg);
+		       	$Result = DB_query($SQL, $ErrMsg);
 			if (DB_num_rows($Result)>0) {
 				echo '<table class="selection">
 					<thead>

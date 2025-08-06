@@ -49,8 +49,8 @@ if (isset($_POST['submit'])) {
 	$CheckSQL = "SELECT count(*)
 		     FROM suppliertype
 		     WHERE typename = '" . $_POST['TypeName'] . "'";
-	$CheckResult=DB_query($CheckSQL);
-	$CheckRow=DB_fetch_row($CheckResult);
+	$CheckResult = DB_query($CheckSQL);
+	$CheckRow = DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0 and !isset($_POST['Edit'])) {
 		$InputError = 1;
 		prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
@@ -80,9 +80,8 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ( $InputError !=1) {
-	//run the SQL from either of the above possibilites
+	//run the SQL from either of the above possibilities
 		$Result = DB_query($SQL);
-
 
 	// Fetch the default supplier type
 		$SQL = "SELECT confvalue
@@ -118,7 +117,7 @@ if (isset($_POST['submit'])) {
 	$SQL = "SELECT COUNT(*) FROM suppliers WHERE supptype='" . $SelectedType . "'";
 
 	$ErrMsg = _('The number of suppliers using this Type record could not be retrieved because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
 		prnMsg (_('Cannot delete this type because suppliers are currently set up to use this type') . '<br />' .
@@ -127,7 +126,7 @@ if (isset($_POST['submit'])) {
 
 		$SQL="DELETE FROM suppliertype WHERE typeid='" . $SelectedType . "'";
 		$ErrMsg = _('The Type record could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('Supplier type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 		unset ($SelectedType);

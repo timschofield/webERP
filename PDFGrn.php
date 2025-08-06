@@ -57,9 +57,9 @@ if ($GRNNo == 'Preview'){
 			ON grns.itemcode=stockmaster.stockid
 			WHERE grnbatch='". $GRNNo ."'";
 
-	$GRNResult=DB_query($SQL);
+	$GRNResult = DB_query($SQL);
 	$NoOfGRNs = DB_num_rows($GRNResult);
-	if($NoOfGRNs>0) { //there are GRNs to print
+	if ($NoOfGRNs>0) { //there are GRNs to print
 
 		$SQL = "SELECT suppliers.suppname,
 						suppliers.address1,
@@ -71,7 +71,7 @@ if ($GRNNo == 'Preview'){
 				FROM grns INNER JOIN suppliers
 				ON grns.supplierid=suppliers.supplierid
 				WHERE grnbatch='". $GRNNo ."'";
-		$SuppResult = DB_query($SQL,_('Could not get the supplier of the selected GRN'));
+		$SuppResult = DB_query($SQL, _('Could not get the supplier of the selected GRN'));
 		$SuppRow = DB_fetch_array($SuppResult);
 	}
 } // get data to print
@@ -128,7 +128,7 @@ if ($NoOfGRNs >0){
 
 		$SQL = "SELECT stockmaster.controlled
 			    FROM stockmaster WHERE stockid ='" . $MyRow['itemcode'] . "'";
-		$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+		$CheckControlledResult = DB_query($SQL, '<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
 
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
@@ -139,7 +139,7 @@ if ($NoOfGRNs >0){
 					WHERE stockmoves.stockid='" . $MyRow['itemcode'] . "'
 					AND stockmoves.type =25
 					AND stockmoves.transno='" . $GRNNo . "'";
-			$GetStockMoveResult = DB_query($SQL,_('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
+			$GetStockMoveResult = DB_query($SQL, _('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 			while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x-20,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, _('Lot/Serial:'),'right');
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $SerialStockMoves['serialno']);

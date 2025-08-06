@@ -1,5 +1,5 @@
 <?php
-/* Database abstraction for MariaDB */
+/* Database abstraction for MariaDB (based on mysqli) */
 
 define ('LIKE', 'LIKE');
 
@@ -11,7 +11,7 @@ global $db;	// Make sure it IS global, regardless of our context
 // since php 8.1, failures to connect will throw an exception, preventing our own error handling. Reset that
 mysqli_report(MYSQLI_REPORT_ERROR);
 
-$db = mysqli_connect($Host , $DBUser, $DBPassword, $_SESSION['DatabaseName'], $MySQLPort);
+$db = mysqli_connect($Host, $DBUser, $DBPassword, $_SESSION['DatabaseName'], $MySQLPort);
 
 /* check connection */
 if (mysqli_connect_errno()) {
@@ -19,7 +19,7 @@ if (mysqli_connect_errno()) {
 	session_unset();
 	session_destroy();
 	echo '<p>' . _('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
-	exit();
+	exit(1);
 }
 
 if (!$db) {
@@ -32,15 +32,15 @@ if (!$db) {
 mysqli_set_charset($db, 'utf8');
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
-if(isset($DatabaseName)) {
-	if(!mysqli_select_db($db,$DatabaseName)) {
+if (isset($DatabaseName)) {
+	if (!mysqli_select_db($db, $DatabaseName)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset ($DatabaseName);
 		exit();
 	}
 } else {
-	if(!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
+	if (!mysqli_select_db($db, $_SESSION['DatabaseName'])) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
 		unset ($_SESSION['DatabaseName']);
@@ -48,48 +48,53 @@ if(isset($DatabaseName)) {
 	}
 }
 
-//DB wrapper functions to change only once for whole application
+// DB wrapper functions to change only once for whole application
 
 function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
 	global $Debug;
 	global $PathPrefix;
 	global $db;
-	global $Messages;
 
 	$Result = mysqli_query($db, $SQL);
-	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
+	$ErrNo = DB_error_no();
 
-	if($DebugMessage == '') {
-		$DebugMessage = _('The SQL that failed was');
-	}
+	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
 
-	if(DB_error_no() != 0 AND $TrapErrors==true) {
+	if ($ErrNo != 0 AND $TrapErrors) {
 		require_once($PathPrefix . 'includes/header.php');
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
-		if($Debug==1) {
-			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
+		if ($ErrorMessage == '') {
+			/// @todo add default error messages for insert/update/delete queries
+			if ($SQLArray[0] == 'SELECT') {
+				$ErrorMessage = _('An error occurred in retrieving the information');
+			}
 		}
-		if($Transaction) {
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
+		if ($Debug==1) {
+			if ($DebugMessage == '') {
+				$DebugMessage = _('The SQL that failed was');
+			}
+			prnMsg($DebugMessage. '<br />' . $SQL . '<br />', 'error', _('Database SQL Failure'));
+		}
+		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
-			if(DB_error_no() != 0) {
+			if (DB_error_no() != 0) {
 				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error'). ' ' .DB_error_no() );
-			}else{
+			} else {
 				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
 		exit();
-	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($Result)>0)) {
+	} elseif ($ErrNo == 0) {
+		if ($SQLArray[0] == 'INSERT' OR $SQLArray[0] == 'UPDATE') {
+			/// @todo store in the session the table name, so that we can later check it when the user calls `DB_Last_Insert_ID`
+			$_SESSION['LastInsertId'] = mysqli_insert_id($db);
+		}
 
-		$SQLArray = explode(' ', $SQL);
-
-		if(($SQLArray[0] == 'INSERT')
-			OR ($SQLArray[0] == 'UPDATE')
-			OR ($SQLArray[0] == 'DELETE')) {
-
-			if($SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
+		if (isset($_SESSION['MonthsAuditTrail']) AND $_SESSION['MonthsAuditTrail']>0 AND DB_affected_rows($Result)>0) {
+			if (($SQLArray[0] == 'INSERT' or $SQLArray[0] == 'UPDATE' or $SQLArray[0] == 'DELETE') and $SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
 				$AuditSQL = "INSERT INTO audittrail (transactiondate,
 									userid,
 									querystring)
@@ -125,7 +130,7 @@ function DB_data_seek(&$ResultIndex,$Record) {
 }
 
 function DB_free_result($ResultIndex) {
-	if(is_resource($ResultIndex)) {
+	if (is_resource($ResultIndex)) {
 		mysqli_free_result($ResultIndex);
 	}
 }
@@ -150,13 +155,11 @@ function DB_error_msg() {
 }
 
 function DB_Last_Insert_ID($Table, $FieldName) {
-//	return mysqli_insert_id($Conn);
-	if(isset($_SESSION['LastInsertId'])) {
+	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
 	} else {
 		$Last_Insert_ID = 0;
 	}
-//	unset($_SESSION['LastInsertId']);
 	return $Last_Insert_ID;
 }
 
@@ -176,7 +179,7 @@ function DB_show_fields($TableName) {
 }
 
 function interval( $val, $Inter ) {
-		return "\n".'interval ' . $val . ' ' . $Inter . "\n";
+	return "\n".'interval ' . $val . ' ' . $Inter . "\n";
 }
 
 function DB_Maintenance() {
@@ -206,6 +209,7 @@ function DB_Txn_Commit() {
 
 function DB_Txn_Rollback() {
 	global $db;
+	/// @todo raise a user_error if we are not in a transaction (record the tx start and end in DB_Txn_Begin/DB_Txn_Commit)
 	mysqli_query($db,'ROLLBACK');
 }
 
@@ -220,7 +224,7 @@ function DB_ReinstateForeignKeys() {
 }
 
 function DB_table_exists($TableName) {
-	global $db;
+	//global $db;
 
 	$SQL = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = '" . $TableName . "'";
 	$Result = DB_query($SQL);

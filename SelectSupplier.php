@@ -21,8 +21,7 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$SQL = "SELECT * FROM geocode_param";
-	$ErrMsg = _('An error occurred in retrieving the information');
-	$Result = DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$SQL = "SELECT suppliers.supplierid,
 				suppliers.lat,
@@ -30,8 +29,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 			FROM suppliers
 			WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
 			ORDER BY suppliers.supplierid";
-	$ErrMsg = _('An error occurred in retrieving the information');
-	$Result2 = DB_query($SQL, $ErrMsg);
+	$Result2 = DB_query($SQL);
 	$MyRow2 = DB_fetch_array($Result2);
 	$lat = $MyRow2['lat'];
 	$lng = $MyRow2['lng'];
@@ -384,8 +382,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					FROM suppliers INNER JOIN currencies
 					ON suppliers.currcode=currencies.currabrev
 					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
-			$ErrMsg = _('An error occurred in retrieving the information');
-			$DataResult = DB_query($SQL, $ErrMsg);
+			$DataResult = DB_query($SQL);
 			$MyRow = DB_fetch_array($DataResult);
 			// Select some more data about the supplier
 			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
