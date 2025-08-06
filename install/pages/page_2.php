@@ -73,7 +73,7 @@ if (!in_array('mbstring', $Extensions)) {
 	echo '<div class="success">' . _('The mbstring extension is correctly installed') . '</div>';
 }
 
-//Check the extension module
+//Check the libxml extension
 if (!in_array('libxml', $Extensions)) {
 	$InputError = 1;
 	echo '<div class="error">' . _('The libxml extension is not available in your PHP') . '</div>';
