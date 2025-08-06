@@ -1,13 +1,11 @@
 <?php
 
-
 include('includes/session.php');
 
 $Title = _('Sales Area Maintenance');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'Areas';
 include('includes/header.php');
-
 
 if (isset($_GET['SelectedArea'])){
 	$SelectedArea = mb_strtoupper($_GET['SelectedArea']);

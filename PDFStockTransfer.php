@@ -1,6 +1,5 @@
 <?php
 
-
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
 include('includes/session.php');

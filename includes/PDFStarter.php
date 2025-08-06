@@ -1,6 +1,5 @@
 <?php
 
-
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
  	This file is included by most of the scripts (47 from 54 at now) that creates a pdf.

@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Search Work Orders');
 $ViewTopic = 'Manufacturing';

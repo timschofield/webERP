@@ -1,6 +1,5 @@
 <?php
 
-
 /*The ImportBankTransClass contains the structure ofinformation about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of
 GLEntries objects to hold the GL analysis for each transaction */

@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Freight Costs Maintenance');
 $ViewTopic = 'Setup';

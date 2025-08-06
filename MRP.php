@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: MRP.php 7959 2018-02-13 04:04:59Z turbopt $*/
-
 include('includes/session.php');
 $Title = _('Run MRP Calculation');
 $ViewTopic = 'MRP';

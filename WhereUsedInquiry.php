@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Where Used Inquiry');
 $ViewTopic = 'Manufacturing';

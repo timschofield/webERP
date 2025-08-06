@@ -1,6 +1,5 @@
 <?php
 
-
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
 

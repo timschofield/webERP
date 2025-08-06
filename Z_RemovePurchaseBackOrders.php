@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title=_('Remove Purchase Order Back Orders');
 $ViewTopic = 'SpecialUtilities';

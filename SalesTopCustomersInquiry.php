@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Top Customer Sales Inquiry');
 $ViewTopic = 'Sales';

@@ -1,6 +1,5 @@
 <?php
 
-
 /*PDF page header for user defined sales reports */
 
 if ($PageNumber>0){

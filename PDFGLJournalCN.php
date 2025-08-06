@@ -1,5 +1,4 @@
 <?php
-/* $Revision: 1.5 $2012.2CQZ二次修改 */
 
 include('includes/session.php');
 if (isset($_POST['JournalNo'])) {

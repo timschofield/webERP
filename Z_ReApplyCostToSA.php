@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title=_('Apply Current Cost to Sales Analysis');
 $ViewTopic = 'SpecialUtilities';
