@@ -5,6 +5,13 @@
 	"license": "GPL-2.0-only",
 	"homepage": "https://www.weberp.org/",
 	"keywords": [ "erp" ],
+	"_comment": "We use a patched version of phplot, while we wait for upstream to remove warnings with php 8",
+	"repositories": [
+		{
+			"type": "git",
+			"url": "https://github.com/gggeek/phplot"
+		}
+	],
 	"_note": "the mysqli extension is required by the installer. Once we add to it support for mysql and pdo, it can be demoted to suggested",
 	"require": {
 		"php": "^8.1",
@@ -12,11 +19,12 @@
 		"ext-mbstring": "*",
 		"ext-mysqli": "*",
 		"ext-xml": "*",
+		"dompdf/dompdf": "^3.1",
 		"gggeek/barcodepack": "^1.0.1",
 		"gggeek/polyfill-gettext": "dev-main as 1.99.99",
+		"phplot/phplot": "dev-release-candidate-for-8.0.1 as 8.0.1",
 		"phpmailer/phpmailer": "^6.9",
 		"phpoffice/phpspreadsheet": "^4.1",
-		"dompdf/dompdf": "^3.1",
 		"phpxmlrpc/phpxmlrpc": "^4.11.0",
 		"tecnickcom/tcpdf": "=6.8.0"
 	},
@@ -37,7 +45,7 @@
 	"autoload": {
 		"psr-4": {"webERP\\": "src/"}
 	},
-	"_comment": "Since we ship dependecies, force Composer not to download anything which requires a bigger php version",
+	"_comment_2": "Since we ship dependecies, force Composer not to download anything which requires a bigger php version",
 	"config": {
 		"platform": {
 			"php": "8.1.0"

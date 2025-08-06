@@ -1,9 +1,8 @@
 <?php
 
 include('includes/session.php');
-include('includes/phplot/phplot.php');
-$Title=_('Sales Report Graph');
 
+$Title=_('Sales Report Graph');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'SalesGraph';
 
@@ -228,7 +227,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	include('includes/footer.php');
 } else {
 
-	$graph = new PHPlot(950,450);
+	$graph = new Phplot\Phplot\phplot(950,450);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';

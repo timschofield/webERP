@@ -1,0 +1,678 @@
+<!--
+     Change Log Appendix for PHPlot Reference Manual
+-->
+<appendix id="changelog">
+<title>Change Log</title>
+<abstract><title></title>
+  <para>
+This is the summary change log for the PHPlot Reference Manual, up to 2016-01-01. For a more detailed list of changes,
+see the ChangeLog file in the 'doc/manual' directory in the Git repository. For changes to PHPlot itself,
+see the ChangeLog file in the 'doc' directory. For more recent changes, look at the Git log).
+  </para>
+</abstract>
+
+<variablelist>
+
+  <varlistentry>
+    <term>2015-11-02</term>
+    <listitem>
+      <para>
+Released updated version of the manual corresponding to PHPlot-6.2.0.
+This documents the new plot types <literal>squaredarea</literal> and
+<literal>stackedsquaredarea</literal>, and extended <literal>printf</literal>
+custom label formatting.
+Numerous small corrections have been made throughout the manual, including
+changes for PHP-7, and changes based on phpdoc comments made in the PHPlot code.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2013-05-11</term>
+    <listitem>
+      <para>
+Released updated version of the manual corresponding to PHPlot-6.1.0.
+This documents the new <literal>boxes</literal> plot type for Box Plots,
+and the new <literal>data-data-yx-error</literal> data type for
+horizontal error plots.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2013-04-03</term>
+    <listitem>
+      <para>
+Released updated version of the manual corresponding to PHPlot-6.0.0.
+This is a summary of the changes:
+        <itemizedlist>
+          <listitem>
+            <para>
+New <xref linkend="adv-imgmap"/> on creating image maps for PHPlot images.
+This was previously an experimental feature documented in a text file
+<filename>Imagemaps.txt</filename> included in previous PHPlot releases.
+New examples were added.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+New <xref linkend="adv-autorange"/> describes the new phplot-6.0.0
+automatic range and tick increment calculations in detail.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+Documented new phplot functions (methods) in the Function Reference:
+<xref linkend="SetDrawDataBorders" />,
+<xref linkend="SetDrawPieBorders" />,
+<xref linkend="SetDrawYDataLabelLines" />,
+<xref linkend="SetLegendBgColor" />,
+<xref linkend="SetLegendColorboxBorders" />,
+<xref linkend="SetLegendTextColor" />,
+<xref linkend="SetPieBorderColor" />,
+<xref linkend="SetPieDirection" />,
+<xref linkend="SetPieStartAngle" />,
+<xref linkend="TuneXAutoRange" />,
+<xref linkend="TuneXAutoTicks" />,
+<xref linkend="TuneYAutoRange" />, and
+<xref linkend="TuneYAutoTicks" />.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+Added small plot images to the table of plot types in
+<xref linkend="conc-plottypes"/>.
+            </para>
+          </listitem>
+          <listitem>
+            <para>
+Documented all changes to internal functions and class variables in the
+Developers Guide section.
+            </para>
+          </listitem>
+        </itemizedlist>
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2012-04-06</term>
+    <listitem>
+      <para>
+Released updated version of the manual corresponding to PHPlot-5.8.0.
+<xref linkend="adv-serialize"/> and <xref linkend="adv-streaming"/>
+under <xref linkend="advanced"/>
+were added, documenting new features.
+The section on label formatting was broken apart into a separate
+sub-section for each formatting type, and now includes documentation for
+the new arguments to custom formatting callback functions.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2012-02-25</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.7.0.
+This includes documentation for new function DrawMessage() (with example),
+and new label color controls SetDataLabelColor(), SetDataValueLabelColor(),
+SetPieLabelColor(), and SetTickLabelColor(). The table in Plot Element
+Colors has been expanded to include default colors.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2012-01-02</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.6.0.
+This includes new material and examples for pie chart label types and formats.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-07-30</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.5.0.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-06-09</term>
+    <listitem>
+      <para>
+Added a new chapter at the end of Part III, Developer's Guide to PHPlot
+with a list of PHPlot class constants. (Since there is only one constant,
+this is a very short chapter.)
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-05-27</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.4.0.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-01-15</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.3.1.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-01-11</term>
+    <listitem>
+      <para>
+Added a new section in the Advanced chapter on placing multiple plots
+on an image, and added a new example of overlay plots.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2011-01-05</term>
+    <listitem>
+      <para>
+Added a short new section in the Advanced chapter showing how to extend
+the PHPlot class to customize default settings.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-12-26</term>
+    <listitem>
+      <para>
+New sub-section in Concepts chapter, Colors section, showing which function
+is used to set the color for each plot element.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-12-04</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.3.0.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-12-03</term>
+    <listitem>
+      <para>
+Document 2 new functions to control drawing of the axis lines.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-11-18</term>
+    <listitem>
+      <para>
+Restructuring.
+Too much advanced material was ending up in the basic programming chapter
+"Concepts". There is now a new chapter "Advanced", which includes the material
+on Callbacks (demoted from chapter to section), plus two sections previously
+in "Concepts": custom data color callback, and truecolor images.
+Also moved the Functions by Category chapter after Examples, not before.
+      </para>
+      <para>
+Added new section "Tuning Parameters" in the Advanced chapter, to provide
+more information about class variables that can be set to adjust plot
+appearance.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-11-16</term>
+    <listitem>
+      <para>
+Documented 3 new plot types - OHLC financial plots, with examples.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-10-03</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.2.0.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-09-30</term>
+    <listitem>
+      <para>
+Changes for new color processing. Mostly internal functions and methods,
+but also two new public methods were added for controlling title colors.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-09-27</term>
+    <listitem>
+      <para>
+Document new behavior of stackedbar plots with negative values.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-09-25</term>
+    <listitem>
+      <para>
+Changes for new X and Y axis position defaults.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-09-13</term>
+    <listitem>
+      <para>
+Documentation was added and changes made for horizontal plot types and their
+new data types.
+(This was previously an experimental feature, documented in a text file
+included in with the PHPlot release.)
+Three new examples were added, showing horizontal plot types.
+      </para>
+      <para>
+A terminology change was necessary due to the introduction of horizontal plots
+and dual use of Y data labels, which are now symmetrical with X data labels.
+Previously, <emphasis>data labels</emphasis> referred to labels from the
+data array which were displayed along the X axis or top edge, and
+<emphasis>Y data labels</emphasis> referred to the Y bar value labels
+displayed within the plot area.
+The manual now distinguishes these by type, not axis. <emphasis>Axis data
+labels</emphasis> are labels from the data array which are displayed along the
+independent variable axis, and <emphasis>data value labels</emphasis> show the
+value of a data point using the dependent variable. The general term
+<emphasis>data labels</emphasis> is used to refer to both types of labels. (For
+example, SetXDataLabelAngle applies to data labels - both axis data labels
+and data value labels.)
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-09-08</term>
+    <listitem>
+      <para>
+Changes were made throughout the manual to support production of a PDF
+version. The changes should have only a small impact on the HTML version.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-08-30</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.1.3.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-08-27</term>
+    <listitem>
+      <para>
+Rewrote and updated sections related to TrueType font handling. Starting
+after PHPlot-5.1.2 this works differently and hopefully better.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-08-19</term>
+    <listitem>
+      <para>
+Removed the Extra Data Processing section in the Concepts chapter, and
+removed the <filename>phplot_data.php</filename> file from the installation
+steps. This file has been removed from the release. (Reference bug report
+3048267.)
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-07-29</term>
+    <listitem>
+      <para>
+Document the new data color customization callback with a new section in
+the Concepts chapter and two new examples.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-06-28</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.1.2.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-06-13</term>
+    <listitem>
+      <para>
+New section added to PHPlot Concepts chapter on using truecolor images. The
+reference and developer information were also updated, and a new example
+was added.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-05-30</term>
+    <listitem>
+      <para>
+Documented changes to image border and plot border functions.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-04-18</term>
+    <listitem>
+      <para>
+Added a new example to the examples chapter with a complete mini-application
+containing a web form and form handling script.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-04-03</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.1.1.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2010-03-25</term>
+    <listitem>
+      <para>
+Document new Y Data Labels for stacked bar charts.
+      </para>
+      <para>
+Document new plot type 'stackedarea'.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-12-24</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.1.0.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-12-14</term>
+    <listitem>
+      <para>
+Document 4 new functions and changes to existing functions related to new
+controls on data labels versus tick labels.
+      </para>
+      <para>
+Removed function list from Getting Started chapter, because it was out of
+date and duplicated material in another chapter.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-12-10</term>
+    <listitem>
+      <para>
+Added sections to the Concepts chapter about using TrueType fonts and
+special characters, because it didn't seem to have been documented anywhere
+else.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-11-18</term>
+    <listitem>
+      <para>
+Added a new section to the Callbacks chapter about using a callback for
+annotating a plot.
+This goes with a new example added to the Examples chapter.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-11-06</term>
+    <listitem>
+      <para>
+Added a new chapter to Part III Developer's Guide documenting the internal
+member class variables.
+The chapter on Callbacks has been moved from Part III up into Part I.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-10-12</term>
+    <listitem>
+      <para>
+Documented SetImageBorderType('none') and Set[XY]LabelType('').
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-07-21</term>
+    <listitem>
+      <para>
+Updated SetNumberFormat to document a new hook variable to override locale,
+and fixed the example under SetXLabelType on rendering a Euro symbol.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2009-06-14</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.0.7.
+      </para>
+      <para>
+PHPlot license is now LGPL-2.1.
+      </para>
+      <para>
+Add information to SetRGBArray about using large and custom color maps.
+      </para>
+      <para>
+Updates to Developer's Guide and Reference sections to document new feature
+allowing partial margin specifications in SetMarginsPixels and
+SetPlotAreaPixels.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2009-01-21</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.0.6.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2008-09-21</term>
+    <listitem>
+      <para>
+Changes were made for the next PHPlot release, including new label
+formatting types and mixed GD/TTF text types.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2008-07-22</term>
+    <listitem>
+      <para>
+Reference sections were changed to add a History subsection, detailing
+behavior in previous releases. This information was previously in the Notes
+subsections, but is not usually relevant to users of the current release.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2008-01-12</term>
+    <listitem>
+      <para>
+Update copyright year to 2008.
+      </para>
+      <para>
+Updates to Part III, Developer's Guide for changes in internal functions
+used for text handling and margin/scale processing. Updated figure showing
+the plot layout.
+      </para>
+      <para>
+Added new chapter to Developer's Guide on the callbacks feature, and added
+documentation of the 3 public functions used with callbacks to the Function
+Reference. The text is based on the <filename>Callbacks</filename> file
+which was included with PHPlot-5.0.4 (and will removed in the next release).
+Although this is now documented in the manual,
+the callbacks feature is still considered experimental.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2007-11-22</term>
+    <listitem>
+      <para>
+Added new section to Concepts chapter on error handling.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2007-10-19</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.0.4, which
+should be released in the next few days.
+      </para>
+      <para>
+Added documentation for new function SetLegendStyle.
+      </para>
+      <para>
+Removed use of reference assignment (<literal>=&amp;</literal>)
+in all inline examples, external examples, and reference material when
+creating a PHPlot object. Added note to PHPlot constructor reference
+explaining why.
+      </para>
+      <para>
+Added documentation for new function SetNumberFormat.
+      </para>
+      <para>
+Added new Part III - PHPlot Developer's Guide. This includes two layout figures
+and a list of internal functions. This is mostly intended as reference
+material for maintainers of PHPlot, but may be of use to others as well.
+More text may be added to this part in the future.
+      </para>
+      <para>
+Document the requirement that style arrays use zero-based sequential integer
+indexes only. This includes colors, point shapes/sizes, line widths, and
+line styles.
+      </para>
+    </listitem>
+  </varlistentry>
+  <varlistentry>
+    <term>2006-12-01</term>
+    <listitem>
+      <para>
+Released updated version of the manual to correspond to PHPlot-5.0rc3.
+Documented new Y data labels for bar charts and line/point suppression.
+Add a note on how to get borderless, unshaded bars (needed due to a recent
+bug fix).
+      <para>
+      </para>
+Updates were applied to the installation section to match the README
+included with 5.0rc3. Minimum PHP level corrected to 4.3.0, and noted that
+PHP 5 works, as this has now been tested. Deleted note about included
+examples and documentation; these have been removed from the release.
+      </para>
+      <para>
+Three examples which use random data where changed to use a fixed seed,
+so the results are repeatable.
+      </para>
+      <para>
+A new example was added, showing a bar chart with data labels.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2006-11-11</term>
+    <listitem>
+      <para>
+Released manual dated 2006-11-11 to sourceforge.net. This is the first
+release of the manual on SourceForge. It corresponds to PHPlot-5.0rc2 with
+several patches applied.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry>
+    <term>2006-09-24</term>
+    <listitem>
+      <para>
+Conversion of manual from DocBook-SGML to DocBook-XML. Reorganized, so the
+reference section is now alphabetical by function name, with a new chapter
+for category grouping of functions.
+      </para>
+    </listitem>
+  </varlistentry>
+
+
+  <varlistentry>
+    <term>2005-02-27</term>
+    <listitem>
+      <para>
+Limited release of draft manual dated 2005-02-27.
+      </para>
+    </listitem>
+  </varlistentry>
+
+
+  <varlistentry>
+    <term>2005-02-06</term>
+    <listitem>
+      <para>
+Limited release of draft manual dated 2005-02-06.
+      </para>
+    </listitem>
+  </varlistentry>
+
+
+</variablelist>
+
+</appendix>

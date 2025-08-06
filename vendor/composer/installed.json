@@ -638,6 +638,39 @@
             "install-path": "../masterminds/html5"
         },
         {
+            "name": "phplot/phplot",
+            "version": "dev-release-candidate-for-8.0.1",
+            "version_normalized": "dev-release-candidate-for-8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/phplot",
+                "reference": "8ddccf3d67b717d04f17db6832648ee2d361a61b"
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=7.1"
+            },
+            "time": "2025-08-06T09:45:41+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Phplot\\Phplot\\": "src/"
+                }
+            },
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "AJRepo",
+                    "email": "AJRepo@users.noreply.github.com"
+                }
+            ],
+            "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+            "install-path": "../phplot/phplot"
+        },
+        {
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
             "version_normalized": "6.10.0.0",

@@ -1,0 +1,401 @@
+<!--
+     Getting Started chapter for PHPlot Reference Manual
+     Original material is from 'quickstart.html' distributed with PHPlot.
+-->
+<chapter id="starting">
+<title>Getting Started with PHPlot</title>
+
+<abstract><title></title>
+  <para>
+This chapter will help you get started with PHPlot.
+  </para>
+  <para>
+The material in this chapter was originally from the PHPlot Quick Start
+and Examples document, by Afan Ottenheimer and Miguel de Benito,
+distributed with PHPlot. It has undergone much editing and any mistakes
+are not their fault.
+  </para>
+</abstract>
+
+<sect1 id="starting-intro">
+<title>Introduction</title>
+<para>
+Many web sites need to create real-time or dynamic charts and graphs from
+live data sets. Many users have found PHP a great way for this dynamic
+creation of images using the <link linkend="def-gd">GD</link> library.
+The advantage of using the server to create an image (that is, using a
+server-side scripting language rather than a client-side language such as
+Javascript) is that one does not have to worry about browser compatibility or
+client operating system compatibility issues.
+</para>
+
+<para>
+PHPlot is a specialized graphics library which provides a means for your
+PHP-enabled web server to create and manipulate graphs as objects and
+display the completed graph as an image.
+PHPlot uses the GD library to create elementary shapes such as lines,
+rectangles, and text, but hides the details of GD from the application
+programmer.
+</para>
+
+<para>
+Data sets are passed to PHPlot using PHP arrays, in a convenient format
+for database-driven sites.
+</para>
+
+<para>
+First, lets discuss how PHPlot works in general with some terminology.
+(More complete definitions can be found in <xref linkend="conc-defs" />.)
+A PHPlot <emphasis>image</emphasis> can consist of several
+<emphasis>graphs</emphasis> (but usually has only one), each graph consisting
+of several <emphasis>elements</emphasis> (like lines, axes, and labels).
+</para>
+
+<para>
+To use PHPlot, you create a PHP object from the PHPlot class, for example:
+<programlisting><![CDATA[$plot = new phplot;
+]]></programlisting>
+Then you set the properties of the object, by using a series of function
+calls (actually methods of the class). These define the characteristics of
+the image, the graph or graphs, and their elements. This includes setting
+the array containing the data to be plotted, defining titles if you want
+them, and many optional elements and style settings. You can think of this
+as "drawing" elements into the image, but in fact PHPlot just notes your
+intentions and doesn't do much until you are finished.
+</para>
+
+<para>
+When you are done describing a graph, you instruct PHPlot to "draw" the
+graph into the image. When you are done with all graphs in an image,
+you need to instruct PHPlot to "print" (output) the image.
+Since most images contain only one graph, PHPlot simplifies
+this process by default. Unless instructed otherwise, PHPlot will "print"
+the image (output it to the browser) as soon as you tell it to "draw"
+(render) the first graph.
+</para>
+
+<para>
+Usually, PHPlot will "print" the image directly to the user's browser.
+The result will be a complete HTTP response with headers, so your PHP
+script must not produce any other output (except for optional headers).
+The user will be see the image either as a result of accessing your
+script directly with a URL, like
+<literal>http://www.example.com/graphs/myplot.php</literal>,
+or you can embed the image in a web page using an image tag, like this:
+<screen><![CDATA[<IMG SRC="http://www.example.com/graphs/myplot.php">
+]]></screen>
+</para>
+
+<para>
+Instead of sending the image to the browser, your application can instead
+choose to write the PHPlot image to a file on the server. This could be
+useful if you want to implement server-side caching of image files.
+(PHPlot itself does not currently provide caching.)
+</para>
+
+<para>
+Before continuing, we need to mention coordinates.
+PHPlot uses two coordinate spaces: one for the image, and one for the
+data you are plotting.
+<emphasis>World Coordinates</emphasis>
+are the X,Y coordinates of your data, relative to the axis origin,
+in the units of the data sets.
+Your data array uses world coordinates, as do tick mark labels on the X and
+Y axis.
+<emphasis>Device Coordinates</emphasis>
+measure pixels in the image according the the GD convention, with
+the origin in the upper left corner of the image. These are also
+called Pixel Coordinates.
+PHPlot tries to place elements on your graph appropriately, but if
+you need to override its choices you will use device coordinates to
+position the elements.
+</para>
+
+<para>
+The rest of this chapter explains how to write a PHP script which creates
+a plot using PHPlot.
+Information on PHP can be found at
+<ulink url="https://www.php.net/">www.php.net</ulink>.
+Information about the GD library which PHP uses to create images can
+be found at <ulink url="https://libgd.github.io/">libgd.org</ulink>.
+More information about PHPlot can be found at
+<ulink url="https://github.com/PHPlot/phplot">github.com/PHPlot/phplot</ulink>.
+</para>
+</sect1>
+
+<sect1 id="starting-create">
+<title>Creating the Object</title>
+<para>
+You create a PHPlot object by first including the code to be used,
+and then defining the variable:
+<programlisting><![CDATA[<?php
+require_once 'phplot.php';  // here we include the PHPlot code
+$plot = new phplot;    // here we define the variable
+
+//Rest of code goes below
+]]></programlisting>
+</para>
+
+<para>
+The above code assigns the PHPlot object to the variable
+<literal>$plot</literal>.
+</para>
+
+</sect1>
+
+<sect1 id="starting-simple">
+<title>A Simple Graph</title>
+<para>
+We will start with a simple line graph.
+&qs1;
+</para>
+
+<para>
+<?dbfo keep-together="always"?>
+And that's it! What we get is the following graph:
+
+<informalfigure>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="examples/qs1.png" scale="58" format="PNG" />
+    </imageobject>
+    <textobject>
+      <phrase>Simple line graph</phrase>
+    </textobject>
+  </mediaobject>
+</informalfigure>
+</para>
+
+<para>
+That's a great start, but now we would like to specify the width and height
+of the image, and add some titles.
+</para>
+
+</sect1>
+
+<sect1 id="starting-more">
+<title>Different Size Images and Titles</title>
+<para>
+Let's say we want our plot to be bigger, 800 pixels wide and 600 pixels high.
+So instead of having the line
+  <programlisting><![CDATA[$plot = new phplot;
+]]></programlisting>
+</para>
+<para>
+We replace it with
+  <programlisting><![CDATA[$plot = new phplot(800,600);
+]]></programlisting>
+and you have specified the size in pixels of the image to be created.
+</para>
+<para>
+A couple of things to note:
+  <itemizedlist>
+    <listitem>
+      <para>
+The default is not to use TrueType fonts.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Since there was only one graph on the image, we didn't have to
+use PrintImage. DrawGraph took care of it for us.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+We did not specify the data type. If you do not specify the data
+type, PHPlot assumes <literal>text-data</literal>.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+We did not specify the file type (GIF, PNG, JPEG, ...).
+PHPlot 5.0 (and newer) makes PNG images by default.
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+The data is passed in as an array of arrays. This may seem awkward
+now, but as we add functionality this will be beneficial.
+      </para>
+    </listitem>
+  </itemizedlist>
+</para>
+
+<para>
+OK, now we're ready to add some customization to the plot. Let's change
+the size, the title and the X/Y axis labels. All we need to do is use
+additional methods of the <literal>$plot</literal> object before
+printing the image. Here is the complete result:
+
+&qs2;
+</para>
+
+<para>
+<?dbfo keep-together="always"?>
+And that's it! What we get is the following graph:
+
+<informalfigure>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="examples/qs2.png" scale="58" format="PNG" />
+    </imageobject>
+    <textobject>
+      <phrase>Line graph with titles and labels</phrase>
+    </textobject>
+  </mediaobject>
+</informalfigure>
+</para>
+
+<para>
+Note that the newline character "\n" separates multiple lines
+in titles, and you must use double quotes around the title string for PHP
+to recognize the newline.
+</para>
+</sect1>
+
+<sect1 id="start-multiple">
+<title>Multiple Lines Per Graph</title>
+<para>
+Let's say we want to plot not just one dataset, but several Y values for
+each X position. With PHPlot, it is easy to specify the multiple data lines
+by just passing in all the Y values for a given X value at once.
+So instead of <literal>array('label', y)</literal>,
+we specify <literal>array('label', y<subscript>1</subscript>,
+y<subscript>2</subscript>, y<subscript>3</subscript>, ...)</literal>.
+This is very convenient when working with rows of data from databases.
+</para>
+
+<para>
+Now our data will have three Y values for each position on the X axis.
+&qs3;
+</para>
+
+<para>
+<?dbfo keep-together="always"?>
+Which gives us:
+<informalfigure>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="examples/qs3.png" scale="58" format="PNG" />
+    </imageobject>
+    <textobject>
+      <phrase>Multiple lines on a graph</phrase>
+    </textobject>
+  </mediaobject>
+</informalfigure>
+</para>
+
+<para>
+Notice that each set of Y data gets a different color.
+Also the missing data point (label 'b' on the green line) is skipped.
+This behavior can be adjusted with <xref linkend="SetDrawBrokenLines" />.
+</para>
+
+
+<para>
+This gives you the basics of how to create a graph in PHPlot.
+A nice start, but now we'd like to add some customization, namely different
+fonts, margins and types of graphs.
+</para>
+
+</sect1>
+
+<sect1 id="starting-custom">
+<title>Customization</title>
+<para>
+PHPlot can draw these types of plots:
+  <itemizedlist>
+    <listitem>
+      <para>
+Bars (with optional shadows) and Stacked Bars, both vertical and horizontal
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Lines
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Points (a lot of point shapes are available)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Linepoints (as you might expect, both points and lines)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Area and Stacked Area
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Pie (2D or 3D look)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Thinbarline (sometimes also called impulse), both vertical and horizontal
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Lines, Points, and Linepoints with Error bars
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Squared (steps)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Bubbles
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Open/High/Low/Close (shows price changes for a stock, for example)
+      </para>
+    </listitem>
+    <listitem>
+      <para>
+Boxes (5-number statistical summary)
+      </para>
+    </listitem>
+  </itemizedlist>
+</para>
+
+<para>
+You specify which type of plot you want with the <xref linkend="SetPlotType" />
+function.
+</para>
+
+<para>
+There are many ways we can change the look and feel of the graph.
+Almost every parameter of the graph, including ticks, grids, and data labels,
+can be adjusted using PHPlot functions.
+A categorized list of these functions can be found in <xref
+linkend="functions"/>.
+Each of the functions is described in detail in <xref linkend="reference" />.
+
+</para>
+</sect1>
+
+<sect1 id="starting-next">
+<title>What's Next?</title>
+<para>
+If you want to see more pictures and sample code, take a look at the
+examples in <xref linkend="examples" />.
+</para>
+<para>
+Otherwise, you can continue with
+<xref linkend="concepts" /> where PHPlot concepts are described in more detail.
+</para>
+
+</sect1>
+
+</chapter>

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c74350dcf960c28c506bea58484aa7f4",
+    "content-hash": "896b95ededd9894295378ba8992be755",
     "packages": [
         {
             "name": "composer/pcre",
@@ -614,6 +614,36 @@
             "time": "2024-03-31T07:05:07+00:00"
         },
         {
+            "name": "phplot/phplot",
+            "version": "dev-release-candidate-for-8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/phplot",
+                "reference": "8ddccf3d67b717d04f17db6832648ee2d361a61b"
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Phplot\\Phplot\\": "src/"
+                }
+            },
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "AJRepo",
+                    "email": "AJRepo@users.noreply.github.com"
+                }
+            ],
+            "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+            "time": "2025-08-06T09:45:41+00:00"
+        },
+        {
             "name": "phpmailer/phpmailer",
             "version": "v6.10.0",
             "source": {
@@ -1218,11 +1248,18 @@
             "version": "dev-main",
             "alias": "1.99.99",
             "alias_normalized": "1.99.99.0"
+        },
+        {
+            "package": "phplot/phplot",
+            "version": "dev-release-candidate-for-8.0.1",
+            "alias": "8.0.1",
+            "alias_normalized": "8.0.1.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "gggeek/polyfill-gettext": 20
+        "gggeek/polyfill-gettext": 20,
+        "phplot/phplot": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

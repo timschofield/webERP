@@ -1,0 +1,470 @@
+This is the Change Log for the PHPlot Test Suite, up to release 8.0.0.1.
+
+For more recent changes, see the project's git changelog, available online at
+https://github.com/PHPlot/phplot/commits/master/
+
+-----------------------------------------------------------------------------
+
+2016-01-01
+    New tests for Feature Request #59, legend border color/disable control:
+    * legendborder*.php: Added 7 new tests.
+    * tests.ini: List 7 new tests.
+
+2015-11-03
+    Fixes needed to complete PHPlot-6.2.0 release testing:
+    * config.php: Fix for Ubuntu, font path has changed (no more ttf- prefix).
+      This caused a large number of tests using TTF to fail on Ubuntu.
+    * u.defaultfont.php: Use the test class PHPlot_test2 that also prevents
+      error images from being drawn, which was making it hard to diagnose
+      other font problems.
+    * compare_tests.php : Add a "second try" file comparison function. If
+      image files do not match byte-for-byte, try converting them to PNM and
+      then compare the results. This cleared up about 900 image differ
+      reports on Ubuntu, apparently because on Ubuntu some meta-data is
+      being added to the images (resolution?) and this caused the byte-by-byte
+      compares to fail even if the images are identical.
+    * piesize.php: Use full path for TrueType font file. (Otherwise this fails
+      with some PHP configurations. Font without path is tested elsewhere.)
+    * ex-pieangle.php: Set the path for TrueType font files, to prevent
+      test failures on some PHP configurations (thread safety enabled).
+
+2015-10-31
+    New tests for data borders with area fill plot types:
+    * areaborders??.php: 24 new tests
+    * tests.ini: List 24 new tests.
+
+2015-10-28
+    * ex-squaredarea1.php, ex-stackedsquaredarea1.php: style changes for
+      inclusion in the reference manual.
+
+2015-10-25
+    New tests for 'squaredarea' and 'stackedsquaredarea' plot types:
+    * squarea*.php: 22 new tests for new plot types.  (Note: 'squarea' is
+      short for 'squared area' and is only used in the test filenames.)
+    * tc-squaredarea.php: New test for squaredarea plot with transparency and
+      area overlap.
+    * tc-area2.php: New test for area plot with transparency. This is the
+      same as tc-squaredarea.php except for the plot type and title, and
+      allows for comparing these two plot types with the same data.
+    * ex-squaredarea1.php, ex-stackedsquaredarea1.php: New, examples which
+      will be in the reference manual.
+
+    Updated tests for new 'squaredarea' and 'stackedsquaredarea' plot types:
+    * matchtypes.php: Expanded the test to cover these 2 new plot types, and
+      also horizontal bars vs stackedbars.
+      Added option to save the plots to files, for debugging.
+    * u.ptdt.php: Add new plot types to plot type/data type matrix.
+    * u.baddata.php: Added 12 cases for new types + 2 cases for existing.
+    * empty-nocols-sqa.php, empty-nocols-ssq.php: New cases of empty-nocols.
+    * empty-plot-sqa.php, empty-plot-ssq.php: New cases of empty-plot.
+
+    * tests.ini: List 30 new tests.
+    * empty-nocols-sq.php: Fix typo
+
+2015-10-23
+    Expanded and renamed unit test of label format types.
+    * fmtlab-printf3.php: Renamed to u.formattype.php
+    * u.formattype.php: Renamed from fmtlab-printf3.php. Extended to test
+      more format types, and added all examples from the reference manual
+      SetXLabelType page. (Several of these turned out to be wrong.)
+    * tests.ini: Renamed 1 test.
+
+2015-10-22
+    New tests for multi-format printf in label formatting (FR#56).
+    * labelformats[789].php: New tests for 1, 2, and 3 format strings.
+    * fmtlab-printf3.php: New unit test.
+    * tests.ini: List 4 new tests.
+
+2015-10-16
+    A pair of new tests that came out of taking a closer look at area fill
+    plot types.
+    * area2.php: New test, area plot fill overlaps with transparency.
+    * matchtypes.php: New test checks that area and stackedarea (also bars
+      and stackedbars) make the same plot when there is a single data set.
+    * tests.ini: List 2 new tests.
+    * README: fixed a missing parenthesis in a code sample.
+
+2015-08-31
+    * labelprec*.php: 4 new (actually from 2013) tests for label precision.
+    * tests.ini: List 4 new tests.
+    * run_test.php: Fix format in summary.
+    * compare_tests.php: Check for and report removed tests, clean up output.
+
+2015-08-29
+    Fixes needed for PHP-7.0 (not yet released):
+    * callback2.php: Class name as constructor raises DEPRECATED warning.
+      Fixed when calling parent constructor too.
+    * imagemap_unit-pi-tds.php: Fixed duplicate parameter $unused.
+
+2015-03-20
+    * testversion.php: Fix for fix made 2013-11-13 below to accept phpdoc tag
+      for version. Despite a comment saying it checked the top 25 lines of
+      the file, it only checked 10, which wasn't enough.
+
+2013-11-13
+    * missing.php: Add support to this test for horizontal plots, which
+      were not being tested for missing point behavior.
+    * missingh*.php: 10 new tests for missing points in horizontal plots.
+    * tests.ini: List 10 new tests.
+
+    * testversion.php: Fix to also work with under-development PHPlot which
+      uses phpdoc comments. (This test checks the source code for a version
+      string in a comment; the new code uses a phpdoc tag for that. The
+      test now works with both.)
+
+2013-05-10
+    * compare_tests.php: Updated this utility script which compares test
+      results against a baseline. Added text file compare, -q option for
+      quieter operation, and -m option to check only matched tests.
+
+2013-05-07
+    * transparent-reset*.php: 2 tests that were overlooked (written but never
+      added to the test suite for PHPlot-6.0.0). They test the fix/feature for
+      resetting transparent color selection.
+    * tests.ini: List 2 new tests.
+
+2013-04-26
+    * dtaliases.php, range-log[1-5].php: Fix top comments (these are
+      extracted by a script used to help keep track of the tests).
+
+2013-04-25
+    Added new tests for making imagemaps from the new box plots:
+    * imagemap_html-bx.php, imagemap_trace-bx.php: 2 new tests
+    * tests.ini: List 2 new tests.
+    Changed test for new plot type:
+    * u.baddata.php: Add test cases for new box plots.
+
+2013-04-23
+    Added new tests for Box Plots (feature request #52):
+    * ex-boxplot[12].php: New box plot examples from reference manual.
+    * boxplot*.php: 11 new tests for box plots.
+    * tests.ini: List 13 new tests.
+    * u.ptdt.php: Expand to include the new plot type in the test cases.
+
+2013-04-16
+    Added new test to check the data type aliases in SetDataType() which
+    was re-written for PHPlot-6.1.0.
+    * dtaliases.php: New unit test.
+    * tests.ini: 1 new test.
+
+    Add new example from Reference Manual as a test:
+    * ex-horizerror.php: New example from reference manual.
+    * tests.ini: 1 new test.
+
+2013-04-14
+    Added new tests for horizontal error plots (feature request #47, for
+    PHPlot-6.1.0).
+    * horzerrplt*.php: New tests for horizontal error plots.
+    * tests.ini: List 10 new tests.
+    * u.ptdt.php: Expand to include the new data type in the test cases.
+
+2013-04-02
+    Fix 8 tests that failed to prove their point because of the change
+    in default minticks from 5 to 8.
+    * range-auto7bin[45].php, range-auto7dec4[a-f].php: Set minticks to 5
+      (the old default) so the tests show the intended change in resulting
+      tick increment at the thresholds.
+
+2013-04-01
+    More tests for auto-range/auto-tick calculations.
+    * range-auto7date[1-5].php, range-auto8mt[4-9].php, range-autoii[1-3].php:
+      New tests
+    * tests.ini: List 14 new tests.
+
+2013-03-26
+    Added new tests for auto-range/auto-tick calculations (bugs #132, #101)
+    which are the major new changes in PHPlot-6.0.0. Note: Each of these
+    tests should either run under PHPlot-5.x, or else exit gracefully
+    with 'skip' status if they need features added in PHPlot-6.0.0.
+    * u.calcplotareaworld.php, u.calcstep.php: New unit tests for
+      auto-range/auto-tick calculations.
+    * fractionticks.php: Test fractional tick labels.
+    * range-*.php, tickset*.php: New tests for auto-range/auto-tick
+      calculations.
+    * tests.ini: List 93 new tests.
+
+
+    * legendtxbgcolor.php: Send 'test skipped' message to stdout not stderr.
+
+2013-03-19
+    Added new tests for bug #166 legend with point shapes vs shape 'none':
+    * useshape-noshape*.php : 2 new tests
+    * tests.ini: List 2 new tests.
+
+2013-03-02
+    Re-synchronize the tests named "ex-*" with the examples in the PHPlot
+    Reference Manual. These tests started out as copies of the examples,
+    but as the manual is updated sometimes the examples have to change.
+    * tests.ini: List 1 new test
+    * ex-legendshape.php: extended test to support variable plot type.
+    * ex-legendshape2.php: new test, variation of legend shapes for line plot.
+    * ex-ohlcbasic.php, ex-ohlccandlesticks.php, ex-ohlccandlesticks2.php: Use
+      new tuning function to suppress scaling the Y axis to include zero,
+      which improves the appearance of these plots.
+    * ex-ytickanchor.php: Force the plot range, to demonstrate the need for
+      a Y tick anchor. Starting with PHPlot-6.0.0, the default behavior was
+      such that this example no longer showed the problem, before this fix.
+
+2013-02-11
+    * config.php: Fix font name issues on Windows. The default option
+      still uses the DejaVu font family on all systems. (This font is included
+      with LibreOffice.) A flag can be set which will use standard Windows
+      fonts instead, however it will be much harder to verify results.
+
+2013-02-03
+    * u.FindDataLimits.php: At SVN rev 1502 on the /Rel6 branch, this test
+      broke because PHPlot now sets the min/max limits for implied range
+      (text-data) more accurately up front, rather than fixing them later.
+      Changed expected test results for all text-data cases to match the
+      new behavior, and added a function which will adjust the expected
+      results when the test is run with older versions of PHPlot. (Note:
+      the detection code is imperfect and the fix will not work for some
+      SVN revs before 1502 and after the Rel6 branch.)
+
+2013-01-17
+    * LICENSES: Update copyright year, no change to licenses.
+    Added new tests for legend background & text color control:
+    * legendtxbgcolor*.php : 4 new tests for SetLegendBgColor() and
+      SetLegendTextColor().
+    * tests.ini: List 4 new tests.
+
+2012-12-29
+    * run_test.php: Implemented 'skipped' tests, using exit(2).
+    * README: Updated to describe new 'skip test' exit status.
+    * drawdataborder.php, ex-horizlinepts.php, ex-pieangle.php,
+      legendcolorboxborder.php, piebcol.php, ydatalabellines.php: Skip tests
+      if required new method(s) are missing.
+    * drawtextfont.php, horzlpe.php: Skip test based on PHPlot version.
+
+2012-12-27
+    * testversion.php: Removed obsolete check for "CVS" string in version,
+      and added check for new version_id constant.
+
+2012-12-24
+    * legshape2.php: This test 'broke' with recent code changes. It was
+      supposed to show SetLegendUseShapes(True) being ignored for a plot
+      type (lines) that did not support shape markers, but PHPlot does now
+      support that function with line plots. Changed the plot type to
+      'thinbarline', and updated the title.
+
+2012-12-23
+    Added new tests for feature requests #50 and #51:
+    * drawdataborder*.php : 8 new tests for SetDrawDataBorders()
+    * legendcolorboxborder*.php : 4 new tests for SetLegendColorboxBorders()
+    * legendlinemarker*.php : 15 new tests for line markers in legend
+    * tests.ini: List 27 new tests.
+
+2012-09-23
+    Added 3 new tests for bug #164 (previously #3557510) "Calculated
+    defaults applied to subsequent plots".
+    * multidefault-labelfmt*.php : 3 new tests.
+    * tests.ini: List 3 new tests.
+
+2012-09-18
+    Added 23 new tests for feature request #47 "Extend horizontal plots to
+    more types":
+    * ex-horizlinepts.php: New example from reference manual
+    * horzlpe*.php: 15 new tests for horizontal lines/points
+    * ydatalabellines*.php: 7 new tests for Y data label lines
+    * tests.ini: List 23 new tests. Total now is 859 tests.
+    These test changes were needed because of the feature request:
+    * u.ptdt.php: Changed expected results, since 3 plottypes now accept
+      2 more data types each (6 cases now expected to work).
+    * dlexformat3[abc].php: Removed flag saying data value labels won't be
+      produced, since data-data-error plots can now display them.
+    * dlexformat.php: For data-data-error plots, set the data value label
+      angle, so the labels aren't on top of the error bars.
+
+2012-09-23
+    Added 6 new tests for feature request #46 "Control pie chart borders":
+    * piebcol*.php: 6 new tests
+    * tests.ini: List 6 new tests. Total now is 836 tests.
+
+2012-09-10
+    Added 8 new tests for bug #165 "Missing axis labels on some empty plots":
+    * empty-nocols*.php : 8 new tests
+    * tests.ini: List 8 new tests
+
+2012-08-20
+    Added 6 new tests. These are related to bug #3557510 "Calculated defaults
+    applied to subsequent plots". Details:
+    * multidefault-axis[12].php: Calculated default axis position sticks to
+      next plot (1), unless reset (2). Documented behavior, not a bug.
+    * multidefault-labelgrid[12].php: Calculated label position and grid
+      on/off stick to next plot (1). Grid part is a bug, to be fixed in
+      PHPlot-6.0.0. Label position is not yet determined to be a bug. In
+      (2) the label positions are reset.
+    * multidefault-labelangle1.php: X data label angle defaults to X label
+      angle, but sticks even if X label angle changes. Will be fixed in 6.0.0.
+    * multidefault-tickinc1.php: Tick increment needs to be calculated again
+      for each plot. PHPlot-5.8.0 does this right. 6.0.0 in development was
+      broken for a while, but now does it right too.
+
+2012-08-14
+    Fixed multiple tests that broke with an upcoming change for PHPlot-6.0.0
+    which makes most class variables protected visibility. In most cases,
+    the fix was to use a new class which extends PHPlot and allows access
+    to the needed variable(s).  No changes to test output.
+    * colors.php: Allow access to $rgb_array.
+    * defaultfont1a.php, defaultfont2a.php: Allow access to $default_ttfont.
+    * linepoints1.php: Allow access to $point_shapes.
+    * stream2.php: Allow access to $stream_frame_header, $stream_boundary.
+    * u.FindDataLimits: Allow access to internal methods CheckDataArray()
+      and FindDataLimits(), and to the 4 min/max x/y variables.
+    * u.dvlpos.php: Make a new object for each case, instead of reusing it
+      and doing unset() on the tuning variables.  Also, removed compatibility
+      code for PHPlot-5.7.0 and older. The test now requires 5.8.0 or higher.
+    * u.pmarg.php: Allow access to $plot_area.
+    * u.setcolors.php: Allow access to $default_colors, $data_colors,
+      $data_border_colors, $error_bar_colors.
+
+2012-08-03
+    * u.tickanchor.php: Fixed test failure on new "Rel6" branch code, due
+      to internal changes, by going through to DrawGraph() before fetching
+      the tick values. No changes to test output.
+      Also fixed typo (unreachable return).
+    * drawtextfont.php: Fix typo in variable name. No changes to test.
+    * overlay3.php: Need to turn off Y grid before second plot, else it
+      draws over the grid a second time which may or may not change the
+      plot appearance.
+    * resets3.php: Add a comment explaining the odd values on the Y axis of
+      the lower plot, after settings are reset from the top plot.
+
+2012-07-27
+    New tests for release 6.0.0 changes to SetPlotAreaWorld() range checking:
+    * error-SetPlotAreaWorld*.php : 10 new tests
+    * tests.ini: List 10 new tests.
+
+2012-07-26
+    * misc-a1.php: Removed incorrect comment about color definition, and
+      removed unneeded colors from the map. This goes along with corrections
+      made to the reference manual for SetRGBArray() on 2012-06-12 in the
+      "Rel6" branch for release 6.0.0. (It is not necessary to define
+      PHPlot's internally-used colors in the custom color map.)
+      No change to test output.
+    * misc-a2.php: New test for error detection in SetRGBArray().
+      Note: This test fails (does not detect the error) before PHPlot-6.0.0.
+    * ex-pieangle.php: New test from new reference manual example showing
+      pie chart start angle and direction setting.
+      Note: This test fails before PHPlot-6.0.0.
+    * drawtextfont.php: New test of font argument extension in DrawText().
+      Note: This test fails before PHPlot-6.0.0.
+    * tests.ini: List 3 new tests.
+
+2012-04-26
+    * run_test.php: Track and report test "N of M"; report total elapsed time
+      at end, and add -match command line option for selecting tests.
+
+2012-04-06
+    * serialize1.php : New test for serialize/unserialize
+    * tests.ini: List 1 new test.
+
+2012-04-01
+    * stream1.php, stream2.php : 2 new tests for streaming plots.
+    * tests.ini: List 2 new tests. Total is now 802 tests.
+
+2012-03-24
+    * dlexformat*.php: 19 new tests for custom label formatting with
+      row and column arguments.
+    * ex-dlexformat.php : 1 new test from new reference manual example.
+    * tests.ini: List 20 new tests
+    * makedata.php: New support script, used by new tests.
+    * Makefile: List new support script
+
+    * u.dvlpos.php: Fix test which broke due to new usage of
+      CheckDataValueLabels().  Changed to auto-detect old or new usage
+      and now works with both.
+
+2012-03-19
+    * datalabellines.php: Add support for error plots.
+    * datalabellines[cde].php: 3 new tests, data label lines in error plots.
+    * tests.ini: List 3 new tests
+
+    * imagemap_html-{b,bu,c,pi,pt}.php: Fix the test output messages so they
+      do not contain the path to the results directory, to avoid spurious
+      result compare errors.
+
+2012-03-16
+    * datalabellines.php: Add support for testing data label lines with
+      bubble plots (reference: bug #3506408).
+    * datalabellines[9ab].php: 3 new tests, data label lines in bubble plots.
+    * tests.ini: List 3 new tests
+
+2012-02-24
+    * histogram.php: Resync to example in manual: 1 comment typo fixed, use
+      SetDraw[XY]Axis to disable axis lines rather than changing them to
+      transparent (which was the only way to do this at the time), and fix
+      for no border if draw_border is off. These changes have no effect
+      on the test output files.
+
+2012-02-21
+    * imagemap_html-*.php: 12 new tests for imagemaps. These produce HTML.
+    * imagemap_trace-*.php: 10 new tests for imagemaps. These produce images.
+    * imagemap_unit-*.php: 4 new tests for imagemaps. These are unit tests.
+    * tests.ini: List 26 new tests for imagemaps
+
+2012-02-18
+    * labelcolor*.php, pielabelcolor*.php: New tests for new functions to
+      set label colors.
+    * tests.ini: List 9 new tests
+
+    * compare_tests.php: Fix typo in script, error with bad command option.
+
+2012-02-17
+    * ex-drawmessage.php: Test fails on Windows due to font file not found.
+      Fixed to use the config.php file and font name variables for more
+      system independence.
+    * localepielabel.php: New test for pie label format bug with locale
+      using , for decimal point.
+    * tests.ini: List new test
+
+2012-02-06
+    * drawmessage*.php: Added 8 new tests for DrawMessage()
+    * ex-drawmessage.php: Added 1 new test from Reference Manual example
+      of DrawMessage().
+    * tests.ini: List 9 new tests
+
+2012-01-09
+    * backgroundreset*.php: Added 4 new tests. These are actually old tests,
+      from 2010-12-26 work on resetting the background with multiple plots
+      on an image, but they never got added to the test suite.
+    * tests.ini: List 4 new tests
+
+2012-01-02
+    * ex-pielabeltype: Resync to example from the manual. This removes two
+      data rows which were too small to display.
+
+2012-01-01
+    * LICENSES: Update copyright year, no change to licenses.
+
+2011-12-30
+    Add 70 new tests and 1 data file, for the pie sizing and label changes.
+    * ex-pielabeltype*.php: New example files and data file, from the manual.
+    * multipie.php, pieautosize*.php, pieminautosize*.php, pieminsize*.php,
+      piesize*.php: New tests for pie sizing and label types.
+    * Makefile: List new dependent file
+    * tests.ini: Add 70 new tests to run
+
+2011-12-21
+    * multiplot.php: Added option for plot-area-relative legend positioning,
+      to fix the test failure in multiplot2 with new pie chart code.
+    * multiplot2.php: Use new plot-area-relative legend positioning, not world
+      coordinates. This fixes a test failure with the new pie chart code,
+      which does not set up world coordinate mapping with pie charts. World
+      coordinates don't make sense for pie charts and this should not have
+      worked before.
+
+2011-12-10
+    * LICENSES: Fix typo, no change to licenses.
+
+2011-08-24
+    * tests.ini: Fix validation pattern for encodeimg1 per previous change.
+
+2011-08-19
+    * encodeimg1.php: Fix message from test so it does not contain the path
+      to the results directory, to avoid spurious result compare errors.
+
+2011-08-08
+    * The PHPlot Test Suite is imported into SubVersion. No prior change
+      history is available here (although the test suite development goes
+      back to 2006).
