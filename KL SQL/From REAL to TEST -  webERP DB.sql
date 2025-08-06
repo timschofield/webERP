@@ -115,7 +115,10 @@ TRUNCATE test_erp.`debtorsmaster`;
 INSERT INTO test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE test_erp.`debtortrans`;
-INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; 
+/* Special insert to prevent error when copying calculated fields*/
+INSERT INTO test_erp.debtortrans (id, transno, type, debtorno, branchcode, trandate, inputdate, prd, settled, reference, tpe, order_, rate, ovamount, ovgst, ovfreight, ovdiscount, diffonexch, alloc, invtext, shipvia, edisent, consignment, packages, salesperson)
+SELECT id, transno, type, debtorno, branchcode, trandate, inputdate, prd, settled, reference, tpe, order_, rate, ovamount, ovgst, ovfreight, ovdiscount, diffonexch, alloc, invtext, shipvia, edisent, consignment, packages, salesperson
+FROM kurakura_kl_erp.debtortrans; 
 
 TRUNCATE test_erp.`debtortranstaxes`;
 INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
@@ -322,7 +325,10 @@ INSERT INTO test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loct
 
 TRUNCATE test_erp.`loctransfers`;
 /*INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE reference >= 200000;*/
-INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers;
+/* Special insert to prevent error when copying calculated fields*/
+INSERT INTO test_erp.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc)
+SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc
+FROM kurakura_kl_erp.loctransfers;
 
 TRUNCATE test_erp.`mailgroupdetails`;
 INSERT INTO test_erp.mailgroupdetails SELECT * FROM kurakura_kl_erp.mailgroupdetails;
