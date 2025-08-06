@@ -83,7 +83,7 @@ echo '</select>
 				</field>
 			</ul>';
 if ($Result != '') {
-	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" /><img class="result_icon" src="', $Result, '.png" />', $Message;
+	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" /><img class="result_icon" src="images/', $Result, '.png" />', $Message;
 } else {
 	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" />';
 }
