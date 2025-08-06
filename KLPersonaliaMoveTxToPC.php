@@ -15,7 +15,7 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['PaymentDate'], $_POST['SalaryType']);
+	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['PaymentDate'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
@@ -23,17 +23,16 @@ if (isset($_POST['submit'])) {
 include('includes/footer.php');
 
 
-function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
-
+function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
+	global $RootPath, $Theme;
+	
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
 	//initialise no input errors
 	$InputError = FALSE;
 	
 	//first off validate inputs sensible
-	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = _('Move Monthly Salary to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
@@ -122,8 +121,8 @@ function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 			while ($MyRow = DB_fetch_array($Result)) {
 				// Fixed
 				$FixedSalary = $MyRow['upahpokok'] +
-								$MyRow['tunjanganjabatan'] +
-								$MyRow['tunjanganmasakerja'];
+							$MyRow['tunjanganjabatan'] +
+							$MyRow['tunjanganmasakerja'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $MyRow['codename']);
 				
 				// Makan
@@ -132,19 +131,19 @@ function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 
 				// Bensin
 				$Bensin = $MyRow['tunjangantransport'] +
-								$MyRow['tunjangankendaraan'];
+						$MyRow['tunjangankendaraan'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $MyRow['codename']);
 				
 				//Commissions
 				$Commissions = $MyRow['komisitetap'] +
-								$MyRow['komisiretail'] +
-								$MyRow['komisisupport'] +
-								$MyRow['bonuspenjualan'];
+							$MyRow['komisiretail'] +
+							$MyRow['komisisupport'] +
+							$MyRow['bonuspenjualan'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $MyRow['codename']);
 				
 				//Shifts
 				$Shifts = $MyRow['lembur'] +
-								$MyRow['potonganabsen'];
+						$MyRow['potonganabsen'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $MyRow['codename']);
 				
 				//THR
@@ -153,7 +152,8 @@ function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 				
 				//Lain2
 				$Lain2 = $MyRow['penerimaanlain'] +
-								$MyRow['potonganlain2'];
+						$MyRow['potonganlain2'];
+
 				if (($MyRow['codename'] == 'Ricard') OR 
 					($MyRow['codename'] == 'Laia')){
 					// Dividends paid as lain2 to shareholders for PTADU goes to different GL than karyawan
@@ -164,7 +164,7 @@ function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 				
 				//JHT
 				$JHT = $MyRow['potonganjht'] +
-								$MyRow['potonganaskes'];
+						$MyRow['potonganaskes'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $MyRow['codename']);
 
 				//PPH21
@@ -222,8 +222,8 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 			$TabCode = $MyRow['pctabcode'];
 			$ExpenseType = $MyRow['pcexpensecode'];
 			$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
-			$SQL = "INSERT INTO pcashdetails (counterindex, 
-											tabcode, 
+			$DbgMsg = _('The SQL that failed was');
+			$SQL = "INSERT INTO pcashdetails (tabcode, 
 											date, 
 											codeexpense, 
 											amount, 
@@ -231,8 +231,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 											posted, 
 											notes, 
 											receipt)
-					VALUES ('',
-							'" . $TabCode . "',
+					VALUES ('" . $TabCode . "',
 							'" . $PaymentDate . "',
 							'" . $ExpenseType . "',
 							 " . -$Amount . ",
@@ -240,7 +239,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							 0,
 							 '',
 							 '" . $Receipt . "')";
-			$ResultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
+			DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
 		}else{
 			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense: '. $SQL, 'error');
 		}
