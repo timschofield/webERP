@@ -115,7 +115,7 @@ ol{
 list-style-position: inside;
 }
 .success{
-background: #e9ffcf url(valid.png) no-repeat right;
+background: #e9ffcf url(images/valid.png) no-repeat right;
 border: 1px solid #7AAA3A;
 border-radius: 5px;
 padding: 2px 8px;
@@ -126,7 +126,7 @@ margin-bottom:8px;
 text-align:left;
 }
 .error {
-background:#ffd3bf url(invalid.png) no-repeat right;
+background:#ffd3bf url(images/invalid.png) no-repeat right;
 border:1px solid #ED5410;
 border-radius:5px;
 padding:2px 8px;
