@@ -188,6 +188,12 @@ if (isset($_POST['Save'])) {
 								AND stockid='" . $Item->StockId . "'";
 			$CheckResult = DB_query($CheckSQL);
 
+			// Ensure QuantityRequired is always a valid double value
+			$QuantityRequired = 0;
+			if (isset($Item->QuantityRequired) && is_numeric($Item->QuantityRequired)) {
+				$QuantityRequired = floatval($Item->QuantityRequired);
+			}
+
 			if (DB_num_rows($CheckResult) == 0) {
 				$SQL = "INSERT INTO woitems (wo,
 											stockid,
@@ -197,13 +203,13 @@ if (isset($_POST['Save'])) {
 										VALUES (
 											'" . $_SESSION['WorkOrder' . $Identifier]->OrderNumber . "',
 											'" . $Item->StockId . "',
-											'" . $Item->QuantityRequired . "',
+											'" . $QuantityRequired . "',
 											'" . $Cost . "',
 											'" . $Item->Comments . "'
 										)";
 				$ErrMsg = _('The work order item could not be added');
 			} else {
-				$SQL = "UPDATE woitems SET qtyreqd='" . $Item->QuantityRequired . "',
+				$SQL = "UPDATE woitems SET qtyreqd='" . $QuantityRequired . "',
 											comments='" . $Item->Comments . "'
 								WHERE wo='" . $_SESSION['WorkOrder' . $Identifier]->OrderNumber . "'
 									AND stockid='" . $Item->StockId . "'";
@@ -555,10 +561,6 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');
-
-		if ($Debug == 1) {
-			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL, 'info');
-		}
 	}
 
 } //end of if search
