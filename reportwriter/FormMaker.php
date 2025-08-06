@@ -96,7 +96,7 @@ switch ($_POST['todo']) {
 			}
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
-		require('WriteForm.inc');
+		require(__DIR__ . '/includes/WriteForm.php');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function
 		// if we are here, there's been an error, report it
