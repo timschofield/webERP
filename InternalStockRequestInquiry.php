@@ -368,7 +368,7 @@ if(isset($StockItemsResult)){
 				$Locations = implode("','",$Locations);
 				$SQL .= " WHERE stockrequest.loccode in ('" . $Locations . "')";
 			} else {
-			 	$SQL .= " WHERE 1 ";
+				$SQL .= " WHERE 1=1 ";
 			}
 		}
 		//the authorization status

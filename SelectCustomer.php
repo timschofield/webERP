@@ -475,7 +475,7 @@ echo '</form>';
 if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 
-		$SQL = "SELECT * FROM geocode_param WHERE 1";
+		$SQL = "SELECT * FROM geocode_param";
 		$ErrMsg = _('An error occurred in retrieving the information');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) == 0) {

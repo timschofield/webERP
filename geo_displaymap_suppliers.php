@@ -4,7 +4,7 @@ include('includes/session.php');
 /// @todo do we need these functions?
 include('includes/SQL_CommonFunctions.php');
 
-$SQL="SELECT * FROM geocode_param WHERE 1";
+$SQL="SELECT * FROM geocode_param";
 $ErrMsg = _('An error occurred in retrieving the currency information');
 $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
