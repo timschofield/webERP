@@ -2,7 +2,9 @@
 
 include('includes/session.php');
 
-if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
+use Dompdf\Dompdf;
+
+if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['View'])){
 
 /*Now figure out the inventory data to report for the category range under review */
 	if ($_POST['Location']=='All'){
@@ -66,19 +68,8 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
-		 exit();
+		exit();
 	}
-}
-
-if (isset($_POST['PrintPDF'])){
-
-	include('includes/PDFStarter.php');
-
-	$pdf->addInfo('Title',_('Inventory Valuation Report'));
-	$pdf->addInfo('Subject',_('Inventory Valuation'));
-	$FontSize=9;
-	$PageNumber=1;
-	$LineHeight=12;
 
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
@@ -89,7 +80,56 @@ if (isset($_POST['PrintPDF'])){
 		exit();
 	}
 
-	include('includes/PDFInventoryValnPageHeader.php');
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	if ($_POST['DetailedReport']=='Yes'){
+		$HTML .= '<meta name="author" content="WebERP " . $Version">
+				<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+					<div class="centre" id="ReportHeader">
+						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+						' . _('Inventory Valuation Report') . '<br />
+						' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>' . _('Category') . '/' . _('Item') . '</th>
+								<th>' . _('Description') . '</th>
+								<th>' . _('Quantity') . '</th>
+								<th>' . _('Cost Per Unit') . '</th>
+								<th>' . _('Units') . '</th>
+								<th>' . _('Extended Cost') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
+	} else {
+		$HTML .= '<meta name="author" content="WebERP " . $Version">
+				<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+					<div class="centre" id="ReportHeader">
+						' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+						' . _('Inventory Valuation Report') . '<br />
+						' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<th>' . _('Category') . '/' . _('Item') . '</th>
+								<th>' . _('Quantity') . '</th>
+								<th>' . _('Extended Cost') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
+	}
 
 	$Tot_Val=0;
 	$Category = '';
@@ -99,111 +139,147 @@ if (isset($_POST['PrintPDF'])){
 	while ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryValn['categoryid']){
-			$FontSize=10;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 
 				/* need to print the total of previous category */
-				if ($_POST['DetailedReport']=='Yes'){
-					$YPos -= (2*$LineHeight);
-					if ($YPos < $Bottom_Margin + (3*$LineHeight)){
-		 				  include('includes/PDFInventoryValnPageHeader.php');
-					}
-					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
-				}
-
-				$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
+				$HTML .= '<tr class="total_row">';
 				$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
-				$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
-				$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
-				$YPos -=$LineHeight;
-
+				$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
 				if ($_POST['DetailedReport']=='Yes'){
-				/*draw a line under the CATEGORY TOTAL*/
-					$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
-					$YPos -=(2*$LineHeight);
+
+					/* need to print the total of previous category */
+					$DisplayCatTotVal = locale_number_format($CatTot_Val, 2);
+					$HTML .= '<td colspan="2">' . _('Total for') . ' ' . $Category . " - " . $CategoryName . '</td>
+								<td class="number">' . $DisplayCatTotQty . '</td>
+								<td></td>';
+
+					$CatTot_Qty = 0;
+					$CatTot_Val = 0;
+					$HTML .= '<td></td>
+								<td class="number">' . $DisplayCatTotVal . '</td>
+							</tr>';
+				} else {
+					$HTML .= '<td>' .  $Category . " - " . $CategoryName . '</td>
+							<td class="number">' . $DisplayCatTotQty . '</td>
+							<td class="number">' . $DisplayCatTotVal . '</td>
+							</tr>';
 				}
-				$CatTot_Val=0;
-				$CatTot_Qty=0;
+
+
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription']);
+			if ($_POST['DetailedReport']=='Yes'){
+				$HTML .= '<tr>
+							<th colspan="6"><h3>' . $InventoryValn['categoryid'] . ' - ' . $InventoryValn['categorydescription'] . '</h3></th>
+						</tr>';
+			}
 			$Category = $InventoryValn['categoryid'];
 			$CategoryName = $InventoryValn['categorydescription'];
 		}
 
 		if ($_POST['DetailedReport']=='Yes'){
-			$YPos -=$LineHeight;
-			$FontSize=8;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);
-			$LeftOvers = $pdf->addTextWrap(170,$YPos,220,$FontSize,$InventoryValn['description']);
 			$DisplayUnitCost = locale_number_format($InventoryValn['unitcost'],$_SESSION['CompanyRecord']['decimalplaces']);
 			$DisplayQtyOnHand = locale_number_format($InventoryValn['qtyonhand'],$InventoryValn['decimalplaces']);
 			$DisplayItemTotal = locale_number_format($InventoryValn['itemtotal'],$_SESSION['CompanyRecord']['decimalplaces']);
 
-			$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayQtyOnHand,'right');
-			$LeftOvers = $pdf->addTextWrap(423,$YPos,15,$FontSize,$InventoryValn['units'],'left');
-			$LeftOvers = $pdf->addTextWrap(438,$YPos,60,$FontSize,$DisplayUnitCost, 'right');
-
-			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayItemTotal, 'right');
+			$HTML .= '<tr class="striped_row">
+						<td>' . $InventoryValn['stockid'] . '</td>
+						<td>' . $InventoryValn['description'] . '</td>
+						<td class="number">' . $DisplayQtyOnHand . '</td>
+						<td class="number">' . $DisplayUnitCost . '</td>
+						<td class="number">' . $InventoryValn['units'] . '</td>
+						<td class="number">' . $DisplayItemTotal . '</td>
+					</tr>';
 		}
 		$Tot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
-		if ($YPos < $Bottom_Margin + $LineHeight){
-		   include('includes/PDFInventoryValnPageHeader.php');
-		}
-
 	} /*end inventory valn while loop */
 
-	$FontSize =10;
 /*Print out the category totals */
-	if ($_POST['DetailedReport']=='Yes'){
-		$YPos -= (2*$LineHeight);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
-	}
 	$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
-
-	$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
 	$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
-	$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
 
+	$HTML .= '<tr class="total_row">';
 	if ($_POST['DetailedReport']=='Yes'){
-		/*draw a line under the CATEGORY TOTAL*/
-		$YPos -= ($LineHeight);
-		$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+		$HTML .= '<td colspan="2">' . _('Total for') . ' ' . $Category . ' - ' . $CategoryName . '</td>';
+		$HTML .= '<td class="number">' . $DisplayCatTotQty . '</td>
+					<td colspan="2"></td>
+					<td class="number">' . $DisplayCatTotVal . '</td>
+				</tr>';
+	} else {
+		$HTML .= '<td>' .  $Category . " - " . $CategoryName . '</td>
+				<td class="number">' . $DisplayCatTotQty . '</td>
+				<td class="number">' . $DisplayCatTotVal . '</td>
+			</tr>';
 	}
 
-	$YPos -= (2*$LineHeight);
-
-	if ($YPos < $Bottom_Margin + $LineHeight){
-		   include('includes/PDFInventoryValnPageHeader.php');
-	}
 /*Print out the grand totals */
-	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = locale_number_format($Tot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
-
-} elseif (isset($_POST['CSV'])) {
-
-	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
-	while ($InventoryValn = DB_fetch_row($InventoryResult)) {
-		$CSVListing .= '"';
-		$CSVListing .= implode('","', $InventoryValn) . '"' . "\n";
+	if ($_POST['DetailedReport']=='Yes'){
+		$HTML .= '<tr class="total_row">
+					<td class="number" colspan="5">' . _('Grand Total Value') . '</td>
+					<td class="number">' . $DisplayTotalVal . '</td>
+				</tr>';
+	} else {
+		$HTML .= '<tr class="total_row">
+					<td class="number" colspan="2">' . _('Grand Total Value') . '</td>
+					<td class="number">' . $DisplayTotalVal . '</td>
+				</tr>';
 	}
-	header('Content-Encoding: UTF-8');
-	header('Content-type: text/csv; charset=UTF-8');
-	header("Content-disposition: attachment; filename=InventoryValuation_Categories_" .  $_POST['FromCriteria']  . '-' .  $_POST['ToCriteria']  .'.csv');
-	/// @todo review caching header
-	header("Pragma: public");
-	header("Expires: 0");
-	// the BOM is not used much anymore in 2025...
-	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
-	echo $CSVListing;
-	exit();
+
+	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} elseif (isset($_POST['Spreadsheet'])) {
+		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+		$File = 'InventoryValuation-' . Date('Y-m-d'). '.' . 'ods';
+
+		header('Content-Disposition: attachment;filename="' . $File . '"');
+		header('Cache-Control: max-age=0');
+		$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+		$spreadsheet = $reader->loadFromString($HTML);
+
+		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Ods');
+		$writer->save('php://output');
+	} else {
+		$Title = _('Inventory Valuation Report');
+		include('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo $HTML;
+		include('includes/footer.php');
+	}
 
 } else { /*The option to print PDF nor to create the CSV was not hit */
 
@@ -216,7 +292,7 @@ if (isset($_POST['PrintPDF'])){
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
@@ -266,8 +342,9 @@ if (isset($_POST['PrintPDF'])){
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+				<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . _('Spreadsheet') . '" />
 		</div>';
 	echo '</form>';
 
