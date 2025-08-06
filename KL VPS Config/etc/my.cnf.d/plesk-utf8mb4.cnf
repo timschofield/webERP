@@ -1,0 +1,4 @@
+# Configure utf8mb4 default character set for mysqldump
+# If you don't need it, please comment out the lines below
+[mysqldump]
+default-character-set=utf8mb4
