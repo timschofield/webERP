@@ -2,7 +2,6 @@
 
 include('includes/session.php');
 if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
-include('includes/barcodepack/class.code128.php');
 
 $PtsPerMM = 2.83464567; //pdf points per mm (72 dpi / 25.4 mm per inch)
 
@@ -211,11 +210,11 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					}elseif($Field['Barcode']==1) {
-
-						$BarcodeImage = new code128(str_replace('_','',$Value));
+						/// @todo move to barcode functionality provided by TCPDF, to avoid one dependency
+						$BarcodeImage = new \BarcodePack\code128(str_replace('_','',$Value));
 
 						ob_start();
-						imagepng(imagepng($BarcodeImage->draw()));
+						imagepng($BarcodeImage->draw());
 						$Image_String = ob_get_contents();
 						ob_end_clean();
 

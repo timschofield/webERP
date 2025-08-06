@@ -7,13 +7,11 @@
  * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
  */
 
-
-
-require_once 'class.barcode.php';
+namespace BarcodePack;
 
 // Error codes
 define('E_BAD_CHARS', 200);
-
+define('E_ODD_LENGTH', 500);
 
 /**
  * Linear Barcode
@@ -22,8 +20,8 @@ define('E_BAD_CHARS', 200);
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class linearBarcode extends barcode {
-
+class linearBarcode extends barcode
+{
 	/** @var array */
 	protected $biteCode = array();
 
@@ -44,6 +42,7 @@ class linearBarcode extends barcode {
 	 *
 	 * @param string $text
 	 * @param int $modulesize
+	 * @param null|string $allowedChars
 	 */
 	public function __construct($text, $moduleSize=2, $allowedChars=null)
 	{
@@ -54,11 +53,10 @@ class linearBarcode extends barcode {
 				$this->checkAllowedChars($text, $allowedChars);
 			}
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			throw $e;
 		}
 	}
-
 
 	/**
 	 * Check Allowed Chars
@@ -71,14 +69,12 @@ class linearBarcode extends barcode {
 	{
 		for($i=0; $i<strlen($text); $i++) {
 			if(!in_array($text[$i], $allowedChars)) {
-				throw new Exception('Input text contains nonallowed characters.', E_BAD_CHARS);
-				return false;
+				throw new \Exception('Input text contains non-allowed characters.', E_BAD_CHARS);
+				//return false;
 			}
 		}
 		return true;
 	}
-
-
 
 	/**
 	 * Get Barcode Length
@@ -92,25 +88,23 @@ class linearBarcode extends barcode {
 		return $len;
 	}
 
-
 	/**
 	 * Draw
 	 * Create image with barcode
 	 *
 	 * @param bool $showText
-	 * @return image resource
+	 * @return \GdImage|resource resource
 	 */
 	public function draw($showText=true)
 	{
 		// Image create
 		$margin = $this->margin*$this->moduleSize;
 		$im = ImageCreate($this->getBarcodeLen()*$this->moduleSize+(2*$margin),
-				$this->height+$this->fontSize+(2*$margin));
+			$this->height+$this->fontSize+(2*$margin));
 
 		// Color set
 		$white = Imagecolorallocate ($im,255,255,255);
 		$black = Imagecolorallocate ($im,0,0,0);
-
 
 		// Draw lines
 		$pos = 0;
@@ -147,13 +141,12 @@ class linearBarcode extends barcode {
 		if($showText) {
 			$textWidth = ImageFontWidth($this->fontSize)*strlen($this->text);
 			imagestring ($im, $this->fontSize,
-					$this->getBarcodeLen()*$this->moduleSize/2-$textWidth/2+$margin,
-					$this->height-$this->fontSize/2+$margin, $this->text, $black);
+				$this->getBarcodeLen()*$this->moduleSize/2-$textWidth/2+$margin,
+				$this->height-$this->fontSize/2+$margin, $this->text, $black);
 		}
 
 		return $im;
 	}
-
 
 	/**
 	 * Raw Data
@@ -170,6 +163,4 @@ class linearBarcode extends barcode {
 		}
 		return $ret;
 	}
-
-
 }

@@ -7,9 +7,7 @@
  * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
  */
 
-
-
-require_once 'class.linearBarcode.php';
+namespace BarcodePack;
 
 /**
  * Code 128
@@ -18,8 +16,8 @@ require_once 'class.linearBarcode.php';
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class code128 extends linearBarcode {
-
+class code128 extends linearBarcode
+{
 	// Code sets
 	const CHARSET_A = 'A';
 	const CHARSET_B = 'B';
@@ -35,7 +33,6 @@ class code128 extends linearBarcode {
 	const CODE_A = 101;
 	const CODE_B = 100;
 	const CODE_C = 99;
-
 
 	private $setA = array();
 	private $setB = array();
@@ -167,7 +164,6 @@ class code128 extends linearBarcode {
 		'11'			// 107 Termination bar
 	);
 
-
 	/**
 	 * Constructor
 	 *
@@ -185,7 +181,7 @@ class code128 extends linearBarcode {
 				$allowedChars[] = chr($i);
 			}
 			for($i=0; $i<=31; $i++) {
-				// chars NUL - US (Unit seperator)
+				// chars NUL - US (Unit separator)
 				$this->setA[$i] = $i + 64;
 				$this->charsA .= chr($i);
 				$allowedChars[] = chr($i);
@@ -200,24 +196,20 @@ class code128 extends linearBarcode {
 				$allowedChars[] = chr($i);
 			}
 
-
 			parent::__construct($text, $moduleSize, $allowedChars);
-
 
 			$this->biteCode = $this->createBiteCode();
 
-		} catch (Exception $e) {
+		} catch (\Exception $e) {
 			throw $e;
 		}
 
 	}
 
-
 	/**
 	 * Create Bite Code
 	 *
-	 *
-	 * @return string
+	 * @return array
 	 */
 	private function createBiteCode()
 	{
@@ -247,9 +239,8 @@ class code128 extends linearBarcode {
 			$characterSet = self::CHARSET_A;
 			$weightedSum += self::START_A;
 		} else {
-			throw new Exception();
+			throw new \Exception();
 		}
-
 
 		for($i=0;$i<strlen($this->text);$i++) {
 			switch ($characterSet) {
@@ -318,13 +309,12 @@ class code128 extends linearBarcode {
 		return $biteCode;
 	}
 
-
 	/**
 	 * Find Character Set
-	 * Find correct character set depends on imput char
+	 * Find correct character set depends on input char
 	 *
-	 * @param char $char
-	 * @return char
+	 * @param string $char
+	 * @return string
 	 */
 	private function findCharacterSet($char) {
 		if(strpos($this->charsB, $char)!==false) {
@@ -334,5 +324,4 @@ class code128 extends linearBarcode {
 			return self::CHARSET_A;
 		}
 	}
-
 }

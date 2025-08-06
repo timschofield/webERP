@@ -7,13 +7,11 @@
  * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
  */
 
-
+namespace BarcodePack;
 
 // Error codes
-
 define('E_EMPTY_TEXT', 100);
 define('E_MODULE_SIZE', 101);
-
 
 /**
  * barcode
@@ -23,8 +21,8 @@ define('E_MODULE_SIZE', 101);
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class barcode {
-
+class barcode
+{
 	// Minimal module size
 	const MIN_MODULE_SIZE = 1;
 
@@ -46,7 +44,6 @@ class barcode {
 	 */
 	protected $moduleSize = null;
 
-
 	/**
 	 * Constructor
 	 *
@@ -55,12 +52,11 @@ class barcode {
 	 */
 	public function __construct($text, $moduleSize=self::MODULE_SIZE)
 	{
-
 		// input text check
 		if(!empty ($text)) {
 			$this->text = $text;
 		} else {
-			throw new Exception('Input text can not be empty.', E_EMPTY_TEXT);
+			throw new \Exception('Input text can not be empty.', E_EMPTY_TEXT);
 		}
 
 		// Module size check
@@ -68,9 +64,8 @@ class barcode {
 		if($moduleSize >= self::MIN_MODULE_SIZE && $moduleSize <= self::MAX_MODULE_SIZE) {
 			$this->moduleSize = $moduleSize;
 		} else {
-			throw new Exception('Module size have to be in range '.self::MIN_MODULE_SIZE.' - '.self::MAX_MODULE_SIZE.'.', E_MODULE_SIZE);
+			throw new \Exception('Module size have to be in range '.self::MIN_MODULE_SIZE.' - '.self::MAX_MODULE_SIZE.'.', E_MODULE_SIZE);
 		}
 
 	}
-
 }

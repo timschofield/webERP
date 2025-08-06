@@ -7,14 +7,10 @@
  * a Creative Commons Attribution-NoDerivs 3.0 Unported License.
  */
 
-
-
-require_once 'class.linearBarcode.php';
-
+namespace BarcodePack;
 
 // Error codes
 define('E_ODD_LENGTH', 500);
-
 
 /**
  * i2of5
@@ -24,8 +20,8 @@ define('E_ODD_LENGTH', 500);
  * @author Tomáš Horáček <info@webpack.cz>
  * @package BarcodePack
  */
-class i2of5 extends linearBarcode {
-
+class i2of5 extends linearBarcode
+{
 	/** @var array */
 	private $allowedChars = array(
 		'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
@@ -51,7 +47,6 @@ class i2of5 extends linearBarcode {
 		'STOP' => '11101',
 	);
 
-
 	/**
 	 * Constructor
 	 *
@@ -64,22 +59,21 @@ class i2of5 extends linearBarcode {
 			parent::__construct($text, $moduleSize, $this->allowedChars);
 
 			if((strlen($this->text)%2)!=0) {
-				throw new Exception('The number of characters must be even', E_ODD_LENGTH);
+				throw new \Exception('The number of characters must be even', E_ODD_LENGTH);
 			}
 
 			$this->biteCode = $this->createBiteCode();
 		}
-		catch(Exception $e) {
+		catch(\Exception $e) {
 			throw $e;
 		}
 
 	}
 
-
 	/**
 	 * Create Bite Code
 	 *
-	 * @return string
+	 * @return array
 	 */
 	private function createBiteCode()
 	{
@@ -89,7 +83,6 @@ class i2of5 extends linearBarcode {
 		$biteCode['START'] = $this->codeTable['START'];
 
 		$biteCode['DATA'] = '';
-
 
 		for($i=0;$i<strlen($this->text);$i++) {
 			$firstCounter = 0;	// Num of line module
@@ -130,6 +123,4 @@ class i2of5 extends linearBarcode {
 
 		return $biteCode;
 	}
-
-
 }
