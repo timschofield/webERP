@@ -1,5 +1,6 @@
 # Changelog - Archive
-All notable changes to the webERP project will be documented in this file.
+
+All changes details to the webERP project up to version 4.14.0 are documented in this file.
 The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].
 For the most recent changelogs, please refer to [CHANGELOG.md].
 

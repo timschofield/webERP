@@ -1,0 +1,31 @@
+# Main Changes
+
+This file contains a high-level overview of the main changes, starting with v5.
+
+For detailed changelogs of v5 and later, please look at the git commit logs for the `master` branch, available at
+https://github.com/timschofield/webERP/commits/master/.
+
+For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
+
+## [v5.0.0] - (unreleased)
+
+* increased minimum php requirements to version 8.1
+* deprecated support for php extension `mysql` to connect to the database (code for it is still there but it might be
+  dropped in the future). Use `mysqli` instead
+* db tables are now created using the `utf8_mb4` character set if the database supports it, instead of `utf8_mb3`,
+  to allow full support of emojis and other unicode niceties (NB: this is actually not yet merged ;-)
+* rewritten the installer
+* fixed the XMLRPC API
+* updated the pdf report writer library TCPDF to version 6.XX
+* introduced a new pdf report writer library: DomPDF, to eventually replace all usage of TCPDF
+* new and improved database upgrade system
+* new login screen
+* new agents commission system
+* new dashboard system
+* new system for processing regular payments
+* new General Ledger budget system
+* new budget system
+* new popup context-sensitive help system
+* automatically log out the user, and then return them to the correct module when they log back in
+* css styling changes
+* various bugfixes

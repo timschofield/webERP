@@ -12,18 +12,19 @@ over the web. For further information and for a full list of features, please vi
 
 ## Demo
 
-A live demo of the latest (currently RC) release is available on the webERP support site, where you can login and experiment with all
-the webERP features: https://www.weberp.org/demo/
+A live demo of the latest (currently RC) release is available on the webERP support site, where you can log in and experiment
+with all the webERP features: https://www.weberp.org/demo/
 
 ## Download Now
 
-The latest stable version is currently [v4.15.2](https://github.com/timschofield/webERP/releases/tag/v4.15.2), and can
-be downloaded from SourceForge.
+*NB* the "not yet released" v5 version is recommended over the latest v4 version for new installations. You can
+download the latest daily-updated version from [GitHub](https://github.com/timschofield/webERP/archive/refs/heads/master.zip)
 
-[![Download Latest Official Release](https://a.fsdn.com/con/app/sf-download-button)](http://sourceforge.net/projects/web-erp/files/latest/download)
+The latest stable version is currently [v4.15.2](https://github.com/timschofield/webERP/releases/tag/v4.15.2), and can
+be downloaded from [SourceForge](http://sourceforge.net/projects/web-erp/files/latest/download)
 
 ## Requirements
-- A web server - webERP has been tested on Apache, NGINX, lighthttpd, and Hiawatha
+- A web server - webERP has been tested on Apache, Nginx, Lighthttpd, and Hiawatha
 - PHP version 8.1 and above
 - MySQL version 4.3 and above, or MariaDB version 5.1 and above
 - A web browser with HTML5 compatibility
@@ -34,16 +35,19 @@ Further information about hardware and software requirements is available in the
 
 ### New installation
 
-1. [Download the latest official webERP release.](http://sourceforge.net/projects/web-erp/files/latest/download)
+1. [Download the latest webERP source code](https://github.com/timschofield/webERP/archive/refs/heads/master.zip).
 2. Unzip the downloaded file.
-3. Create an empty database, taking note of your username, password, hostname, and database name.
-4. Everything inside the folder you unzipped needs to be uploaded/copied to your webserver, for example, into your `public_html` or `www` or `html` folder (the folder will already exist on your webserver).
-5. In your browser, enter the address to your site, such as: www.example.com (or if you uploaded it into another subdirectory such as foldername use www.example.com/foldername)
+3. Everything inside the folder you unzipped needs to be uploaded/copied to your webserver, for example, into your
+   `public_html` or `www` or `html` folder (the folder will already exist on your webserver).
+4. Create an empty database, taking note of your username, password, hostname, and database name.
+   NB: the database user must have sufficient permissions to create triggers and functions.
+5. In your browser, enter the address to your site, such as: www.example.com (or if you uploaded it into another subdirectory
+   such as foldername use www.example.com/foldername)
 6. Follow the instructions that appear in your browser for installation.
 
 ### Upgrading
 
-1. [Download the latest official webERP release.](http://sourceforge.net/projects/web-erp/files/latest/download)
+1. [Download the latest webERP source code](https://github.com/timschofield/webERP/archive/refs/heads/master.zip).
 2. Unzip the downloaded file.
 3. Backup the `config.php` script and `companies/` directory from your previous installation.
 4. Everything inside the folder you unzipped needs to be uploaded/copied to your webserver, overwriting your previous installation.

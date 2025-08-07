@@ -41,7 +41,7 @@ echo '<form method="post" action="index.php?Page=4">
 			</ul>';
 
 if ($DataSaved != '') {
-	echo '<input type="submit" id="save" name="test" value="Save admin account details" /><img class="result_icon" src="valid.png" />', $Message;
+	echo '<input type="submit" id="save" name="test" value="Save admin account details" /><img class="result_icon" src="images/valid.png" />', $Message;
 } else {
 	echo '<input type="submit" id="save" name="test" value="Save admin account details" />';
 }

@@ -26,10 +26,10 @@ and prompt for approval before applying them.
 2. Stop new users from logging in by setting `[Main Menu > Settings > System Parameters > Perform
      Database Maintenance at Login]` to "Allow SysAdmin Access Only"
 
-3. (Optional) Stop webERP site. For the highest degree of database integrity, you may consider
-     stopping the system during the upgrade. The results are unpredictable when an upgrade involves
+3. (Optional) Stop the webERP site. For the highest degree of database integrity, you may consider
+     stopping the webserver during the upgrade. The results are unpredictable when an upgrade involves
      upgrading the database schema and an already-logged user performs a transaction using new
-     PHP code, which exercise expected new database features, but before the database schema
+     PHP code, which exercises expected new database features, but before the database schema
      has been upgraded.
 
      Also, the files of the new version are not updated simultaneously. There is a finite risk a
@@ -39,67 +39,67 @@ and prompt for approval before applying them.
      more likely to occur).
 
      Also note that caching (e.g. PHP code, web page, database queries, etc.) can also have an
-     affect the actual or perceived stability of an upgrade.
+     effect on the actual or perceived stability of an upgrade.
 
 4. Backup the webERP directory and all databases to restore should any issues be encountered
      during the upgrade procedure.
 
 5. Upgrade webERP files by either:
 
-    - extract the new archive into the webERP directory and overwrite existing files, or
+    - extracting the new archive into the webERP directory and overwriting existing files, or
     - if git was used to clone the webERP Git source repo (i.e. if the installation was done by cloning
-      the GitHub project repo), you can use "git pull" to update.
+      the GitHub project repo), use `git pull` to update.
 
 6. Put the web site back online (e.g. restart web server)
 
 7. Log into each company as an admin user to trigger the automatic database upgrade procedure. Each
      database (company) must be upgraded individually.
 
-The new upgrade system cannot identify database schema versions prior to 3.11 and will prompt for
+NB: the new upgrade system cannot identify database schema versions prior to 3.11 and will prompt for
 the database version (the upgrade system is compatible with version 3.00 onwards).
 
 Should you install using a new directory, you are essentially performing a new installation and
-you must manually copy any site-specific files from the old version yourself, such as:
+must manually copy any site-specific files from the old version yourself, such as:
 
 1. config.php
 2. webERP/companies/*
 3. any modified scripts (any modified scripts should be saved in a separate directory to aid updating
-   as required.
+   as required).
 
 
 ## Upgrading from a previous version
 
-### Upgrading from a database version after 4.10
+### Upgrading from a version before 4.10
 
 Variable naming in config.php was changed in version 4.10 to be consistent with the rest of the system.
 
-$dbType changed to $DBType
-$dbuser changed to $DBUser
-$dbpassword changed to $DBPassword
-$allow_demo_mode changed to $AllowDemoMode
-$rootpath changed to $RootPath
+`$dbType` changed to `$DBType`
+`$dbuser` changed to `$DBUser`
+`$dbpassword` changed to `$DBPassword`
+`$allow_demo_mode` changed to `$AllowDemoMode`
+`$rootpath` changed to `$RootPath`
 
 The upgrade script should modify your existing config.php file automatically to change these variable
 names.
 
 
-### Upgrading from a database version after 4.09
+### Upgrading from a version before 4.09
 
-A new CSS structure was released with 4.09 and upgraders made need to clear their browser cache for the
+A new CSS structure was released with 4.09 and upgraders may need to clear their browser cache for the
 new CSS to render correctly (reported by a user with Internet Explorer 9).
 
 
-### Upgrading from database version 3.11 to 4.x
+### Upgrading from version 3.11 to 4.x
 
-PHP 5.3 is required as of version 4.x because of simpleXML module is now used for XML definition of
-report formats and is only available with PHP 5+.
+PHP 5.3 is required as of version 4.x because the simpleXML extension is now used for XML definition of
+report formats, and it is only available with PHP 5+.
 
 
 ### Upgrading from database version prior to 3.05
 
-Prior to v4.01, updating the database was performed using SQL scripts in webERP/sql/mysql/country_sql/.
+Prior to v4.01, updating the database was performed using SQL scripts in `webERP/sql/mysql/country_sql/`.
 The upgrade scripts assume database name "webERP", if your database name is different you must edit
-the script to add the following line to the top before running the the script in a terminal.
+the script to add the following line to the top before running the script in a terminal.
 
     USE mydatabase;
 
@@ -147,7 +147,7 @@ behaviour. A special script must be run to effect these changes after the SQL sc
 Z_Upgrade_3.01-3.02.php must be opened in the browser to effect these changes.
 
 
-### Upgrading from database version 2.9B TO 3.0
+### Upgrading from database version 2.9B to 3.0
 
 There are extensive changes to the database and the upgrade2.9b-3.0.sql may take some time to run depending on
 how much data there is in the system. A backup of the 2.9b database dump should be taken prior to attempting to
