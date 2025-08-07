@@ -109,7 +109,7 @@ if (!isset($_POST['FromDate'])
 		$i++;
 	}
 
-	$GraphTitle = $KPIDescription . ' ' . _('From') . ' ' . ConvertSQLDate($InitialDate) . ' ' . _('to') . ' ' . ConvertSQLDate($FinalDate) . "\n\r";
+	$GraphTitle = $KPIDescription . ' ' . 'From' . ' ' . ConvertSQLDate($InitialDate) . ' ' . 'to' . ' ' . ConvertSQLDate($FinalDate);
 
 	$Range = max(abs($MaxValue), abs($MinValue));
 	if ($Range < 5){
@@ -121,9 +121,8 @@ if (!isset($_POST['FromDate'])
 	}
 
 	$graph = new Phplot\Phplot\phplot(1200, 600);
-	$graph->SetTitleColor('blue');
 	$graph->SetTitle($GraphTitle);
-	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/kpigraph.png');
+	$graph->SetOutputFile($_SESSION['reports_dir'] . '/kpigraph.png');
 	$graph->SetXTitle(_('Date'));
 	$graph->SetYTitle(_('KPI Value'));
 	$graph->SetXTickPos('none');
@@ -131,16 +130,17 @@ if (!isset($_POST['FromDate'])
 //	$graph->SetXDataLabelPos('none'); do not draw the dates in X axis
 	$graph->SetXLabelAngle(90);
 	$graph->SetBackgroundColor('white');
+	$graph->SetTitleColor('blue');
 	$graph->SetFileFormat('png');
 	$graph->SetPlotType($_POST['GraphType']);
-	$graph->SetIsInline(TRUE);
+	$graph->SetIsInline(true);
 	$graph->SetShading(5);
-	$graph->SetDrawYGrid(TRUE);
+	$graph->SetDrawYGrid(true);
 	$graph->SetDataType('text-data');
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($PrecisionY);
 	$graph->SetYDataLabelPos('none');
-	$graph->TuneYAutoRange(0, 0, 0);
+	$graph->TuneYAutoRange('0', '0', '0');
 	$graph->SetDataColors(
 		array('blue'),  //Data Colors
 		array('black')	//Border Colors
