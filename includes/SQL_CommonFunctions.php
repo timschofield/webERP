@@ -17,13 +17,11 @@ function GetNextTransNo($TransType) {
 	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 		. _('The transaction number could not be incremented');
-	$DbgMsg = _('The following SQL to increment the transaction number was used');
-	DB_query($SQL, $ErrMsg, $DbgMsg);
+	DB_query($SQL, $ErrMsg);
 	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>'
 		. _('The next transaction number could not be retrieved from the database because');
-	$DbgMsg = _('The following SQL to retrieve the transaction number was used');
-	$GetTransNoResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$GetTransNoResult = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];
 }
@@ -103,7 +101,7 @@ function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 function GetSalesGLCode($salesarea, $partnumber) {
     $SQL="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     $MyRow=DB_fetch_array($Result);
     return $MyRow[0];
 }
@@ -185,8 +183,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. _('The GL credit for the stock cost adjustment posting could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 						typeno,
@@ -206,8 +203,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 			. _('The GL debit for stock cost adjustment posting could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
@@ -409,8 +405,7 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 										'" . date('Y-m-d') . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 				. _('The create of the qasamples record failed');
-			$DbgMsg = _('The following SQL to create the qasamples was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			$SampleID = DB_Last_Insert_ID('qasamples', 'sampleid');
 			$SQL = "INSERT INTO sampleresults (sampleid,
 											testid,
@@ -432,8 +427,7 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 											AND prodspecs.active='1'";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 				. _('The create of the sampleresults record failed');
-			$DbgMsg = _('The following SQL to create the sampleresults was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} //$MyRow2[0]==0
 	} //$MyRow[0]>0

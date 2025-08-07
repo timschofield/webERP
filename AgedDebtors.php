@@ -530,7 +530,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 			$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 			echo '<option value="">' . _('All Salespeople') . '</option>';
 			while ($MyRow=DB_fetch_array($Result)) {
 					echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
@@ -546,7 +546,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 		$SQL = "SELECT currency, currabrev FROM currencies";
 
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		while ($MyRow=DB_fetch_array($Result)) {
 			  if($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
 				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';

@@ -961,7 +961,7 @@ echo '</pre>';
 								'" . $Order->DeliverBlind ."'
 								)";
 						$ErrMsg = _('The order cannot be created because');
-						$InsertQryResult = DB_query($HeaderSQL,$ErrMsg);
+						$InsertQryResult = DB_query($HeaderSQL, $ErrMsg);
 						// update salesorderdetails too here ..
 						$xi=0;
 						foreach ($Order->LineItems as $lineNumber => $linedetail) {

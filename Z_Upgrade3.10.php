@@ -19,11 +19,11 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     $SQL='SELECT count(typeid)
             FROM debtortype
             WHERE typeid=1';
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     $MyRow=DB_fetch_array($Result);
     if ($MyRow[0]==0) {
         $SQL='INSERT INTO `debtortype` ( `typeid` , `typename` ) VALUES (1, "Default")';
-        $Result=DB_query($SQL);
+        $Result = DB_query($SQL);
         if (DB_error_no()==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {
@@ -36,11 +36,11 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     $SQL="SELECT count(id)
             FROM factorcompanies
             WHERE coyname='None'";
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     $MyRow=DB_fetch_array($Result);
     if ($MyRow[0]==0) {
         $SQL='INSERT INTO `factorcompanies` ( `id` , `coyname` ) VALUES (null, "None")';
-        $Result=DB_query($SQL);
+        $Result = DB_query($SQL);
         if (DB_error_no()==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {
@@ -51,10 +51,10 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     }
     echo '<tr><td>' . _('Adding quotedate to salesorders table') . '</td>';
     $SQL='DESCRIBE `salesorders` `quotedate`';
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     if (DB_num_rows($Result)==0) {
         $SQL='ALTER TABLE `salesorders` ADD `quotedate` date NOT NULL default "0000-00-00"';
-        $Result=DB_query($SQL);
+        $Result = DB_query($SQL);
         if (DB_error_no()==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {
@@ -65,10 +65,10 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
     }
     echo '<tr><td>' . _('Adding confirmeddate to salesorders table') . '</td>';
     $SQL='DESCRIBE `salesorders` `confirmeddate`';
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     if (DB_num_rows($Result)==0) {
         $SQL="ALTER TABLE `salesorders` ADD `confirmeddate` date NOT NULL default '0000-00-00'";
-        $Result=DB_query($SQL);
+        $Result = DB_query($SQL);
         if (DB_error_no()==0) {
             echo '<td>' . _('Success') . '</td></tr>';
         } else {

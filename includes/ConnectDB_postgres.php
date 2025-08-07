@@ -58,13 +58,17 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			if ($DebugMessage == '') {
 				$DebugMessage = _('The SQL that failed was:');
 			}
-			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
+			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
+			prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $trace[0]['file'] . _('on line') . ' ' . $trace[0]['line'],
+				'error', _('Database SQL Failure'));
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if (DB_error_no() !=0) {
-				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), 'error', _('DB Database Rollback Error') . ' ' . DB_error_no());
+			} else {
+				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
@@ -129,7 +133,7 @@ function DB_escape_string($String) {
 }
 
 function DB_show_tables() {
-	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	return $Result;
 }
 

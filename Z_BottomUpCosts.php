@@ -24,9 +24,8 @@ if (isset($Run)) { //start bom processing
 			WHERE b2.parent is null;" ;
 
 	$ErrMsg =  _('An error occurred selecting all bottom level components');
-	$DbgMsg =  _('The SQL that was used to select bottom level components and failed in the process was');
 
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($Item = DB_fetch_array($Result)) {
 		$InputError=UpdateCost($Item['component']);

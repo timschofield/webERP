@@ -82,8 +82,7 @@ if ($_GET['Action'] == 'Enter') {
 								WHERE stockmaster.barcode='". $_POST[$BarCode] ."'";
 
 				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-				$KitResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$KitResult = DB_query($SQL, $ErrMsg);
 				$MyRow=DB_fetch_array($KitResult);
 
 				$_POST[$StockID] = strtoupper($MyRow['stockid']);
@@ -112,7 +111,7 @@ if ($_GET['Action'] == 'Enter') {
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
-					$EnterResult = DB_query($SQL,$ErrMsg);
+					$EnterResult = DB_query($SQL, $ErrMsg);
 				}
 			}
 		} // end of loop
@@ -213,8 +212,7 @@ if ($_GET['Action'] == 'Enter') {
 									'" . $MyRow[2] . "')";
 
 				$ErrMsg = _('The stock count line number') . ' ' . $Row . ' ' . _('could not be entered because');
-				$DbgMsg = _('The SQL that was used to add the item failed was');
-				$EnterResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$EnterResult = DB_query($SQL, $ErrMsg, '', true);
 
 				if (DB_error_no() != 0) {
 					$InputError = 1;
@@ -359,7 +357,7 @@ if ($_GET['Action'] == 'Enter') {
 				$id = (int)$id;
 				$SQL = "DELETE FROM stockcounts WHERE id='".$id."'";
 				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
-				$EnterResult = DB_query($SQL,$ErrMsg);
+				$EnterResult = DB_query($SQL, $ErrMsg);
 				prnMsg( _('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}

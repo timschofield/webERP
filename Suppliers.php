@@ -513,9 +513,8 @@ if (isset($_POST['submit'])) {
 			}
 
 			$ErrMsg = _('The supplier could not be updated because');
-			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 			// echo $SQL;
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'), 'success');
 
@@ -582,9 +581,8 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['DefaultGL'] . "'
 								)";
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
-			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'), 'success');
 

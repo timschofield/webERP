@@ -28,8 +28,7 @@ $ContractHeaderSQL = "SELECT contractdescription,
 						WHERE contractref= '" . $ContractRef . "'";
 
 $ErrMsg =  _('The contract cannot be retrieved because');
-$DbgMsg =  _('The SQL statement that was used and failed was');
-$ContractHdrResult = DB_query($ContractHeaderSQL,$ErrMsg,$DbgMsg);
+$ContractHdrResult = DB_query($ContractHeaderSQL, $ErrMsg);
 
 if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifier]->ContractRef )) {
 
@@ -68,8 +67,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 						WHERE contractref ='" . $ContractRef . "'";
 
 	$ErrMsg =  _('The bill of material cannot be retrieved because');
-	$DbgMsg =  _('The SQL statement that was used to retrieve the contract bill of material was');
-	$ContractBOMResult = DB_query($ContractBOMsql,$ErrMsg,$DbgMsg);
+	$ContractBOMResult = DB_query($ContractBOMsql, $ErrMsg);
 
 	if (DB_num_rows($ContractBOMResult) > 0) {
 		while ($MyRow=DB_fetch_array($ContractBOMResult)) {
@@ -92,8 +90,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 						ORDER BY contractreqid";
 
 	$ErrMsg =  _('The other contract requirementscannot be retrieved because');
-	$DbgMsg =  _('The SQL statement that was used to retrieve the other contract requirments was');
-	$ContractReqtsResult = DB_query($ContractReqtsSQL,$ErrMsg,$DbgMsg);
+	$ContractReqtsResult = DB_query($ContractReqtsSQL, $ErrMsg);
 
 	if (DB_num_rows($ContractReqtsResult) > 0) {
 		while ($MyRow=DB_fetch_array($ContractReqtsResult)) {

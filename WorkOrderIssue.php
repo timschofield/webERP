@@ -190,8 +190,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 					AND loccode = '" . $_POST['FromLocation'] . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-			$DbgMsg = _('The following SQL to update the location stock record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		} else {
 			$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
 
@@ -224,8 +223,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 							'" . $NewQtyOnHand . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order issue because');
-		$DbgMsg = _('The following SQL to insert the stock movement records was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
@@ -246,8 +244,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 										AND (loccode = '" . $_POST['FromLocation'] . "')
 										AND (serialno = '" . $SerialNo . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock item records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 						/** end of handle stockserialitems records */
 
@@ -261,8 +258,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 											'" . $SerialNo . "',
 											-1)";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 					} //non blank SerialNo
 
 				} //end for all of the potential serialised entries in the multi select box
@@ -280,8 +276,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 								AND loccode = '" . $_POST['FromLocation'] . "'
 								AND serialno = '" . $_POST['BatchRef' . $i] . "'";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch/lot reference for the item already exists because');
-						$DbgMsg = _('The following SQL to test for an already existing controlled item was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 						$AlreadyExistsRow = DB_fetch_row($Result);
 
 						if ($AlreadyExistsRow[0] > 0 and $_POST['Qty' . $i] != 0) {
@@ -307,8 +302,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						}
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The batch/lot item record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the batch/lot item records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 						/** end of handle stockserialitems records */
 
@@ -323,8 +317,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 											'" . $_POST['BatchRef' . $i] . "',
 											'" . filter_number_format($_POST['Qty' . $i]) * -1 . "')";
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 						}
 					} //non blank BundleRef
 
@@ -358,8 +351,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*now the credit Stock entry*/
 			$SQL = "INSERT INTO gltrans (type,
@@ -378,17 +370,15 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the stock GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} /* end of if GL and stock integrated and standard cost !=0 */
 
 		//update the wo with the new qtyrecd
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not update the work order cost issued to the work order because');
-		$DbgMsg = _('The following SQL was used to update the work order');
 		$UpdateWOResult = DB_query("UPDATE workorders
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
-									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
+									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 
@@ -509,8 +499,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 							AND loccode = '" . $_POST['FromLocation'] . "'";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the location stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} else {
 				$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
 
@@ -541,8 +530,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 									'" . $IssueItemRow['cost'] . "',
 									'" . $NewQtyOnHand . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order issue because');
-			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1) {
 				/*GL integration with stock is activated so need the GL journals to make it so */
 				/*first the debit the WIP of the item being manufactured from the WO
@@ -564,8 +552,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				/*now the credit Stock entry*/
 				$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -583,17 +570,15 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock GLTrans record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
 			//update the wo with the new qtyrecd
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not update the work order cost issued to the work order because');
-			$DbgMsg = _('The following SQL was used to update the work order');
 			$UpdateWOResult = DB_query("UPDATE workorders
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
-									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
+									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, '', true);
 
 			prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
 		} //end of foreach loop;
@@ -706,8 +691,7 @@ if (isset($_POST['Search'])) {
 	}
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');

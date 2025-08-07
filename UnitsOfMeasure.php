@@ -164,7 +164,7 @@ if (isset($_POST['Submit'])) {
 			ORDER BY unitid";
 
 	$ErrMsg = _('Could not get unit of measures because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>

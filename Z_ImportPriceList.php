@@ -127,8 +127,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 										'" . FormatDateForSQL($_POST['StartDate']) . "')";
 
 			$ErrMsg =  _('The price could not be added because');
-			$DbgMsg = _('The SQL that was used to add the price failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop

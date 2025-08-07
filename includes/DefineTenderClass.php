@@ -122,7 +122,7 @@ Class Tender {
 			foreach ($this->Suppliers as $Supplier) {
 				$SQL="DELETE FROM tendersuppliers
 					WHERE  tenderid='" . $this->TenderId . "'";
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				$SuppliersSQL[]="INSERT INTO tendersuppliers (
 									tenderid,
 									supplierid,
@@ -134,7 +134,7 @@ Class Tender {
 			foreach ($this->LineItems as $LineItem) {
 				$SQL="DELETE FROM tenderitems
 						WHERE  tenderid='" . $this->TenderId . "'";
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				$ItemsSQL[]="INSERT INTO tenderitems (tenderid,
 														stockid,
 														quantity,
@@ -146,12 +146,12 @@ Class Tender {
 			}
 		}
 		DB_Txn_Begin();
-		$Result=DB_query($HeaderSQL, '', '', True);
+		$Result = DB_query($HeaderSQL, '', '', True);
 		foreach ($SuppliersSQL as $SQL) {
-			$Result=DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', True);
 		}
 		foreach ($ItemsSQL as $SQL) {
-			$Result=DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', True);
 		}
 		DB_Txn_Commit();
 	}

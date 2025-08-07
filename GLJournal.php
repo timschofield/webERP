@@ -285,8 +285,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					'" . $JournalItem->Amount . "'
 					)";
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
-		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		InsertGLTags($JournalItem->tag);
 
 		if ($_POST['JournalType'] == 'Reversing') {
@@ -307,8 +306,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 						)";
 
 			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
-			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			InsertGLTags($JournalItem->tag);
 		}
 	}

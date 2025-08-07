@@ -17,7 +17,7 @@ if (isset($_POST['UpdateAll'])) {
 			$SQL="UPDATE stockrequest
 					SET authorised='1'
 					WHERE dispatchid='" . $RequestNo . "'";
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 		}
 		if (strpos($POSTVariableName, 'cancel')!== false) {
 			$CancelItems = explode('cancel', $POSTVariableName);
@@ -56,7 +56,7 @@ $SQL="SELECT stockrequest.dispatchid,
 		WHERE stockrequest.authorised=0
 		AND stockrequest.closed=0
 		AND www_users.userid='".$_SESSION['UserID']."'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<div>';
@@ -92,7 +92,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 				ON stockmaster.stockid=stockrequestitems.stockid
 			WHERE dispatchid='".$MyRow['dispatchid'] . "'
 			AND completed=0";
-	$LineResult=DB_query($LinesSQL);
+	$LineResult = DB_query($LinesSQL);
 
 	echo '<tr>
 			<td></td>

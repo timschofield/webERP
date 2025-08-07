@@ -41,7 +41,6 @@ if (isset($_GET['NewCredit'])){
 	}
 }
 
-
 if (!isset($_SESSION['CreditItems'.$identifier])){
 	 /* It must be a new credit note being created $_SESSION['CreditItems'.$identifier] would be set up from a previous call*/
 
@@ -65,7 +64,6 @@ if (isset($_POST['CancelCredit'])) {
 	$_SESSION['RequireCustomerSelection'] = 1;
 }
 
-
 if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 
 	if ($_POST['Keywords'] AND $_POST['CustCode']) {
@@ -75,10 +73,10 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 		  prnMsg( _('At least one Customer Name keyword OR an extract of a Customer Code must be entered for the search'), 'info' );
 	} else {
 		if (mb_strlen($_POST['Keywords'])>0) {
-		  //insert wildcard characters in spaces
+			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-			   $SQL = "SELECT	debtorsmaster.name,
+			$SQL = "SELECT	debtorsmaster.name,
 								custbranch.debtorno,
 								custbranch.brname,
 								custbranch.contactname,
@@ -91,9 +89,9 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 							WHERE custbranch.brname " . LIKE  . " '" . $SearchString . "'
 							AND custbranch.disabletrans='0'";
 
-		  } elseif (mb_strlen($_POST['CustCode'])>0){
+		} elseif (mb_strlen($_POST['CustCode'])>0){
 
-			   $SQL = "SELECT 	debtorsmaster.name,
+			$SQL = "SELECT 	debtorsmaster.name,
 								custbranch.debtorno,
 								custbranch.brname,
 								custbranch.contactname,
@@ -105,25 +103,22 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 							ON custbranch.debtorno=debtorsmaster.debtorno
 							WHERE custbranch.debtorno " . LIKE  . "'%" . $_POST['CustCode'] . "%'
 							AND custbranch.disabletrans='0'";
-		  }
+		}
 
-		  $ErrMsg = _('Customer branch records requested cannot be retrieved because');
-		  $DbgMsg = _('SQL used to retrieve the customer details was');
-		  $Result_CustSelect = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$ErrMsg = _('Customer branch records requested cannot be retrieved because');
+		$Result_CustSelect = DB_query($SQL, $ErrMsg);
 
+		if (DB_num_rows($Result_CustSelect)==1) {
+			$MyRow = DB_fetch_array($Result_CustSelect);
+			$SelectedCustomer = trim($MyRow['debtorno']);
+			$SelectedBranch = trim($MyRow['branchcode']);
+			$_POST['JustSelectedACustomer'] = true;
+		} elseif (DB_num_rows($Result_CustSelect)==0) {
+			prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
+		}
 
-		  if (DB_num_rows($Result_CustSelect)==1){
-			    $MyRow=DB_fetch_array($Result_CustSelect);
-			    $SelectedCustomer = trim($MyRow['debtorno']);
-			    $SelectedBranch = trim($MyRow['branchcode']);
-			    $_POST['JustSelectedACustomer'] = true;
-		  } elseif (DB_num_rows($Result_CustSelect)==0){
-			    prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
-		  }
-
-	 } /*one of keywords or custcode was more than a zero length string */
+	} /*one of keywords or custcode was more than a zero length string */
 } /*end of if search button for customers was hit*/
-
 
 if (isset($_POST['JustSelectedACustomer']) AND !isset($SelectedCustomer)){
 	/*Need to figure out the number of the form variable that the user clicked on */
@@ -180,8 +175,7 @@ will be booked back into. */
 				AND custbranch.debtorno = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'";
 
 	$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $SelectedCustomer . ' ' . _('cannot be retrieved because');
-	$DbgMsg =  _('SQL used to retrieve the branch details was');
-	$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($Result);
 
@@ -379,7 +373,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
-		$SearchResult = DB_query($SQL,$ErrMsg);
+		$SearchResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0){
 			   prnMsg(_('There are no products available that match the criteria specified'),'info');
@@ -457,7 +451,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							WHERE  stockmaster.stockid = '". $_POST['NewItem'] . "'";
 
 				$ErrMsg =  _('There is a problem selecting the part because');
-				$Result1 = DB_query($SQL,$ErrMsg);
+				$Result1 = DB_query($SQL, $ErrMsg);
 
 		   		if ($MyRow = DB_fetch_array($Result1)){
 
@@ -625,8 +619,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							WHERE stockmaster.stockid = '". $_POST['NewItem'] . "'";
 
 				$ErrMsg = _('The item details could not be retrieved because');
-				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$Result1 = DB_query($SQL, $ErrMsg);
 				$MyRow = DB_fetch_array($Result1);
 
 				$LineNumber = $_SESSION['CreditItems'.$identifier]->LineCounter;
@@ -1074,8 +1067,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 			WHERE custbranch.debtorno ='". $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
 			AND custbranch.branchcode = '" . $_SESSION['CreditItems'.$identifier]->Branch . "'";
 	$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The area cannot be determined for this customer');
-	$DbgMsg = _('The following SQL to insert the customer credit note was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	 if ($MyRow = DB_fetch_row($Result)){
 	     $Area = $MyRow[0];
@@ -1136,8 +1128,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 									'" . $_SESSION['CreditItems' . $identifier]->SalesPerson . "' )";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The customer credit note transaction could not be added to the database because');
-	$DbgMsg = _('The following SQL to insert the customer credit note was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 	$CreditTransID = DB_Last_Insert_ID('debtortrans','id');
@@ -1153,8 +1144,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 						'" . -$TaxAmount/$_SESSION['CurrencyRate'] . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
- 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	}
 
 /* Insert stock movements for stock coming back in if the Credit is a return of goods */
@@ -1222,8 +1212,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 												'" . $CreditLine->Narrative . "')";
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement records for the purpose of display on the credit note was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			} else { //its a return or a write off need to record goods coming in first
 
@@ -1297,8 +1286,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 		    	}
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*Get the stockmoveno from above - need to ref StockMoveTaxes and possibly SerialStockMoves */
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -1318,8 +1306,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 								'" . $Tax->TaxOnTax . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this credit note line item could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
 
@@ -1335,8 +1322,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 								AND loccode='" . $_SESSION['CreditItems'.$identifier]->Location . "'
 								AND serialno='" . $Item->BundleRef . "'";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existence of the serial stock item record could not be determined because');
-						$DbgMsg = _('The following SQL to find out if the serial stock item record existed already was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 						$MyRow = DB_fetch_row($Result);
 
 						if ($MyRow[0]==0) {
@@ -1354,8 +1340,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 																)";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The new serial stock item record could not be inserted because');
-							$DbgMsg = _('The following SQL to insert the new serial stock item record was used') ;
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 						} else { /*Update the existing StockSerialItems record */
 							$SQL = "UPDATE stockserialitems SET quantity= quantity + " . $Item->BundleQty . "
 									WHERE stockid='" . $CreditLine->StockID . "'
@@ -1363,8 +1348,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 									AND serialno='" . $Item->BundleRef . "'";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-							$DbgMsg = _('The following SQL to update the serial stock item record was used');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 						}
 						/* now insert the serial stock movement */
 
@@ -1378,8 +1362,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 															'" . $Item->BundleRef . "',
 															'" . $Item->BundleQty . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement record was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					}/* foreach serial item in the serialitems array */
 
@@ -1399,8 +1382,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 							AND locstock.loccode = '" . $_SESSION['CreditItems'.$identifier]->Location . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated because');
-					$DbgMsg = _('The following SQL to update the location stock record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} else if ($CreditLine->MBflag=='A'){ /* its an assembly */
 					/*Need to get the BOM for this part and make stock moves
@@ -1420,8 +1402,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
                             AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 					$ErrMsg =  _('Could not retrieve assembly components from the database for') . ' ' . $CreditLine->StockID . ' ' . _('because');
-				 	$DbgMsg = _('The SQL that failed was');
-					$AssResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				 	$AssResult = DB_query($SQL, $ErrMsg, '', true);
 
 					while ($AssParts = DB_fetch_array($AssResult)){
 
@@ -1475,18 +1456,16 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 													)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records for the assembly components of') . ' ' . $CreditLine->StockID . ' ' . _('could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the assembly components stock movement records was used');
-				        $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
-					  /*Update the stock quantities for the assembly components */
-					 $SQL = "UPDATE locstock
+					/*Update the stock quantities for the assembly components */
+					$SQL = "UPDATE locstock
 					   		SET locstock.quantity = locstock.quantity + " . $AssParts['quantity'] * $CreditLine->Quantity . "
 							WHERE locstock.stockid = '" . $AssParts['component'] . "'
 							AND locstock.loccode = '" . $_SESSION['CreditItems'.$identifier]->Location . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Location stock record could not be updated for an assembly component because');
-  					$DbgMsg =  _('The following SQL to update the component location stock record was used');
-					$Result = DB_query($SQL,$ErrMsg, $DbgMsg,true);
+  					$Result = DB_query($SQL, $ErrMsg, '',true);
 				    } /* end of assembly explosion and updates */
 
 
@@ -1575,8 +1554,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 				}
 
      			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement record to write the stock off could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement to write off the stock was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if (($CreditLine->MBflag=='M' OR $CreditLine->MBflag=='B') AND $CreditLine->Controlled==1){
 					/*Its a write off too still so need to process the serial items
@@ -1593,8 +1571,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 								AND serialno='" . $Item->BundleRef . "'";
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated for the write off because');
-						$DbgMsg = _('The following SQL to update the serial stock item record was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 						/* now insert the serial stock movement */
 
@@ -1609,8 +1586,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 															'" . -$Item->BundleQty . "'
 															)";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record for the write off could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement write off record was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					}/* foreach serial item in the serialitems array */
 
@@ -1651,8 +1627,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 							salesanalysis.salesperson";
 
 			$ErrMsg = _('The count to check for existing Sales analysis records could not run because');
-			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$MyRow = DB_fetch_array($Result);
 
@@ -1761,8 +1736,7 @@ sales analysis needs to reflect the sales made before and after the changes*/
 			}
 
 			$ErrMsg = _('The sales analysis record for this credit note could not be added because');
-			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-			$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 /* If GLLink_Stock then insert GLTrans to either debit stock or an expense
@@ -1795,8 +1769,7 @@ at standard cost*/
 											'" . ($CreditLine->StandardCost * -$CreditLine->Quantity) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of the stock credited GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 				if ($_POST['CreditType']=='WriteOff'){
@@ -1821,8 +1794,7 @@ then debit the expense account the stock is to written off to */
 										)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost of the stock credited GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				    } else {
 
 /*the goods are coming back into stock so debit the stock account*/
@@ -1844,8 +1816,7 @@ then debit the expense account the stock is to written off to */
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock side (or write off) of the cost of sales GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				    }
 
 				} /* end of if GL and stock integrated and standard cost !=0 */
@@ -1874,8 +1845,7 @@ then debit the expense account the stock is to written off to */
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					if ($CreditLine->DiscountPercent !=0){
 
@@ -1897,8 +1867,7 @@ then debit the expense account the stock is to written off to */
 
 
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The credit note discount GL posting could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 					}/* end of if discount not equal to 0 */
 				} /*end of if sales integrated with debtors */
 		  } /*Quantity credited is more than 0 */
@@ -1925,8 +1894,7 @@ then debit the expense account the stock is to written off to */
 								'" . -(($_SESSION['CreditItems'.$identifier]->total + $_SESSION['CreditItems'.$identifier]->FreightCost + $TaxTotal)/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting for the credit note could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 		if ($_SESSION['CreditItems'.$identifier]->FreightCost !=0) {
 			$SQL = "INSERT INTO gltrans (type,
@@ -1945,8 +1913,7 @@ then debit the expense account the stock is to written off to */
 								'" . ($_SESSION['CreditItems'.$identifier]->FreightCost/$_SESSION['CurrencyRate']) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting for this credit note could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 		foreach ( $TaxTotals as $TaxAuthID => $TaxAmount){
 			if ($TaxAmount !=0 ){
@@ -1966,8 +1933,7 @@ then debit the expense account the stock is to written off to */
 											'" . ($TaxAmount/$_SESSION['CurrencyRate']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 		}
 

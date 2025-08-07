@@ -43,7 +43,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		AND chartdetails.accountcode IS NULL";
 
 	$ErrMsg = _('Inserting new chart details records required failed because');
-	$InsChartDetailsRecords = DB_query($SQL,$ErrMsg);
+	$InsChartDetailsRecords = DB_query($SQL, $ErrMsg);
 
 
 	while ($AccountRow = DB_fetch_array($ChartDetailsNotSetUpResult)){

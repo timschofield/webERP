@@ -145,7 +145,7 @@ $BookMark = '';
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
-	$Periods = DB_query($SQL,$ErrMsg);
+	$Periods = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow = DB_fetch_array($Periods)){
 		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'],'M',-1) . '</option>';

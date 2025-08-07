@@ -314,7 +314,7 @@ if (isset($_GET['AllocTrans'])) {
 
 	$SQL .= " ORDER BY debtortrans.trandate, debtortrans.transno";
 
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 
 	while ($MyRow=DB_fetch_array($Result)) {
 		$DiffOnExchThisOne = ($MyRow['amt']/$MyRow['rate']) - ($MyRow['amt']/$_SESSION['Alloc']->TransExRate);

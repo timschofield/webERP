@@ -132,8 +132,7 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'] . ' OFFSET ' . strval($_SESSION['DisplayRecordsMax'] * $Offset);
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');

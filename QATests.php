@@ -106,8 +106,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the QA Test failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg , 'success');
 

@@ -542,8 +542,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	}
 	$SQL = GenerateStockmasterQuery($_POST);
 	$ErrMsg = _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}

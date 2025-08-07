@@ -5,7 +5,7 @@ $Title = _('Database table details');
 include('includes/header.php');
 
 $SQL='DESCRIBE '.$_GET['table'];
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<table><tr>';
 echo '<th>' . _('Field name') . '</th>';

@@ -267,7 +267,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	} //end not order number selected
 
 	$ErrMsg = _('No shipments were returned by the SQL because');
-	$ShipmentsResult = DB_query($SQL,$ErrMsg);
+	$ShipmentsResult = DB_query($SQL, $ErrMsg);
 
 
 	if (DB_num_rows($ShipmentsResult)>0){

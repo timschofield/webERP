@@ -20,7 +20,7 @@ function GetReports($GroupID) {
 		$sql= "SELECT id, reportname FROM reports
 			WHERE defaultreport='".$Def."' AND groupname='".$GroupID."'
 			ORDER BY reportname";
-		$Result=DB_query($sql,'','',false,true);
+		$Result = DB_query($sql,'','',false,true);
 		if (DB_num_rows($Result)>0) {
 			$RptForm .= '<tr><td><select name="ReportID" size="10" onchange="submit()">';
 			while ($Temp = DB_fetch_array($Result)) {

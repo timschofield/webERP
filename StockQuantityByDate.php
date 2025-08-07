@@ -115,9 +115,8 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 	}
 
 	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
 
-	$StockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$StockResult = DB_query($SQL, $ErrMsg);
 
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 

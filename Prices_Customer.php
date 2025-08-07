@@ -187,8 +187,7 @@ $SQL = "SELECT prices.price,
 						startdate";
 
 $ErrMsg = _('Could not retrieve the normal prices set up because');
-$DbgMsg = _('The SQL used to retrieve these records was');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 
@@ -231,8 +230,7 @@ $SQL = "SELECT prices.price,
 				prices.startdate";
 
 $ErrMsg = _('Could not retrieve the special prices set up because');
-$DbgMsg = _('The SQL used to retrieve these records was');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 

@@ -70,7 +70,7 @@ if(isset($PrintPDF)
 					bankaccounts.bankaccountcode
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
-		$Result=DB_query($SQL,'','',false,false);
+		$Result = DB_query($SQL,'','',false,false);
 		if(DB_error_no()!=1) {
 			if(DB_num_rows($Result)==1) {
 				$MyRow = DB_fetch_array($Result);
@@ -220,7 +220,7 @@ if(isset($PrintPDF)
 			}
 		}
 
-		$Result=DB_query($SQL,'','',false,false);
+		$Result = DB_query($SQL,'','',false,false);
 
 		if(DB_error_no()!=0) {
 
@@ -298,7 +298,7 @@ if(isset($PrintPDF)
 					AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		if(DB_error_no()!=0) {
 			$Title = _('Transaction Print Error Report');
 			include('includes/header.php');
@@ -749,7 +749,7 @@ if(isset($PrintPDF)
 
 			}
 
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 			if(DB_num_rows($Result)==0 OR DB_error_no()!=0) {
 				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				if($Debug==1) {
@@ -960,7 +960,7 @@ if(isset($PrintPDF)
 				echo '<hr />';
 				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $MyRow['currcode'] . '</h4></div>';
 
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				if(DB_error_no()!=0) {
 					echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
 					if($Debug==1) {

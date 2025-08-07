@@ -46,10 +46,9 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 /* Do a quick tidy up to settle any transactions that should have been settled at the time of allocation but for whatever reason weren't */
 	$ErrMsg = _('There was a problem settling the old transactions.');
-	$DbgMsg = _('The SQL used to settle outstanding transactions was');
 	$SQL = "UPDATE debtortrans SET settled=1
 			WHERE ABS(debtortrans.balance)<0.009";
-	$SettleAsNec = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SettleAsNec = DB_query($SQL, $ErrMsg);
 
 /*Figure out who all the customers in this range are */
 	$ErrMsg= _('There was a problem retrieving the customer information for the statements from the database');
@@ -109,7 +108,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				bankaccounts.bankaccountcode
 			FROM bankaccounts
 			WHERE bankaccounts.invoice = '1'";
-	$Result=DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=1) {
 		if (DB_num_rows($Result)==1){
 			$MyRow = DB_fetch_array($Result);

@@ -537,7 +537,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<table>';
 	echo '<tr><th colspan="2">' . _('Price List Export') . '</th></tr>';
 	$SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
-	$SalesTypesResult=DB_query($SQL);
+	$SalesTypesResult = DB_query($SQL);
 	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
 	echo '<td><select name="SalesType">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){
@@ -546,7 +546,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '</select></td></tr>';
 
 	$SQL = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($SQL);
+	$SalesTypesResult = DB_query($SQL);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){
@@ -570,7 +570,7 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<tr><th colspan="2">' . _('Customer List Export') . '</th></tr>';
 
 	$SQL = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($SQL);
+	$SalesTypesResult = DB_query($SQL);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){

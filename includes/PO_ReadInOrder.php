@@ -58,8 +58,7 @@
 							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	   $ErrMsg =  _('The order cannot be retrieved because');
-	   $DbgMsg =  _('The SQL statement that was used and failed was');
-	   $GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg,$DbgMsg);
+	   $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1 and !isset($_SESSION['PO'.$identifier]->OrderNo )) {
 
@@ -117,7 +116,7 @@
 							ORDER BY suppliers.supplierid";
 
 			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-			$Result_SuppSelect = DB_query($SupplierSQL,$ErrMsg);
+			$Result_SuppSelect = DB_query($SupplierSQL, $ErrMsg);
 
 			if (DB_num_rows($Result_SuppSelect)==1){
 				$MyRow=DB_fetch_array($Result_SuppSelect);
@@ -163,8 +162,7 @@
 									ORDER BY podetailitem";
 
 			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
-			$DbgMsg =  _('The SQL statement that was used to retrieve the purchase order lines was');
-			$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg);
+			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 		  if (DB_num_rows($LineItemsResult) > 0) {
 

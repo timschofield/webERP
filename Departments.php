@@ -96,9 +96,8 @@ if (isset($_POST['Submit'])) {
 		if (is_array($SQL)) {
 			DB_Txn_Begin();
 			$ErrMsg = _('The department could not be inserted');
-			$DbgMsg = _('The sql that failed was') . ':';
 			foreach ($SQL as $SQLStatement ) {
-				$Result = DB_query($SQLStatement, $ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQLStatement, $ErrMsg, '', true);
 				if(!$Result) {
 					$InputError = 1;
 					break;
@@ -164,7 +163,7 @@ if (isset($_POST['Submit'])) {
 			ORDER BY description";
 
 	$ErrMsg = _('There are no departments created');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 			<tr>

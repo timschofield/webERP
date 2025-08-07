@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 							VALUES ('" . $Item . "',
 								'" . $_POST['Related'] . "')";
 		$ErrMsg = _('The new related item could not be added');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($_POST['Related'] . ' ' . _('is now related to') . ' ' . $Item,'success');
 
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
 								VALUES ('" . $_POST['Related'] . "',
 									'" . $Item . "')";
 			$ErrMsg = _('The new related item could not be added');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Item . ' ' . _('is now related to') . ' ' . $_POST['Related'],'success');
 		}
 	}
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 			WHERE (stockid = '". $Item ."' AND related ='". $_GET['Related'] ."')
 			OR (stockid = '". $_GET['Related'] ."' AND related ='". $Item ."')";
 	$ErrMsg = _('Could not delete this relationshop');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg( _('This relationship has been deleted'),'success');
 
 }

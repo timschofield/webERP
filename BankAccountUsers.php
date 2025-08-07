@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 		AND userid='".$SelectedUser."'";
 
 	$ErrMsg = _('The bank account user record could not be deleted because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('User').' '. $SelectedUser .' '. _('has been un-authorised to use').' '. $SelectedBankAccount .' '. _('bank account') ,'success');
 	unset($_GET['delete']);
 }
@@ -113,8 +113,7 @@ then none of the above are true. These will call the same page again and allow u
 			FROM bankaccounts
 			ORDER BY accountcode";
 	$ErrMsg = _('The bank accounts could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		// Lists bank accounts order by accountcode

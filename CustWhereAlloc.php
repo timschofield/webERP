@@ -204,7 +204,7 @@ if ($_POST['TransType']== 12) {
 					FROM gltrans LEFT JOIN bankaccounts ON account=accountcode
 					WHERE type=12 AND typeno='".$_POST['TransNo']."' AND account !='". $_SESSION['CompanyRecord']['debtorsact'] ."' AND accountcode IS NULL";
 	$ErrMsg = _('Failed to retrieve charge data');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)>0) {
 		while ($MyRow = DB_fetch_array($Result)){
 			echo '<div class="centre">

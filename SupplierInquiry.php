@@ -75,8 +75,7 @@ $SQL = "SELECT suppliers.suppname,
       			paymentterms.daysbeforedue,
       			paymentterms.dayinfollowingmonth";
 $ErrMsg = _('The supplier details could not be retrieved by the SQL because');
-$DbgMsg = _('The SQL that failed was');
-$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$SupplierResult = DB_query($SQL, $ErrMsg);
 
 if(DB_num_rows($SupplierResult) == 0) {
 
@@ -96,9 +95,8 @@ if(DB_num_rows($SupplierResult) == 0) {
 			WHERE suppliers.supplierid = '" . $SupplierID . "'";
 
 	$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
-	$DbgMsg = _('The SQL that failed was');
 
-	$SupplierResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SupplierResult = DB_query($SQL, $ErrMsg);
 
 } else {
 	$NIL_BALANCE = False;
@@ -132,8 +130,7 @@ if(isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])) {
 				AND transno='" . $_GET['HoldTrans'] . "'";
 	}
 	$ErrMsg = _('The Supplier Transactions could not be updated because');
-	$DbgMsg = _('The SQL that failed was');
-	$UpdateResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$UpdateResult = DB_query($SQL, $ErrMsg);
 }
 
 echo '<table class="selection">
@@ -187,8 +184,7 @@ $SQL = "SELECT supptrans.id,
 		AND supptrans.trandate >= '" . $DateAfterCriteria . "'
 		ORDER BY supptrans.trandate";
 $ErrMsg = _('No transactions were returned by the SQL because');
-$DbgMsg = _('The SQL that failed was');
-$TransResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$TransResult = DB_query($SQL, $ErrMsg);
 
 if(DB_num_rows($TransResult) == 0) {
 	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];

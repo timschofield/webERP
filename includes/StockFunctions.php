@@ -59,13 +59,12 @@ function GetQuantityOnHand($StockID, $Location) {
 		$UserAllowedLocations = '';
 		$ErrMsg = _('The quantity on hand for this product in the specified location cannot be retrieved because');
 	}
-	$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
 	$SQL = "SELECT SUM(quantity) AS qoh
 			FROM locstock " .
 			$UserAllowedLocations . "
 			WHERE stockid = '" . $StockID . "'" .
 			$WhereLocation . "";
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}else{
@@ -282,7 +281,6 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 		$UserAllowedLocations = '';
 		$ErrMsg = _('The quantity demanded for this product in the specified location cannot be retrieved because');
 	}
-	$DbgMsg = _('The following SQL to retrieve the demanded stock quantity was used');
 
 	$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS demand
 			FROM salesorderdetails
@@ -294,7 +292,7 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 				AND salesorders.quotation = 0 " .
 				$WhereLocation;
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}
@@ -358,7 +356,6 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 		$UserAllowedLocations = '';
 		$ErrMsg = _('The quantity demanded for this product as a component in BOM in the specified location cannot be retrieved because');
 	}
-	$DbgMsg = _('The following SQL to retrieve the demanded stock quantity  as a component in BOM was used');
 
 	$SQL = "SELECT SUM((salesorderdetails.quantity - salesorderdetails.qtyinvoiced) * bom.quantity) AS demand
 			FROM salesorderdetails
@@ -375,7 +372,7 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 				AND salesorders.quotation = 0 " .
 				$WhereLocation;
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		return 0;
 	}
@@ -447,7 +444,6 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 		$UserAllowedLocations = '';
 		$ErrMsg = _('The quantity demanded for this product as a component in work orders in the specified location cannot be retrieved because');
 	}
-	$DbgMsg = _('The following SQL to retrieve the demanded stock quantity  as a component in work orders was used');
 
 	$SQL = "SELECT SUM(qtypu * (woitems.qtyreqd - woitems.qtyrecd)) AS demand
 			FROM woitems

@@ -443,21 +443,19 @@ if (isset($_POST['submit'])) {
 					WHERE stockid='" . $StockID . "'";
 
 				$ErrMsg = _('The stock item could not be updated because');
-				$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$ErrMsg = _('Could not update the language description because');
-				$DbgMsg = _('The SQL that was used to update the language description and failed was');
 
 				if (count($ItemDescriptionLanguagesArray) > 0) {
 					foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 						if ($LanguageId != '') {
-							$Result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $LanguageId . "'", $ErrMsg, $DbgMsg, true);
+							$Result = DB_query("DELETE FROM stockdescriptiontranslations WHERE stockid='" . $StockID . "' AND language_id='" . $LanguageId . "'", $ErrMsg, '', true);
 							$Result = DB_query("INSERT INTO stockdescriptiontranslations (stockid,
 																						language_id,
 																						descriptiontranslation,
 																						longdescriptiontranslation)
-												VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.', '_', $LanguageId) ] . "', '" . $_POST['LongDescription_' . str_replace('.', '_', $LanguageId) ] . "')", $ErrMsg, $DbgMsg, true);
+												VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.', '_', $LanguageId) ] . "', '" . $_POST['LongDescription_' . str_replace('.', '_', $LanguageId) ] . "')", $ErrMsg, '', true);
 						}
 					}
 					/*
@@ -467,7 +465,7 @@ if (isset($_POST['submit'])) {
 							$SQL = "UPDATE stockdescriptiontranslations " .
 									"SET descriptiontranslation='" . $DescriptionTranslation . "' " .
 									"WHERE stockid='" . $StockID . "' AND (language_id='" . $LanguageId. "')";
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 					}
 					*/
 
@@ -479,12 +477,11 @@ if (isset($_POST['submit'])) {
 						SET needsrevision = '0'
 						WHERE stockid='" . $StockID . "'";
 					$ErrMsg = _('The stock description translations could not be updated because');
-					$DbgMsg = _('The SQL that was used to set the flag for translation revision failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
 				//delete any properties for the item no longer relevant with the change of category
-				$Result = DB_query("DELETE FROM stockitemproperties WHERE stockid ='" . $StockID . "'", $ErrMsg, $DbgMsg, true);
+				$Result = DB_query("DELETE FROM stockitemproperties WHERE stockid ='" . $StockID . "'", $ErrMsg, '', true);
 
 				//now insert any item properties
 				for ($i = 0;$i < $_POST['PropertyCounter'];$i++) {
@@ -506,7 +503,7 @@ if (isset($_POST['submit'])) {
 																		value)
 														VALUES ('" . $StockID . "',
 																'" . $_POST['PropID' . $i] . "',
-																'" . $_POST['PropValue' . $i] . "')", $ErrMsg, $DbgMsg, true);
+																'" . $_POST['PropValue' . $i] . "')", $ErrMsg, '', true);
 				} //end of loop around properties defined for the category
 				if ($OldStockAccount != $NewStockAct and $_SESSION['CompanyRecord']['gllink_stock'] == 1) {
 					/*Then we need to make a journal to transfer the cost to the new stock account */
@@ -526,8 +523,7 @@ if (isset($_POST['submit'])) {
 												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . ($UnitCost * $StockQtyRow[0]) . "')";
 					$ErrMsg = _('The stock cost journal could not be inserted because');
-					$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
 												trandate,
@@ -542,7 +538,7 @@ if (isset($_POST['submit'])) {
 												'" . $OldStockAccount . "',
 												'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 												'" . (-$UnitCost * $StockQtyRow[0]) . "')";
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} /* end if the stock category changed and forced a change in stock cost account */
 				if ($OldWIPAccount != $NewWIPAct and $_SESSION['CompanyRecord']['gllink_stock'] == 1) {
@@ -579,8 +575,7 @@ if (isset($_POST['submit'])) {
 													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . $WIPValue . "')";
 						$ErrMsg = _('The WIP cost journal could not be inserted because');
-						$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 						$SQL = "INSERT INTO gltrans (type,
 													typeno,
 													trandate,
@@ -595,7 +590,7 @@ if (isset($_POST['submit'])) {
 													'" . $OldWIPAccount . "',
 													'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 													'" . (-$WIPValue) . "')";
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 					}
 				} /* end if the stock category changed and forced a change in WIP account */
 				DB_Txn_Commit();
@@ -658,12 +653,10 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['Pansize']) . "')";
 
 				$ErrMsg = _('The item could not be added because');
-				$DbgMsg = _('The SQL that was used to add the item failed was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, '', true);
+				$Result = DB_query($SQL, $ErrMsg, '', '', true);
 				if (DB_error_no() == 0) {
 					//now insert the language descriptions
 					$ErrMsg = _('Could not update the language description because');
-					$DbgMsg = _('The SQL that was used to update the language description and failed was');
 					if (count($ItemDescriptionLanguagesArray) > 0) {
 						foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
 							if ($LanguageId != '' and $_POST['Description_' . str_replace('.', '_', $LanguageId) ] != '') {
@@ -671,7 +664,7 @@ if (isset($_POST['submit'])) {
 																							language_id,
 																							descriptiontranslation,
 																							longdescriptiontranslation)
-													VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.', '_', $LanguageId) ] . "', '" . $_POST['longDescription_' . str_replace('.', '_', $LanguageId) ] . "')", $ErrMsg, $DbgMsg, true);
+													VALUES('" . $StockID . "','" . $LanguageId . "', '" . $_POST['Description_' . str_replace('.', '_', $LanguageId) ] . "', '" . $_POST['longDescription_' . str_replace('.', '_', $LanguageId) ] . "')", $ErrMsg, '', true);
 							}
 						}
 					}
@@ -697,7 +690,7 @@ if (isset($_POST['submit'])) {
 													value)
 													VALUES ('" . $StockID . "',
 														'" . $_POST['PropID' . $i] . "',
-														'" . $_POST['PropValue' . $i] . "')", $ErrMsg, $DbgMsg, true);
+														'" . $_POST['PropValue' . $i] . "')", $ErrMsg, '', true);
 					} //end of loop around properties defined for the category
 					//Add data to locstock
 					$SQL = "INSERT INTO locstock (loccode,
@@ -707,8 +700,7 @@ if (isset($_POST['submit'])) {
 										FROM locations";
 
 					$ErrMsg = _('The locations for the item') . ' ' . $StockID . ' ' . _('could not be added because');
-					$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-					$InsResult = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$InsResult = DB_query($SQL, $ErrMsg, '', true);
 					DB_Txn_Commit();
 					if (DB_error_no() == 0) {
 						prnMsg(_('New Item') . ' ' . '<a href="SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> ' . _('has been added to the database') . '<br />' . _('NB: The item cost and pricing must also be setup') . '<br />' . '<a target="_blank" href="StockCostUpdate.php?StockID=' . $StockID . '">' . _('Enter Item Cost') . '</a>
@@ -1088,8 +1080,7 @@ echo '<field>
 
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve stock categories and failed was');
-$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if (!isset($_POST['CategoryID']) or $MyRow['categoryid'] == $_POST['CategoryID']) {

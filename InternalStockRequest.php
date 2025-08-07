@@ -87,8 +87,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 											'" . $_SESSION['Request']->Narrative . "',
 											'" . $_SESSION['UserID'] . "')";
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The request header record could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the request header record was used');
-		$Result = DB_query($HeaderSQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($HeaderSQL, $ErrMsg, '', true);
 
 		foreach ($_SESSION['Request']->LineItems as $LineItems) {
 			$LineSQL = "INSERT INTO stockrequestitems (dispatchitemsid,
@@ -105,8 +104,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 													'" . $LineItems->DecimalPlaces . "',
 													'" . $LineItems->UOM . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The request line record could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the request header record was used');
-			$Result = DB_query($LineSQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($LineSQL, $ErrMsg, '', true);
 		}
 
 		$EmailSQL = "SELECT email
@@ -487,8 +485,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous']
 	$SQL = $SQL . ' LIMIT ' . $_SESSION['DisplayRecordsMax'] . ' OFFSET ' . ($_SESSION['DisplayRecordsMax'] * $Offset);
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');

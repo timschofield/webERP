@@ -234,7 +234,7 @@ if (isset($_POST['PrintPDF'])){
    		   $SQL .= "	AND stockmoves.loccode ='" . $_POST['Location'] . "'";
 		}
 
-		$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
+		$SalesResult = DB_query($SQL,'','',FALSE,FALSE);
 
 		if (DB_error_no() !=0) {
 	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
@@ -335,7 +335,7 @@ if (isset($_POST['PrintPDF'])){
 			<select name="Location">';
 	$SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$LocnResult=DB_query($SQL);
+	$LocnResult = DB_query($SQL);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 

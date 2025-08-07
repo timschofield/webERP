@@ -584,7 +584,7 @@ function BuildSQL($Prefs) {
 function BuildDataArray($ReportID, $sql, $Prefs) {
 	global $Heading, $Seq;
 	// first see if we have data
-	$Result=DB_query($sql,'','',false,true);
+	$Result = DB_query($sql,'','',false,true);
 	if (DB_num_rows($Result)==0) return false; // No data so bail now
 
 	// See if we need to group, fetch the group fieldname

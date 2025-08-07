@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 				WHERE categoryid = '".$SelectedCategory . "'";
 
 		$ErrMsg = _('Could not update the fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'],'success');
 
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['DisposalAct'] . "',
 										'" . $_POST['AccumDepnAct'] . "')";
 		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
 
 	}

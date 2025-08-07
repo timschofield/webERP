@@ -163,7 +163,7 @@ if (isset($_GET['ModifyOrderNumber'])
 						WHERE salesorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
 	$ErrMsg =  _('The order cannot be retrieved because');
-	$GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg);
+	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1) {
 
@@ -265,7 +265,7 @@ if (isset($_GET['ModifyOrderNumber'])
 								ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the order cannot be retrieved because');
-		$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
+		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 		if (DB_num_rows($LineItemsResult)>0) {
 
 			while ($MyRow=DB_fetch_array($LineItemsResult)) {
@@ -378,7 +378,7 @@ if (isset($_POST['SearchCust'])
 					custbranch.branchcode";
 
 	$ErrMsg = _('The searched customer records requested cannot be retrieved because');
-	$Result_CustSelect = DB_query($SQL,$ErrMsg);
+	$Result_CustSelect = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result_CustSelect)==1){
 		$MyRow=DB_fetch_array($Result_CustSelect);
@@ -432,8 +432,7 @@ if (isset($SelectedCustomer)) {
 			WHERE debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo. "'";
 
 	$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-	$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow[1] != 1){
@@ -535,8 +534,7 @@ if (isset($SelectedCustomer)) {
 			WHERE debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 	$ErrMsg = _('The details for the customer selected') . ': ' .$_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br />' . $SQL;
-	$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
@@ -685,11 +683,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno ='" . $_SESSION['ExistingOrder' . $identifier] . "'";
 				$ErrMsg =_('The order detail lines could not be deleted because');
-				$DelResult=DB_query($SQL,$ErrMsg);
+				$DelResult = DB_query($SQL, $ErrMsg);
 
 				$SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_SESSION['ExistingOrder' . $identifier] . "'";
 				$ErrMsg = _('The order header could not be deleted because');
-				$DelResult=DB_query($SQL,$ErrMsg);
+				$DelResult = DB_query($SQL, $ErrMsg);
 
 				$_SESSION['ExistingOrder' . $identifier]=0;
 			}
@@ -812,9 +810,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$SQL = $SQL . " LIMIT " . $_SESSION['DisplayRecordsMax'] . " OFFSET " . strval($_SESSION['DisplayRecordsMax'] * $Offset);
 
 		$ErrMsg = _('There is a problem selecting the part records to display because');
-		$DbgMsg = _('The SQL used to get the part selection was');
 
-		$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$SearchResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
 			prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -902,9 +899,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
-			$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-			$KitResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
+			$KitResult = DB_query($SQL, $ErrMsg);
 
 			if (DB_num_rows($KitResult)==0){
 				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database and has not been added to the order'),'warn');
@@ -918,7 +913,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                             AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 					$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
-					$KitResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+					$KitResult = DB_query($SQL, $ErrMsg);
 
 					$ParentQty = $NewItemQty;
 					while ($KitParts = DB_fetch_array($KitResult)){
@@ -1211,7 +1206,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-		$KitResult = DB_query($SQL,$ErrMsg);
+		$KitResult = DB_query($SQL, $ErrMsg);
 
 		$NewItemQty = 1; /*By Default */
 		$Discount = 0; /*By default - can change later or discount category override */
@@ -1226,7 +1221,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                         AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
-				$KitResult = DB_query($SQL,$ErrMsg);
+				$KitResult = DB_query($SQL, $ErrMsg);
 
 				$ParentQty = $NewItemQty;
 				while ($KitParts = DB_fetch_array($KitResult)){
@@ -1260,7 +1255,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$ErrMsg =  _('Could not determine if the part being ordered was a kitset or not because');
 
-				$KitResult = DB_query($SQL,$ErrMsg);
+				$KitResult = DB_query($SQL, $ErrMsg);
 
 				//$NewItemQty = 1; /*By Default */
 				$Discount = 0; /*By default - can change later or discount category override */
@@ -1275,7 +1270,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
                                 AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 						$ErrMsg = _('Could not retrieve kitset components from the database because');
-						$KitResult = DB_query($SQL,$ErrMsg);
+						$KitResult = DB_query($SQL, $ErrMsg);
 
 						$ParentQty = $NewItemQty;
 						while ($KitParts = DB_fetch_array($KitResult)){
@@ -1853,7 +1848,6 @@ function GetCustBranchDetails($identifier) {
 					AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		return $Result;
 }

@@ -143,8 +143,7 @@ if (isset($_POST['SearchParts'])) {
 	}
 
 	$ErrMsg = _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 } //isset($_POST['SearchParts'])
 
 
@@ -185,7 +184,7 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	$SQL = "SELECT locations.loccode, locationname,(SELECT count(*) FROM locations) AS total FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$ErrMsg = _('Failed to retrieve location data');
-	$ResultStkLocs = DB_query($SQL,$ErrMsg);
+	$ResultStkLocs = DB_query($SQL, $ErrMsg);
 	$UserLocations = DB_num_rows($ResultStkLocs);
 	$AllListed = false;
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
@@ -351,7 +350,7 @@ if (isset($StockItemsResult)) {
 	$StockStr .=')';
 	$QOHSQL = "SELECT stockid, sum(quantity) FROM locstock INNER JOIN locationusers ON locationusers.loccode=locationusers.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' GROUP BY stockid";
 	$ErrMsg = _('Failed to retrieve qoh');
-	$QOHResult = DB_query($QOHSQL,$ErrMsg);
+	$QOHResult = DB_query($QOHSQL, $ErrMsg);
 	$QOH = array();
 	while ($MyRow=DB_fetch_array($QOHResult)){
 		$QOH[$MyRow['stockid']] = $MyRow[1];
@@ -652,7 +651,7 @@ else {
 			//lets retrieve the PO balance here to make it a standard sql query.
 			$BalSql = "SELECT itemcode, quantityord - quantityrecd as balance FROM purchorderdetails WHERE orderno = '" . $MyRow['orderno'] . "'";
 			$ErrMsg = _('Failed to retrieve purchorder details');
-			$BalResult  = DB_query($BalSql,$ErrMsg);
+			$BalResult = DB_query($BalSql, $ErrMsg);
 			if (DB_num_rows($BalResult)>0) {
 				while ($BalRow = DB_fetch_array($BalResult)) {
 					$Bal .= '<br/>' . $BalRow['itemcode'] . ' -- ' . $BalRow['balance'];

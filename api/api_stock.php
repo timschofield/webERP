@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(stockid)
     				  FROM stockmaster
 	    			  WHERE stockid='".$StockCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]>0) {
 			$Errors[$i] = StockCodeAlreadyExists;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT count(stockid)
 				      FROM stockmaster
 				      WHERE stockid='".$StockCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = StockCodeDoesntExist;
@@ -31,7 +31,7 @@
 		$Searchsql = "SELECT count(categoryid)
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = StockCategoryDoesntExist;
@@ -76,7 +76,7 @@
  * target webERP company */
 	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -216,7 +216,7 @@
 		$Searchsql = "SELECT count(taxcatid)
 				      FROM taxcategories
 				      WHERE taxcatid='".$TaxCat."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = TaxCategoriesDoesntExist;

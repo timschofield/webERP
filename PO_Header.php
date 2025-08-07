@@ -409,8 +409,7 @@ if (isset($_POST['Select'])) {
 				WHERE supplierid='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	// added for suppliers lookup fields
 	$AuthSql = "SELECT cancreate
@@ -485,8 +484,7 @@ else {
 			WHERE supplierid='" . $_POST['Select'] . "'";
 
 	$ErrMsg = _('The supplier record of the supplier selected') . ': ' . $_POST['Select'] . ' ' . _('cannot be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($Result);
 

@@ -48,7 +48,7 @@ if (isset($_POST['RevPayts']) AND Is_Date($_POST['PaytDate'])==1){
 					AND transno='" . $Alloc['transno'] . "'";
 
 			$ErrMsg =_('The update to the suppliers charges that were settled by the payment failed because');
-			$UpdResult = DB_query($SQL,$ErrMsg);
+			$UpdResult = DB_query($SQL, $ErrMsg);
 
 		}
 

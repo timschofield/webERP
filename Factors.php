@@ -79,9 +79,8 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 						'" . $_POST['Email']  . "')";
 
 		$ErrMsg = _('The factoring company') . ' ' . $_POST['FactorName'] . ' ' . _('could not be added because');
-		$DbgMsg = _('The SQL that was used to insert the factor but failed was');
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('A new factoring company for') . ' ' . $_POST['FactorName'] . ' ' . _('has been added to the database'),'success');
 
@@ -100,8 +99,7 @@ if (isset($_POST['Submit']) OR isset($_POST['Update'])) {
 			WHERE id = '" .$FactorID."'";
 
 		$ErrMsg = _('The factoring company could not be updated because');
-		$DbgMsg = _('The SQL that was used to update the factor but failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The factoring company record for') . ' ' . $_POST['FactorName'] . ' ' . _('has been updated'),'success');
 
@@ -316,7 +314,7 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 					fax,
 					email
 			FROM factorcompanies";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">

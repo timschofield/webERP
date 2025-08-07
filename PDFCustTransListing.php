@@ -29,7 +29,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			WHERE type='" . $_POST['TransType'] . "'
 			AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
-	$Result=DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no()!=0){
 		$Title = _('Payment Listing');

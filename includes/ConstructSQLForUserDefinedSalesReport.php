@@ -150,7 +150,7 @@ $GetReportSpecSQL="SELECT reportheading,
 			FROM reportheaders
 			WHERE reportid='" . $_GET['ReportID'] . "'";
 
-$SpecResult= DB_query($GetReportSpecSQL);
+$SpecResult = DB_query($GetReportSpecSQL);
 $ReportSpec = DB_fetch_array($SpecResult);
 
 $GetColsSQL = "SELECT colno,
@@ -331,8 +331,7 @@ exit();
 
 /*Now let her go .... */
 $ErrMsg = _('There was a problem running the SQL to retrieve the sales analysis information');
-$DbgMsg = _('The SQL that was used to retrieve the user defined sales analysis info was');
-$Result=DB_query($SQLTheLot,$ErrMsg,$DbgMsg);
+$Result = DB_query($SQLTheLot, $ErrMsg);
 
 if (DB_num_rows($Result)==0){
     $Title = _('User Defined Sales Analysis Problem') . ' ....';

@@ -167,9 +167,7 @@ if(isset($_POST['ShowStatus'])) {
 	}
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
-	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
-
+	$LocStockResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table cellpadding="5" cellspacing="4" class="selection">
 			<thead>

@@ -421,8 +421,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 									'" .  _('Timesheet for the week ending') . ' ' . $_POST['WeekEnding'] . ': ' . $WeekTimeRow['firstname'] . ' ' . $WeekTimeRow['surname'] . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('labour stock movement records could not be inserted when processing the timesheet because');
-				$DbgMsg =  _('The following SQL to insert the labour stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) != 0) {
@@ -454,8 +453,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 								'" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The labour cost posting to a work order GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*now the credit labour recovery entry - the GetSockGLCode actually returns the labour recovery GL account for labour type stock categories */
 				$ItemGLAccounts = GetStockGLCode($WeekTimeRow['issueitem']);
@@ -476,20 +474,18 @@ if(isset($_POST['ApproveTimesheet'])) {
 								'" . -($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "')";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The labour recovery account credit on the approval of a timesheet GL posting could not be inserted because');
-					$DbgMsg =  _('The following SQL to insert the labour gltrans record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} /* end of if GL and stock integrated and standard cost !=0 */
 
 
 				//update the wo with new cost issued
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not update the work order labour cost because');
-				$DbgMsg = _('The following SQL was used to update the work order');
-				$UpdateWOResult =DB_query("UPDATE workorders
+				$UpdateWOResult = DB_query("UPDATE workorders
 											SET costissued=costissued+" . ($WeekTimeRow['labourcost'] * $WeekTimeRow['totalweekhours']) . "
 											WHERE wo='" . $WeekTimeRow['wo'] . "'",
 											$ErrMsg,
-											$DbgMsg,
+											'',
 											true);
 			} //end loop through the WOs entered on this timesheet
 

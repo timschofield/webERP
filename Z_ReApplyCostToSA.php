@@ -46,7 +46,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 
 
 	$ErrMsg = _('Could not retrieve the sales analysis records to be updated because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($ItemsToUpdate = DB_fetch_array($Result)){
 
@@ -59,7 +59,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
 
 			$ErrMsg = _('Could not recalculate the current cost of the assembly item') . $ItemsToUpdate['stockid'] . ' ' . _('because');
-			$AssemblyCostResult = DB_query($SQL,$ErrMsg);
+			$AssemblyCostResult = DB_query($SQL, $ErrMsg);
 			$AssemblyCost = DB_fetch_row($AssemblyCostResult);
 			$Cost = $AssemblyCost[0];
 		} else {
@@ -71,7 +71,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 				AND periodno ='" . $_POST['PeriodNo'] . "'";
 
 		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('because');
-		$UpdResult = DB_query($SQL,$ErrMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 
 
 		prnMsg(_('Updated sales analysis for period') . ' ' . $_POST['PeriodNo'] . ' ' . _('and stock item') . ' ' . $ItemsToUpdate['stockid'] . ' ' . _('using a cost of') . ' ' . $Cost,'success');

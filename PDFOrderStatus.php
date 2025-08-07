@@ -166,7 +166,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL .= " ORDER BY salesorders.orderno";
 
-	$Result=DB_query($SQL,'','',false,false); //dont trap errors here
+	$Result = DB_query($SQL,'','',false,false); //dont trap errors here
 
 	if (DB_error_no()!=0){
 		include('includes/header.php');

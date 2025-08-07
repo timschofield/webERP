@@ -73,7 +73,7 @@ if (isset($_POST['Submit'])) {
 		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 		WHERE supplierid='" . $SupplierID . "'" . $Where;
 	$ErrMsg = _('Failed to retrieve supplier invoice and grn data');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)>0) {
 		echo '<table class="selection">
 			<thead>

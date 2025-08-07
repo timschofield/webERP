@@ -41,8 +41,7 @@ if(isset($_POST['CheckCode'])) {
 			  WHERE stockid " . LIKE . " '%" . $_POST['StockCode']."%'";
 	}
 	$ErrMsg=_('The stock information cannot be retrieved because');
-	$DbgMsg=_('The SQL to get the stock description was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	echo '<table class="selection">
 		<thead>
 			<tr>
@@ -258,8 +257,7 @@ if(isset($_POST['EnterTransfer']) ) {
 				AND loccode= '" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 		$ErrMsg =  _('Could not retrieve the QOH at the sending location because');
-		$DbgMsg =  _('The SQL that failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if(DB_num_rows($Result)==1) {
 			$LocQtyRow = DB_fetch_row($Result);
@@ -289,8 +287,7 @@ if(isset($_POST['EnterTransfer']) ) {
 								FROM stockmaster
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');
-			$DbgMsg = _('The SQL that failed was');
-			$ResultStandardCost = DB_query($SQLstandardcost,$ErrMsg,$DbgMsg);
+			$ResultStandardCost = DB_query($SQLstandardcost, $ErrMsg);
 			$MyRow = DB_fetch_array($ResultStandardCost);
 			$StandardCost = $MyRow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
 			// Insert record:
@@ -311,8 +308,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					mb_substr($_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 					-$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
-					$DbgMsg =  _('The following SQL to insert records was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 		// Insert the stock movement for the stock going out of the from location
 		$SQL = "INSERT INTO stockmoves(stockid,
@@ -339,8 +335,7 @@ if(isset($_POST['EnterTransfer']) ) {
 						)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -361,7 +356,7 @@ if(isset($_POST['EnterTransfer']) ) {
 						AND serialno='" . $Item->BundleRef . "'";
 
 				$ErrMsg =  _('The entered item code does not exist');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
 				if($SerialItemExistsRow[0]==1) {
@@ -374,8 +369,7 @@ if(isset($_POST['EnterTransfer']) ) {
 							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-					$DbgMsg = _('The following SQL to update the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} else {
 					/*Need to insert a new serial item record */
 					$SQL = "INSERT INTO stockserialitems (stockid,
@@ -390,10 +384,8 @@ if(isset($_POST['EnterTransfer']) ) {
 						'" . -$Item->BundleQty . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
-					$DbgMsg = _('The following SQL to insert the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
-
 
 				/* now insert the serial stock movement */
 
@@ -410,8 +402,7 @@ if(isset($_POST['EnterTransfer']) ) {
 							)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}/* foreach controlled item in the serialitems array */
 		} /*end if the transferred item is a controlled item */
@@ -423,7 +414,7 @@ if(isset($_POST['EnterTransfer']) ) {
 				WHERE locstock.stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 				AND loccode= '" . $_SESSION['Transfer']->StockLocationTo . "'";
 		$ErrMsg = _('Could not retrieve QOH at the destination because');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '',true);
 		if(DB_num_rows($Result)==1) {
 			$LocQtyRow = DB_fetch_row($Result);
 			$QtyOnHandPrior = $LocQtyRow[0];
@@ -446,8 +437,7 @@ if(isset($_POST['EnterTransfer']) ) {
 								FROM stockmaster
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');
-			$DbgMsg = _('The SQL that failed was');
-			$ResultStandardCost = DB_query($SQLstandardcost,$ErrMsg,$DbgMsg);
+			$ResultStandardCost = DB_query($SQLstandardcost, $ErrMsg);
 			$MyRow = DB_fetch_array($ResultStandardCost);
 			$StandardCost = $MyRow['standardcost'];// QUESTION: Standard cost for: Assembly (value="A") and Manufactured (value="M") items ?
 			// Insert record:
@@ -468,8 +458,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					mb_substr($_SESSION['Transfer']->StockLocationTo.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost, 0, 200) . "','" .
 					$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 			$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The incoming inventory GL transacction record could not be inserted because');
-			$DbgMsg =  _('The following SQL to insert records was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 		// Insert the stock movement for the stock coming into the to location
 		$SQL = "INSERT INTO stockmoves (stockid,
@@ -494,8 +483,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					'" . round($QtyOnHandPrior + $_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "')";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-		$DbgMsg = _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -515,7 +503,7 @@ if(isset($_POST['EnterTransfer']) ) {
 						AND serialno='" . $Item->BundleRef . "'";
 
 				$ErrMsg = _('Could not determine if the serial item exists in the transfer to location');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
 				if($SerialItemExistsRow[0]==1) {
@@ -528,8 +516,7 @@ if(isset($_POST['EnterTransfer']) ) {
 							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-					$DbgMsg = _('The following SQL to update the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} else {
 					/*Need to insert a new serial item record */
 					$SQL = "INSERT INTO stockserialitems (stockid,
@@ -546,10 +533,8 @@ if(isset($_POST['EnterTransfer']) ) {
 								'')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be added because');
-					$DbgMsg = _('The following SQL to insert the serial stock item record was used:');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
-
 
 				/* now insert the serial stock movement */
 
@@ -562,20 +547,17 @@ if(isset($_POST['EnterTransfer']) ) {
 								'" . $Item->BundleRef . "',
 								'" . $Item->BundleQty . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}/* foreach controlled item in the serialitems array */
 		} /*end if the transfer item is a controlled item */
-
 
 		$SQL = "UPDATE locstock SET quantity = quantity - '" . round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "'
 				WHERE stockid='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'
 				AND loccode='" . $_SESSION['Transfer']->StockLocationFrom . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-		$DbgMsg = _('The following SQL to update the location stock record was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE locstock
 				SET quantity = quantity + '" . round($_SESSION['Transfer']->TransferItem[0]->Quantity,$_SESSION['Transfer']->TransferItem[0]->DecimalPlaces) . "'
@@ -583,8 +565,7 @@ if(isset($_POST['EnterTransfer']) ) {
 				AND loccode='" . $_SESSION['Transfer']->StockLocationTo . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-		$DbgMsg = _('The following SQL to update the location stock record was used');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 

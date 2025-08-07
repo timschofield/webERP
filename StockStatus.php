@@ -100,8 +100,7 @@ $SQL = "SELECT locstock.loccode,
 		ORDER BY locations.locationname";
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
-$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 	echo '<thead>';
@@ -139,7 +138,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND shiploc='".$MyRow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL);
+		$InTransitResult = DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityOut=-$InTransitRow['intransit'];
@@ -151,7 +150,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND recloc='".$MyRow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL);
+		$InTransitResult = DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
 			$InTransitQuantityIn=-$InTransitRow['intransit'];
@@ -232,9 +231,8 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	/* only show pricing history for sales invoices - type=10 */
 
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
-	$DbgMsg = _('The SQL that failed was');
 
-	$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$MovtsResult = DB_query($SQL, $ErrMsg);
 
 	$k=1;
 	while ($MyRow=DB_fetch_array($MovtsResult)) {
