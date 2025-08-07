@@ -1,7 +1,6 @@
 <?php
 
 include('includes/session.php');
-include('includes/phplot/phplot.php');
 include('includes/UIGeneralFunctions.php');
 
 include('includes/KLGeneralFunctions.php');
@@ -121,7 +120,7 @@ if (!isset($_POST['FromDate'])
 		$PrecisionY = 0;
 	}
 
-	$graph = new PHPlot(1200,600);
+	$graph = new Phplot\Phplot\phplot(1200, 600);
 	$graph->SetTitleColor('blue');
 	$graph->SetTitle($GraphTitle);
 	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/kpigraph.png');
