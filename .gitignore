@@ -1,6 +1,11 @@
+
+# KL settings 
 *.ini
 companies\test_erp\part_pics\*
 companies\kurakura_kl_erp\part_pics\*
+# KL settings END
+
+# Ignore NetBeans project metadata
 nbproject/
 # As well as Jetbrains stuff
 /.idea/
@@ -12,9 +17,16 @@ Thumbs.db
 # Only config.distrib.php is to be distributed
 /config.php
 
-# Ignore everything in the companies directory
-# except for weberpdemo
-companies/test_erp/logs/weberp.log
+# Ignore everything in the companies directory...
+/companies/*
+# ...except for weberpdemo, but KL do not want weberpdemo anyway...
+/companies/weberpdemo
 
-#ignore the cache files
+# And the eventual .git dir from composer-installed projects which are downloaded as git clones
+/vendor/phplot/phplot/.git/
+
+# KL settings
+# ignore the cache files and the log
 includes/WebClientPrint/wcpcahe/
+companies/test_erp/logs/weberp.log
+# KL settings END

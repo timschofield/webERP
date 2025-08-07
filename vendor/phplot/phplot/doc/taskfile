@@ -1,0 +1,457 @@
+#!/usr/bin/env bash
+
+set -e
+
+BUILD_DIR="${BUILD_DIR:-./build}"
+
+PHPDOCUMENTOR="${PHPDOCUMENTOR:-$BUILD_DIR/phpdocumentor}"
+# ex. template name: `clean`
+PHPDOC_TEMPLATE="${PHPDOC_TEMPLATE}"
+
+# PHP CLI to run examples:
+PHP="${PHP:-/usr/bin/php}"
+
+# XSL Transformation Processor program:
+XSLTPROC="${XSLTPROC:-xsltproc}"
+# XML formatting
+#XMLFORMAT="${XMLFORMAT:-xmllint -format}"
+# Apache FOP program:
+FOP="${FOP:-/usr/bin/fop}"
+
+# A legacy variable - unused atm, was used to build a 'sourceforge-compatible' html-version of the manual
+XSLTPROCFLAGS=
+
+# @todo generate this list by adding a specific comment within the php sources and grepping for it
+EXAMPLES_PHP="examples/annotate.php \
+  examples/area1.php \
+  examples/bars1.php \
+  examples/bars2.php \
+  examples/bars3.php \
+  examples/bars4.php \
+  examples/boxplot1.php \
+  examples/boxplot2.php \
+  examples/bubbles1.php \
+  examples/colorcallbackbars.php \
+  examples/colorcallbackgradient.php \
+  examples/dlexformat.php \
+  examples/drawmessage.php \
+  examples/encodeimage.php \
+  examples/histogram.php \
+  examples/horizbar.php \
+  examples/horizerror.php \
+  examples/horizlinepts.php \
+  examples/horizstackedbar.php \
+  examples/horizthinbarline.php \
+  examples/imagemapbars.php \
+  examples/imagemapnonembed.php \
+  examples/imagemappie.php \
+  examples/legendshape.php \
+  examples/legendshape1.php \
+  examples/legendshape2.php \
+  examples/linepoints1.php \
+  examples/linepoints2.php \
+  examples/lines1.php \
+  examples/lines2.php \
+  examples/ohlcbasic.php \
+  examples/ohlccandlesticks.php \
+  examples/ohlccandlesticks2.php \
+  examples/outbreak.php \
+  examples/pie1.php \
+  examples/pie2.php \
+  examples/pie3.php \
+  examples/pieangle.php \
+  examples/pielabeltype1.php \
+  examples/pielabeltype2.php \
+  examples/pielabeltype3.php \
+  examples/pielabeltype4.php \
+  examples/pielabeltype5.php \
+  examples/pielabeltypedata.php \
+  examples/points1.php \
+  examples/points2.php \
+  examples/qs1.php \
+  examples/qs2.php \
+  examples/qs3.php \
+  examples/squared1.php \
+  examples/squaredarea1.php \
+  examples/stackedarea1.php \
+  examples/stackedbars1.php \
+  examples/stackedbars2.php \
+  examples/stackedbars3.php \
+  examples/stackedsquaredarea1.php \
+  examples/thinbarline1.php \
+  examples/thinbarline2.php \
+  examples/twoplot1.php \
+  examples/xtickanchor.php \
+  examples/ytickanchor.php \
+  examples/ytickanchor1.php"
+
+# @todo generate this list by adding a specific comment within the php sources and grepping for it
+EXAMPLES_IMAGES="examples/annotate.png \
+  examples/area1.png \
+  examples/bars1.png \
+  examples/bars2.png \
+  examples/bars3.png \
+  examples/bars4.png \
+  examples/boxplot1.png \
+  examples/boxplot2.png \
+  examples/bubbles1.png \
+  examples/colorcallbackbars.png \
+  examples/colorcallbackgradient.png \
+  examples/dlexformat.png \
+  examples/drawmessage.png \
+  examples/histogram.jpg \
+  examples/horizbar.png \
+  examples/horizerror.png \
+  examples/horizlinepts.png \
+  examples/horizstackedbar.png \
+  examples/horizthinbarline.png \
+  examples/legendshape.png \
+  examples/legendshape1.png \
+  examples/legendshape2.png \
+  examples/linepoints1.png \
+  examples/linepoints2.png \
+  examples/lines1.png \
+  examples/lines2.png \
+  examples/ohlcbasic.png \
+  examples/ohlccandlesticks.png \
+  examples/ohlccandlesticks2.png \
+  examples/outbreak.png \
+  examples/pie1.png \
+  examples/pie2.png \
+  examples/pie3.png \
+  examples/pieangle.png \
+  examples/pielabeltype1.png \
+  examples/pielabeltype2.png \
+  examples/pielabeltype3.png \
+  examples/pielabeltype4.png \
+  examples/pielabeltype5.png \
+  examples/points1.png \
+  examples/points2.png \
+  examples/qs1.png \
+  examples/qs2.png \
+  examples/qs3.png \
+  examples/squared1.png \
+  examples/squaredarea1.png \
+  examples/stackedarea1.png \
+  examples/stackedbars1.png \
+  examples/stackedbars2.png \
+  examples/stackedbars3.png \
+  examples/stackedsquaredarea1.png \
+  examples/thinbarline1.png \
+  examples/thinbarline2.png \
+  examples/twoplot1.png \
+  examples/xtickanchor.png \
+  examples/ytickanchor.png \
+  examples/ytickanchor1.png"
+
+###
+
+# @todo Refactor the tool-setup logic: if user defined a path to the tool executable, do not install it. If the tool
+# @todo executable env var is empty, check ifit is available using `which`. If not available, install it and set the value
+# install the tools required to build the docs
+function setup_tools() {
+    sudo=
+    if [ "$(id -u)" != "0" ]; then
+        sudo='sudo --preserve-env=GITHUB_ACTIONS DEBIAN_FRONTEND=noninteractive'
+    else
+        export DEBIAN_FRONTEND=noninteractive
+    fi
+
+    $sudo apt-get -y update
+
+    PHPPKG=$(apt-cache search php-cli | grep php | grep cli | grep -v -F '(default)' | awk '{print $1}')
+    if [ -z "${PHPPKG}" ]; then
+        echo "Can not find a php-cli package in the apt repositories for this server" >&2
+        exit 1
+    fi
+
+    # git, curl, gpg are needed by phive, used to install phpdocumentor
+    # phive nowadays requires ext-mbstring, ext-xml and ext-curl
+    # fonts-dejavu are used by the php examples in the manual
+    # @todo besides php-cli, are there other php extensions used by phpdocumentor that we should make sure are onboard?
+    #       The list at https://packagist.org/packages/phpdocumentor/phpdocumentor says: php: ^8.1, ext-ctype, ext-hash,
+    #       ext-iconv, ext-json, ext-mbstring, ext-simplexml, ext-xml
+    $sudo apt-get install -y \
+        curl fonts-dejavu git gpg unzip zip "${PHPPKG}" "${PHPPKG/cli/curl}" "${PHPPKG/cli/gd}" "${PHPPKG/cli/mbstring}" "${PHPPKG/cli/xml}"
+
+    # Install phpdocumentor and the docbook xslt using Composer
+    # Sadly this method, as of 2023/1, does not allow installing version 3.3.0 and later
+    ## in case we are switching between php versions, always reinstall every tool with the correct version...
+    #if [ -f composer.lock ]; then
+    #    rm composer.lock
+    #fi
+    #composer install --no-dev
+    # required as of phpdoc 3.1.2
+    #sed -r -i -e "s|resource: '%kernel\\.project_dir%/vendor/phpdocumentor/reflection/src/phpDocumentor/Reflection/Php'|resource: '%kernel.project_dir%/../reflection/src/phpDocumentor/Reflection/Php'|g" ./vendor/phpdocumentor/phpdocumentor/config/reflection.yaml
+    #$sudo chown -R "$(id -u):$(id -g)" vendor
+
+    # Install phpdocumentor via Phive
+    # @todo wouldn't it be quicker to just scan the github page for the last release and just get the phar?
+    curl -fsSL -o "${BUILD_DIR}/phive" "https://phar.io/releases/phive.phar"
+    #curl -fsSL -o -O phive.phar.asc "https://phar.io/releases/phive.phar.asc"
+    #gpg --keyserver hkps://keys.openpgp.org --recv-keys 0x6AF725270AB81E04D79442549D8A98B29B2D5D79
+    #gpg --verify phive.phar.asc build/phive
+    #rm phive.phar.asc
+    chmod +x "${BUILD_DIR}/phive"
+    (cd "${BUILD_DIR}"; ./phive install --trust-gpg-keys 6DA3ACC4991FFAE5 -t "$(pwd)" phpdocumentor)
+    # phive behaves weirdly... fix that
+    if [ -L "${BUILD_DIR}/phpDocumentor" ]; then mv "${BUILD_DIR}/phpDocumentor" "${BUILD_DIR}/phpdocumentor"; fi
+
+    # Install the DocBook xslt
+    if [ ! -d "${BUILD_DIR}/docbook-xsl" ]; then
+        curl -fsSL -o "${BUILD_DIR}/dbx.zip" "https://github.com/docbook/xslt10-stylesheets/releases/download/release/1.79.2/docbook-xsl-1.79.2.zip"
+        (cd "${BUILD_DIR}"; unzip dbx.zip)
+        mv "${BUILD_DIR}/docbook-xsl-1.79.2" "${BUILD_DIR}/docbook-xsl"
+        rm "${BUILD_DIR}/dbx.zip"
+    fi
+
+    # FOP toolchain
+    $sudo apt-get install -y \
+        default-jre fop libxml2-utils xsltproc
+
+    # ascidoctor-pdf toolchain
+    #$sudo gem install asciidoctor-pdf rouge
+
+    # pandoc toolchain
+    #$sudo apt-get install -y \
+    #    pandoc texlive-xetex texlive-fonts-extra texlive-latex-extra
+
+    # Get the eisvogel template for pandoc
+    #if [ ! -f eisvogel.latex ]; then
+    #    curl -fsSL -o ev.zip "https://github.com/Wandmalfarbe/pandoc-latex-template/releases/download/v2.1.0/Eisvogel-2.1.0.zip"
+    #    unzip ev.zip
+    #    rm -rf examples
+    #    rm ev.zip LICENSE CHANGELOG.md icon.png
+    #fi
+}
+
+# builds the complete documentation (including the zip archives), starting with tool setup
+function build_from_scratch() {
+    setup_tools
+    build
+}
+
+# builds the complete documentation (including the zip archives). Does not set up the required tools
+function build() {
+    build_apidocs
+    build_manual
+    build_manual_cleanup
+    create_archives
+}
+
+# builds the API docs
+function build_apidocs() {
+    if [ ! -d "${BUILD_DIR}/doc/api}" ]; then
+        mkdir -p "${BUILD_DIR}/doc/api"
+    fi
+
+    if [ -n "${PHPDOC_TEMPLATE}" ]; then
+        PHPDOC_TEMPLATE="--template ${PHPDOC_TEMPLATE}"
+    fi
+    $PHPDOCUMENTOR run --no-interaction --cache-folder "${BUILD_DIR}/.phpdoc" --title PHPlot --defaultpackagename PHPlot \
+        -d "$(realpath ./src/)" --ignore contrib -t "${BUILD_DIR}/doc/api"
+
+    # @todo ... manually mangle the index.html file to add generation date, lib version, etc... as they are not in the default template
+}
+
+# builds the manual, in all supported formats
+function build_manual() {
+    build_manual_html
+    build_manual_pdf
+}
+
+# prepares the source code of the manual by copying it to the build dir and generating list of examples, images, etc
+function build_manual_setup() {
+    if [ ! -d "${BUILD_DIR}/doc/manual" ]; then
+        mkdir -p "${BUILD_DIR}/doc/manual"
+    #else
+    #    # @todo decide: either we should clean the existing dir or abort if it is not empty
+    fi
+    if [ ! -d "${BUILD_DIR}/src" ]; then
+        mkdir -p "${BUILD_DIR}/src"
+    #else
+    #    # @todo decide: either we should clean the existing dir or abort if it is not empty
+    fi
+
+    # build the manual out of a copy - it is easier than setting up proper indirect paths, or .gitignore rules
+    cp -R doc/manual/* "${BUILD_DIR}/doc/manual"
+    cp -R src/*.php "${BUILD_DIR}/src"
+
+    # create xml entities out of examples source code, as well as an 'index' xml file listing them
+    echo "Generating xml entity files from the examples scripts..."
+    echo "<!-- Automatically generated: entity list file -->" > "${BUILD_DIR}/doc/manual/examples_list.xml"
+    for file in $EXAMPLES_PHP; do
+        if [ ! -f "${BUILD_DIR}/doc/manual/${file}" ]; then
+            echo "Missing example php file doc/manual/${file}" >&2
+            exit 1
+        fi
+        target_file="${BUILD_DIR}/doc/manual/${file/.php/.xml}"
+        echo -n '<programlisting><![CDATA[' > "${target_file}"
+        cat "${BUILD_DIR}/doc/manual/${file}" >> "${target_file}"
+        echo -n ']]></programlisting>' >> "${target_file}"
+
+        entity=${file/.php/}
+        entity=${entity/examples\//}
+        echo "<!ENTITY ${entity} SYSTEM \"${file/.php/.xml}\">" >> "${BUILD_DIR}/doc/manual/examples_list.xml"
+    done
+
+    # create images out of examples
+    echo "Generating images out of examples scripts..."
+    for file in $EXAMPLES_IMAGES; do
+        source_file="${BUILD_DIR}/doc/manual/${file/.png/.php}"
+        source_file="${source_file/.jpg/.php}"
+        if [ ! -f "${source_file}" ]; then
+            echo "Missing image php file doc/manual/${file}" >&2
+            exit 1
+        fi
+        target_file="${BUILD_DIR}/doc/manual/${file}"
+        # @todo fix the examples which use fonts that are not installed by default on an Ubuntu runner
+        ${PHP} "$source_file" > "$target_file" || true
+    done
+
+    # generate the variables list
+    echo "Generating the variables_list entity file from variables.list..."
+    ${PHP} "${BUILD_DIR}/doc/manual/gen.vardoc.php" < "${BUILD_DIR}/doc/manual/variables.list" > "${BUILD_DIR}/doc/manual/variables_list.xml"
+}
+
+# pass in -f to force regen of data from example php files
+function build_manual_html() {
+    if [ ! -d "${BUILD_DIR}/doc/manual/examples" ] || [ "$1" = '-f' ]; then
+        build_manual_setup
+    fi
+
+    echo "Generating the html version of the manual..."
+    (cd "${BUILD_DIR}/doc/manual"; ${XSLTPROC} ${XSLTPROCFLAGS} style.xsl main.xml)
+    # highlight the source code in the generated html
+    echo "Highlighting php syntax of the examples within the generated html pages..."
+    ${PHP} doc/manual/highlight.php "${BUILD_DIR}/doc/manual"
+}
+
+# pass in -f to force regen of data from example php files
+function build_manual_pdf() {
+    if [ ! -d "${BUILD_DIR}/doc/manual/examples" ] || [ "$1" = '-f' ]; then
+        build_manual_setup
+    fi
+
+    # This uses xsltproc for the XML to FO conversion, even though fop can do that, because fop gives
+    # useless messages if it does the XML processing ("context not available").
+    # Also xsltproc is better about using XML catalogs.
+    echo "Transforming the manual source xml to xml-fo"
+    (cd "${BUILD_DIR}/doc/manual"; ${XSLTPROC} pdf.xsl main.xml > manual.fo.xml)
+    # @todo Usage of xmllint seems not necessary at all, so it was disabled to speed up the build. We could allow
+    #       the user to trigger it manually as it is a helpful debugging tool when developing the stylesheets
+    #${XMLFORMAT} "${BUILD_DIR}/doc/manual/manual.fo.xml" > "${BUILD_DIR}/doc/manual/manual.ffo.xml"
+
+    # work around buggy java installations which result in FOP saying `JVM flavor 'sun' not understood`
+    if [ -f /usr/lib/java-wrappers/java-wrappers.sh ]; then
+        . /usr/lib/java-wrappers/java-wrappers.sh
+        find_java_runtime
+        if [ -n "$JAVA_HOME" ]; then
+            export JAVA_HOME="$JAVA_HOME"
+        fi
+        if [ -n "$JAVA_CMD" ]; then
+            export JAVA_CMD="$JAVA_CMD"
+        fi
+    fi
+
+    # @todo the php source code is not colorized in the pdf version of the manual
+
+    echo "generating the pdf manual from the xml-fo file..."
+    ${FOP} -catalog -fo "${BUILD_DIR}/doc/manual/manual.fo.xml" -pdf "${BUILD_DIR}/doc/phplot_manual.pdf"
+}
+
+# remove all non-final-output files from the directory where the html manual is built
+function build_manual_cleanup() {
+    rm -fv "${BUILD_DIR}/doc/manual/"*.xml
+    rm -fv "${BUILD_DIR}/doc/manual/"*.xsl
+    rm -fv "${BUILD_DIR}/doc/manual/"*.php
+    rm -fv "${BUILD_DIR}/doc/manual/"*.md
+    rm -fv "${BUILD_DIR}/doc/manual/"*.list
+    rm -fv "${BUILD_DIR}/doc/manual/.ispell_words"
+    rm -rfv "${BUILD_DIR}/doc/manual/etc"
+    rm -fv "${BUILD_DIR}/doc/manual/examples/"*.md
+    rm -fv "${BUILD_DIR}/doc/manual/examples/"*.php
+    rm -fv "${BUILD_DIR}/doc/manual/examples/"*.xml
+    rm -fv "${BUILD_DIR}/doc/manual/examples/geese.jpg"
+}
+
+# creates a zip file for all docs (api docs, manual in html format, manual as pdf)
+function create_archives() {
+    create_apidocs_archive
+    create_manual_html_archive
+    create_manual_pdf_archive
+}
+
+# creates a zip file of the api docs
+function create_apidocs_archive() {
+    (cd "${BUILD_DIR}/doc"; zip -9 -r phplot_api_docs.zip api)
+}
+
+# creates a zip file of the manual in html format
+function create_manual_html_archive() {
+    build_manual_cleanup
+    (cd "${BUILD_DIR}/doc"; zip -9 -r phplot_manual_html.zip manual)
+}
+
+# creates a zip file of the manual in pdf format
+function create_manual_pdf_archive() {
+    (cd "${BUILD_DIR}/doc"; zip -9 phplot_manual_pdf.zip phplot_manual.pdf)
+}
+
+# removes the built documentation
+function clean() {
+    rm -rfv "${BUILD_DIR}/doc/api"
+    rm -rfv "${BUILD_DIR}/doc/manual"
+    rm -fv "${BUILD_DIR}/doc/phplot_manual.pdf"
+    rm -fv "${BUILD_DIR}/doc/"*.zip
+}
+
+# removes the built documentation and the tools downloaded to build it, except sw installed via apt
+function distclean() {
+    clean
+
+    rm -rfv "${BUILD_DIR}/.phive"
+    rm -rfv "${BUILD_DIR}/.phpdoc"
+    rm -fv "${BUILD_DIR}/phive"
+    rm -fv "${BUILD_DIR}/phpdocumentor"
+    rm -rfv "${BUILD_DIR}/docbook-xsl"
+
+    rm -rfv "${BUILD_DIR}/src"
+
+    # @todo what about removing dpkg stuff?
+}
+
+# prints this help text
+function help() {
+    # @todo allow a tag such as `# @internal` to denote functions as not available for external execution
+    declare -A DESCRIPTIONS
+    local CMD MAX LEN
+    echo "$0 <task> <args>"
+    echo "Tasks:"
+    MAX=-1
+    for CMD in $(compgen -A function); do
+        LEN=${#CMD}
+        ((LEN > MAX)) && MAX=$LEN
+        DESCRIPTIONS[$CMD]=$(grep "function $CMD(" -B 1 "${BASH_SOURCE[0]}" | grep '^#' | grep -v '@todo' | sed 's/^# *//')
+    done
+    MAX=$((MAX + 4))
+    for CMD in $(compgen -A function); do
+        if [ -z "${DESCRIPTIONS[$CMD]}" ]; then
+            echo "    ${CMD}"
+        else
+            printf "%-${MAX}s %s\n" "    ${CMD}" "${DESCRIPTIONS[$CMD]}"
+            #echo "    ${CMD}: ${DESCRIPTIONS[$CMD]}"
+        fi
+    done
+}
+
+###
+
+if [ $# -eq 0 ] || [ "$1" = '-h' ]; then
+    help
+else
+    cd "$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")"
+
+    TIMEFORMAT="Task completed in %3lR"
+    time "${@}"
+fi

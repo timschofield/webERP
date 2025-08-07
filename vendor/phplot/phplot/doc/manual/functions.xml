@@ -1,0 +1,366 @@
+<!--
+     Functions by Category
+     (This material used to be in the reference section, before I alphabetized the functions there.)
+-->
+<chapter id="functions">
+<title>PHPlot Functions By Category</title>
+
+<abstract><title></title>
+  <para>
+This chapter presents a grouping of the PHPlot functions by category.
+Descriptions of the functions can be found in <xref linkend="reference" />.
+  </para>
+</abstract>
+
+<sect1 id="ref-core">
+<title>Core</title>
+<para>
+The functions in this section form the core of PHPlot.
+You cannot produce plots without using some of these.
+If you want to produce plots with little or no customization, you need use
+no other functions.
+These functions are used to create a PHPlot object, select the type of
+plot you want, provide the data to be plotted, and output the plot.
+For more information, see <xref linkend="conc-overview"/>.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="PHPlot" /></para></listitem>
+  <listitem><para><xref linkend="PHPlot-truecolor" /></para></listitem>
+  <listitem><para><xref linkend="DrawGraph" /></para></listitem>
+  <listitem><para><xref linkend="EncodeImage" /></para></listitem>
+  <listitem><para><xref linkend="EndStream" /></para></listitem>
+  <listitem><para><xref linkend="PrintImage" /></para></listitem>
+  <listitem><para><xref linkend="PrintImageFrame" /></para></listitem>
+  <listitem><para><xref linkend="SetDataType" /></para></listitem>
+  <listitem><para><xref linkend="SetDataValues" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotType" /></para></listitem>
+  <listitem><para><xref linkend="StartStream" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-iocontrol">
+<title>Input/Output Control</title>
+<para>
+The functions in this section control the overall input and output of the
+plot. Use the functions in this section to select the graphics file format,
+direct the output, control browser caching, and control error handling.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="DrawMessage" /></para></listitem>
+  <listitem><para><xref linkend="SetBrowserCache" /></para></listitem>
+  <listitem><para><xref linkend="SetFailureImage" /></para></listitem>
+  <listitem><para><xref linkend="SetFileFormat" /></para></listitem>
+  <listitem><para><xref linkend="SetIsInline" /></para></listitem>
+  <listitem><para><xref linkend="SetOutputFile" /></para></listitem>
+  <listitem><para><xref linkend="SetPrintImage" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-colorstyle">
+<title>Colors and Line Styles</title>
+<para>
+The functions in this section are used to control the colors and
+line styles of PHPlot elements.
+More information about using colors in PHPlot can be found in
+<xref linkend="conc-colors" /> and <xref linkend="adv-truecolor" />.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetBackgroundColor" /></para></listitem>
+  <listitem><para><xref linkend="SetDataBorderColors" /></para></listitem>
+  <listitem><para><xref linkend="SetDataColors" /></para></listitem>
+  <listitem><para><xref linkend="SetDataLabelColor" /></para></listitem>
+  <listitem><para><xref linkend="SetDataValueLabelColor" /></para></listitem>
+  <listitem><para><xref linkend="SetDefaultDashedStyle" /></para></listitem>
+  <listitem><para><xref linkend="SetErrorBarColors" /></para></listitem>
+  <listitem><para><xref linkend="SetGridColor" /></para></listitem>
+  <listitem><para><xref linkend="SetImageBorderColor" /></para></listitem>
+  <listitem><para><xref linkend="SetImageBorderWidth" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendBgColor" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendBorderColor" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendTextColor" /></para></listitem>
+  <listitem><para><xref linkend="SetLightGridColor" /></para></listitem>
+  <listitem><para><xref linkend="SetLineStyles" /></para></listitem>
+  <listitem><para><xref linkend="SetLineWidths" /></para></listitem>
+  <listitem><para><xref linkend="SetPieBorderColor" /></para></listitem>
+  <listitem><para><xref linkend="SetPieLabelColor" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotBgColor" /></para></listitem>
+  <listitem><para><xref linkend="SetRGBArray" /></para></listitem>
+  <listitem><para><xref linkend="SetTextColor" /></para></listitem>
+  <listitem><para><xref linkend="SetTickColor" /></para></listitem>
+  <listitem><para><xref linkend="SetTickLabelColor" /></para></listitem>
+  <listitem><para><xref linkend="SetTitleColor" /></para></listitem>
+  <listitem><para><xref linkend="SetTransparentColor" /></para></listitem>
+  <listitem><para><xref linkend="SetXTitleColor" /></para></listitem>
+  <listitem><para><xref linkend="SetYTitleColor" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-addlstyle">
+<title>Additional Style Controls</title>
+<para>
+The functions in this section control additional style attributes of the
+plot, including background images, borders, point style and size for point
+plots, and shading for 3D affects.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetBgImage" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawBrokenLines" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawDataBorders" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawPieBorders" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawPlotAreaBackground" /></para></listitem>
+  <listitem><para><xref linkend="SetImageBorderType" /></para></listitem>
+  <listitem><para><xref linkend="SetPieDirection" /></para></listitem>
+  <listitem><para><xref linkend="SetPieStartAngle" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotAreaBgImage" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotBorderType" /></para></listitem>
+  <listitem><para><xref linkend="SetPointShapes" /></para></listitem>
+  <listitem><para><xref linkend="SetPointSizes" /></para></listitem>
+  <listitem><para><xref linkend="SetShading" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-errorbars">
+<title>Error Bar Controls</title>
+<para>
+The functions in this section control the appearance of error bars, used in
+plots with data types <literal>data-data-error</literal> and
+<literal>data-data-yx-error</literal>.
+</para>
+<para>
+See also <xref linkend="SetErrorBarColors" />, which sets the color used for
+error bars.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetErrorBarLineWidth" /></para></listitem>
+  <listitem><para><xref linkend="SetErrorBarShape" /></para></listitem>
+  <listitem><para><xref linkend="SetErrorBarSize" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-textfonts">
+<title>Text Fonts</title>
+<para>
+The functions in this section control the text fonts used by PHPlot.
+For more information, see <xref linkend="conc-text"/>.
+</para>
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetDefaultTTFont" /></para></listitem>
+  <listitem><para><xref linkend="SetFont" /></para></listitem>
+  <listitem><para><xref linkend="SetFontGD" /></para></listitem>
+  <listitem><para><xref linkend="SetFontTTF" /></para></listitem>
+  <listitem><para><xref linkend="SetLineSpacing" /></para></listitem>
+  <listitem><para><xref linkend="SetTTFPath" /></para></listitem>
+  <listitem><para><xref linkend="SetUseTTF" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-titles">
+<title>Titles</title>
+<para>
+The functions in this section set the title strings: the overall plot
+title, and optional titles for the X and Y axes.
+For more information, see <xref linkend="conc-titles"/>.
+See also <xref linkend="SetTitleColor" />,
+<xref linkend="SetXTitleColor" />, and
+<xref linkend="SetYTitleColor" /> to set the title colors,
+and <xref linkend="SetFont" /> to set the title fonts.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetTitle" /></para></listitem>
+  <listitem><para><xref linkend="SetXTitle" /></para></listitem>
+  <listitem><para><xref linkend="SetYTitle" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-legend">
+<title>Legend</title>
+<para>
+The functions in this section control the legend.
+For more information, see <xref linkend="conc-legend"/>.
+See also <xref linkend="SetLegendTextColor" /> to set the legend text color,
+<xref linkend="SetLegendBgColor"/> to set the legend background color,
+<xref linkend="SetLegendBorderColor" /> to set the legend outline border color,
+and <xref linkend="SetFont" /> to set the legend text font.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="GetLegendSize" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawLegendBorder" /></para></listitem>
+  <listitem><para><xref linkend="SetLegend" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendColorboxBorders" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendPixels" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendPosition" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendReverse" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendStyle" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendUseShapes" /></para></listitem>
+  <listitem><para><xref linkend="SetLegendWorld" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-axes">
+<title>Axis Controls</title>
+<para>
+The functions in this section control aspects of the X and Y axes. You can
+control the axis position and optionally use logarithmic scaling.
+You can also prevent drawing the axis lines.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetDrawXAxis" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawYAxis" /></para></listitem>
+  <listitem><para><xref linkend="SetXAxisPosition" /></para></listitem>
+  <listitem><para><xref linkend="SetXScaleType" /></para></listitem>
+  <listitem><para><xref linkend="SetYAxisPosition" /></para></listitem>
+  <listitem><para><xref linkend="SetYScaleType" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-grid">
+<title>Grid Controls</title>
+<para>
+The functions in this section control the optional grid lines.
+For more information, see <xref linkend="conc-grid"/>.
+See also <xref linkend="SetLightGridColor" /> to set the grid color.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetDrawDashedGrid" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawXGrid" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawYGrid" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-labels">
+<title>Labels</title>
+<para>
+The functions in this section control the formatting and display of labels.
+This includes data labels (axis data labels which come from your data array,
+and data value labels),
+tick labels (automatically generated by PHPlot), and the data
+labels used on pie charts to identify the pie segments.
+For more information, see <xref linkend="conc-labels"/>.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetDrawXDataLabelLines" /></para></listitem>
+  <listitem><para><xref linkend="SetDrawYDataLabelLines" /></para></listitem>
+  <listitem><para><xref linkend="SetLabelScalePosition" /></para></listitem>
+  <listitem><para><xref linkend="SetNumberFormat" /></para></listitem>
+  <listitem><para><xref linkend="SetPieLabelType" /></para></listitem>
+  <listitem><para><xref linkend="SetPrecisionX" /></para></listitem>
+  <listitem><para><xref linkend="SetPrecisionY" /></para></listitem>
+  <listitem><para><xref linkend="SetXDataLabelAngle" /></para></listitem>
+  <listitem><para><xref linkend="SetXDataLabelPos" /></para></listitem>
+  <listitem><para><xref linkend="SetXDataLabelType" /></para></listitem>
+  <listitem><para><xref linkend="SetXLabelAngle" /></para></listitem>
+  <listitem><para><xref linkend="SetXLabelType" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickLabelPos" /></para></listitem>
+  <listitem><para><xref linkend="SetXTimeFormat" /></para></listitem>
+  <listitem><para><xref linkend="SetYDataLabelAngle" /></para></listitem>
+  <listitem><para><xref linkend="SetYDataLabelPos" /></para></listitem>
+  <listitem><para><xref linkend="SetYDataLabelType" /></para></listitem>
+  <listitem><para><xref linkend="SetYLabelAngle" /></para></listitem>
+  <listitem><para><xref linkend="SetYLabelType" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickLabelPos" /></para></listitem>
+  <listitem><para><xref linkend="SetYTimeFormat" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-ticks">
+<title>Ticks</title>
+<para>
+The functions in this section control the X axis and Y axis tick marks.
+For more information, see <xref linkend="conc-ticks"/>.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="SetNumXTicks" /></para></listitem>
+  <listitem><para><xref linkend="SetNumYTicks" /></para></listitem>
+  <listitem><para><xref linkend="SetSkipBottomTick" /></para></listitem>
+  <listitem><para><xref linkend="SetSkipLeftTick" /></para></listitem>
+  <listitem><para><xref linkend="SetSkipRightTick" /></para></listitem>
+  <listitem><para><xref linkend="SetSkipTopTick" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickAnchor" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickCrossing" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickIncrement" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickLength" /></para></listitem>
+  <listitem><para><xref linkend="SetXTickPos" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickAnchor" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickCrossing" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickIncrement" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickLength" /></para></listitem>
+  <listitem><para><xref linkend="SetYTickPos" /></para></listitem>
+  <listitem><para><xref linkend="TuneXAutoTicks" /></para></listitem>
+  <listitem><para><xref linkend="TuneYAutoTicks" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-scaling">
+<title>Scaling and Translation</title>
+<para>
+The functions in this section control the overall data scaling and
+positioning of the plot on the image, or translate coordinates.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="GetDeviceXY" /></para></listitem>
+  <listitem><para><xref linkend="SetMarginsPixels" /></para></listitem>
+  <listitem><para><xref linkend="SetPieAutoSize" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotAreaPixels" /></para></listitem>
+  <listitem><para><xref linkend="SetPlotAreaWorld" /></para></listitem>
+  <listitem><para><xref linkend="TuneXAutoRange" /></para></listitem>
+  <listitem><para><xref linkend="TuneYAutoRange" /></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+<sect1 id="ref-callbacks">
+<title>Callbacks</title>
+<para>
+The functions in this section are used to implement callbacks.
+This is an advanced feature described in more detail in
+<xref linkend="callbacks"/>.
+</para>
+
+<para>
+<itemizedlist>
+  <listitem><para><xref linkend="GetCallback"/></para></listitem>
+  <listitem><para><xref linkend="RemoveCallback"/></para></listitem>
+  <listitem><para><xref linkend="SetCallback"/></para></listitem>
+</itemizedlist>
+</para>
+</sect1>
+
+
+</chapter>

@@ -1,0 +1,50 @@
+/*
+   HTML Style Sheet for PHPlot Reference Manual
+*/
+
+/* For cover page: */
+h1.title {
+  text-align: center;
+  font-size: 250%;
+}
+
+h3.corpauthor, h3.author, .affiliation {
+  text-align: center;
+  font-style: italic;
+}
+
+/* Shade examples */
+pre.programlisting, pre.synopsis, pre.screen {
+  color: #000000;
+  background-color: #e0e0e0;
+  padding: 10px;
+}
+
+/* Table of Contents */
+.toc dl dt {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.toc dl dl dt {
+  padding-top: 0em;
+  padding-bottom: 0em;
+}
+
+/* Abstract */
+.abstract {
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
+/* Indent examples, line up program listings inside examples */
+div.example {
+  margin-left: 4em;
+}
+div.example pre.programlisting, div.example pre.screen {
+  margin-left: 0em;
+}
+
+/* Don't put userinput in bold (strong) - hard to read. */
+strong.userinput {
+  font-weight: normal;
+}

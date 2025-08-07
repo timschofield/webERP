@@ -1,0 +1,100 @@
+name: PHPlot doc building and website updating
+
+on:
+  # We limit this workflow to pushes of tags. No need to run on prs and on pushes to master
+  push:
+    #branches:
+    #    - master
+    tags:
+      - '**'
+jobs:
+  release:
+    if: ${{ startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')) }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # apparently required by tj-actions/changed-files
+
+      - name: set git credentials as user triggering the build
+        uses: fregante/setup-git-user@v1
+
+      # These could be useful to update the generated docs on any pushes to master which have changes to docs sources
+      #
+      #- name: get changed files - manual
+      #  id: changed-manual
+      #  uses: tj-actions/changed-files@v35
+      #  with:
+      #    files: |
+      #      doc/manual/**
+      #- name: get changed files - source
+      #  id: changed-source
+      #  uses: tj-actions/changed-files@v35
+      #  with:
+      #    files: |
+      #      src/**
+
+      - name: install tools for generating docs
+        #if: ${{ steps.changed-source.outputs.any_changed == 'true' || steps.changed-manual.outputs.any_changed == 'true' || (github.ref_type == 'tag' && startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')))  }}
+        run: |
+          chmod 755 ./doc/taskfile
+          ./doc/taskfile setup_tools
+
+      # build api docs, including the zip files
+      - name: generate api docs
+        #if: ${{ steps.changed-source.outputs.any_changed == 'true' || (github.ref_type == 'tag' && startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')))  }}
+        run: |
+          ./doc/taskfile build_apidocs
+          ./doc/taskfile create_apidocs_archives
+
+      # build manual in html and pdf formats, including the zip files
+      - name: generate the manual
+        #if: ${{ steps.changed-manual.outputs.any_changed == 'true' || (github.ref_type == 'tag' && startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')))  }}
+        run: |
+          ./doc/taskfile build_manual
+          ./doc/taskfile build_manual_cleanup
+          ./doc/taskfile create_manual_html_archive
+          ./doc/taskfile create_manual_pdf_archive
+
+      - name: update the website - api docs
+        #if: ${{ steps.changed-source.outputs.any_changed == 'true' || (github.ref_type == 'tag' && startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')))  }}
+        run: |
+          git fetch
+          git checkout gh-pages
+          mv ./build/doc/api doc
+          git add doc/api
+          git commit -m 'update the api docs'
+          git push
+          git checkout ${{ github.ref_name }}
+
+      - name: update the website - manual
+        #if: ${{ steps.changed-manual.outputs.any_changed == 'true' || (github.ref_type == 'tag' && startsWith(github.ref_name, '8.') && !(contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc')))  }}
+        run: |
+          git fetch
+          git checkout gh-pages
+          mv ./build/doc/phplot_manual.pdf doc
+          git add doc/phplot_manual.pdf
+          mv ./build/doc/manual doc
+          git add doc/manual
+          git commit -m 'update the manual'
+          git push
+          git checkout ${{ github.ref_name }}
+
+      # create release on github, with data from the NEWS file and add docs artifacts
+
+      - name: create release announcement from NEWS
+        #if: ${{ github.ref_type == 'tag' && startsWith(github.ref_name, '4.') }}
+        run: |
+          tar -cvzf demofiles.tgz demo
+          tail -n+8 doc/NEWS.md | sed '/ Release /Q' >> announcement.txt
+
+      - name: create the release on github
+        #if: ${{ github.ref_type == 'tag' && startsWith(github.ref_name, '4.') }}
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: announcement.txt
+          files: |
+            ./build/doc/phplot_api_docs.zip
+            ./build/doc/phplot_manual_html.zip
+            ./build/doc/phplot_manual_pdf.zip
