@@ -58,13 +58,15 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			if ($DebugMessage == '') {
 				$DebugMessage = _('The SQL that failed was:');
 			}
-			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
+			prnMsg('<br />' . $DebugMessage. "<br />$SQL<br />", 'error', _('Database SQL Failure'));
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if (DB_error_no() !=0) {
-				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), 'error', _('DB Database Rollback Error') . ' ' . DB_error_no());
+			} else {
+				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
