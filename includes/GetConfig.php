@@ -1,5 +1,7 @@
 <?php
 
+global $RootPath;
+
 // Systems can temporarily force a reload by setting the variable $ForceConfigReload to true
 
 if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
