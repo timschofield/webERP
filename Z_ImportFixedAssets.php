@@ -214,8 +214,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 									'" . FormatDateForSQL($DatePurchased) . "')";
 
 			$ErrMsg =  _('The asset could not be added because');
-			$DbgMsg = _('The SQL that was used to add the asset and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
@@ -239,8 +238,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 											'" . $Cost . "')";
 
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
-				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
-				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($SQL, $ErrMsg);
 
 				$SQL = "INSERT INTO fixedassettrans ( assetid,
 													transtype,
@@ -260,8 +258,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 											'" . $AccumDepn . "')";
 
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
-				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
-				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($SQL, $ErrMsg);
 
 				if (DB_error_no() ==0) {
 					prnMsg( _('Inserted the new asset:') . ' ' . $Description,'info');

@@ -195,8 +195,7 @@ if (isset($_POST['SearchParts'])){
 	 }
 
 	$ErrMsg =  _('No items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 }
 
 if (isset($_POST['StockID'])){
@@ -460,7 +459,7 @@ if (!isset($StockID)) {
 		} //end not order number selected
 
 		$ErrMsg = _('No works orders were returned by the SQL because');
-		$WorkOrdersResult = DB_query($SQL,$ErrMsg);
+		$WorkOrdersResult = DB_query($SQL, $ErrMsg);
 
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {

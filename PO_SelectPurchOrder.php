@@ -103,8 +103,7 @@ if (isset($_POST['SearchParts'])) {
 			ORDER BY stockmaster.stockid";
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 }
 /* Not appropriate really to restrict search by date since user may miss older
 * ouststanding orders

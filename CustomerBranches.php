@@ -344,7 +344,7 @@ if (isset($_POST['submit'])) {
 								$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 							}
 							$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
-							$Result = DB_query($SQL,$ErrMsg);
+							$Result = DB_query($SQL, $ErrMsg);
 							if (DB_error_no()==0){
 								prnMsg(_('Branch Deleted'),'success');
 							}

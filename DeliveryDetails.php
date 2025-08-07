@@ -163,8 +163,7 @@ if(isset($_POST['Update'])
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . _('cannot be retrieved because');
-		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		if(DB_num_rows($Result)==0) {
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
@@ -244,8 +243,7 @@ if(isset($_POST['Update'])
 						FROM shippers
 						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
 			$ErrMsg = _('There was a problem testing for the default shipper');
-			$DbgMsg = _('SQL used to test for the default shipper') . ':';
-			$TestShipperExists = DB_query($SQL,$ErrMsg,$DbgMsg);
+			$TestShipperExists = DB_query($SQL, $ErrMsg);
 
 			if(DB_num_rows($TestShipperExists)==1) {
 
@@ -255,7 +253,7 @@ if(isset($_POST['Update'])
 
 				$SQL = "SELECT shipper_id
 							FROM shippers";
-				$TestShipperExists = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$TestShipperExists = DB_query($SQL, $ErrMsg);
 
 				if(DB_num_rows($TestShipperExists)>=1) {
 					$ShipperReturned = DB_fetch_row($TestShipperExists);
@@ -311,9 +309,7 @@ if(isset($_POST['ProcessOrder'])) {
 			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = _('The customer terms cannot be determined') . '. ' . _('This order cannot be processed because');
-		$DbgMsg = _('SQL used to find the customer terms') . ':';
-		$TermsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
+		$TermsResult = DB_query($SQL, $ErrMsg);
 
 		$MyRow = DB_fetch_array($TermsResult);
 		if($MyRow['daysbeforedue']==0 AND $MyRow['dayinfollowingmonth']==0) {
@@ -399,7 +395,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 								)";
 
 	$ErrMsg = _('The order cannot be added because');
-	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg);
+	$InsertQryResult = DB_query($HeaderSQL, $ErrMsg);
 
 
 	$StartOf_LineItemsSQL = "INSERT INTO salesorderdetails (
@@ -413,7 +409,6 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 											poline,
 											itemdue)
 										VALUES (";
-	$DbgMsg = _('The SQL that failed was');
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineItemsSQL = $StartOf_LineItemsSQL ."
@@ -428,7 +423,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					'" . FormatDateForSQL($StockItem->ItemDue) . "'
 				)";
 		$ErrMsg = _('Unable to add the sales order line');
-		$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+		$Ins_LineItemResult = DB_query($LineItemsSQL, $ErrMsg,'',true);
 
 		/*Now check to see if the item is manufactured
 		 * 			and AutoCreateWOs is on
@@ -469,7 +464,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										'" . Date('Y-m-d') . "',
 										'" . FormatDateForSQL($StockItem->ItemDue) . "')",
 										$ErrMsg,
-										$DbgMsg,
+										'',
 										true);
 				//Need to get the latest BOM to roll up cost
 				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
@@ -495,7 +490,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										 '" . $WOQuantity . "',
 										 '" . $Cost . "')";
 				$ErrMsg = _('The work order item could not be added');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 				WoRealRequirements($WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
@@ -524,13 +519,13 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 															'" . $StockItem->StockID . "',
 															'" . ($StockItem->NextSerialNo + $i) . "')";
 								$ErrMsg = _('The serial number for the work order item could not be added');
-								$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+								$Result = DB_query($SQL, $ErrMsg, '', true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
 							}
 						}//end loop around creation of woserialnos
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = _('Could not update the new next serial number for the item');
-						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'",$ErrMsg,$DbgMsg,true);
+						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'", $ErrMsg, '', true);
 				}// end if the item is serialised and nextserialno is set
 
 				$EmailSubject = _('New Work Order Number') . ' ' . $WONo . ' ' . _('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
@@ -627,12 +622,11 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			$ContractRow = DB_fetch_array($ContractResult);
 			$WONo = GetNextTransNo(40);
 			$ErrMsg = _('Could not update the contract status');
-			$DbgMsg = _('The SQL that failed to update the contract status was');
-			$UpdContractResult=DB_query("UPDATE contracts SET status=2,
+			$UpdContractResult = DB_query("UPDATE contracts SET status=2,
 															wo='" . $WONo . "'
 										WHERE orderno='" .$_SESSION['ExistingOrder'.$identifier] . "'",
 										$ErrMsg,
-										$DbgMsg,
+										'',
 										true);
 			$ErrMsg = _('Could not insert the contract bill of materials');
 			$InsContractBOM = DB_query("INSERT INTO bom (parent,
@@ -651,8 +645,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													quantity
 											FROM contractbom
 											WHERE contractref='" . $ContractRow['contractref'] . "'",
-											$ErrMsg,
-											$DbgMsg);
+											$ErrMsg);
 
 			$ErrMsg = _('Unable to insert a new work order for the sales order item');
 			$InsWOResult = DB_query("INSERT INTO workorders (wo,
@@ -663,8 +656,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													'" . $_SESSION['Items'.$identifier]->Location ."',
 													'" . $ContractRow['requireddate'] . "',
 													'" . Date('Y-m-d'). "')",
-										$ErrMsg,
-										$DbgMsg);
+										$ErrMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
 			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) AS cost
 									FROM stockmaster INNER JOIN contractbom
@@ -694,7 +686,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 									 '1',
 									 '" . $Cost . "')";
 			$ErrMsg = _('The work order item could not be added');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 			WoRealRequirements($WONo, $_SESSION['Items'.$identifier]->Location, $ContractRow['contractref']);
@@ -729,10 +721,8 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'
 						WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'.$identifier] ."'";
 
-	$DbgMsg = _('The SQL that was used to update the order and failed was');
 	$ErrMsg = _('The order cannot be updated because');
-	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
-
+	$InsertQryResult = DB_query($HeaderSQL, $ErrMsg, '', true);
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
@@ -753,9 +743,8 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 						WHERE salesorderdetails.orderno='" . $_SESSION['ExistingOrder'.$identifier] . "'
 						AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
 
-		$DbgMsg = _('The SQL that was used to modify the order line and failed was');
 		$ErrMsg = _('The updated order line cannot be modified because');
-		$Upd_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+		$Upd_LineItemResult = DB_query($LineItemsSQL, $ErrMsg, '', true);
 
 	} /* updated line items into sales order details */
 
@@ -965,8 +954,7 @@ $SQL = "SELECT locations.loccode, locationname
 	WHERE locations.allowinvoicing='1'
 	ORDER BY locations.locationname";
 $ErrMsg = _('The stock locations could not be retrieved');
-$DbgMsg = _('SQL used to retrieve the stock locations was') . ':';
-$StkLocsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$StkLocsResult = DB_query($SQL, $ErrMsg);
 // COMMENT: What if there is no authorized locations available for this user?
 while($MyRow=DB_fetch_array($StkLocsResult)) {
 	echo '<option', ($_SESSION['Items'.$identifier]->Location==$MyRow['loccode'] ? ' selected="selected"' : ''), ' value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
@@ -1129,10 +1117,9 @@ echo'<field>
 				<select name="ShipVia">';
 
 		$ErrMsg = _('The shipper details could not be retrieved');
-		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
 		$SQL = "SELECT shipper_id, shippername FROM shippers";
-		$ShipperResults = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$ShipperResults = DB_query($SQL, $ErrMsg);
 		while ($MyRow=DB_fetch_array($ShipperResults)) {
 			if($MyRow['shipper_id']==$_POST['ShipVia']) {
 				echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';

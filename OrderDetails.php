@@ -48,8 +48,7 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
 $ErrMsg =  _('The order cannot be retrieved because');
-$DbgMsg = _('The SQL that failed to get the order header was');
-$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
+$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 
@@ -169,8 +168,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
 	$ErrMsg =  _('The line items of the order cannot be retrieved because');
-	$DbgMsg =  _('The SQL used to retrieve the line items, that failed was');
-	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg, $DbgMsg);
+	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 	if (DB_num_rows($LineItemsResult)>0) {
 

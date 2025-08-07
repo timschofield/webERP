@@ -11,7 +11,6 @@ $LineHeight=15;
 
 $Title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
-$DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
 $SQL = "SELECT stockmaster.stockid,
                stockmaster.description,
@@ -31,7 +30,7 @@ $SQL = "SELECT stockmaster.stockid,
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 
-$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result)==0){
 	include('includes/header.php');

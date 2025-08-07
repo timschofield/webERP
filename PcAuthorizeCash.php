@@ -185,8 +185,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $MyRow['currency'] . "'
 										)";
 			$ErrMsg = _('Cannot insert a bank transaction because');
-			$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-			$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
+			$ResultBank = DB_query($SQLBank, $ErrMsg, '', true);
 
 			$SQL = "UPDATE pcashdetails
 					SET authorized = CURRENT_DATE,

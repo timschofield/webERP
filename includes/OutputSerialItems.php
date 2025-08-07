@@ -22,7 +22,7 @@ $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UT
 $SQL="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 $Perishable=$MyRow['perishable'];
 if ($LineItem->Serialised==1){
@@ -165,7 +165,7 @@ $SQL="SELECT serialno,
 		FROM stockserialitems
 		WHERE stockid='".$StockID."'
 		AND loccode='" . $Location . "'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 $RowNumber=0;
 while ($MyRow=DB_fetch_array($Result)){

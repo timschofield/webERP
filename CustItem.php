@@ -74,8 +74,7 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 							'" . $_POST['cust_description'] . "',
 							'" . $_POST['cust_part'] . "')";
 		$ErrMsg = _('The customer Item details could not be added to the database because');
-		$DbgMsg = _('The SQL that failed was');
-		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$AddResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('This customer data has been added to the database'), 'success');
 		unset($DebtorsMasterResult);
 	}
@@ -87,8 +86,7 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 							WHERE custitem.stockid='" . $StockId . "'
 							AND custitem.debtorno='" . $DebtorNo . "'";
 		$ErrMsg = _('The customer details could not be updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('customer data has been updated'), 'success');
 		unset($DebtorsMasterResult);
 		unset($DebtorNo);
@@ -187,8 +185,7 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE DebtorNo='" . $DebtorNo . "'";
 	$ErrMsg = _('The customer details for the selected customer could not be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
-	$SuppSelResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SuppSelResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SuppSelResult) == 1) {
 		$MyRow = DB_fetch_array($SuppSelResult);
 		$Name = $MyRow['name'];
@@ -271,8 +268,7 @@ if (isset($_POST['Searchcustomer'])) {
 
 	} //one of keywords or cust_part was more than a zero length string
 	$ErrMsg = _('The cuswtomer matching the criteria entered could not be retrieved because');
-	$DbgMsg = _('The SQL to retrieve customer details that failed was');
-	$DebtorsMasterResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$DebtorsMasterResult = DB_query($SQL, $ErrMsg);
 } //end of if search
 if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 	if (isset($StockId)) {

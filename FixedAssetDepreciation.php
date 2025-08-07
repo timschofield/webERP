@@ -75,7 +75,7 @@ $SQL="SELECT fixedassets.assetid,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
 
-$AssetsResult=DB_query($SQL);
+$AssetsResult = DB_query($SQL);
 
 $InputError = false; //always hope for the best
 if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
@@ -193,8 +193,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $NewDepreciation ."')";
 
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
-		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -210,7 +209,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['accumdepnact'] . "',
 								'" . mb_substr(_('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'], 0, 200) . "',
 								'" . -$NewDepreciation ."')";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
@@ -230,15 +229,13 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 											'depn',
 											'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
-		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
 				WHERE assetid = '" . $AssetRow['assetid'] . "'";
 		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
-		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was:');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr>

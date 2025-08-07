@@ -44,8 +44,6 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="" alt="" />' . ' ' . _('For Work Order Number') . ' ' . $WO . ' ' . _('and output item') . ' ' . $StockID . ' - ' . $Description . '
 	</p>';
 
-$DbgMsg = _('The SQL that failed was');
-
 if (isset($_POST['AddControlledItems'])){
 	if (isset($_POST['NumberToAdd'])){ // Must be adding serial numbers automatically
 		if (!is_numeric(filter_number_format($_POST['NumberToAdd']))){
@@ -93,7 +91,7 @@ if (isset($_POST['AddControlledItems'])){
 			}
 			$NextSerialNo = $NextItemNumber + 1;
 			$ErrMsg = _('Unable to add the serial numbers requested');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			// update the nextserialno in the stockmaster for the item
 			$Result = DB_query("UPDATE stockmaster
 								SET nextserialno='" . $NextSerialNo . "'
@@ -102,7 +100,7 @@ if (isset($_POST['AddControlledItems'])){
 								WHERE stockid='" . $StockID . "'
 								AND wo='" . $WO . "'",
 								$ErrMsg,
-								$DbgMsg,
+								'',
 								true);
 			DB_Txn_Commit();
 		}
@@ -140,7 +138,7 @@ if (isset($_POST['AddControlledItems'])){
 									WHERE stockid='" . $StockID . "'
 									AND wo='" . $WO . "'",
 									$ErrMsg,
-									$DbgMsg,
+									'',
 									true);
 				$SQL = "INSERT INTO woserialnos (stockid,
 												 wo,
@@ -154,7 +152,7 @@ if (isset($_POST['AddControlledItems'])){
 											 '" . $_POST['Reference'] . "')";
 
 				$ErrMsg = _('Unable to add the batch or serial number requested');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				DB_Txn_Commit();
 			}
@@ -224,13 +222,13 @@ if (isset($_POST['UpdateItems'])){
 	if (sizeof($SQL)>0){
 		DB_Txn_Begin();
 		foreach ($SQL as $SQLStatement){
-				$Result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQLStatement, $ErrMsg, '', true);
 		}
 		$Result = DB_query("UPDATE woitems SET qtyreqd = '" . $WOQuantityTotal . "'
 							WHERE wo = '" .$WO . "'
 							AND stockid='" . $StockID . "'",
 							$ErrMsg,
-							$DbgMsg,
+							'',
 							true);
 		DB_Txn_Commit();
 	}
@@ -291,7 +289,7 @@ $SQL = "SELECT serialno,
 		AND stockid='" . $StockID . "'";
 
 $ErrMsg = _('Could not get the work order serial/batch items');
-$WOSerialNoResult = DB_query($SQL,$ErrMsg);
+$WOSerialNoResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($WOSerialNoResult)==0){
 	prnMsg(_('There are no serial items or batches yet defined for this work order item. Create new items first'),'info');

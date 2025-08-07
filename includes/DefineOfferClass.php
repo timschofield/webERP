@@ -91,8 +91,7 @@ Class Offer {
 								'" . FormatDateForSQL($LineItems->ExpiryDate) . "',
 								'" . $this->CurrCode . "')";
 					$ErrMsg = _('The suppliers offer could not be inserted into the database because');
-					$DbgMsg = _('The SQL statement used to insert the suppliers offer record and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
 						prnMsg(_('The offer for') . ' ' . $LineItems->StockID . ' ' . _('has been inserted into the database'), 'success');
 						$this->OfferMailText .= $LineItems->Quantity . ' ' . $LineItems->Units . ' ' . _('of') . ' ' .
@@ -114,8 +113,7 @@ Class Offer {
 							expirydate='" . FormatDateForSQL($LineItem->ExpiryDate) . "'
 						WHERE offerid='" . $LineItem->LineNo . "'";
 					$ErrMsg = _('The suppliers offer could not be updated on the database because');
-					$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
 						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('has been updated in the database'), 'success');
 						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . _('of') . ' ' .
@@ -128,8 +126,7 @@ Class Offer {
 				} else { // the LineItem is Deleted flag is true so delete it
 					$SQL = "DELETE from offers WHERE offerid='" . $LineItem->LineNo . "'";
 					$ErrMsg = _('The supplier offer could not be deleted on the database because');
-					$DbgMsg = _('The SQL statement used to delete the suppliers offer record are failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
 						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('has been deleted in the database'), 'info');
 						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . _('of') . ' ' .

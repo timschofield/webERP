@@ -174,7 +174,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 
 	$ErrMsg = _('The freight cost record could not be updated because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	prnMsg($Msg,'success');
 

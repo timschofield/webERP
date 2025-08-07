@@ -164,7 +164,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		ORDER BY sectionid";
 
 	$ErrMsg = _('Could not get account group sections because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img alt="" class="noPrint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.

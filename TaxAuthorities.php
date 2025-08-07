@@ -42,7 +42,7 @@ if(isset($_POST['submit'])) {
 				WHERE taxid = '" . $SelectedTaxAuthID . "'";
 
 		$ErrMsg = _('The update of this tax authority failed because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$Msg = _('The tax authority for record has been updated');
 
@@ -69,7 +69,7 @@ if(isset($_POST['submit'])) {
 				)";
 
 		$Errmsg = _('The addition of this tax authority failed because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$Msg = _('The new tax authority record has been added to the database');
 
@@ -136,8 +136,7 @@ if(!isset($SelectedTaxAuthID)) {
 			FROM taxauthorities";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
-	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>

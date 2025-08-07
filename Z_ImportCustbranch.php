@@ -74,35 +74,35 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$Salesmen=array();
 	$SQL = "SELECT salesmancode
 				     FROM salesman";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Salesmen[]=$MyRow['salesmancode'];
 	}
 	$Areas=array();
 	$SQL = "SELECT areacode
 				     FROM areas";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Areas[]=$MyRow['areacode'];
 	}
 	$Locations=array();
 	$SQL = "SELECT loccode
 				     FROM locations";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Locations[]=$MyRow['loccode'];
 	}
 	$Shippers=array();
 	$SQL = "SELECT shipper_id
 				     FROM shippers";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Shippers[]=$MyRow['shipper_id'];
 	}
 	$Taxgroups=array();
 	$SQL = "SELECT taxgroupid
 				     FROM taxgroups";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Taxgroups[]=$MyRow['taxgroupid'];
 	}
@@ -351,7 +351,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$SQL = "SELECT 1
 						 FROM debtorsmaster
 						 WHERE debtorno='".$_POST['DebtorNo']."' LIMIT 1";
-					$Result=DB_query($SQL);
+					$Result = DB_query($SQL);
 					$DebtorExists=(DB_num_rows($Result)>0);
 					if ($DebtorExists) {
 						$ExistDebtorNos[]=$_POST['DebtorNo'];
@@ -366,7 +366,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				     FROM custbranch
            			 WHERE debtorno='".$_POST['DebtorNo']."' AND
 				           branchcode='".$_POST['BranchCode']."' LIMIT 1";
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				$BranchExists=(DB_num_rows($Result)>0);
 				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					$ExistedBranches[] = array('debtor'=>$_POST['DebtorNo'],

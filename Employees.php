@@ -50,9 +50,8 @@ if(isset($_POST['submit'])) {
 						WHERE id = '" . $SelectedEmployee . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedEmployee . ' ' . _('employee record because');
-		$DbgMsg = _('The SQL used to update the employee record was');
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The employee record has been updated'),'success');
 
@@ -76,11 +75,9 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['Email'] . "')";
 
 		$ErrMsg = _('An error occurred inserting the new employee record because');
-		$DbgMsg = _('The SQL used to insert the employee record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The new employee record has been added'),'success');
-
 	}
 
 	unset($_POST['Surname']);

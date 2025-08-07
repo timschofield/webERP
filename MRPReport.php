@@ -27,7 +27,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			WHERE part = '" . $_POST['Part'] ."'
 			ORDER BY daterequired,whererequired";
 
-	$Result = DB_query($SQL,'','',False,False);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no() !=0) {
 		$Errors = 1;
 		$Title = _('Print MRP Report Error');
@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			 FROM mrpsupplies
 			 WHERE part = '" . $_POST['Part'] . "'
 			 ORDER BY mrpdate";
-	$Result = DB_query($SQL,'','',false,true);
+	$Result = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		$Errors = 1;
 	}
@@ -713,8 +713,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		}
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}

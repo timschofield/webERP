@@ -33,8 +33,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 			ORDER BY bankaccountname";
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . '<br />' . $SQL;
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) ==0) {
 		prnMsg(_('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
 		echo '<br /><a href="BankAccounts.php>' . _('Setup Import Format for Bank Accounts') . '</a>';
@@ -124,7 +123,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$ErrMsg = _('Could not retrieve bank accounts that match with the statement being imported');
 
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)==0) { //but check for the worst!
 		//there is no bank account set up for the bank account being imported
 		prnMsg(_('The account') . ' ' . $_SESSION['Statement']->AccountNumber . ' ' . _('is not defined as a bank account of the business. No imports can be processed'), 'warn');
@@ -437,7 +436,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 			/* Now insert the bank transaction if necessary */
 			/* it is not possible to import transaction that were originally in another currency converted to the currency of the bank account by the bank - these entries would need to be done through the usual method */
 
-				$Result=DB_query("INSERT INTO banktrans (transno,
+				$Result = DB_query("INSERT INTO banktrans (transno,
 														type,
 														bankact,
 														ref,

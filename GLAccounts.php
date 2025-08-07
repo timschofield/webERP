@@ -184,7 +184,7 @@ if(isset($_POST['submit'])) {
 									OR materialuseagevarac='" . $SelectedAccount . "'
 									OR wipact='" . $SelectedAccount . "'";
 							$Errmsg = _('Could not test for existing stock GL codes because');
-							$Result = DB_query($SQL,$ErrMsg);
+							$Result = DB_query($SQL, $ErrMsg);
 
 							$MyRow = DB_fetch_row($Result);
 							if($MyRow[0]>0) {
@@ -195,7 +195,7 @@ if(isset($_POST['submit'])) {
 								$SQL= "SELECT COUNT(*) FROM bankaccounts
 								WHERE accountcode='" . $SelectedAccount ."'";
 								$ErrMsg = _('Could not test for existing bank account GL codes because');
-								$Result = DB_query($SQL,$ErrMsg);
+								$Result = DB_query($SQL, $ErrMsg);
 
 								$MyRow = DB_fetch_row($Result);
 								if($MyRow[0]>0) {

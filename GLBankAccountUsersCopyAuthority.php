@@ -24,9 +24,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		DB_Txn_Begin();
 
 		$SQL = "DELETE FROM bankaccountusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to delete the auhority in bankaccountusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Deleting the previous authority to view / update the Bank Accounts of user') . ' ' . $_POST['ToUserID'], 'success');
 
 		$SQL = "INSERT INTO bankaccountusers (userid, accountcode)
@@ -34,9 +33,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				FROM bankaccountusers
 				WHERE UPPER(userid) = UPPER('" . $_POST['FromUserID'] . "')";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the auhority in bankaccountusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Copied the authority to view / update the Bank Accounts from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to user') . ' ' . $_POST['ToUserID'], 'success');
 
 		DB_Txn_Commit();

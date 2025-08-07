@@ -116,8 +116,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . filter_number_format($_POST['MinOrderQty']) . "',
 							'" . $_POST['Preferred'] . "')";
 		$ErrMsg = _('The supplier purchasing details could not be added to the database because');
-		$DbgMsg = _('The SQL that failed was');
-		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$AddResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('This supplier purchasing data has been added to the database'), 'success');
 	}
 	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
@@ -134,8 +133,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							AND purchdata.supplierno='" . $SupplierID . "'
 							AND purchdata.effectivefrom='" . $_POST['WasEffectiveFrom'] . "'";
 		$ErrMsg = _('The supplier purchasing details could not be updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('Supplier purchasing data has been updated'), 'success');
 
 		/*Now need to validate supplier purchasing discount records  and update/insert as necessary */
@@ -162,7 +160,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 													effectivefrom = '" . FormatDateForSQL($_POST['DiscountEffectiveFrom' . $i]) . "',
 													effectiveto = '" . FormatDateForSQL($_POST['DiscountEffectiveTo' . $i]) . "'
 						WHERE id = " . intval($_POST['DiscountID' . $i]);
-				$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+				$UpdResult = DB_query($SQL, $ErrMsg);
 			}
 		} /*end loop through all supplier discounts */
 
@@ -194,8 +192,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 								'" . FormatDateForSQL($_POST['DiscountEffectiveFrom']) . "',
 								'" . FormatDateForSQL($_POST['DiscountEffectiveTo']) . "')";
 			$ErrMsg = _('Could not insert a new supplier discount entry because');
-			$DbgMsg = _('The SQL used to insert the supplier discount entry that failed was');
-			$InsertResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$InsertResult = DB_query($SQL, $ErrMsg);
 			prnMsg(_('A new supplier purchasing discount record was entered successfully'),'success');
 		}
 
@@ -340,8 +337,7 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 				ON suppliers.currcode=currencies.currabrev
 			WHERE supplierid='".$SupplierID."'";
     $ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
-    $DbgMsg = _('The SQL that failed was');
-    $SuppSelResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+    $SuppSelResult = DB_query($SQL, $ErrMsg);
     if (DB_num_rows($SuppSelResult) == 1) {
         $MyRow = DB_fetch_array($SuppSelResult);
         $SuppName = $MyRow['suppname'];
@@ -419,8 +415,7 @@ if (isset($_POST['SearchSupplier'])) {
 
     } //one of keywords or SupplierCode was more than a zero length string
     $ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-    $DbgMsg = _('The SQL to retrieve supplier details that failed was');
-    $SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+    $SuppliersResult = DB_query($SQL, $ErrMsg);
 } //end of if search
 
 if (isset($SuppliersResult)) {
@@ -669,8 +664,7 @@ if (!isset($SuppliersResult)) {
 					AND stockid = '" . $StockID . "'";
 
 		$ErrMsg = _('The supplier discounts could not be retrieved because');
-		$DbgMsg = _('The SQL to retrieve supplier discounts for this item that failed was');
-		$DiscountsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$DiscountsResult = DB_query($SQL, $ErrMsg);
 
 		echo '<table cellpadding="2" colspan="7" class="selection">
 			<thead>

@@ -8,12 +8,11 @@ Function returns the relavent GL Code to post COGS entries to*/
 function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 
 	$ErrMsg = _('Can not retrieve the cost of sales GL code because');
-	$DbgMsg =_('SQL to get the cost of sales GL Code');
 
 	/*Get the StockCategory for this item */
 
 	$SQL = "SELECT categoryid FROM stockmaster WHERE stockid='" . $StockID . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$StockCategory = $MyRow[0];
 
@@ -39,7 +38,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 	*/
 
 
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==0){
 
@@ -49,7 +48,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 			AND stkcat = '" . $StockCategory . "'
 			AND salestype = 'AN'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 	}
 
@@ -60,7 +59,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 			WHERE area = '" . $Area . "'
 			AND stkcat = 'ANY' AND salestype = '" . $SalesType . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 	if (DB_num_rows($Result)==0){
 
@@ -70,7 +69,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 			AND stkcat = '" . $StockCategory . "'
 			AND salestype = '" . $SalesType . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -82,7 +81,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 			AND salestype='AN'
 			AND stkcat = '" . $StockCategory . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -93,7 +92,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 			WHERE area = '" . $Area . "'
 			AND stkcat = 'ANY'
 			AND salestype='AN'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0) {
@@ -103,7 +102,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
                 		WHERE area = 'AN'
                 		AND stkcat = 'ANY'
                 		AND salestype = '" . $SalesType . "'";
-            $Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+            $Result = DB_query($SQL, $ErrMsg);
       }
 
 	if (DB_num_rows($Result)==0){
@@ -114,7 +113,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
                   WHERE area = 'AN'
                   AND stkcat = 'ANY'
                   AND salestype='AN'";
-                  $Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+                  $Result = DB_query($SQL, $ErrMsg);
       }
 
 	if (DB_num_rows($Result)==0){ /*STILL!*/
@@ -150,12 +149,10 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 /*Gets the  Sales GL Code for a specific area, sales type and stock category */
 
 	$ErrMsg = _('There was a problem retrieving the sales general ledger code because');
-	$DbgMsg =  _('SQL to get the sales GL Codes for sales and discounts');
-
 
 		/*Get the StockCategory for this item */
 	$SQL = "SELECT categoryid FROM stockmaster WHERE stockid='" . $StockID . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$StockCategory = $MyRow[0];
 
@@ -181,7 +178,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 			AND stkcat = '" . $StockCategory . "'
 			AND salestype = '". $SalesType . "'";
 
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==0){
 		DB_free_result($Result);
@@ -192,7 +189,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND stkcat = '" . $StockCategory . "'
 				AND salestype = 'AN'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -204,7 +201,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND stkcat = 'ANY'
 				AND salestype = '" . $SalesType . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -216,7 +213,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND salestype='" . $SalesType . "'
 				AND stkcat = '" . $StockCategory . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -228,7 +225,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND salestype='AN'
 				AND stkcat = '" . $StockCategory . "'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if (DB_num_rows($Result)==0){
@@ -240,7 +237,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND stkcat = 'ANY'
 				AND salestype='AN'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
         if (DB_num_rows($Result)==0) {
@@ -251,7 +248,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
                 	WHERE area = 'AN'
                 	AND stkcat = 'ANY'
                 	AND salestype = '" . $SalesType . "'";
-        	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+        	$Result = DB_query($SQL, $ErrMsg);
         }
 
 	if (DB_num_rows($Result)==0){
@@ -264,7 +261,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 				AND stkcat = 'ANY'
 				AND salestype='AN'";
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */

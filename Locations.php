@@ -82,9 +82,8 @@ if(isset($_POST['submit'])) {
 						WHERE loccode = '" . $SelectedLocation . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
-		$DbgMsg = _('The SQL used to update the location record was');
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The location record has been updated'),'success');
 		unset($_POST['LocCode']);
@@ -163,8 +162,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['AllowInvoicing'] . "')";
 
 		$ErrMsg = _('An error occurred inserting the new location record because');
-		$DbgMsg = _('The SQL used to insert the location record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The new location record has been added'),'success');
 
@@ -182,8 +180,7 @@ if(isset($_POST['submit'])) {
 			FROM stockmaster";
 
 		$ErrMsg = _('An error occurred inserting the new location stock records for all pre-existing parts because');
-		$DbgMsg = _('The SQL used to insert the new stock location records was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
 
 	/* Also need to add locationuser records for all existing users*/
@@ -200,7 +197,7 @@ if(isset($_POST['submit'])) {
 				AND locations.loccode='". $_POST['LocCode'] . "';";
 
 		$ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('Existing users have been authorized for this location'),'success');
 
 		unset($_POST['LocCode']);
@@ -372,7 +369,7 @@ if(isset($_POST['submit'])) {
 								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'");
 		}
 
-		$Result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
+		$Result = DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
 		$Result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'");
 		$Result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'");
 

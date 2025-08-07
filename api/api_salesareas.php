@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT COUNT(areacode)
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] > 0) {
 			$Errors[$i] = AreaCodeNotSetup;

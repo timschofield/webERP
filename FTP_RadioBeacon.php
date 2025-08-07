@@ -42,7 +42,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.deliverto";
 
 $ErrMsg = _('No orders were returned because');
-$SalesOrdersResult = DB_query($SQL,$ErrMsg);
+$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
@@ -153,7 +153,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
 
 	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database');
-	$Result=DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==1){ /*There is ony one order header returned */
 
@@ -179,7 +179,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 					AND salesorderdetails.orderno=" . $_GET['OrderNo'];
 
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database because');
-		$Result=DB_query($SQL, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling creating the Header record - the PHRecord*/

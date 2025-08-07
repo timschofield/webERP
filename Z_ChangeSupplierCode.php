@@ -85,28 +85,27 @@ function ProcessSupplier($OldCode, $NewCode) {
 		`phn`, `port`, `email`, `fax`, `telephone`
 		FROM suppliers WHERE supplierid='" . $OldCode . "'";
 
-	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new suppliers master record failed') . ', ' . _('the SQL statement was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	foreach ($Table_key as $Table=>$key) {
 		prnMsg(_('Changing').' '. $Table.' ' . _('records'),'info');
 		$SQL = "UPDATE " . $Table . " SET $key='" . $NewCode . "' WHERE $key='" . $OldCode . "'";
 		$ErrMsg = _('The SQL to update') . ' ' . $Table . ' ' . _('records failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	}
 
 	prnMsg(_('Deleting the supplier code from the suppliers master table'),'info');
 	$SQL = "DELETE FROM suppliers WHERE supplierid='" . $OldCode . "'";
 
 	$ErrMsg = _('The SQL to delete the old supplier record failed');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	DB_Txn_Commit();
 }
 
 function checkSupplierExist($CodeSupplier) {
-	$Result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $CodeSupplier . "'");
+	$Result = DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $CodeSupplier . "'");
 	if (DB_num_rows($Result)==0) return false;
 	return true;
 }

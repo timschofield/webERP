@@ -152,7 +152,7 @@ if (!isset($_SESSION['Shipment'])){
 		WHERE supplierid='" . $_SESSION['SupplierID'] . "'";
 
 	$ErrMsg = _('The supplier details for the shipment could not be retrieved because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 
 	$_SESSION['Shipment']->SupplierID = $_SESSION['SupplierID'];

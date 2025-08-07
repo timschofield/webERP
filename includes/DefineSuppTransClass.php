@@ -71,7 +71,7 @@ Class SuppTrans {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 
 		while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 

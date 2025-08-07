@@ -227,13 +227,12 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 						if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
 							$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order Created and Authorised by') . ' ' . $UserDetails . ' - ' . _('Auto created from sales orders')  . '<br />';
 							$ErrMsg = _('Could not update purchase order status to Authorised');
-							$DbgMsg = _('The SQL that failed was');
 							$Result = DB_query("UPDATE purchorders SET allowprint = 1,
 												   status = 'Authorised',
 												   stat_comment = '" . $StatusComment . "'
 												WHERE orderno = '" . $PO_OrderNo . "'",
 												$ErrMsg,
-												$DbgMsg,
+												'',
 												true);
 						} else { // no authority to authorise this order
 							if (DB_num_rows($AuthResult) == 0) {
@@ -343,8 +342,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		  										0)";
 
 					$ErrMsg = _('The purchase order header record could not be inserted into the database because');
-					$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} //end if it's a new supplier and PO to create
 
 				/*reminder we are in a loop of the total of each item to place a purchase order for based on a selection of sales orders */
@@ -370,9 +368,8 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			  							 '" . $ItemRow['suppliers_partno'] . "',
 			  							 '" . $ItemRow['conversionfactor']  . "')";
 				$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
-				$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
-				$Result =DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				$Order_Value  += ($ItemRow['price']*$ItemRow['orderqty'] / $ItemRow['conversionfactor']);
 			} /* end of the loop round the items on the sales order  that we wish to place purchase orders for */
 
@@ -395,13 +392,12 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
 					$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order Created and Authorised by') . $UserDetails . ' - ' . _('Auto created from sales orders') . '<br />';
 					$ErrMsg = _('Could not update purchase order status to Authorised');
-					$DbgMsg = _('The SQL that failed was');
 					$Result = DB_query("UPDATE purchorders SET allowprint = 1,
 															status = 'Authorised',
 															stat_comment = '" . $StatusComment . "'
 												 WHERE orderno = '" . $PO_OrderNo . "'",
 												$ErrMsg,
-												$DbgMsg,
+												'',
 												true);
 				} else { // no authority to authorise this order
 					if (DB_num_rows($AuthResult) == 0) {
@@ -1119,8 +1115,7 @@ function GetSearchItems ($SqlConstraint = '') {
 						ORDER BY stockmaster.stockid";
 
 	$ErrMsg =  _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 	return $StockItemsResult;
 }

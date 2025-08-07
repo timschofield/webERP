@@ -319,7 +319,7 @@ Class Cart {
 				ORDER BY taxcalculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 		$i=1;
 		while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 
@@ -353,7 +353,7 @@ Class Cart {
 			ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 		unset($this->LineItems[$LineNumber]->Taxes);
 		if (DB_num_rows($GetTaxRatesResult)==0){
 			prnMsg(_('It appears that taxes are not defined correctly for this customer tax group') ,'error');
@@ -401,7 +401,7 @@ Class Cart {
 				ORDER BY taxgrouptaxes.calculationorder";
 
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 		$i=1;
 		while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 

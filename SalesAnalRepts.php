@@ -156,8 +156,7 @@ if (isset($_POST['submit'])) {
 				WHERE reportid = " . $SelectedReport;
 
 		$ErrMsg = _('The report could not be updated because');
-		$DbgMsg = _('The SQL used to update the report headers was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg( _('The') .' ' . $_POST['ReportHeading'] . ' ' . _('report has been updated'),'success', 'Report Updated');
 		unset($SelectedReport);
@@ -219,8 +218,7 @@ if (isset($_POST['submit'])) {
 					)";
 
 		$ErrMsg = _('The report could not be added because');
-		$DbgMsg = _('The SQL used to add the report header was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The') . ' ' . $_POST['ReportHeading'] . ' ' . _('report has been added to the database'),'success','Report Added');
 
@@ -250,14 +248,12 @@ if (isset($_POST['submit'])) {
 
 	$SQL="DELETE FROM reportcolumns WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _('The deletion of the report column failed because');
-	$DbgMsg = _('The SQL used to delete the report column was');
 
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL="DELETE FROM reportheaders WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _('The deletion of the report heading failed because');
-	$DbgMsg = _('The SQL used to delete the report headers was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	prnMsg(_('Report Deleted') ,'info');
 	unset($SelectedReport);
@@ -337,8 +333,7 @@ if (!isset($_GET['delete'])) {
 				WHERE reportid='".$SelectedReport."'";
 
 		$ErrMsg = _('The reports for display could not be retrieved because');
-		$DbgMsg = _('The SQL used to retrieve the report headers was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$MyRow = DB_fetch_array($Result);
 

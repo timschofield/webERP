@@ -43,9 +43,9 @@ if (isset($_GET['DeleteProperty'])){
 
 	$ErrMsg = _('Could not delete the property') . ' ' . $_GET['DeleteProperty'] . ' ' . _('because');
 	$SQL = "DELETE FROM stockitemproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$SQL = "DELETE FROM stockcatproperties WHERE stkcatpropid='" . $_GET['DeleteProperty'] . "'";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('Deleted the property') . ' ' . $_GET['DeleteProperty'],'success');
 }
 
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 									 WHERE
 									 categoryid = '" . $SelectedCategory. "'";
 		$ErrMsg = _('Could not update the stock category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		if ($_POST['PropertyCounter']==0 and $_POST['PropLabel0']!='') {
 			$_POST['PropertyCounter']=0;
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
 													'" . $_POST['PropNumeric' .$i] . "',
 													" . $_POST['PropReqSO' .$i] . ')';
 				$ErrMsg = _('Could not insert a new category property for') . $_POST['PropLabel' . $i];
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 			} elseif ($_POST['PropID' .$i] !='NewProperty') { //we could be amending existing properties
 				$SQL = "UPDATE stockcatproperties SET label ='" . $_POST['PropLabel' . $i] . "',
 													  controltype = " . $_POST['PropControlType' . $i] . ",
@@ -159,7 +159,7 @@ if (isset($_POST['submit'])) {
 													  reqatsalesorder = " . $_POST['PropReqSO' .$i] . "
 												WHERE stkcatpropid =" . $_POST['PropID' .$i];
 				$ErrMsg = _('Updated the stock category property for') . ' ' . $_POST['PropLabel' . $i];
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 			}
 
 		} //end of loop round properties
@@ -192,7 +192,7 @@ if (isset($_POST['submit'])) {
 											$_POST['MaterialUseageVarAc'] . "','" .
 											$_POST['WIPAct'] . "')";
 		$ErrMsg = _('Could not insert the new stock category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('A new stock category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
 
 	}

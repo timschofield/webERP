@@ -129,7 +129,7 @@ function DB_escape_string($String) {
 }
 
 function DB_show_tables() {
-	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	return $Result;
 }
 

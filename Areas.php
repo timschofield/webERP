@@ -88,8 +88,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
 		$ErrMsg = _('The area could not be added or updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		unset($SelectedArea);
 		unset($_POST['AreaCode']);
 		unset($_POST['AreaDescription']);

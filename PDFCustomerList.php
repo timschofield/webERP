@@ -466,7 +466,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<select name="Areas[]" multiple="multiple">';
 
 	$SQL="SELECT areacode, areadescription FROM areas";
-	$AreasResult= DB_query($SQL);
+	$AreasResult = DB_query($SQL);
 
 	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
 

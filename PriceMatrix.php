@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) {
 				AND quantitybreak='" . filter_number_format($_POST['OldQuantityBreak']) . "'";
 
 		$ErrMsg = _('Could not be update the existing prices');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		ReSequenceEffectiveDates ($StockID, $_POST['SalesType'],$_POST['CurrAbrev'],$_POST['QuantityBreak']);
 
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 						'" . $SQLStartDate . "',
 						'" . $SQLEndDate . "')";
 		$ErrMsg = _('Failed to insert price data');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg( _('The price matrix record has been added'),'success');
 		echo '<br />';
 		unset($_POST['StockID']);
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
 		AND startdate='" . $_GET['StartDate'] . "'
 		AND enddate='" . $_GET['EndDate'] . "'";
 	$ErrMsg = _('Failed to delete price data');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg( _('The price matrix record has been deleted'),'success');
 }
 

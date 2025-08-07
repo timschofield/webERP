@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 			FROM currencies
 			WHERE currabrev='".$_POST['Abbreviation']."'";
 
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 AND !isset($SelectedCurrency)) {
@@ -179,7 +179,7 @@ if (isset($_POST['submit'])) {
 					AND account='" . $MyRowBankAccount['accountcode'] . "'";
 
 			$ErrMsg = _('The bank account balance could not be returned by the SQL because');
-			$BalanceResult = DB_query($SQL,$ErrMsg);
+			$BalanceResult = DB_query($SQL, $ErrMsg);
 			$MyRow = DB_fetch_row($BalanceResult);
 			$OldBalanceInFunctionalCurrency = $MyRow[0];
 			$BalanceInAccountCurrency = $OldBalanceInFunctionalCurrency * $OldRate;
@@ -208,8 +208,7 @@ if (isset($_POST['submit'])) {
 								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 								(-$DifferenceToAdjust) . "')";
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
-				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				$SQL = "INSERT INTO gltrans (
 								type,
 								typeno,
@@ -226,7 +225,7 @@ if (isset($_POST['submit'])) {
 								mb_substr($MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault'], 0, 200) . "', '" .
 								($DifferenceToAdjust) . "')";
 
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				prnMsg(_('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 			}
 		}

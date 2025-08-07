@@ -94,8 +94,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 										'" . $MyRow[2] . "')";
 
 			$ErrMsg =  _('The general ledger account could not be added because');
-			$DbgMsg = _('The SQL that was used to add the general ledger account that failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop

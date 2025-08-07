@@ -20,7 +20,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
 
 /*First check the code exists */
-	$Result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
 	if(DB_num_rows($Result)==0) {
 		prnMsg(_('The GL account code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('does not currently exist as a GL account code in the system'),'error');
 		$InputError =1;
@@ -38,7 +38,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 
 /*Now check that the new code doesn't already exist */
-	$Result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
 	if(DB_num_rows($Result)!=0) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement GL account code') . ': ' . $_POST['NewAccountCode'] . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
@@ -58,9 +58,8 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 				FROM chartmaster
 				WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		DB_IgnoreForeignKeys();
@@ -129,7 +128,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 		echo '<br />' . _('Deleting the old chartmaster record');
 		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
 		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		echo '<p>' . _('GL account Code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewAccountCode'];

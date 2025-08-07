@@ -40,7 +40,7 @@ if (isset($_POST['UpdateData'])){
 					overheadcost,
 					mbflag";
 	$ErrMsg = _('The entered item code does not exist');
-	$OldResult = DB_query($SQL,$ErrMsg);
+	$OldResult = DB_query($SQL, $ErrMsg);
 	$OldRow = DB_fetch_array($OldResult);
 	$_POST['QOH'] = $OldRow['totalqoh'];
 	$_POST['OldMaterialCost'] = $OldRow['materialcost'];
@@ -76,8 +76,7 @@ if (isset($_POST['UpdateData'])){
 				WHERE stockid='" . $StockID . "'";
 
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 		UpdateCost($StockID); //Update any affected BOMs
@@ -86,7 +85,6 @@ if (isset($_POST['UpdateData'])){
 }
 
 $ErrMsg = _('The cost details for the stock item could not be retrieved because');
-$DbgMsg = _('The SQL that failed was');
 
 $Result = DB_query("SELECT description,
 							units,
@@ -113,8 +111,7 @@ $Result = DB_query("SELECT description,
 							overheadcost,
 							mbflag,
 							stocktype",
-							$ErrMsg,
-							$DbgMsg);
+							$ErrMsg);
 
 
 $MyRow = DB_fetch_array($Result);

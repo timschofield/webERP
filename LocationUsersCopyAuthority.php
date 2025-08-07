@@ -24,9 +24,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		DB_Txn_Begin();
 
 		$SQL = "DELETE FROM locationusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to delete the auhority in locationusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Deleting the previous authority to view / update the Locations of user') . ' ' . $_POST['ToUserID'], 'success');
 
 		$SQL = "INSERT INTO locationusers (userid, loccode, canview, canupd)
@@ -34,9 +33,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				FROM locationusers
 				WHERE UPPER(userid) = UPPER('" . $_POST['FromUserID'] . "')";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the auhority in locationusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Copied the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to user') . ' ' . $_POST['ToUserID'], 'success');
 
 		DB_Txn_Commit();

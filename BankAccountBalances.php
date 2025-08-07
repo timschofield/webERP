@@ -30,8 +30,7 @@ $SQL = "SELECT DISTINCT
 			AND userid='" . $_SESSION['UserID'] . "'
 		ORDER BY bankaccounts.accountcode";
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {
 	echo _('There are no bank accounts defined that you have authority to see');

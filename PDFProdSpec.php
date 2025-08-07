@@ -87,7 +87,7 @@ $SQL = "SELECT keyval,
 			AND prodspecs.showonspec='1'
 			ORDER by groupby, prodspecs.testid";
 
-$Result=DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -277,7 +277,7 @@ $SQL = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityProdSpecText'";
 
-$Result=DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 $MyRow=DB_fetch_array($Result);
 $Disclaimer=$MyRow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);

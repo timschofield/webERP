@@ -772,7 +772,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		} // End of if($_POST['ReportType']
 		//echo "<br/>$SQL<br/>";
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$ctr = 0;
 		echo '<pre>';
 		$TotalQty = 0;
@@ -1172,7 +1172,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 			<label for="Category">' . _('Stock Categories') . ':</label>
 			<select name="Category">';
 
-	$CategoryResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory");
+	$CategoryResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory");
 	echo '<option selected="selected" value="All">' . _('All Categories')  . '</option>';
 	while($MyRow = DB_fetch_array($CategoryResult)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription']  . '</option>';
@@ -1189,7 +1189,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	}else{
 		echo '<select name="Salesman">';
 		$SQL="SELECT salesmancode, salesmanname FROM salesman";
-		$SalesmanResult= DB_query($SQL);
+		$SalesmanResult = DB_query($SQL);
 		echo '<option selected="selected" value="All">' . _('All Salespeople')  . '</option>';
 		while($MyRow = DB_fetch_array($SalesmanResult)) {
 			echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname']  . '</option>';
@@ -1202,7 +1202,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<field>
 			<label for="Area">' . _('For Sales Areas') . ':</label>
 			<select name="Area">';
-	$AreasResult= DB_query("SELECT areacode, areadescription FROM areas");
+	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas");
 	echo '<option selected="selected" value="All">' . _('All Areas')  . '</option>';
 	while($MyRow = DB_fetch_array($AreasResult)) {
 		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription']  . '</option>';
@@ -1260,7 +1260,7 @@ function TempStockmoves() {
 
 	$SQL = "CREATE TEMPORARY TABLE tempstockmoves LIKE stockmoves";
 	$ErrMsg = _('The SQL to the create temp stock moves table failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "INSERT tempstockmoves
 	          SELECT * FROM stockmoves
@@ -1268,7 +1268,7 @@ function TempStockmoves() {
 	          AND stockmoves.trandate >='" . $FromDate .
 			  "' AND stockmoves.trandate <='" . $ToDate . "'";
 	$ErrMsg = _('The SQL to insert temporary stockmoves records failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "UPDATE tempstockmoves, stockmoves
 	          SET tempstockmoves.reference = stockmoves.reference
@@ -1277,7 +1277,7 @@ function TempStockmoves() {
                 AND tempstockmoves.stockid = stockmoves.stockid
                 AND stockmoves.type ='10'";
 	$ErrMsg = _('The SQL to update tempstockmoves failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 
 } // End of function TempStockmoves

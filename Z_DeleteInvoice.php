@@ -77,7 +77,7 @@ $SQL = "DELETE FROM orderdeliverydifferenceslog
                AND invoiceno = '" . $_GET['InvoiceNo'] . "'";
 
 $ErrMsg = _('The SQL to delete the delivery differences records failed because');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg(_('Any order delivery differences records have been deleted'),'info');
 
 /*Now delete the custallocns */
@@ -85,9 +85,8 @@ prnMsg(_('Any order delivery differences records have been deleted'),'info');
 $SQL = "DELETE custallocns FROM custallocns
         WHERE transid_allocto ='" . $IDDebtorTrans . "'";
 
-$DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 
 prnMsg(_('The custallocns record has been deleted'),'info');
 
@@ -95,9 +94,8 @@ prnMsg(_('The custallocns record has been deleted'),'info');
 
 $SQL = "DELETE debtortranstaxes FROM debtortranstaxes
                WHERE debtortransid ='" . $IDDebtorTrans . "'";
-$DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The debtortranstaxes record could not be deleted') . ' - ' . _('the sql server returned the following error');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 
 prnMsg(_('The debtortranstaxes record has been deleted'),'info');
 
@@ -107,9 +105,8 @@ prnMsg(_('The debtortranstaxes record has been deleted'),'info');
 $SQL = "DELETE FROM debtortrans
                WHERE transno ='" . $_GET['InvoiceNo'] . "'
                AND debtortrans.type=10";
-$DbgMsg = _('The SQL that failed was');
 $ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql server returned the following error');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 
 prnMsg(_('The debtor transaction record has been deleted'),'info');
 
@@ -124,13 +121,13 @@ foreach ($StockMovement as $OrderLine) {
                                 AND stkcode = '" . $OrderLine['stockid'] . "'";
 
 	$ErrMsg = _('The SQL to reverse the update of the sales order detail records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
     prnMsg(_('The sales order records have been updated as not invoiced'),'info');
 /*reverse the update to LocStock */
     if ($OrderLine['mbflag']!='A' AND $OrderLine['mbflag']!='D'){
 
         	$ErrMsg = _('The SQL to reverse update to the location stock records failed because');
-	        $Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	        $Result = DB_query($SQL, $ErrMsg, '', true);
              prnMsg(_('Reversed the location stock quantities for items that decreased'),'info');
     }
 
@@ -146,7 +143,7 @@ Delete Sales Analysis records */
 
 	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '',true);
 	prnMsg(_('Sales analysis records deleted') . ' - ' . _('this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
 }
 
@@ -155,7 +152,7 @@ $SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
 		WHERE stockmoves.type=10 AND stockmoves.transno = '" . $_GET['InvoiceNo'] . "'";
 
 $ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg(_('Deleted the credit note stock move taxes').'info');
 echo '<br /><br />';
 
@@ -163,14 +160,14 @@ echo '<br /><br />';
 $SQL = "DELETE FROM stockmoves WHERE type=10 AND transno = '" . $_GET['InvoiceNo'] . "'";
 
 $ErrMsg = _('The SQL to delete the stock movement records failed because');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg(_('The stock movement records associated with the invoice have been deleted'),'info');
 echo '<br /><br />';
 
 /* Delete any GL Transaction records*/
 $SQL = "DELETE FROM gltrans WHERE gltrans.type=10 AND gltrans.typeno='" . $_GET['InvoiceNo'] . "'";
 $ErrMsg = _('The SQL to delete the general ledger journal records failed because');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
 
 DB_Txn_Commit();

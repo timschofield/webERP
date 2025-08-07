@@ -39,7 +39,7 @@ if (isset($_POST['PrintPDF'])) {
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
 	$SQLfrom="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
-	$Result = DB_query($SQLfrom,$ErrMsg);
+	$Result = DB_query($SQLfrom, $ErrMsg);
 	$Row = DB_fetch_row($Result);
 	$FromLocation=$Row['0'];
 
@@ -49,7 +49,7 @@ if (isset($_POST['PrintPDF'])) {
 					cashsalebranch
 			FROM `locations`
 			WHERE loccode='" . $_POST['ToLocation'] . "'";
-	$Resultto = DB_query($SQLto,$ErrMsg);
+	$Resultto = DB_query($SQLto, $ErrMsg);
 	$RowTo = DB_fetch_row($Resultto);
 	$ToLocation=$RowTo['0'];
 	$ToCustomer=$RowTo['1'];
@@ -62,7 +62,7 @@ if (isset($_POST['PrintPDF'])) {
 				FROM debtorsmaster, currencies
 				WHERE debtorsmaster.currcode = currencies.currabrev
 					AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
+		$ResultPrices = DB_query($SqlPrices, $ErrMsg);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency=$RowPrices['0'];
 		$ToPriceList=$RowPrices['1'];
@@ -73,7 +73,7 @@ if (isset($_POST['PrintPDF'])) {
 	// more than one category
 	if ($_POST['StockCat'] != 'All') {
 		$CategorySQL="SELECT categorydescription FROM stockcategory WHERE categoryid='".$_POST['StockCat']."'";
-		$CategoryResult=DB_query($CategorySQL);
+		$CategoryResult = DB_query($CategorySQL);
 		$CategoryRow=DB_fetch_array($CategoryResult);
 		$CategoryDescription=$CategoryRow['categorydescription'];
 		$WhereCategory = " AND stockmaster.categoryid ='" . $_POST['StockCat'] . "' ";
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF'])) {
 							WHERE stockid='" . $MyRow['stockid'] . "'
 								AND shiploc='".$_POST['FromLocation']."'
 								AND pendingqty>0";
-			$InTransitResult=DB_query($InTransitSQL);
+			$InTransitResult = DB_query($InTransitSQL);
 			$InTransitRow=DB_fetch_array($InTransitResult);
 			$InTransitQuantityAtFrom=$InTransitRow['intransit'];
 		}
@@ -170,7 +170,7 @@ if (isset($_POST['PrintPDF'])) {
 						WHERE stockid='" . $MyRow['stockid'] . "'
 							AND recloc='".$_POST['ToLocation']."'
 							AND pendingqty>0";
-		$InTransitResult=DB_query($InTransitSQL);
+		$InTransitResult = DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		$InTransitQuantityAtTo=$InTransitRow['intransit'];
 

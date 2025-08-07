@@ -40,8 +40,7 @@ if (!isset($_POST['Show'])) {
 			WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 			ORDER BY bankaccounts.bankaccountname";
 	$ErrMsg = _('The bank accounts could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-	$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$AccountsResults = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.

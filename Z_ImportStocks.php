@@ -230,8 +230,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			";
 
 			$ErrMsg =  _('The item could not be added because');
-			$DbgMsg = _('The SQL that was used to add the item failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the stock location records too
 
@@ -242,8 +241,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									FROM locations";
 
 				$ErrMsg =  _('The locations for the item') . ' ' . $StockID .  ' ' . _('could not be added because');
-				$DbgMsg = _('NB Locations records can be added by opening the utility page') . ' <i>Z_MakeStockLocns.php</i> ' . _('The SQL that was used to add the location records that failed was');
-				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($SQL, $ErrMsg);
 
 				if (DB_error_no() ==0) {
 					prnMsg( _('New Item') .' ' . $StockID  . ' '. _('has been added to the transaction'),'info');

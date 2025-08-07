@@ -74,8 +74,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . $ExchangeDifference . "')";
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
-		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -91,7 +90,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . mb_substr($CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']), 0, 200) . "',
 									'" . (-$ExchangeDifference) . "')";
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'), 'success');
@@ -114,8 +113,7 @@ $SQL = "SELECT
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 		ORDER BY bankaccounts.bankaccountname";
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
+$AccountsResults = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($AccountsResults) == 0) {
 	echo '</select>

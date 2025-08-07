@@ -13,7 +13,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/t
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
 $EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
-$EmailResult=DB_query($EmailSQL);
+$EmailResult = DB_query($EmailSQL);
 $EmailRow=DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
@@ -27,7 +27,7 @@ if (isset($_POST['UpdateAll'])) {
 						stat_comment='".$Comment."',
 						allowprint=1
 					WHERE orderno='". $OrderNo."'";
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 		}
 	}
 }
@@ -47,7 +47,7 @@ $SQL="SELECT purchorders.*,
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator
 	WHERE status='Pending'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -72,7 +72,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 				WHERE userid='".$_SESSION['UserID']."'
 				AND currabrev='".$MyRow['currcode']."'";
 
-	$AuthResult=DB_query($AuthSQL);
+	$AuthResult = DB_query($AuthSQL);
 	$MyAuthRow=DB_fetch_array($AuthResult);
 	$AuthLevel=$MyAuthRow['authlevel'];
 
@@ -80,7 +80,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		           	FROM purchorderdetails
 			        WHERE orderno='".$MyRow['orderno'] . "'";
 
-	$OrderValueResult=DB_query($OrderValueSQL);
+	$OrderValueResult = DB_query($OrderValueSQL);
 	$MyOrderValueRow=DB_fetch_array($OrderValueResult);
 	$OrderValue=$MyOrderValueRow['ordervalue'];
 
@@ -106,7 +106,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 				LEFT JOIN stockmaster
 				ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE orderno='".$MyRow['orderno'] . "'";
-		$LineResult=DB_query($LineSQL);
+		$LineResult = DB_query($LineSQL);
 
 		echo '<tr>
 				<td></td>

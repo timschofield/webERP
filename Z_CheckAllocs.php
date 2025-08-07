@@ -55,7 +55,7 @@ while ($MyRow = DB_fetch_array($Result)){
 			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
 
 	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
-	$TransResult = DB_query($SQL,$ErrMsg);
+	$TransResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">';
 

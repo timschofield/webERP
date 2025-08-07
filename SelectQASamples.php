@@ -233,8 +233,7 @@ if (isset($_POST['submit'])) {
 
 		$Msg = _('QA Sample record for') . ' ' . $SelectedSampleID  . ' ' .  _('has been updated');
 		$ErrMsg = _('The update of the QA Sample failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($Msg , 'success');
 		if ( $_POST['Cert']==1) {
 			$Result = DB_query("SELECT prodspeckey, lotkey FROM qasamples
@@ -247,8 +246,7 @@ if (isset($_POST['submit'])) {
 						AND lotkey='" . $MyRow[1] . "'";
 				$Msg = _('All other samples for this Specification and Lot was marked as Cert=No');
 				$ErrMsg = _('The update of the QA Sample failed because');
-				$DbgMsg = _('The SQL that was used and failed was');
-				$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				prnMsg($Msg , 'success');
 			}
 		}
@@ -281,10 +279,10 @@ if (isset($_POST['submit'])) {
 	} else {
 		$SQL="DELETE FROM sampleresults WHERE sampleid='" . $SelectedSampleID . "'";
 		$ErrMsg = _('The sample results could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$SQL="DELETE FROM qasamples WHERE sampleid='" . $SelectedSampleID ."'";
 		$ErrMsg = _('The QA Sample could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		echo $SQL;
 		prnMsg(_('QA Sample') . ' ' . $SelectedSampleID . _('has been deleted from the database'),'success');
 		unset ($SelectedSampleID);
@@ -380,8 +378,7 @@ if (!isset($SelectedSampleID)) {
 		}
 
 		$ErrMsg = _('No stock items were returned by the SQL because');
-		$DbgMsg = _('The SQL used to retrieve the searched parts was');
-		$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$StockItemsResult = DB_query($SQL, $ErrMsg);
 	}
 
 	if (true or !isset($LotNumber) or $LotNumber == '') { //revisit later, right now always show all inputs

@@ -126,9 +126,8 @@ $SQL = "SELECT stockmoves.stockid,
 		ORDER BY stkmoveno DESC";
 
 $ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
-$DbgMsg = _('The SQL that failed was') . ' ';
 
-$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
 	$MyRow = DB_fetch_array($MovtsResult);

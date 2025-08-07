@@ -49,7 +49,7 @@ $YPos -= (1.5 * $LineHeight);
 $PageNumber++;
 
 $SQL="SELECT MIN(id) as start FROM debtortrans WHERE type=12 AND transno='". $_GET['BatchNumber']. "'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 $StartReceiptNumber=$MyRow['start'];
 
@@ -73,7 +73,7 @@ $SQL = "SELECT 	currabrev,
 				FROM banktrans
 				WHERE type=12
 				AND transno='" . $_GET['BatchNumber']."')";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 $CurrencyCode=$MyRow['currabrev'];
 $DecimalPlaces=$MyRow['decimalplaces'];
@@ -88,7 +88,7 @@ $SQL="SELECT name,
 		FROM debtorsmaster
 		WHERE debtorno='".$DebtorNo."'";
 
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 
 /* Prints customer info */

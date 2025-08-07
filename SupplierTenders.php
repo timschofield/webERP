@@ -23,7 +23,7 @@ if (empty($_GET['identifier'])) {
 
 if (!isset($_POST['SupplierID'])) {
 	$SQL="SELECT supplierid FROM www_users WHERE userid='" . $_SESSION['UserID'] . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_array($Result);
 	if ($MyRow['supplierid']=='') {
 		prnMsg(_('This functionality can only be accessed via a supplier login.'), 'warning');
@@ -44,7 +44,7 @@ $SQL="SELECT suppname,
 			currcode
 		FROM suppliers
 		WHERE supplierid='" . $_POST['SupplierID'] . "'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 $Supplier=$MyRow['suppname'];
 $Currency=$MyRow['currcode'];
@@ -56,7 +56,7 @@ if (isset($_POST['Confirm'])) {
 			SET responded=1
 			WHERE supplierid='" . $_SESSION['offer'.$identifier]->SupplierID . "'
 			AND tenderid='" . $_SESSION['offer'.$identifier]->TenderID . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 }
 
 if (isset($_POST['Process'])) {
@@ -104,10 +104,10 @@ if (isset($_POST['Process'])) {
 					ON tenders.location=locations.loccode
 					WHERE closed=0
 					AND tenderid='".$_SESSION['offer'.$identifier]->TenderID."'";
-	$LocationResult=DB_query($LocationSQL);
+	$LocationResult = DB_query($LocationSQL);
 	$MyLocationRow=DB_fetch_row($LocationResult);
 	$CurrencySQL="SELECT decimalplaces from currencies WHERE currabrev='".$_SESSION['offer'.$identifier]->CurrCode."'";
-	$CurrencyResult=DB_query($CurrencySQL);
+	$CurrencyResult = DB_query($CurrencySQL);
 	$CurrencyRow=DB_fetch_array($CurrencyResult);
 	echo '<tr>
 			<td valign="top" style="background-color:#cccce5">' . _('Deliver To') . ':</td>
@@ -191,7 +191,7 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 			$UOM=$_POST['uom'.$Index];
 			if (isset($UOM) AND $Quantity>0) {
 				$SQL="SELECT description, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				$MyRow=DB_fetch_array($Result);
 				$_SESSION['offer'.$identifier]->add_to_offer($_SESSION['offer'.$identifier]->LinesOnOffer,
 												$StockID,
@@ -299,7 +299,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
 				AND offers.expirydate >= CURRENT_DATE";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
 	while ($MyRow=DB_fetch_array($Result)) {
@@ -460,7 +460,7 @@ if (isset($_POST['TenderType'])
 			AND tenders.closed=0
 			AND tendersuppliers.responded=0
 			ORDER BY tendersuppliers.tenderid";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<table class="selection">';
 	echo '<tr>
 			<th colspan="13"><font size="3" color="#616161">' . _('Outstanding Tenders Waiting For Offer') . '</font></th>
@@ -483,7 +483,7 @@ if (isset($_POST['TenderType'])
 						ON tenders.location=locations.loccode
 						WHERE closed=0
 						AND tenderid='".$MyRow[0]."'";
-		$LocationResult=DB_query($LocationSQL);
+		$LocationResult = DB_query($LocationSQL);
 		$MyLocationRow=DB_fetch_row($LocationResult);
 		echo '<tr>
 				<td valign="top" style="background-color:#cccce5">' . _('Deliver To') . ':</td>
@@ -516,7 +516,7 @@ if (isset($_POST['TenderType'])
 					LEFT JOIN tenders
 					ON tenders.tenderid=tenderitems.tenderid
 					WHERE tenderitems.tenderid='" . $MyRow[0] . "'";
-		$ItemResult=DB_query($ItemSQL);
+		$ItemResult = DB_query($ItemSQL);
 		echo '<tr>
 				<th>' . stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' . _('Item Code') . '</th>
 				<th>' . _('Item Description') . '</th>
@@ -658,8 +658,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	}
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');

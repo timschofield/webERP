@@ -133,7 +133,7 @@ if ($_POST['StockLocation']=='All') {
 			AND date_format(trandate, '%Y-%m-%d')<='".FormatDateForSQL($_POST['ToDate'])."'
 			AND stockmoves.loccode='" . $_POST['StockLocation'] . "'";
 }
-$Result=DB_query($SQL,'','',false,false);
+$Result = DB_query($SQL,'','',false,false);
 
 if (DB_error_no()!=0){
 	$Title = _('Transaction Listing');

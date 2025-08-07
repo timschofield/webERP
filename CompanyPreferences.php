@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 								WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
 
 			/* Alter the exchange rates in the currencies table */
@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 			/* Set new rates */
 			$SQL="UPDATE currencies SET rate=rate/" . $NewCurrencyRate;
 			$ErrMsg =  _('Could not update the currency rates');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			/* End of update currencies */
 
@@ -149,7 +149,7 @@ if ($InputError != 1) {
 				WHERE coycode=1";
 
 	$ErrMsg =  _('The company preferences could not be retrieved because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 
 	$MyRow = DB_fetch_array($Result);
@@ -250,7 +250,7 @@ echo '<field>
 	</field>';
 
 
-$Result=DB_query("SELECT currabrev, currency FROM currencies");
+$Result = DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<field>
@@ -270,7 +270,7 @@ DB_free_result($Result);
 echo '</select>
 	</field>';
 
-$Result=DB_query("SELECT accountcode,
+$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
@@ -384,7 +384,7 @@ echo '<field>
 		<label>' . _('Freight Re-charged GL Account') . ':</label>
 		<select tabindex="19" name="FreightAct">';
 
-$Result=DB_query("SELECT accountcode,
+$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname

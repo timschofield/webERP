@@ -29,7 +29,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	/* Load the pagesecurity settings from the database */
 	$SQL="SELECT script, pagesecurity FROM scripts";
-	$Result=DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0) {
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
@@ -73,7 +73,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				WHERE coycode=1";
 
 	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
-	$ReadCoyResult = DB_query($SQL,$ErrMsg);
+	$ReadCoyResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
@@ -94,7 +94,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				timeout,
 				auth
 			FROM emailsettings";
-	$Result=DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()==0 and DB_num_rows($Result) > 0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway

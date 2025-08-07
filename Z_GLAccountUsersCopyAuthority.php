@@ -29,9 +29,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 
 		echo '<br />' . _('Deleting the current authority to view / update the GL Accounts of user') . ' ' .  $_POST['ToUserID'];
 		$SQL = "DELETE FROM glaccountusers WHERE userid = '" . $_POST['ToUserID'] . "'";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to delete the auhority in glaccountusers record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Copying the authority to view / update the GL Accounts from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to') . ' ' . $_POST['ToUserID'];
@@ -40,9 +39,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 						FROM glaccountusers
 						WHERE userid = '" . $_POST['FromUserID'] . "'";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the auhority in glaccountusers record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
 		DB_Txn_Commit();

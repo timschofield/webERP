@@ -126,8 +126,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the salesperson failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg , 'success');
 
@@ -170,7 +169,7 @@ $BookMark = 'SalespeopleDelete';
 
 				$SQL="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
 				$ErrMsg = _('The salesperson could not be deleted because');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
 				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
 				unset ($SelectedSalesPerson);
@@ -363,8 +362,7 @@ if (! isset($_GET['delete'])) {
 			<select name="CommissionTypeID">';
 	$SQL = "SELECT commissiontypeid, commissiontypename FROM salescommissiontypes ORDER BY commissiontypename";
 	$ErrMsg = _('An error occurred in retrieving the sales commission types from the database');
-	$DbgMsg = _('The SQL that was used to retrieve the commission type information and that failed in the process was');
-	$CommissionTypeResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$CommissionTypeResult = DB_query($SQL, $ErrMsg);
 	if (!isset($_POST['CommissionTypeID']) or $_POST['CommissionTypeID'] == 0) {
 		echo '<option selected="selected" value="0">', _('No Commission'), '</option>';
 	} else {

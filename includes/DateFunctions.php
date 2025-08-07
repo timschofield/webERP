@@ -1263,7 +1263,7 @@ function PeriodExists($TransDate) {
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 	if (DB_num_rows($GetPrdResult) == 0) {
 		return false;
@@ -1384,7 +1384,7 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 					AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
 	$ErrMsg = _('An error occurred in retrieving the period number');
-	$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 	$MyRow = DB_fetch_row($GetPrdResult);
 
 	return $MyRow[0];

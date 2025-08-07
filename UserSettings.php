@@ -74,8 +74,7 @@ if(isset($_POST['Modify'])) {
 						pdflanguage='" . $_POST['PDFLanguage'] . "'
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = _('The user alterations could not be processed because');
-			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
 			$SQL = "UPDATE www_users
@@ -89,8 +88,7 @@ if(isset($_POST['Modify'])) {
 						password='" . CryptPass($_POST['Password']) . "'
 					WHERE userid = '" . $_SESSION['UserID'] . "'";
 			$ErrMsg = _('The user alterations could not be processed because');
-			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(_('The user settings have been updated'),'success');
 		}
 		// Update the session variables to reflect user changes on-the-fly:
