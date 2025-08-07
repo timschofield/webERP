@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Used historically to create a) an "empty" database to use when creating a new company,
+# and b) a "demo" database containing operational data for learning and testing.
+#
 # Creates 2 files:
 # ./sql/mysql/country_sql/default.sql - a dump of the current db, with only minimal data
 # ./sql/mysql/country_sql/demo.sql - a dump of the current db, with all data
