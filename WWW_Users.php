@@ -556,7 +556,7 @@ if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
 if(!isset($_POST['Timeout'])) {
-	$_POST['Timeout']=5;
+	$_POST['Timeout']=10;
 }
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
