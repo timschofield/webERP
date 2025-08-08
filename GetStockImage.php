@@ -8,10 +8,10 @@ global $RootPath;
 http://127.0.0.1/~brink/webERP/GetStockImage.php
 ?automake=1&width=81&height=74&stockid=&textcolor=FFFFF0&bevel=3&text=aa&bgcolor=007F00
 
-automake - if specified allows autocreate images
+automake - if specified allows auto creation of images
 stockid - if not specified it produces a blank image if set to empty string uses default stock image
 bgcolor - Background color specified in hex
-textcolor - Forground color specified in hex
+textcolor - Foreground color specified in hex
 transcolor - Transparent color specified in hex
 width - if specified scales image to width
 height - if specified scales image to height
