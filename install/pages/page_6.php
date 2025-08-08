@@ -467,7 +467,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	} else {
 		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
 
-		PopulateSQLDataBySQL(__DIR__ . '/../demo.sql');
+		PopulateSQLDataBySQL(__DIR__ . '/../sql/demo.sql');
 
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);

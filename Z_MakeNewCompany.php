@@ -3,6 +3,8 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
+global $DBType;
+
 /* Was the Cancel button pressed the last time through ? */
 
 if (isset($_POST['EnterCompanyDetails'])) {
@@ -63,7 +65,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			}
 
 			if ($_POST['CreateDB']==TRUE){
-				/* Need to read in the sql script and process the queries to initate a new DB */
+				/* Need to read in the sql script and process the queries to iniate a new DB */
 
 				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
 
@@ -82,13 +84,15 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 						}
 					}
 					$db = pg_connect( $PgConnStr );
-					$SQLScriptFile = file('./sql/pg/country_sql/default.psql');
+					$SQLScriptFile = file('./sql/pg/default.psql');
 
 				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
 					mysql_select_db($_POST['NewDatabase'],$db);
+					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
 				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewDatabase']);
+					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
 				}
 

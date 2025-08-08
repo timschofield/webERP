@@ -251,22 +251,13 @@ Also paraphrased from the MySQL manual:
 
 #### 3.2 Create database schema manually (optional demo data)
 
-Two historical scripts are provided which can be used to manually creating the database schema and load demo
+An sql script id provided which can be used to manually create the database schema and load demo
 data.
 
-	./sql/mysql/country_sql/demo.sql
+	./install/sql/demo.sql
 
-contains a minimal amount of demonstration data and bogus company setup so that transactions can be tried to
+It contains a minimal amount of demonstration data and bogus company setup so that transactions can be tried to
 see how the system works.
-
-	./sql/mysql/country_sql/default.sql
-
-contains  only the basic data necessary to start a new company.
-
-Both scripts are from version 4.15 and must be updated manually before using the new automatic update system.
-
-	.\sql\mysql\upgrade4.15-4.15.1.sql
-	.\sql\mysql\upgrade4.15.1-4.15.2.sql
 
 To use the default.sql file:
 
