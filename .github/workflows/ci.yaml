@@ -20,30 +20,30 @@ jobs:
                     - php: '8.1'
                       operating-system: ubuntu-22.04
 
-                steps:
-                    - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
-                    - run: echo "Job is now running on a ${{ runner.os }} server"
-                    - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
+        steps:
+            - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
+            - run: echo "Job is now running on a ${{ runner.os }} server"
+            - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
 
-                    #- name: Install required packages
-                    #  run: |
-                    #    sudo apt-get -y install fonts-dejavu
+            #- name: Install required packages
+            #  run: |
+            #    sudo apt-get -y install fonts-dejavu
 
-                    - name: Check out repository code
-                      uses: actions/checkout@v3
+            - name: Check out repository code
+              uses: actions/checkout@v3
 
-                    - name: Set up the required php version
-                      uses: shivammathur/setup-php@v2
-                      with:
-                          php-version: ${{ matrix.php }}
-                          extensions: bcmath, calendar, curl, gettext, iconv, mbstring, mcrypt, mysqli, ftp, gd, simplexml, sqlite3, xml, zip, zlib
+            - name: Set up the required php version
+              uses: shivammathur/setup-php@v2
+              with:
+                  php-version: ${{ matrix.php }}
+                  extensions: bcmath, calendar, curl, gettext, iconv, mbstring, mcrypt, mysqli, ftp, gd, simplexml, sqlite3, xml, zip, zlib
 
-                    - name: Check syntax of php files
-                      run: |
-                        ./build/check_syntax.sh
+            - name: Check syntax of php files
+              run: |
+                ./build/check_syntax.sh
 
-                    # @todo test loading of sql files - use a different db version for each php version
+            # @todo test loading of sql files - use a different db version for each php version
 
-                    # @todo check that there are no security issues with composer deps
+            # @todo check that there are no security issues with composer deps
 
-                    # @todo run unit/functional tests
+            # @todo run unit/functional tests
