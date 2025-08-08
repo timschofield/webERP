@@ -21,6 +21,40 @@ if (isset($_POST['install'])) {
 	}
 }
 
+function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
+	if (extension_loaded('gd')) {
+		// generate an image, based on company name
+
+		// same size as logo_server.jpg
+		/// @todo grab the size from the file via gd calls
+		$width = 200;
+		$height = 51;
+		$Font = 3;
+
+		$im = imagecreate($width, $height);
+		$BackgroundColour = imagecolorallocate($im, 119, 119, 119); // #777777, same as default color theme
+		$TextColour = imagecolorallocate($im, 255, 255, 255);
+
+		$fw = imagefontwidth($Font);
+		$fh = imagefontheight($Font);
+		$TextWidth = $fw * mb_strlen($CompanyName);
+		$px = (imagesx($im) - $TextWidth) / 2;
+		$py = (imagesy($im) - ($fh)) / 2;
+		imagefill($im, 0, 0, $BackgroundColour);
+		imagestring($im, $Font, $px, $py, $CompanyName, $TextColour);
+
+		/// @todo add white bevel, rounded border with transparent background
+
+		if (!imagepng($im, $CompanyDir . '/logo.png')) {
+			copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+		}
+		imagedestroy($im);
+
+	} else {
+		copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+	}
+}
+
 /**
  * @todo we miss the PORT setting!
  * @return string[] error messages
@@ -32,7 +66,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 
 	if (!$DB) {
 		$Errors[] = _('Failed to connect the database management system');
-		return;
+		return $Errors;
 	} else {
 		// avoid exceptions being thrown on query errors
 		mysqli_report(MYSQLI_REPORT_ERROR);
@@ -108,10 +142,10 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 		$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
 		$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
 		$UploadOK = 1;
-		$ImageFileType = strtolower(pathinfo($TargetFile,PATHINFO_EXTENSION));
+		$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
 
 		if ($_FILES["LogoFile"]["tmp_name"] != '') {
-			// Check if image file is a actual image or fake image
+			// Check if image file is an actual image or fake image
 			if(isset($_POST["install"])) {
 				$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
 				if($check !== false) {
@@ -135,7 +169,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 			}
 
 			// Allow certain file formats
-			if($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
+			if ($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
 				echo '<div class="error">' . _('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
 				$UploadOK = 0;
 			}
@@ -153,8 +187,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 			}
 			ob_flush();
 		} else {
-			/// @todo generate an image instead, based on company name
-			$Result = copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+			CreateCompanyLogo($DatabaseName, $Path_To_Root, $CompanyDir);
 		}
 	}
 }
