@@ -3,7 +3,7 @@
 set -e
 
 help() {
-    printf "Usage: make_release.sh
+	printf "Usage: make_release.sh
 
 Legacy script used to build a 'release': updates the translation files, creates database dumps and a tarball
 "
@@ -12,17 +12,17 @@ Legacy script used to build a 'release': updates the translation files, creates 
 # parse cli options and arguments
 while getopts ":h" opt
 do
-    case $opt in
-        h)
-            help
-            exit 0
-        ;;
-        \?)
-            printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
-            help
-            exit 1
-        ;;
-    esac
+	case $opt in
+		h)
+			help
+			exit 0
+		;;
+		\?)
+			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
+			help
+			exit 1
+		;;
+	esac
 done
 shift $((OPTIND-1))
 

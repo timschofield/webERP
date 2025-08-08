@@ -3,7 +3,7 @@
 set -e
 
 help() {
-    printf "Usage: update_translations.sh ACTION
+	printf "Usage: update_translations.sh ACTION
 
 ACTION should be either source_files, binary_files or all.
 
@@ -19,17 +19,17 @@ NB: requires xgettext, msgmerge and msgfmt
 # parse cli options and arguments
 while getopts ":h" opt
 do
-    case $opt in
-        h)
-            help
-            exit 0
-        ;;
-        \?)
-            printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
-            help
-            exit 1
-        ;;
-    esac
+	case $opt in
+		h)
+			help
+			exit 0
+		;;
+		\?)
+			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
+			help
+			exit 1
+		;;
+	esac
 done
 shift $((OPTIND-1))
 

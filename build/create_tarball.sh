@@ -3,7 +3,7 @@
 set -e
 
 help() {
-    printf "Usage: create_tarball.sh
+	printf "Usage: create_tarball.sh
 
 Creates a zip file (aka. tarball) out of the local installation, saves it in the home dir of the current user
 "
@@ -12,17 +12,17 @@ Creates a zip file (aka. tarball) out of the local installation, saves it in the
 # parse cli options and arguments
 while getopts ":h" opt
 do
-    case $opt in
-        h)
-            help
-            exit 0
-        ;;
-        \?)
-            printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
-            help
-            exit 1
-        ;;
-    esac
+	case $opt in
+		h)
+			help
+			exit 0
+		;;
+		\?)
+			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
+			help
+			exit 1
+		;;
+	esac
 done
 shift $((OPTIND-1))
 

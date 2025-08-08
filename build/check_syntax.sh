@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 help() {
-    printf "Usage: check_syntax.sh
+	printf "Usage: check_syntax.sh
 
 Checks the validity of every php file within the local installation. Errors are written to stderr
 "
@@ -10,17 +10,17 @@ Checks the validity of every php file within the local installation. Errors are 
 # parse cli options and arguments
 while getopts ":h" opt
 do
-    case $opt in
-        h)
-            help
-            exit 0
-        ;;
-        \?)
-            printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
-            help
-            exit 1
-        ;;
-    esac
+	case $opt in
+		h)
+			help
+			exit 0
+		;;
+		\?)
+			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
+			help
+			exit 1
+		;;
+	esac
 done
 shift $((OPTIND-1))
 
@@ -36,7 +36,7 @@ files="$(find . -name '*.php' | grep -v './vendor/' | sort | tr '\n' ' ')"
 for filename in $files; do
 	echo "Checking $filename ..."
 	output="$(php -l "$filename" 2>&1)"
-    if [ $? != 0 ]; then
-    	echo "**ERROR** $output" >&2
-    fi
+	if [ $? != 0 ]; then
+		echo "**ERROR** $output" >&2
+	fi
 done
