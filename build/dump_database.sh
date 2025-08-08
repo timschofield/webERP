@@ -4,8 +4,8 @@
 # and b) a "demo" database containing operational data for learning and testing.
 #
 # Creates 2 files:
-# ./sql/mysql/country_sql/default.sql - a dump of the current db, with only minimal data
-# ./sql/mysql/country_sql/demo.sql - a dump of the current db, with all data
+# ./sql/mysql/default.sql - a dump of the current db, with only minimal data
+# ./sql/mysql/demo.sql - a dump of the current db, with all data
 #
 # NB: truncates table audittrail on the live db in use
 
@@ -17,7 +17,7 @@ MYSQL_PWD="${MYSQL_PWD:-a}";
 MYSQL_DATABASE="${MYSQL_DATABASE:-weberpdemo}"
 
 BASE_DIR="$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")";
-TARGET_DIR="$BASE_DIR/sql/mysql/country_sql"
+TARGET_DIR="$BASE_DIR/sql/mysql"
 
 mysql -u"$MYSQL_USER"  -p"$MYSQL_PWD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
 

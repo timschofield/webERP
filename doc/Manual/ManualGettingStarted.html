@@ -106,7 +106,7 @@
 
 <h3>Copying the PHP Scripts</h3>
 
-<p>All files in the archive except the installation instructions in INSTALL.txt, weberp-demo.sql and weberp-new.sql should be copied to a directory under the web server DocumentRoot directory. This varies by distribution but:</p>
+<p>All files in the archive should be copied to a directory under the web server DocumentRoot directory. This varies by distribution but:</p>
 
 <p>/srv/www/htdocs</p>
 
@@ -150,23 +150,18 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
 
 <p>If you have an account set up already in MySQL and Innodb tables enabled, then all you need to do is to run one of the sql scripts.</p>
 
-<p>Two scripts are provided in the webERP/sql/mysql/country_sql/ directory (folder):</p>
+<p>A scripts is provided in the webERP/install/sql/ directory (folder):</p>
 
 <ol>
-    <li>weberp-demo.sql This has a minimal amount of demonstration data with a bogus company set up so that transactions can be tried to see how the system works.</li>
-
-    <li>weberp-new.sql This script has only the basic data necessary to start a new company. If you wish to set up your company using the webERP software, then this is the script to use. This creates a webERP database and populates it with only the very basic starting data.</li>
+    <li>demo.sql This has a minimal amount of demonstration data with a bogus company set up so that transactions can be tried to see how the system works.</li>
 </ol>
 
-<p>The files weberp-demo.sql and web-erp-new.sql should be in the directory with all the PHP scripts. Change to the directory where the scripts are held or use the full path and enter:</p>
+<p>Change to the directory where the scripts are held or use the full path and enter:</p>
 
-<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/country_sql/weberp-demo.sql</p>
+<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/install/sql/demo.sql</p>
 
-<p>or</p>
 
-<p>shell &gt; mysql --user=weberp --password='some_pass' &lt; path_to_web_server/webERP/sql/mysql/country_sql/weberp-new.sql</p>
-
-<p>as required. Modify the user entered here as 'weberp' to the user you created in MySQL for the purpose, and modify the password stated here as 'some_pass' to the password appropriate for the user. Also modify the path_to_the_sql_script to the appropriate path - perhaps something like /srv/www/htdocs/webERP/.</p>
+<p>Modify the user entered here as 'weberp' to the user you created in MySQL for the purpose, and modify the password stated here as 'some_pass' to the password appropriate for the user. Also modify the path_to_the_sql_script to the appropriate path - perhaps something like /srv/www/htdocs/webERP/.</p>
 
 <h3>Editing config.php</h3>
 
