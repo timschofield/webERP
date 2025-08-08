@@ -25,7 +25,7 @@ CREATE TABLE `purchorders` (
   `suppliercontact` varchar(30) NOT NULL DEFAULT '',
   `supptel` varchar(30) NOT NULL DEFAULT '',
   `contact` varchar(30) NOT NULL DEFAULT '',
-  `version` decimal(3,2) NOT NULL DEFAULT '1.00',
+  `version` decimal(5,2) NOT NULL DEFAULT '1.00',
   `revised` date NOT NULL DEFAULT '1000-01-01',
   `realorderno` varchar(16) NOT NULL DEFAULT '',
   `deliveryby` varchar(100) NOT NULL DEFAULT '',
