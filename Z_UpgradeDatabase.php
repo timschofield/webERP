@@ -4,6 +4,8 @@ $PageSecurity = 15;
 
 include('includes/session.php');
 
+global $DBType;
+
 $Title = _('Database Upgrade');
 
 /// @todo use $RootPath for links

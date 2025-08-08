@@ -3,6 +3,8 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
+global $DBType;
+
 /* Was the Cancel button pressed the last time through ? */
 
 if (isset($_POST['EnterCompanyDetails'])) {

@@ -30,9 +30,16 @@ if (!file_exists($PathPrefix . 'config.php')) {
 include($PathPrefix . 'config.php');
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
+	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;
+}
+
+// another upgrade issue - mysql php extension is not available anymore
+if ($DBType === 'mysql') {
+	/// @todo we should attempt to update the config.php file...
+	$DBType = 'mysqli';
 }
 
 if (isset($SessionSavePath)) {
