@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-include('includes/DateFunctions.php');
+
 use Dompdf\Dompdf;
 $Title = _('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
@@ -119,7 +119,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<th>' . $DayNumber . '</th>';
 		$DayNumber++;
 	}
-	$HTML .= '</tr><tr>';
+	$HTML .= '</tr><tr class="striped_row">';
     $HTML .= str_repeat('<td></td>', $ColumnCounter);
 
 	$LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
@@ -131,7 +131,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$HTML .= '<td class="number" style="outline: 1px solid gray;">' . locale_number_format(0,0) . '<br />' .  locale_number_format(0,1) . '%</td>';
 		}
 		if ($ColumnCounter==7){
-			$HTML .= '</tr><tr>';
+			$HTML .= '</tr><tr class="striped_row">';
 						for ($j=1;$j<=7;$j++){
 								   $HTML .= '<th>' . $DayNumber. '</th>';
 							$DayNumber++;
@@ -139,7 +139,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								   break;
 							}
 						}
-						$HTML .= '</tr><tr>';
+						$HTML .= '</tr><tr class="striped_row">';
 			$ColumnCounter=0;
 		}
 	}
