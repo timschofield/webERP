@@ -18,7 +18,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
             $ImageLink = '<img class="StockImage" src="GetStockImage.php?automake=1' .
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=000000' .
-                                                    '&text='. $Item .
+                                                    '&text=' . $Item .
                                                     '&width=' . $Width .
                                                     '&height=' . $Height .
                                                     '&StockID=' . urlencode($Item) .
