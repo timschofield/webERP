@@ -10,8 +10,7 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 ## [v5.0.0] - (unreleased)
 
 * increased minimum php requirements to version 8.1
-* deprecated support for php extension `mysql` to connect to the database (code for it is still there but it might be
-  dropped in the future). Use `mysqli` instead
+* removed support for php extension `mysql` to connect to the database. Use `mysqli` instead
 * db tables are now created using the `utf8_mb4` character set if the database supports it, instead of `utf8_mb3`,
   to allow full support of emojis and other unicode niceties (NB: this is actually not yet merged ;-)
 * rewritten the installer
@@ -26,6 +25,18 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 * new General Ledger budget system
 * new budget system
 * new popup context-sensitive help system
+* set the default session timeout for new users to 10 minutes instead of 5
 * automatically log out the user, and then return them to the correct module when they log back in
+* improved compatibility with MySQL/MariaDB strict mode
+* fixed sending emails to multiple addresses
+* changed the default timezone to be Auckland
+* various directory restructuring. Image files are now in `images`, external dependencies in `vendor`. Unused sql dumps
+  have been removed
+* introduced usage of Composer to manage dependencies
+* improved support for installing webERP in a directory below the webserver root
+* update dependencies to their latest version (barcodepack, polyfill-gettext, phplot, phpmailer, phpspreadsheet, phpxmlrpc)
+* moved documentation files to Markdown format, to ease viewing directly on GitHub
+* introduced file `robots.txt` to avoid accidental indexation of site contents
+* improved the debugging of failed SQL queries when `$Debug` is set to 1
 * css styling changes
 * various bugfixes
