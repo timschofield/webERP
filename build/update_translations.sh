@@ -3,7 +3,16 @@
 set -e
 
 help() {
-    printf "Usage: update_translations.sh
+    printf "Usage: update_translations.sh ACTION
+
+ACTION should be either source_files, binary_files or all.
+
+The standard workflow is the following:
+- run 'update_translations source_files' to automatically add new translation strings found in source code to the textual translation files (.po)
+- have automated or manual translators updating the textual translation files (.po)
+- run 'update_translations binary_files' to generate the binary translation files (.mo) from the textual ones (.mo)
+
+NB: requires xgettext, msgmerge and msgfmt
 "
 }
 
@@ -31,23 +40,36 @@ LOCALES="$LOCALES ru_RU.utf8 sq_AL.utf8 sv_SE.utf8 sw_KE.utf8 tr_TR.utf8 vi_VN.u
 
 BASE_DIR="$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")";
 
+ACTION="$1"
+if [ "$ACTION" != all ] && [ "$ACTION" != source_files ] && [ "$ACTION" != binary_files ]; then
+	echo "ERROR: please provide an argument. It must be either 'all', 'source_files' or 'binary_files'" >&2
+	exit 1
+fi
+
 cd "$BASE_DIR";
 
-# xgettext: Extracts translatable strings from given input file paths
+if [ "$ACTION" = all ] || [ "$ACTION" = source_files ]; then
 
-# @todo use `find` to avoid having to specify all directories manually
-xgettext --no-wrap --from-code=utf-8 -L php -o locale/en_GB.utf8/LC_MESSAGES/messages.pot ./*.php ./api/*.php ./dashboard/*.php \
-	./doc/Manual/*.php ./includes/*.php ./install/*.php ./install/pages/*.php ./reportwriter/*.php ./reportwriter/admin/*.php \
-	./reportwriter/admin/forms/*.php ./reportwriter/forms/*.php ./reportwriter/includes/*.php ./reportwriter/install/*.php \
-	./reportwriter/languages/en_US/*.php
+	# xgettext: Extracts translatable strings from given input file paths
+	# @todo use `find` to avoid having to specify all directories manually
+	echo "Extracting translatable strings from source files..."
+	xgettext --no-wrap --from-code=utf-8 -L php -o locale/en_GB.utf8/LC_MESSAGES/messages.pot ./*.php ./api/*.php ./dashboard/*.php \
+		./doc/Manual/*.php ./includes/*.php ./install/*.php ./install/pages/*.php ./reportwriter/*.php ./reportwriter/admin/*.php \
+		./reportwriter/admin/forms/*.php ./reportwriter/forms/*.php ./reportwriter/includes/*.php ./reportwriter/install/*.php \
+		./reportwriter/languages/en_US/*.php
 
-# msgmerge: Merges two Uniforum style .po files together
-for TOUPDATE in $LOCALES; do
-	msgmerge -U -N --backup=off --no-wrap "./locale/${TOUPDATE}/LC_MESSAGES/messages.po" "./locale/en_GB.utf8/LC_MESSAGES/messages.pot"
-done
+	# msgmerge: Merges two Uniforum style .po files together
+	for TOUPDATE in $LOCALES; do
+		echo "Updating file './locale/${TOUPDATE}/LC_MESSAGES/messages.po'..."
+		msgmerge -U -N --backup=off --no-wrap "./locale/${TOUPDATE}/LC_MESSAGES/messages.po" "./locale/en_GB.utf8/LC_MESSAGES/messages.pot"
+	done
+fi
 
-# msgfmt: Generates a binary message catalog from a textual translation description
+if [ "$ACTION" = all ] || [ "$ACTION" = binary_files ]; then
 
-for TOUPDATE in $LOCALES; do
-	msgfmt -o "./locale/${TOUPDATE}/LC_MESSAGES/messages.mo" "./locale/${TOUPDATE}/LC_MESSAGES/messages.po"
-done
+	# msgfmt: Generates a binary message catalog from a textual translation description
+	for TOUPDATE in $LOCALES; do
+		echo "Updating file './locale/${TOUPDATE}/LC_MESSAGES/messages.mo'..."
+		msgfmt -o "./locale/${TOUPDATE}/LC_MESSAGES/messages.mo" "./locale/${TOUPDATE}/LC_MESSAGES/messages.po"
+	done
+fi

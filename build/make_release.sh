@@ -34,7 +34,7 @@ echo "Checking syntax of php files..."
 
 echo "Updating translation files..."
 
-"$BASE_DIR/build/update_translations.sh"
+"$BASE_DIR/build/update_translations.sh" all
 
 echo "Cleaning up and dumping the database..."
 
