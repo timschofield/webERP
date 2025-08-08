@@ -321,7 +321,7 @@ if (!isset($_GET['delete'])) {
 		if (isset($SelectedManufacturer)){
             $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 			$ImageFile = reset($Glob);
-			if (extension_loaded('xgd') && function_exists('gd_info') && file_exists($ImageFile)){
+			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
 				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 					'&amp;StockID='.urlencode('/BRAND-' . $SelectedManufacturer).
 					'&amp;text='.

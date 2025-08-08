@@ -210,6 +210,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					}elseif($Field['Barcode']==1) {
+						/// @todo check for existence of gd extension. If not, add a warning message into the pdf
+
 						/// @todo move to barcode functionality provided by TCPDF, to avoid one dependency
 						$BarcodeImage = new \BarcodePack\code128(str_replace('_','',$Value));
 
