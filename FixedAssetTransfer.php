@@ -20,7 +20,7 @@ foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 						SET assetlocation='".$_POST['Location'.$AssetID] ."'
 						WHERE assetid='". $AssetID . "'";
 
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 			prnMsg(_('The Fixed Asset has been moved successfully'), 'success');
 			echo '<br />';
 		}
@@ -33,7 +33,7 @@ if (isset($_GET['AssetID'])) {
 	$AssetID=$_POST['AssetID'];
 } else {
 	$SQL="SELECT categoryid, categorydescription FROM fixedassetcategories";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -154,7 +154,7 @@ if (isset($_POST['Search'])) {
 			ORDER BY fixedassets.assetid";
 
 
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<br />';
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
           <div>';
@@ -171,7 +171,7 @@ if (isset($_POST['Search'])) {
 		</tr>';
 
 	$LocationSQL="SELECT locationid, locationdescription from fixedassetlocations";
-	$LocationResult=DB_query($LocationSQL);
+	$LocationResult = DB_query($LocationSQL);
 
 	while ($MyRow=DB_fetch_array($Result)) {
 

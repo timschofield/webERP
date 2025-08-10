@@ -42,7 +42,7 @@ $SQL = "SELECT stockmoves.stockid,
 				stockmaster.units,
 				stockmaster.decimalplaces";
 $ErrMsg = _('Could not get the inventory issues for this contract because');
-$InventoryIssuesResult = DB_query($SQL,$ErrMsg);
+$InventoryIssuesResult = DB_query($SQL, $ErrMsg);
 $InventoryIssues = array();
 while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 	$InventoryIssues[$InventoryIssuesRow['stockid']]['StockID'] = $InventoryIssuesRow['stockid'];
@@ -194,7 +194,7 @@ $SQL = "SELECT supptrans.supplierno,
 		WHERE contractcharges.contractref='" . $ContractRef . "'
 		ORDER BY contractcharges.anticipated";
 $ErrMsg = _('Could not get the other charges to the contract because');
-$OtherChargesResult = DB_query($SQL,$ErrMsg);
+$OtherChargesResult = DB_query($SQL, $ErrMsg);
 $OtherReqtsActual =0;
 while ($OtherChargesRow=DB_fetch_array($OtherChargesResult)) {
 	if ($OtherChargesRow['anticipated']==0){
@@ -257,8 +257,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . -$Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');
-	$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 	$SQL = "INSERT INTO gltrans (type,
 								typeno,
 								trandate,
@@ -275,16 +274,14 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 							'" . $Variance . "')";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The gl entry of WIP for the variance on closing the contract could not be inserted because');
-	$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 //Now update the status of the contract to closed
 	$SQL = "UPDATE contracts
 				SET status=3
 				WHERE contractref='" . $_SESSION['Contract'.$identifier]->ContractRef . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The status of the contract could not be updated to closed because');
-	$DbgMsg = _('The following SQL to change the status of the contract was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 /*Check if the contract work order is still open */
 	$CheckIfWOOpenResult = DB_query("SELECT closed
@@ -293,7 +290,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	$CheckWORow=DB_fetch_row($CheckIfWOOpenResult);
 	if ($CheckWORow[0]==0){
 		//then close the work order
-		$CloseWOResult =DB_query("UPDATE workorders
+		$CloseWOResult = DB_query("UPDATE workorders
 									SET closed=1
 									WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'",
 									_('Could not update the work order to closed because:'),
@@ -306,7 +303,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	 *  If work done on the contract is a write off then the user must also write off the stock of the contract item as a separate job
 	 */
 
-		$Result =DB_query("SELECT qtyrecd FROM woitems
+		$Result = DB_query("SELECT qtyrecd FROM woitems
 							WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef . "'
 							AND wo='" . $_SESSION['Contract'.$identifier]->WO . "'");
 		if (DB_num_rows($Result)==1) {
@@ -336,8 +333,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 						AND loccode= '" . $_SESSION['Contract'.$identifier]->LocCode . "'";
 
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg =  _('The following SQL to update the location stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					/*Insert stock movements - with unit cost */
 
@@ -367,8 +363,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 									'" . ($QtyOnHandPrior + 1) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order receipt because');
-				$DbgMsg =  _('The following SQL to insert the stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -396,8 +391,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 											'" . ($OtherReqtsBudget+$ContractBOMBudget) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The receipt of contract work order finished stock GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the work order receipt of finished items GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					/*now the credit WIP entry*/
 					$SQL = "INSERT INTO gltrans (type,
@@ -416,20 +410,18 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 											'" . -($OtherReqtsBudget+$ContractBOMBudget) . "')";
 
 					$ErrMsg =   _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The WIP credit on receipt of finished items from a work order GL posting could not be inserted because');
-					$DbgMsg =  _('The following SQL to insert the WIP GLTrans record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '',true);
 
 				} /* end of if GL and stock integrated and standard cost !=0 */
 
 				//update the wo with the new qtyrecd
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not update the work order item record with the total quantity received because');
-				$DbgMsg = _('The following SQL was used to update the work order');
-				$UpdateWOResult =DB_query("UPDATE woitems
+				$UpdateWOResult = DB_query("UPDATE woitems
 										SET qtyrecd=qtyrecd+1
 										WHERE wo='" . $_SESSION['Contract'.$identifier]->WO . "'
 										AND stockid='" . $_SESSION['Contract'.$identifier]->ContractRef . "'",
 										$ErrMsg,
-										$DbgMsg,
+										'',
 										true);
 			}//end if the contract wo was not received - work order item received/processed above if not
 		}//end if there was a row returned from the woitems query

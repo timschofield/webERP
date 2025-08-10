@@ -333,7 +333,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 				<select tabindex="4" name="Currency">';
 
 		$SQL = "SELECT currency, currabrev FROM currencies";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($Result)){
 			if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){

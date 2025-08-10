@@ -115,9 +115,8 @@ if (isset($_POST['UpdateDatabase'])){
 				$SQL = "DELETE FROM suppallocs WHERE id = '" . $AllocnItem->PrevAllocRecordID . "'";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . _('could not be deleted because');
-				$DbgMsg = _('The following SQL to delete the allocation record was used');
 
-				$Result=DB_query($SQL, $ErrMsg, $DbgMsg, True);
+				$Result = DB_query($SQL, $ErrMsg, '', True);
 			 }
 
 			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt){
@@ -136,10 +135,9 @@ if (isset($_POST['UpdateDatabase'])){
 												'" . $_SESSION['Alloc']->AllocTrans . "',
 												'" . $AllocnItem->ID . "')";
 
-						  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .  _('The supplier allocation record for') . ' ' . $AllocnItem->TransType . ' ' .  $AllocnItem->TypeNo . ' ' ._('could not be inserted because');
-						  $DbgMsg = _('The following SQL to insert the allocation record was used');
+						 $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .  _('The supplier allocation record for') . ' ' . $AllocnItem->TransType . ' ' .  $AllocnItem->TypeNo . ' ' ._('could not be inserted because');
 
-					     $Result=DB_query($SQL, $ErrMsg, $DbgMsg, True);
+					     $Result = DB_query($SQL, $ErrMsg, '', True);
 				     }
 				     $NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 
@@ -154,11 +152,9 @@ if (isset($_POST['UpdateDatabase'])){
 												settled = '" . $Settled . "'
 							WHERE id = '" . $AllocnItem->ID . "'";
 
-					  $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be modified for the allocation against it because');
+					 $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be modified for the allocation against it because');
 
-					  $DbgMsg = _('The following SQL to update the debtor transaction record was used');
-
-				     $Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
+					 $Result = DB_query($SQL, $ErrMsg, '', True);
 
 			 } /*end if the new allocation is different to what it was before */
 
@@ -181,9 +177,7 @@ if (isset($_POST['UpdateDatabase'])){
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					 _('The supplier payment or credit note transaction could not be modified for the new allocation and exchange difference because');
 
-		$DbgMsg = _('The following SQL to update the payment or credit note was used');
-
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
+		$Result = DB_query($SQL, $ErrMsg, '', True);
 
 		/*Almost there ... if there is a change in the total diff on exchange
 		 and if the GLLink to debtors is active - need to post diff on exchange to GL */
@@ -213,10 +207,8 @@ if (isset($_POST['UpdateDatabase'])){
 							'" . $MovtInDiffOnExch . "')";
 
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
-		      $DbgMsg = _('The following SQL to insert the GLTrans record was used');
 
-		      $Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-
+		      $Result = DB_query($SQL, $ErrMsg, '', True);
 
 		      $SQL = "INSERT INTO gltrans (type,
 							typeno,
@@ -236,9 +228,7 @@ if (isset($_POST['UpdateDatabase'])){
 		      $ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 _('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
-		      $DbgMsg = _('The following SQL to insert the GLTrans record was used');
-
-		      $Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
+		      $Result = DB_query($SQL, $ErrMsg, '', True);
 
 		   }
 
@@ -358,9 +348,7 @@ if (isset($_GET['AllocTrans'])){
 
 	$ErrMsg = _('There was a problem retrieving the transactions available to allocate to');
 
-	$DbgMsg = _('The SQL that was used to retrieve the transaction information was');
-
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow=DB_fetch_array($Result)){
 		$_SESSION['Alloc']->add_to_AllocsAllocn ($MyRow['id'],
@@ -401,9 +389,7 @@ if (isset($_GET['AllocTrans'])){
 
 	$ErrMsg = _('There was a problem retrieving the previously allocated transactions for modification');
 
-	$DbgMsg = _('The SQL that was used to retrieve the previously allocated transaction information was');
-
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow = DB_fetch_array($Result)){
 

@@ -95,8 +95,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 	}
 
 	$ErrMsg = _('The pick list cannot be retrieved because');
-	$DbgMsg = _('The SQL to get the order header was');
-	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
+	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult) == 1) {
 
@@ -188,8 +187,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 							ORDER BY salesorderdetails.orderlineno";
 
 		$ErrMsg = _('The line items of the pick list cannot be retrieved because');
-		$DbgMsg = _('The SQL that failed was');
-		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg, $DbgMsg);
+		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 		if (DB_num_rows($LineItemsResult) > 0) {
 
@@ -232,8 +230,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 										AND pickserialdetails.detailno='" . $MyRow['detailno'] . "'";
 
 				$ErrMsg = _('The serial items of the pick list cannot be retrieved because');
-				$DbgMsg = _('The SQL that failed was');
-				$SerialItemsResult = DB_query($SerialItemsSQL, $ErrMsg, $DbgMsg);
+				$SerialItemsResult = DB_query($SerialItemsSQL, $ErrMsg);
 				if (DB_num_rows($SerialItemsResult) > 0) {
 					$InOutModifier = 1;
 					while ($MySerial = DB_fetch_array($SerialItemsResult)) {
@@ -563,8 +560,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 					ON pickreqdetails.detailno=pickserialdetails.detailno
 				WHERE prid='" . $_SESSION['ProcessingPick'] . "'";
 	$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The pickserialdetails could not be deleted');
-	$DbgMsg = _('The following SQL to delete them was used');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	/*Update order header for invoice charged on */
 	$ExtraUpdSQL = '';
@@ -593,8 +589,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 			AND salesorders.orderno=pickreq.orderno";
 
 	$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the internal comments');
-	$DbgMsg = _('The following SQL to update the order was used');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	foreach ($_SESSION['Items' . $identifier]->LineItems as $OrderLine) {
 		$LineItemsSQL = "SELECT pickreqdetails.detailno
@@ -606,8 +601,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 						AND salesorderdetails.orderlineno='" . $OrderLine->LineNumber . "'";
 
 		$ErrMsg = _('The line items of the pick list cannot be retrieved because');
-		$DbgMsg = _('The SQL that failed was');
-		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg, $DbgMsg);
+		$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 		$MyLine = DB_fetch_array($LineItemsResult);
 		$DetailNo = $MyLine['detailno'];
 		$SQL = "UPDATE pickreqdetails
@@ -616,8 +610,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 				WHERE detailno='" . $DetailNo . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The pickreqdetail record could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the pickreqdetail records was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($OrderLine->Controlled == 1) {
 			foreach($OrderLine->SerialItems as $Item) {
@@ -632,8 +625,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 										'" . $Item->BundleQty . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}/* foreach controlled item in the serialitems array */
 		} /*end if the orderline is a controlled item */
 

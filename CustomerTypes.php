@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
 	       WHERE debtortrans.type='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer type could not be retrieved');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
@@ -151,7 +151,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "SELECT COUNT(*) FROM debtorsmaster WHERE typeid='".$SelectedType."'";
 
 		$ErrMsg = _('The number of transactions using this Type record could not be retrieved because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
 			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customers with this type code'));
@@ -163,7 +163,7 @@ if (isset($_POST['submit'])) {
 
 				$SQL="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
 				$ErrMsg = _('The Type record could not be deleted because');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				echo '<br />';
 				prnMsg(_('Customer type') . ' ' . $TypeName  . ' ' . _('has been deleted') ,'success');
 			}

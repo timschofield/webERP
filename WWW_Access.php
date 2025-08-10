@@ -77,7 +77,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 	// Need to exec the query
 	if (isset($SQL) AND $InputError != 1 ) {
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		if( $Result ) {
 			prnMsg( $ResMsg,'success');
 		}

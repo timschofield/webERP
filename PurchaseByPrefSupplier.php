@@ -27,8 +27,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						WHERE  stockmaster.stockid = '". $StockID . "'";
 
 				$ErrMsg = _('The item details for') . ' ' . $StockID . ' ' . _('could not be retrieved because');
-				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$ItemResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$ItemResult = DB_query($SQL, $ErrMsg);
 				if (DB_num_rows($ItemResult)==1){
 					$ItemRow = DB_fetch_array($ItemResult);
 
@@ -52,8 +51,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 							ORDER BY latesteffectivefrom DESC";
 
 					$ErrMsg = _('The purchasing data for') . ' ' . $StockID . ' ' . _('could not be retrieved because');
-					$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
-					$PurchDataResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+					$PurchDataResult = DB_query($SQL, $ErrMsg);
 					if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
 
@@ -70,8 +68,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
 						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
-						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
-						$DiscountResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+						$DiscountResult = DB_query($SQL, $ErrMsg);
 						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 							$ItemDiscountPercent += $DiscountRow['discountpercent'];
 							$ItemDiscountAmount += $DiscountRow['discountamount'];
@@ -161,7 +158,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						WHERE userid='" . $_SESSION['UserID'] . "'
 						AND currabrev='" . $SupplierRow['currcode'] ."'";
 
-			$AuthResult=DB_query($AuthSQL);
+			$AuthResult = DB_query($AuthSQL);
 			$AuthRow=DB_fetch_array($AuthResult);
 
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $OrderValue) { //user has authority to authrorise as well as create the order
@@ -252,10 +249,9 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . $AllowPrintPO . "' )";
 
 		$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
-		$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
-	     /*Insert the purchase order detail records */
+	    /*Insert the purchase order detail records */
 		foreach ($PurchItems as $StockID=>$POLine) {
 
 			//print_r($POLine);
@@ -287,9 +283,8 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 							'0',
 							'" . $POLine['ConversionFactor'] . "')";
 			$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
-			$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
-			$Result =DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		} /* end of the loop round the detail line items on the order */
 		echo '<p />';
 		prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' .  _('has been created.') . ' ' . _('Total order value of') . ': ' . locale_number_format($OrderValue,$SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode']  ,'success');
@@ -312,7 +307,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 		<select name="Supplier">';
 
 $SQL = "SELECT supplierid, suppname FROM suppliers WHERE supptype<>7 ORDER BY suppname";
-$SuppResult=DB_query($SQL);
+$SuppResult = DB_query($SQL);
 
 echo '<option value="">' . _('Not Yet Selected') . '</option>';
 
@@ -445,7 +440,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					FROM stockmoves
 					WHERE stockid='" . $ItemRow['stockid'] . "'
 					AND (type=10 OR type=11)";
-			$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
+			$SalesResult = DB_query($SQL,'','',FALSE,FALSE);
 
 			if (DB_error_no() !=0) {
 		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';

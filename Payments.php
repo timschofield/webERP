@@ -72,8 +72,7 @@ $SQL = "SELECT pagesecurity
 		 WHERE scripts.script = 'BankAccountBalances.php'";
 
 $ErrMsg = _('The security for G/L Accounts cannot be retrieved because');
-$DbgMsg = _('The SQL that was used and failed was');
-$Security2Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$Security2Result = DB_query($SQL, $ErrMsg);
 $MyUserRow = DB_fetch_array($Security2Result);
 $CashSecurity = $MyUserRow['pagesecurity'];
 
@@ -567,8 +566,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$_SESSION['PaymentDetail'.$identifier]->Currency .
 							"')";
 					$ErrMsg = _('Cannot insert a bank transaction because');
-					$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 			}
 		}
@@ -618,8 +616,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							$_POST['ChequeNum'] . "'
 						)";
 			$ErrMsg = _('Cannot insert a payment transaction against the supplier because');
-			$DbgMsg = _('Cannot insert a payment transaction against the supplier using the SQL');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			$SQL = "SELECT id FROM supptrans WHERE transno='" . $TransNo . "' AND type=22";
 			$Result = DB_query($SQL, '', '', true);
 			$MyRow = DB_fetch_array($Result);
@@ -629,13 +626,11 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 					/* Firstly subtract from the payment the amount of the invoice  */
 					$SQL = "UPDATE supptrans SET alloc=alloc-" . $PaidAmount . " WHERE id='" . $PaymentID . "'";
 					$ErrMsg = _('Cannot update an allocation against the supplier because');
-					$DbgMsg = _('Cannot update an allocation against the supplier using the SQL');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					/* Then add theamount of the invoice to the invoice allocation */
 					$SQL = "UPDATE supptrans SET alloc=alloc+" . $PaidAmount . " WHERE id='" . $PaidID . "'";
 					$ErrMsg = _('Cannot update an allocation against the supplier because');
-					$DbgMsg = _('Cannot update an allocation against the supplier using the SQL');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					/* Finally update the supplier allocations table */
 					$SQL = "INSERT INTO suppallocs (amt,
 													datealloc,
@@ -648,8 +643,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 													'" . $PaidID . "'
 												)";
 					$ErrMsg = _('Cannot update an allocation against the supplier because');
-					$DbgMsg = _('Cannot update an allocation against the supplier using the SQL');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 			}
 
@@ -659,8 +653,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 						lastpaid='" . $_SESSION['PaymentDetail' . $identifier]->Amount . "'
 					WHERE suppliers.supplierid='" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "'";
 			$ErrMsg = _('Cannot update the supplier record for the date of the last payment made because');
-			$DbgMsg = _('Cannot update the supplier record for the date of the last payment made using the SQL');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative = $_SESSION['PaymentDetail' . $identifier]->SupplierID . ' - ' . $_SESSION['PaymentDetail' . $identifier]->gltrans_narrative;
 
@@ -685,8 +678,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							$CreditorTotal . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
-				$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if ($_SESSION['PaymentDetail' . $identifier]->Discount != 0) {
 					/* Now credit Discount received account with discounts */
@@ -708,8 +700,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								(-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 							)";
 					$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
-					$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} // end if discount
 
 			} // end if gl creditors
@@ -737,8 +728,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							(-$_SESSION['PaymentDetail' . $identifier]->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');
-				$DbgMsg = _('Cannot insert a GL transaction for the bank account credit using the SQL');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				EnsureGLEntriesBalance($TransType, $TransNo);
 			}
 		}
@@ -770,8 +760,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 					$_POST['ChequeNum'] . "'
 				)";
 		$ErrMsg = _('Cannot insert a bank transaction because');
-		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 		/* RICARD KL prepare the e-mail text just in case there are any controlled accounts */
@@ -967,9 +956,8 @@ if (isset($_POST['BankAccount']) AND $_POST['BankAccount'] != '') {
 			AND chartmaster.accountcode='" . $_POST['BankAccount'] . "'";
 
 	$ErrMsg = _('The bank account name cannot be retrieved because');
-	$DbgMsg = _('SQL used to retrieve the bank account name was');
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 1) {
 		$MyRow = DB_fetch_row($Result);
@@ -1018,8 +1006,7 @@ $SQL = "SELECT bankaccountname,
 		ORDER BY bankaccountname";
 
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
+$AccountsResults = DB_query($SQL, $ErrMsg);
 
 echo '<field>
 		<label for="BankAccount">', _('Bank Account') , ':</label>

@@ -120,22 +120,19 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "UPDATE locstock
 						SET quantity = quantity + '" . $StockQtyDifference . "'
 						WHERE stockid='" . $MyRow['stockid'] . "'
 						AND loccode='" . $MyRow['loccode'] . "'";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $MyRow['standardcost'] > 0){
 
 					$StockGLCodes = GetStockGLCode($MyRow['stockid']);
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -151,10 +148,9 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" .  $StockGLCodes['adjglact'] . "',
 								'" . ($MyRow['standardcost'] * -($StockQtyDifference)) . "',
 								'" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-					$DbgMsg = _('The following SQL to insert the GL entries was used');
 
 					$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -170,7 +166,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" .  $StockGLCodes['stockact'] . "',
 								'" . $MyRow['standardcost'] * $StockQtyDifference . "',
                                 '" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} //END INSERT GL TRANS
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
@@ -183,7 +179,6 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	// now do the report
 	$ErrMsg = _('The Inventory Comparison data could not be retrieved because');
-	$DbgMsg = _('The following SQL to retrieve the Inventory Comparison data was used');
 	$SQL = "SELECT stockcheckfreeze.stockid,
 					description,
 					stockmaster.categoryid,
@@ -206,7 +201,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				stockmaster.categoryid,
 				stockcheckfreeze.stockid";
 
-	$CheckedItems = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$CheckedItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($CheckedItems)==0){
 		$Title= _('Inventory Comparison Comparison Report');

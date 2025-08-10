@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
 
 	$SQL="SELECT count(accountcode)
 			FROM bankaccounts WHERE accountcode='".$_POST['AccountCode']."'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 and !isset($SelectedBankAccount)) {
@@ -133,8 +133,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	if( $InputError !=1 ) {
 		$ErrMsg = _('The bank account could not be inserted or modified because');
-		$DbgMsg = _('The SQL used to insert/modify the bank account details was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg,'success');
 		echo '<br />';
@@ -192,8 +191,7 @@ if (!isset($SelectedBankAccount)) {
 				ON bankaccounts.accountcode = chartmaster.accountcode
 			ORDER BY bankaccounts.accountcode";
 	$ErrMsg = _('The bank accounts could not be retrieved because');
-	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 			<tr>

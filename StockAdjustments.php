@@ -145,9 +145,8 @@ if (isset($_POST['CheckCode'])) {
 				FROM stockmaster
 				WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
 	}
-	$ErrMsg=_('The stock information cannot be retrieved because');
-	$DbgMsg=_('The SQL to get the stock description was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$ErrMsg = _('The stock information cannot be retrieved because');
+	$Result = DB_query($SQL, $ErrMsg);
 	echo '<table class="selection">
 			<tr>
 				<th>' . _('Stock Code') . '</th>
@@ -191,7 +190,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$SQL = "SELECT quantity FROM locstock
 				WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'
 				AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'";
-		$CheckNegResult=DB_query($SQL);
+		$CheckNegResult = DB_query($SQL);
 		$CheckNegRow = DB_fetch_array($CheckNegResult);
 		if ($CheckNegRow['quantity']+$_SESSION['Adjustment' . $identifier]->Quantity <0){
 			$InputError=true;
@@ -248,8 +247,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'')";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -262,8 +260,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 					)";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock adjustment reason record cannot be inserted because');
-		$DbgMsg =  _('The following SQL to insert the stock adjustment reason record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		/* KL RICARD END Adjustments reasons */
 
 		/*Insert the StockSerialMovements and update the StockSerialItems for controlled items*/
@@ -279,7 +276,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 						AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'
 						AND serialno='" . $Item->BundleRef . "'";
 				$ErrMsg = _('Unable to determine if the serial item exists');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
 				if ($SerialItemExistsRow[0]==1){
@@ -290,8 +287,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 							AND serialno='" . $Item->BundleRef . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-					$DbgMsg =  _('The following SQL to update the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} else {
 					/*Need to insert a new serial item record */
 					$SQL = "INSERT INTO stockserialitems (stockid,
@@ -308,10 +304,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 											'" . FormatDateForSQL($Item->ExpiryDate) ."')";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-					$DbgMsg =  _('The following SQL to update the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
-
 
 				/* now insert the serial stock movement */
 
@@ -324,8 +318,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 											'" . $Item->BundleRef . "',
 											'" . $Item->BundleQty . "')";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-				$DbgMsg =  _('The following SQL to insert the serial stock movement records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}/* foreach controlled item in the serialitems array */
 		} /*end if the adjustment item is a controlled item */
@@ -335,8 +328,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 				AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
-		$DbgMsg = _('The following SQL to update the stock record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_SESSION['Adjustment' . $identifier]->StandardCost > 0){
 
@@ -359,8 +351,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative, 0, 200) . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-			$DbgMsg = _('The following SQL to insert the GL entries was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			
 			/* KL RICARD Do not use tags
 			InsertGLTags($_POST['tag']);
@@ -383,8 +374,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									)";
 
 			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-			$DbgMsg = _('The following SQL to insert the GL entries was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '',true);
 		}
 
 		EnsureGLEntriesBalance(17, $AdjustmentNumber);
@@ -434,7 +424,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 			FROM stockmaster
 			WHERE stockid='".$StockID."'";
 
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow=DB_fetch_array($Result);
 		$_SESSION['Adjustment' . $identifier]->PartUnit=$MyRow['units'];

@@ -298,7 +298,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="StockCategory">' .  _('For Stock Category') .':</label>
 				<select name="StockCategory">';
 
-		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
+		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($MyRow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
@@ -309,7 +309,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="SalesType">' . _('For Sales Type/Price List').':</label>
 				<select name="SalesType">';
 		$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($SQL);
+		$SalesTypesResult = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($SalesTypesResult)){
 			if ($_SESSION['DefaultPriceList']==$MyRow['typeabbrev']){
@@ -325,7 +325,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="Currency">' . _('For Currency').':</label>
 				<select name="Currency">';
 		$SQL = "SELECT currabrev, country, currency FROM currencies";
-		$CurrenciesResult=DB_query($SQL);
+		$CurrenciesResult = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($CurrenciesResult)){
 			if ($_SESSION['CompanyRecord']['currencydefault']==$MyRow['currabrev']){

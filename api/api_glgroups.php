@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]>0) {
 			$Errors[$i] = GLAccountGroupAlreadyExists;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT count(sectionid)
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = GLAccountSectionDoesntExist;
@@ -47,7 +47,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0 and $AccountGroup!='') {
 			$Errors[$i] = AccountGroupDoesntExist;

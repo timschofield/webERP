@@ -68,15 +68,14 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 										cust_description,
 										cust_part)
 						VALUES ('" . $DebtorNo . "',
-							'" . $StockID . "',
+							'" . $StockId . "',
 							'" . $_POST['customersUOM'] . "',
 							'" . filter_number_format($_POST['ConversionFactor']) . "',
 							'" . $_POST['cust_description'] . "',
 							'" . $_POST['cust_part'] . "')";
-        $ErrMsg = _('The customer Item details could not be added to the database because');
-        $DbgMsg = _('The SQL that failed was');
-        $AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
-        prnMsg(_('This customer data has been added to the database'), 'success');
+		$ErrMsg = _('The customer Item details could not be added to the database because');
+		$AddResult = DB_query($SQL, $ErrMsg);
+		prnMsg(_('This customer data has been added to the database'), 'success');
 		unset($DebtorsMasterResult);
 	}
 	if ($InputError == 0 and isset($_POST['UpdateRecord'])) {
@@ -84,13 +83,11 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 										conversionfactor='" . filter_number_format($_POST['ConversionFactor']) . "',
 										cust_description='" . $_POST['cust_description'] . "',
 										custitem.cust_part='" . $_POST['cust_part'] . "'
-							WHERE custitem.stockid='" . $StockID . "'
+							WHERE custitem.stockid='" . $StockId . "'
 							AND custitem.debtorno='" . $DebtorNo . "'";
-        $ErrMsg = _('The customer details could not be updated because');
-        $DbgMsg = _('The SQL that failed was');
-        $UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
-        prnMsg(_('customer data has been updated'), 'success');
-        unset($Edit);
+		$ErrMsg = _('The customer details could not be updated because');
+		$UpdResult = DB_query($SQL, $ErrMsg);
+		prnMsg(_('customer data has been updated'), 'success');
 		unset($DebtorsMasterResult);
 		unset($DebtorNo);
     }
@@ -188,8 +185,7 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE DebtorNo='" . $DebtorNo . "'";
 	$ErrMsg = _('The customer details for the selected customer could not be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
-	$SuppSelResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SuppSelResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SuppSelResult) == 1) {
 		$MyRow = DB_fetch_array($SuppSelResult);
 		$Name = $MyRow['name'];
@@ -270,25 +266,24 @@ if (isset($_POST['Searchcustomer'])) {
 				FROM debtorsmaster
 				WHERE debtorsmaster.DebtorNo " . LIKE . " '%" . $_POST['cust_no'] . "%'";
 
-    } //one of keywords or cust_part was more than a zero length string
+	} //one of keywords or cust_part was more than a zero length string
     $ErrMsg = _('The cuswtomer matching the criteria entered could not be retrieved because');
-    $DbgMsg = _('The SQL to retrieve customer details that failed was');
-    $DebtorsMasterResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$DebtorsMasterResult = DB_query($SQL, $ErrMsg);
 } //end of if search
-if (isset($DebtorsMasterResult) AND DB_num_rows($DebtorsMasterResult) > 0) {
-	if (isset($StockID)) {
-        $Result = DB_query("SELECT stockmaster.description,
+if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
+	if (isset($StockId)) {
+		$Result = DB_query("SELECT stockmaster.description,
 								stockmaster.units,
 								stockmaster.mbflag
 						FROM stockmaster
-						WHERE stockmaster.stockid='".$StockID."'");
+						WHERE stockmaster.stockid='" . $StockId . "'");
 		$MyRow = DB_fetch_row($Result);
 		$StockUOM = $MyRow[1];
 		if (DB_num_rows($Result) <> 1) {
-			prnMsg(_('Stock Item') . ' - ' . $StockID . ' ' . _('is not defined in the database'), 'warn');
+			prnMsg(_('Stock Item') . ' - ' . $StockId . ' ' . _('is not defined in the database'), 'warn');
 		}
 	} else {
-		$StockID = '';
+		$StockId = '';
 		$StockUOM = 'each';
 	}
 	echo '<form action="' . htmlspecialchars(basename(__FILE__)) . '" method="post">';
@@ -318,7 +313,7 @@ if (isset($DebtorsMasterResult) AND DB_num_rows($DebtorsMasterResult) > 0) {
 				<td>', $MyRow['address3'], '</td>
 			</tr>';
 
-		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
+		echo '<input type="hidden" name="StockID" value="' . $StockId . '" />';
 		echo '<input type="hidden" name="StockUOM" value="' . $StockUOM . '" />';
 
 	}
@@ -349,7 +344,7 @@ if (!isset($DebtorsMasterResult)) {
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 				WHERE custitem.debtorno='" . $DebtorNo . "'
-				AND custitem.stockid='" . $StockID . "'";
+				AND custitem.stockid='" . $StockId . "'";
 
 		$ErrMsg = _('The customer purchasing details for the selected customer and item could not be retrieved because');
 		$EditResult = DB_query($SQL, $ErrMsg);
@@ -397,7 +392,7 @@ if (!isset($DebtorsMasterResult)) {
 		echo '</div>
 			</field>';
 	}
-	echo '<input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockID . '" />';
+	echo '<input type="hidden" name="StockID" maxlength="10" size="11" value="' . $StockId . '" />';
 	if (!isset($CurrCode)) {
 		$CurrCode = '';
 	}
@@ -461,12 +456,12 @@ if (!isset($DebtorsMasterResult)) {
 			</div>';
 	}
 
-	if (isset($StockLocation) and isset($StockID) and mb_strlen($StockID) != 0) {
+	if (isset($StockLocation) and isset($StockId) and mb_strlen($StockId) != 0) {
 		echo '<div class="centre">
-				<a href="', $RootPath, '/StockStatus.php?StockID=', $StockID, '">', _('Show Stock Status'), '</a><br />
-				<a href="', $RootPath, '/StockMovements.php?StockID=', $StockID, '&StockLocation=', $StockLocation, '">', _('Show Stock Movements'), '</a><br />
-				<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', $StockID, '&StockLocation=', $StockLocation, '">', _('Search Outstanding Sales Orders'), '</a><br />
-				<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', $StockID, '">', _('Search Completed Sales Orders'), '</a><br />
+				<a href="', $RootPath, '/StockStatus.php?StockID=', $StockId, '">', _('Show Stock Status'), '</a><br />
+				<a href="', $RootPath, '/StockMovements.php?StockID=', $StockId, '&StockLocation=', $StockLocation, '">', _('Show Stock Movements'), '</a><br />
+				<a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', $StockId, '&StockLocation=', $StockLocation, '">', _('Search Outstanding Sales Orders'), '</a><br />
+				<a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', $StockId, '">', _('Search Completed Sales Orders'), '</a><br />
 			</div>';
 	}
 	echo '</form>';

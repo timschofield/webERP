@@ -120,7 +120,7 @@ if (isset($SelectedCOA)) {
 				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 }
-$Result=DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -307,7 +307,7 @@ $SQL = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityCOAText'";
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 $MyRow=DB_fetch_array($Result);
 $Disclaimer=$MyRow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);

@@ -309,7 +309,6 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				A nicety or important?? */
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The cost could not be updated because');
-				$DbgMsg = _('The following SQL to update the cost was used');
 
 				if ($TotalQuantityOnHand>0) {
 
@@ -321,7 +320,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
+					$Result = DB_query($SQL, $ErrMsg, '','',TRUE);
 
 				} else {
 					$SQL = "UPDATE stockmaster
@@ -330,7 +329,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
+					$Result = DB_query($SQL, $ErrMsg, '','',TRUE);
 
 				}
 				/* End of Weighted Average Costing Code */

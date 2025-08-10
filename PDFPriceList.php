@@ -386,7 +386,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<label for="SalesType">', _('For Sales Type/Price List'), ':</label>
 			<select name="SalesType">';
 	$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
-	$SalesTypesResult=DB_query($SQL);
+	$SalesTypesResult = DB_query($SQL);
 
 	while ($MyRow=DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
@@ -398,7 +398,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<label for="Currency">', _('For Currency'), ':</label>
 			<select name="Currency">';
 	$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-	$CurrencyResult=DB_query($SQL);
+	$CurrencyResult = DB_query($SQL);
 	echo '<option selected="selected" value="All">', _('All'), '</option>';
 	while ($MyRow=DB_fetch_array($CurrencyResult)) {
 		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';

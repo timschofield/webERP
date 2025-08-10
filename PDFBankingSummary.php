@@ -27,8 +27,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			AND banktrans.type=12";
 
 	$ErrMsg = _('An error occurred getting the header information about the receipt batch number') . ' ' . $_POST['BatchNo'];
-	$DbgMsg = _('The SQL used to get the receipt header information that failed was');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0){
 		$Title = _('Create PDF Print-out For A Batch Of Receipts');

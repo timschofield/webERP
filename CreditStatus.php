@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 
 	$SQL="SELECT count(reasoncode)
 			FROM holdreasons WHERE reasoncode='".$_POST['ReasonCode']."'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 and !isset($SelectedReason)) {

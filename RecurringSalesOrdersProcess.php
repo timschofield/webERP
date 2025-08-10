@@ -148,7 +148,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $DelDate . "')";
 
 	$ErrMsg = _('The order cannot be added because');
-	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,true);
+	$InsertQryResult = DB_query($HeaderSQL, $ErrMsg,true);
 
 	$EmailText = _('A new order has been created from a recurring order template for customer') .' ' .  $RecurrOrderRow['debtorno'] . ' ' . $RecurrOrderRow['branchcode'] . "\n" . _('The order number is:') . ' ' . $OrderNo;
 
@@ -164,7 +164,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						WHERE recurrsalesorderdetails.recurrorderno ='" . $RecurrOrderRow['recurrorderno'] . "'";
 
 	$ErrMsg = _('The line items of the recurring order cannot be retrieved because');
-	$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
+	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 	$LineCounter = 0;
 
@@ -199,7 +199,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$SQL = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
 			WHERE recurrorderno='" . $RecurrOrderRow['recurrorderno'] ."'";
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
-	$Result = DB_query($SQL,$ErrMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, true);
 
 	DB_Txn_Commit();
 
@@ -230,13 +230,13 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				ON debtorsmaster.currcode=currencies.currabrev
 				WHERE debtorno='" . $RecurrOrderRow['debtorno'] . "'";
 		$ErrMsg = _('The exchange rate for the customer currency could not be retrieved from the currency table because:');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		$CurrencyRate = $MyRow[0];
 
 		$SQL = "SELECT taxprovinceid FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
 		$ErrMsg = _('Could not retrieve the tax province of the location from where the order was fulfilled because:');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow=DB_fetch_row($Result);
 		$DispTaxProvinceID = $MyRow[0];
 
@@ -277,7 +277,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			ORDER BY taxgrouptaxes.calculationorder";
 
 			$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-			$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+			$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 
 			$LineTaxAmount = 0;
 			$TaxTotals =array();
@@ -325,8 +325,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				AND stkcode = '" . $RecurrOrderLineRow['stkcode'] . "'";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
-			$DbgMsg = _('The following SQL to update the sales order detail record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			// Insert stock movements - with unit cost
 			$LocalCurrencyPrice= ($RecurrOrderLineRow['unitprice'] *(1- floatval($RecurrOrderLineRow['discountpercent'])))/ $CurrencyRate;
@@ -367,8 +366,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						'" . $RecurrOrderLineRow['narrative'] . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -388,8 +386,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $Tax['TaxOnTax'] . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 			/*Insert Sales Analysis records */
 
@@ -427,8 +424,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					salesanalysis.salesperson";
 
 			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$MyRow = DB_fetch_row($Result);
 
@@ -486,8 +482,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			}
 
 			$ErrMsg = _('Sales analysis record could not be added or updated because');
-			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $RecurrOrderLineRow['unitprice'] !=0){
 
@@ -514,8 +509,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
-				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/* Don't care about COGS because it can only be a dummy items being invoiced ... no cost of sales to mess with */
 
@@ -541,8 +535,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} /*end of if discount !=0 */
 
@@ -581,8 +574,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the tax GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 			}
 
@@ -608,8 +600,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 									)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 
 			/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
@@ -634,8 +625,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 									)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 		} /*end of if Sales and GL integrated */
 
@@ -643,8 +633,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
-		$DbgMsg = _('The following SQL to update the sales order was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	/*Now insert the DebtorTrans */
 
@@ -684,11 +673,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $RecurrOrderRow['shipvia'] . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
-
 
 		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
@@ -698,8 +685,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					'" . filter_number_format($Tax['FXAmount']/$CurrencyRate) . "')";
 
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
- 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 

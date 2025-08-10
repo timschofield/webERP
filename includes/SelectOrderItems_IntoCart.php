@@ -51,8 +51,7 @@ if ($AlreadyOnThisOrder!=1){
 			AND stockmaster.stockid = '". $NewItem . "'";
 
     $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
-    $DbgMsg = _('The SQL used to retrieve the pricing details but failed was');
-    $Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
+    $Result1 = DB_query($SQL, $ErrMsg);
 
     if (DB_num_rows($Result1)==0){
 		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));

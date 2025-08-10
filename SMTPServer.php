@@ -46,8 +46,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				auth='".$_POST['Auth']."'";
 
 	$ErrMsg = _('The email setting information failed to update');
-	$DbgMsg = _('The SQL failed to update is ');
-	$Result1=DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result1 = DB_query($SQL, $ErrMsg);
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br />';
@@ -66,7 +65,6 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 						'".$_POST['Password']."',
 						'".$_POST['Auth']."')";
 	$ErrMsg = _('The email settings failed to be inserted');
-	$DbgMsg = _('The SQL failed to insert the email information is');
 	$Result2 = DB_query($SQL);
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been successfully inserted'),'success');
@@ -85,10 +83,9 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 				auth
 			FROM emailsettings";
 		$ErrMsg = _('The email settings information cannot be retrieved');
-		$DbgMsg = _('The SQL that failed was');
 
-		$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
-		if(DB_num_rows($Result)!=0){
+		$Result = DB_query($SQL, $ErrMsg);
+		if (DB_num_rows($Result)!=0){
 			$MailServerSetting = 1;
 			$MyRow=DB_fetch_array($Result);
 		}else{

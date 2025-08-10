@@ -41,7 +41,7 @@ $SQL="SELECT taskid,
 		ORDER BY ADDDATE(lastcompleted,frequencydays) DESC";
 
 $ErrMsg = _('The maintenance schedule cannot be retrieved because');
-$Result=DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">
      <tr>

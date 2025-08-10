@@ -87,8 +87,7 @@ if(isset($_POST['Modify'])) {
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
 			}
 			$ErrMsg = _('The user alterations could not be processed because');
-			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
 			// KL RICARD: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
@@ -111,8 +110,7 @@ if(isset($_POST['Modify'])) {
 			}
 
 			$ErrMsg = _('The user alterations could not be processed because');
-			$DbgMsg = _('The SQL that was used to update the user and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(_('The user settings have been updated'),'success');
 		}
 		// Update the session variables to reflect user changes on-the-fly:

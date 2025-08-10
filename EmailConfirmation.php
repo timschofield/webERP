@@ -76,7 +76,7 @@ $SQL = "SELECT salesorders.debtorno,
 			AND salesorders.fromstkloc=locations.loccode
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -234,7 +234,7 @@ if($_GET['POLine'] == 1){
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
 		ORDER BY poline";
-	$Result=DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$i=0;
 	if (DB_num_rows($Result)>0){
 

@@ -150,8 +150,7 @@ if(isset($_POST['submit'])) {
 				AND custbranch.branchcode='" . ($_POST['BranchCode'] ?? '') . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
-		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		if(DB_num_rows($Result)==0) {
 			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'), 'error');
@@ -234,8 +233,7 @@ if(isset($_POST['submit'])) {
 					WHERE userid = '". $SelectedUser . "'";
 
 		$ErrMsg = _('The user alterations could not be processed because');
-		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('The selected user record has been updated'), 'success' );
 
 		$_SESSION['ShowPageHelp'] = $_POST['ShowPageHelp'];
@@ -299,8 +297,7 @@ if(isset($_POST['submit'])) {
 					'" . $_POST['Department'] . "')";
 
 		$ErrMsg = _('The user insertion could not be processed because');
-		$DbgMsg = _('The SQL that was used to insert the user and failed was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg(_('A new user record has been inserted'), 'success');
 
 		$LocationSql = "INSERT INTO locationusers (loccode,
@@ -315,8 +312,7 @@ if(isset($_POST['submit'])) {
 												)";
 
 		$ErrMsg = _('The default user locations could not be processed because');
-		$DbgMsg = _('The SQL that was used to create the user locations and failed was');
-		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+		$Result = DB_query($LocationSql, $ErrMsg);
 		prnMsg(_('User has been authorized to use and update only his / her default location'), 'success' );
 		
 		// KL RICARD Send email
@@ -328,8 +324,8 @@ if(isset($_POST['submit'])) {
 //						 SELECT '" . $_POST['UserID'] . "', chartmaster.accountcode,1,1
 //						 FROM chartmaster;	";
 //		$ErrMsg = _('The default user GL Accounts could not be processed because');
-//		$DbgMsg = _('The SQL that was used to create the user GL Accounts and failed was');
-//		$Result = DB_query($GLAccountsSql, $ErrMsg, $DbgMsg);
+//
+//		$Result = DB_query($GLAccountsSql, $ErrMsg);
 //		prnMsg(_('User has been authorized to use and update all GL accounts'), 'success' );
 	}
 
@@ -879,7 +875,7 @@ $SQL = "SELECT departmentid,
 		FROM departments
 		ORDER BY description";
 
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 echo '<select name="Department">';
 if((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])) {
 	echo '<option selected="selected" value="0">' . _('Any Internal Department') . '</option>';

@@ -78,7 +78,7 @@ function search(&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEA
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 
@@ -281,7 +281,7 @@ function listall($Part,$DemandType)  {//####LISTALL_LISTALL_LISTALL_LISTALL_LIST
 			 $Where	. " ORDER BY mrpdemands.stockid, mrpdemands.duedate";
 
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<tr>

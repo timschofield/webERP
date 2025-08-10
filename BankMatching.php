@@ -54,14 +54,14 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 						FROM banktrans
 						WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not retrieve transaction information');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			$MyRow=DB_fetch_array($Result);
 			$AmountCleared = round($MyRow[0] / $MyRow[1],2);
 			/*Update the banktrans recoord to match it off */
 			$SQL = "UPDATE banktrans SET amountcleared= ". $AmountCleared . "
 									WHERE banktransid='" . $_POST['BankTrans_' . $Counter] . "'";
 			$ErrMsg =  _('Could not match off this payment because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif ((isset($_POST['AmtClear_' . $Counter])
 					AND filter_number_format($_POST['AmtClear_' . $Counter])<0
@@ -75,7 +75,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter])
 					AND $_POST['Unclear_' . $Counter]==True) {
@@ -83,7 +83,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 			$SQL = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not unclear this bank transaction because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 	}
 	/*Show the updated position with the same criteria as previously entered*/

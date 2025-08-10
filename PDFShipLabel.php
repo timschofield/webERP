@@ -183,8 +183,7 @@ if ($SelectedORD == 'Preview') {
 	}
 	//echo $OrderHeaderSQL;
 	$ErrMsg = _('The order cannot be retrieved because');
-	$DbgMsg = _('The SQL that failed to get the order header was');
-	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg, $DbgMsg);
+	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult) > 0) {
 		$BoxNumber = 1;

@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]>0) {
 			$Errors[$i] = GLAccountCodeAlreadyExists;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = GLAccountCodeDoesntExists;
@@ -39,7 +39,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = AccountGroupDoesntExist;

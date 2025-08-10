@@ -45,7 +45,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-	$Result=DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Payment Listing');
 		include('includes/header.php');

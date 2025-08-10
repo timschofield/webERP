@@ -58,7 +58,7 @@ $SQL = "INSERT INTO salesanalysis (typeabbrev,
 		ORDER BY prd";
 
 $ErrMsg = _('The sales analysis data could not be recreated because');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<p />';
 prnMsg(_('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');

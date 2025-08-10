@@ -236,7 +236,7 @@ echo '<field>
 		<select name="Location">';
 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-$Result= DB_query("SELECT locations.loccode,
+$Result = DB_query("SELECT locations.loccode,
 						   locationname
 					FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1");
 while ($MyRow=DB_fetch_array($Result)){

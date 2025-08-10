@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 		AND categoryid='".$SelectedType."'";
 
 	$ErrMsg = _('The Stock Category by Role record could not be deleted because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('Internal Stock Category').' '. $SelectedType .' '. _('for user role').' '. $SelectedRole .' '. _('has been deleted') ,'success');
 	unset($_GET['delete']);
 }

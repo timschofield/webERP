@@ -100,9 +100,8 @@ if (isset($_POST['submit'])) {
 		$SQL .= " WHERE manufacturers_id = '" . $SelectedManufacturer . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedManufacturer . ' ' . _('manufacturer record because');
-		$DbgMsg = _('The SQL used to update the manufacturer record was');
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg( _('The manufacturer record has been updated'),'success');
 		unset($_POST['ManufacturersName']);
@@ -120,8 +119,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['ManufacturersURL'] . "')";
 
 		$ErrMsg =  _('An error occurred inserting the new manufacturer record because');
-		$DbgMsg =  _('The SQL used to insert the manufacturer record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$LastInsertId = DB_Last_Insert_ID('manufacturers', 'manufacturers_id');
 
 		if (isset($_FILES['BrandPicture']) AND $_FILES['BrandPicture']['name'] !='') {

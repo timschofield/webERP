@@ -156,7 +156,7 @@ if (isset($_POST['ShowSales'])){
 			ORDER BY netsalesvalue DESC";
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($SQL,$ErrMsg);
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">';
 

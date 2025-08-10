@@ -27,7 +27,7 @@ if (isset($_POST['UpdateSalesAnalysis'])){
 			ON debtorsmaster.debtorno=custbranch.debtorno";
 
 	$ErrMsg = _('Could not retrieve the customer records to be updated because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	while ($CustomerRow = DB_fetch_array($Result)){
 
@@ -38,7 +38,7 @@ if (isset($_POST['UpdateSalesAnalysis'])){
 				AND custbranch ='" . $CustomerRow['branchcode'] . "'";
 
 		$ErrMsg = _('Could not update the sales analysis records for') . ' ' . $CustomerRow['debtorno'] . ' ' . _('because');
-		$UpdResult = DB_query($SQL,$ErrMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('Updated sales analysis for customer code') . ': ' . $CustomerRow['debtorno'] . ' ' . _('and branch code') . ': ' . $CustomerRow['branchcode'],'success');
 	}

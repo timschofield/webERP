@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 	       WHERE debtortrans.tpe='".$SelectedType."'";
 
 	$ErrMsg = _('The number of transactions using this customer/sales/pricelist type could not be retrieved');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
@@ -145,7 +145,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "SELECT COUNT(*) FROM debtorsmaster WHERE salestype='".$SelectedType."'";
 
 		$ErrMsg = _('The number of transactions using this Sales Type record could not be retrieved because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
 			prnMsg (_('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customers with this sales type code'));
@@ -153,12 +153,12 @@ if (isset($_POST['submit'])) {
 
 			$SQL="DELETE FROM salestypes WHERE typeabbrev='" . $SelectedType . "'";
 			$ErrMsg = _('The Sales Type record could not be deleted because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(_('Sales type') . ' / ' . _('price list') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 			$SQL ="DELETE FROM prices WHERE prices.typeabbrev='" . $SelectedType . "'";
 			$ErrMsg =  _('The Sales Type prices could not be deleted because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			prnMsg(' ...  ' . _('and any prices for this sales type / price list were also deleted'),'success');
 			unset ($SelectedType);

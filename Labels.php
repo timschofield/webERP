@@ -129,7 +129,7 @@ if (isset($_POST['SelectedLabelID'])){
 				AND ctype_digit($_POST['HPos' . $i])
 				AND ctype_digit($_POST['FontSize' . $i])){ // if all entries are integers
 
-				$Result =DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
+				$Result = DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
 														vpos='" . $_POST['VPos' . $i] . "',
 														hpos='" . $_POST['HPos' . $i] . "',
 														fontsize='" . $_POST['FontSize' . $i] . "',
@@ -205,7 +205,7 @@ if (isset($_POST['submit'])) {
 				WHERE labelid = '" . $SelectedLabelID . "'";
 
 		$ErrMsg = _('The update of this label template failed because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$Message = _('The label template has been updated');
 		prnMsg($Message, 'success');
@@ -234,7 +234,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['PageHeight'] . "')";
 
 		$ErrMsg = _('The addition of this label failed because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$Message = _('The new label template has been added to the database');
 		prnMsg($Message, 'success');
 	}
@@ -279,8 +279,7 @@ if (!isset($SelectedLabelID)) {
 			FROM labels";
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined label templates could not be retrieved because');
-	$DbgMsg = _('The following SQL to retrieve the label templates was used');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)>0){
 		echo '<table class="selection">
@@ -513,7 +512,7 @@ if (isset($SelectedLabelID)) {
 			WHERE labelid = '" . $SelectedLabelID . "'
 			ORDER BY vpos DESC";
 	$ErrMsg = _('Could not get the label fields because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$i=0;
 	echo '<table class="selection">
 				<tr>

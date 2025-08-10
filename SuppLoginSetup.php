@@ -99,8 +99,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['Theme'] . "',
 							'". $_POST['UserLanguage'] ."')";
 		$ErrMsg = _('The user could not be added because');
-		$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg( _('A new supplier login has been created'), 'success' );
 		include('includes/footer.php');
 		exit();

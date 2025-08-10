@@ -61,7 +61,7 @@ if(isset($_POST['submit'])) {
 						SET taxcatname='" . $_POST['TaxCategoryName'] . "'
 						WHERE taxcatname ".LIKE." '".$OldTaxCategoryName."'";
 				$ErrMsg = _('The tax category could not be updated');
-				$Result = DB_query($SQL,$ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 			} else {
 				$InputError = 1;
 				prnMsg( _('The tax category no longer exists'),'error');
@@ -85,7 +85,7 @@ if(isset($_POST['submit'])) {
 						'" . $_POST['TaxCategoryName'] ."'
 						)";
 			$ErrMsg = _('The new tax category could not be added');
-			$Result = DB_query($SQL,$ErrMsg,true);
+			$Result = DB_query($SQL, $ErrMsg,true);
 
 			$LastTaxCatID = DB_Last_Insert_ID('taxcategories','taxcatid');
 
@@ -96,7 +96,7 @@ if(isset($_POST['submit'])) {
  					taxprovinces.taxprovinceid,
 					'" . $LastTaxCatID . "'
 				FROM taxauthorities CROSS JOIN taxprovinces";
-			$Result = DB_query($SQL,$ErrMsg,true);
+			$Result = DB_query($SQL, $ErrMsg,true);
 
 			DB_Txn_Commit();
 		}
@@ -160,7 +160,7 @@ if(isset($_POST['submit'])) {
 			ORDER BY taxcatid";
 
 	$ErrMsg = _('Could not get tax categories because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>

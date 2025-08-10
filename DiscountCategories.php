@@ -60,12 +60,12 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 } elseif (isset($_POST['SubmitCategory'])) {
 	$SQL = "SELECT stockid FROM stockmaster WHERE categoryid='".$_POST['stockcategory']."'";
 	$ErrMsg = _('Failed to retrieve stock category data');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if(DB_num_rows($Result)>0){
 		$SQL="UPDATE stockmaster
 				SET discountcategory='".$_POST['DiscountCategory']."'
 				WHERE categoryid='".$_POST['stockcategory']."'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 	}else{
 		prnMsg(_('There are no stock defined for this stock category, you must define stock for it first'),'error');
 		include('includes/footer.php');
@@ -160,7 +160,7 @@ if (isset($_POST['SelectChoice'])) {
 				$SQL="SELECT stockid, description FROM stockmaster
 						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%'
 						AND description " . LIKE . " '%".$_POST['PartDesc']."%'";
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 			if (!isset($_POST['stockID'])) {
 				echo _('Select a part code').':<br />';
 				while ($MyRow=DB_fetch_array($Result)) {

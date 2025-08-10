@@ -151,13 +151,12 @@ if (isset($_POST['Add'])) {
 								)";
 
 		$ErrMsg = _('Cannot insert a bank transaction because');
-		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE regularpayments SET nextpayment='" . FormatDateForSQL($NextPaymentDate) . "',
 											completed='" . $Completed . "'
 										WHERE id='" . $ID . "'";
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		DB_Txn_Commit();
 
 		prnMsg(_('The regular payment has been processed'), 'success');

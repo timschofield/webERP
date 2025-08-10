@@ -48,7 +48,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 			ORDER BY suppliers.supplierid ASC";
 
 	$ErrMsg = _('The SQL to find the suppliers with active Purchase Orders');
-	$ResultSuppliers = DB_query($SQL,$ErrMsg);
+	$ResultSuppliers = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($ResultSuppliers) != 0){
 
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
@@ -104,7 +104,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 							ORDER BY purchorders.orderno ASC";
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$SupplierResult = DB_query($SQLSupplier,$ErrMsg);
+			$SupplierResult = DB_query($SQLSupplier, $ErrMsg);
 
 			$TotalSupplierOwnCurrency = 0;
 			$TotalSupplierFunctionalCurrency = 0;
@@ -202,7 +202,7 @@ function display($Title)
 	$SQL = "SELECT DISTINCT(address6) AS country
 			FROM suppliers
 			ORDER BY address6";
-	$CountryResult=DB_query($SQL);
+	$CountryResult = DB_query($SQL);
 	echo '<option value="All">' . _('All Countries') . '</option>';
 	while ($MyRow=DB_fetch_array($CountryResult)){
 		echo '<option value="' . $MyRow['country'] . '">' . $MyRow['country'] . '</option>';
@@ -217,7 +217,7 @@ function display($Title)
 				currency
 			FROM currencies
 			ORDER BY currency";
-	$CurrencyResult=DB_query($SQL);
+	$CurrencyResult = DB_query($SQL);
 	echo '<option value="All">' . _('All Currencies') . '</option>';
 	while ($MyRow=DB_fetch_array($CurrencyResult)){
 		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';

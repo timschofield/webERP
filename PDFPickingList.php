@@ -26,7 +26,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 				locationname
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" name="form">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -136,7 +136,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 
 if (isset($_POST['TransDate'])
 	OR (isset($_GET['TransNo']) AND $_GET['TransNo'] != 'Preview')) {
-	$Result=DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($Result)==0){
@@ -226,7 +226,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 		$SQL="SELECT COUNT(orderno)
 				FROM pickinglists
 				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'";
-		$CountResult=DB_query($SQL);
+		$CountResult = DB_query($SQL);
 		$Count=DB_fetch_row($CountResult);
 		if ($Count[0]==0) {
 		/* There are no previous picking lists for this order */
@@ -266,7 +266,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
             			WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] ."'
             			AND salesorderdetails.orderlineno=pickinglistdetails.orderlineno";
 		}
-		$LineResult=DB_query($SQL, $ErrMsg);
+		$LineResult = DB_query($SQL, $ErrMsg);
 	}
 	if ((isset($_GET['TransNo'])
 		AND $_GET['TransNo'] == 'Preview')
@@ -284,7 +284,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				'" . FormatDateForSQL($_POST['TransDate'])."',
 				CURRENT_DATE,
 				'1000-01-01')";
-			$HeaderResult=DB_query($SQL);
+			$HeaderResult = DB_query($SQL);
 		} else {
 			$LinesToShow=1;
 		}
@@ -318,7 +318,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 					'" . $MyRow2['orderlineno']."',
 					'" . $DisplayQtySupplied ."',
 					0)";
-					$LineResult=DB_query($SQL);
+					$LineResult = DB_query($SQL);
 			}
 			$ListCount ++;
 
