@@ -223,7 +223,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							}
 						}
 						$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
+						$UpdateConfigResult = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='UpdateCurrencyRatesDaily'");
 					}
 				}
 			}

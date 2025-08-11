@@ -55,8 +55,8 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 					FROM stockmaster INNER JOIN BOM
 						ON stockmaster.stockid = bom.component
 					WHERE bom.parent = '" . $ItemsToUpdate['stockid'] . "'
-					AND bom.effectiveto > '" . Date('Y-m-d') . "'
-					AND bom.effectiveafter < '" . Date('Y-m-d') . "'";
+					AND bom.effectiveto > CURRENT_DATE
+					AND bom.effectiveafter < CURRENT_DATE";
 
 			$ErrMsg = _('Could not recalculate the current cost of the assembly item') . $ItemsToUpdate['stockid'] . ' ' . _('because');
 			$AssemblyCostResult = DB_query($SQL, $ErrMsg);

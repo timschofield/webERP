@@ -257,7 +257,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								amount)
 							VALUES (35,
 								'" . $CostUpdateNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['adjglact'] . "',
 								'" . mb_substr(_('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
@@ -275,7 +275,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								amount)
 							VALUES (35,
 								'" . $CostUpdateNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
 								'" . mb_substr(_('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'], 0, 200) . "',
@@ -359,7 +359,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								28,
 								'" . $WOIssueNo . "',
 								'" . $WORow['loccode'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $_SESSION['UserID'] . "',
 								'" . $PeriodNo . "',
 								'" . $_POST['WO'] . "',
@@ -391,7 +391,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (28,
 								'" . $WOIssueNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
 								'" . mb_substr($_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('Component') . ': ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
@@ -409,7 +409,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (28,
 								'" . $WOIssueNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $AutoIssueCompRow['stockact'] . "',
 								'" . mb_substr($_POST['WO'] . ' - ' . $_POST['StockID'] . ' -> ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
@@ -463,7 +463,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							26,
 							'" . $WOReceiptNo . "',
 							'" . $_POST['IntoLocation'] . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $_SESSION['UserID'] . "',
 							'" . $WORow['stdcost'] . "',
 							'" . $PeriodNo . "',
@@ -680,7 +680,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (26,
 								'" . $WOReceiptNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
 								'" . mb_substr($_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
@@ -699,7 +699,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (26,
 								'" . $WOReceiptNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
 								'" . mb_substr($_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',

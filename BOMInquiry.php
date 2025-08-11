@@ -158,8 +158,8 @@ if (isset($StockID) and $StockID!=""){
 			FROM bom INNER JOIN stockmaster
 			ON bom.component = stockmaster.stockid
 			WHERE bom.parent = '" . $StockID . "'
-            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+            AND bom.effectiveafter <= CURRENT_DATE
+            AND bom.effectiveto > CURRENT_DATE";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
 	$BOMResult = DB_query($SQL, $ErrMsg);

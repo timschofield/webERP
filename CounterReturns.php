@@ -408,8 +408,8 @@ if ($_SESSION['Items' . $identifier]->DefaultCurrency != $_SESSION['CompanyRecor
 							bom.quantity
 						FROM bom
 						WHERE bom.parent='" . $NewItem . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
 				$KitResult = DB_query($SQL, $ErrMsg);
@@ -520,8 +520,8 @@ if (isset($_POST['Recalculate'])) {
 								bom.quantity
 							FROM bom
 							WHERE bom.parent='" . $ReturnItemLine->StockID. "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
 				$KitResult = DB_query($SQL, $ErrMsg);
@@ -569,8 +569,8 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 						bom.quantity
 					FROM bom
 					WHERE bom.parent='" . $NewItem . "'
-                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                    AND bom.effectiveafter <= CURRENT_DATE
+                    AND bom.effectiveto > CURRENT_DATE";
 
 			$ErrMsg = _('Could not retrieve kitset components from the database because');
 			$KitResult = DB_query($SQL, $ErrMsg);
@@ -620,8 +620,8 @@ if (isset($NewItemArray) AND isset($_POST['SelectingReturnItems'])) {
 	        					bom.quantity
 		          			FROM bom
 							WHERE bom.parent='" . $NewItem . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 					$ErrMsg = _('Could not retrieve kitset components from the database because');
 					$KitResult = DB_query($SQL, $ErrMsg);
@@ -1012,8 +1012,8 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
 						AND bom.parent='" . $ReturnItemLine->StockID . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not retrieve assembly components from the database for'). ' '. $ReturnItemLine->StockID . _('because').' ';
 				$AssResult = DB_query($SQL, $ErrMsg, '', true);

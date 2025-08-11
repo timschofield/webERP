@@ -95,8 +95,8 @@ function submit($RootPath, $Location) {
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '". $Location ."'
 						AND bom.parent = '" . $MyItem['stockid'] . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);

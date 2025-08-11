@@ -1186,7 +1186,7 @@ then do the updates and inserts to process the credit note entered */
 											'" . $CreditNoteNo . "',
 											'" . $SQLCreditNoteDate . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'cost',
 											'" . -($PurchPriceVar) . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
@@ -1270,7 +1270,7 @@ then do the updates and inserts to process the credit note entered */
 											'" . $CreditNoteNo . "',
 											'" . $SQLCreditNoteDate . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'cost',
 											'" . (-$AssetAddition->Amount  / $_SESSION['SuppTrans']->ExRate)  . "')";
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');

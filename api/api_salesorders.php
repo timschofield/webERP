@@ -870,8 +870,8 @@ $SOH_DateFields = array ('orddate',
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLineRow['stkcode'] . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 				$AssResult = api_DB_query($SQL);
 

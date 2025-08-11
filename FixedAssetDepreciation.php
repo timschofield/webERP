@@ -225,7 +225,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 											'" . $TransNo . "',
 											'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'depn',
 											'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');

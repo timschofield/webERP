@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 											amount)
 							VALUES ('42',
 								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $OldDetails['costact'] . "',
 								'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
@@ -184,7 +184,7 @@ if (isset($_POST['submit'])) {
 											amount)
 							VALUES ('42',
 								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $NewAccounts['costact'] . "',
 								'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
@@ -203,7 +203,7 @@ if (isset($_POST['submit'])) {
 												amount)
 								VALUES ('42',
 									'" . $TransNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $OldDetails['accumdepnact'] . "',
 									'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
@@ -222,7 +222,7 @@ if (isset($_POST['submit'])) {
 												amount)
 								VALUES ('42',
 									'" . $TransNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $NewAccounts['accumdepnact'] . "',
 									'" . mb_substr($AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'], 0, 200) . "',
@@ -329,7 +329,7 @@ if (isset($_POST['submit'])) {
 										amount)
 						VALUES ('43',
 							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['costact'] . "',
 							'" . mb_substr(_('Delete asset') . ' ' . $AssetID, 0, 200) . "',
@@ -348,7 +348,7 @@ if (isset($_POST['submit'])) {
 										amount)
 						VALUES ('43',
 							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['accumdepnact'] . "',
 							'" . mb_substr(_('Delete asset') . ' ' . $AssetID, 0, 200) . "',

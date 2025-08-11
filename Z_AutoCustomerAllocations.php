@@ -132,7 +132,7 @@ function ProcessAllocation() {
 							transid_allocfrom,
 							transid_allocto
 						) VALUES (
-							'" . date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $AllocnItem->AllocAmt . "',
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'

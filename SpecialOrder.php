@@ -354,7 +354,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										deliverydate)
 							VALUES ('" . $_SESSION['SPL'.$identifier]->SupplierID . "',
 							 		'" . $_SESSION['SPL'.$identifier]->Comments . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $_SESSION['SPL'.$identifier]->SuppCurrExRate . "',
 									'" . $_SESSION['SPL'.$identifier]->Initiator . "',
 									'" . $_SESSION['SPL'.$identifier]->QuotationRef . "',
@@ -369,8 +369,8 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . $_SESSION['SPL'.$identifier]->Status . "',
 									'" . htmlspecialchars($StatusComment, ENT_QUOTES,'UTF-8')  . "',
 									'" . $_SESSION['SPL'.$identifier]->AllowPrintPO . "',
-									'" . Date('Y-m-d') . "',
-									'" . Date('Y-m-d') . "')";
+									CURRENT_DATE,
+									CURRENT_DATE)";
 
 
 		$ErrMsg = _('The purchase order header record could not be inserted into the database because');
@@ -506,7 +506,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							'" . $_SESSION['SPL'.$identifier]->CustomerID . "',
 							'" . $_SESSION['SPL'.$identifier]->BranchCode . "',
 							'" . $_SESSION['SPL'.$identifier]->CustRef ."',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $BranchDetails['salestype'] . "',
 							'" . $BranchDetails['defaultshipvia'] ."',
 							'" . $BranchDetails['brname'] . "',

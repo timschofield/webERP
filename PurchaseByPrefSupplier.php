@@ -221,7 +221,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 										allowprint)
 						VALUES(	'" . $OrderNo . "',
 								'" . $_POST['Supplier'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $SupplierRow['rate'] . "',
 								'" . $_SESSION['UserID'] . "',
 								'" . $_SESSION['UserStockLocation'] . "',
@@ -240,7 +240,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . $SupplierRow['address6'] . "',
 								'" . $SupplierRow['telephone']. "',
 								'" . $LocnRow['contact'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')+1,Date('Y'))) . "',
 								'" . $Status . "',
 								'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',

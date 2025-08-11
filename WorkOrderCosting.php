@@ -377,7 +377,7 @@ if (isset($_POST['Close'])) {
 										amount)
 									VALUES (29,
 										'" . $WOCloseNo . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $WORow['materialuseagevarac'] . "',
 										'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
@@ -396,7 +396,7 @@ if (isset($_POST['Close'])) {
 							amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['stockact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
@@ -414,7 +414,7 @@ if (isset($_POST['Close'])) {
 							amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
@@ -435,7 +435,7 @@ if (isset($_POST['Close'])) {
 						labourcost=0,
 						overheadcost=0,
 						lastcost='" . $WORow['currcost'] . "',
-						lastcostupdate = '" . Date('Y-m-d') . "'
+						lastcostupdate = CURRENT_DATE
 					WHERE stockid='" . $WORow['stockid'] . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');
@@ -453,7 +453,7 @@ if (isset($_POST['Close'])) {
 											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['materialuseagevarac'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance'), 0, 200) . "',
@@ -471,7 +471,7 @@ if (isset($_POST['Close'])) {
 											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance'), 0, 200) . "',
@@ -493,7 +493,7 @@ if (isset($_POST['Close'])) {
 							amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['purchpricevaract'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance'), 0, 200) . "',
@@ -511,7 +511,7 @@ if (isset($_POST['Close'])) {
 											amount)
 						VALUES (29,
 							'" . $WOCloseNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance'), 0, 200) . "',

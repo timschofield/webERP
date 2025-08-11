@@ -11,7 +11,7 @@ $Result = DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='1000-0
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
 
-	$Result = DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'", '', '', true);
+	$Result = DB_query("DELETE FROM prices WHERE enddate<CURRENT_DATE", '', '', true);
 	$Result = DB_query("SELECT stockid,
 							typeabbrev,
 							currabrev,
@@ -19,7 +19,7 @@ if (isset($_POST['DeleteOldPrices'])){
 							branchcode,
 							MAX(startdate) as lateststart
 					FROM prices
-					WHERE startdate<'" . Date('Y-m-d') . "'
+					WHERE startdate<CURRENT_DATE
 					GROUP BY stockid,
 							typeabbrev,
 							currabrev,

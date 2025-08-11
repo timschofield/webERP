@@ -118,7 +118,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 														'" . $_POST['CurrCode'] . "',
 														'" . $_POST['DebtorNo_' . $PriceCounter] . "',
 														'" . $_POST['BranchCode_' . $PriceCounter] . "',
-														'" . date('Y-m-d') . "'
+														CURRENT_DATE
 													)";
 					$ResultInsert = DB_query($SQLInsert);
 				}

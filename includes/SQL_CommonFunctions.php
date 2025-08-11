@@ -174,7 +174,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 									amount)
 						VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
 						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
@@ -194,7 +194,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						amount)
 					VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
 						'" . mb_substr($StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
@@ -402,7 +402,7 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 										'" . $Comments . "',
 										'" . $Cert . "',
 										'" . $_SESSION['UserID'] . "',
-										'" . date('Y-m-d') . "')";
+										CURRENT_DATE)";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
 				. _('The create of the qasamples record failed');
 			$Result = DB_query($SQL, $ErrMsg, '', true);

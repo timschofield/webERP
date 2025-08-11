@@ -637,7 +637,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 				LEFT JOIN (SELECT purchdata.price,purchdata.leadtime,purchdata.supplierno,purchdata.stockid,purchdata.suppliersuom,purchdata.suppliers_partno,purchdata.conversionfactor,purchdata.effectivefrom FROM purchdata INNER JOIN (SELECT max(a.effectivefrom) as eff,a.supplierno,a.stockid from purchdata a   GROUP BY a.stockid,a.supplierno) as c ON purchdata.supplierno=c.supplierno AND purchdata.stockid=c.stockid AND purchdata.effectivefrom=c.eff)  as b
 
 					ON stockmaster.stockid = b.stockid
-					AND b.effectivefrom <= '" . Date('Y-m-d') . "'
+					AND b.effectivefrom <= CURRENT_DATE
 				WHERE stockmaster.stockid='" . $Purch_Item . "'
 				AND b.supplierno ='" . $_GET['SelectedSupplier'] . "'";
 		$Result = DB_query($SQL);

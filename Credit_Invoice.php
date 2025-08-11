@@ -665,7 +665,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 			VALUES('" . $Allocate_amount . "',
 				'" . $CreditTransID . "',
 				'" . $_SESSION['CreditItems' . $identifier]->TransID . "',
-				'" . Date('Y-m-d') . "')";
+				CURRENT_DATE)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The allocation record for the credit note could not be added to the database because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -741,8 +741,8 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 									stockmaster
 								WHERE bom.component=stockmaster.stockid
 								AND bom.parent='" . $CreditLine->StockID . "'
-                                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                                AND bom.effectiveafter <= CURRENT_DATE
+                                AND bom.effectiveto > CURRENT_DATE";
 
 					$ErrMsg = _('Could not retrieve assembly components from the database for') . ' ' . $CreditLine->StockID . ' ' . _('because');
 					$AssResult = DB_query($SQL, $ErrMsg, '', true);

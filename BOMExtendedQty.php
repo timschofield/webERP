@@ -44,8 +44,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-              AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-              AND bom.effectiveto > '" . date('Y-m-d') . "'";
+              AND bom.effectiveafter <= CURRENT_DATE
+              AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 
 	$LevelCounter = 2;
@@ -71,8 +71,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					 (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa
 			FROM bom
 			WHERE bom.parent ='" . $_POST['Part'] . "'
-            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+            AND bom.effectiveafter <= CURRENT_DATE
+            AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 	//echo "<br />sql is $SQL<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -103,8 +103,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					 (bom.quantity * passbom.extendedqpa)
 			 FROM bom,passbom
 			 WHERE bom.parent = passbom.part
-             AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-             AND bom.effectiveto > '" . date('Y-m-d') . "'";
+             AND bom.effectiveafter <= CURRENT_DATE
+             AND bom.effectiveto > CURRENT_DATE";
 		$Result = DB_query($SQL);
 
 		$Result = DB_query("DROP TABLE IF EXISTS passbom2");
@@ -125,8 +125,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 									FROM bom
 									INNER JOIN passbom2
 									ON bom.parent = passbom2.part
-									WHERE bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+									WHERE bom.effectiveafter <= CURRENT_DATE
+                                    AND bom.effectiveto > CURRENT_DATE";
 		$Result = DB_query($SQL);
 
 		$SQL = "SELECT COUNT(bom.parent) AS components

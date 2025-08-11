@@ -63,8 +63,8 @@ if (isset($StockID)) {
 			ON bom.parent = stockmaster.stockid
 			INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE component='" . $StockID . "'
-                AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                AND bom.effectiveto > '" . date('Y-m-d') . "'
+                AND bom.effectiveafter <= CURRENT_DATE
+                AND bom.effectiveto > CURRENT_DATE
 			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');

@@ -337,7 +337,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 						VALUES (
 							'NULL',
 							'" . $_SESSION['UserID'] . "',
-							'" . date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $OrdersToPick[$i]['deliverydate'] . "',
 							'New',
 							'Please pick order. Generate packing slip. Apply shipment labels and ship in system.  Return all Paperwork to MemberSupport@resmart.com',

@@ -461,7 +461,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 												 startdate)
 								 VALUES ('" . $WONo . "',
 										'" . $_SESSION['DefaultFactoryLocation'] . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . FormatDateForSQL($StockItem->ItemDue) . "')",
 										$ErrMsg,
 										'',
@@ -640,7 +640,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													stockid,
 													workcentreadded,
 													'" . $_SESSION['Items'.$identifier]->Location ."',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'2099-12-31',
 													quantity
 											FROM contractbom

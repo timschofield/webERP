@@ -109,7 +109,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 			$SQL = "UPDATE prices
 						SET enddate='" . FormatDateForSQL($_POST['StartDate']) . "'
 						WHERE stockid='" . $StockID . "'
-						AND enddate>'" . date('Y-m-d') . "'
+						AND enddate>CURRENT_DATE
 						AND typeabbrev='" . $MyRow[1] . "'";
 			$Result = DB_query($SQL);
 
