@@ -15,6 +15,5 @@ ChangeColumnDefault('transtext', 'supptrans', 'text', 'NULL', NULL);
 ChangeColumnDefault('comments', 'woitems', 'longblob', 'NULL', NULL);
 ChangeColumnDefault('closecomments', 'workorders', 'longblob', 'NULL', NULL);
 ChangeColumnDefault('remark', 'workorders', 'text', 'NULL', NULL);
-ChangeColumnType('version', 'purchorders', 'DECIMAL(5,2)', 'NOT NULL', '1.00');
 
-UpdateDBNo(basename(__FILE__, '.php'), _('Set dafault to nullable fields'));
+UpdateDBNo(basename(__FILE__, '.php'), _('Set default to nullable fields'));
