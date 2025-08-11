@@ -659,7 +659,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . $_SESSION['Items' . $identifier]->Branch . "',
 						'" . DB_escape_string($_SESSION['Items' . $identifier]->CustRef) . "',
 						'" . stripcslashes($_SESSION['Items' . $identifier]->Comments) . "',
-						'" . Date("Y-m-d") . "',
+						CURRENT_DATE,
 						'" . Date("H:i:s") . "',
 						'" . $_SESSION['Items' . $identifier]->DefaultSalesType . "',
 						'" . $_SESSION['Items' . $identifier]->ShipVia . "',
