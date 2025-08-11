@@ -919,7 +919,18 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 }
 
 
-function ShowDebugBackTrace($DebugMessage, $SQL, $Trace){
+function ShowDebugBackTrace($DebugMessage, $SQL){
+	global $Debug;
+
+	if ($Debug == 1) {
+		$Trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
+	}else if ($Debug >= 1) {
+		$Trace = debug_backtrace();
+	}else {
+		// Should not happen. Safety check
+		return;
+	}
+
 	prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $Trace[0]['file'] . _('on line') . ' ' . $Trace[0]['line'],
 				'error', _('Database SQL Failure'));
 
