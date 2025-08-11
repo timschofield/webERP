@@ -410,9 +410,8 @@ if (isset($_POST['submit'])) {
 		$longitude = 0;
 		if ($_SESSION['geocode_integration'] == 1) {
 			// Get the lat/long from our geocoding host
-			$SQL = "SELECT * FROM geocode_param WHERE 1";
-			$ErrMsg = _('An error occurred in retrieving the information');
-			$Resultgeo = DB_query($SQL, $ErrMsg);
+			$SQL = "SELECT * FROM geocode_param";
+			$Resultgeo = DB_query($SQL);
 			$Row = DB_fetch_array($Resultgeo);
 			$APIKey = $Row['geocode_key'];
 			$MapHost = $Row['map_host'];
@@ -522,9 +521,8 @@ if (isset($_POST['submit'])) {
 			}
 
 			$ErrMsg = _('The supplier could not be updated because');
-			$DbgMsg = _('The SQL that was used to update the supplier but failed was');
 			// echo $SQL;
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			prnMsg(_('The supplier master record for') . ' ' . $SupplierID . ' ' . _('has been updated'), 'success');
 
@@ -591,9 +589,8 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['DefaultGL'] . "'
 								)";
 			$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
-			$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			prnMsg(_('A new supplier for') . ' ' . $_POST['SuppName'] . ' ' . _('has been added to the database'), 'success');
 

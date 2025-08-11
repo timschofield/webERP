@@ -27,7 +27,7 @@ if (isset($_POST['ProcessStockChange'])){
 	$_POST['NewStockID'] = mb_strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
-	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The stock code') . ': ' . $_POST['OldStockID'] . ' ' . _('does not currently exist as a stock code in the system'),'error');
 		$InputError =1;
@@ -45,7 +45,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 
 /*Now check that the new code doesn't already exist */
-	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
 	if (DB_num_rows($Result)!=0){
 		echo '<br /><br />';
 		prnMsg(_('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . _('already exists as a stock code in the system') . ' - ' . _('a unique stock code must be entered for the new code'),'error');
@@ -139,9 +139,8 @@ if (isset($_POST['ProcessStockChange'])){
 					klmovingdiscount80
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new stock master record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -243,7 +242,7 @@ if (isset($_POST['ProcessStockChange'])){
 		echo '<br />' . _('Deleting the old stock master record');
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = _('The SQL to delete the old stock master record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 		echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
@@ -283,9 +282,8 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 	*/
 	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');
 	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
-	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$Result = DB_query_oc($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query_oc($SQL,$ErrMsg,'',true);
 	echo ' ... ' . _('completed');
 }
 // KL RICARD END

@@ -88,7 +88,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 				INDEX (daynumber),
 				PRIMARY KEY (calendardate)) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$i = 0;
 
@@ -119,7 +119,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 				 VALUES ('" . $DateAdd . "',
 						'1',
 						'" . $ManuFlag . "')";
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	// Update daynumber. Set it so non-manufacturing days will have the same daynumber as a valid
@@ -128,7 +128,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 	$DayNumber = 1;
 	$SQL = "SELECT * FROM mrpcalendar
 			ORDER BY calendardate";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	while ($MyRow = DB_fetch_array($Result)) {
 		   if ($MyRow['manufacturingflag'] == "1") {
 			   $DayNumber++;
@@ -136,7 +136,7 @@ function submit(&$ChangeDate)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_S
 		   $CalDate = $MyRow['calendardate'];
 		   $SQL = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $Resultupdate = DB_query($SQL,$ErrMsg);
+		   $Resultupdate = DB_query($SQL, $ErrMsg);
 	}
 	prnMsg(_('The MRP Calendar has been created'),'success');
 	ShowInputForm($ChangeDate);
@@ -176,7 +176,7 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 	$SQL = "UPDATE mrpcalendar SET manufacturingflag = '".$NewManufacturingFlag."'
 			WHERE calendardate = '".$CalDate."'";
 	$ErrMsg = _('Cannot update the MRP Calendar');
-	$Resultupdate = DB_query($SQL,$ErrMsg);
+	$Resultupdate = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The MRP calendar record for') . ' ' . $ChangeDate  . ' ' . _('has been updated'),'success');
 	unset ($ChangeDate);
 	ShowInputForm($ChangeDate);
@@ -187,7 +187,7 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 	// subtract the leadtime from the daynumber, and find the valid manufacturing day with that daynumber.
 	$DayNumber = 1;
 	$SQL = "SELECT * FROM mrpcalendar ORDER BY calendardate";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	while ($MyRow = DB_fetch_array($Result)) {
 		   if ($MyRow['manufacturingflag'] == '1') {
 			   $DayNumber++;
@@ -195,7 +195,7 @@ function update(&$ChangeDate)  //####UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_UPDATE_U
 		   $CalDate = $MyRow['calendardate'];
 		   $SQL = "UPDATE mrpcalendar SET daynumber = '" . $DayNumber . "'
 					WHERE calendardate = '" . $CalDate . "'";
-		   $Resultupdate = DB_query($SQL,$ErrMsg);
+		   $Resultupdate = DB_query($SQL, $ErrMsg);
 	} // End of while
 
 } // End of function update()
@@ -215,7 +215,7 @@ function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LIST
 			AND calendardate <='" . $ToDate . "'";
 
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 			<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">

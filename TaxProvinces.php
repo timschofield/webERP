@@ -157,7 +157,7 @@ or deletion of the records*/
 			ORDER BY taxprovinceid";
 
 	$ErrMsg = _('Could not get tax categories because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>

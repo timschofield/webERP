@@ -810,8 +810,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . (float)$Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
-	$DbgMsg = 'SQL to insert GLTrans record: ';
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 }
 
 function GLAccountBelongsTo($Account){
@@ -1053,18 +1052,16 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					''
 				)";
 				
-		$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 		$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		$SQL = "UPDATE debtorsmaster
 					SET lastpaiddate = CURRENT_DATE,
 					lastpaid = '" . $TotalAmount ."'
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
-		$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 		$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -1088,9 +1085,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . (float)($NetAmount * $FunctionalExRate * $ExRate) . "',
 				'" . $Currency . "'
 			)";
-		$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 		$ErrMsg = _('Cannot insert a bank transaction');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		$SQL="INSERT INTO gltrans (type,
 									typeno,
@@ -1108,9 +1104,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . $NetAmount . "'
 			)";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		if ($Commission > 0){
 			$SQL="INSERT INTO gltrans (type,
@@ -1129,9 +1124,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$Commission . "'
 									)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,'',true);
 		}
 
 		if ($CommissionPPN > 0){
@@ -1151,9 +1145,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$CommissionPPN . "'
 									)";
-			$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,'',true);
 		}
 
 		$SQL="INSERT INTO gltrans ( type,
@@ -1172,9 +1165,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									'" . mb_substr($Narrative, 0, 200) . "',
 									'" . -$TotalAmount . "'
 									)";
-		$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
+		$Result = DB_query($SQL,$ErrMsg,'',true);			
 
 		// update the salesorder table, from quotation to confirmed order
 		if  (($PaymentCode == "tokopedia") OR 
@@ -1192,9 +1184,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}
-		$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
 		$ErrMsg = _('Cannot update the quotation flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		if (($CustomerCode == "WEB-KL-IDR") OR ($CustomerCode == "WEB-WH-IDR")) {
 			// online sale from our website, we must update the status of the order in OpenCart
@@ -1214,9 +1205,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$SQL = "UPDATE salesorders
 					SET klpaidcash = '" . $TotalAmount . "'
 				WHERE salesorders.orderno='" . $OrderNo . "'";
-		$DbgMsg = _('The SQL that failed to update the payment flag of the sales order was');
 		$ErrMsg = _('Cannot update the payment flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 
 		$Result = DB_Txn_Commit();
 	}
@@ -1316,15 +1306,40 @@ function InsertKPI($KPICode, $Value){
 				'" . mb_substr($KPICode, 0, 30) . "',
 				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
-		$DbgMsg = 'SQL to insert klkpi record: ';
-		DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		DB_query($SQL,$ErrMsg,'',true);
 	}
 }
 
 function NumberOfShops($ShopType){
-	$SQL="SELECT COUNT(*)
-		FROM locations
-		WHERE typeloc = '" . $ShopType . "'";
+	if ($ShopType == "SHOPKL" OR $ShopType == "SHOPBL" OR $ShopType == "SHOPOU"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = '" . $ShopType . "'";
+	}elseif ($ShopType == "SHOPOK"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = 'SHOPKL'
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}elseif ($ShopType == "SHOPOB"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = 'SHOPBL'
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}elseif ($ShopType == "SHOPOG"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE (typeloc = 'SHOPKL' OR typeloc = 'SHOPBL' OR typeloc = 'SHOPOU')
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}else{
+		return 0;
+	}
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -1511,12 +1526,17 @@ function TotalItemsToBeReceivedByWO($Brand){
 }
 
 function TotalModels($Brand){
-	$ErrMsg = 'Error in TotalModels()';
 
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1525,7 +1545,7 @@ function TotalModels($Brand){
 			FROM stockmaster
 			WHERE discontinued = 0 " . 
 				$Operator1 ."";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow['0'];
@@ -1534,12 +1554,17 @@ function TotalModels($Brand){
 }
  
 function TotalItems($Brand){
-	$ErrMsg = 'Error in TotalItems()';
 
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1581,11 +1606,16 @@ function TotalDisplayItems($Brand){
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
-	$ErrMsg = 'Error in DailySoldItems()';
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1611,6 +1641,12 @@ function BrandTextFromCode($Brand){
 		$BrandText = "Blink";
 	}elseif ($Brand == "SHOPOU"){
 		$BrandText = "Outlet";
+	}elseif ($Brand == "SHOPOK"){
+		$BrandText = "Outlet Kapal-Laut";
+	}elseif ($Brand == "SHOPOB"){
+		$BrandText = "Outlet Blink";
+	}elseif ($Brand == "SHOPOG"){
+		$BrandText = "Outlet General";
 	}else{
 		$BrandText = "ERROR";
 	}
@@ -1676,9 +1712,8 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 				FROM chartmaster
 				WHERE accountcode='" . $OldGL . "'";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the new chartmaster record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		DB_IgnoreForeignKeys();
@@ -1802,7 +1837,7 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 		echo '<br />' . _('Deleting the old chartmaster record');
 		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
 		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . _('completed');
 
 		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;

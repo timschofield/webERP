@@ -14,7 +14,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 if (isset($_POST['ProcessCustomerChange'])){
 
 /*First check the customer code exists */
-	$Result=DB_query("SELECT debtorno,
+	$Result = DB_query("SELECT debtorno,
 							branchcode
 						FROM custbranch
 						WHERE debtorno='" . $_POST['DebtorNo'] . "'
@@ -38,7 +38,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 
 
 /*Now check that the new code doesn't already exist */
-	$Result=DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'");
+	$Result = DB_query("SELECT debtorno FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "' AND branchcode ='" . $_POST['NewBranchCode'] . "'");
 	if (DB_num_rows($Result)!=0){
 		prnMsg(_('The replacement customer branch code') . ': ' . $_POST['NewBranchCode'] . ' ' . _('already exists as a branch code for the same customer') . ' - ' . _('a unique branch code must be entered for the new code'),'error');
 		include('includes/footer.php');
@@ -110,9 +110,8 @@ if (isset($_POST['ProcessCustomerChange'])){
 			FROM custbranch
 			WHERE debtorno='" . $_POST['DebtorNo'] . "'
 			AND branchcode='" . $_POST['OldBranchCode'] . "'";
-	$DbgMsg = _('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new customer branch master record failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	prnMsg (_('Changing customer transaction records'),'info');
 	$SQL = "UPDATE debtortrans SET
@@ -121,7 +120,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update debtor transaction records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	prnMsg(_('Changing sales analysis records'),'info');
 	$SQL = "UPDATE salesanalysis
@@ -130,7 +129,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					AND custbranch='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update Sales Analysis records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 	prnMsg(_('Changing order delivery differences records'),'info');
@@ -140,7 +139,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					AND branch='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update order delivery differences records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 	prnMsg (_('Changing pricing records'),'info');
@@ -149,7 +148,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 				WHERE debtorno='" . $_POST['DebtorNo'] . "'
 				AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the pricing records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 	prnMsg(_('Changing sales orders records'),'info');
@@ -158,7 +157,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the sales order header records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
 	prnMsg(_('Changing stock movement records'),'info');
@@ -167,7 +166,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update the stock movement records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	prnMsg(_('Changing user default customer records'),'info');
 	$SQL = "UPDATE www_users
@@ -176,7 +175,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to update the user records failed');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	prnMsg(_('Changing the customer branch code in contract header records'),'info');
 	$SQL = "UPDATE contracts
@@ -184,7 +183,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 	$ErrMsg = _('The SQL to update contract header records failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	DB_Txn_Commit();
 
@@ -195,7 +194,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 					AND branchcode='" . $_POST['OldBranchCode'] . "'";
 
 	$ErrMsg = _('The SQL to delete the old customer branch record failed because');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true,true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 	DB_ReinstateForeignKeys();
 
 }

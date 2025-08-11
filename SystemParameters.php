@@ -401,11 +401,11 @@ if (isset($_POST['submit'])) {
 		if (sizeof($SQL) > 1 ) {
 			DB_Txn_Begin();
 			foreach ($SQL as $Line) {
-				$Result = DB_query($Line,$ErrMsg);
+				$Result = DB_query($Line, $ErrMsg);
 			}
 			DB_Txn_Commit();
 		} elseif(sizeof($SQL)==1) {
-			$Result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		prnMsg( _('System configuration updated'),'success');
@@ -733,7 +733,7 @@ echo '<field>
 // DefaultPriceList
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type";
 $ErrMsg = _('Could not load price lists');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_DefaultPriceList">' . _('Default Price List') . ':</label>
 		<select name="X_DefaultPriceList">';
@@ -751,7 +751,7 @@ echo '</select>
 // Default_Shipper
 $SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 $ErrMsg = _('Could not load shippers');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_Default_Shipper">' . _('Default Shipper') . ':</label>
 		<select name="X_Default_Shipper">';
@@ -818,7 +818,7 @@ echo '</select>
 //==HJ== drop down list for tax category
 $SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $ErrMsg = _('Could not load tax categories table');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 echo '<field>
 		<label for="X_DefaultTaxCategory">' . _('Default Tax Category') . ':</label>
 		<select name="X_DefaultTaxCategory">';
@@ -1159,7 +1159,7 @@ echo '<field>
 		<select name="X_ProhibitPostingsBefore">';
 $SQL = "SELECT lastdate_in_period FROM periods ORDER BY periodno DESC";
 $ErrMsg = _('Could not load periods table');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 if ($_SESSION['ProhibitPostingsBefore']=='' OR $_SESSION['ProhibitPostingsBefore']=='1900-01-01' OR !isset($_SESSION['ProhibitPostingsBefore'])){
 	echo '<option selected="selected" value="1900-01-01">' . ConvertSQLDate('1900-01-01') . '</option>';
 }
@@ -1279,7 +1279,7 @@ echo '<field>
 
 $SQL = "SELECT loccode,locationname FROM locations";
 $ErrMsg = _('Could not load locations table');
-$Result = DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 while ($LocationRow = DB_fetch_array($Result)){
 	if ($_SESSION['DefaultFactoryLocation']==$LocationRow['loccode']){
 		echo  '<option selected="selected" value="' . $LocationRow['loccode'] . '">' . $LocationRow['locationname'] . '</option>';

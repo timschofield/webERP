@@ -1,10 +1,8 @@
 <?php
 
-
 /*The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
-
 
 include('includes/DefineSuppTransClass.php');
 

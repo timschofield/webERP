@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 
 $Title = _('Shop Configuration');
@@ -166,13 +165,12 @@ if (isset($_POST['submit'])) {
 
 		}
 		$ErrMsg =  _('The shop configuration could not be updated because');
-		$DbgMsg = _('The SQL that failed was:');
 
 		if (sizeof($SQL) > 0 ) {
 
 			DB_Txn_Begin();
-			foreach ($SQL as $SQLLine) {
-				$Result = DB_query($SQLLine,$ErrMsg,$DbgMsg,true);
+			foreach ($SQL as $SqlLine) {
+				$Result = DB_query($SqlLine, $ErrMsg, '', true);
 			}
 			DB_Txn_Commit();
 			prnMsg( _('Shop configuration updated'),'success');

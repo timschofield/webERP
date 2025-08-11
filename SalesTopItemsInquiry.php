@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -211,7 +210,7 @@ if (isset($_POST['ShowSales'])){
 	}
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($SQL,$ErrMsg);
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">';

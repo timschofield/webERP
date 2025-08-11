@@ -119,8 +119,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			}
 
 			$ErrMsg = _('No stock items were returned by the SQL because');
-			$DbgMsg = _('The SQL used to retrieve the searched parts was');
-			$StockItemsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$StockItemsResult = DB_query($SQL, $ErrMsg);
 		}
 
 		if (true or !isset($LotNumber) or $LotNumber == "") { //revisit later, right now always show all inputs
@@ -334,8 +333,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					WHERE sampleresults.sampleid='" .$SelectedSampleID. "'";
 		$Msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
 		$ErrMsg = _('The insert of the test results failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			$Result2 = DB_query("SELECT count(testid) FROM prodspecs
@@ -413,8 +411,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 								AND resultid='".$MyRow2[0]."'";
 					$Msg = _('Test Results have been overwritten to sample') . ' ' . $_POST['CopyToSampleID']  . _(' from sample') . ' ' . $SelectedSampleID  . _(' for test ') . $MyRow['testid'];
 					$ErrMsg = _('The insert of the test results failed because');
-					$DbgMsg = _('The SQL that was used and failed was');
-					$UpdResult = DB_query($UpdSQLl,$ErrMsg, $DbgMsg);
+					$UpdResult = DB_query($UpdSQLl, $ErrMsg);
 					prnMsg($Msg , 'success');
 				} else {
 					$Msg = _('Test Results have NOT BEEN overwritten for Result ID ') . $MyRow2[0];
@@ -454,8 +451,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 								)";
 				$Msg = _('Test Results have been copied to') . ' ' . $_POST['CopyToSampleID'] . ' ' . _('from') . ' ' . $SelectedSampleID . ' ' . _('for') . ' ' . $MyRow['testid'];
 				$ErrMsg = _('The insert of the test results failed because');
-				$DbgMsg = _('The SQL that was used and failed was');
-				$insresult = DB_query($InsSQL,$ErrMsg, $DbgMsg);
+				$insresult = DB_query($InsSQL, $ErrMsg);
 				prnMsg($Msg , 'success');
 			}
 		} //while loop on myrow
@@ -591,8 +587,7 @@ if (isset($_POST['AddTests'])) {
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
 			$Msg = _('A Sample Result record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Sample Result failed because');
-			$DbgMsg = _('The SQL that was used and failed was');
-			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Msg , 'success');
 		} //if on
 	} //for
@@ -644,8 +639,7 @@ if (isset($_POST['submit'])) {
 
 		$Msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
 		$ErrMsg = _('The updated of the sampleresults failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($Msg , 'success');
 	} //for
 	//check to see all values are in spec or at least entered
@@ -661,8 +655,7 @@ if (isset($_POST['submit'])) {
 				WHERE sampleid = '".$SelectedSampleID."'";
 		$Msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
 		$ErrMsg = _('The update of the QA Sample failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($Msg , 'error');
 	}
 }
@@ -676,7 +669,7 @@ if (isset($_GET['Delete'])) {
 	} else {
 		$SQL="DELETE FROM sampleresults WHERE resultid='". $_GET['ResultID']."'";
 		$ErrMsg = _('The sample results could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('Result QA Sample') . ' ' . $_GET['ResultID'] . _('has been deleted from the database'),'success');
 		unset($_GET['ResultID']);

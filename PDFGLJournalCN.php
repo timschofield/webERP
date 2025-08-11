@@ -1,5 +1,4 @@
 <?php
-/* $Revision: 1.5 $2012.2CQZ二次修改 */
 
 include('includes/session.php');
 if (isset($_POST['JournalNo'])) {
@@ -51,9 +50,9 @@ if ($JournalNo=='Preview') {
 				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='".$TypeID."'
 				AND gltrans.typeno='" . $JournalNo . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$LineCount = DB_num_rows($Result); // UldisN
-	$MyRow=DB_fetch_array($Result);
+	$MyRow = DB_fetch_array($Result);
 	$JournalDate=$MyRow['trandate'];
 	DB_data_seek($Result, 0);
 	$Typemame=$MyRow['typename'];

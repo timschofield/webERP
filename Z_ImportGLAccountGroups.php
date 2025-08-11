@@ -12,7 +12,7 @@ include('includes/header.php');
 
 //$weberpuser = $_SESSION['UserID'];
 //$SQL="SELECT password FROM www_users WHERE userid='" . $weberpuser . "'";
-//$Result=DB_query($SQL);
+//$Result = DB_query($SQL);
 //$MyRow=DB_fetch_array($Result);
 //$weberppassword = $MyRow[0];
 

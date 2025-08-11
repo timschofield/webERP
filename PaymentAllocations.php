@@ -1,6 +1,5 @@
 <?php
 
-
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */

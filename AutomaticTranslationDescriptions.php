@@ -56,7 +56,7 @@ if(DB_num_rows($Result) != 0) {
 					"SET descriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
-			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
 			echo '<tr class="striped_row">
@@ -76,7 +76,7 @@ if(DB_num_rows($Result) != 0) {
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
 					echo $SQL;
-			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
 			echo '<tr class="striped_row">

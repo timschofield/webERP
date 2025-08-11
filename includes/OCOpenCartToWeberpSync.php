@@ -126,7 +126,6 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 							</thead>
 							<tbody>';
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update OpenCart orders in webERP failed');
 		$InsertErrMsg = _('The SQL to insert OpenCart orders in webERP failed');
 
@@ -240,7 +239,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 									'" . $MyRow['date_modified'] . "',
 									'" . $MyRow['date_modified'] . "',
 									'" . $MyRow['date_modified'] . "')";
-					DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+					DB_query($SQLInsert,$InsertErrMsg,'',true);
 				}
 				if ($ShowMessages){
 					echo '<table class="selection">' . $TableHeader;
@@ -306,14 +305,14 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $myitems['quantity'] . "',
 											'" . $MyRow['date_modified'] . "',
 											'0')"; // prices come already net from OpenCart
-						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,'',true);
 
 						// prepare the RL for the items just ordered online
 						$SQLUpdate = "UPDATE locstock
 										SET reorderlevel = reorderlevel + " . $myitems['quantity'] . "
 										WHERE stockid = '" . $myitems['model'] . "'
 										AND loccode = '" . $Location . "'";
-						DB_query($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+						DB_query($SQLUpdate,$UpdateErrMsg,'',true);
 						if ($ShowMessages){
 							echo '<td>' . $MyRow['order_id'] . '</td>
 									<td>' . $OrderNo . '</td>
@@ -385,7 +384,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $MyRow['date_modified'] . "',
 											'" . $CouponCode . "',
 											'0')"; // prices come already net from OpenCart
-						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,'',true);
 						if ($ShowMessages){
 							echo '<td>' . $MyRow['order_id'] . '</td>
 									<td>' . $OrderNo . '</td>
@@ -446,7 +445,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 											'" . $MyRow['date_modified'] . "',
 											'" . $DiscountCode . "',
 											'0')"; // prices come already net from OpenCart
-						DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query($SQLInsert,$InsertErrMsg,'',true);
 						if ($ShowMessages){
 							echo '<td>' . $MyRow['order_id'] . '</td>
 									<td>' . $OrderNo . '</td>
@@ -502,10 +501,9 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	// Now deal with the Paypal payment/s of the order...
 
 	// Lock OpenCart tables to ensure consistency during read and subsequent updates within this function's scope
-	$DbgMsg = _('The SQL used to lock tables was:');
 	$ErrMsg = _('Failed to lock OpenCart PayPal related tables.');
 	$LockQuery = "LOCK TABLES oc_paypal_order READ, oc_paypal_order_transaction READ, oc_order WRITE, oc_order_total READ";
-	DB_query_oc($LockQuery, $ErrMsg, $DbgMsg, true);
+	DB_query_oc($LockQuery, $ErrMsg, '', true);
 
 	$SQL = "SELECT 	oc_paypal_order.paypal_order_id,
 				oc_order.order_id,
@@ -653,9 +651,8 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 		}
 	}
 	// Unlock OpenCart tables
-	$DbgMsg = _('The SQL used to unlock tables was:');
 	$ErrMsg = _('Failed to unlock OpenCart tables.');
-	DB_query_oc("UNLOCK TABLES", $ErrMsg, $DbgMsg, true);
+	DB_query_oc("UNLOCK TABLES", $ErrMsg, '', true);
 
 	if ($ShowMessages){
 		prnMsg(locale_number_format($i,0) . ' ' . _('PayPal Payments synchronized from OpenCart to webERP'),'success');

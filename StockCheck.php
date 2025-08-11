@@ -236,7 +236,7 @@ if (isset($_POST['PrintPDF'])){
 	$SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
-	$LocnResult=DB_query($SQL);
+	$LocnResult = DB_query($SQL);
 
 	while ($MyRow=DB_fetch_array($LocnResult)){
 			  echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';

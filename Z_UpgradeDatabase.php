@@ -1,9 +1,12 @@
 <?php
+
 $PageSecurity = 15;
+
+include('includes/session.php');
 
 $Title = _('Database Upgrade');
 
-/// @todo move inclusion of session.php to above this block, so that wec use $RootPath for links
+/// @todo use $RootPath for links
 echo '<!DOCTYPE html>';
 echo '<html>
 		<head>
@@ -15,8 +18,6 @@ echo '<html>
 
 echo '<title>', $Title, '</title>';
 echo '<link rel="stylesheet" href="css/dbupgrade.css" type="text/css" />';
-
-include('includes/session.php');
 
 //ob_start(); /*what is this for? */
 if (!isset($_SESSION['DBVersion'])) {

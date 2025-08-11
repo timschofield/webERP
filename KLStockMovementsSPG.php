@@ -74,9 +74,7 @@ if ($StockID != ''){
 			ORDER BY stkmoveno DESC";
 
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
-	$DbgMsg = _('The SQL that failed was') . ' ';
-
-	$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$MovtsResult = DB_query($SQL, $ErrMsg);
 
 	$TableTitleText = _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days";
 	ShowTableTitle($TableTitleText);

@@ -110,7 +110,7 @@ $SQLTests="SELECT sampleresults.testid,
 				AND sampledate <='" . $ToDate . "'";
 
 
-$TestResult=DB_query($SQLTests);
+$TestResult = DB_query($SQLTests);
 $TestsArray=array();
 $SamplesArray=array();
 $AllResultsArray=array();

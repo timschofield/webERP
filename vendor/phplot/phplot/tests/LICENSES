@@ -1,0 +1,32 @@
+This is the license information for the PHPlot Test Suite
+
+Last updated: 2013-01-17
+-----------------------------------------------------------------------------
+The PHPlot Test Suite is Copyright (c) 2011-2013 lbayuk AT users.sourceforge.net
+
+The PHPlot Test Suite is licensed under the same terms as PHPlot itself,
+the GNU Lesser General Public License version 2.1, although it is a separate
+product from PHPlot. Refer to the file COPYING included with PHPlot for details.
+
+In addition to the license terms, you may use portions of any of the
+included test scripts as the basis for your own PHPlot scripts. That is,
+you may copy, paste, and edit any portion of individual scripts and use
+them in your own script(s) to produce plots; provided that you are not
+creating a "test suite" from these parts, you are not considered to be
+creating a derivative work nor redistributing this code.
+
+Anything listed below is licensed separately and not part of the PHPlot license.
+-----------------------------------------------------------------------------
+This test suite uses and includes the FreeUniversal-Regular.ttf font file
+from openfontlibrary.org. The font is licensed as follows:
+
+  FreeUniversal fonts, Copyright (c) 2009 Wilson, Stephan
+  with Reserved Font Name FreeUniversal.
+  This Font Software is licensed under the SIL Open Font License, Version 1.1.
+  This license is [*included in the font], and is also available with a FAQ at:
+  http://scripts.sil.org/OFL
+
+*Note: The license text is embedded inside the TrueType font file, but was
+not included separately with the download.
+
+-----------------------------------------------------------------------------

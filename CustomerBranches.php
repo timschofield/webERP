@@ -102,9 +102,8 @@ if (isset($_POST['submit'])) {
 	}
 	if ($_SESSION['geocode_integration']==1 ){
 		// Get the lat/long from our geocoding host
-		$SQL = "SELECT * FROM geocode_param WHERE 1";
-		$ErrMsg = _('An error occurred in retrieving the information');
-		$Resultgeo = DB_query($SQL, $ErrMsg);
+		$SQL = "SELECT * FROM geocode_param";
+		$Resultgeo = DB_query($SQL);
 		$Row = DB_fetch_array($Resultgeo);
 		$APIKey = $Row['geocode_key'];
 		$MapHost = $Row['map_host'];
@@ -351,7 +350,7 @@ if (isset($_POST['submit'])) {
 								$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 							}
 							$ErrMsg = _('The branch record could not be deleted') . ' - ' . _('the SQL server returned the following message');
-							$Result = DB_query($SQL,$ErrMsg);
+							$Result = DB_query($SQL, $ErrMsg);
 							if (DB_error_no()==0){
 								prnMsg(_('Branch Deleted'),'success');
 							}

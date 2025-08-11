@@ -49,11 +49,11 @@ if(isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if(isset($_POST['SectionID'])) {
-		$SQL="SELECT sectionid
+	if (isset($_POST['SectionID'])) {
+		$SQL = "SELECT sectionid
 					FROM accountsection
 					WHERE sectionid='".$_POST['SectionID']."'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 
 		if((DB_num_rows($Result)!=0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
@@ -164,7 +164,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		ORDER BY sectionid";
 
 	$ErrMsg = _('Could not get account group sections because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img alt="" class="noPrint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.

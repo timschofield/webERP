@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('Geocode Maintenance');
 include('includes/header.php');
@@ -32,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	$SQL="SELECT count(geocodeid)
 			FROM geocode_param WHERE geocodeid='".$_POST['GeoCodeID']."'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 and !isset($SelectedParam)) {

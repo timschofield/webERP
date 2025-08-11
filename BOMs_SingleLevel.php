@@ -47,8 +47,7 @@ ie the BOM is recursive otherwise false ie 0 */
 
 	$SQL = "SELECT component FROM bom WHERE parent='".$ComponentToCheck."'";
 	$ErrMsg = _('An error occurred in retrieving the components of the BOM during the check for recursion');
-	$DbgMsg = _('The SQL that was used to retrieve the components of the BOM and that failed in the process was');
-	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)!=0) {
 		while ($MyRow=DB_fetch_array($Result)){
@@ -98,8 +97,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component,$Level) {
 				AND bom.parent = '".$Parent."'";
 
 		$ErrMsg = _('Could not retrieve the BOM components because');
-		$DbgMsg = _('The SQL used to retrieve the components was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		//echo $TableHeader;
 		$RowCounter =0;
@@ -298,9 +296,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 					AND bom.component='" . $SelectedComponent . "'";
 
 			$ErrMsg =  _('Could not update this BOM component because');
-			$DbgMsg =  _('The SQL used to update the component was');
 
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			$Msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
 			UpdateCost($SelectedComponent);
 
@@ -321,9 +318,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 						AND loccode='" . $_POST['LocCode'] . "'" ;
 
 				$ErrMsg =  _('An error occurred in checking the component is not already on the BOM');
-				$DbgMsg =  _('The SQL that was used to check the component was not already on the BOM and that failed in the process was');
 
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
 				if (DB_num_rows($Result)==0) {
 
@@ -347,9 +343,8 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 								" . $_POST['AutoIssue'] . ")";
 
 					$ErrMsg = _('Could not insert the BOM component because');
-					$DbgMsg = _('The SQL used to insert the component was');
 
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 
 					UpdateCost($_POST['Component']);
 					$Msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
@@ -380,8 +375,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 				AND workcentreadded='".$WorkCentre."'";
 
 		$ErrMsg = _('Could not delete this BOM components because');
-		$DbgMsg = _('The SQL used to delete the BOM was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$ComponentSQL = "SELECT component
 							FROM bom
@@ -414,10 +408,9 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			WHERE stockmaster.stockid='" . $SelectedParent . "'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$MyRow=DB_fetch_row($Result);
+	$MyRow = DB_fetch_row($Result);
 
 	$ParentMBflag = $MyRow[1];
 
@@ -450,8 +443,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			AND stockmaster.mbflag='M'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	$ix = 0;
 	if( DB_num_rows($Result) > 0 ) {
      echo '<table class="selection">';
@@ -474,8 +466,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		AND stockmaster.mbflag='A'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if( DB_num_rows($Result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . _('Assembly parent items').' : ';
@@ -499,8 +490,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			AND stockmaster.mbflag='K'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if( DB_num_rows($Result) > 0 ) {
         echo '<table class="selection">';
 		echo '<tr><td><div class="centre">' . _('Kit sets').' : ';
@@ -523,8 +513,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			AND stockmaster.mbflag='G'";
 
 	$ErrMsg = _('Could not retrieve the description of the parent part because');
-	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
-	$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if( DB_num_rows($Result) > 0 ) {
 		echo '<table class="selection">
 				<tr>
@@ -671,8 +660,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 			}
 
 			$ErrMsg = _('Could not retrieve the list of potential components because');
-			$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
-			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 
 			while ($MyRow = DB_fetch_array($Result)) {
@@ -864,7 +852,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search

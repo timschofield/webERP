@@ -2,14 +2,9 @@
 /* Entry of new work orders */
 
 include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
-$ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
-
 $Title = _('Work Order Entry');
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.inc');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.
@@ -53,7 +48,7 @@ if(is_null($LocRow['loccode']) OR $LocRow['loccode']=='') {
 	prnMsg(_('Your security settings do not allow you to create or update new Work Order at this location') . ' ' . $LocCode,'error');
 	echo '<br /><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select an existing work order') . '</a>';
 	include('includes/footer.php');
-		exit();
+	exit;
 }
 
 foreach ($_POST as $key=>$value) {
@@ -128,7 +123,6 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 						ORDER BY stockmaster.stockid
 							";
 	} elseif(mb_strlen($_POST['CustomerRef'])>0) {
-		exit();
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units,
@@ -247,7 +241,7 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
-	echo $ListCount.'x'.$_SESSION['DisplayRecordsMax'];
+	$ListCount = $myrow[0];
 	if($ListCount>0) {
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
 	} else {
@@ -274,8 +268,7 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg, '');
 
 	if(DB_num_rows($SearchResult)==0 ) {
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -614,21 +607,20 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 	if($CancelDelete==false) { //ie all tests proved ok to delete
 		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
-		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the items on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		// delete the actual work order
 		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 
 		DB_Txn_Commit();
 		prnMsg(_('The work order has been cancelled'),'success');
@@ -665,17 +657,16 @@ if(isset($_GET['Delete'])) {
 	//delete items
 		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
-		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_GET['WO'] . "' AND parentstockid='" . $_GET['StockID'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the item on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
 		header('Location: '. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_GET['WO']);
@@ -786,7 +777,7 @@ if(!isset($_POST['StartDate'])) {
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="date" name="StartDate" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['StartDate']) .'" /></td>
+		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" /></td>
 	</tr>';
 
 if(!isset($_POST['RequiredBy'])) {
@@ -795,7 +786,7 @@ if(!isset($_POST['RequiredBy'])) {
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="date" name="RequiredBy" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['RequiredBy']) .'" /></td>
+		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" /></td>
 	</tr>';
 if(!isset($_POST['Ref'])) {
 	$_POST['Ref'] = '';
@@ -1058,3 +1049,4 @@ if(isset($SearchResult)) {
 
 echo '</form>';
 include('includes/footer.php');
+?>

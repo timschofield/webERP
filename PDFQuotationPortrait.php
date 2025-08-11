@@ -73,7 +73,7 @@ $SQL = "SELECT salesorders.customerref,
 			WHERE salesorders.quotation=1
 			AND salesorders.orderno='" . $_GET['QuotationNo'] ."'";
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -135,7 +135,7 @@ $SQL = "SELECT salesorderdetails.stkcode,
 		ON salesorderdetails.stkcode=stockmaster.stockid
 	WHERE salesorderdetails.orderno='" . $_GET['QuotationNo'] . "'";
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 $ListCount = 0;
 

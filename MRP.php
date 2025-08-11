@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: MRP.php 7959 2018-02-13 04:04:59Z turbopt $*/
-
 include('includes/session.php');
 $Title = _('Run MRP Calculation');
 $ViewTopic = 'MRP';
@@ -26,7 +24,7 @@ if (isset($_POST['submit'])) {
 	$SQL = "CREATE TEMPORARY TABLE passbom (part char(20),
 											sortpart text) DEFAULT CHARSET=utf8";
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "CREATE TEMPORARY TABLE tempbom (parent char(20),
 											component char(20),

@@ -1,7 +1,5 @@
 <?php
 
-/* $Revision: 1.9 $ */
-
 $PageSecurity = 15;
 
 include('includes/session.php');

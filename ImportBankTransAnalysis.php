@@ -1,6 +1,5 @@
 <?php
 
-
 /*The ImportBankTransClass contains the structure ofinformation about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of
 GLEntries objects to hold the GL analysis for each transaction */
@@ -307,7 +306,7 @@ if ($AllowGLAnalysis==false){
 			FROM tags
 			ORDER BY tagref";
 
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$MyRow['tagref']){
 			echo '<option selected value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';

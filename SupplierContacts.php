@@ -93,9 +93,8 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 	if ($InputError != 1) {
 		$ErrMsg = _('The supplier contact could not be inserted or updated because');
-		$DbgMsg = _('The SQL that was used but failed was');
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg,'success');
 
@@ -114,9 +113,8 @@ if (isset($_POST['submit'])) {
 			AND supplierid = '".$SupplierID."'";
 
 	$ErrMsg = _('The supplier contact could not be deleted because');
-	$DbgMsg = _('The SQL that was used but failed was');
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<br />' . _('Supplier contact has been deleted') . '<p />';
 

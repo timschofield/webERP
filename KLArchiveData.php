@@ -221,14 +221,13 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 						amount,
 						jobref
 				FROM gltrans
-				ORDER BY periodno,
 				WHERE periodno > " . $PeriodAlreadyArchived . "
 					AND periodno <= " . $ArchiveToPeriod . "
+				ORDER BY periodno,
 						trandate,
 						account";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the gltrans record');
-		$DbgMsg = _('The SQL that was used to insert the gltrans record was');		
 		if (DB_num_rows($Result) != 0) {
 			$RecordCounter = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
@@ -255,7 +254,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 								'" . mb_substr(DB_escape_string($MyRow['narrative'] ?? ''), 0, 200) . "',
 								'" . $MyRow['amount'] . "',
 								'" . DB_escape_string($MyRow['jobref'] ?? '') . "')";
-					DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+					DB_query_archive($SQLInsert, $ErrMsg, '');
 					$RecordCounter++;
 				}
 			}
@@ -280,7 +279,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 					$SQLDelete = "DELETE FROM gltrans 
 									WHERE periodno = " . $MyConsolidatedRow['periodno'] . "
 										AND account = '" . $MyConsolidatedRow['account'] . "'";
-					DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+					DB_query($SQLDelete, $ErrMsg, '');
 					
 					$Typeno = GetNextTransNo(1000);
 					$SQLInsert = "INSERT INTO gltrans 
@@ -303,7 +302,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 									'" . mb_substr('CONSOLIDATED ACCOUNTING', 0, 200) . "',
 									'" . $MyConsolidatedRow['consolidated'] . "',
 									'')";
-					DB_query($SQLInsert, $ErrMsg, $DbgMsg);
+					DB_query($SQLInsert, $ErrMsg, '');
 				}
 				prnMsg("Inserted consolidated accounting records in production DB gltrans table");
 
@@ -384,7 +383,6 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 				WHERE prd <= " . $ArchiveToPeriod . "";
 		$Result = DB_query($SQL);	
 		$ErrMsg = _('An error occurred in inserting the stockmoves record');
-		$DbgMsg = _('The SQL that was used to insert the stockmoves record was');		
 		if (DB_num_rows($Result) != 0) {
 			$RecordCounter = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
@@ -429,7 +427,7 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 								'" . $MyRow['newqoh'] . "',
 								'" . $MyRow['hidemovt'] . "',
 								'" . DB_escape_string($MyRow['narrative'] ?? '') . "')";
-					DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+					DB_query_archive($SQLInsert, $ErrMsg, '');
 					$RecordCounter++;
 				}
 			}
@@ -437,7 +435,7 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 			
 			$SQLDelete = "DELETE FROM stockmoves 
 							WHERE prd <= " . $ArchiveToPeriod . "";
-			DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+			DB_query($SQLDelete, $ErrMsg, '');
 			prnMsg("Deleted stockmoves records in Production DB");
 			
 			UpdateArchiveTablePeriod('stockmoves', $ArchiveToPeriod);
@@ -487,7 +485,6 @@ function ArchiveTableStockmovestaxes() {
 			WHERE sm.stkmoveno IS NULL";
 	$Result = DB_query($SQL);	
 	$ErrMsg = _('An error occurred in inserting the stockmovestaxes record');
-	$DbgMsg = _('The SQL that was used to insert the stockmovestaxes record was');		
 	
 	if (DB_num_rows($Result) != 0) {
 		// select the webERP stockmoves table to be copied into Archive DB
@@ -506,7 +503,7 @@ function ArchiveTableStockmovestaxes() {
 							'" . $MyRow['taxrate'] . "',
 							'" . $MyRow['taxontax'] . "',
 							'" . $MyRow['taxcalculationorder'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
 		}
@@ -517,7 +514,7 @@ function ArchiveTableStockmovestaxes() {
 					LEFT JOIN stockmoves sm 
 						ON st.stkmoveno = sm.stkmoveno
 					WHERE sm.stkmoveno IS NULL";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		DB_query($SQLDelete, $ErrMsg, '');
 		prnMsg("Deleted stockmovestaxes records in webERP production DB");
 
 		// count how many records are on stockmovestaxes in webERP production DB
@@ -570,7 +567,6 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 				AND stockmaster.date_updated <= '" . $ArchiveToEndDate . "'";
 	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the stockmoves record');
-	$DbgMsg = _('The SQL that was used to insert the stockmoves record was');
 	if (DB_num_rows($Result) != 0) {
 		$RecordCounter = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -595,7 +591,7 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 								'" . $MyRow['recdate'] . "',
 								'" . DB_escape_string($MyRow['shiploc'] ?? '') . "',
 								'" . DB_escape_string($MyRow['recloc'] ?? '') . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}	
 		}
@@ -607,7 +603,7 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 						ON lt.stockid = sm.stockid
 					WHERE sm.discontinued = 1
 						AND sm.date_updated <= '" . $ArchiveToEndDate . "'";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		DB_query($SQLDelete, $ErrMsg, '');
 		prnMsg("Deleted loctransfers records in webERP production DB");
 
 		// count how many records are on loctransfers in webERP production DB
@@ -738,7 +734,6 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 
 	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the debtortrans record');
-	$DbgMsg = _('The SQL that was used to insert the debtortrans record was');		
 	if (DB_num_rows($Result) != 0) {
 		$RecordCounter = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -797,7 +792,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . $MyRow['packages'] . "',
 							'" . $MyRow['salesperson'] . "',
 							'" . $MyRow['balance'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
 		}
@@ -829,7 +824,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 					$SQLDelete = "DELETE FROM debtortrans 
 									WHERE prd = " . $MyConsolidatedRow['prd'] . "
 										AND debtorno = '" . $MyConsolidatedRow['debtorno'] . "'";
-					DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+					DB_query($SQLDelete, $ErrMsg, '');
 
 					$Transno = GetNextTransNo(1001);
 					$SQLInsert = "INSERT INTO debtortrans 
@@ -884,7 +879,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . '1' . "',
 							'" . '999' . "',
 							'" . $MyConsolidatedRow['balance_consolidated'] . "')";
-					DB_query($SQLInsert, $ErrMsg, $DbgMsg);
+					DB_query($SQLInsert, $ErrMsg, '');
 				}
 				prnMsg("Inserted consolidated accounting records in production DB debtortrans table");
 
@@ -910,8 +905,6 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 		$Result = DB_Txn_Rollback();
 	}
 }
-
-
 
 /**************************************************************************************************************
  * ArchiveTableDebtortranstaxes function
@@ -939,7 +932,6 @@ function ArchiveTableDebtortranstaxes() {
 			WHERE debtortrans.id IS NULL";
 	$Result = DB_query($SQL);	
 	$ErrMsg = _('An error occurred in inserting the debtortranstaxes record');
-	$DbgMsg = _('The SQL that was used to insert the debtortranstaxes record was');		
 	
 	if (DB_num_rows($Result) != 0) {
 		// select the webERP debtortrans table to be copied into Archive DB
@@ -954,7 +946,7 @@ function ArchiveTableDebtortranstaxes() {
 							'" . $MyRow['debtortransid'] . "',
 							'" . $MyRow['taxauthid'] . "',
 							'" . $MyRow['taxamount'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
 		}
@@ -965,7 +957,7 @@ function ArchiveTableDebtortranstaxes() {
 					LEFT JOIN debtortrans
 						ON debtortranstaxes.debtortransid = debtortrans.id
 					WHERE debtortrans.id IS NULL";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		DB_query($SQLDelete, $ErrMsg, '');
 		prnMsg("Deleted debtortranstaxes records in webERP production DB");
 
 		// count how many records are on debtortranstaxes in webERP production DB
@@ -1012,7 +1004,6 @@ function ArchiveTableCustallocns() {
 			WHERE debtortrans.id IS NULL";
 	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the custallocns record');
-	$DbgMsg = _('The SQL that was used to insert the custallocns record was');
 
 	if (DB_num_rows($Result) != 0) {
 		// select the webERP debtortrans table to be copied into Archive DB
@@ -1031,7 +1022,7 @@ function ArchiveTableCustallocns() {
 							'" . $MyRow['datealloc'] . "',
 							'" . $MyRow['transid_allocfrom'] . "',
 							'" . $MyRow['transid_allocto'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
 		}
@@ -1042,7 +1033,7 @@ function ArchiveTableCustallocns() {
 					LEFT JOIN debtortrans
 						ON custallocns.transid_allocfrom = debtortrans.id
 					WHERE debtortrans.id IS NULL";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		DB_query($SQLDelete, $ErrMsg, '');
 		prnMsg("Deleted custallocns records in webERP production DB");
 
 		// count how many records are on custallocns in webERP production DB
@@ -1118,7 +1109,6 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 
 	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the banktrans record');
-	$DbgMsg = _('The SQL that was used to insert the banktrans record was');		
 	if (DB_num_rows($Result) != 0) {
 		$RecordCounter = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1151,7 +1141,7 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 							'" . $MyRow['amount'] . "',
 							'" . DB_escape_string($MyRow['currcode'] ?? '') . "',
 							'" . $MyRow['chequeno'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg, '');
 				$RecordCounter++;
 			}
 		}
@@ -1183,7 +1173,7 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 									WHERE transdate = '" . $MyConsolidatedRow['transdate'] . "'
 										AND bankact = '" . $MyConsolidatedRow['bankact'] . "'
 										AND currcode = '" . $MyConsolidatedRow['currcode'] . "'";
-					DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+					DB_query($SQLDelete, $ErrMsg, '');
 
 					$Transno = GetNextTransNo(1002);
 					$SQLInsert = "INSERT INTO banktrans 
@@ -1212,7 +1202,7 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 							'" . $MyConsolidatedRow['amount_consolidated'] . "',
 							'" . $MyConsolidatedRow['currcode'] . "',
 							'" . '' . "')";
-					DB_query($SQLInsert, $ErrMsg, $DbgMsg);
+					DB_query($SQLInsert, $ErrMsg, '');
 				}
 				prnMsg("Inserted consolidated accounting records in production DB banktrans table");
 
@@ -1309,7 +1299,6 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 
 	$Result = DB_query($SQL);
 	$ErrMsg = _('An error occurred in inserting the klconsignment record');
-	$DbgMsg = _('The SQL that was used to insert the klconsignment record was');
 	if (DB_num_rows($Result) != 0) {
 		$RecordCounter = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1344,7 +1333,7 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 							'" . $MyRow['standardcost'] . "',
 							'" . $MyRow['invoicedtopartner'] . "',
 							'" . $MyRow['fakturpajakdate'] . "')";
-				DB_query_archive($SQLInsert, $ErrMsg, $DbgMsg);
+				DB_query_archive($SQLInsert, $ErrMsg);
 				$RecordCounter++;
 			}
 		}
@@ -1353,7 +1342,7 @@ function ArchiveTableKlconsignment($ArchiveToPeriod) {
 		$SQLDelete = "DELETE FROM klconsignment
 					WHERE saledate > '" . $DateAlreadyArchived . "'
 						AND saledate <= '" . $ArchiveToDate . "'";
-		DB_query($SQLDelete, $ErrMsg, $DbgMsg);
+		DB_query($SQLDelete, $ErrMsg);
 		prnMsg("Deleted klconsignment records in Production DB");
 
 		UpdateArchiveTablePeriod('klconsignment', $ArchiveToPeriod);

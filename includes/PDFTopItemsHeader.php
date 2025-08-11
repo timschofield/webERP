@@ -1,4 +1,5 @@
 <?php
+
 /*PDF page header for Top Items report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -7,7 +8,8 @@ if ($PageNumber>1){
 $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 $XPos=0;
-$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg',$XPos+20,$YPos-50,0,60);
+/// @todo use the same logo-scanning logic used in other places, and support non-jpeg files
+$pdf->addJpegFromFile('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg', $XPos+20, $YPos-50, 0, 60);
 
 if ($_GET['Customers']!='All'){
 	$SQL="SELECT typename
@@ -51,7 +53,6 @@ $LeftOvers = $pdf->addTextWrap($Xpos+320,$YPos,300-$Left_Margin,$FontSize,  _('T
 $LeftOvers = $pdf->addTextWrap($Xpos+370,$YPos,300-$Left_Margin,$FontSize,  _('Unit'), 'centre');
 $LeftOvers = $pdf->addTextWrap($Xpos+410,$YPos,300-$Left_Margin,$FontSize,  _('Value Sales'), 'centre');
 $LeftOvers = $pdf->addTextWrap($Xpos+480,$YPos,300-$Left_Margin,$FontSize,  _('On Hand'), 'centre');
-
 
 $FontSize=8;
 $pdf->Rectangle($Left_Margin, $YPos-$LineHeight,$Page_Width-$Left_Margin-$Right_Margin,$YPos-$Bottom_Margin);

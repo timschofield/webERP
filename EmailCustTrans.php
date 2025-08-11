@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
@@ -55,7 +54,7 @@ $SQL = "SELECT email
 		AND debtortrans.transno='" .$_GET['FromTransNo'] . "'";
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
-$ContactResult=DB_query($SQL,$ErrMsg);
+$ContactResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ContactResult)>0){
 	$EmailAddrRow = DB_fetch_row($ContactResult);

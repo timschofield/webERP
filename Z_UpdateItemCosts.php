@@ -71,7 +71,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 						overheadcost";
 
 		$ErrMsg = _('The selected item code does not exist');
-	    $OldResult = DB_query($SQL,$ErrMsg);
+	    $OldResult = DB_query($SQL, $ErrMsg);
 	    $OldRow = DB_fetch_array($OldResult);
 	    $QOH = $OldRow['totalqoh'];
 
@@ -92,11 +92,9 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 									WHERE stockid='" . $StockID . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');
-			$DbgMsg = _('The SQL that failed was');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			UpdateCost($StockID); //Update any affected BOMs
-
 		}
 
 		$LineNumber++;

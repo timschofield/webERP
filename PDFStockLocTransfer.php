@@ -57,7 +57,6 @@ $PageNumber=1;
 $LineHeight=30;
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>' .  _('This page must be called with a location transfer reference number').'.';
-$DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
 $SQL = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
 			   stockmaster.description,
@@ -77,7 +76,7 @@ $SQL = "SELECT loctransfers.reference,
 		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
-$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result)==0){
 

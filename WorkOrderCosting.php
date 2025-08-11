@@ -384,10 +384,8 @@ if (isset($_POST['Close'])) {
 										'" .round((-$TotalCostVar*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
-
 
 				$SQL = "INSERT INTO gltrans (type,
 							typeno,
@@ -405,8 +403,7 @@ if (isset($_POST['Close'])) {
 							'" . round((-$TotalCostVar*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
 							typeno,
@@ -424,8 +421,7 @@ if (isset($_POST['Close'])) {
 							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the work order variance posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}
 			if ($TotalOnHand>0) {//to avoid negative quantity make cost data abnormal
@@ -443,8 +439,7 @@ if (isset($_POST['Close'])) {
 					WHERE stockid='" . $WORow['stockid'] . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');
-			$DbgMsg = _('The SQL that failed was');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} else { //we are standard costing post the variances
 			if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $TotalUsageVar!=0){
@@ -465,8 +460,7 @@ if (isset($_POST['Close'])) {
 							'" . round((-$TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the material usage variance could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -484,8 +478,7 @@ if (isset($_POST['Close'])) {
 							'" . round(($TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the usage variance posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}//end if gl-stock linked and a usage variance exists
 
@@ -507,8 +500,7 @@ if (isset($_POST['Close'])) {
 							'" . round((-$TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the cost variance could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -526,14 +518,13 @@ if (isset($_POST['Close'])) {
 							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the cost variance posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			} //end of if gl-stock integrated and there's a cost variance
 		} //end of standard costing section
 	} // end loop around the items on the work order
 
-	$CloseWOResult =DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
+	$CloseWOResult = DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
 				_('Could not update the work order to closed because:'),
 				_('The SQL used to close the work order was:'),
 				true);

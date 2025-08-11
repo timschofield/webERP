@@ -31,9 +31,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		DB_Txn_Begin();
 
 		$SQL = "DELETE FROM glaccountusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to delete the auhority in glaccountusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Deleting the previous authority to view / update the GL Accounts of user') . ' ' . $_POST['ToUserID'], 'success');
 
 		$SQL = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
@@ -41,9 +40,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				FROM glaccountusers
 				WHERE UPPER(userid) = UPPER('" . $_POST['FromUserID'] . "')";
 
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg = _('The SQL to insert the auhority in glaccountusers record failed');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		prnMsg(_('Copied the authority to view / update the GL Accounts from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to user') . ' ' . $_POST['ToUserID'], 'success');
 
 		// KL RICARD: Send email to admin when user copy authority from one user to another.

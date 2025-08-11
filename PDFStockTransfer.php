@@ -1,6 +1,5 @@
 <?php
 
-
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
 include('includes/session.php');
@@ -83,7 +82,7 @@ $SQL="SELECT stockmoves.stockid,
 		AND qty < 0
 		AND type=16";
 
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0){
 	$Title = _('Print Stock Transfer - Error');
 	include('includes/header.php');

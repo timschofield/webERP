@@ -202,8 +202,7 @@ if (isset($_POST['submit'])) {
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The user update could not be processed because');
-		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,'');
 
 		unset($_POST['UserID']);
 		unset($_POST['Salesman']);
@@ -388,8 +387,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 					WHERE userid = '" . $_POST['UserID'] . "'";
 
 	$ErrMsg = _('The default user locations could not be deleted because');
-	$DbgMsg = _('The SQL that was used to update the user locations and failed was');
-	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($LocationSql, $ErrMsg, '');
 
 	// Assign the default location to the user
 	$LocationSql = "INSERT INTO locationusers (loccode,
@@ -403,8 +401,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		1
 	)";
 	$ErrMsg = _('The default user locations could not be processed because');
-	$DbgMsg = _('The SQL that was used to update the user locations and failed was');
-	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($LocationSql, $ErrMsg, '');
 
 	// Give SPG rights ALSO to KANTO location (needed for internal requests)
 	$LocationSql = "INSERT INTO locationusers (loccode,
@@ -417,6 +414,6 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		1,
 		0
 	)";
-	$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($LocationSql, $ErrMsg);
 
 }

@@ -50,6 +50,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
+
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 /*	$KL_SystemAdmin = TRUE;
@@ -676,7 +677,7 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		prnMsg("Packaging Information",'info');
+
 		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);

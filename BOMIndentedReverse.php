@@ -1,6 +1,5 @@
 <?php
 
-
 // BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly
 
@@ -17,7 +16,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				sortpart text) DEFAULT CHARSET=utf8";
 
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
@@ -41,8 +40,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					  CONCAT(bom.component,bom.parent) AS sortpart
 					  FROM bom
 			  WHERE bom.component ='" . $_POST['Part'] . "'
-			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-			  AND bom.effectiveto > '" . date('Y-m-d') . "'";
+			  AND bom.effectiveafter <= CURRENT_DATE
+			  AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 
 	$LevelCounter = 2;
@@ -68,8 +67,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					 bom.quantity
 					 FROM bom
 			  WHERE bom.component ='" . $_POST['Part'] . "'
-			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-			  AND bom.effectiveto > '" . date('Y-m-d') . "'";
+			  AND bom.effectiveafter <= CURRENT_DATE
+			  AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -99,8 +98,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						 bom.quantity
 				FROM bom,passbom
 				WHERE bom.component = passbom.part
-				AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-				AND bom.effectiveto > '" . date('Y-m-d') . "'";
+				AND bom.effectiveafter <= CURRENT_DATE
+				AND bom.effectiveto > CURRENT_DATE";
 		$Result = DB_query($SQL);
 
 		$Result = DB_query("DROP TABLE IF EXISTS passbom2");
@@ -119,8 +118,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						  CONCAT(passbom2.sortpart,bom.parent) AS sortpart
 				   FROM bom,passbom2
 				   WHERE bom.component = passbom2.part
-				   AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-				   AND bom.effectiveto > '" . date('Y-m-d') . "'";
+				   AND bom.effectiveafter <= CURRENT_DATE
+				   AND bom.effectiveto > CURRENT_DATE";
 		$Result = DB_query($SQL);
 		$Result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part");
 

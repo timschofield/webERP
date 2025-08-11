@@ -19,10 +19,8 @@ define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
 /*
- *  Function to validate user name,  perform validity checks and initialise
- *  $_SESSION data.
- *  Returns:
- *	See define() statements above.
+ *  Function to validate username and password, perform validity checks and initialise $_SESSION data.
+ *  @returns int See define() statements above.
  */
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 
@@ -36,6 +34,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		$_SESSION['ScriptStartTime'] = microtime();
 
 		/* if not logged in */
+
 		$_SESSION['AccessLevel'] = '';
 		$_SESSION['CustomerID'] = '';
 		$_SESSION['UserBranch'] = '';
@@ -45,24 +44,25 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		$_SESSION['UserStockLocation'] = '';
 		$_SESSION['AttemptsCounter']++;
 
-		// Show login screen
 		if (!isset($Name) or $Name == '') {
+			// Show login screen
 			$_SESSION['DatabaseName'] = '';
 			return  UL_SHOWLOGIN;
 		}
+
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
 		$SQL = "SELECT *
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
-		$Debug =1;
+		$Debug = 1;
         $PasswordVerified = false;
-		$Auth_Result = DB_query($SQL,$ErrMsg);
+		$Auth_Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Auth_Result) > 0) {
 			$MyRow = DB_fetch_array($Auth_Result);
-			if (VerifyPass($Password,$MyRow['password'])) {
+			if (VerifyPass($Password, $MyRow['password'])) {
 				$PasswordVerified = true;
 			} elseif (isset($GLOBALS['CryptFunction'])) {
 				/*if the password stored in the DB was compiled the old way,
@@ -92,14 +92,13 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							. " WHERE userid = '" . $Name . "';";
 					DB_query($SQL);
 				}
-
 			}
 		}
 
-		// Populate session variables with data base results
+		// Populate session variables with database results
 		if ($PasswordVerified) {
 
-			if ($MyRow['blocked']==1){
+			if ($MyRow['blocked']==1) {
 				//the account is blocked
 				unset($_POST['UserNameEntryField']);
 				unset($_POST['Password']);
@@ -109,6 +108,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				RecordRunningTime('Login attempt on blocked account', $Name); 
 				return  UL_BLOCKED;
 			}
+
 			/*reset the attempts counter on successful login */
 			$_SESSION['UserID'] = $MyRow['userid'];
 			$_SESSION['AttemptsCounter'] = 0;
@@ -166,15 +166,15 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
 			$Sec_Result = DB_query($SQL);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
-			if (DB_num_rows($Sec_Result)==0){
+			if (DB_num_rows($Sec_Result)==0) {
 				// KL RICARD: log the script running time
 				RecordRunningTime('Login attempt with security tokens error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
-				$i=0;
+				$i = 0;
 				$UserIsSysAdmin = FALSE;
-				while ($MyRow = DB_fetch_row($Sec_Result)){
-					if ($MyRow[0] == 15){
+				while ($MyRow = DB_fetch_row($Sec_Result)) {
+					if ($MyRow[0] == 15) {
 						$UserIsSysAdmin = TRUE;
 					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
@@ -185,18 +185,18 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			/* User is logged in so get configuration parameters - save in session */
 			include($PathPrefix . 'includes/GetConfig.php');
 
-			if(isset($_SESSION['DB_Maintenance'])){
+			if (isset($_SESSION['DB_Maintenance'])) {
 				if ($_SESSION['DB_Maintenance']>0)  { //run the DB maintenance script
 					if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 							ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
-							,'d')	>= 	$_SESSION['DB_Maintenance']){
+							,'d')	>= 	$_SESSION['DB_Maintenance']) {
 
 						/*Do the DB maintenance routing for the DB_type selected */
 						DB_Maintenance();
 						$_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 
 						/* Audit trail purge only runs if DB_Maintenance is enabled */
-						if (isset($_SESSION['MonthsAuditTrail'])){
+						if (isset($_SESSION['MonthsAuditTrail'])) {
 							 $SQL = "DELETE FROM audittrail
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = _('There was a problem deleting expired audit-trail history');
@@ -212,11 +212,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			}
 
 			/*Check to see if currency rates need to be updated */
-			if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+			if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
 				if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 					/* Only run the update to currency rates if today is after the last update i.e. only runs once a day */
 					if (DateDiff(Date($_SESSION['DefaultDateFormat']),
-						ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0){
+						ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily']),'d')> 0) {
 
 						if ($_SESSION['ExchangeRateFeed']=='ECB') {
 							$CurrencyRates = GetECBCurrencyRates(); // gets rates from ECB see includes/MiscFunctions.php
@@ -250,7 +250,6 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				}
 			}
 
-
 			/* Set the logo if not yet set.
 			 * will be done only once per session and each time
 			 * we are not in session (i.e. before login)
@@ -266,13 +265,12 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				}
 			}
 
-			if(!isset($_SESSION['DB_Maintenance'])){
+			if (!isset($_SESSION['DB_Maintenance'])) {
 				// KL RICARD: log the script running time
 				RecordRunningTime('Login attempt with config error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
-
-				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])){
+				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])) {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
 					// KL RICARD: log the script running time
@@ -280,8 +278,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					return  UL_MAINTENANCE;
 				}
 			}
-		} else {     // Incorrect password
-			// 5 login attempts, show failed login screen
+		} else {
+			// Incorrect password
+
+			// after 5 login attempts, show failed login screen
 			if (!isset($_SESSION['AttemptsCounter'])) {
 				$_SESSION['AttemptsCounter'] = 0;
 			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($Name)) {
@@ -298,9 +298,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					SendEmailFromWebERP($SysAdminEmail,
 										$SysAdminEmail,
 										$EmailSubject,
-										$EmailText,
-										'',
-										false);
+										$EmailText);
 				}
 
 				unset($_POST['UserNameEntryField']);
@@ -314,8 +312,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			// KL RICARD: log the script running time
 			RecordRunningTime('Login attempt with wrong password', $Name); 
 			return  UL_NOTVALID;
-		}
-	}		// End of userid/password check
+		} // End of incorrect password
+	} // End of userid/password check
+
 	// Run with debugging messages for the system administrator(s) but not anyone else
 	// KL RICARD: log the script running time
 	RecordRunningTime('Login successful', $_SESSION['UserID']); 

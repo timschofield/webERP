@@ -368,7 +368,7 @@ if(isset($StockItemsResult)){
 				$Locations = implode("','",$Locations);
 				$SQL .= " WHERE stockrequest.loccode in ('" . $Locations . "')";
 			} else {
-			 	$SQL .= " WHERE 1 ";
+				$SQL .= " WHERE 1=1 ";
 			}
 		}
 		//the authorization status
@@ -547,8 +547,6 @@ function GetSearchItems ($SQLConstraint='') {
 					    stockmaster.units
 					    ORDER BY stockmaster.stockid";
 	$ErrMsg =  _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 	return $StockItemsResult;
-
-	}
+}

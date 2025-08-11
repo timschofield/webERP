@@ -99,9 +99,7 @@ if (isset($_POST['submit'])) {
 				WHERE partnercode = '" . $SelectedPartner . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('retail partner record because');
-		$DbgMsg = _('The SQL used to update the retail partner record was');
-
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The retail partner record has been updated'), 'success');
 
@@ -285,8 +283,7 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['SettlementDelayQRIS']) . "')";
 
 		$ErrMsg = _('An error occurred inserting the new retail partner record because');
-		$DbgMsg = _('The SQL used to insert the retail partner record was');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The new retail partner record has been added'), 'success');
 

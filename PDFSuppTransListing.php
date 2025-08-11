@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/SQL_CommonFunctions.php');
 include('includes/session.php');
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
@@ -74,7 +73,7 @@ $SQL= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND trandate='" . FormatDateForSQL($_POST['Date']) . "'";
 
-$Result=DB_query($SQL,'','',false,false);
+$Result = DB_query($SQL,'','',false,false);
 
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');

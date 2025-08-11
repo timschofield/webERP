@@ -318,9 +318,8 @@ function ItemEnableLazadaInfo($StockID, $EnabledLazada) {
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
 		$SQL = SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
-	$DbgMsg = _('The SQL that failed to enable/disable the Lazada marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Lazada marketplace info because');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -341,9 +340,8 @@ function ItemEnableShopeeInfo($StockID, $EnabledShopee) {
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
 		$SQL = SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
-	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -364,9 +362,8 @@ function ItemEnableTokopediaInfo($StockID, $EnabledTokopedia) {
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
 		$SQL = SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
-	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -390,9 +387,8 @@ function ItemInsertLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLa
 			'" . $LazadaProductId . "',
 			'" . $EnabledLazada . "')";
 
-	$DbgMsg = _('The SQL that failed to insert the Lazada marketplace info was');
 	$ErrMsg = _('Cannot insert the Lazada marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -416,9 +412,8 @@ function ItemInsertShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLSh
 			'" . $ShopeeProductId . "',
 			'" . $EnabledShopee . "')";
 
-	$DbgMsg = _('The SQL that failed to insert the Shopee marketplace info was');
 	$ErrMsg = _('Cannot insert the Shopee marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -442,9 +437,8 @@ function ItemInsertTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductI
 			'" . $TokopediaProductId . "',
 			'" . $EnabledTokopedia . "')";
 
-	$DbgMsg = _('The SQL that failed to insert the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot insert the Tokopedia marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -463,9 +457,8 @@ function ItemUpdateLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLa
 				lazadaenabled='" . $EnabledLazada ."'
 		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
-	$DbgMsg = _('The SQL that failed to update the Lazada marketplace info was');
 	$ErrMsg = _('Cannot update the Lazada marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -484,9 +477,8 @@ function ItemUpdateShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLSh
 				shopeeenabled='" . $EnabledShopee ."'
 		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
-	$DbgMsg = _('The SQL that failed to update the Shopee marketplace info was');
 	$ErrMsg = _('Cannot update the Shopee marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -505,9 +497,8 @@ function ItemUpdateTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductI
 				tokopediaenabled='" . $EnabledTokopedia ."'
 		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
-	$DbgMsg = _('The SQL that failed to update the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot update the Tokopedia marketplace info because');
-	DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -521,9 +512,8 @@ function GetTokopediaProductId($StockID) {
 			FROM klstockmarketplaces
 			WHERE stockid = '" . $StockID . "'";
 
-	$DbgMsg = _('The SQL that failed to get the Tokopedia Product ID was');
 	$ErrMsg = _('Cannot get the Tokopedia Product ID because');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
 		return $Row['0'];
@@ -542,9 +532,8 @@ function GetShopeeProductId($StockID) {
 			FROM klstockmarketplaces
 			WHERE stockid = '" . $StockID . "'";
 
-	$DbgMsg = _('The SQL that failed to get the Shopee Product ID was');
 	$ErrMsg = _('Cannot get the Shopee Product ID because');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
 		return $Row['0'];

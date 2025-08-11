@@ -161,7 +161,6 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Basic Product Information in Opencart failed');
 		$InsertErrMsg = _('The SQL to insert Basic Product Information in Opencart failed');
 
@@ -291,7 +290,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								height = '" . $Height . "',
 								length_class_id = '" . $LenghtClassId . "'
 							WHERE product_id = '" . $ProductId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 				$SQLUpdate = "UPDATE oc_product_description SET
 								name = '" . $Name . "',
@@ -302,7 +301,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								tag = '" . $Tag . "'
 							WHERE product_id = '" . $ProductId . "'
 								AND language_id = '" . $LanguageId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 				
 				if (!DataExistsInOpenCart('oc_product_to_store', 'store_id', $StoreId, 'product_id', $ProductId)){
 					$SQLInsert = "INSERT INTO oc_product_to_store
@@ -312,7 +311,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . $StoreId . "'
 								)";
-					$ResultUpdate = DB_query_oc($SQLInsert,$UpdateErrMsg,$DbgMsg,true);
+					$ResultUpdate = DB_query_oc($SQLInsert,$UpdateErrMsg,'',true);
 				}
 			}else{
 				$Action = "Insert";
@@ -380,7 +379,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								'" . $ServerNow . "',
 								'" . $ServerNow . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				// Let's get the OpenCart primary key for product
 				$ProductId = GetOpenCartProductId($Model);
@@ -404,7 +403,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								'" . $MetaKeyword . "',
 								'" . $Tag . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				$SQLInsert = "INSERT INTO oc_product_to_store
 								(product_id,
@@ -413,7 +412,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . $StoreId . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 
 				$SortOrder++;
 			}
@@ -479,7 +478,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . OPENCART_STORE_BLINK . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 				$StoreText = $StoreText . " + BL";
 				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_BLINK, $LanguageId);
 			}
@@ -493,7 +492,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 								('" . $ProductId . "',
 								'" . OPENCART_STORE_WHOLESALE . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 				$StoreText = $StoreText . " + WH";
 				MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, OPENCART_STORE_WHOLESALE, $LanguageId);
 			}
@@ -569,9 +568,8 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
-
 		$k = 0; //row colour counter
+		$Action = '';
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			/* Field Matching */
@@ -663,7 +661,6 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Product Prices in Opencart failed');
 
 		$k = 0; //row colour counter
@@ -683,7 +680,7 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 			$SQLUpdate = "UPDATE oc_product SET
 							price = '" . $Price . "'
 						WHERE product_id = '" . $ProductId . "'";
-			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 			// update discounts if needed
 			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList );
@@ -751,7 +748,6 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
 
 		$k = 0; //row colour counter
@@ -774,7 +770,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 							quantity = '" . $Quantity . "',
 							status = '" . $Status . "'
 						WHERE product_id = '" . $ProductId . "'";
-			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -851,7 +847,6 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
 
 		$k = 0; //row colour counter
@@ -939,7 +934,6 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Product Links to marketplaces in Opencart failed');
 		$InsertErrMsg = _('The SQL to insert Product Links to marketplaces in Opencart failed');
 
@@ -1003,7 +997,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 				$SQLUpdate = "UPDATE oc_product_link SET
 								product_link = '" . $Link . "'
 							WHERE product_id = '" . $ProductId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			}else{
 				$Action = "Insert";
 
@@ -1014,7 +1008,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 								('" . $ProductId . "',
 								'" . $Link . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 			}
 			
 			if ($ShowMessages){
@@ -1122,7 +1116,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
+		$InsertErrMsg = _('The SQL to insert Product Description Translations in Opencart failed');
 		$UpdateErrMsg = _('The SQL to update Product Description Translations in Opencart failed');
 
 		$k = 0; //row colour counter
@@ -1176,7 +1170,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 										tag = '" . $Tag . "'
 									WHERE product_id = '" . $ProductId . "'
 										AND language_id = '" . $LanguageId . "'";
-						$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+						DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 					}else{
 						$Action = "Insert";
@@ -1199,7 +1193,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 										'" . $MetaKeyword . "',
 										'" . $Tag . "'
 										)";
-						$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+						DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 					}
 	
 					// create SEO Keywords if needed
@@ -1357,7 +1351,6 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = _('The SQL to update Currency Exchange Rates in Opencart failed');
 		$InsertErrMsg = _('The SQL to insert Currency Exchange Rates in Opencart failed');
 
@@ -1382,7 +1375,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 								SET value 		= '" . $Rate . "',
 									date_modified 	= '" . $ServerNow . "'
 								WHERE code 	= '" . $Currency . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 			}else{
 				$Action = "Insert";
 				$SQLInsert = "INSERT INTO oc_currency
@@ -1400,7 +1393,7 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 								'1',
 								'" . $ServerNow . "'
 								)";
-				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 			}
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1482,7 +1475,6 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
 		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
@@ -1560,7 +1552,6 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
 		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
@@ -1635,7 +1626,6 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 							</tr>';
 			echo $TableHeader;
 		}
-		$DbgMsg = _('The SQL statement that failed was');
 		$UpdateErrMsg = 'The SQL to update ' . $Title . ' failed';
 		$InsertErrMsg = 'The SQL to insert ' . $Title . ' failed';
 
@@ -1683,7 +1673,6 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
 	/* Now, insert it, if it is not there yet*/
 	if (!DataExistsInOpenCart('oc_product_to_customer_group', 'product_id', $ProductId, 'customer_group_id', $CustomerGroupId)){
-		$DbgMsg = _('The SQL statement that failed was');
 		$InsertErrMsg = _('The SQL on fucntion AssignAcessRightsProductsToCustomerGroupInOpenCart failed');
 		$SQLInsert = "INSERT INTO oc_product_to_customer_group
 						(product_id,
@@ -1692,12 +1681,11 @@ function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 						('" . $ProductId . "',
 						'" . $CustomerGroupId . "'
 						)";
-		$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+		$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 	}
 }
 
 function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
-	$DbgMsg = _('The SQL statement that failed was');
 	$DeleteErrMsg = _('The SQL on fucntion RevokeAcessRightsProductsToCustomerGroupInOpenCart failed');
 
 	/* Now, revoke (delete) the access rights*/
@@ -1705,5 +1693,5 @@ function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 			WHERE product_id = '" . $ProductId . "'
 				AND customer_group_id = '" . $CustomerGroupId . "'";
 				
-	$ResultDelete = DB_query_oc($SQL,$DeleteErrMsg,$DbgMsg,true);
+	$ResultDelete = DB_query_oc($SQL,$DeleteErrMsg,'',true);
 }

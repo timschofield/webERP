@@ -77,7 +77,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -199,7 +199,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					AND custitem.stockid=salesorderdetails.stkcode
 				WHERE locstock.loccode = '" . $MyRow['fromstkloc'] . "'
 					AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-	$Result=DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling with a page header */
@@ -274,7 +274,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 							AND bom.effectiveafter <= CURRENT_DATE
 							AND bom.effectiveto > CURRENT_DATE";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
-				$AssemblyResult = DB_query($SQL,$ErrMsg);
+				$AssemblyResult = DB_query($SQL, $ErrMsg);
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
 				$YPos -= ($LineHeight);
 				/*Loop around all the components of the assembly and list the quantity supplied */

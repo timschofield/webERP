@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockAdjustment.php');
 include('includes/session.php');

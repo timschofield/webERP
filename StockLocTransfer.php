@@ -79,7 +79,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 									WHERE stockid='" . $StockID . "'
 										AND shiploc='".$_POST['FromStockLocation']."'
 										AND pendingqty > 0";
-					$InTransitResult=DB_query($InTransitSQL);
+					$InTransitResult = DB_query($InTransitSQL);
 					$InTransitRow=DB_fetch_array($InTransitResult);
 					$InTransitQuantity=$InTransitRow['intransit'];
 					// Only if stock exists at this location
@@ -146,7 +146,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 										WHERE stockid='" . $_POST['StockID' . $i] . "'
 											AND shiploc='".$_POST['FromStockLocation']."'
 											AND pendingqty > 0";
-						$InTransitResult=DB_query($InTransitSQL);
+						$InTransitResult = DB_query($InTransitSQL);
 						$InTransitRow=DB_fetch_array($InTransitResult);
 						$InTransitQuantity=$InTransitRow['intransit'];
 						// Only if stock exists at this location

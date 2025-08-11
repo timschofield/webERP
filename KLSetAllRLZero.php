@@ -25,9 +25,8 @@ if(isset($_POST['ProcessReorderLevelZero'])) {
 		DB_Txn_Begin();
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";
-		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to set RL = 0 at location failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 		prnMsg(_('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'] . ' ' . _('completed'),'success');
 		
 		DB_Txn_Commit();

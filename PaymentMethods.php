@@ -198,7 +198,7 @@ if (isset($_POST['submit'])) {
 			ORDER BY paymentid";
 
 	$ErrMsg = _('Could not get payment methods because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>

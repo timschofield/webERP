@@ -1797,14 +1797,14 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysThisYear, $ToLastDaysThisYear) / $NumDays;
 	$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysLastYear, $ToLastDaysLastYear) / $NumDays;
 	$TrendThisYear = ($DailySoldItemsThisYearPastDays - $DailySoldItemsLastYearPastDays) / $DailySoldItemsLastYearPastDays;
-	if ($Brand != "SHOPOU"){
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL") {
 		$DisplayItems = TotalDisplayItems($Brand);
 		$AvailableForSaleItems = $TotalItems - $DisplayItems;
 		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDaysLastYear;
 		$ItemsToBeSoldNextDaysBasedOnTrendLastYear = $DailySoldItemsLastYearNextDays * ($TrendThisYear+1);
 		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearPastDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
 	}else{
-		$DisplayItems = 0; // for sicounted items we don't want to keep enough for display, we want to get rid of them
+		$DisplayItems = 0; // for discounted items we don't want to keep enough for display, we want to get rid of them
 		$AvailableForSaleItems = $TotalItems ;
 		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearPastDays;
 	}
@@ -1864,7 +1864,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				</tr>';
 	}
 
-	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
+	if ($ShowFullDetails AND ($Brand == "SHOPKL" OR $Brand == "SHOPBL")){
 		echo '<tr>
 				<td>Daily Stock sold same last ' . $NumDays . ' days last year ' . 
 				ConvertSQLDate($FromLastDaysLastYear) . '-' .
@@ -1873,14 +1873,14 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				</tr>';
 	}
 	
-	if ($Brand != "SHOPOU"){
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
 		echo '<tr>
 				<td>Retail trend from same days last year (%)</td>
 				<td class="number">' . locale_number_format($TrendThisYear*100,1). '%</td>
 				</tr>';
 	}
 	
-	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
+	if ($ShowFullDetails AND ($Brand == "SHOPKL" OR $Brand == "SHOPBL")){
 		echo '<tr>
 				<td>Daily Stock sold next ' . $NumDaysLastYear . ' days last year ' . 
 				ConvertSQLDate($FromNextDaysLastYear) . '-' .
@@ -1902,7 +1902,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			<td class="number">' . locale_number_format($DaysStockForSale,0) . '</td>
 			</tr>';
 
-	if ($Brand != "SHOPOU"){
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
 		echo '<tr>
 				<td>Stock to be received by PO (PCS)</td>
 				<td class="number">' . locale_number_format($ItemsPO,0) . '</td>
@@ -1924,20 +1924,23 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			</div>
 			</form>';
 
-	InsertKPI("SHOPS-OPEN-" . $BrandCode, $Shops);
-	InsertKPI("STOCK-MODELS-" . $BrandCode, $TotalModels);
-	InsertKPI("STOCK-TOTAL-PCS-" . $BrandCode, $TotalItems);
-	InsertKPI("STOCK-DISPLAY-PCS-" . $BrandCode, $DisplayItems);
-	InsertKPI("STOCK-FORSALE-PCS-" . $BrandCode, $AvailableForSaleItems);
-	InsertKPI("STOCK-AV-PCS-MODEL-" . $BrandCode, round($AvailableForSaleItems/$TotalModels,2));
-	InsertKPI("STOCK-AV-SOLD-" . $NumDays . "D-PCS-" . $BrandCode, $DailySoldItemsThisYearPastDays);
-	InsertKPI("STOCK-FORECAST-" . $NumDays . "D-PCS-" . $BrandCode, $EstimationDailyItemsToBeSoldNextDays);
-	InsertKPI("STOCK-QOH-DAYS-" .$BrandCode, $DaysStockForSale);
-	InsertKPI("STOCK-PENDING-PO-PCS-" . $BrandCode, $ItemsPO);
-	InsertKPI("STOCK-PENDING-WO-PCS-" . $BrandCode, $ItemsWO);
-	InsertKPI("STOCK-QOH-PO-WO-DAYS-" .$BrandCode, $DaysStockForSaleIncludingPOWO);
-	InsertKPI("STOCK-NEED-OPTIMAL-PCS-" . $BrandCode, $ItemsToGetOptimalDaysStock);
-	if ($Brand != "SHOPOU"){
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL" OR $Brand == "SHOPOU"){
+		InsertKPI("SHOPS-OPEN-" . $BrandCode, $Shops);
+		InsertKPI("STOCK-MODELS-" . $BrandCode, $TotalModels);
+		InsertKPI("STOCK-TOTAL-PCS-" . $BrandCode, $TotalItems);
+		InsertKPI("STOCK-DISPLAY-PCS-" . $BrandCode, $DisplayItems);
+		InsertKPI("STOCK-FORSALE-PCS-" . $BrandCode, $AvailableForSaleItems);
+		InsertKPI("STOCK-AV-PCS-MODEL-" . $BrandCode, round($AvailableForSaleItems/$TotalModels,2));
+		InsertKPI("STOCK-AV-SOLD-" . $NumDays . "D-PCS-" . $BrandCode, $DailySoldItemsThisYearPastDays);
+		InsertKPI("STOCK-FORECAST-" . $NumDays . "D-PCS-" . $BrandCode, $EstimationDailyItemsToBeSoldNextDays);
+		InsertKPI("STOCK-QOH-DAYS-" .$BrandCode, $DaysStockForSale);
+		InsertKPI("STOCK-PENDING-PO-PCS-" . $BrandCode, $ItemsPO);
+		InsertKPI("STOCK-PENDING-WO-PCS-" . $BrandCode, $ItemsWO);
+		InsertKPI("STOCK-QOH-PO-WO-DAYS-" .$BrandCode, $DaysStockForSaleIncludingPOWO);
+		InsertKPI("STOCK-NEED-OPTIMAL-PCS-" . $BrandCode, $ItemsToGetOptimalDaysStock);
+	}
+
+	if ($Brand == "SHOPKL" OR $Brand == "SHOPBL"){
 		InsertKPI("SALES-TREND-RETAIL-". $NumDays . "D-" . $BrandCode, $TrendThisYear*100);
 	}
 }

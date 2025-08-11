@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -109,7 +108,6 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
    $TransResult = DB_query($SQL);
    $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
-   $DbgMsg =  _('The SQL that failed was');
 
    echo '<table class="selection">';
 

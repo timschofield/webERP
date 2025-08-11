@@ -49,7 +49,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				AND reference IN (" . $WOSelected . ")
 				ORDER BY reference";
 			$ErrMsg = _('Failed to retrieve wo cost data');
-		       	$Result = DB_query($SQL,$ErrMsg);
+		       	$Result = DB_query($SQL, $ErrMsg);
 			if (DB_num_rows($Result)>0) {
 				echo '<table class="selection">
 					<thead>
@@ -195,8 +195,7 @@ if (isset($_POST['SearchParts'])){
 	 }
 
 	$ErrMsg =  _('No items were returned by the SQL because');
-	$DbgMsg = _('The SQL used to retrieve the searched parts was');
-	$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$StockItemsResult = DB_query($SQL, $ErrMsg);
 }
 
 if (isset($_POST['StockID'])){
@@ -414,7 +413,7 @@ if (!isset($StockID)) {
 						INNER JOIN woitems ON workorders.wo=woitems.wo
 						INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 						INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-						WHERE 1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
+						WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
 						AND workorders.wo='". $SelectedWO ."'
 						ORDER BY workorders.wo,
 								woitems.stockid";
@@ -434,7 +433,7 @@ if (!isset($StockID)) {
 							INNER JOIN woitems ON workorders.wo=woitems.wo
 							INNER JOIN stockmaster ON woitems.stockid=stockmaster.stockid
 							INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-							WHERE 1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
+							WHERE 1=1 " . $ClosedOrOpen . $StartDateFrom . $StartDateTo . "
 							AND woitems.stockid='". $SelectedStockItem ."'
 							AND workorders.loccode='" . $_POST['StockLocation'] . "'
 							ORDER BY workorders.wo,
@@ -460,7 +459,7 @@ if (!isset($StockID)) {
 		} //end not order number selected
 
 		$ErrMsg = _('No works orders were returned by the SQL because');
-		$WorkOrdersResult = DB_query($SQL,$ErrMsg);
+		$WorkOrdersResult = DB_query($SQL, $ErrMsg);
 
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {

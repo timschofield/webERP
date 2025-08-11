@@ -75,7 +75,7 @@ if (isset($_GET['NewRecurringOrder'])){
 								WHERE recurringsalesorders.recurrorderno = '" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 		$ErrMsg =  _('The order cannot be retrieved because');
-		$GetOrdHdrResult = DB_query($OrderHeaderSQL,$ErrMsg);
+		$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 		if (DB_num_rows($GetOrdHdrResult)==1) {
 
@@ -134,7 +134,7 @@ if (isset($_GET['NewRecurringOrder'])){
 									AND recurrsalesorderdetails.recurrorderno ='" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 			$ErrMsg = _('The line items of the order cannot be retrieved because');
-			$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
+			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 			if (DB_num_rows($LineItemsResult)>0) {
 
 				while ($MyRow=DB_fetch_array($LineItemsResult)) {
@@ -174,11 +174,11 @@ if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->I
 if (isset($_POST['DeleteRecurringOrder'])){
 	$SQL = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete the recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'],'success');
 
@@ -265,8 +265,7 @@ if (isset($_POST['Process'])) {
 										'" . $_POST['AutoInvoice'] . "')";
 
 			$ErrMsg = _('The recurring order cannot be added because');
-			$DbgMsg = _('The SQL that failed was');
-			$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
+			$InsertQryResult = DB_query($HeaderSQL, $ErrMsg, '', true);
 
 			$RecurrOrderNo = DB_Last_Insert_ID('recurringsalesorders','recurrorderno');
 			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (recurrorderno,
@@ -286,7 +285,7 @@ if (isset($_POST['Process'])) {
 								'" . filter_number_format($StockItem->Quantity) . "',
 								'" . filter_number_format($StockItem->DiscountPercent) . "',
 								'" . $StockItem->Narrative . "')";
-				$Ins_LineItemResult = DB_query($LineItemsSQL,$ErrMsg,$DbgMsg,true);
+				$Ins_LineItemResult = DB_query($LineItemsSQL, $ErrMsg, '', true);
 
 			} /* inserted line items into sales order details */
 
@@ -301,7 +300,7 @@ if (isset($_POST['Process'])) {
 					WHERE recurrorderno = '" . $_POST['ExistingRecurrOrderNo'] . "'";
 
 			$ErrMsg = _('The recurring order cannot be updated because');
-			$UpdateQryResult = DB_query($HeaderSQL,$ErrMsg);
+			$UpdateQryResult = DB_query($HeaderSQL, $ErrMsg);
 			prnmsg(_('The recurring order template has been updated'),'success');
 		}
 

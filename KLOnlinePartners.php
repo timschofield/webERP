@@ -79,9 +79,7 @@ if(isset($_POST['submit'])) {
 				WHERE onlinepartnercode = '" . $SelectedPartner . "'";
 
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('online partner record because');
-		$DbgMsg = _('The SQL used to update the online partner record was');
-
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('The online partner record has been updated'),'success');
 
@@ -217,8 +215,7 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['ForeignCurrencySurchargeFactor'] . "')";
 
 		$ErrMsg = _('An error occurred inserting the new online partner record because');
-		$DbgMsg = _('The SQL used to insert the online partner record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('The new online partner record has been added'),'success');
 

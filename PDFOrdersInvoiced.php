@@ -164,7 +164,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.decimalplaces
 			ORDER BY salesorders.orderno";
 
-	$Result=DB_query($SQL,'','',false,false); //dont trap errors here
+	$Result = DB_query($SQL,'','',false,false); //dont trap errors here
 
 	$HTML = '';
 
@@ -279,7 +279,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				WHERE debtortrans.order_ ='" . $OrderNo . "'
 				AND stockmoves.stockid ='" . $MyRow['stkcode'] . "'";
 
-		$InvoicesResult =DB_query($SQL);
+		$InvoicesResult = DB_query($SQL);
 		if (DB_num_rows($InvoicesResult)>0){
 			$HTML .= '<tr>
 						<th></th>
@@ -396,7 +396,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<select required="required" name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
-	$Result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
+	$Result = DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($MyRow=DB_fetch_array($Result)){
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}

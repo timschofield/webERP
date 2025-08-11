@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $ViewTopic = 'EDI';
 $BookMark = '';
@@ -55,7 +54,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				AND debtortrans.debtorno='" . $CustDetails['debtorno'] . "'";
 
 	$ErrMsg = _('There was a problem retrieving the customer transactions because');
-	$TransHeaders = DB_query($SQL,$ErrMsg);
+	$TransHeaders = DB_query($SQL, $ErrMsg);
 
 
 	if (DB_num_rows($TransHeaders)==0){
@@ -103,7 +102,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
                 WHERE partnercode='" . $CustDetails['debtorno'] . "'
                 AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
-		$MessageLinesResult = DB_query($SQL,$ErrMsg);
+		$MessageLinesResult = DB_query($SQL, $ErrMsg);
 
 
 		if (DB_num_rows($MessageLinesResult)>0){

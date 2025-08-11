@@ -61,7 +61,8 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/OCOpenCartToWeberpSync.php');
 	include('includes/OCOpenCartConnectDB.php');
 	include('includes/KLSmartStockTransfers.php');
-
+	include('includes/ArchiveConnectDB.php');
+	
 	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
@@ -696,7 +697,13 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0, 0, 0, Date('m') - $_SESSION['MonthsAuditTrail'])) . "'";
 	DB_query($SQL);
-	$Text = "Purge Audit Trail table";
+	$Text = "Purge Audit Trail table in webERP";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	DB_query_archive($SQL);
+	$Text = "Purge Audit Trail table in archive webERP";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	DB_query_oc($SQL);
+	$Text = "Purge Audit Trail table in OpenCart";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }

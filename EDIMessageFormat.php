@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 $Title = _('EDI Message Format');
 $ViewTopic = 'EDI';
@@ -42,7 +41,7 @@ if (isset($_POST['NewEDIInvMsg'])){
 			AND messagetype='INVOIC'";
 
 	$ErrMsg = _('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . _('because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 }
 
 $InputError = 0;

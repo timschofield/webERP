@@ -75,8 +75,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 					FROM prodspecs WHERE keyval='" .$KeyValue. "'";
 			$Msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
-			$DbgMsg = _('The SQL that was used and failed was');
-			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Msg , 'success');
 		$KeyValue=$_POST['CopyTo'];
 		unset($_GET['CopySpec']);
@@ -266,8 +265,7 @@ if (isset($_POST['AddTests'])) {
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
 			$Msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
-			$DbgMsg = _('The SQL that was used and failed was');
-			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Msg , 'success');
 		} //if on
 	} //for
@@ -301,8 +299,7 @@ if (isset($_POST['submit'])) {
 
 		$Msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
 		$ErrMsg = _('The update of the Product Specification failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg , 'success');
 
@@ -331,7 +328,7 @@ if (isset($_POST['submit'])) {
 		$SQL="DELETE FROM prodspecs WHERE keyval='". $KeyValue."'
 									AND testid='". $SelectedQATest."'";
 		$ErrMsg = _('The Product Specification could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);

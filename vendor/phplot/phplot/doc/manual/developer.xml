@@ -1,0 +1,3147 @@
+<!--
+     Developer's Guide chapter for PHPlot Reference Manual
+-->
+<part label="III" id="part3">
+<title>Developer's Guide to PHPlot</title>
+<partintro id="developer">
+  <abstract><title></title>
+    <para>
+This part of the PHPlot manual is about PHPlot internals, and various
+technical details which are of interest mostly to developers of PHPlot
+itself.
+    </para>
+  </abstract>
+</partintro>
+
+<chapter id="dev-layout">
+<title>PHPlot Plot Layout</title>
+<para>
+This figure illustrates the plot layout, starting with PHPlot-5.0.5 when
+the margin calculations were rewritten.
+Use the following notes to help understand the figure.
+</para>
+
+<itemizedlist>
+  <listitem>
+    <para>
+A vertical plot is shown. The X and Y coordinate system is the same for
+horizontal plots, but the roles are reversed: Y is the independent
+variable, and X is the dependent variable.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+The safe_margin (box with X) is a gap of 5 pixels used to separate elements.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+The main title, X titles, and Y titles are optional. If these titles are
+not set, the space allocated to them collapses, including the safe_margin
+gap. This is shown in the figure with an arrow.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+Similarly, the X tick labels, X axis data labels (for vertical plots),
+Y tick labels, and Y axis data labels (for horizontal plots) are optional.
+If these labels are not used, the space allocated to them collapses,
+including the safe_margin.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+For vertical plots, X axis data labels and X tick labels occupy the same space.
+For horizontal plots, Y axis data labels and Y tick labels occupy the same space.
+Normally only one of these should be present; if both are on for some reason
+they will overlay.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+The base_margin (pink box with plus sign) is the space between the image edge
+and the outermost graphics or text. If there is no image border, or the
+image border is no wider than 2 pixels (which is always the case through
+PHPlot-5.1.1), then the base_margin is set to the same as the safe_margin
+value (5 pixels). A wider image border increases the base_margin; for example
+an 8 pixel image border results in a base_margin of 11 pixels.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+The top, left, right, and bottom margins consist of base_margin plus
+whatever space is needed for titles and ticks. There is a minimum value
+for these margins - 2 times safe_margin plus base_margin. Even if there
+are no titles at all on a side, the margin on that side will be no less
+than this minimum margin. This keeps the axis or plot area edge from coming
+too close to the image edge.
+The calculated plot area margins shown can be overridden by using
+<xref linkend="SetPlotAreaPixels"/> or <xref linkend="SetMarginsPixels"/>.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+The main title is positioned relative to the top of the image.
+Starting with PHPlot-5.0.5, the X and Y titles are positioned relative
+to the plot area.
+PHPlot-5.0.4 and earlier positioned the X and Y titles
+relative to the image edges.
+The difference should not be visible with automatic margins, but if the
+margins are set larger, or the plot area smaller, then the X and Y titles
+will move inwards with the newer releases.
+    </para>
+  </listitem>
+  <listitem>
+    <para>
+It is possible to position X ticks and X tick labels to
+<literal>xaxis</literal>, and Y ticks and Y tick labels to
+<literal>yaxis</literal>, so the ticks and/or labels will
+float to the axis positions rather than always appear on the edges of the
+plot area. Space will be allocated for the corresponding margin only if the
+axis happens to fall exactly at the data limits for that side. This may
+cause problems if the axis is close but not quite at the edge; no margin
+space will be allocated on that side for the labels, and the labels may
+overlap the title or fall off the edge of the image.
+    </para>
+  </listitem>
+</itemizedlist>
+
+<informalfigure>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="images/layout.png" scale="58" format="PNG" />
+    </imageobject>
+    <textobject>
+      <phrase>PHPlot plot layout figure</phrase>
+    </textobject>
+  </mediaobject>
+</informalfigure>
+
+</chapter>
+
+<chapter id="dev-legend">
+<title>PHPlot Legend Layout</title>
+<para>
+This figure illustrates the layout of the legend, as drawn by
+<xref linkend="DrawLegend"/>.
+Two of six possible arrangements of the color boxes and text are shown.
+See <xref linkend="SetLegendStyle"/> for more information.
+</para>
+<para>
+Through PHPlot-5.2.0, the width of the color boxes was always
+<varname>char_w</varname>, the width of one character (or the width of the
+upper case letter "E") in the legend text font.
+Starting with PHPlot-5.3.0, this can be adjusted using a class variable.
+See <xref linkend="adv-tuning-legend"/> for more.
+</para>
+<para>
+If point shapes are used in the legend instead of color boxes
+(see <xref linkend="SetLegendUseShapes"/>, added in PHPlot-5.4.0),
+the same amount of space is still allocated, including width adjustment.
+But the point shape itself is always drawn at the same size as in
+the plot, regardless of the width adjustment factor. If the plot area has
+a color background, the width adjustment will stretch the box in that color
+which is drawn behind the point shape.
+</para>
+
+<para>
+If line markers are used in the legend instead of color boxes (see
+<xref linkend="SetLegendUseShapes"/>, added in PHPlot-6.0.0 for line plots),
+the width of the area reserved for color boxes is scaled by 4
+(along with any 'tuning' adjustment).
+This leaves enough room to draw a line segment that can be identified
+visually by color and width.
+</para>
+
+<para>
+<informalfigure>
+  <mediaobject>
+    <imageobject>
+      <imagedata fileref="images/legend-layout.png" scale="75" format="PNG" />
+    </imageobject>
+    <textobject>
+      <phrase>PHPlot legend layout figure</phrase>
+    </textobject>
+  </mediaobject>
+</informalfigure>
+</para>
+
+</chapter>
+
+<chapter id="dev-internal">
+<title>PHPlot Class Internal Functions</title>
+<abstract><title></title>
+  <para>
+This chapter documents PHPlot internal functions. These functions are
+intended to be used only by PHPlot itself.
+  </para>
+</abstract>
+
+<note>
+  <para>
+Starting with PHPlot-5.1.0, most of the internal functions are declared as
+<literal>protected</literal>, which limits their visibility to other member
+functions and inherited or parent classes. Some internal functions are
+still <literal>public</literal>, usually because they are needed for
+testing PHPlot. However, all functions documented in this chapter should be
+treated as private, for use only by PHPlot. If you feel you have a need to
+use one of these functions from outside PHPlot (or an inherited class),
+please report this via the available PHPlot support mechanisms.
+  </para>
+</note>
+
+<!-- Original material is from "PHPlot Internal Functions" included with
+   pre-5.0rc3 releases of PHPlot, but extensively edited.
+   All functions in phplot.php should either be documented in "reference"
+   (if 'public') or here (if 'private').
+
+   This string and the REMOVED tags are used to help maintain the document:
+   BEGIN INTERNAL FUNCTIONS
+-->
+
+<variablelist>
+<varlistentry>
+  <term><anchor id="array_merge_php4" xreflabel="array_merge_php4"/>array_merge_php4($array1,$array2)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This non-member function was removed at PHPlot-5.0.4.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="array_pad_array" xreflabel="array_pad_array"/>array_pad_array(&amp;$arr, $size, $arr2=NULL)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This non-member function was removed at PHPlot-5.0.4 and replaced with
+the class member function <xref linkend="pad_array"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcAxisPositions" xreflabel="CalcAxisPositions"/>CalcAxisPositions()</term>
+  <listitem>
+    <para>
+Calculates the X and Y axis positions in world coordinates. These can be
+supplied by the user, in which case they are only changed if they are
+outside the data range. If axis positions are not supplied by the user,
+CalcAxisPositions applies defaults as described in
+<xref linkend="SetXAxisPosition"/> and <xref linkend="SetYAxisPosition"/>.
+Called by <xref linkend="DrawGraph"/>.
+Note: This code was moved out of CalcTranslation at PHPlot-5.0.5.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcBarWidths" xreflabel="CalcBarWidths"/>CalcBarWidths($stacked, $verticals)</term>
+  <listitem>
+    <para>
+Calculates values for <literal>bars</literal> and <literal>stackedbars</literal>
+plot types.
+It calculates the width of the bars and the margins around and between them.
+An argument was added in PHPlot-5.1.2 to support horizontal plots.
+Arguments were changed in PHPlot-5.3.0 to explicitly select stacked or
+grouped bars, and vertical or horizontal plots.
+This is called by the bar chart drawing functions
+<xref linkend="DrawBars"/>, <xref linkend="DrawStackedBars"/>,
+<xref linkend="DrawHorizBars"/>, and <xref linkend="DrawHorizStackedBars"/>.
+(Through PHPlot-5.1.2 this was called by <xref linkend="DrawGraph"/> before a
+bars or stackedbars plot.)
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcGridSettings" xreflabel="CalcGridSettings"/>CalcGridSettings()</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed at PHPlot-6.0.0. It applied the defaults to the X
+and Y grid flags. PHPlot now uses <xref linkend="GetGridSetting"/> instead.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcMargins" xreflabel="CalcMargins"/>CalcMargins($maximize)</term>
+  <listitem>
+    <para>
+Calculates the size of the four margins around the plot area:
+x_left_margin, x_right_margin, y_top_margin, and y_bot_margin.
+It does this by trying to determine how much space is needed for titles,
+labels, and tick marks.
+Starting with PHPlot-5.0.5, this is only called by <xref linkend="DrawGraph"/>,
+and it also calculates position offsets for titles and labels. It is called
+even in case of a user-supplied plot area (SetPlotAreaPixels or
+SetMarginsPixels was used). If the $maximize argument is true, then the
+plot area does not leave room for X or Y axis, labels, or titles; this is
+used for pie charts.
+    </para>
+    <para>
+Through PHPlot-5.0.6, all 4 margins are either user-defined or all 4 are
+automatically calculated. Starting with PHPlot-5.0.7, the 4 margins can be
+independently set or defaulted to automatic. CalcMargins calculates values
+for all 4 margins, but only saves those that have not been set using either
+<xref linkend="SetMarginsPixels"/> or <xref linkend="SetPlotAreaPixels"/>.
+Note that other than the overall plot title, elements are drawn relative to
+the plot area, which is calculated based on the actual margins. If the top
+margin is increased, for example, the plot title stays at the top of the
+image, but top tick marks and labels move down against the graph.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcMaxDataLabelSize" xreflabel="CalcMaxDataLabelSize"/>CalcMaxDataLabelSize($which = 'x')</term>
+  <listitem>
+    <para>
+Calculates the size of the biggest X or Y data label.
+For 'x' it returns the height along the Y axis of the tallest data label.
+For 'y' it returns the width along the sides of the widest data label.
+This is used to allocate space for margins.
+This was added to PHPlot-5.0.5.
+The argument supporting Y label width was added in PHPlot-5.1.2.
+Called by <xref linkend="CalcMargins"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcMaxTickLabelSize" xreflabel="CalcMaxTickLabelSize"/>CalcMaxTickLabelSize($which)</term>
+  <listitem>
+    <para>
+Calculates the size of the biggest tick label. The $which argument is 'x'
+or 'y' to indicate which labels to work with. For 'x', it returns the
+height along the Y axis; for 'y' it returns the width along the X axis.
+This is used to allocate space for margins.
+This was added to PHPlot-5.0.5.
+Calls <xref linkend="CalcTicks"/> to determine the tick value parameters.
+Called by <xref linkend="CalcMargins"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcPlotAreaPixels" xreflabel="CalcPlotAreaPixels"/>CalcPlotAreaPixels()</term>
+  <listitem>
+    <para>
+Calculates the pixel coordinates of the plot area.
+This was added to PHPlot-5.0.5 by moving the parts of the calculations out of
+SetPlotAreaPixels and SetMarginsPixels. Those two functions now simply
+record their arguments, and make no attempt to calculate any parameters.
+Called by <xref linkend="DrawGraph"/>, after <xref linkend="CalcMargins"/>
+is used to calculate margins.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcPlotAreaWorld" xreflabel="CalcPlotAreaWorld"/>CalcPlotAreaWorld()</term>
+  <listitem>
+    <para>
+Calculates the world coordinate limits of the plot area.
+This was added to PHPlot-5.0.5 by moving the calculations out of
+<xref linkend="SetPlotAreaWorld"/>.
+Starting with PHPlot-6.0.0, it just calls <xref linkend="CalcPlotRange"/>
+twice, once for X and once for Y.
+Called by <xref linkend="DrawGraph"/>, after <xref linkend="FindDataLimits"/>
+is used to examine the data array values.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcPlotRange" xreflabel="CalcPlotRange"/>CalcPlotRange($which)</term>
+  <listitem>
+    <para>
+Calculates the plot range and tick increment. $which is 'x' or 'y', to
+calculate values for the X or Y axis.
+Specified values (e.g. with <xref linkend="SetPlotAreaWorld"/>
+or <xref linkend="SetXTickIncrement"/>) are used if set. Otherwise, values
+are calculated heuristically.
+Returns an array of 3 calculated values: tick_increment, plot_min, and plot_max.
+This was added in PHPlot-6.0.0.
+Calls <xref linkend="CalcStep"/> if necessary to calculate the tick
+increment. (If either the tick increment or number of ticks has been set,
+then CalcPlotRange uses those instead of calling CalcStep).
+Called by <xref linkend="CalcPlotAreaWorld"/>, once for X and once for Y.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcRangeInit" xreflabel="CalcRangeInit"/>CalcRangeInit(&amp;$plot_limit, $implied, $data_limit)</term>
+  <listitem>
+    <para>
+Calculates the initial values for the plot range ends.
+$plot_limit is one end (min or max) of a plot range. It is passed as a
+reference because it might be unset. Unset, NULL, or an empty string means
+this end of the range has not been set and needs to be calculated.
+$implied is true when the data type does not specify the value (for
+example, the X value in text-data data type).
+$data_limit is the actual data limit (min or max) at this end of the range;
+given no other information this is the initial guess for the plot range limit.
+Returns an array of 2 elements: the initial value for the plot range limit,
+and a flag indicating if additional adjustment of that value is to be done.
+    </para>
+    <para>
+This was added in PHPlot-6.0.0.
+Called by <xref linkend="CalcPlotRange"/> 4 times, once for each end of the X
+and Y ranges.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcStep" xreflabel="CalcStep"/>CalcStep($which, $range)</term>
+  <listitem>
+    <para>
+Calculates an appropriate tick increment.
+$which is 'x' or 'y', and selects configuration variables for that axis.
+$range is the plot area range (max - min).
+Returns the calculated tick increment.
+    </para>
+    <para>
+This function is not called if the user has set a tick increment
+(<xref linkend="SetXTickIncrement"/>, <xref linkend="SetYTickIncrement"/>)
+or the number of tick marks
+(<xref linkend="SetNumXTicks"/>, <xref linkend="SetNumYTicks"/>).
+This function calls either <xref linkend="CalcStep125"/>,
+<xref linkend="CalcStepBinary"/>, or <xref linkend="CalcStepDatetime"/>
+to calculate an appropriate value, depending on the tick increment mode.
+This was added in PHPlot-6.0.0.
+Called by <xref linkend="CalcPlotRange"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcStep125" xreflabel="CalcStep125"/>CalcStep125($range, $min_ticks)</term>
+  <listitem>
+    <para>
+Calculates an appropriate tick increment in 'decimal' mode. This is the
+default mode.
+$range is the plot area range (max - min).
+$min_ticks is the minimum number of tick intervals to produce.
+Returns the calculated tick increment.
+The algorithm produces the largest tick increment that is a power of 10
+times 1, 2, or 5, and divides the plot area range $range into no fewer than
+$min_ticks intervals.
+This was added in PHPlot-6.0.0.
+Called by <xref linkend="CalcStep"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcStepBinary" xreflabel="CalcStepBinary"/>CalcStepBinary($range, $min_ticks)</term>
+  <listitem>
+    <para>
+Calculates an appropriate tick increment in 'binary' (power of 2) mode.
+$range is the plot area range (max - min).
+$min_ticks is the minimum number of tick intervals to produce.
+Returns the calculated tick increment.
+The algorithm produces the largest tick increment that is a power of 2
+and divides the plot area range $range into no fewer than $min_ticks intervals.
+This was added in PHPlot-6.0.0.
+Called by <xref linkend="CalcStep"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcStepDatetime"
+xreflabel="CalcStepDatetime"/>CalcStepDatetime($range, $min_ticks)</term>
+  <listitem>
+    <para>
+Calculates an appropriate tick increment in 'date' mode.
+This is for when the values along the axis represent date/time values.
+$range is the plot area range (max - min), in seconds.
+$min_ticks is the minimum number of tick intervals to produce.
+Returns the calculated tick increment.
+The function contains a list of acceptable intervals between 1 second and 1
+week, and returns one of those if possible - the largest value that divides
+the plot area range $range into no fewer than $min_ticks intervals. If the
+range is too large (would produce too many ticks with an increment of 1
+week), the function falls back to using <xref linkend="CalcStep125"/> with
+units of 1 day.
+This was added in PHPlot-6.0.0.
+Called by <xref linkend="CalcStep"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcTicks" xreflabel="CalcTicks"/>CalcTicks($which)</term>
+  <listitem>
+    <para>
+Gets the tick parameters. $which is 'x' or 'y'. Returns an array of 3
+values: start, end, and interval.
+This was added to PHPlot-5.0.5, although still using the method
+of just dividing the interval by 10 if there is no user-supplied interval
+or tick count.
+Starting with PHPlot-5.4.0, it also accounts for a tick anchor value, by
+shifting the start value as needed.
+Starting in PHPlot-6.0.0, it no longer calculates the tick increment, but
+simply uses the values calculated by <xref linkend="CalcPlotRange"/>.
+Called by <xref linkend="CalcMaxTickLabelSize"/>,
+<xref linkend="DrawYTicks"/>, and <xref linkend="DrawXTicks"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CalcTranslation" xreflabel="CalcTranslation"/>CalcTranslation()</term>
+  <listitem>
+    <para>
+Calculates the parameters for transforming world to pixel coordinates.
+This function calculates the scale (xscale, yscale) and origin
+(plot_origin_x, plot_origin_y) for X and Y translations, which
+are used by the xtr() and ytr() functions.
+Starting with PHPlot-5.0.5, this is only called by <xref linkend="DrawGraph"/>,
+as nothing else uses the parameters until the graph is ready to be drawn.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckDataArray" xreflabel="CheckDataArray"/>CheckDataArray()</term>
+  <listitem>
+    <para>
+Checks that there is a valid data array for the plot, and calculates values
+that depend on the data type.
+Called very early by <xref linkend="DrawGraph"/>.
+This was added in PHPlot-5.1.3, moving the checking out of DrawGraph
+and adding the data_columns calculation.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckDataType" xreflabel="CheckDataType"/>CheckDataType($valid_types)</term>
+  <listitem>
+    <para>
+Used to validate the data_type for a plot_type. This works like a specialized
+version of <xref linkend="CheckOption"/>. $valid_types contains the valid
+data type(s) for the current plot_type, separated by a comma and space if more
+than one is supported. If the current data_type is in the list, returns TRUE,
+else produces an error. This was added in PHPlot-5.1.2 to unify the way
+the plot drawing functions check the data type.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckDataValueLabels" xreflabel="CheckDataValueLabels"/>CheckDataValueLabels($label_control, &amp;$dvl)</term>
+  <listitem>
+    <para>
+Checks to see if data value labels should be drawn, based on $label_control
+(which is either <literal>$this->y_data_label_pos</literal> for vertical plots,
+or <literal>$this->x_data_label_pos</literal> for horizontal plots).
+Returns FALSE if the labels are off, else returns TRUE and sets 4 variables
+in the $dvl array. This array is used by <xref linkend="DrawDataValueLabel"/>
+to position the label. The array contains these keys: x_offset, y_offset :
+device coordinate (pixel) offsets for the label; h_align, v_align :
+text alignment.
+Called by plot type drawing functions such as <xref linkend="DrawDots"/>
+which do data value labels, other than bars and stackedbars.
+This was added in PHPlot-5.3.0.
+Through PHPlot-5.7.0, four separate reference arguments were used for the
+return values, instead of an array.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckLabels" xreflabel="CheckLabels"/>CheckLabels()</term>
+  <listitem>
+    <para>
+Fixes up the data and tick label position and angle.
+This applies defaults to data label and tick label positions but avoids
+having them overlap unless the user deliberately positioned them that way.
+Also sets the default angle for X data labels.
+This is for compatibility with PHPlot-5.0.7 and earlier, when there was only
+one control for both types of labels.
+Called by <xref linkend="DrawGraph"/> before calculating margins with
+<xref linkend="CalcMargins"/>.
+This was added in PHPlot-5.1.0.
+Before PHPlot-6.0.0, it also applied tick label format settings as
+defaults for data label formatting. Starting with PHPlot-6.0.0, this
+is now handled in <xref linkend="FormatLabel"/> instead.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckLabelsAllEmpty" xreflabel="CheckLabelsAllEmpty"/>CheckLabelsAllEmpty()</term>
+  <listitem>
+    <para>
+Returns TRUE if all of the labels in the data array are empty strings.
+This is used by <xref linkend="CheckLabels"/> to determine whether tick or
+axis data labels should default on if both are left off.
+This was added in PHPlot-5.1.2.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckOption" xreflabel="CheckOption"/>CheckOption($which_opt, $which_acc, $which_func)</term>
+  <listitem>
+    <para>
+Checks the validity of an option passed to a PHPlot member function.
+$which_opt is the string to check, and $which_acc is a string of acceptable
+choices (with a comma and then a space between choices).
+If the string to check is not found in the string of acceptable choices, a
+fatal error will be reported using <xref linkend="PrintError"/>.
+The error message will include $which_func which should
+be the name of the calling function (using the PHP __FUNCTION__ magic constant).
+Note that this is used to catch programming errors, not run-time or user errors.
+If the string to check is acceptable, it is returned down-cased and trimmed
+of leading and trailing spaces.
+Note: At PHPlot-5.0.5, this function was changed to require exactly ', '
+(comma space) between acceptable choices, and reject empty strings for
+$which_opt and disallow partial matches.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckOptionArray" xreflabel="CheckOptionArray"/>CheckOptionArray($opt, $acc, $func)</term>
+  <listitem>
+    <para>
+Checks the validity of an option argument passed to a PHPlot member function
+that can accept its argument as either a string or an array of strings.
+$opt is the string or array to check, and $acc is a string of acceptable
+choices (with a comma and then a space between choices).
+If the $opt argument is supplied as a string, it is first converted to an
+array with one element. Then the elements of the array are each checked
+for validity. If any element of the array of strings to check is not
+found in the string of acceptable choices, a fatal error will be reported
+using <xref linkend="PrintError"/>. The error message will include $func
+which should be the name of the calling function (using the PHP
+__FUNCTION__ magic constant). Note that this is used to catch programming
+errors, not run-time or user errors. If all of the array elements to check
+are acceptable, the array is returned with each element down-cased and
+trimmed of leading and trailing spaces. Note that an array is always
+returned, even if the opt argument is a string.
+This was added in PHPlot-5.1.2.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckPieLabels" xreflabel="CheckPieLabels"/>CheckPieLabels()</term>
+  <listitem>
+    <para>
+Sets up the default pie chart label type and format. The default is percentage
+labels formatted as 'data' (fixed-point). The default cannot be statically
+defined, for compatibility with previous releases which used the Y label
+precision (if set), else 1 digit if <xref linkend="SetPrecisionY"/>
+was never called.
+Called by <xref linkend="DrawPieChart"/>.
+This was added in PHPlot-5.6.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckPlotRange"
+xreflabel="CheckPlotRange"/>CheckPlotRange($which, &amp;$plot_min, &amp;$plot_max, $adjust_min, $adjust_max)</term>
+  <listitem>
+    <para>
+Ensures that the X or Y plot range is positive. This is necessary because the
+plot range and tick increment calculations, as well as the overall plotting
+functions, cannot handle zero or negative ranges.
+A bad range can happen as a result of 'flat' or missing data (all Y values
+the same, for example), or if <xref linkend="SetPlotAreaWorld"/> is used to
+set one end of the data range, and the actual data is on the wrong side of
+that limit. (<function>SetPlotAreaWorld</function> itself defends against
+setting both ends of a range such that min >= max).
+PHPlot will never adjust user-set plot limits, but it will adjust its own
+calculated limits to force a positive range (even if the resulting plot may
+not be useful).
+    </para>
+    <para>
+$which is 'x' or 'y' (this is only used for error reporting).
+$plot_min and $plot_max are the range limits. These are passed by reference
+and may be adjusted by the function.
+$adjust_min and $adjust_max are flags indicating if the corresponding
+$plot_min and $plot_max values were user-specified (False) or calculated (True).
+A flag value of True means <function>CheckPlotRange</function> may adjust
+the corresponding plot range value to prevent a non-positive range.
+Called by <xref linkend="CalcPlotRange"/>.
+This was added in PHPlot-6.0.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="CheckPointParams" xreflabel="CheckPointParams"/>CheckPointParams()</term>
+  <listitem>
+    <para>
+Adjusts the point_shapes and point_sizes arrays so they have the same size,
+and stores the size in a class variable. This handles processing deferred
+from <xref linkend="SetPointShapes"/> and <xref linkend="SetPointSizes"/>
+until graph drawing time. It it is called by <xref linkend="DrawDots"/>
+before using point shapes.
+This was added in PHPlot-5.1.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DecodeDataType" xreflabel="DecodeDataType"/>DecodeDataType()</term>
+  <listitem>
+    <para>
+Decodes the data type, and sets several member variables that other functions
+can use to understand how to process the data array. The variables it sets
+all have names starting with "datatype_" (refer to <xref linkend="dev-vars"/>).
+This is called by <xref linkend="DrawGraph"/>.
+It was added in PHPlot-5.1.2 (where it returned an array of 4 flags, and
+was called by several functions that needed to know the structure of the
+data array.)
+In PHPlot-5.1.3, it was changed to set member variables instead.
+It is now called just once, and the other functions reference the variables
+as needed.
+Starting with PHPlot-6.1.0, it uses the
+<link linkend="var-datatypes">$datatypes</link> array to set the flags based
+on the data type, so it no longer needs to 'know' the actual data type names.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DisableCaching" xreflabel="DisableCaching"/>DisableCaching()</term>
+  <listitem>
+    <para>
+Sends HTTP headers to the browser to disable client-side caching. This is
+called by <xref linkend="PrintImage"/> if
+<xref linkend="SetBrowserCache"/> was used to disable caching.
+It is also used by <xref linkend="StartStream"/>.
+This was added in PHPlot-5.8.0 by moving code out of PrintImage.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DoCallback" xreflabel="DoCallback"/>DoCallback($reason, ...)</term>
+  <listitem>
+    <para>
+Call a callback (hook) function. $reason is the name given to the
+callback, for example <literal>draw_titles</literal>
+(meaning: call after drawing titles).
+The reasons are array indexes in the $callbacks class variable. Following
+that are zero or more arguments to pass to the callback, after the image
+resource and passthrough arguments. DoCallback does nothing if there is no
+callback registered for the given reason, otherwise it calls the callback
+function. See <xref linkend="callbacks"/> for more information on callbacks.
+    </para>
+    <para>
+Starting with PHPlot-5.1.3, <function>DoCallback</function> returns the value
+returned by the callback function, if any. If there is no callback defined for
+the given reason,  <literal>NULL</literal> is returned. So it is possible to
+define a callback that returns a meaningful value (such as True/False), and
+still distinguish the case of where no callback has been set. However, it is
+often simpler to test first to see if a callback has been set, using
+<xref linkend="GetCallback"/>, before using <function>DoCallback</function>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawArea" xreflabel="DrawArea"/>DrawArea($do_stacked = False)</term>
+  <listitem>
+    <para>
+Draws an area plot, or a stacked area plot (if the optional argument is True).
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-area">area</link> or
+<link linkend="plottype-stackedarea">stackedarea</link>.
+Stacked area plots were added in PHPlot-5.1.1; through PHPlot-5.1.0 this
+function did not have a parameter and was used only for area plots.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawBackground" xreflabel="DrawBackground"/>DrawBackground($overwrite = False)</term>
+  <listitem>
+    <para>
+Draws the image background, either an image file or solid fill or nothing.
+Called by <xref linkend="DrawGraph"/> and <xref linkend="DrawMessage"/>.
+The optional argument $overwrite (added in PHPlot-5.7.0 for DrawMessage)
+forces the background to be drawn, even if it was already drawn.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawBar" xreflabel="DrawBar"/>DrawBar($row, $column, $x1, $y1, $x2, $y2, $data_color, $shade_color, $border_color, $shade_top = TRUE, $shade_side = TRUE)</term>
+  <listitem>
+    <para>
+Draws a single bar (or bar segment), with either shading or border.
+The $row and $column indicate which data point is being plotted.
+Four corner coordinates and 3 color indexes are provided.
+The first color $data_color is the bar fill color,
+the second color $shade_color is the shading color, and the third
+color $border_color is used for bar borders.
+(These three come from <xref linkend="GetBarColors"/>.)
+The last two arguments are flags used to suppress the top or side shading
+for certain cases of stacked bar segments.
+Called by <xref linkend="DrawBars"/> and <xref linkend="DrawHorizBars"/>
+to draw each bar.
+Called by <xref linkend="DrawStackedBars"/> and
+<xref linkend="DrawHorizStackedBars"/> to draw each bar segment.
+This was added in PHPlot-5.2.0, moving common code from those 4 functions.
+    </para>
+    <para>
+Starting with PHPlot-5.7.0, the arguments were changed as shown to accommodate
+a new callback which provides access to drawing coordinates.
+In previous releases, the usage was
+<function>DrawBar($x1, $y1, $x2, $y2, $data_color, $alt_color,
+$shade_top = TRUE, $shade_side = TRUE)</function>.
+    </para>
+    <para>
+In PHPlot-6.0.0, a single $alt_color argument was split into separate
+$shade_color and $border_color arguments. This corresponds to the change
+in <xref linkend="GetBarColors"/>, and allows for bar charts with
+independent control over shading and borders.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawBars" xreflabel="DrawBars"/>DrawBars()</term>
+  <listitem>
+    <para>
+Draws a bar chart plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-bars">bars</link>.
+If the data type indicates a horizontal bar chart,
+calls <xref linkend="DrawHorizBars"/> instead.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawBoxes" xreflabel="DrawBoxes"/>DrawBoxes()</term>
+  <listitem>
+    <para>
+Draws a box plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-boxes">boxes</link>.
+This was added in PHPlot-6.1.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawBubbles" xreflabel="DrawBubbles"/>DrawBubbles()</term>
+  <listitem>
+    <para>
+Draws a bubbles plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-bubbles">bubbles</link>.
+This was added in PHPlot-5.5.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawDataLabel" xreflabel="DrawDataLabel"/>DrawDataLabel($which_font, $which_angle, $x_world, $y_world, $which_color, $which_text, $which_halign = 'center', $which_valign = 'top', $x_adjustment=0, $y_adjustment=0)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-5.1.3 and replaced
+by <xref linkend="DrawDataValueLabel"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawDataValueLabel" xreflabel="DrawDataValueLabel"/>DrawDataValueLabel($x_or_y, $row, $column, $x_world, $y_world, $text, $dvl)</term>
+  <listitem>
+    <para>
+Draws a data value label (previously called "Y data label").
+These are the above-bar or in-bar labels on bar and stackedbar charts, and
+the labels near data points available with some other plot types.
+</para>
+<para>
+$x_or_y is 'x' or 'y' to select the font, angle, and formatting type.
+The $row and $column are passed to <xref linkend="FormatLabel"/>
+for possible use with a custom formatting function.
+The label is drawn at world coordinates ($x_world, $y_world) after device
+coordinate offset is applied (see below).
+$text is the label text, which gets formatted with
+<xref linkend="FormatLabel"/> before drawing.
+</para>
+<para>
+The $dvl argument is an array with up to 6 variables containing positioning
+and related information. In $dvl, x_offset and y_offset are pixel offsets
+for the label; h_align and v_align specify the text alignment relative
+to the plotting point (see <xref linkend="DrawText"/>);
+min_width and max_width used to prevent labels from overlapping their
+allocated space. If either min_width or max_width is supplied in the $dvl
+array, the text is sized before drawing, and if it won't fit in the space
+the label is not drawn. This is used to suppress labels that are too wide to
+be drawn inside their bars, for example.
+The defaults for the X and Y offsets are 0, and the default alignment is
+(center, center). (The $dvl argument is required, but none of its elements
+is required.)
+</para>
+<para>
+This function is called by all plot drawing functions which support data value
+labels, if those labels are enabled.
+</para>
+<para>
+This function was added in PHPlot-5.1.3 and replaced
+<xref linkend="DrawDataLabel"/>.
+Through PHPlot-5.7.0, 6 separate arguments were used instead of the $dvl
+array, and the $row and $column arguments were not present.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawDot" xreflabel="DrawDot"/>DrawDot($row, $column, $x_world, $y_world, $color)</term>
+  <listitem>
+    <para>
+Draws a single marker point ('dot') at the given X and Y world coordinates,
+using the given color.
+The $row and $column indicate which data point is being plotted.
+The $column parameter also selects the marker shape and size,
+using the arrays set up with SetPointSizes() and SetPointShapes().
+Called by <xref linkend="DrawDots"/> to plot point markers.
+Starting with PHPlot-5.4.0, DrawDot() simply converts the coordinates to device
+coordinates and then calls <xref linkend="DrawShape"/>. It has no knowledge of
+the available dot shapes.
+    </para>
+    <para>
+Starting with PHPlot-5.7.0, the arguments were changed as shown to accommodate
+a new callback which provides access to drawing coordinates.
+In previous releases, the usage was
+<function>DrawDot($x_world, $y_world, $record, $color)</function>.
+The old $record argument is equivalent to the new $column argument.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawDots" xreflabel="DrawDots"/>DrawDots($paired = False)</term>
+  <listitem>
+    <para>
+Draws a points plot, or the points for a linepoints plot, including error plots.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-points">points</link>,
+and by <xref linkend="DrawLinePoints"/> for the
+points portion of a <link linkend="plottype-linepoints">linepoints</link> plot.
+$paired is true for <literal>linepoints</literal> plots.
+When $paired is true, DrawDots() draws the points and error bars, and
+<xref linkend="DrawLines" /> draws the lines and data labels.
+(The $paired argument was added in PHPlot-5.1.3.)
+Starting with PHPlot-6.0.0, DrawDots() also handles error plots,
+and horizontal points and linepoints plots.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawDotsError" xreflabel="DrawDotsError"/>DrawDotsError($paired = False)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-6.0.0 and merged into
+<xref linkend="DrawDots" />.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawError" xreflabel="DrawError"/>DrawError($error_message, [$where_x], [$where_y])</term>
+  <listitem>
+    <para>
+Starting with PHPlot-5.0.5, this function is an alias for
+<xref linkend="PrintError"/> and is retained for compatibility.
+The $where_x and $where_arguments are now ignored. (Previously they
+positioned the error message on the image, but were never used.)
+Starting with PHPlot-5.7.0, this function is considered deprecated.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawHorizBars" xreflabel="DrawHorizBars"/>DrawHorizBars()</term>
+  <listitem>
+    <para>
+Draws a horizontal bars plot.
+Called by <xref linkend="DrawBars"/> when the data type indicates a
+horizontal plot.
+This was added in PHPlot-5.1.2 (but was called by DrawGraph).
+In PHPlot-5.1.3 it was changed to be called by DrawBars.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawHorizStackedBars" xreflabel="DrawHorizStackedBars"/>DrawHorizStackedBars()</term>
+  <listitem>
+    <para>
+Draws a horizontal stacked bars plot.
+Called by <xref linkend="DrawStackedBars"/> when the data type indicates a
+horizontal plot.
+This was added in PHPlot-5.1.3.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawImageBorder" xreflabel="DrawImageBorder"/>DrawImageBorder($overwrite = False)</term>
+  <listitem>
+    <para>
+Draws a border around the image, if enabled by
+<xref linkend="SetImageBorderType"/>.
+Called by <xref linkend="DrawGraph"/> and <xref linkend="DrawMessage"/>.
+The optional argument $overwrite (added in PHPlot-5.7.0 for DrawMessage)
+forces the border to be drawn, even if it was already drawn.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawLegend" xreflabel="DrawLegend"/>DrawLegend(x,y,type)</term>
+  <listitem>
+    <para>
+Draws the plot legend. This includes the box, text labels, and color boxes
+or shapes.
+Called by <xref linkend="DrawGraph"/>,
+but only if legend text has been set using <xref linkend="SetLegend"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawLinePoints" xreflabel="DrawLinePoints"/>DrawLinePoints()</term>
+  <listitem>
+    <para>
+Draws a linepoints plot, with or without error bars.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-linepoints">linepoints</link>.
+It simply calls <xref linkend="DrawLines"/> and <xref linkend="DrawDots"/>,
+which handle both the plain and error bar cases.
+This was added in PHPlot-5.1.3 to provide a function specific to this
+plot type.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawLines" xreflabel="DrawLines"/>DrawLines($paired = False)</term>
+  <listitem>
+    <para>
+Draws a line plot, or the lines part of a linepoints plot, including error
+plots.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-lines">lines</link>, and by
+<xref linkend="DrawLinePoints"/> for the
+lines portion of a <link linkend="plottype-linepoints">linepoints</link> plot.
+$paired is true for <literal>linepoints</literal> plots.
+When $paired is true, DrawLines() draws the lines and data labels, and
+<xref linkend="DrawDots" /> draw the points and error bars.
+(The $paired argument was added in PHPlot-5.1.3.)
+Starting with PHPlot-6.0.0, DrawLines() also handles error plots,
+and horizontal lines and linepoints plots.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawLinesError" xreflabel="DrawLinesError"/>DrawLinesError($paired = False)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-6.0.0 and merged into
+<xref linkend="DrawLines" />.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawOHLC" xreflabel="DrawOHLC"/>DrawOHLC($draw_candles, $always_fill = FALSE)</term>
+  <listitem>
+    <para>
+Draws one of the three types of OHLC (Open/High/Low/Close) plots.
+If $draw_candles is FALSE, draws a basic OHLC plot
+(plot type <link linkend="plottype-ohlc">ohlc</link>).
+If $draw_candles is TRUE and $always_fill is FALSE,
+draws a candlestick OHLC plot
+(plot type <link linkend="plottype-candlesticks">candlesticks</link>).
+If $draw_candles is TRUE and $always_fill is TRUE,
+draws a filled candlestick OHLC plot
+(plot type <link linkend="plottype-candlesticks2">candlesticks2</link>).
+Called by <xref linkend="DrawGraph"/> when the plot type is one of those
+three types.
+This was added in PHPlot-5.3.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawPieChart" xreflabel="DrawPieChart"/>DrawPieChart()</term>
+  <listitem>
+    <para>
+Draws a pie chart plot.
+Called by <xref linkend="DrawGraph"/> with the plot type is
+<link linkend="plottype-pie">pie</link>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawPieLabel" xreflabel="DrawPieLabel"/>DrawPieLabel($label_txt, $xc, $yc, $start_angle, $arc_angle, $r)</term>
+  <listitem>
+    <para>
+Draws a pie chart label. $label_txt is the already-formatted label text
+string. ($xc, $yc) is the center of the pie (not the text basepoint).
+$start_angle is the starting angle in degrees for the segment being
+labeled, which extends for $arc_angle degrees. $r is an array of static
+values (constant for each pie chart): ellipse parameters and a flag to
+indicate the text alignment should be reversed.
+Called by <xref linkend="DrawPieChart"/>.
+This was added in PHPlot-5.6.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawPlotAreaBackground" xreflabel="DrawPlotAreaBackground"/>DrawPlotAreaBackground()</term>
+  <listitem>
+    <para>
+Draws the plot area background, either an image file set with
+<xref linkend="SetPlotAreaBgImage"/>,
+or else a solid fill color selected by <xref linkend="SetPlotBgColor"/>
+if enabled with <xref linkend="SetDrawPlotAreaBackground"/>
+or else nothing.
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawPlotBorder" xreflabel="DrawPlotBorder"/>DrawPlotBorder($draw_axes=TRUE)</term>
+  <listitem>
+    <para>
+Draws the border around the plot area.
+This draws zero to four lines around the plot area (depending on
+<xref linkend="SetPlotBorderType"/>).
+The $draw_axes argument (added in PHPlot-5.6.0) is true for all plot types
+except pie charts, and controls the default value if SetPlotBorderType() was
+not called.
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawShape" xreflabel="DrawShape"/>DrawShape($x, $y, $record, $color, $allow_none = TRUE)</term>
+  <listitem>
+    <para>
+Draws a single marker point ('dot' or 'shape') at the given X and Y device
+(pixel) coordinates, using the given color. The $record parameter selects the
+marker shape and size using the arrays set up with SetPointSizes() and
+SetPointShapes(); they are not passed as arguments themselves.
+Called by <xref linkend="DrawDot"/> and <xref linkend="DrawLegend"/>.
+This is the function that knows which shapes are available and how to draw
+them. (<xref linkend="SetPointShapes"/> also has a list of valid shapes.)
+This was added at PHPlot-5.4.0 by moving the shape drawing code out of
+DrawDot(), leaving behind only the conversion from world to device coordinates.
+This was necessary because DrawLegend() needs to specify marker positions
+in pixel coordinates when using point shapes instead of color boxes.
+    </para>
+    <para>
+If the optional $allow_none is FALSE, then the function will substitute
+another shape for the special 'none' shape (which suppresses a shape marker
+for a data set in a linepoints plot). This is used when drawing a legend, to
+ensure that there is a marker shape for each data set. This argument was
+added in PHPlot-6.0.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawSquared" xreflabel="DrawSquared"/>DrawSquared()</term>
+  <listitem>
+    <para>
+Draws a squared (stepped lines) plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-squared">squared</link>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawSquaredArea" xreflabel="DrawSquaredArea"/>DrawSquaredArea($do_stacked = False)</term>
+  <listitem>
+    <para>
+Draws a squared area plot, or a stacked squared area plot
+(if the optional argument is True).
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-squaredarea">squaredarea</link> or
+<link linkend="plottype-stackedsquaredarea">stackedsquaredarea</link>.
+This was added in PHPlot-6.2.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawStackedBars" xreflabel="DrawStackedBars"/>DrawStackedBars()</term>
+  <listitem>
+    <para>
+Draws a stacked bars chart plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-stackedbars">stackedbars</link>.
+If the data type indicates a horizontal plot,
+calls <xref linkend="DrawHorizStackedBars"/> instead.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawText" xreflabel="DrawText"/>DrawText($font, $angle, $xpos, $ypos, $color, $text, $halign = 'left', $valign = 'bottom')</term>
+  <listitem>
+    <para>
+Draws a string of text $text, at position ($xpos, $ypos).
+The font settings are specified by $font, which is one of the text element
+names used by <xref linkend="SetFont"/> such as <literal>'title'</literal>
+or <literal>'x_label'</literal>. An empty string or NULL can be used to get
+the <literal>'generic'</literal> font. For backward compatibility,
+a font array (from the PHPlot object $fonts[] array) can be used too.
+    </para>
+    <para>
+The text is drawn at angle $angle (built-in fonts can be used at 0
+and 90 degrees only, TrueType at any angle). $color is a GD color
+index for the image. Text alignment relative to the (x,y) point is
+controlled with $halign (<literal>center</literal>,
+<literal>left</literal>, or <literal>right</literal>)
+and $valign (<literal>center</literal>, <literal>bottom</literal>,
+or <literal>top</literal>).
+    </para>
+    <para>
+Multi-line text strings are supported. This function accounts for the
+limitations and differences in GD text drawing routines for built-in and
+TrueType fonts.
+Called by numerous functions which place text on the plot.
+    </para>
+    <para>
+Starting with PHPlot-5.0.5, this function just calls
+<xref linkend="ProcessText"/> in text drawing mode. DrawText should be used
+by all internal PHPlot code that needs to draw text, and ProcessText should
+only be used by DrawText and SizeText.
+    </para>
+    <para>
+Starting with PHPlot-5.1.0, $font can be NULL or an empty string to
+use the <emphasis>generic</emphasis> font.
+This was intended to allow callbacks to avoid having to reference the internal
+class array variable which stores font information.
+    </para>
+    <para>
+Starting with PHPlot-6.0.0, the preferred form for $font is the name of a
+PHPlot text element, with use of the $fonts[] member variable deprecated.
+This further eases use of DrawText by callbacks, which can specify a font
+other than 'generic' without referencing internal class variables.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawThinBarLines" xreflabel="DrawThinBarLines"/>DrawThinBarLines()</term>
+  <listitem>
+    <para>
+Draws a thin bar lines plot. This is sometimes called an impulse plot.
+Called by <xref linkend="DrawGraph"/> when the plot type is
+<link linkend="plottype-thinbarline">thinbarline</link>.
+This function draws both vertical and horizontal variants of this plot type.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawTitle" xreflabel="DrawTitle"/>DrawTitle()</term>
+  <listitem>
+    <para>
+Draws the main plot title as set with <xref linkend="SetTitle"/>. This is centered at the
+very top of the image.
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXAxis" xreflabel="DrawXAxis"/>DrawXAxis()</term>
+  <listitem>
+    <para>
+Draws the X (horizontal) axis, including the axis line,
+tick marks and labels,
+and also draws the vertical grid lines.
+All of these except the axis line are done in <xref linkend="DrawXTicks"/>.
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXDataLabel" xreflabel="DrawXDataLabel"/>DrawXDataLabel($xlab, $xpos, $row, $do_lines=FALSE)</term>
+  <listitem>
+    <para>
+Draws an axis data label for an X value. The labels are above or below the plot
+area or both, depending on the value set with
+<xref linkend="SetXDataLabelPos"/>.
+The $row value indicates the row index in the data array for this label; it
+is used to position the data label line, and for custom label formatting.
+If $do_lines is true, this calls <xref linkend="DrawXDataLine"/> to draw a
+line from the label to the point, if enabled and supported by the plot type.
+    </para>
+    <para>
+This function is used by vertical plots.
+It is called by plot drawing routines for all plot types except
+<literal>pie</literal>:
+<xref linkend="DrawArea"/>,
+<xref linkend="DrawBars"/>,
+<xref linkend="DrawDots"/>,
+<xref linkend="DrawThinBarLines"/>,
+<xref linkend="DrawLines"/>,
+<xref linkend="DrawSquared"/>, and
+<xref linkend="DrawStackedBars"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXDataLine" xreflabel="DrawXDataLine"/>DrawXDataLine($xpos, $row)</term>
+  <listitem>
+    <para>
+Draws X data label lines, which are vertical lines from the bottom or top
+of the plot to the data points. This is enabled with
+<xref linkend="SetDrawXDataLabelLines"/>. The lines are drawn from the
+position (above, below, or both) of the X axis data labels, which are set with
+<xref linkend="SetXDataLabelPos"/>.
+Called by <xref linkend="DrawXDataLabel"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXErrorBars"
+xreflabel="DrawXErrorBars"/>DrawXErrorBars($x, $y $error_plus, $error_minus, $color)</term>
+  <listitem>
+    <para>
+Draws an error bar set for the point at world coordinates ($x, $y).
+$error_plus and $error_minus are the X error amounts (in world coordinates).
+Both are non-negative values.
+Called by <xref linkend="DrawDots"/> and <xref linkend="DrawLines"/> when
+the data type indicates a horizontal error plot.
+This was added in PHPlot-6.1.0 when horizontal error plots were implemented.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXTick" xreflabel="DrawXTick"/>DrawXTick($x, $x_pixels)</term>
+  <listitem>
+    <para>
+Draws a single X value tick mark and its label.
+These can appear on the bottom of the graph, top of the graph, along the
+X axis (even if it is in the middle somewhere), on both sides, or nowhere,
+as set with <xref linkend="SetXTickPos"/> and
+<xref linkend="SetXTickLabelPos"/>.
+$x is the X value of the tick, and $x_pixels is its device coordinate value.
+Called by <xref linkend="DrawXTicks"/>.
+This was added at PHPlot-5.0.5 by splitting the code out of DrawXTicks,
+for symmetry with DrawYTicks.
+Through PHPlot-5.7.0, $x was passed to this function already formatted with
+<xref linkend="FormatLabel"/>. Starting with PHPlot-5.8.0, the actual tick
+value is passed, so <function>DrawXTick</function> can decide whether or
+not to format it.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXTicks" xreflabel="DrawXTicks"/>DrawXTicks()</term>
+  <listitem>
+    <para>
+Draws the vertical grid lines, the tick marks, and tick labels.
+Calls <xref linkend="CalcTicks"/> to calculate the tick parameters.
+Calls <xref linkend="DrawXTick"/> to draw each tick mark and its label.
+Called by <xref linkend="DrawXAxis"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawXTitle" xreflabel="DrawXTitle"/>DrawXTitle()</term>
+  <listitem>
+    <para>
+Draws the X axis title. There can be zero, one, or two of them depending on
+the position parameter specified in <xref linkend="SetXTitle"/>.
+Calls <xref linkend="DrawText"/> to actually draw the title(s).
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYAxis" xreflabel="DrawYAxis"/>DrawYAxis()</term>
+  <listitem>
+    <para>
+Draws the Y (vertical) axis, including the axis line,
+tick marks and labels,
+and also draws the horizontal grid lines.
+All of these except the axis line are done in <xref linkend="DrawYTicks"/>.
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYDataLabel" xreflabel="DrawYDataLabel"/>DrawYDataLabel($ylab, $ypos, $row, $do_lines=FALSE)</term>
+  <listitem>
+    <para>
+Draws an axis data label for a Y value. The labels are along the Y axis or
+side of the plot, or both, depending on the value set with
+<xref linkend="SetYDataLabelPos"/>.
+The $row value indicates the row index in the data array for this label; it
+is used for custom label formatting.
+If $do_lines is true, this calls <xref linkend="DrawYDataLine"/> to draw a
+line from the label to the point, if enabled and supported by the plot type.
+This function is used by horizontal plots, and was added in PHPlot-5.1.2.
+Called by horizontal plot drawing functions such as
+<xref linkend="DrawHorizBars"/>.
+The $do_lines argument was added in PHPlot-6.0.0 when horizontal plots
+supporting data label lines were first available.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYDataLine" xreflabel="DrawYDataLine"/>DrawYDataLine($ypos, $row)</term>
+  <listitem>
+    <para>
+Draws Y data label lines, which are horizontal lines from the left or right
+side of the plot to the data points. This is enabled with
+<xref linkend="SetDrawYDataLabelLines"/>, and is only valid with horizontal
+plots which support Y data label lines. The lines are drawn from the
+position (left, right, or both) of the Y axis data labels, which are set with
+<xref linkend="SetYDataLabelPos"/>.
+Called by <xref linkend="DrawYDataLabel"/>.
+This was added in PHPlot-6.0.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYErrorBar" xreflabel="DrawYErrorBar"/>DrawYErrorBar($x_world, $y_world, $error_height, $color)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-6.1.0 and replaced with
+<xref linkend="DrawYErrorBars"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYErrorBars" xreflabel="DrawYErrorBars"/>DrawYErrorBars($x, $y $error_plus, $error_minus, $color)</term>
+  <listitem>
+    <para>
+Draws an error bar set for the point at world coordinates ($x, $y).
+$error_plus and $error_minus are the Y error amounts (in world coordinates).
+Both are non-negative values.
+Called by <xref linkend="DrawDots"/> and <xref linkend="DrawLines"/> when
+the data type indicates a vertical error plot.
+This was added in PHPlot-6.1.0, replacing <xref linkend="DrawYErrorBar"/>
+(which drew only 1 of the error bars for a point).
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYTick" xreflabel="DrawYTick"/>DrawYTick($y, $y_pixels)</term>
+  <listitem>
+    <para>
+Draws a single Y value tick mark and its label.
+These can appear on the left of the graph, right of the graph, along the
+Y axis (even if it is in the middle somewhere), on both sides, or nowhere,
+as set with <xref linkend="SetYTickPos"/> and
+<xref linkend="SetYTickLabelPos"/>.
+$y is the Y value of the tick, and $y_pixels is its device coordinate value.
+Called by <xref linkend="DrawYTicks"/>.
+Through PHPlot-5.7.0, $y was passed to this function already formatted with
+<xref linkend="FormatLabel"/>. Starting with PHPlot-5.8.0, the actual tick
+value is passed, so <function>DrawYTick</function> can decide whether or
+not to format it.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYTicks" xreflabel="DrawYTicks"/>DrawYTicks()</term>
+  <listitem>
+    <para>
+Draws the horizontal grid lines, the tick marks, and tick labels.
+Calls <xref linkend="DrawYTick"/> to draw each tick mark and its label.
+Called by <xref linkend="DrawYAxis"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="DrawYTitle" xreflabel="DrawYTitle"/>DrawYTitle()</term>
+  <listitem>
+    <para>
+Draws the Y axis title. There can be zero, one, or two of them depending on
+the position parameter specified in <xref linkend="SetYTitle"/>.
+Calls <xref linkend="DrawText"/> to actually draw the title(s).
+Called by <xref linkend="DrawGraph"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="FindDataLimits" xreflabel="FindDataLimits"/>FindDataLimits()</term>
+  <listitem>
+    <para>
+Finds the limits of the data. Using the data_type and the data array, it
+goes through the points and determines the minimum and maximum X and Y values.
+It stores the min and max Y values for each row (plot line) in the
+class arrays data_min and data_max.
+(Before PHPlot-5.0.4, these were stored back into the data array
+with special index values MINY (-1) and MAXY (-2).)
+It also stores the overall min and max X and Y values as min_x, max_x,
+min_y, and max_y.
+It also stores the length of the longest data label in max_t.
+Starting with PHPlot-5.0.5, this is only called once by
+<xref linkend="DrawGraph"/>. (In PHPlot-5.0.4 and earlier, this was called
+from various places, with a flag data_limits_done to indicate it was called.)
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="FormatLabel" xreflabel="FormatLabel"/>FormatLabel($which_pos, $which_lab, ...)</term>
+  <listitem>
+    <para>
+Formats a value for use as a tick, data, or pie chart label.
+This implements the format type selected with
+<xref linkend="SetXLabelType"/>, <xref linkend="SetYLabelType"/>,
+<xref linkend="SetXDataLabelType"/>, <xref linkend="SetYDataLabelType"/>,
+and <xref linkend="SetPieLabelType"/>.
+If no formatting is in effect for that label type ($which_pos), it returns the
+label string $which_lab as-is. Otherwise, it formats it as directed. This
+can be a floating point number (formatted with <xref linkend="number_format"/>),
+a date/time value, or it can be formatted with <function>sprintf</function>
+or a user-defined function (type 'custom').
+Any additional arguments after the first 2 are passed through to a custom label
+formatting function. This is used to make the data row and column available
+to the user-defined function (if applicable for the label type).
+    </para>
+    <para>
+Called by several functions that need to format label values.
+Separation of data and tick label formatting was available starting with
+PHPlot-5.1.0. Use with pie chart labels was added in PHPlot-5.6.0.
+Support for additional arguments for custom functions  was added
+in PHPlot-5.8.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="FormatPieLabel" xreflabel="FormatPieLabel"/>FormatPieLabel($index, $pie_label_source, $arc_angle, $slice_weight)</term>
+  <listitem>
+    <para>
+Formats a pie chart label. This first gets the initial value, based on
+the $source argument to <xref linkend="SetPieLabelType"/>, which is passed
+in as $pie_label_source. It may use $index, $arc_angle, or $slice_weight,
+or a combination of those. Then it formats that value using
+<xref linkend="FormatLabel"/> and returns the result.
+Called by <xref linkend="DrawPieChart"/>.
+This was added in PHPlot-5.6.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetBarColors"
+xreflabel="GetBarColors"/>GetBarColors($row, $idx, &amp;$vars, &amp;$data_color, &amp;$shade_color, &amp;$border_color)</term>
+  <listitem>
+    <para>
+Gets the color indexes to be used for a bar plot.
+This is used by bar and stackedbar plot drawing functions, and
+accounts for a custom data color callback if defined.
+$row and $idx are the indexes for the current bar or bar segment.
+$vars is an array argument that maintains information across calls - the
+caller allocates an empty array, and this function updates it.
+The color index for bar filling is returned in $data_color.
+$shade_color is the color index to use for shading (if shading is on).
+$border_color is the color index to use for the bar border (if on).
+This was added in PHPlot-5.2.0, moving common code into a function.
+In PHPlot-6.0.0, a single $alt_color argument was split into separate
+$shade_color and $border_color arguments.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetColorIndex" xreflabel="GetColorIndex"/>GetColorIndex(&amp;$color, $default_color_index=0)</term>
+  <listitem>
+    <para>
+Allocate a GD color index for a color given as a 4 component array (R,G,B,A)
+$color. Returns a color index to be used in GD drawing functions.
+The color returned is the exact color requested if it already exists in the
+image, or if can be allocated.
+For palette images, if the color map is full, no new colors can be allocated,
+and this function will return an index to the closest existing color.
+For truecolor images, this function always returns an index for the exact
+requested color.
+If $color is empty or unset, returns $default_color_index instead, without
+allocating a new color.
+This was added in PHPlot-5.2.0, replacing the second half of
+<xref linkend="SetIndexColor"/>.
+The $default_color_index argument was added in PHPlot-5.7.0, and the $color
+argument was changed to a reference (so an unset variable can be passed
+without an error).
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetColorIndexArray" xreflabel="GetColorIndexArray"/>GetColorIndexArray($color_array, $max_colors)</term>
+  <listitem>
+    <para>
+Allocates GD color indexes for each color in the array $color_array, which are
+given as 4 component arrays (R,G,B,A). Up to $max_colors colors will be
+allocated. (This is used to limit the number of allocated data colors to the
+number of data sets in the plot, for example.)
+<xref linkend="GetColorIndex"/> is used to allocate each color.
+Returns an array of GD color indexes to be used in GD drawing functions.
+This was added in PHPlot-5.3.1.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetDarkColorIndex" xreflabel="GetDarkColorIndex"/>GetDarkColorIndex($color)</term>
+  <listitem>
+    <para>
+Allocate a GD color index for a darker shade of a color given as a 4 component
+array (R,G,B,A).
+Returns a color index to be used in GD drawing functions.
+The method used is to subtract 48 from each red, green, and blue component
+(without letting any go negative).
+The alpha component is not adjusted.
+The color returned is the exact color requested if it already exists in the
+image, or if can be allocated, else the closest color available.
+This is used for shadow colors (for example, in bar charts and pie charts).
+This was added in PHPlot-5.2.0, replacing the second half of
+<xref linkend="SetIndexDarkColor"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetDarkColorIndexArray" xreflabel="GetDarkColorIndexArray"/>GetDarkColorIndexArray($color_array, $max_colors)</term>
+  <listitem>
+    <para>
+Allocates GD color indexes for a darker shade of each color in the array
+$color_array, which are given as 4 component arrays (R,G,B,A). Up to
+$max_colors colors will be allocated. (This is used to limit the number of
+allocated dark-shade data colors to the number of data sets in the plot,
+for example.)
+<xref linkend="GetDarkColorIndex"/> is used to allocate each color.
+Returns an array of GD color indexes to be used in GD drawing functions.
+This was added in PHPlot-5.3.1.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetDataColor" xreflabel="GetDataColor"/>GetDataColor($row, $idx, &amp;$vars, &amp;$data_color, $extra=0)</term>
+  <listitem>
+    <para>
+Gets the color index to be used for a data element (a point or line
+segment, for example).
+This is used by multiple plot drawing functions to get the data color,
+accounting for a custom data color callback if defined.
+$row and $idx are the indexes for the data point. $vars is an array argument
+that maintains information across calls - the caller allocates an empty
+array, and this function updates it.
+The color index to use is returned in $data_color.
+$extra contains extra information for a data color callback.
+This was added in PHPlot-5.2.0, moving common code into a function.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetDataErrorColors" xreflabel="GetDataErrorColors"/>GetDataErrorColors($row, $idx, &amp;$vars, &amp;$data_color, &amp;$error_color, $extra=0)</term>
+  <listitem>
+    <para>
+This is an extended version of <xref linkend="GetDataColor"/> which is used
+for error bar plots. It returns two color index values: $data_color for the
+data element, and $error_color for the error bar.
+This is used by error plot drawing functions, and accounts for a custom
+data color callback if defined.
+$row and $idx are the indexes for the data point. $vars is an array argument
+that maintains information across calls - the caller allocates an empty
+array, and this function updates it.
+$extra contains extra information for a data color callback.
+This was added in PHPlot-5.2.0, moving common code into a function.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetDefaultTTFont" xreflabel="GetDefaultTTFont"/>GetDefaultTTFont()</term>
+  <listitem>
+    <para>
+Returns the default TrueType font name. If no default font has been set
+using <xref linkend="SetDefaultTTFont"/>, the first time this is called it
+will go through a list of likely sans-serif fonts, trying to find one
+that works.  The first one that works, or the last one if none works, will
+be set as the default font.
+This was added in PHPlot-5.1.3, replacing the static initialization of
+default font.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetGridSetting" xreflabel="GetGridSetting"/>GetGridSetting($xy)</term>
+  <listitem>
+    <para>
+Returns a flag indicating whether to draw the grid along the axis
+indicated by $xy ('x' or 'y'). This implements the grid default which
+differs for horizontal and vertical plots.
+This was added in PHPlot-6.0.0, replacing CalcGridSettings().
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetImage" xreflabel="GetImage"/>GetImage($image_filename, &amp;$width, &amp;$height)</term>
+  <listitem>
+    <para>
+Reads an image file from $image_filename, stores the width and height
+(in pixels) in the $width and $height reference arguments, and returns
+a PHP GD image resource of the image.
+This is used by <xref linkend="SetInputFile"/> and <xref linkend="tile_img"/>.
+Errors go to <xref linkend="PrintError"/>; there is no way for the script
+to recover. Possible errors include an image file type which is unsupported
+by PHP GD, or a corrupt image file.
+Note: This was added at PHPlot-5.0.4, by moving common code from the
+two calling functions.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetImageBorderWidth" xreflabel="GetImageBorderWidth"/>GetImageBorderWidth()</term>
+  <listitem>
+    <para>
+This returns the image border width, as set with
+<xref linkend="SetImageBorderWidth" /> or as defaulted.
+It is used by <xref linkend="CalcMargins" /> to account for image border width,
+and by <xref linkend="DrawImageBorder" /> when drawing the image border.
+This was added in PHPlot-5.1.2.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetImageType" xreflabel="GetImageType"/>GetImageType(&amp;$mime_type, &amp;$output_f)</term>
+  <listitem>
+    <para>
+Given the current file type (e.g. 'png'), this sets the MIME type for the
+image (e.g. 'image/png') and the name of the GD output function (e.g.
+'imagepng') corresponding to that type. The results are stored in the
+arguments, and TRUE is returned unless an error occurs.
+It is used by <xref linkend="PrintImage" /> and <xref linkend="EncodeImage"/>.
+This was added in PHPlot-5.5.0, from code moved out of PrintImage.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetLegendPosition" xreflabel="GetLegendPosition"/>GetLegendPosition($width, $height)</term>
+  <listitem>
+    <para>
+This calculates and returns the device coordinates (as a 2 element array X,Y)
+of the upper left corner of the legend box. $width and $height are the size of
+the legend box.  It accounts for the positioning mode, reference point,
+base point, and pixel offset as set with <xref linkend="SetLegendPosition"/>.
+Called by <xref linkend="DrawLegend"/>.
+This was added in PHPlot-5.4.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetLegendSizeParams" xreflabel="GetLegendSizeParams"/>GetLegendSizeParams()</term>
+  <listitem>
+    <para>
+This calculates a number of parameters that determine how to draw the
+legend, and returns an array containing those variables and their values.
+Called by <xref linkend="GetLegendSize"/> (which only uses the 'width' and
+'height' elements), and by <xref linkend="DrawLegend"/>.
+This was added in PHPlot-5.4.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetLineSpacing" xreflabel="GetLineSpacing"/>GetLineSpacing($font)</term>
+  <listitem>
+    <para>
+Given a font array variable, returns the proper spacing in pixels between lines
+of text using that font. This works for both GD and TrueType fonts. See also
+<xref linkend="SetLineSpacing"/>.
+Used by <xref linkend="ProcessTextGD"/>, <xref linkend="ProcessTextTTF"/>,
+and <xref linkend="DrawLegend"/>.
+Note: This was added at PHPlot-5.0.6, with support for mixing TTF and GD
+fonts.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetRangeEndAdjust" xreflabel="GetRangeEndAdjust"/>GetRangeEndAdjust($which, &amp;$adjust)</term>
+  <listitem>
+    <para>
+Applies a default to $adjust, the plot range end adjustment factor. $which is
+'x' or 'y'. If $adjust is already set, the function does nothing.
+Otherwise, it uses the current plot type to apply a default setting to $adjust.
+See the notes on the <literal>adjust_type</literal> entry in
+<xref linkend="var-plots"/> for more on the per-plot-type adjustment mode.
+This is used by <xref linkend="CalcPlotRange"/>.
+It was added at PHPlot-6.0.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="GetTextAlignment" xreflabel="GetTextAlignment"/>GetTextAlignment($sin_t, $cos_t, &amp;$h_align, &amp;$v_align, $reverse = FALSE)</term>
+  <listitem>
+    <para>
+Selects the best alignment for text which is at a specific angle ($sin_t,
+$cos_t) from a point. The result is returned in $h_align and $v_align,
+suitable for use with <xref linkend="DrawText"/>.
+The alignment is chosen from 8 possible values (left/center, center/bottom,
+etc.) to keep the closest edge or corner of the text box at a fixed
+distance from the reference point (typically the center of a pie chart, or
+a plotted point), regardless of the text string size.
+For example, text at 0 degrees is left/center aligned, and text at 90 degrees
+is center/bottom aligned.
+If $reverse is true, the alignment is reversed; this is used for text inside
+an ellipse but close to the circumference.
+Used by <xref linkend="CheckDataValueLabels"/>
+and <xref linkend="DrawPieLabel"/>.
+Note: This was added at PHPlot-5.6.0 by moving code out of
+<xref linkend="CheckDataValueLabels"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+
+<varlistentry>
+  <term><anchor id="initialize" xreflabel="initialize"/>initialize($imagecreate_function, $width, $height, $output_file, $input_file)</term>
+  <listitem>
+    <para>
+Initialize a newly created object. This is called from the two class
+constructors, <xref linkend="PHPlot"/> and <xref linkend="PHPlot-truecolor"/>.
+$imagecreate_function is the name of the GD function used to create an image
+(<function>imagecreate</function> or <function>imagecreatetruecolor</function>).
+The other arguments are the same as in the class constructors, except the
+defaults are already applied.
+This was added in PHPlot-5.6.0 by moving duplicated code from the two
+constructors into a shared function.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="NeedDataDarkColors" xreflabel="NeedDataDarkColors"/>NeedDataDarkColors()</term>
+  <listitem>
+    <para>
+Allocates darker data colors, which are used for shading.
+This is called by graph drawing functions such as <xref linkend="DrawPieChart"/>
+if they need to use these colors for shading.
+This was added in PHPlot-5.2.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="NeedErrorBarColors" xreflabel="NeedErrorBarColors"/>NeedErrorBarColors()</term>
+  <listitem>
+    <para>
+Allocates colors used for error bars.
+This is called by any graph drawing functions that is going to draw error bars.
+This was added in PHPlot-5.2.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="number_format" xreflabel="number_format"/>number_format($number, $decimals=0)</term>
+  <listitem>
+    <para>
+Formats a floating point number, like PHP's number_format(), inserting
+a decimal separator and thousands groups separators. Unlike the PHP
+function, this uses variables in the PHPlot class to select the separators.
+The separators can be set with <xref linkend="SetNumberFormat"/>, or by
+default PHPlot will attempt to get locale-specific values.
+For example, 1234+(56/100) will be returned as "1,234.56" if the locale is
+"en_US", and as "1.234,56" if the locale is "de_DE".
+As a fall-back, if locale information is not available, '.' is used for
+decimal point, and ',' for thousands separator. This fall-back is equivalent
+to the behavior in PHPlot 5.0rc3 and earlier.
+This is used by <xref linkend="FormatLabel"/> when the formatting type is
+<literal>data</literal>, and also for the pie chart labels in
+<xref linkend="DrawPieChart"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="pad_array" xreflabel="pad_array"/>pad_array(&amp;$arr, $size)</term>
+  <listitem>
+    <para>
+Pads an array $arr with copies of itself until it reaches the given size.
+If $arr is a scalar, it will first be converted to an array with one
+element. Then, if $arr has fewer than $size elements, elements of $arr
+starting from the first will be appended until it reaches $size elements.
+This only works on zero-based sequential integer indexed arrays.
+Called by <xref linkend="PadArrays"/>, <xref linkend="SetPointShapes"/>,
+and <xref linkend="SetPointSizes"/>.
+This replaced <xref linkend="array_pad_array"/> at PHPlot-5.0.4,
+however that had an unused 3rd argument, and worked on general indexed arrays.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="PadArrays" xreflabel="PadArrays"/>PadArrays()</term>
+  <listitem>
+    <para>
+Pads the style arrays (line_widths, line_styles, data_colors, etc.) so they
+are all large enough to contain an entry for each data set or plot line.
+This uses <xref linkend="pad_array"/>.
+Called by <xref linkend="DrawGraph"/> before drawing anything.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="PrintError" xreflabel="PrintError"/>PrintError($error_message)</term>
+  <listitem>
+    <para>
+Handles a fatal error within PHPlot. Starting with PHPlot-5.0.5 this and
+<xref linkend="DrawError"/> are identical. PrintError attempts to draw the
+error message $error_message into the image, and then output the image.
+This method is used because PHPlot is normally expected to output an image,
+and text output would not be displayed properly. (If no image resource was
+available, and the <xref linkend="SetIsInline"/> flag is not on, PHPlot
+will send a 500 Internal Server Error header.) PrintError uses
+<xref linkend="DrawMessage"/> to actually draw the message onto the image.
+After this, PrintError uses the PHP trigger_error() function to signal a user
+error. This is normally fatal to the script, unless caught. This will also
+result in the error message written to the error output stream, which
+typically ends up in a web server error log.
+    </para>
+    <para>
+(Through PHPlot-5.0.4, PrintError wrote an error message to standard output
+and exited.)
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="ProcessText" xreflabel="ProcessText"/>ProcessText($draw_it, $font_id, $angle, $x, $y, $color, $text, $halign, $valign)</term>
+  <listitem>
+    <para>
+This function acts as a bridge, or switch, between the two functions
+<xref linkend="SizeText"/> and <xref linkend="DrawText"/>, which handle
+both GD and TTF text,
+and the functions which specifically handle GD text or TTF text.
+The arguments to this function are the same as
+<xref linkend="DrawText"/> except for an additional first argument
+$draw_it. If $draw_it is true, text is drawn. This is used by DrawText. If
+$draw_it is false, only the bounding box size of the text is calculated and
+returned. This is used by SizeText. In text sizing mode, the x, y, color,
+halign, and valign arguments are ignored, as they are not needed when
+calculating the text bounding box size.
+This function is only called by
+<xref linkend="SizeText"/> and <xref linkend="DrawText"/>, and calls either
+<xref linkend="ProcessTextTTF"/> or <xref linkend="ProcessTextGD"/>.
+    </para>
+    <para>
+<function>ProcessText</function> examines the $font_id argument and handles
+the variations described under <xref linkend="DrawText"/>. If $font_id is
+an array, it is assumed to be an element of the member array $fonts[], and
+is passed as-is to the lower level functions.
+If it is a string that exists as an index to $fonts[], that font array is
+used. In all other cases, the <literal>generic</literal> font is used.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="ProcessTextGD" xreflabel="ProcessTextGD"/>ProcessTextGD($draw_it, $font, $angle, $x, $y, $color, $text, $h_factor, $v_factor)</term>
+  <listitem>
+    <para>
+Draws GD fixed-font text, or calculates the size of GD fixed-font text.
+This is only called by <xref linkend="ProcessText"/> after it determines
+that GD text is in use.
+If $draw_it is true, text is drawn;
+if $draw_it is false, only the bounding box size of the text is calculated and
+returned as a two-element array ($width, $height).
+Here $width is measured along the X axis, and $height along Y, regardless
+of the text angle. These are the size of an orthogonal bounding box that
+contains the text block.
+The $font argument is a PHPlot font array, which must reference a GD font.
+The $angle is 0 or 90 degrees, as GD text only supports those values.
+$x, $y are the reference point of the text $text, which is drawn in color
+$color.
+The text string can contain multiple lines, with a newline character between
+lines.
+The $h_factor and $v_factor arguments are translated from the
+alignment arguments supplied to DrawText or SizeText: 0, 0.5, or 1.0
+If $draw_it is false, for text sizing mode, the x, y, color,
+h_factor and v_factor arguments are ignored.
+    </para>
+    <para>
+Note: This was added at PHPlot-5.0.5. It was changed at PHPlot-5.0.6 to
+take a single font array argument, rather than 3 separate arguments for
+font number, width, and height.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="ProcessTextTTF" xreflabel="ProcessTextTTF"/>ProcessTextTTF($draw_it, $font, $angle, $x, $y, $color, $text, $h_factor, $v_factor)</term>
+  <listitem>
+    <para>
+Draws TTF text, or calculates the size of TTF text.
+This is only called by <xref linkend="ProcessText"/> after it determines
+that TTF text is in use.
+If $draw_it is true, text is drawn;
+if $draw_it is false, only the bounding box size of the text is calculated and
+returned as a two-element array ($width, $height).
+Here $width is measured along the X axis, and $height along Y, regardless
+of the text angle. These are the size of an orthogonal bounding box that
+contains the text block.
+The $font argument is a PHPlot font array, which must reference a TTF font.
+The text is drawn at $angle degrees; unlike GD text TTF text can be drawn
+at any angle.
+$x, $y are the reference point of the text $text, which is drawn in color
+$color.
+The text string can contain multiple lines, with a newline character between
+lines.
+The $h_factor and $v_factor arguments are translated from the
+alignment arguments supplied to DrawText or SizeText: 0, 0.5, or 1.0
+If $draw_it is false, for text sizing mode, the x, y, color,
+h_factor and v_factor arguments are ignored.
+    </para>
+    <para>
+Note that the interpretation of the alignment for text at arbitrary angles
+may not be what you expect. Rotation of text happens before alignment, and
+alignment and positioning use the orthogonal bounding box of the text.
+    </para>
+    <para>
+Note: This was added at PHPlot-5.0.5. It was changed in PHPlot-5.0.6 to
+take a single font array argument, rather than 2 separate arguments for
+font filename and size.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetBgColorIndexes" xreflabel="SetBgColorIndexes"/>SetBgColorIndexes()</term>
+  <listitem>
+    <para>
+Allocates the colors for the image background and image border.
+Called by <xref linkend="SetColorIndexes"/> before drawing anything, and
+by <xref linkend="DrawMessage"/> if needed.
+This was added in PHPlot-5.7.0 by moving code from SetColorIndexes, so that
+DrawMessage can set up only the color indexes it needs.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetColorIndexes" xreflabel="SetColorIndexes"/>SetColorIndexes()</term>
+  <listitem>
+    <para>
+Allocates all the colors needed for a plot.
+Called by <xref linkend="DrawGraph"/> before drawing anything.
+Calls <xref linkend="SetBgColorIndexes"/> (starting at PHPlot-5.7.0) to set
+the background and border color indexes.
+This was added in PHPlot-5.2.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetDashedStyle" xreflabel="SetDashedStyle"/>SetDashedStyle($which_ndxcol, $use_style = TRUE)</term>
+  <listitem>
+    <para>
+Sets the GD line style to select a dashed line, if line styles are enabled,
+in preparation for drawing a dashed line. $which_ndxcol is the color index
+to use for the line, and $use_style is a flag indicating if a styled line
+is to be drawn. Returns a GD color index to use for drawing. If
+$use_styles is false, indicating solid lines, the return value is
+$which_ndxcol. If $use_styles is true or omitted, the return value is a
+GD constant used to indicate drawing a styled line, and $which_ndxcol is
+used to set up the line style. The return value is then used by the caller
+as the color argument in drawing functions such as
+<function>imageline</function>.
+    </para>
+    <para>
+To understand how this function works, see the documentation for the PHP GD
+function <function>ImageSetStyle()</function> and also refer to <xref
+linkend="SetDefaultDashedStyle"/>. GD expects a line style to be specified
+as an array of pixel values, which is awkward to deal with.  PHPlot uses a
+shorthand notation with integer values indicating pairs of the number of
+color pixels ("on" pixels), then transparent pixels ("off" pixels).
+<function>SetDefaultDashedStyle()</function> creates a template string with
+a marker for each "on" pixel, and the special GD color code for transparent
+pixels for each "off" pixel.  This template is saved in the class variable
+<varname>default_dashed_style</varname>.  The actual color to use for the
+"on" pixels is filled in by <function>SetDashedStyle()</function> before
+the dashed style is used.  The result is an array of pixel values for
+<function>ImageSetStyle()</function>.
+    </para>
+    <para>
+(In PHPlot-6.1.0 and earlier, <function>SetDefaultDashedStyle()</function>
+created a string of PHP code to generate an array of pixel values in the
+form used by the GD function <function>ImageSetStyle()</function>, and
+saved this as <varname>default_dashed_style</varname>.
+<function>SetDashedStyle()</function> then evaluated the PHP code, with
+the correct color filled in from <varname>$which_ndxcol</varname>.)
+    </para>
+
+    <para>
+Called by all functions that need to draw lines that can have a line style
+applied, including <xref linkend="DrawXTicks"/> and <xref linkend="DrawYTicks"/>
+(for drawing the grid lines, not the ticks), and <xref linkend="DrawLines"/>
+for drawing line plots.
+    </para>
+    <para>
+The $use_style argument and return value were added in PHPlot-6.0.0.
+Before that, <function>SetDashedStyle</function> unconditionally set up the
+line style, and returned a boolean value.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetDefaultFonts" xreflabel="SetDefaultFonts"/>SetDefaultFonts()</term>
+  <listitem>
+    <para>
+Selects all the default font values and sizes. See <xref linkend="SetFont"/>
+for details of the font element names and default values.  Called by the class
+constructor initialization function <xref linkend="initialize"/> to initialize
+fonts in the plot object, and by <xref linkend="SetUseTTF"/> to restore the
+defaults when changing from or to TrueType font usage.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetDefaultStyles" xreflabel="SetDefaultStyles"/>SetDefaultStyles()</term>
+  <listitem>
+    <para>
+Initializes default colors and styles for PHPlot objects. Mostly this calls
+the public member functions such as <xref linkend="SetDataColors"/> but
+without specifying an array of colors, which causes the member functions
+to select default values.
+Called by the class constructor initialization function
+<xref linkend="initialize"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetIndexColor" xreflabel="SetIndexColor"/>SetIndexColor($which_color, $alpha = 0)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-5.2.0.
+It parsed a color specification, and allocated a GD color index.
+The first part is replaced by calling <xref linkend="SetRGBColor"/> directly,
+and the second part is implemented with <xref linkend="GetColorIndex"/>
+at graph drawing time.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetIndexDarkColor" xreflabel="SetIndexDarkColor"/>SetIndexDarkColor($which_color, $alpha = 0)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed in PHPlot-5.2.0.
+It parsed a color specification, and allocated a GD color index for a
+slightly darker shade of the color.
+The first part is replaced by calling <xref linkend="SetRGBColor"/> directly,
+and the second part is implemented with <xref linkend="GetDarkColorIndex"/>
+at graph drawing time.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetInputFile" xreflabel="SetInputFile"/>SetInputFile($which_input_file)</term>
+  <listitem>
+    <para>
+Sets an image file $which_input_file to be used as the background image for
+the graph. Also resets the graph size to the size of the image file.
+Called by the class constructor initialization function
+<xref linkend="initialize"/>.
+Note: In earlier releases, this was considered an externally available
+function. After a PHPlot object was created with the constructor,
+SetInputFile could be used to resize it and set the background image.
+Although this still works, it is deprecated. SetInputFile should be
+considered an internal-use-only function. Users should set the background
+image file using the 4th argument of <xref linkend="PHPlot"/> or
+<xref linkend="PHPlot-truecolor"/>  when creating an instance of the object.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetLabelType" xreflabel="SetLabelType"/>SetLabelType($mode, $args)</term>
+  <listitem>
+    <para>
+Sets the formatting used for tick, data, and pie chart labels.
+This implements <xref linkend="SetXLabelType"/>,
+<xref linkend="SetYLabelType"/>, <xref linkend="SetXDataLabelType"/>,
+<xref linkend="SetYDataLabelType"/>, and part of
+<xref linkend="SetPieLabelType"/>.
+$mode is either 'x', 'xd', 'y', 'yd', or 'p' to select the type of label
+(x, y for tick labels; xd, yd for data labels; p for pie chart labels).
+$args is an array of arguments, with $args[0] selecting the type of
+formatting (for example, <literal>data</literal>).
+Additional array elements depend on the formatting type.
+For more details, see the above-referenced functions.
+All arguments to those functions are combined into an array and passed to
+<function>SetLabelType</function> as $args.
+Separation of data and tick label formatting was available starting with
+PHPlot-5.1.0. Support for pie chart label formatting was added in PHPlot-5.6.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetRGBColor" xreflabel="SetRGBColor"/>SetRGBColor($color_asked, $alpha = 0)</term>
+  <listitem>
+    <para>
+Converts a general color specification into a standard form as an array of
+4 components: red, green, blue, and alpha, and returns the array.  The 3
+color components are integers in the range 0-255, and the alpha component
+is an integer in the range 0-127 (where 0 means opaque).  The acceptable
+color specification forms are documented in <xref linkend="conc-colors-forms"/>
+and <xref linkend="adv-truecolor-forms"/>,
+and include color names, component arrays, and strings of the form #RRGGBB
+and #RRGGBBAA.  The alpha argument provides a default value if the color
+specification does not include alpha; the default 0 makes the color
+opaque.
+This is used directly by all functions that accept a color specification.
+Use of alpha in the color specification, the default alpha argument, and the
+4th component in the returned array were added in PHPlot-5.1.1.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SetupAreaPlot" xreflabel="SetupAreaPlot"/>SetupAreaPlot($stacked, &amp;$xd, &amp;$yd)</term>
+  <listitem>
+    <para>
+Sets up for an area plot (plot types <literal>area</literal>,
+<literal>stackedarea</literal>, <literal>squaredarea</literal>,
+and <literal>stackedsquaredarea</literal>).
+$stacked indicates a stacked (cumulative) plot, so the
+Y values in the data array are to be accumulated for each X row.
+    </para>
+    <para>
+This function calculates two arrays, $xd[] and $yd[], which are used for
+drawing area fills. On return, $xd[] contains the device coordinates for
+the X values from the data array (or implied, for text-data data type).
+$yd[] is returned as a 2-dimensional array of Y values in device coordinates.
+<function>SetupAreaPlot</function> adds an additional column of Y values
+representing the X axis, which is the base line for area fills.
+For stacked plots, this goes before the first real Y value in the array.
+For unstacked plots, it goes after the last real Y value in the array.
+    </para>
+    <para>
+While traversing the data array, this function also draws axis data labels
+if they are enabled. (Doing it here avoids having the calling functions
+need to access the data array at all.)
+    </para>
+    <para>
+This was added in PHPlot-6.2.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="SizeText" xreflabel="SizeText"/>SizeText($font, $angle, $text)</term>
+  <listitem>
+    <para>
+Calculates the size of a block of text. It works on both GD (fixed-font) and TTF
+text.
+$font is a text element name, empty, or a PHPlot font array (use of an array
+is deprecated); see <xref linkend="DrawText"/> for details.
+$angle is the text angle in degrees.
+$text is the text string. The text string can contain multiple lines,
+with a newline character between lines.
+This function just calls <xref linkend="ProcessText"/> in text sizing mode
+to do the work.
+It returns a two-element array with the text width and height. These are the
+width and height of an orthogonal bounding box (box aligned with the X
+and Y axes) which contains the rotated text block.
+Called by functions which need to determine text size for laying out
+plot elements, such as <xref linkend="CalcMargins"/>.
+This function replaced <xref linkend="TTFBBoxSize"/> at PHPlot-5.0.5.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="tile_img" xreflabel="tile_img"/>tile_img($file, $xorig, $yorig, $width, $height, $mode)</term>
+  <listitem>
+    <para>
+Tiles an image from a file onto the plot image.
+$file is the filename of the image to use as the tile.
+($xorig, $yorig) are the origin point for the tiling,
+and ($width, $height) are the area to be tiled. These are used to tile just
+under the plot area versus the entire image. The $mode can be
+<literal>centeredtile</literal>, <literal>tile</literal>, or
+<literal>scale</literal>.  Scale mode scales the source image to
+fit the target area. Tile and centeredtile modes repeat the source image as
+needed to fit into the target area; the difference is that centeredtile
+offsets the tile start position by half its size, which works better for
+some tiles.
+Called by
+<xref linkend="DrawBackground"/> and <xref linkend="DrawPlotAreaBackground"/>
+if an image file is selected for the plot area or overall background.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="truncate_array" xreflabel="truncate_array"/>truncate_array(&amp;$array, $size)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This was added in PHPlot-5.2.0 and removed in PHPlot-5.3.1,
+when data color processing was changed to not truncate the color arrays.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="TTFBBoxSize" xreflabel="TTFBBoxSize"/>TTFBBoxSize($size, $angle, $font, $string)</term> <!-- REMOVED -->
+  <listitem>
+    <para>
+This function was removed at PHPlot-5.0.5.
+It was replaced by <xref linkend="SizeText"/>.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="TuneAutoRange" xreflabel="TuneAutoRange"/>TuneAutoRange($which, $zero_magnet, $adjust_mode, $adjust_amount)</term>
+  <listitem>
+    <para>
+This implements <xref linkend="TuneXAutoRange"/> and
+<xref linkend="TuneYAutoRange"/> to store tuning parameters used by the
+automatic range calculation. $which is 'x' or 'y', and the other arguments
+are as described under those two public functions.
+This was added in PHPlot-6.0.0
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="TuneAutoTicks"
+xreflabel="TuneAutoTicks"/>TuneAutoTicks($which, $min_ticks, $tick_mode, $tick_inc_integer)</term>
+  <listitem>
+    <para>
+This implements <xref linkend="TuneXAutoTicks"/> and
+<xref linkend="TuneYAutoTicks"/> to store tuning parameters used by the
+tick increment calculation. $which is 'x' or 'y', and the other arguments
+are as described under those two public functions.
+This was added in PHPlot-6.0.0
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="xtr" xreflabel="xtr"/>xtr($x_world)</term>
+  <listitem>
+    <para>
+Translates an X world coordinate value into a pixel coordinate value.
+This uses the scale and translation set up by <xref linkend="CalcTranslation"/>.
+See <xref linkend="GetDeviceXY"/> for a public interface.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="ytr" xreflabel="ytr"/>ytr($y_world)</term>
+  <listitem>
+    <para>
+Translates a Y world coordinate value into a pixel coordinate value.
+This uses the scale and translation set up by <xref linkend="CalcTranslation"/>.
+See <xref linkend="GetDeviceXY"/> for a public interface.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="__sleep" xreflabel="__sleep"/>__sleep()</term>
+  <listitem>
+    <para>
+This is a PHP "magic method" that prepares a PHPlot object for serialization.
+It stores the PHPlot version string (for checking at wakeup time), and a
+flag indicating if it used a truecolor image or not.
+See <xref linkend="adv-serialize"/>.
+This was added in PHPlot-5.8.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="__wakeup" xreflabel="__wakeup"/>__wakeup()</term>
+  <listitem>
+    <para>
+This is a PHP "magic method" that re-creates a PHPlot object after
+unserialization.
+It checks the stored version string to make sure the object was serialized with
+the exact same PHPlot version, and then re-creates the image resource.
+See <xref linkend="adv-serialize"/>.
+This was added in PHPlot-5.8.0.
+    </para>
+  </listitem>
+</varlistentry>
+
+</variablelist>
+
+</chapter>
+
+<chapter id="dev-vars">
+<title>PHPlot Class Member Variables</title>
+<abstract><title></title>
+  <para>
+This chapter provides information about the PHPlot class member variables
+and constants.
+  </para>
+</abstract>
+
+<para>
+Most PHPlot class member variables are meant for internal use only,
+and are declared to have <emphasis>protected</emphasis> visibility
+(starting with PHPlot-6.0.0).
+This means they are not accessible from your application, unless you define
+a class that extends PHPlot.
+All these member variables are subject to change in future
+releases without concern for backward compatibility.
+</para>
+
+<para>
+One exception is the plot tuning variables, which have public visibility.
+<xref linkend="adv-tuning"/> describes how these PHPlot member variables
+can be used to adjust plot appearance.
+Setting them from your application is generally safe, as they have relatively
+small effects on plots, and are less likely to change in future releases.
+</para>
+
+<para>
+A few additional member class variables have public visibility, due to past
+use in applications, but you should avoid using them. This includes
+<literal>img</literal>, the GD image resource, and <literal>fonts</literal>,
+the array of font information.
+</para>
+
+<sect1 id="dev-vars-list">
+<title>List of Member Variables</title>
+
+<para>
+The table below lists the PHPlot class member variables.
+</para>
+
+<para>
+The initial values are listed under <emphasis>Default Value</emphasis>.
+Variables which are declared but not initialized at the top of the
+PHPlot class definition have nothing in this column. They can be considered
+to have an initial value of NULL, which is significant for some variables
+but not for others.
+</para>
+
+<para>
+The <emphasis>Reference Function</emphasis> column lists the member
+function(s) used to set the variable, if the variable can be set by the
+application, else the member function which calculates the variable, if
+there is one, else the member function(s) which use the variable, if there
+are only a few.
+</para>
+
+<para>
+Variables which hold color values are initialized to defaults using
+<xref linkend="SetDefaultStyles"/> when a PHPlot object is created.
+For the default colors, see <xref linkend="conc-colors-elements"/>.
+</para>
+
+<para>
+&variablelist;
+</para>
+</sect1>
+<pagebreak/>
+<sect1 id="dev-var-notes">
+<title>Member Variable Notes</title>
+<abstract><title></title>
+  <para>
+This section contains details on some of the PHPlot class member variables
+listed in the previous section.
+Remember that all PHPlot class member variables are meant for internal use only.
+  </para>
+</abstract>
+
+<sect2 id="var-datatypes">
+<title>datatypes[]</title>
+<para>
+The <varname>datatypes[]</varname> array contains information about the
+available data types. See <xref linkend="conc-datatypes"/> for more
+information about data types.
+It is used by <xref linkend="SetDataType"/> to validated the supplied data
+type, and by <xref linkend="DecodeDataType"/> to set the flags that
+describe the datatype.
+</para>
+
+<para>
+The goal is to keep the names and details about the data types in this
+array only, and minimize other uses of the actual data type names. However,
+each plot type drawing function (for example <xref linkend="DrawLines"/>)
+also 'knows' about the data types it supports, and specifies the data type
+names when calling <xref linkend="CheckDataType"/>.
+</para>
+
+<para>
+This array was added in PHPlot-6.1.0.
+It is a protected static member variable in the PHPlot class, so it must be
+accessed as <varname>self::$datatypes</varname> from inside the class (or a
+derived class), and not through an instance of the class.
+Is not accessible from outside the class or derived classes.
+</para>
+
+<para>
+The array keys are the data types (for example: 'text-data').
+The values are arrays which contain information about the data type.
+The second-level array keys correspond to the 'datatype' flag variables,
+without the 'datatype_' prefix. A key will be present, with the value
+<literal>TRUE</literal>, if the flag should be set for that data type.
+The key will be absent if the flag should not be set.
+For example: for data type <literal>text-data</literal>, the array contains
+one value: <literal>'implied' =&gt; TRUE</literal>. This means that for
+data type text-data, the <literal>datatype_implied</literal> flag should be
+TRUE (indicating that this data type has implied independent variable
+values), and all other flags should be FALSE. In addition to
+<literal>implied</literal>, the other possible keys are
+<literal>pie_single</literal>, <literal>error_bars</literal>,
+<literal>swapped_xy</literal>, and <literal>yz</literal>.
+</para>
+
+</sect2>
+
+<sect2 id="var-fonts">
+<title>fonts[]</title>
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The <varname>fonts[]</varname> array contains information about the fonts to
+use for text on the plot. The array keys are the element names (such as
+<literal>title</literal> or <literal>legend</literal>) as used in
+<xref linkend="SetFont"/>, <xref linkend="SetFontGD"/>, or
+<xref linkend="SetFontTTF"/>. The array values are arrays which contain
+information about the font to use for that element. The keys and values of
+the second-level arrays are:
+
+<informaltable>
+  <?dbfo table-width="80%"?> <!-- Table width hint for PDF only -->
+  <tgroup cols="3">
+    <?dbhtml table-summary="fonts[] array elements"?>
+<!-- Note: Unable to specify column widths that work in both HTML and PDF.
+     For HTML, it only accepts %, and for FO/PDF it only takes *.
+     The only work-around is to move longer content out of table cells, so
+     HTML can automatically get columns widths that are acceptable.
+-->
+    <colspec colname="c1" colwidth="20*" />
+    <colspec colname="c2" colwidth="40*" />
+    <colspec colname="c3" colwidth="40*" />
+    <thead>
+      <row>
+        <entry>Key</entry>
+        <entry>Value for TTF</entry>
+        <entry>Value for GD Font</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>ttf</entry>
+        <entry>True for a TrueType font</entry>
+        <entry>False for a GD font</entry>
+      </row>
+      <row>
+        <entry>font</entry>
+        <entry>Pathname of the font file</entry>
+        <entry>Font number: 1 through 5</entry>
+      </row>
+      <row>
+        <entry>size</entry>
+        <entry>Font point size</entry>
+        <entry>Not used</entry>
+      </row>
+      <row>
+        <entry>height</entry>
+        <entry>Height in pixels of an upper-case "E" in the font</entry>
+        <entry>Font height in pixels</entry>
+      </row>
+      <row>
+        <entry>width</entry>
+        <entry>Width in pixels of an upper-case "E" in the font</entry>
+        <entry>Font width in pixels</entry>
+      </row>
+      <row>
+        <entry>spacing</entry>
+        <entry>Font's built-in inter-line spacing</entry>
+        <entry>Not used</entry>
+      </row>
+      <row>
+        <entry>line_spacing</entry>
+        <entry>User-requested inter-line spacing factor.</entry>
+        <entry>Same as for TTF</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+<para>
+For TrueType fonts, the height and width can vary by character. The fonts
+array stores a height and width value for the font, but these are only used
+for sizing non-text plot elements (such as the legend color boxes). When
+PHPlot needs to know the drawn size of a string that will use TTF, it calculates
+the exact size of that specific string when drawn with the designated font.
+</para>
+<para>
+GD fonts have fixed character width and height, so the values stored in
+the fonts array can be used to calculate text string sizes.
+</para>
+
+<para>
+The <literal>spacing</literal> key stores the TrueType font's built-in
+inter-line spacing. Although TrueType fonts have this information
+internally, PHP cannot access it, so PHPlot calculates it by taking the
+height of the string "E\nE" and subtracting twice the height of the letter E.
+</para>
+
+<para>
+The <literal>line_spacing</literal> key stores the user-specified line spacing
+adjustment for a text element, if any, from <xref linkend="SetFont"/> or
+one of the two related functions. It will be NULL if the spacing was
+not set for this element, meaning use the default line spacing.
+See <xref linkend="SetLineSpacing"/> for more information on how this is used.
+</para>
+
+<para>
+Here is an example of part of a fonts array, for the title element:
+<programlisting><![CDATA[$plot->fonts['title'] = array(
+    'ttf' => FALSE,          // This element uses a GD font
+    'font' => 2,             // Use GD font 2
+    'height' => 13,          // Provided by GD
+    'width' => 6,            // Provided by GD
+    'line_spacing' => NULL,  // Use default line spacing
+)
+]]></programlisting>
+</para>
+</sect2>
+
+<sect2 id="var-label-format">
+<title>label_format[]</title>
+<para>
+The <varname>label_format[]</varname> array contains information about how
+text labels should be formatted. This array has 5 entries, with keys 'x',
+'y', 'xd', 'yd', and 'p'. The 'x' and 'y' entries are for tick labels, and the
+'xd' and 'yd' entries are for data labels. (Note that PHPlot defaults data
+label formatting to match tick label formatting, but this is handled in
+<xref linkend="FormatLabel"/>.)
+The 'p' entry is for pie chart labels, and will only exist for pie charts.
+(The 'p' entry was added in PHPlot-5.6.0.)
+</para>
+
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The value of each entry in <varname>label_format</varname> is an array
+containing formatting information. The arrays are empty by default, meaning
+there is no special formatting. If formatting has been enabled, for example
+with <xref linkend="SetXLabelType"/>, the arrays can contain the following
+keys and values:
+
+<informaltable>
+  <?dbfo keep-together="always"?>
+  <tgroup cols="3">
+    <?dbhtml table-summary="label_format[] array elements"?>
+    <colspec colname="c1" colwidth="20*" />
+    <colspec colname="c2" colwidth="20*" />
+    <colspec colname="c3" colwidth="60*" />
+    <thead>
+      <row>
+        <entry>Key</entry>
+        <entry>Used with type</entry>
+        <entry>Value</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>type</entry>
+        <entry></entry>
+        <entry>Formatting type: data, time, printf, or custom.</entry>
+      </row>
+      <row>
+        <entry>precision</entry>
+        <entry>data</entry>
+        <entry>The number of decimal positions to produce.</entry>
+      </row>
+      <row>
+        <entry>prefix</entry>
+        <entry>data</entry>
+        <entry>A prefix string to append to the label (for example, a currency
+            sign).</entry>
+      </row>
+      <row>
+        <entry>suffix</entry>
+        <entry>data</entry>
+        <entry>A suffix string to append to the label (for example, a currency
+           sign or percent sign).
+           This replaces data_units_text (which still works too).</entry>
+      </row>
+      <row>
+        <entry>time_format</entry>
+        <entry>time</entry>
+        <entry>The date/time format string for the PHP strftime()
+            function.</entry>
+      </row>
+      <row>
+        <entry>printf_format</entry>
+        <entry>printf</entry>
+        <entry>The format string(s) for the PHP printf() function.
+           This can be a single string, or an array of one to three strings.
+           </entry>
+      </row>
+      <row>
+        <entry>custom_callback</entry>
+        <entry>custom</entry>
+        <entry>The function (or array with object and method name) to call to
+            format the label.</entry>
+      </row>
+      <row>
+        <entry>custom_arg</entry>
+        <entry>custom</entry>
+        <entry>An additional argument to pass to the custom_callback
+            function.</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+<para>
+Use of multiple strings for <literal>printf_format</literal> was added in
+PHPlot-6.2.0.
+</para>
+
+</sect2>
+
+<sect2 id="var-legendpos">
+<title>legend_pos[]</title>
+<para>
+The <varname>legend_pos[]</varname> array contains information about
+positioning of the legend. This is set by <xref linkend="SetLegendPosition"/>,
+and by the functions which use it (<xref linkend="SetLegendPixels"/> and
+<xref linkend="SetLegendWorld"/>).
+This was added in PHPlot-5.4.0, replacing scalar variables legend_x_pos,
+legend_y_pos, and legend_xy_world.
+</para>
+
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The array keys correspond to the arguments to
+<xref linkend="SetLegendPosition"/> and are shown in the following table.
+<informaltable>
+  <tgroup cols="2">
+    <?dbhtml table-summary="legend_pos[] array elements"?>
+    <colspec colname="c1" colwidth="40*" />
+    <colspec colname="c2" colwidth="60*" />
+    <thead>
+      <row>
+        <entry>Keys</entry>
+        <entry>Value</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>x, y</entry>
+        <entry>Relative coordinates of a point on the legend box</entry>
+      </row>
+      <row>
+        <entry>mode</entry>
+        <entry>One of: image, plot, title, or world</entry>
+      </row>
+      <row>
+        <entry>x_base, y_base</entry>
+        <entry>Relative coordinates of a point on the image, plot, or
+           title, or world coordinates</entry>
+      </row>
+      <row>
+        <entry>x_offset, y_offset</entry>
+        <entry>Pixel offset to be applied last</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+</sect2>
+
+<sect2 id="var-plots">
+<title>plots[]</title>
+<para>
+The <varname>plots[]</varname> array contains information about known plot
+types. It is used by <xref linkend="FindDataLimits"/>,
+<xref linkend="DrawGraph"/>, and other class functions to prepare for and
+draw the main portion of the plot.
+The goal is to contain the information about each available plot type
+in a single place - this array. The actual names of the plot types (for
+example 'bars' or 'linepoints') appear only in this array. To simplify
+somewhat, adding a new plot type to PHPlot involves adding a new element to
+the <varname>plots[]</varname> array, and adding a new function to PHPlot
+which draws the 'insides' of the plot.
+</para>
+
+<para>
+This array was added in PHPlot-5.3.0.
+It is a protected static member variable in the PHPlot class, so it must be
+accessed as <varname>self::$plots</varname> from inside the class (or a
+derived class), and not through an instance of the class.
+Is not accessible from outside the class or derived classes.
+</para>
+
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The array keys are the plot types (for example: 'bars', 'linepoints').
+These must not include upper case letters.
+The values are arrays which contain information about the plot type.
+The keys and values of the second-level arrays are:
+
+<informaltable>
+  <tgroup cols="2">
+    <?dbhtml table-summary="plots[] array elements"?>
+    <colspec colname="c1" colwidth="30*" />
+    <colspec colname="c2" colwidth="70*" />
+    <thead>
+      <row>
+        <entry>Key</entry>
+        <entry>Value</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>draw_method</entry>
+        <entry>
+Name of the PHPlot class method (function) to call to draw the 'insides' of
+the plot.  This is the only required entry.
+        </entry>
+      </row>
+
+      <row>
+        <entry>draw_arg</entry>
+        <entry>
+Optional argument array to pass to the draw_method function.
+        </entry>
+      </row>
+
+      <row>
+        <entry>suppress_axes</entry>
+        <entry>
+Optional flag indicating that the X axis and Y axis should not be drawn.
+Default is FALSE.
+        </entry>
+      </row>
+
+      <row>
+        <entry>abs_vals</entry>
+        <entry>
+Optional flag indicating that the plot type uses the absolute values of data.
+Default is FALSE.
+        </entry>
+      </row>
+
+      <row>
+        <entry>sum_vals</entry>
+        <entry>
+Optional flag indicating that the plot type sums up the values in each row.
+Default is FALSE.
+        </entry>
+      </row>
+
+      <row>
+        <entry>legend_alt_marker</entry>
+        <entry>
+Optional alternate marker mode for legends: box, shape, or line.
+        </entry>
+      </row>
+
+      <row>
+        <entry>adjust_type</entry>
+        <entry>
+Optional control for adjusting the end of an automatically calculated plot
+range (see notes below).
+        </entry>
+      </row>
+
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+<para>
+Only the <literal>draw_method</literal> entry is required.  The named method
+is used to draw everything inside the plot area. (That is, everything except
+the plot titles, axis lines, tick marks and tick labels, grid lines, and
+legend.)
+</para>
+
+<para>
+The <literal>draw_arg</literal> entry can be used to pass constant
+arguments to the <literal>draw_method</literal> method.
+If present, this must be an array, and each element of the array is passed to
+the drawing method as a separate argument.  If this is not specified, the
+drawing method is called with no arguments.  This is generally used to
+overload drawing methods, so they handle multiple similar plot types.
+</para>
+
+<para>
+The <literal>suppress_axes</literal> flag indicates that X and Y axis lines
+should not be drawn (used with pie charts, for example).
+If omitted, FALSE is used, meaning the axis lines are drawn.
+(Before PHPlot-6.0.0 this was called <literal>draw_axes</literal>, with
+default TRUE, and FALSE for pie charts.)
+</para>
+
+<para>
+The two special data processing flags <literal>abs_vals</literal> and
+<literal>sum_vals</literal> are used by <xref linkend="FindDataLimits"/>
+to indicate how to compute the minimum and maximum data values.
+Plot types that ignore sign and take absolute values of the data set
+<literal>abs_vals</literal> to TRUE.
+Plot types that sum up the data values in each row set
+<literal>sum_vals</literal> to TRUE.
+The default if omitted for both flags is FALSE, meaning the plot type
+uses the values as specified in the data array.
+
+If both <literal>abs_vals</literal> and <literal>sum_vals</literal> are TRUE,
+this means the plot type sums up the absolute values from the data array.
+(The stackedarea plot type does this.)
+</para>
+
+<para>
+The optional <literal>legend_alt_marker</literal> entry indicates the
+use of an alternate maker shape in legends.
+Use <xref linkend="SetLegendUseShapes"/> to select either the primary
+mode or the alternate mode for legend shapes. The primary mode is a solid
+filled color box. The alternate mode varies with the plot type, according
+the the <literal>legend_alt_marker</literal> entry.
+Use 'box' for rectangular color boxes. This is the default if the
+<literal>legend_alt_marker</literal> key is omitted from the array.
+Effectively, this means there is no alternate marker
+mode for these plot types, because color boxes are the primary mode.
+Use 'shape' for point shape markers, which applies to points plots and similar
+types which use point shapes.
+Use 'line' for short line segments, which applies to line plots and similar
+types.
+</para>
+
+<para>
+The optional <literal>adjust_type</literal> entry controls adjustments
+made to the end of an automatically calculated plot range.
+See <xref linkend="TuneXAutoRange"/> and <xref linkend="TuneYAutoRange"/>
+for more information.
+This is used to indicate when a plot type needs additional space, perhaps
+for labels, between the data extrema and the edge of the plot area.
+If omitted, the default value 0 is used.
+A value of 0 means apply the adjustment for the dependent variable only.
+A value of 1 means apply the adjustment for both X and Y, and a value of
+2 means do not apply the adjustment to either X or Y.
+</para>
+</sect2>
+
+<sect2 id="var-rangectl">
+<title>rangectl[]</title>
+<para>
+The <varname>rangectl[]</varname> array contains parameters which are used
+to control the automatic calculation of the plot area range.
+</para>
+
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The array contains 2 arrays, indexed as <literal>'x'</literal> and
+<literal>'y'</literal> for X and Y axis parameters respectively.
+The keys and values of the second-level arrays are:
+<informaltable>
+  <tgroup cols="3">
+    <?dbhtml table-summary="rangectl[] array elements"?>
+    <colspec colname="c1" colwidth="30*" />
+    <colspec colname="c2" colwidth="30*" />
+    <colspec colname="c3" colwidth="40*" />
+    <thead>
+      <row>
+        <entry>Key</entry>
+        <entry>Default</entry>
+        <entry>Description</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>zero_magnet</entry>
+        <entry>0.857142 (Note this is 6/7)</entry>
+        <entry>Strength of the <emphasis>zero magnet</emphasis></entry>
+      </row>
+      <row>
+        <entry>adjust_mode</entry>
+        <entry>T</entry>
+        <entry>End adjustment mode: R, T, or I</entry>
+      </row>
+      <row>
+        <entry>adjust_amount</entry>
+        <entry>(Dynamic; see <xref linkend="GetRangeEndAdjust"/>)</entry>
+        <entry>Amount of end adjustment, as a fraction of the plot range</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+<para>
+Values in this array are set with
+<xref linkend="TuneXAutoRange"/> and <xref linkend="TuneYAutoRange"/>.
+For more information see <xref linkend="adv-autorange-params"/>.
+The values are used by <xref linkend="CalcPlotRange"/>.
+</para>
+</sect2>
+
+<sect2 id="var-tickctl">
+<title>tickctl[]</title>
+<para>
+The <varname>tickctl[]</varname> array contains parameters which are used
+to control the automatic calculation of tick intervals.
+</para>
+
+<para>
+<?dbfo keep-together="always"?> <!-- Prevent PDF break before table -->
+The array contains 2 arrays, indexed as <literal>'x'</literal> and
+<literal>'y'</literal> for X and Y axis parameters respectively.
+The keys and values of the second-level arrays are:
+<informaltable>
+  <tgroup cols="3">
+    <?dbhtml table-summary="tickctl[] array elements"?>
+    <colspec colname="c1" colwidth="30*" />
+    <colspec colname="c2" colwidth="30*" />
+    <colspec colname="c3" colwidth="40*" />
+    <thead>
+      <row>
+        <entry>Key</entry>
+        <entry>Default</entry>
+        <entry>Description</entry>
+      </row>
+    </thead>
+    <tbody>
+      <row>
+        <entry>min_ticks</entry>
+        <entry>8</entry>
+        <entry>Minimum number of tick intervals</entry>
+      </row>
+      <row>
+        <entry>tick_mode</entry>
+        <entry>NULL (calculated)</entry>
+        <entry>Tick increment calculation mode: 'decimal', 'binary', or 'date'</entry>
+      </row>
+      <row>
+        <entry>tick_inc_integer</entry>
+        <entry>FALSE</entry>
+        <entry>If TRUE, force the tick increment to be a whole number</entry>
+      </row>
+    </tbody>
+  </tgroup>
+</informaltable>
+</para>
+
+<para>
+Values in this array are set with
+<xref linkend="TuneXAutoTicks"/> and <xref linkend="TuneYAutoTicks"/>.
+For more information see <xref linkend="adv-autorange-tick-params"/>.
+The values are used by <xref linkend="CalcStep"/>.
+</para>
+
+</sect2>
+
+
+</sect1>
+
+<!-- Note: This used to be another Chapter, since the previous chapter
+     is about variables, not constants. But that seemed to confuse
+     Docbook and it made a bad 'prev' link in the next page (Appendix 1)
+     which skipped over the Constants chapter.  Making it a section of the
+     previous chapter instead works around the problem.
+-->
+<sect1 id="dev-const">
+<title>PHPlot Class Constants</title>
+<abstract><title></title>
+  <para>
+This section provides information about constants defined in the PHPlot class.
+As these are PHP constants, they are accessed without a leading $ and
+cannot be expanded inside string values.
+  </para>
+</abstract>
+
+<para>
+<variablelist>
+<varlistentry>
+  <term><anchor id="const_version" xreflabel="PHPlot::version"/>PHPlot::version</term>
+  <listitem>
+    <para>
+The <varname>version</varname> constant contains the PHPlot code version as
+a string, for example <literal>"5.4.0"</literal>.
+(This was added in PHPlot-5.4.0.)
+    </para>
+  </listitem>
+</varlistentry>
+
+<varlistentry>
+  <term><anchor id="const_version_id" xreflabel="PHPlot::version_id"/>PHPlot::version_id</term>
+  <listitem>
+    <para>
+The <varname>version_id</varname> constant contains the PHPlot code version as
+an integer, using the conventional formula 10000*major_version +
+100*minor_version + patch_version.
+This was added in PHPlot-6.0.0 (with value 60000) to make it
+possible for the test suite to check for a minimum version.
+    </para>
+  </listitem>
+</varlistentry>
+
+</variablelist>
+</para>
+</sect1>
+
+</chapter>
+
+</part>

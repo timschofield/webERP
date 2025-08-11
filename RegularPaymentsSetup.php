@@ -17,8 +17,7 @@ echo '<p class="page_title_text" >
 if (isset($_GET['Complete'])) {
 	$SQL = "UPDATE regularpayments SET completed=1 WHERE id='" . $_GET['Payment'] . "'";
 	$ErrMsg = _('Cannot set regular payment as completed because');
-	$DbgMsg = _('Cannot set regular payment as completed using the SQL');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_error_no() == 0) {
 		prnMsg(_('The regular payment has been marked as complete and no further payments will be made'), 'success');
 	} else {
@@ -116,7 +115,6 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 												finalpayment='" . FormatDateForSQL($_POST['LastPaymentDate']) . "'
 											WHERE id='" . $_POST['ID'] . "'";
 			$ErrMsg = _('Cannot update regular payment because');
-			$DbgMsg = _('Cannot update regular payment using the SQL');
 		} else {
 			$SQL = "INSERT INTO regularpayments (frequency,
 												days,
@@ -143,9 +141,8 @@ if (isset($_POST['Add']) or isset($_POST['Update'])) {
 												'" . FormatDateForSQL($_POST['FirstPaymentDate']) . "'
 											)";
 			$ErrMsg = _('Cannot insert a new regular payment because');
-			$DbgMsg = _('Cannot insert a new regular payment using the SQL');
 		}
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		unset($_POST['ID']);
 		unset($_POST['Frequency']);
 		unset($_POST['Days']);
@@ -235,8 +232,7 @@ $SQL = "SELECT bankaccountname,
 			WHERE bankaccountusers.userid = '" . $_SESSION['UserID'] . "'
 			ORDER BY bankaccountname";
 $ErrMsg = _('The bank accounts could not be retrieved because');
-$DbgMsg = _('The SQL used to retrieve the bank accounts was');
-$AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
+$AccountsResults = DB_query($SQL, $ErrMsg);
 
 echo '<field>
 		<label for="BankAccount">', _('Bank Account'), ':</label>

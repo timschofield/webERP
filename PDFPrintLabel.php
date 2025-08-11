@@ -2,7 +2,6 @@
 
 include('includes/session.php');
 if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
-include('includes/barcodepack/class.code128.php');
 
 $PtsPerMM = 2.83464567; //pdf points per mm (72 dpi / 25.4 mm per inch)
 
@@ -211,11 +210,13 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					}elseif($Field['Barcode']==1) {
+						/// @todo check for existence of gd extension. If not, add a warning message into the pdf
 
-						$BarcodeImage = new code128(str_replace('_','',$Value));
+						/// @todo move to barcode functionality provided by TCPDF, to avoid one dependency
+						$BarcodeImage = new \BarcodePack\code128(str_replace('_','',$Value));
 
 						ob_start();
-						imagepng(imagepng($BarcodeImage->draw()));
+						imagepng($BarcodeImage->draw());
 						$Image_String = ob_get_contents();
 						ob_end_clean();
 
@@ -299,7 +300,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="StockCategory">' .  _('For Stock Category') .':</label>
 				<select name="StockCategory">';
 
-		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
+		$CatResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($MyRow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
@@ -310,7 +311,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="SalesType">' . _('For Sales Type/Price List').':</label>
 				<select name="SalesType">';
 		$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($SQL);
+		$SalesTypesResult = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($SalesTypesResult)){
 			if ($_SESSION['DefaultPriceList']==$MyRow['typeabbrev']){
@@ -326,7 +327,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<label for="Currency">' . _('For Currency').':</label>
 				<select name="Currency">';
 		$SQL = "SELECT currabrev, country, currency FROM currencies";
-		$CurrenciesResult=DB_query($SQL);
+		$CurrenciesResult = DB_query($SQL);
 
 		while ($MyRow=DB_fetch_array($CurrenciesResult)){
 			if ($_SESSION['CompanyRecord']['currencydefault']==$MyRow['currabrev']){

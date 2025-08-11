@@ -8,7 +8,7 @@ include('includes/session.php');
 use PHPMailer\PHPMailer\PHPMailer;
 
 include('includes/SQL_CommonFunctions.php');
-include('includes/class.pdf.php');
+include('includes/class.cpdf.php');
 $_POST['FromDate']=date('Y-m-01');
 $_POST['ToDate']= FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate . ' - 7 days'));
@@ -46,7 +46,7 @@ $SQL= "SELECT salesorders.orderno,
 		 AND salesorders.quotation=0
 		 ORDER BY salesorders.orderno";
 
-$Result=DB_query($SQL,'','',false,false); //dont trap errors here
+$Result = DB_query($SQL,'','',false,false); //dont trap errors here
 
 if (DB_error_no()!=0){
 	include('includes/header.php');

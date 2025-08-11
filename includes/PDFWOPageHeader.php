@@ -34,8 +34,8 @@ $pdf->addText($FormDesign->FactoryAddress->Line4->x,$Page_Height - $FormDesign->
 $pdf->addText($FormDesign->FactoryAddress->Line5->x,$Page_Height - $FormDesign->FactoryAddress->Line5->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line5->FontSize, $WOHeader['deladd5'] . $WOHeader['deladd6']);// Includes delivery postal code and country.
 //$pdf->addText($FormDesign->FactoryAddress->WorkCenter->x,$Page_Height - $FormDesign->FactoryAddress->WorkCenter->y+$AddressLineOffset, $FormDesign->FactoryAddress->WorkCenter->FontSize, $WOHeader['workcenter']);
 
-$pdf->RoundRectangle($FormDesign->WOAddressBox->x, $Page_Height - $FormDesign->WOAddressBox->y,$FormDesign->WOAddressBox->width, $FormDesign->WOAddressBox->height, $FormDesign->WOAddressBox->radius, $FormDesign->WOAddressBox->radius);// Function RoundRectangle from includes/class.pdf.php
-//$pdf->RoundRectangle($FormDesign->WOHeaderBox->x, $Page_Height - $FormDesign->WOHeaderBox->y,$FormDesign->WOHeaderBox->width, $FormDesign->WOHeaderBox->height, $FormDesign->WOHeaderBox->radius, $FormDesign->WOHeaderBox->radius);// Function RoundRectangle from includes/class.pdf.php
+$pdf->RoundRectangle($FormDesign->WOAddressBox->x, $Page_Height - $FormDesign->WOAddressBox->y,$FormDesign->WOAddressBox->width, $FormDesign->WOAddressBox->height, $FormDesign->WOAddressBox->radius, $FormDesign->WOAddressBox->radius);// Function RoundRectangle from includes/class.cpdf.php
+//$pdf->RoundRectangle($FormDesign->WOHeaderBox->x, $Page_Height - $FormDesign->WOHeaderBox->y,$FormDesign->WOHeaderBox->width, $FormDesign->WOHeaderBox->height, $FormDesign->WOHeaderBox->radius, $FormDesign->WOHeaderBox->radius);// Function RoundRectangle from includes/class.cpdf.php
 
 $pdf->setFont('','B');
 $pdf->addText($FormDesign->ItemNumberLab->x,$Page_Height - $FormDesign->ItemNumberLab->y, $FormDesign->ItemNumberLab->FontSize,  _('Item Number') . ':' );

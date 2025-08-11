@@ -1,6 +1,5 @@
 <?php
 
-
 include('includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
@@ -41,7 +40,7 @@ if ($GRNNo == 'Preview'){
 			ON grns.itemcode=stockmaster.stockid
 			WHERE grnbatch='". $GRNNo ."'";
 
-	$GRNResult=DB_query($SQL);
+	$GRNResult = DB_query($SQL);
 	$NoOfGRNs = DB_num_rows($GRNResult);
 	if($NoOfGRNs>0) { //there are GRNs to print
 

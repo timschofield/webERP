@@ -1,8 +1,7 @@
 <?php
 
-
 include('includes/session.php');
-include('includes/class.pdf.php');
+include('includes/class.cpdf.php');
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
@@ -75,7 +74,7 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
@@ -156,7 +155,7 @@ $SQL = "SELECT salesorderdetails.stkcode,
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result)>0){
 /*Yes there are line items to start the ball rolling with a page header */
@@ -204,7 +203,7 @@ if (DB_num_rows($Result)>0){
 	$pdf->AddPage();
 //	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
 	$pdf->cMargin = 0;		// Javier: needs check.
-/* END Brought from class.pdf.php constructor */
+/* END Brought from class.cpdf.php constructor */
 	$pdf->setPrintFooter(true);
 	$FontSize=12;
 	$LineHeight=16;

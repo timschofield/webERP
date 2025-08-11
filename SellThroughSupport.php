@@ -81,8 +81,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . FormatDateForSQL($_POST['EffectiveTo']) . "')";
 
 		$ErrMsg = _('The sell through support record could not be added to the database because');
-		$DbgMsg = _('The SQL that failed was');
-		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$AddResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('This sell through support has been added to the database'), 'success');
 	}
 	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
@@ -97,8 +96,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							WHERE id='" . $_POST['SellSupportID'] . "'";
 
 		$ErrMsg = _('The sell through support record could not be updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$UpdResult = DB_query($SQL, $ErrMsg);
 		prnMsg(_('Sell Through Support record has been updated'), 'success');
 		$Edit = false;
 
@@ -151,8 +149,7 @@ if (isset($_POST['SearchSupplier'])) {
 
 	} //one of keywords or SupplierCode was more than a zero length string
 	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
-	$SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$SuppliersResult = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p> ';
 
@@ -421,8 +418,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 			WHERE supplierno ='" . $SupplierID . "'
 			AND preferred=1";
 	$ErrMsg = _('Could not retrieve the items that the supplier provides');
-	$DbgMsg = _('The SQL that was used to get the supplier items and failed was');
-	$ItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$ItemsResult = DB_query($SQL, $ErrMsg);
 
 	while ($ItemsRow = DB_fetch_array($ItemsResult)){
 		if ($ItemsRow['stockid'] == $_POST['StockID']){

@@ -74,8 +74,7 @@ if ($StockID != ''){
 			ORDER BY locations.locationname";
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');
-	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$LocStockResult = DB_query($SQL, $ErrMsg);
 
 //	echo $TableHeader;
 	while ($MyRow=DB_fetch_array($LocStockResult)) {

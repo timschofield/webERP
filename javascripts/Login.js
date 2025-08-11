@@ -26,6 +26,7 @@ function ShowCompanies() {
 		document.getElementById("CompanySelect").style.backgroundSize = "contain";
 	}
 }
+
 function UpdateSelect() {
 	document.getElementById("CompanyNameField").value=this.id;
 	document.getElementById("CompanySelect").value=document.getElementById("CompanyNameField").options[document.getElementById("CompanyNameField").selectedIndex].text;
@@ -34,6 +35,7 @@ function UpdateSelect() {
 	document.getElementById("CompanySelect").style.background = "url(\'css/descending.png\') no-repeat right transparent";
 	document.getElementById("CompanySelect").style.backgroundSize = "contain";
 }
+
 function TogglePassword () {
 	if (document.getElementById("password").type == "password") {
 		document.getElementById("password").type = "text";
@@ -45,6 +47,7 @@ function TogglePassword () {
 		document.getElementById("eye").title = "Show Password";
 	}
 }
+
 function checkMousePos(event) {
 	if (document.getElementById("dropdownlist").style.maxHeight!="0px" && document.getElementById("dropdownlist").style.maxHeight!="") {
 		rect=document.getElementById("CompanySelect").getBoundingClientRect();
@@ -53,9 +56,11 @@ function checkMousePos(event) {
 		}
 	}
 }
+
 function ShowSpinner() {
 	document.getElementById("waiting_show").style.display="block";
 }
+
 document.addEventListener("click", checkMousePos);
 document.getElementById("eye").addEventListener("click", TogglePassword);
 document.getElementById("CompanySelect").value=document.getElementById("CompanyNameField").options[document.getElementById("CompanyNameField").selectedIndex].text;

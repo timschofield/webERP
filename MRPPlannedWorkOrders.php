@@ -87,7 +87,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
-	$Result = DB_query($SQL,'','',false,true);
+	$Result = DB_query($SQL, '', '', false, true);
 
 	if (DB_error_no() !=0) {
 	  $Title = _('MRP Planned Work Orders') . ' - ' . _('Problem Report');
@@ -160,7 +160,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					}
 				}
 
-				// Parameters for addTextWrap are defined in /includes/class.pdf.php
+				// Parameters for addTextWrap are defined in /includes/class.cpdf.php
 				$FormatedSupDueDate = ConvertSQLDate($MyRow['duedate']);
 				$FormatedSupMRPDate = ConvertSQLDate($MyRow['mrpdate']);
 				$ExtCost = $MyRow['supplyquantity'] * $MyRow['computedcost'];

@@ -95,8 +95,7 @@ if (isset($_POST['UpdateAll'])) {
 								)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*Get the ID of the StockMove... */
 				$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
@@ -110,8 +109,7 @@ if (isset($_POST['UpdateAll'])) {
 							AND serialno='" . $SerialNo . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
-					$DbgMsg = _('The following SQL to update the serial stock item record was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					/* now insert the serial stock movement */
 
@@ -125,8 +123,7 @@ if (isset($_POST['UpdateAll'])) {
 											'" . -$Quantity . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} /*end if the orderline is a controlled item */
 
 				$SQL = "UPDATE stockrequestitems
@@ -135,17 +132,15 @@ if (isset($_POST['UpdateAll'])) {
 							AND dispatchitemsid='" . $LineID . "'";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "UPDATE locstock SET quantity = quantity - '" . $Quantity . "'
 									WHERE stockid='" . $StockID . "'
 										AND loccode='" . $Location . "'";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the stock record was used');
 
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 AND $StandardCost > 0) {
 
@@ -168,8 +163,7 @@ if (isset($_POST['UpdateAll'])) {
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-					$DbgMsg = _('The following SQL to insert the GL entries was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					InsertGLTags($Tags);
 
 					$SQL = "INSERT INTO gltrans (type,
@@ -189,8 +183,7 @@ if (isset($_POST['UpdateAll'])) {
 											)";
 
 					$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
-					$DbgMsg = _('The following SQL to insert the GL entries was used');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
 				if (($Quantity >= $RequestedQuantity) OR $Completed == True) {
@@ -198,7 +191,7 @@ if (isset($_POST['UpdateAll'])) {
 								SET completed=1
 							WHERE dispatchid='" . $RequestID . "'
 								AND dispatchitemsid='" . $LineID . "'";
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
 				DB_Txn_Commit();
