@@ -70,7 +70,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			}
 		}
 		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
-		if ($Debug==1) {
+		if ($Debug == 1) {
 			if ($DebugMessage == '') {
 				$DebugMessage = _('The SQL that failed was');
 			}
