@@ -268,8 +268,7 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL,$ErrMsg, $DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg, '');
 
 	if(DB_num_rows($SearchResult)==0 ) {
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
@@ -608,21 +607,20 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 	if($CancelDelete==false) { //ie all tests proved ok to delete
 		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
-		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the items on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		// delete the actual work order
 		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 
 		DB_Txn_Commit();
 		prnMsg(_('The work order has been cancelled'),'success');
@@ -659,17 +657,16 @@ if(isset($_GET['Delete'])) {
 	//delete items
 		DB_Txn_Begin();
 		$ErrMsg = _('The work order could not be deleted');
-		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_GET['WO'] . "' AND parentstockid='" . $_GET['StockID'] . "'";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the item on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,'',true);
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
 		header('Location: '. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_GET['WO']);

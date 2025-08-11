@@ -130,8 +130,7 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $QtyDelivered . "',
 					CURRENT_DATE)";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
-		$DbgMsg = _('The following SQL to insert the packaging used was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		
 		/*	Update locstock at the shop for the qty */
 		$SQL = "UPDATE locstock
@@ -140,8 +139,7 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					AND loccode = '" . $_SESSION['UserStockLocation'] . "'";
 
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0040');
-		$DbgMsg = _('The following SQL to update the location stock record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*	Update stockmoves at the shop for the qty */
 		$SQL = "INSERT INTO stockmoves (
@@ -178,8 +176,7 @@ function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . ($QtyOnHandPrior - $QtyDelivered) . "',
 					'" . _('Shop Packaging used') . "' )";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0050');
-		$DbgMsg = _('The following SQL to insert the stock movement records was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 		
 		/* Now account for the cost of sale and loss of stock */
 		if ($StandardCost != 0){
@@ -275,8 +272,7 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 			salesanalysis.salesperson";
 
 	$ErrMsg = _('The count of existing Sales analysis records could not run because');
-	$DbgMsg = _('SQL to count the no of sales analysis records');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	$MyRow = DB_fetch_row($Result);
 
@@ -341,8 +337,7 @@ function InsertItemSoldIntoSalesAnalysis($Area,
 	}
 
 	$ErrMsg = _('Sales analysis record could not be added or updated because');
-	$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 }
 
 /**************************************************************************************************************
@@ -413,7 +408,6 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . 
 					_('The Retail Customer Info could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the retail customer data was used');
 		} else {
 			$SQL = "UPDATE klretailcustomers
 					SET firstname = '" . $FirstName . "',
@@ -425,7 +419,7 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 						sex = '" . $Sex . "'
 					WHERE orderno = '" . $OrderNo . "'";
 		}
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
@@ -643,9 +637,8 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . $NetPayment . "',
 				'" . $Currency . "')";
 
-	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-001 FAILED Insert banktrans');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	//insert a new debtortrans for the receipt
 
@@ -673,9 +666,8 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . -$AmountPaid . "',
 				'" . -$AmountPaid . "',
 				'" . $Description . "')";
-	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-002 FAILED Insert debtortrans');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans', 'id');
 
@@ -683,9 +675,8 @@ function AccountDebtorPayment($ReceiptNumber,
 									lastpaid='" . $AmountPaid . "'
 							WHERE debtorsmaster.debtorno='" . $DebtorNo . "'";
 
-	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-003 FAILED Update debtorsmaster');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	//and finally add the allocation record between receipt and invoice
 
@@ -697,9 +688,8 @@ function AccountDebtorPayment($ReceiptNumber,
 									CURRENT_DATE,
 									 '" . $ReceiptDebtorTransID . "',
 									 '" . $DebtorTransID . "')";
-	$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-004 FAILED Insert custallocns');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);							
+	$Result = DB_query($SQL, $ErrMsg, '', true);							
 	return $ReceiptNumber;
 }
 
@@ -770,9 +760,8 @@ function AccountDebtorDiscount($ReceiptNumber,
 				'" . -$AmountDiscount . "',
 				'" . 0 . "',
 				'" . $Description . "')";
-	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorDiscount ERROR-002 FAILED Insert debtortrans');
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	return $ReceiptNumber;
 }
@@ -1196,13 +1185,12 @@ function DoubleJustified($Left, $Right, $Lenght, $Fillchar){
 **************************************************************************************************************/
 function GetItemPackagingDescription($StockID){
 	$ErrMsg = _('Can not retrieve the packaging description because');
-	$DbgMsg = _('SQL to get the packaging description was');
 
 	$SQL = "SELECT packagingdescription 
-			FROM klpackaging, stockmaster 
+			FROM klpackaging, stockmaster
 			WHERE klpackaging.packagingcode = stockmaster.klpackaging
 				AND stockmaster.stockid = '" . $StockID . "'";
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	$Result = DB_query($SQL, $ErrMsg, '', true);
 	if (DB_num_rows($Result) == 0){
 		// no packaging description found, return empty string
 		return '';

@@ -222,7 +222,6 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 			$TabCode = $MyRow['pctabcode'];
 			$ExpenseType = $MyRow['pcexpensecode'];
 			$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
-			$DbgMsg = _('The SQL that failed was');
 			$SQL = "INSERT INTO pcashdetails (tabcode, 
 											date, 
 											codeexpense, 
@@ -239,7 +238,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							 0,
 							 '',
 							 '" . $Receipt . "')";
-			DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
+			DB_query($SQL,$InsertErrMsg,'',true);
 		}else{
 			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense: '. $SQL, 'error');
 		}

@@ -975,8 +975,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						'". $OldRL ."',
 						'". $NewRL ."')";		
 		$ErrMsg =_('Could not insert the KLAdjustRL Log');
-		$DbgMsg = _('The following SQL to insert the request header record was used');
-		DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		DB_query($SQL,$ErrMsg,'',true);
 		}
 	}
 }
@@ -1005,8 +1004,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 					SET reorderlevel = 0 
 					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
 		$ErrMsg =_('Error in function OnlineReorderLevelAdjustments');
-		$DbgMsg = _('The following SQL to update reorder levels was used');
-		$Result = DB_query($RLSQL,$ErrMsg,$DbgMsg,true);		
+		$Result = DB_query($RLSQL,$ErrMsg,'',true);		
 		if ($ShowMessages){
 			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');
 		}

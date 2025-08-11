@@ -23,15 +23,13 @@ $ReasonChangeStatusId = "webERP --> Expired as no payment received";
 UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 1, "", "", $ReasonChangeStatusId);
 
 $SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
-$DbgMsg = _('The SQL that failed to delete the sales order details was');
 $ErrMsg = _('Cannot delete the sales order details because');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,'',true);
 prnMsg( _('Deleted Sales Order Lines ').  $_GET['OrderNo']);
 
 $SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
-$DbgMsg = _('The SQL that failed to delete the sales order was');
 $ErrMsg = _('Cannot delete the sales order because');
-$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,'',true);
 prnMsg( _('Deleted Sales Order Header ').  $_GET['OrderNo']);
 
 

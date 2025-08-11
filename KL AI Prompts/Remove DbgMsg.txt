@@ -1,8 +1,11 @@
 #codebase
-In all files in this workspace except on the files ConnectDB*.php
-Do not update calls to DB_query_oc() or DB_query_old()
-1) Delete all lines defining the variable $DbgMsg (lines starting as $DbgMsg= or $DbgMsg = )
-2) Update all calls to DB_query($SQL,$ErrMsg,$DbgMsg); to DB_query($SQL,$ErrMsg); removing the $DbgMsg
-3) Update all calls to DB_query($SQL,$ErrMsg,$DbgMsg, true); to DB_query($SQL, $ErrMsg, '', true); removing the $DbgMsg
-4) Update all calls to DB_query($SQL,$ErrMsg,$DbgMsg, false); to DB_query($SQL, $ErrMsg, '', false); removing the $DbgMsg
- 
+In all *.php files in this workspace except on the files ConnectDB*.php, ArchiveConnectDB.php and OCOpenCartConnectDB.php:
+
+
+1) Delete all lines defining the variable $DbgMsg (lines starting as $DbgMsg= or $DbgMsg = ).
+2) Update all calls to function DB_query(), setting the $DbgMsg as '', if the call has an explicit parameter $DbgMsg.
+3) Update all calls to function DB_query_oc(), setting the $DbgMsg as '', if the call has an explicit parameter $DbgMsg.
+4) Update all calls to function DB_query_archive(), setting the $DbgMsg as '', if the call has an explicit parameter $DbgMsg.
+5) Iterate all *.php files until done.
+6) Do NOT update, format, improve, etc anything else on the code except related to the $DbgMsg variable
+

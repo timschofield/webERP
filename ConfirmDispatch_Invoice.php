@@ -1513,12 +1513,11 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 								'1000-01-01')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the klconsignment record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL,$ErrMsg,'',true);
 				}else{
 					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				}
-// KL RICARD End of Consignment sales for PTADU MODIFICATIONS
+				// KL RICARD End of Consignment sales for PTADU MODIFICATIONS
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -1774,8 +1773,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 							'" . $OrderLine->QtyDispatched . "',
 							CURRENT_DATE)";
 				$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-1030');
-				$DbgMsg = _('The following SQL to insert the packaging used was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,'',true);
 			// KL RICARD END
 			}
 		} /*Quantity dispatched is more than 0 */

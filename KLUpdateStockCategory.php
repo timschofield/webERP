@@ -77,8 +77,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 										'" . round($UnitCost * $QOH) . "')";
 			$ErrMsg =  _('The stock cost journal could not be inserted because');
-			$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '',true);
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -93,7 +92,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										'" . $OldStockAccount . "',
 										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 										'" . round(-$UnitCost * $QOH) . "')";
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '',true);
 
 		} /* end if the stock category changed and forced a change in stock cost account */
 		if ($OldWIPAccount != $NewWIPAct) {
@@ -131,8 +130,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 											'" . $WIPValue . "')";
 				$ErrMsg =  _('The WIP cost journal could not be inserted because');
-				$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '',true);
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -147,7 +145,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											'" . $OldWIPAccount . "',
 											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
 											'" . (-$WIPValue) . "')";
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, '',true);
 			}
 		} /* end if the stock category changed and forced a change in WIP account */
 		$SQL = "UPDATE stockmaster
@@ -155,8 +153,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 				WHERE stockid='".$StockID."'";
 
 		$ErrMsg = _('The stock item could not be updated because');
-		$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,'',true);
 			
 		prnMsg ('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
 	}else{

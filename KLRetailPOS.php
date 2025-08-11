@@ -207,8 +207,7 @@ if (isset($_POST['OrderItems'])
 					WHERE stockmaster.stockid='" . $NewItem . "'";
 
 			$ErrMsg = _('Could not determine if the part was shop packaging or not because');
-			$DbgMsg = _('The sql that was used to determine if the part being ordered was shop packaging or not was ');
-			$PackagingResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$PackagingResult = DB_query($SQL, $ErrMsg, '');
 			if (DB_num_rows($PackagingResult) == 0) {
 				prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'), 'warn');
 			} elseif ($MyRow = DB_fetch_array($PackagingResult)) {
@@ -685,13 +684,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . $_POST['AmountReturnedGoods'] . "',
 						'" . $_POST['AmountVouchers'] . "',
 						'" . $Area . "')";
-		$DbgMsg = _('Problem inserting the sales order header. The SQL that failed was');
 		$ErrMsg = _('The order cannot be added because');
-		$InsertQryResult = DB_query($SQLHeader, $ErrMsg, $DbgMsg, true);
+		$InsertQryResult = DB_query($SQLHeader, $ErrMsg, '', true);
 
 		$LinesInOrder = 0;
 		// Now process all the lines of the order
-		$DbgMsg = _('Problem inserting a line of a sales order. The SQL that failed was');
 		foreach ($_SESSION['Items' . $identifier]->LineItems as $StockItem) {
 
 			$SQLLineItems = "INSERT INTO salesorderdetails
@@ -719,7 +716,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								1)";
 
 			$ErrMsg = _('Unable to add the sales order line');
-			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, $DbgMsg, true);
+			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 		} /* end inserted line items into sales order details */
 		/* End of insertion of new sales order */
@@ -768,8 +765,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 			_('The debtor transaction record could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
-	 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+	 	$Result = DB_query($SQL, $ErrMsg, '', true);
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans', 'id');
 
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
@@ -784,8 +780,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 					_('The debtor transaction taxes records could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} else {
 				prnMsg(_('Exchange rate is zero, cannot insert debtor transaction taxes.'), 'error');
 				$InputError = true; // Set error flag
@@ -834,8 +829,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 					_('Location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the location stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}
 
@@ -891,8 +885,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . DB_escape_string($OrderLine->Narrative) . "' )";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 				_('Stock movement records could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
@@ -913,8 +906,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							'" . $Tax->TaxOnTax . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 					_('Taxes and rates applicable to this invoice line item could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} //end for each tax for the line
 
 			/*Insert Sales Analysis records */
@@ -1083,8 +1075,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 					_('The Consignment Sales Details could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the klconsignment record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} /* End of clustering */
 		} /*end of OrderLine loop */
 		// Check if an error occurred during order line processing
@@ -1146,7 +1137,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								1)";
 
 			$ErrMsg = _('Unable to add the Voucher Discount order line');
-			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, $DbgMsg, true);
+			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 
 			$ReceiptNumber = AccountDiscountOnOrderRetail('Voucher/Discount',
@@ -1197,7 +1188,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								1)";
 
 			$ErrMsg = _('Unable to add the Returned Goods Value order line');
-			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, $DbgMsg, true);
+			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 
 			$ReceiptNumber = AccountDiscountOnOrderRetail('Returned Goods',
@@ -1693,8 +1684,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 									'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
 							_('The returned goods record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert returned goods record was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 					}
 				}
 

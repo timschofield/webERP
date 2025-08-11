@@ -282,9 +282,8 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 	*/
 	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');
 	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
-	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$Result = DB_query_oc($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query_oc($SQL,$ErrMsg,'',true);
 	echo ' ... ' . _('completed');
 }
 // KL RICARD END

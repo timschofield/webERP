@@ -82,8 +82,7 @@ if (isset($_POST['submit'])) {
 		
 		$Msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
 		$ErrMsg = _('The insert of the KL tali exchange failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, '');
 		prnMsg($Msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);
@@ -131,17 +130,15 @@ if (isset($_POST['submit'])) {
 
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity + 1
 				WHERE stockid='" . $_POST['ItemFrom'] . "'
 				AND loccode='" . $_SESSION['UserStockLocation'] . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
-		$DbgMsg = _('The following SQL to update the stock record was used');
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		// PROCESS THE ITEM TO (GIVEN TO CUSTOMER)
 
@@ -184,17 +181,15 @@ if (isset($_POST['submit'])) {
 
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
-		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity - 1
 				WHERE stockid='" . $_POST['ItemTo'] . "'
 				AND loccode='" . $_SESSION['UserStockLocation'] . "'";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
-		$DbgMsg = _('The following SQL to update the stock record was used');
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		
 		KLSendEmail("TaliExchange", "Silent", $_POST['ItemFrom'], $_POST['ItemTo'], $_SESSION['UserID'], $_SESSION['UserStockLocation'], $_POST['InvoiceNumber']);

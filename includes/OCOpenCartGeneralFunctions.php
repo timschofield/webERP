@@ -453,7 +453,6 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 	$CustomerGroupId = 1; // Retail Customers
 	$Priority = 1;
 	$ManufacturerId = GetManufacturerFromProductId($ProductId);
-	$DbgMsg = _('The SQL that was used and failed in the process was');
 
 	if ($DiscountCategory == ''){
 		// ProductId has no discount in webERP
@@ -461,7 +460,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 		$SQL = "DELETE FROM oc_" . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . "
 				WHERE product_id = '" . $ProductId . "'";
 		$DeleteErrMsg = _('The SQL to delete the product discount in Opencart table ') . ' ' . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . ' ' . ('failed');
-		DB_query_oc($SQL,$DeleteErrMsg,$DbgMsg,true);
+		DB_query_oc($SQL,$DeleteErrMsg,'',true);
 	}else{
 		// ProductId has some discount in webERP
 		// so replicate all the discounts in OpenCart
@@ -489,7 +488,6 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 }
 
 function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Priority, $DiscountedPrice){
-	$DbgMsg = _('The SQL that was used and failed in the process was');
 	if (WEBERP_DISCOUNTS_IN_OPENCART_TABLE == 'product_discount'){
 		/* use the table product_discount */
 		$SQL = "SELECT product_discount_id
@@ -510,7 +508,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						AND quantity = '" . $Quantity . "'
 						AND customer_group_id = '" . $CustomerGroupId ."'";
 			$UpdateErrMsg = _('The SQL to update the product discount in Opencart failed');
-			DB_query_oc($SQL,$UpdateErrMsg,$DbgMsg,true);
+			DB_query_oc($SQL,$UpdateErrMsg,'',true);
 		}else{
 			// there is no discount in OpenCart yet, so we need to create one
 			$SQL = "INSERT INTO oc_product_discount
@@ -527,7 +525,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						'" . $DiscountedPrice . "'
 					)";
 			$InsertErrMsg = _('The SQL to insert the product discount in Opencart failed');
-			DB_query_oc($SQL,$InsertErrMsg,$DbgMsg,true);
+			DB_query_oc($SQL,$InsertErrMsg,'',true);
 		}
 	}else{
 		/* use the table product_special */
@@ -546,7 +544,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 					WHERE product_id = '" . $ProductId . "'
 						AND customer_group_id = '" . $CustomerGroupId ."'";
 			$UpdateErrMsg = _('The SQL to update the product special in Opencart failed');
-			DB_query_oc($SQL,$UpdateErrMsg,$DbgMsg,true);
+			DB_query_oc($SQL,$UpdateErrMsg,'',true);
 		}else{
 			// there is no special in OpenCart yet, so we need to create one
 			$SQL = "INSERT INTO oc_product_special
@@ -561,7 +559,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						'" . $DiscountedPrice . "'
 					)";
 			$InsertErrMsg = _('The SQL to insert the product special in Opencart failed');
-			DB_query_oc($SQL,$InsertErrMsg,$DbgMsg,true);
+			DB_query_oc($SQL,$InsertErrMsg,'',true);
 		}
 	}
 }
@@ -584,12 +582,11 @@ function GetOpenCartSettingId($Store, $Code, $Key){
 
 
 function UpdateSettingValueOpenCart($SettingId, $Value){
-	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
 	$SQLUpdate = "UPDATE oc_setting
 					SET	value = '" . $Value . "'
 				WHERE setting_id = '" . $SettingId . "'";
-	DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 }
 
 function CreateMetaDescriptionSalesCategory($Group, $Item){
@@ -680,12 +677,10 @@ Function GetNextSequenceNo ($TransType){
 	DB_query("SELECT typeno FROM systypes WHERE typeid='" . $TransType ."' FOR UPDATE");
 	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
-	$DbgMsg =  _('The following SQL to increment the transaction number was used');
-	DB_query($SQL,$ErrMsg,$DbgMsg);
+	DB_query($SQL,$ErrMsg,'');
 	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
-	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
-	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$GetTransNoResult = DB_query($SQL,$ErrMsg,'');
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];	
 }
@@ -721,18 +716,16 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 									'" . round(-($FreightCost),2) . "',
 									'" . $PaymentSystem . _(' OC Payment') . "')";
 
-	$DbgMsg = _('The SQL that failed was');
 	$ErrMsg = _('The customer receipt cannot be added because');
-	DB_query($HeaderSQL,$ErrMsg,$DbgMsg);
+	DB_query($HeaderSQL,$ErrMsg,'');
 
 	$SQL = "UPDATE debtorsmaster
 				SET lastpaiddate = CURRENT_DATE,
 				lastpaid='" . $AmountPaid ."'
 			WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
-	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 	$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 
 	/*now enter the BankTrans entry */
 	//First get the currency and rate for the bank account
@@ -761,9 +754,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 			'" . ($AmountPaid * $Rate / $FunctionalRate) . "',
 			'" . $CustomerCurrency . "'
 		)";
-	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 	$ErrMsg = _('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 
 
 	/* then enter GLTrans records for discount, bank and debtors */
@@ -784,9 +776,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . ($AmountPaid) /$Rate . "'
 				)";
-	$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -803,9 +794,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . -(($AmountPaid) /$Rate). "' )";
-	$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
@@ -867,9 +857,8 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 							'" . -($Commission * $Rate / $FunctionalRate) . "',
 							'" .$Currency . "'
 						)";
-	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 	$ErrMsg = _('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 
 	/* Bank account entry first */
 	$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . _('Fees for Transaction ID') . ': ' . $TransactionID;
@@ -888,9 +877,8 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . -($Commission /$Rate) . "'
 				)";
-	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee from the bank account debit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -907,19 +895,17 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 						'". $CommissionAccount . "',
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . ($Commission /$Rate). "' )";
-	$DbgMsg = _('The SQL that failed to insert the Paypal transaction fee for the commission account credit was');
 	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	DB_query($SQL,$ErrMsg,'',true);
 	EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
 }
 
 function ChangeOrderQuotationFlag($OrderNo, $Flag){
-	$DbgMsg = _('The SQL that failed was');
 	$ErrMsg = _('The Change of quotation flag in salesorders table');
 	$SQLUpdate = "UPDATE salesorders
 					SET quotation = " . $Flag . "
 					WHERE orderno = '" . $OrderNo . "'";
-	DB_query($SQLUpdate,$ErrMsg,$DbgMsg,true);
+	DB_query($SQLUpdate,$ErrMsg,'',true);
 }
 
 function GetPaypalReturnDataInArray($RawData){
@@ -951,15 +937,13 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 			$MyRow = DB_fetch_array($Result);
 			$SeoUrlId = $MyRow['seo_url_id'];
 			
-			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainSeoUrl function failed');
 			$SQLUpdate = "UPDATE oc_seo_url SET
 							keyword ='" . $SEOKeyword . "'
 						WHERE seo_url_id = '" . $SeoUrlId . "'";
-			DB_query_oc($SQLUpdate,$ErrMsg,$DbgMsg,true);
+			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
 		}else{
 			// otherwise we insert it
-			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainSeoUrl function failed');
 			$SQLInsert = "INSERT INTO oc_seo_url
 							(store_id,
@@ -972,7 +956,7 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 							'" . $SEOQuery . "',
 							'" . $SEOKeyword . "'
 							)";
-			DB_query_oc($SQLInsert,$ErrMsg,$DbgMsg,true);
+			DB_query_oc($SQLInsert,$ErrMsg,'',true);
 		}
 	}
 }
@@ -993,13 +977,12 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 		$CarrierPowerTrack = "";
 	}
 
-	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
 	$SQLUpdate = "UPDATE oc_order
 					SET	order_status_id = '" . $StatusId . "',
 						date_modified = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
-	DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 	// Insert the status change into the history table
 	$ErrMsg = _('The SQL to Insert OpenCart Order Status failed');
@@ -1020,7 +1003,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 					'" . $AWB . "',
 					'" . $ServerNow . "'
 					)";
-	DB_query_oc($SQLInsert,$ErrMsg,$DbgMsg,true);
+	DB_query_oc($SQLInsert,$ErrMsg,'',true);
 
 	if ($StatusId == OPENCART_ORDER_STATUS_SHIPPED){
 		// Insert the status change into the powertrack table
@@ -1037,7 +1020,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 						'" . $AWB . "',
 						'" . $ServerNow . "'
 						)";
-		DB_query_oc($SQLInsert,$ErrMsg,$DbgMsg,true);
+		DB_query_oc($SQLInsert,$ErrMsg,'',true);
 	}
 }
 
@@ -1045,12 +1028,11 @@ function UpdateOpenCartOrderPayment($OrderId){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
-	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Payment failed');
 	$SQLUpdate = "UPDATE oc_order
 					SET	kl_payment_sync_to_weberp = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
-	DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
+	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 }
 
 function RoundPriceFromCart($Value, $Currency){
@@ -1249,15 +1231,13 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 			$MyRow = DB_fetch_array($Result);
 			$ProductImageId = $MyRow['product_image_id'];
 			
-			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainPackagingImage function failed');
 			$SQLUpdate = "UPDATE oc_product_image SET
 							image ='" . $KLPackagingImage . "'
 						WHERE product_image_id = '" . $ProductImageId . "'";
-			DB_query_oc($SQLUpdate,$ErrMsg,$DbgMsg,true);
+			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
 		}else{
 			// otherwise we insert it
-			$DbgMsg = _('The SQL that failed was');
 			$ErrMsg = _('The MaintainPackagingImage function failed');
 			$SQLInsert = "INSERT INTO oc_product_image
 							(product_id,
@@ -1268,7 +1248,7 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 							'" . $KLPackagingImage . "',
 							'" . OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER . "'
 							)";
-			DB_query_oc($SQLInsert,$ErrMsg,$DbgMsg,true);
+			DB_query_oc($SQLInsert,$ErrMsg,'',true);
 		}
 	}
 }
@@ -1314,14 +1294,12 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_i
 
 function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOneSalesCategory){
 
-	$DbgMsg = _('The SQL that was used and failed in the process was');
-
 	if ($OnlyOneSalesCategory){
 		// Delete the current product_to_category, as we only accept 1 product_to_category in website
 		$DeleteErrMsg = _('The SQL to delete Product - Sales Categories in Opencart failed');
 		$SQLDelete = "DELETE FROM oc_product_to_category 
 					WHERE product_id = '" . $ProductId . "'";
-		DB_query_oc($SQLDelete,$DeleteErrMsg,$DbgMsg,true);
+		DB_query_oc($SQLDelete,$DeleteErrMsg,'',true);
 	}
 
 	if (!DataExistsInOpenCart('oc_product_to_category', 'product_id', $ProductId, 'category_id', $SalesCatId)){
@@ -1334,7 +1312,7 @@ function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOn
 						('" . $ProductId . "',
 						'" . $SalesCatId . "'
 						)";
-		DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+		DB_query_oc($SQLInsert,$InsertErrMsg,'',true);
 	}
 }
 

@@ -117,8 +117,7 @@ $SQL = "SELECT locstock.loccode,
 		ORDER BY locations.locationname";
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
-$DbgMsg = _('The SQL that failed was');
-$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg);
 
 $TableHeader = '<tr>
 					<th class="SortedColumn">' . _('Location') . '</th>

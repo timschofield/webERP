@@ -135,8 +135,7 @@ if (isset($_POST['submit'])) {
 		DB_Txn_Begin();
 
 		$ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
-		$DbgMsg = _('The SQL that was used and failed was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg($Msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid']);
