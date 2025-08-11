@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 11, 2025 at 07:42 AM
+-- Generation Time: Aug 11, 2025 at 09:57 AM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -43,7 +43,7 @@ CREATE TABLE `accountgroups` (
 
 CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL DEFAULT 0,
-  `sectionname` text NOT NULL
+  `sectionname` text NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -313,7 +313,7 @@ CREATE TABLE `companies` (
 
 CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL DEFAULT '',
-  `confvalue` text NOT NULL
+  `confvalue` text NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -405,6 +405,10 @@ CREATE TABLE `currencies` (
 --
 DELIMITER $$
 CREATE TRIGGER `currencies_creation_timestamp` BEFORE INSERT ON `currencies` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `currencies_update_timestamp` BEFORE UPDATE ON `currencies` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -857,10 +861,10 @@ CREATE TABLE `fixedassets` (
   `disposalproceeds` double NOT NULL DEFAULT 0,
   `assetcategoryid` varchar(6) NOT NULL DEFAULT '',
   `description` varchar(50) NOT NULL DEFAULT '',
-  `longdescription` text NOT NULL,
+  `longdescription` text NOT NULL DEFAULT '',
   `depntype` int(11) NOT NULL DEFAULT 1,
-  `depnrate` double NOT NULL,
-  `barcode` varchar(30) NOT NULL,
+  `depnrate` double NOT NULL DEFAULT 0,
+  `barcode` varchar(30) NOT NULL DEFAULT '',
   `disposaldate` date NOT NULL DEFAULT '1000-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -873,10 +877,10 @@ CREATE TABLE `fixedassets` (
 CREATE TABLE `fixedassettasks` (
   `taskid` int(11) NOT NULL,
   `assetid` int(11) NOT NULL,
-  `taskdescription` text NOT NULL,
+  `taskdescription` text NOT NULL DEFAULT '',
   `frequencydays` int(11) NOT NULL DEFAULT 365,
-  `lastcompleted` date NOT NULL,
-  `userresponsible` varchar(20) NOT NULL,
+  `lastcompleted` date NOT NULL DEFAULT '1000-01-01',
+  `userresponsible` varchar(20) NOT NULL DEFAULT '',
   `manager` varchar(20) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -907,7 +911,7 @@ CREATE TABLE `fixedassettrans` (
 CREATE TABLE `freightcosts` (
   `shipcostfromid` int(11) NOT NULL,
   `locationfrom` varchar(5) NOT NULL DEFAULT '',
-  `destinationcountry` varchar(40) NOT NULL,
+  `destinationcountry` varchar(40) NOT NULL DEFAULT '',
   `destination` varchar(40) NOT NULL DEFAULT '',
   `shipperid` int(11) NOT NULL DEFAULT 0,
   `cubrate` double NOT NULL DEFAULT 0,
@@ -1164,10 +1168,10 @@ CREATE TABLE `klarchivedtables` (
 CREATE TABLE `klchangeprice` (
   `counterpricechange` int(11) NOT NULL COMMENT 'Counter for KL price changes',
   `stockid` varchar(20) NOT NULL DEFAULT '',
-  `startprocessdate` date NOT NULL,
-  `newretailprice` decimal(20,4) NOT NULL,
+  `startprocessdate` date NOT NULL DEFAULT '1000-01-01',
+  `newretailprice` decimal(20,4) NOT NULL DEFAULT 0.0000,
   `pricechanged` tinyint(1) NOT NULL DEFAULT 0,
-  `endprocessdate` date NOT NULL
+  `endprocessdate` date NOT NULL DEFAULT '1000-01-01'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
@@ -1406,7 +1410,7 @@ CREATE TABLE `klretailcustomers` (
   `sex` varchar(1) DEFAULT NULL,
   `exported` varchar(1) NOT NULL DEFAULT 'N',
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_updated` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -1414,6 +1418,10 @@ CREATE TABLE `klretailcustomers` (
 --
 DELIMITER $$
 CREATE TRIGGER `klretailcustomers_creation_timestamp` BEFORE INSERT ON `klretailcustomers` FOR EACH ROW SET NEW.date_added = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `klretailcustomers_update_timestamp` BEFORE UPDATE ON `klretailcustomers` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -1551,6 +1559,10 @@ CREATE TABLE `klstockmarketplaces` (
 --
 DELIMITER $$
 CREATE TRIGGER `klstockmarketplaces_creation_timestamp` BEFORE INSERT ON `klstockmarketplaces` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `klstockmarketplaces_update_timestamp` BEFORE UPDATE ON `klstockmarketplaces` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -2296,6 +2308,10 @@ DELIMITER $$
 CREATE TRIGGER `prices_creation_timestamp` BEFORE INSERT ON `prices` FOR EACH ROW SET NEW.date_created = NOW()
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `prices_update_timestamp` BEFORE UPDATE ON `prices` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2557,6 +2573,10 @@ DELIMITER $$
 CREATE TRIGGER `relateditems_creation_timestamp` BEFORE INSERT ON `relateditems` FOR EACH ROW SET NEW.date_created = NOW()
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `relateditems_update_timestamp` BEFORE UPDATE ON `relateditems` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2804,7 +2824,7 @@ CREATE TABLE `salariescalculated` (
   `potonganlain2notes` varchar(80) NOT NULL DEFAULT '',
   `bulatan` double NOT NULL DEFAULT 0,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
-  `date_updated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `date_updated` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -2812,6 +2832,10 @@ CREATE TABLE `salariescalculated` (
 --
 DELIMITER $$
 CREATE TRIGGER `salariescalculated_creation_timestamp` BEFORE INSERT ON `salariescalculated` FOR EACH ROW SET NEW.date_added = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salariescalculated_update_timestamp` BEFORE UPDATE ON `salariescalculated` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -2860,6 +2884,10 @@ DELIMITER $$
 CREATE TRIGGER `salescat_creation_timestamp` BEFORE INSERT ON `salescat` FOR EACH ROW SET NEW.date_created = NOW()
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salescat_update_timestamp` BEFORE UPDATE ON `salescat` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -2881,6 +2909,10 @@ CREATE TABLE `salescatprod` (
 --
 DELIMITER $$
 CREATE TRIGGER `salescatprod_creation_timestamp` BEFORE INSERT ON `salescatprod` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salescatprod_update_timestamp` BEFORE UPDATE ON `salescatprod` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -2967,7 +2999,7 @@ CREATE TABLE `salesman` (
   `salesmanname` char(30) NOT NULL DEFAULT '',
   `smantel` char(20) NOT NULL DEFAULT '',
   `smanfax` char(20) NOT NULL DEFAULT '',
-  `current` tinyint(4) NOT NULL COMMENT 'Salesman current (1) or not (0)',
+  `current` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'Salesman current (1) or not (0)',
   `commissionperiod` int(1) NOT NULL DEFAULT 0,
   `commissiontypeid` tinyint(4) NOT NULL DEFAULT 0,
   `glaccount` varchar(20) NOT NULL DEFAULT '1'
@@ -3331,6 +3363,10 @@ DELIMITER $$
 CREATE TRIGGER `stockdescriptiontranslations_creation_timestamp` BEFORE INSERT ON `stockdescriptiontranslations` FOR EACH ROW SET NEW.date_created = NOW()
 $$
 DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stockdescriptiontranslations_update_timestamp` BEFORE UPDATE ON `stockdescriptiontranslations` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -3400,6 +3436,10 @@ CREATE TABLE `stockmaster` (
 --
 DELIMITER $$
 CREATE TRIGGER `stockmaster_creation_timestamp` BEFORE INSERT ON `stockmaster` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stockmaster_update_timestamp` BEFORE UPDATE ON `stockmaster` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
 
@@ -3871,7 +3911,7 @@ CREATE TABLE `woitems` (
   `stockid` char(20) NOT NULL DEFAULT '',
   `qtyreqd` double NOT NULL DEFAULT 1,
   `qtyrecd` double NOT NULL DEFAULT 0,
-  `stdcost` double NOT NULL,
+  `stdcost` double NOT NULL DEFAULT 0,
   `nextlotsnref` varchar(20) DEFAULT '',
   `comments` longblob DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
