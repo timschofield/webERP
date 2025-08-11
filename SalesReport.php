@@ -77,7 +77,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$TotalGlTax = 0;
 	$PeriodFrom = FormatDateForSQL($_POST['PeriodFrom']);
 	$PeriodTo = FormatDateForSQL($_POST['PeriodTo']);
-	if($_POST['ShowDetails']) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
+	if (isset($_POST['ShowDetails'])) {// Parameters: PeriodFrom, PeriodTo, ShowDetails=on.
 		$HTML .= '<th>' . _('Date') . '</th>
 				<th>' . _('Sales Invoice') . '</th>
 				<th>' . _('Reference') . '</th>' .
