@@ -1311,9 +1311,35 @@ function InsertKPI($KPICode, $Value){
 }
 
 function NumberOfShops($ShopType){
-	$SQL="SELECT COUNT(*)
-		FROM locations
-		WHERE typeloc = '" . $ShopType . "'";
+	if ($ShopType == "SHOPKL" OR $ShopType == "SHOPBL" OR $ShopType == "SHOPOU"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = '" . $ShopType . "'";
+	}elseif ($ShopType == "SHOPOK"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = 'SHOPKL'
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}elseif ($ShopType == "SHOPOB"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE typeloc = 'SHOPBL'
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}elseif ($ShopType == "SHOPOG"){
+		$SQL="SELECT COUNT(*)
+				FROM locations
+				WHERE (typeloc = 'SHOPKL' OR typeloc = 'SHOPBL' OR typeloc = 'SHOPOU')
+					AND (alldisc20items = 1 
+						OR alldisc50items = 1
+						OR alldisc80items = 1)";
+	}else{
+		return 0;
+	}
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -1500,12 +1526,17 @@ function TotalItemsToBeReceivedByWO($Brand){
 }
 
 function TotalModels($Brand){
-	$ErrMsg = 'Error in TotalModels()';
 
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1514,7 +1545,7 @@ function TotalModels($Brand){
 			FROM stockmaster
 			WHERE discontinued = 0 " . 
 				$Operator1 ."";
-	$Result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow['0'];
@@ -1523,12 +1554,17 @@ function TotalModels($Brand){
 }
  
 function TotalItems($Brand){
-	$ErrMsg = 'Error in TotalItems()';
 
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1570,11 +1606,16 @@ function TotalDisplayItems($Brand){
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
-	$ErrMsg = 'Error in DailySoldItems()';
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
-	}else if ($Brand == "SHOPBL"){
+	}elseif ($Brand == "SHOPBL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+	}elseif ($Brand == "SHOPOK"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOB"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+	}elseif ($Brand == "SHOPOG"){
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
@@ -1600,6 +1641,12 @@ function BrandTextFromCode($Brand){
 		$BrandText = "Blink";
 	}elseif ($Brand == "SHOPOU"){
 		$BrandText = "Outlet";
+	}elseif ($Brand == "SHOPOK"){
+		$BrandText = "Outlet Kapal-Laut";
+	}elseif ($Brand == "SHOPOB"){
+		$BrandText = "Outlet Blink";
+	}elseif ($Brand == "SHOPOG"){
+		$BrandText = "Outlet General";
 	}else{
 		$BrandText = "ERROR";
 	}
