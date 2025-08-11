@@ -42,8 +42,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					  CONCAT(bom.parent,bom.component) AS sortpart
 			  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-			  AND bom.effectiveto > '" . date('Y-m-d') . "'";
+			  AND bom.effectiveafter <= CURRENT_DATE
+			  AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 
 	$LevelCounter = 2;
@@ -70,8 +70,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			  FROM bom
 			  INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-			  AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-			  AND bom.effectiveto > '" . date('Y-m-d') . "'";
+			  AND bom.effectiveafter <= CURRENT_DATE
+			  AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 	//echo "<br />sql is $SQL<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -104,8 +104,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				FROM bom
 				 INNER JOIN passbom ON bom.parent = passbom.part
 				 INNER JOIN locationusers ON locationusers.loccode=bom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE bom.effectiveafter <= '" . date('Y-m-d') . "'
-				AND bom.effectiveto > '" . date('Y-m-d') . "'";
+				WHERE bom.effectiveafter <= CURRENT_DATE
+				AND bom.effectiveto > CURRENT_DATE";
 			$Result = DB_query($SQL);
 
 			$SQL = "DROP TABLE IF EXISTS passbom2";
@@ -128,8 +128,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							  CONCAT(passbom2.sortpart,bom.component) AS sortpart
 					   FROM bom,passbom2
 					   WHERE bom.parent = passbom2.part
-					   AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-					   AND bom.effectiveto > '" . date('Y-m-d') . "'";
+					   AND bom.effectiveafter <= CURRENT_DATE
+					   AND bom.effectiveto > CURRENT_DATE";
 			$Result = DB_query($SQL);
 
 
