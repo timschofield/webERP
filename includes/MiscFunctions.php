@@ -33,6 +33,7 @@
  * SendEmailBySmtp - Sends email using SMTP
  * SendEmailByStandardMailFunction - Sends email using PHP mail function
  * SendEmailFromWebERP - Main email sending function for WebERP
+ * ShowDebugBackTrace - Shows the debug backtrace information if debugging is enabled
  * wikiLink - Generates wiki application links
  * XmlElement - Class for XML elements in currency rate parsing
  * ******************** END FUNCTION INDEX ********************
@@ -915,4 +916,39 @@ function SendEmailByStandardMailFunction($From, $To, $Subject, $Body, $Attachmen
 			return false;
 		}
 	}
+}
+
+
+function ShowDebugBackTrace($DebugMessage, $SQL, $Trace){
+	prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $Trace[0]['file'] . _('on line') . ' ' . $Trace[0]['line'],
+				'error', _('Database SQL Failure'));
+
+	echo '<div class="centre">
+		<table class="selection">
+		<tr><th colspan="6">' . _('Function Call Stack') . '</th></tr>
+		<tr>
+		<th>' . _('Frame') . '</th>
+		<th>' . _('File') . '</th>
+		<th>' . _('Line') . '</th>
+		<th>' . _('Function') . '</th>
+		<th>' . _('Class') . '</th>
+		<th>' . _('Arguments') . '</th>
+		</tr>';
+	foreach ($Trace as $Index => $Frame) {
+		if (isset($Frame['args']) && count($Frame['args']) > 0) {
+			$Parameters = '<pre>' . htmlspecialchars(print_r($Frame['args'], true)) . '</pre>';
+		} else {
+			$Parameters = 'N/A';
+		}
+		echo '<tr class="striped_row">
+			<td>' . $Index . '</td>
+			<td>' . (isset($Frame['file']) ? $Frame['file'] : 'N/A') . '</td>
+			<td>' . (isset($Frame['line']) ? $Frame['line'] : 'N/A') . '</td>
+			<td>' . (isset($Frame['function']) ? $Frame['function'] : 'N/A') . '</td>
+			<td>' . (isset($Frame['class']) ? $Frame['class'] : 'N/A') . '</td>
+			<td>' . $Parameters . '</td>
+		</tr>';
+	}
+	echo '</table>
+		</div>';
 }

@@ -74,9 +74,8 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			if ($DebugMessage == '') {
 				$DebugMessage = _('The SQL that failed was');
 			}
-			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-			prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $trace[0]['file'] . _('on line') . ' ' . $trace[0]['line'],
-				'error', _('Database SQL Failure'));
+			$Trace = debug_backtrace();
+			ShowDebugBackTrace($DebugMessage, $SQL, $Trace);	
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
