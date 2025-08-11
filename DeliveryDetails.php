@@ -372,7 +372,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 								'" . $_SESSION['Items'.$identifier]->Branch . "',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->CustRef) ."',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->Comments) ."',
-								'" . Date("Y-m-d") . "',
+								CURRENT_DATE,
 								'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 								'" . $_POST['ShipVia'] ."',
 								'". DB_escape_string($_SESSION['Items'.$identifier]->DeliverTo) . "',
