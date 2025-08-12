@@ -1,12 +1,17 @@
 <?php
+
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 include('includes/CountriesArray.php');
+global $CountriesArray;
 
 if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = mb_strtoupper($_GET['DebtorNo']);
@@ -21,7 +26,6 @@ if (!isset($DebtorNo)) {
 	include('includes/footer.php');
 	exit();
 }
-
 
 if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = mb_strtoupper($_GET['SelectedBranch']);

@@ -1,10 +1,10 @@
 <?php
 
 include('includes/session.php');
+global $RootPath;
 
 $ViewTopic = 'AccountsReceivable';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-
 $Title = _('Customer Item Data');
 
 include('includes/header.php');

@@ -4,13 +4,15 @@ include('includes/GetSalesTransGLCodes.php');
 /*defines the structure of the data required to hold the transaction as a session variable */
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreditNotes';
-
 $Title = _('Credit An Invoice');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/CommissionFunctions.php');
 

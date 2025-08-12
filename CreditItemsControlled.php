@@ -2,11 +2,12 @@
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
+
 include('includes/session.php');
+global $RootPath;
 
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreditNotes';
-
 $Title = _('Specify Credited Controlled Items');
 
 /* Session started in header.php for password checking and authorisation level check */
@@ -92,9 +93,9 @@ include('includes/InputSerialItems.php');
 echo '</tr>
 	</table>';
 
-/*TotalQuantity set inside this include file from the sum of the bundles
-of the item selected for dispatch */
-if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier){
+/* TotalQuantity set inside this include file from the sum of the bundles of the item selected for dispatch */
+/// @todo are we sure that $TotalQuantity is defined here?
+if ($CreditLink == 'Credit_Invoice.php?identifier=' . $identifier) {
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 } else {
 	$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo]->Quantity = $TotalQuantity;

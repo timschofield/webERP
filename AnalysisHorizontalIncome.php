@@ -1,6 +1,6 @@
 <?php
-/* AnalysisHorizontalIncome.php
-Shows the horizontal analysis of the statement of comprehensive income.
+
+/* Shows the horizontal analysis of the statement of comprehensive income.
 
 Parameters:
 	PeriodFrom: Select the beginning of the reporting period.
@@ -19,11 +19,13 @@ Parameters:
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Horizontal Analysis of Statement of Comprehensive Income');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalIncome';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 // Merges gets into posts:
@@ -203,6 +205,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 
 	// Page title as IAS 1, numerals 10 and 51:
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	global $CurrencyName;
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.

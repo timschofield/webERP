@@ -2,10 +2,11 @@
 
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
+include('includes/session.php');
+global $DBUser, $DBPassword, $Host, $RootPath;
+
 $ViewTopic = 'Setup';
 $BookMark = '';
-
-include('includes/session.php');
 $Title = _('Backup webERP Database');
 include('includes/header.php');
 

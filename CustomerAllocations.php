@@ -1,13 +1,16 @@
 <?php
+
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
-include('includes/DefineCustAllocsClass.php');// Before includes/session.php *******
+include('includes/DefineCustAllocsClass.php'); // Before includes/session.php *******
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Receipt') . '/' . _('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
@@ -559,7 +562,7 @@ if (isset($_POST['AllocTrans'])) {
 		if ( $CurrentDebtor != $MyRow['debtorno'] ) {
 			if ( $CurrentTransaction > 1 ) {
 				echo '<tr class="striped_row">
-						<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
+						<td colspan="7" class="number"><b>' . locale_number_format($Balance, $CurrDecimalPlaces)  . '</b></td>
 						<td><b>' . $CurrCode . '</b></td>
 						<td><b>' . _('Balance') . '</b></td>
 					</tr>';

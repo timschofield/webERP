@@ -1,7 +1,10 @@
 <?php
+
 /* Defines the general ledger account to be used for cost of sales entries */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Cost Of Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'COGSGLPostings';
@@ -129,6 +132,7 @@ if (!isset($SelectedCOGSPostingID)) {
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result)==0){
 			/* The required group does not seem to exist so we create it */
+			/// @bug column accountgroups does not exist ???
 			$SQL = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,

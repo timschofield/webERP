@@ -6,6 +6,7 @@
  */
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 include('includes/SQL_CommonFunctions.php');
 

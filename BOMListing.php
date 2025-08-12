@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
 
 use Dompdf\Dompdf;
 

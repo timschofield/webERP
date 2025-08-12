@@ -1,8 +1,10 @@
 <?php
-/* AccountGroups.php
-Defines the groupings of general ledger accounts */
+
+/* Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Account Groups');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';

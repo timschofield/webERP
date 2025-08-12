@@ -1,11 +1,15 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
+
 $Title = _('Customer Notes');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'CustomerNotes';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Id'])){

@@ -1,8 +1,10 @@
 <?php
-// CompanyPreferences.php
+
 // Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc.
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 $Title = _('Company Preferences');
@@ -252,6 +254,7 @@ echo '<field>
 
 $Result = DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+global $CurrencyName;
 
 echo '<field>
 		<label for="CurrencyDefault">', _('Home Currency'), ':</label>
@@ -419,7 +422,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 DB_data_seek($Result,0);
 
 echo '</select>
-	<fieldhelp>' . _('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invoices is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
 </field>';
 
 echo '<field>

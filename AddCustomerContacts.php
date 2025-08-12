@@ -1,7 +1,10 @@
 <?php
+
 /* Adds customer contacts */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Contacts');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'AddCustomerContacts';

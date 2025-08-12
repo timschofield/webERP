@@ -5,11 +5,13 @@
 include('includes/DefineCartClass.php');
 
 include('includes/session.php');
+global $Debug, $RootPath, $SysAdminEmail, $Theme;
+
 $Title = _('Counter Sales');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderCounterSales';
-
 include('includes/header.php');
+
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

@@ -1,13 +1,16 @@
 <?php
 
 include('includes/session.php');
+global $DefaultLanguage, $RootPath, $Theme;
+
 $Title = _('Customer Login Configuration');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/LanguagesArray.php');
-
+global $LanguagesArray;
 
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />
@@ -16,7 +19,6 @@ if (!isset($_SESSION['CustomerID'])){
 	include('includes/footer.php');
 	exit();
 }
-
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
@@ -33,7 +35,6 @@ echo '<p class="page_title_text">
 	'</p>
 	<br />';
 
-
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -43,13 +44,14 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (mb_strlen($_POST['UserID'])<4){
+	if (mb_strlen($_POST['UserID'])<4) {
 		$InputError = 1;
 		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR mb_strstr($_POST['UserID'],' ')) {
 		$InputError = 1;
 		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
-	} elseif (mb_strlen($_POST['Password'])<5){
+	} elseif (mb_strlen($_POST['Password'])<5) {
+		/// @bug where is $SelectedUser defined?
 		if (!$SelectedUser){
 			$InputError = 1;
 			prnMsg(_('The password entered must be at least 5 characters long'),'error');

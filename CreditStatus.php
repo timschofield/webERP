@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Credit Status Code Maintenance');
 $ViewTopic = 'CreditStatus';
 $BookMark = 'CreditStatus';

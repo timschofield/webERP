@@ -1,7 +1,10 @@
 <?php
+
 /* Shows customer account/statement on screen rather than PDF. */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 if (isset($_POST['TransAfterDate'])) {$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
 $Title = _('Customer Account');// Screen identification.

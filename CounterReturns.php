@@ -5,6 +5,7 @@
 include('includes/DefineCartClass.php');
 
 include('includes/session.php');
+
 $Title = _('Counter Returns');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'CounterReturns';

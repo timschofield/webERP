@@ -1,7 +1,9 @@
 <?php
+
 /* Multiple work orders cost review */
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);}
 if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);}

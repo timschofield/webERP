@@ -1,8 +1,10 @@
 <?php
-// BankAccountBalances.php
+
 // Shows bank accounts authorised for with balances
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('List of bank account balances');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountBalances';

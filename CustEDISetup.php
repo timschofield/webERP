@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath;
+
 $ViewTopic = 'EDI';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 $Title = _('Customer EDI Set Up');

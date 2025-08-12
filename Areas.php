@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 $Title = _('Sales Area Maintenance');
 $ViewTopic = 'CreatingNewSystem';

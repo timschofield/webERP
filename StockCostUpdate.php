@@ -3,10 +3,14 @@
 $UpdateSecurity =10;
 
 include('includes/session.php');
+
+global $RootPath, $Theme;
+
 $Title = _('Stock Cost Update');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['StockID'])){

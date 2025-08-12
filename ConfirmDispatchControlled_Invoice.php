@@ -2,15 +2,15 @@
 
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
-$Title = _('Specify Dispatched Controlled Items');
 
+include('includes/session.php');
+global $RootPath;
+
+$Title = _('Specify Dispatched Controlled Items');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
-
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
-
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -45,10 +45,8 @@ if (!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['ProcessingOrder'
 	exit();
 }
 
-
 /*Save some typing by referring to the line item class object in short form */
 $LineItem = &$_SESSION['Items'.$identifier]->LineItems[$LineNo];
-
 
 //Make sure this item is really controlled
 if ( $LineItem->Controlled != 1 ){
@@ -85,8 +83,8 @@ $ShowExisting=true;
 
 include('includes/InputSerialItems.php');
 
-/*TotalQuantity set inside this include file from the sum of the bundles
-of the item selected for dispatch */
+/* TotalQuantity set inside this include file from the sum of the bundles of the item selected for dispatch */
+/// @todo are we sure $TotalQuantity is defined, here ???
 $_SESSION['Items'.$identifier]->LineItems[$LineNo]->QtyDispatched = $TotalQuantity;
 
 include('includes/footer.php');

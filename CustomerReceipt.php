@@ -1,14 +1,18 @@
 <?php
+
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 include('includes/DefineReceiptClass.php');
+
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
 
 if (isset($_POST['DateBanked'])) {
 	$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);
 }
 
 include('includes/GetPaymentMethods.php');
+global $ReceiptTypes;
 
 $Title = _('Receipt Entry');
 
@@ -853,6 +857,7 @@ if (DB_num_rows($Result)==0){
 
 } else {
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	global $CurrencyName;
 	while ($MyRow=DB_fetch_array($Result)){
 		if ($_SESSION['ReceiptBatch' . $identifier]->Currency==$MyRow['currabrev']){
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
@@ -1242,6 +1247,7 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 
 		while ($MyRow=DB_fetch_array($CustomerSearchResult)) {
 
+			/// @todo bug - is $j supposed to be an index into the loop?
 			echo '<tr class="striped_row">
 					<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="', $MyRow['debtorno'], '" /></td>
 					<td>', $MyRow['name'], '</td>

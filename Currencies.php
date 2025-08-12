@@ -1,18 +1,22 @@
 <?php
-//	Currencies.php
+
 //	Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
 /*
 	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
 */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
 $Title = _('Currencies Maintenance');
 include('includes/header.php');
 
 include_once('includes/CountriesArray.php');// To get the country name from the country code.
+global $CountriesArray;
 include_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+global $CurrencyName;
 include_once('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SelectedCurrency'])) {

@@ -6,6 +6,9 @@ $SuppliersSecurity = 9; //don't show supplier purchasing info unless security to
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
 include('includes/session.php');
+
+global $RootPath, $Theme;
+
 $Title = _('Search Inventory Items');
 $ViewTopic = 'Inventory';
 $BookMark = 'SelectingInventory';
@@ -682,6 +685,7 @@ function GenerateStockmasterQuery(array $post): string {
     }
 
     // Initialize the SQL query.
+	/// @todo invalid query? shouldn't it join locstock?
     $SQL = "SELECT stockmaster.stockid,
                    stockmaster.description,
                    stockmaster.longdescription,

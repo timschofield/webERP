@@ -1,10 +1,13 @@
 <?php
- /* Lists customer account balances in detail or summary in selected currency */
+
+/* Lists customer account balances in detail or summary in selected currency */
 
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
+
 use Dompdf\Dompdf;
 
-if(isset($_POST['PrintPDF']) or isset($_POST['View'])
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])

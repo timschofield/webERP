@@ -1,24 +1,31 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+global $CurrencyName;
+
 if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);}
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
-	$ViewTopic = 'AccountsReceivable';
+	//$ViewTopic = 'AccountsReceivable';
 	$BookMark = 'AmendCustomer';
 } else {
-	$ViewTopic = 'AccountsReceivable';
+	//$ViewTopic = 'AccountsReceivable';
 	$BookMark = 'NewCustomer';
 }
 
 $Title = _('Customer Maintenance');
 /* webERP manual links before header.php */
+/// @bug this overrides the values set above
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'NewCustomer';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/CountriesArray.php');
+global $CountriesArray;
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') .
@@ -339,7 +346,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($CancelDelete==0) { //ie not cancelled the delete as a result of above tests
 		$SQL="DELETE FROM custbranch WHERE debtorno='" . $_POST['DebtorNo'] . "'";
-		$Result = DB_query($SQL, $ErrMsg);
+		$Result = DB_query($SQL);
 		$SQL="DELETE FROM custcontacts WHERE debtorno='" . $_POST['DebtorNo'] . "'";
 		$Result = DB_query($SQL);
 		$SQL="DELETE FROM debtorsmaster WHERE debtorno='" . $_POST['DebtorNo'] . "'";
@@ -643,6 +650,7 @@ if (!isset($DebtorNo)) {
 		$_POST['LanguageID']=$_SESSION['Language'];
 	}
 
+	/// @bug is $LanguagesArray defined here ???
 	foreach ($LanguagesArray as $LanguageCode => $LanguageName){
 		if ($_POST['LanguageID'] == $LanguageCode){
 			echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';

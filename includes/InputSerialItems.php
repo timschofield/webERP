@@ -1,5 +1,6 @@
 <?php
-/*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
+
+/*Input Serial Items - used for inputting serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
 - GoodsReceivedControlled.php
@@ -7,6 +8,7 @@ for controlled items - used in:
 - StockTransfers.php
 - CreditItemsControlled.php
 */
+
 //bring up perishable variable here otherwise we cannot get it in Add_SerialItems.php
 $SQL = "SELECT perishable,
 		decimalplaces

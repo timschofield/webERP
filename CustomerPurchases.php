@@ -1,7 +1,10 @@
 <?php
+
 /* This script is to view the items purchased by a customer. */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Purchases');// Screen identificator.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 /* This help needs to be writing...

@@ -1,7 +1,10 @@
 <?php
+
 /* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';

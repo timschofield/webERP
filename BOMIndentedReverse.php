@@ -1,9 +1,11 @@
 <?php
 
-// BOMIndented.php - Reverse Indented Bill of Materials - From lowest level component to top level
+// Reverse Indented Bill of Materials - From lowest level component to top level
 // assembly
 
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

@@ -4,7 +4,11 @@
 include('includes/DefinePaymentClass.php');
 
 include('includes/session.php');
+
+global $RootPath, $Theme;
+
 if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
+
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -60,6 +64,8 @@ else {
 echo '<div class="page_help_text">', _('Use this screen to enter payments FROM your bank account.<br />Note: To enter a payment FROM a supplier, first select the Supplier, click Enter a Payment to, or Receipt from the Supplier, and use a negative Payment amount on this form.') , '</div>
 	<br />';
 
+/// @todo move this security check to a function or a class method, making it reusable. Or, even better, why not look
+///       directly in $_SESSION['PageSecurityArray']?
 $SQL = "SELECT pagesecurity
 		  FROM scripts
 		 WHERE scripts.script = 'BankAccountBalances.php'";
@@ -1009,6 +1015,7 @@ if (DB_num_rows($Result) == 0) {
 }
 else {
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	global $CurrencyName;
 	if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 		echo '<select name="Currency" onchange="ReloadForm(UpdateHeader)" required="required">';
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1096,8 +1103,9 @@ echo '<field>
 		<select name="Paymenttype">';
 
 include('includes/GetPaymentMethods.php');
-/* The array Payttypes is set up in includes/GetPaymentMethods.php
+/* The array PaytTypes is set up in includes/GetPaymentMethods.php
  payment methods can be modified from the setup tab of the main menu under payment methods*/
+global $PaytTypes;
 
 foreach ($PaytTypes as $PaytType) {
 

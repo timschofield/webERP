@@ -3,6 +3,8 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
+
 include('includes/ImageFunctions.php');
 
 $identifier = $_GET['identifier'];
@@ -19,7 +21,6 @@ if (!isset($_SESSION['Contract'.$identifier])){
 $Title = _('Contract Bill of Materials');
 $ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
-
 include('includes/header.php');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {

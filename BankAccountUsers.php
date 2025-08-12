@@ -1,8 +1,10 @@
 <?php
-// BankAccountUsers.php
+
 // Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';

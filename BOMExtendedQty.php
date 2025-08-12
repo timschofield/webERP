@@ -3,6 +3,8 @@
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

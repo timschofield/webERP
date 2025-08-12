@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Types') . ' / ' . _('Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'CustomerTypes';

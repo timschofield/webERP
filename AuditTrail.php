@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
@@ -8,7 +9,6 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 $Title = _('Audit Trail');
 $ViewTopic = 'Setup';
 $BookMark = 'AuditTrail';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';

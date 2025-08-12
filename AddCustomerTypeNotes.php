@@ -1,10 +1,13 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Customer Type (Group) Notes');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'CustomerTypeNotes';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['NoteDate'])) {$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}

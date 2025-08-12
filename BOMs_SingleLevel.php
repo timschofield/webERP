@@ -1,13 +1,13 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 $Title = _('Bill Of Materials Maintenance');
-
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {

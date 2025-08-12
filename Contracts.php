@@ -1,7 +1,10 @@
 <?php
 
 include('includes/DefineContractClass.php');
+
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
+
 if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);}
 
 if (isset($_GET['ModifyContractNo'])) {
@@ -21,13 +24,14 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 		$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 	}
 }
+
 $ViewTopic = 'Contracts';
 $BookMark = 'CreateContract';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
-/*If the page is called is called without an identifier being set then
+/* If the page is called without an identifier being set then
  * it must be either a new contract, or the start of a modification of an
  * existing contract, and so we must create a new identifier.
  *
