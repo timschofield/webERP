@@ -924,7 +924,7 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 
 	if ($Debug == 1) {
 		$Trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);
-	}else if ($Debug >= 1) {
+	}else if ($Debug >= 2) {
 		$Trace = debug_backtrace();
 	}else {
 		// Should not happen. Safety check
