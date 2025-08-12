@@ -474,8 +474,8 @@ function ItemUpdateShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLSh
 	$SQL = "UPDATE klstockmarketplaces
 			SET shopeeurl = '" . $URLShopee . "',
 				shopeeproductid = '" . $ShopeeProductId ."',
-				shopeeenabled='" . $EnabledShopee ."'
-		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
+				shopeeenabled = '" . $EnabledShopee ."'
+		WHERE klstockmarketplaces.stockid = '" . $StockID . "'";
 
 	$ErrMsg = _('Cannot update the Shopee marketplace info because');
 	DB_query($SQL, $ErrMsg, '', true);
@@ -494,8 +494,8 @@ function ItemUpdateTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductI
 	$SQL = "UPDATE klstockmarketplaces
 			SET tokopediaurl = '" . $URLTokopedia . "',
 				tokopediaproductid = '" . $TokopediaProductId ."',
-				tokopediaenabled='" . $EnabledTokopedia ."'
-		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
+				tokopediaenabled = '" . $EnabledTokopedia ."'
+		WHERE klstockmarketplaces.stockid = '" . $StockID . "'";
 
 	$ErrMsg = _('Cannot update the Tokopedia marketplace info because');
 	DB_query($SQL, $ErrMsg, '', true);

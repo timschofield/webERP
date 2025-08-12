@@ -67,7 +67,6 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 		
 		echo '<div>';
 		echo '<table class="selection">
@@ -115,7 +114,10 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				
 				// Check if we have enough QOH to set it as enabled in Shopee
 				$QOH = ItemMarketplaceQOH($StockID);
-				$EnabledShopee = ( $QOH > 0);
+				$EnabledShopee = 0;
+				if ($QOH > 0) {
+					$EnabledShopee = 1;
+				}
 				
 				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 					// Already exists, so only update the info with the newest shopee link and shopee product id if needed
