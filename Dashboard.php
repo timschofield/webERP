@@ -1,7 +1,10 @@
 <?php
+
 $PageSecurity = 0;
 
 include('includes/session.php');
+global $RootPath;
+
 $Title = _('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';

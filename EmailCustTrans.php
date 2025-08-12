@@ -1,11 +1,9 @@
 <?php
 
 include('includes/session.php');
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
+global $RootPath;
 
-$ViewTopic = 'Sales';
-$BookMark = '';
+include('includes/SQL_CommonFunctions.php');
 
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Invoice');
@@ -14,7 +12,11 @@ if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Credit Note');
 	$TypeCode =11;
 }
+
 $Title=_('Email') . ' ' . $TransactionType . ' ' . _('Number') . ' ' . $_GET['FromTransNo'];
+$ViewTopic = 'Sales';
+$BookMark = '';
+include('includes/header.php');
 
 if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 

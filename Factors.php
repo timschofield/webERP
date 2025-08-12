@@ -1,12 +1,11 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 $Title = _('Factor Company Maintenance');
-
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (isset($_GET['FactorID'])){

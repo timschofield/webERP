@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 use Dompdf\Dompdf;
+
 $Title = _('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = '';

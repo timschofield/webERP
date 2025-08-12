@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $SysAdminEmail;
+
 include('includes/SQL_CommonFunctions.php');
 
 $ViewTopic = 'SalesOrders';

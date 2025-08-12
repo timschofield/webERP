@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $Debug, $RootPath, $Theme;
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

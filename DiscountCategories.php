@@ -7,6 +7,7 @@ $Title = _('Discount Categories Maintenance');
 $ViewTopic = "SalesOrders";
 $BookMark = "DiscountMatrix";
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['stockID'])) {

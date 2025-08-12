@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = _('EDI Message Format');
 $ViewTopic = 'EDI';
 $BookMark = '';

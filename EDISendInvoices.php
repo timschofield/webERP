@@ -1,9 +1,11 @@
 <?php
 
 include('includes/session.php');
+
 $ViewTopic = 'EDI';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php'); //need for EDITransNo
 
 /*Get the Customers who are enabled for EDI invoicing */
@@ -66,7 +68,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 	$CustEDIReference = $CustDetails['edireference'];
 	$TaxAuthorityRef = $_SESSION['CompanyRecord']['gstno'];
 
-	while ($TransDetails = DB_fetch_array($TransHeaders)){
+	while ($TransDetails = DB_fetch_array($TransHeaders)) {
 
 /*Set up the variables that will be needed in construction of the EDI message */
 		if ($TransDetails['type']==10){ /* its an invoice */
@@ -107,7 +109,6 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		if (DB_num_rows($MessageLinesResult)>0){
 
-
 			$DetailLines = array();
 			$ArrayCounter =0;
 			while ($MessageLine = DB_fetch_array($MessageLinesResult)){
@@ -132,7 +133,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 					need to get the line details for the invoice or credit note
 					for creating the detail lines */
 
-					if ($TransDetail['type']==10){ /*its an invoice */
+					if ($TransDetails['type']==10){ /*its an invoice */
 						 $SQL = "SELECT stockmoves.stockid,
 							 		stockmaster.description,
 									-stockmoves.qty as quantity,

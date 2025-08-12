@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
+global $RootPath;
 
 $Title = _('Process EDI Orders');
 $ViewTopic = 'EDI';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
 require_once ('includes/MiscFunctions.php');
@@ -95,7 +96,7 @@ while ($SegRow=DB_fetch_array($OrderSeg)){
 $TotalNoOfSegments = $i-1;
 
 $ediordersdir = $_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders'];
-echo '<br />' . $ediOrdersdir;
+echo '<br />' . $ediordersdir;
 if (!is_dir($ediordersdir)) {
 	error_log("EDI orders directory error " . $ediordersdir, 0); // php logging
 	exit();
@@ -906,6 +907,7 @@ echo '</pre>';
 
 				//echo '<br />' . 'ordertype ' . $Order->OrderType . ' / ' . $_SESSION['DefaultOrdertype'];
 				//echo '<br />' . 'salesperon ' . $Order->SalesPerson . ' / ' . $_SESSION['DefaultSalesperson'];
+					/// @bug $QuotDate, $ConfDate not defined ???
 					$HeaderSQL = "INSERT INTO salesorders (
 								orderno,
 								debtorno,

@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Discount Matrix Maintenance');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'DiscountMatrix';

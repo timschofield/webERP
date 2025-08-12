@@ -1,7 +1,10 @@
 <?php
+
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('View Currency Trend');
 $ViewTopic = 'Currencies';
 $BookMark = 'ExchangeRateTrend';
@@ -31,6 +34,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 	$SQL = "SELECT currabrev FROM currencies";
 	$Result = DB_query($SQL);
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	global $CurrencyName;
 
 	// CurrencyToShow Currency Picker
 	echo '<tr>

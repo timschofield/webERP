@@ -1,4 +1,5 @@
 <?php
+
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
@@ -6,6 +7,7 @@ This is where the delivery details are confirmed/entered/modified and the order 
 */
 
 include('includes/DefineCartClass.php');
+global $CustomerLogin, $Debug, $RootPath, $SysAdminEmail, $Theme;
 
 /* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
@@ -24,6 +26,7 @@ include('includes/FreightCalculation.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
+global $CountriesArray;
 
 if(isset($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
@@ -941,7 +944,8 @@ echo '<field>
 		<label for="Location">', _('Deliver from the warehouse at'), ':</label>
 		<select name="Location">';
 
-if($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$identifier]->Location)) {
+if ($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$identifier]->Location)) {
+	/// @bug $DefaultStockLocation is never defined
 	$_SESSION['Items'.$identifier]->Location = $DefaultStockLocation;
 }
 

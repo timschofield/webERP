@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+global $RootPath;
+
 $Title = _('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';
