@@ -1,18 +1,19 @@
 <?php
 
 include('includes/session.php');
+global $RootPath;
+
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
 	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
 }
-$Title = _('Depreciation Journal Entry');
 
+$Title = _('Depreciation Journal Entry');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetDepreciation';
-
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
+include('includes/SQL_CommonFunctions.php');
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 $Result = DB_query("SELECT periods.lastdate_in_period,
@@ -47,6 +48,7 @@ if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 
 
 /* Get list of assets for journal */
+/// @bug make query complaint with strict mode re. group-by
 $SQL="SELECT fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,

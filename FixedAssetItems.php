@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Fixed Assets');
+global $RootPath, $Theme;
 
+$Title = _('Fixed Assets');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
@@ -297,7 +298,7 @@ if (isset($_POST['submit'])) {
 						ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 						WHERE assetid='" . $AssetID . "'");
 	$AssetRow = DB_fetch_array($Result);
-	$NBV = $AssetRow['cost'] -$AssetRow['accumdepn'];
+	$NBV = $AssetRow['cost'] - $AssetRow['accumdepn'];
 	if ($NBV!=0) {
 		$CancelDelete =1; //cannot delete assets where NBV is not 0
 		prnMsg(_('The asset still has a net book value - only assets with a zero net book value can be deleted'),'error');
@@ -352,7 +353,7 @@ if (isset($_POST['submit'])) {
 							'" . $PeriodNo . "',
 							'" . $AssetRow['accumdepnact'] . "',
 							'" . mb_substr(_('Delete asset') . ' ' . $AssetID, 0, 200) . "',
-							'" . $Asset['accumdepn']. "'
+							'" . $AssetRow['accumdepn']. "'
 							)";
 			$ErrMsg = _('Cannot insert a GL entry for the reversal of accumulated depreciation on deletion of the asset because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);

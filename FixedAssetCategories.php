@@ -1,12 +1,11 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 $Title = _('Fixed Asset Category Maintenance');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetCategories';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">
