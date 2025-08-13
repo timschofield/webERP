@@ -1,5 +1,7 @@
 <?php
 
+global $PathPrefix, $RootPath, $DBType;
+
 require_once($PathPrefix .'includes/MiscFunctions.php');
 
 if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from the file structure

@@ -8,12 +8,12 @@ echo '<fieldset>
 			</div>
 			<ul>
 				<field>
-					<label for="CompanyName">' . _("Company Name") . ': </label>
+					<label for="CompanyName">' . _('Company Name') . ': </label>
 					<input type="text" name="CompanyName" required="required" maxlength="50" size="30" />
 					<fieldhelp>' . _('The full name of the company that you want to be used throughout webERP') . '</fieldhelp>
 				</field>
 				<field>
-				<label for="COA">' . _("Chart of Accounts") . ': </label>
+				<label for="COA">' . _('Chart of Accounts') . ': </label>
 				<select name="COA">';
 
 $COAs = glob('sql/coa/*.sql');

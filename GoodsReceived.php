@@ -111,7 +111,7 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 				<input type="date" maxlength="10" size="11" name="DefaultReceivedDate" value="' . FormatDateForSQL($_SESSION['PO' . $identifier]->DefaultReceivedDate) . '" />
 			</field>
 			<field>
-				<label for="SupplierReference">' . _("Supplier's Reference") . ':</label>
+				<label for="SupplierReference">' . _('Supplier\'s Reference') . ':</label>
 				<input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/>
 			</field>
 		</fieldset>';

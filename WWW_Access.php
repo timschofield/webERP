@@ -170,7 +170,7 @@ if (!isset($_POST['SecRoleName'])) {
 echo '<field>
 		<label for="SecRoleName">' . _('Role') . ':</label>
 		<input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="" />
-		<fieldhelp>'._("The role description entered must be at least 4 characters long").'</fieldhelp>
+		<fieldhelp>'._('The role description entered must be at least 4 characters long').'</fieldhelp>
 	</field>';
 echo '</fieldset>
 	<div class="centre">
