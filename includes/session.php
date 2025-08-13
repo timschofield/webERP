@@ -28,8 +28,11 @@ if (!file_exists($PathPrefix . 'config.php')) {
 }
 
 include($PathPrefix . 'config.php');
+global $AllowDemoMode, $DefaultTheme, $RootPath;
 
-if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
+if (isset($dbuser)) {
+	//this gets past an upgrade issue where old versions used lower case variable names
+	global $dbuser, $dbpassword, $dbType;
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;

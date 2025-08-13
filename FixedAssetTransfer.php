@@ -1,12 +1,11 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
 
 $Title = _('Change Asset Location');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .

@@ -1,11 +1,15 @@
 <?php
 
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title = _('Freight Costs Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'FreightCosts';
 include('includes/header.php');
+
 include('includes/CountriesArray.php');
+global $CountriesArray;
 
 if (isset($_GET['LocationFrom'])){
 	$LocationFrom = $_GET['LocationFrom'];

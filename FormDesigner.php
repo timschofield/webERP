@@ -1,5 +1,5 @@
 <?php
-/*	FormDesigner.php */
+
 /*	Allows to customize the form layout without requiring the use of scripting or technical development. */
 
 /*	Form Designer notes:
@@ -18,6 +18,8 @@
 /* RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ? */
 
 include('includes/session.php');
+global $PathPrefix, $RootPath, $Theme;
+
 $Title = _('Form Designer');
 $ViewTopic = 'Setup';
 $BookMark = 'FormDesigner';

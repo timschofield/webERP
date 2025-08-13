@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Fixed Asset Locations');
+global $RootPath, $Theme;
 
+$Title = _('Fixed Asset Locations');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
-
 include('includes/header.php');
+
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';

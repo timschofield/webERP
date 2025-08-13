@@ -1,16 +1,16 @@
 <?php
 
-/*Variables required to configure this script must be set in config.php */
-
 include('includes/session.php');
+global $RootPath, $Theme;
+
 $Title=_('FTP order to Radio Beacon');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Freight Costs') . '" alt="" />' . ' ' . $Title . '
 	</p>';
-
 
 /*Logic should allow entry of an order number which returns
 some details of the order for confirming before producing the file for ftp */
@@ -109,7 +109,6 @@ while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 //end of while loop
 
 echo '</table>';
-
 
 if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 

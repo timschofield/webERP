@@ -1,7 +1,10 @@
 <?php
 
 // Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
+
 include('includes/session.php');
+global $RootPath, $Theme;
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['FromDate'])) {
@@ -15,6 +18,10 @@ if (isset($_POST['ToDate'])) {
 if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet'])) {
 
 	$DisposalSQL = '';
+
+	$DateFrom = FormatDateForSQL($_POST['FromDate']);
+	$DateTo = FormatDateForSQL($_POST['ToDate']);
+
 	if ($_POST['DisposalStatus'] == 'ALL') {
 		$DisposalSQL .= " AND (fixedassets.disposaldate = '1000-01-01'
 								OR fixedassets.disposaldate >='" . $DateFrom . "')";
@@ -26,8 +33,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		$DisposalSQL .= ' AND disposaldate != "1000-01-01"';
 	}
 
-	$DateFrom = FormatDateForSQL($_POST['FromDate']);
-	$DateTo = FormatDateForSQL($_POST['ToDate']);
+
 	$SQL = "SELECT fixedassets.assetid,
 					fixedassets.description,
 					fixedassets.longdescription,
