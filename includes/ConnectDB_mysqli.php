@@ -74,7 +74,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			if ($DebugMessage == '') {
 				$DebugMessage = _('The SQL that failed was');
 			}
-			ShowDebugBackTrace($DebugMessage, $SQL);	
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
@@ -130,9 +130,7 @@ function DB_data_seek(&$ResultIndex,$Record) {
 }
 
 function DB_free_result($ResultIndex) {
-	if (is_resource($ResultIndex)) {
-		mysqli_free_result($ResultIndex);
-	}
+	mysqli_free_result($ResultIndex);
 }
 
 function DB_num_rows($ResultIndex) {
