@@ -57,17 +57,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		WHERE debtortrans.transno='" . $_POST['BatchNo'] . "'
 		AND debtortrans.type=12";
 
-	$CustRecs = DB_query($SQL, '', '', false, false);
-	if (DB_error_no()!=0) {
-		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include('includes/header.php');
-	   	prnMsg(_('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
-		if ($Debug==1){
-	        	prnMsg(_('The SQL used to get the customer receipt information that failed was') . '<br />' . $SQL,'error');
-	  	}
-		include('includes/footer.php');
-	  	exit();
-	}
+	$ErrMsg = _('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'];
+	$CustRecs = DB_query($SQL, $ErrMsg, '', false);
+	
 	$SQL = "SELECT narrative,
 			amount
 		FROM gltrans
@@ -76,17 +68,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		AND gltrans.account !='" . $MyRow['bankact'] . "'
 		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
-	$GLRecs = DB_query($SQL, '', '', false, false);
-	if (DB_error_no() != 0){
-		$Title = _('Create PDF Print-out For A Batch Of Receipts');
-		include('includes/header.php');
-		prnMsg(_('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'],'error');
-		if ($Debug==1){
-			prnMsg(_('The SQL used to get the GL receipt information that failed was') . ':<br />' . $SQL,'error');
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'];
+	$GLRecs = DB_query($SQL, $ErrMsg, '', false);
 
 	$HTML = '';
 

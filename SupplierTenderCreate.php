@@ -806,7 +806,7 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($SearchResult) == 0 and $Debug == 1) {
+	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products to display matching the criteria provided'), 'warn');
 	}
 	if (DB_num_rows($SearchResult) == 1) {

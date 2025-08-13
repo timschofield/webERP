@@ -23,7 +23,7 @@ global $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
 if ( !$db ) {
-	if ($Debug==1) {
+	if ($Debug >= 1) {
 		echo '<br>' . $PgConnStr . '<br>';
 	}
 	echo '<br>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . _(' Try logging in with an alternative company name.');

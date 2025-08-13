@@ -222,19 +222,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	} /* end if not all sales areas was selected */
 
-	$CustomersResult = DB_query($SQL);
-
-	if(DB_error_no() !=0) {
-	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.php');
-	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg() );
-	   echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-	   if($Debug==1) {
-	      echo '<br />' .  $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
+	$ErrMsg = _('The customer List could not be retrieved');
+	$CustomersResult = DB_query($SQL, $ErrMsg);
 
 	if(DB_num_rows($CustomersResult) == 0) {
 	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';

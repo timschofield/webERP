@@ -436,17 +436,8 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		$SQL = "SELECT accountname
 				FROM chartmaster
 				WHERE accountcode ='" . $_POST['GLCode'] . "'";
-		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
-		$GLValidResult = DB_query($SQL, $ErrMsg,'',false,false);
-		if (DB_error_no() !=0) {
-			$AllowUpdate = false;
-			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg(), 'error');
-			if ($Debug==1){
-				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $SQL,'error');
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved');
+		$GLValidResult = DB_query($SQL, $ErrMsg, '', false);
 		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
 			$AllowUpdate = false;
 			prnMsg( _('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'),'error');
@@ -671,9 +662,6 @@ if (isset($_POST['NewItem'])
 															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-					if ($Debug==1){
-						echo '<br />' . $SQL;
-					}
 					include('includes/footer.php');
 					exit();
 				}
@@ -833,9 +821,6 @@ if (isset($_POST['UploadFile'])) {
 						++$InsertNum;
 					} else { //no rows returned by the SQL to get the item
 						prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-						if ($Debug==1){
-							echo '<br />' . $SQL;
-						}
 					}
 				} /* end of if not already on the order */
 			} /* end if the $_POST has NewQty in the variable name */
@@ -1259,7 +1244,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
+	if (DB_num_rows($SearchResult)==0){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){

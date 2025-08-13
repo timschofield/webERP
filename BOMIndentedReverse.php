@@ -128,20 +128,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	} // End of while $ComponentCounter > 0
 
-	if (DB_error_no() !=0) {
-	  $Title = _('Indented BOM Listing') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br />
-			<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		  echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
-
-
 	$SQL = "SELECT stockmaster.stockid,
 				   stockmaster.description
 			  FROM stockmaster

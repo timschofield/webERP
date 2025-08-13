@@ -117,20 +117,9 @@ if (isset($_POST['PrintPDF'])) {
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
-	$Result = DB_query($SQL,'','',false,true);
+	$ErrMsg = _('The Stock Dispatch report could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Stock Dispatch - Problem Report');
-		include('includes/header.php');
-		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-		echo '<br />
-				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
 	if (DB_num_rows($Result) ==0) {
 		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.php');

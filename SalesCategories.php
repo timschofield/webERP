@@ -136,10 +136,6 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');
-
-		if ($Debug == 1) {
-			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL, 'info');
-		}
 	}
 
 } //end of if search

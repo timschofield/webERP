@@ -32,18 +32,8 @@ if (isset($_POST['PrintPDF'])){
 					   AND stockmaster.mbflag!='K'
 					   AND stockmaster.mbflag!='D'";
 
-		$Result = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Stock Count Sheets - Problem Report');
-			include('includes/header.php');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-		  			echo '<br />' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('The inventory quantities could not be added to the freeze file');
+		$Result = DB_query($SQL, $ErrMsg, '', false);
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
@@ -53,18 +43,8 @@ if (isset($_POST['PrintPDF'])){
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$Result = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
-			include('includes/header.php');
-			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-		  			echo '<br />' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('The old quantities could not be deleted from the freeze file');
+		$Result = DB_query($SQL, $ErrMsg, '', false);
 
 		$SQL = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
@@ -83,25 +63,15 @@ if (isset($_POST['PrintPDF'])){
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$Result = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Stock Freeze - Problem Report');
-			include('includes/header.php');
-			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-		  			echo '<br />' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		} else {
-			$Title = _('Stock Check Freeze Update');
-			include('includes/header.php');
-			echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
-			prnMsg( _('Added to the stock check file successfully'),'success');
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('The inventory quantities could not be added to the freeze file');
+		$Result = DB_query($SQL, $ErrMsg, '', false);
+
+		$Title = _('Stock Check Freeze Update');
+		include('includes/header.php');
+		echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
+		prnMsg( _('Added to the stock check file successfully'),'success');
+		include('includes/footer.php');
+		exit();
 	}
 
 
@@ -124,19 +94,9 @@ if (isset($_POST['PrintPDF'])){
 
 	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
-	$InventoryResult = DB_query($SQL,'','',false,false);
+	$ErrMsg = _('The inventory quantities could not be retrieved');
+	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Stock Sheets') . ' - ' . _('Problem Report') . '.... ';
-		include('includes/header.php');
-		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-		  	echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
 	if (DB_num_rows($InventoryResult) ==0) {
 		$Title = _('Stock Count Sheets - Problem Report');
 		include('includes/header.php');

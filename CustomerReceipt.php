@@ -643,14 +643,10 @@ if (isset($_POST['Search'])){
 						WHERE 	custbranch.debtorno = debtorsmaster.debtorno
 							AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "')";
 		}
-
-		$CustomerSearchResult = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
-			if ($Debug==1){
-				prnMsg(_('SQL used to retrieve the customer details was') . '<br />' . $SQL,'error');
-			}
-		} elseif (DB_num_rows($CustomerSearchResult)==1){
+		$ErrMsg = _('The searched customer records requested cannot be retrieved');
+		$CustomerSearchResult = DB_query($SQL, $ErrMsg, '', false);
+		
+		if (DB_num_rows($CustomerSearchResult)==1){
 			$MyRow=DB_fetch_array($CustomerSearchResult);
 			$Select = $MyRow['debtorno'];
 			unset($CustomerSearchResult);

@@ -80,19 +80,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				ORDER BY sellthroughsupport.supplierno,
 					stockmaster.stockid";
 
-	$ClaimsResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-
-	  include('includes/header.php');
-		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-		  echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The sell through support items to claim could not be retrieved');
+	$ClaimsResult = DB_query($SQL, $ErrMsg , '', false);
 
 	if (DB_num_rows($ClaimsResult) == 0) {
 

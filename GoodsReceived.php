@@ -367,45 +367,6 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 			prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned') . '. ' . _('Processing halted') . '. ' . _('To enter a delivery against this purchase order') . ', ' . _('it must be re-selected and re-read again to update the changes made by the other user'),'warn');
 
-			if ($Debug==1) {
-				echo '<table class="selection">
-					<tr>
-						<td>' . _('GL Code of the Line Item') . ':</td>
-						<td>' . $_SESSION['PO'.$identifier]->LineItems[$LineNo]->GLCode . '</td>
-						<td>' . $MyRow['glcode'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('ShiptRef of the Line Item') . ':</td>
-						<td>' . $_SESSION['PO'.$identifier]->LineItems[$LineNo]->ShiptRef . '</td>
-						<td>' . $MyRow['shiptref'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('Contract Reference of the Line Item') . ':</td>
-						<td>' . $_SESSION['PO'.$identifier]->LineItems[$LineNo]->JobRef . '</td>
-						<td>' . $MyRow['jobref'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('Quantity Invoiced of the Line Item') . ':</td>
-						<td>' . locale_number_format($_SESSION['PO'.$identifier]->LineItems[$LineNo]->QtyInv,$_SESSION['PO'.$identifier]->LineItems[$LineNo]->DecimalPlaces) . '</td>
-						<td>' . $MyRow['qtyinvoiced'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('Stock Code of the Line Item') . ':</td>
-						<td>' .  $_SESSION['PO'.$identifier]->LineItems[$LineNo]->StockID . '</td>
-						<td>' . $MyRow['itemcode'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('Order Quantity of the Line Item') . ':</td>
-						<td>' . locale_number_format($_SESSION['PO'.$identifier]->LineItems[$LineNo]->Quantity,$_SESSION['PO'.$identifier]->LineItems[$LineNo]->DecimalPlaces) . '</td>
-						<td>' . $MyRow['quantityord'] . '</td>
-					</tr>
-					<tr>
-						<td>' . _('Quantity of the Line Item Already Received') . ':</td>
-						<td>' . locale_number_format($_SESSION['PO'.$identifier]->LineItems[$LineNo]->QtyReceived,$_SESSION['PO'.$identifier]->LineItems[$LineNo]->DecimalPlaces) . '</td>
-						<td>' . locale_number_format($MyRow['quantityrecd'],$_SESSION['PO'.$identifier]->LineItems[$LineNo]->DecimalPlaces) . '</td>
-					</tr>
-					</table>';
-			}
 			echo '<div class="centre"><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' .
 				_('Select a different purchase order for receiving goods against') . '</a></div>';
 			echo '<div class="centre"><a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $_SESSION['PO'.$identifier]->OrderNo . '">' .  _('Re-read the updated purchase order for receiving goods against'). '</a></div>';

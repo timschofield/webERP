@@ -26,19 +26,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ORDER BY bom.parent,
 					bom.component";
 
-	$BOMResult = DB_query($SQL,'','',false,false); //dont do error trapping inside DB_query
+	$ErrMsg = ('The Bill of Material listing could not be retrieved');
+	$BOMResult = DB_query($SQL, $ErrMsg, '', false);
 
-	if (DB_error_no() !=0) {
-	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
-	   include('includes/header.php');
-	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		  echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
 	if (DB_num_rows($BOMResult)==0){
 	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
 	   include('includes/header.php');

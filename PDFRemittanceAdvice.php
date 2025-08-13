@@ -74,20 +74,8 @@ If ((isset($_POST['PrintPDF']))
 				ORDER BY supptrans.type,
 						 supptrans.transno";
 
-
-		$TransResult = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Remittance Advice Problem Report');
-			include('includes/header.php');
-			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		}
-
+		$ErrMsg = _('The details of the payment to the supplier could not be retrieved');
+		$TransResult = DB_query($SQL, $ErrMsg, '', false);
 
 		while ($DetailTrans = DB_fetch_array($TransResult)){
 
