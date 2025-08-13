@@ -27,22 +27,16 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			WHERE part = '" . $_POST['Part'] ."'
 			ORDER BY daterequired,whererequired";
 
-	$Result = DB_query($SQL, '', '', false, false);
+	$ErrMsg = _('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 	if (DB_error_no() !=0) {
 		$Errors = 1;
-		$Title = _('Print MRP Report Error');
-		include('includes/header.php');
-		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit();
 	}
 
 	if (DB_num_rows($Result) == 0) {
 		$Errors = 1;
 		$Title = _('Print MRP Report Warning');
 		include('includes/header.php');
-		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
@@ -109,7 +103,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 				   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 				   TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE) AS datediff
 				FROM mrpplannedorders WHERE part = '" . $_POST['Part'] . "' ORDER BY mrpdate";
-	$Result = DB_query($SQL,'','',false,true);
+	$Result = DB_query($SQL,'','',false);
 	if (DB_error_no() !=0) {
 		$Errors = 1;
 	}
@@ -140,11 +134,8 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (isset($Errors)) {
 		$Title = _('MRP Report') . ' - ' . _('Problem Report');
 		include('includes/header.php');
-		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
+		prnMsg( _('The MRP Report could not be retrieved'), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
 		include('includes/footer.php');
 		exit();
 	}
@@ -168,7 +159,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			LEFT JOIN stockmaster
 			ON levels.part = stockmaster.stockid
 			WHERE part = '" . $_POST['Part'] . "'";
-	$Result = DB_query($SQL,'','',false,true);
+	$Result = DB_query($SQL,'','',false);
 	$MyRow=DB_fetch_array($Result);
 	$pdf->addTextWrap($Left_Margin,$YPos,35,$FontSize,_('Part:'),'');
 	$pdf->addTextWrap(70,$YPos,100,$FontSize,$MyRow['part'],'');

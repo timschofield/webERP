@@ -168,9 +168,6 @@ if(isset($_POST['Update'])
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_POST['Select'] . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-			if($Debug==1) {
-				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
-			}
 			include('includes/footer.php');
 			exit();
 		}

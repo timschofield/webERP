@@ -104,18 +104,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Payment Run - Problem Report');
-			include('includes/header.php');
-			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('The details of supplier invoices due could not be retrieved');
+		$TransResult = DB_query($SQL, $ErrMsg , '', false);
 		if (DB_num_rows($TransResult)==0) {
 			include('includes/header.php');
 			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
@@ -178,19 +168,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 							WHERE type = '" . $DetailTrans['type'] . "'
 							AND transno = '" . $DetailTrans['transno'] . "'";
 
-				$ProcessResult = DB_query($SQL,'','',false,false);
-				if (DB_error_no() !=0) {
-					$Title = _('Payment Processing - Problem Report') . '.... ';
-					include('includes/header.php');
-					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
-					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-					if ($Debug==1){
-						echo '<br />' . _('The SQL that failed was') . $SQL;
-					}
-					DB_Txn_Rollback();
-					include('includes/footer.php');
-					exit();
-				}
+				$ErrMsg = ('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed');
+				$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 			}
 
 			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
@@ -215,9 +194,6 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			include('includes/header.php');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
-			}
 			DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit();
@@ -315,17 +291,9 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<input type="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
 		  </field>';
 
+	$ErrMsg = _('The bank accounts could not be retrieved');
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
-
-	$AccountsResults = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
-		 if ($Debug==1){
-			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
-		 }
-		 exit();
-	}
+	$AccountsResults = DB_query($SQL, $ErrMsg, '', false);
 
 	echo '<field>
 			<label for="BankAccount">' . _('Pay From Account') . ':</label>

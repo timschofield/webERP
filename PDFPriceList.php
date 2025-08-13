@@ -193,19 +193,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockcategory.categorydescription," .
 					$ItemOrder;
 	}
-	$PricesResult = DB_query($SQL,'','',false,false);
+	$ErrMsg = _('The Price List could not be retrieved');
+	$PricesResult = DB_query($SQL, $ErrMsg, '', false);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Price List') . ' - ' . _('Problem Report....');
-		include('includes/header.php');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu'). '</a>';
-		if ($Debug==1) {
-			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
-		}
-		include('includes/footer.php');
-		exit();
-	}
 	if (DB_num_rows($PricesResult)==0) {
 		$Title = _('Print Price List Error');
 		include('includes/header.php');

@@ -27,19 +27,8 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				ORDER BY stockcheckfreeze.loccode,
 						stockcheckfreeze.stockid";
 
-		$StockChecks = DB_query($SQL,'','',false,false);
-		if (DB_error_no() !=0) {
-			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '....';
-			include('includes/header.php');
-			echo '<br />';
-			prnMsg( _('The inventory check file could not be retrieved because'). ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
-			if ($Debug==1){
-	      			echo '<br />' . $SQL;
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('The inventory check file could not be retrieved');
+		$StockChecks = DB_query($SQL, $ErrMsg, '', false);
 
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
@@ -53,19 +42,8 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					WHERE stockcounts.stockid='" . $MyRow['stockid'] . "'
 					AND stockcounts.loccode='" . $MyRow['loccode'] . "'";
 
-			$StockCounts = DB_query($SQL);
-			if (DB_error_no() !=0) {
-				$Title = _('Stock Count Comparison') . ' - ' . _('Problem Report') . '....';
-				include('includes/header.php');
-				echo '<br />';
-				prnMsg( _('The inventory counts file could not be retrieved because'). ' - ' . DB_error_msg(). 'error');
-				echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu') . '</a>';
-				if ($Debug==1){
-					echo '<br />' .  $SQL;
-				}
-				include('includes/footer.php');
-				exit();
-			}
+			$ErrMsg = _('The inventory counts file could not be retrieved');
+			$StockCounts = DB_query($SQL, $ErrMsg);
 
 			$StkCountResult = DB_query($SQL);
 			$StkCountRow = DB_fetch_array($StkCountResult);
@@ -257,20 +235,9 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				WHERE loccode ='" . $Location . "'
 				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
-		$Counts = DB_query($SQL,'','',false,false);
+		$ErrMsg = _('The inventory counts could not be retrieved');
+		$Counts = DB_query($SQL, $ErrMsg, '', false);
 
-		if (DB_error_no() !=0) {
-	 		$Title = _('Inventory Comparison') . ' - ' . _('Problem Report') . '.... ';
-	  		include('includes/header.php');
-	   		echo '<br />';
-			prnMsg( _('The inventory counts could not be retrieved by the SQL because').' - ' . DB_error_msg(), 'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' .  $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit();
-		}
 		if ($CheckItemRow['qoh']!=0 OR DB_num_rows($Counts)>0) {
 			$YPos -=$LineHeight;
 			$FontSize=8;

@@ -73,18 +73,10 @@ $SQL= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND trandate='" . FormatDateForSQL($_POST['Date']) . "'";
 
-$Result = DB_query($SQL,'','',false,false);
+$ErrMsg = _('An error occurred getting the payments');
+$Result = DB_query($SQL, $ErrMsg, '', false);
 
-if (DB_error_no()!=0){
-	$Title = _('Payment Listing');
-	include('includes/header.php');
-	prnMsg(_('An error occurred getting the payments'),'error');
-	if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
-	}
-	include('includes/footer.php');
-  	exit();
-} elseif (DB_num_rows($Result) == 0){
+if (DB_num_rows($Result) == 0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	echo '<br />';

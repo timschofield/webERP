@@ -108,23 +108,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	}
 
-	$Result = DB_query($SQL, '', '', false, false); //dont error check - see below
-	if (DB_error_no() != 0) {
-		$Title = _('DIFOT Report Error');
-		include('includes/header.php');
-		prnMsg(_('An error occurred getting the days between delivery requested and actual invoice') , 'error');
-		if ($Debug == 1) {
-			prnMsg(_('The SQL used to get the days between requested delivery and actual invoice dates was') . "<br />$SQL", 'error');
-		}
-		include('includes/footer.php');
-		exit();
-	} elseif (DB_num_rows($Result) == 0) {
+	$ErrMsg = _('An error occurred getting the days between delivery requested and actual invoice');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
+	
+	if (DB_num_rows($Result) == 0) {
 		$Title = _('DIFOT Report Error');
 		include('includes/header.php');
 		prnMsg(_('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range') , 'info');
-		if ($Debug == 1) {
-			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
-		}
 		include('includes/footer.php');
 		exit();
 	}

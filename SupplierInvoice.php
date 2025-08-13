@@ -1400,11 +1400,6 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 				$LocalTotal += ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate;
 			} /* end of GRN postings */
 
-			if ($Debug == 1 AND (abs($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.009999) {
-
-				echo '<p>' . _('The total posted to the debit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
-			}
-
 			foreach ($_SESSION['SuppTrans']->Taxes as $Tax) {
 				/* Now the TAX account */
 				if ($Tax->TaxOvAmount <> 0) {

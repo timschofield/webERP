@@ -60,19 +60,9 @@ if ( isset($_POST['pricelist']) ) {
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
 				stockmaster.stockid";
-	$PricesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Price List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Price List could not be retrieved');
+	$PricesResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('stockid') . ',' .
 			stripcomma('description') . ',' .
@@ -156,19 +146,8 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE debtorsmaster.debtorno=custbranch.debtorno
 		AND ((defaultlocation = '".$_POST['Location']."') OR (defaultlocation = '') OR (defaultlocation IS NULL))";
 
-	$CustResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Customer List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Customer List could not be retrieved by the SQL');
+	$CustResult = DB_query($SQL, $ErrMsg , '', false);
 
 	$CSVContent = stripcomma('debtorno') . ',' .
 			stripcomma('branchcode') . ',' .
@@ -247,19 +226,8 @@ if ( isset($_POST['pricelist']) ) {
 			commissionrate2
 		FROM salesman";
 
-	$SalesManResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Salesman List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Salesman List could not be retrieved');
+	$SalesManResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('salesmancode') . ',' .
 			stripcomma('salesmanname') . ',' .
@@ -268,7 +236,6 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('commissionrate1') . ',' .
 			stripcomma('breakpoint') . ',' .
 			stripcomma('commissionrate2') . "\n";
-
 
 	while ($SalesManList = DB_fetch_array($SalesManResult)){
 
@@ -296,19 +263,8 @@ if ( isset($_POST['pricelist']) ) {
 	$SQL = "SELECT stockid
 		FROM stockmaster
 		ORDER BY stockid";
-	$ImageResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Image List could not be retrieved');
+	$ImageResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('stockid') . ','.
 				  stripcomma('filename') . ','.
@@ -335,23 +291,11 @@ if ( isset($_POST['pricelist']) ) {
 			tokenname
 		FROM securitytokens";
 
-	$SecTokenResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Security Token List could not be retrieved');
+	$SecTokenResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('tokenid') . ',' .
 			stripcomma('tokenname') . "\n";
-
 
 	while ($SecTokenList = DB_fetch_array($SecTokenResult)){
 
@@ -371,23 +315,11 @@ if ( isset($_POST['pricelist']) ) {
 			secrolename
 		FROM securityroles";
 
-	$SecRoleResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Role List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Security Role List could not be retrieved');
+	$SecRoleResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('secrolename') . "\n";
-
 
 	while ($SecRoleList = DB_fetch_array($SecRoleResult)){
 
@@ -407,23 +339,11 @@ if ( isset($_POST['pricelist']) ) {
 			tokenid
 		FROM securitygroups";
 
-	$SecGroupResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Group List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Security Group List could not be retrieved');
+	$SecGroupResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('tokenid') . "\n";
-
 
 	while ($SecGroupList = DB_fetch_array($SecGroupResult)){
 
@@ -459,19 +379,8 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE (customerid <> '') OR
 			(NOT customerid IS NULL)";
 
-	$SecUserResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security User List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The Security User List could not be retrieved');
+	$SecUserResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$CSVContent = stripcomma('userid') . ',' .
 			stripcomma('password') . ','.

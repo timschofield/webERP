@@ -130,28 +130,15 @@ if (isset($_POST['PrintPDF'])) {
 			   stockmaster.actualcost,
 			   supplytotal.supply,
 			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
-	$Result = DB_query($SQL, '', '', false, true);
 
-	if (DB_error_no() != 0) {
-		$Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg(_('The MRP shortages and excesses could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-		echo '<br/><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br/>' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The MRP shortages and excesses could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
 		include('includes/header.php');
 		prnMsg(_('No MRP shortages - Excess retrieved'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-		}
 		include('includes/footer.php');
 		exit();
 	}

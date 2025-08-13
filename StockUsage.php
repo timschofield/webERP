@@ -141,14 +141,8 @@ if (isset($_POST['ShowUsage'])){
 				ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 
 	}
-	$MovtsResult = DB_query($SQL);
-	if (DB_error_no() !=0) {
-		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
-		if ($Debug==1){
-		echo '<br />' . _('The SQL that failed was') . $SQL;
-		}
-		exit();
-	}
+	$ErrMsg = _('The stock usage for the selected criteria could not be retrieved');
+	$MovtsResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 			<thead>

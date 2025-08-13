@@ -56,19 +56,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					stockmaster.stockid";
 
 	}
-	$InventoryResult = DB_query($SQL, '', '', false, false);
-
-	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.php');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-	      echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
+	$ErrMsg = _('The inventory quantities could not be retrieved');
+	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
 
 	$HTML = '';
 
@@ -167,21 +156,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 					AND stockmoves.hidemovt=0";
 		}
 
-		$SalesResult = DB_query($SQL,'','', false, false);
-
-		if (DB_error_no() !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      		echo '<br />' .$SQL;
-	   		}
-
-	   		include('includes/footer.php');
-	   		exit();
-		}
-
+		$ErrMsg = _('The sales quantities could not be retrieved');
+		$SalesResult = DB_query($SQL, $ErrMsg, '', false);
 		$ListCount = DB_num_rows($SalesResult);
 		$SalesRow = DB_fetch_array($SalesResult);
 

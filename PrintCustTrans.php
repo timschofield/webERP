@@ -219,18 +219,9 @@ if (isset($PrintPDF)
 			}
 		} // end else
 
-		$Result = DB_query($SQL,'','',false, false);
+		$ErrMsg = _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint;
+		$Result = DB_query($SQL, $ErrMsg, '', false);
 
-		if (DB_error_no()!=0) {
-			$Title = _('Transaction Print Error Report');
-			include('includes/header.php');
-			prnMsg( _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available'),'error');
-			if ($Debug==1) {
-				prnMsg (_('The SQL used to get this information that failed was') . '<br />' . $SQL,'error');
-			}
-			include('includes/footer.php');
-			exit();
-		}
 		if (DB_num_rows($Result)==1) {
 			$MyRow = DB_fetch_array($Result);
 
@@ -296,19 +287,9 @@ if (isset($PrintPDF)
 							AND stockmoves.show_on_inv_crds=1";
 			} // end else
 
-			$Result = DB_query($SQL);
-			if(DB_error_no()!=0) {
-
-				$Title = _('Transaction Print Error Report');
-				include('includes/header.php');
-				echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
-				if ($Debug==1) {
-					echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' . $SQL;
-				}
-				include('includes/footer.php');
-				exit();
-			}
-
+			$ErrMsg = _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo;
+			$Result = DB_query($SQL, $ErrMsg);
+			
 			if ($InvOrCredit=='Invoice') {
 				/* Calculate Due Date info. This reference is used in the PDFTransPageHeader.php file. */
 				$DisplayDueDate = CalcDueDate(ConvertSQLDate($MyRow['trandate']), $MyRow['dayinfollowingmonth'], $MyRow['daysbeforedue']);
@@ -742,12 +723,10 @@ if (isset($PrintPDF)
 							AND debtortrans.transno='" . $FromTransNo . "'";
 			}
 
-			$Result = DB_query($SQL);
-			if(DB_num_rows($Result)==0 OR DB_error_no()!=0) {
-				echo '<p>' . _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
-				if ($Debug==1) {
-					prnMsg( _('The SQL used to get this information that failed was') . '<br />' . $SQL, 'warn');
-				}
+			$ErrMsg = _('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $FromTransNo;
+			$Result = DB_query($SQL, $ErrMsg);
+			if(DB_num_rows($Result)==0) {
+				echo '<p>' . $ErrMsg . ' ' . _('from the database') . '. ' . _('To print an invoice, the sales order record, the customer transaction record and the branch record for the customer must not have been purged') . '. ' . _('To print a credit note only requires the customer, transaction, salesman and branch records be available');
 				break;
 				include('includes/footer.php');
 				exit();
@@ -952,14 +931,8 @@ if (isset($PrintPDF)
 				echo '<hr />';
 				echo '<div class="centre"><h4>' . _('All amounts stated in') . ' ' . $MyRow['currcode'] . '</h4></div>';
 
-				$Result = DB_query($SQL);
-				if (DB_error_no()!=0) {
-					echo '<br />' . _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo . ' ' . _('from the database');
-					if ($Debug==1){
-						 echo '<br />' . _('The SQL used to get this information that failed was') . '<br />' .$SQL;
-					}
-					exit();
-				}
+				$ErrMsg = _('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo ;
+				$Result = DB_query($SQL, $ErrMsg);
 
 				if (DB_num_rows($Result)>0){
 	/* Table for stock details */
