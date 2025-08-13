@@ -2,7 +2,7 @@
 /* Defines the various centres of work within a manufacturing company. Also the overhead and labour rates applicable to the work centre and its standard capacity */
 
 include('includes/session.php');
-$Title = _('Work Centres');
+$Title = __('Work Centres');
 $ViewTopic = 'Manufacturing';
 $BookMark = 'WorkCentres';
 include('includes/header.php');
@@ -25,15 +25,15 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['Code']) < 2) {
 		$InputError = 1;
-		prnMsg(_('The Work Centre code must be at least 2 characters long'),'error');
+		prnMsg(__('The Work Centre code must be at least 2 characters long'),'error');
 	}
 	if (mb_strlen($_POST['Description'])<3) {
 		$InputError = 1;
-		prnMsg(_('The Work Centre description must be at least 3 characters long'),'error');
+		prnMsg(__('The Work Centre description must be at least 3 characters long'),'error');
 	}
 	if (mb_strstr($_POST['Code'],' ') OR ContainsIllegalCharacters($_POST['Code']) ) {
 		$InputError = 1;
-		prnMsg(_('The work centre code cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
+		prnMsg(__('The work centre code cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'),'error');
 	}
 
 	if (isset($SelectedWC) AND $InputError !=1) {
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
-		$Msg = _('The work centre record has been updated');
+		$Msg = __('The work centre record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
@@ -63,12 +63,12 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['OverheadRecoveryAct'] . "',
 						'" . $_POST['OverheadPerHour'] . "'
 						)";
-		$Msg = _('The new work centre has been added to the database');
+		$Msg = __('The new work centre has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 
 	if ($InputError !=1){
-		$Result = DB_query($SQL,_('The update/addition of the work centre failed because'));
+		$Result = DB_query($SQL,__('The update/addition of the work centre failed because'));
 		prnMsg($Msg,'success');
 		unset ($_POST['Location']);
 		unset ($_POST['Description']);
@@ -87,17 +87,17 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
+		prnMsg(__('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' .__('BOM items referring to this work centre code'),'warn');
 	}  else {
 		$SQL= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
+			prnMsg(__('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('Contract BOM items referring to this work centre code'),'warn');
 		} else {
 			$SQL="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
 			$Result = DB_query($SQL);
-			prnMsg(_('The selected work centre record has been deleted'),'succes');
+			prnMsg(__('The selected work centre record has been deleted'),'succes');
 		} // end of Contract BOM test
 	} // end of BOM test
 }
@@ -109,7 +109,7 @@ then none of the above are true and the list of work centres will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$SQL = "SELECT workcentres.code,
@@ -126,11 +126,11 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', _('WC Code'), '</th>
-				<th class="SortedColumn">', _('Description'), '</th>
-				<th class="SortedColumn">', _('Location'), '</th>
-				<th class="SortedColumn">', _('Overhead GL Account'), '</th>
-				<th class="SortedColumn">', _('Overhead Per Hour'), '</th>
+				<th class="SortedColumn">', __('WC Code'), '</th>
+				<th class="SortedColumn">', __('Description'), '</th>
+				<th class="SortedColumn">', __('Location'), '</th>
+				<th class="SortedColumn">', __('Overhead GL Account'), '</th>
+				<th class="SortedColumn">', __('Overhead Per Hour'), '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -144,8 +144,8 @@ or deletion of the records*/
 				<td>', $MyRow['locationname'], '</td>
 				<td>', $MyRow['overheadrecoveryact'], '</td>
 				<td class="number">', $MyRow['overheadperhour'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this work centre?') . '\');">' . __('Delete')  . '</a></td>
 			</tr>';
 	}
 
@@ -160,7 +160,7 @@ if (isset($SelectedWC)) {
 		'/images/maintenance.png" title="',// Icon image.
 		$Title, '" /> ',// Icon title.
 		$Title, '</p>';// Page title.
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Work Centres') . '</a></div>';
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -190,9 +190,9 @@ if (isset($SelectedWC)) {
 	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
 		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
 		<fieldset>
-			<legend>', _('Edit Work Centre'), '</legend>
+			<legend>', __('Edit Work Centre'), '</legend>
 			<field>
-				<label for="Code">' ._('Work Centre Code') . ':</label>
+				<label for="Code">' .__('Work Centre Code') . ':</label>
 				<fieldtext>' . $_POST['Code'] . '</fieldtext>
 			</field>';
 
@@ -201,11 +201,11 @@ if (isset($SelectedWC)) {
 		$_POST['Code'] = '';
 	}
 	echo '<fieldset>
-			<legend>', _('Create Work Centre'), '</legend>
+			<legend>', __('Create Work Centre'), '</legend>
 			<field>
-				<label for="Code">' . _('Work Centre Code') . ':</label>
-				<input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title=""  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" />
-				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
+				<label for="Code">' . __('Work Centre Code') . ':</label>
+				<input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title=""  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'.__('More than 2 legal characters').'" />
+				<fieldhelp>'.__('The code should be at least 2 characters and no illegal characters allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 			</field>';
 }
 
@@ -219,13 +219,13 @@ if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 echo '<field>
-		<label for="Description">' . _('Work Centre Description') . ':</label>
-		<input type="text" pattern="[^&+-]{3,}" required="required" title="" name="Description" ' . (isset($SelectedWC)? 'autofocus="autofocus"': '') . ' size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'._('More than 3 legal characters').'" />
-		<fieldhelp>'._('The Work Center should be more than 3 characters and no illegal characters allowed').'</fieldhelp>
+		<label for="Description">' . __('Work Centre Description') . ':</label>
+		<input type="text" pattern="[^&+-]{3,}" required="required" title="" name="Description" ' . (isset($SelectedWC)? 'autofocus="autofocus"': '') . ' size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'.__('More than 3 legal characters').'" />
+		<fieldhelp>'.__('The Work Center should be more than 3 characters and no illegal characters allowed').'</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for="Location">' . _('Location') . ':</label>
+		<label for="Location">' . __('Location') . ':</label>
 		<select name="Location">';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -245,7 +245,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="OverheadRecoveryAct">' . _('Overhead Recovery GL Account') . ':</label>
+		<label for="OverheadRecoveryAct">' . __('Overhead Recovery GL Account') . ':</label>
 		<select name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
@@ -277,15 +277,15 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="OverheadPerHour">' . _('Overhead Per Hour') . ':</label>
+		<label for="OverheadPerHour">' . __('Overhead Per Hour') . ':</label>
 		<input type="text" class="number" name="OverheadPerHour" size="6" title="" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />
-		<fieldhelp>'._('The input must be numeric').'</fieldhelp>
+		<fieldhelp>'.__('The input must be numeric').'</fieldhelp>
 	</field>';
 
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 	</form>';
 include('includes/footer.php');

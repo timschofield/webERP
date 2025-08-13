@@ -5,22 +5,22 @@ include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-$Title = _('Customer Transactions Inquiry');
+$Title = __('Customer Transactions Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'ARTransInquiry';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Transaction Inquiry') . '" alt="" />' . ' ' . __('Transaction Inquiry') . '
 	</p>';
-echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>';
+echo '<div class="page_help_text">' . __('Choose which type of transaction to report on.') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="TransType">' . _('Type') . ':</label>
+				<label for="TransType">' . __('Type') . ':</label>
 				<select tabindex="1" name="TransType"> ';
 
 $SQL = "SELECT typeid,
@@ -31,7 +31,7 @@ $SQL = "SELECT typeid,
 
 $ResultTypes = DB_query($SQL);
 
-echo '<option value="All">' . _('All') . '</option>';
+echo '<option value="All">' . __('All') . '</option>';
 while($MyRow=DB_fetch_array($ResultTypes)) {
 	echo '<option';
 	if(isset($_POST['TransType'])) {
@@ -51,16 +51,16 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<field>
-		<label for="FromDate">' . _('From') . ':</label>
+		<label for="FromDate">' . __('From') . ':</label>
 		<input type="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
-		<label for="ToDate">' . _('To') . ':</label>
+		<label for="ToDate">' . __('To') . ':</label>
 		<input type="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show transactions') . '" />
+		<input name="ShowResults" tabindex="4" type="submit" value="' . __('Show transactions') . '" />
     </div>
 	</form>';
 
@@ -91,23 +91,23 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	}
 	$SQL .=  " ORDER BY id";
 
-   $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
+   $ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $TransResult = DB_query($SQL, $ErrMsg);
 
    echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Type') . '</th>
-					<th class="SortedColumn">' . _('Number') . '</th>
-					<th class="SortedColumn">' . _('Date') . '</th>
-					<th class="SortedColumn">' . _('Customer') . '</th>
-					<th class="SortedColumn">' . _('Branch') . '</th>
-					<th class="SortedColumn">' . _('Reference') . '</th>
-					<th class="SortedColumn">' . _('Comments') . '</th>
-					<th class="SortedColumn">' . _('Order') . '</th>
-					<th class="SortedColumn">' . _('Ex Rate') . '</th>
-					<th class="SortedColumn">' . _('Amount') . '</th>
-					<th class="SortedColumn">' . _('Currency') . '</th>
+					<th class="SortedColumn">' . __('Type') . '</th>
+					<th class="SortedColumn">' . __('Number') . '</th>
+					<th class="SortedColumn">' . __('Date') . '</th>
+					<th class="SortedColumn">' . __('Customer') . '</th>
+					<th class="SortedColumn">' . __('Branch') . '</th>
+					<th class="SortedColumn">' . __('Reference') . '</th>
+					<th class="SortedColumn">' . __('Comments') . '</th>
+					<th class="SortedColumn">' . __('Order') . '</th>
+					<th class="SortedColumn">' . __('Ex Rate') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th class="SortedColumn">' . __('Currency') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -132,7 +132,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 						<td>', $MyRow['currcode'], '</td>
 						<td>
 							<a target="_blank" href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&InvOrCredit=Invoice">
-							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . _('Click to preview the invoice') . '" /></a>
+							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . __('Click to preview the invoice') . '" /></a>
 						</td>
 					</tr>';
 
@@ -151,7 +151,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 						<td>', $MyRow['currcode'], '</td>
 						<td>
 							<a target="_blank" href="', $RootPath, 'PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&InvOrCredit=Credit">
-							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . _('Click to preview the credit') . '" /></a>
+							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . __('Click to preview the credit') . '" /></a>
 						</td>
 					</tr>';
 		} else {  /* otherwise */

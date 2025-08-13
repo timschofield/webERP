@@ -4,17 +4,17 @@
 
 //$PageSecurity = 2;
 include('includes/session.php');
-$Title = _('Shipments Open Inquiry');
+$Title = __('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .
-				_('Supplier') . '" alt="" />' . ' ' . _('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
+				__('Supplier') . '" alt="" />' . ' ' . __('Open Shipments for').' ' . $_GET['SupplierName']. '.</p>';
 
 if (!isset($_GET['SupplierID']) or !isset($_GET['SupplierName'])){
 	echo '<br />';
-	prnMsg( _('This page must be given the supplier code to look for shipments for'), 'error');
+	prnMsg( __('This page must be given the supplier code to look for shipments for'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -24,11 +24,11 @@ $SQL = "SELECT shiptref,
 		eta
 	FROM shipments
 	WHERE supplierid='" . $_GET['SupplierID'] . "'";
-$ErrMsg = _('No shipments were returned from the database because'). ' - '. DB_error_msg();
+$ErrMsg = __('No shipments were returned from the database because'). ' - '. DB_error_msg();
 $ShiptsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ShiptsResult)==0){
-       prnMsg(_('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
+       prnMsg(__('There are no open shipments currently set up for').' ' . $_GET['SupplierName'],'warn');
 	include('includes/footer.php');
        exit();
 }
@@ -36,9 +36,9 @@ if (DB_num_rows($ShiptsResult)==0){
 
 echo '<table cellpadding="2" class="selection">';
 echo '<tr>
-		<th>' .  _('Reference'). '</th>
-		<th>' .  _('Vessel'). '</th>
-		<th>' .  _('ETA'). '</th></tr>';
+		<th>' .  __('Reference'). '</th>
+		<th>' .  __('Vessel'). '</th>
+		<th>' .  __('ETA'). '</th></tr>';
 
 $j = 1;
 

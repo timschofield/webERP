@@ -24,11 +24,11 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	AND is_numeric(filter_number_format($_POST['ExRate']))){
 
 /*then print the report */
-	$Title = _('Payment Run - Problem Report');
+	$Title = __('Payment Run - Problem Report');
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
-	$PDF->addInfo('Title',_('Payment Run Report'));
-	$PDF->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$PDF->addInfo('Title',__('Payment Run Report'));
+	$PDF->addInfo('Subject',__('Payment Run') . ' - ' . __('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . __('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$LineHeight=12;
@@ -106,20 +106,20 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$TransResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
-			$Title = _('Payment Run - Problem Report');
+			$Title = __('Payment Run - Problem Report');
 			include('includes/header.php');
-			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			prnMsg(__('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+			echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			if ($Debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
+				echo '<br />' . __('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
 			exit();
 		}
 		if (DB_num_rows($TransResult)==0) {
 			include('includes/header.php');
-			prnMsg(_('There are no outstanding supplier invoices to pay'),'info');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			prnMsg(__('There are no outstanding supplier invoices to pay'),'info');
+			echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			include('includes/footer.php');
 			exit();
 		}
@@ -180,12 +180,12 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 				$ProcessResult = DB_query($SQL,'','',false,false);
 				if (DB_error_no() !=0) {
-					$Title = _('Payment Processing - Problem Report') . '.... ';
+					$Title = __('Payment Processing - Problem Report') . '.... ';
 					include('includes/header.php');
-					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
-					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+					prnMsg(__('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . __('could not be processed because') . ' - ' . DB_error_msg(),'error');
+					echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 					if ($Debug==1){
-						echo '<br />' . _('The SQL that failed was') . $SQL;
+						echo '<br />' . __('The SQL that failed was') . $SQL;
 					}
 					DB_Txn_Rollback();
 					include('includes/footer.php');
@@ -211,19 +211,19 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		DB_Txn_Commit();
 
 		if (DB_error_no() !=0) {
-			$Title = _('Payment Processing - Problem Report') . '.... ';
+			$Title = __('Payment Processing - Problem Report') . '.... ';
 			include('includes/header.php');
-			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			prnMsg(__('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
+			echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			if ($Debug==1){
-				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
+				prnMsg(__('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
 			DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit();
 		}
 
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,__('Grand Total Payments Due'), 'left');
 		$LeftOvers = $PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
 		$LeftOvers = $PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
@@ -234,17 +234,17 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Payment Run');
+	$Title=__('Payment Run');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types'). '" alt="" />' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Supplier Types'). '" alt="" />' . $Title . '
 		</p>';
 
 	if (isset($_POST['Currency']) AND !is_numeric(filter_number_format($_POST['ExRate']))){
-		echo '<br />' . _('To process payments for') . ' ' . $_POST['Currency'] . ' ' . _('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . _('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
+		echo '<br />' . __('To process payments for') . ' ' . $_POST['Currency'] . ' ' . __('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . __('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
 	}
 
 	/* show form to allow input	*/
@@ -252,7 +252,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Select Suppliers To Pay'), '</legend>';
+			<legend>', __('Select Suppliers To Pay'), '</legend>';
 
 	if (!isset($_POST['FromCriteria']) OR mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -265,19 +265,19 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
 	echo '<field>
-			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
 			<input type="text" pattern="[^><+-]{1,10}" title="" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
-			<fieldhelp>'._('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
+			<fieldhelp>'.__('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		  </field>';
 	echo '<field>
-			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
+			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
 			<input type="text" pattern="[^<>+-]{1,10}" title="" maxlength="10" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" />
-			<fieldhelp>'._('Illegal characters are not allowed').'</fieldhelp>
+			<fieldhelp>'.__('Illegal characters are not allowed').'</fieldhelp>
 		 </field>';
 
 
 	echo '<field>
-			<label for="Currency">' . _('For Suppliers Trading in') . ':</label>
+			<label for="Currency">' . __('For Suppliers Trading in') . ':</label>
 			<select name="Currency">';
 
 	$SQL = "SELECT currency, currabrev FROM currencies";
@@ -299,9 +299,9 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		$DefaultExRate = filter_number_format($_POST['ExRate']);
 	}
 	echo '<field>
-			<label for="ExRate">' . _('Exchange Rate') . ':</label>
+			<label for="ExRate">' . __('Exchange Rate') . ':</label>
 			<input type="text" class="number" title="" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" />
-			<fieldhelp>'._('The input must be number').'</fieldhelp>
+			<fieldhelp>'.__('The input must be number').'</fieldhelp>
 		  </field>';
 
 	if (!isset($_POST['AmountsDueBy'])){
@@ -311,7 +311,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 
 	echo '<field>
-			<label for="AmountsDueBy">' . _('Payments Due To') . ':</label>
+			<label for="AmountsDueBy">' . __('Payments Due To') . ':</label>
 			<input type="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
 		  </field>';
 
@@ -320,22 +320,22 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$AccountsResults = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
-		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
+		 echo '<br />' . __('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 		 if ($Debug==1){
-			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
+			echo '<br />' . __('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }
 		 exit();
 	}
 
 	echo '<field>
-			<label for="BankAccount">' . _('Pay From Account') . ':</label>
+			<label for="BankAccount">' . __('Pay From Account') . ':</label>
 			<select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults)==0){
 		 echo '</select></td>
 			</field>
 			</table>
-			<p>' . _('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected') . '.
+			<p>' . __('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') . '.
 			</p>';
 		 include('includes/footer.php');
 		 exit();
@@ -354,7 +354,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	}
 
 	echo '<field>
-			<label for="PaytType">' . _('Payment Type') . ':</label>
+			<label for="PaytType">' . __('Payment Type') . ':</label>
 			<select name="PaytType">';
 
 /* The array PaytTypes is set up in config.php for user modification
@@ -373,8 +373,8 @@ Payment types can be modified by editing that file */
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF Only') . '" />
-				<input type="submit" name="PrintPDFAndProcess" value="' . _('Print and Process Payments') . '" />
+				<input type="submit" name="PrintPDF" value="' . __('Print PDF Only') . '" />
+				<input type="submit" name="PrintPDFAndProcess" value="' . __('Print and Process Payments') . '" />
 			</div>';
 	echo '</form>';
 	include('includes/footer.php');

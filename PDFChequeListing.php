@@ -12,12 +12,12 @@ $BookMark = 'ChequePaymentListing';
 
 $InputError=0;
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-	$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = __('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
 if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
-	$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = __('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['ToDate']);
 }
@@ -47,18 +47,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
-		$Title = _('Payment Listing');
+		$Title = __('Payment Listing');
 		include('includes/header.php');
-		prnMsg(_('An error occurred getting the payments'),'error');
+		prnMsg(__('An error occurred getting the payments'),'error');
 		if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
+			prnMsg(__('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 		}
 		include('includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result) == 0){
-		$Title = _('Payment Listing');
+		$Title = __('Payment Listing');
 		include('includes/header.php');
-		prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
+		prnMsg (__('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '. ' .__('Please try again selecting a different date range or account'), 'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -83,15 +83,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . $BankAccountName . ' ' . _('Payments Summary') . '<br />
-					' . _('From') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' .  $_POST['ToDate'] . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . $BankAccountName . ' ' . __('Payments Summary') . '<br />
+					' . __('From') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' .  $_POST['ToDate'] . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Amount') . '</th>
-							<th>' . _('Reference / General Ledger Posting Details') . '</th>
+							<th>' . __('Amount') . '</th>
+							<th>' . __('Reference / General Ledger Posting Details') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -116,11 +116,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$GLTransResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no()!=0){
-			$Title = _('Payment Listing');
+			$Title = __('Payment Listing');
 			include('includes/header.php');
-			prnMsg(_('An error occurred getting the GL transactions'),'error');
+			prnMsg(__('An error occurred getting the GL transactions'),'error');
 			if ($Debug==1){
-				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL, 'error');
+				prnMsg( __('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL, 'error');
 			}
 			include('includes/footer.php');
 			exit();
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			if ($CheckRow[0] > 0) {
 				$AccountName = $GLRow['accountname'];
 			}else{
-				$AccountName = _('Other GL Accounts');
+				$AccountName = __('Other GL Accounts');
 			}
 			$HTML .= '<tr class="striped_row">
 						<td>' . $AccountName . '</td>
@@ -164,7 +164,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$HTML .= '</tbody>
 					</table>
 					<div class="centre">
-						<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+						<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 					</div>';
 		}
 		$HTML .= '</body>
@@ -185,16 +185,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				"Attachment" => false
 			));
 		} else {
-			$Title = _('Create PDF Print Out For A Batch Of Receipts');
+			$Title = __('Create PDF Print Out For A Batch Of Receipts');
 			include('includes/header.php');
-			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Print Out For A Batch Of Receipts') . '</p>';
+			echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Print Out For A Batch Of Receipts') . '</p>';
 			echo $HTML;
 			include('includes/footer.php');
 		}
 	}
 } else {
 
-	$Title = _('Payment Listing');
+	$Title = __('Payment Listing');
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' .
@@ -208,17 +208,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="FromDate">' . _('Enter the date from which cheques are to be listed') . ':</label>
+				<label for="FromDate">' . __('Enter the date from which cheques are to be listed') . ':</label>
 				<input name="FromDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
 			</field>';
 	echo '<field>
-			<label for="ToDate">' . _('Enter the date to which cheques are to be listed') . ':</label>
+			<label for="ToDate">' . __('Enter the date to which cheques are to be listed') . ':</label>
 			<input name="ToDate" maxlength="10" size="11"  type="date" value="' . Date('Y-m-d') . '" />
 		</field>';
 	echo '<field>
-			<label for="BankAccount">' . _('Bank Account') . '</label>';
+			<label for="BankAccount">' . __('Bank Account') . '</label>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
 	$Result = DB_query($SQL);
@@ -234,8 +234,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>
 		</form>';
 

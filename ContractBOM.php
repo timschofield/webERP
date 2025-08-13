@@ -16,7 +16,7 @@ if (!isset($_SESSION['Contract'.$identifier])){
 	exit();
 }
 
-$Title = _('Contract Bill of Materials');
+$Title = __('Contract Bill of Materials');
 $ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
 
@@ -39,7 +39,7 @@ if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
 if (isset($_POST['BackToHeader'])){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/Contracts.php?identifier='.$identifier. '" />';
 	echo '<br />';
-	prnMsg(_('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . _('click here') . '</a> ' . _('to continue'),'info');
+	prnMsg(__('You should automatically be forwarded to the Contract page. If this does not happen perhaps the browser does not support META Refresh') . '<a href="' . $RootPath . '/Contracts.php?identifier='.$identifier . '">' . __('click here') . '</a> ' . __('to continue'),'info');
 	include('includes/footer.php');
 	exit();
 }
@@ -47,7 +47,7 @@ if (isset($_POST['BackToHeader'])){
 if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 
 	if ($_POST['Keywords']) {
@@ -139,11 +139,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		}
 	}
 
-	$ErrMsg = _('There is a problem selecting the part records to display because');
+	$ErrMsg = __('There is a problem selecting the part records to display because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
-		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
+		prnMsg( __('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
 		$MyRow=DB_fetch_array($SearchResult);
@@ -158,7 +158,7 @@ if(isset($_GET['Delete'])){
 	if($_SESSION['Contract'.$identifier]->Status!=2){
 		$_SESSION['Contract'.$identifier]->Remove_ContractComponent($_GET['Delete']);
 	} else {
-		prnMsg( _('The contract BOM cannot be altered because the customer has already placed the order'),'warn');
+		prnMsg( __('The contract BOM cannot be altered because the customer has already placed the order'),'warn');
 	}
 }
 
@@ -174,7 +174,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 				is not already on this order */
 					if ($Component->StockID == trim($_POST['StockID'.$i])) {
 						$AlreadyOnThisBOM = 1;
-						prnMsg( _('The item') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('is already in the bill of material for this contract. The system will not allow the same item on the contract more than once. However you can change the quantity required for the item.'),'error');
+						prnMsg( __('The item') . ' ' . trim($_POST['StockID'.$i]) . ' ' . __('is already in the bill of material for this contract. The system will not allow the same item on the contract more than once. However you can change the quantity required for the item.'),'error');
 					}
 				} /* end of the foreach loop to look for preexisting items of the same code */
 			}
@@ -189,7 +189,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". trim($_POST['StockID'.$i]) . "'";
 
-				$ErrMsg = _('The item details could not be retrieved');
+				$ErrMsg = __('The item details could not be retrieved');
 				$Result1 = DB_query($SQL, $ErrMsg);
 
 				if ($MyRow = DB_fetch_array($Result1)){
@@ -202,7 +202,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 																			$MyRow['units'],
 																			$MyRow['decimalplaces']);
 				} else {
-					prnMsg (_('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
+					prnMsg (__('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . __('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					if ($Debug==1){
 						echo '<br />' . $SQL;
 					}
@@ -226,19 +226,19 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			WHERE stocktype<>'L'
 			AND stocktype<>'D'
 			ORDER BY categorydescription";
-	$ErrMsg = _('The supplier category details could not be retrieved because');
+	$ErrMsg = __('The supplier category details could not be retrieved because');
 	$Result1 = DB_query($SQL, $ErrMsg);
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . __('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
 		</p>';
 
 	echo '<fieldset>
-			<legend>', _('Search For Stock Items'), '</legend>
+			<legend>', __('Search For Stock Items'), '</legend>
 			<field>
-				<label for="StockCat"">', _('Select Stock Category'), '</label>
+				<label for="StockCat"">', __('Select Stock Category'), '</label>
 				<select name="StockCat">';
 
-	echo '<option selected="selected" value="All">', _('All'), '</option>';
+	echo '<option selected="selected" value="All">', __('All'), '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $MyRow1['categoryid']) {
 			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
@@ -261,17 +261,17 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 	}
 
 	echo '<field>
-			<label for="Keywords">', _('Enter text extracts in the description'), ':</label>
+			<label for="Keywords">', __('Enter text extracts in the description'), ':</label>
 			<input type="search" name="Keywords" size="20" autofocus="autofocus" maxlength="25" value="', $_POST['Keywords'], '" />
 		</field>
 		<field>
-			<label for="StockCode">', '<b>', _('OR'), ' </b>', _('Enter extract of the Stock Code'), ':</label>
+			<label for="StockCode">', '<b>', __('OR'), ' </b>', __('Enter extract of the Stock Code'), ':</label>
 			<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
 		</field>
-		<a target="_blank" href="', $RootPath, '/Stocks.php">', '<b>', _('OR'), ' </b>', _('Create a New Stock Item'), '</a>
+		<a target="_blank" href="', $RootPath, '/Stocks.php">', '<b>', __('OR'), ' </b>', __('Create a New Stock Item'), '</a>
 	</fieldset>';
-	echo '<div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
-	echo '<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="UpdateLines" value="' . __('Update Lines') . '" />';
+	echo '<input type="submit" name="BackToHeader" value="' . __('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract BOM lines if there are any !! */
 
@@ -282,17 +282,17 @@ if (!isset($_GET['Edit'])) {
 			WHERE stocktype<>'L'
 			AND stocktype<>'D'
 			ORDER BY categorydescription";
-	$ErrMsg = _('The supplier category details could not be retrieved because');
+	$ErrMsg = __('The supplier category details could not be retrieved because');
 	$Result1 = DB_query($SQL, $ErrMsg);
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Search For Stock Items') .
 		'</p>';
 	echo '<table class="selection">
 			<tr></tr>
 			<tr>
 				<td><select name="StockCat">';
 
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat']==$MyRow1['categoryid']){
 			echo '<option selected="selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
@@ -313,22 +313,22 @@ if (!isset($_GET['Edit'])) {
 	}
 
 	echo '</select></td>
-			<td>' . _('Enter text extracts in the description') . ':</td>
-			<td><input type="text" autofocus="autofocus" title="' . _('Enter any text that should appear in the item description as the basis of your search') . '" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
+			<td>' . __('Enter text extracts in the description') . ':</td>
+			<td><input type="text" autofocus="autofocus" title="' . __('Enter any text that should appear in the item description as the basis of your search') . '" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-			<td><input type="text" title="' . _('Enter any part of an item code to seach for all matching items containing that text in the code') . '" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
+			<td><b>' . __('OR') . ' </b>' . __('Enter extract of the Stock Code') . ':</td>
+			<td><input type="text" title="' . __('Enter any part of an item code to seach for all matching items containing that text in the code') . '" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
 		</tr>
 		<tr>
 			<td></td>
-			<td><b>' . _('OR') . ' </b><a target="_blank" href="'.$RootPath.'/Stocks.php">' . _('Create a New Stock Item') . '</a></td>
+			<td><b>' . __('OR') . ' </b><a target="_blank" href="'.$RootPath.'/Stocks.php">' . __('Create a New Stock Item') . '</a></td>
 		</tr>
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+			<input type="submit" name="Search" value="' . __('Search Now') . '" />
 		</div>
 		<br />';
 
@@ -339,11 +339,11 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1">';
 
 	$TableHeader = '<tr>
-						<th>' . _('Code')  . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Image') . '</th>
-						<th>' . _('Quantity') . '</th>
+						<th>' . __('Code')  . '</th>
+						<th>' . __('Description') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Image') . '</th>
+						<th>' . __('Quantity') . '</th>
 					</tr>';
 	echo $TableHeader;
 
@@ -360,7 +360,7 @@ if (isset($SearchResult)) {
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['units'] . '</td>
 				<td>' . $ImageSource . '</td>
-				<td><input class="number" type="text" title="' . _('Enter the quantity required of this item to complete the contract') . '" required="required" size="6" value="0" name="Qty'.$i.'" />
+				<td><input class="number" type="text" title="' . __('Enter the quantity required of this item to complete the contract') . '" required="required" size="6" value="0" name="Qty'.$i.'" />
 				<input type="hidden" name="StockID' . $i . '" value="' . $MyRow['stockid'] . '" />
 				</td>
 			</tr>';
@@ -376,11 +376,11 @@ if (isset($SearchResult)) {
 			<input type="hidden" name="CountOfItems" value="'. $i . '" />';
 	if ($i == $_SESSION['DisplayRecordsMax']){
 
-		prnMsg( _('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . _('can be displayed') . '. ' . _('Please restrict your search to only the parts required'),'info');
+		prnMsg( __('Only the first') . ' ' . $_SESSION['DisplayRecordsMax'] . ' ' . __('can be displayed') . '. ' . __('Please restrict your search to only the parts required'),'info');
 	}
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name="NewItem" value="' . _('Add to Contract Bill Of Material') .'" />
+			<input type="submit" name="NewItem" value="' . __('Add to Contract Bill Of Material') .'" />
 		</div>';
 }#end if SearchResults to show
 

@@ -3,7 +3,7 @@ include('includes/DefineJournalClass.php');
 
 include('includes/session.php');
 if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
-$Title = _('Journal Entry');
+$Title = __('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 
@@ -64,7 +64,7 @@ if (isset($_GET['TemplateID'])) {
 
 if (isset($_POST['JournalProcessDate'])) {
 	if (!Is_Date($_POST['JournalProcessDate'])) {
-		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
+		prnMsg(__('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
 	}else{
 		$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
@@ -83,35 +83,35 @@ if (isset($_POST['LoadTemplate'])) {
 				FROM jnltmplheader ";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no templates saved. You must first create a template.') , 'warn');
+		prnMsg(__('There are no templates saved. You must first create a template.') , 'warn');
 	}
 	else {
 		echo '<p class="page_title_text" >
-				<img class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', _('Load journal from a template') , '
+				<img class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', __('Load journal from a template') , '
 			</p>';
 
 		echo '<table>
 				<tr>
-					<th colspan="4">', _('Available journal templates') , '</th>
+					<th colspan="4">', __('Available journal templates') , '</th>
 				</tr>
 				<tr>
-					<th>', _('Template ID') , '</th>
-					<th>', _('Template Description') , '</th>
-					<th>', _('Journal Type') , '</th>
+					<th>', __('Template ID') , '</th>
+					<th>', __('Template Description') , '</th>
+					<th>', __('Journal Type') , '</th>
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['journaltype'] == 0) {
-				$JournalType = _('Normal');
+				$JournalType = __('Normal');
 			}
 			else {
-				$JournalType = _('Reversing');
+				$JournalType = __('Reversing');
 			}
 			echo '<tr class="striped_row">
 					<td>', $MyRow['templateid'], '</td>
 					<td>', $MyRow['templatedescription'], '</td>
 					<td>', $JournalType, '</td>
-					<td class="noPrint"><a href="', basename(__FILE__) , '?TemplateID=', urlencode($MyRow['templateid']) , '">', _('Select') , '</a></td>
+					<td class="noPrint"><a href="', basename(__FILE__) , '?TemplateID=', urlencode($MyRow['templateid']) , '">', __('Select') , '</a></td>
 				</tr>';
 		}
 
@@ -124,7 +124,7 @@ if (isset($_POST['LoadTemplate'])) {
 if (isset($_POST['SaveTemplate'])) {
 	if (!isset($_POST['Description']) or $_POST['Description'] == '') {
 		$_POST['ConfimSave'] = 'ConfirmSave';
-		prnMsg(_('You must enter a description of between 1 and 50 characters for this template.') , 'error');
+		prnMsg(__('You must enter a description of between 1 and 50 characters for this template.') , 'error');
 	}
 	else {
 		// Check if duplicate description
@@ -149,7 +149,7 @@ if (isset($_POST['SaveTemplate'])) {
 											)";
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
-				prnMsg(_('The journal template header info could not be saved') , 'error');
+				prnMsg(__('The journal template header info could not be saved') , 'error');
 				include('includes/footer.php');
 				exit();
 			}
@@ -172,16 +172,16 @@ if (isset($_POST['SaveTemplate'])) {
 				$Result = DB_query($SQL);
 				++$LineNumber;
 				if (DB_error_no() != 0) {
-					prnMsg(_('The journal template line info could not be saved') , 'error');
+					prnMsg(__('The journal template line info could not be saved') , 'error');
 					include('includes/footer.php');
 					exit();
 				}
 			}
-			prnMsg(_('The template has been successfully saved') , 'success');
+			prnMsg(__('The template has been successfully saved') , 'success');
 		}
 		else {
 			$_POST['ConfimSave'] = 'ConfirmSave';
-			prnMsg(_('A template with this description already exists. You must use a unique description') , 'info');
+			prnMsg(__('A template with this description already exists. You must use a unique description') , 'info');
 		}
 	}
 }
@@ -192,23 +192,23 @@ if (isset($_POST['ConfimSave'])) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text" >
-			<img  class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', _('Save journal as a template') , '
+			<img  class="page_title_icon" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="" alt="" />', ' ', __('Save journal as a template') , '
 		</p>';
 
 	echo '<table width="85%">
 			<tr>
-				<th colspan="5"><div class="centre"><h2>', _('Journal Summary') , '</h2></div></th>
+				<th colspan="5"><div class="centre"><h2>', __('Journal Summary') , '</h2></div></th>
 			</tr>
 			<tr>
-				<td colspan="1">', _('Template description') , ':</td>
+				<td colspan="1">', __('Template description') , ':</td>
 				<td colspan="4"><input type="text" size="50" name="Description" value="" maxlength="50" /></td>
 			</tr>
 			<tr>
-				<th>', _('GL Tag') , '</th>
-				<th>', _('GL Account') , '</th>
-				<th>', _('Debit') , '</th>
-				<th>', _('Credit') , '</th>
-				<th>', _('Narrative') , '</th>
+				<th>', __('GL Tag') , '</th>
+				<th>', __('GL Account') , '</th>
+				<th>', __('Debit') , '</th>
+				<th>', __('Credit') , '</th>
+				<th>', __('Narrative') , '</th>
 			</tr>';
 
 	foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
@@ -221,7 +221,7 @@ if (isset($_POST['ConfimSave'])) {
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($Tag == 0) {
-			$TagDescription = _('None');
+			$TagDescription = __('None');
 		}
 		else {
 			$TagDescription = $MyRow[0];
@@ -245,8 +245,8 @@ if (isset($_POST['ConfimSave'])) {
 	echo '</table>';
 
 	echo '<div class="centre">
-			<input type="submit" name="SaveTemplate" value="', _('Save as template') , '" /><br />
-			<input type="reset" name="Cancel" value="', _('Cancel') , '" />
+			<input type="submit" name="SaveTemplate" value="', __('Save as template') , '" /><br />
+			<input type="reset" name="Cancel" value="', __('Cancel') , '" />
 		</div>';
 	echo '</form>';
 
@@ -254,7 +254,7 @@ if (isset($_POST['ConfimSave'])) {
 	exit();
 }
 
-if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Process Journal')) {
+if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == __('Accept and Process Journal')) {
 
 	/* once the GL analysis of the journal is entered
 	 process all the data in the session cookie into the DB
@@ -284,7 +284,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 					'" . mb_substr($JournalItem->Narrative, 0, 200) . "',
 					'" . $JournalItem->Amount . "'
 					)";
-		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
+		$ErrMsg = __('Cannot insert a GL entry for the journal line because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		InsertGLTags($JournalItem->tag);
 
@@ -301,20 +301,20 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
-						'" . mb_substr(_('Reversal') . " - " . $JournalItem->Narrative, 0, 200) . "',
+						'" . mb_substr(__('Reversal') . " - " . $JournalItem->Narrative, 0, 200) . "',
 						'" . -($JournalItem->Amount) . "'
 						)";
 
-			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
+			$ErrMsg = __('Cannot insert a GL entry for the reversing journal because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 			InsertGLTags($JournalItem->tag);
 		}
 	}
 
-	$ErrMsg = _('Cannot commit the changes');
+	$ErrMsg = __('Cannot commit the changes');
 	DB_Txn_Commit();
 
-	prnMsg(_('Journal') . ' ' . $TransNo . ' ' . _('has been successfully entered') , 'success');
+	prnMsg(__('Journal') . ' ' . $TransNo . ' ' . __('has been successfully entered') , 'success');
 
 	unset($_POST['JournalProcessDate']);
 	unset($_POST['JournalType']);
@@ -323,7 +323,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 
 	/*Set up a newy in case user wishes to enter another */
 	echo '<br />
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . _('Enter Another General Ledger Journal') . '</a>';
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?NewJournal=Yes">' . __('Enter Another General Ledger Journal') . '</a>';
 
 	include('includes/footer.php');
 	exit();
@@ -335,7 +335,7 @@ elseif (isset($_GET['Delete'])) {
 	$_SESSION['JournalDetail']->Remove_GLEntry($_GET['Delete']);
 
 }
-elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user hit submit a new GL Analysis line into the journal
+elseif (isset($_POST['Process']) and $_POST['Process'] == __('Accept')) { //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode'] != '') {
 		$Extract = explode(' - ', $_POST['GLCode']);
 		$_POST['GLCode'] = $Extract[0];
@@ -351,16 +351,16 @@ elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user 
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' and $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
-				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
+				prnMsg(__('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
 				$AllowThisPosting = false;
 			}
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' and $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
-				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
+				prnMsg(__('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
 				$AllowThisPosting = false;
 			}
 		}
 		if (in_array($_POST['GLManualCode'], $_SESSION['JournalDetail']->BankAccounts)) {
-			prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment') , 'info');
+			prnMsg(__('GL Journals involving a bank account cannot be entered') . '. ' . __('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment') , 'info');
 			$AllowThisPosting = false;
 		}
 
@@ -371,7 +371,7 @@ elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user 
 			$Result = DB_query($SQL);
 
 			if (DB_num_rows($Result) == 0) {
-				prnMsg(_('The manual GL code entered does not exist in the database') . ' - ' . _('so this GL analysis item could not be added') , 'warn');
+				prnMsg(__('The manual GL code entered does not exist in the database') . ' - ' . __('so this GL analysis item could not be added') , 'warn');
 				unset($_POST['GLManualCode']);
 			}
 			else {
@@ -385,22 +385,22 @@ elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user 
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' and $_POST['GLCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
 
-				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
+				prnMsg(__('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
 				$AllowThisPosting = false;
 			}
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == '1' and $_POST['GLCode'] == $_SESSION['CompanyRecord']['creditorsact']) {
 
-				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
+				prnMsg(__('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration') , 'warn');
 				$AllowThisPosting = false;
 			}
 		}
 		if ($_POST['GLCode'] == '' and $_POST['GLManualCode'] == '') {
-			prnMsg(_('You must select a GL account code') , 'info');
+			prnMsg(__('You must select a GL account code') , 'info');
 			$AllowThisPosting = false;
 		}
 
 		if (in_array($_POST['GLCode'], $_SESSION['JournalDetail']->BankAccounts)) {
-			prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment') , 'warn');
+			prnMsg(__('GL Journals involving a bank account cannot be entered') . '. ' . __('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment') , 'warn');
 			$AllowThisPosting = false;
 		}
 
@@ -437,7 +437,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text">
-		<img src="' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+		<img src="' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 // A new table in the first column of the main table
@@ -447,22 +447,22 @@ if (!isset($_SESSION['JournalDetail']->JnlDate) or !Is_Date($_SESSION['JournalDe
 }
 
 echo '<fieldset>
-		<legend>', _('Journal Header') , '</legend>
+		<legend>', __('Journal Header') , '</legend>
 		<field>
-			<label for="JournalProcessDate">' . _('Date to Process Journal') . ':</label>
+			<label for="JournalProcessDate">' . __('Date to Process Journal') . ':</label>
 			<input type="date" required="required" name="JournalProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" />
 		</field>
 		<field>
-			<label for="JournalType">' . _('Type') . ':</label>
+			<label for="JournalType">' . __('Type') . ':</label>
 			<select name="JournalType">';
 
 if ($_POST['JournalType'] == 'Reversing') {
-	echo '<option selected="selected" value = "Reversing">' . _('Reversing') . '</option>';
-	echo '<option value = "Normal">' . _('Normal') . '</option>';
+	echo '<option selected="selected" value = "Reversing">' . __('Reversing') . '</option>';
+	echo '<option value = "Normal">' . __('Normal') . '</option>';
 }
 else {
-	echo '<option value = "Reversing">' . _('Reversing') . '</option>';
-	echo '<option selected="selected" value = "Normal">' . _('Normal') . '</option>';
+	echo '<option value = "Reversing">' . __('Reversing') . '</option>';
+	echo '<option selected="selected" value = "Normal">' . __('Normal') . '</option>';
 }
 
 echo '</select>
@@ -471,7 +471,7 @@ echo '</select>
 /* close off the table in the first column  */
 
 echo '<fieldset>
-		<legend>' . _('Journal Line Entry') . '</legend>';
+		<legend>' . __('Journal Line Entry') . '</legend>';
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
@@ -482,7 +482,7 @@ $SQL = "SELECT tagref,
 	ORDER BY tagref";
 $Result = DB_query($SQL);
 echo '<field>
-	<label for="tag">', _('GL Tag') , '</label>
+	<label for="tag">', __('GL Tag') , '</label>
 	<select multiple="multiple" name="tag[]">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_GET['Edit']) and isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or (isset($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) and in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
@@ -499,7 +499,7 @@ if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode'] = '';
 }
 echo '<field>
-		<label for="GLManualCode">' . _('GL Account Code') . '</label>
+		<label for="GLManualCode">' . __('GL Account Code') . '</label>
 		<input type="text" autofocus="autofocus" name="GLManualCode" maxlength="12" size="12" onchange="inArray(this, GLCode.options,' . "'" . 'The account code ' . "'" . '+ this.value+ ' . "'" . ' doesnt exist' . "'" . ')" value="' . $_POST['GLManualCode'] . '"  />
 	</field>';
 
@@ -511,9 +511,9 @@ $SQL = "SELECT chartmaster.accountcode,
 
 $Result = DB_query($SQL);
 echo '<field>
-		<label for="GLCode">' . _('Select GL Account') . '</label>
+		<label for="GLCode">' . __('Select GL Account') . '</label>
 		<select name="GLCode" onchange="return assignComboToInput(this,' . 'GLManualCode' . ')">
-			<option value="">' . _('Select a general ledger account code') . '</option>';
+			<option value="">' . __('Select a general ledger account code') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['GLCode']) and $_POST['GLCode'] == $MyRow['accountcode']) {
 		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
@@ -536,34 +536,34 @@ if (!isset($_POST['Debit'])) {
 }
 
 echo '<field>
-		<label for="Debit">' . _('Debit') . '</label>
+		<label for="Debit">' . __('Debit') . '</label>
 		<input type="text" class="number" name="Debit" onchange="eitherOr(this,Credit)" maxlength="12" size="10" value="' . locale_number_format($_POST['Debit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
 	</field>
 	<field>
-		<label for="Credit">' . _('Credit') . '</label>
+		<label for="Credit">' . __('Credit') . '</label>
 		<input type="text" class="number" name="Credit" onchange="eitherOr(this,Debit)" maxlength="12" size="10" value="' . locale_number_format($_POST['Credit'], $_SESSION['CompanyRecord']['decimalplaces']) . '" />
 	</field>
 	<field>
-		<label for="GLNarrative">' . _('GL Narrative') . '</label>
+		<label for="GLNarrative">' . __('GL Narrative') . '</label>
 		<input type="text" name="GLNarrative" maxlength="100" size="100" value="' . $_POST['GLNarrative'] . '" />
 	</field>
 	</fieldset>'; /*Close the main table */
 echo '<div class="centre">
-		<input type="submit" name="Process" value="' . _('Accept') . '" />
+		<input type="submit" name="Process" value="' . __('Accept') . '" />
 	</div>
 	<br />
 	<br />';
 
 echo '<table class="selection" width="85%">
 		<tr>
-			<th colspan="6"><div class="centre"><h2>' . _('Journal Summary') . '</h2></div></th>
+			<th colspan="6"><div class="centre"><h2>' . __('Journal Summary') . '</h2></div></th>
 		</tr>
 		<tr>
-			<th>' . _('GL Tag') . '</th>
-			<th>' . _('GL Account') . '</th>
-			<th>' . _('Debit') . '</th>
-			<th>' . _('Credit') . '</th>
-			<th>' . _('Narrative') . '</th>
+			<th>' . __('GL Tag') . '</th>
+			<th>' . __('GL Account') . '</th>
+			<th>' . __('Debit') . '</th>
+			<th>' . __('Credit') . '</th>
+			<th>' . __('Narrative') . '</th>
 		</tr>';
 
 $DebitTotal = 0;
@@ -588,23 +588,23 @@ foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	}
 
 	echo '<td>' . $JournalItem->Narrative . '</td>
-		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $JournalItem->ID . '">' . _('Delete') . '</a></td>
+		<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Delete=' . $JournalItem->ID . '">' . __('Delete') . '</a></td>
 	</tr>';
 }
 
 echo '<tr class="striped_row"><td></td>
-		<td class="number"><b>' . _('Total') . '</b></td>
+		<td class="number"><b>' . __('Total') . '</b></td>
 		<td class="number"><b>' . locale_number_format($DebitTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 		<td class="number"><b>' . locale_number_format($CreditTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 	</tr>';
 if ($DebitTotal != $CreditTotal) {
-	echo '<tr><td class="centre" style="background-color: #fddbdb"><b>' . _('Required to balance') . ' - </b>' . locale_number_format(abs($DebitTotal - $CreditTotal) , $_SESSION['CompanyRecord']['decimalplaces']);
+	echo '<tr><td class="centre" style="background-color: #fddbdb"><b>' . __('Required to balance') . ' - </b>' . locale_number_format(abs($DebitTotal - $CreditTotal) , $_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal > $CreditTotal) {
-	echo ' ' . _('Credit') . '</td></tr>';
+	echo ' ' . __('Credit') . '</td></tr>';
 }
 else if ($DebitTotal < $CreditTotal) {
-	echo ' ' . _('Debit') . '</td></tr>';
+	echo ' ' . __('Debit') . '</td></tr>';
 }
 echo '</table>
 	</td>
@@ -613,16 +613,16 @@ echo '</table>
 
 if (abs($_SESSION['JournalDetail']->JournalTotal) < 0.001 and $_SESSION['JournalDetail']->GLItemCounter > 0) {
 	echo '<div class="centre">
-			<input type="submit" name="CommitBatch" value="', _('Accept and Process Journal') , '" /><br />
-			<input type="submit" name="ConfimSave" value="', _('Save as a template') , '" />
+			<input type="submit" name="CommitBatch" value="', __('Accept and Process Journal') , '" /><br />
+			<input type="submit" name="ConfimSave" value="', __('Save as a template') , '" />
 		</div>';
 }
 elseif (count($_SESSION['JournalDetail']->GLEntries) > 0) {
-	prnMsg(_('The journal must balance ie debits equal to credits before it can be processed') , 'warn');
+	prnMsg(__('The journal must balance ie debits equal to credits before it can be processed') , 'warn');
 }
 else {
 	echo '<div class="centre">
-			<input type="submit" name="LoadTemplate" value="', _('Load from a template') , '" />
+			<input type="submit" name="LoadTemplate" value="', __('Load from a template') , '" />
 		</div>';
 }
 

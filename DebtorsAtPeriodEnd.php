@@ -38,10 +38,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$CustomerResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
-		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
+		$Title = __('Customer Balances') . ' - ' . __('Problem Report');
 		include('includes/header.php');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -50,10 +50,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	if (DB_num_rows($CustomerResult) == 0) {
-		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
+		$Title = __('Customer Balances') . ' - ' . __('Problem Report');
 		include('includes/header.php');
-		prnMsg(_('The customer details listing has no clients to report on'),'warn');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('The customer details listing has no clients to report on'),'warn');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -72,16 +72,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Customer Balances For Customers between') . ' ' . $_POST['FromCriteria'] .  ' ' . _('and') . ' ' . $_POST['ToCriteria'] . ' ' . _('as at') . ' ' . $PeriodEndDate . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Customer Balances For Customers between') . ' ' . $_POST['FromCriteria'] .  ' ' . __('and') . ' ' . $_POST['ToCriteria'] . ' ' . __('as at') . ' ' . $PeriodEndDate . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Balance') . '</th>
-							<th>' . _('FX') . '</th>
-							<th>' . _('Currency') . '</th>
+							<th>' . __('Customer') . '</th>
+							<th>' . __('Balance') . '</th>
+							<th>' . __('FX') . '</th>
+							<th>' . __('Currency') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -111,7 +111,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
 	$HTML .= '<tr class="total_row">
-				<td>' . _('Total balances') . '</td>
+				<td>' . __('Total balances') . '</td>
 				<td class="number">' . $DisplayTotBalance . '</td>
 				<td colspan="2"></td>
 			</tr>';
@@ -128,7 +128,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Debtor Balances');
+		$Title = __('Debtor Balances');
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
@@ -158,13 +158,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Debtor Balances');
+	$Title=__('Debtor Balances');
 
 	$ViewTopic = 'ARReports';
 	$BookMark = 'PriorMonthDebtors';
 
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Search') .
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
 	if (!isset($_POST['FromCriteria']) OR !isset($_POST['ToCriteria'])) {
@@ -175,23 +175,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
-				<legend>', _('Report Criteria'), '</legend>';
+				<legend>', __('Report Criteria'), '</legend>';
 		echo '<field>
-				<label for="FromCriteria">' . _('From Customer Code') .':</label>
+				<label for="FromCriteria">' . __('From Customer Code') .':</label>
 				<input tabindex="1" type="text" maxlength="10" size="8" name="FromCriteria" required="required" data-type="no-illegal-chars" title="" value="1" />
-				<fieldhelp>' . _('Enter a portion of the code of first customer to report') . '</fieldhelp>
+				<fieldhelp>' . __('Enter a portion of the code of first customer to report') . '</fieldhelp>
 			</field>
 			<field>
-				<label for="ToCriteria">' . _('To Customer Code') . ':</label>
+				<label for="ToCriteria">' . __('To Customer Code') . ':</label>
 				<input tabindex="2" type="text" maxlength="10" size="8" name="ToCriteria" required="required" data-type="no-illegal-chars" title="" value="zzzzzz" />
-				<fieldhelp>' . _('Enter a portion of the code of last customer to report') . '</fieldhelp>
+				<fieldhelp>' . __('Enter a portion of the code of last customer to report') . '</fieldhelp>
 			</field>
 			<field>
-				<label for="PeriodEnd">' . _('Balances As At') . ':</label>
+				<label for="PeriodEnd">' . __('Balances As At') . ':</label>
 				<select tabindex="3" name="PeriodEnd">';
 
 		$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-		$Periods = DB_query($SQL,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
+		$Periods = DB_query($SQL,__('Could not retrieve period data because'),__('The SQL that failed to get the period data was'));
 
 		while ($MyRow = DB_fetch_array($Periods)){
 
@@ -204,8 +204,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>
 		</fieldset>
 		<div class="centre">
-					<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-					<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+					<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+					<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
 	</form>';
 

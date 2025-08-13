@@ -9,4 +9,4 @@ if (DB_error_no($Result) == 0) {
 	$_SESSION['Updates']['Errors']++;
 }
 
-UpdateDBNo(basename(__FILE__, '.php'), _('Change column lastpaiddate in suppliers table to be of type date, not datetime'));
+UpdateDBNo(basename(__FILE__, '.php'), __('Change column lastpaiddate in suppliers table to be of type date, not datetime'));

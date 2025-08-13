@@ -245,10 +245,10 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
 
 	if(DB_error_no() !=0) {
-		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
+		$Title = __('Aged Customer Account Analysis') . ' - ' . __('Problem Report') . '.... ';
 		include('includes/header.php');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		if($Debug==1) {
 			echo '<br />' . $SQL;
 		}
@@ -271,25 +271,25 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  _('to') . ' ' . $_POST['ToCriteria'] . '<br />
-					' . _('And Trading in') . ' ' . $_POST['Currency'] . '<br />';
+					' . __('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  __('to') . ' ' . $_POST['ToCriteria'] . '<br />
+					' . __('And Trading in') . ' ' . $_POST['Currency'] . '<br />';
 	if (trim($_POST['Salesman'])!=''){
 		$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
 		$rs = DB_query($SQL,'','',False,False);
 		$Row = DB_fetch_array($rs);
-		$HTML .= _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'] . '<br />';
+		$HTML .= __('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'] . '<br />';
 	}
-	$HTML .=  _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+	$HTML .=  __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Balance') . '</th>
-							<th>' . _('Current') . '</th>
-							<th>' . _('Due Now') . '</th>
-							<th>' . $_SESSION['PastDueDays1'] . ' ' . _('Days Over') . '</th>
-							<th>' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over') . '</th>
+							<th>' . __('Customer') . '</th>
+							<th>' . __('Balance') . '</th>
+							<th>' . __('Current') . '</th>
+							<th>' . __('Due Now') . '</th>
+							<th>' . $_SESSION['PastDueDays1'] . ' ' . __('Days Over') . '</th>
+							<th>' . $_SESSION['PastDueDays2'] . ' ' . __('Days Over') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -376,12 +376,12 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 			$DetailResult = DB_query($SQL,'','',False,False); /*Dont trap errors */
 			if(DB_error_no() !=0) {
-				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
+				$Title = __('Aged Customer Account Analysis') . ' - ' . __('Problem Report') . '....';
 				include('includes/header.php');
-				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+				prnMsg(__('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . __('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+				echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 				if($Debug==1) {
-					echo '<br />' . _('The SQL that failed was') . '<br />' . $SQL;
+					echo '<br />' . __('The SQL that failed was') . '<br />' . $SQL;
 				}
 				include('includes/footer.php');
 				exit();
@@ -453,7 +453,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -474,23 +474,23 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Aged Debtor Analysis');
+		$Title = __('Aged Debtor Analysis');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Aged Debtor Analysis') . '" alt="" />' . ' ' . _('Aged Debtor Analysis') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Aged Debtor Analysis') . '" alt="" />' . ' ' . __('Aged Debtor Analysis') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Aged Debtor Analysis');
+	$Title=__('Aged Debtor Analysis');
 
 	$ViewTopic = 'ARReports';
 	$BookMark = 'AgedDebtors';
 
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
 
@@ -500,29 +500,29 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
-				<legend>', _('Select Report Criteria'), '</legend>';
+				<legend>', __('Select Report Criteria'), '</legend>';
 
 		echo '<field>
-				<label for="FromCriteria">' . _('From Customer Code') . ':' . '</label>
+				<label for="FromCriteria">' . __('From Customer Code') . ':' . '</label>
 				<input tabindex="1" autofocus="autofocus" required="required" type="text" maxlength="6" size="7" name="FromCriteria" value="0" title="" />
-				<fieldhelp>' . _('Enter the first customer code alphabetically to include in the report') . '</fieldhelp>
+				<fieldhelp>' . __('Enter the first customer code alphabetically to include in the report') . '</fieldhelp>
 			</field>
 			<field>
-				<label for="ToCriteria">' . _('To Customer Code') . ':' . '</label>
+				<label for="ToCriteria">' . __('To Customer Code') . ':' . '</label>
 				<input tabindex="2" type="text" required="required"  maxlength="6" size="7" name="ToCriteria" value="zzzzzz" title="" />
-				<fieldhelp>' . _('Enter the last customer code alphabetically to include in the report') . '</fieldhelp>
+				<fieldhelp>' . __('Enter the last customer code alphabetically to include in the report') . '</fieldhelp>
 			</field>
 			<field>
-				<label for="All_Or_Overdues">' . _('All balances or overdues only') . ':' . '</label>
+				<label for="All_Or_Overdues">' . __('All balances or overdues only') . ':' . '</label>
 				<select tabindex="3" name="All_Or_Overdues">
-					<option selected="selected" value="All">' . _('All customers with balances') . '</option>
-					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
-					<option value="HeldOnly">' . _('Held accounts only') . '</option>
+					<option selected="selected" value="All">' . __('All customers with balances') . '</option>
+					<option value="OverduesOnly">' . __('Overdue accounts only') . '</option>
+					<option value="HeldOnly">' . __('Held accounts only') . '</option>
 				</select>
-				<fieldhelp>', _('Show all account balances, or just show accounts with overdue balances'), '</fieldhelp>
+				<fieldhelp>', __('Show all account balances, or just show accounts with overdue balances'), '</fieldhelp>
 			</field>
 			<field>
-				<label for="Salesman">' . _('Only Show Customers Of') . ':' . '</label>';
+				<label for="Salesman">' . __('Only Show Customers Of') . ':' . '</label>';
 		if($_SESSION['SalesmanLogin'] != '') {
 			echo '<fieldtext>', $_SESSION['UsersRealName'], '</fieldtext>';
 		}else{
@@ -531,17 +531,17 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 
 			$Result = DB_query($SQL);
-			echo '<option value="">' . _('All Salespeople') . '</option>';
+			echo '<option value="">' . __('All Salespeople') . '</option>';
 			while ($MyRow=DB_fetch_array($Result)) {
 					echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 			}
 			echo '</select>
-				<fieldhelp>', _('Only show customers for a particular salesperson, or for all sales people'), '</fieldhelp>';
+				<fieldhelp>', __('Only show customers for a particular salesperson, or for all sales people'), '</fieldhelp>';
 		}
 		echo '</field>';
 
 		echo '<field>
-				<label for="Currency">' . _('Only show customers trading in') . ':' . '</label>
+				<label for="Currency">' . __('Only show customers trading in') . ':' . '</label>
 				<select tabindex="5" name="Currency">';
 
 		$SQL = "SELECT currency, currabrev FROM currencies";
@@ -555,23 +555,23 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			  }
 		}
 		echo '</select>
-			<fieldhelp>', _('Select the customer currency, and just show customers trading in that currency'), '</fieldhelp>
+			<fieldhelp>', __('Select the customer currency, and just show customers trading in that currency'), '</fieldhelp>
 		</field>';
 
 		echo '<field>
-				<label for="DetailedReport">' . _('Summary or detailed report') . ':' . '</label>
+				<label for="DetailedReport">' . __('Summary or detailed report') . ':' . '</label>
 				<select tabindex="6" name="DetailedReport">
-					<option selected="selected" value="No">' . _('Summary Report') . '</option>
-					<option value="Yes">' . _('Detailed Report') . '</option>
+					<option selected="selected" value="No">' . __('Summary Report') . '</option>
+					<option value="Yes">' . __('Detailed Report') . '</option>
 				</select>
-				<fieldhelp>', _('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
+				<fieldhelp>', __('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
 			</field>';
 
 		echo '</fieldset>';
 
 		echo '<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>
 		</form>';
 	}

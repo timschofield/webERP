@@ -1,29 +1,29 @@
 <?php
 //$PageSecurity = 15;
 include('includes/session.php');
-$Title = _('Upgrade webERP 3.10 - 3.11');
+$Title = __('Upgrade webERP 3.10 - 3.11');
 include('includes/header.php');
 
 
 if (empty($_POST['DoUpgrade'])){
-	prnMsg(_('This script will run perform any modifications to the database since v 3.10 required to allow the additional functionality in version 3.11 scripts'),'info');
+	prnMsg(__('This script will run perform any modifications to the database since v 3.10 required to allow the additional functionality in version 3.11 scripts'),'info');
 
 	echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<div class="centre"?><input type="submit" name=DoUpgrade value="' . _('Perform Upgrade') . '" /></div>';
+	echo '<div class="centre"?><input type="submit" name=DoUpgrade value="' . __('Perform Upgrade') . '" /></div>';
 	echo '</form>';
 }
 
-if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
+if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 
 	echo '<br />';
-	prnMsg(_('If there are any failures then please check with your system administrator').
-		'. '._('Please read all notes carefully to ensure they are expected'),'info');
+	prnMsg(__('If there are any failures then please check with your system administrator').
+		'. '.__('Please read all notes carefully to ensure they are expected'),'info');
 
 	$SQLScriptFile = file('./sql/mysql/upgrade3.10-3.11.sql');
 
 	$ScriptFileEntries = sizeof($SQLScriptFile);
-	$ErrMsg = _('The script to upgrade the database failed because');
+	$ErrMsg = __('The script to upgrade the database failed because');
 	$SQL ='';
 	$InAFunction = false;
 	echo '<br /><table>';
@@ -55,31 +55,31 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 				$Result = DB_query($SQL, $ErrMsg, '', false, false);
 				switch (DB_error_no()) {
 					case 0:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . _('Success') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:green">' . __('Success') . '</td></tr>';
 						break;
 					case 1050:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . _('Note').' - '.
-							_('Table has already been created') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
+							__('Table has already been created') . '</td></tr>';
 						break;
 					case 1060:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . _('Note').' - '.
-							_('Column has already been created') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
+							__('Column has already been created') . '</td></tr>';
 						break;
 					case 1061:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . _('Note').' - '.
-							_('Index already exists') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
+							__('Index already exists') . '</td></tr>';
 						break;
 					case 1062:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . _('Note').' - '.
-							_('Entry has already been done') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
+							__('Entry has already been done') . '</td></tr>';
 						break;
 					case 1068:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . _('Note').' - '.
-							_('Primary key already exists') . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:yellow">' . __('Note').' - '.
+							__('Primary key already exists') . '</td></tr>';
 						break;
 					default:
-						echo '<tr><td>' . $comment . '</td><td style="background-color:red">' . _('Failure').' - '.
-							_('Error number').' - '.DB_error_no()  . '</td></tr>';
+						echo '<tr><td>' . $comment . '</td><td style="background-color:red">' . __('Failure').' - '.
+							__('Error number').' - '.DB_error_no()  . '</td></tr>';
 						break;
 				}
 				unset($SQL);

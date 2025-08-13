@@ -11,10 +11,10 @@ global $db;// Make sure it IS global, regardless of our context
 $db = mysql_connect($Host . ':' . $MySQLPort, $DBUser, $DBPassword);
 
 if (!$db) {
-	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
+	echo '<br />' . __('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
+	echo '<p>' . __('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . __('here') . '</a>' . ' ' .__('to try logging in again') . '</p>';
 
 	exit();
 }
@@ -26,15 +26,15 @@ mysql_set_charset('utf8', $db);
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
+		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 		unset($_SESSION['DatabaseName']);
 		exit();
 	}
 } else {
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
+		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 		unset($_SESSION['DatabaseName']);
 		exit();
 	}
@@ -58,23 +58,23 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
-				$ErrorMessage = _('An error occurred in retrieving the information');
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : ''). DB_error_msg(), 'error', _('Database Error'));
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : ''). DB_error_msg(), 'error', __('Database Error'));
 		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
-				$DebugMessage = _('The SQL that failed was');
+				$DebugMessage = __('The SQL that failed was');
 			}
-			ShowDebugBackTrace($DebugMessage, $SQL);	
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
-				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error') . ' ' . DB_error_no());
+				prnMsg(__('Error Rolling Back Transaction'), 'error', __('Database Rollback Error') . ' ' . DB_error_no());
 			} else {
-				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
@@ -171,7 +171,7 @@ function interval( $val, $Inter ) {
 }
 
 function DB_Maintenance() {
-	prnMsg(_('The system has just run the regular database administration and optimisation routine.'), 'info');
+	prnMsg(__('The system has just run the regular database administration and optimisation routine.'), 'info');
 
 	$TablesResult = DB_show_tables();
 	while ($MyRow = DB_fetch_row($TablesResult)) {

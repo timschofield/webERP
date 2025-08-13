@@ -62,55 +62,55 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Prices By Inventory Category') . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-					' . _('Price List') . ' - ' . $_POST['SalesType'] . ' - ' . $SalesTypeName . '<br />
-					' . _('Effective as at') . ' - ' . $_POST['EffectiveDate'] . '<br />
+					' . __('Prices By Inventory Category') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Price List') . ' - ' . $_POST['SalesType'] . ' - ' . $SalesTypeName . '<br />
+					' . __('Effective as at') . ' - ' . $_POST['EffectiveDate'] . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Item Description') . '</th>
-							<th colspan="2">' . _('Effective Date Range') . '</th>';
+							<th>' . __('Item Code') . '</th>
+							<th>' . __('Item Description') . '</th>
+							<th colspan="2">' . __('Effective Date Range') . '</th>';
 
 	if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
-		$HTML .= '<th>' .  _('Branch') . '</th>';
+		$HTML .= '<th>' .  __('Branch') . '</th>';
 	}
 	if ($_POST['ShowGPPercentages']=='Yes') {
-		$HTML .= '<th>' . _('Gross Profit') . '</th>';
+		$HTML .= '<th>' . __('Gross Profit') . '</th>';
 	}
 
-	$HTML .= '<th>' . _('Price') . '</th>
+	$HTML .= '<th>' . __('Price') . '</th>
 			</tr>
 		</thead>
 	<tbody>';
 
 	$HTML .= '<tr>
-				<td colspan="4">*' . _('Prices excluding tax') . '</td>
+				<td colspan="4">*' . __('Prices excluding tax') . '</td>
 			</tr>';
 
 	/*Now figure out the inventory data to report for the category range under review */
-	if ($_POST['CustomerSpecials']==_('Customer Special Prices Only')) {
+	if ($_POST['CustomerSpecials']==__('Customer Special Prices Only')) {
 
 		if ($_SESSION['CustomerID']=='') {
-			$Title = _('Special price List - No Customer Selected');
+			$Title = __('Special price List - No Customer Selected');
 			$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
 			$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
 			include('includes/header.php');
 			echo '<br />';
-			prnMsg( _('The customer must first be selected from the select customer link') . '. ' . _('Re-run the price list once the customer has been selected') );
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
+			prnMsg( __('The customer must first be selected from the select customer link') . '. ' . __('Re-run the price list once the customer has been selected') );
+			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 			include('includes/footer.php');
 			exit();
 		}
 		if (!Is_Date($_POST['EffectiveDate'])) {
-			$Title = _('Special price List - No Customer Selected');
+			$Title = __('Special price List - No Customer Selected');
 			$ViewTopic = 'SalesTypes';// Filename in ManualContents.php's TOC.
 			$BookMark = 'PDFPriceList';// Anchor's id in the manual's html document.
 			include('includes/header.php');
-			prnMsg(_('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
-			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
+			prnMsg(__('The effective date must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+			echo '<br /><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 			include('includes/footer.php');
 			exit();
 		}
@@ -196,21 +196,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$PricesResult = DB_query($SQL,'','',false,false);
 
 	if (DB_error_no() !=0) {
-		$Title = _('Price List') . ' - ' . _('Problem Report....');
+		$Title = __('Price List') . ' - ' . __('Problem Report....');
 		include('includes/header.php');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu'). '</a>';
+		prnMsg( __('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
+		echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
 		if ($Debug==1) {
-			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
+			prnMsg(__('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($PricesResult)==0) {
-		$Title = _('Print Price List Error');
+		$Title = __('Print Price List Error');
 		include('includes/header.php');
-		prnMsg(_('There were no price details to print out for the customer or category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '</a>';
+		prnMsg(__('There were no price details to print out for the customer or category specified'),'warn');
+		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -242,7 +242,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($PriceList['enddate']!='9999-12-31') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
-			$DisplayEndDate = _('No End Date');
+			$DisplayEndDate = __('No End Date');
 		}
 
 		$HTML .= '<tr>
@@ -256,7 +256,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			if ($PriceList['branchcode']!='') {
 				$HTML .= '<td>' . $PriceList['brname'] . '</td>';
 			} else {
-				$HTML .= '<td>' . _('All') . '</td>';
+				$HTML .= '<td>' . __('All') . '</td>';
 			}
 
 		} elseif ($_POST['CustomerSpecials']=='Full Description') {
@@ -301,12 +301,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Warns if obsolete items are included:
 	if (isset($_POST['ShowObsolete'])) {
 		$HTML .= '<tr>
-					<td colspan="4">' . _('* Obsolete items included.') . '</td>
+					<td colspan="4">' . __('* Obsolete items included.') . '</td>
 				</tr>';
 	}
 
 	$FontSize = 10;
-	$FileName = $_SESSION['DatabaseName'] . '_' . _('Price_List') . '_' . date('Y-m-d') . '.pdf';
+	$FileName = $_SESSION['DatabaseName'] . '_' . __('Price_List') . '_' . date('Y-m-d') . '.pdf';
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
@@ -320,7 +320,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -341,32 +341,32 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Prices By Inventory Category');
+		$Title = __('Prices By Inventory Category');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Prices By Inventory Category') . '" alt="" />' . ' ' . _('Prices By Inventory Category') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Prices By Inventory Category') . '" alt="" />' . ' ' . __('Prices By Inventory Category') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
 
 
 } else { /*The option to print PDF was not hit */
-	$Title = _('Price Listing');
+	$Title = __('Price Listing');
 	$ViewTopic = 'SalesTypes';
 	$BookMark = 'PDFPriceList';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/customer.png" title="', // Icon image.
-		_('Price List'), '" /> ', // Icon title.
-		_('Print a price list by inventory category'), '</p>';// Page title.
+		__('Price List'), '" /> ', // Icon title.
+		__('Print a price list by inventory category'), '</p>';// Page title.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="Categories">', _('Select Inventory Categories'), ':</label>
+			<label for="Categories">', __('Select Inventory Categories'), ':</label>
 			<select autofocus="autofocus" id="Categories" minlength="1" multiple="multiple" name="Categories[]" required="required">';
 	$SQL = "SELECT categoryid, categorydescription
 			FROM stockcategory
@@ -383,7 +383,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="SalesType">', _('For Sales Type/Price List'), ':</label>
+			<label for="SalesType">', __('For Sales Type/Price List'), ':</label>
 			<select name="SalesType">';
 	$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
 	$SalesTypesResult = DB_query($SQL);
@@ -395,11 +395,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Currency">', _('For Currency'), ':</label>
+			<label for="Currency">', __('For Currency'), ':</label>
 			<select name="Currency">';
 	$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
 	$CurrencyResult = DB_query($SQL);
-	echo '<option selected="selected" value="All">', _('All'), '</option>';
+	echo '<option selected="selected" value="All">', __('All'), '</option>';
 	while ($MyRow=DB_fetch_array($CurrencyResult)) {
 		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	}
@@ -407,24 +407,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="ShowGPPercentages">', _('Show Gross Profit %'), ':</label>
+			<label for="ShowGPPercentages">', __('Show Gross Profit %'), ':</label>
 			<select name="ShowGPPercentages">
-				<option selected="selected" value="No">', _('Prices Only'), '</option>
-				<option value="Yes">', _('Show GP % too'), '</option>
+				<option selected="selected" value="No">', __('Prices Only'), '</option>
+				<option value="Yes">', __('Show GP % too'), '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for="CustomerSpecials">', _('Price Listing Type'), ':</label>
+			<label for="CustomerSpecials">', __('Price Listing Type'), ':</label>
 			<select name="CustomerSpecials">
-				<option selected="selected" value="Sales Type Prices">', _('Default Sales Type Prices'), '</option>
-				<option value="Customer Special Prices Only">', _('Customer Special Prices Only'), '</option>
-				<option value="Full Description">', _('Full Description'), '</option>
+				<option selected="selected" value="Sales Type Prices">', __('Default Sales Type Prices'), '</option>
+				<option value="Customer Special Prices Only">', __('Customer Special Prices Only'), '</option>
+				<option value="Full Description">', __('Full Description'), '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for="EffectiveDate">', _('Effective As At'), ':</label>
+			<label for="EffectiveDate">', __('Effective As At'), ':</label>
 			<input required="required" maxlength="10" size="11" type="date" name="EffectiveDate" value="', Date('Y-m-d'), '" />
 		</field>';
 
@@ -435,28 +435,28 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Checked = ' ';
 	}
 	echo '<field>
-			<label for="ShowObsolete">', _('Show obsolete items'), ':</label>
+			<label for="ShowObsolete">', __('Show obsolete items'), ':</label>
 			<input',$Checked, ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />
-			<fieldhelp>', _('Check this box to show the obsolete items'), '</fieldhelp>
+			<fieldhelp>', __('Check this box to show the obsolete items'), '</fieldhelp>
 		</field>';
 
 	// Option to select the order of the items in the report:
 	echo '<fieldset>
-			<legend>', _('Sort items by'), ':</legend>
+			<legend>', __('Sort items by'), ':</legend>
 		<field>
-	 		<label>', _('Currency, category and code'), '</label>
+	 		<label>', __('Currency, category and code'), '</label>
 	 		<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code" />
 		</field>
 		<field>
-			<label>', _('Currency, category and description'), '</label>
+			<label>', __('Currency, category and description'), '</label>
 			<input name="ItemOrder" type="radio" value="Description" />
 		</field>
 		</fieldset>',
 
 		'</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('PDF Price List') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View Price List') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('PDF Price List') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View Price List') . '" />
 			</div>
 	</form>';
 

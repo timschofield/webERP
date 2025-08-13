@@ -15,12 +15,12 @@ elseif (isset($_GET['Period'])) {
 if (isset($_POST['RunReport'])) {
 
 	if (!isset($SelectedPeriod)) {
-		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
+		prnMsg(__('A period or range of periods must be selected from the list box') , 'info');
 		include('includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
-		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
+		prnMsg(__('An account or range of accounts must be selected from the list box') , 'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -29,8 +29,8 @@ if (isset($_POST['RunReport'])) {
 
 	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-	$PDF->addInfo('Title', _('GL Account Report'));
-	$PDF->addInfo('Subject', _('GL Account Report'));
+	$PDF->addInfo('Title', __('GL Account Report'));
+	$PDF->addInfo('Subject', __('GL Account Report'));
 	$LineHeight = 12;
 	$PageNumber = 1;
 	$FontSize = 10;
@@ -80,7 +80,7 @@ if (isset($_POST['RunReport'])) {
 						gltrans.trandate,
 						gltrans.counterindex";
 
-		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
+		$ErrMsg = __('The transactions for account') . ' ' . $SelectedAccount . ' ' . __('could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
 
 		if ($YPos < ($Bottom_Margin + (5 * $LineHeight))) { //need 5 lines grace otherwise start new page
@@ -89,7 +89,7 @@ if (isset($_POST['RunReport'])) {
 		}
 
 		$YPos -= $LineHeight;
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $SelectedAccount . ' - ' . $AccountName . ' ' . ': ' . _('Listing for Period') . ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected);
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $SelectedAccount . ' - ' . $AccountName . ' ' . ': ' . __('Listing for Period') . ' ' . $FirstPeriodSelected . ' ' . __('to') . ' ' . $LastPeriodSelected);
 
 		if ($PandLAccount == True) {
 			$RunningTotal = 0;
@@ -101,13 +101,13 @@ if (isset($_POST['RunReport'])) {
 					WHERE gltotals.account = '" . $SelectedAccount . "'
 					AND gltotals.period < '" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The brought forward balance for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+			$ErrMsg = __('The brought forward balance for account') . ' ' . $SelectedAccount . ' ' . __('could not be retrieved');
 			$BfwdResult = DB_query($SQL, $ErrMsg);
 			$BfwdRow = DB_fetch_array($BfwdResult);
 			$RunningTotal = $BfwdRow['bfwd'];
 
 			$YPos -= $LineHeight;
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Brought Forward Balance'));
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Brought Forward Balance'));
 
 			if ($RunningTotal < 0) { //its a credit balance b/fwd
 				$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -124,7 +124,7 @@ if (isset($_POST['RunReport'])) {
 			if ($MyRow['periodno'] != $PeriodNo) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
 					$YPos -= $LineHeight;
-					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Period Total'));
+					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Period Total'));
 					if ($PeriodTotal < 0) { //its a credit balance b/fwd
 						$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					}
@@ -175,10 +175,10 @@ if (isset($_POST['RunReport'])) {
 		}
 		$YPos -= $LineHeight;
 		if ($PandLAccount == True) {
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Total Period Movement'));
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, __('Total Period Movement'));
 		}
 		else { /*its a balance sheet account*/
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Balance C/Fwd'));
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Balance C/Fwd'));
 		}
 		if ($RunningTotal < 0) {
 			$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -193,7 +193,7 @@ if (isset($_POST['RunReport'])) {
 	} /*end for each SelectedAccount */
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account']) == 0) {
-		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
+		prnMsg(__('An account or range of accounts must be selected from the list box') , 'info');
 		include('includes/footer.php');
 		exit();
 
@@ -205,12 +205,12 @@ if (isset($_POST['RunReport'])) {
 
 } /* end of if PrintReport button hit */
 else {
-	$Title = _('General Ledger Account Report');
+	$Title = __('General Ledger Account Report');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . __('General Ledger Account Inquiry') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
 
-	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
+	echo '<div class="page_help_text">' . __('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -220,9 +220,9 @@ else {
 
 	/*Show a form to allow input of criteria for the report */
 	echo '<fieldset>
-			<legend>', _('Report Criteria') , '</legend>
+			<legend>', __('Report Criteria') , '</legend>
 			<field>
-				<label for="Account">' . _('Selected Accounts') . ':</label>
+				<label for="Account">' . __('Selected Accounts') . ':</label>
 				<select name="Account[]" size="12" multiple="multiple">';
 	$SQL = "SELECT chartmaster.accountcode,
 				   chartmaster.accountname
@@ -246,7 +246,7 @@ else {
 	echo '</select>';
 
 	echo '<field>
-			<label for="Period">' . _('For Period range') . ':</label>
+			<label for="Period">' . __('For Period range') . ':</label>
 			<select Name=Period[] size="12" multiple="multiple">';
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
@@ -266,7 +266,7 @@ else {
 
 	//Select the tag
 	echo '<field>
-			<label for="tag">' . _('Select Tag') . ':</label>
+			<label for="tag">' . __('Select Tag') . ':</label>
 			<select name="tag">';
 
 	$SQL = "SELECT tagref,
@@ -275,7 +275,7 @@ else {
 				ORDER BY tagref";
 
 	$Result = DB_query($SQL);
-	echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
+	echo '<option value="-1">-1 - ' . __('All tags') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
@@ -289,7 +289,7 @@ else {
 	// End select tag
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="RunReport" value="' . _('Run Report') . '" />
+			<input type="submit" name="RunReport" value="' . __('Run Report') . '" />
 		</div>
 		</form>';
 
@@ -312,9 +312,9 @@ function NewPageHeader() {
 	$YPos = $Page_Height - $Top_Margin;
 	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 	$YPos -= $LineHeight;
-	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('GL Account Report'));
+	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('GL Account Report'));
 	$FontSize = 8;
-	$LeftOvers = $PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
+	$LeftOvers = $PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 	$YPos -= (2 * $LineHeight);
 
@@ -328,13 +328,13 @@ function NewPageHeader() {
 	/*set up the headings */
 	$XPos = $Left_Margin + 1;
 
-	$LeftOvers = $PDF->addTextWrap($XPos, $YPos, 30, $FontSize, _('Type') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(80, $YPos, 30, $FontSize, _('Reference') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(110, $YPos, 50, $FontSize, _('Date') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, _('Debit') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, _('Credit') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, _('Narrative') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, _('Tag') , 'centre');
+	$LeftOvers = $PDF->addTextWrap($XPos, $YPos, 30, $FontSize, __('Type') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(80, $YPos, 30, $FontSize, __('Reference') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(110, $YPos, 50, $FontSize, __('Date') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, __('Debit') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, __('Credit') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, __('Narrative') , 'centre');
+	$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, __('Tag') , 'centre');
 
 	$YPos = $YPos - (2 * $LineHeight);
 }

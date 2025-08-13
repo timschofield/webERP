@@ -6,9 +6,9 @@ $Result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(
 $MyRow = DB_fetch_row($Result);
 
 $graph = new Phplot\Phplot\phplot(1000, 500);
-$graph->SetTitle($MyRow[0] . ' ' . _('Usage'));
-$graph->SetXTitle(_('Month'));
-$graph->SetYTitle(_('Quantity'));
+$graph->SetTitle($MyRow[0] . ' ' . __('Usage'));
+$graph->SetXTitle(__('Month'));
+$graph->SetYTitle(__('Quantity'));
 $graph->SetBackgroundColor("wheat");
 $graph->SetTitleColor("blue");
 $graph->SetPlotType('bars');
@@ -98,20 +98,20 @@ if($_GET['StockLocation'] == 'All') {
 $MovtsResult = DB_query($SQL);
 
 if (DB_error_no() != 0) {
-    $Title = _('Stock Usage Graph Problem');
+    $Title = __('Stock Usage Graph Problem');
     include('includes/header.php');
-    echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
+    echo __('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
     if ($Debug == 1) {
-        echo '<br />' . _('The SQL that failed was') . $SQL;
+        echo '<br />' . __('The SQL that failed was') . $SQL;
     }
     include('includes/footer.php');
     exit();
 }
 
 if (DB_num_rows($MovtsResult) == 0) {
-    $Title = _('Stock Usage Graph Problem');
+    $Title = __('Stock Usage Graph Problem');
     include('includes/header.php');
-    prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
+    prnMsg(__('There are no movements of this item from the selected location to graph'),'info');
     include('includes/footer.php');
     exit();
 }

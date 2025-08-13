@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Work Order Costing');
+$Title = __('Work Order Costing');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
@@ -16,11 +16,11 @@ if (isset($_GET['WO'])) {
 	unset($SelectedWO);
 }
 
-echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . __('Back to Work Orders'). '</a>
 	<br />
 	<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $Title . '
+	__('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -30,8 +30,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (!isset($SelectedWO)) {
 	/* This page can only be called with a work order number */
 	echo '<div class="centre><a href="' . $RootPath . '/SelectWorkOrder.php">' .
-		_('Select a work order') . '</a></div>';
-	prnMsg(_('This page can only be opened if a work order has been selected.'),'info');
+		__('Select a work order') . '</a></div>';
+	prnMsg(__('This page can only be opened if a work order has been selected.'),'info');
 	include('includes/footer.php');
 	exit();
 } else {
@@ -40,7 +40,7 @@ if (!isset($SelectedWO)) {
 }
 
 
-$ErrMsg = _('Could not retrieve the details of the selected work order');
+$ErrMsg = __('Could not retrieve the details of the selected work order');
 $WOResult = DB_query("SELECT workorders.loccode,
 							locations.locationname,
 							workorders.requiredby,
@@ -54,7 +54,7 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
-	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
+	prnMsg(__('The selected work order item cannot be retrieved from the database'),'info');
 	include('includes/footer.php');
 	exit();
 }
@@ -63,11 +63,11 @@ $WorkOrderRow = DB_fetch_array($WOResult);
 
 echo '<table class="selection">
 	<tr>
-		<td class="label">' . _('Work order') . ':</td>
+		<td class="label">' . __('Work order') . ':</td>
 		<td>' . $_POST['WO']  . '</td>
-	 	<td class="label">' . _('Manufactured at') . ':</td>
+	 	<td class="label">' . __('Manufactured at') . ':</td>
 		<td>' . $WorkOrderRow['locationname'] . '</td>
-		<td class="label">' . _('Required By') . ':</td>
+		<td class="label">' . __('Required By') . ':</td>
 		<td>' . ConvertSQLDate($WorkOrderRow['requiredby']) . '</td>
 	</tr>
 	</table>
@@ -95,14 +95,14 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 
 echo  '<table class="selection">
 		<tr>
-			<th>' . _('Item') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity Required') . '</th>
-			<th>' . _('Units') . '</th>
-			<th>' . _('Quantity Received') . '</th>
-			<th>' . _('Status') . '</th>
-			<th>' . _('Receive') . '</th>
-			<th>' . _('Issue') . '</th>
+			<th>' . __('Item') . '</th>
+			<th>' . __('Description') . '</th>
+			<th>' . __('Quantity Required') . '</th>
+			<th>' . __('Units') . '</th>
+			<th>' . __('Quantity Received') . '</th>
+			<th>' . __('Status') . '</th>
+			<th>' . __('Receive') . '</th>
+			<th>' . __('Issue') . '</th>
 		</tr>';
 
 $TotalStdValueRecd =0;
@@ -114,9 +114,9 @@ while ($WORow = DB_fetch_array($WOItemsResult)){
 	 			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 	 			<td>' . $WORow['units'] . '</td>
 	 			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
-	 			<td class="number"><a href="'. $RootPath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Status') . '</a></td>
-	 			<td class="number"><a href="'. $RootPath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Receive') . '</a></td>
-	 			<td class="number"><a href="'. $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . _('Issue') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderStatus.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . __('Status') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderReceive.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . __('Receive') . '</a></td>
+	 			<td class="number"><a href="'. $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $WORow['stockid'] . '">' . __('Issue') . '</a></td>
  			</tr>';
 
 	$TotalStdValueRecd +=($WORow['stdcost']*$WORow['qtyrecd']);
@@ -127,15 +127,15 @@ echo '</table>
 	<table class="selection">';
 
 echo '<tr>
-		<th>' . _('Item') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Qty Reqd') . '</th>
-		<th>' . _('Cost Reqd') . '</th>
-		<th>' . _('Date Issued') . '</th>
-		<th>' . _('Issued Qty') . '</th>
-		<th>' . _('Issued Cost') . '</th>
-		<th>' . _('Usage Variance') . '</th>
-		<th>' . _('Cost Variance') . '</th>
+		<th>' . __('Item') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('Qty Reqd') . '</th>
+		<th>' . __('Cost Reqd') . '</th>
+		<th>' . __('Date Issued') . '</th>
+		<th>' . __('Issued Qty') . '</th>
+		<th>' . __('Issued Cost') . '</th>
+		<th>' . __('Usage Variance') . '</th>
+		<th>' . __('Cost Variance') . '</th>
 	</tr>';
 
 $RequirementsResult = DB_query("SELECT worequirements.stockid,
@@ -204,7 +204,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 								WHERE stockmoves.type=28
 								AND stockmoves.reference = '" . $_POST['WO'] . "'
 								AND stockmoves.stockid = '" . $RequirementsRow['stockid'] . "'",
-								_('Could not retrieve the issues of the item because:'));
+								__('Could not retrieve the issues of the item because:'));
 	$IssueQty =0;
 	$IssueCost=0;
 
@@ -287,7 +287,7 @@ $SQL = "SELECT stockmoves.stockid,
 						FROM worequirements
 					WHERE worequirements.wo='" . $_POST['WO'] . "')";
 
-$WOIssuesResult = DB_query($SQL,_('Could not get issues that were not required by the BOM because'));
+$WOIssuesResult = DB_query($SQL,__('Could not get issues that were not required by the BOM because'));
 
 if (DB_num_rows($WOIssuesResult)>0){
 	while ($WOIssuesRow = DB_fetch_array($WOIssuesResult)){
@@ -315,7 +315,7 @@ echo '<tr>
 		<td colspan="3"><hr /></td>
 	</tr>';
 echo '<tr>
-		<td colspan="2" class="number">' . _('Totals') . '</td>
+		<td colspan="2" class="number">' . __('Totals') . '</td>
 		<td></td>
 		<td class="number">' . locale_number_format($TotalReqdCost,$_SESSION['CompanyRecord']['decimalplaces'])  . '</td>
 		<td></td><td></td>
@@ -380,10 +380,10 @@ if (isset($_POST['Close'])) {
 										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $WORow['materialuseagevarac'] . "',
-										'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
+										'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
 										'" .round((-$TotalCostVar*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the work order variance could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
@@ -399,10 +399,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['stockact'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
 							'" . round((-$TotalCostVar*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the work order variance could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -417,10 +417,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of variance'), 0, 200) . "',
 							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the work order variance posting could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the WIP side of the work order variance posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}
@@ -438,7 +438,7 @@ if (isset($_POST['Close'])) {
 						lastcostupdate = CURRENT_DATE
 					WHERE stockid='" . $WORow['stockid'] . "'";
 
-			$ErrMsg = _('The cost details for the stock item could not be updated because');
+			$ErrMsg = __('The cost details for the stock item could not be updated because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} else { //we are standard costing post the variances
@@ -456,10 +456,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['materialuseagevarac'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of usage variance'), 0, 200) . "',
 							'" . round((-$TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the material usage variance could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the material usage variance could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -474,10 +474,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of usage variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of usage variance'), 0, 200) . "',
 							'" . round(($TotalUsageVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the usage variance posting could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the WIP side of the usage variance posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}//end if gl-stock linked and a usage variance exists
@@ -496,10 +496,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['purchpricevaract'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of cost variance'), 0, 200) . "',
 							'" . round((-$TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the cost variance could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the cost variance could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -514,10 +514,10 @@ if (isset($_POST['Close'])) {
 							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
-							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of cost variance'), 0, 200) . "',
+							'" . mb_substr($_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . __('share of cost variance'), 0, 200) . "',
 							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the cost variance posting could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL posting for the WIP side of the cost variance posting could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			} //end of if gl-stock integrated and there's a cost variance
@@ -525,25 +525,25 @@ if (isset($_POST['Close'])) {
 	} // end loop around the items on the work order
 
 	$CloseWOResult = DB_query("UPDATE workorders SET closed=1, closecomments = '". $_POST['CloseComments'] ."' WHERE wo='" .$_POST['WO'] . "'",
-				_('Could not update the work order to closed because:'),
-				_('The SQL used to close the work order was:'),
+				__('Could not update the work order to closed because:'),
+				__('The SQL used to close the work order was:'),
 				true);
 	$DeleteAnyWOSerialNos = DB_query("DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'",
-									_('Could not delete the predefined work order serial numbers'),
-									_('The SQL used to delete the predefined serial numbers was:'),
+									__('Could not delete the predefined work order serial numbers'),
+									__('The SQL used to delete the predefined serial numbers was:'),
 									true);
 	DB_Txn_Commit();
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
-			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');
+			prnMsg(__('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');
 		} else {
-			prnMsg(_('The work order has been closed and general ledger entries made for the variances on the work order'),'success');
+			prnMsg(__('The work order has been closed and general ledger entries made for the variances on the work order'),'success');
 		}
 	} else {
 		if ($_SESSION['WeightedAverageCosting']==1){
-			prnMsg(_('The item costs resulting from the work order have been applied against the weighted average stock value of the items on the work order, and the work order has been closed'),'success');
+			prnMsg(__('The item costs resulting from the work order have been applied against the weighted average stock value of the items on the work order, and the work order has been closed'),'success');
 		} else {
-			prnMsg(_('The work order has been closed'),'success');
+			prnMsg(__('The work order has been closed'),'success');
 		}
 	}
 	$WorkOrderRow['closed']=1;
@@ -570,13 +570,13 @@ if ($WorkOrderRow['closed']==0){
 	echo '<tr>
 			<td colspan="9">
 				<div class="centre">
-					<input type="submit" name="Close" value="' . _('Close This Work Order') . '" onclick="return confirm(\'' . _('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . _('Are You Sure?') . '\');" />
+					<input type="submit" name="Close" value="' . __('Close This Work Order') . '" onclick="return confirm(\'' . __('Closing the work order takes the variances to the general ledger (if integrated). The work order will no longer be able to have manufactured goods received entered against it or materials issued to it.') . '  ' . __('Are You Sure?') . '\');" />
 				</div>
 			</td>
 		</tr>';
 } else {
 	echo '<tr>
-			<td colspan="9">' . _('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td>
+			<td colspan="9">' . __('This work order is closed and cannot accept additional issues of materials or receipts of manufactured items') . '</td>
 		</tr>';
 }
 echo '</table>

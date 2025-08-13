@@ -170,16 +170,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if (DB_error_no()!=0){
 		include('includes/header.php');
-		echo '<br />' . _('An error occurred getting the orders details');
+		echo '<br />' . __('An error occurred getting the orders details');
 		if ($Debug==1){
-			echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
+			echo '<br />' . __('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 		}
 		include('includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result)==0){
-		$Title=_('Order Status Report - No Data');
+		$Title=__('Order Status Report - No Data');
 		include('includes/header.php');
-		prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');
+		prnMsg(__('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' '. $_POST['ToDate'] . '. ' . __('Please try again selecting a different date range'),'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -197,7 +197,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$CategoryDescription = $MyRow[1];
 	} else {
 		$WhereCategory = "";
-		$CategoryDescription = _('All');
+		$CategoryDescription = __('All');
 	}
 
 	$HTML = '';
@@ -219,10 +219,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-				' . _('Order Status Listing') . '<br />
-				' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-				' . _('Category') . ' - ' . $_POST['CategoryID'] . ' - ' . $CategoryDescription . '<br />
-				' . _('Location') . ' - ' . $_POST['Location'] . '<br />
+				' . __('Order Status Listing') . '<br />
+				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('Category') . ' - ' . $_POST['CategoryID'] . ' - ' . $CategoryDescription . '<br />
+				' . __('Location') . ' - ' . $_POST['Location'] . '<br />
 			</div>';
 
 	$HTML .= '<table>
@@ -231,12 +231,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		if ($MyRow['orderno']!=$OrderNo	){
 			$HTML .= '<tr>
-						<th>' . _('Order') . '</th>
-						<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Ord Date') . '</th>
-						<th>' . _('Location') . '</th>
-						<th>' . _('Status') . '</th>
+						<th>' . __('Order') . '</th>
+						<th>' . __('Customer') . '</th>
+						<th>' . __('Branch') . '</th>
+						<th>' . __('Ord Date') . '</th>
+						<th>' . __('Location') . '</th>
+						<th>' . __('Status') . '</th>
 					</tr>';
 
 			$HTML .= '<tr>
@@ -247,9 +247,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td>' . $MyRow['locationname'] . '</td>';
 
 			if ($MyRow['printedpackingslip']==1){
-				$PackingSlipPrinted = _('Printed') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']);
+				$PackingSlipPrinted = __('Printed') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']);
 			} else {
-				$PackingSlipPrinted =_('Not yet printed');
+				$PackingSlipPrinted =__('Not yet printed');
 			}
 
 			$HTML .= '<td>' . $PackingSlipPrinted . '</td>
@@ -257,11 +257,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			/*Its not the first line */
 			$OrderNo = $MyRow['orderno'];
 			$HTML .= '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Ordered') . '</th>
-						<th>' . _('Invoiced') . '</th>
-						<th>' . _('Outstanding') . '</th>
+						<th>' . __('Code') . '</th>
+						<th>' . __('Description') . '</th>
+						<th>' . __('Ordered') . '</th>
+						<th>' . __('Invoiced') . '</th>
+						<th>' . __('Outstanding') . '</th>
 					</tr>';
 
 		}
@@ -274,7 +274,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($MyRow['quantity']>$MyRow['qtyinvoiced']){
 			$HTML .= '<td class="number">' . locale_number_format($MyRow['quantity']-$MyRow['qtyinvoiced'],$MyRow['decimalplaces']). '</td>';
 		} else {
-			$HTML .= '<td>' . _('Complete') . '</td>';
+			$HTML .= '<td>' . __('Complete') . '</td>';
 		}
 
 		$HTML .= '</tr>';
@@ -294,7 +294,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -313,41 +313,41 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		// Output the generated PDF to Browser
 		$dompdf->stream($_SESSION['DatabaseName'] . '_OrderStatus_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	} else {
-		$Title = _('Order Status Report');
+		$Title = __('Order Status Report');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Order Status Report') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Order Status Report') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
 } else { /*The option to print PDF was not hit so display form */
 
-	$Title = _('Order Status Report');
+	$Title = __('Order Status Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="FromDate">' . _('Enter the date from which orders are to be listed') . ':</label>
+				<label for="FromDate">' . __('Enter the date from which orders are to be listed') . ':</label>
 				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y'))) . '" />
 			</field>
 			<field>
-				<label for="ToDate">' . _('Enter the date to which orders are to be listed') . ':</label>
+				<label for="ToDate">' . __('Enter the date to which orders are to be listed') . ':</label>
 				<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
 			</field>
 			<field>
-				<label for="CategoryID">' . _('Inventory Category') . '</label>';
+				<label for="CategoryID">' . __('Inventory Category') . '</label>';
 
 	$SQL = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	$Result = DB_query($SQL);
 
 	echo '<select required="required" name="CategoryID">
-			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
+			<option selected="selected" value="All">' . __('Over All Categories') . '</option>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
@@ -356,9 +356,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Location">' . _('Inventory Location') . ':</label>
+			<label for="Location">' . __('Inventory Location') . ':</label>
 			<select name="Location">
-				<option selected="selected" value="All">' . _('All Locations') . '</option>';
+				<option selected="selected" value="All">' . __('All Locations') . '</option>';
 
 	$Result = DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -368,17 +368,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="BackOrders">' . _('Back Order Only') . ':</label>
+			<label for="BackOrders">' . __('Back Order Only') . ':</label>
 			<select name="BackOrders">
-				<option value="Yes">' . _('Only Show Back Orders') . '</option>
-				<option selected="selected" value="No">' . _('Show All Orders') . '</option>
+				<option value="Yes">' . __('Only Show Back Orders') . '</option>
+				<option selected="selected" value="No">' . __('Show All Orders') . '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>';
 	echo '</form>';
 	include('includes/footer.php');

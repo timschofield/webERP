@@ -3,20 +3,20 @@
 include('includes/session.php');
 if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
 if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
-$Title = _('General Ledger Journal Inquiry');
+$Title = __('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
 
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/money_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/money_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>';
-	echo '<legend>' . _('Selection Criteria') . '</legend>';
+	echo '<legend>' . __('Selection Criteria') . '</legend>';
 
 	$SQL = "SELECT typeid,systypes.typeno,typename FROM
 		systypes INNER JOIN gltrans ON systypes.typeid=gltrans.type
@@ -24,7 +24,7 @@ if (!isset($_POST['Show'])) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		echo '<field>
-				<label for="TransType">' . _('Transaction Type') . ' </label>
+				<label for="TransType">' . __('Transaction Type') . ' </label>
 				<select name="TransType">';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (!isset($MaxJournalNumberUsed)) {
@@ -41,9 +41,9 @@ if (!isset($_POST['Show'])) {
 	}
 
 	echo '<field>
-			<label>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</label>
-			' . _('From') . ':' . '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '
-			' . _('To') . ':' . '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '
+			<label>' . __('Journal Number Range') . ' (' . __('Between') . ' 1 ' . __('and') . ' ' . $MaxJournalNumberUsed . ')</label>
+			' . __('From') . ':' . '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '
+			' . __('To') . ':' . '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '
 		</field>';
 
 	$SQL = "SELECT MIN(trandate) AS fromdate,
@@ -60,14 +60,14 @@ if (!isset($_POST['Show'])) {
 	}
 
 	echo '<field>
-			<label>' . _('Journals Dated Between') . ':</label>
-			' . _('From') . ':' . '<input name="FromTransDate" type="date" maxlength="10" size="11" value="' . $FromDate . '" />
-			' . _('To') . ':' . '<input name="ToTransDate" type="date" maxlength="10" size="11" value="' . $ToDate . '" />
+			<label>' . __('Journals Dated Between') . ':</label>
+			' . __('From') . ':' . '<input name="FromTransDate" type="date" maxlength="10" size="11" value="' . $FromDate . '" />
+			' . __('To') . ':' . '<input name="ToTransDate" type="date" maxlength="10" size="11" value="' . $ToDate . '" />
 		</field>';
 
 	echo '</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="Show" value="' . _('Show transactions') . '" />
+			<input type="submit" name="Show" value="' . __('Show transactions') . '" />
 		</div>';
 	echo '</form>';
 }
@@ -93,18 +93,18 @@ else {
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no transactions for this account in the date range selected') , 'info');
+		prnMsg(__('There are no transactions for this account in the date range selected') , 'info');
 	}
 	else {
 		echo '<table class="selection">';
 		echo '<tr>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Journal Number') . '</th>
-				<th>' . _('Account Code') . '</th>
-				<th>' . _('Account Description') . '</th>
-				<th>' . _('Narrative') . '</th>
-				<th>' . _('Amount') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-				<th>' . _('Tag') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('Journal Number') . '</th>
+				<th>' . __('Account Code') . '</th>
+				<th>' . __('Account Description') . '</th>
+				<th>' . __('Narrative') . '</th>
+				<th>' . __('Amount') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+				<th>' . __('Tag') . '</th>
 				<th colspan="2"></th>
 			</tr>';
 
@@ -153,8 +153,8 @@ else {
 						<td>' . $MyRow['accountname'] . '</td>';
 			}
 			else {
-				echo '<td>' . _('Others') . '</td>
-						<td>' . _('Other GL Accounts') . '</td>';
+				echo '<td>' . __('Others') . '</td>
+						<td>' . __('Other GL Accounts') . '</td>';
 			}
 
 			echo '<td>' . $MyRow['narrative'] . '</td>
@@ -163,10 +163,10 @@ else {
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . _('Print') . '</a>
+						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
 					</td>';
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . _('View') . '</a>
+						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
 					</td></tr>';
 			}
 
@@ -179,7 +179,7 @@ else {
 	} //end if no bank trans in the range to show
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . _('Select Another Date') . '" /></div>';
+	echo '<br /><div class="centre"><input type="submit" name="Return" value="' . __('Select Another Date') . '" /></div>';
 	echo '</form>';
 }
 include('includes/footer.php');

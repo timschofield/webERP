@@ -4,7 +4,7 @@
 include('includes/session.php');
 if (isset($_POST['TransAfterDate'])) {$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
-$Title = _('Customer Account');// Screen identification.
+$Title = __('Customer Account');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.
 $BookMark = 'CustomerAccount';// Anchor's id in the manual's html document.
 include('includes/header.php');
@@ -12,8 +12,8 @@ include('includes/header.php');
 // always figure out the SQL required from the inputs available
 
 if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
-	prnMsg(_('To display the account a customer must first be selected from the customer selection screen'), 'info');
-	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', _('Select a Customer Account to Display'), '</a></div>';
+	prnMsg(__('To display the account a customer must first be selected from the customer selection screen'), 'info');
+	echo '<br /><div class="centre"><a href="', $RootPath, '/SelectCustomer.php">', __('Select a Customer Account to Display'), '</a></div>';
 	include('includes/footer.php');
 	exit();
 } else {
@@ -26,7 +26,7 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
-	$ErrMsg = _('Failed to retrieve sales data');
+	$ErrMsg = __('Failed to retrieve sales data');
 	$Result = DB_query($SQL, $ErrMsg);
 	if(DB_num_rows($Result)>0) {
 		while($MyRow = DB_fetch_array($Result)) {
@@ -35,12 +35,12 @@ if ($_SESSION['SalesmanLogin'] != '') {
 			}
 		}
 	} else {
-		prnMsg(_('There is no salesman data set for this customer'),'error');
+		prnMsg(__('There is no salesman data set for this customer'),'error');
 		include('includes/footer.php');
 		exit();
 	}
 	if (!$ViewAllowed) {
-		prnMsg(_('You have no authority to review this customer account'),'error');
+		prnMsg(__('You have no authority to review this customer account'),'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -54,7 +54,7 @@ if (!isset($_POST['TransAfterDate'])) {
 $Transactions = array();
 
 /*now get all the settled transactions which were allocated this month */
-$ErrMsg = _('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $CustomerID . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $CustomerID . ' ' . __('from the database');
 if ($_SESSION['Show_Settled_LastMonth']==1) {
 	$SQL = "SELECT DISTINCT debtortrans.id,
 						debtortrans.type,
@@ -89,7 +89,7 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 }
 
 /*now get all the outstanding transaction ie Settled=0 */
-$ErrMsg =  _('There was a problem retrieving the outstanding transactions for') . ' ' .	$CustomerID . ' '. _('from the database') . '.';
+$ErrMsg =  __('There was a problem retrieving the outstanding transactions for') . ' ' .	$CustomerID . ' '. __('from the database') . '.';
 $SQL = "SELECT debtortrans.id,
 			debtortrans.type,
 			systypes.typename,
@@ -201,17 +201,17 @@ $SQL .= " GROUP BY
 			holdreasons.dissallowinvoices,
 			holdreasons.reasondescription";
 
-$ErrMsg = _('The customer details could not be retrieved by the SQL because');
+$ErrMsg = __('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL, $ErrMsg);
 
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
 echo '<div class="noPrint centre">
-		<a href="', $RootPath, '/SelectCustomer.php">', _('Back to Customer Screen'), '</a>
+		<a href="', $RootPath, '/SelectCustomer.php">', __('Back to Customer Screen'), '</a>
 	</div>';
 
 echo '<table width="100%">
-		<tr><th colspan="2">', _('Customer Statement For'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '</th></tr>
+		<tr><th colspan="2">', __('Customer Statement For'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '</th></tr>
 		<tr><td colspan="2">', $CustomerRecord['address1'], '</td></tr>';
 if($CustomerRecord['address2']!='') {// If not empty, output this line.
 	echo '<tr><td colspan="2">', $CustomerRecord['address2'], '</td></tr>';
@@ -221,21 +221,21 @@ if($CustomerRecord['address3']!='') {// If not empty, output this line.
 }
 echo '	<tr><td colspan="2">', $CustomerRecord['address4'], '</td></tr>
 		<tr><td colspan="2">', $CustomerRecord['address5'], ' ', $CustomerRecord['address6'], '</td></tr>
-		<tr><th>', _('All amounts stated in'), ':</th><td>', $CustomerRecord['currency'], '</td></tr>
-		<tr><th>', _('Terms'), ':</th><td>', $CustomerRecord['terms'], '</th></tr>
-		<tr><th>', _('Credit Limit'), ':</th><td>', locale_number_format($CustomerRecord['creditlimit'], 0), '</td></tr>
-		<tr><th>', _('Credit Status'), ':</th><td>', $CustomerRecord['reasondescription'], '</td></tr>
+		<tr><th>', __('All amounts stated in'), ':</th><td>', $CustomerRecord['currency'], '</td></tr>
+		<tr><th>', __('Terms'), ':</th><td>', $CustomerRecord['terms'], '</th></tr>
+		<tr><th>', __('Credit Limit'), ':</th><td>', locale_number_format($CustomerRecord['creditlimit'], 0), '</td></tr>
+		<tr><th>', __('Credit Status'), ':</th><td>', $CustomerRecord['reasondescription'], '</td></tr>
 	</table>';
 
 if ($CustomerRecord['dissallowinvoices'] != 0) {
-	echo '<br /><b><font color="red" size="4">', _('ACCOUNT ON HOLD'), '</font></b><br />';
+	echo '<br /><b><font color="red" size="4">', __('ACCOUNT ON HOLD'), '</font></b><br />';
 }
 echo '<form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="centre noPrint">';
 echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
-echo _('Show all transactions after'), ':
+echo __('Show all transactions after'), ':
 		<input type="date" maxlength="10" name="TransAfterDate" required="required" size="11" tabindex="1" value="', FormatDateForSQL($_POST['TransAfterDate']), '" />',
-		'<input name="Refresh Inquiry" tabindex="3" type="submit" value="', _('Refresh Inquiry'), '" />
+		'<input name="Refresh Inquiry" tabindex="3" type="submit" value="', __('Refresh Inquiry'), '" />
 	</form>';
 
 /* Show a table of the invoices returned by the SQL. */
@@ -243,17 +243,17 @@ echo _('Show all transactions after'), ':
 echo '<br /><table class="selection">
 	<thead>
 		<tr>
-			<th class="SortedColumn">', _('Type'), '</th>
-			<th class="SortedColumn">', _('Number'), '</th>
-			<th class="SortedColumn">', _('Date'), '</th>
-			<th>', _('Branch'), '</th>
-			<th class="SortedColumn">', _('Reference'), '</th>
-			<th>', _('Comments'), '</th>
-			<th>', _('Order'), '</th>
-			<th>', _('Charges'), '</th>
-			<th>', _('Credits'), '</th>
-			<th>', _('Allocated'), '</th>
-			<th>', _('Balance'), '</th>
+			<th class="SortedColumn">', __('Type'), '</th>
+			<th class="SortedColumn">', __('Number'), '</th>
+			<th class="SortedColumn">', __('Date'), '</th>
+			<th>', __('Branch'), '</th>
+			<th class="SortedColumn">', __('Reference'), '</th>
+			<th>', __('Comments'), '</th>
+			<th>', __('Order'), '</th>
+			<th>', __('Charges'), '</th>
+			<th>', __('Credits'), '</th>
+			<th>', __('Allocated'), '</th>
+			<th>', __('Balance'), '</th>
 			<th class="noPrint" colspan="4">&nbsp;</th>
 		</tr>
 	</thead><tbody>';
@@ -267,10 +267,10 @@ if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
 foreach ($Transactions as $MyRow) {
 
 	if ($MyRow['settled']==1 AND $OutstandingOrSettled=='') {
-		echo '<tr><th colspan="11">', _('TRANSACTIONS SETTLED SINCE'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
+		echo '<tr><th colspan="11">', __('TRANSACTIONS SETTLED SINCE'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
 		$OutstandingOrSettled='Settled';
 	} elseif (($OutstandingOrSettled=='Settled' OR $OutstandingOrSettled=='') AND $MyRow['settled']==0) {
-		echo '<tr><th colspan="11">', _('OUTSTANDING TRANSACTIONS'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
+		echo '<tr><th colspan="11">', __('OUTSTANDING TRANSACTIONS'), ' ', $_POST['TransAfterDate'], '</th><th class="noPrint" colspan="4">&nbsp;</th></tr>';
 		$OutstandingOrSettled='Outstanding';
 	}
 
@@ -289,14 +289,14 @@ foreach ($Transactions as $MyRow) {
 			<td>&nbsp;</td>
 			<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
-			<td class="noPrint" title="', _('Click to preview the invoice'), '">
-				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ', _('HTML'), '</a>
+			<td class="noPrint" title="', __('Click to preview the invoice'), '">
+				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ', __('HTML'), '</a>
 			</td>
-			<td class="noPrint" title="', _('Click for PDF'), '">
-				<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', _('PDF'), '</a>
+			<td class="noPrint" title="', __('Click for PDF'), '">
+				<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', __('PDF'), '</a>
 			</td>
-			<td class="noPrint" title="', _('Click to email the invoice'), '">
-				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', _('Email'), '</a>
+			<td class="noPrint" title="', __('Click to email the invoice'), '">
+				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 			</td>
 			<td class="noPrint">&nbsp;</td>
 		</tr>';
@@ -314,17 +314,17 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
-				<td class="noPrint" title="', _('Click to preview the credit note'), '">
-					<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', _('HTML'), '</a>
+				<td class="noPrint" title="', __('Click to preview the credit note'), '">
+					<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" />', __('HTML'), '</a>
 				</td>
-				<td class="noPrint" title="', _('Click for PDF'), '">
-					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" />', _('PDF'), '</a>
+				<td class="noPrint" title="', __('Click for PDF'), '">
+					<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" />', __('PDF'), '</a>
 				</td>
-				<td class="noPrint" title="', _('Click to email the credit note'), '">
-					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', _('Email'), '</a>
+				<td class="noPrint" title="', __('Click to email the credit note'), '">
+					<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Credit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>
 				</td>
-				<td class="noPrint" title="', _('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', _('Allocation'), '</a>
+				<td class="noPrint" title="', __('Click to allocate funds'), '">
+					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 			</tr>';
 
@@ -344,8 +344,8 @@ foreach ($Transactions as $MyRow) {
 				<td class="number">', locale_number_format($MyRow['totalamount'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 				<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
-				<td class="noPrint" title="', _('Click to allocate funds'), '">
-					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', _('Allocation'), '</a>
+				<td class="noPrint" title="', __('Click to allocate funds'), '">
+					<a href="', $RootPath, '/CustomerAllocations.php?AllocTrans=', $MyRow['id'], '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" />', __('Allocation'), '</a>
 				</td>
 				<td class="noPrint">&nbsp;</td>
 				<td class="noPrint">&nbsp;</td>
@@ -382,11 +382,11 @@ echo '</tbody></table>
 	<br />
 	<table class="selection" width="70%">
 		<tr>
-			<th style="width:20%">', _('Total Balance'), '</th>
-			<th style="width:20%">', _('Current'), '</th>
-			<th style="width:20%">', _('Now Due'), '</th>
-			<th style="width:20%">', $_SESSION['PastDueDays1'], '-', $_SESSION['PastDueDays2'], ' ', _('Days Overdue'), '</th>
-			<th style="width:20%">', _('Over'), ' ', $_SESSION['PastDueDays2'], ' ', _('Days Overdue'), '</th>
+			<th style="width:20%">', __('Total Balance'), '</th>
+			<th style="width:20%">', __('Current'), '</th>
+			<th style="width:20%">', __('Now Due'), '</th>
+			<th style="width:20%">', $_SESSION['PastDueDays1'], '-', $_SESSION['PastDueDays2'], ' ', __('Days Overdue'), '</th>
+			<th style="width:20%">', __('Over'), ' ', $_SESSION['PastDueDays2'], ' ', __('Days Overdue'), '</th>
 		</tr>
 		<tr>
 			<td class="number">', locale_number_format($CustomerRecord['balance'], $CustomerRecord['decimalplaces']), '</td>

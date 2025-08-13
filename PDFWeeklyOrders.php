@@ -14,9 +14,9 @@ $_POST['ToDate']= FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate . ' - 7 days'));
 $Recipients = GetMailList('WeeklyOrders');
 if (sizeOf($Recipients) == 0) {
-	$Title = _('Weekly Orders') . ' - ' . _('Problem Report');
+	$Title = __('Weekly Orders') . ' - ' . __('Problem Report');
 	include('includes/header.php');
-	prnMsg( _('There are no members of the Weekly Orders Recipients email group'), 'warn');
+	prnMsg( __('There are no members of the Weekly Orders Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
@@ -50,17 +50,17 @@ $Result = DB_query($SQL,'','',false,false); //dont trap errors here
 
 if (DB_error_no()!=0){
 	include('includes/header.php');
-	echo '<br />' . _('An error occurred getting the orders details');
+	echo '<br />' . __('An error occurred getting the orders details');
 	if ($Debug==1){
-		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
+		echo '<br />' . __('The SQL used to get the orders that failed was') . '<br />' . $SQL;
 	}
 	include('includes/footer.php');
 	exit();
 }
 $PaperSize="Letter_Landscape";
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title',_('Weekly Orders Report'));
-$pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+$pdf->addInfo('Title',__('Weekly Orders Report'));
+$pdf->addInfo('Subject',__('Orders from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate']);
 $LineHeight=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
@@ -77,16 +77,16 @@ $Col9=570;
 $Col10=610;
 $Col11=660;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col1,$YPos,$Col2-$Col1-5,$FontSize,_('Order'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,_('Customer'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col3,$YPos,$Col4-$Col3-5,$FontSize,_('Order Date'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col4,$YPos,$Col5-$Col4-5,$FontSize,_('Item'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col5,$YPos,$Col6-$Col5-5,$FontSize,_('Description'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col6,$YPos,$Col7-$Col6-5,$FontSize,_('Quantity'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col7,$YPos,$Col8-$Col7-5,$FontSize,_('Sales'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,_('Cost'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,_('GP %'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col10,$YPos,$Col11-$Col10-5,$FontSize,_('Status'), 'Left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col1,$YPos,$Col2-$Col1-5,$FontSize,__('Order'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,__('Customer'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col3,$YPos,$Col4-$Col3-5,$FontSize,__('Order Date'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col4,$YPos,$Col5-$Col4-5,$FontSize,__('Item'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col5,$YPos,$Col6-$Col5-5,$FontSize,__('Description'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col6,$YPos,$Col7-$Col6-5,$FontSize,__('Quantity'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col7,$YPos,$Col8-$Col7-5,$FontSize,__('Sales'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,__('Cost'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col9,$YPos,$Col10-$Col9-5,$FontSize,__('GP %'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col10,$YPos,$Col11-$Col10-5,$FontSize,__('Status'), 'Left');
 
 $YPos-=$LineHeight;
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
@@ -100,9 +100,9 @@ while ($MyRow=DB_fetch_array($Result)){
 	} else {
 		$Qty=$MyRow['quantity'];
 		if ($MyRow['qtyinvoiced']==0) {
-			$Status= _('Ordered');
+			$Status= __('Ordered');
 		} else {
-			$Status= _('Partial');
+			$Status= __('Partial');
 		}
 	}
 	$SalesValue=$Qty*$MyRow['unitprice']*(1-$MyRow['discountpercent']);
@@ -137,7 +137,7 @@ if ($TotalSalesValue <> 0) {
 } else {
 	$TotalGP=0;
 }
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,_('Total Order Amounts'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,__('Total Order Amounts'), 'left');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col6,$YPos,$Col7-$Col6-5,$FontSize,locale_number_format($TotalSalesVolume,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col7,$YPos,$Col8-$Col7-5,$FontSize,locale_number_format($TotalSalesValue,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,locale_number_format($TotalSalesCost,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
@@ -171,7 +171,7 @@ $SQL = "SELECT 	trandate,
 			AND trandate>='" . $_POST['FromDate']  . "'
 			AND trandate<='" . $_POST['ToDate']  . "'";
 
-$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+$ErrMsg = __('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
 $SalesResult = DB_query($SQL, $ErrMsg);
 while ($DaySalesRow=DB_fetch_array($SalesResult)) {
 	$TotalSalesValue += $DaySalesRow['salesvalue'];
@@ -183,7 +183,7 @@ if ($TotalSalesValue <> 0) {
 } else {
 	$TotalGP=0;
 }
-$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,_('Monthly Invoiced Total'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+$Col2,$YPos,$Col3-$Col2-5,$FontSize,__('Monthly Invoiced Total'), 'left');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col6,$YPos,$Col7-$Col6-5,$FontSize,locale_number_format($TotalSalesVolume,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col7,$YPos,$Col8-$Col7-5,$FontSize,locale_number_format($TotalSalesValue,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+$Col8,$YPos,$Col9-$Col8-5,$FontSize,locale_number_format($TotalSalesCost,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
@@ -198,24 +198,24 @@ $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 $Attachment = $mail->getFile($FileName);
 SendEmailFromWebERP($SysAdminEmail,
 					$Recipients,
-					_('Weekly Orders Report'),
-					_('Please find the weekly order report'),
+					__('Weekly Orders Report'),
+					__('Please find the weekly order report'),
 					array($FileName)
 				);
 
 if($Result){
-		$Title = _('Print Weekly Orders');
+		$Title = __('Print Weekly Orders');
 		include('includes/header.php');
-		prnMsg(_('The Weekly Orders report has been mailed'),'success');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('The Weekly Orders report has been mailed'),'success');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 
 }else{
-		$Title = _('Print Weekly Orders Error');
+		$Title = __('Print Weekly Orders Error');
 		include('includes/header.php');
-		prnMsg(_('There are errors lead to mails not sent'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('There are errors lead to mails not sent'),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 

@@ -29,7 +29,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
                                             '" width="' . $Width .
                                             '" height="' . $Height . '" />';
     } else {
-        $ImageLink = _('No Image');
+        $ImageLink = __('No Image');
     }
    return $ImageLink;
 }

@@ -84,7 +84,7 @@ function GetAPIErrorMessages( $errcodes )
 	    else
 		$rm[] = $ErrorDescription[$errnum];
 	} else {
-		$rm[] = _('** Error Code Not Defined **');
+		$rm[] = __('** Error Code Not Defined **');
 	}
 	// Add this array to returned array.
 	$retmsg[] = $rm;
@@ -118,7 +118,7 @@ function DoSetup()
 				if (isset($_SESSION['MonthsAuditTrail'])){
 				     $SQL = "DELETE FROM audittrail
 						    WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-					$ErrMsg = _('There was a problem deleting expired audit-trail history');
+					$ErrMsg = __('There was a problem deleting expired audit-trail history');
 				    $Result = DB_query($SQL);
 				}
 			    $_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');

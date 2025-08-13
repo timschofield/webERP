@@ -3,7 +3,7 @@
 
 
 include('includes/session.php');
-$Title = _('General Ledger Account Report');
+$Title = __('General Ledger Account Report');
 
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
@@ -17,9 +17,9 @@ elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
 
-echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . __('General Ledger Account Inquiry') . '" alt="" />' . ' ' . __('General Ledger Account Report') . '</p>';
 
-echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
+echo '<div class="page_help_text">' . __('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -29,9 +29,9 @@ $DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') , 0, Date('Y')));
 
 /*Show a form to allow input of criteria for the report */
 echo '<fieldset>
-		<legend>', _('Report Criteria') , '</legend>
+		<legend>', __('Report Criteria') , '</legend>
 		<field>
-			<label for="Account">' . _('Selected Accounts') . ':</label>
+			<label for="Account">' . __('Selected Accounts') . ':</label>
 			<select name="Account[]" size="12" multiple="multiple">';
 $SQL = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
@@ -53,7 +53,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Period">' . _('For Period range') . ':</label>
+		<label for="Period">' . __('For Period range') . ':</label>
 		<select name="Period[]" size="12" multiple="multiple">';
 $SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($SQL);
@@ -73,7 +73,7 @@ echo '</select>
 
 //Select the tag
 echo '<field>
-		<label for="tag">' . _('Select Tag') . ':</label>
+		<label for="tag">' . __('Select Tag') . ':</label>
 		<select name="tag">';
 
 $SQL = "SELECT tagref,
@@ -82,7 +82,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $Result = DB_query($SQL);
-echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
+echo '<option value="-1">-1 - ' . __('All tags') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
@@ -97,7 +97,7 @@ echo '</select>
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="MakeCSV" value="' . _('Make CSV File') . '" />
+		<input type="submit" name="MakeCSV" value="' . __('Make CSV File') . '" />
 	</div>
 </form>';
 
@@ -106,12 +106,12 @@ echo '<div class="centre">
 if (isset($_POST['MakeCSV'])) {
 
 	if (!isset($SelectedPeriod)) {
-		prnMsg(_('A period or range of periods must be selected from the list box') , 'info');
+		prnMsg(__('A period or range of periods must be selected from the list box') , 'info');
 		include('includes/footer.php');
 		exit();
 	}
 	if (!isset($_POST['Account'])) {
-		prnMsg(_('An account or range of accounts must be selected from the list box') , 'info');
+		prnMsg(__('An account or range of accounts must be selected from the list box') , 'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -125,7 +125,7 @@ if (isset($_POST['MakeCSV'])) {
 	$fp = fopen($FileName, 'w');
 
 	if ($fp == FALSE) {
-		prnMsg(_('Could not open or create the file under') . ' ' . $FileName, 'error');
+		prnMsg(__('Could not open or create the file under') . ' ' . $FileName, 'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -177,10 +177,10 @@ if (isset($_POST['MakeCSV'])) {
 					gltrans.counterindex";
 
 
-		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
+		$ErrMsg = __('The transactions for account') . ' ' . $SelectedAccount . ' ' . __('could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
 
-		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period') . ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected . "\n");
+		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . __('for period') . ' ' . $FirstPeriodSelected . ' ' . __('to') . ' ' . $LastPeriodSelected . "\n");
 		if ($PandLAccount == True) {
 			$RunningTotal = 0;
 		}
@@ -191,16 +191,16 @@ if (isset($_POST['MakeCSV'])) {
 					WHERE gltotals.account = '" . $SelectedAccount . "'
 					AND gltotals.period < '" . $FirstPeriodSelected . "'";
 
-			$ErrMsg = _('The opening balance for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
+			$ErrMsg = __('The opening balance for account') . ' ' . $SelectedAccount . ' ' . __('could not be retrieved');
 			$BalanceResult = DB_query($SQL, $ErrMsg);
 			$BalanceRow = DB_fetch_array($BalanceResult);
 			$RunningTotal = $BalanceRow['bfwd'];
 
 			if ($RunningTotal < 0) {
-				fwrite($fp, $SelectedAccount . ', ' . $FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,,' . -$RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ', ' . $FirstPeriodSelected . ', ' . __('Brought Forward Balance') . ',,,,' . -$RunningTotal . "\n");
 			}
 			else {
-				fwrite($fp, $SelectedAccount . ', ' . $FirstPeriodSelected . ', ' . _('Brought Forward Balance') . ',,,' . $RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ', ' . $FirstPeriodSelected . ', ' . __('Brought Forward Balance') . ',,,' . $RunningTotal . "\n");
 			}
 		}
 		$PeriodTotal = 0;
@@ -212,10 +212,10 @@ if (isset($_POST['MakeCSV'])) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
 					// Removed the query to chartdetails here as it's no longer needed
 					if ($PeriodTotal < 0) {
-						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal . "\n");
+						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . __('Period Total') . ',,,,' . -$PeriodTotal . "\n");
 					}
 					else {
-						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . $PeriodTotal . "\n");
+						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . __('Period Total') . ',,,' . $PeriodTotal . "\n");
 					}
 				}
 				$PeriodNo = $MyRow['periodno'];
@@ -242,32 +242,32 @@ if (isset($_POST['MakeCSV'])) {
 		} //end loop around GLtrans
 		if ($PeriodTotal <> 0) {
 			if ($PeriodTotal < 0) {
-				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal . "\n");
+				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . __('Period Total') . ',,,,' . -$PeriodTotal . "\n");
 			}
 			else {
-				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,' . $PeriodTotal . "\n");
+				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . __('Period Total') . ',,,' . $PeriodTotal . "\n");
 			}
 		}
 		if ($PandLAccount == True) {
 			if ($RunningTotal < 0) {
-				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . __('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
 			}
 			else {
-				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Total Period Movement') . ',,,' . $RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . __('Total Period Movement') . ',,,' . $RunningTotal . "\n");
 			}
 		}
 		else { /*its a balance sheet account*/
 			if ($RunningTotal < 0) {
-				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,,' . -$RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . __('Balance C/Fwd') . ',,,,' . -$RunningTotal . "\n");
 			}
 			else {
-				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . _('Balance C/Fwd') . ',,,' . $RunningTotal . "\n");
+				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . __('Balance C/Fwd') . ',,,' . $RunningTotal . "\n");
 			}
 		}
 
 	} /*end for each SelectedAccount */
 	fclose($fp);
-	echo '<p><a href="' . $FileName . '">' . _('click here') . '</a> ' . _('to view the file') . '<br />';
+	echo '<p><a href="' . $FileName . '">' . __('click here') . '</a> ' . __('to view the file') . '<br />';
 } /* end of if CreateCSV button hit */
 
 include('includes/footer.php');

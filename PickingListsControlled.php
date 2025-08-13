@@ -3,7 +3,7 @@
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
-$Title = _('Specify Picked Controlled Items');
+$Title = __('Specify Picked Controlled Items');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
@@ -21,9 +21,9 @@ if (isset($_GET['LineNo'])) {
 	$LineNo = (int) $_POST['LineNo'];
 } else {
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/PickingLists.php">' . _('Select a pick list line to process') . '</a>
+			<a href="' . $RootPath . '/PickingLists.php">' . __('Select a pick list line to process') . '</a>
 		</div>';
-	prnMsg(_('This page can only be opened if a pick list has been selected') . '. ' . _('Please do that first'), 'error');
+	prnMsg(__('This page can only be opened if a pick list has been selected') . '. ' . __('Please do that first'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -31,9 +31,9 @@ if (isset($_GET['LineNo'])) {
 if (!isset($_SESSION['Items' . $identifier]) OR !isset($_SESSION['ProcessingPick'])) {
 	/* This page can only be called with a sales order number to invoice */
 	echo '<div class="centre">
-			<a href="' . $RootPath . '/SelectPickingLists.php">' . _('Select a a pick List to maintain') . '</a>
+			<a href="' . $RootPath . '/SelectPickingLists.php">' . __('Select a a pick List to maintain') . '</a>
 		</div>';
-	prnMsg(_('This page can only be opened if a pick list has been selected'), 'error');
+	prnMsg(__('This page can only be opened if a pick list has been selected'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -45,8 +45,8 @@ $LineItem =& $_SESSION['Items' . $identifier]->LineItems[$LineNo];
 
 //Make sure this item is really controlled
 if ($LineItem->Controlled != 1) {
-	echo '<div class="centre"><a href="' . $RootPath . '/PickingLists.php">' . _('Back to the Sales Order') . '</a></div>';
-	prnMsg(_('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'), 'error');
+	echo '<div class="centre"><a href="' . $RootPath . '/PickingLists.php">' . __('Back to the Sales Order') . '</a></div>';
+	prnMsg(__('The line item must be defined as controlled to require input of the batch numbers or serial numbers being sold'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -56,9 +56,9 @@ Get the page going....
 ********************************************/
 echo '<div class="centre">';
 
-echo '<br /><a href="' . $RootPath . '/PickingLists.php?identifier=' . $identifier . '">' . _('Back to Picking List') . '</a>';
+echo '<br /><a href="' . $RootPath . '/PickingLists.php?identifier=' . $identifier . '">' . __('Back to Picking List') . '</a>';
 
-echo '<br /><b>' . _('Dispatch of up to') . ' ' . locale_number_format($LineItem->Quantity - $LineItem->QtyInv, $LineItem->DecimalPlaces) . ' ' . _('Controlled items') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . _('on Picklist') . ' ' . $_SESSION['Items' . $identifier]->OrderNo . ' ' . _('to') . ' ' . $_SESSION['Items' . $identifier]->CustomerName . '</b></div>';
+echo '<br /><b>' . __('Dispatch of up to') . ' ' . locale_number_format($LineItem->Quantity - $LineItem->QtyInv, $LineItem->DecimalPlaces) . ' ' . __('Controlled items') . ' ' . $LineItem->StockID . ' - ' . $LineItem->ItemDescription . ' ' . __('on Picklist') . ' ' . $_SESSION['Items' . $identifier]->OrderNo . ' ' . __('to') . ' ' . $_SESSION['Items' . $identifier]->CustomerName . '</b></div>';
 
 /** vars needed by InputSerialItem : **/
 $StockID = $LineItem->StockID;

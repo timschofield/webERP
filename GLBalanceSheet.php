@@ -23,8 +23,8 @@ if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in anot
 	include('includes/session.php');
 }
 use Dompdf\Dompdf;
-$Title = _('Balance Sheet');
-$Title2 = _('Statement of Financial Position'); // Name as IAS.
+$Title = __('Balance Sheet');
+$Title2 = __('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BalanceSheet';
 
@@ -128,28 +128,28 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	$HTML .= '<table summary="' . _('HTML View') . '">
+	$HTML .= '<table summary="' . __('HTML View') . '">
 			<thead>
 				<tr>
 					<th colspan="6">
-						<h2>' . _('Balance Sheet as at') . ' ' . $BalanceDate . '
+						<h2>' . __('Balance Sheet as at') . ' ' . $BalanceDate . '
 						</h2>
 					</th>
 				</tr>';
 
 	if ($_POST['ShowDetail'] == 'Detailed') {
 		$HTML .= '<tr>
-				<th>' . _('Account') . '</th>
-				<th>' . _('Account Name') . '</th>
+				<th>' . __('Account') . '</th>
+				<th>' . __('Account Name') . '</th>
 				<th colspan="2">' . $BalanceDate . '</th>
-				<th colspan="2">' . _('Last Year') . '</th>
+				<th colspan="2">' . __('Last Year') . '</th>
 			</tr>';
 	} else {
 		/*summary */
 		$HTML .= '<tr>
 				<th colspan="2"></th>
 				<th colspan="2">' . $BalanceDate . '</th>
-				<th colspan="2">' . _('Last Year') . '</th>
+				<th colspan="2">' . __('Last Year') . '</th>
 			</tr>';
 	}
 	$HTML .= '</thead>';
@@ -411,7 +411,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</tr>';
 
 	$HTML .= '<tr class="total_row">
-			<td colspan="3"><h2>' . _('Check Total') . '</h2></td>
+			<td colspan="3"><h2>' . __('Check Total') . '</h2></td>
 			<td class="number">' . locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
 			<td class="number">' . locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -441,7 +441,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('General Ledger Balance Sheet');
+		$Title = __('General Ledger Balance Sheet');
 		include('includes/header.php');
 
 		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
@@ -449,8 +449,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			// Page title as IAS1 numerals 10 and 51:
 			$Title, '<br />', // Page title, reporting statement.
 			stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
-			_('as at'), ' ', $BalanceDate, '<br />'; // Page title, reporting period.
-		echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+			__('as at'), ' ', $BalanceDate, '<br />'; // Page title, reporting period.
+		echo __('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 
 		echo $HTML;
 		echo // Shows a form to select an action after the report was shown:
@@ -459,7 +459,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		// Resend report parameters:
 		'<input name="PeriodTo" type="hidden" value="' . $_POST['PeriodTo'] . '" />',
 		'<div class="centre">
-			<input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" />
+			<input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" />
 		</div>' .
 		'</form>';
 		include('includes/footer.php');
@@ -480,17 +480,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />' .
-		_('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />' .
-		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+		__('Balance Sheet (or statement of financial position) is a summary  of balances. Assets, liabilities and ownership equity are listed as of a specific date, such as the end of its financial year. Of the four basic financial statements, the balance sheet is the only statement which applies to a single point in time.') . '<br />' .
+		__('The balance sheet has three parts: assets, liabilities and ownership equity. The main categories of assets are listed first and are followed by the liabilities. The difference between the assets and the liabilities is known as equity or the net assets or the net worth or capital of the company and according to the accounting equation, net worth must equal assets minus liabilities.') . '<br />' .
+		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" target="_blank">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		// Input table:
 		'<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="PeriodTo">' . _('Select the balance date') . ':</label>
+				<label for="PeriodTo">' . __('Select the balance date') . ':</label>
 				<select name="PeriodTo" required="required">';
 
 		$PeriodSQL = "SELECT periodno
@@ -514,30 +514,30 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="ShowDetail">', _('Detail or summary'), '</label>
+			<label for="ShowDetail">', __('Detail or summary'), '</label>
 			<select name="ShowDetail" required="required" title="" >';
 	if($_POST['ShowDetail'] == 'Summary') {
-		echo	'<option selected="selected" value="Summary">', _('Summary'), '</option>
-				<option value="Detailed">', _('All Accounts'), '</option>';
+		echo	'<option selected="selected" value="Summary">', __('Summary'), '</option>
+				<option value="Detailed">', __('All Accounts'), '</option>';
 	} else {
-		echo	'<option value="Summary">', _('Summary'), '</option>
-				<option selected="selected" value="Detailed">', _('All Accounts'), '</option>';
+		echo	'<option value="Summary">', __('Summary'), '</option>
+				<option selected="selected" value="Detailed">', __('All Accounts'), '</option>';
 	}
 	echo	'</select>
-			<fieldhelp>', _('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
+			<fieldhelp>', __('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
 		</field>';
 
 	// Show accounts with zero balance:
 	echo '<field>
-			<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+			<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
 			<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox" />
-	 		<fieldhelp>', _('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
+	 		<fieldhelp>', __('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
 		 </field>',
 		'</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF Balance Sheet').'" />
-			<input type="submit" name="View" title="View" value="' . _('Show Balance Sheet') .'" />
+			<input type="submit" name="PrintPDF" title="PDF" value="'.__('PDF Balance Sheet').'" />
+			<input type="submit" name="View" title="View" value="' . __('Show Balance Sheet') .'" />
 		</div>',
 		'</form>';
 

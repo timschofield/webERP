@@ -3,14 +3,14 @@
 include('includes/session.php');
 
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Inventory Negatives Listing') );
-$pdf->addInfo('Subject', _('Inventory Negatives Listing'));
+$pdf->addInfo('Title', __('Inventory Negatives Listing') );
+$pdf->addInfo('Subject', __('Inventory Negatives Listing'));
 $FontSize=9;
 $PageNumber=1;
 $LineHeight=15;
 
-$Title = _('Negative Stock Listing Error');
-$ErrMsg = _('An error occurred retrieving the negative quantities.');
+$Title = __('Negative Stock Listing Error');
+$ErrMsg = __('An error occurred retrieving the negative quantities.');
 
 $SQL = "SELECT stockmaster.stockid,
                stockmaster.description,
@@ -34,7 +34,7 @@ $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result)==0){
 	include('includes/header.php');
-	prnMsg(_('There are no negative stocks to list'),'error');
+	prnMsg(__('There are no negative stocks to list'),'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -66,8 +66,8 @@ if (DB_num_rows($Result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 } else {
-	$Title = _('Negative Stock Listing Problem');
+	$Title = __('Negative Stock Listing Problem');
 	include('includes/header.php');
-	prnMsg(_('There are no negative stocks to list'),'info');
+	prnMsg(__('There are no negative stocks to list'),'info');
 	include('includes/footer.php');
 }

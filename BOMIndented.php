@@ -17,7 +17,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				sortpart text) DEFAULT CHARSET=utf8";
-	$ErrMsg = _('The SQL to create passbom failed with the message');
+	$ErrMsg = __('The SQL to create passbom failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "CREATE TEMPORARY TABLE tempbom (
@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$Result = DB_query($SQL,_('Create of tempbom failed because'));
+	$Result = DB_query($SQL,__('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -143,10 +143,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} // End of if $_POST['Levels']
 
 	if (DB_error_no() !=0) {
-	  $Title = _('Indented BOM Listing') . ' - ' . _('Problem Report');
+	  $Title = __('Indented BOM Listing') . ' - ' . __('Problem Report');
 	  include('includes/header.php');
-	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+	   prnMsg( __('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
 	   if ($Debug==1){
 		  echo '<br />' . $SQL;
 	   }
@@ -178,21 +178,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Indented BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Indented BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th class="SortedColumn">' . _('Part Number') . '</th>
-							<th class="SortedColumn">' . _('M/B') . '</th>
-							<th class="SortedColumn">' . _('Description') . '</th>
-							<th class="SortedColumn">' . _('Location') . '</th>
-							<th class="SortedColumn">' . _('Work') . '<br />' . _('Centre') . '</th>
-							<th class="SortedColumn">' . _('Quantity') . '</th>
-							<th class="SortedColumn">' . _('UOM') . '</th>
-							<th class="SortedColumn">' . _('From Date') . '</th>
-							<th class="SortedColumn">' . _('To Date') . '</th>
+							<th class="SortedColumn">' . __('Part Number') . '</th>
+							<th class="SortedColumn">' . __('M/B') . '</th>
+							<th class="SortedColumn">' . __('Description') . '</th>
+							<th class="SortedColumn">' . __('Location') . '</th>
+							<th class="SortedColumn">' . __('Work') . '<br />' . __('Centre') . '</th>
+							<th class="SortedColumn">' . __('Quantity') . '</th>
+							<th class="SortedColumn">' . __('UOM') . '</th>
+							<th class="SortedColumn">' . __('From Date') . '</th>
+							<th class="SortedColumn">' . __('To Date') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -240,7 +240,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Indented BOM Listing');
+		$Title = __('Indented BOM Listing');
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
@@ -273,31 +273,31 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'Manufacturing';
 	$BookMark = '';
 
-	$Title=_('Indented BOM Listing');
+	$Title=__('Indented BOM Listing');
 	include('includes/header.php');
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
 		  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Select Report Criteria'), '</legend>';
+			<legend>', __('Select Report Criteria'), '</legend>';
 	echo '<field>
-			<label for="Part">' . _('Part') . ':</label>
+			<label for="Part">' . __('Part') . ':</label>
 			<input type="text" name="Part" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="" size="20" />
-			<fieldhelp>' . _('Enter the item code of parent item to list the bill of material for') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the item code of parent item to list the bill of material for') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Levels">' . _('Levels') . ':</label>
+			<label for="Levels">' . __('Levels') . ':</label>
 			<select name="Levels">
-				<option selected="selected" value="All">' . _('All Levels') . '</option>
-				<option value="One">' . _('One Level') . '</option>
+				<option selected="selected" value="All">' . __('All Levels') . '</option>
+				<option value="One">' . __('One Level') . '</option>
 			</select>
 		</field>
 		</fieldset>
 		<div class="centre">
-				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
 	</form>';
 

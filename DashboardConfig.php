@@ -1,13 +1,13 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Configure Dashboard Scripts');
+$Title = __('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Page Security Levels'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Page Security Levels'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_GET['Delete'])) {
@@ -20,9 +20,9 @@ if (isset($_GET['Delete'])) {
 	$SQL = "DELETE FROM scripts WHERE script='" . $MyRow['scripts'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
-		prnMsg(_('The script was successfully removed'), 'success');
+		prnMsg(__('The script was successfully removed'), 'success');
 	} else {
-		prnMsg(_('There was a peoblem removing the script'), 'error');
+		prnMsg(__('There was a peoblem removing the script'), 'error');
 	}
 }
 
@@ -40,9 +40,9 @@ if (isset($_POST['Update'])) {
 							WHERE script='" . $MyRow['scripts'] . "'";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
-		prnMsg(_('The script was successfully updated'), 'success');
+		prnMsg(__('The script was successfully updated'), 'success');
 	} else {
-		prnMsg(_('There was a peoblem updating the script'), 'error');
+		prnMsg(__('There was a peoblem updating the script'), 'error');
 	}
 }
 
@@ -68,9 +68,9 @@ if (isset($_POST['Insert'])) {
 							)";
 	$Result = DB_query($SQL);
 	if (DB_error_no() == 0) {
-		prnMsg(_('The script was successfully inserted'), 'success');
+		prnMsg(__('The script was successfully inserted'), 'success');
 	} else {
-		prnMsg(_('There was a peoblem inserting the script'), 'error');
+		prnMsg(__('There was a peoblem inserting the script'), 'error');
 	}
 }
 
@@ -88,12 +88,12 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th colspan="6">', _('Configured Dashboard Scripts'), '</th>
+					<th colspan="6">', __('Configured Dashboard Scripts'), '</th>
 				</tr>
 				<tr>
-					<th class="SortedColumn">', _('Script'), '</th>
-					<th>', _('Description'), '</th>
-					<th class="SortedColumn">', _('Security Level'), '</th>
+					<th class="SortedColumn">', __('Script'), '</th>
+					<th>', __('Description'), '</th>
+					<th class="SortedColumn">', __('Security Level'), '</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -106,8 +106,8 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 				<td>', $MyRow['scripts'], '</td>
 				<td>', _($MyRow['description']), '</td>
 				<td>', _($MyRow['tokenname']), '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Edit=1">', _('Edit'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Delete=1">', _('Remove'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Edit=1">', __('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedScript=', urlencode($MyRow['id']), '&amp;Delete=1">', __('Remove'), '</a></td>
 			</tr>';
 	}
 	echo '</tbody>
@@ -132,13 +132,13 @@ if (isset($_GET['Edit'])) {
 	$_POST['Description'] = $MyRow['description'];
 
 	echo '<fieldset>
-			<legend>', _('Edit dashboard script details'), '</legend>
+			<legend>', __('Edit dashboard script details'), '</legend>
 			<field>
-				<label for="ID">', _('Script ID'), '</label>
+				<label for="ID">', __('Script ID'), '</label>
 				<div class="fieldtext">', $MyRow['id'], '</div>
 			</field>
 			<field>
-				<label for="Script">', _('Script Name'), '</label>
+				<label for="Script">', __('Script Name'), '</label>
 				<div class="fieldtext">', $MyRow['scripts'], '</div>
 			</field>';
 	echo '<input type="hidden" name="ID" value="', $MyRow['id'], '" />';
@@ -149,9 +149,9 @@ if (isset($_GET['Edit'])) {
 	$_POST['Description'] = '';
 
 	echo '<fieldset>
-			<legend>', _('New dashboard script details'), '</legend>
+			<legend>', __('New dashboard script details'), '</legend>
 			<field>
-				<label for="Script">', _('Script Name'), '</label>
+				<label for="Script">', __('Script Name'), '</label>
 				<select name="Script">';
 	$Scripts = glob('dashboard/*.php');
 	foreach ($Scripts as $ScriptName) {
@@ -175,7 +175,7 @@ $TokenSQL = "SELECT tokenid,
 			ORDER BY tokenid";
 $TokenResult = DB_query($TokenSQL);
 echo '<field>
-		<label for="PageSecurity">', _('Security Token'), '</label>
+		<label for="PageSecurity">', __('Security Token'), '</label>
 		<select name="PageSecurity">';
 while ($MyTokenRow = DB_fetch_array($TokenResult)) {
 	if ($MyTokenRow['tokenid'] == $_POST['PageSecurity']) {
@@ -188,7 +188,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Description">', _('Description'), '</label>
+		<label for="Description">', __('Description'), '</label>
 		<input type="text" size="50" name="Description" value="', $_POST['Description'], '" />
 	</field>';
 
@@ -196,11 +196,11 @@ echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="', _('Update Configuration'), '" />
+			<input type="submit" name="Update" value="', __('Update Configuration'), '" />
 		</div';
 } else {
 	echo '<div class="centre">
-			<input type="submit" name="Insert" value="', _('Insert New Script'), '" />
+			<input type="submit" name="Insert" value="', __('Insert New Script'), '" />
 		</div';
 }
 

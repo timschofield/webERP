@@ -10,13 +10,13 @@ This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????
 
 
 include('includes/session.php');
-$Title = _('Delete Invoice');
+$Title = __('Delete Invoice');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 if (!isset($_GET['InvoiceNo'])){
-        prnMsg(_('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . _('This page should not be run by non-system administrators'),'info');
+        prnMsg(__('This page must be called with the InvoiceNo to delete Z_DeleteInvoice.php?InvoiceNo=XX') . '. ' . __('This page should not be run by non-system administrators'),'info');
         include('includes/footer.php');
         exit();
 }
@@ -65,7 +65,7 @@ while ($MyRow = DB_fetch_array($Result)){
 	$i++;
 }
 
-prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
+prnMsg(__('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 /*Setup a database transaction */
 DB_Txn_Begin();
@@ -76,28 +76,28 @@ $SQL = "DELETE FROM orderdeliverydifferenceslog
                WHERE orderno = '". $ProcessingOrder . "'
                AND invoiceno = '" . $_GET['InvoiceNo'] . "'";
 
-$ErrMsg = _('The SQL to delete the delivery differences records failed because');
+$ErrMsg = __('The SQL to delete the delivery differences records failed because');
 $Result = DB_query($SQL, $ErrMsg, '', true);
-prnMsg(_('Any order delivery differences records have been deleted'),'info');
+prnMsg(__('Any order delivery differences records have been deleted'),'info');
 
 /*Now delete the custallocns */
 
 $SQL = "DELETE custallocns FROM custallocns
         WHERE transid_allocto ='" . $IDDebtorTrans . "'";
 
-$ErrMsg = _('The custallocns record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$ErrMsg = __('The custallocns record could not be deleted') . ' - ' . __('the sql server returned the following error');
 $Result = DB_query($SQL, $ErrMsg, '', true);
 
-prnMsg(_('The custallocns record has been deleted'),'info');
+prnMsg(__('The custallocns record has been deleted'),'info');
 
 /*Now delete the debtortranstaxes */
 
 $SQL = "DELETE debtortranstaxes FROM debtortranstaxes
                WHERE debtortransid ='" . $IDDebtorTrans . "'";
-$ErrMsg = _('The debtortranstaxes record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$ErrMsg = __('The debtortranstaxes record could not be deleted') . ' - ' . __('the sql server returned the following error');
 $Result = DB_query($SQL, $ErrMsg, '', true);
 
-prnMsg(_('The debtortranstaxes record has been deleted'),'info');
+prnMsg(__('The debtortranstaxes record has been deleted'),'info');
 
 
 /*Now delete the DebtorTrans */
@@ -105,10 +105,10 @@ prnMsg(_('The debtortranstaxes record has been deleted'),'info');
 $SQL = "DELETE FROM debtortrans
                WHERE transno ='" . $_GET['InvoiceNo'] . "'
                AND debtortrans.type=10";
-$ErrMsg = _('The debtorTrans record could not be deleted') . ' - ' . _('the sql server returned the following error');
+$ErrMsg = __('The debtorTrans record could not be deleted') . ' - ' . __('the sql server returned the following error');
 $Result = DB_query($SQL, $ErrMsg, '', true);
 
-prnMsg(_('The debtor transaction record has been deleted'),'info');
+prnMsg(__('The debtor transaction record has been deleted'),'info');
 
 
 /*Now reverse updated SalesOrderDetails for the quantities invoiced and the actual dispatch dates. */
@@ -120,15 +120,15 @@ foreach ($StockMovement as $OrderLine) {
                                 WHERE orderno = '" . $ProcessingOrder . "'
                                 AND stkcode = '" . $OrderLine['stockid'] . "'";
 
-	$ErrMsg = _('The SQL to reverse the update of the sales order detail records failed because');
+	$ErrMsg = __('The SQL to reverse the update of the sales order detail records failed because');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
-    prnMsg(_('The sales order records have been updated as not invoiced'),'info');
+    prnMsg(__('The sales order records have been updated as not invoiced'),'info');
 /*reverse the update to LocStock */
     if ($OrderLine['mbflag']!='A' AND $OrderLine['mbflag']!='D'){
 
-        	$ErrMsg = _('The SQL to reverse update to the location stock records failed because');
+        	$ErrMsg = __('The SQL to reverse update to the location stock records failed because');
 	        $Result = DB_query($SQL, $ErrMsg, '', true);
-             prnMsg(_('Reversed the location stock quantities for items that decreased'),'info');
+             prnMsg(__('Reversed the location stock quantities for items that decreased'),'info');
     }
 
 /*This is a problem - should only update sales analysis what happens where there
@@ -141,37 +141,37 @@ Delete Sales Analysis records */
 			   AND qty = '" . $OrderLine['qty'] . "'
 			   AND stockid = '" . $OrderLine['stockid'] . "'";
 
-	$ErrMsg = _('The SQL to delete the sales analysis records failed because');
+	$ErrMsg = __('The SQL to delete the sales analysis records failed because');
 
 	$Result = DB_query($SQL, $ErrMsg, '',true);
-	prnMsg(_('Sales analysis records deleted') . ' - ' . _('this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
+	prnMsg(__('Sales analysis records deleted') . ' - ' . __('this deleted all sales analysis for the customer/branch and items on this invoice'),'info');
 }
 
 $SQL = "DELETE stockmovestaxes.* FROM stockmovestaxes INNER JOIN stockmoves
 		ON stockmovestaxes.stkmoveno=stockmoves.stkmoveno
 		WHERE stockmoves.type=10 AND stockmoves.transno = '" . $_GET['InvoiceNo'] . "'";
 
-$ErrMsg = _('SQL to delete the stock movement tax records failed with the message');
+$ErrMsg = __('SQL to delete the stock movement tax records failed with the message');
 $Result = DB_query($SQL, $ErrMsg, '', true);
-prnMsg(_('Deleted the credit note stock move taxes').'info');
+prnMsg(__('Deleted the credit note stock move taxes').'info');
 echo '<br /><br />';
 
 /* Delete the stock movements  */
 $SQL = "DELETE FROM stockmoves WHERE type=10 AND transno = '" . $_GET['InvoiceNo'] . "'";
 
-$ErrMsg = _('The SQL to delete the stock movement records failed because');
+$ErrMsg = __('The SQL to delete the stock movement records failed because');
 $Result = DB_query($SQL, $ErrMsg, '', true);
-prnMsg(_('The stock movement records associated with the invoice have been deleted'),'info');
+prnMsg(__('The stock movement records associated with the invoice have been deleted'),'info');
 echo '<br /><br />';
 
 /* Delete any GL Transaction records*/
 $SQL = "DELETE FROM gltrans WHERE gltrans.type=10 AND gltrans.typeno='" . $_GET['InvoiceNo'] . "'";
-$ErrMsg = _('The SQL to delete the general ledger journal records failed because');
+$ErrMsg = __('The SQL to delete the general ledger journal records failed because');
 $Result = DB_query($SQL, $ErrMsg, '', true);
-prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
+prnMsg(__('The GL journal records associated with the invoice have been deleted'),'info');
 
 DB_Txn_Commit();
 
-prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
+prnMsg(__('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . __('has been deleted'),'info');
 
 include('includes/footer.php');

@@ -19,9 +19,9 @@ $DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
-	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');
 	include('includes/header.php');
-	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	prnMsg(__('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
@@ -29,17 +29,17 @@ include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/PDFSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
-$Subject = _('Sales Analysis Report');
+$Subject = __('Sales Analysis Report');
 
 if ($Counter > 0) { /* the number of lines of the sales report is more than 0  ie there is a report to send! */
 	$pdf->Output($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf', 'F'); //save to file
 	$pdf->__destruct();
 
-	$Body = _('Please find herewith sales report');
+	$Body = __('Please find herewith sales report');
 	$AttachmentPath = $_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf';
 
 	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $AttachmentPath, true);
 } else {
-	$Body = _('Error running automated sales report number') . ' ' . $ReportID;
+	$Body = __('Error running automated sales report number') . ' ' . $ReportID;
 	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
 }

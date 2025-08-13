@@ -14,13 +14,13 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Page_Width/2 -120,$YPos-40,0,60);
 $FontSize =15;
 if ($InvOrCredit=='Invoice') {
 
-        $pdf->addText($Page_Width - 200, $YPos, $FontSize, _('TAX INVOICE') . ' ');
+        $pdf->addText($Page_Width - 200, $YPos, $FontSize, __('TAX INVOICE') . ' ');
 } else {
-	$pdf->addText($Page_Width - 200, $YPos, $FontSize, _('CREDIT NOTE') . ' ');
+	$pdf->addText($Page_Width - 200, $YPos, $FontSize, __('CREDIT NOTE') . ' ');
 }
 
 $FontSize = 10;
-$pdf->addTextWrap($Page_Width-$Left_Margin-42, $YPos+5, 72, $FontSize, _('Page') . ' ' . $PageNumber);
+$pdf->addTextWrap($Page_Width-$Left_Margin-42, $YPos+5, 72, $FontSize, __('Page') . ' ' . $PageNumber);
 
 $XPos = $Page_Width - 265;
 $YPos -= 111;
@@ -44,23 +44,23 @@ $pdf->line($XPos+235, $YPos+5,$XPos+235, $YPos+100);
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
-$pdf->addText($Page_Width-268, $YPos-13, $FontSize, _('Number'));
+$pdf->addText($Page_Width-268, $YPos-13, $FontSize, __('Number'));
 $pdf->addText($Page_Width-180, $YPos-13, $FontSize, $FromTransNo);
-$pdf->addText($Page_Width-268, $YPos-26, $FontSize, _('Customer Code'));
-$pdf->addText($Page_Width-180, $YPos-26, $FontSize, $MyRow['debtorno'] . ' ' . _('Branch') . ' ' . $MyRow['branchcode']);
-$pdf->addText($Page_Width-268, $YPos-39, $FontSize, _('Date'));
+$pdf->addText($Page_Width-268, $YPos-26, $FontSize, __('Customer Code'));
+$pdf->addText($Page_Width-180, $YPos-26, $FontSize, $MyRow['debtorno'] . ' ' . __('Branch') . ' ' . $MyRow['branchcode']);
+$pdf->addText($Page_Width-268, $YPos-39, $FontSize, __('Date'));
 $pdf->addText($Page_Width-180, $YPos-39, $FontSize, ConvertSQLDate($MyRow['trandate']));
 
 
 if ($InvOrCredit=='Invoice') {
 
-	$pdf->addText($Page_Width-268, $YPos-52, $FontSize, _('Order No'));
+	$pdf->addText($Page_Width-268, $YPos-52, $FontSize, __('Order No'));
 	$pdf->addText($Page_Width-180, $YPos-52, $FontSize, $MyRow['orderno']);
-	$pdf->addText($Page_Width-268, $YPos-65, $FontSize, _('Order Date'));
+	$pdf->addText($Page_Width-268, $YPos-65, $FontSize, __('Order Date'));
 	$pdf->addText($Page_Width-180, $YPos-65, $FontSize, ConvertSQLDate($MyRow['orddate']));
-	$pdf->addText($Page_Width-268, $YPos-78, $FontSize, _('Dispatch Detail'));
+	$pdf->addText($Page_Width-268, $YPos-78, $FontSize, __('Dispatch Detail'));
 	$pdf->addText($Page_Width-180, $YPos-78, $FontSize, $MyRow['shippername'] . '-' . $MyRow['consignment']);
-	$pdf->addText($Page_Width-268, $YPos-91, $FontSize, _('Dispatched From'));
+	$pdf->addText($Page_Width-268, $YPos-91, $FontSize, __('Dispatched From'));
 	$pdf->addText($Page_Width-180, $YPos-91, $FontSize, $MyRow['locationname']);
 }
 
@@ -78,8 +78,8 @@ $pdf->addText($XPos, $YPos-19,$FontSize, $_SESSION['CompanyRecord']['regoffice1'
 $pdf->addText($XPos, $YPos-28,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
 $pdf->addText($XPos, $YPos-37,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . '  ' . $_SESSION['CompanyRecord']['regoffice4'] . '  ' . $_SESSION['CompanyRecord']['regoffice5']);
 $pdf->addText($XPos, $YPos-46, $FontSize, $_SESSION['CompanyRecord']['regoffice6']);
-$pdf->addText($XPos, $YPos-54, $FontSize, _('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
-$pdf->addText($XPos, $YPos-63, $FontSize, _('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
+$pdf->addText($XPos, $YPos-54, $FontSize, __('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . __('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
+$pdf->addText($XPos, $YPos-63, $FontSize, __('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
 
 /*Now the customer charged to details top left */
 
@@ -88,7 +88,7 @@ $YPos = $Page_Height - $Top_Margin;
 
 $FontSize=10;
 
-$pdf->addText($XPos, $YPos, $FontSize, _('Sold To') . ':');
+$pdf->addText($XPos, $YPos, $FontSize, __('Sold To') . ':');
 $XPos +=80;
 
 if ($MyRow['invaddrbranch']==0){
@@ -109,7 +109,7 @@ $YPos -=($LineHeight*4);
 
 if ($InvOrCredit=='Invoice') {
 
-	$pdf->addText($XPos, $YPos, $FontSize, _('Delivered To') . ':');
+	$pdf->addText($XPos, $YPos, $FontSize, __('Delivered To') . ':');
 	$XPos +=80;
 // Before trying to call htmlspecialchars_decode, check that its supported, if not substitute a compatible version
 if (!function_exists('htmlspecialchars_decode')) {
@@ -135,7 +135,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 if ($InvOrCredit=='Credit'){
 /* then its a credit note */
 
-	$pdf->addText($XPos, $YPos, $FontSize, _('Charge Branch') . ':');
+	$pdf->addText($XPos, $YPos, $FontSize, __('Charge Branch') . ':');
 	$XPos +=80;
 	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($MyRow['brname']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($MyRow['braddress1']));
@@ -156,10 +156,10 @@ $XPos = $Left_Margin;
 $YPos -= ($LineHeight*2);
 
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-$pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']]);
+$pdf->addText($Left_Margin, $YPos-8, $FontSize, __('All amounts stated in') . ': ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']]);
 
 if ($InvOrCredit=='Invoice') {
-	$pdf->addText($Page_Width-$Left_Margin-88, $YPos-8, $FontSize, _('Due Date') . ': ' . $DisplayDueDate);
+	$pdf->addText($Page_Width-$Left_Margin-88, $YPos-8, $FontSize, __('Due Date') . ': ' . $DisplayDueDate);
 }
 
 /*draw a box with nice round corner for entering line items */
@@ -184,20 +184,20 @@ $pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margi
 $YPos -= ($LineHeight*2);
 /*Set up headings */
 $FontSize=10;
-$pdf->addText($Left_Margin + 2, $YPos, $FontSize, _('Customer Tax Ref') . ':');
+$pdf->addText($Left_Margin + 2, $YPos, $FontSize, __('Customer Tax Ref') . ':');
 $pdf->addText($Left_Margin+100, $YPos, $FontSize, $MyRow['taxref']);
 
 
 /*Print a vertical line */
 $pdf->line($Left_Margin+248, $YPos-10+$LineHeight+3,$Left_Margin+248, $YPos - 18);
 if ($InvOrCredit=='Invoice'){
-	$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Customer Order Ref.') . ':');
+	$pdf->addText($Left_Margin + 252, $YPos, $FontSize, __('Customer Order Ref.') . ':');
 	$pdf->addText($Left_Margin+370, $YPos, $FontSize, $MyRow['customerref']);
 }
 /*Print a vertical line */
 $pdf->line($Left_Margin+450, $YPos+$LineHeight-7,$Left_Margin+450,$YPos-18);
 
-$pdf->addText($Left_Margin+453, $YPos, $FontSize, _('Sales Person') . ':');
+$pdf->addText($Left_Margin+453, $YPos, $FontSize, __('Sales Person') . ':');
 $pdf->addText($Left_Margin+510, $YPos, $FontSize, $MyRow['salesmanname']);
 
 $YPos -= 8;
@@ -208,13 +208,13 @@ $YPos -= 12;
 
 $TopOfColHeadings = $YPos-10;
 
-$pdf->addText($Left_Margin+5, $YPos, $FontSize, _('Item Code'));
-$pdf->addText($Left_Margin+100, $YPos, $FontSize, _('Description'));
-$pdf->addText($Left_Margin+382, $YPos, $FontSize, _('Unit Price'));
-$pdf->addText($Left_Margin+485, $YPos, $FontSize, _('Quantity'));
-$pdf->addText($Left_Margin+555, $YPos, $FontSize, _('UOM'));
-$pdf->addText($Left_Margin+595, $YPos, $FontSize, _('Discount'));
-$pdf->addText($Left_Margin+690, $YPos, $FontSize, _('Extended Price'));
+$pdf->addText($Left_Margin+5, $YPos, $FontSize, __('Item Code'));
+$pdf->addText($Left_Margin+100, $YPos, $FontSize, __('Description'));
+$pdf->addText($Left_Margin+382, $YPos, $FontSize, __('Unit Price'));
+$pdf->addText($Left_Margin+485, $YPos, $FontSize, __('Quantity'));
+$pdf->addText($Left_Margin+555, $YPos, $FontSize, __('UOM'));
+$pdf->addText($Left_Margin+595, $YPos, $FontSize, __('Discount'));
+$pdf->addText($Left_Margin+690, $YPos, $FontSize, __('Extended Price'));
 
 $YPos-=8;
 

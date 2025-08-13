@@ -11,24 +11,24 @@ $FontSize=15;
 
 Switch ($_POST['TransType']) {
 	case 20:
-		$TransType=_('Supplier Invoices');
+		$TransType=__('Supplier Invoices');
 		break;
 	case 21:
-		$TransType=_('Supplier Credit Notes');
+		$TransType=__('Supplier Credit Notes');
 		break;
 	case 22:
-		$TransType=_('Supplier Payments');
+		$TransType=__('Supplier Payments');
 }
 
 $XPos = $Left_Margin;
 $YPos -= 40;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=12;
-$pdf->addText($XPos, $YPos-20,$FontSize, $TransType . ' ' ._('input on') . ' ' . $_POST['Date']);
+$pdf->addText($XPos, $YPos-20,$FontSize, $TransType . ' ' .__('input on') . ' ' . $_POST['Date']);
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
-$pdf->addText($XPos, $YPos,$FontSize, _('Page') . ': ' . $PageNumber);
+$pdf->addText($XPos, $YPos,$FontSize, __('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
@@ -44,12 +44,12 @@ $YPos -= $LineHeight;
 /*Set up headings */
 $FontSize=8;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,_('Supplier'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,_('Reference'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,_('Trans Date'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,_('Net Amount'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,_('Tax Amount'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,_('Total Amount'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,__('Supplier'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,__('Reference'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,__('Trans Date'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,__('Net Amount'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,__('Tax Amount'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,__('Total Amount'), 'right');
 $YPos-=$LineHeight;
 
 /*draw a line */

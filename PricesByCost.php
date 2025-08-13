@@ -7,12 +7,12 @@ if (isset($_POST['submit']) OR isset($_POST['update']) && (@$_POST['Margin'] == 
 	exit();
 }
 
-$Title = _('Update of Prices By A Multiple Of Cost');
+$Title = __('Update of Prices By A Multiple Of Cost');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Update Price By Cost') . '</p>';
 
 if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	if ($_POST['Comparator'] == 1) {
@@ -143,12 +143,12 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	$SalesTypeRow = DB_fetch_array($ResultType);
 
 	if (isset($CategoryRow['categorgdescription'])) {
-		$CategoryText = $CategoryRow['categorgdescription'] . ' ' . _('category');
+		$CategoryText = $CategoryRow['categorgdescription'] . ' ' . __('category');
 	} else {
-		$CategoryText = _('all Categories');
+		$CategoryText = __('all Categories');
 	} /*end of else Category */
 
-	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
+	echo '<div class="page_help_text">' . __('Items in') . ' ' . $CategoryText . ' ' . __('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . __('times') . ' ' . __('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
 	if ($NumRow > 0) { //the number of prices returned from the main prices query is
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
@@ -162,16 +162,16 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th class="SortedColumn">' . _('Customer') . '</th>
-					<th class="SortedColumn">' . _('Branch') . '</th>
-					<th class="SortedColumn">' . _('Start Date') . '</th>
-					<th class="SortedColumn">' . _('End Date') . '</th>
-					<th class="SortedColumn">' . _('Cost') . '</th>
-					<th class="SortedColumn">' . _('GP %') . '</th>
-					<th class="SortedColumn">' . _('Price Proposed') . '</th>
-					<th class="SortedColumn">' . _('List Price') . '</th>
+					<th class="SortedColumn">' . __('Code') . '</th>
+					<th class="SortedColumn">' . __('Description') . '</th>
+					<th class="SortedColumn">' . __('Customer') . '</th>
+					<th class="SortedColumn">' . __('Branch') . '</th>
+					<th class="SortedColumn">' . __('Start Date') . '</th>
+					<th class="SortedColumn">' . __('End Date') . '</th>
+					<th class="SortedColumn">' . __('Cost') . '</th>
+					<th class="SortedColumn">' . __('GP %') . '</th>
+					<th class="SortedColumn">' . __('Price Proposed') . '</th>
+					<th class="SortedColumn">' . __('List Price') . '</th>
 				<tr>
 			</thead>
 			<tbody>';
@@ -201,7 +201,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 			//variable for proposed
 			$ProposedPrice = $Cost * filter_number_format($_POST['Margin']);
 			if ($MyRow['enddate']=='9999-12-31'){
-				$EndDateDisplay = _('No End Date');
+				$EndDateDisplay = __('No End Date');
 			} else {
 				$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 			}
@@ -223,45 +223,45 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '</tbody>
 			<tfoot>
 				<tr>
-			<td class="number" colspan="4"><input type="submit" name="submit" value="' . _('Update') . '" onclick="return confirm(\'' . _('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
-			<td class="text" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . _('Back') . '" /></a></td>
+			<td class="number" colspan="4"><input type="submit" name="submit" value="' . __('Update') . '" onclick="return confirm(\'' . __('If the prices above do not have a commencement date as today, this will create new prices with commencement date of today at the entered figures and update the existing prices with historical start dates to have an end date of yesterday. Are You Sure?') . '\');" /></td>
+			<td class="text" colspan="3"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '"><input type="submit" value="' . __('Back') . '" /></a></td>
 			 </tr>
 			</tfoot>
 			</table>
 			</form>';
 	} else {
-		prnMsg(_('There were no prices meeting the criteria specified to review'),'info');
-		echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Back') . '<a/></div>';
+		prnMsg(__('There were no prices meeting the criteria specified to review'),'info');
+		echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Back') . '<a/></div>';
 	}
 } else { /*The option to submit was not hit so display form */
-	echo '<div class="page_help_text">' . _('Prices can be displayed based on their relation to cost') . '</div><br />';
+	echo '<div class="page_help_text">' . __('Prices can be displayed based on their relation to cost') . '</div><br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Bulk Price Update'), '</legend>';
+			<legend>', __('Bulk Price Update'), '</legend>';
 
 	$SQL = "SELECT categoryid, categorydescription
 			  FROM stockcategory
 			  ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	echo '<field>
-			<label for="StockCat">' . _('Category') . ':</label>
+			<label for="StockCat">' . __('Category') . ':</label>
 			<select name="StockCat">';
-	echo '<option value="all">' . _('All Categories') . '</option>';
+	echo '<option value="all">' . __('All Categories') . '</option>';
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="Margin">' . _('Price') . '</label>
+			<label for="Margin">' . __('Price') . '</label>
 			<select name="Comparator">
-				<option value="1">' . _('Less than or equal to') . '</option>
-				<option value="2">' . _('Greater than or equal to') . '</option>';
+				<option value="1">' . __('Less than or equal to') . '</option>
+				<option value="2">' . __('Greater than or equal to') . '</option>';
 	if ($_SESSION['WeightedAverageCosting']==1) {
-		echo '</select>' . ' '. _('Average Cost') . ' x ';
+		echo '</select>' . ' '. __('Average Cost') . ' x ';
 	} else {
-		echo '</select>' . ' '. _('Standard Cost') . ' x ';
+		echo '</select>' . ' '. __('Standard Cost') . ' x ';
 	}
 	if (!isset($_POST['Margin'])){
 		$_POST['Margin']=1;
@@ -270,7 +270,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		</field>';
 	$Result = DB_query("SELECT typeabbrev, sales_type FROM salestypes");
 	echo '<field>
-			<label for="SalesType">' . _('Sales Type') . '/' . _('Price List') . ':</label>
+			<label for="SalesType">' . __('Sales Type') . '/' . __('Price List') . ':</label>
 			<select name="SalesType">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['SalesType'] == $MyRow['typeabbrev']) {
@@ -285,7 +285,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		</field>';
 
 	echo '<field>
-			<label for="CurrCode">' . _('Currency') . ':</label>
+			<label for="CurrCode">' . __('Currency') . ':</label>
 			<select name="CurrCode">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $MyRow['currabrev']) {
@@ -300,7 +300,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Submit') . '" /></div>
+			<input type="submit" name="submit" value="' . __('Submit') . '" /></div>
 		</div>
 	</form>';
 } /*end of else not submit */

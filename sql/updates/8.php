@@ -7,5 +7,5 @@ AddCalculatedColumn('pendingqty', 'loctransfers', 'double', ' NOT NULL ', '(ship
 AddCalculatedColumn('linenetprice', 'salesorderdetails', 'double', ' NOT NULL ', '(qtyinvoiced * (unitprice * (1 - discountpercent)))', 'poline');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), _('Create calculated fields to improve speed of access'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Create calculated fields to improve speed of access'));
 }

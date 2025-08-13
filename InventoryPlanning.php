@@ -59,10 +59,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	$InventoryResult = DB_query($SQL, '', '', false, false);
 
 	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
+	  $Title = __('Inventory Planning') . ' - ' . __('Problem Report') . '....';
 	  include('includes/header.php');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+	   prnMsg(__('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
 	   if ($Debug==1){
 	      echo '<br />' . $SQL;
 	   }
@@ -98,25 +98,25 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Inventory Planning Report') . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Inventory Planning Report') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Item') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . $Period_5_Name . ' ' . _('Qty') . '</th>
-							<th>' . $Period_4_Name . ' ' . _('Qty') . '</th>
-							<th>' . $Period_3_Name . ' ' . _('Qty') . '</th>
-							<th>' . $Period_2_Name . ' ' . _('Qty') . '</th>
-							<th>' . $Period_1_Name . ' ' . _('Qty') . '</th>
-							<th>' . $Period_0_Name . ' ' . _('MTD') . '</th>
-							<th>' . $NumberMonthsHolding . ' ' . _('ms stk') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Cust Ords') . '</th>
-							<th>' . _('Splr Ords') . '</th>
-							<th>' . _('Sugg Ord') . '</th>
+							<th>' . __('Item') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . $Period_5_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_4_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_3_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_2_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_1_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_0_Name . ' ' . __('MTD') . '</th>
+							<th>' . $NumberMonthsHolding . ' ' . __('ms stk') . '</th>
+							<th>' . __('QOH') . '</th>
+							<th>' . __('Cust Ords') . '</th>
+							<th>' . __('Splr Ords') . '</th>
+							<th>' . __('Sugg Ord') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -170,10 +170,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$SalesResult = DB_query($SQL,'','', false, false);
 
 		if (DB_error_no() !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
+	 		 $Title = __('Inventory Planning') . ' - ' . __('Problem Report') . '....';
 	  		include('includes/header.php');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+	   		prnMsg( __('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
+	   		echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
 	   		if ($Debug==1){
 	      		echo '<br />' .$SQL;
 	   		}
@@ -244,7 +244,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -265,9 +265,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Inventory Planning Report');
+		$Title = __('Inventory Planning Report');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Planning Report') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -341,11 +341,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
 	$HTML = '';
 	$HTML .= '<tr>
-				<th>' . _('Category ID') . '</th>
-				<th>' . _('Category Description') .'</th>
-				<th>' . _('Stock ID') .'</th>
-				<th>' . _('Description') .'</th>
-				<th>' . _('QOH') . '</th>';
+				<th>' . __('Category ID') . '</th>
+				<th>' . __('Category Description') .'</th>
+				<th>' . __('Stock ID') .'</th>
+				<th>' . __('Description') .'</th>
+				<th>' . __('QOH') . '</th>';
 	for ($i=0;$i<24;$i++) {
 		$HTML .= '<th>' . $Periods[$i]['Month'] . '</th>';
 	}
@@ -356,7 +356,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		$SQL = $SQLStarter . " AND stockid='" . $InventoryPlan['stockid'] . "' GROUP BY stockmoves.stockid";
-		$SalesResult = DB_query($SQL,_('The stock usage of this item could not be retrieved because'));
+		$SalesResult = DB_query($SQL,__('The stock usage of this item could not be retrieved because'));
 
 		if (DB_num_rows($SalesResult)==0) {
 			$HTML .= '<tr>
@@ -395,18 +395,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Inventory Planning Reporting');
+	$Title=__('Inventory Planning Reporting');
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+				<label for="Categories">' . __('Select Inventory Categories') . ':</label>
 				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
@@ -423,13 +423,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		</field>';
 
 	echo '<field>
-			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<label for="Location">' . __('For Inventory in Location') . ':</label>
 			<select name="Location">';
 
 	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult=DB_query($SQL);
 
-	echo '<option value="All">' . _('All Locations') . '</option>';
+	echo '<option value="All">' . __('All Locations') . '</option>';
 
 	while ($MyRow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
@@ -438,27 +438,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		</field>';
 
 	echo '<field>
-			<label for="NumberMonthsHolding">' . _('Stock Planning') . ':</label>
+			<label for="NumberMonthsHolding">' . __('Stock Planning') . ':</label>
 			<select name="NumberMonthsHolding">
-				<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
-				<option value="1.5">' . _('One Month and a half MAX')  . '</option>
-				<option value="2">' . _('Two Months MAX')  . '</option>
-				<option value="2.5">' . _('Two Month and a half MAX')  . '</option>
-				<option value="3">' . _('Three Months MAX')  . '</option>
-				<option value="4">' . _('Four Months MAX')  . '</option>
-				<option value="11">' . _('One Month AVG')  . '</option>
-				<option value="11.5">' . _('One Month and a half AVG')  . '</option>
-				<option value="12">' . _('Two Months AVG')  . '</option>
-				<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
-				<option value="13">' . _('Three Months AVG')  . '</option>
-				<option value="14">' . _('Four Months AVG')  . '</option>
+				<option selected="selected" value="1">' . __('One Month MAX')  . '</option>
+				<option value="1.5">' . __('One Month and a half MAX')  . '</option>
+				<option value="2">' . __('Two Months MAX')  . '</option>
+				<option value="2.5">' . __('Two Month and a half MAX')  . '</option>
+				<option value="3">' . __('Three Months MAX')  . '</option>
+				<option value="4">' . __('Four Months MAX')  . '</option>
+				<option value="11">' . __('One Month AVG')  . '</option>
+				<option value="11.5">' . __('One Month and a half AVG')  . '</option>
+				<option value="12">' . __('Two Months AVG')  . '</option>
+				<option value="12.5">' . __('Two Month and a half AVG')  . '</option>
+				<option value="13">' . __('Three Months AVG')  . '</option>
+				<option value="14">' . __('Four Months AVG')  . '</option>
 			</select>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-		<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
-		<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . _('Spreadsheet') . '" />
+		<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+		<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+		<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . __('Spreadsheet') . '" />
 	</div>
 	</form>';
 

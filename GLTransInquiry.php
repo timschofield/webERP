@@ -1,14 +1,14 @@
 <?php
 include('includes/session.php');
-$Title = _('General Ledger Transaction Inquiry');
+$Title = __('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTransInquiry';
 include('includes/header.php');
 
-$MenuURL = '<div><a href="' . $RootPath . '/index.php?&amp;Application=GL">' . _('General Ledger Menu') . '</a></div>';
+$MenuURL = '<div><a href="' . $RootPath . '/index.php?&amp;Application=GL">' . __('General Ledger Menu') . '</a></div>';
 
 if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
-	prnMsg(_('This page requires a valid transaction type and number'), 'warn');
+	prnMsg(__('This page requires a valid transaction type and number'), 'warn');
 	echo $MenuURL;
 } else {
 	$TypeSQL = "SELECT typename,
@@ -19,7 +19,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 	$TypeResult = DB_query($TypeSQL);
 
 	if (DB_num_rows($TypeResult) == 0) {
-		prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'], 'error');
+		prnMsg(__('No transaction of this type with id') . ' ' . $_GET['TypeID'], 'error');
 		echo $MenuURL;
 	} else {
 		$MyRow = DB_fetch_row($TypeResult);
@@ -31,19 +31,19 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 		//
 		//========[ SHOW SYNOPSYS ]===========
 		//
-		echo '<p class="page_title_text"><img alt="" src="' . $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . _('General Ledger Transaction Inquiry') . '" />' . ' ' . _('General Ledger Transaction Inquiry') . '</p>';
+		echo '<p class="page_title_text"><img alt="" src="' . $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . __('General Ledger Transaction Inquiry') . '" />' . ' ' . __('General Ledger Transaction Inquiry') . '</p>';
 
 		echo '<table class="selection">'; //Main table
 		echo '<tr>
 				<th colspan="6"><h2><b>' . _($TransName) . ' ' . $_GET['TransNo'] . '</b></h2></th>
 			</tr>
 			<tr>
-				<th>' . _('Period') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('GL Account') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Debits') . '</th>
-				<th>' . _('Credits') . '</th>
+				<th>' . __('Period') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('GL Account') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Debits') . '</th>
+				<th>' . __('Credits') . '</th>
 			</tr>';
 
 		$SQL = "SELECT
@@ -128,7 +128,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 					$AccountName = $TransRow['accountname'];
 					$URL = $RootPath . '/GLAccountInquiry.php?Account=' . urlencode($TransRow['account']);
 				} else {
-					$AccountName = _('Other GL Accounts');
+					$AccountName = __('Other GL Accounts');
 					$URL = "";
 				}
 
@@ -191,7 +191,7 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 		DB_free_result($TransResult);
 
 		echo '<tr style="background-color:#FFFFFF">
-				<td class="number" colspan="4"><b>' . _('Total') . '</b></td>
+				<td class="number" colspan="4"><b>' . __('Total') . '</b></td>
 				<td class="number"><b>' . locale_number_format(($DebitTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 				<td class="number"><b>' . locale_number_format((-$CreditTotal), $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 			</tr>

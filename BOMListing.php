@@ -29,10 +29,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BOMResult = DB_query($SQL,'','',false,false); //dont do error trapping inside DB_query
 
 	if (DB_error_no() !=0) {
-	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
+	   $Title = __('Bill of Materials Listing') . ' - ' . __('Problem Report');
 	   include('includes/header.php');
-	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+	   prnMsg(__('The Bill of Material listing could not be retrieved by the SQL because'),'error');
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu') . '</a>';
 	   if ($Debug==1){
 		  echo '<br />' . $SQL;
 	   }
@@ -40,9 +40,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	   exit();
 	}
 	if (DB_num_rows($BOMResult)==0){
-	   $Title = _('Bill of Materials Listing') . ' - ' . _('Problem Report');
+	   $Title = __('Bill of Materials Listing') . ' - ' . __('Problem Report');
 	   include('includes/header.php');
-	   prnMsg( _('The Bill of Material listing has no bills to report on'),'warn');
+	   prnMsg( __('The Bill of Material listing has no bills to report on'),'warn');
 	   include('includes/footer.php');
 	   exit();
 	}
@@ -62,19 +62,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . _('and') . ' ' . $_POST['ToCriteria'] . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . __('and') . ' ' . $_POST['ToCriteria'] . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Component Part') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Effective After') . '</th>
-							<th>' . _('Effective To') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Work') . '<br />' . _('Centre') . '</th>
-							<th>' . _('Quantity') . '</th>
+							<th>' . __('Component Part') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . __('Effective After') . '</th>
+							<th>' . __('Effective To') . '</th>
+							<th>' . __('Location') . '</th>
+							<th>' . __('Work') . '<br />' . __('Centre') . '</th>
+							<th>' . __('Quantity') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -139,7 +139,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Bill Of Material Listing');
+		$Title = __('Bill Of Material Listing');
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
@@ -148,13 +148,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Bill Of Material Listing');
+	$Title=__('Bill Of Material Listing');
 
 	$ViewTopic = 'Manufacturing';
 	$BookMark = '';
 
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
@@ -163,24 +163,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
 			  <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			  <fieldset>
-				<legend>', _('Report Criteria'), '</legend>';
+				<legend>', __('Report Criteria'), '</legend>';
 
 		echo '<field>
-				<label for="FromCriteria">' . _('From Inventory Part Code') . ':' . '</label>
+				<label for="FromCriteria">' . __('From Inventory Part Code') . ':' . '</label>
 				<input tabindex="1" type="text" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="" name="FromCriteria" size="20" maxlength="20" value="1" />
-				<fieldhelp>' . _('Enter the lowest alpha code of parent bom items to list the bill of material for') .  '</fieldhelp>
+				<fieldhelp>' . __('Enter the lowest alpha code of parent bom items to list the bill of material for') .  '</fieldhelp>
 			</field>';
 
 		echo '<field>
-				<label for="ToCriteria">' . _('To Inventory Part Code') . ':' . '</label>
+				<label for="ToCriteria">' . __('To Inventory Part Code') . ':' . '</label>
 				<input tabindex="2" type="text" required="required" data-type="no-illegal-chars" title="" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" />
-				<fieldhelp>' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '</fieldhelp>
+				<fieldhelp>' . __('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '</fieldhelp>
 			</field>';
 
 		echo '</fieldset>
 				<div class="centre">
-					<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-					<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+					<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+					<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 				</div>
 			</form>';
 	}

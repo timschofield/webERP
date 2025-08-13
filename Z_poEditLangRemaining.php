@@ -11,7 +11,7 @@
 include('includes/session.php');
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangRemaining";
-$Title = _('Edit Remaining Strings For This Language');
+$Title = __('Edit Remaining Strings For This Language');
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
@@ -20,9 +20,9 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
-echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
-echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
+echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
@@ -43,7 +43,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
     /* write the new language file */
 
-		prnMsg (_('Writing the language file') . '.....<br />', 'info', ' ');
+		prnMsg (__('Writing the language file') . '.....<br />', 'info', ' ');
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
@@ -72,7 +72,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($MsgfmtCommand);
 
-		prnMsg (_('Done') . '<br />', 'info', ' ');
+		prnMsg (__('Done') . '<br />', 'info', ' ');
 
 		echo '</form>';
 		echo '</td></tr></table>';
@@ -99,25 +99,25 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
 /* stick it on the screen */
 
-    echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+    echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
-		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
+		prnMsg (__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
 		echo '</div>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table>';
-		echo '<tr><th ALIGN="center">' . _('Language File for') . ' "' . $_SESSION['Language'] . '"</th></tr>';
+		echo '<tr><th ALIGN="center">' . __('Language File for') . ' "' . $_SESSION['Language'] . '"</th></tr>';
 		echo '<tr><td></td></tr>';
 		echo '<tr><td>';
 
 		echo '<table WIDTH="100%">';
 		echo '<tr>';
-		echo '<th>' . _('Default text') . '</th>';
-		echo '<th>' . _('Translation') . '</th>';
-		echo '<th>' . _('Exists in') . '</th>';
+		echo '<th>' . __('Default text') . '</th>';
+		echo '<th>' . __('Translation') . '</th>';
+		echo '<th>' . __('Exists in') . '</th>';
 		echo '</tr>' . "\n";
 
 		for ($i=1; $i<=$TotalLines; $i++) {
@@ -136,7 +136,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		echo '</td></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre">';
-		echo '<input type="submit" name="submit" value="' . _('Modify') . '" />&nbsp;&nbsp;';
+		echo '<input type="submit" name="submit" value="' . __('Modify') . '" />&nbsp;&nbsp;';
 		echo '<input type="hidden" name="module" value="' . $_POST['module'] . '" />';
 
 		echo '</form>';
