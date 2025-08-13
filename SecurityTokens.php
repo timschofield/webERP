@@ -7,6 +7,8 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
 include('includes/header.php');
 
+$FixedTokens = array(0, 1, 9);
+
 if($AllowDemoMode) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	include('includes/footer.php');
@@ -100,12 +102,21 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	</thead><tbody>';
 $Result = DB_query("SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid");
 while($MyRow = DB_fetch_array($Result)) {
-	echo '<tr class="striped_row">
-			<td class="number">', $MyRow['tokenid'], '</td>
-			<td class="text">', htmlspecialchars($MyRow['tokenname'], ENT_QUOTES, 'UTF-8'), '</td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Edit=Yes&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Delete=Yes&amp;TokenId=', $MyRow['tokenid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
-		</tr>';
+	if (in_array($MyRow['tokenid'], $FixedTokens)) {
+		echo '<tr class="striped_row">
+				<td class="number">', $MyRow['tokenid'], '</td>
+				<td class="text">', htmlspecialchars(_($MyRow['tokenname']), ENT_QUOTES, 'UTF-8'), '</td>
+				<td class="noPrint">', _('Edit'), '</td>
+				<td class="noPrint">', _('Delete'), '</td>
+			</tr>';
+	} else {
+		echo '<tr class="striped_row">
+				<td class="number">', $MyRow['tokenid'], '</td>
+				<td class="text">', htmlspecialchars(_($MyRow['tokenname']), ENT_QUOTES, 'UTF-8'), '</td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Edit=Yes&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Delete=Yes&amp;TokenId=', $MyRow['tokenid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
+			</tr>';
+	}
 }
 echo '</tbody>
 	</table>';
