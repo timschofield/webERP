@@ -166,17 +166,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL .= " ORDER BY salesorders.orderno";
 
-	$Result = DB_query($SQL,'','',false,false); //dont trap errors here
+	$ErrMsg = _('An error occurred getting the orders details');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 
-	if (DB_error_no()!=0){
-		include('includes/header.php');
-		echo '<br />' . _('An error occurred getting the orders details');
-		if ($Debug==1){
-			echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	} elseif (DB_num_rows($Result)==0){
+	if (DB_num_rows($Result)==0){
 		$Title=_('Order Status Report - No Data');
 		include('includes/header.php');
 		prnMsg(_('There were no orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' '. $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'info');

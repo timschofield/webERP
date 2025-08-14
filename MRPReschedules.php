@@ -25,39 +25,26 @@ if (isset($_POST['PrintPDF'])) {
 /*Find mrpsupplies records where the duedate is not the same as the mrpdate */
 	$SelectType = " ";
 	if ($_POST['Selection'] != 'All') {
-		 $SelectType = " AND ordertype = '" . $_POST['Selection'] . "'";
+		$SelectType = " AND ordertype = '" . $_POST['Selection'] . "'";
 	 }
 	$SQL = "SELECT mrpsupplies.*,
 				   stockmaster.description,
 				   stockmaster.decimalplaces
-			  FROM mrpsupplies,stockmaster
-			  WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
-				 $SelectType
-			  ORDER BY mrpsupplies.part";
-	$Result = DB_query($SQL,'','',false,true);
+			FROM mrpsupplies,stockmaster
+			WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
+				$SelectType
+			ORDER BY mrpsupplies.part";
 
-	if (DB_error_no() !=0) {
-	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		  echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
+	$ErrMsg = _('The MRP reschedules could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($Result) == 0) {
-	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
+		$Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
+		include('includes/header.php');
+		prnMsg( _('No MRP reschedule retrieved'), 'warn');
+		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+		include('includes/footer.php');
+		exit();
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,

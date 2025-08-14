@@ -376,15 +376,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$SearchResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0){
-			   prnMsg(_('There are no products available that match the criteria specified'),'info');
-			   if ($Debug==1){
-				    prnMsg(_('The SQL statement used was') . ':<br />' . $SQL,'info');
-			   }
+			prnMsg(_('There are no products available that match the criteria specified'),'info');
 		}
 		if (DB_num_rows($SearchResult)==1){
-			   $MyRow=DB_fetch_array($SearchResult);
-			   $_POST['NewItem'] = $MyRow['stockid'];
-			   DB_data_seek($SearchResult,0);
+			$MyRow=DB_fetch_array($SearchResult);
+			$_POST['NewItem'] = $MyRow['stockid'];
+			DB_data_seek($SearchResult,0);
 		}
 
 	 } //end of if search for parts to add to the credit note

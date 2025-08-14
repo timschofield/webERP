@@ -43,19 +43,9 @@ if (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$SupplierResult = DB_query($SQL);
+	$ErrMsg = _('The Supplier details could not be retrieved');
+	$SupplierResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Supplier Balances - Problem Report');
-		include('includes/header.php');
-		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
 	if (DB_num_rows($SupplierResult) ==0) {
 		$Title = _('Supplier Balances - Problem Report');
 		include('includes/header.php');

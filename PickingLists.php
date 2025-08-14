@@ -506,12 +506,6 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 	if (DB_num_rows($Result) != count($_SESSION['Items' . $identifier]->LineItems)) {
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if  not 	then someone has already invoiced or credited some lines */
 
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
-			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items' . $identifier]->LineItems);
-		}
-
 		echo '<br />';
 		prnMsg(_('This order has been changed or invoiced since this delivery was started to be confirmed') . '. ' . _('Processing halted') . '. ' . _('To enter and confirm this dispatch') . _(' the order must be re-selected and re-read again to update the changes made by the other user'), 'error');
 

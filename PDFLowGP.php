@@ -9,7 +9,7 @@ if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
 }
-$Debug=0;
+
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML = '';
@@ -64,31 +64,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.actualcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 
-	$LowGPSalesResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-
-		include('includes/header.php');
-		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = _('The low GP items could not be retrieved');
+	$LowGPSalesResult = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($LowGPSalesResult) == 0) {
-
 		include('includes/header.php');
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
 		include('includes/footer.php');
 		exit();
 	}
+	
 	$HTML .= '<table>
 				<tr>
 					<th>' . _('Trans') . '</th>

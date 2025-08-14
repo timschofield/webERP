@@ -122,19 +122,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 			}
 		}
 	}
-	$PricesResult = DB_query($SQL,'','',false,true);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Price List') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-		echo '<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg =  _('The Price List could not be retrieved');
+	$PricesResult = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($PricesResult)==0) {
 

@@ -142,7 +142,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
+	if (DB_num_rows($SearchResult)==0){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -203,9 +203,6 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 																			$MyRow['decimalplaces']);
 				} else {
 					prnMsg (_('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
-					if ($Debug==1){
-						echo '<br />' . $SQL;
-					}
 					include('includes/footer.php');
 					exit();
 				}

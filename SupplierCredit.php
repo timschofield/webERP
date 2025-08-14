@@ -1036,10 +1036,6 @@ then do the updates and inserts to process the credit note entered */
 
 			} /* end of GRN postings */
 
-			if ($Debug == 1 AND abs(($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal)>0.004){
-				prnMsg(_('The total posted to the credit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate),'error');
-			}
-
 			foreach ($_SESSION['SuppTrans']->Taxes as $Tax){
 				/* Now the TAX account */
 				if ($Tax->TaxOvAmount/ $_SESSION['SuppTrans']->ExRate !=0){

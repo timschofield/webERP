@@ -35,19 +35,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$CustomerResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Customer Balances') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = ('The customer details could not be retrieved');
+	$CustomerResult = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($CustomerResult) == 0) {
 		$Title = _('Customer Balances') . ' - ' . _('Problem Report');

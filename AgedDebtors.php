@@ -242,20 +242,8 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				holdreasons.reasondescription
 				HAVING ABS(SUM(debtortrans.balance)) >0.005";
 	}
-	$CustomerResult = DB_query($SQL,'','',False,False); /*dont trap errors handled below*/
-
-	if(DB_error_no() !=0) {
-		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '.... ';
-		include('includes/header.php');
-		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if($Debug==1) {
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
-
+	$ErrMsg = _('The customer details could not be retrieved');
+	$CustomerResult = DB_query($SQL, $ErrMsg , '', false);
 
 	$HTML = '';
 
@@ -374,18 +362,8 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$DetailResult = DB_query($SQL,'','',False,False); /*Dont trap errors */
-			if(DB_error_no() !=0) {
-				$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
-				include('includes/header.php');
-				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if($Debug==1) {
-					echo '<br />' . _('The SQL that failed was') . '<br />' . $SQL;
-				}
-				include('includes/footer.php');
-				exit();
-			}
+			$ErrMsg = _('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved');
+			$DetailResult = DB_query($SQL, $ErrMsg, '', false);
 
 			$HTML .= '<tr>
 						<td colspan="6">

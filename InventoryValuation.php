@@ -57,19 +57,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 				ORDER BY stockcategory.categorydescription,
 					stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL,'','',false,true);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg =  _('The inventory valuation could not be retrieved');
+	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');

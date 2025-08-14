@@ -99,20 +99,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						locstock.loccode";
 	}
 
+	$ErrMsg = _('The Inventory Quantity report could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
 
-	$Result = DB_query($SQL,'','',false,true);
-
-	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
-	  include('includes/header.php');
-	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-		  echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
 	if (DB_num_rows($Result)==0){
 			$Title = _('Print Inventory Quantities Report');
 			include('includes/header.php');

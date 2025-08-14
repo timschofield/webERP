@@ -46,17 +46,9 @@ $SQL= "SELECT salesorders.orderno,
 		 AND salesorders.quotation=0
 		 ORDER BY salesorders.orderno";
 
-$Result = DB_query($SQL,'','',false,false); //dont trap errors here
+$ErrMsg = _('An error occurred getting the orders details');
+$Result = DB_query($SQL, $ErrMsg , '', false);
 
-if (DB_error_no()!=0){
-	include('includes/header.php');
-	echo '<br />' . _('An error occurred getting the orders details');
-	if ($Debug==1){
-		echo '<br />' . _('The SQL used to get the orders that failed was') . '<br />' . $SQL;
-	}
-	include('includes/footer.php');
-	exit();
-}
 $PaperSize="Letter_Landscape";
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title',_('Weekly Orders Report'));

@@ -45,17 +45,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-	$Result = DB_query($SQL,'','',false,false);
-	if (DB_error_no()!=0){
-		$Title = _('Payment Listing');
-		include('includes/header.php');
-		prnMsg(_('An error occurred getting the payments'),'error');
-		if ($Debug==1){
-			prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
-		}
-		include('includes/footer.php');
-		exit();
-	} elseif (DB_num_rows($Result) == 0){
+	$ErrMsg = _('An error occurred getting the payments');
+	$Result = DB_query($SQL, $ErrMsg, '', false);
+	
+	if (DB_num_rows($Result) == 0){
 		$Title = _('Payment Listing');
 		include('includes/header.php');
 		prnMsg (_('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' ._('Please try again selecting a different date range or account'), 'error');
@@ -106,25 +99,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				</tr>';
 
 		$SQL = "SELECT accountname,
-						accountcode,
-						amount,
-						narrative
-					FROM gltrans INNER JOIN chartmaster
+					accountcode,
+					amount,
+					narrative
+				FROM gltrans
+				INNER JOIN chartmaster
 					ON gltrans.account=chartmaster.accountcode
-					WHERE gltrans.typeno ='" . $MyRow['transno'] . "'
-						AND gltrans.type='" . $MyRow['type'] . "'";
+				WHERE gltrans.typeno ='" . $MyRow['transno'] . "'
+					AND gltrans.type='" . $MyRow['type'] . "'";
 
-		$GLTransResult = DB_query($SQL,'','',false,false);
-		if (DB_error_no()!=0){
-			$Title = _('Payment Listing');
-			include('includes/header.php');
-			prnMsg(_('An error occurred getting the GL transactions'),'error');
-			if ($Debug==1){
-				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL, 'error');
-			}
-			include('includes/footer.php');
-			exit();
-		}
+		$ErrMsg = _('An error occurred getting the GL transactions');
+		$GLTransResult = DB_query($SQL, $ErrMsg, '', false);
+
 		while ($GLRow=DB_fetch_array($GLTransResult)){
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"
 			$CheckSql = "SELECT count(*)

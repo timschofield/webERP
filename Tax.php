@@ -34,18 +34,10 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 					AND (debtortrans.type=10 OR debtortrans.type=11)
 					AND debtortranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 				ORDER BY debtortrans.id";
-	$DebtorTransResult = DB_query($SQL, '', '', false, false); //don't trap errors in DB_query
-	if (DB_error_no() != 0) {
-		$Title = _('Taxation Reporting Error');
-		include('includes/header.php');
-		prnMsg(_('The accounts receivable transaction details could not be retrieved because') . ' ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+
+	$ErrMsg = _('The accounts receivable transaction details could not be retrieved');
+	$DebtorTransResult = DB_query($SQL, $ErrMsg, '', false);
+
 	$SalesCount = 0;
 	$SalesNet = 0;
 	$SalesTax = 0;
@@ -139,18 +131,10 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 					AND (supptrans.type=20 OR supptrans.type=21)
 					AND supptranstaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 				ORDER BY supptrans.id"; // ORDER BY supptrans.recno ?
-	$SuppTransResult = DB_query($SQL, '', '', false, false); //doint trap errors in DB_query
-	if (DB_error_no() != 0) {
-		$Title = _('Taxation Reporting Error');
-		include('includes/header.php');
-		echo _('The accounts payable transaction details could not be retrieved because') . ' ' . DB_error_msg();
-		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+
+	$ErrMsg = _('The accounts payable transaction details could not be retrieved');
+	$SuppTransResult = DB_query($SQL, $ErrMsg, '', false);
+
 	$PettyCashSQL = "SELECT pcashdetails.date AS trandate,
 							pcashdetailtaxes.pccashdetail AS transno,
 							pcashdetailtaxes.description AS suppreference,
@@ -168,18 +152,10 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 							AND pcashdetails.date <= '" . FormatDateForSQL($PeriodEnd) . "'
 							AND pcashdetailtaxes.taxauthid = '" . $_POST['TaxAuthority'] . "'
 						ORDER BY pcashdetailtaxes.counterindex";
-	$PettyCashResult = DB_query($PettyCashSQL, '', '', false, false); //doint trap errors in DB_query
-	if (DB_error_no() != 0) {
-		$Title = _('Taxation Reporting Error');
-		include('includes/header.php');
-		echo _('The petty cash transaction details could not be retrieved because') . ' ' . DB_error_msg();
-		echo '<br /><a href="' . $RootPath . '/index.php?">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+
+	$ErrMsg = _('The petty cash transaction details could not be retrieved');
+	$PettyCashResult = DB_query($PettyCashSQL, $ErrMsg, '', false); 
+
 	$PurchasesCount = 0;
 	$PurchasesNet = 0;
 	$PurchasesTax = 0;

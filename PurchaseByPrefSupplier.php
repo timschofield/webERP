@@ -388,107 +388,84 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					ORDER BY purchdata.supplierno,
 						stockmaster.stockid";
 
-	$ItemsResult = DB_query($SQL, '', '', false, false);
+	$ErrMsg = _('The supplier inventory quantities could not be retrieved');
+	$ItemsResult = DB_query($SQL, $ErrMsg, '', false, false);
 	$ListCount = DB_num_rows($ItemsResult);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.php');
-		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-		  echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	} else {
-		//head up a new table
-		echo '<table>
-			<thead>
-				<tr>
-					<th class="SortedColumn">' . _('Item Code') . '</th>
-					<th class="SortedColumn">' . _('Item Description') . '</th>
-					<th class="SortedColumn">' . _('Bin') . '</th>
-					<th class="SortedColumn">' . _('On Hand') . '</th>
-					<th class="SortedColumn">' . _('Demand') . '</th>
-					<th class="SortedColumn">' . _('Supp Ords') . '</th>
-					<th class="SortedColumn">' . _('Previous') . '<br />' ._('Month') . '</th>
-					<th class="SortedColumn">' . _('Last') . '<br />' ._('Month') . '</th>
-					<th class="SortedColumn">' . _('Week') . '<br />' ._('3') . '</th>
-					<th class="SortedColumn">' . _('Week') . '<br />' ._('2') . '</th>
-					<th class="SortedColumn">' . _('Last') . '<br />' ._('Week') . '</th>
-					<th>' . _('Order Qty') . '</th>
-				</tr>
-			</thead>
-			<tbody>';
-
-		$i=0;
-
-		while ($ItemRow = DB_fetch_array($ItemsResult)){
-
-
-			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
-								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
-								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
-					FROM stockmoves
-					WHERE stockid='" . $ItemRow['stockid'] . "'
-					AND (type=10 OR type=11)";
-			$SalesResult = DB_query($SQL,'','',FALSE,FALSE);
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'. $SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit();
-			}
-
-			$SalesRow = DB_fetch_array($SalesResult);
-
-			// Get the demand
-			$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
-			// Get the QOO
-			$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
-
-			if (!isset($_POST['OrderQty' . $i])){
-				$_POST['OrderQty' . $i] =0;
-			}
-			echo '<tr>
-					<td>' . $ItemRow['stockid']  . '</td>
-					<td>' . $ItemRow['description'] . '</td>
-					<td>' . $ItemRow['bin'] . '</td>
-					<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk2'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk1'],$ItemRow['decimalplaces']) . '</td>
-					<td><input type="hidden" name="StockID' . $i . '" value="' . $ItemRow['stockid'] . '" /><input type="text" class="number" name="OrderQty' . $i  . '" value="' . $_POST['OrderQty' . $i] . '" title="' . _('Enter the quantity to purchase of this item') . '" size="6" maxlength="6" /></td>
-				</tr>';
-			$i++;
-		} /*end preferred supplier items while loop */
-
-		echo '</tbody>
-			<tfoot>
-				<tr>
-				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return confirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
+	//head up a new table
+	echo '<table>
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Item Code') . '</th>
+				<th class="SortedColumn">' . _('Item Description') . '</th>
+				<th class="SortedColumn">' . _('Bin') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Demand') . '</th>
+				<th class="SortedColumn">' . _('Supp Ords') . '</th>
+				<th class="SortedColumn">' . _('Previous') . '<br />' ._('Month') . '</th>
+				<th class="SortedColumn">' . _('Last') . '<br />' ._('Month') . '</th>
+				<th class="SortedColumn">' . _('Week') . '<br />' ._('3') . '</th>
+				<th class="SortedColumn">' . _('Week') . '<br />' ._('2') . '</th>
+				<th class="SortedColumn">' . _('Last') . '<br />' ._('Week') . '</th>
+				<th>' . _('Order Qty') . '</th>
 			</tr>
-			</tfoot>
-			</table>';
-	}
+		</thead>
+		<tbody>';
+
+	$i=0;
+
+	while ($ItemRow = DB_fetch_array($ItemsResult)){
+
+		$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
+				FROM stockmoves
+				WHERE stockid='" . $ItemRow['stockid'] . "'
+				AND (type=10 OR type=11)";
+
+		$ErrMsg = _('The sales quantities could not be retrieved');
+		$SalesResult = DB_query($SQL, $ErrMsg, '',false);
+		$SalesRow = DB_fetch_array($SalesResult);
+
+		// Get the demand
+		$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
+		// Get the QOO
+		$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
+
+		if (!isset($_POST['OrderQty' . $i])){
+			$_POST['OrderQty' . $i] =0;
+		}
+		echo '<tr>
+				<td>' . $ItemRow['stockid']  . '</td>
+				<td>' . $ItemRow['description'] . '</td>
+				<td>' . $ItemRow['bin'] . '</td>
+				<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk2'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk1'],$ItemRow['decimalplaces']) . '</td>
+				<td><input type="hidden" name="StockID' . $i . '" value="' . $ItemRow['stockid'] . '" /><input type="text" class="number" name="OrderQty' . $i  . '" value="' . $_POST['OrderQty' . $i] . '" title="' . _('Enter the quantity to purchase of this item') . '" size="6" maxlength="6" /></td>
+			</tr>';
+		$i++;
+	} /*end preferred supplier items while loop */
+
+	echo '</tbody>
+		<tfoot>
+			<tr>
+			<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return confirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
+		</tr>
+		</tfoot>
+		</table>';
 }
 
 echo '</div>
