@@ -294,12 +294,6 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 } else {
 	$CustomerLogin = 0;
 }
-if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$Debug = 1; //allow debug messages
-
-} else {
-	$Debug = 0; //don't allow debug messages
-}
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
