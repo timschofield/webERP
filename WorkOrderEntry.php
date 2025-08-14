@@ -272,10 +272,6 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 
 	if(DB_num_rows($SearchResult)==0 ) {
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
-
-		if($debug==1) {
-			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL,'info');
-		}
 	}
 	if(DB_num_rows($SearchResult)==1) {
 		$myrow=DB_fetch_array($SearchResult);
