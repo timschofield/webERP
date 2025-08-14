@@ -7,7 +7,16 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
 include('includes/header.php');
 
-$FixedTokens = array(0, 1, 9);
+/* FixedTokens contains a list of token IDs that are reserved and cannot be changed or deleted.
+ * These security tokens ID are hardcoded in several webERP scripts.
+ * 0: Main Index Page
+ * 1: Order Entry / Customer access only
+ * 9: Supplier entry only
+ * 12: Prices
+ * 15: System administration
+ * 18: Cost 
+ */
+$FixedTokens = array(0, 1, 9, 12, 15, 18);
 
 if($AllowDemoMode) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
