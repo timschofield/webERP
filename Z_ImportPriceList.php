@@ -31,6 +31,10 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ',');
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
