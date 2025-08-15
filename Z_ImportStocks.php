@@ -54,6 +54,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
