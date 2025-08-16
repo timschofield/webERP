@@ -6,11 +6,11 @@ include('includes/session.php');
 if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {
-	$Title=_('MRP error');
+	$Title=__('MRP error');
 	include('includes/header.php');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
-			_('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
+	prnMsg( __('The MRP calculation must be run before you can run this report') . '<br />' .
+			__('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -22,7 +22,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	if (Is_Date($_POST['cutoffdate'])) {
 		$FormatDate = FormatDateForSQL($_POST['cutoffdate']);
 		$WhereDate = " AND duedate <= '" . $FormatDate . "' ";
-		$ReportDate = ' ' . _('Through') . ' ' . $_POST['cutoffdate'];
+		$ReportDate = ' ' . __('Through') . ' ' . $_POST['cutoffdate'];
 	}
 
 	if ($_POST['Consolidation'] == 'None') {
@@ -88,14 +88,14 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 						 computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
-	$ErrMsg = _('The MRP planned work orders could not be retrieved');
+	$ErrMsg = __('The MRP planned work orders could not be retrieved');
 	$Result = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($Result)==0){ //then there is nothing to print
-		$Title = _('MRP Planned Work Orders');
+		$Title = __('MRP Planned Work Orders');
 		include('includes/header.php');
-		prnMsg(_('There were no items with demand greater than supply'),'info');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('There were no items with demand greater than supply'),'info');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -104,8 +104,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 		include('includes/PDFStarter.php');
 
-		$PDF->addInfo('Title',_('MRP Planned Work Orders Report'));
-		$PDF->addInfo('Subject',_('MRP Planned Work Orders'));
+		$PDF->addInfo('Title',__('MRP Planned Work Orders Report'));
+		$PDF->addInfo('Subject',__('MRP Planned Work Orders'));
 
 		$FontSize=9;
 		$PageNumber=1;
@@ -134,11 +134,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				// Print information on part break
 				if ($Partctr > 0 AND $HoldPart != $MyRow['part']) {
 					$PDF->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
-					$PDF->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
+					$PDF->addTextWrap(180,$YPos,50,$FontSize,__('Unit Cost: '),'center',0,$Fill);
 					$PDF->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
 					$PDF->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty, $HoldDecimalPlaces),'right',0,$Fill);
 					$PDF->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-					$PDF->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
+					$PDF->addTextWrap(370,$YPos,30,$FontSize,__('M/B: '),'right',0,$Fill);
 					$PDF->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
 					$TotalPartCost = 0;
 					$TotalPartQty = 0;
@@ -187,11 +187,11 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		// Print summary information for last part
 		$YPos -=$LineHeight;
 		$PDF->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
-		$PDF->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
+		$PDF->addTextWrap(180,$YPos,50,$FontSize,__('Unit Cost: '),'center',0,$Fill);
 		$PDF->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
 		$PDF->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$Fill);
 		$PDF->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-		$PDF->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
+		$PDF->addTextWrap(370,$YPos,30,$FontSize,__('M/B: '),'right',0,$Fill);
 		$PDF->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
 		$FontSize =8;
 		$YPos -= (2*$LineHeight);
@@ -202,9 +202,9 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		}
 
 		/*Print out the grand totals */
-		$PDF->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
+		$PDF->addTextWrap($Left_Margin,$YPos,120,$FontSize,__('Number of Work Orders: '), 'left');
 		$PDF->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
-		$PDF->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
+		$PDF->addTextWrap(200,$YPos,100,$FontSize,__('Total Extended Cost:'), 'right');
 		$DisplayTotalVal = locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']);
 		$PDF->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
@@ -213,31 +213,31 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 	} else { // Review planned work orders
 
-		$Title = _('Review/Convert MRP Planned Work Orders');
+		$Title = __('Review/Convert MRP Planned Work Orders');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
 				<th colspan="9">
-					<h3>' . _('Consolidation') . ': ' . $_POST['Consolidation'] . '&nbsp;&nbsp;&nbsp;&nbsp;'
-						  . _('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</h3>
+					<h3>' . __('Consolidation') . ': ' . $_POST['Consolidation'] . '&nbsp;&nbsp;&nbsp;&nbsp;'
+						  . __('Cutoff Date') . ': ' . $_POST['cutoffdate'] . '</h3>
 				</th>
 			</tr>
 			<tr>
 				<th></th>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('MRP Date') . '</th>
-				<th>' . _('Due Date') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Unit Cost') . '</th>
-				<th>' . _('Ext. Cost') . '</th>';
+				<th>' . __('Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('MRP Date') . '</th>
+				<th>' . __('Due Date') . '</th>
+				<th>' . __('Quantity') . '</th>
+				<th>' . __('Unit Cost') . '</th>
+				<th>' . __('Ext. Cost') . '</th>';
 			if ($_POST['Consolidation'] != 'None') {
-				echo '<th>' . _('Consolidations') . '</th>';
+				echo '<th>' . __('Consolidations') . '</th>';
 			}
 		echo '</tr>';
 
@@ -249,7 +249,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		while ($MyRow = DB_fetch_array($Result)){
 
 			echo '<tr class="striped_row">
-				<td><a href="' . $RootPath . '/WorkOrderEntry.php?NewItem=' . urlencode($MyRow['part']) . '&amp;ReqQty=' . urlencode($MyRow['supplyquantity']) . '&amp;ReqDate=' . urlencode($MyRow['duedate']) . '&amp;StartDate=' . urlencode($MyRow['mrpdate']) . '">' . _('Convert') . '</a></td>
+				<td><a href="' . $RootPath . '/WorkOrderEntry.php?NewItem=' . urlencode($MyRow['part']) . '&amp;ReqQty=' . urlencode($MyRow['supplyquantity']) . '&amp;ReqDate=' . urlencode($MyRow['duedate']) . '&amp;StartDate=' . urlencode($MyRow['mrpdate']) . '">' . __('Convert') . '</a></td>
 				<td>' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . urlencode($MyRow['part']) . '">' . $MyRow['part'] . '</a>' .  '<input type="hidden" name="' . $j . '_part" value="' . $MyRow['part']. '" /></td>
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . ConvertSQLDate($MyRow['mrpdate']) . '</td>
@@ -270,51 +270,51 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 		// Print out the grand totals
 		echo '<tr>
-				<td colspan="3" class="number">' . _('Number of Work Orders') .': ' . ($j-1) . '</td>
-				<td colspan="5" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td colspan="3" class="number">' . __('Number of Work Orders') .': ' . ($j-1) . '</td>
+				<td colspan="5" class="number">' . __('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>
 			</form>';
 
-		echo '<br /><a class="noPrint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria.'), '</a>';
+		echo '<br /><a class="noPrint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Select different criteria.'), '</a>';
 		include('includes/footer.php');
 
 	} // end Review planned work orders
 } else { /*The option to print PDF was not hit so display form */
 
-	$Title=_('MRP Planned Work Orders Reporting');
+	$Title=__('MRP Planned Work Orders Reporting');
 	$ViewTopic = 'MRP';
 	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Consolidation">' . _('Consolidation') . ':</label>
+				<label for="Consolidation">' . __('Consolidation') . ':</label>
 				<select required="required" name="Consolidation">
-					<option selected="selected" value="None">' . _('None') . '</option>
-					<option value="Weekly">' . _('Weekly') . '</option>
-					<option value="Monthly">' . _('Monthly') . '</option>
+					<option selected="selected" value="None">' . __('None') . '</option>
+					<option value="Weekly">' . __('Weekly') . '</option>
+					<option value="Monthly">' . __('Monthly') . '</option>
 				</select>
 			 </field>
 			 <field>
-				<label for="Fill">' . _('Print Option') . ':</label>
+				<label for="Fill">' . __('Print Option') . ':</label>
 				<select name="Fill">
-					<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-					<option value="no">' . _('Plain Print') . '</option>
+					<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+					<option value="no">' . __('Plain Print') . '</option>
 				</select>
 			 </field>
 			 <field>
-				<label for="cutoffdate">' . _('Cut Off Date') . ':</label>
+				<label for="cutoffdate">' . __('Cut Off Date') . ':</label>
 				<input required="required" type="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>
 			 </fieldset>
 			 <div class="centre">
-				  <input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+				  <input type="submit" name="Review" value="' . __('Review') . '" /> <input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
 			 </div>
 		  </form>';
 
@@ -337,21 +337,21 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 	$YPos -=$LineHeight;
 
-	$PDF->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('MRP Planned Work Orders Report'));
+	$PDF->addTextWrap($Left_Margin,$YPos,150,$FontSize,__('MRP Planned Work Orders Report'));
 	$PDF->addTextWrap(190,$YPos,100,$FontSize,$ReportDate);
-	$PDF->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
+	$PDF->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,__('Printed') . ': ' .
+		 Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $LineHeight;
 
 	if ($Consolidation == 'None') {
-		$DisplayConsolidation = _('None');
+		$DisplayConsolidation = __('None');
 	} elseif ($Consolidation == 'Weekly') {
-		$DisplayConsolidation = _('Weekly');
+		$DisplayConsolidation = __('Weekly');
 	} else {
-		$DisplayConsolidation = _('Monthly');
+		$DisplayConsolidation = __('Monthly');
 	}
 
-	$PDF->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
+	$PDF->addTextWrap($Left_Margin,$YPos,65,$FontSize,__('Consolidation').':');
 	$PDF->addTextWrap(110,$YPos,40,$FontSize,$DisplayConsolidation);
 
 	$YPos -=(2*$LineHeight);
@@ -359,17 +359,17 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
-	$PDF->addTextWrap($Xpos,$YPos,150,$FontSize,_('Part Number'), 'left');
-	$PDF->addTextWrap(150,$YPos,50,$FontSize,_('Due Date'), 'right');
-	$PDF->addTextWrap(200,$YPos,60,$FontSize,_('MRP Date'), 'right');
-	$PDF->addTextWrap(260,$YPos,50,$FontSize,_('Quantity'), 'right');
-	$PDF->addTextWrap(310,$YPos,60,$FontSize,_('Ext. Cost'), 'right');
+	$PDF->addTextWrap($Xpos,$YPos,150,$FontSize,__('Part Number'), 'left');
+	$PDF->addTextWrap(150,$YPos,50,$FontSize,__('Due Date'), 'right');
+	$PDF->addTextWrap(200,$YPos,60,$FontSize,__('MRP Date'), 'right');
+	$PDF->addTextWrap(260,$YPos,50,$FontSize,__('Quantity'), 'right');
+	$PDF->addTextWrap(310,$YPos,60,$FontSize,__('Ext. Cost'), 'right');
 
 	if ($Consolidation == 'None') {
-		$PDF->addTextWrap(370,$YPos,80,$FontSize,_('Source Type'), 'right');
-		$PDF->addTextWrap(450,$YPos,80,$FontSize,_('Source Order'), 'right');
+		$PDF->addTextWrap(370,$YPos,80,$FontSize,__('Source Type'), 'right');
+		$PDF->addTextWrap(450,$YPos,80,$FontSize,__('Source Order'), 'right');
 	} else {
-		$PDF->addTextWrap(370,$YPos,100,$FontSize,_('Consolidation Count'), 'right');
+		$PDF->addTextWrap(370,$YPos,100,$FontSize,__('Consolidation Count'), 'right');
 	}
 
 	$FontSize=8;

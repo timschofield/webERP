@@ -10,5 +10,5 @@ CreateTable('session_data', 'CREATE TABLE `session_data` (
 AddColumn('timeout', 'www_users', 'TINYINT', 'NOT NULL', 5, 'pagesize');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), _('Database changes to automatically logout remembering state'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Database changes to automatically logout remembering state'));
 }

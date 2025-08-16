@@ -6,8 +6,8 @@ include('includes/session.php');
 if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Check Comparison Report') );
-	$pdf->addInfo('Subject', _('Inventory Check Comparison'). ' ' . Date($_SESSION['DefaultDateFormat']));
+	$pdf->addInfo('Title', __('Check Comparison Report') );
+	$pdf->addInfo('Subject', __('Inventory Check Comparison'). ' ' . Date($_SESSION['DefaultDateFormat']));
 	$PageNumber=1;
 	$LineHeight=15;
 
@@ -27,7 +27,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				ORDER BY stockcheckfreeze.loccode,
 						stockcheckfreeze.stockid";
 
-		$ErrMsg = _('The inventory check file could not be retrieved');
+		$ErrMsg = __('The inventory check file could not be retrieved');
 		$StockChecks = DB_query($SQL, $ErrMsg, '', false);
 
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
@@ -42,7 +42,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 					WHERE stockcounts.stockid='" . $MyRow['stockid'] . "'
 					AND stockcounts.loccode='" . $MyRow['loccode'] . "'";
 
-			$ErrMsg = _('The inventory counts file could not be retrieved');
+			$ErrMsg = __('The inventory counts file could not be retrieved');
 			$StockCounts = DB_query($SQL, $ErrMsg);
 
 			$StkCountResult = DB_query($SQL);
@@ -91,26 +91,26 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							'" . $SQLAdjustmentDate . "',
 							'" . $_SESSION['UserID'] . "',
 							'" . $PeriodNo . "',
-							'" . _('Inventory Check') . "',
+							'" . __('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
 							'" . ($QtyOnHandPrior + $StockQtyDifference) . "',
 							'" . $MyRow['standardcost'] . "'
 						)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock movement record cannot be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "UPDATE locstock
 						SET quantity = quantity + '" . $StockQtyDifference . "'
 						WHERE stockid='" . $MyRow['stockid'] . "'
 						AND loccode='" . $MyRow['loccode'] . "'";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $MyRow['standardcost'] > 0){
 
 					$StockGLCodes = GetStockGLCode($MyRow['stockid']);
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 
 					$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -125,10 +125,10 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['adjglact'] . "',
 								'" . ($MyRow['standardcost'] * -($StockQtyDifference)) . "',
-								'" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
+								'" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . __('Inventory Check'), 0, 200) . "')";
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 
 					$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -143,11 +143,11 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								'" . $PeriodNo . "',
 								'" .  $StockGLCodes['stockact'] . "',
 								'" . $MyRow['standardcost'] * $StockQtyDifference . "',
-                                '" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . _('Inventory Check'), 0, 200) . "')";
+                                '" . mb_substr($MyRow['stockid'] . " x " . $StockQtyDifference . " @ " . $MyRow['standardcost'] . " - " . __('Inventory Check'), 0, 200) . "')";
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} //END INSERT GL TRANS
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Unable to COMMIT transaction while adjusting stock in StockCheckAdjustmet report');
 				DB_Txn_Commit();
 
 			} // end if $StockQtyDifference !=0
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	} // end user wanted to close the inventory check file and do the adjustments
 
 	// now do the report
-	$ErrMsg = _('The Inventory Comparison data could not be retrieved because');
+	$ErrMsg = __('The Inventory Comparison data could not be retrieved because');
 	$SQL = "SELECT stockcheckfreeze.stockid,
 					description,
 					stockmaster.categoryid,
@@ -182,11 +182,11 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	$CheckedItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($CheckedItems)==0){
-		$Title= _('Inventory Comparison Comparison Report');
+		$Title= __('Inventory Comparison Comparison Report');
 		include('includes/header.php');
 		echo '<p>';
-		prnMsg(_('There is no inventory check data to report on'), 'warn');
-		echo '<p>' .  _('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">' .  _('inventory check sheets') . '</a> - '. _('and select the option to create new Inventory Comparison data file');
+		prnMsg(__('There is no inventory check data to report on'), 'warn');
+		echo '<p>' .  __('To start an inventory check first run the'). ' <a href="' . $RootPath . '/StockCheck.php">' .  __('inventory check sheets') . '</a> - '. __('and select the option to create new Inventory Comparison data file');
 		include('includes/footer.php');
 		exit();
 	}
@@ -235,14 +235,14 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				WHERE loccode ='" . $Location . "'
 				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
-		$ErrMsg = _('The inventory counts could not be retrieved');
+		$ErrMsg = __('The inventory counts could not be retrieved');
 		$Counts = DB_query($SQL, $ErrMsg, '', false);
 
 		if ($CheckItemRow['qoh']!=0 OR DB_num_rows($Counts)>0) {
 			$YPos -=$LineHeight;
 			$FontSize=8;
 			if (mb_strlen($CheckItemRow['bin'])>0){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'] . ' - ' . _('Bin') . ':' . $CheckItemRow['bin'], 'left');
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'] . ' - ' . __('Bin') . ':' . $CheckItemRow['bin'], 'left');
 			} else {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,$CheckItemRow['stockid'], 'left');
 			}
@@ -251,7 +251,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		}
 
 		if (DB_num_rows($Counts)==0 AND $CheckItemRow['qoh']!=0){
-			$LeftOvers = $pdf->addTextWrap(380, $YPos,160, $FontSize, _('No counts entered'), 'left');
+			$LeftOvers = $pdf->addTextWrap(380, $YPos,160, $FontSize, __('No counts entered'), 'left');
 			if ($_POST['ZeroCounts']=='Adjust'){
 				$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format(-($CheckItemRow['qoh']),$CheckItemRow['decimalplaces']), 'right');
 			}
@@ -268,7 +268,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		   			include('includes/PDFStockComparisonPageHeader.php');
 				}
 			} // end of loop printing count information
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 375-$Left_Margin, $FontSize, _('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
+			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 375-$Left_Margin, $FontSize, __('Total for') . ': ' . $CheckItemRow['stockid'], 'right');
 			$LeftOvers = $pdf->addTextWrap(375, $YPos, 60, $FontSize, locale_number_format($TotalCount,$CheckItemRow['decimalplaces']), 'right');
 			$LeftOvers = $pdf->addTextWrap(485, $YPos, 60, $FontSize, locale_number_format($TotalCount-$CheckItemRow['qoh'],$CheckItemRow['decimalplaces']), 'right');
 		} //end of if there are counts to print
@@ -298,7 +298,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$Title= _('Inventory Comparison Report');
+	$Title= __('Inventory Comparison Report');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include('includes/header.php');
@@ -310,38 +310,38 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     echo '<fieldset>
-			<legend>', _('Stock Check Options'), '</legend>';
+			<legend>', __('Stock Check Options'), '</legend>';
 	echo '<field>
-			<label for="ReportOrClose">' . _('Choose Option'). ':</label>
+			<label for="ReportOrClose">' . __('Choose Option'). ':</label>
 			<select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
-		echo '<option selected="selected" value="ReportAndClose">' .  _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
-		echo '<option value="ReportOnly">' .  _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
+		echo '<option selected="selected" value="ReportAndClose">' .  __('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
+		echo '<option value="ReportOnly">' .  __('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
 	} else {
-		echo '<option selected="selected" value="ReportOnly">' . _('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
-		echo '<option value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
+		echo '<option selected="selected" value="ReportOnly">' . __('Report The Inventory Comparison Differences Only - No Adjustments') . '</option>';
+		echo '<option value="ReportAndClose">' . __('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 	}
 
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="ZeroCounts">' .  _('Action for Zero Counts') . ':</label>
+			<label for="ZeroCounts">' .  __('Action for Zero Counts') . ':</label>
 			<select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
-		echo '<option selected="selected" value="Adjust">' .  _('Adjust System stock to Nil') . '</option>';
-		echo '<option value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
+		echo '<option selected="selected" value="Adjust">' .  __('Adjust System stock to Nil') . '</option>';
+		echo '<option value="Leave">' . __('Do not Adjust System stock to Nil') . '</option>';
 	} else {
-		echo '<option value="Adjust">' .  _('Adjust System stock to Nil') . '</option>';
-		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
+		echo '<option value="Adjust">' .  __('Adjust System stock to Nil') . '</option>';
+		echo '<option selected="selected" value="Leave">' . __('Do not Adjust System stock to Nil') . '</option>';
 	}
 
     echo '</select>
 		</field>';
 	echo '</fieldset>
-		<div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF'). '" /></div>';
+		<div class="centre"><input type="submit" name="PrintPDF" value="' . __('Print PDF'). '" /></div>';
     echo '</form>';
 
 	include('includes/footer.php');

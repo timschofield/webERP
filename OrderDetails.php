@@ -6,11 +6,11 @@ include('includes/session.php');
 $_GET['OrderNumber']=(int)$_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
-	$Title = _('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
+	$Title = __('Reviewing Sales Order Number') . ' ' . $_GET['OrderNumber'];
 } else {
 	include('includes/header.php');
 	echo '<br /><br /><br />';
-	prnMsg(_('This page must be called with a sales order number to review') . '.<br />' . _('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . _('Click on back') . '.','error');
+	prnMsg(__('This page must be called with a sales order number to review') . '.<br />' . __('i.e.') . ' http://????/OrderDetails.php?OrderNumber=<i>xyz</i><br />' . __('Click on back') . '.','error');
 	include('includes/footer.php');
 	exit();
 }
@@ -47,23 +47,23 @@ $OrderHeaderSQL = "SELECT salesorders.debtorno,
 					ON debtorsmaster.currcode=currencies.currabrev
 					WHERE salesorders.orderno = '" . $_GET['OrderNumber'] . "'";
 
-$ErrMsg =  _('The order cannot be retrieved because');
+$ErrMsg =  __('The order cannot be retrieved because');
 $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 if (DB_num_rows($GetOrdHdrResult)==1) {
 
-	echo '<a class="toplink" href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/><br/>
-		<a class="toplink" href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
+	echo '<a class="toplink" href="' . $RootPath . '/SelectCompletedOrder.php">' . __('Return to Sales Order Inquiry') . '</a><br/><br/>
+		<a class="toplink" href="' . $RootPath . '/SelectCustomer.php">' . __('Return to Customer Inquiry Interface') . '</a>';
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Order Details') . '" alt="" />' . ' ' . $Title . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Order Details') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	$MyRow = DB_fetch_array($GetOrdHdrResult);
 	$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
 	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
-		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
+		prnMsg (__('Your customer login will only allow you to view your own purchase orders'),'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -78,66 +78,66 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="4"><h3>' . _('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
+				<th colspan="4"><h3>' . __('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
-				<th class="text">' . _('Customer Code') . ':</th>
+				<th class="text">' . __('Customer Code') . ':</th>
 				<td><a href="' . $RootPath . '/SelectCustomer.php?Select=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . '</a></td>
-				<th class="text">' . _('Customer Name') . ':</th>
+				<th class="text">' . __('Customer Name') . ':</th>
 				<th>' . $MyRow['name'] . '</th>
 			</tr>
 			<tr>
-				<th class="text">' . _('Customer Reference') . ':</th>
+				<th class="text">' . __('Customer Reference') . ':</th>
 				<td>' . $MyRow['customerref'] . '</td>
-				<th class="text">' . _('Deliver To') . ':</th>
+				<th class="text">' . __('Deliver To') . ':</th>
 				<th>' . $MyRow['deliverto'] . '</th>
 			</tr>
 			<tr>
-				<th class="text">' . _('Ordered On') . ':</th>
+				<th class="text">' . __('Ordered On') . ':</th>
 				<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
-				<th class="text">' . _('Delivery Address 1') . ':</th>
+				<th class="text">' . __('Delivery Address 1') . ':</th>
 				<td>' . $MyRow['deladd1'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Requested Delivery') . ':</th>
+				<th class="text">' . __('Requested Delivery') . ':</th>
 				<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
-				<th class="text">' . _('Delivery Address 2') . ':</th>
+				<th class="text">' . __('Delivery Address 2') . ':</th>
 				<td>' . $MyRow['deladd2'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Order Currency') . ':</th>
+				<th class="text">' . __('Order Currency') . ':</th>
 				<td>' . $MyRow['currcode'] . '</td>
-				<th class="text">' . _('Delivery Address 3') . ':</th>
+				<th class="text">' . __('Delivery Address 3') . ':</th>
 				<td>' . $MyRow['deladd3'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Deliver From Location') . ':</th>
+				<th class="text">' . __('Deliver From Location') . ':</th>
 				<td>' . $MyRow['fromstkloc'] . '</td>
-				<th class="text">' . _('Delivery Address 4') . ':</th>
+				<th class="text">' . __('Delivery Address 4') . ':</th>
 				<td>' . $MyRow['deladd4'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Telephone') . ':</th>
+				<th class="text">' . __('Telephone') . ':</th>
 				<td>' . $MyRow['contactphone'] . '</td>
-				<th class="text">' . _('Delivery Address 5') . ':</th>
+				<th class="text">' . __('Delivery Address 5') . ':</th>
 				<td>' . $MyRow['deladd5'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Email') . ':</th>
+				<th class="text">' . __('Email') . ':</th>
 				<td><a href="mailto:' . $MyRow['contactemail'] . '">' . $MyRow['contactemail'] . '</a></td>
-				<th class="text">' . _('Delivery Address 6') . ':</th>
+				<th class="text">' . __('Delivery Address 6') . ':</th>
 				<td>' . $MyRow['deladd6'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Freight Cost') . ':</th>
+				<th class="text">' . __('Freight Cost') . ':</th>
 				<td>' . $MyRow['freightcost'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Comments'). ': </th>
+				<th class="text">' . __('Comments'). ': </th>
 				<td colspan="3">' . $MyRow['comments'] . '</td>
 			</tr>
 			<tr>
-				<th class="text">' . _('Invoices') . ': </th>
+				<th class="text">' . __('Invoices') . ': </th>
 				<td colspan="3">' . $Inv . '</td>
 			</tr>
 			</table>';
@@ -167,7 +167,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $_GET['OrderNumber'] . "'";
 
-	$ErrMsg =  _('The line items of the order cannot be retrieved because');
+	$ErrMsg =  __('The line items of the order cannot be retrieved because');
 	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 	if (DB_num_rows($LineItemsResult)>0) {
@@ -179,20 +179,20 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<th colspan="13"><h3>' . _('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
+				<th colspan="13"><h3>' . __('Order Line Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>
 			</tr>
 			<tr>
-				<th>' . _('PO Line') . '</th>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Unit') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Discount') . '</th>
-				<th>' . _('Total') . '</th>
-				<th>' . _('Qty Del') . '</th>
-				<th>' . _('Last Del') . '/' . _('Due Date') . '</th>
-				<th>' . _('Narrative') . '</th>
+				<th>' . __('PO Line') . '</th>
+				<th>' . __('Item Code') . '</th>
+				<th>' . __('Item Description') . '</th>
+				<th>' . __('Quantity') . '</th>
+				<th>' . __('Unit') . '</th>
+				<th>' . __('Price') . '</th>
+				<th>' . __('Discount') . '</th>
+				<th>' . __('Total') . '</th>
+				<th>' . __('Qty Del') . '</th>
+				<th>' . __('Last Del') . '/' . __('Due Date') . '</th>
+				<th>' . __('Narrative') . '</th>
 			</tr>';
 
 		while ($MyRow=DB_fetch_array($LineItemsResult)) {
@@ -227,7 +227,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		$DisplayWeight = locale_number_format($OrderTotalWeight,2);
 
 		echo '<tr class="total_row">
-				<td colspan="6" class="number"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
+				<td colspan="6" class="number"><b>' . __('TOTAL Excl Tax/Freight') . '</b></td>
 				<td colspan="2" class="number">' . $DisplayTotal . '</td>
 			</tr>
 			</table>';
@@ -235,9 +235,9 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<td>' . _('Total Weight') . ':</td>
+				<td>' . __('Total Weight') . ':</td>
 				<td>' . $DisplayWeight . '</td>
-				<td>' . _('Total Volume') . ':</td>
+				<td>' . __('Total Volume') . ':</td>
 				<td>' . $DisplayVolume . '</td>
 			</tr>
 		</table>';

@@ -2,7 +2,7 @@
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 include('includes/session.php');
-$Title = _('Customer Allocations != DebtorTrans.Alloc');
+$Title = __('Customer Allocations != DebtorTrans.Alloc');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -26,16 +26,16 @@ $SQL = "SELECT debtortrans.id,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result)==0){
-	prnMsg(_('There are no inconsistencies with allocations') . ' - ' . _('all is well'),'info');
+	prnMsg(__('There are no inconsistencies with allocations') . ' - ' . __('all is well'),'info');
 }
 
 while ($MyRow = DB_fetch_array($Result)){
 	$AllocToID = $MyRow['id'];
 
-	echo '<br />' . _('Allocations made against') . ' ' . $MyRow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $MyRow['transno'];
-	echo '<br />' . _('Original Invoice Total') . ': '. $MyRow['totamt'];
-	echo '<br />' . _('Total amount recorded as allocated against it') . ': ' . $MyRow['alloc'];
-	echo '<br />' . _('Total of allocation records') . ': ' . $MyRow['totalalloc'];
+	echo '<br />' . __('Allocations made against') . ' ' . $MyRow['debtorno'] . ' ' . __('Invoice Number') . ': ' . $MyRow['transno'];
+	echo '<br />' . __('Original Invoice Total') . ': '. $MyRow['totamt'];
+	echo '<br />' . __('Total amount recorded as allocated against it') . ': ' . $MyRow['alloc'];
+	echo '<br />' . __('Total of allocation records') . ': ' . $MyRow['totalalloc'];
 
 	$SQL = "SELECT type,
 				transno,
@@ -54,18 +54,18 @@ while ($MyRow = DB_fetch_array($Result)){
 			debtorsmaster.currcode=currencies.currabrev
 			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
 
-	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
+	$ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because');
 	$TransResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">';
 
 	$Tableheader = '<tr>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Number') . '</th>
-				<th>' . _('Reference') . '</th>
-				<th>' . _('Ex Rate') . '</th>
-				<th>' . _('Amount') . '</th>
-				<th>' . _('Alloc') . '</th></tr>';
+				<th>' . __('Type') . '</th>
+				<th>' . __('Number') . '</th>
+				<th>' . __('Reference') . '</th>
+				<th>' . __('Ex Rate') . '</th>
+				<th>' . __('Amount') . '</th>
+				<th>' . __('Alloc') . '</th></tr>';
 	echo $Tableheader;
 
 	$RowCounter = 1;
@@ -74,9 +74,9 @@ while ($MyRow = DB_fetch_array($Result)){
 	while ($MyRow1=DB_fetch_array($TransResult)) {
 
 		if ($MyRow1['type']==11){
-			$TransType = _('Credit Note');
+			$TransType = __('Credit Note');
 		} else {
-			$TransType = _('Receipt');
+			$TransType = __('Receipt');
 		}
 		$CurrDecimalPlaces = $MyRow1['currdecimalplaces'];
 

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('EDI Message Format');
+$Title = __('EDI Message Format');
 $ViewTopic = 'EDI';
 $BookMark = '';
 include('includes/header.php');
@@ -40,7 +40,7 @@ if (isset($_POST['NewEDIInvMsg'])){
 			WHERE partnercode='DEFAULT'
 			AND messagetype='INVOIC'";
 
-	$ErrMsg = _('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . _('because');
+	$ErrMsg = __('There was an error inserting the default template invoice message records for') . ' ' . $PartnerCode . ' ' . __('because');
 	$Result = DB_query($SQL, $ErrMsg);
 }
 
@@ -59,7 +59,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 				linetext='" . $_POST['LineText'] . "'
 			WHERE id = '" . $SelectedMessageLine . "'";
 	$Result = DB_query($SQL);
-	$Msg = _('Message line updated');
+	$Msg = __('Message line updated');
 	unset ($SelectedMessageLine);
 
 } elseif ($InputError !=1 AND isset($_POST['submit'])) {
@@ -79,7 +79,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 				'" . $_POST['SequenceNo'] . "',
 				'" . $_POST['LineText'] . "'
 				)";
-		$Msg = _('Message line added');
+		$Msg = __('Message line added');
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
 	unset ($SelectedMessageLine);
@@ -90,7 +90,7 @@ if ($InputError !=1 AND isset($_POST['update'])) {
 
 	$SQL="DELETE FROM edimessageformat WHERE id='" . $_GET['delete']."'";
 	$Result = DB_query($SQL);
-	$Msg=_('The selected message line has been deleted');
+	$Msg=__('The selected message line has been deleted');
 
 }
 if (isset($Msg)) {
@@ -102,7 +102,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<br />
-	<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($SelectedMessageLine)) {
 
@@ -124,11 +124,11 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="5"><h3>' . _('Definition of') . ' ' . $MessageType . ' ' . _('for') . ' ' . $PartnerCode . '</h3></th></tr>';
+	echo '<tr><th colspan="5"><h3>' . __('Definition of') . ' ' . $MessageType . ' ' . __('for') . ' ' . $PartnerCode . '</h3></th></tr>';
 	$TableHeader = '<tr>
-					<th>' . _('Section') . '</th>
-					<th>' . _('Sequence') . '</th>
-					<th>' . _('Format String') . '</th>
+					<th>' . __('Section') . '</th>
+					<th>' . __('Sequence') . '</th>
+					<th>' . __('Format String') . '</th>
 					</tr>';
 	echo $TableHeader;
 
@@ -138,15 +138,15 @@ or deletion of the records*/
 				<td>', $MyRow[1], '</td>
 				<td class="number">', $MyRow[2], '</td>
 				<td>', $MyRow[3], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedMessageLine=', $MyRow[0], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?delete=', $MyRow[0], '">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedMessageLine=', $MyRow[0], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?delete=', $MyRow[0], '">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
 	if (DB_num_rows($Result)==0){
 		echo '<div class="centre">
-				<input tabindex="1" type="submit" name="NewEDIInvMsg" value="' . _('Create New EDI Invoice Message From Default Template') . '" />
+				<input tabindex="1" type="submit" name="NewEDIInvMsg" value="' . __('Create New EDI Invoice Message From Default Template') . '" />
 			</div>';
 	}
 } //end of ifs SelectedLine is not set
@@ -169,7 +169,7 @@ if (isset($SelectedMessageLine)) {
 	$_POST['SequenceNo']  = $MyRow['sequenceno'];
 	$_POST['LineText']  = $MyRow['linetext'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?MessageType=INVOIC&amp;PartnerCode=' . $MyRow['partnercode'] . '">' . _('Review Message Lines') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?MessageType=INVOIC&amp;PartnerCode=' . $MyRow['partnercode'] . '">' . __('Review Message Lines') . '</a></div>';
 
 	echo '<input type="hidden" name="SelectedMessageLine" value="' . $SelectedMessageLine . '" />';
 	echo '<input type="hidden" name="MessageType" value="' . $MyRow['messagetype'] . '" />';
@@ -180,31 +180,31 @@ if (isset($SelectedMessageLine)) {
 }
 
 echo '<fieldset>
-		<legend>', _('Message Format Details'), '</legend>';
+		<legend>', __('Message Format Details'), '</legend>';
 
 if (isset($MyRow['messagetype']) and $MyRow['messagetype']!='') {
-	echo '<field><th colspan="2">' . _('Definition of') . ' ' . $MyRow['messagetype'] . ' ' . _('for') . ' ' . $MyRow['partnercode'] . '</th></field>';
+	echo '<field><th colspan="2">' . __('Definition of') . ' ' . $MyRow['messagetype'] . ' ' . __('for') . ' ' . $MyRow['partnercode'] . '</th></field>';
 }
 
 echo '<field>
-		<label for="Section">' . _('Section') . ':</label>';
+		<label for="Section">' . __('Section') . ':</label>';
 echo '<select tabindex="2" name="Section">';
 
 if ($_POST['Section']=='Heading') {
-	echo '<option selected="selected" value="Heading">' . _('Heading') . '</option>';
+	echo '<option selected="selected" value="Heading">' . __('Heading') . '</option>';
 } else {
-	echo '<option value="Heading">' . _('Heading') . '</option>';
+	echo '<option value="Heading">' . __('Heading') . '</option>';
 }
 
 if (isset($_POST['Section']) AND $_POST['Section']=='Detail') {
-	echo '<option selected="selected" value="Detail">' . _('Detail') . '</option>';
+	echo '<option selected="selected" value="Detail">' . __('Detail') . '</option>';
 } else {
-	echo '<option value="Detail">' . _('Detail') . '</option>';
+	echo '<option value="Detail">' . __('Detail') . '</option>';
 }
 if (isset($_POST['Section']) AND $_POST['Section']=='Summary') {
-	echo '<option selected="selected" value="Summary">' . _('Summary') . '</option>';
+	echo '<option selected="selected" value="Summary">' . __('Summary') . '</option>';
 } else {
-	echo '<option value="Summary">' . _('Summary') . '</option>';
+	echo '<option value="Summary">' . __('Summary') . '</option>';
 }
 
 echo '</select>';
@@ -221,7 +221,7 @@ echo '<field>
 	</field>';
 
 echo '<field>
-		<label for="LineText">' .  _('Line Text') . ':'  . '</label>
+		<label for="LineText">' .  __('Line Text') . ':'  . '</label>
 		<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />
 	</field>';
 
@@ -229,11 +229,11 @@ echo '</fieldset>';
 
 if (isset($_GET['SelectedMessageLine'])) {
 	echo '<div class="centre">
-			<input tabindex="5" type="submit" name="update" value="'.  _('Update Information'). '" />
+			<input tabindex="5" type="submit" name="update" value="'.  __('Update Information'). '" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input tabindex="5" type="submit" name="submit" value="'.  _('Enter Information'). '" />
+			<input tabindex="5" type="submit" name="submit" value="'.  __('Enter Information'). '" />
 		</div>';
 }
 echo '</form>';

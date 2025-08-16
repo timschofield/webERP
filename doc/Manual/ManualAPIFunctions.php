@@ -24,7 +24,7 @@ $answer = $response->value();
 $encoder = new \PhpXmlRpc\Encoder();
 for ($i=0; $i<sizeof($answer); $i++) {
 	$method = $answer[$i];
-	echo '<br /><table border="1" width="80%"><tr><th colspan="3"><h4>'._('Method name')._('  -  ').'<b>'.htmlspecialchars($method->scalarval()).'</b></h4></th></tr>';
+	echo '<br /><table border="1" width="80%"><tr><th colspan="3"><h4>'.__('Method name').__('  -  ').'<b>'.htmlspecialchars($method->scalarval()).'</b></h4></th></tr>';
 	$request = new PhpXmlRpc\Request("system.methodHelp", array($method));
 	$response = PhpXmlRpc\Server::_xmlrpcs_methodHelp($server, $request);
 	$signature = $encoder->decode($response->value());

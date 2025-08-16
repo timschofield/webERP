@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('MRP Demand Types');
+$Title = __('MRP Demand Types');
 $ViewTopic = 'MRP';
 $BookMark = '';
 include('includes/header.php');
@@ -14,7 +14,7 @@ if (isset($_POST['SelectedDT'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
-		_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -29,16 +29,16 @@ if (isset($_POST['submit'])) {
 	if (trim(mb_strtoupper($_POST['MRPDemandType']) == 'WO') or
 	   trim(mb_strtoupper($_POST['MRPDemandType']) == 'SO')) {
 		$InputError = 1;
-		prnMsg(_('The Demand Type is reserved for the system'),'error');
+		prnMsg(__('The Demand Type is reserved for the system'),'error');
 	}
 
 	if (mb_strlen($_POST['MRPDemandType']) < 1) {
 		$InputError = 1;
-		prnMsg(_('The Demand Type code must be at least 1 character long'),'error');
+		prnMsg(__('The Demand Type code must be at least 1 character long'),'error');
 	}
 	if (mb_strlen($_POST['Description'])<3) {
 		$InputError = 1;
-		prnMsg(_('The Demand Type description must be at least 3 characters long'),'error');
+		prnMsg(__('The Demand Type description must be at least 3 characters long'),'error');
 	}
 
 	if (isset($SelectedDT) AND $InputError !=1) {
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
 		$SQL = "UPDATE mrpdemandtypes SET description = '" . $_POST['Description'] . "'
 				WHERE mrpdemandtype = '" . $SelectedDT . "'";
-		$Msg = _('The demand type record has been updated');
+		$Msg = __('The demand type record has been updated');
 	} elseif ($InputError !=1) {
 
 	//Selected demand type is null cos no item selected on first time round so must be adding a
@@ -60,12 +60,12 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . trim(mb_strtoupper($_POST['MRPDemandType'])) . "',
 						'" . $_POST['Description'] . "'
 						)";
-		$Msg = _('The new demand type has been added to the database');
+		$Msg = __('The new demand type has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 
 	if ($InputError !=1){
-		$Result = DB_query($SQL,_('The update/addition of the demand type failed because'));
+		$Result = DB_query($SQL,__('The update/addition of the demand type failed because'));
 		prnMsg($Msg,'success');
 		echo '<br />';
 		unset ($_POST['Description']);
@@ -84,11 +84,11 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this demand type because MRP Demand records exist for this type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' ._('MRP Demands referring to this type'),'warn');
+		prnMsg(__('Cannot delete this demand type because MRP Demand records exist for this type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' .__('MRP Demands referring to this type'),'warn');
     } else {
 			$SQL="DELETE FROM mrpdemandtypes WHERE mrpdemandtype='" . $SelectedDT . "'";
 			$Result = DB_query($SQL);
-			prnMsg(_('The selected demand type record has been deleted'),'succes');
+			prnMsg(__('The selected demand type record has been deleted'),'succes');
 			echo '<br />';
 	} // end of MRPDemands test
 }
@@ -109,8 +109,8 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
-			<tr><th>' . _('Demand Type') . '</th>
-				<th>' . _('Description') . '</th>
+			<tr><th>' . __('Demand Type') . '</th>
+				<th>' . __('Description') . '</th>
 				<th colspan="2"></th>
 			</tr>';
 
@@ -119,8 +119,8 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 		echo '<tr class="striped_row">
 				<td>', $MyRow[0], '</td>
 				<td>', $MyRow[1], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '&amp;delete=yes">' . _('Delete')  . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '&amp;delete=yes">' . __('Delete')  . '</a></td>
 			</tr>';
 	}
 
@@ -131,7 +131,7 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 //end of ifs and buts!
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Demand Types') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Demand Types') . '</a></div>';
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
@@ -154,9 +154,9 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo '<input type="hidden" name="SelectedDT" value="' . $SelectedDT . '" />';
 	echo '<input type="hidden" name="MRPDemandType" value="' . $_POST['MRPDemandType'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Edit Demand Type'), '</legend>
+			<legend>', __('Edit Demand Type'), '</legend>
 			<field>
-				<label for="MRPDemandType">' ._('Demand Type') . ':</label>
+				<label for="MRPDemandType">' .__('Demand Type') . ':</label>
 				<fieldtext>' . $_POST['MRPDemandType'] . '</fieldtext>
 			</field>';
 
@@ -165,9 +165,9 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 		$_POST['MRPDemandType'] = '';
 	}
 	echo '<fieldset>
-			<legend>', _('Create Demand Type'), '</legend>
+			<legend>', __('Create Demand Type'), '</legend>
 			<field>
-				<label for="MRPDemandType">' . _('Demand Type') . ':</label>
+				<label for="MRPDemandType">' . __('Demand Type') . ':</label>
 				<input type="text" name="MRPDemandType" size="6" maxlength="5" value="' . $_POST['MRPDemandType'] . '" />
 			</field>' ;
 }
@@ -177,12 +177,12 @@ if (!isset($_POST['Description'])) {
 }
 
 echo '<field>
-		<label for="Description">' . _('Demand Type Description') . ':</label>
+		<label for="Description">' . __('Demand Type Description') . ':</label>
 		<input type="text" name="Description" size="31" maxlength="30" value="' . $_POST['Description'] . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
     </div>
 	</form>';
 

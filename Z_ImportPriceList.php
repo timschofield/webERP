@@ -2,14 +2,14 @@
 
 include('includes/session.php');
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-$Title = _('Import Sales Price List');
+$Title = __('Import Sales Price List');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Import Price List from CSV file') . '" />' . ' ' .
-		_('Import Price List from CSV file') . '</p>';
+		__('Import Price List from CSV file') . '" />' . ' ' .
+		__('Import Price List from CSV file') . '</p>';
 
 $FieldHeadings = array(
 	'StockID',			//  0 'STOCKID',
@@ -38,7 +38,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings). '. ' . _('Download the template to see the expected columns.'),'error');
+		prnMsg (__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings). '. ' . __('Download the template to see the expected columns.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -48,7 +48,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	$HeadingColumnNumber = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
-			prnMsg (_('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
+			prnMsg (__('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -66,7 +66,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
-			prnMsg ($FieldTarget . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
+			prnMsg ($FieldTarget . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -85,7 +85,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Stock item') . ' "'. $MyRow[0]. '" ' . _('does not exist'),'error');
+			prnMsg (__('Stock item') . ' "'. $MyRow[0]. '" ' . __('does not exist'),'error');
 		}
 		//Then check that the price list actually exists
 		$SQL = "SELECT COUNT(typeabbrev) FROM salestypes WHERE typeabbrev='" . $MyRow[1] . "'";
@@ -93,7 +93,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('SalesType/Price List') . ' "' . $MyRow[1]. '" ' . _('does not exist'),'error');
+			prnMsg (__('SalesType/Price List') . ' "' . $MyRow[1]. '" ' . __('does not exist'),'error');
 		}
 
 		//Then check that the currency code actually exists
@@ -102,7 +102,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Currency') . ' "' . $MyRow[2] . '" ' . _('does not exist'),'error');
+			prnMsg (__('Currency') . ' "' . $MyRow[2] . '" ' . __('does not exist'),'error');
 		}
 
 		//Finally force the price to be a double
@@ -130,7 +130,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 										'" . $MyRow[3] . "',
 										'" . FormatDateForSQL($_POST['StartDate']) . "')";
 
-			$ErrMsg =  _('The price could not be added because');
+			$ErrMsg =  __('The price could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
 		}
 
@@ -141,11 +141,11 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $LineNumber. '. Batch import has been rolled back.'),'error');
+		prnMsg(__('Failed on row '. $LineNumber. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
-		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
+		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed. All transactions committed to the database.'),'success');
 	}
 
 	fclose($FileHandle);
@@ -155,25 +155,25 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
-			_('This function loads a new sales price list from a comma separated variable (csv) file.') . '<br />' .
-			_('The file must contain four columns, and the first row should be the following headers:') . '<br />StockID, SalesType, CurrencyCode, Price<br />' .
-			_('followed by rows containing these four fields for each price to be uploaded.') .  '<br />' .
-			_('The StockID, SalesType, and CurrencyCode fields must have a corresponding entry in the stockmaster, salestypes, and currencies tables.') . '</div>';
+			__('This function loads a new sales price list from a comma separated variable (csv) file.') . '<br />' .
+			__('The file must contain four columns, and the first row should be the following headers:') . '<br />StockID, SalesType, CurrencyCode, Price<br />' .
+			__('followed by rows containing these four fields for each price to be uploaded.') .  '<br />' .
+			__('The StockID, SalesType, and CurrencyCode fields must have a corresponding entry in the stockmaster, salestypes, and currencies tables.') . '</div>';
 
 	echo '<fieldset>
-			<legend>', _('Import Criteria'), '</legend>
+			<legend>', __('Import Criteria'), '</legend>
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 			<field>
-				<label>', _('Prices effective from') . ':</label>
+				<label>', __('Prices effective from') . ':</label>
 				<input name="StartDate" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 			</field>
 			<field>
-				<label>', _('Upload file') . ':</label>
+				<label>', __('Upload file') . ':</label>
 				<input name="PriceListFile" type="file" />
 			</field>
 			</fieldset>
 			<div class="centre">
-			<input type="submit" name="submit" value="' . _('Send File') . '" />
+			<input type="submit" name="submit" value="' . __('Send File') . '" />
 		</div>
 		</form>';
 

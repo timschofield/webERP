@@ -23,9 +23,9 @@ $DatabaseName = $_SESSION['DatabaseName'];
 
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
-	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');
 	include('includes/header.php');
-	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	prnMsg(__('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
@@ -33,8 +33,8 @@ include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/CSVSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
-$Subject = _('Sales Analysis') . ' - ' . _('CSV Format');
-$Body = _('Please find herewith the comma separated values sales report');
+$Subject = __('Sales Analysis') . ' - ' . __('CSV Format');
+$Body = __('Please find herewith the comma separated values sales report');
 $Attachment = $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
 
 $Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $Attachment, true);

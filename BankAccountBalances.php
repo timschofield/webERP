@@ -3,21 +3,21 @@
 // Shows bank accounts authorised for with balances
 
 include('includes/session.php');
-$Title = _('List of bank account balances');
+$Title = __('List of bank account balances');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountBalances';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/bank.png" title="', // Icon image.
-	_('Bank Account Balances'), '" /> ', // Icon title.
-	_('Bank Account Balances'), '</p>',// Page title.
+	__('Bank Account Balances'), '" /> ', // Icon title.
+	__('Bank Account Balances'), '</p>',// Page title.
 	'<table>
 		<tr>
-			<th>', _('Bank Account'), '</th>
-			<th>', _('Account Name'), '</th>
-			<th>', _('Balance in account currency'), '</th>
-			<th>', _('Balance in functional currency'), '</th>
+			<th>', __('Bank Account'), '</th>
+			<th>', __('Account Name'), '</th>
+			<th>', __('Balance in account currency'), '</th>
+			<th>', __('Balance in functional currency'), '</th>
 		</tr>';
 
 $SQL = "SELECT DISTINCT
@@ -29,11 +29,11 @@ $SQL = "SELECT DISTINCT
 			ON bankaccounts.accountcode=bankaccountusers.accountcode
 			AND userid='" . $_SESSION['UserID'] . "'
 		ORDER BY bankaccounts.accountcode";
-$ErrMsg = _('The bank accounts could not be retrieved because');
+$ErrMsg = __('The bank accounts could not be retrieved because');
 $Result = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($Result) == 0) {
-	echo _('There are no bank accounts defined that you have authority to see');
+	echo __('There are no bank accounts defined that you have authority to see');
 } else {
 	while ($MyBankRow = DB_fetch_array($Result)) {
 		$CurrBalanceSQL = "SELECT SUM(amount) AS balance

@@ -102,7 +102,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
 		//retrieve the sql data;
 		$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-		$ErrMsg = _('Failed to retrieve favorites');
+		$ErrMsg = __('Failed to retrieve favorites');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) > 0) {
 			$SQL = array();
@@ -192,20 +192,20 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit();
 
 		case UL_CONFIGERR:
-			$Title = _('Account Error Report');
+			$Title = __('Account Error Report');
 			include($PathPrefix . 'includes/header.php');
 			echo '<br /><br /><br />';
-			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
+			prnMsg(__('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
 			include($PathPrefix . 'includes/footer.php');
 			exit();
 
 		case UL_NOTVALID:
-			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . __('incorrect password') . '</b></font><br /><b>' . __('The user/password combination') . '<br />' . __('is not a valid user of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 
 		case UL_MAINTENANCE:
-			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . __('system maintenance') . '</b></font><br /><b>' . __('webERP is not available right now') . '<br />' . __('during maintenance of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 	}
@@ -235,7 +235,7 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
 		exit();
 	}
 }
@@ -244,10 +244,10 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
-	$Title = _('Account Error Report');
+	$Title = __('Account Error Report');
 	include($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
-	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
+	prnMsg(__('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include($PathPrefix . 'includes/footer.php');
 	exit();
 }
@@ -263,14 +263,14 @@ if (!isset($PageSecurity)) {
 
 if (!isset($AllowAnyone)) {
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		$Title = _('Security Permissions Problem');
+		$Title = __('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.php');
 		echo '<tr>
 				<td class="menu_group_items">
 					<table width="100%" class="table_index">
 						<tr>
 							<td class="menu_group_item">
-								<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>
+								<b><font style="size:+1; text-align:center;">' . __('The security settings on your account do not permit you to access this function') . '</font></b>
 							</td>
 						</tr>
 					</table>
@@ -302,9 +302,9 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Error in form verification');
+		$Title = __('Error in form verification');
 		include('includes/header.php');
-		prnMsg(_('This form was not submitted with a correct ID'), 'error');
+		prnMsg(__('This form was not submitted with a correct ID'), 'error');
 		include('includes/footer.php');
 		exit();
 	}

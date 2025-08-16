@@ -21,7 +21,7 @@ if (isset($_GET['PDF'])) {
 }
 
 if (!isset($JournalNo) OR !isset($Type)) {
-	prnMsg(_('This page should be called with Journal No and Type'), 'error');
+	prnMsg(__('This page should be called with Journal No and Type'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -58,16 +58,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '<table>';
 	$HTML .= '<tr>
-				<th colspan="7"><h3>' . _('General Ledger Journal') . '</h3></th>
+				<th colspan="7"><h3>' . __('General Ledger Journal') . '</h3></th>
 			</tr>
 			<tr>
-				<th>' . _('Account Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Narrative') . '</th>
-				<th>' . _('Amount') . '</th>
-				<th>' . _('Tag') . '</th>
-				<th>' . _('Job Reference') . '</th>
+				<th>' . __('Account Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('Narrative') . '</th>
+				<th>' . __('Amount') . '</th>
+				<th>' . __('Tag') . '</th>
+				<th>' . __('Job Reference') . '</th>
 			  </tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -116,16 +116,16 @@ if (isset($_POST['PrintPDF'])) {
 	));
 } elseif (isset($_POST['View'])) {
 	// Handle on-screen view
-	$Title = _('General Ledger Journal');
+	$Title = __('General Ledger Journal');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo $HTML;
 		echo '<div class="centre">
-				<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 			</div>';
 	include('includes/footer.php');
 } else {
-	prnMsg(_('No valid action selected'), 'error');
+	prnMsg(__('No valid action selected'), 'error');
 	include('includes/footer.php');
 	exit();
 }

@@ -4,7 +4,7 @@ include('includes/session.php');
 include('includes/StockFunctions.php');
 include('includes/PDFStarter.php');
 $FontSize = 10;
-$pdf->addInfo('Title', _('Top Items Search Result'));
+$pdf->addInfo('Title', __('Top Items Search Result'));
 $PageNumber = 1;
 $LineHeight = 12;
 include('includes/PDFTopItemsHeader.php');

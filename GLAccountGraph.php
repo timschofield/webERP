@@ -39,7 +39,7 @@
 
 include('includes/session.php');
 include('includes/phplot/phplot.php');
-$Title = _('GL Account Graph');
+$Title = __('GL Account Graph');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
 
@@ -63,7 +63,7 @@ if (isset($_POST['Period']) and $_POST['Period'] != '') {
 if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo'])) {
 
 	if ($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
-		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'), 'error');
+		prnMsg(__('The selected period from is actually after the period to! Please re-select the reporting period'), 'error');
 		$NewReport = 'on';
 	}
 
@@ -75,13 +75,13 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Account">' . _('Select GL Account') . ':</label>
+				<label for="Account">' . __('Select GL Account') . ':</label>
 				<select name="Account">';
 
 	$SQL = "SELECT chartmaster.accountcode,
@@ -117,36 +117,36 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		</field>';
 
 	echo '<field>
-			<label for="GraphType">' . _('Graph Type') . '</label>
+			<label for="GraphType">' . __('Graph Type') . '</label>
 			<select name="GraphType">
-					<option value="bars">' . _('Bar Graph') . '</option>
-					<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
-					<option value="lines">' . _('Line Graph') . '</option>
-					<option value="linepoints">' . _('Line Point Graph') . '</option>
-					<option value="area">' . _('Area Graph') . '</option>
-					<option value="points">' . _('Points Graph') . '</option>
-					<option value="pie">' . _('Pie Graph') . '</option>
-					<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>
-					<option value="squared">' . _('Squared Graph') . '</option>
-					<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
+					<option value="bars">' . __('Bar Graph') . '</option>
+					<option value="stackedbars">' . __('Stacked Bar Graph') . '</option>
+					<option value="lines">' . __('Line Graph') . '</option>
+					<option value="linepoints">' . __('Line Point Graph') . '</option>
+					<option value="area">' . __('Area Graph') . '</option>
+					<option value="points">' . __('Points Graph') . '</option>
+					<option value="pie">' . __('Pie Graph') . '</option>
+					<option value="thinbarline">' . __('Thin Bar Line Graph') . '</option>
+					<option value="squared">' . __('Squared Graph') . '</option>
+					<option value="stackedarea">' . __('Stacked Area Graph') . '</option>
 				</select>
 			</field>';
 
 	echo '<field>
-			<label for="DisplayType">' . _('Display Type') . '</label>
+			<label for="DisplayType">' . __('Display Type') . '</label>
 			<select name="DisplayType">
-				<option selected="selected" value="variation">' . _('Variation') . '</option>
-				<option value="value">' . _('Value') . '</option>
+				<option selected="selected" value="variation">' . __('Variation') . '</option>
+				<option value="value">' . __('Value') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for="InvertGraph">', _('Invert Graph'), '</label>
+			<label for="InvertGraph">', __('Invert Graph'), '</label>
 			<input type="checkbox" name="InvertGraph" />
 		</field>';
 
 	echo '<field>
-			<label for="PeriodFrom">' . _('Select Period From') . ':</label>
+			<label for="PeriodFrom">' . __('Select Period From') . ':</label>
 			<select name="PeriodFrom">';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
@@ -187,7 +187,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	}
 
 	echo '<field>
-			<label for="PeriodTo">' . _('Select Period To') . ':</label>
+			<label for="PeriodTo">' . __('Select Period To') . ':</label>
 			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
@@ -210,13 +210,13 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>', _('OR'), ' </b>', _('Select Period'), '</label>
+			<label for="Period">', '<b>', __('OR'), ' </b>', __('Select Period'), '</label>
 			' . ReportPeriodList($_POST['Period']) . '
 		</field>';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="ShowGraph" value="' . _('Show Account Graph') . '" />
+				<input type="submit" name="ShowGraph" value="' . __('Show Account Graph') . '" />
 			</div>
 		</form>';
 	include('includes/footer.php');
@@ -226,9 +226,9 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$AccountName = GetGLAccountName($SelectedAccount);
 
 	if ($_POST['DisplayType'] == 'value') {
-		$GraphTitle = $AccountName . ' ' . _('GL Account Graph - Account Value') . "\n\r";
+		$GraphTitle = $AccountName . ' ' . __('GL Account Graph - Account Value') . "\n\r";
 	} else {
-		$GraphTitle = $AccountName . ' ' . _('GL Account Graph - Actual Transactions') . "\n\r";
+		$GraphTitle = $AccountName . ' ' . __('GL Account Graph - Actual Transactions') . "\n\r";
 	}
 	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year,
 					MONTHNAME(`lastdate_in_period`) AS month
@@ -244,7 +244,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$PeriodToRow = DB_fetch_array($Result);
 	$Ending = $PeriodToRow['month'] . ' ' . $PeriodToRow['year'];
 
-	$GraphTitle .= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
+	$GraphTitle .= ' ' . __('From Period') . ' ' . $Starting . ' ' . __('to') . ' ' . $Ending . "\n\r";
 
 	if ($_POST['DisplayType'] == 'value') {
 		// Calculate cumulative value
@@ -259,7 +259,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 					AND p_to.periodno <= '" . $_POST['PeriodTo'] . "'
 				ORDER BY p_to.periodno";
 		$DataColumn = 'cumulative_actual';
-		$LegendText = _('Value');
+		$LegendText = __('Value');
 	} else {
 		// Show variation per period (original query)
 		$SQL = "SELECT periods.periodno,
@@ -276,14 +276,14 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 						 gltotals.amount
 				ORDER BY periods.periodno";
 		$DataColumn = 'actual';
-		$LegendText = _('Actual');
+		$LegendText = __('Actual');
 	}
 
 	$Graph = new PHPlot(1200, 600);
 	$Graph->SetTitle($GraphTitle);
 	$Graph->SetTitleColor('blue');
 	$Graph->SetOutputFile('companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png');
-	$Graph->SetXTitle(_('Month'));
+	$Graph->SetXTitle(__('Month'));
 
 	$Graph->SetXTickPos('none');
 	$Graph->SetXTickLabelPos('none');
@@ -302,12 +302,12 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() != 0) {
 
-		prnMsg(_('The GL Account graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
+		prnMsg(__('The GL Account graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($SalesResult) == 0) {
-		prnMsg(_('There is not GL Account data for the criteria entered to graph'), 'info');
+		prnMsg(__('There is not GL Account data for the criteria entered to graph'), 'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -337,7 +337,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		  </table>';
 
 	echo '<div class="noPrint centre">
-			<a href="', basename(__FILE__), '">', _('Select Different Criteria'), '</a>
+			<a href="', basename(__FILE__), '">', __('Select Different Criteria'), '</a>
 		</div>';
 	include('includes/footer.php');
 }

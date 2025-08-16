@@ -19,7 +19,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				AND prices.enddate >= CURRENT_DATE
 			ORDER BY prices.startdate DESC";
 
-	$ErrMsg = _('There is a problem in retrieving the pricing information for part') . ' ' . $StockID . ' ' . _('and for Customer') . ' ' . $DebtorNo . ' ' . _('the error message returned by the SQL server was');
+	$ErrMsg = __('There is a problem in retrieving the pricing information for part') . ' ' . $StockID . ' ' . __('and for Customer') . ' ' . $DebtorNo . ' ' . __('the error message returned by the SQL server was');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0) {
@@ -86,7 +86,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 								AND pricematrix.quantitybreak >= '" . $OrderLineQty . "'
 								AND pricematrix.startdate <= CURRENT_DATE
 								AND pricematrix.enddate >= CURRENT_DATE";
-					$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
+					$ErrMsg = __('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . __('and the error message returned by SQL server is ');
 
 					$Result = DB_query($SQL, $ErrMsg);
 
@@ -97,7 +97,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 								WHERE debtorsmaster.salestype = pricematrix.salestype
 									AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 									AND pricematrix.stockid = '" . $StockID . "'";
-						$ErrorMsg = _('Failed to retrieve price from price matrix');
+						$ErrorMsg = __('Failed to retrieve price from price matrix');
 						$Result = DB_query($SQL, $ErrMsg);
 					}
 				} // End If no regular price found, checking the price matrix
@@ -105,7 +105,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				if (DB_num_rows($Result) == 0) {
 					/*Not even a price set up in the default price list so return 0 */
 					if ($ReportZeroPrice == 1) {
-						prnMsg(_('There are no prices set up for') . ' ' . $StockID, 'warn');
+						prnMsg(__('There are no prices set up for') . ' ' . $StockID, 'warn');
 					}
 					return 0;
 				}

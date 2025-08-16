@@ -2,14 +2,14 @@
 
 include('includes/session.php');
 
-$Title = _('Reorder Level Location Reporting');
+$Title = __('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 include('includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-	_('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';
+	__('Inventory') . '" alt="" />' . ' ' . __('Inventory Reorder Level Location Report') . '</p>';
 
 //update database if update pressed
 if (isset($_POST['submit'])) {
@@ -73,21 +73,21 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	$ResultLocation = DB_query($SQLLoc);
 	$Location = DB_fetch_array($ResultLocation);
 
-	echo '<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
-	echo '<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' .
-		locale_number_format($_POST['NumberOfDays'], 0) . '' . _(' Days ') . ' </strong></p>';
+	echo '<p class="page_title_text"><strong>' . __('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
+	echo '<p class="page_title_text"><strong>' . __('Number Of Days Sales : ') . '' .
+		locale_number_format($_POST['NumberOfDays'], 0) . '' . __(' Days ') . ' </strong></p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="Update">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr>
-            <th>' . _('Code') . '</th>
-            <th>' . _('Description') . '</th>
-            <th>' . _('Total Invoiced') . '<br />' . _('At Location') . '</th>
-            <th>' . _('On Hand') . '<br />' . _('At All Locations') . '</th>
-            <th>' . _('On Hand') . '<br />' . _('At Location') . '</th>
-            <th>' . _('Reorder Level') . '</th>
-            <th>' . _('Bin Location') . '</th>
+            <th>' . __('Code') . '</th>
+            <th>' . __('Description') . '</th>
+            <th>' . __('Total Invoiced') . '<br />' . __('At Location') . '</th>
+            <th>' . __('On Hand') . '<br />' . __('At All Locations') . '</th>
+            <th>' . __('On Hand') . '<br />' . __('At Location') . '</th>
+            <th>' . __('Reorder Level') . '</th>
+            <th>' . __('Bin Location') . '</th>
         </tr>';
 
 	$i = 1;
@@ -123,7 +123,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	} //end of looping
 	echo '<tr>
 			<td class="centre" colspan="7">
-				<input type="submit" name="submit" value="' . _('Update') . '" />
+				<input type="submit" name="submit" value="' . __('Update') . '" />
 			</td>
 		</tr>
         </table>
@@ -131,7 +131,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 } else { /*The option to submit was not hit so display form */
 
-	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
+	echo '<div class="page_help_text">' . __('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -144,9 +144,9 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 					AND locationusers.canview = 1";
 	$ResultStkLocs = DB_query($SQL);
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="StockLocation">' . _('Location') . ':</label>
+				<label for="StockLocation">' . __('Location') . ':</label>
 				<select name="StockLocation"> ';
 
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
@@ -163,7 +163,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	$Result1 = DB_query($SQL);
 
 	echo '<field>
-			<label for="StockCat">' . _('Category') . ':</label>
+			<label for="StockCat">' . __('Category') . ':</label>
 			<select name="StockCat">';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -174,21 +174,21 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		</field>';
 
 	echo '<field>
-			<label for="NumberOfDays">' . _('Number Of Days Sales') . ':</label>
+			<label for="NumberOfDays">' . __('Number Of Days Sales') . ':</label>
 			<input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" />
 		</field>';
 
 	echo '<field>
-			<label for="Sequence">' . _('Order By') . ':</label>
+			<label for="Sequence">' . __('Order By') . ':</label>
 			<select name="Sequence">
-				<option value="1">' . _('Total Invoiced') . '</option>
-				<option value="2">' . _('Item Code') . '</option>
+				<option value="1">' . __('Total Invoiced') . '</option>
+				<option value="2">' . __('Item Code') . '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Submit') . '" />
+				<input type="submit" name="submit" value="' . __('Submit') . '" />
 			</div>';
 	echo '</form>';
 

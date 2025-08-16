@@ -6,7 +6,7 @@ global $RootPath;
 
 if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$SQL = "SELECT confname, confvalue FROM config";
-	$ErrMsg = _('Could not get the configuration parameters from the database because');
+	$ErrMsg = __('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
 	while( $MyRow = DB_fetch_array($ConfigResult) ) {
 		if (is_numeric($MyRow['confvalue']) AND $MyRow['confname']!='DefaultPriceList' AND $MyRow['confname']!='VersionNumber'){
@@ -74,12 +74,12 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				INNER JOIN currencies ON companies.currencydefault=currencies.currabrev
 				WHERE coycode=1";
 
-	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
+	$ErrMsg = __('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
-		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
+		prnMsg( __('The company record has not yet been set up') . '</b><br />' . __('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',__('CRITICAL PROBLEM'));
 		exit();
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);

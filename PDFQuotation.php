@@ -7,20 +7,20 @@ include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
-	$Title = _('Select Quotation To Print');
+	$Title = __('Select Quotation To Print');
 	include('includes/header.php');
 	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Select a Quotation to Print before calling this page') , 'error');
+	prnMsg( __('Select a Quotation to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
-						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Quotations') . '</a></td>
+						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Quotations') . '</a></td>
 				</tr>
 			</table>
 			</div>
@@ -32,7 +32,7 @@ if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorders.customerref,
 				salesorders.comments,
@@ -75,20 +75,20 @@ $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-        $Title = _('Print Quotation Error');
+        $Title = __('Print Quotation Error');
         include('includes/header.php');
          echo '<div class="centre">
 				<br />
 				<br />
 				<br />';
-        prnMsg( _('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
+        prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
         echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
-						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . _('Outstanding Quotations') . '</a>
+						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Outstanding Quotations') . '</a>
 					</td>
 				</tr>
 				</table>
@@ -110,15 +110,15 @@ if (DB_num_rows($Result)==0){
 LETS GO */
 $PaperSize = 'A4_Landscape';// PDFStarter.php: $Page_Width=842; $Page_Height=595; $Top_Margin=30; $Bottom_Margin=30; $Left_Margin=40; $Right_Margin=30;
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Customer Quotation') );
-$pdf->addInfo('Subject', _('Quotation') . ' ' . $_GET['QuotationNo']);
+$pdf->addInfo('Title', __('Customer Quotation') );
+$pdf->addInfo('Subject', __('Quotation') . ' ' . $_GET['QuotationNo']);
 $FontSize = 12;
 $LineHeight = 12;// Recommended: $LineHeight = $x * $FontSize.
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
-$ErrMsg = _('There was a problem retrieving the quotation line details for quotation Number') . ' ' .
-	$_GET['QuotationNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the quotation line details for quotation Number') . ' ' .
+	$_GET['QuotationNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorderdetails.stkcode,
 		stockmaster.description,
@@ -226,18 +226,18 @@ if (DB_num_rows($Result)>0){
 
 	$FontSize = 10;
 	$YPos -= $LineHeight;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, _('Quotation Excluding Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Quotation Excluding Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']), 'right');
 	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, _('Total Tax'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Total Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($TaxTotal,$MyRow['currdecimalplaces']), 'right');
 	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, _('Quotation Including Tax'),'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Quotation Including Tax'),'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']), 'right');
 
 	// Print salesorders.comments:
 	$YPos -= $FontSize*2;
-	$pdf->addText($XPos, $YPos+$FontSize, $FontSize, _('Notes').':');
+	$pdf->addText($XPos, $YPos+$FontSize, $FontSize, __('Notes').':');
 	$Width2 = $Page_Width-$Right_Margin-120;// Width to print salesorders.comments.
 	$LeftOvers = trim($MyRow['comments']);
 	//**********
@@ -257,11 +257,11 @@ if (DB_num_rows($Result)>0){
 
 
 if ($ListCount == 0){
-	$Title = _('Print Quotation Error');
+	$Title = __('Print Quotation Error');
 	include('includes/header.php');
-	prnMsg(_('There were no items on the quotation') . '. ' . _('The quotation cannot be printed'),'info');
-	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  _('Print Another Quotation'). '</a>
-			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+	prnMsg(__('There were no items on the quotation') . '. ' . __('The quotation cannot be printed'),'info');
+	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Quotation=Quotes_only">' .  __('Print Another Quotation'). '</a>
+			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
 } else {

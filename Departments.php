@@ -2,14 +2,14 @@
 
 include('includes/session.php');
 
-$Title = _('Departments');
+$Title = __('Departments');
 
 $ViewTopic = 'Setup';
 $BookMark = 'Departments';
 
 include('includes/header.php');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
-		_('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedDepartmentID']) )
 	$SelectedDepartmentID = $_GET['SelectedDepartmentID'];
@@ -29,11 +29,11 @@ if (isset($_POST['Submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['DepartmentName'])) {
 		$InputError = 1;
-		prnMsg( _('The description of the department must not contain the character') . " '&amp;' " . _('or the character') ." '",'error');
+		prnMsg( __('The description of the department must not contain the character') . " '&amp;' " . __('or the character') ." '",'error');
 	}
 	if (trim($_POST['DepartmentName']) == '') {
 		$InputError = 1;
-		prnMsg( _('The Name of the Department should not be empty'), 'error');
+		prnMsg( __('The Name of the Department should not be empty'), 'error');
 	}
 
 	if (isset($_POST['SelectedDepartmentID'])
@@ -50,7 +50,7 @@ if (isset($_POST['Submit'])) {
 		$MyRow = DB_fetch_row($Result);
 		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('This department name already exists.'),'error');
+			prnMsg( __('This department name already exists.'),'error');
 		} else {
 			// Get the old name and check that the record still exist neet to be very careful here
 
@@ -69,10 +69,10 @@ if (isset($_POST['Submit'])) {
 							WHERE description " . LIKE . " '" . $OldDepartmentName . "'";
 			} else {
 				$InputError = 1;
-				prnMsg( _('The department does not exist.'),'error');
+				prnMsg( __('The department does not exist.'),'error');
 			}
 		}
-		$Msg = _('The department has been modified');
+		$Msg = __('The department has been modified');
 	} elseif ($InputError !=1) {
 		/*SelectedDepartmentID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM departments
@@ -81,21 +81,21 @@ if (isset($_POST['Submit'])) {
 		$MyRow = DB_fetch_row($Result);
 		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('There is already a department with the specified name.'),'error');
+			prnMsg( __('There is already a department with the specified name.'),'error');
 		} else {
 			$SQL = "INSERT INTO departments (description,
 											 authoriser )
 					VALUES ('" . $_POST['DepartmentName'] . "',
 							'" . $_POST['Authoriser'] . "')";
 		}
-		$Msg = _('The new department has been created');
+		$Msg = __('The new department has been created');
 	}
 
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($SQL)) {
 			DB_Txn_Begin();
-			$ErrMsg = _('The department could not be inserted');
+			$ErrMsg = __('The department could not be inserted');
 			foreach ($SQL as $SQLStatement ) {
 				$Result = DB_query($SQLStatement, $ErrMsg, '', true);
 				if(!$Result) {
@@ -127,7 +127,7 @@ if (isset($_POST['Submit'])) {
 			WHERE departmentid = '" . $SelectedDepartmentID . "'";
 	$Result = DB_query($SQL);
 	if ( DB_num_rows($Result) == 0 ) {
-		prnMsg( _('You cannot delete this Department'),'warn');
+		prnMsg( __('You cannot delete this Department'),'warn');
 	} else {
 		$MyRow = DB_fetch_row($Result);
 		$OldDepartmentName = $MyRow[0];
@@ -138,12 +138,12 @@ if (isset($_POST['Submit'])) {
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg( _('You cannot delete this Department'),'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('There are items related to this department');
+			prnMsg( __('You cannot delete this Department'),'warn');
+			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('There are items related to this department');
 		} else {
 			$SQL="DELETE FROM departments WHERE description " . LIKE . "'" . $OldDepartmentName . "'";
 			$Result = DB_query($SQL);
-			prnMsg( $OldDepartmentName . ' ' . _('The department has been removed') . '!','success');
+			prnMsg( $OldDepartmentName . ' ' . __('The department has been removed') . '!','success');
 		}
 	} //end if account group used in GL accounts
 	unset ($SelectedDepartmentID);
@@ -162,13 +162,13 @@ if (isset($_POST['Submit'])) {
 			FROM departments
 			ORDER BY description";
 
-	$ErrMsg = _('There are no departments created');
+	$ErrMsg = __('There are no departments created');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Department Name') . '</th>
-				<th>' . _('Authoriser') . '</th>
+				<th>' . __('Department Name') . '</th>
+				<th>' . __('Authoriser') . '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -176,8 +176,8 @@ if (isset($_POST['Submit'])) {
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['description'] . '</td>
 				<td>' . $MyRow['authoriser'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this department?') . '\');">'  . _('Delete')  . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedDepartmentID=' . $MyRow['departmentid'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this department?') . '\');">'  . __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -187,7 +187,7 @@ if (isset($_POST['Submit'])) {
 
 if (isset($SelectedDepartmentID)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('View all Departments') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('View all Departments') . '</a>
 		</div>';
 }
 
@@ -209,7 +209,7 @@ if (! isset($_GET['delete'])) {
 
 		$Result = DB_query($SQL);
 		if ( DB_num_rows($Result) == 0 ) {
-			prnMsg( _('The selected departemnt could not be found.'),'warn');
+			prnMsg( __('The selected departemnt could not be found.'),'warn');
 			unset($SelectedDepartmentID);
 		} else {
 			$MyRow = DB_fetch_array($Result);
@@ -220,21 +220,21 @@ if (! isset($_GET['delete'])) {
 
 			echo '<input type="hidden" name="SelectedDepartmentID" value="' . $_POST['DepartmentID'] . '" />';
 			echo '<fieldset>
-					<legend>', _('Edit Department Details'), '</legend>';
+					<legend>', __('Edit Department Details'), '</legend>';
 		}
 
 	}  else {
 		$_POST['DepartmentName']='';
 		echo '<fieldset>
-				<legend>', _('Create New Department Details'), '</legend>';
+				<legend>', __('Create New Department Details'), '</legend>';
 	}
 	echo '<field>
-			<label for="DepartmentName">' . _('Department Name') . ':' . '</label>
+			<label for="DepartmentName">' . __('Department Name') . ':' . '</label>
 			<input type="text" name="DepartmentName" size="50" required="required" title="" maxlength="100" value="' . $_POST['DepartmentName'] . '" />
-			<fieldhelp>' ._('The department name is required') . '</fieldhelp>
+			<fieldhelp>' .__('The department name is required') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Authoriser">' . _('Authoriser') . '</label>
+			<label for="Authoriser">' . __('Authoriser') . '</label>
 			<select name="Authoriser">';
 	$UserSQL="SELECT userid FROM www_users";
 	$Userresult=DB_query($UserSQL);
@@ -249,7 +249,7 @@ if (! isset($_GET['delete'])) {
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="Submit" value="' . __('Enter Information') . '" />
         </div>
 		</form>';
 

@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title=_('Sales Report Graph');
+$Title=__('Sales Report Graph');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'SalesGraph';
 
@@ -13,33 +13,33 @@ $SelectADifferentPeriod ='';
 if (isset($_POST['FromPeriod']) AND isset($_POST['ToPeriod'])){
 
 	if ($_POST['FromPeriod'] > $_POST['ToPeriod']){
-		prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
-		$SelectADifferentPeriod =_('Select A Different Period');
+		prnMsg(__('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
+		$SelectADifferentPeriod =__('Select A Different Period');
 	}
 /*	There is no PHPlot reason to restrict the graph to 12 months...
 	if ($_POST['ToPeriod'] - $_POST['FromPeriod'] >12){
-		prnMsg(_('The selected period range is more than 12 months - only graphs for a period less than 12 months can be created'),'error');
-		$SelectADifferentPeriod= _('Select A Different Period');
+		prnMsg(__('The selected period range is more than 12 months - only graphs for a period less than 12 months can be created'),'error');
+		$SelectADifferentPeriod= __('Select A Different Period');
 	}
 */	if ((!isset($_POST['ValueFrom']) OR $_POST['ValueFrom']=='' OR !isset($_POST['ValueTo']) OR $_POST['ValueTo']=='') AND $_POST['GraphOn'] !='All'){
-		prnMsg(_('For graphs including either a customer or item range - the range must be specified. Please enter the value from and the value to for the range'),'error');
-		$SelectADifferentPeriod= _('Select A Different Period');
+		prnMsg(__('For graphs including either a customer or item range - the range must be specified. Please enter the value from and the value to for the range'),'error');
+		$SelectADifferentPeriod= __('Select A Different Period');
 	}
 }
 
 if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
-	OR $SelectADifferentPeriod==_('Select A Different Period')){
+	OR $SelectADifferentPeriod==__('Select A Different Period')){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 
 	ECHO '<field>
-			<label for="ToPeriod">' . _('Select Period From') . ':</label>
+			<label for="ToPeriod">' . __('Select Period From') . ':</label>
 			<select name="FromPeriod">';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -76,7 +76,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<field>
-			<label for="ToPeriod">' . _('Select Period To')  . ':</label>
+			<label for="ToPeriod">' . __('Select Period To')  . ':</label>
 			<select name="ToPeriod">';
 
 	DB_data_seek($Periods,0);
@@ -97,7 +97,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>' , _('OR') , ' </b>' , _('Select Period'), '</label>
+			<label for="Period">', '<b>' , __('OR') , ' </b>' , __('Select Period'), '</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
 		</field>';
 
@@ -107,12 +107,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['SalesArea']='';
 	}
 	echo '<field>
-			<label for="SalesArea">' . _('For Sales Area/Region:')  . '</label>
+			<label for="SalesArea">' . __('For Sales Area/Region:')  . '</label>
 			<select name="SalesArea">';
 	if($_POST['SalesArea']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow=DB_fetch_array($AreasResult)){
 		if($MyRow['areacode']==$_POST['SalesArea']){
@@ -130,12 +130,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['CategoryID']='';
 	}
 	echo '<field>
-			<LABEL FOR="CategoryID">' . _('For Stock Category')  . ':</LABEL>
+			<LABEL FOR="CategoryID">' . __('For Stock Category')  . ':</LABEL>
 			<select name="CategoryID">';
 	if($_POST['CategoryID']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow=DB_fetch_array($CategoriesResult)){
 		if($MyRow['categoryid']==$_POST['CategoryID']){
@@ -154,13 +154,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<field>
-			<label for="SalesmanCode">' . _('For Salesperson:') . '</label>
+			<label for="SalesmanCode">' . __('For Salesperson:') . '</label>
 			<select name="SalesmanCode">';
 
 	if($_POST['SalesmanCode']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow=DB_fetch_array($SalesFolkResult)){
 		if ($MyRow['salesmancode']== $_POST['SalesmanCode']){
@@ -174,18 +174,18 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		</field>';
 
 	echo '<field>
-			<label for="GraphType">' . _('Graph Type') . '</label>
+			<label for="GraphType">' . __('Graph Type') . '</label>
 			<select name="GraphType">
-				<option value="bars">' . _('Bar Graph') . '</option>
-				<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
-				<option value="lines">' . _('Line Graph') . '</option>
-				<option value="linepoints">' . _('Line Point Graph') . '</option>
-				<option value="area">' . _('Area Graph') . '</option>
-				<option value="points">' . _('Points Graph') . '</option>
-				<option value="pie">' . _('Pie Graph') . '</option>
-				<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>
-				<option value="squared">' . _('Squared Graph') . '</option>
-				<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
+				<option value="bars">' . __('Bar Graph') . '</option>
+				<option value="stackedbars">' . __('Stacked Bar Graph') . '</option>
+				<option value="lines">' . __('Line Graph') . '</option>
+				<option value="linepoints">' . __('Line Point Graph') . '</option>
+				<option value="area">' . __('Area Graph') . '</option>
+				<option value="points">' . __('Points Graph') . '</option>
+				<option value="pie">' . __('Pie Graph') . '</option>
+				<option value="thinbarline">' . __('Thin Bar Line Graph') . '</option>
+				<option value="squared">' . __('Squared Graph') . '</option>
+				<option value="stackedarea">' . __('Stacked Area Graph') . '</option>
 			</select>
 			</field>';
 
@@ -196,33 +196,33 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		$_POST['ValueTo']='';
 	}
 	echo '<field>
-			<label for="GraphOn">' . _('Graph On:') . '</label>
+			<label for="GraphOn">' . __('Graph On:') . '</label>
 			<fieldset>
-				<div><input type="radio" id="All" name="GraphOn" value="All" checked="checked" /><label for="All">' . _('All') . '</label></div>
-				<div><input type="radio" id="Customer" name="GraphOn" value="Customer" /><label for="Customer">' . _('Customer') . '</label></div>
-				<div><input type="radio" id="StockID" name="GraphOn" value="StockID" /><label for="StockID">' . _('Item Code') . '</label></div>
+				<div><input type="radio" id="All" name="GraphOn" value="All" checked="checked" /><label for="All">' . __('All') . '</label></div>
+				<div><input type="radio" id="Customer" name="GraphOn" value="Customer" /><label for="Customer">' . __('Customer') . '</label></div>
+				<div><input type="radio" id="StockID" name="GraphOn" value="StockID" /><label for="StockID">' . __('Item Code') . '</label></div>
 			</fieldset>
 		</field>';
 	echo '<field>
-			<label for="ValueFrom">' . _('From:') . '</label>
+			<label for="ValueFrom">' . __('From:') . '</label>
 			<input type="text" name="ValueFrom" value="' . $_POST['ValueFrom'] . '" />
 		</field>
 		<field>
-	 		<label for="ValueTo">' . _('To:') . '</label>
+	 		<label for="ValueTo">' . __('To:') . '</label>
 	 		<input type="text" name="ValueTo" value="' . $_POST['ValueTo'] . '" />
 	 	</field>';
 
 	echo '<field>
-			<label for="GraphValue">' . _('Graph Value:') . '</label>
+			<label for="GraphValue">' . __('Graph Value:') . '</label>
 			<fieldset>
-				<div><label>' . _('Net Sales Value') . '</label><input type="radio" name="GraphValue" value="Net" checked="checked" /></div>
-				<div><label>' . _('Gross Profit') . '</label><input type="radio" name="GraphValue" value="GP" /></div>
-				<div><label>' . _('Quantity') . '</label><input type="radio" name="GraphValue" value="Quantity" /></div>
+				<div><label>' . __('Net Sales Value') . '</label><input type="radio" name="GraphValue" value="Net" checked="checked" /></div>
+				<div><label>' . __('Gross Profit') . '</label><input type="radio" name="GraphValue" value="GP" /></div>
+				<div><label>' . __('Quantity') . '</label><input type="radio" name="GraphValue" value="Quantity" /></div>
 			</fieldset>
 		</field>';
 
 	echo '</fieldset>
-			<div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show Sales Graph') .'" /></div>
+			<div class="centre"><input type="submit" name="ShowGraph" value="' . __('Show Sales Graph') .'" /></div>
 		</form>';
 	include('includes/footer.php');
 } else {
@@ -232,13 +232,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$WhereClause ='';
 	$GraphTitle ='';
 	if ($_POST['GraphValue']=='Net') {
-		$GraphTitle = _('Sales Value');
+		$GraphTitle = __('Sales Value');
 		$SelectClause = 'amt - disc';
 	} elseif ($_POST['GraphValue']=='GP'){
-		$GraphTitle = _('Gross Profit');
+		$GraphTitle = __('Gross Profit');
 		$SelectClause = '(amt - disc - cost)';
 	} else {
-		$GraphTitle = _('Unit Sales');
+		$GraphTitle = __('Unit Sales');
 		$SelectClause = 'qty';
 	}
 
@@ -259,40 +259,40 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$ToPeriod = DB_fetch_array($Result);
 	$Ending = $ToPeriod['month'] . ' ' . $ToPeriod['year'];
 
-	$GraphTitle .= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
+	$GraphTitle .= ' ' . __('From Period') . ' ' . $Starting . ' ' . __('to') . ' ' . $Ending . "\n\r";
 
 	if ($_POST['SalesArea']=='All'){
-		$GraphTitle .= ' ' . _('For All Sales Areas');
+		$GraphTitle .= ' ' . __('For All Sales Areas');
 	} else {
 		$Result = DB_query("SELECT areadescription FROM areas WHERE areacode='" . $_POST['SalesArea'] . "'");
 		$MyRow = DB_fetch_row($Result);
-		$GraphTitle .= ' ' . _('For') . ' ' . $MyRow[0];
+		$GraphTitle .= ' ' . __('For') . ' ' . $MyRow[0];
 		$WhereClause .= " area='" . $_POST['SalesArea'] . "' AND";
 	}
 	if ($_POST['CategoryID']=='All'){
-		$GraphTitle .= ' ' . _('For All Stock Categories');
+		$GraphTitle .= ' ' . __('For All Stock Categories');
 	} else {
 		$Result = DB_query("SELECT categorydescription FROM stockcategory WHERE categoryid='" . $_POST['CategoryID'] . "'");
 		$MyRow = DB_fetch_row($Result);
-		$GraphTitle .= ' ' . _('For') . ' ' . $MyRow[0];
+		$GraphTitle .= ' ' . __('For') . ' ' . $MyRow[0];
 		$WhereClause .= " stkcategory='" . $_POST['CategoryID'] . "' AND";
 
 	}
 	if ($_POST['SalesmanCode']=='All'){
-		$GraphTitle .= ' ' . _('For All Salespeople');
+		$GraphTitle .= ' ' . __('For All Salespeople');
 	} else {
 		$Result = DB_query("SELECT salesmanname FROM salesman WHERE salesmancode='" . $_POST['SalesmanCode'] . "'");
 		$MyRow = DB_fetch_row($Result);
-		$GraphTitle .= ' ' . _('For Salesperson:') . ' ' . $MyRow[0];
+		$GraphTitle .= ' ' . __('For Salesperson:') . ' ' . $MyRow[0];
 		$WhereClause .= " salesperson='" . $_POST['SalesmanCode'] . "' AND";
 
 	}
 	if ($_POST['GraphOn']=='Customer'){
-		$GraphTitle .= ' ' . _('For Customers from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
+		$GraphTitle .= ' ' . __('For Customers from') . ' ' . $_POST['ValueFrom'] . ' ' . __('to') . ' ' . $_POST['ValueTo'];
 		$WhereClause .= "  cust >='" . $_POST['ValueFrom'] . "' AND cust <='" . $_POST['ValueTo'] . "' AND";
 	}
 	if ($_POST['GraphOn']=='StockID'){
-		$GraphTitle .= ' ' . _('For Items from') . ' ' . $_POST['ValueFrom'] . ' ' . _('to') . ' ' . $_POST['ValueTo'];
+		$GraphTitle .= ' ' . __('For Items from') . ' ' . $_POST['ValueFrom'] . ' ' . __('to') . ' ' . $_POST['ValueTo'];
 		$WhereClause .= "  stockid >='" . $_POST['ValueFrom'] . "' AND stockid <='" . $_POST['ValueTo'] . "' AND";
 	}
 
@@ -310,13 +310,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
 	$graph->SetOutputFile($_SESSION['reports_dir'] . '/salesgraph.png');
-	$graph->SetXTitle(_('Month'));
+	$graph->SetXTitle(__('Month'));
 	if ($_POST['GraphValue']=='Net'){
-		$graph->SetYTitle(_('Sales Value'));
+		$graph->SetYTitle(__('Sales Value'));
 	} elseif ($_POST['GraphValue']=='GP'){
-		$graph->SetYTitle(_('Gross Profit'));
+		$graph->SetYTitle(__('Gross Profit'));
 	} else {
-		$graph->SetYTitle(_('Quantity'));
+		$graph->SetYTitle(__('Quantity'));
 	}
 	$graph->SetXTickPos('none');
 	$graph->SetXTickLabelPos('none');
@@ -335,12 +335,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 
-		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+		prnMsg(__('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($SalesResult)==0){
-		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
+		prnMsg(__('There is not sales data for the criteria entered to graph'),'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -357,7 +357,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		array('grey','wheat'),  //Data Colors
 		array('black')	//Border Colors
 	);
-	$graph->SetLegend(array(_('Actual'),_('Budget')));
+	$graph->SetLegend(array(__('Actual'),__('Budget')));
 	$graph->SetYDataLabelPos('plotin');
 
 	//Draw it

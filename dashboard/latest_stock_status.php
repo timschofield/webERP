@@ -8,7 +8,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$DashBoardURL = $RootPath . '/index.php';
 }
 
-	$ScriptTitle = _('Stock Status');
+	$ScriptTitle = __('Stock Status');
 
 	$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 	$DashboardResult = DB_query($SQL);
@@ -19,7 +19,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 				<tr>
 					<th colspan="4">
 						<div class="CanvasTitle">', $ScriptTitle, '
-						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
 						</div>
 					</th>
 				</tr>';
@@ -52,10 +52,10 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SearchResult = DB_query($SQL);
 
 	echo '<tr>
-			<th class="SortedColumn">', _('Code'), '</th>
-			<th class="SortedColumn">', _('Description'), '</th>
-			<th>', _('Total Quantity on Hand'), '</th>
-			<th>', _('Units'), '</th>
+			<th class="SortedColumn">', __('Code'), '</th>
+			<th class="SortedColumn">', __('Description'), '</th>
+			<th>', __('Total Quantity on Hand'), '</th>
+			<th>', __('Units'), '</th>
 		</tr>
 	</thead>';
 

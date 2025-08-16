@@ -13,20 +13,20 @@ $PageSecurity=15;
 $_POST['CompanyNameField']= 'yourdatabase';
 
 include('includes/session.php');
-$Title = _('Create and send sales analysis files');
+$Title = __('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<div class="centre">' . _('Making a comma separated values file of the stock items') . '</div>';
+echo '<div class="centre">' . __('Making a comma separated values file of the stock items') . '</div>';
 
-$ErrMsg = _('The SQL to get the stock items failed with the message');
+$ErrMsg = __('The SQL to get the stock items failed with the message');
 
 $SQL = "SELECT stockid, categoryid, description FROM stockmaster";
 $Result = DB_query($SQL, $ErrMsg);
@@ -43,7 +43,7 @@ $fp = fopen($ItemsFileName,'w');
 
 if ($fp==FALSE){
 
-	prnMsg(_('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
+	prnMsg(__('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -58,9 +58,9 @@ while ($MyRow = DB_fetch_row($Result)){
 fclose($fp);
 //Now the customers
 
-echo '<div class="centre">' . _('Making a comma separated values file of the customers') . '</div>';
+echo '<div class="centre">' . __('Making a comma separated values file of the customers') . '</div>';
 
-$ErrMsg = _('The SQL to get the customers failed with the message');
+$ErrMsg = __('The SQL to get the customers failed with the message');
 
 $SQL = "SELECT debtorsmaster.debtorno, debtorsmaster.name, custbranch.branchcode, brname, salestype, area, salesman FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno=custbranch.debtorno";
 $Result = DB_query($SQL, $ErrMsg);
@@ -73,7 +73,7 @@ $fp = fopen($CustomersFileName,'w');
 
 if ($fp==FALSE){
 
-	prnMsg(_('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
+	prnMsg(__('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -89,9 +89,9 @@ fclose($fp);
 
 //Now the sales analysis invoice & credit note lines
 
-echo '<div class="centre">' . _('Making a comma separated values file of the sales lines') . '</div>';
+echo '<div class="centre">' . __('Making a comma separated values file of the sales lines') . '</div>';
 
-$ErrMsg = _('The SQL to get the sales data failed with the message');
+$ErrMsg = __('The SQL to get the sales data failed with the message');
 
 $SQL = "SELECT 	stockmoves.debtorno,
 				stockmoves.branchcode,
@@ -118,7 +118,7 @@ $fp = fopen($SalesFileName,'w');
 
 if ($fp==FALSE){
 
-	prnMsg(_('Could not open or create the file under') . ' ' . $SalesFileName,'error');
+	prnMsg(__('Could not open or create the file under') . ' ' . $SalesFileName,'error');
 	include('includes/footer.php');
 	exit();
 }

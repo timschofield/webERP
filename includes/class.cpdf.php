@@ -315,14 +315,14 @@ if (!class_exists('Cpdf', false)) {
 
 		function OutputI($DocumentFilename = 'Document.pdf') {
 			if (($DocumentFilename == null) or ($DocumentFilename == '')) {
-				$DocumentFilename = _('Document.pdf');
+				$DocumentFilename = __('Document.pdf');
 			}
 			$this->Output($DocumentFilename,'I');
 		}
 
 		function OutputD($DocumentFilename = 'Document.pdf') {
 			if (($DocumentFilename == null) or ($DocumentFilename == '')) {
-				$DocumentFilename = _('Document.pdf');
+				$DocumentFilename = __('Document.pdf');
 			}
 			$this->Output($DocumentFilename,'D');
 		}

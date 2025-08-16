@@ -74,14 +74,14 @@ echo '<table class="selection">
 if ($_POST['EntryType']=='KEYED') {
 	echo ' checked="checked" ';
 }
-echo 'value="KEYED" />' .  _('Keyed Entry') . '</td>';
+echo 'value="KEYED" />' .  __('Keyed Entry') . '</td>';
 
 if ($LineItem->Serialised==1){
 	echo '<td><input type="radio" name="EntryType" onclick="submit();" ';
 	if ($_POST['EntryType']=='SEQUENCE') {
 		echo ' checked="checked" ';
 	}
-	echo ' value="SEQUENCE" />' .  _('Sequential') . '</td>';
+	echo ' value="SEQUENCE" />' .  __('Sequential') . '</td>';
 }
 
 echo '<td valign="bottom"><input type="radio" id="FileEntry" name="EntryType" onclick="submit();" ';
@@ -89,12 +89,12 @@ echo '<td valign="bottom"><input type="radio" id="FileEntry" name="EntryType" on
 if ($_POST['EntryType']=='FILE') {
 	echo ' checked="checked" ';
 }
-echo ' value="FILE" />' .  _('File Upload') . '&nbsp; <input type="file" name="ImportFile" onclick="document.getElementById(\'FileEntry\').checked=true;" /></td>
+echo ' value="FILE" />' .  __('File Upload') . '&nbsp; <input type="file" name="ImportFile" onclick="document.getElementById(\'FileEntry\').checked=true;" /></td>
 	</tr>
 	<tr>
 		<td colspan="3">
 		<div class="centre">
-			<input type="submit" value="'. _('Set Entry Type'). ':" />
+			<input type="submit" value="'. __('Set Entry Type'). ':" />
 		</div>
 		</td>
 	</tr>
@@ -106,9 +106,9 @@ global $TableHeader;
 /* Link to clear the list and start from scratch */
 $EditLink =  '<br />
 			<div class="centre">
-					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID .'&amp;LineNo=' . $LineNo . $CreditInvoice . '">' .  _('Edit'). '</a> | ';
+					<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;EditControlled=true&amp;StockID=' . $LineItem->StockID .'&amp;LineNo=' . $LineNo . $CreditInvoice . '">' .  __('Edit'). '</a> | ';
 
-$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' .  _('Remove All'). '</a>
+$RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&amp;DELETEALL=YES&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo . $CreditInvoice . '">' .  __('Remove All'). '</a>
 			<br />
 			</div>';
 
@@ -116,24 +116,24 @@ $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UT
 if ($LineItem->Serialised==1){
 	if ($Perishable==0) {
 		$TableHeader .= '<tr>
-							<th>' .  _('Serial No'). '</th>
+							<th>' .  __('Serial No'). '</th>
 						</tr>';
 	} else {
 		$TableHeader .= '<tr>
-							<th>' .  _('Serial No'). '</th>
-							<th>' .  _('Expiry Date'). '<th>
+							<th>' .  __('Serial No'). '</th>
+							<th>' .  __('Expiry Date'). '<th>
 						</tr>';
 	}
 } else if ($LineItem->Serialised==0 AND $Perishable==1){
 	$TableHeader = '<tr>
-						<th>' .  _('Batch/Roll/Bundle'). ' #</th>
-						<th>' .  _('Quantity'). '</th>
-						<th>' .  _('Expiry Date'). '</th>
+						<th>' .  __('Batch/Roll/Bundle'). ' #</th>
+						<th>' .  __('Quantity'). '</th>
+						<th>' .  __('Expiry Date'). '</th>
 					</tr>';
 } else {
 	$TableHeader = '<tr>
-						<th>' .  _('Batch/Roll/Bundle'). ' #</th>
-						<th>' .  _('Quantity'). '</th>
+						<th>' .  __('Batch/Roll/Bundle'). ' #</th>
+						<th>' .  __('Quantity'). '</th>
 					</tr>';
 }
 
