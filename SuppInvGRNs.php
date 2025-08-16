@@ -116,7 +116,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 		</tr>
 		<tr>
 			<th>' . _('Sequence') . ' #</th>
-			<th>' . _("Supplier's Ref") . '</th>
+			<th>' . _('Supplier\'s Ref') . '</th>
 			<th>' . _('Item Code') . '</th>
 			<th>' . _('Description') . '</th>
 			<th>' . _('Quantity Yet To Inv') . '</th>

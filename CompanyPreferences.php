@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 
 		if (!fwrite($CompanyFileHandler, $Contents)) {
 			fclose($CompanyFileHandler);
-			echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+			echo '<div class="error">' . _('Cannot write to the Companies.php file') . '</div>';
 		}
 		//close file
 		fclose($CompanyFileHandler);

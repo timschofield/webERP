@@ -190,7 +190,7 @@ function submit(&$StockID,&$DemandID)  //####SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_
 							mrpdemandtype = '" . trim(mb_strtoupper($_POST['MRPDemandtype'])) . "',
 							duedate = '" . $FormatedDuedate . "'
 					WHERE demandid = '" . $DemandID . "'";
-			$Msg = _("The MRP demand record has been updated for").' '.$StockID;
+			$Msg = _('The MRP demand record has been updated for').' '.$StockID;
 		} else {
 
 	// If $MyRow[0] from SELECT count(*) is zero, this is an entry of a new record

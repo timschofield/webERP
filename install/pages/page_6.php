@@ -272,9 +272,9 @@ function CreateTables($Path_To_Root) {
 		$DBErrors += DB_error_no($Result);
 	}
 	if ($DBErrors > 0) {
-		echo '<div class="error">' . _("Database tables could not be created") . '</div>';
+		echo '<div class="error">' . _('Database tables could not be created') . '</div>';
 	} else {
-		echo '<div class="success">' . _("All database tables have been created") . '</div>';
+		echo '<div class="success">' . _('All database tables have been created') . '</div>';
 	}
 	ob_flush();
 }
@@ -413,9 +413,9 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$DBErrors += DB_error_no($Result);
 		}
 		if ($DBErrors > 0) {
-			echo '<div class="error">' . _("Database tables could not be created") . '</div>';
+			echo '<div class="error">' . _('Database tables could not be created') . '</div>';
 		} else {
-			echo '<div class="success">' . _("All database tables have been created") . '</div>';
+			echo '<div class="success">' . _('All database tables have been created') . '</div>';
 		}
 		ob_flush();
 
@@ -567,7 +567,7 @@ $Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION
 
 if (!fwrite($CompanyFileHandler, $Contents)) {
 	fclose($CompanyFileHandler);
-	echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+	echo '<div class="error">' . _('Cannot write to the Companies.php file') . '</div>';
 }
 //close file
 fclose($CompanyFileHandler);
@@ -624,9 +624,9 @@ function CreateGLTriggers($Path_To_Root)
 		$DBErrors += DB_error_no();
 	}
 	if ($DBErrors > 0) {
-		echo '<div class="error">' . _("Database triggers could not be created") . '</div>';
+		echo '<div class="error">' . _('Database triggers could not be created') . '</div>';
 	} else {
-		echo '<div class="success">' . _("All database triggers have been created") . '</div>';
+		echo '<div class="success">' . _('All database triggers have been created') . '</div>';
 	}
 
 	return $DBErrors;

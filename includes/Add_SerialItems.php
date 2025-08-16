@@ -351,10 +351,10 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			if ($LineItem->Serialised){
 				$ExistingQty = ValidBundleRef($StockID, $LocationOut, $NewSerialNo);
 				if ($NewQty == 1 AND $ExistingQty != 0){
-					prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a>: '. _("The Serial Number being added exists with a Quantity that is not Zero (0)!"), 'error' );
+					prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a>: '. _('The Serial Number being added exists with a Quantity that is not Zero (0)!'), 'error' );
 					$SerialError = true;
 				} elseif ($NewQty == -1 AND $ExistingQty != 1){
-					prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> : '. _("The Serial Number being removed exists with a Quantity that is not One (1)!"), 'error');
+					prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> : '. _('The Serial Number being removed exists with a Quantity that is not One (1)!'), 'error');
 					$SerialError = true;
 				}
 			}

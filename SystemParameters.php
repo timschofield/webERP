@@ -495,7 +495,7 @@ if (is_writable('config.php')) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>' . _("The default theme to use for the login screen and the setup of new users. The users' theme selection will override it.") . '</fieldhelp>
+		<fieldhelp>' . _('The default theme to use for the login screen and the setup of new users. The users\' theme selection will override it.') . '</fieldhelp>
 	</field>';
 } else {
 	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
