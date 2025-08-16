@@ -47,6 +47,10 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 	//get the header row
 	$HeaderRow = fgetcsv($FileHandle, 10000, ",");
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if ( count($HeaderRow) != count($FieldNames) ) {
