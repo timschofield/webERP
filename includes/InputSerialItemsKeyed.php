@@ -48,7 +48,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 	}
 
 
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo .'&amp;identifier=' . $identifier . $CreditInvoice . '">' .  _('Delete'). '</a></td>
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&amp;StockID=' . $LineItem->StockID . '&amp;LineNo=' . $LineNo .'&amp;identifier=' . $identifier . $CreditInvoice . '">' .  __('Delete'). '</a></td>
 		</tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
@@ -57,10 +57,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class="number"><b>' .  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class="number"><b>' .  __('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
 	echo '<tr>
-			<td class="number"><b>' .  _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' .  __('Total Quantity'). ':</b></td>
 			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
 		</tr>';
 }
@@ -145,7 +145,7 @@ for ($i=0;$i < 10;$i++){
 echo '</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="AddBatches" value="'. _('Enter'). '" />
+			<input type="submit" name="AddBatches" value="'. __('Enter'). '" />
 		</div>
 		</div>
 		</form>

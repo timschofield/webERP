@@ -1,7 +1,7 @@
 <?php
 
 //$PageSecurity = 3;
-$Title = _('Geocode Generate XML');
+$Title = __('Geocode Generate XML');
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');

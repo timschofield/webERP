@@ -4,7 +4,7 @@ as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$LineHeight);
 $PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
-$LeftOvers = $PDF->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,_('Total Due For') . ' ' . $SupplierName, 'left');
+$LeftOvers = $PDF->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,__('Total Due For') . ' ' . $SupplierName, 'left');
 
 $TotalPayments += $AccumBalance;
 $TotalAccumDiffOnExch += $AccumDiffOnExch;
@@ -49,7 +49,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . -$AccumDiffOnExch . "',
 				'" . -$AccumBalance . "')";
 
-	$ErrMsg = _('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted');
+	$ErrMsg = __('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 	$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 
 	$PaymentTransID = DB_Last_Insert_ID('supptrans','id');
@@ -68,7 +68,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 						'" . $PaymentTransID . "',
 						'" . $AllocTrans->TransID . "')";
 
-		$ErrMsg = _('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted');
+		$ErrMsg = __('None of the payments will be processed since an allocation record for') . $SupplierName . __('could not be inserted');
 		$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 	} /*end of the loop to insert the allocation records */
 
@@ -86,7 +86,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 				'" . $_POST['PaytType'] . "',
 				" .  -$AccumBalance . ")";
-	$ErrMsg = _('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted'); 
+	$ErrMsg = __('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 	$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 
 	/*If the General Ledger Link is activated */
@@ -108,10 +108,10 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					'" . $PeriodNo . "',
 					'" . $_POST['BankAccount'] . "',
-					'" . mb_substr($SupplierID . " - " . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
+					'" . mb_substr($SupplierID . " - " . $SupplierName . ' ' . __('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
 					'" . (-$AccumBalance/ filter_number_format($_POST['ExRate'])) . "')";
 
-		$ErrMsg = _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted');
+		$ErrMsg = __('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 		$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Do the GL trans for the payment DR creditors */
@@ -128,10 +128,10 @@ if (isset($_POST['PrintPDFAndProcess'])){
 					'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 					'" . $PeriodNo . "',
 					'" . $_SESSION['CompanyRecord']['creditorsact'] . "',
-					'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
+					'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . __('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . ' - ' . $PaytReference, 0, 200) . "',
 					'" . ($AccumBalance/ filter_number_format($_POST['ExRate'])  + $AccumDiffOnExch) . "')";
 
-		$ErrMsg = _('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted');
+		$ErrMsg = __('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 		$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Do the GL trans for the exch diff */
@@ -148,9 +148,9 @@ if (isset($_POST['PrintPDFAndProcess'])){
 							'" . FormatDateForSQL($_POST['AmountsDueBy']) . "',
 							'" . $PeriodNo . "',
 							'" . $_SESSION['CompanyRecord']['purchasesexchangediffact'] . "',
-							'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . _('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference, 0, 200) . "',
+							'" . mb_substr($SupplierID . ' - ' . $SupplierName . ' ' . __('payment run on') . ' ' . Date($_SESSION['DefaultDateFormat']) . " - " . $PaytReference, 0, 200) . "',
 							'" . (-$AccumDiffOnExch) . "')";
-			$ErrMsg = _('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted');
+			$ErrMsg = __('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . __('could not be inserted');
 			$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 		}
 		EnsureGLEntriesBalance(22,$SuppPaymentNo);

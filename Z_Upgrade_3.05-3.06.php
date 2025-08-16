@@ -1,23 +1,23 @@
 <?php
 //$PageSecurity = 15;
 include('includes/session.php');
-$Title = _('Upgrade webERP 3.06 - 3.07');
+$Title = __('Upgrade webERP 3.06 - 3.07');
 include('includes/header.php');
 
 
-prnMsg(_('This script will run perform any modifications to the database since v 3.06 required to allow the additional functionality in version 3.07 scripts'),'info');
+prnMsg(__('This script will run perform any modifications to the database since v 3.06 required to allow the additional functionality in version 3.07 scripts'),'info');
 
 echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<input type="submit" name="DoUpgrade" value="' . _('Perform Upgrade') . '" />';
+echo '<input type="submit" name="DoUpgrade" value="' . __('Perform Upgrade') . '" />';
 echo '</form>';
 
-if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
+if ($_POST['DoUpgrade'] == __('Perform Upgrade')){
 
 	$SQLScriptFile = file('./sql/mysql/upgrade3.06-3.07.sql');
 
 	$ScriptFileEntries = sizeof($SQLScriptFile);
-	$ErrMsg = _('The script to upgrade the database failed because');
+	$ErrMsg = __('The script to upgrade the database failed because');
 	$SQL ='';
 	$InAFunction = false;
 

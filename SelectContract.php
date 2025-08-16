@@ -1,21 +1,21 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Select Contract');
+$Title = __('Select Contract');
 $ViewTopic = 'Contracts';
 $BookMark = 'SelectContract';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/contract.png" title="', // Icon image.
-	_('Contracts'), '" /> ', // Icon title.
-	_('Select A Contract'), '</p>';// Page title.
+	__('Contracts'), '" /> ', // Icon title.
+	__('Select A Contract'), '</p>';// Page title.
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend class="search">', _('Contract Search'), '</legend>';
+		<legend class="search">', __('Contract Search'), '</legend>';
 
 if (isset($_GET['ContractRef'])){
 	$_POST['ContractRef']=$_GET['ContractRef'];
@@ -27,10 +27,10 @@ if (isset($_GET['SelectedCustomer'])){
 
 if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
 	$_POST['ContractRef'] = trim($_POST['ContractRef']);
-	echo _('Contract Reference') . ' - ' . $_POST['ContractRef'];
+	echo __('Contract Reference') . ' - ' . $_POST['ContractRef'];
 } else {
 	if (isset($_POST['SelectedCustomer'])) {
-		echo _('For customer') . ': ' . $_POST['SelectedCustomer'] . ' ' . _('and') . ' ';
+		echo __('For customer') . ': ' . $_POST['SelectedCustomer'] . ' ' . __('and') . ' ';
 		echo '<input type="hidden" name="SelectedCustomer" value="' . $_POST['SelectedCustomer'] . '" />';
 	}
 }
@@ -38,12 +38,12 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
 if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
 	echo '<field>
-			<label for="ContractRef">', _('Contract Reference') . ':</label>
+			<label for="ContractRef">', __('Contract Reference') . ':</label>
 			<input type="text" name="ContractRef" maxlength="20" size="20" />
 		</field>';
 
 	echo '<field>
-			<label for="Status">', _('Search Contracts In'), '</label>
+			<label for="Status">', __('Search Contracts In'), '</label>
 			<select name="Status">';
 
 	if (isset($_GET['Status'])){
@@ -53,11 +53,11 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		$_POST['Status']=4;
 	}
 
-	$Statuses[] = _('Not Yet Quoted');
-	$Statuses[] = _('Quoted - No Order Placed');
-	$Statuses[] = _('Order Placed');
-	$Statuses[] = _('Completed');
-	$Statuses[] = _('All Contracts');
+	$Statuses[] = __('Not Yet Quoted');
+	$Statuses[] = __('Quoted - No Order Placed');
+	$Statuses[] = __('Order Placed');
+	$Statuses[] = __('Completed');
+	$Statuses[] = __('All Contracts');
 
 	$StatusCount = count($Statuses);
 
@@ -74,8 +74,8 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 }
 echo '</fieldset>';
 echo '<div class="centre">
-		<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
-echo '&nbsp;&nbsp;<a href="' . $RootPath . '/Contracts.php">' . _('New Contract') . '</a></div>';
+		<input type="submit" name="SearchContracts" value="' . __('Search') . '" />';
+echo '&nbsp;&nbsp;<a href="' . $RootPath . '/Contracts.php">' . __('New Contract') . '</a></div>';
 
 
 //figure out the SQL required from the inputs available
@@ -139,7 +139,7 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef'] !='') {
 	}
 } //end not contract ref selected
 
-$ErrMsg = _('No contracts were returned by the SQL because');
+$ErrMsg = __('No contracts were returned by the SQL because');
 $ContractsResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the contracts returned by the SQL */
@@ -147,14 +147,14 @@ $ContractsResult = DB_query($SQL, $ErrMsg);
 echo '<table cellpadding="2" width="98%" class="selection">';
 
 $TableHeader = '<tr>
-					<th>' . _('Modify') . '</th>
-					<th>' . _('Order') . '</th>
-					<th>' . _('Issue To WO') . '</th>
-					<th>' . _('Costing') . '</th>
-					<th>' . _('Contract Ref') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Required Date') . '</th>
+					<th>' . __('Modify') . '</th>
+					<th>' . __('Order') . '</th>
+					<th>' . __('Issue To WO') . '</th>
+					<th>' . __('Costing') . '</th>
+					<th>' . __('Contract Ref') . '</th>
+					<th>' . __('Description') . '</th>
+					<th>' . __('Customer') . '</th>
+					<th>' . __('Required Date') . '</th>
 				</tr>';
 
 echo $TableHeader;
@@ -171,24 +171,24 @@ while ($MyRow=DB_fetch_array($ContractsResult)) {
 	$FormatedRequiredDate = ConvertSQLDate($MyRow['requireddate']);
 
 	if ($MyRow['status']==0 OR $MyRow['status']==1){ //still setting up the contract
-		echo '<td><a href="' . $ModifyPage . '">' . _('Modify') . '</a></td>';
+		echo '<td><a href="' . $ModifyPage . '">' . __('Modify') . '</a></td>';
 	} else {
-		echo '<td>' . _('n/a') . '</td>';
+		echo '<td>' . __('n/a') . '</td>';
 	}
 	if ($MyRow['status']==1 OR $MyRow['status']==2){ // quoted or ordered
 		echo '<td><a href="' . $OrderModifyPage . '">' . $MyRow['orderno'] . '</a></td>';
 	} else {
-		echo '<td>' . _('n/a') . '</td>';
+		echo '<td>' . __('n/a') . '</td>';
 	}
 	if ($MyRow['status']==2){ //the customer has accepted the quote but not completed contract yet
 		echo '<td><a href="' . $IssueToWOPage . '">' . $MyRow['wo'] . '</a></td>';
 	} else {
-		echo '<td>' . _('n/a') . '</td>';
+		echo '<td>' . __('n/a') . '</td>';
 	}
 	if ($MyRow['status']==2 OR $MyRow['status']==3){
-			echo '<td><a href="' . $CostingPage . '">' . _('View') . '</a></td>';
+			echo '<td><a href="' . $CostingPage . '">' . __('View') . '</a></td>';
 		} else {
-			echo '<td>' . _('n/a') . '</td>';
+			echo '<td>' . __('n/a') . '</td>';
 	}
 	echo '<td>' . $MyRow['contractref'] . '</td>
 		  <td>' . $MyRow['contractdescription'] . '</td>

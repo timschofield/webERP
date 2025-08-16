@@ -3,7 +3,7 @@
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.php');
 
-$Title = _('Stock Status');
+$Title = __('Stock Status');
 
 $ViewTopic = 'Inventory';
 $BookMark = '';
@@ -36,8 +36,8 @@ $Result = DB_query("SELECT description,
 						   controlled
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
-					_('Could not retrieve the requested item'),
-					_('The SQL used to retrieve the items was'));
+					__('Could not retrieve the requested item'),
+					__('The SQL used to retrieve the items was'));
 
 if (DB_num_rows($Result) > 0) {
 	$MyRow = DB_fetch_array($Result);
@@ -47,43 +47,43 @@ if (DB_num_rows($Result) > 0) {
 	$Description = $MyRow['description'];
 	$Units = $MyRow['units'];
 	$KitSet = $MyRow['mbflag'];
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
-		'" alt="" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . _('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .
+		'" alt="" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . __('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
 } else {
 	$DecimalPlaces = 2;
 	$Serialised = 0;
 	$Controlled = 0;
 	$KitSet = '';
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
-	'" alt="" /><b>' . _('Stock Status') . '</b></p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .
+	'" alt="" /><b>' . __('Stock Status') . '</b></p>';
 }
 
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($KitSet=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	prnMsg( _('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
+	prnMsg( __('This is a kitset part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($KitSet=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
+	prnMsg(__('This is an assembly part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($KitSet=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
+	prnMsg( __('This is an dummy part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
-		<legend>', _('Select Stock Code'), '</legend>
+		<legend>', __('Select Stock Code'), '</legend>
 		<field>
-			<label for="StockID">', _('Stock Code') . ':</label>
-			<input type="text" data-type="no-illegal-chars" title ="" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />
-			<fieldhelp>'._('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'</fieldhelp>
+			<label for="StockID">', __('Stock Code') . ':</label>
+			<input type="text" data-type="no-illegal-chars" title ="" placeholder="'.__('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />
+			<fieldhelp>'.__('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'</fieldhelp>
 		</field>
 	</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />
+		<input type="submit" name="ShowStatus" value="' . __('Show Stock Status') . '" />
 	</div>';
 
 $SQL = "SELECT locstock.loccode,
@@ -99,7 +99,7 @@ $SQL = "SELECT locstock.loccode,
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
-$ErrMsg = _('The stock held at each location cannot be retrieved because');
+$ErrMsg = __('The stock held at each location cannot be retrieved because');
 $LocStockResult = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
@@ -107,19 +107,19 @@ echo '<table class="selection">';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 	echo '<tr>
-						<th class="SortedColumn">' . _('Location') . '</th>
-						<th class="SortedColumn">' . _('Demand') . '</th>
+						<th class="SortedColumn">' . __('Location') . '</th>
+						<th class="SortedColumn">' . __('Demand') . '</th>
 					</tr>';
 } else {
 	echo '<tr>
-						<th class="SortedColumn">' . _('Location') . '</th>
-						<th class="SortedColumn">' . _('Bin Location') . '</th>
-						<th class="SortedColumn">' . _('Quantity On Hand') . '</th>
-						<th class="SortedColumn">' . _('Re-Order Level') . '</th>
-						<th class="SortedColumn">' . _('Demand') . '</th>
-						<th class="SortedColumn">' . _('In Transit') . '</th>
-						<th class="SortedColumn">' . _('Available') . '</th>
-						<th class="SortedColumn">' . _('On Order') . '</th>
+						<th class="SortedColumn">' . __('Location') . '</th>
+						<th class="SortedColumn">' . __('Bin Location') . '</th>
+						<th class="SortedColumn">' . __('Quantity On Hand') . '</th>
+						<th class="SortedColumn">' . __('Re-Order Level') . '</th>
+						<th class="SortedColumn">' . __('Demand') . '</th>
+						<th class="SortedColumn">' . __('In Transit') . '</th>
+						<th class="SortedColumn">' . __('Available') . '</th>
+						<th class="SortedColumn">' . __('On Order') . '</th>
 					</tr>';
 }
 
@@ -182,9 +182,9 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
-			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . _('Serial Numbers') . '</tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&amp;Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Serial Numbers') . '</tr>';
 		} elseif ($Controlled==1){
-			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . _('Batches') . '</a></td></tr>';
+			echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&amp;StockID=' .$StockID . '">' . __('Batches') . '</a></td></tr>';
 		}else{
 			echo '</tr>';
 		}
@@ -203,7 +203,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 echo '</tbody>
 	<tr>
 		<td></td>
-		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
+		<td><input type="submit" name="UpdateBinLocations" value="' . __('Update Bins') . '" /></td>
 	</tr>
 	</table>';
 
@@ -230,7 +230,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 
 	/* only show pricing history for sales invoices - type=10 */
 
-	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
+	$ErrMsg = __('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 
 	$MovtsResult = DB_query($SQL, $ErrMsg);
 
@@ -273,13 +273,13 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	  echo '<table class="selection">
 			<thead>
 			<tr>
-				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
+				<th colspan="4"><font color="navy" size="2">' . __('Pricing history for sales of') . ' ' . $StockID . ' ' . __('to') . ' ' . $DebtorNo . '</font></th>
 				</tr>
 				<tr>
-						<th class="SortedColumn">' . _('Date Range') . '</th>
-						<th class="SortedColumn">' . _('Quantity') . '</th>
-						<th class="SortedColumn">' . _('Price') . '</th>
-						<th class="SortedColumn">' . _('Discount') . '</th>
+						<th class="SortedColumn">' . __('Date Range') . '</th>
+						<th class="SortedColumn">' . __('Quantity') . '</th>
+						<th class="SortedColumn">' . __('Price') . '</th>
+						<th class="SortedColumn">' . __('Discount') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -296,16 +296,16 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	 echo '</tbody></table>';
 	 }
 	else {
-	  echo '<p>' . _('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
+	  echo '<p>' . __('No history of sales of') . ' ' . $StockID . ' ' . __('to') . ' ' . $DebtorNo;
 	}
 }//end of displaying price history for a debtor
 
-echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>
-	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>
-	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>
-	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . __('Show Movements') . '</a>
+	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Usage') . '</a>
+	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>
+	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
 if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
-	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Purchase Orders') . '</a>';
 }
 
 echo '</div></form>';

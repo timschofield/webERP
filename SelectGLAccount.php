@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title = _('Search GL Accounts');
+$Title = __('Search GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
@@ -13,13 +13,13 @@ unset($Result);
 if (isset($_POST['Search'])){
 
 	if (mb_strlen($_POST['Keywords']>0) AND mb_strlen($_POST['GLCode'])>0) {
-		$Msg=_('Account name keywords have been used in preference to the account code extract entered');
+		$Msg=__('Account name keywords have been used in preference to the account code extract entered');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
             $SQL = "SELECT chartmaster.accountcode,
                     chartmaster.accountname,
                     chartmaster.group_,
-                    CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
+                    CASE WHEN accountgroups.pandl!=0 THEN '" . __('Profit and Loss') . "' ELSE '" . __('Balance Sheet') ."' END AS pl
                     FROM chartmaster,
                         accountgroups,
 						glaccountusers
@@ -37,8 +37,8 @@ if (isset($_POST['Search'])){
 					chartmaster.accountname,
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0
-						THEN '" . _('Profit and Loss') . "'
-						ELSE '" . _('Balance Sheet') . "' END AS pl
+						THEN '" . __('Profit and Loss') . "'
+						ELSE '" . __('Balance Sheet') . "' END AS pl
 				FROM chartmaster,
 					accountgroups,
 					glaccountusers
@@ -59,7 +59,7 @@ if (isset($_POST['Search'])){
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,
-					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
+					CASE WHEN accountgroups.pandl!=0 THEN '" . __('Profit and Loss') . "' ELSE '" . __('Balance Sheet') ."' END AS pl
 					FROM chartmaster,
 						accountgroups,
 						glaccountusers
@@ -85,7 +85,7 @@ $TargetPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (!isset($AccountID)) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for General Ledger Accounts') . '</p>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -94,9 +94,9 @@ if (!isset($AccountID)) {
 	}
 
 	echo '<fieldset>
-			<legend class="search">', _('General Ledger account Search'), '</legend>
+			<legend class="search">', __('General Ledger account Search'), '</legend>
 		<field>
-			<label for="Keywords">' . _('Enter extract of text in the Account name') .':</label>
+			<label for="Keywords">' . __('Enter extract of text in the Account name') .':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>';
 
@@ -111,9 +111,9 @@ if (!isset($AccountID)) {
 	$ResultSelection=DB_query($SQLAccountSelect);
 	$OptGroup = '';
 	echo '<field>
-			<label for="GLCode">', '<b>' , _('OR') , '</b>' , _('Search for Account Code'), '</label>
+			<label for="GLCode">', '<b>' , __('OR') , '</b>' , __('Search for Account Code'), '</label>
 			<select name="GLCode">';
-	echo '<option value="">' . _('Select an Account Code') . '</option>';
+	echo '<option value="">' . __('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		if ($OptGroup != $MyRowSelection['group_']) {
 			echo '<optgroup label="' . $MyRowSelection['group_'] . '">';
@@ -131,8 +131,8 @@ if (!isset($AccountID)) {
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-			<input type="submit" name="reset" value="' . _('Reset') .'" />
+			<input type="submit" name="Search" value="' . __('Search Now') . '" />
+			<input type="submit" name="reset" value="' . __('Reset') .'" />
 		</div>';
 
 	if (isset($Result) and DB_num_rows($Result)>0) {
@@ -140,12 +140,12 @@ if (!isset($AccountID)) {
 		echo '<table class="selection">
 				<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
 					<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Account Name') . '</th>
-						<th>' . _('Group') . '</th>
-						<th>' . _('Account Type') . '</th>
-						<th>' . _('Inquiry') . '</th>
-						<th>' . _('Edit') . '</th>
+						<th>' . __('Code') . '</th>
+						<th>' . __('Account Name') . '</th>
+						<th>' . __('Group') . '</th>
+						<th>' . __('Account Type') . '</th>
+						<th>' . __('Inquiry') . '</th>
+						<th>' . __('Edit') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -157,8 +157,8 @@ if (!isset($AccountID)) {
 					<td>', htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
 					<td>', $MyRow['group_'], '</td>
 					<td>', $MyRow['pl'], '</td>
-					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
-					<td><a href="', $RootPath, '/GLAccounts.php?SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
+					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . __('Inquiry') . '" alt="' . __('Inquiry') . '" /></td>
+					<td><a href="', $RootPath, '/GLAccounts.php?SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Edit') . '" alt="' . __('Edit') . '" /></a>
 				</tr>';
 
 //end of page full new headings if

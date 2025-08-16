@@ -34,7 +34,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 				AND stockserialitems.loccode ='" . $LocationOut."'
 				AND quantity > 0
 			ORDER BY createdate, quantity";
-	$ErrMsg = '<br />' .  _('Could not retrieve the items for'). ' ' . $StockID;
+	$ErrMsg = '<br />' .  __('Could not retrieve the items for'). ' ' . $StockID;
 	$Bundles = DB_query($SQL, $ErrMsg );
 	echo '<table class="selection"><tr>';
 	if (DB_num_rows($Bundles)>0){
@@ -44,7 +44,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 			$AllSerials[$Itm->BundleRef] = $Itm->BundleQty;
 		}
 
-		echo '<td valign="top"><b>' .  _('Select Existing Items'). '</b><br />';
+		echo '<td valign="top"><b>' .  __('Select Existing Items'). '</b><br />';
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -80,20 +80,20 @@ if ($_POST['EntryType'] == 'KEYED'){
 					} else {
 						$RecvQty = $MyRow['quantity'];
 					}
-					echo '<option value="' . $MyRow['serialno'] . '/|/'. $RecvQty .'">' . $MyRow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</option>';
+					echo '<option value="' . $MyRow['serialno'] . '/|/'. $RecvQty .'">' . $MyRow['serialno'].' - ' . __('Qty left'). ': ' . $RecvQty . '</option>';
 					$ItemsAvailable += $RecvQty;
 				}
 			}
 		}
 		echo '</select>
 			<br />';
-		echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '"></div>
+		echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. __('Enter'). '"></div>
 			<br />';
 		echo '</form>';
-		echo $ItemsAvailable . ' ' . _('items available');
+		echo $ItemsAvailable . ' ' . __('items available');
 		echo '</td>';
 	} else {
-		echo '<td>' .  prnMsg( _('There does not appear to be any of') . ' ' . $StockID . ' ' . _('left in'). ' '. $LocationOut , 'warn','',true) . '</td>';
+		echo '<td>' .  prnMsg( __('There does not appear to be any of') . ' ' . $StockID . ' ' . __('left in'). ' '. $LocationOut , 'warn','',true) . '</td>';
 	}
 	echo '</tr></table>';
 }

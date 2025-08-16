@@ -13,7 +13,7 @@ if (isset($_POST['test'])) {
 		/// @todo we lost the PORT!
 		$conn = mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], 'information_schema');
 		$Result = 'valid';
-		$Message = _('Database connection working');
+		$Message = __('Database connection working');
 	}
 	catch(Exception $e) {
 		$Result = 'invalid';
@@ -27,14 +27,14 @@ if (isset($_POST['test'])) {
 
 echo '<form method="post" action="index.php?Page=3">
 		<fieldset>
-			<legend>' . _('Database settings') . '</legend>
+			<legend>' . __('Database settings') . '</legend>
 			<div class="page_help_text">
-				<p>' . _('Please enter your database information below.') . '<br />
+				<p>' . __('Please enter your database information below.') . '<br />
 				</p>
 			</div>
 			<ul>
 				<field>
-					<label for="dbms">' . _('DBMS Driver') . ': </label>
+					<label for="dbms">' . __('DBMS Driver') . ': </label>
 					<select name="dbms">';
 
 if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
@@ -49,43 +49,43 @@ if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
 }
 
 echo '</select>
-		<fieldhelp>' . _('Select the Database Management System you are using') . '</fieldhelp>
+		<fieldhelp>' . __('Select the Database Management System you are using') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="HostName">' . _('Host Name') . ': </label>
-					<input type="text" name="HostName" id="HostName" required="required" value="' . $_SESSION['Installer']['HostName'] . '" placeholder="' . _('Enter database host name') . '" />
-					<fieldhelp>' . _('Commonly: localhost or 127.0.0.1') . '</fieldhelp>
+					<label for="HostName">' . __('Host Name') . ': </label>
+					<input type="text" name="HostName" id="HostName" required="required" value="' . $_SESSION['Installer']['HostName'] . '" placeholder="' . __('Enter database host name') . '" />
+					<fieldhelp>' . __('Commonly: localhost or 127.0.0.1') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="Port">' . _('Database Port') . ': </label>
-					<input type="text" name="Port" id="Port" required="required" value="' . $_SESSION['Installer']['Port'] . '" maxlength="16" placeholder="' . _('The database port') . '" />
-					<fieldhelp>' . _('The port to use to connect to the databse.') . '</fieldhelp>
+					<label for="Port">' . __('Database Port') . ': </label>
+					<input type="text" name="Port" id="Port" required="required" value="' . $_SESSION['Installer']['Port'] . '" maxlength="16" placeholder="' . __('The database port') . '" />
+					<fieldhelp>' . __('The port to use to connect to the databse.') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="Database">' . _('Database Name') . ': </label>
-					<input type="text" name="Database" id="Database" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="32" placeholder="' . _('The database name') . '" />
-					<fieldhelp>' . _('If your user name below does not have permissions to create a database then this database must be created and empty.') . '</fieldhelp>
+					<label for="Database">' . __('Database Name') . ': </label>
+					<input type="text" name="Database" id="Database" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="32" placeholder="' . __('The database name') . '" />
+					<fieldhelp>' . __('If your user name below does not have permissions to create a database then this database must be created and empty.') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="Prefix">' . _('Database Prefix') . ' - ' . _('Optional') . ': </label>
-					<input type="text" name="Prefix" size="25" placeholder="' . _('Useful with shared hosting') . '" pattern="^[A-Za-z0-9$]+_$" />&#160;
-					<fieldhelp>' . _('Optional: in the form of prefix_') . '</fieldhelp>
+					<label for="Prefix">' . __('Database Prefix') . ' - ' . __('Optional') . ': </label>
+					<input type="text" name="Prefix" size="25" placeholder="' . __('Useful with shared hosting') . '" pattern="^[A-Za-z0-9$]+_$" />&#160;
+					<fieldhelp>' . __('Optional: in the form of prefix_') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="UserName">' . _('Database User Name') . ':</label>
-					<input type="text" name="UserName" id="UserName" value="' . $_SESSION['Installer']['UserName'] . '" placeholder="' . _('A valid database user name') . '" maxlength="32" required="required" />&#160;
-					<fieldhelp>' . _('If this user does not have permission to create databases, then the database entered above must exist and be empty.') . '</fieldhelp>
+					<label for="UserName">' . __('Database User Name') . ':</label>
+					<input type="text" name="UserName" id="UserName" value="' . $_SESSION['Installer']['UserName'] . '" placeholder="' . __('A valid database user name') . '" maxlength="32" required="required" />&#160;
+					<fieldhelp>' . __('If this user does not have permission to create databases, then the database entered above must exist and be empty.') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="Password">' . _('Password') . ': </label>
-					<input type="password" name="Password" placeholder="' . _('Database user password') . '" value="' . $_SESSION['Installer']['Password'] . '" />
-					<fieldhelp>' . _('Enter the database user password if one exists') . '</fieldhelp>
+					<label for="Password">' . __('Password') . ': </label>
+					<input type="password" name="Password" placeholder="' . __('Database user password') . '" value="' . $_SESSION['Installer']['Password'] . '" />
+					<fieldhelp>' . __('Enter the database user password if one exists') . '</fieldhelp>
 				</field>
 			</ul>';
 if ($Result != '') {
-	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" /><img class="result_icon" src="images/', $Result, '.png" />', $Message;
+	echo '<input type="submit" id="save" name="test" value="', __('Save details and test the connection'), '" /><img class="result_icon" src="images/', $Result, '.png" />', $Message;
 } else {
-	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" />';
+	echo '<input type="submit" id="save" name="test" value="', __('Save details and test the connection'), '" />';
 }
 echo '</fieldset>
 	</form>';

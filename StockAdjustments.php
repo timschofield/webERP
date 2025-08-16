@@ -4,7 +4,7 @@ include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
 
-$Title = _('Stock Adjustments');
+$Title = __('Stock Adjustments');
 
 /* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
@@ -116,11 +116,11 @@ if(isset($_GET['OldIdentifier'])){
 	$_SESSION['Adjustment'.$identifier]->StockLocation=$_SESSION['Adjustment'.$_GET['OldIdentifier']]->StockLocation;
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . _('Inventory Adjustment') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Inventory Adjustment') . '" alt="" />' . ' ' . __('Inventory Adjustment') . '</p>';
 
 if (isset($_POST['CheckCode'])) {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . _('Select Item to Adjust') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . __('Select Item to Adjust') . '</p>';
 
 	if (mb_strlen($_POST['StockText'])>0) {
 		$SQL="SELECT stockid,
@@ -133,18 +133,18 @@ if (isset($_POST['CheckCode'])) {
 				FROM stockmaster
 				WHERE stockid " . LIKE  . " '%" . $_POST['StockCode'] ."%'";
 	}
-	$ErrMsg = _('The stock information cannot be retrieved because');
+	$ErrMsg = __('The stock information cannot be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Stock Code') . '</th>
-				<th>' . _('Stock Description') . '</th>
+				<th>' . __('Stock Code') . '</th>
+				<th>' . __('Stock Description') . '</th>
 			</tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		echo '<tr>
 				<td>' . $MyRow[0] . '</td>
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . _('Adjust') . '</a>
+				<td><a href="StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
 			</tr>';
 	}
 	echo '</table>';
@@ -158,19 +158,19 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 	$Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'");
 	$MyRow = DB_fetch_row($Result);
 	if (DB_num_rows($Result)==0) {
-		prnMsg( _('The entered item code does not exist'),'error');
+		prnMsg( __('The entered item code does not exist'),'error');
 		$InputError = true;
 	} elseif (!is_numeric($_SESSION['Adjustment' . $identifier]->Quantity)){
-		prnMsg( _('The quantity entered must be numeric'),'error');
+		prnMsg( __('The quantity entered must be numeric'),'error');
 		$InputError = true;
 	} elseif(strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1))>$_SESSION['Adjustment' . $identifier]->DecimalPlaces){
-		prnMsg(_('The decimal places input is more than the decimals of this item defined,the defined decimal places is ').' '.$_SESSION['Adjustment' . $identifier]->DecimalPlaces.' '._('and the input decimal places is ').' '.strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1)),'error');
+		prnMsg(__('The decimal places input is more than the decimals of this item defined,the defined decimal places is ').' '.$_SESSION['Adjustment' . $identifier]->DecimalPlaces.' '.__('and the input decimal places is ').' '.strlen(substr(strrchr($_SESSION['Adjustment'.$identifier]->Quantity, "."), 1)),'error');
 		$InputError = true;
 	} elseif ($_SESSION['Adjustment' . $identifier]->Quantity==0){
-		prnMsg( _('The quantity entered cannot be zero') . '. ' . _('There would be no adjustment to make'),'error');
+		prnMsg( __('The quantity entered cannot be zero') . '. ' . __('There would be no adjustment to make'),'error');
 		$InputError = true;
 	} elseif ($_SESSION['Adjustment' . $identifier]->Controlled==1 AND count($_SESSION['Adjustment' . $identifier]->SerialItems)==0) {
-		prnMsg( _('The item entered is a controlled item that requires the detail of the serial numbers or batch references to be adjusted to be entered'),'error');
+		prnMsg( __('The item entered is a controlled item that requires the detail of the serial numbers or batch references to be adjusted to be entered'),'error');
 		$InputError = true;
 	}
 
@@ -182,7 +182,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$CheckNegRow = DB_fetch_array($CheckNegResult);
 		if ($CheckNegRow['quantity']+$_SESSION['Adjustment' . $identifier]->Quantity <0){
 			$InputError=true;
-			prnMsg(_('The system parameters are set to prohibit negative stocks. Processing this stock adjustment would result in negative stock at this location. This adjustment will not be processed.'),'error');
+			prnMsg(__('The system parameters are set to prohibit negative stocks. Processing this stock adjustment would result in negative stock at this location. This adjustment will not be processed.'),'error');
 		}
 	}
 
@@ -234,7 +234,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'" . $_SESSION['Adjustment' . $identifier]->StandardCost . "',
 										'')";
 
-		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
+		$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock movement record cannot be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 /*Get the ID of the StockMove... */
@@ -253,7 +253,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'
 						AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'
 						AND serialno='" . $Item->BundleRef . "'";
-				$ErrMsg = _('Unable to determine if the serial item exists');
+				$ErrMsg = __('Unable to determine if the serial item exists');
 				$Result = DB_query($SQL, $ErrMsg);
 				$SerialItemExistsRow = DB_fetch_row($Result);
 
@@ -264,7 +264,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 							AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'
 							AND serialno='" . $Item->BundleRef . "'";
 
-					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+					$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock item record could not be updated because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} else {
 					/*Need to insert a new serial item record */
@@ -281,7 +281,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 											'" . $Item->BundleQty . "',
 											'" . FormatDateForSQL($Item->ExpiryDate) ."')";
 
-					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+					$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock item record could not be updated because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
@@ -295,7 +295,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 											'" . $_SESSION['Adjustment' . $identifier]->StockID . "',
 											'" . $Item->BundleRef . "',
 											'" . $Item->BundleQty . "')";
-				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+				$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}/* foreach controlled item in the serialitems array */
@@ -305,7 +305,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 				WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'
 				AND loccode='" . $_SESSION['Adjustment' . $identifier]->StockLocation . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('The location stock record could not be updated because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $_SESSION['Adjustment' . $identifier]->StandardCost > 0){
@@ -328,7 +328,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" . mb_substr($_SESSION['Adjustment' . $identifier]->StockID . " x " . $_SESSION['Adjustment' . $identifier]->Quantity . " @ " .
 										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative, 0, 200) . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 			InsertGLTags($_POST['tag']);
 
@@ -348,20 +348,20 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" . mb_substr($_SESSION['Adjustment' . $identifier]->StockID . ' x ' . $_SESSION['Adjustment' . $identifier]->Quantity . ' @ ' . $_SESSION['Adjustment' . $identifier]->StandardCost . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative, 0, 200) . "'
 									)";
 
-			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+			$Errmsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 			$Result = DB_query($SQL, $ErrMsg, '',true);
 		}
 
 		EnsureGLEntriesBalance(17, $AdjustmentNumber);
 
 		DB_Txn_Commit();
-		$AdjustReason = $_SESSION['Adjustment' . $identifier]->Narrative?  _('Narrative') . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative:'';
-		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. _('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
+		$AdjustReason = $_SESSION['Adjustment' . $identifier]->Narrative?  __('Narrative') . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative:'';
+		$ConfirmationText = __('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '.__('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. __('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
 		prnMsg( $ConfirmationText,'success');
 
 		if ($_SESSION['InventoryManagerEmail']!=''){
-			$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
-			$EmailSubject = _('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
+			$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . Date('Y-m-d H:i:s');
+			$EmailSubject = __('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			SendEmailFromWebERP($SysAdminEmail,
 								$_SESSION['InventoryManagerEmail'],
 								$EmailSubject,
@@ -405,36 +405,36 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	}
 }
 echo '<fieldset>
-		<legend>' . _('Adjustment Details') . '</legend>';
+		<legend>' . __('Adjustment Details') . '</legend>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }
 echo '<field>
-		<label for="StockID">' .  _('Stock Code'). ':</label>';
+		<label for="StockID">' .  __('Stock Code'). ':</label>';
 if (isset($StockID)) {
 	echo '<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /></field>';
 } else {
 	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></field>';
 }
 echo '<field>
-		<label>' .  _('Partial Description'). ':</label>
-		<input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" />&nbsp; &nbsp;'._('Partial Stock Code'). ':';
+		<label>' .  __('Partial Description'). ':</label>
+		<input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" />&nbsp; &nbsp;'.__('Partial Stock Code'). ':';
 if (isset($StockID)) {
 	echo '<input type="text" name="StockCode" size="21" value="' . $StockID .'" maxlength="20" />';
 } else {
 	echo '<input type="text" name="StockCode" size="21" value="" maxlength="20" />';
 }
-echo '<input type="submit" name="CheckCode" value="'._('Check Part').'" />
+echo '<input type="submit" name="CheckCode" value="'.__('Check Part').'" />
 	</field>';
 
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
 	echo '<field>
-			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
+			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('.__('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . __('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
 		</field>';
 }
 
 echo '<field>
-		<label for="StockLocation">'. _('Adjustment to Stock At Location').':</label>
+		<label for="StockLocation">'. __('Adjustment to Stock At Location').':</label>
 		<select name="StockLocation" onchange="submit();"> ';
 foreach ($LocationList as $Loccode=>$Locationname){
 	if (isset($_SESSION['Adjustment'.$identifier]->StockLocation) AND $Loccode == $_SESSION['Adjustment' . $identifier]->StockLocation){
@@ -456,12 +456,12 @@ if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustmen
 }
 
 echo '<field>
-		<label for="Narrative">' .  _('Comments On Why').':</label>
+		<label for="Narrative">' .  __('Comments On Why').':</label>
 		<input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" />
 	</field>';
 
 echo '<field>
-		<label for="Quantity">' . _('Adjustment Quantity').':</label>';
+		<label for="Quantity">' . __('Adjustment Quantity').':</label>';
 
 if ($Controlled==1){
 		if ($_SESSION['Adjustment' . $identifier]->StockLocation == ''){
@@ -469,8 +469,8 @@ if ($Controlled==1){
 		}
 		echo '<input type="hidden" name="Quantity" value="' . $_SESSION['Adjustment' . $identifier]->Quantity . '" />
 				'.locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$DecimalPlaces) .' &nbsp; &nbsp; &nbsp; &nbsp;
-				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier='.$identifier.'">' . _('Remove') . '</a>]
-				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">' . _('Add') . '</a>]';
+				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier='.$identifier.'">' . __('Remove') . '</a>]
+				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">' . __('Add') . '</a>]';
 } else {
 	if (!isset($DecimalPlaces)) {
 		$DecimalPlaces = 2;
@@ -486,7 +486,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 $Result = DB_query($SQL);
 echo '<field>
-		<label for="tag">', _('Tag'), '</label>
+		<label for="tag">', __('Tag'), '</label>
 		<select multiple="multiple" name="tag[]">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
@@ -501,22 +501,22 @@ echo '</select>
 
 echo '</fieldset>
 	<div class="centre">
-	<input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '" />';
+	<input type="submit" name="EnterAdjustment" value="'. __('Enter Stock Adjustment'). '" />';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation']='';
 }
 
 echo '<br />
-	<a href="'. $RootPath. '/StockStatus.php?StockID='. $StockID . '">' . _('Show Stock Status') . '</a>';
+	<a href="'. $RootPath. '/StockStatus.php?StockID='. $StockID . '">' . __('Show Stock Status') . '</a>';
 echo '<br />
-	<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>';
+	<a href="'.$RootPath.'/StockMovements.php?StockID=' . $StockID . '">' . __('Show Movements') . '</a>';
 echo '<br />
-	<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Usage') . '</a>';
+	<a href="'.$RootPath.'/StockUsage.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . __('Show Stock Usage') . '</a>';
 echo '<br />
-	<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&amp;StockLocation=' . $_POST['StockLocation'] . '">' .  _('Search Outstanding Sales Orders') . '</a>';
+	<a href="'.$RootPath.'/SelectSalesOrder.php?SelectedStockItem='. $StockID .'&amp;StockLocation=' . $_POST['StockLocation'] . '">' .  __('Search Outstanding Sales Orders') . '</a>';
 echo '<br />
-	<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">' . _('Search Completed Sales Orders') . '</a>';
+	<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">' . __('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
 	</form>';

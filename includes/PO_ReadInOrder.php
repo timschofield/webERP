@@ -57,7 +57,7 @@
 							INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 							WHERE purchorders.orderno = '" . $_GET['ModifyOrderNumber'] . "'";
 
-	   $ErrMsg =  _('The order cannot be retrieved because');
+	   $ErrMsg =  __('The order cannot be retrieved because');
 	   $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult)==1 and !isset($_SESSION['PO'.$identifier]->OrderNo )) {
@@ -115,14 +115,14 @@
 							WHERE suppliers.supplierid='" . $_SESSION['PO'.$identifier]->SupplierID."'
 							ORDER BY suppliers.supplierid";
 
-			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
+			$ErrMsg = __('The searched supplier records requested cannot be retrieved because');
 			$Result_SuppSelect = DB_query($SupplierSQL, $ErrMsg);
 
 			if (DB_num_rows($Result_SuppSelect)==1){
 				$MyRow=DB_fetch_array($Result_SuppSelect);
 			} elseif (DB_num_rows($Result_SuppSelect)==0){
-				prnMsg( _('No supplier records contain the selected text') . ' - ' .
-					_('please alter your search criteria and try again'),'info');
+				prnMsg( __('No supplier records contain the selected text') . ' - ' .
+					__('please alter your search criteria and try again'),'info');
 			}
 
 /*now populate the line PO array with the purchase order details records */
@@ -161,7 +161,7 @@
 									AND purchorderdetails.orderno ='" . $_GET['ModifyOrderNumber'] . "'
 									ORDER BY podetailitem";
 
-			$ErrMsg =  _('The lines on the purchase order cannot be retrieved because');
+			$ErrMsg =  __('The lines on the purchase order cannot be retrieved because');
 			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 		  if (DB_num_rows($LineItemsResult) > 0) {
@@ -174,7 +174,7 @@
 						$GLCode = $MyRow['glcode'];
 					 }
 					if (is_null($MyRow['units'])){
-						$Units = _('each');
+						$Units = __('each');
 					} else {
 						$Units = $MyRow['units'];
 					}

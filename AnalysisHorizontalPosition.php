@@ -19,7 +19,7 @@ Parameters:
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
-$Title = _('Horizontal Analysis of Statement of Financial Position');
+$Title = __('Horizontal Analysis of Statement of Financial Position');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalPosition';
 
@@ -56,21 +56,21 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('Shows the horizontal analysis of the statement of financial position.') . '<br />' .
-		_('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'). '<br />' .
-		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).') . '<br />' .
-		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+		__('Shows the horizontal analysis of the statement of financial position.') . '<br />' .
+		__('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'). '<br />' .
+		__('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).') . '<br />' .
+		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	// BEGIN ReportParametersFormStart:
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>', // Content of the header and footer of the input table:
-		'<legend>', _('Report Parameters'), '</legend>';
+		'<legend>', __('Report Parameters'), '</legend>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
 	// Select period to:
 	echo	'<field>
-				<label for="PeriodTo">', _('Select the balance date'), '</label>
+				<label for="PeriodTo">', __('Select the balance date'), '</label>
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -89,16 +89,16 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	echo		'</select>
 			</field>
 			<field>
-				<label for="ShowDetail">', _('Detail or summary'), '</label>
+				<label for="ShowDetail">', __('Detail or summary'), '</label>
 				<select name="ShowDetail" required="required">
-					<option value="Summary">', _('Summary'), '</option>
-					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
+					<option value="Summary">', __('Summary'), '</option>
+					<option selected="selected" value="Detailed">', __('All Accounts'), '</option>
 				</select>
-					<fieldhelp>', _('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
+					<fieldhelp>', __('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
 			</field>',
 	// Show accounts with zero balance:
 			'<field>',
-				'<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+				'<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
 				<input';
 	if (isset($_POST['ShowZeroBalance'])) {
 		echo ' checked="checked"';
@@ -106,13 +106,13 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		echo '';
 	}
 	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
-				<fieldhelp>', _('Check this box to show accounts with zero balance'),'</fieldhelp>
+				<fieldhelp>', __('Check this box to show accounts with zero balance'),'</fieldhelp>
 			</field>';
 	// BEGIN ReportParametersFormEnd:
 	echo '</fieldset>
 			<div class="centre">
-				<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>
-				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>
+				<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>
+				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>
 			</div>',
 		'</form>';
 	// END ReportParametersFormEnd.
@@ -129,32 +129,32 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.
-		_('Horizontal Analysis of Statement of Financial Position'), '" /> ', // Icon title.
-		_('Horizontal Analysis of Statement of Financial Position'), '<br />', // Page title, reporting statement.
+		__('Horizontal Analysis of Statement of Financial Position'), '" /> ', // Icon title.
+		__('Horizontal Analysis of Statement of Financial Position'), '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
-		_('as at'), ' ', $BalanceDate, '<br />', // Page title, reporting period.
-		_('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+		__('as at'), ' ', $BalanceDate, '<br />', // Page title, reporting period.
+		__('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="scrollable">
 		<thead>
 		<tr>';
 	if ($_POST['ShowDetail'] == 'Detailed') {// Detailed report:
-		echo '<th class="text">', _('Account'), '</th>
-			<th class="text">', _('Account Name'), '</th>';
+		echo '<th class="text">', __('Account'), '</th>
+			<th class="text">', __('Account Name'), '</th>';
 	} else {// Summary report:
-		echo '<th class="text" colspan="2">', _('Summary'), '</th>';
+		echo '<th class="text" colspan="2">', __('Summary'), '</th>';
 	}
-	echo	'<th class="number">', _('Current period'), '</th>
-			<th class="number">', _('Last period'), '</th>
-			<th class="number">', _('Actual change'), '</th>
-			<th class="number">', _('Relative change'), '</th>
+	echo	'<th class="number">', __('Current period'), '</th>
+			<th class="number">', __('Last period'), '</th>
+			<th class="number">', __('Actual change'), '</th>
+			<th class="number">', __('Relative change'), '</th>
 		</tr>
 		</thead>
 		<tfoot>
 			<tr>
 				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
-					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Actual change signs: a positive number indicates a source of funds; a negative number indicates an application of funds.'), '<br />',
-					_('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
+					'<br /><b>', __('Notes'), ':</b><br />',
+					__('Actual change signs: a positive number indicates a source of funds; a negative number indicates an application of funds.'), '<br />',
+					__('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
 				'</td>
 			</tr>
 		</tfoot>
@@ -171,7 +171,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				ON chartmaster.accountcode = gltotals.account
 			WHERE accountgroups.pandl = 1";
 
-	$AccumProfitResult = DB_query($SQL, _('The accumulated profits brought forward could not be calculated by the SQL because'));
+	$AccumProfitResult = DB_query($SQL, __('The accumulated profits brought forward could not be calculated by the SQL because'));
 
 	$AccumProfitRow = DB_fetch_array($AccumProfitResult); /*should only be one row returned */
 
@@ -203,7 +203,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				accountgroups.groupname,
 				gltotals.account";
 
-	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'));
+	$AccountsResult = DB_query($SQL, __('No general ledger accounts were returned by the SQL because'));
 
 	$CheckTotal = 0;
 	$CheckTotalLY = 0;
@@ -376,7 +376,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	}
 	echo $DrawTotalLine;
 	echo'<tr>
-			<td colspan="2"><h2>', _('Check Total'), '</h2></td>
+			<td colspan="2"><h2>', __('Check Total'), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format($CheckTotal - $CheckTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -393,9 +393,9 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 		'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 		'<div class="centre noPrint">', // Form buttons:
-			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>',
 		'</form>';
 	// END ReportDocEndButtons.

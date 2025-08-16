@@ -6,16 +6,16 @@ include('LanguagesArray.php');
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))) {
-	$DemoText = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
+	$DemoText = __('Login as user') . ': <i>' . __('admin') . '</i><br />' . __('with password') . ': <i>' . __('weberp') . '</i>';
 } elseif (!isset($DemoText)) {
-	$DemoText = _('Please login here');
+	$DemoText = __('Please login here');
 }
 
 echo '<!DOCTYPE html>';
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<head>
-		<title>WebERP ', _('Login screen'), '</title>
+		<title>WebERP ', __('Login screen'), '</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="icon" href="favicon.ico" type="image/x-icon" />
@@ -82,7 +82,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 }
 
 if ($AllowCompanySelectionBox != 'Hide') {
-	echo '<label for="CompanySelect">', _('Company'), ':</label>';
+	echo '<label for="CompanySelect">', __('Company'), ':</label>';
 	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
 	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
@@ -119,11 +119,11 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	echo '</ol>';
 }
 
-echo '<label for="username">', _('User name'), ':</label>
-	<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
-	<label for="password">', _('Password'), ':</label>
-	<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', _('Password'), '" />
-	<input type="text" id="eye" readonly title="', _('Show Password'), '" />
+echo '<label for="username">', __('User name'), ':</label>
+	<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', __('User name'), '" maxlength="20" /><br />
+	<label for="password">', __('Password'), ':</label>
+	<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', __('Password'), '" />
+	<input type="text" id="eye" readonly title="', __('Show Password'), '" />
 	<div id="demo_text">';
 
 if (isset($DemoText)) {
@@ -133,8 +133,8 @@ if (isset($DemoText)) {
 echo '</div>';
 
 echo '<div style="text-align: left;">
-        <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
-            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
+        <button class="button" type="submit" value="', __('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
+            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', __('Login'), ' ', '<img src="css/tick.png" title="', __('Login'), '" alt="" class="ButtonIcon" />
         </button>
       </div>';
 

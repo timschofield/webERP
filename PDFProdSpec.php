@@ -12,25 +12,25 @@ if (isset($_GET['KeyValue']))  {
 }
 //Get Out if we have no product specification
 if (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
-        $Title = _('Select Product Specification To Print');
+        $Title = __('Select Product Specification To Print');
         $ViewTopic = 'QualityAssurance';
         $BookMark = '';
         include('includes/header.php');
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
-				<legend>', _('Select Product Specification'), '</legend>
+				<legend>', __('Select Product Specification'), '</legend>
 				<field>
-					<label for="KeyValue">' . _('Enter Specification Name') .':</label>
+					<label for="KeyValue">' . __('Enter Specification Name') .':</label>
 					<input type="text" name="KeyValue" size="25" maxlength="25" /></td>
 				</field>
 			</fieldset>';
 
 		echo '<div class="centre">
-				<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+				<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 			</div>
 		</form>';
 
@@ -39,7 +39,7 @@ if (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 
 		echo '<fieldset>
 				<field>
-				<label for="KeyValue">' . _('Or Select Existing Specification') .':</label>';
+				<label for="KeyValue">' . __('Or Select Existing Specification') .':</label>';
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
@@ -57,7 +57,7 @@ if (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+			<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
     include('includes/footer.php');
@@ -65,7 +65,7 @@ if (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the Product Specification') . ' ' . $SelectedProdSpec . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the Product Specification') . ' ' . $SelectedProdSpec . ' ' . __('from the database');
 
 $SQL = "SELECT keyval,
 				description,
@@ -91,20 +91,20 @@ $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-	$Title = _('Print Product Specification Error');
+	$Title = __('Print Product Specification Error');
 	include('includes/header.php');
 	 echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Unable to Locate Specification') . ' : ' . $_SelectedProdSpec . ' ', 'error');
+	prnMsg( __('Unable to Locate Specification') . ' : ' . $_SelectedProdSpec . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 			<tr>
 				<td class="menu_group_item">
-					<ul><li><a href="'. $RootPath . '/PDFProdSpec.php">' . _('Product Specifications') . '</a></li></ul>
+					<ul><li><a href="'. $RootPath . '/PDFProdSpec.php">' . __('Product Specifications') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>
@@ -118,8 +118,8 @@ if (DB_num_rows($Result)==0){
 $PaperSize = 'Letter';
 
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Product Specification') );
-$pdf->addInfo('Subject', _('Product Specification') . ' ' . $SelectedProdSpec);
+$pdf->addInfo('Title', __('Product Specification') );
+$pdf->addInfo('Subject', __('Product Specification') . ' ' . $SelectedProdSpec);
 $FontSize=12;
 $PageNumber = 1;
 $HeaderPrinted=0;
@@ -130,10 +130,10 @@ $CurSection='NULL';
 $SectionTitle='';
 $SectionTrailer='';
 
-$SectionsArray=array(array('PhysicalProperty',3, _('Technical Data Sheet Properties'), _('* Data herein is typical and not to be construed as specifications.'), array(260,110,135),array(_('Physical Property'),_('Value'),_('Test Method')),array('left','center','center')),
-					 array('',3, _('Header'), _('* Trailer'), array(260,110,135), array(_('Physical Property'),_('Value'),_('Test Method')),array('left','center','center')),
-					 array('Processing',2, _('Injection Molding Processing Guidelines'), _('* Desicant type dryer required.'), array(240,265),array(_('Setting'),_('Value')),array('left','center')),
-					 array('RegulatoryCompliance',2, _('Regulatory Compliance'), '', array(240,265),array(_('Regulatory Compliance'),_('Value')),array('left','center')));
+$SectionsArray=array(array('PhysicalProperty',3, __('Technical Data Sheet Properties'), __('* Data herein is typical and not to be construed as specifications.'), array(260,110,135),array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
+					 array('',3, __('Header'), __('* Trailer'), array(260,110,135), array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
+					 array('Processing',2, __('Injection Molding Processing Guidelines'), __('* Desicant type dryer required.'), array(240,265),array(__('Setting'),__('Value')),array('left','center')),
+					 array('RegulatoryCompliance',2, __('Regulatory Compliance'), '', array(240,265),array(__('Regulatory Compliance'),__('Value')),array('left','center')));
 
 while ($MyRow=DB_fetch_array($Result)){
 	if ($MyRow['description']=='') {
@@ -266,7 +266,7 @@ if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
 	include('includes/PDFProdSpecHeader.php');
 }
-$Disclaimer= _('The information provided on this datasheet should only be used as a guideline. Actual lot to lot values will vary.');
+$Disclaimer= __('The information provided on this datasheet should only be used as a guideline. Actual lot to lot values will vary.');
 $FontSize=8;
 $LineHeight=$FontSize*1.25;
 $YPos -= $LineHeight;

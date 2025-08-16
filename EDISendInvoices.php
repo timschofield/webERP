@@ -53,7 +53,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				AND edisent=0
 				AND debtortrans.debtorno='" . $CustDetails['debtorno'] . "'";
 
-	$ErrMsg = _('There was a problem retrieving the customer transactions because');
+	$ErrMsg = __('There was a problem retrieving the customer transactions because');
 	$TransHeaders = DB_query($SQL, $ErrMsg);
 
 
@@ -101,7 +101,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
                 FROM edimessageformat
                 WHERE partnercode='" . $CustDetails['debtorno'] . "'
                 AND messagetype='INVOIC' ORDER BY sequenceno";
-		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
+		$ErrMsg =  __('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . __('because');
 		$MessageLinesResult = DB_query($SQL, $ErrMsg);
 
 
@@ -219,10 +219,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 				if ($MessageSent==True){
 					echo '<br /><br />';
-					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('was successfully emailed'),'success');
+					prnMsg(__('EDI Message') . ' ' . $EDITransNo . ' ' . __('was successfully emailed'),'success');
 				} else {
 					echo '<br /><br />';
-					prnMsg(_('EDI Message') . ' ' . $EDITransNo . _('could not be emailed to') . ' ' . $CustDetails['ediaddress'],'error');
+					prnMsg(__('EDI Message') . ' ' . $EDITransNo . __('could not be emailed to') . ' ' . $CustDetails['ediaddress'],'error');
 				}
 			} else { /*it must be ftp transport */
 
@@ -230,17 +230,17 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				$conn_id = ftp_connect($CustDetails['ediaddress']); // login with username and password
 				$login_result = ftp_login($conn_id, $CustDetails['ediserveruser'], $CustDetails['ediserverpwd']); // check connection
 				if ((!$conn_id) || (!$login_result)) {
-					prnMsg( _('Ftp connection has failed'). '<br />' . _('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' ._('for user') . ' ' . $CustDetails['ediserveruser'],'error');
+					prnMsg( __('Ftp connection has failed'). '<br />' . __('Attempted to connect to') . ' ' . $CustDetails['ediaddress'] . ' ' .__('for user') . ' ' . $CustDetails['ediserveruser'],'error');
 					include('includes/footer.php');
 					exit();
 				}
 				$MessageSent = ftp_put($conn_id, $_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, 'EDI_INV_' . $EDITransNo, FTP_ASCII); // check upload status
 				if (!$MessageSent) {
 					echo '<br /><br />';
-					prnMsg(_('EDI Message') . ' ' . $EDITransNo . ' ' . _('could not be sent via ftp to') .' ' . $CustDetails['ediaddress'],'error');
+					prnMsg(__('EDI Message') . ' ' . $EDITransNo . ' ' . __('could not be sent via ftp to') .' ' . $CustDetails['ediaddress'],'error');
 		 		} else {
 					echo '<br /><br />';
-					prnMsg( _('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . _('via ftp to') . ' ' . $CustDetails['ediaddress'],'success');
+					prnMsg( __('Successfully uploaded EDI_INV_') . $EDITransNo . ' ' . __('via ftp to') . ' ' . $CustDetails['ediaddress'],'success');
 				} // close the FTP stream
 				ftp_quit($conn_id);
 			}
@@ -254,7 +254,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		} else {
 
-			prnMsg( _('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' . $CustDetails['debtorno'],'error');
+			prnMsg( __('Cannot create EDI message since there is no EDI INVOIC message template set up for') . ' ' . $CustDetails['debtorno'],'error');
 		} /*End if there is a message template defined for the customer invoic*/
 	} /* loop around all the customer transactions to be sent */
 

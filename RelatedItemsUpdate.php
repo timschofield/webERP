@@ -2,12 +2,12 @@
 /* Quality Test Maintenance */
 
 include('includes/session.php');
-$Title = _('Update Related Items');
+$Title = __('Update Related Items');
 $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
 include('includes/header.php');
 
-echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a>';
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a>';
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/inventory.png" title="', // Icon image.
@@ -36,14 +36,14 @@ $Result = DB_query("SELECT stockmaster.description
 $MyRow = DB_fetch_row($Result);
 
 if (DB_num_rows($Result)==0){
-	prnMsg( _('The part code entered does not exist in the database') . ': ' . $Item . _('Only valid parts can have related items entered against them'),'error');
+	prnMsg( __('The part code entered does not exist in the database') . ': ' . $Item . __('Only valid parts can have related items entered against them'),'error');
 	$InputError=1;
 }
 
 
 if (!isset($Item)){
 	echo '<p>';
-	prnMsg (_('An item must first be selected before this page is called') . '. ' . _('The product selection page should call this page with a valid product code'),'error');
+	prnMsg (__('An item must first be selected before this page is called') . '. ' . __('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 	$MyRow_related = DB_fetch_row($Result_related);
 
 	if (DB_num_rows($Result_related)==0){
-		prnMsg( _('The part code entered as related item does not exist in the database') . ': ' . $_POST['Related'] .  _('Only valid parts can be related items'),'error');
+		prnMsg( __('The part code entered as related item does not exist in the database') . ': ' . $_POST['Related'] .  __('Only valid parts can be related items'),'error');
 		$InputError=1;
 	}
 
@@ -76,12 +76,12 @@ if (isset($_POST['submit'])) {
 	$MyRow = DB_fetch_row($Result);
 
 	if (DB_num_rows($Result)!=0){
-		prnMsg( _('This related item has already been entered.') , 'warn');
+		prnMsg( __('This related item has already been entered.') , 'warn');
 		$InputError =1;
 	}
 
 	if ($_POST['Related'] == $Item){
-		prnMsg( _('An item can not be related to itself') , 'warn');
+		prnMsg( __('An item can not be related to itself') , 'warn');
 		$InputError =1;
 	}
 
@@ -90,10 +90,10 @@ if (isset($_POST['submit'])) {
 									related)
 							VALUES ('" . $Item . "',
 								'" . $_POST['Related'] . "')";
-		$ErrMsg = _('The new related item could not be added');
+		$ErrMsg = __('The new related item could not be added');
 		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg($_POST['Related'] . ' ' . _('is now related to') . ' ' . $Item,'success');
+		prnMsg($_POST['Related'] . ' ' . __('is now related to') . ' ' . $Item,'success');
 
 		/* It is safe to assume that, if A is related to B, B is related to A */
 		$SQL_reverse = "SELECT related
@@ -108,9 +108,9 @@ if (isset($_POST['submit'])) {
 										related)
 								VALUES ('" . $_POST['Related'] . "',
 									'" . $Item . "')";
-			$ErrMsg = _('The new related item could not be added');
+			$ErrMsg = __('The new related item could not be added');
 			$Result = DB_query($SQL, $ErrMsg);
-			prnMsg($Item . ' ' . _('is now related to') . ' ' . $_POST['Related'],'success');
+			prnMsg($Item . ' ' . __('is now related to') . ' ' . $_POST['Related'],'success');
 		}
 	}
 
@@ -124,9 +124,9 @@ if (isset($_POST['submit'])) {
 	$SQL="DELETE FROM relateditems
 			WHERE (stockid = '". $Item ."' AND related ='". $_GET['Related'] ."')
 			OR (stockid = '". $_GET['Related'] ."' AND related ='". $Item ."')";
-	$ErrMsg = _('Could not delete this relationshop');
+	$ErrMsg = __('Could not delete this relationshop');
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg( _('This relationship has been deleted'),'success');
+	prnMsg( __('This relationship has been deleted'),'success');
 
 }
 
@@ -148,14 +148,14 @@ if (DB_num_rows($Result) > 0) {
 		<thead>
 			<tr>
 				<th colspan="3">' .
-				_('Related Items To') . ':
+				__('Related Items To') . ':
 				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
-				<input type="submit" name="NewPart" value="' . _('List Related Items') . '" /></th>
+				<input type="submit" name="NewPart" value="' . __('List Related Items') . '" /></th>
 			</tr>
 			<tr>
-				<th class="SortedColumn">' . _('Code') . '</th>
-				<th class="SortedColumn">' . _('Description') . '</th>
-				<th>' . _('Delete') . '</th>
+				<th class="SortedColumn">' . __('Code') . '</th>
+				<th class="SortedColumn">' . __('Description') . '</th>
+				<th>' . __('Delete') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -165,7 +165,7 @@ if (DB_num_rows($Result) > 0) {
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' .  $MyRow['description'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $MyRow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this relationship?') . '\');">' . _('Delete') . '</a></td>';
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $MyRow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this relationship?') . '\');">' . __('Delete') . '</a></td>';
 		echo '</tr>';
 
 	}
@@ -174,7 +174,7 @@ if (DB_num_rows($Result) > 0) {
 	echo '</div>
 		  </form>';
 } else {
-	prnMsg(_('There are no items related set up for this part'),'warn');
+	prnMsg(__('There are no items related set up for this part'),'warn');
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '">';
@@ -190,7 +190,7 @@ echo '<fieldset>';
 echo '<legend>' . $Item . ' - ' . $PartDescription . '</legend>';
 
 echo '<field>
-		<label for="Related">' . _('Related Item Code') . ':</label>
+		<label for="Related">' . __('Related Item Code') . ':</label>
 		<input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="';
 		if (isset($_POST['Related'])) {
 			echo $_POST['Related'];
@@ -199,7 +199,7 @@ echo '<field>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Relation') . '" />
+		<input type="submit" name="submit" value="' . __('Enter') . '/' . __('Amend Relation') . '" />
 	</div>';
 
 echo '</form>';

@@ -8,7 +8,7 @@ if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST[
 if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);}
 if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);}
 if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);}
-$Title = _('Search Outstanding Sales Orders');
+$Title = __('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';
 include('includes/header.php');
@@ -53,7 +53,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		}
 	}
 	if (mb_strlen($OrdersToPlacePOFor) == '') {
-		prnMsg(_('There were no sales orders checked to place purchase orders for. No purchase orders will be created.'),'info');
+		prnMsg(__('There were no sales orders checked to place purchase orders for. No purchase orders will be created.'),'info');
 	} else {
    /*  Now build SQL of items to purchase with purchasing data and preferred suppliers - sorted by preferred supplier */
 		$SQL = "SELECT purchdata.supplierno,
@@ -92,7 +92,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				ORDER BY purchdata.supplierno,
 					 purchdata.stockid";
 
-		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
+		$ErrMsg = __('Unable to retrieve the items on the selected orders for creating purchase orders for');
 		$ItemResult = DB_query($SQL, $ErrMsg);
 
 		$ItemArray = array();
@@ -145,7 +145,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 					stockcategory.stockact
 				ORDER BY purchdata.supplierno,
 					 purchdata.stockid";
-		$ErrMsg = _('Unable to retrieve the items on the selected orders for creating purchase orders for');
+		$ErrMsg = __('Unable to retrieve the items on the selected orders for creating purchase orders for');
 		$ItemResult = DB_query($SQL, $ErrMsg);
 
 		/* add any assembly item components from salesorders to the ItemArray */
@@ -175,7 +175,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		}
 
 		if (count($ItemArray) == 0) {
-			prnMsg(_('There might be no supplier purchasing data set up for any items on the selected sales order(s). No purchase orders have been created'),'warn');
+			prnMsg(__('There might be no supplier purchasing data set up for any items on the selected sales order(s). No purchase orders have been created'),'warn');
 		} else {
 			/*Now get the default delivery address details from the users default stock location */
 			$SQL = "SELECT locationname,
@@ -193,7 +193,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 							AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 							AND locationusers.canupd = 1
 						WHERE locations.loccode = '" . $_SESSION['UserStockLocation']  . "'";
-			$ErrMsg = _('The delivery address for the order could not be obtained from the user default stock location');
+			$ErrMsg = __('The delivery address for the order could not be obtained from the user default stock location');
 			$DelAddResult = DB_query($SQL, $ErrMsg);
 			$DelAddRow = DB_fetch_array($DelAddResult);
 
@@ -225,8 +225,8 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 						}
 
 						if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
-							$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order Created and Authorised by') . ' ' . $UserDetails . ' - ' . _('Auto created from sales orders')  . '<br />';
-							$ErrMsg = _('Could not update purchase order status to Authorised');
+							$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Order Created and Authorised by') . ' ' . $UserDetails . ' - ' . __('Auto created from sales orders')  . '<br />';
+							$ErrMsg = __('Could not update purchase order status to Authorised');
 							$Result = DB_query("UPDATE purchorders SET allowprint = 1,
 												   status = 'Authorised',
 												   stat_comment = '" . $StatusComment . "'
@@ -236,21 +236,21 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 												true);
 						} else { // no authority to authorise this order
 							if (DB_num_rows($AuthResult) == 0) {
-								$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
+								$AuthMessage = __('Your authority to approve purchase orders in') . ' ' . $SuppRow['currcode'] . ' ' . __('has not yet been set up') . '<br />';
 							} else {
-								$AuthMessage = _('You can only authorise up to') . ' ' . $SuppRow['currcode'] . ' ' . $AuthRow['authlevel'] . '.<br />';
+								$AuthMessage = __('You can only authorise up to') . ' ' . $SuppRow['currcode'] . ' ' . $AuthRow['authlevel'] . '.<br />';
 							}
 
-							prnMsg( _('You do not have permission to authorise this purchase order') . '.<br />' .  _('This order is for') . ' ' .
+							prnMsg( __('You do not have permission to authorise this purchase order') . '.<br />' .  __('This order is for') . ' ' .
 							$SuppRow['currcode'] . ' ' . $Order_Value . '. ' .
-							$AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />' .
-							_('The order has been created with a status of pending and will require authorisation'), 'warn');
+							$AuthMessage . __('If you think this is a mistake please contact the systems administrator') . '<br />' .
+							__('The order has been created with a status of pending and will require authorisation'), 'warn');
 						}
 					} //end of authorisation status settings
 
 					if ($SupplierID != '') { //then we have just added a purchase order
 						echo '<br />';
-						prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
+						prnMsg(__('Purchase Order') . ' ' . $PO_OrderNo . ' ' . __('on') . ' ' . $SupplierID . ' ' . __('has been created'),'success');
 						DB_Txn_Commit();
 					}
 
@@ -276,11 +276,11 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 							ON suppliers.currcode = currencies.currabrev
 							WHERE supplierid = '" . $SupplierID . "'";
 
-					$ErrMsg = _('Could not get the supplier information for the order');
+					$ErrMsg = __('Could not get the supplier information for the order');
 					$SuppResult = DB_query($SQL, $ErrMsg);
 					$SuppRow = DB_fetch_array($SuppResult);
 
-					$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order Created by') . ' ' . $UserDetails . ' - ' . _('Auto created from sales orders')  . '<br />';
+					$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Order Created by') . ' ' . $UserDetails . ' - ' . __('Auto created from sales orders')  . '<br />';
 					/*Insert to purchase order header record */
 					$SQL = "INSERT INTO purchorders ( orderno,
 		  									  supplierno,
@@ -341,7 +341,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		  										'" . $SuppRow['paymentterms'] . "',
 		  										0)";
 
-					$ErrMsg = _('The purchase order header record could not be inserted into the database because');
+					$ErrMsg = __('The purchase order header record could not be inserted into the database because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} //end if it's a new supplier and PO to create
 
@@ -367,7 +367,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			  							 '" . $ItemRow['suppliersuom'] . "',
 			  							 '" . $ItemRow['suppliers_partno'] . "',
 			  							 '" . $ItemRow['conversionfactor']  . "')";
-				$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
+				$ErrMsg =__('One of the purchase order detail records could not be inserted into the database because');
 
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 				$Order_Value  += ($ItemRow['price']*$ItemRow['orderqty'] / $ItemRow['conversionfactor']);
@@ -390,8 +390,8 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				}
 
 				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
-					$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Order Created and Authorised by') . $UserDetails . ' - ' . _('Auto created from sales orders') . '<br />';
-					$ErrMsg = _('Could not update purchase order status to Authorised');
+					$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Order Created and Authorised by') . $UserDetails . ' - ' . __('Auto created from sales orders') . '<br />';
+					$ErrMsg = __('Could not update purchase order status to Authorised');
 					$Result = DB_query("UPDATE purchorders SET allowprint = 1,
 															status = 'Authorised',
 															stat_comment = '" . $StatusComment . "'
@@ -401,18 +401,18 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 												true);
 				} else { // no authority to authorise this order
 					if (DB_num_rows($AuthResult) == 0) {
-						$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $SuppRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
+						$AuthMessage = __('Your authority to approve purchase orders in') . ' ' . $SuppRow['currcode'] . ' ' . __('has not yet been set up') . '<br />';
 					} else {
-						$AuthMessage = _('You can only authorise up to') . ' ' . $SuppRow['currcode'] . ' ' . $AuthRow['authlevel'] . '.<br />';
+						$AuthMessage = __('You can only authorise up to') . ' ' . $SuppRow['currcode'] . ' ' . $AuthRow['authlevel'] . '.<br />';
 					}
 
-					prnMsg( _('You do not have permission to authorise this purchase order') . '.<br />' .  _('This order is for') . ' ' . $SuppRow['currcode'] . ' ' . $Order_Value . '. ' . $AuthMessage . _('If you think this is a mistake please contact the systems administrator') . '<br />' .  _('The order has been created with a status of pending and will require authorisation'), 'warn');
+					prnMsg( __('You do not have permission to authorise this purchase order') . '.<br />' .  __('This order is for') . ' ' . $SuppRow['currcode'] . ' ' . $Order_Value . '. ' . $AuthMessage . __('If you think this is a mistake please contact the systems administrator') . '<br />' .  __('The order has been created with a status of pending and will require authorisation'), 'warn');
 				}
 			} //end of authorisation status settings
 
 			if ($SupplierID != '') { //then we have just added a purchase order irrespective of autoauthorise status
 				echo '<br />';
-				prnMsg(_('Purchase Order') . ' ' . $PO_OrderNo . ' ' . _('on') . ' ' . $SupplierID . ' ' . _('has been created'),'success');
+				prnMsg(__('Purchase Order') . ' ' . $PO_OrderNo . ' ' . __('on') . ' ' . $SupplierID . ' ' . __('has been created'),'success');
 				DB_Txn_Commit();
 			}
 			$Result = DB_query("UPDATE salesorders SET poplaced = 1 WHERE " . $OrdersToPlacePOFor);
@@ -423,7 +423,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 
 /*To the sales order selection form */
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales') . '" alt="" />' . ' ' . __('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -450,21 +450,21 @@ if (isset($OrderNumber) AND $OrderNumber != '') {
 	$OrderNumber = trim($OrderNumber);
 	if (!is_numeric($OrderNumber)) {
 		echo '<br />
-			<b>' . _('The Order Number entered MUST be numeric') . '</b>
+			<b>' . __('The Order Number entered MUST be numeric') . '</b>
 			<br />';
 		unset ($OrderNumber);
 		include('includes/footer.php');
 		exit();
 	} else {
-		echo _('Order Number') . ' - ' . $OrderNumber;
+		echo __('Order Number') . ' - ' . $OrderNumber;
 	}
 } else {
 	if (isset($SelectedCustomer)) {
-		echo _('For customer') . ': ' . $SelectedCustomer . ' ' . _('and') . ' ';
+		echo __('For customer') . ': ' . $SelectedCustomer . ' ' . __('and') . ' ';
 		echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer . '" />';
 	}
 	if (isset($SelectedStockItem)) {
-		 echo _('for the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
+		 echo __('for the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 	}
 }
 
@@ -490,13 +490,13 @@ if (!isset($StockID)) {
 	if (!isset($OrderNumber) OR $OrderNumber == '') {
 
 		echo '<fieldset>
-				<legend class="search">', _('Search Criteria'), '</legend>
+				<legend class="search">', __('Search Criteria'), '</legend>
 				<field>
-					<label for="OrderNumber">' . _('Order number') . ': </label>
+					<label for="OrderNumber">' . __('Order number') . ': </label>
 					<input type="text" name="OrderNumber" maxlength="8" size="9" />
 				</field>
 				<field>
-				<label for="StockLocation">' . _('From Stock Location') . ':</label>
+				<label for="StockLocation">' . __('From Stock Location') . ':</label>
 				<select name="StockLocation"> ';
 
 		$SQL = "SELECT locationname,
@@ -526,21 +526,21 @@ if (!isset($StockID)) {
 			</field>';
 
 		echo '<field>
-				<label for="Quotations">', _('Search in'), '</label>
+				<label for="Quotations">', __('Search in'), '</label>
 				<select name="Quotations">';
 
 		if ( $_POST['Quotations'] == 'Quotes_Only' ) {
-			echo '<option selected="selected" value="Quotes_Only">' . _('Quotations Only') . '</option>';
-			echo '<option value="Orders_Only">' . _('Orders Only')  . '</option>';
-			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
+			echo '<option selected="selected" value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Orders_Only">' . __('Orders Only')  . '</option>';
+			echo '<option value="Overdue_Only">' . __('Overdue Only') . '</option>';
 		} elseif ( $_POST['Quotations'] == 'Overdue_Only' ) {
-			echo '<option selected="selected" value="Overdue_Only">' . _('Overdue Only') . '</option>';
-			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
-			echo '<option value="Orders_Only">' . _('Orders Only') . '</option>';
+			echo '<option selected="selected" value="Overdue_Only">' . __('Overdue Only') . '</option>';
+			echo '<option value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Orders_Only">' . __('Orders Only') . '</option>';
 		} else {
-			echo '<option selected="selected" value="Orders_Only">' . _('Orders Only') . '</option>';
-			echo '<option value="Quotes_Only">' . _('Quotations Only') . '</option>';
-			echo '<option value="Overdue_Only">' . _('Overdue Only') . '</option>';
+			echo '<option selected="selected" value="Orders_Only">' . __('Orders Only') . '</option>';
+			echo '<option value="Quotes_Only">' . __('Quotations Only') . '</option>';
+			echo '<option value="Overdue_Only">' . __('Overdue Only') . '</option>';
 		}
 
 		if (!isset($_POST['DueDateFrom'])) {
@@ -564,30 +564,30 @@ if (!isset($StockID)) {
 			</field>';
 
 		echo '<field>
-				<label for="CustomerRef">' . _('Customer Ref') . '</label>
+				<label for="CustomerRef">' . __('Customer Ref') . '</label>
 				<input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" />
 			</field>
 			<field>
-				<label for"DueDateFrom">' . _('Due Date From') . '</label>
+				<label for"DueDateFrom">' . __('Due Date From') . '</label>
 				<input type="date" name="DueDateFrom" value="' . FormatDateForSQL($_POST['DueDateFrom']) . '" size="10" />
 			</field>
 			<field>
-				<label for="DueDateTo">' . _('Due Date To') . '</label>
+				<label for="DueDateTo">' . __('Due Date To') . '</label>
 				<input type="date" name="DueDateTo" value="' . FormatDateForSQL($_POST['DueDateTo']) . '" size="10" />
 			</field>
 			<field>
-				<label for="OrderDateFrom">' . _('Order Date From') . '</label>
+				<label for="OrderDateFrom">' . __('Order Date From') . '</label>
 				<input type="date" name="OrderDateFrom" value="' . FormatDateForSQL($_POST['OrderDateFrom']) . '" size="10" />
 			</field>
 			<field>
-				<label for="OrderDateTo">' . _('Order Date To') . '</label>
+				<label for="OrderDateTo">' . __('Order Date To') . '</label>
 				<input type="date" name="OrderDateTo" value="' . FormatDateForSQL($_POST['OrderDateTo']) . '" size="10" />
 			</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
-			<input type="reset" name="Reset" value="' . _('Reset') . '" />
-			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a>
+			<input type="submit" name="SearchOrders" value="' . __('Search') . '" />
+			<input type="reset" name="Reset" value="' . __('Reset') . '" />
+			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . __('Add Sales Order') . '</a>
 		</div>';
 	}
 
@@ -606,11 +606,11 @@ if (!isset($StockID)) {
 	}
 
 	echo '<fieldset>
-			<legend class="search">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</legend>
+			<legend class="search">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</legend>
 			<field>
-			<label for="StockCat">' . _('Select a stock category') . ':</label>
+			<label for="StockCat">' . __('Select a stock category') . ':</label>
 			<select name="StockCat">';
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $MyRow1['categoryid']) {
@@ -623,17 +623,17 @@ if (!isset($StockID)) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="Keywords">' . _('Enter text extract(s) in the description') . ':</label>
+			<label for="Keywords">' . __('Enter text extract(s) in the description') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>
 		<field>
-			<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
+			<label for="StockCode">' . '<b>' . __('OR') . ' </b>' . __('Enter extract of the Stock Code') . ':</label>
 			<input type="text" name="StockCode" size="15" maxlength="18"  value="' . $_POST['StockCode'] . '" />
 		</field>
 	</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-			<input type="reset" name="ResetPart" value="' . _('Show All') . '" />
+			<input type="submit" name="SearchParts" value="' . __('Search Parts Now') . '" />
+			<input type="reset" name="ResetPart" value="' . __('Show All') . '" />
 		</div>';
 
 if (isset($StockItemsResult)
@@ -642,10 +642,10 @@ if (isset($StockItemsResult)
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="SortedColumn" >' . _('Code') . '</th>
-			<th class="SortedColumn" >' . _('Description') . '</th>
-			<th class="SortedColumn" >' . _('On Hand') . '</th>
-			<th>' . _('Units') . '</th>
+			<th class="SortedColumn" >' . __('Code') . '</th>
+			<th class="SortedColumn" >' . __('Description') . '</th>
+			<th class="SortedColumn" >' . __('On Hand') . '</th>
+			<th>' . __('Units') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -874,7 +874,7 @@ if (isset($StockItemsResult)
 							ORDER BY salesorders.orderno';
 			} //end not order number selected
 
-	$ErrMsg = _('No orders or quotations were returned by the SQL because');
+	$ErrMsg = __('No orders or quotations were returned by the SQL because');
 	$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
@@ -901,43 +901,43 @@ if (isset($StockItemsResult)
 		}
 		$PrintPickLabel = '';
 		if ($_SESSION['RequirePickingNote'] == 1) {
-			$PrintPickLabel = '<th>' . _('Pick Lists') . '</th>';
+			$PrintPickLabel = '<th>' . __('Pick Lists') . '</th>';
 		}
 
 		echo '<thead>';
 
 		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ) {
 			echo '<tr>
-								<th class="SortedColumn" >' . _('Modify') . '</th>
-								<th>' . _('Acknowledge') . '</th>
+								<th class="SortedColumn" >' . __('Modify') . '</th>
+								<th>' . __('Acknowledge') . '</th>
 								' . $PrintPickLabel . '
-								<th>' . _('Invoice') . '</th>
-								<th>' . _('Dispatch Note') . '</th>
-								<th>' . _('Labels') . '</th>
-								<th class="SortedColumn" >' . _('Customer') . '</th>
-								<th class="SortedColumn" >' . _('Branch') . '</th>
-								<th class="SortedColumn" >' . _('Cust Order') . ' #</th>
-								<th class="SortedColumn" >' . _('Order Date') . '</th>
-								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
-								<th class="SortedColumn" >' . _('Delivery To') . '</th>
-								<th class="SortedColumn" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th>' . __('Invoice') . '</th>
+								<th>' . __('Dispatch Note') . '</th>
+								<th>' . __('Labels') . '</th>
+								<th class="SortedColumn" >' . __('Customer') . '</th>
+								<th class="SortedColumn" >' . __('Branch') . '</th>
+								<th class="SortedColumn" >' . __('Cust Order') . ' #</th>
+								<th class="SortedColumn" >' . __('Order Date') . '</th>
+								<th class="SortedColumn" >' . __('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . __('Delivery To') . '</th>
+								<th class="SortedColumn" >' . __('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($canCreate == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
-				echo '<th>' . _('Place PO') . '</th>';
+				echo '<th>' . __('Place PO') . '</th>';
 			}
 
 			echo '</tr>';
 		} else {  /* displaying only quotations */
 			echo '<tr>
-								<th class="SortedColumn">' . _('Modify') . '</th>
-								<th>' . _('Print Quote') . '</th>
-								<th class="SortedColumn" >' . _('Customer') . '</th>
-								<th class="SortedColumn" >' . _('Branch') . '</th>
-								<th class="SortedColumn" >' . _('Cust Ref') . ' #</th>
-								<th class="SortedColumn" >' . _('Quote Date') . '</th>
-								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
-								<th class="SortedColumn" >' . _('Delivery To') . '</th>
-								<th class="SortedColumn" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="SortedColumn">' . __('Modify') . '</th>
+								<th>' . __('Print Quote') . '</th>
+								<th class="SortedColumn" >' . __('Customer') . '</th>
+								<th class="SortedColumn" >' . __('Branch') . '</th>
+								<th class="SortedColumn" >' . __('Cust Ref') . ' #</th>
+								<th class="SortedColumn" >' . __('Quote Date') . '</th>
+								<th class="SortedColumn" >' . __('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . __('Delivery To') . '</th>
+								<th class="SortedColumn" >' . __('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 
@@ -958,7 +958,7 @@ if (isset($StockItemsResult)
 					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
 						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
 					} else {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . _('Pick') . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . __('Pick') . '</a></td>';
 					}
 					$PrintDummyFlag = '';
 				}
@@ -986,9 +986,9 @@ if (isset($StockItemsResult)
 				}
 
 				if ($MyRow['printedpackingslip'] == 0) {
-				$PrintText = _('Print');
+				$PrintText = __('Print');
 				} else {
-				$PrintText = _('Reprint');
+				$PrintText = __('Reprint');
 				}
 
 				$PrintLabels = $RootPath . '/PDFShipLabel.php?Type=Sales&ORD=' . urlencode((string) $MyRow['orderno']);
@@ -996,11 +996,11 @@ if (isset($StockItemsResult)
 				if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
 					echo '<tr class="striped_row">
 								<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-								<td><a href="', $PrintAck, '">', _('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
+								<td><a href="', $PrintAck, '">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 								', $PrintPickLabel, '
-								<td><a href="', $Confirm_Invoice, '">', _('Invoice'), '</a></td>
-								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
-								<td><a href="', $PrintLabels, '">', _('Labels'), '</a></td>
+								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
+								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
+								<td><a href="', $PrintLabels, '">', __('Labels'), '</a></td>
 								<td>', $MyRow['name'], '</td>
 								<td>', $MyRow['brname'], '</td>
 								<td>', $CustomerRef, '</td>
@@ -1021,7 +1021,7 @@ if (isset($StockItemsResult)
 				} else { /*must be quotes only */
 					echo '<tr class="striped_row">
 							<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-							<td><a href="', $PrintQuotation, '" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . _('Portrait') . '</a></td>
+							<td><a href="', $PrintQuotation, '" target="_blank">' . __('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . __('Portrait') . '</a></td>
 							<td>', $MyRow['name'], '</td>
 							<td>', $MyRow['brname'], '</td>
 							<td>', $MyRow['customerref'], '</td>
@@ -1040,9 +1040,9 @@ if (isset($StockItemsResult)
 					<td colspan="', ($PrintPickLabel <> '' ? '12' : '11'), '" class="number"><b>';
 
 		if ($_POST['Quotations'] == 'Orders_Only') {
-			echo _('Total Order(s) Value in');
+			echo __('Total Order(s) Value in');
 		} else {
-			echo _('Total Quotation(s) Value in');
+			echo __('Total Quotation(s) Value in');
 		}
 		if (!isset($PricesSecurity) or !in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens'])) {
 			$OrdersTotal = '---------';
@@ -1053,7 +1053,7 @@ if (isset($StockItemsResult)
 
 		if ($_POST['Quotations'] == 'Orders_Only' AND $canCreate == 0) { //cancreate == 0 means can create POs
 			echo '<td>
-					<input type="submit" name="PlacePO" value="' . _('Place') . " " . _('PO') . '" onclick="return confirm(\'' . _('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
+					<input type="submit" name="PlacePO" value="' . __('Place') . " " . __('PO') . '" onclick="return confirm(\'' . __('This will create purchase orders for all the items on the checked sales orders above, based on the preferred supplier purchasing data held in the system. Are You Absolutely Sure?') . '\');" />
 				</td>';
 		}
 
@@ -1073,7 +1073,7 @@ include('includes/footer.php');
 function GetSearchItems ($SqlConstraint = '') {
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		 echo _('Stock description keywords have been used in preference to the Stock code extract entered');
+		 echo __('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 
 	$SQL =  "SELECT stockmaster.stockid,
@@ -1114,7 +1114,7 @@ function GetSearchItems ($SqlConstraint = '') {
 						stockmaster.units
 						ORDER BY stockmaster.stockid";
 
-	$ErrMsg =  _('No stock items were returned by the SQL because');
+	$ErrMsg =  __('No stock items were returned by the SQL because');
 	$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 	return $StockItemsResult;

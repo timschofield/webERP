@@ -2,7 +2,7 @@
 //this script can be set to run from cron
 $AllowAnyone = true;
 include('includes/session.php');
-$Title = _('Send maintenance reminders');
+$Title = __('Send maintenance reminders');
 
 
 $SQL = "SELECT description,
@@ -20,14 +20,14 @@ $SQL = "SELECT description,
 
 $Result = DB_query($SQL);
 $LastUserResponsible = '';
-$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
+$MailText = __('You have the following maintenance task(s) falling due or over-due:') . "\n";
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($LastUserResponsible != '' && $LastUserResponsible != $MyRow['userresponsible'] && IsEmailAddress($LastUserEmail)) {
 		// Send email to the previous user before moving to the next one
 		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastUserEmail, 'Maintenance Tasks Reminder', $MailText);
 		// Reset mail text for new recipient
-		$MailText = _('You have the following maintenance task(s) falling due or over-due:') . "\n";
+		$MailText = __('You have the following maintenance task(s) falling due or over-due:') . "\n";
 	}
 
 	if ($LastUserResponsible != $MyRow['userresponsible']) {
@@ -38,7 +38,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$MailText .= 'Asset' . ': ' . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: "
 		. ConvertSQLDate($MyRow['duedate']);
 	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']), Date($_SESSION['DefaultDateFormat']))) {
-		$MailText .= _('NB: THIS JOB IS OVERDUE');
+		$MailText .= __('NB: THIS JOB IS OVERDUE');
 	}
 	$MailText .= "\n\n";
 }
@@ -80,8 +80,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$LastManagerEmail = $MyRow['email'];
 	}
 
-	$ManagerMailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task:') . ' ' . $MyRow['taskdescription'] . "\n"
-		. _('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
+	$ManagerMailText .= __('Asset') . ': ' . $MyRow['description'] . "\n" . __('Task:') . ' ' . $MyRow['taskdescription'] . "\n"
+		. __('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
 	$ManagerMailText .= "\n\n";
 }
 
@@ -89,11 +89,11 @@ if (DB_num_rows($Result) > 0) {
 	include('includes/header.php');
 	if (IsEmailAddress($LastManagerEmail)) {
 		$SendResult = SendEmailFromWebERP($SysAdminEmail, $LastManagerEmail, 'Overdue Maintenance Tasks Reminder', $ManagerMailText);
-		prnMsg(_('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
+		prnMsg(__('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
 	}
 	include('includes/footer.php');
 } else {
 	include('includes/header.php');
-	prnMsg(_('There are no reminders to be sent'), 'info');
+	prnMsg(__('There are no reminders to be sent'), 'info');
 	include('includes/footer.php');
 }

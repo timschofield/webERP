@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('List of Items without picture');
+$Title = __('List of Items without picture');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -18,7 +18,7 @@ $Result = DB_query($SQL);
 $PrintHeader = TRUE;
 
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text"><strong>' . _('Current Items without picture in webERP') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . __('Current Items without picture in webERP') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$i = 1;
@@ -30,9 +30,9 @@ if (DB_num_rows($Result) != 0){
 			if($PrintHeader){
 				$TableHeader = '<tr>
 								<th>' . '#' . '</th>
-								<th>' . _('Category') . '</th>
-								<th>' . _('Item Code') . '</th>
-								<th>' . _('Description') . '</th>
+								<th>' . __('Category') . '</th>
+								<th>' . __('Item Code') . '</th>
+								<th>' . __('Description') . '</th>
 								</tr>';
 				echo $TableHeader;
 				$PrintHeader = FALSE;

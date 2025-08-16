@@ -5,17 +5,17 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/DefinePOClass.php');
 
 if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
-	$Title = _('Select a purchase order');
+	$Title = __('Select a purchase order');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
-	prnMsg(_('Select a Purchase Order Number to Print before calling this page'), 'error');
+	prnMsg(__('Select a Purchase Order Number to Print before calling this page'), 'error');
 	echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
 					<tr><td class="menu_group_item">
-						<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-						<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+						<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . __('Outstanding Purchase Orders') . '</a></li>
+						<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . __('Purchase Order Inquiry') . '</a></li>
 						</td>
 					</tr></table>
 				</div>
@@ -25,8 +25,8 @@ if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
 	include('includes/footer.php');
 	exit();
 
-	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a purchase order number to print');
-	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
+	echo '<div class="centre"><br /><br /><br />' . __('This page must be called with a purchase order number to print');
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 	exit();
 }
 if (isset($_GET['OrderNo'])) {
@@ -35,12 +35,12 @@ if (isset($_GET['OrderNo'])) {
 elseif (isset($_POST['OrderNo'])) {
 	$OrderNo = $_POST['OrderNo'];
 }
-$Title = _('Print Purchase Order Number') . ' ' . $OrderNo;
+$Title = __('Print Purchase Order Number') . ' ' . $OrderNo;
 
 if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' AND !IsEmailAddress($_POST['EmailTo'])) {
 		include('includes/header.php');
-		prnMsg(_('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
+		prnMsg(__('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.php');
 		exit();
 	}
@@ -59,7 +59,7 @@ if ($OrderNo == 'Preview') { //OrderNo is set to 'Preview' when just looking at 
 	$_POST['PrintOrEmail'] = 'Print';
 	/*These are required to kid the system - I hate this */
 	$_POST['ShowAmounts'] = 'Yes';
-	$OrderStatus = _('Printed');
+	$OrderStatus = __('Printed');
 	$MakePDFThenDisplayIt = True;
 } //$OrderNo == 'Preview'
 
@@ -73,7 +73,7 @@ if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly
 
 if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview') {
 	/*retrieve the order details from the database to print */
-	$ErrMsg = _('There was a problem retrieving the purchase order header details for Order Number') . ' ' . $OrderNo . ' ' . _('from the database');
+	$ErrMsg = __('There was a problem retrieving the purchase order header details for Order Number') . ' ' . $OrderNo . ' ' . __('from the database');
 	$SQL = "SELECT	purchorders.supplierno,
 					suppliers.suppname,
 					suppliers.address1,
@@ -111,17 +111,17 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		/*There is no order header returned */
-		$Title = _('Print Purchase Order Error');
+		$Title = __('Print Purchase Order Error');
 		include('includes/header.php');
 		echo '<div class="centre"><br /><br /><br />';
-		prnMsg(_('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
+		prnMsg(__('Unable to Locate Purchase Order Number') . ' : ' . $OrderNo . ' ', 'error');
 		echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 				<tr><td class="menu_group_item">
-				<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
-				<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Purchase Order Inquiry') . '</a></li>
+				<li><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . __('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . __('Purchase Order Inquiry') . '</a></li>
 				</td>
 				</tr>
 			</table>
@@ -135,23 +135,23 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 
 		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
 			include('includes/header.php');
-			prnMsg(_('Purchase orders can only be printed once they have been authorised') . '. ' . _('This order is currently at a status of') . ' ' . _($POHeader['status']), 'warn');
+			prnMsg(__('Purchase orders can only be printed once they have been authorised') . '. ' . __('This order is currently at a status of') . ' ' . __($POHeader['status']), 'warn');
 			include('includes/footer.php');
 			exit();
 		}
 
 		if ($ViewingOnly == 0) {
 			if ($POHeader['allowprint'] == 0) {
-				$Title = _('Purchase Order Already Printed');
+				$Title = __('Purchase Order Already Printed');
 				include('includes/header.php');
 				echo '<p>';
-				prnMsg(_('Purchase Order Number') . ' ' . $OrderNo . ' ' . _('has previously been printed') . '. ' . _('It was printed on') . ' ' . ConvertSQLDate($POHeader['dateprinted']) . '<br />' . _('To re-print the order it must be modified to allow a reprint') . '<br />' . _('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
+				prnMsg(__('Purchase Order Number') . ' ' . $OrderNo . ' ' . __('has previously been printed') . '. ' . __('It was printed on') . ' ' . ConvertSQLDate($POHeader['dateprinted']) . '<br />' . __('To re-print the order it must be modified to allow a reprint') . '<br />' . __('This check is there to ensure that duplicate purchase orders are not sent to the supplier resulting in several deliveries of the same supplies'), 'warn');
 
 				echo '<div class="centre">
- 					<li><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">' . _('Print This Order as a Copy') . '</a>
- 					<li><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . _('Modify the order to allow a real reprint') . '</a>
-					<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Select another order') . '</a>
-					<li><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
+ 					<li><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '&ViewingOnly=1">' . __('Print This Order as a Copy') . '</a>
+ 					<li><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('Modify the order to allow a real reprint') . '</a>
+					<li><a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . __('Select another order') . '</a>
+					<li><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 
 				include('includes/footer.php');
 				exit();
@@ -197,14 +197,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	// Set the paper size/orintation
 	$PaperSize = $FormDesign->PaperSize;
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Purchase Order'));
-	$pdf->addInfo('Subject', _('Purchase Order Number') . ' ' . $OrderNo);
+	$pdf->addInfo('Title', __('Purchase Order'));
+	$pdf->addInfo('Subject', __('Purchase Order Number') . ' ' . $OrderNo);
 	$LineHeight = $FormDesign->LineHeight;
 	$PageNumber = 1;
 	/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
 	Now ... Has it got any line items */
 	if ($OrderNo != 'Preview') { // It is a real order
-		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' . _('from the database');
+		$ErrMsg = __('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' . __('from the database');
 		$SQL = "SELECT itemcode,
 						deliverydate,
 						itemdescription,
@@ -310,7 +310,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		} else {
 			$DisplayOrderTotal = '----';
 		}
-		$pdf->addText($FormDesign->OrderTotalCaption->x, $Page_Height - $FormDesign->OrderTotalCaption->y, $FormDesign->OrderTotalCaption->FontSize, _('Order Total - excl tax') . ' ' . $POHeader['currcode']);
+		$pdf->addText($FormDesign->OrderTotalCaption->x, $Page_Height - $FormDesign->OrderTotalCaption->y, $FormDesign->OrderTotalCaption->FontSize, __('Order Total - excl tax') . ' ' . $POHeader['currcode']);
 		$LeftOvers = $pdf->addTextWrap($FormDesign->OrderTotal->x, $Page_Height - $FormDesign->OrderTotal->y, $FormDesign->OrderTotal->Length, $FormDesign->OrderTotal->FontSize, $DisplayOrderTotal, 'right');
 	} /*end if there are order details to show on the order - or its a preview*/
 
@@ -327,25 +327,25 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
-								_('Purchase Order Number') . ' ' . $OrderNo,
+								__('Purchase Order Number') . ' ' . $OrderNo,
 								('Please find herewith our purchase order number') . ' ' . $OrderNo,
 								$_SESSION['reports_dir'] . '/' . $PdfFileName);
 
 		if ($Success == 1) {
-			$Title = _('Email a Purchase Order');
+			$Title = __('Email a Purchase Order');
 			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
-			prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
+			prnMsg(__('Purchase Order') . ' ' . $OrderNo . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 
 		} else { //email failed
-			$Title = _('Email a Purchase Order');
+			$Title = __('Email a Purchase Order');
 			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
-			prnMsg(_('Emailing Purchase order') . ' ' . $OrderNo . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
+			prnMsg(__('Emailing Purchase order') . ' ' . $OrderNo . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 	}
 	if ($ViewingOnly == 0 AND $Success == 1) {
-		$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment'], ENT_QUOTES, 'UTF-8');
+		$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment'], ENT_QUOTES, 'UTF-8');
 
 		$SQL = "UPDATE purchorders	SET	allowprint =  0,
 										dateprinted  = CURRENT_DATE,
@@ -370,45 +370,45 @@ else {
 	} //$ViewingOnly == 1
 	echo '<input type="hidden" name="OrderNo" value="' . $OrderNo . '" />';
 	echo '<fieldset>
-			<legend>', _('Print Options'), '</legend>
+			<legend>', __('Print Options'), '</legend>
 			<field>
-				<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+				<label for="PrintOrEmail">' . __('Print or Email the Order') . '</label>
 				<select name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
 	}
 	if ($ViewingOnly != 0) {
-		echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
+		echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
 	}
 	else {
 		if ($_POST['PrintOrEmail'] == 'Print') {
-			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
-			echo '<option value="Email">' . _('Email') . '</option>';
+			echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
+			echo '<option value="Email">' . __('Email') . '</option>';
 		} else {
-			echo '<option value="Print">' . _('Print') . '</option>';
-			echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
+			echo '<option value="Print">' . __('Print') . '</option>';
+			echo '<option selected="selected" value="Email">' . __('Email') . '</option>';
 		}
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="ShowAmounts">' . _('Show Amounts on the Order') . '</label>
+			<label for="ShowAmounts">' . __('Show Amounts on the Order') . '</label>
 			<select name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
 	}
 	if ($_POST['ShowAmounts'] == 'Yes') {
-		echo '<option selected="selected" value="Yes">' . _('Yes') . '</option>';
-		echo '<option value="No">' . _('No') . '</option>';
+		echo '<option selected="selected" value="Yes">' . __('Yes') . '</option>';
+		echo '<option value="No">' . __('No') . '</option>';
 	} else {
-		echo '<option value="Yes">' . _('Yes') . '</option>';
-		echo '<option selected="selected" value="No">' . _('No') . '</option>';
+		echo '<option value="Yes">' . __('Yes') . '</option>';
+		echo '<option selected="selected" value="No">' . __('No') . '</option>';
 	}
 	echo '</select>
 		</field>';
 	if ($_POST['PrintOrEmail'] == 'Email') {
-		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
+		$ErrMsg = __('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
 						suppliercontacts.email
 				FROM suppliercontacts INNER JOIN purchorders
@@ -417,7 +417,7 @@ else {
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
 			echo '<field>
-					<label for="EmailTo">' . _('Email to') . ':</label>
+					<label for="EmailTo">' . __('Email to') . ':</label>
 					<select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
@@ -433,13 +433,13 @@ else {
 			</fieldset>';
 		} else {
 			echo '</fieldset>';
-			prnMsg(_('There are no contacts defined for the supplier of this order') . '. ' . _('You must first set up supplier contacts before emailing an order'), 'error');
+			prnMsg(__('There are no contacts defined for the supplier of this order') . '. ' . __('You must first set up supplier contacts before emailing an order'), 'error');
 		}
 	} else {
 		echo '</fieldset>';
 	}
 	echo '<div class="centre">
-			<input type="submit" name="DoIt" value="' . _('OK') . '" />
+			<input type="submit" name="DoIt" value="' . __('OK') . '" />
 		</div>
 	</form>';
 

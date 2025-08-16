@@ -3,7 +3,7 @@
 include('includes/session.php');
 use Dompdf\Dompdf;
 
-$Title = _('No Sales Items Searching');
+$Title = __('No Sales Items Searching');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// everything below here to view NumberOfNoSalesItems on selected location
@@ -116,23 +116,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Reorder Level Report') . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-					' . _('Location') . ' - ' . $Locations . '
-					' . _('Customer Type') . ' - ' . $_POST['Customers'] . '<br />
-					' . _('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />
+					' . __('Reorder Level Report') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Location') . ' - ' . $Locations . '
+					' . __('Customer Type') . ' - ' . $_POST['Customers'] . '<br />
+					' . __('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />
 				</div>';
 
 	$HTML .= '<table class="selection">';
 
 	$HTML .= '<tr>
-				<th>' . _('No') . '</th>
-				<th>' . _('Location') . '</th>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Location QOH') . '</th>
-				<th>' . _('Total QOH') . '</th>
-				<th>' . _('Units') . '</th>
+				<th>' . __('No') . '</th>
+				<th>' . __('Location') . '</th>
+				<th>' . __('Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Location QOH') . '</th>
+				<th>' . __('Total QOH') . '</th>
+				<th>' . __('Units') . '</th>
 			</tr>';
 
 	$i = 1;
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if ($_POST['Location'][0] == 'All') {
 			$HTML .= '<tr class="striped_row">
 						<td class="number">' . $i . '</td>
-						<td>' . _('All') . '</td>
+						<td>' . __('All') . '</td>
 						<td>' . $CodeLink . '</td>
 						<td>' . $MyRow['description'] . '</td>
 						<td class="number">' . $QOH . '</td>
@@ -178,7 +178,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -199,10 +199,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Reorder Level Reporting');
+		$Title = __('Reorder Level Reporting');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -213,19 +213,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
+	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items') . '" alt="" />' . ' ' . __('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
-	. _('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />' .  _( 'This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />' .  _('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
+	. __('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />' .  __('This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />' .  __('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Inquiry Criteria'), '</legend>';
+			<legend>', __('Inquiry Criteria'), '</legend>';
 
 	//select location
 	echo '<field>
-			 <label for="Location">' . _('Select Location') . ':</label>
+			 <label for="Location">' . __('Select Location') . ':</label>
 			<select name="Location[]" multiple="multiple">
-				<option value="All" selected="selected">' . _('All') . '</option>';
+				<option value="All" selected="selected">' . __('All') . '</option>';
 	$SQL = "SELECT 	locations.loccode,locationname
 			FROM 	locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -245,14 +245,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	//to view list of customer
 	echo '<field>
-			<label for="Customers">' . _('Select Customer Type') . ':</label>
+			<label for="Customers">' . __('Select Customer Type') . ':</label>
 			<select name="Customers">';
 
 	$SQL = "SELECT typename,
 					typeid
 				FROM debtortype";
 	$Result = DB_query($SQL);
-	echo '<option value="All">' . _('All') . '</option>';
+	echo '<option value="All">' . __('All') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 	}
@@ -265,15 +265,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 	echo '<field>
-			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<label for="StockCat">' . __('In Stock Category') . ':</label>
 			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
 	if ($_POST['StockCat']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid']==$_POST['StockCat']){
@@ -287,14 +287,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	//View number of days
 	echo '<field>
-			<label for="NumberOfDays">' . _('Number Of Days') . ':</label>
+			<label for="NumberOfDays">' . __('Number Of Days') . ':</label>
 			<input class="integer" tabindex="3" type="text" required="required" title="" name="NumberOfDays" size="8" maxlength="8" value="30" />
-			<fieldhelp>' . _('Enter the number of days to examine the sales for') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the number of days to examine the sales for') . '</fieldhelp>
 		 </field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-		<input type="submit" name="View" title="View" value="' . _('View') . '" />
+		<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+		<input type="submit" name="View" title="View" value="' . __('View') . '" />
 	</div>
 	</form>';
 	include('includes/footer.php');
