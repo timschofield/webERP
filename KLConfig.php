@@ -9,7 +9,7 @@
 $KLCodeVersion = "039";
 
 // let's setup all the variables depending on the environment
-if (URLWithoutScriptNameContains("LOCAL-TEST")) {
+if (URLWithoutScriptNameContains(".LOCAL")) {
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
