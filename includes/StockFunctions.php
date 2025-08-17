@@ -33,7 +33,7 @@ function GetQuantityOnHand($StockID, $Location) {
 		// All locations to be considered
 		$WhereLocation = '';
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity on hand for this product in all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity on hand for this product in all locations cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_VIEW'){
 		// All user is allowed to view locations to be considered
@@ -42,7 +42,7 @@ function GetQuantityOnHand($StockID, $Location) {
 									ON locationusers.loccode = locstock.loccode
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canview = 1 ";
-		$ErrMsg = _('The quantity on hand for this product in all locations the user can view cannot be retrieved because');
+		$ErrMsg = __('The quantity on hand for this product in all locations the user can view cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_UPDATE'){
 		// All user is allowed to update locations to be considered
@@ -51,13 +51,13 @@ function GetQuantityOnHand($StockID, $Location) {
 									ON locationusers.loccode = locstock.loccode
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canupd = 1 ";
-		$ErrMsg = _('The quantity on hand for this product in locations the user can update cannot be retrieved because');
+		$ErrMsg = __('The quantity on hand for this product in locations the user can update cannot be retrieved because');
 	}
 	else{
 		// Just 1 location to consider
 		$WhereLocation = " AND locstock.loccode = '" . $Location . "'";
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity on hand for this product in the specified location cannot be retrieved because');
+		$ErrMsg = __('The quantity on hand for this product in the specified location cannot be retrieved because');
 	}
 	$SQL = "SELECT SUM(quantity) AS qoh
 			FROM locstock " .
@@ -147,11 +147,11 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
 	// All locations to be considered
 		$WhereLocation = "";
-		$ErrMsg = _('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . __('to be received into all locations cannot be retrieved because');
 	}else{
 		// Just 1 location to consider
 		$WhereLocation = " AND purchorders.intostocklocation = '" . $Location . "'";
-		$ErrMsg = _('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . _('to be received into') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+		$ErrMsg = __('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . __('to be received into') . ' ' . $Location . ' ' . __('cannot be retrieved because');
 	}
 
 	$SQL="SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) AS QtyOnOrder
@@ -201,11 +201,11 @@ function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
-		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . __('to be received into all locations cannot be retrieved because');
 	}else{
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode = '" . $Location . "'";
-		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+		$ErrMsg = __('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . __('to be received into') . ' ' . $Location . ' ' . __('cannot be retrieved because');
 	}
 
 	$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) AS qtywo
@@ -255,7 +255,7 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 		// All locations to be considered
 		$WhereLocation = '';
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product in all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product in all locations cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_VIEW'){
 		// All user is allowed to view locations to be considered
@@ -264,7 +264,7 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 									ON locationusers.loccode = salesorders.fromstkloc
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canview = 1 ";
-		$ErrMsg = _('The quantity demanded for this product in all locations the user can view cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product in all locations the user can view cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_UPDATE'){
 		// All user is allowed to update locations to be considered
@@ -273,13 +273,13 @@ function GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location) {
 									ON locationusers.loccode = salesorders.fromstkloc
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canupd = 1 ";
-		$ErrMsg = _('The quantity demanded for this product in locations the user can update cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product in locations the user can update cannot be retrieved because');
 	}
 	else{
 		// Just 1 location to consider
 		$WhereLocation = " AND salesorders.fromstkloc = '" . $Location . "'";
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product in the specified location cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product in the specified location cannot be retrieved because');
 	}
 
 	$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS demand
@@ -330,7 +330,7 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 		// All locations to be considered
 		$WhereLocation = '';
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product as a component in BOM in all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in BOM in all locations cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_VIEW'){
 		// All user is allowed to view locations to be considered
@@ -339,7 +339,7 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 									ON locationusers.loccode = salesorders.fromstkloc
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canview = 1 ";
-		$ErrMsg = _('The quantity demanded for this product as a component in BOM in all locations the user can view cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in BOM in all locations the user can view cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_UPDATE'){
 		// All user is allowed to update locations to be considered
@@ -348,13 +348,13 @@ function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 									ON locationusers.loccode = salesorders.fromstkloc
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canupd = 1 ";
-		$ErrMsg = _('The quantity demanded for this product as a component in BOM in locations the user can update cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in BOM in locations the user can update cannot be retrieved because');
 	}
 	else{
 		// Just 1 location to consider
 		$WhereLocation = " AND salesorders.fromstkloc = '" . $Location . "'";
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product as a component in BOM in the specified location cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in BOM in the specified location cannot be retrieved because');
 	}
 
 	$SQL = "SELECT SUM((salesorderdetails.quantity - salesorderdetails.qtyinvoiced) * bom.quantity) AS demand
@@ -408,17 +408,17 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
-		$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
+		$ErrMsg = __('The workorder component demand for this product cannot be retrieved because');
 	}else{
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
-		$ErrMsg = _('The workorder component demand for this product from') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+		$ErrMsg = __('The workorder component demand for this product from') . ' ' . $Location . ' ' . __('cannot be retrieved because');
 	}
 	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product as a component in work orders in all locations cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in work orders in all locations cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_VIEW'){
 		// All user is allowed to view locations to be considered
@@ -427,7 +427,7 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 									ON locationusers.loccode = workorders.loccode
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canview = 1 ";
-		$ErrMsg = _('The quantity demanded for this product as a component in work orders in all locations the user can view cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in work orders in all locations the user can view cannot be retrieved because');
 	}
 	elseif  ($Location == 'USER_CAN_UPDATE'){
 		// All user is allowed to update locations to be considered
@@ -436,13 +436,13 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 									ON locationusers.loccode = workorders.loccode
 									AND locationusers.userid = '" .  $_SESSION['UserID'] . "'
 									AND locationusers.canupd = 1 ";
-		$ErrMsg = _('The quantity demanded for this product as a component in work orders in locations the user can update cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in work orders in locations the user can update cannot be retrieved because');
 	}
 	else{
 		// Just 1 location to consider
 		$WhereLocation = " AND workorders.loccode = '" . $Location . "'";
 		$UserAllowedLocations = '';
-		$ErrMsg = _('The quantity demanded for this product as a component in work orders in the specified location cannot be retrieved because');
+		$ErrMsg = __('The quantity demanded for this product as a component in work orders in the specified location cannot be retrieved because');
 	}
 
 	$SQL = "SELECT SUM(qtypu * (woitems.qtyreqd - woitems.qtyrecd)) AS demand

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL SPG Performance Report');
+$Title = __('KL SPG Performance Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -119,18 +119,18 @@ function RetailTypePayments($TypeReport, $MaxDays) {
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
-		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $MaxDays . _(' days by ') . $TypeReport;
+		$TableTitleText = __('Distribution Cash / Credit Card during the last ') . $MaxDays . __(' days by ') . $TypeReport;
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . $TypeReport . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . _('% Cash') . '</th>
-						<th class="SortedColumn">' . _('% Credit') . '</th>
-						<th class="SortedColumn">' . _('% Returns') . '</th>
-						<th class="SortedColumn">' . _('% Vouchers') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
+						<th class="SortedColumn">' . __('% Cash') . '</th>
+						<th class="SortedColumn">' . __('% Credit') . '</th>
+						<th class="SortedColumn">' . __('% Returns') . '</th>
+						<th class="SortedColumn">' . __('% Vouchers') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -264,27 +264,27 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC) {
                 
     $Result = DB_query($SQL);
     if (DB_num_rows($Result) != 0){
-        $TableTitleText = _('SPG Performance in ') . $ShopName . ' (' . $Shop . ') ' . _('during the last ') . $NumDaysA . _(' days and ') . ($NumDaysB - $NumDaysA) . _(' previous days');
+        $TableTitleText = __('SPG Performance in ') . $ShopName . ' (' . $Shop . ') ' . __('during the last ') . $NumDaysA . __(' days and ') . ($NumDaysB - $NumDaysA) . __(' previous days');
         ShowTableTitle($TableTitleText);
         echo '<div>';
         echo '<table class="selection">
                 <thead>
                     <tr>
-                        <th colspan="3">' . _('SPG') . '</th>
-                        <th colspan="2">' . $NumDaysA . ' ' . _('last days') . '</th>
-                        <th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' ' . _('previous days') . '</th>
-                        <th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' ' . _('previous days') . '</th>
+                        <th colspan="3">' . __('SPG') . '</th>
+                        <th colspan="2">' . $NumDaysA . ' ' . __('last days') . '</th>
+                        <th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' ' . __('previous days') . '</th>
+                        <th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' ' . __('previous days') . '</th>
                     </tr>
                     <tr>
-                        <th>' . _('Code') . '</th>
-                        <th>' . _('Name') . '</th>
-                        <th>' . _('Role') . '</th>
-                        <th class="SortedColumn">' . _('Days') . '</th>
-                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
-                        <th class="SortedColumn">' . _('Days') . '</th>
-                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
-                        <th class="SortedColumn">' . _('Days') . '</th>
-                        <th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+                        <th>' . __('Code') . '</th>
+                        <th>' . __('Name') . '</th>
+                        <th>' . __('Role') . '</th>
+                        <th class="SortedColumn">' . __('Days') . '</th>
+                        <th class="SortedColumn">' . __('Avg Daily Sales') . '</th>
+                        <th class="SortedColumn">' . __('Days') . '</th>
+                        <th class="SortedColumn">' . __('Avg Daily Sales') . '</th>
+                        <th class="SortedColumn">' . __('Days') . '</th>
+                        <th class="SortedColumn">' . __('Avg Daily Sales') . '</th>
                     </tr>
                 </thead>
                 <tbody>';
@@ -336,7 +336,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC) {
             $ShopDailyC = ($SummaryRow['totalDaysC'] > 0) ? $SummaryRow['totalC'] / $SummaryRow['totalDaysC'] : 0;
             
             echo '<tr class="striped_row" style="font-weight:bold;">
-                    <td colspan="3">' . _('SHOP TOTAL') . '</td>
+                    <td colspan="3">' . __('SHOP TOTAL') . '</td>
                     <td class="number">' . locale_number_format_zero_blank($SummaryRow['totalDaysA'],0) . '</td>
                     <td class="number">' . locale_number_format_zero_blank($ShopDailyA,0) . '</td>
                     <td class="number">' . locale_number_format_zero_blank($SummaryRow['totalDaysB'],0) . '</td>
@@ -350,7 +350,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC) {
                 </table>
                 </div>';
     } else {
-        prnMsg(_('No performance data available for shop ') . $ShopName . ' (' . $Shop . ')', 'info');
+        prnMsg(__('No performance data available for shop ') . $ShopName . ' (' . $Shop . ')', 'info');
     }
 }
 
@@ -724,28 +724,28 @@ function HourlySales($numDays, $RootPath){
 			}
 			if (($ShowHeader) OR ($ZoneName != $MyRow['zone'])){
 				$TableHeader = '<tr>
-									<th class="SortedColumn">' . _('Zone') . '</th>
-									<th class="SortedColumn">' . _('Shop') . '</th>
-									<th class="SortedColumn">' . _('Type') . '</th>
-									<th class="SortedColumn">' . _('First Sale') . '</th>
-									<th class="SortedColumn">' . _('00-08') . '</th>
-									<th class="SortedColumn">' . _('08-09') . '</th>
-									<th class="SortedColumn">' . _('09-10') . '</th>
-									<th class="SortedColumn">' . _('10-11') . '</th>
-									<th class="SortedColumn">' . _('11-12') . '</th>
-									<th class="SortedColumn">' . _('12-13') . '</th>
-									<th class="SortedColumn">' . _('13-14') . '</th>
-									<th class="SortedColumn">' . _('14-15') . '</th>
-									<th class="SortedColumn">' . _('15-16') . '</th>
-									<th class="SortedColumn">' . _('16-17') . '</th>
-									<th class="SortedColumn">' . _('17-18') . '</th>
-									<th class="SortedColumn">' . _('18-19') . '</th>
-									<th class="SortedColumn">' . _('19-20') . '</th>
-									<th class="SortedColumn">' . _('20-21') . '</th>
-									<th class="SortedColumn">' . _('21-22') . '</th>
-									<th class="SortedColumn">' . _('22-23') . '</th>
-									<th class="SortedColumn">' . _('23-24') . '</th>
-									<th class="SortedColumn">' . _('Last Sale') . '</th>
+									<th class="SortedColumn">' . __('Zone') . '</th>
+									<th class="SortedColumn">' . __('Shop') . '</th>
+									<th class="SortedColumn">' . __('Type') . '</th>
+									<th class="SortedColumn">' . __('First Sale') . '</th>
+									<th class="SortedColumn">' . __('00-08') . '</th>
+									<th class="SortedColumn">' . __('08-09') . '</th>
+									<th class="SortedColumn">' . __('09-10') . '</th>
+									<th class="SortedColumn">' . __('10-11') . '</th>
+									<th class="SortedColumn">' . __('11-12') . '</th>
+									<th class="SortedColumn">' . __('12-13') . '</th>
+									<th class="SortedColumn">' . __('13-14') . '</th>
+									<th class="SortedColumn">' . __('14-15') . '</th>
+									<th class="SortedColumn">' . __('15-16') . '</th>
+									<th class="SortedColumn">' . __('16-17') . '</th>
+									<th class="SortedColumn">' . __('17-18') . '</th>
+									<th class="SortedColumn">' . __('18-19') . '</th>
+									<th class="SortedColumn">' . __('19-20') . '</th>
+									<th class="SortedColumn">' . __('20-21') . '</th>
+									<th class="SortedColumn">' . __('21-22') . '</th>
+									<th class="SortedColumn">' . __('22-23') . '</th>
+									<th class="SortedColumn">' . __('23-24') . '</th>
+									<th class="SortedColumn">' . __('Last Sale') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -1015,15 +1015,15 @@ function DaysOfWeekSales($numDays, $RootPath){
 			ORDER BY WeekDaySales DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Distribution of retail sales by week days for the last ') . $numDays . _(' days');
+		$TableTitleText = __('Distribution of retail sales by week days for the last ') . $numDays . __(' days');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Day') . '</th>
-						<th class="SortedColumn">' . _('% Sales') . '</th>
-						<th class="SortedColumn">' . _('Avg Distance') . '</th>
+						<th class="SortedColumn">' . __('Day') . '</th>
+						<th class="SortedColumn">' . __('% Sales') . '</th>
+						<th class="SortedColumn">' . __('Avg Distance') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

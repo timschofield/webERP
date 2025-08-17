@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Stock Movements for SPG');
+$Title = __('Stock Movements for SPG');
 /* webERP manual links before header.php */
 $ViewTopic= "Inventory";
 $BookMark = "InventoryMovement";
@@ -31,17 +31,17 @@ $Result = DB_query("SELECT description,
 						   decimalplaces
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
-					_('Could not retrieve the requested item'),
-					_('The SQL used to retrieve the items was'));
+					__('Could not retrieve the requested item'),
+					__('The SQL used to retrieve the items was'));
 $MyRow = DB_fetch_array($Result);
 $DecimalPlaces = $MyRow['decimalplaces'];
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title ="'._('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
+echo __('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title ="'.__('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'" placeholder="'.__('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
-echo ' <input type="submit" name="ShowStatus" value="' . _('Show Item Movements in ') . $LocationName . '" />';
+echo ' <input type="submit" name="ShowStatus" value="' . __('Show Item Movements in ') . $LocationName . '" />';
 if ($StockID != ''){
 	$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'");
 	$MyRow = DB_fetch_row($Result);
@@ -73,23 +73,23 @@ if ($StockID != ''){
 			AND hidemovt=0
 			ORDER BY stkmoveno DESC";
 
-	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
+	$ErrMsg = __('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 	$MovtsResult = DB_query($SQL, $ErrMsg);
 
-	$TableTitleText = _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days";
+	$TableTitleText = __('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days";
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';
 	echo '<table class="selection">';
 	$Tableheader = '<thead>
 						<tr>
-							<th>' . _('Date') . '</th>
-							<th>' . _('User') . '</th>
-							<th>' . _('Type') . '</th>
-							<th>' . _('Number') . '</th>
-							<th>' . _('Reference') . '</th>
-							<th>' . _('Qty Movement') . '</th>
-							<th>' . _('Stock after movement') . '</th>
+							<th>' . __('Date') . '</th>
+							<th>' . __('User') . '</th>
+							<th>' . __('Type') . '</th>
+							<th>' . __('Number') . '</th>
+							<th>' . __('Reference') . '</th>
+							<th>' . __('Qty Movement') . '</th>
+							<th>' . __('Stock after movement') . '</th>
 						</tr>
 					</thead>
 					<tbody>';

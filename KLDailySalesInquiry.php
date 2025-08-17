@@ -11,14 +11,14 @@
  ************************************************************************************************************************ */
 
 include('includes/session.php');
-$Title = _('KL Daily Sales Inquiry');
+$Title = __('KL Daily Sales Inquiry');
 include('includes/header.php');
 include_once('includes/DateFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/' . $Theme .'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
-echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/' . $Theme .'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '</p>';
+echo '<div class="page_help_text">' . __('Select the month to show daily sales for') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -29,11 +29,11 @@ if (!isset($_POST['MonthToShow'])){
 $EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
-echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '', '', 1, true, false);
-echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Sales Person'), '', 'CURRENT', true, 2, true, false);
-echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], _('Customer Type'), '', '', 3, true, false);
+echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], __('Month to Show'), '', '', 1, true, false);
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  __('Sales Person'), '', 'CURRENT', true, 2, true, false);
+echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], __('Customer Type'), '', '', 3, true, false);
 echo '</fieldset>';
-echo OneButtonCenteredForm("ShowResults", _('Show Daily Sales For The Selected Month'), 4, true, false);
+echo OneButtonCenteredForm("ShowResults", __('Show Daily Sales For The Selected Month'), 4, true, false);
 	
 /*Now get and display the sales data returned */
 if (mb_strpos($EndDateSQL,'/')) {
@@ -74,18 +74,18 @@ if ($_POST['CustomerType']!='All') {
 }
 $SQL .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
 
-$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+$ErrMsg = __('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
 $SalesResult = DB_query($SQL,$ErrMsg);
 
 echo '<table class="selection">
 	<tr>
-		<th style="width: 14%">' . _('Sunday') . '</th>
-		<th style="width: 14%">' . _('Monday') . '</th>
-		<th style="width: 14%">' . _('Tuesday') . '</th>
-		<th style="width: 14%">' . _('Wednesday') . '</th>
-		<th style="width: 14%">' . _('Thursday') . '</th>
-		<th style="width: 14%">' . _('Friday') . '</th>
-		<th style="width: 14%">' . _('Saturday') . '</th>
+		<th style="width: 14%">' . __('Sunday') . '</th>
+		<th style="width: 14%">' . __('Monday') . '</th>
+		<th style="width: 14%">' . __('Tuesday') . '</th>
+		<th style="width: 14%">' . __('Wednesday') . '</th>
+		<th style="width: 14%">' . __('Thursday') . '</th>
+		<th style="width: 14%">' . __('Friday') . '</th>
+		<th style="width: 14%">' . __('Saturday') . '</th>
 	</tr>';
 
 $CumulativeTotalSales = 0;
@@ -160,9 +160,9 @@ if ($CumulativeTotalSales !=0){
 	$AverageDailySales = 0;
 }
 
-//echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
+//echo '<th colspan="7">' . __('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . __('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . __('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
 // KL RICARD No one needs to know the GP% :-)
-echo '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
+echo '<th colspan="7">' . __('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . __('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
 
 echo '</table>';
 

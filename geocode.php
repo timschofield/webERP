@@ -2,7 +2,7 @@
 // geocode.php
 
 //$PageSecurity = 3;
-$Title = _('Geocode Generate');
+$Title = __('Geocode Generate');
 
 include('includes/session.php');
 include('includes/header.php');
@@ -22,7 +22,7 @@ $MapHost = $Row['map_host'];
 define("MAPS_HOST", $MapHost);
 define("KEY", $APIKey);
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers')  . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Geocode Setup') . '" alt="" />' . ' ' . __('Geocoding of Customers and Suppliers')  . '</p>';
 
 // select all the customer branches
 $SQL = "SELECT * FROM custbranch";
@@ -48,7 +48,7 @@ while ($Row = DB_fetch_array($Result)) {
     $DebtorNo =$Row["debtorno"];
     $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
-    echo '<br \>', _('Customer Code'), ': ', $id;
+    echo '<br \>', __('Customer Code'), ': ', $id;
 
 
     $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
@@ -83,7 +83,7 @@ while ($Row = DB_fetch_array($Result)) {
     } else {
       // failure to geocode
       $geocode_pending = false;
-      echo '<br />' . 'Address: ' . $Address . _('failed to geocode.');
+      echo '<br />' . 'Address: ' . $Address . __('failed to geocode.');
       echo 'Received status ' . $status . '<br />';
     }
     usleep($delay);
@@ -100,7 +100,7 @@ while ($Row2 = DB_fetch_array($Result2)) {
     $id = $Row2["supplierid"];
     $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
-    echo '<p>' . _('Supplier Code: ') . $id;
+    echo '<p>' . __('Supplier Code: ') . $id;
 
     $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
 //    $xml = simplexml_load_file($RequestURL) or die("url not loading");
@@ -139,5 +139,5 @@ while ($Row2 = DB_fetch_array($Result2)) {
     usleep($delay);
   }
 }
-echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go back to Geocode Setup') . '</a></div>';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go back to Geocode Setup') . '</a></div>';
 include('includes/footer.php');

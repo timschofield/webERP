@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('List of packaging needed to fill up the shops');
+$Title = __('List of packaging needed to fill up the shops');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');

@@ -8,15 +8,15 @@ echo '<br />
 	<table width="90%" cellpadding="2" colspan="9">';
 
 echo '<thead bgcolor="#800000">
-		<th>' . _('Item Code') . '</th>
-		<th>' . _('Item Description') . '</th>
-		<th>' . _('Quantity') . '</th>
-		<th>' . _('QOH') . '</th>
-		<th>' . _('Unit') . '</th>
-		<th>' . _('Packaging') . '</th>
-		<th>' . _('Price') . '</th>
-		<th>' . _('Discount') . '</th>
-		<th>' . _('Total') . '</th>
+		<th>' . __('Item Code') . '</th>
+		<th>' . __('Item Description') . '</th>
+		<th>' . __('Quantity') . '</th>
+		<th>' . __('QOH') . '</th>
+		<th>' . __('Unit') . '</th>
+		<th>' . __('Packaging') . '</th>
+		<th>' . __('Price') . '</th>
+		<th>' . __('Discount') . '</th>
+		<th>' . __('Total') . '</th>
 	</thead>
 	<tbody>';
 	  
@@ -93,7 +93,7 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 	echo '<td class="number">' . number_format($SubTotal + $TaxLineTotal, 0) . '</td>';
 	echo '<td><a href="' . $_SERVER['PHP_SELF'] . '?' . SID . '&amp;identifier=' . $identifier . '&amp;Delete=' . 
-		$OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . _('Delete') . '</a></td></tr>';
+		$OrderLine->LineNumber . '" onclick="return confirm(\'' . __('Are You Sure?') . '\');">' . __('Delete') . '</a></td></tr>';
 
 } /* end of loop around items */
 
@@ -101,12 +101,12 @@ echo '</tbody>
 	</tfooter>';
 echo '<tr class="TotalTableRows">
 			<td colspan="6"></td>
-			<td colspan="2"><b>' . _('Total') . '</b></td>
+			<td colspan="2"><b>' . __('Total') . '</b></td>
 			<td colspan="2" class="numberTotal">' . number_format(($_SESSION['Items'.$identifier]->total + $TaxTotal), 0) . '</td>
 	</tr>';
 echo '<tr class="TotalTableRows">
 			<td colspan="6"></td>
-			<td colspan="2"><b>' . _('Number of Items') . '</b></td>
+			<td colspan="2"><b>' . __('Number of Items') . '</b></td>
 			<td colspan="2" class="numberTotal">' . number_format($TotalNumberOfItems, 0) . '</td>
 	</tr>
 	</tfooter>

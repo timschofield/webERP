@@ -95,39 +95,39 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 	$i = 0;
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Orders from OpenCart') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Orders from OpenCart') .'</strong></p>';
 			echo '<div>';
 			$TableHeader = '<thead>
 								<tr>
-									<th>' . _('OC #') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('Name') . '</th>
-									<th>' . _('eMail') . '</th>
-									<th>' . _('Shipping Cost') . '</th>
-									<th>' . _('Shipper') . '</th>
-									<th>' . _('Currency') . '</th>
-									<th>' . _('Payment Code') . '</th>
-									<th>' . _('Country') . '</th>
-									<th>' . _('Action') . '</th>
+									<th>' . __('OC #') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('Name') . '</th>
+									<th>' . __('eMail') . '</th>
+									<th>' . __('Shipping Cost') . '</th>
+									<th>' . __('Shipper') . '</th>
+									<th>' . __('Currency') . '</th>
+									<th>' . __('Payment Code') . '</th>
+									<th>' . __('Country') . '</th>
+									<th>' . __('Action') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
 
 			$TableHeaderForItems = '<thead>
 								<tr>
-									<th>' . _('OC #') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('OrderLine') . '</th>
-									<th>' . _('Code') . '</th>
-									<th>' . _('Unit Price') . '</th>
-									<th>' . _('Quantity') . '</th>
-									<th>' . _('Action') . '</th>
+									<th>' . __('OC #') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('OrderLine') . '</th>
+									<th>' . __('Code') . '</th>
+									<th>' . __('Unit Price') . '</th>
+									<th>' . __('Quantity') . '</th>
+									<th>' . __('Action') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
 		}
-		$UpdateErrMsg = _('The SQL to update OpenCart orders in webERP failed');
-		$InsertErrMsg = _('The SQL to insert OpenCart orders in webERP failed');
+		$UpdateErrMsg = __('The SQL to update OpenCart orders in webERP failed');
+		$InsertErrMsg = __('The SQL to insert OpenCart orders in webERP failed');
 
 		
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -484,10 +484,10 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Orders synchronized from OpenCart to webERP'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Orders synchronized from OpenCart to webERP'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Orders synchronized from OpenCart to webERP') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Orders synchronized from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -501,7 +501,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 	// Now deal with the Paypal payment/s of the order...
 
 	// Lock OpenCart tables to ensure consistency during read and subsequent updates within this function's scope
-	$ErrMsg = _('Failed to lock OpenCart PayPal related tables.');
+	$ErrMsg = __('Failed to lock OpenCart PayPal related tables.');
 	$LockQuery = "LOCK TABLES oc_paypal_order READ, oc_paypal_order_transaction READ, oc_order WRITE, oc_order_total READ";
 	DB_query_oc($LockQuery, $ErrMsg, '', true);
 
@@ -539,27 +539,27 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Paypal Payments from OpenCart') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Paypal Payments from OpenCart') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
 								<tr>
-									<th>' . _('CustomerID') . '</th>
-									<th>' . _('email') . '</th>
-									<th>' . _('webERP Code') . '</th>
-									<th>' . _('OrderID') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('Order Total') . '</th>
-									<th>' . _('Order Curr') . '</th>
-									<th>' . _('Paypal Total') . '</th>
-									<th>' . _('Shipment') . '</th>
-									<th>' . _('Paypal Curr') . '</th>
-									<th>' . _('Paypal Trx') . '</th>
-									<th>' . _('Trx Total') . '</th>
-									<th>' . _('Commission') . '</th>
-									<th>' . _('Date') . '</th>
-									<th>' . _('Status') . '</th>
-									<th>' . _('Pending reason') . '</th>
+									<th>' . __('CustomerID') . '</th>
+									<th>' . __('email') . '</th>
+									<th>' . __('webERP Code') . '</th>
+									<th>' . __('OrderID') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('Order Total') . '</th>
+									<th>' . __('Order Curr') . '</th>
+									<th>' . __('Paypal Total') . '</th>
+									<th>' . __('Shipment') . '</th>
+									<th>' . __('Paypal Curr') . '</th>
+									<th>' . __('Paypal Trx') . '</th>
+									<th>' . __('Trx Total') . '</th>
+									<th>' . __('Commission') . '</th>
+									<th>' . __('Date') . '</th>
+									<th>' . __('Status') . '</th>
+									<th>' . __('Pending reason') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -651,14 +651,14 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 		}
 	}
 	// Unlock OpenCart tables
-	$ErrMsg = _('Failed to unlock OpenCart tables.');
+	$ErrMsg = __('Failed to unlock OpenCart tables.');
 	DB_query_oc("UNLOCK TABLES", $ErrMsg, '', true);
 
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('PayPal Payments synchronized from OpenCart to webERP'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('PayPal Payments synchronized from OpenCart to webERP'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('PayPal Payments synchronized from OpenCart to webERP') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('PayPal Payments synchronized from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -687,16 +687,16 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Updated Order Status from OpenCart') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Updated Order Status from OpenCart') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
 								<tr>
-									<th>' . _('OpenCart #') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('OC Status') . '</th>
-									<th>' . _('webERP Status') . '</th>
-									<th>' . _('Message') . '</th>
+									<th>' . __('OpenCart #') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('OC Status') . '</th>
+									<th>' . __('webERP Status') . '</th>
+									<th>' . __('Message') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -743,10 +743,10 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Updated Order Status from OpenCart to webERP'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Updated Order Status from OpenCart to webERP'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Updated Order Status from OpenCart to webERP') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Updated Order Status from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -774,16 +774,16 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Sync Snap (MIDTRANS) OpenCart Order Payments') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Sync Snap (MIDTRANS) OpenCart Order Payments') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
 								<tr>
-									<th>' . _('OpenCart #') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('Total Paid') . '</th>
-									<th>' . _('Payment Time') . '</th>
-									<th>' . _('Result') . '</th>
+									<th>' . __('OpenCart #') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('Total Paid') . '</th>
+									<th>' . __('Payment Time') . '</th>
+									<th>' . __('Result') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -829,10 +829,10 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('snap (MIDTRANS) Payments synchronized from OpenCart to webERP'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('snap (MIDTRANS) Payments synchronized from OpenCart to webERP'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('snap (MIDTRANS) Payments synchronized from OpenCart to webERP') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('snap (MIDTRANS) Payments synchronized from OpenCart to webERP') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -886,9 +886,9 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
 								<tr>
-									<th>' . _('OpenCart #') . '</th>
-									<th>' . _('webERP #') . '</th>
-									<th>' . _('Customer') . '</th>
+									<th>' . __('OpenCart #') . '</th>
+									<th>' . __('webERP #') . '</th>
+									<th>' . __('Customer') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -979,7 +979,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 			$SQLUpdate = "UPDATE salesorders 
 					SET klemailpaymentconfirm = CURRENT_DATE
 					WHERE orderno =	'" . $MyRow['orderno'] . "'";
-			$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
+			$ErrMsg =__('Could not update the sales order KL email payment confirmation date because');
 			DB_query($SQLUpdate,$ErrMsg);
 
 			if ($ShowMessages){

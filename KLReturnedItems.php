@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 $NumDays = 30;
-$Title = _('Items Returned by Customers for the last ') . $NumDays . ' days';
+$Title = __('Items Returned by Customers for the last ') . $NumDays . ' days';
 include('includes/header.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -21,7 +21,7 @@ if (isset($Errors)) {
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' 
-	. _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	. __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 					oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
 				WHERE returneditemsid = '" . $SelectedReturnedItemsId . "'";
 
-		$Msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' . _('has been updated');
+		$Msg = __('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' . __('has been updated');
 	} elseif ($InputError != 1) {
 
 		// First check the returned item is not being duplicated
@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
-			prnMsg(_('The Returned Item ') . $SelectedReturnedItemsId . _(' already exist.'), 'error');
+			prnMsg(__('The Returned Item ') . $SelectedReturnedItemsId . __(' already exist.'), 'error');
 		} else {
 
 			// Add new record on submit
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['oldinvoice'] . "',
 							'" . FormatDateForSQL($_POST['oldinvoicedate']) . "')";
 
-			$Msg = _('Returned Item') . ' ' . $_POST['orderno'] . ' ' . _('has been created');
+			$Msg = __('Returned Item') . ' ' . $_POST['orderno'] . ' ' . __('has been created');
 		}
 	}
 
@@ -103,9 +103,9 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 
 	$SQL = "DELETE FROM returneditems WHERE code='" . $SelectedReturnedItemsId . "'";
-	$ErrMsg = _('The Returned Item record could not be deleted because');
+	$ErrMsg = __('The Returned Item record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg(_('The returned item') . ' ' . $SelectedReturnedItemsId . ' ' . _('has been deleted'), 'success');
+	prnMsg(__('The returned item') . ' ' . $SelectedReturnedItemsId . ' ' . __('has been deleted'), 'success');
 
 	unset($SelectedReturnedItemsId);
 	unset($_GET['delete']);
@@ -148,12 +148,12 @@ if (!isset($SelectedReturnedItemsId)) {
 		<thead>
 			<tr>
 				<th class="SortedColumn">' . '#' . '</th>
-				<th class="SortedColumn">' . _('Item Code') . '</th>
-				<th class="SortedColumn">' . _('Reason') . '</th>
-				<th class="SortedColumn">' . _('Order Return') . '</th>
-				<th class="SortedColumn">' . _('Date of Return') . '</th>
-				<th class="SortedColumn">' . _('Original Invoice') . '</th>
-				<th class="SortedColumn">' . _('Date Original Invoice') . '</th>
+				<th class="SortedColumn">' . __('Item Code') . '</th>
+				<th class="SortedColumn">' . __('Reason') . '</th>
+				<th class="SortedColumn">' . __('Order Return') . '</th>
+				<th class="SortedColumn">' . __('Date of Return') . '</th>
+				<th class="SortedColumn">' . __('Original Invoice') . '</th>
+				<th class="SortedColumn">' . __('Date Original Invoice') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -169,11 +169,11 @@ if (!isset($SelectedReturnedItemsId)) {
 			<td>' . $MyRow['oldinvoice'] . '</td>
 			<td>' . ConvertSQLDate($MyRow['oldinvoicedate']) . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') 
-				. '?SelectedReturnedItemsId=' . $MyRow['returneditemsid'] . '">' . _('Edit') . '</a></td>
+				. '?SelectedReturnedItemsId=' . $MyRow['returneditemsid'] . '">' . __('Edit') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') 
 				. '?SelectedReturnedItemsId=' . $MyRow['returneditemsid'] 
-				. '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this return?') 
-				. '\');">' . _('Delete') . '</a></td>
+				. '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this return?') 
+				. '\');">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -186,7 +186,7 @@ if (isset($SelectedReturnedItemsId)) {
 	echo '<br />
 			<div class="centre">
 				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' 
-				. _('Show List of Returned Items') . '</a>
+				. __('Show List of Returned Items') . '</a>
 			</div>';
 }
 if (!isset($_GET['delete'])) {
@@ -238,24 +238,24 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $_POST['SelectedReturnedItemsId'] . '" />';
 		echo '<fieldset>
-			<legend>' . _('Returned Item') . '</legend>';
+			<legend>' . __('Returned Item') . '</legend>';
 		
-		echo '<field>' . _('# Return') . ': ' . $SelectedReturnedItemsId . '</field>';
+		echo '<field>' . __('# Return') . ': ' . $SelectedReturnedItemsId . '</field>';
 	} else {
 		echo '<fieldset>
-			<legend>' . _('Returned Item') . '</legend>';
+			<legend>' . __('Returned Item') . '</legend>';
 	}
 
-	echo FieldToSelectOneText('itemcode', $_POST['itemcode'], 20, 20, _('Item Code'));
-	echo FieldToSelectOneReturnedItemReason('reasonid', $_POST['reasonid'], _('Return Reason'));
-	echo FieldToSelectOneText('orderno', $_POST['orderno'], 20, 20, _('Order Return'));
-	echo FieldToSelectOneDate('returndate', $_POST['returndate'], _('Date Of Return'), '', '', '', true, true);
-	echo FieldToSelectOneText('oldinvoice', $_POST['oldinvoice'], 20, 20, _('Original Invoice'));
-	echo FieldToSelectOneDate('oldinvoicedate', $_POST['oldinvoicedate'], _('Date Of Original Invoice'));
+	echo FieldToSelectOneText('itemcode', $_POST['itemcode'], 20, 20, __('Item Code'));
+	echo FieldToSelectOneReturnedItemReason('reasonid', $_POST['reasonid'], __('Return Reason'));
+	echo FieldToSelectOneText('orderno', $_POST['orderno'], 20, 20, __('Order Return'));
+	echo FieldToSelectOneDate('returndate', $_POST['returndate'], __('Date Of Return'), '', '', '', true, true);
+	echo FieldToSelectOneText('oldinvoice', $_POST['oldinvoice'], 20, 20, __('Original Invoice'));
+	echo FieldToSelectOneDate('oldinvoicedate', $_POST['oldinvoicedate'], __('Date Of Original Invoice'));
 		
 	echo '</fieldset>';
 
-	echo TwoButtonsCenteredForm('submit', _('Accept'), 'Cancel', _('Cancel'));
+	echo TwoButtonsCenteredForm('submit', __('Accept'), 'Cancel', __('Cancel'));
 
 	echo '</div>
           </form>';

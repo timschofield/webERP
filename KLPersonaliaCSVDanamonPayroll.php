@@ -6,7 +6,7 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Export CSV File for Transfer to Danamon Accounts');
+$Title = __('Export CSV File for Transfer to Danamon Accounts');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
@@ -26,9 +26,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 	
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -161,7 +161,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Selection Parameters') . '</legend>';
+		<legend>' . __('Selection Parameters') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 

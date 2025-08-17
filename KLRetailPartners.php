@@ -6,15 +6,15 @@ include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('KL Retail Partners Maintenance'); // Screen identification.
+$Title = __('KL Retail Partners Maintenance'); // Screen identification.
 $ViewTopic = ''; // Filename's id in ManualContents.php's TOC.
 $BookMark = ''; // Anchor's id in the manual's html document.
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="', // Icon image.
-	_('Setup'), '" /> ', // Icon title.
-	_('KL Retail Partners Maintenance'), '</p>'; // Page title.
+	__('Setup'), '" /> ', // Icon title.
+	__('KL Retail Partners Maintenance'), '</p>'; // Page title.
 
 include('includes/CountriesArray.php');
 
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 	$_POST['PartnerCode'] = mb_strtoupper($_POST['PartnerCode']);
 	if (trim($_POST['PartnerCode']) == '') {
 		$InputError = 1;
-		prnMsg(_('The Partner Code code may not be empty'), 'error');
+		prnMsg(__('The Partner Code code may not be empty'), 'error');
 	}
 
 	if (isset($SelectedPartner) AND $InputError != 1) {
@@ -98,10 +98,10 @@ if (isset($_POST['submit'])) {
 					settlementdelayqris = '" . filter_number_format($_POST['SettlementDelayQRIS']) . "'
 				WHERE partnercode = '" . $SelectedPartner . "'";
 
-		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('retail partner record because');
+		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . __('retail partner record because');
 		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The retail partner record has been updated'), 'success');
+		prnMsg(__('The retail partner record has been updated'), 'success');
 
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
@@ -282,10 +282,10 @@ if (isset($_POST['submit'])) {
 								'" . filter_number_format($_POST['SettlementDelayWeChat']) . "',
 								'" . filter_number_format($_POST['SettlementDelayQRIS']) . "')";
 
-		$ErrMsg = _('An error occurred inserting the new retail partner record because');
+		$ErrMsg = __('An error occurred inserting the new retail partner record because');
 		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The new retail partner record has been added'), 'success');
+		prnMsg(__('The new retail partner record has been added'), 'success');
 
 		unset($SelectedPartner);
 		unset($_POST['PartnerCode']);
@@ -354,12 +354,12 @@ if (isset($_POST['submit'])) {
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0] > 0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this retal partner because there are locations related to it.'), 'warn');
-		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this retail partner');
+		prnMsg(__('Cannot delete this retal partner because there are locations related to it.'), 'warn');
+		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('locations using this retail partner');
 	}
 	if (!$CancelDelete) {
 		$Result = DB_query("DELETE FROM klretailpartners WHERE partnercode = '" . $SelectedPartner . "'");
-		prnMsg(_('Retail Partner') . ' ' . $SelectedPartner . ' ' . _('has been deleted') . '!', 'success');
+		prnMsg(__('Retail Partner') . ' ' . $SelectedPartner . ' ' . __('has been deleted') . '!', 'success');
 		unset($SelectedPartner);
 	} //end if Delete Retail Partner
 	unset($SelectedPartner);
@@ -392,24 +392,24 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no retail partners'), 'error');
+		prnMsg(__('There are no retail partners'), 'error');
 	}
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', _('Code'), '</th>
-				<th class="SortedColumn">', _('Name'), '</th>
-				<th class="SortedColumn">', _('PPN'), '</th>
-				<th class="SortedColumn">', _('Cash Reported'), '</th>
-				<th class="SortedColumn">', _('EDC Danamon'), '</th>
-				<th class="SortedColumn">', _('EDC BNI'), '</th>
-				<th class="SortedColumn">', _('AMEX BNI'), '</th>
-				<th class="SortedColumn">', _('EDC Mandiri'), '</th>
-				<th class="SortedColumn">', _('QRIS Mandiri'), '</th>
-				<th class="SortedColumn">', _('EDC BCA'), '</th>
-				<th class="SortedColumn">', _('AMEX BCA'), '</th>
-				<th class="SortedColumn">', _('Consign PTADU'), '</th>
+				<th class="SortedColumn">', __('Code'), '</th>
+				<th class="SortedColumn">', __('Name'), '</th>
+				<th class="SortedColumn">', __('PPN'), '</th>
+				<th class="SortedColumn">', __('Cash Reported'), '</th>
+				<th class="SortedColumn">', __('EDC Danamon'), '</th>
+				<th class="SortedColumn">', __('EDC BNI'), '</th>
+				<th class="SortedColumn">', __('AMEX BNI'), '</th>
+				<th class="SortedColumn">', __('EDC Mandiri'), '</th>
+				<th class="SortedColumn">', __('QRIS Mandiri'), '</th>
+				<th class="SortedColumn">', __('EDC BCA'), '</th>
+				<th class="SortedColumn">', __('AMEX BCA'), '</th>
+				<th class="SortedColumn">', __('Consign PTADU'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -430,10 +430,10 @@ or deletion of the records*/
 				<td class="number">' . locale_number_format($MyRow['comissionamexbca'], 2) . "%" . '</td>
 				<td class="number">' . locale_number_format($MyRow['percentconsignmentptadu'], 0) . "%" . '</td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
-					'?SelectedPartner=' . $MyRow['partnercode'] . '">' . _('Edit') . '</a></td>
+					'?SelectedPartner=' . $MyRow['partnercode'] . '">' . __('Edit') . '</a></td>
 				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .
 					'?SelectedPartner=' . $MyRow['partnercode'] . '&amp;delete=1" onclick="return confirm(\'' .
-					_('Are you sure you wish to delete this retail partner?') . '\');">' . _('Delete') . '</a></td>
+					__('Are you sure you wish to delete this retail partner?') . '\');">' . __('Delete') . '</a></td>
 				</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -444,7 +444,7 @@ or deletion of the records*/
 
 echo '<br />';
 if (isset($SelectedPartner)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Records') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 echo '<br />';
 
@@ -581,16 +581,16 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="PartnerCode" value="' . $_POST['PartnerCode'] . '" />';
 
-		echo '<fieldset><legend>' . _('Edit Retail Partner details') . '</legend>';
-		echo '<field>' . _('Retail Partner Code') . ': ' . $_POST['PartnerCode'] . '</field>';
+		echo '<fieldset><legend>' . __('Edit Retail Partner details') . '</legend>';
+		echo '<field>' . __('Retail Partner Code') . ': ' . $_POST['PartnerCode'] . '</field>';
 		echo '</fieldset>';
 
 	} else { //end of if $SelectedPartner only do the else when a new record is being entered
 		if (!isset($_POST['PartnerCode'])) {
 			$_POST['PartnerCode'] = '';
 		}
-		echo '<fieldset><legend>' . _('New Retail Partner details') . '</legend>';
-		echo FieldToSelectOneText('PartnerCode', $_POST['PartnerCode'], 20, 20, _('Partner Code'), '', 'no-illegal-chars', '', true, true);
+		echo '<fieldset><legend>' . __('New Retail Partner details') . '</legend>';
+		echo FieldToSelectOneText('PartnerCode', $_POST['PartnerCode'], 20, 20, __('Partner Code'), '', 'no-illegal-chars', '', true, true);
 		echo '</fieldset>';
 	}
 	if (!isset($_POST['PartnerName'])) {
@@ -762,87 +762,87 @@ if (!isset($_GET['delete'])) {
 		$_POST['SettlementDelayQRIS'] = 1;
 	}
 
-	echo '<fieldset><legend>' . _('Partner POS Parameters') . '</legend>';
-	echo FieldToSelectOneText('PartnerName', $_POST['PartnerName'], 51, 50, _('Partner Name in POS Slip'), '');
-	echo FieldToSelectOneText('PartnerAddress', $_POST['PartnerAddress'], 51, 100, _('Address in POS Slip'));
-	echo FieldToSelectOneText('PartnerNPWP', $_POST['PartnerNPWP'], 21, 20, _('NPWP in POS Slip'));
-	echo FieldToSelectOneSalesArea('AreaSalesCreditCard', $_POST['AreaSalesCreditCard'], _('Credit Card Sales Area'));
-	echo FieldToSelectOneSalesArea('AreaSalesCash', $_POST['AreaSalesCash'], _('Cash Sales Area'));
-	echo FieldToSelectOneSalesArea('AreaSalesCashOthers', $_POST['AreaSalesCashOthers'], _('Other Cash Sales Area'));
-	echo FieldToSelectOneText('CashSalesReported', $_POST['CashSalesReported'], 5, 5, _('% cash Sales Reported'));
-	echo FieldToSelectOneGLAccount('AccountPOSReceivable', $_POST['AccountPOSReceivable'], _('POS Receivable GL Account'));
-	echo FieldToSelectOneSysType('CounterInvoiceA', $_POST['CounterInvoiceA'], _('Counter Invoices Credit Card'));
-	echo FieldToSelectOneSysType('CounterInvoiceB', $_POST['CounterInvoiceB'], _('Counter Invoices Cash'));
-	echo FieldToSelectOneSysType('CounterInvoiceC', $_POST['CounterInvoiceC'], _('Counter Invoices Other Cash'));
+	echo '<fieldset><legend>' . __('Partner POS Parameters') . '</legend>';
+	echo FieldToSelectOneText('PartnerName', $_POST['PartnerName'], 51, 50, __('Partner Name in POS Slip'), '');
+	echo FieldToSelectOneText('PartnerAddress', $_POST['PartnerAddress'], 51, 100, __('Address in POS Slip'));
+	echo FieldToSelectOneText('PartnerNPWP', $_POST['PartnerNPWP'], 21, 20, __('NPWP in POS Slip'));
+	echo FieldToSelectOneSalesArea('AreaSalesCreditCard', $_POST['AreaSalesCreditCard'], __('Credit Card Sales Area'));
+	echo FieldToSelectOneSalesArea('AreaSalesCash', $_POST['AreaSalesCash'], __('Cash Sales Area'));
+	echo FieldToSelectOneSalesArea('AreaSalesCashOthers', $_POST['AreaSalesCashOthers'], __('Other Cash Sales Area'));
+	echo FieldToSelectOneText('CashSalesReported', $_POST['CashSalesReported'], 5, 5, __('% cash Sales Reported'));
+	echo FieldToSelectOneGLAccount('AccountPOSReceivable', $_POST['AccountPOSReceivable'], __('POS Receivable GL Account'));
+	echo FieldToSelectOneSysType('CounterInvoiceA', $_POST['CounterInvoiceA'], __('Counter Invoices Credit Card'));
+	echo FieldToSelectOneSysType('CounterInvoiceB', $_POST['CounterInvoiceB'], __('Counter Invoices Cash'));
+	echo FieldToSelectOneSysType('CounterInvoiceC', $_POST['CounterInvoiceC'], __('Counter Invoices Other Cash'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('Invoice Details') . '</legend>';
-	echo FieldToSelectOneText('PartnerNameInvoice', $_POST['PartnerNameInvoice'], 51, 50, _('Partner Name in Consignment Invoice/FP'), '');
-	echo FieldToSelectOneText('partneraddressjalan', $_POST['partneraddressjalan'], 51, 100, _('Jalan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddressnomor', $_POST['partneraddressnomor'], 21, 20, _('Nomor in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('partneraddresspropinsi', $_POST['partneraddresspropinsi'], 51, 50, _('Propinsi in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, _('Kode Pos in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'), '', '', '', false, false);
-	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, _('NPWP in Consignment Invoice/FP'));
-	echo FieldToSelectOneEmail('PartnerEmail', $_POST['PartnerEmail'], 51, 50, _('Partner Email'), '');
+	echo '<fieldset><legend>' . __('Invoice Details') . '</legend>';
+	echo FieldToSelectOneText('PartnerNameInvoice', $_POST['PartnerNameInvoice'], 51, 50, __('Partner Name in Consignment Invoice/FP'), '');
+	echo FieldToSelectOneText('partneraddressjalan', $_POST['partneraddressjalan'], 51, 100, __('Jalan in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, __('Blok in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddressnomor', $_POST['partneraddressnomor'], 21, 20, __('Nomor in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, __('RT in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, __('RW in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, __('Kecamatan in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, __('Kelurahan in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, __('Kabupaten in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('partneraddresspropinsi', $_POST['partneraddresspropinsi'], 51, 50, __('Propinsi in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, __('Kode Pos in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, __('Telepon in Consignment Invoice/FP'), '', '', '', false, false);
+	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, __('NPWP in Consignment Invoice/FP'));
+	echo FieldToSelectOneEmail('PartnerEmail', $_POST['PartnerEmail'], 51, 50, __('Partner Email'), '');
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('Tax Information') . '</legend>';
-	echo FieldToSelectOneText('PPN', $_POST['PPN'], 5, 5, _('% PPN to apply'), '');
-	echo FieldToSelectOneGLAccount('AccountPPN', $_POST['AccountPPN'], _('PPN GL Account'));
+	echo '<fieldset><legend>' . __('Tax Information') . '</legend>';
+	echo FieldToSelectOneText('PPN', $_POST['PPN'], 5, 5, __('% PPN to apply'), '');
+	echo FieldToSelectOneGLAccount('AccountPPN', $_POST['AccountPPN'], __('PPN GL Account'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('PTADU Consignment Information') . '</legend>';
-	echo FieldToSelectOneText('PercentConsignmentPTADU', $_POST['PercentConsignmentPTADU'], 5, 5, _('% Consignment to PT ADU'));
-	echo FieldToSelectOneGLAccount('AccountConsignmentSalesPTADU', $_POST['AccountConsignmentSalesPTADU'], _('Consignment Sales PT. ADU GL Account'));
-	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], _('Consignment COGS Partner GL Account'));
+	echo '<fieldset><legend>' . __('PTADU Consignment Information') . '</legend>';
+	echo FieldToSelectOneText('PercentConsignmentPTADU', $_POST['PercentConsignmentPTADU'], 5, 5, __('% Consignment to PT ADU'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentSalesPTADU', $_POST['AccountConsignmentSalesPTADU'], __('Consignment Sales PT. ADU GL Account'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], __('Consignment COGS Partner GL Account'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('EDC Comission Information') . '</legend>';
-	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], _('Credit Card Comission GL Account'));
-	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], _('Bank Danamon GL Account'));
-	echo FieldToSelectOneText('SettlementDelayDanamon', $_POST['SettlementDelayDanamon'], 3, 3, _('Settlement Delay Danamon (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionCCDanamon', $_POST['ComissionCCDanamon'], 5, 5, _('% Credit Card Comission Bank Danamon'));
-	echo FieldToSelectOneText('ComissionAmexDanamon', $_POST['ComissionAmexDanamon'], 5, 5, _('% AMEX Comission Bank Danamon'));
-	echo FieldToSelectOneGLAccount('AccountBankBNI', $_POST['AccountBankBNI'], _('Bank BNI GL Account'));
-	echo FieldToSelectOneText('SettlementDelayBNI', $_POST['SettlementDelayBNI'], 3, 3, _('Settlement Delay BNI (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionCCBNI', $_POST['ComissionCCBNI'], 5, 5, _('% Credit Card Comission Bank BNI'));
-	echo FieldToSelectOneText('ComissionAmexBNI', $_POST['ComissionAmexBNI'], 5, 5, _('% AMEX Comission Bank BNI'));
-	echo FieldToSelectOneGLAccount('AccountBankMandiri', $_POST['AccountBankMandiri'], _('Bank Mandiri GL Account'));
-	echo FieldToSelectOneText('SettlementDelayMandiri', $_POST['SettlementDelayMandiri'], 3, 3, _('Settlement Delay Mandiri (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionCCMandiri', $_POST['ComissionCCMandiri'], 5, 5, _('% Credit Card Comission Bank Mandiri'));
-	echo FieldToSelectOneGLAccount('AccountBankBCA', $_POST['AccountBankBCA'], _('Bank BCA GL Account'));
-	echo FieldToSelectOneText('SettlementDelayBCA', $_POST['SettlementDelayBCA'], 3, 3, _('Settlement Delay BCA (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionCCBCA', $_POST['ComissionCCBCA'], 5, 5, _('% Credit Card Comission Bank BCA'));
-	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, _('% AMEX Comission Bank BCA'));
+	echo '<fieldset><legend>' . __('EDC Comission Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], __('Credit Card Comission GL Account'));
+	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], __('Bank Danamon GL Account'));
+	echo FieldToSelectOneText('SettlementDelayDanamon', $_POST['SettlementDelayDanamon'], 3, 3, __('Settlement Delay Danamon (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionCCDanamon', $_POST['ComissionCCDanamon'], 5, 5, __('% Credit Card Comission Bank Danamon'));
+	echo FieldToSelectOneText('ComissionAmexDanamon', $_POST['ComissionAmexDanamon'], 5, 5, __('% AMEX Comission Bank Danamon'));
+	echo FieldToSelectOneGLAccount('AccountBankBNI', $_POST['AccountBankBNI'], __('Bank BNI GL Account'));
+	echo FieldToSelectOneText('SettlementDelayBNI', $_POST['SettlementDelayBNI'], 3, 3, __('Settlement Delay BNI (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionCCBNI', $_POST['ComissionCCBNI'], 5, 5, __('% Credit Card Comission Bank BNI'));
+	echo FieldToSelectOneText('ComissionAmexBNI', $_POST['ComissionAmexBNI'], 5, 5, __('% AMEX Comission Bank BNI'));
+	echo FieldToSelectOneGLAccount('AccountBankMandiri', $_POST['AccountBankMandiri'], __('Bank Mandiri GL Account'));
+	echo FieldToSelectOneText('SettlementDelayMandiri', $_POST['SettlementDelayMandiri'], 3, 3, __('Settlement Delay Mandiri (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionCCMandiri', $_POST['ComissionCCMandiri'], 5, 5, __('% Credit Card Comission Bank Mandiri'));
+	echo FieldToSelectOneGLAccount('AccountBankBCA', $_POST['AccountBankBCA'], __('Bank BCA GL Account'));
+	echo FieldToSelectOneText('SettlementDelayBCA', $_POST['SettlementDelayBCA'], 3, 3, __('Settlement Delay BCA (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionCCBCA', $_POST['ComissionCCBCA'], 5, 5, __('% Credit Card Comission Bank BCA'));
+	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, __('% AMEX Comission Bank BCA'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('QRIS Information') . '</legend>';
-	echo FieldToSelectOneGLAccount('AccountQRIS', $_POST['AccountQRIS'], _('QRIS Mandiri GL Account'));
-	echo FieldToSelectOneText('SettlementDelayQRIS', $_POST['SettlementDelayQRIS'], 3, 3, _('Settlement Delay QRIS Mandiri (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionQRIS', $_POST['ComissionQRIS'], 5, 5, _('% Comission QRIS Mandiri'));
-	echo FieldToSelectOneGLAccount('AccountComissionQRIS', $_POST['AccountComissionQRIS'], _('QRIS Mandiri Comission GL Account'));
+	echo '<fieldset><legend>' . __('QRIS Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountQRIS', $_POST['AccountQRIS'], __('QRIS Mandiri GL Account'));
+	echo FieldToSelectOneText('SettlementDelayQRIS', $_POST['SettlementDelayQRIS'], 3, 3, __('Settlement Delay QRIS Mandiri (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionQRIS', $_POST['ComissionQRIS'], 5, 5, __('% Comission QRIS Mandiri'));
+	echo FieldToSelectOneGLAccount('AccountComissionQRIS', $_POST['AccountComissionQRIS'], __('QRIS Mandiri Comission GL Account'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('AliPay/WeChat Information') . '</legend>';
-	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('AliPay/WeChat GL Account'));
-	echo FieldToSelectOneText('SettlementDelayWeChat', $_POST['SettlementDelayWeChat'], 3, 3, _('Settlement Delay AliPay/WeChat (days)'), '', 'number');
-	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission AliPay/WeChat'));
-	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('AliPay/WeChat Comission GL Account'));
+	echo '<fieldset><legend>' . __('AliPay/WeChat Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], __('AliPay/WeChat GL Account'));
+	echo FieldToSelectOneText('SettlementDelayWeChat', $_POST['SettlementDelayWeChat'], 3, 3, __('Settlement Delay AliPay/WeChat (days)'), '', 'number');
+	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, __('% Comission AliPay/WeChat'));
+	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], __('AliPay/WeChat Comission GL Account'));
 	echo '</fieldset>';
 
-	echo '<fieldset><legend>' . _('HPP Compensation (Obsolete)') . '</legend>';
-	echo FieldToSelectOneText('HPPCompensation', $_POST['HPPCompensation'], 5, 5, _('% HPP Compensation (Obsolete. Always 100)'));
-	echo FieldToSelectOneGLAccount('AccountHPPCompensation', $_POST['AccountHPPCompensation'], _('HPP Compensation GL Account'));
+	echo '<fieldset><legend>' . __('HPP Compensation (Obsolete)') . '</legend>';
+	echo FieldToSelectOneText('HPPCompensation', $_POST['HPPCompensation'], 5, 5, __('% HPP Compensation (Obsolete. Always 100)'));
+	echo FieldToSelectOneGLAccount('AccountHPPCompensation', $_POST['AccountHPPCompensation'], __('HPP Compensation GL Account'));
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Enter Information'));
+	echo OneButtonCenteredForm('submit', __('Enter Information'));
 
 	echo '</div>
 		</form>';

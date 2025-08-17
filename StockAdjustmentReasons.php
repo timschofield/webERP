@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
-$Title = _('Reasons for Stock Adjustment Maintenance');
+$Title = __('Reasons for Stock Adjustment Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -19,7 +19,7 @@ $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title
 	. '" alt="" />' . $Title . '</p>
-	<div class="page_help_text">' . _('Add/edit/delete Stock Adjustment Reason') . '</div>
+	<div class="page_help_text">' . __('Add/edit/delete Stock Adjustment Reason') . '</div>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -34,14 +34,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['reasonname']) >100) {
 		$InputError = 1;
-		prnMsg(_('The Stock Adjustment name description must be 100 characters or less long'),'error');
+		prnMsg(__('The Stock Adjustment name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'stockadjustmentreasons';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['reasonname']))==0) {
 		$InputError = 1;
-		prnMsg(_('The Stock Adjustment name description must contain at least one character'),'error');
+		prnMsg(__('The Stock Adjustment name description must contain at least one character'),'error');
 		$Errors[$i] = 'stockadjustmentreasons';
 		$i++;
 	}
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0) {
 		$InputError = 1;
-		prnMsg(_('You already have a Stock Adjustment Reason called').' '.$_POST['reasonname'],'error');
+		prnMsg(__('You already have a Stock Adjustment Reason called').' '.$_POST['reasonname'],'error');
 		$Errors[$i] = 'ReasonName';
 		$i++;
 	}
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 			SET reasonname = '" . $_POST['reasonname'] . "'
 			WHERE reasonid = '" . $SelectedType . "'";
 
-		prnMsg(_('The Stock Adjustment Reason') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
+		prnMsg(__('The Stock Adjustment Reason') . ' ' . $SelectedType . ' ' .  __('has been updated'),'success');
 	} elseif ($InputError !=1){
 		// Add new record on submit
 
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['reasonname'] . "')";
 
 
-		$Msg = _('Stock Adjustment Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
+		$Msg = __('Stock Adjustment Reason') . ' ' . $_POST['reasonname'] .  ' ' . __('has been created');
 		$CheckSQL = "SELECT count(reasonid) FROM stockadjustmentreasons";
 		$Result = DB_query($CheckSQL);
 		$Row = DB_fetch_row($Result);
@@ -92,18 +92,18 @@ if (isset($_POST['submit'])) {
 
 	$SQL = "SELECT COUNT(*) FROM stockadjustments WHERE reasonid='" . $SelectedType . "'";
 
-	$ErrMsg = _('The number of stock adjustments using this code could not be retrieved because');
+	$ErrMsg = __('The number of stock adjustments using this code could not be retrieved because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (_('Cannot delete this Stock Adjustment Reason because it has been used.') . '<br />' .
-			_('There are') . ' ' . $MyRow[0] . ' ' . _('adjustments using this reason'));
+		prnMsg (__('Cannot delete this Stock Adjustment Reason because it has been used.') . '<br />' .
+			__('There are') . ' ' . $MyRow[0] . ' ' . __('adjustments using this reason'));
 	} else {
 
 		$SQL="DELETE FROM stockadjustmentreasons WHERE reasonid='" . $SelectedType . "'";
-		$ErrMsg = _('The Reason could not be deleted because');
+		$ErrMsg = __('The Reason could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Stock Adjustment Reason ') . $SelectedType  . ' ' . _('has been deleted') ,'success');
+		prnMsg(__('Stock Adjustment Reason ') . $SelectedType  . ' ' . __('has been deleted') ,'success');
 
 		unset ($SelectedType);
 		unset($_GET['delete']);
@@ -119,8 +119,8 @@ if (!isset($SelectedType)){
 	echo '<table class="selection">';
 	echo '<thead>
 		<tr>
-			<th class="SortedColumn">' . _('Reason ID') . '</th>
-			<th class="SortedColumn">' . _('Reason Name') . '</th>
+			<th class="SortedColumn">' . __('Reason ID') . '</th>
+			<th class="SortedColumn">' . __('Reason Name') . '</th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -131,9 +131,9 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>'.$MyRow[0].'</td>
 			<td>'.$MyRow[1].'</td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . _('Edit') . '</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . __('Edit') . '</a></td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'&amp;delete=yes" onclick="return confirm(\'' .
-				_('Are you sure you wish to delete this Stock Adjustment Reason?') . '\');">' . _('Delete') . '</a></td>
+				__('Are you sure you wish to delete this Stock Adjustment Reason?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -144,7 +144,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 if (isset($SelectedType)) {
 
 	echo '<div class="centre">
-			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></p>
+			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></p>
 		</div>';
 }
 if (! isset($_GET['delete'])) {
@@ -154,7 +154,7 @@ if (! isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
 	echo '<fieldset>
-		<legend>' . _('Stock Adjustment Reason Details') . '</legend>';
+		<legend>' . __('Stock Adjustment Reason Details') . '</legend>';
 
 	if (isset($SelectedType) AND $SelectedType!='') {
 		$SQL = "SELECT reasonid,
@@ -171,17 +171,17 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="reasonid" value="' . $_POST['reasonid'] . '" />';
 
-		echo '<field>' . _('Type ID') . ': ' . $_POST['reasonid'] . '</field>';
+		echo '<field>' . __('Type ID') . ': ' . $_POST['reasonid'] . '</field>';
 	}
 
 	if (!isset($_POST['reasonname'])) {
 		$_POST['reasonname']='';
 	}
 
-	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, _('Reason Name'), '',	'',	'',	true, false);
+	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, __('Reason Name'), '',	'',	'',	true, false);
 
 	echo '</fieldset>';
-	echo OneButtonCenteredForm('submit', _('Accept'));
+	echo OneButtonCenteredForm('submit', __('Accept'));
 
 	echo '</div>
 		</form>';

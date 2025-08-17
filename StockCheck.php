@@ -11,8 +11,8 @@ include('includes/session.php');
 if (isset($_POST['PrintPDF'])){
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Stock Count Sheets'));
-	$pdf->addInfo('Subject',_('Stock Count Sheets'));
+	$pdf->addInfo('Title',__('Stock Count Sheets'));
+	$pdf->addInfo('Subject',__('Stock Count Sheets'));
 	$FontSize=10;
 	$PageNumber=1;
 	$LineHeight=30;
@@ -38,7 +38,7 @@ if (isset($_POST['PrintPDF'])){
 					   AND stockmaster.mbflag!='K'
 					   AND stockmaster.mbflag!='D'";
 
-		$ErrMsg = _('The inventory quantities could not be added to the freeze file');
+		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
 		$Result = DB_query($SQL, $ErrMsg, '', false);
 	}
 
@@ -49,7 +49,7 @@ if (isset($_POST['PrintPDF'])){
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$ErrMsg = _('The old quantities could not be deleted from the freeze file');
+		$ErrMsg = __('The old quantities could not be deleted from the freeze file');
 		$Result = DB_query($SQL, $ErrMsg, '', false);
 
 		$SQL = "INSERT INTO stockcheckfreeze (stockid,
@@ -69,13 +69,13 @@ if (isset($_POST['PrintPDF'])){
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$ErrMsg = _('The inventory quantities could not be added to the freeze file');
+		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
 		$Result = DB_query($SQL, $ErrMsg, '', false);
 
-		$Title = _('Stock Check Freeze Update');
+		$Title = __('Stock Check Freeze Update');
 		include('includes/header.php');
-		echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Print Check Sheets') . '</a>';
-		prnMsg( _('Added to the stock check file successfully'),'success');
+		echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Print Check Sheets') . '</a>';
+		prnMsg( __('Added to the stock check file successfully'),'success');
 		include('includes/footer.php');
 		exit();
 	}
@@ -100,14 +100,14 @@ if (isset($_POST['PrintPDF'])){
 
 	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
-	$ErrMsg = _('The inventory quantities could not be retrieved');
+	$ErrMsg = __('The inventory quantities could not be retrieved');
 	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
 
 	if (DB_num_rows($InventoryResult) ==0) {
-		$Title = _('Stock Count Sheets - Problem Report');
+		$Title = __('Stock Count Sheets - Problem Report');
 		include('includes/header.php');
-		prnMsg(_('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -161,19 +161,19 @@ if (isset($_POST['PrintPDF'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Stock Check Sheets');
+	$Title=__('Stock Check Sheets');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'. _('print') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'. __('print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Select Items For Stock Check'), '</legend>
+			<legend>', __('Select Items For Stock Check'), '</legend>
 			<field>
-				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+				<label for="Categories">' . __('Select Inventory Categories') . ':</label>
 				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
@@ -190,7 +190,7 @@ if (isset($_POST['PrintPDF'])){
 		</field>';
 
 	echo '<field>
-			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<label for="Location">' . __('For Inventory in Location') . ':</label>
 			<select name="Location">';
 	// KL RICARD: Show only locations that user can view, do not need update rights
 	$SQL = "SELECT locations.loccode, locationname FROM locations
@@ -205,32 +205,32 @@ if (isset($_POST['PrintPDF'])){
 		</field>';
 
 	echo '<field>
-			<label for="MakeStkChkData">' . _('Action for Stock Check Freeze') . ':</label>
+			<label for="MakeStkChkData">' . __('Action for Stock Check Freeze') . ':</label>
 			<select name="MakeStkChkData">';
 
 	if (!isset($_POST['MakeStkChkData'])){
 		$_POST['MakeStkChkData'] = 'PrintOnly';
 	}
 	if ($_POST['MakeStkChkData'] =='New'){
-		echo '<option selected="selected" value="New">' . _('Make new stock check data file') . '</option>';
+		echo '<option selected="selected" value="New">' . __('Make new stock check data file') . '</option>';
 	} else {
-		echo '<option value="New">' . _('Make new stock check data file') . '</option>';
+		echo '<option value="New">' . __('Make new stock check data file') . '</option>';
 	}
 	if ($_POST['MakeStkChkData'] =='AddUpdate'){
-		echo '<option selected="selected" value="AddUpdate">' . _('Add/update existing stock check file') . '</option>';
+		echo '<option selected="selected" value="AddUpdate">' . __('Add/update existing stock check file') . '</option>';
 	} else {
-		echo '<option value="AddUpdate">' . _('Add/update existing stock check file') . '</option>';
+		echo '<option value="AddUpdate">' . __('Add/update existing stock check file') . '</option>';
 	}
 	if ($_POST['MakeStkChkData'] =='PrintOnly'){
-		echo '<option selected="selected" value="PrintOnly">' . _('Print Stock Check Sheets Only') . '</option>';
+		echo '<option selected="selected" value="PrintOnly">' . __('Print Stock Check Sheets Only') . '</option>';
 	} else {
-		echo '<option value="PrintOnly">' . _('Print Stock Check Sheets Only') . '</option>';
+		echo '<option value="PrintOnly">' . __('Print Stock Check Sheets Only') . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="ShowInfo">' . _('Show system quantity on sheets') . ':</label>';
+			<label for="ShowInfo">' . __('Show system quantity on sheets') . ':</label>';
 
 	if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
 			echo '<input type="checkbox" name="ShowInfo" value="false" />';
@@ -240,7 +240,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</field>';
 
 	echo '<field>
-			<label for="NonZerosOnly">' . _('Only print items with non zero quantities') . ':</label>';
+			<label for="NonZerosOnly">' . __('Only print items with non zero quantities') . ':</label>';
 	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false){
 			echo '<input type="checkbox" name="NonZerosOnly" value="false" />';
 	} else {
@@ -252,7 +252,7 @@ if (isset($_POST['PrintPDF'])){
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print and Process') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('Print and Process') . '" />
 		</div>
 	</form>';
 

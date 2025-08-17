@@ -2,7 +2,7 @@
 /* Shows to which invoices a receipt was allocated to */
 
 include('includes/session.php');
-$Title = _('Customer How Paid Inquiry');
+$Title = __('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'WhereAllocated';
 include('includes/header.php');
@@ -17,29 +17,29 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text noPrint">
-		<img alt="" src="'. $RootPath. '/css/'. $Theme.'/images/money_add.png" title="',_('Customer Where Allocated'), '" /> ',$Title. '
+		<img alt="" src="'. $RootPath. '/css/'. $Theme.'/images/money_add.png" title="',__('Customer Where Allocated'), '" /> ',$Title. '
 	</p>';// Page title.
 
 echo '<fieldset>
 		<field>
-			<label for="TransType">' . _('Type') . ':</label>
+			<label for="TransType">' . __('Type') . ':</label>
 			<select tabindex="1" name="TransType">';
 
 if(!isset($_POST['TransType'])) {
 	$_POST['TransType']='10';
 }
 if($_POST['TransType']==10) {
-	 echo '<option selected="selected" value="10">' . _('Invoice') . '</option>
-			<option value="12">' . _('Receipt') . '</option>
-			<option value="11">' . _('Credit Note') . '</option>';
+	 echo '<option selected="selected" value="10">' . __('Invoice') . '</option>
+			<option value="12">' . __('Receipt') . '</option>
+			<option value="11">' . __('Credit Note') . '</option>';
 } elseif($_POST['TransType'] == 12) {
-	echo '<option selected="selected" value="12">' . _('Receipt') . '</option>
-			<option value="10">' . _('Invoice') . '</option>
-			<option value="11">' . _('Credit Note') . '</option>';
+	echo '<option selected="selected" value="12">' . __('Receipt') . '</option>
+			<option value="10">' . __('Invoice') . '</option>
+			<option value="11">' . __('Credit Note') . '</option>';
 } elseif($_POST['TransType'] == 11) {
-	echo '<option selected="selected" value="11">' . _('Credit Note') . '</option>
-		<option value="10">' . _('Invoice') . '</option>
-		<option value="12">' . _('Receipt') . '</option>';
+	echo '<option selected="selected" value="11">' . __('Credit Note') . '</option>
+		<option value="10">' . __('Invoice') . '</option>
+		<option value="12">' . __('Receipt') . '</option>';
 }
 
 echo '</select>
@@ -47,17 +47,17 @@ echo '</select>
 
 if(!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
 echo '<field>
-		<label for="TransNo">' . _('Transaction Number').':</label>
+		<label for="TransNo">' . __('Transaction Number').':</label>
 		<input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" />
 	</field>
 	</fieldset>
 	<div class="centre noPrint">
-		<input tabindex="3" type="submit" name="ShowResults" value="' . _('Show How Allocated') . '" />
+		<input tabindex="3" type="submit" name="ShowResults" value="' . __('Show How Allocated') . '" />
 	</div>';
 
 if(isset($_POST['ShowResults']) AND  $_POST['TransNo']=='') {
 	echo '<br />';
-	prnMsg(_('The transaction number to be queried must be entered first'),'warn');
+	prnMsg(__('The transaction number to be queried must be entered first'),'warn');
 }
 
 if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
@@ -100,7 +100,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				INNER JOIN custallocns ";
 		if($_POST['TransType']==12 OR $_POST['TransType'] == 11) {
 
-			$TitleInfo = ($_POST['TransType'] == 12)?_('Receipt'):_('Credit Note');
+			$TitleInfo = ($_POST['TransType'] == 12)?__('Receipt'):__('Credit Note');
 			if($MyRow['totamt']<0) {
 				$SQL .= "ON debtortrans.id = custallocns.transid_allocto
 					WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
@@ -111,21 +111,21 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			}
 
 		} else {
-			$TitleInfo = _('invoice');
+			$TitleInfo = __('invoice');
 			$SQL .= "ON debtortrans.id = custallocns.transid_allocfrom
 				WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
 		}
 		$SQL .= " ORDER BY transno ";
 
-		$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
+		$ErrMsg = __('The customer transactions for the selected criteria could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
 
 		if(DB_num_rows($TransResult)==0) {
 
 			if($MyRow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)) {
-					prnMsg(_('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
+					prnMsg(__('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
 			} else {
-				prnMsg(_('There are no allocations made against this transaction'),'info');
+				prnMsg(__('There are no allocations made against this transaction'),'info');
 			}
 		} else {
 			$Printer = true;
@@ -135,19 +135,19 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				<thead>
 				<tr>
 					<th class="centre" colspan="7">
-						<b>' . _('Allocations made against') . ' ' . $TitleInfo . ' ' . _('number') . ' ' . $_POST['TransNo'] . '<br />' .
-						_('Transaction Total').': '. locale_number_format($MyRow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
+						<b>' . __('Allocations made against') . ' ' . $TitleInfo . ' ' . __('number') . ' ' . $_POST['TransNo'] . '<br />' .
+						__('Transaction Total').': '. locale_number_format($MyRow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
 					</th>
 				</tr>';
 
 			$TableHeader = '<tr>
-					<th class="centre">' . _('Date') . '</th>
-					<th class="text">' . _('Type') . '</th>
-					<th class="number">' . _('Number') . '</th>
-					<th class="text">' . _('Reference') . '</th>
-					<th class="number">' . _('Ex Rate') . '</th>
-					<th class="number">' . _('Amount') . '</th>
-					<th class="number">' . _('Alloc') . '</th>
+					<th class="centre">' . __('Date') . '</th>
+					<th class="text">' . __('Type') . '</th>
+					<th class="number">' . __('Number') . '</th>
+					<th class="text">' . __('Reference') . '</th>
+					<th class="number">' . __('Ex Rate') . '</th>
+					<th class="number">' . __('Amount') . '</th>
+					<th class="number">' . __('Alloc') . '</th>
 				</tr>';
 			echo $TableHeader,
 				'</thead>
@@ -159,11 +159,11 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			while($MyRow=DB_fetch_array($TransResult)) {
 
 				if($MyRow['type']==11) {
-					$TransType = _('Credit Note');
+					$TransType = __('Credit Note');
 				} elseif($MyRow['type'] == 10) {
-					$TransType = _('Invoice');
+					$TransType = __('Invoice');
 				} else {
-					$TransType = _('Receipt');
+					$TransType = __('Receipt');
 				}
 				echo '<tr class="striped_row">
 						<td class="centre">', ConvertSQLDate($MyRow['trandate']), '</td>
@@ -185,7 +185,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			}
 			//end of while loop
 			echo '<tr>
-					<td class="number" colspan="6">' . _('Total allocated') . '</td>
+					<td class="number" colspan="6">' . __('Total allocated') . '</td>
 					<td class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td>
 				</tr>
 
@@ -195,7 +195,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 	} //got the ID of the transaction to find allocations for
 } //end of while loop;
 if ($Rows>1) {
-	echo '<div class="centre"><b>' . _('Transaction Total'). '</b> ' .locale_number_format($GrandTotal,$CurrDecimalPlaces) . '</div>';
+	echo '<div class="centre"><b>' . __('Transaction Total'). '</b> ' .locale_number_format($GrandTotal,$CurrDecimalPlaces) . '</div>';
 }
 if ($_POST['TransType']== 12) {
 	//retrieve transaction to see if there are any transaction fee,
@@ -203,18 +203,18 @@ if ($_POST['TransType']== 12) {
 						amount
 					FROM gltrans LEFT JOIN bankaccounts ON account=accountcode
 					WHERE type=12 AND typeno='".$_POST['TransNo']."' AND account !='". $_SESSION['CompanyRecord']['debtorsact'] ."' AND accountcode IS NULL";
-	$ErrMsg = _('Failed to retrieve charge data');
+	$ErrMsg = __('Failed to retrieve charge data');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)>0) {
 		while ($MyRow = DB_fetch_array($Result)){
 			echo '<div class="centre">
-							<strong>'._('GL Account') .' ' . $MyRow['account'] . '</strong> '. _('Amount') . locale_number_format($MyRow['amount'],$CurrDecimalPlaces).'<br/> '. _('To local currency'). ' ' . locale_number_format($MyRow['amount']*$Rate,$CurrDecimalPlaces).' ' . _('at rate') . ' ' . $Rate .
+							<strong>'.__('GL Account') .' ' . $MyRow['account'] . '</strong> '. __('Amount') . locale_number_format($MyRow['amount'],$CurrDecimalPlaces).'<br/> '. __('To local currency'). ' ' . locale_number_format($MyRow['amount']*$Rate,$CurrDecimalPlaces).' ' . __('at rate') . ' ' . $Rate .
 
 					'</div>';
 					$GrandTotal += $MyRow['amount'] * $Rate;
 		}
 		echo '<div class="centre">
-					<strong>' . _('Grand Total') . '</strong>' . ' ' . locale_number_format($GrandTotal,$CurrDecimalPlaces).'
+					<strong>' . __('Grand Total') . '</strong>' . ' ' . locale_number_format($GrandTotal,$CurrDecimalPlaces).'
 		</div>';
 	}
 }
@@ -224,7 +224,7 @@ echo '</form>';
 if(isset($Printer)) {
 	echo '<div class="centre noPrint">
 			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
 		'</div>';// "Print This" button.
 }
 include('includes/footer.php');

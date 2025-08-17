@@ -4,22 +4,22 @@ include('includes/session.php');
 if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 
-$Title = _('All Stock Movements By Location');
+$Title = __('All Stock Movements By Location');
 
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
 	<fieldset>
-		<legend>', _('Inquiry Criteria'), '</legend>
+		<legend>', __('Inquiry Criteria'), '</legend>
 		<field>
-			<label for="StockLocation">', _('From Stock Location'), ':</label>
+			<label for="StockLocation">', __('From Stock Location'), ':</label>
 			<select required="required" name="StockLocation">';
 
 $SQL = "SELECT locationname,
@@ -31,7 +31,7 @@ $SQL = "SELECT locationname,
 			AND locationusers.canview=1
 		ORDER BY locationname";
 
-echo '<option selected="selected" value="All">', _('All Locations'), '</option>';
+echo '<option selected="selected" value="All">', __('All Locations'), '</option>';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] = 'All';
@@ -64,17 +64,17 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
 echo '<field>
-		<label for="BeforeDate">', _('Show Movements before'), ':</label>
+		<label for="BeforeDate">', __('Show Movements before'), ':</label>
 		<input type="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['BeforeDate']), '" />
 	</field>';
 
 echo '<field>
-		<label for="AfterDate">', _('But after'), ':</label>
+		<label for="AfterDate">', __('But after'), ':</label>
 		<input type="date" name="AfterDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['AfterDate']), '" />
 	 </field>
 	 </fieldset>
 	<div class="centre">
-		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
+		<input type="submit" name="ShowMoves" value="', __('Show Stock Movements'), '" />
 	</div>';
 
 if ($_POST['StockLocation'] == 'All') {
@@ -110,23 +110,23 @@ $SQL = "SELECT stockmoves.stockid,
 				AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
 				AND hidemovt=0
 			ORDER BY stkmoveno DESC";
-$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because');
+$ErrMsg = __('The stock movements for the selected criteria could not be retrieved because');
 $MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
 	echo '<table cellpadding="5" cellspacing="4" class="selection">
 			<tr>
-				<th>', _('Item Code'), '</th>
-				<th>', _('Type'), '</th>
-				<th>', _('Trans No'), '</th>
-				<th>', _('Date'), '</th>
-				<th>', _('Customer'), '</th>
-				<th>', _('Quantity'), '</th>
-				<th>', _('Reference'), '</th>
-				<th>', _('Price'), '</th>
-				<th>', _('Discount'), '</th>
-				<th>', _('Quantity on Hand'), '</th>
-				<th>', _('Serial No.'), '</th>
+				<th>', __('Item Code'), '</th>
+				<th>', __('Type'), '</th>
+				<th>', __('Trans No'), '</th>
+				<th>', __('Date'), '</th>
+				<th>', __('Customer'), '</th>
+				<th>', __('Quantity'), '</th>
+				<th>', __('Reference'), '</th>
+				<th>', __('Price'), '</th>
+				<th>', __('Discount'), '</th>
+				<th>', __('Quantity on Hand'), '</th>
+				<th>', __('Serial No.'), '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($MovtsResult)) {

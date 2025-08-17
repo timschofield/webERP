@@ -8,14 +8,14 @@ KL RICARD MODIFICATIONS:
 ***************************************************************************************/
 
 include('includes/session.php');
-$Title = _('UTILITY PAGE Change A GL Account Code');// Screen identificator.
+$Title = __('UTILITY PAGE Change A GL Account Code');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeGLAccountCode';// Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
-	_('Change A GL Account Code'), '" /> ',// Icon title.
-	_('Change A GL Account Code'), '</p>';// Page title.
+	__('Change A GL Account Code'), '" /> ',// Icon title.
+	__('Change A GL Account Code'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -40,18 +40,18 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-	<legend>', _('General Ledger Code To Change'), '</legend>
+	<legend>', __('General Ledger Code To Change'), '</legend>
 	<field>
-		<label>' . _('Existing GL Account Code') . ':</label>
+		<label>' . __('Existing GL Account Code') . ':</label>
 		<input type="text" name="OldAccountCode" size="20" maxlength="20" />
 	</field>
 	<field>
-		<label>' . _('New GL Account Code') . ':</label>
+		<label>' . __('New GL Account Code') . ':</label>
 		<input type="text" name="NewAccountCode" size="20" maxlength="20" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="ProcessGLAccountCode" value="' . _('Process') . '" />
+		<input type="submit" name="ProcessGLAccountCode" value="' . __('Process') . '" />
 	</div>
 	</form>';
 

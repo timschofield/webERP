@@ -1,6 +1,6 @@
 <?php
 include('includes/session.php');
-$Title = _('List of Items Sold in Shop');
+$Title = __('List of Items Sold in Shop');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -27,9 +27,9 @@ ShowTableTitle($TableTitleText);
 echo '<table class="selection">
 		<thead>';
 $TableHeader = '<tr>
-					<th class="SortedColumn">' . _('Date') . '</th>
-					<th class="SortedColumn">' . _('Item') . '</th>
-					<th class="SortedColumn">' . _('Sold') . '</th>
+					<th class="SortedColumn">' . __('Date') . '</th>
+					<th class="SortedColumn">' . __('Item') . '</th>
+					<th class="SortedColumn">' . __('Sold') . '</th>
 				</tr>';
 echo $TableHeader;
 echo '</thead>

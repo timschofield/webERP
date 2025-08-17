@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title = _('Process EDI Orders');
+$Title = __('Process EDI Orders');
 $ViewTopic = 'EDI';
 $BookMark = '';
 
@@ -152,7 +152,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 		} else {
 			$SegCounter++;
 			if ($SegCounter > $Seg[$SegID]['MaxOccur']){
-				$EmailText = $EmailText . "\n" . _('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' ._('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . _('this is the') . ' ' . $SegCounter . ' ' . _('occurrence') .  '<br />' . _('The segment line read as follows') . ':<br />' . $LineText;
+				$EmailText = $EmailText . "\n" . __('The EANCOM Standard only allows for') . ' ' . $Seg[$SegID]['MaxOccur'] . ' ' .__('occurrences of the segment') . ' ' . $Seg[$SegID]['SegTag'] . ' ' . __('this is the') . ' ' . $SegCounter . ' ' . __('occurrence') .  '<br />' . __('The segment line read as follows') . ':<br />' . $LineText;
 			}
 		}
 
@@ -164,7 +164,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 			$SegID++; /*Move to the next Seg in the order message */
 			$LastSeg = $SegID; /*Remember the last segid moved to */
 
-			echo "\n" . _('Segment Group') . ' = ' . $Seg[$SegID]['SegGroup'] . ' ' . _('Max Occurrences of Segment') . ' = ' . $Seg[$SegID]['MaxOccur'] . ' ' . _('No occurrences so far') . ' = ' . $SegCounter;
+			echo "\n" . __('Segment Group') . ' = ' . $Seg[$SegID]['SegGroup'] . ' ' . __('Max Occurrences of Segment') . ' = ' . $Seg[$SegID]['MaxOccur'] . ' ' . __('No occurrences so far') . ' = ' . $SegCounter;
 
 			if ($Seg[$SegID]['SegGroup'] != $SegGroup AND $Seg[$SegID]['MaxOccur'] > $SegCounter){ /*moved to a new seg group  but could be more segment groups*/
 				$SegID = $FirstSegInGroup; /*Try going back to first seg in the group */
@@ -179,18 +179,18 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 
 		if ($SegTag != $Seg[$SegID]['SegTag']){
 
-			$EmailText .= "\n" . _('ERROR') . ': ' . _('Unable to identify segment tag') . ' ' . $SegTag . ' ' . _('from the message line') . '<br />' . $LineText . '<br /><font color=RED><b>' . _('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
+			$EmailText .= "\n" . __('ERROR') . ': ' . __('Unable to identify segment tag') . ' ' . $SegTag . ' ' . __('from the message line') . '<br />' . $LineText . '<br /><font color=RED><b>' . __('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
 
 			$TryNextFile = True;
 		}
 
-		echo '<br />' . _('The segment tag') . ' ' . $SegTag . ' ' . _('is being processed');
+		echo '<br />' . __('The segment tag') . ' ' . $SegTag . ' ' . __('is being processed');
 
 		switch ($SegTag){
 			case 'UNB';
 				$UNB = explode ('+',mb_substr($LineText,4));
 				if (mb_substr($UNB[6],0,6)!='ORDERS'){
-					$EmailText .= "\n" . _('This message is not an edi order');
+					$EmailText .= "\n" . __('This message is not an edi order');
 					$TryNextFile = True;
 				}
 
@@ -201,10 +201,10 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				$UNH2 = explode (':',$UNH_elements[1]);
 				$EdiMsgVer = $UNH2[1] . '.' . $UNH2[2] ; // fex D.00A
 //				echo '<br />' . $EdiMsgVer;
-				$Order->Comments .= _('Customer EDI Ref') . ': ' . $UNH_elements[0];
-				$EmailText .= "\n" . _('EDI Message Ref') . ': ' . $UNH_elements[0];
+				$Order->Comments .= __('Customer EDI Ref') . ': ' . $UNH_elements[0];
+				$EmailText .= "\n" . __('EDI Message Ref') . ': ' . $UNH_elements[0];
 				if (mb_substr($UNH_elements[1],0,6)!='ORDERS'){
-					$EmailText .= "\n" . _('This message is not an EDI order');
+					$EmailText .= "\n" . __('This message is not an EDI order');
 					$TryNextFile = True;
 				}
 				break;
@@ -213,47 +213,47 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				$BGM_C002 = explode(':',$BGM_elements[0]);
 				switch ($BGM_C002[0]){
 					case '220':
-						$EmailText .= "\n" . _('This message is a standard order');
+						$EmailText .= "\n" . __('This message is a standard order');
 						break;
 					case '221':
-						$EmailText .= "\n" . _('This message is a blanket order');
-						$Order->Comments .= "\n" . _('blanket order');
+						$EmailText .= "\n" . __('This message is a blanket order');
+						$Order->Comments .= "\n" . __('blanket order');
 						break;
 					case '224':
-						$EmailText .= "\n\n" . _('This order is URGENT') . '</font>';
-						$Order->Comments .= "\n" . _('URGENT ORDER');
+						$EmailText .= "\n\n" . __('This order is URGENT') . '</font>';
+						$Order->Comments .= "\n" . __('URGENT ORDER');
 						break;
 					case '226':
-						$EmailText .= "\n" . _('Call off order');
-						$Order->Comments .= "\n" . _('Call Off Order');
+						$EmailText .= "\n" . __('Call off order');
+						$Order->Comments .= "\n" . __('Call Off Order');
 						break;
 					case '227':
-						$EmailText .= "\n" . _('Consignment order');
-						$Order->Comments .= "\n" . _('Consignment order');
+						$EmailText .= "\n" . __('Consignment order');
+						$Order->Comments .= "\n" . __('Consignment order');
 						break;
 					case '22E':
-						$EmailText .= "\n" . _('Manufacturer raised order');
-						$Order->Comments .= "\n" . _('Manufacturer raised order');
+						$EmailText .= "\n" . __('Manufacturer raised order');
+						$Order->Comments .= "\n" . __('Manufacturer raised order');
 						break;
 					case '258':
-						$EmailText .= "\n" . _('Standing order');
-						$Order->Comments .= "\n" ._('Standing order');
+						$EmailText .= "\n" . __('Standing order');
+						$Order->Comments .= "\n" .__('Standing order');
 						break;
 					case '237':
-						$EmailText .= "\n" . _('Cross docking services order');
-						$Order->Comments .= "\n" . _('Cross docking services order');
+						$EmailText .= "\n" . __('Cross docking services order');
+						$Order->Comments .= "\n" . __('Cross docking services order');
 						break;
 					case '400':
-						$EmailText .= "\n" . _('Exceptional Order');
-						$Order->Comments .= "\n" . _('Exceptional Order');
+						$EmailText .= "\n" . __('Exceptional Order');
+						$Order->Comments .= "\n" . __('Exceptional Order');
 						break;
 					case '401':
-						$EmailText .= "\n" . _('Trans-shipment order');
-						$Order->Comments .= "\n" . _('Trans-shipment order');
+						$EmailText .= "\n" . __('Trans-shipment order');
+						$Order->Comments .= "\n" . __('Trans-shipment order');
 						break;
 					case '402':
-						$EmailText .= "\n" . _('Cross docking order');
-						$Order->Comments .= "\n" . _('Cross docking order');
+						$EmailText .= "\n" . __('Cross docking order');
+						$Order->Comments .= "\n" . __('Cross docking order');
 						break;
 
 				} /*end switch for type of order */
@@ -261,7 +261,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					echo '<br />echo BGM_elements[1] ' .$BGM_elements[1];
 					$BGM_C106 = explode(':',$BGM_elements[1]);
 					$Order->CustRef = $BGM_C106[0];
-					$EmailText .= "\n" . _('Customers order ref') . ': ' . $BGM_C106[0];
+					$EmailText .= "\n" . __('Customers order ref') . ': ' . $BGM_C106[0];
 				}
 				if (isset($BGM_elements[2])){
 					echo '<br />echo BGM_elements[2] ' .$BGM_elements[2];
@@ -270,47 +270,47 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 
 					switch ($MsgFunction){
 						case '5':
-							$EmailText .= "\n\n" . _('REPLACEMENT order') . ' - ' . _('MUST DELETE THE ORIGINAL ORDER MANUALLY');
+							$EmailText .= "\n\n" . __('REPLACEMENT order') . ' - ' . __('MUST DELETE THE ORIGINAL ORDER MANUALLY');
 							break;
 						case '6':
-							$EmailText .= "\n" . _('Confirmation of previously sent order');
+							$EmailText .= "\n" . __('Confirmation of previously sent order');
 							break;
 						case '7':
-							$EmailText .= "\n\n" . _('DUPLICATE order DELETE ORIGINAL ORDER MANUALLY');
+							$EmailText .= "\n\n" . __('DUPLICATE order DELETE ORIGINAL ORDER MANUALLY');
 							break;
 						case '16':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n\n" . _('Proposed order only no order created in web-ERP');
+							$EmailText .= "\n\n" . __('Proposed order only no order created in web-ERP');
 							break;
 						case '31':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('COPY order only no order will be created in web-ERP');
+							$EmailText .= "\n" . __('COPY order only no order will be created in web-ERP');
 							break;
 						case '42':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('Confirmation of order') . ' - ' . _('not created in web-ERP');
+							$EmailText .= "\n" . __('Confirmation of order') . ' - ' . __('not created in web-ERP');
 							break;
 						case '46':
 							$CreateOrder = False; /*Dont create order in system */
-							$EmailText .= "\n" . _('Provisional order only') . ' - ' . _('not created in web-ERP');
+							$EmailText .= "\n" . __('Provisional order only') . ' - ' . __('not created in web-ERP');
 							break;
 					}
 
 					if (isset($BGM_1225[1])){
 						$ResponseCode = $BGM_1225[1];
-						echo '<br />' . _('Response Code') . ': ' . $ResponseCode;
+						echo '<br />' . __('Response Code') . ': ' . $ResponseCode;
 						switch ($ResponseCode) {
 							case 'AC':
-								$EmailText .= "\n" . _('Please acknowledge to customer with detail and changes made to the order');
+								$EmailText .= "\n" . __('Please acknowledge to customer with detail and changes made to the order');
 								break;
 							case 'AB':
-								$EmailText .= "\n" . _('Please acknowledge to customer the receipt of message');
+								$EmailText .= "\n" . __('Please acknowledge to customer the receipt of message');
 								break;
 							case 'AI':
-								$EmailText .= "\n" . _('Please acknowledge to customer any changes to the order');
+								$EmailText .= "\n" . __('Please acknowledge to customer any changes to the order');
 								break;
 							case 'NA':
-								$EmailText .= "\n" . _('No acknowledgement to customer is required');
+								$EmailText .= "\n" . __('No acknowledgement to customer is required');
 								break;
 						}
 					}
@@ -323,7 +323,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				switch ($DTM_C507[0]){
 					case '2': /*Delivery date */
 						$Order->DeliveryDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Delivery date') . ' ' . $Order->DeliveryDate;
+						$EmailText .= "\n" . __('Delivery date') . ' ' . $Order->DeliveryDate;
 						break;
 					case '10': /*shipment date requested */
 					case '11': /*dispatch date */
@@ -333,59 +333,59 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					case '4': /*orig order date */
 						$Order->Orig_OrderDate = $LocalFormatDate;
 						$Order->OrdDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Orig,.order date') . ' ' . $Order->Orig_OrderDate;
+						$EmailText .= "\n" . __('Orig,.order date') . ' ' . $Order->Orig_OrderDate;
 						break;
 					case '69': /*Promised delivery date */
 						$Order->DeliveryDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Promised delivery date') . ' ' . $Order->DeliveryDate;
+						$EmailText .= "\n" . __('Promised delivery date') . ' ' . $Order->DeliveryDate;
 						break;
 					case '15': /*promotion start date */
-						$EmailText .= "\n" . _('Promotion start date') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Promotion start date') . ' ' . $LocalFormatDate;
 						break;
 					case '37': /*ship not before */
-						$EmailText .= "\n" . _('Do NOT ship before') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Do NOT ship before') . ' ' . $LocalFormatDate;
 						break;
 					case '38': /*ship not later than */
 					case '61': /*Cancel if not delivered by this date */
 					case '63': /*Latest delivery date */
 					case '393': /*Cancel if not shipped by this date */
-						$EmailText .= "\n" . _('Cancel order if not dispatched before') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Cancel order if not dispatched before') . ' ' . $LocalFormatDate;
 						break;
 					case '137': /*Order date */
 						$Order->Orig_OrderDate = $LocalFormatDate;
 						$Order->OrdDate = $LocalFormatDate;
-						$EmailText .= "\n" . _('Order date') . ':  ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Order date') . ':  ' . $LocalFormatDate;
 						break;
 					case '171': /*A date relating to a RFF seg */
 						/*This DTM segment follows a RFF seg so $RFF will be set
 						use the RFF seg to determine if the date refers to the
 						order */
-						$EmailText .= "\n" . _('dated') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('dated') . ' ' . $LocalFormatDate;
 						if ($SegGroup == 1){
-							$Order->Comments .= ' ' . _('dated') . ': ' . $LocalFormatDate;
+							$Order->Comments .= ' ' . __('dated') . ': ' . $LocalFormatDate;
 						}
 						break;
 					case '200': /*Pickup collection date/time */
-						$EmailText .= "\n\n" . _('Pickup date') . ':  ' . $LocalFormatDate;
+						$EmailText .= "\n\n" . __('Pickup date') . ':  ' . $LocalFormatDate;
 						$Order->DeliveryDate = $LocalFormatDate;
 						break;
 					case '263': /*Invoicing period */
-						$EmailText .= "\n" . _('Invoice period') . ':  ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Invoice period') . ':  ' . $LocalFormatDate;
 						break;
 					case '273': /*Validity period */
-						$EmailText .= "\n" . _('Valid period') . ':  ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Valid period') . ':  ' . $LocalFormatDate;
 						break;
 					case '282': /*Confirmation date lead time */
-						$EmailText .= "\n" . _('Confirmation of date lead time') . ' ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Confirmation of date lead time') . ' ' . $LocalFormatDate;
 						break;
 					case '132': /*depature date/time */
-						$EmailText .= "\n" . _('Departure date') . ': ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Departure date') . ': ' . $LocalFormatDate;
 						break;
 					case '133': /*arrival date/time */
-						$EmailText .= "\n" . _('Arrival date') . ': ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Arrival date') . ': ' . $LocalFormatDate;
 						break;
 					case '134': /*Rate of exchange date/time */
-						$EmailText .= "\n" . _('Rate of exchange date / time') . ': ' . $LocalFormatDate;
+						$EmailText .= "\n" . __('Rate of exchange date / time') . ': ' . $LocalFormatDate;
 						break;
 				}
 				break;
@@ -393,53 +393,53 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				/*explode into an array all items delimited by the : - only after the + */
 				$PAI_C534 = explode(':',mb_substr($LineText,4));
 				if ($PAI_C534[0]=='1'){
-					$EmailText .= "\n" . _('Payment will be effected by a direct payment for this order');
+					$EmailText .= "\n" . __('Payment will be effected by a direct payment for this order');
 				} elseif($PAI_C534[0]=='OA'){
-					$EmailText .= "\n" . _('This order to be settled in accordance with the normal account trading terms');
+					$EmailText .= "\n" . __('This order to be settled in accordance with the normal account trading terms');
 				}
 				if ($PAI_C534[1]=='20'){
-					$EmailText .= "\n" . _('The goods on this order') . ' - ' . _('once delivered') . ' - ' . _('will be held as security for the payment');
+					$EmailText .= "\n" . __('The goods on this order') . ' - ' . __('once delivered') . ' - ' . __('will be held as security for the payment');
 				}
 				if ($PAI_C534[2]=='42'){
-					$EmailText .= "\n" . _('Payment will be effected to bank account');
+					$EmailText .= "\n" . __('Payment will be effected to bank account');
 				} elseif ($PAI_C534[2]=='60'){
-					$EmailText .= "\n" . _('Payment will be effected by promissory note');
+					$EmailText .= "\n" . __('Payment will be effected by promissory note');
 				} elseif ($PAI_C534[2]=='40'){
-					$EmailText .= "\n" . _('Payment will be effected by a bill drawn by the creditor on the debtor');
+					$EmailText .= "\n" . __('Payment will be effected by a bill drawn by the creditor on the debtor');
 				} elseif ($PAI_C534[2]=='10E'){
-					$EmailText .= "\n" . _('Payment terms are defined in the Commercial Account Summary Section');
+					$EmailText .= "\n" . __('Payment terms are defined in the Commercial Account Summary Section');
 				}
 				if (isset($PAI_C534[5])){
 					if ($PAI_C534[5]=='2')
-					$EmailText .= "\n" . _('Payment will be posted through the ordinary mail system');
+					$EmailText .= "\n" . __('Payment will be posted through the ordinary mail system');
 				}
 				break;
 			case 'ALI':
 				$ALI = explode('+',mb_substr($LineText,4));
 				if (mb_strlen($ALI[0])>1){
-					$EmailText .= "\n" . _('Goods of origin') . ' ' . $ALI[0];
+					$EmailText .= "\n" . __('Goods of origin') . ' ' . $ALI[0];
 				}
 				if (mb_strlen($ALI[1])>1){
-					$EmailText .= "\n" . _('Duty regime code') . ' ' . $ALI[1];
+					$EmailText .= "\n" . __('Duty regime code') . ' ' . $ALI[1];
 				}
 				switch ($ALI[2]){
 					case '136':
-						$EmailText .= "\n" . _('Buying group conditions apply');
+						$EmailText .= "\n" . __('Buying group conditions apply');
 						break;
 					case '137':
-						$EmailText .= "\n\n" . _('Cancel the order if complete delivery is not possible on the requested date or time');
+						$EmailText .= "\n\n" . __('Cancel the order if complete delivery is not possible on the requested date or time');
 						break;
 					case '73E':
-						$EmailText .= "\n" . _('Delivery subject to final authorisation');
+						$EmailText .= "\n" . __('Delivery subject to final authorisation');
 						break;
 					case '142':
-						$EmailText .= "\n" . _('Invoiced but not replenished');
+						$EmailText .= "\n" . __('Invoiced but not replenished');
 						break;
 					case '143':
-						$EmailText .= "\n" . _('Replenished but not invoiced');
+						$EmailText .= "\n" . __('Replenished but not invoiced');
 						break;
 					case '144':
-						$EmailText .= "\n" . _('Deliver Full order');
+						$EmailText .= "\n" . __('Deliver Full order');
 						break;
 				}
 				break;
@@ -457,46 +457,46 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				$RFF = explode(':',mb_substr($LineText,4));
 				switch ($RFF[0]){
 					case 'AE':
-						$MsgText = "\n" . _('Authorisation for expense no') . ' ' . $RFF[1];
+						$MsgText = "\n" . __('Authorisation for expense no') . ' ' . $RFF[1];
 						break;
 					case 'BO':
-						$MsgText =  "\n" . _('Blanket Order') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Blanket Order') . ' # ' . $RFF[1];
 						break;
 					case 'CR':
 						$Order->CustRef = $RFF[1];
-						$MsgText =  "\n" . _('Customer Ref') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Customer Ref') . ' # ' . $RFF[1];
 						break;
 					case 'CT':
-						$MsgText =  "\n" . _('Contract'). ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Contract'). ' # ' . $RFF[1];
 						break;
 					case 'IP':
-						$MsgText =  "\n" . _('Import Licence') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Import Licence') . ' # ' . $RFF[1];
 						break;
 					case 'ON':
 						$Order->CustRef = $RFF[1];
-						$MsgText =  "\n" . _('Buyer order') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Buyer order') . ' # ' . $RFF[1];
 						break;
 					case 'PD':
-						$MsgText =  "\n" . _('Promo deal') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Promo deal') . ' # ' . $RFF[1];
 						break;
 					case 'PL':
-						$MsgText =  "\n" . _('Price List') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Price List') . ' # ' . $RFF[1];
 						break;
 					case 'UC':
-						$MsgText =  "\n" . _('Ultimate customer ref') . ' ' . $RFF[1];
+						$MsgText =  "\n" . __('Ultimate customer ref') . ' ' . $RFF[1];
 						break;
 					case 'VN':
-						$MsgText =  "\n" . _('Supplier Order') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Supplier Order') . ' # ' . $RFF[1];
 						break;
 					case 'AKO':
-						$MsgText =  "\n" . _('Action auth') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Action auth') . ' # ' . $RFF[1];
 						break;
 					case 'ANJ':
-						$MsgText =  "\n" . _('Authorisation') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('Authorisation') . ' # ' . $RFF[1];
 						break;
 					case 'VA':
 					// VA    VAT registration number
-						$MsgText =  "\n" . _('VAT registration number') . ' # ' . $RFF[1];
+						$MsgText =  "\n" . __('VAT registration number') . ' # ' . $RFF[1];
 						break;
 				}
 				if ($SegGroup == 1){
@@ -517,7 +517,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 						/*if NAD_C082[2] must = 9 then NAD_C082[0] is the EAN Intnat Article Numbering Assocn code of the customer - look up the customer by EDIReference*/
 							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1");
 							if (DB_num_rows($InvoiceeResult)!=1){
-								$EmailText .= "\n" . _('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('So that is the end of the road for this message');
+								$EmailText .= "\n" . __('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('So that is the end of the road for this message');
 								$TryNextFile = True; /* Look for other EDI msgs */
 								$CreateOrder = False; /*Dont create order in system */
 							} else {
@@ -535,7 +535,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 //					  error_log("SU/EDIReference " . $_SESSION['EDIReference'] , 0);
 						if ($NAD_C082[0]!= $_SESSION['EDIReference']){
 							/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
-							$EmailText .= "\n" . _('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . _('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . _('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . _('used in this message') . '. ' . _('This implies that the EDI message is for some other supplier') . '. ' . _('No further processing will be done');
+							$EmailText .= "\n" . __('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . __('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('This implies that the EDI message is for some other supplier') . '. ' . __('No further processing will be done');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /* Don't create order in system */						}
 						break;
@@ -570,7 +570,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 														email
 												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1");
 						if (DB_num_rows($BranchResult)!=1){
-							$EmailText .= "\n" . _('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' ._('or several that match this store number') . '. ' . _('This order could not be processed further');
+							$EmailText .= "\n" . __('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' .__('or several that match this store number') . '. ' . __('This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /*Dont create order in system */
 						} else {
@@ -613,7 +613,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 												FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno = custbranch.debtorno WHERE debtorsmaster.edireference='" . $NAD_C082[0] . "' AND debtorsmaster.ediorders=1");
 
 					 if (DB_num_rows($ByResult)!=1){
-							$EmailText .= "\n" . _('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . _('Unfortunately there are either no branches of customer code') . ' ' . _('or several that match this ediref code. This order could not be processed further');
+							$EmailText .= "\n" . __('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . __('or several that match this ediref code. This order could not be processed further');
 							$TryNextFile = True; /* Look for other EDI msgs */
 							$CreateOrder = False; /* Dont create order in system */
 					} else {
@@ -655,18 +655,18 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 			case 'CUX':
 				$CUX = explode(':',mb_substr($LineText,4));
 				// $Order->Currency = $CUX[1];
-				$EmailText .= "\n" . _('Currency') . ' ' . $CUX[1];
+				$EmailText .= "\n" . __('Currency') . ' ' . $CUX[1];
 		    	break;
 
 			// TDT+20++30+31'
 			case 'TDT':
-				$EmailText .= "\n" . _('Details of transport');
+				$EmailText .= "\n" . __('Details of transport');
 				break;
 
 		     // TOD+3++CIF:2E:9'
 			case 'TOD':
 			// Terms of delivery or transport
-				$EmailText .= "\n" . _('Terms of delivery or transport');
+				$EmailText .= "\n" . __('Terms of delivery or transport');
 
 			    break;
 
@@ -688,10 +688,10 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					$LOC = explode('+',mb_substr($LineText,4));
 					switch ($LOC[2]){
 						case '1': /*Place of terms of delivery*/
-							$EmailText .= "\n" . _('Place of terms of delivery (LOC/1)') . ': ' . $LOC[2];
+							$EmailText .= "\n" . __('Place of terms of delivery (LOC/1)') . ': ' . $LOC[2];
 							break;
 						case '7': /*Place/location identification*/
-							$EmailText .= "\n" . _('Place of terms of delivery (LOC/7)') . ': ' . $LOC[2];
+							$EmailText .= "\n" . __('Place of terms of delivery (LOC/7)') . ': ' . $LOC[2];
 							break;
 
 					}
@@ -718,7 +718,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 
 					$LIN = explode('+',mb_substr($LineText,4));
 					$LIN2 = explode(':', $LIN[2]);
-					$EmailText .= "\n" . _('Line item') . ': ' . $LIN[0] . ' ' . $LIN2[0] ;
+					$EmailText .= "\n" . __('Line item') . ': ' . $LIN[0] . ' ' . $LIN2[0] ;
 					$LinCount++;
 					$Order->LineCounter = $LinCount;
 					// init order line data ffu....
@@ -759,7 +759,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 //					      $Qty=$QTY2[1];
 					   break;
 					}
-					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA2[0] ;
+					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA2[0] ;
 					break;
 
 			case 'IMD':
@@ -772,7 +772,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					}
 
 					$Descr=$IMD2[3];
-					$EmailText .= "\n" . _('Item description') . ': ' . $IMD2[3] ;
+					$EmailText .= "\n" . __('Item description') . ': ' . $IMD2[3] ;
 					break;
 
 			case 'QTY':
@@ -783,7 +783,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					      $Qty=$QTY2[1];
 					   break;
 					}
-					$EmailText .= "\n" . _('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;
+					$EmailText .= "\n" . __('Quantity') . ': ' . $QTY2[0] . '/'  . $QTY2[1] ;
 					break;
 
 			case 'MOA':
@@ -795,7 +795,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					   case '39'; // total amount
 					   break;
 					}
-					$EmailText .= "\n" . _('Monetary amount'). ': ' . $MOA2[1];
+					$EmailText .= "\n" . __('Monetary amount'). ': ' . $MOA2[1];
 					break;
 
 			case 'PRI':
@@ -806,12 +806,12 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					     $Price = $PRI2[1];
 					   break;
 					}
-					$EmailText .= "\n" . _('Price details') . ': ' . $PRI2[1] ;
+					$EmailText .= "\n" . __('Price details') . ': ' . $PRI2[1] ;
 					break;
 
 			case 'PAC':
 					$PAC = explode('+',mb_substr($LineText,4));
-					$EmailText .= "\n" . _('Package') . ': ' . $PAC[1];
+					$EmailText .= "\n" . __('Package') . ': ' . $PAC[1];
 					break;
 
 			case 'PIA': // ADDITIONAL PRODUCT ID
@@ -822,11 +822,11 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					   case 'SA'; // Supplier's article number
 					   break;
 					}
-					$EmailText .= "\n" . _('Additional product id') . ': ' . $PIA[3];
+					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA[3];
 					break;
 
 			case 'PCI':
-					$EmailText .= "\n" . _('Package identification');
+					$EmailText .= "\n" . __('Package identification');
 					break;
 
 			case 'TAX':
@@ -838,7 +838,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					   case '7'; // tax
 					   break;
 					}
-					$EmailText .= "\n" . _('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];
+					$EmailText .= "\n" . __('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];
 					break;
 
 			case 'MEA':
@@ -851,7 +851,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					   case 'K'; // netweight kg
 					   break;
 					}
-					$EmailText .= "\n" . _('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;
+					$EmailText .= "\n" . __('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;
 					break;
 
 			case 'UNS':
@@ -865,7 +865,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 						AddLinToChart ($Order,$StockID,$Qty,$Descr,$LongDescr,$Price,$Disc,$UOM,$Volume,$Weight);
 					}
 
-					$EmailText .= "\n" . _('Section control/Order line count') . ': ' . $LinCount;
+					$EmailText .= "\n" . __('Section control/Order line count') . ': ' . $LinCount;
 					break;
 			case 'CNT':
 			// control total
@@ -876,7 +876,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 					   break;
 					}
 
-					$EmailText .= "\n" . _('Control total') . ': ' . $CNT[0] ;
+					$EmailText .= "\n" . __('Control total') . ': ' . $CNT[0] ;
 					break;
 
           // message end
@@ -960,7 +960,7 @@ echo '</pre>';
 								'" . $Order->Quotation . "',
 								'" . $Order->DeliverBlind ."'
 								)";
-						$ErrMsg = _('The order cannot be created because');
+						$ErrMsg = __('The order cannot be created because');
 						$InsertQryResult = DB_query($HeaderSQL, $ErrMsg);
 						// update salesorderdetails too here ..
 						$xi=0;
@@ -1003,19 +1003,19 @@ echo '</pre>';
 														'" . $itemdue . "',
 														'" . $poline . "')";
 							$LinResult = DB_query($LINSQL,
-							_('The order line for') . ' ' . $xi . ' ' ._('could not be inserted'));
+							__('The order line for') . ' ' . $xi . ' ' .__('could not be inserted'));
 
 						}
 						DB_Txn_Commit();
-						// prnMsg(_('Order Number') . ' ' . $OrderNo . ' ' . _('has been created'),'success');
-						$EmailText .= "\n" . _('Order number: ') . $OrderNo . _(' has been created from edi orders.') ;
+						// prnMsg(__('Order Number') . ' ' . $OrderNo . ' ' . __('has been created'),'success');
+						$EmailText .= "\n" . __('Order number: ') . $OrderNo . __(' has been created from edi orders.') ;
 				}
 					$UNT = explode('+',mb_substr($LineText,4));
-					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNT[0] ;
+					$EmailText .= "\n" . __('Message trailer') . ': ' . $UNT[0] ;
 					break;
 			case 'UNZ':
 					$UNZ = explode('+',mb_substr($LineText,4)); // nbr of mesages
-					$EmailText .= "\n" . _('Message trailer') . ': ' . $UNZ[0] ;
+					$EmailText .= "\n" . __('Message trailer') . ': ' . $UNZ[0] ;
 					break;
 
 
@@ -1044,9 +1044,9 @@ echo '</pre>';
 				}
 			}
 			$TryNextFile = False; /*reset the abort to false before hit next file*/
-			$MailSubject = _('EDI Order Message Error');
+			$MailSubject = __('EDI Order Message Error');
 		} else {
-			$MailSubject = _('EDI Order Message') . ' ' . $Order->CustRef;
+			$MailSubject = __('EDI Order Message') . ' ' . $Order->CustRef;
 			$EDICustServPerson = $_SESSION['PurchasingManagerEmail'];
 			$Recipients = array($EDICustServPerson);
 		}

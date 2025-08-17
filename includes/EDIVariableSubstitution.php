@@ -17,7 +17,7 @@
 
 		$PositionPointer++;
 
-		echo '<BR>' . _('The variable') . ' - ' . $VariableName . ' ' . _('is set to') . ' ' . $$VariableName;
+		echo '<BR>' . __('The variable') . ' - ' . $VariableName . ' ' . __('is set to') . ' ' . $$VariableName;
 
 		$NewLineText = $NewLineText . $$VariableName;
 

@@ -4,14 +4,14 @@ include('includes/session.php');
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 
 $Today =  time();
-$Title = _('Aged Controlled Inventory') . ' ' . _('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
+$Title = __('Aged Controlled Inventory') . ' ' . __('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
 $ViewTopic = 'Inventory';
 $BookMark = 'AgedControlled';
 
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', _('Inventory'), '" alt="" /><b>', $Title, '</b>
+		<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', __('Inventory'), '" alt="" /><b>', $Title, '</b>
 	</p>';
 
 $SQL = "SELECT stockserialitems.stockid,
@@ -37,7 +37,7 @@ $SQL = "SELECT stockserialitems.stockid,
 			WHERE quantity > 0
 			ORDER BY createdate, quantity";
 
-$ErrMsg =  _('The stock held could not be retrieved because');
+$ErrMsg =  __('The stock held could not be retrieved because');
 $LocStockResult = DB_query($SQL, $ErrMsg);
 $NumRows = DB_num_rows($LocStockResult);
 
@@ -47,14 +47,14 @@ $TotalVal=0;
 echo '<table>
 		<thead>
 		<tr>
-			<th class="SortedColumn">', _('Stock'), '</th>
-			<th class="SortedColumn">', _('Description'), '</th>
-			<th class="SortedColumn">', _('Batch'), '</th>
-			<th class="SortedColumn">', _('Quantity Remaining'), '</th>
-			<th class="SortedColumn">', _('Units'), '</th>
-			<th class="SortedColumn">', _('Inventory Value'), '</th>
-			<th class="SortedColumn">', _('Date'), '</th>
-			<th class="SortedColumn">', _('Days Old'), '</th>
+			<th class="SortedColumn">', __('Stock'), '</th>
+			<th class="SortedColumn">', __('Description'), '</th>
+			<th class="SortedColumn">', __('Batch'), '</th>
+			<th class="SortedColumn">', __('Quantity Remaining'), '</th>
+			<th class="SortedColumn">', __('Units'), '</th>
+			<th class="SortedColumn">', __('Inventory Value'), '</th>
+			<th class="SortedColumn">', __('Date'), '</th>
+			<th class="SortedColumn">', __('Days Old'), '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -85,7 +85,7 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 echo '</tbody>
 		<tfoot>
 			<tr class="total_row">
-				<td colspan="3"><b>', _('Total'), '</b></td>
+				<td colspan="3"><b>', __('Total'), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalVal,2), '</b></td>
 				<td colspan="3"></td>

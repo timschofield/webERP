@@ -5,7 +5,7 @@ KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts
 
 include('includes/session.php');
 
-$Title = _('KL SPG User Maintenance');
+$Title = __('KL SPG User Maintenance');
 
 $ViewTopic= 'GettingStarted';
 $BookMark = 'UserMaintenance';
@@ -17,7 +17,7 @@ include('includes/KLEmails.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
 
 	
@@ -95,18 +95,18 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	if (mb_strlen($_POST['UserID'])<4){
 		$InputError = 1;
-		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
+		prnMsg(__('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIlLegalCharacters($_POST['UserID'])) {
 		$InputError = 1;
-		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
+		prnMsg(__('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
 		if (!$SelectedUser){
 			$InputError = 1;
-			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+			prnMsg(__('The password entered must be at least 5 characters long'),'error');
 		}
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
 		$InputError = 1;
-		prnMsg(_('The password cannot contain the user id'),'error');
+		prnMsg(__('The password cannot contain the user id'),'error');
 	}
 
 	if (!isset($SelectedUser)){
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'");
 		if (DB_num_rows($Result)==1){
 			$InputError =1;
-			prnMsg(_('The user ID') . ' ' . $_POST['UserID'] . ' ' . _('already exists and cannot be used again'),'error');
+			prnMsg(__('The user ID') . ' ' . $_POST['UserID'] . ' ' . __('already exists and cannot be used again'),'error');
 		}
 	}
 
@@ -146,7 +146,7 @@ if (isset($_POST['submit'])) {
 
 		AssignLocationsToSPG($_POST['UserID'], $_POST['DefaultLocation']);
 
-		prnMsg( _('The selected user record has been updated'), 'success');
+		prnMsg( __('The selected user record has been updated'), 'success');
 		KLSendEmail("SpgUsernameUpdated", "Silent", $SelectedUser, $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 		
 	} elseif ($InputError !=1) {
@@ -194,14 +194,14 @@ if (isset($_POST['submit'])) {
 
 		AssignLocationsToSPG($_POST['UserID'], $_POST['DefaultLocation']);
 
-		prnMsg( _('A new user record has been inserted'), 'success' );
+		prnMsg( __('A new user record has been inserted'), 'success' );
 		KLSendEmail("SpgUsernameCreated", "Silent", $_POST['UserID'], $_POST['Password'], $_POST['DefaultLocation'], $_SESSION['UserID'],$_POST['Blocked']);
 
 	}
 
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
-		$ErrMsg = _('The user update could not be processed because');
+		$ErrMsg = __('The user update could not be processed because');
 		$Result = DB_query($SQL,$ErrMsg,'');
 
 		unset($_POST['UserID']);
@@ -251,12 +251,12 @@ if (!isset($SelectedUser)) {
 	echo '<table class="selection">';
 	echo '<thead>';
 	echo '<tr>
-			<th class="SortedColumn">' . _('SPG Username') . '</th>
-			<th class="SortedColumn">' . _('SPG') . '</th>
-			<th class="SortedColumn">' . _('Shop') . '</th>
-			<th class="SortedColumn">' . _('Last Login') . '</th>
-			<th class="SortedColumn">' . _('Access Level')  . '</th>
-			<th class="SortedColumn">' . _('Status') . '</th>
+			<th class="SortedColumn">' . __('SPG Username') . '</th>
+			<th class="SortedColumn">' . __('SPG') . '</th>
+			<th class="SortedColumn">' . __('Shop') . '</th>
+			<th class="SortedColumn">' . __('Last Login') . '</th>
+			<th class="SortedColumn">' . __('Access Level')  . '</th>
+			<th class="SortedColumn">' . __('Status') . '</th>
 		</tr>';
 	echo '</thead>';
 	echo '<tbody>';
@@ -284,8 +284,8 @@ if (!isset($SelectedUser)) {
 				<td>' . $LastVisitDate . '</td>
 				<td>' . $SecurityRoles[($MyRow['fullaccess'])] . '</td>
 				<td>' . $Status . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedUser=' . $MyRow['userid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedUser=' . $MyRow['userid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedUser=' . $MyRow['userid'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedUser=' . $MyRow['userid'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this user?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -295,7 +295,7 @@ if (!isset($SelectedUser)) {
 
 
 if (isset($SelectedUser)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">' . _('Review Existing SPG') . '</a></div><br />';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">' . __('Review Existing SPG') . '</a></div><br />';
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -359,21 +359,21 @@ if (isset($SelectedUser)) {
 	echo FixedField('Salesman', $_POST['Salesman'], 'SPG Code', ''); 
 	echo FixedField('RealName', $SPGFullName, 'SPG Name', ''); 
 } else {
-	echo '<fieldset><legend>' . _('New SPG webERP User') . '</legend>';
-	echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), '', 'CURRENT', false, 1, true, true);
+	echo '<fieldset><legend>' . __('New SPG webERP User') . '</legend>';
+	echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', __('SPG'), '', 'CURRENT', false, 1, true, true);
 }
-echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '', 2, false, true);
-echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', 'BALISHOPS', 3, true, false);
-echo FieldToSelectOneEntryFromArray($SecurityRoles, 'Access', isset($_POST['Access']) ? $_POST['Access'] : '', _('Access Level'));
-echo FieldToSelectFromTwoOptions('0', _('Open'),
-								'1', _('Blocked'), 'Blocked', 
-								isset($_POST['Blocked']) ? $_POST['Blocked'] : '0', _('Account Status'), '', '', 5, true, false);
+echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, __('Password'), '', 2, false, true);
+echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', __('KL Shop'), '', 'BALISHOPS', 3, true, false);
+echo FieldToSelectOneEntryFromArray($SecurityRoles, 'Access', isset($_POST['Access']) ? $_POST['Access'] : '', __('Access Level'));
+echo FieldToSelectFromTwoOptions('0', __('Open'),
+								'1', __('Blocked'), 'Blocked', 
+								isset($_POST['Blocked']) ? $_POST['Blocked'] : '0', __('Account Status'), '', '', 5, true, false);
 
 echo '</fieldset>';
 
 echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />';
 
-echo OneButtonCenteredForm('submit', _('Enter Information'));
+echo OneButtonCenteredForm('submit', __('Enter Information'));
 
 echo '</div>
 	</form>';
@@ -386,7 +386,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 	$LocationSql = "DELETE FROM locationusers 
 					WHERE userid = '" . $_POST['UserID'] . "'";
 
-	$ErrMsg = _('The default user locations could not be deleted because');
+	$ErrMsg = __('The default user locations could not be deleted because');
 	$Result = DB_query($LocationSql, $ErrMsg, '');
 
 	// Assign the default location to the user
@@ -400,7 +400,7 @@ function AssignLocationsToSPG($UserID, $LocationCode) {
 		1,
 		1
 	)";
-	$ErrMsg = _('The default user locations could not be processed because');
+	$ErrMsg = __('The default user locations could not be processed because');
 	$Result = DB_query($LocationSql, $ErrMsg, '');
 
 	// Give SPG rights ALSO to KANTO location (needed for internal requests)

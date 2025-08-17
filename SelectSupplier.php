@@ -59,7 +59,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 ';
 }
 
-$Title = _('Search Suppliers');
+$Title = __('Search Suppliers');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SelectSupplier';
 $BodyOnLoad='load();';
@@ -78,7 +78,7 @@ if (isset($_POST['Search'])
 	OR isset($_POST['Previous'])) {
 
 	if (mb_strlen($_POST['Keywords']) > 0 AND mb_strlen($_POST['SupplierCode']) > 0) {
-		prnMsg( _('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
+		prnMsg( __('Supplier name keywords have been used in preference to the Supplier code extract entered'), 'info' );
 	}
 	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
 		$SQL = "SELECT supplierid,
@@ -148,14 +148,14 @@ $TableHead =
 		<thead>
 			<tr>
 				<th style="width:33%">' .
-					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
-					_('Supplier Inquiries') . '</th>
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . __('Inquiries and Reports') . '" />' .
+					__('Supplier Inquiries') . '</th>
 				<th style="width:33%">' .
-					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
-					_('Supplier Transactions') . '</th>
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Transactions') . '" />' .
+					__('Supplier Transactions') . '</th>
 				<th style="width:33%">' .
-					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
-					_('Supplier Maintenance') . '</th>
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Maintenance') . '" />' .
+					__('Supplier Maintenance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -173,41 +173,41 @@ if (isset($_SESSION['SupplierID'])) {
 
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
-		_('Supplier'), '" /> ', // Icon title.
-		_('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>',// Page title.
-		'<div class="page_help_text">', _('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
+		__('Supplier'), '" /> ', // Icon title.
+		__('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>',// Page title.
+		'<div class="page_help_text">', __('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
 			'<tr>
 				<td valign="top" class="select">';
 	// Supplier inquiries options:
-	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
+	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Supplier Account Inquiry') . '</a>
 		<br />
-		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . _('Supplier Delivery Note AND GRN inquiry') . '</a>
+		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . __('Supplier Delivery Note AND GRN inquiry') . '</a>
 		<br />
 		<br />';
 
-	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Add / Receive / View Outstanding Purchase Orders') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('View All Purchase Orders') . '</a><br />';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Add / Receive / View Outstanding Purchase Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('View All Purchase Orders') . '</a><br />';
 	wikiLink('Supplier', $_SESSION['SupplierID']);
-	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . $_SESSION['SupplierID'] . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . _('List all open shipments for') .' '.$SupplierName. '</a>';
-	echo '<br /><a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Search / Modify / Close Shipments') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . _('Supplier Price List') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/ShiptsList.php?SupplierID=' . $_SESSION['SupplierID'] . '&amp;SupplierName=' . urlencode($SupplierName) . '">' . __('List all open shipments for') .' '.$SupplierName. '</a>';
+	echo '<br /><a href="' . $RootPath . '/Shipt_Select.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Search / Modify / Close Shipments') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SuppPriceList.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '">' . __('Supplier Price List') . '</a>';
 	echo '</td><td valign="top" class="select">'; /* Supplier Transactions */
-	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Purchase Order for This Supplier') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SupplierInvoice.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Invoice') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Suppliers Credit Note') . '</a><br />';
-	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Purchase Order for This Supplier') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Suppliers Invoice') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php?New=true&amp;SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Suppliers Credit Note') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Payments.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Enter a Payment to, or Receipt from the Supplier') . '</a><br />';
 	echo '<br />';
-	echo '<br /><a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/ReverseGRN.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Reverse an Outstanding Goods Received Note (GRN)') . '</a>';
 	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
-	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a>
-		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Modify Or Delete Supplier Details') . '</a>
-		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Add/Edit/Delete Supplier Contacts') . '</a>
+	echo '<a href="' . $RootPath . '/Suppliers.php">' . __('Add a New Supplier') . '</a>
+		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Modify Or Delete Supplier Details') . '</a>
+		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Add/Edit/Delete Supplier Contacts') . '</a>
 		<br />
-		<br /><a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Set Up Sell Through Support Deals') . '</a>
-		<br /><a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . _('Set Up A New Shipment') . '</a>
-		<br /><a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login Configuration') . '</a>
+		<br /><a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . __('Set Up Sell Through Support Deals') . '</a>
+		<br /><a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . __('Set Up A New Shipment') . '</a>
+		<br /><a href="' . $RootPath . '/SuppLoginSetup.php">' . __('Supplier Login Configuration') . '</a>
 		</td>
 		</tr>
 		<tbody></table>';
@@ -215,31 +215,31 @@ if (isset($_SESSION['SupplierID'])) {
 	// Supplier is not selected yet
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
-		_('Suppliers'), '" /> ', // Icon title.
-		_('Suppliers'), '</p>',// Page title.
+		__('Suppliers'), '" /> ', // Icon title.
+		__('Suppliers'), '</p>',// Page title.
 		'<br />',
 		$TableHead,
 		'<tr>',
 			'<td class="select"></td>',// Supplier inquiries options.
 			'<td class="select"></td>',// Supplier transactions options.
-			'<td class="select"><a href="', $RootPath, '/Suppliers.php">', _('Add a New Supplier'), '</a></td>',// Supplier Maintenance options.
+			'<td class="select"><a href="', $RootPath, '/Suppliers.php">', __('Add a New Supplier'), '</a></td>',// Supplier Maintenance options.
 		'</tr><tbody></table>';
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Suppliers') . '</p>';
 
 echo '<fieldset>
-		<legend class="search">', _('Search Criteria'), '</legend>
+		<legend class="search">', __('Search Criteria'), '</legend>
 		<field>
-			<label for="Keywords">' . _('Enter a partial Name') . ':</label>';
+			<label for="Keywords">' . __('Enter a partial Name') . ':</label>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
 	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 echo '<field>
-		<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Enter a partial Code') . ':</label>';
+		<label for="SupplierCode">' . '<b>' . __('OR') . ' </b>' . __('Enter a partial Code') . ':</label>';
 if (isset($_POST['SupplierCode'])) {
 	echo '<input type="text" autofocus="autofocus" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
@@ -248,7 +248,7 @@ if (isset($_POST['SupplierCode'])) {
 echo '</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="Search" value="' . __('Search Now') . '" /></div>';
 //if (isset($Result) AND !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($Result);
@@ -264,7 +264,7 @@ if (isset($_POST['Search'])) {
 		}
 	}
 	if ($ListPageMax > 1) {
-		echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
+		echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': </p>';
 		echo '<select name="PageOffset">';
 		$ListPage = 1;
 		while ($ListPage <= $ListPageMax) {
@@ -276,28 +276,28 @@ if (isset($_POST['Search'])) {
 			$ListPage++;
 		}
 		echo '</select>
-			<input type="submit" name="Go" value="' . _('Go') . '" />
-			<input type="submit" name="Previous" value="' . _('Previous') . '" />
-			<input type="submit" name="Next" value="' . _('Next') . '" />';
+			<input type="submit" name="Go" value="' . __('Go') . '" />
+			<input type="submit" name="Previous" value="' . __('Previous') . '" />
+			<input type="submit" name="Next" value="' . __('Next') . '" />';
 		echo '<br />';
 	}
-	echo '<input type="hidden" name="Search" value="' . _('Search Now') . '" />';
+	echo '<input type="hidden" name="Search" value="' . __('Search Now') . '" />';
 	echo '<br />
 		<br />
 		<br />
 		<table cellpadding="2">
 		<thead>
 			<tr>
-	  		<th class="SortedColumn">' . _('Code') . '</th>
-			<th class="SortedColumn">' . _('Supplier Name') . '</th>
-			<th class="SortedColumn">' . _('Currency') . '</th>
-			<th class="SortedColumn">' . _('Address 1') . '</th>
-			<th class="SortedColumn">' . _('Address 2') . '</th>
-			<th class="SortedColumn">' . _('Address 3') . '</th>
-			<th class="SortedColumn">' . _('Address 4') . '</th>
-			<th class="SortedColumn">' . _('Telephone') . '</th>
-			<th class="SortedColumn">' . _('Email') . '</th>
-			<th class="SortedColumn">' . _('URL') . '</th>
+	  		<th class="SortedColumn">' . __('Code') . '</th>
+			<th class="SortedColumn">' . __('Supplier Name') . '</th>
+			<th class="SortedColumn">' . __('Currency') . '</th>
+			<th class="SortedColumn">' . __('Address 1') . '</th>
+			<th class="SortedColumn">' . __('Address 2') . '</th>
+			<th class="SortedColumn">' . __('Address 3') . '</th>
+			<th class="SortedColumn">' . __('Address 4') . '</th>
+			<th class="SortedColumn">' . __('Telephone') . '</th>
+			<th class="SortedColumn">' . __('Email') . '</th>
+			<th class="SortedColumn">' . __('URL') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -327,7 +327,7 @@ if (isset($_POST['Search'])) {
 }
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {
-	echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': </p>';
+	echo '<p>&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': </p>';
 	echo '<select name="PageOffset">';
 	$ListPage = 1;
 	while ($ListPage <= $ListPageMax) {
@@ -339,9 +339,9 @@ if (isset($ListPageMax) and $ListPageMax > 1) {
 		$ListPage++;
 	}
 	echo '</select>
-		<input type="submit" name="Go" value="' . _('Go') . '" />
-		<input type="submit" name="Previous" value="' . _('Previous') . '" />
-		<input type="submit" name="Next" value="' . _('Next') . '" />';
+		<input type="submit" name="Go" value="' . __('Go') . '" />
+		<input type="submit" name="Previous" value="' . __('Previous') . '" />
+		<input type="submit" name="Next" value="' . __('Next') . '" />';
 	echo '<br />';
 }
 echo '</div>
@@ -351,18 +351,18 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	if ($_SESSION['geocode_integration'] == 1) {
 		if ($lat == 0) {
 			echo '<br />';
-			echo '<div class="centre">' . _('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
+			echo '<div class="centre">' . __('Mapping is enabled, but no Mapping data to display for this Supplier.') . '</div>';
 		} else {
 
 			echo '<br />
 				<table class="selection">
 				<thead>
 					<tr>
-						<th>', _('Supplier Mapping'), '</th>
+						<th>', __('Supplier Mapping'), '</th>
 					</tr>
 				</thead><tbody>
 					<tr>
-						<td class="centre">', _('Mapping is enabled, Map will display below.'), '</td>
+						<td class="centre">', __('Mapping is enabled, Map will display below.'), '</td>
 					</tr><tr>
 						<td class="centre">', // Mapping:
 							'<div class="centre" id="map" style="width: ', $map_width, 'px; height: ', $map_height, 'px"></div>
@@ -390,27 +390,27 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			$Row = DB_fetch_array($Total1Result);
 			echo '<br />';
 			echo '<table width="45%" cellpadding="4">';
-			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
+			echo '<tr><th style="width:33%" colspan="2">' . __('Supplier Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
 			if ($MyRow['lastpaiddate'] == 0) {
-				echo _('No payments yet to this supplier.') . '</td>
+				echo __('No payments yet to this supplier.') . '</td>
 					<td valign="top" class="select"></td>
 					</tr>';
 			} else {
-				echo _('Last Paid:') . '</td>
+				echo __('Last Paid:') . '</td>
 					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>
 					</tr>';
 			}
 			echo '<tr>
-					<td valign="top" class="select">' . _('Last Paid Amount:') . '</td>
+					<td valign="top" class="select">' . __('Last Paid Amount:') . '</td>
 					<td valign="top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
 			echo '<tr>
-					<td valign="top" class="select">' . _('Supplier since:') . '</td>
+					<td valign="top" class="select">' . __('Supplier since:') . '</td>
 					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
 					</tr>';
 			echo '<tr>
-					<td valign="top" class="select">' . _('Total Spend with this Supplier:') . '</td>
+					<td valign="top" class="select">' . __('Total Spend with this Supplier:') . '</td>
 					<td valign="top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';

@@ -11,26 +11,26 @@ include('includes/SQL_CommonFunctions.php');
 
 /* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {
-	$Title = _('Picking Lists Not Enabled');
+	$Title = __('Picking Lists Not Enabled');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/error.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	echo '<br />';
-	prnMsg(_('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
-	/*prnMsg(_('The system is configured to NOT use picking lists. In order for a picking note to occur before an order can be delivered, a configuration parameter must be activated. Please, consult your system administrator.'), 'info');*/
+	prnMsg(__('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
+	/*prnMsg(__('The system is configured to NOT use picking lists. In order for a picking note to occur before an order can be delivered, a configuration parameter must be activated. Please, consult your system administrator.'), 'info');*/
 	include('includes/footer.php');
 	exit();
 }
 
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['TransDate'])) {
-	$Title = _('Select Picking Lists');
+	$Title = __('Select Picking Lists');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/sales.png" title="', // Icon image.
-		_('Search'), '" /> ', // Icon title.
+		__('Search'), '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
 	$SQL = "SELECT locations.loccode,
 			locationname
@@ -41,14 +41,14 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Picking List Criteria'), '</legend>';
+			<legend>', __('Picking List Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="TransDate">' . _('Create picking lists for all deliveries to be made on') . ' : ' . '</label>
+			<label for="TransDate">' . __('Create picking lists for all deliveries to be made on') . ' : ' . '</label>
 			<input required="required" autofocus="autofocus" type="date" name="TransDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(date('m'), date('Y'), date('d') + 1)) . '" />
 		</field>
 		<field>
-			<label for="loccode">' . _('From Warehouse') . ' : ' . '</label>
+			<label for="loccode">' . __('From Warehouse') . ' : ' . '</label>
 			<select required="required" name="loccode">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
@@ -57,7 +57,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 		</field>
 		</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="' . _('Print Picking Lists') . '" />
+			<input type="submit" name="Process" value="' . __('Print Picking Lists') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -65,7 +65,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the order header details from the database');
+$ErrMsg = __('There was a problem retrieving the order header details from the database');
 
 if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 	/* If there is no transaction date set, then it must be for a single order */
@@ -156,14 +156,14 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 
 	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($Result) == 0) {
-		$Title = _('Print Picking List Error');
+		$Title = __('Print Picking List Error');
 		include('includes/header.php');
 		echo '<br />';
-		prnMsg(_('Unable to Locate any orders for this criteria '), 'info');
+		prnMsg(__('Unable to Locate any orders for this criteria '), 'info');
 		echo '<br />
 			<table class="selection">
 			<tr>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Enter Another Date') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Enter Another Date') . '</a></td>
 			</tr>
 			</table>
 			<br />';
@@ -214,8 +214,8 @@ if ($OrdersToPick[0]['orderno'] == 'Preview') {
 
 $PaperSize = $FormDesign->PaperSize;
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Picking List'));
-$pdf->addInfo('Subject', _('Laser Picking List'));
+$pdf->addInfo('Title', __('Picking List'));
+$pdf->addInfo('Subject', __('Laser Picking List'));
 $FontSize = 12;
 $ListCount = 0;
 $Copy = '';
@@ -234,7 +234,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 	$PageNumber = 1;
 
 	if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-		$ErrMsg = _('There was a problem retrieving the order line details for Order Number') . ' ' . $OrdersToPick[$i]['orderno'] . ' ' . _('from the database');
+		$ErrMsg = __('There was a problem retrieving the order line details for Order Number') . ' ' . $OrdersToPick[$i]['orderno'] . ' ' . __('from the database');
 
 		/* Are there any picking lists for this order already */
 		$SQL = "SELECT COUNT(orderno),
@@ -447,13 +447,13 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 
 			if ($MyRow2['controlled'] == 1) {
 				if ($MyRow2['serialised'] == 1) {
-/*					$BundleLabel = _('Serial#:');*/
-					$BundleLabel = _('Serial number') . ':';
+/*					$BundleLabel = __('Serial#:');*/
+					$BundleLabel = __('Serial number') . ':';
 				}
 				else {
-/*					$BundleLabel = _('Lot#:');*/
-					$BundleLabel = _('Lot Number') . ':';
-/*					$BundleLabel = _('Lot number') . ':';*/
+/*					$BundleLabel = __('Lot#:');*/
+					$BundleLabel = __('Lot Number') . ':';
+/*					$BundleLabel = __('Lot number') . ':';*/
 				}
 				$SQL = "SELECT serialno,
 								quantity,
@@ -478,7 +478,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 						AND quantity > 0
 						ORDER BY createdate, quantity";
 
-				$ErrMsg = '<br />' . _('Could not retrieve the items for') . ' ' . $MyRow2['stkcode'];
+				$ErrMsg = '<br />' . __('Could not retrieve the items for') . ' ' . $MyRow2['stkcode'];
 				$Bundles = DB_query($SQL, $ErrMsg);
 				$YPos += ($LineHeight);
 
@@ -510,16 +510,16 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 
 		$YPos = $Page_Height - 45;
 		$pdf->setFont('', 'B');
-		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, _('Signed for') . ': ______________________________');
-		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, _('Date') . ' : __________');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, __('Signed for') . ': ______________________________');
+		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, __('Date') . ' : __________');
 		$pdf->setFont('', '');
 	} /*end if there are order details to show on the order*/
 } /*end for loop to print the whole lot twice */
 
 if ($ListCount == 0) {
-	$Title = _('Print Picking List Error');
+	$Title = __('Print Picking List Error');
 	include('includes/header.php');
-	prnMsg( _('There are no picking lists to print'), 'error');
+	prnMsg( __('There are no picking lists to print'), 'error');
 	include('includes/footer.php');
 	exit();
 } else {

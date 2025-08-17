@@ -16,7 +16,7 @@ include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Import Excel with Lazada URL information');
+$Title = __('Import Excel with Lazada URL information');
 
 include('includes/header.php');
 
@@ -76,14 +76,14 @@ function submit($SelectedFile) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Lazada Product Id') . '</th>
-						<th class="SortedColumn">' . _('Lazada Store Id') . '</th>
-						<th class="SortedColumn">' . _('URL Lazada') . '</th>
-						<th class="SortedColumn">' . _('QOH Lazada') . '</th>
-						<th class="SortedColumn">' . _('Error') . '</th>
-						<th class="SortedColumn">' . _('Action') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('Lazada Product Id') . '</th>
+						<th class="SortedColumn">' . __('Lazada Store Id') . '</th>
+						<th class="SortedColumn">' . __('URL Lazada') . '</th>
+						<th class="SortedColumn">' . __('QOH Lazada') . '</th>
+						<th class="SortedColumn">' . __('Error') . '</th>
+						<th class="SortedColumn">' . __('Action') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -107,7 +107,7 @@ function submit($SelectedFile) {
 				$MyRow = DB_fetch_array($Result);
 		
 				$URLLazada = LAZADA_PREFIX_URL . $LazadaProductId . ".html";
-				$LinkLazada = '<li><a rel="external" href="' . $URLLazada . '">' . _('Lazada') . '</a></li>';
+				$LinkLazada = '<li><a rel="external" href="' . $URLLazada . '">' . __('Lazada') . '</a></li>';
 				
 				// Check if we have enough QOH to set it as enabled in Lazada
 				$QOH = ItemMarketplaceQOH($StockID);
@@ -152,13 +152,13 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
         </p>';
 
     echo '<fieldset>
-            <legend>' . _('Import file with Lazada Information') . '</legend>';
+            <legend>' . __('Import file with Lazada Information') . '</legend>';
 
-    echo FieldToSelectOneFile("SelectedFile", _('File with Lazada Information'),'','', '', true, false);
+    echo FieldToSelectOneFile("SelectedFile", __('File with Lazada Information'),'','', '', true, false);
 
     echo '</fieldset>';
 
-    echo OneButtonCenteredForm('submit', _('Import File'));
+    echo OneButtonCenteredForm('submit', __('Import File'));
 
     echo '</div>
         </form>';

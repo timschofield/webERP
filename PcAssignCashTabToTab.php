@@ -6,7 +6,7 @@ include('includes/session.php');
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
-$Title = _('Assignment of Cash from Tab to Tab');
+$Title = __('Assignment of Cash from Tab to Tab');
 include('includes/header.php');
 
 if (isset($_POST['SelectedTabs'])){
@@ -34,11 +34,11 @@ if (isset($_POST['Cancel'])) {
 
 if (isset($_POST['Process'])) {
 	if ($SelectedTabs == '') {
-		prnMsg(_('You must first select a petty cash tab to assign cash'),'error');
+		prnMsg(__('You must first select a petty cash tab to assign cash'),'error');
 		unset($SelectedTabs);
 	}
 	if ($SelectedTabs == $SelectedTabsTo) {
-		prnMsg(_('The tab selected FROM should not be the same as the selected TO'),'error');
+		prnMsg(__('The tab selected FROM should not be the same as the selected TO'),'error');
 		unset($SelectedTabs);
 		unset($SelectedTabsTo);
 		unset($_POST['Process']);
@@ -54,7 +54,7 @@ if (isset($_POST['Process'])) {
 			if ($Currency === '') {
 				$Currency = $CurrRow['currency'];
 			} elseif ($Currency != $CurrRow['currency']) {
-				prnMsg (_('The currency of the tab transferred from should be the same as the tab being transferred to'),'error');
+				prnMsg (__('The currency of the tab transferred from should be the same as the tab being transferred to'),'error');
 				unset($SelectedTabs);
 				unset($SelectedTabsTo);
 				unset($_POST['Process']);
@@ -68,7 +68,7 @@ if (isset($_POST['Go'])) {
 	$InputError = 0;
 	if ($Days <= 0) {
 		$InputError = 1;
-		prnMsg(_('The number of days must be a positive number'),'error');
+		prnMsg(__('The number of days must be a positive number'),'error');
 		$Days = 30;
 	}
 }
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['Amount'] == 0) {
 		$InputError = 1;
-		prnMsg('<br />' . _('The Amount must be input'),'error');
+		prnMsg('<br />' . __('The Amount must be input'),'error');
 	}
 
 	$SQLLimit = "SELECT tablimit,tabcode
@@ -99,11 +99,11 @@ if (isset($_POST['submit'])) {
 		if ($LimitRow['tabcode'] == $SelectedTabs) {
 			if (($_POST['CurrentAmount'] + $_POST['Amount']) > $LimitRow['tablimit']){
 				$InputError = 1;
-				prnMsg(_('The balance after this assignment would be greater than the specified limit for this PC tab') . ' ' . $LimitRow[1],'error');
+				prnMsg(__('The balance after this assignment would be greater than the specified limit for this PC tab') . ' ' . $LimitRow[1],'error');
 			}
 		}  elseif ($_POST['SelectedTabsToAmt'] - $_POST['Amount'] > $LimitRow['tablimit']) {
 				$InputError = 1;
-				prnMsg(_('The balance after this assignment would be greater than the specified limit for this PC tab') . ' ' . $LimitRow[1],'error');
+				prnMsg(__('The balance after this assignment would be greater than the specified limit for this PC tab') . ' ' . $LimitRow[1],'error');
 		}
 	}
 
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 					NULL,
 					'" . $_POST['Notes'] . "'
 					)";
-		$Msg = _('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs . ' ' . _('to') . ' ' . $SelectedTabsTo . ' ' . _('has been created');
+		$Msg = __('Assignment of cash from PC Tab ') . ' ' . $SelectedTabs . ' ' . __('to') . ' ' . $SelectedTabsTo . ' ' . __('has been created');
 	}
 
 	if ( $InputError != 1) {
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedTabs)){
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -171,10 +171,10 @@ if (!isset($SelectedTabs)){
 	$Result = DB_query($SQL);
 
     echo '<fieldset>
-			<legend>', _('Select Cash Tabs'), '</legend>'; //Main table
+			<legend>', __('Select Cash Tabs'), '</legend>'; //Main table
 
     echo '<field>
-			<label for="SelectedTabs">' . _('Petty cash tab to assign cash from') . ':</label>
+			<label for="SelectedTabs">' . __('Petty cash tab to assign cash from') . ':</label>
 			<select name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) AND $MyRow['tabcode'] == $_POST['SelectTabs']) {
@@ -189,7 +189,7 @@ if (!isset($SelectedTabs)){
 		</field>';
 
 	echo '<field>
-			<label for="SelectedTabsTo">' . _('Petty cash tab to assign cash to') . ':</label>
+			<label for="SelectedTabsTo">' . __('Petty cash tab to assign cash to') . ':</label>
 			<select name="SelectedTabsTo">';
 	DB_data_seek($Result,0);
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -206,8 +206,8 @@ if (!isset($SelectedTabs)){
     DB_free_result($Result);
 
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="submit" name="Process" value="' . __('Accept') . '" />
+			<input type="reset" name="Cancel" value="' . __('Cancel') . '" />
 		</div>';
 	echo '</form>';
 }
@@ -217,17 +217,17 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 	if (!isset($_POST['submit'])) {
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' .
-			_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+			__('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another pair of tabs') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Select another pair of tabs') . '</a></div>';
 
 	echo '<fieldset>';
 	echo '	<field>
-				<td>' . _('Petty cash tab to assign cash from') . ':</td>
+				<td>' . __('Petty cash tab to assign cash from') . ':</td>
 				<td>' . $SelectedTabs . '</td>
 			</field>
 			<field>
-				<td>' . _('Petty cash tab to assign cash to') . ':</td>
+				<td>' . __('Petty cash tab to assign cash to') . ':</td>
 				<td>' . $SelectedTabsTo . '</td>
 			</field>';
 	echo '</fieldset>';
@@ -275,23 +275,23 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		//Limit expenses history to X days
 		echo '<fieldset>
 				<field>
-					' . _('Detail of Tab Movements For Last') .':
+					' . __('Detail of Tab Movements For Last') .':
 						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-						<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . _('Days') . '
-						<input type="submit" name="Go" value="' . _('Go') . '" />
+						<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . __('Days') . '
+						<input type="submit" name="Go" value="' . __('Go') . '" />
 				</field>
 			</fieldset>';
 
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Expense Code') . '</th>
-						<th class="SortedColumn">' . _('Amount') . '</th>
-						<th>' . _('Business Purpose') . '</th>
-						<th>' . _('Notes') . '</th>
-						<th>' . _('Receipt Attachment') . '</th>
-						<th class="SortedColumn">' . _('Date Authorised') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
+						<th class="SortedColumn">' . __('Expense Code') . '</th>
+						<th class="SortedColumn">' . __('Amount') . '</th>
+						<th>' . __('Business Purpose') . '</th>
+						<th>' . __('Notes') . '</th>
+						<th>' . __('Receipt Attachment') . '</th>
+						<th class="SortedColumn">' . __('Date Authorised') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -324,15 +324,15 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				$ReceiptExt = $ReceiptRow['extension'];
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
 				$ReceiptText = '';
 			} else {
-				$ReceiptText = _('No attachment');
+				$ReceiptText = __('No attachment');
 			}
 
 		if ($MyRow['authorized'] == '1000-01-01') {
-				$AuthorisedDate = _('Unauthorised');
+				$AuthorisedDate = __('Unauthorised');
 		} else {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
@@ -389,7 +389,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="2" class="number"><b>' . _('Current balance') . ':</b></td>
+					<td colspan="2" class="number"><b>' . __('Current balance') . ':</b></td>
 					<td>' . locale_number_format($SelectedTab['0'],$CurrDecimalPlaces) . '</td>
 				</tr>
 			</tfoot>
@@ -412,9 +412,9 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<fieldset>'; //Main table
-		echo '<legend>' . _('New Cash Assignment') . '</legend>';
+		echo '<legend>' . __('New Cash Assignment') . '</legend>';
 		echo '<field>
-				<label for="Date">' . _('Cash Assignment Date') . ':</label>
+				<label for="Date">' . __('Cash Assignment Date') . ':</label>
 				<input type="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['Date']) . '" />
 			</field>';
 
@@ -424,7 +424,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<field>
-				<label for="Amount">' . _('Amount') . ':</label>
+				<label for="Amount">' . __('Amount') . ':</label>
 				<input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" />
 			</field>';
 
@@ -433,7 +433,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		}
 
 		echo '<field>
-				<label for="Notes">' . _('Notes') . ':</label>
+				<label for="Notes">' . __('Notes') . ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" />
 			</field>';
 
@@ -445,8 +445,8 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			<input type="hidden" name="SelectedTabsToAmt" value="' . $SelectedTabsTo[0] . '" />
 			<br />
 			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Accept') . '" />
-				<input type="reset" name="Cancel" value="' . _('Cancel') . '" /></div>
+				<input type="submit" name="submit" value="' . __('Accept') . '" />
+				<input type="reset" name="Cancel" value="' . __('Cancel') . '" /></div>
 			</div>
 		</form>';
 

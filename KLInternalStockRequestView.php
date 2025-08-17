@@ -7,14 +7,14 @@
 
 include('includes/session.php');
 
-$Title = _('View Unfulfilled Stock Requests');
+$Title = __('View Unfulfilled Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'ViewRequest';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('View Unfulfilled Stock Requests') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Contract') . '" alt="" />' . __('View Unfulfilled Stock Requests') . '</p>';
 
 // Fetch all uncompleted internal stock requests of the department (shop) assigned to SPG
 
@@ -46,14 +46,14 @@ if (DB_num_rows($Result) > 0) {
     echo '<table class="selection">
             <thead>
                 <tr>
-                    <th class="SortedColumn">' . _('Request ID') . '</th>
-                    <th class="SortedColumn">' . _('From') . '</th>
-                    <th class="SortedColumn">' . _('To') . '</th>
-                    <th class="SortedColumn">' . _('Stock ID') . '</th>
-                    <th class="SortedColumn">' . _('Stock Description') . '</th>
-                    <th class="SortedColumn">' . _('Qty Requested') . '</th>
-                    <th class="SortedColumn">' . _('Qty Pending') . '</th>
-                    <th class="SortedColumn">' . _('Units') . '</th>
+                    <th class="SortedColumn">' . __('Request ID') . '</th>
+                    <th class="SortedColumn">' . __('From') . '</th>
+                    <th class="SortedColumn">' . __('To') . '</th>
+                    <th class="SortedColumn">' . __('Stock ID') . '</th>
+                    <th class="SortedColumn">' . __('Stock Description') . '</th>
+                    <th class="SortedColumn">' . __('Qty Requested') . '</th>
+                    <th class="SortedColumn">' . __('Qty Pending') . '</th>
+                    <th class="SortedColumn">' . __('Units') . '</th>
                 </tr>
             </thead>
             <tbody>';
@@ -73,7 +73,7 @@ if (DB_num_rows($Result) > 0) {
 
     echo '</tbody></table>';
 } else {
-    echo '<p>' . _('There are no unfulfilled internal stock requests.') . '</p>';
+    echo '<p>' . __('There are no unfulfilled internal stock requests.') . '</p>';
 }
 
 include('includes/footer.php');

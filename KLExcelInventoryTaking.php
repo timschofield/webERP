@@ -196,7 +196,7 @@ function submit($ListCategories, $Location) {
 			$objWriter->save('php://output');
 
 		}else{
-			$Title = _('Excel file for Inventory Taking');
+			$Title = __('Excel file for Inventory Taking');
 			include('includes/header.php');
 			prnMsg('Inventory Taking: No items to count');
 			include('includes/footer.php');
@@ -209,7 +209,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Export file for Inventory Taking at a location');
+	$Title = __('Export file for Inventory Taking at a location');
 
 	include('includes/header.php');
 
@@ -217,18 +217,18 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Inventory Taking') . '" alt="" />' . ' ' . _('Excel file for Inventory Taking') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Excel file for Inventory Taking') . '" alt="" />' . ' ' . __('Excel file for Inventory Taking') . '
 		</p>';
 
-	echo '<fieldset><legend>' . _('Inventory Taking at Location Selection') . '</legend>';
+	echo '<fieldset><legend>' . __('Inventory Taking at Location Selection') . '</legend>';
 
-	echo FieldToSelectMultipleStockCategories('Categories', $_POST['Categories'], _('Inventory Categories'), _('Select the categories to perform inventory taking at location'), '', 1, true, true);
-	echo FieldToSelectOneLocation('StockLocation', $_POST['StockLocation'], _('Location'), '', 'CANVIEW', 2, true, false);
+	echo FieldToSelectMultipleStockCategories('Categories', $_POST['Categories'], __('Inventory Categories'), __('Select the categories to perform inventory taking at location'), '', 1, true, true);
+	echo FieldToSelectOneLocation('StockLocation', $_POST['StockLocation'], __('Location'), '', 'CANVIEW', 2, true, false);
 	echo FieldToSelectSpreadSheetFormat("Format", $_POST['Format'], 'Spreadsheet File Format', '', '', 3, true, false);
 	
 	echo '</fieldset>';
 	
-	echo OneButtonCenteredForm('submit', _('Export Inventory Taking File'));
+	echo OneButtonCenteredForm('submit', __('Export Inventory Taking File'));
 
 	echo '</form>';
 	include('includes/footer.php');

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL General Performance Board');
+$Title = __('KL General Performance Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;

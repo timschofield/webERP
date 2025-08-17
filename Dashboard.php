@@ -2,7 +2,7 @@
 $PageSecurity = 0;
 
 include('includes/session.php');
-$Title = _('Dashboard');
+$Title = __('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';
 include('includes/header.php');
@@ -40,7 +40,7 @@ if (isset($_GET['Reports']) and count($ScriptArray) < 7) {
 	$UpdateResult = DB_query($UpdateSQL);
 }
 else if (isset($_POST['Reports']) and count($ScriptArray) == 7) {
-	prnMsg(_('A maximum of 6 reports is allowd on each users dashboard') , 'warn');
+	prnMsg(__('A maximum of 6 reports is allowd on each users dashboard') , 'warn');
 }
 $SQL = "SELECT id,
 				scripts,
@@ -67,7 +67,7 @@ if ($i < 6) {
 	echo '<form>
 				<fieldset style="margin:auto">
 					<field>
-						<label for="Reports">', _('Add reports to your dashboard') , '</label>
+						<label for="Reports">', __('Add reports to your dashboard') , '</label>
 						<select name="Reports"  onchange="ReloadForm(submit)">
 						<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {

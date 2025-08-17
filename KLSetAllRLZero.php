@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Set Reorder Level zero for a location');// Screen identificator.
+$Title = __('KL Set Reorder Level zero for a location');// Screen identificator.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
@@ -25,9 +25,9 @@ if(isset($_POST['ProcessReorderLevelZero'])) {
 		DB_Txn_Begin();
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";
-		$ErrMsg =_('The SQL to set RL = 0 at location failed');
+		$ErrMsg =__('The SQL to set RL = 0 at location failed');
 		$Result = DB_query($SQL,$ErrMsg,'',true);
-		prnMsg(_('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'] . ' ' . _('completed'),'success');
+		prnMsg(__('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'] . ' ' . __('completed'),'success');
 		
 		DB_Txn_Commit();
 
@@ -39,11 +39,11 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-        <legend>' . _('Location Selection') . '</legend>';
-echo FieldToSelectOneLocation('FromLocationID', $_POST['FromLocationID'], _('Select Location to set Reorder Levels to ZERO'), '', '', '', true, false);
+        <legend>' . __('Location Selection') . '</legend>';
+echo FieldToSelectOneLocation('FromLocationID', $_POST['FromLocationID'], __('Select Location to set Reorder Levels to ZERO'), '', '', '', true, false);
 echo '</fieldset>';
 
-echo OneButtonCenteredForm('ProcessReorderLevelZero', _('Set Reorder Levels Zero'));
+echo OneButtonCenteredForm('ProcessReorderLevelZero', __('Set Reorder Levels Zero'));
 
 echo '</div>
       </form>';

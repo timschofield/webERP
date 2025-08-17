@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Maintenance Tasks Board');
+$Title = __('KL Maintenance Tasks Board');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

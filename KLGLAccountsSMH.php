@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Chart of Accounts Maintenance for PT. Sungai Mutiara Hitam');
+$Title = __('Chart of Accounts Maintenance for PT. Sungai Mutiara Hitam');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
@@ -17,7 +17,7 @@ if (isset($_POST['SelectedAccount'])){
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
-		_('General Ledger Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('General Ledger Accounts') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['AccountName']) >50) {
 		$InputError = 1;
-		prnMsg( _('The account name must be fifty characters or less long'),'warn');
+		prnMsg( __('The account name must be fifty characters or less long'),'warn');
 	}
 
 	if (isset($SelectedAccount) AND $InputError !=1) {
@@ -40,14 +40,14 @@ if (isset($_POST['submit'])) {
 						group_='" . $_POST['Group'] . "'
 				WHERE accountcode ='" . $SelectedAccount . "'";
 
-		$ErrMsg = _('Could not update the account because');
+		$ErrMsg = __('Could not update the account because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg (_('The general ledger account has been updated'),'success');
+		prnMsg (__('The general ledger account has been updated'),'success');
 	} elseif ($InputError !=1) {
 
 	/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
-		$ErrMsg = _('Could not add the new account code');
+		$ErrMsg = __('Could not add the new account code');
 		$SQL = "INSERT INTO chartmasterSMH (accountcode,
 						accountname,
 						group_)
@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['Group'] . "')";
 		$Result = DB_query($SQL,$ErrMsg);
 
-		prnMsg(_('The new general ledger account has been added'),'success');
+		prnMsg(__('The new general ledger account has been added'),'success');
 	}
 
 	unset ($_POST['Group']);
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 	$SQL="DELETE FROM chartmasterSMH WHERE accountcode= '" . $SelectedAccount ."'";
 	$Result = DB_query($SQL);
-	prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
+	prnMsg( __('Account') . ' ' . $SelectedAccount . ' ' . __('has been deleted'),'succes');
 }
 
 if (!isset($_GET['delete'])) {
@@ -91,22 +91,22 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] .'" />';
 		
-		echo '<fieldset><legend>' . _('Account Details') . '</legend>';
-		echo FieldToSelectOneText('AccountCode', $_POST['AccountCode'], 30, 30, _('Account Code'), '', '', '', true, true);
+		echo '<fieldset><legend>' . __('Account Details') . '</legend>';
+		echo FieldToSelectOneText('AccountCode', $_POST['AccountCode'], 30, 30, __('Account Code'), '', '', '', true, true);
 	} else {
-		echo '<fieldset><legend>' . _('Account Details') . '</legend>';
-		echo FieldToSelectOneText('AccountCode', '', 30, 30, _('Account Code'), '', '', '', true, true);
+		echo '<fieldset><legend>' . __('Account Details') . '</legend>';
+		echo FieldToSelectOneText('AccountCode', '', 30, 30, __('Account Code'), '', '', '', true, true);
 	}
 
 	if (!isset($_POST['AccountName'])) {
 		$_POST['AccountName']='';
 	}
-	echo FieldToSelectOneText('AccountName', $_POST['AccountName'], 51, 50, _('Account Name'), '', '', '', true, false);
-	echo FieldToSelectOneGLAccountGroup('Group', (isset($_POST['Group']) ? $_POST['Group'] : ''), _('Account Group'), '', '', '', true, false);
+	echo FieldToSelectOneText('AccountName', $_POST['AccountName'], 51, 50, __('Account Name'), '', '', '', true, false);
+	echo FieldToSelectOneGLAccountGroup('Group', (isset($_POST['Group']) ? $_POST['Group'] : ''), __('Account Group'), '', '', '', true, false);
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Enter PT. SMH GL Account Details'));
+	echo OneButtonCenteredForm('submit', __('Enter PT. SMH GL Account Details'));
 
 	echo '</form>';
 
@@ -122,23 +122,23 @@ or deletion of the records*/
 	$SQL = "SELECT accountcode,
 			accountname,
 			group_,
-			CASE WHEN pandl=0 THEN '" . _('Balance Sheet') . "' ELSE '" . _('Profit/Loss') . "' END AS acttype
+			CASE WHEN pandl=0 THEN '" . __('Balance Sheet') . "' ELSE '" . __('Profit/Loss') . "' END AS acttype
 		FROM chartmasterSMH,
 			accountgroups
 		WHERE chartmasterSMH.group_=accountgroups.groupname
 		ORDER BY chartmasterSMH.accountcode";
 
-	$ErrMsg = _('The chart accounts could not be retrieved because');
+	$ErrMsg = __('The chart accounts could not be retrieved because');
 
 	$Result = DB_query($SQL,$ErrMsg);
 
 	echo '<br /><table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('Account Code') . '</th>
-					<th>' . _('Account Name') . '</th>
-					<th>' . _('Account Group') . '</th>
-					<th>' . _('P/L or B/S') . '</th>
+					<th>' . __('Account Code') . '</th>
+					<th>' . __('Account Name') . '</th>
+					<th>' . __('Account Group') . '</th>
+					<th>' . __('P/L or B/S') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -149,8 +149,8 @@ or deletion of the records*/
 			<td>{$MyRow[1]}</td>
 			<td>{$MyRow[2]}</td>
 			<td>{$MyRow[3]}</td>
-			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}\">" . _('Edit') . "</td>
-			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
+			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}\">" . __('Edit') . "</td>
+			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}&delete=1\" onclick=\"return confirm('" . __('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . __('Delete') . "</td>
 			</tr>";
 	}
 	echo '</tbody></table></div></form>';
@@ -161,7 +161,7 @@ or deletion of the records*/
 echo '<p>';
 
 if (isset($SelectedAccount)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' .  _('Show All Accounts') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF']) . '">' .  __('Show All Accounts') . '</a></div>';
 }
 
 echo '<p />';

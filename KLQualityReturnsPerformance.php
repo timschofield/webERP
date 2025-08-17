@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Stock Adjustment and Customer Returns Board');
+$Title = __('KL Stock Adjustment and Customer Returns Board');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -62,11 +62,11 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 		$TableTitleText = 'Items returned by customers due to Quality Issues in the last ' . $NumDays . ' days';
 		$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Code') . '</th>
-								<th class="SortedColumn">' . _('Incidences') . '</th>
-								<th class="SortedColumn">' . _('Qty Sold') . '</th>
-								<th class="SortedColumn">' . _('%Incidences') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Code') . '</th>
+								<th class="SortedColumn">' . __('Incidences') . '</th>
+								<th class="SortedColumn">' . __('Qty Sold') . '</th>
+								<th class="SortedColumn">' . __('%Incidences') . '</th>
 							</tr>
 						</thead>';
 	} elseif ($TypeReport == "QualityIssuesByFamily") {
@@ -90,11 +90,11 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 		$TableTitleText = 'Items returned by customers due to Quality Issues of items in the last ' . $NumDays . ' days (grouped by family)';
 		$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Family') . '</th>
-								<th class="SortedColumn">' . _('Incidences') . '</th>
-								<th class="SortedColumn">' . _('Qty Sold') . '</th>
-								<th class="SortedColumn">' . _('%Incidences') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Family') . '</th>
+								<th class="SortedColumn">' . __('Incidences') . '</th>
+								<th class="SortedColumn">' . __('Qty Sold') . '</th>
+								<th class="SortedColumn">' . __('%Incidences') . '</th>
 							</tr>
 						</thead>';
 	} elseif ($TypeReport == "ChangeOfMindByFamily") {
@@ -117,11 +117,11 @@ function QualityIssuesByItem($TypeReport, $NumDays, $RootPath) {
 				$TableTitleText = 'Items returned by customers due to Change of Mind of items in the last ' . $NumDays . ' days (grouped by family)';
 				$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Family') . '</th>
-								<th class="SortedColumn">' . _('Incidences') . '</th>
-								<th class="SortedColumn">' . _('Qty Sold') . '</th>
-								<th class="SortedColumn">' . _('%Incidences') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Family') . '</th>
+								<th class="SortedColumn">' . __('Incidences') . '</th>
+								<th class="SortedColumn">' . __('Qty Sold') . '</th>
+								<th class="SortedColumn">' . __('%Incidences') . '</th>
 							</tr>
 						</thead>';
 	}
@@ -184,24 +184,24 @@ function ReturnsBySPG($SPG, $NumDays) {
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0) {
-		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . 
+		$TableTitleText = __('Quality data Retail Customer by SPG during the last ') . 
 						locale_number_format($NumDays, 0) . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('SPG') . '</th>
-								<th class="SortedColumn">' . _('Name') . '</th>
-								<th class="SortedColumn">' . _('# Sales') . '</th>
-								<th class="SortedColumn">' . _('% Data') . '</th>
-								<th class="SortedColumn">' . _('% First') . '</th>
-								<th class="SortedColumn">' . _('% Last') . '</th>
-								<th class="SortedColumn">' . _('% Country') . '</th>
-								<th class="SortedColumn">' . _('% DOB') . '</th>
-								<th class="SortedColumn">' . _('% Email') . '</th>
-								<th class="SortedColumn">' . _('% Sex') . '</th>
-								<th class="SortedColumn">' . _('% VIP-PACK') . '</th>
+								<th class="SortedColumn">' . __('SPG') . '</th>
+								<th class="SortedColumn">' . __('Name') . '</th>
+								<th class="SortedColumn">' . __('# Sales') . '</th>
+								<th class="SortedColumn">' . __('% Data') . '</th>
+								<th class="SortedColumn">' . __('% First') . '</th>
+								<th class="SortedColumn">' . __('% Last') . '</th>
+								<th class="SortedColumn">' . __('% Country') . '</th>
+								<th class="SortedColumn">' . __('% DOB') . '</th>
+								<th class="SortedColumn">' . __('% Email') . '</th>
+								<th class="SortedColumn">' . __('% Sex') . '</th>
+								<th class="SortedColumn">' . __('% VIP-PACK') . '</th>
 							</tr>
 						</thead>';
 		echo $TableHeader;
@@ -264,16 +264,16 @@ function StockAdjustmentsByItemAndReason($Days, $RootPath){
 	$TotalAdjusted = 0;
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('# stock adjustments by Item and Reason during the last ') . $Days . ' days';
+		$TableTitleText = __('# stock adjustments by Item and Reason during the last ') . $Days . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Reason') . '</th>
-						<th class="SortedColumn">' . _('Qty adjusted') . '</th>
-						<th class="SortedColumn">' . _('Daily Average') . '</th>
+						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('Reason') . '</th>
+						<th class="SortedColumn">' . __('Qty adjusted') . '</th>
+						<th class="SortedColumn">' . __('Daily Average') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

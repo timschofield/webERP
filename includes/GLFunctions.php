@@ -20,7 +20,7 @@ Returns:
 *************************************************************************************************************/
 function InsertGLTags($TagArray) {
 	if (!empty($TagArray)) {
-		$ErrMsg = _('Cannot insert a GL tag for the journal line because');
+		$ErrMsg = __('Cannot insert a GL tag for the journal line because');
 		foreach ($TagArray as $Tag) {
 			$SQL = "INSERT INTO gltags
 					VALUES ( LAST_INSERT_ID(),
@@ -48,7 +48,7 @@ function GetDescriptionsFromTagArray($TagArray) {
 			$TagResult = DB_query($TagSql);
 			$TagRow = DB_fetch_array($TagResult);
 			if ($Tag == 0) {
-				$TagRow['tagdescription'] = _('None');
+				$TagRow['tagdescription'] = __('None');
 			}
 			$TagDescriptions .= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
 		}
@@ -104,6 +104,6 @@ function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 		return locale_number_format(($SelectedPeriod - $PreviousPeriod) * 100 / $PreviousPeriod,
 			$_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
-		return _('N/A');
+		return __('N/A');
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Customer Info Card Maintenance');
+$Title = __('Customer Info Card Maintenance');
 
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
@@ -22,7 +22,7 @@ if (isset($Errors)){
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -68,10 +68,10 @@ if (isset($_POST['submit'])) {
 
 	$SQL = "DELETE FROM klretailcustomers 
 			WHERE orderno='". $SelectedOrder."'";
-	$ErrMsg = _('The customer retail info could not be deleted because');
+	$ErrMsg = __('The customer retail info could not be deleted because');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	prnMsg(_('Customer Info Card for order') . ' ' . $SelectedOrder . ' ' . _('has been deleted'),'success');
+	prnMsg(__('Customer Info Card for order') . ' ' . $SelectedOrder . ' ' . __('has been deleted'),'success');
 	unset ($SelectedOrder);
 	unset($Delete);
 }
@@ -108,15 +108,15 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th>' . _('Order #') . '</th>
-				<th>' . _('Invoice #') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('First Name') . '</th>
-				<th>' . _('Last Name') . '</th>
-				<th>' . _('Country') . '</th>
-				<th>' . _('Date of Birth') . '</th>
-				<th>' . _('email') . '</th>
-				<th>' . _('Sex') . '</th>
+				<th>' . __('Order #') . '</th>
+				<th>' . __('Invoice #') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('First Name') . '</th>
+				<th>' . __('Last Name') . '</th>
+				<th>' . __('Country') . '</th>
+				<th>' . __('Date of Birth') . '</th>
+				<th>' . __('email') . '</th>
+				<th>' . __('Sex') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -144,8 +144,8 @@ or deletion of the records*/
 			<td>'.$TextDOB.'</td>
 			<td>'.$MyRow['email'].'</td>
 			<td>'.$MyRow['sex'].'</td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'">'._('Edit').'</a></td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'&amp;delete=1" onclick="return confirm(\''._('Are you sure you wish to delete this customer info card data?').'\');">'._('Delete').'</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'">'.__('Edit').'</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'&amp;delete=1" onclick="return confirm(\''.__('Are you sure you wish to delete this customer info card data?').'\');">'.__('Delete').'</a></td>
 			</tr>';
 	} //END WHILE LIST LOOP
 	echo '</tbody>
@@ -156,7 +156,7 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedOrder)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show Other Sales for SPG ') . $_SESSION['SalesmanLogin'] . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show Other Sales for SPG ') . $_SESSION['SalesmanLogin'] . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -206,18 +206,18 @@ if (! isset($_GET['delete'])) {
 		}
 		echo '<input type="hidden" name="SelectedOrder" value="' . $SelectedOrder . '" />';
 		echo '<fieldset>
-				<legend>' . _('Customer Info Card for webERP Order :') . $SelectedOrder . '</legend>';
+				<legend>' . __('Customer Info Card for webERP Order :') . $SelectedOrder . '</legend>';
 		
-		echo FieldToSelectOneText('FirstName', $_POST['FirstName'], 32, 32, _('First Name'), '', '', '', true, false);
-		echo FieldToSelectOneText('LastName', $_POST['LastName'], 32, 32, _('Last Name'), '', '', '', true, false);
-		echo FieldToSelectOneEntryFromArray($CountriesForRetail, 'Country', $_POST['Country'], _('Country'), '', '', '', false, false);
-		echo FieldToSelectOneDate('DateOfBirth', $_POST['DateOfBirth'], _('Date Of Birth'), '', '', '', false, false);
-		echo FieldToSelectFromTwoOptions('F', _('Female'), 'M', _('Male'), 'Sex', $_POST['Sex'], _('Sex'), '', '', '', true, false);
-		echo FieldToSelectOneText('Email', $_POST['Email'], 32, 255, _('Email'), '', '', '', false, false);
+		echo FieldToSelectOneText('FirstName', $_POST['FirstName'], 32, 32, __('First Name'), '', '', '', true, false);
+		echo FieldToSelectOneText('LastName', $_POST['LastName'], 32, 32, __('Last Name'), '', '', '', true, false);
+		echo FieldToSelectOneEntryFromArray($CountriesForRetail, 'Country', $_POST['Country'], __('Country'), '', '', '', false, false);
+		echo FieldToSelectOneDate('DateOfBirth', $_POST['DateOfBirth'], __('Date Of Birth'), '', '', '', false, false);
+		echo FieldToSelectFromTwoOptions('F', __('Female'), 'M', __('Male'), 'Sex', $_POST['Sex'], __('Sex'), '', '', '', true, false);
+		echo FieldToSelectOneText('Email', $_POST['Email'], 32, 255, __('Email'), '', '', '', false, false);
 
 		echo '</fieldset>';
 		
-		echo OneButtonCenteredForm('submit', _('Enter Information'));
+		echo OneButtonCenteredForm('submit', __('Enter Information'));
 
 		echo '</div>
 			</form>';

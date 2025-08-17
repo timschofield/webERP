@@ -276,19 +276,19 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			$TableTitleText = _('Rebalancing between shops (Stock available at kantor = 0)');
+			$TableTitleText = __('Rebalancing between shops (Stock available at kantor = 0)');
 			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Category') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Toko From') . '</th>
-								<th>' . _('RL From') . '</th>
-								<th>' . _('Needed At') . '</th>
-								<th>' . _('Strategy') . '</th>
+								<th>' . __('#') . '</th>
+								<th>' . __('Code') . '</th>
+								<th>' . __('Category') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('Toko From') . '</th>
+								<th>' . __('RL From') . '</th>
+								<th>' . __('Needed At') . '</th>
+								<th>' . __('Strategy') . '</th>
 							</tr>';
 			echo '<thead>' . $TableHeader . '</thead>';
 			echo '<tbody>';
@@ -586,9 +586,9 @@ function ActiveLocationsForItem($StockID){
 			$TableTitleText = 'Set RL = 0 for items with NO stock available at shops or kantor.';
 			ShowTableTitle($TableTitleText);
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
+								<th>' . __('#') . '</th>
+								<th>' . __('Code') . '</th>
+								<th>' . __('Description') . '</th>
 							</tr>';
 			echo '<div>
 				<table class="selection">
@@ -730,14 +730,14 @@ to the shops with RL > 0.
 									echo '<div>';
 									echo '<table class="selection">';
 									$TableHeader = '<tr>
-														<th>' . _('#') . '</th>
-														<th>' . _('Code') . '</th>
-														<th>' . _('Category') . '</th>
-														<th>' . _('Description') . '</th>
-														<th>' . _('Qty') . '</th>
-														<th>' . _('Toko') . '</th>
-														<th>' . _('Old RL') . '</th>
-														<th>' . _('New RL') . '</th>
+														<th>' . __('#') . '</th>
+														<th>' . __('Code') . '</th>
+														<th>' . __('Category') . '</th>
+														<th>' . __('Description') . '</th>
+														<th>' . __('Qty') . '</th>
+														<th>' . __('Toko') . '</th>
+														<th>' . __('Old RL') . '</th>
+														<th>' . __('New RL') . '</th>
 													</tr>';
 									echo '<thead>' . $TableHeader . '</thead>';
 									echo '<tbody>';
@@ -870,13 +870,13 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Category') . '</th>
-								<th>' . _('Location') . '</th>
-								<th>' . _('Old RL') . '</th>
-								<th>' . _('New RL') . '</th>
+								<th>' . __('#') . '</th>
+								<th>' . __('Code') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('Category') . '</th>
+								<th>' . __('Location') . '</th>
+								<th>' . __('Old RL') . '</th>
+								<th>' . __('New RL') . '</th>
 							</tr>';
 			echo '<thead>' . $TableHeader . '</thead>';
 			echo '<tbody>';
@@ -957,7 +957,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						WHERE stockid = '". $StockID ."'
 							AND loccode = '". $loccode ."'";
 			}
-			$ErrMsg =_('Could not update reorder level because');
+			$ErrMsg =__('Could not update reorder level because');
 			DB_query($SQL,$ErrMsg);
 			// insert the change in the KLAdjustRL table (acting as a log of these automatic changes)
 			$SQL = "INSERT INTO kladjustrl 
@@ -974,7 +974,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						'". $StockID ."',
 						'". $OldRL ."',
 						'". $NewRL ."')";		
-		$ErrMsg =_('Could not insert the KLAdjustRL Log');
+		$ErrMsg =__('Could not insert the KLAdjustRL Log');
 		DB_query($SQL,$ErrMsg,'',true);
 		}
 	}
@@ -1003,10 +1003,10 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		$RLSQL = "UPDATE locstock
 					SET reorderlevel = 0 
 					WHERE reorderlevel > 0 AND loccode = ". CODE_ONLINE_SHOP ."";
-		$ErrMsg =_('Error in function OnlineReorderLevelAdjustments');
+		$ErrMsg =__('Error in function OnlineReorderLevelAdjustments');
 		$Result = DB_query($RLSQL,$ErrMsg,'',true);		
 		if ($ShowMessages){
-			prnMsg(_('Reset all RL=0 for location Shop Online'),'info');
+			prnMsg(__('Reset all RL=0 for location Shop Online'),'info');
 		}
 		if ($EmailText != ''){
 			$EmailText = $EmailText . "Reset all RL=0 for location Shop Online" . "\n";
@@ -1030,13 +1030,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			$TableTitleText = _('Adjustment RL for Toko Online');
+			$TableTitleText = __('Adjustment RL for Toko Online');
 			ShowTableTitle($TableTitleText);
 			$TableHeader = '<tr>
-								<th>' . _('#') . '</th>
-								<th>' . _('Code') . '</th>
-								<th>' . _('QOH = New RL') . '</th>
-								<th>' . _('Old RL') . '</th>
+								<th>' . __('#') . '</th>
+								<th>' . __('Code') . '</th>
+								<th>' . __('QOH = New RL') . '</th>
+								<th>' . __('Old RL') . '</th>
 							</tr>';
 			echo '<div>
 				<table class="selection">
@@ -1069,7 +1069,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		}
 	}else{
 		if ($ShowMessages){
-			prnMsg(_('No Online Shop orders to be processed at this time.'),'info');
+			prnMsg(__('No Online Shop orders to be processed at this time.'),'info');
 		}
 		if ($EmailText != ''){
 			$EmailText = $EmailText . "No Online Shop orders to be processed at this time" . "\n";

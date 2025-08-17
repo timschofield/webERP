@@ -14,10 +14,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if($_POST['Activity']!='All') {
 		if(!is_numeric($_POST['ActivityAmount'])) {
-			$Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+			$Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
 			include('includes/header.php');
 			echo '<p />';
-			prnMsg( _('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . _('this level of activity must be specified in the local currency') .'.', 'error');
+			prnMsg( __('The activity amount is not numeric and you elected to print customer relative to a certain amount of activity') . ' - ' . __('this level of activity must be specified in the local currency') .'.', 'error');
 			include('includes/footer.php');
 			exit();
 		}
@@ -222,14 +222,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	} /* end if not all sales areas was selected */
 
-	$ErrMsg = _('The customer List could not be retrieved');
+	$ErrMsg = __('The customer List could not be retrieved');
 	$CustomersResult = DB_query($SQL, $ErrMsg);
 
 	if(DB_num_rows($CustomersResult) == 0) {
-	  $Title = _('Customer List') . ' - ' . _('Problem Report') . '....';
+	  $Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
 	  include('includes/header.php');
-	  prnMsg( _('This report has no output because there were no customers retrieved'), 'error' );
-	  echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
+	  prnMsg( __('This report has no output because there were no customers retrieved'), 'error' );
+	  echo '<br /><a href="' .$RootPath .'/index.php">' .  __('Back to the menu'). '</a>';
 	  include('includes/footer.php');
 	  exit();
 	}
@@ -247,20 +247,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				</head>
 				<body>';
 
-	$Heading = _('Customers List for'). ' ';
+	$Heading = __('Customers List for'). ' ';
 
 	if (in_array('All', $_POST['Areas'])){
-		$Heading .= _('All Territories'). ' ';
+		$Heading .= __('All Territories'). ' ';
 	} else {
 		if (count($_POST['Areas'])==1){
-			$Heading .= _('Territory') . ' ' . $_POST['Areas'][0];
+			$Heading .= __('Territory') . ' ' . $_POST['Areas'][0];
 		} else {
-			$Heading .= _('Territories'). ' ';
+			$Heading .= __('Territories'). ' ';
 			$NoOfAreas = count($_POST['Areas']);
 			$i=1;
 			foreach ($_POST['Areas'] as $Area){
 				if ($i==$NoOfAreas){
-					$Heading .= _('and') . ' ' . $Area . ' ';
+					$Heading .= __('and') . ' ' . $Area . ' ';
 				} elseif ($i==($NoOfAreas-1)) {
 					$Heading .= $Area . ' ';
 				} else {
@@ -270,19 +270,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 	}
 
-	$Heading .= ' '. _('and for').' ';
+	$Heading .= ' '. __('and for').' ';
 	if (in_array('All', $_POST['SalesPeople'])){
-		$Heading .= _('All Salespeople');
+		$Heading .= __('All Salespeople');
 	} else {
 		if (count($_POST['SalesPeople'])==1){
-			$Heading .= _('only') .' ' . $_POST['SalesPeople'][0];
+			$Heading .= __('only') .' ' . $_POST['SalesPeople'][0];
 		} else {
-			$Heading .= _('Salespeople') .' ';
+			$Heading .= __('Salespeople') .' ';
 			$NoOfSalesfolk = count($_POST['SalesPeople']);
 			$i=1;
 			foreach ($_POST['SalesPeople'] as $Salesperson){
 				if ($i==$NoOfSalesfolk){
-					$Heading .= _('and') . ' ' . $Salesperson . " ";
+					$Heading .= __('and') . ' ' . $Salesperson . " ";
 				} elseif ($i==($NoOfSalesfolk-1)) {
 					$Heading .= $Salesperson . " ";
 				} else {
@@ -295,16 +295,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . $Heading . '<br />
-				' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 			</div>
 			<table>
 				<thead>
 					<tr>
-						<th>' . _('Act Code') . '</th>
-						<th>' . _('Postal Address') . '</th>
-						<th>' . _('Branch Code') . '</th>
-						<th>' . _('Branch Contact Information') . '</th>
-						<th>' . _('Branch Delivery Address') . '</th>
+						<th>' . __('Act Code') . '</th>
+						<th>' . __('Postal Address') . '</th>
+						<th>' . __('Branch Code') . '</th>
+						<th>' . __('Branch Contact Information') . '</th>
+						<th>' . __('Branch Delivery Address') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -325,7 +325,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					AND branchcode='" . $Customers['branchcode'] . "'
 					AND (type=10 or type=11)
 					AND trandate >='" . FormatDateForSQL($_POST['ActivitySince']). "'";
-			$ActivityResult = DB_query($SQL, _('Could not retrieve the activity of the branch because'), _('The failed SQL was'));
+			$ActivityResult = DB_query($SQL, __('Could not retrieve the activity of the branch because'), __('The failed SQL was'));
 
 			$ActivityRow = DB_fetch_row($ActivityResult);
 			$LocalCurrencyTurnover = $ActivityRow[0];
@@ -351,12 +351,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			$HTML .='<tr class="striped_row">';
 			if($Area!=$Customers['area']) {
-				$HTML .= '<th colspan="3">' . _('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
+				$HTML .= '<th colspan="3">' . __('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
 				$Area = $Customers['area'];
 			}
 
 			if($SalesPerson!=$Customers['salesman']) {
-				$HTML .= '' . _('Salesman') . ' ' . $Customers['salesmanname'] . '</th>';
+				$HTML .= '' . __('Salesman') . ' ' . $Customers['salesmanname'] . '</th>';
 				$SalesPerson = $Customers['salesman'];
 			}
 			$HTML .= '</tr>';
@@ -372,18 +372,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td>' . $Customers['debtorno'] . '</td>
 						<td>' . $CustomerDetails . '</td>
 						<td>' . $Customers['branchcode'] . '<br />
-							' . _('Price List') . ': ' . $Customers['salestype'] . '
+							' . __('Price List') . ': ' . $Customers['salestype'] . '
 						</td>';
 
 
 			if($_POST['Activity']!='All') {
-				$HTML .= '<td>' . _('Turnover') . ' - ' . locale_number_format($LocalCurrencyTurnover,0) . '</td>';
+				$HTML .= '<td>' . __('Turnover') . ' - ' . locale_number_format($LocalCurrencyTurnover,0) . '</td>';
 			}
 
 			$HTML .= '<td>' . $Customers['brname'] . '<br />
 						  ' . $Customers['contactname'] . '<br />
-						  ' . _('Ph'). ': ' . $Customers['phoneno'] . '<br />
-						  ' . _('Fax').': ' . $Customers['faxno'] . '
+						  ' . __('Ph'). ': ' . $Customers['phoneno'] . '<br />
+						  ' . __('Fax').': ' . $Customers['faxno'] . '
 						</td>';
 
 			$BranchAddress = $Customers['name'];
@@ -411,7 +411,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -432,16 +432,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Customer Details Listing');
+		$Title = __('Customer Details Listing');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Customer Details Listing') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . __('Receipts') . '" alt="" />' . ' ' . __('Create PDF Customer Details Listing') . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
 
 } else {
 
-	$Title = _('Customer Details Listing');
+	$Title = __('Customer Details Listing');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -449,15 +449,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
-			<label for="Areas">' . _('For Sales Areas') . ':</label>
+			<label for="Areas">' . __('For Sales Areas') . ':</label>
 			<select name="Areas[]" multiple="multiple">';
 
 	$SQL="SELECT areacode, areadescription FROM areas";
 	$AreasResult = DB_query($SQL);
 
-	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
+	echo '<option selected="selected" value="All">' . __('All Areas') . '</option>';
 
 	while($MyRow = DB_fetch_array($AreasResult)) {
 		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
@@ -466,9 +466,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="SalesPeople">' . _('For Salesperson:') . '</label>
+			<label for="SalesPeople">' . __('For Salesperson:') . '</label>
 			<select name="SalesPeople[]" multiple="multiple">
-				<option selected="selected" value="All">' .  _('All Salespeople') . '</option>';
+				<option selected="selected" value="All">' .  __('All Salespeople') . '</option>';
 
 	$SQL = "SELECT salesmancode, salesmanname FROM salesman";
 	$SalesFolkResult = DB_query($SQL);
@@ -480,11 +480,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Activity">' . _('Level Of Activity'). ':</label>
+			<label for="Activity">' . __('Level Of Activity'). ':</label>
 			<select name="Activity">
-				<option selected="selected" value="All">' .  _('All customers') . '</option>
-				<option value="GreaterThan">' .  _('Sales Greater Than') . '</option>
-				<option value="LessThan">' .  _('Sales Less Than') . '</option>
+				<option selected="selected" value="All">' .  __('All customers') . '</option>
+				<option value="GreaterThan">' .  __('Sales Greater Than') . '</option>
+				<option value="LessThan">' .  __('Sales Less Than') . '</option>
 			</select>';
 
 	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" />
@@ -492,14 +492,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
 	echo '<field>
-			<label for="ActivitySince">' . _('Activity Since'). ':</label>
+			<label for="ActivitySince">' . __('Activity Since'). ':</label>
 			<input type="date" name="ActivitySince" size="11" maxlength="10" value="' . FormatDateForSQL($DefaultActivitySince) . '" />
 		</field>';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>';
     echo '</form>';
 

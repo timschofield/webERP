@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
-$Title = _('Reasons for Item Return Maintenance');
+$Title = __('Reasons for Item Return Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -19,7 +19,7 @@ $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title
 	. '" alt="" />' . $Title . '</p>
-	<div class="page_help_text">' . _('Add/edit/delete Item Return Reason') . '</div>
+	<div class="page_help_text">' . __('Add/edit/delete Item Return Reason') . '</div>
 	<br />';
 
 if (isset($_POST['submit'])) {
@@ -34,14 +34,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['reasonname']) >100) {
 		$InputError = 1;
-		prnMsg(_('The Item Return name description must be 100 characters or less long'),'error');
+		prnMsg(__('The Item Return name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'returnitemreasons';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['reasonname']))==0) {
 		$InputError = 1;
-		prnMsg(_('The Item Return name description must contain at least one character'),'error');
+		prnMsg(__('The Item Return name description must contain at least one character'),'error');
 		$Errors[$i] = 'returnitemreasons';
 		$i++;
 	}
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0) {
 		$InputError = 1;
-		prnMsg(_('You already have a Item Return Reason called').' '.$_POST['reasonname'],'error');
+		prnMsg(__('You already have a Item Return Reason called').' '.$_POST['reasonname'],'error');
 		$Errors[$i] = 'ReasonName';
 		$i++;
 	}
@@ -64,7 +64,7 @@ if (isset($_POST['submit'])) {
 			SET reasonname = '" . $_POST['reasonname'] . "'
 			WHERE reasonid = '" . $SelectedType . "'";
 
-		prnMsg(_('The Item Return Reason') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
+		prnMsg(__('The Item Return Reason') . ' ' . $SelectedType . ' ' .  __('has been updated'),'success');
 	} elseif ($InputError !=1){
 		// Add new record on submit
 
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['reasonname'] . "')";
 
 
-		$Msg = _('Item Return Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
+		$Msg = __('Item Return Reason') . ' ' . $_POST['reasonname'] .  ' ' . __('has been created');
 		$CheckSQL = "SELECT count(reasonid) FROM returnitemreasons";
 		$Result = DB_query($CheckSQL);
 		$Row = DB_fetch_row($Result);
@@ -92,18 +92,18 @@ if (isset($_POST['submit'])) {
 
 	$SQL = "SELECT COUNT(*) FROM returnitems WHERE reasonid='" . $SelectedType . "'";
 
-	$ErrMsg = _('The number of returned items using this code could not be retrieved because');
+	$ErrMsg = __('The number of returned items using this code could not be retrieved because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (_('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
-			_('There are') . ' ' . $MyRow[0] . ' ' . _('returns using this reason'));
+		prnMsg (__('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
+			__('There are') . ' ' . $MyRow[0] . ' ' . __('returns using this reason'));
 	} else {
 
 		$SQL="DELETE FROM returnitemreasons WHERE reasonid='" . $SelectedType . "'";
-		$ErrMsg = _('The Reason could not be deleted because');
+		$ErrMsg = __('The Reason could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Item Return Reason ') . $SelectedType  . ' ' . _('has been deleted') ,'success');
+		prnMsg(__('Item Return Reason ') . $SelectedType  . ' ' . __('has been deleted') ,'success');
 
 		unset ($SelectedType);
 		unset($_GET['delete']);
@@ -125,8 +125,8 @@ if (!isset($SelectedType)){
 	echo '<table class="selection">';
 	echo '<thead>
 		<tr>
-			<th class="SortedColumn">' . _('Reason ID') . '</th>
-			<th class="SortedColumn">' . _('Reason Name') . '</th>
+			<th class="SortedColumn">' . __('Reason ID') . '</th>
+			<th class="SortedColumn">' . __('Reason Name') . '</th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -137,9 +137,9 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>'.$MyRow[0].'</td>
 			<td>'.$MyRow[1].'</td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . _('Edit') . '</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . __('Edit') . '</a></td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'&amp;delete=yes" onclick="return confirm(\'' .
-				_('Are you sure you wish to delete this Item Return Reason?') . '\');">' . _('Delete') . '</a></td>
+				__('Are you sure you wish to delete this Item Return Reason?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -151,7 +151,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 if (isset($SelectedType)) {
 
 	echo '<div class="centre">
-			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></p>
+			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></p>
 		</div>';
 }
 if (! isset($_GET['delete'])) {
@@ -161,7 +161,7 @@ if (! isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	
 	echo '<fieldset>
-		<legend>' . _('Return Reason Details') . '</legend>';
+		<legend>' . __('Return Reason Details') . '</legend>';
 
 	if (isset($SelectedType) AND $SelectedType!='') {
 		$SQL = "SELECT reasonid,
@@ -178,17 +178,17 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="reasonid" value="' . $_POST['reasonid'] . '" />';
 
-		echo '<field>' . _('Type ID') . ': ' . $_POST['reasonid'] . '</field>';
+		echo '<field>' . __('Type ID') . ': ' . $_POST['reasonid'] . '</field>';
 	}
 
 	if (!isset($_POST['reasonname'])) {
 		$_POST['reasonname']='';
 	}
 
-	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, _('Reason Name'), '',	'',	'',	true, false);
+	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, __('Reason Name'), '',	'',	'',	true, false);
 
 	echo '</fieldset>';
-	echo OneButtonCenteredForm('submit', _('Accept'));
+	echo OneButtonCenteredForm('submit', __('Accept'));
 
 	echo '</div>
 		</form>';

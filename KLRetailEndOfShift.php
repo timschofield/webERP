@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('SPG End Of Shift Report');
+$Title = __('SPG End Of Shift Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -46,19 +46,19 @@ $SQL = "SELECT salesorders.orderno,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) != 0){
-	$TableTitleText = $_SESSION['SalesmanLogin'] . _('SPG End Of Shift Report');
+	$TableTitleText = $_SESSION['SalesmanLogin'] . __('SPG End Of Shift Report');
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<thead><tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Order#') . '</th>
-						<th>' . _('Invoice#') . '</th>
-						<th>' . _('Cash') . '</th>
-						<th>' . _('Credit Card') . '</th>
-						<th>' . _('Returned Goods') . '</th>
-						<th>' . _('Voucher Discount') . '</th>
-						<th>' . _('Total') . '</th>
+						<th>' . __('#') . '</th>
+						<th>' . __('Order#') . '</th>
+						<th>' . __('Invoice#') . '</th>
+						<th>' . __('Cash') . '</th>
+						<th>' . __('Credit Card') . '</th>
+						<th>' . __('Returned Goods') . '</th>
+						<th>' . __('Voucher Discount') . '</th>
+						<th>' . __('Total') . '</th>
 					</tr></thead><tbody>';
 	echo $TableHeader;
 	

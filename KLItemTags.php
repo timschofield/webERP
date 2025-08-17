@@ -4,7 +4,7 @@
 include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KUIGeneralFunctions.php');
-$Title = _('Item Tags') . ' / ' . _('Maintenance');
+$Title = __('Item Tags') . ' / ' . __('Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedTag'])){
@@ -19,9 +19,9 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Item Tags') .
-	'" alt="" />' . _('Item Tags Setup') . '</p>';
-echo '<div class="page_help_text">' . _('Add/edit/delete Item Tags') . '</div>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Item Tags') .
+	'" alt="" />' . __('Item Tags Setup') . '</p>';
+echo '<div class="page_help_text">' . __('Add/edit/delete Item Tags') . '</div>';
 if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
@@ -34,14 +34,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TagName']) >100) {
 		$InputError = 1;
-		prnMsg(_('The tag name in English must be 100 characters or less long'),'error');
+		prnMsg(__('The tag name in English must be 100 characters or less long'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
 
 	if (mb_strlen($_POST['TagNameBahasa']) >100) {
 		$InputError = 1;
-		prnMsg(_('The tag name in Bahasa must be 100 characters or less long'),'error');
+		prnMsg(__('The tag name in Bahasa must be 100 characters or less long'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['TagName'])==0) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('The tag name in English must contain at least one character'),'error');
+		prnMsg(__('The tag name in English must contain at least one character'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['TagNameBahasa'])==0) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('The tag name in Bahasa must contain at least one character'),'error');
+		prnMsg(__('The tag name in Bahasa must contain at least one character'),'error');
 		$Errors[$i] = 'ItemTag';
 		$i++;
 	}
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 	if ($CheckRow[0]>0 and !isset($SelectedTag)) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('You already have a tag called').' '.$_POST['TagName'].' or '.$_POST['TagNameBahasa'],'error');
+		prnMsg(__('You already have a tag called').' '.$_POST['TagName'].' or '.$_POST['TagNameBahasa'],'error');
 		$Errors[$i] = 'TagName';
 		$i++;
 	}
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 				tagnamebahasa = LOWER('" . $_POST['TagNameBahasa'] . "')
 			WHERE tagid = '" .$SelectedTag."'";
 
-		$Msg = _('The tag') . ' ' . $SelectedTag . ' ' .  _('has been updated');
+		$Msg = __('The tag') . ' ' . $SelectedTag . ' ' .  __('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The tag') . ' ' . $_POST['tagid'] . _(' already exist.'),'error');
+			prnMsg( __('The tag') . ' ' . $_POST['tagid'] . __(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 							LOWER('" . $_POST['TagNameBahasa'] . "')
 						   )";
 
-			$Msg = _('Item tag') . ' ' . $_POST["tagname"] .  ' - ' . $_POST["tagnamebahasa"] .  ' ' . _('has been created');
+			$Msg = __('Item tag') . ' ' . $_POST["tagname"] .  ' - ' . $_POST["tagnamebahasa"] .  ' ' . __('has been created');
 
 		}
 	}
@@ -134,10 +134,10 @@ if (isset($_POST['submit'])) {
 		$TagNameBahasa = $TypeRow['tagnamebahasa'];
 
 		$SQL="DELETE FROM stocktags WHERE tagid='".$SelectedTag."'";
-		$ErrMsg = _('The tag record could not be deleted because');
+		$ErrMsg = __('The tag record could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
 		echo '<br />';
-		prnMsg(_('Item tag') . ' ' . $TagName  . ' - ' . $TagNameBahasa  . ' ' . _('has been deleted') ,'success');
+		prnMsg(__('Item tag') . ' ' . $TagName  . ' - ' . $TagNameBahasa  . ' ' . __('has been deleted') ,'success');
 	}
 	unset ($SelectedTag);
 	unset($_GET['delete']);
@@ -156,8 +156,8 @@ or deletion of the records*/
 	echo '<br /><table>
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Tag English') . '</th>
-					<th class="SortedColumn">' . _('Tag Bahasa') . '</th>
+					<th class="SortedColumn">' . __('Tag English') . '</th>
+					<th class="SortedColumn">' . __('Tag Bahasa') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -168,8 +168,8 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>' . $MyRow[1] . '</td>
 			<td>' . $MyRow[2] . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $MyRow[0] . '">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $MyRow[0] . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Tag?') . '");\'>' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $MyRow[0] . '">' . __('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTag=' . $MyRow[0] . '&amp;delete=yes" onclick=\'return confirm("' . __('Are you sure you wish to delete this Tag?') . '");\'>' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	echo '</tbody>
@@ -179,7 +179,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 //end of ifs and buts!
 if (isset($SelectedTag)) {
 
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Item Tags Defined') . '</a></div>';
+	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Item Tags Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
@@ -208,12 +208,12 @@ if (! isset($_GET['delete'])) {
 			<input type="hidden" name="tagid" value="' . $_POST['tagid'] . '" />';
 
 		echo '<fieldset>
-				<legend>' . _('Edit Tag Details') . '</legend>';
+				<legend>' . __('Edit Tag Details') . '</legend>';
 
 	}
 	else {
 		echo '<fieldset>
-				<legend>' . _('New Tag Details') . '</legend>';
+				<legend>' . __('New Tag Details') . '</legend>';
 
 	}
 
@@ -224,11 +224,11 @@ if (! isset($_GET['delete'])) {
 		$_POST['TagNameBahasa']='';
 	}
 
-	echo FieldToSelectOneText('TagName', $_POST['TagName'], 50, 100, _('Tag English'), '', '', '', true, false);
-	echo FieldToSelectOneText('TagNameBahasa', $_POST['TagNameBahasa'], 50, 100, _('Tag Bahasa'), '', '', '', true, false);
+	echo FieldToSelectOneText('TagName', $_POST['TagName'], 50, 100, __('Tag English'), '', '', '', true, false);
+	echo FieldToSelectOneText('TagNameBahasa', $_POST['TagNameBahasa'], 50, 100, __('Tag Bahasa'), '', '', '', true, false);
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Accept'));
+	echo OneButtonCenteredForm('submit', __('Accept'));
 
 	echo '</div>
 	</form>';

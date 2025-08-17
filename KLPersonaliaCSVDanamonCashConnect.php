@@ -6,7 +6,7 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Export CSV File for Transfer Danamon Cash Connect');
+$Title = __('Export CSV File for Transfer Danamon Cash Connect');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
@@ -26,9 +26,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 	
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon Cash Connect Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon Cash Connect Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -267,7 +267,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Parameters') . '</legend>';
+		<legend>' . __('Parameters') . '</legend>';
 	
 	include('includes/KLPersonaliaParameterSelection.php');
 

@@ -16,7 +16,7 @@ include('includes/KLUIGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
 
-$Title = _('Import Excel with Shopee URL information');
+$Title = __('Import Excel with Shopee URL information');
 
 include('includes/header.php');
 
@@ -72,14 +72,14 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Shopee Product Id') . '</th>
-						<th class="SortedColumn">' . _('Shopee Store Id') . '</th>
-						<th class="SortedColumn">' . _('URL Shopee') . '</th>
-						<th class="SortedColumn">' . _('QOH Shopee') . '</th>
-						<th class="SortedColumn">' . _('Error') . '</th>
-						<th class="SortedColumn">' . _('Action') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('Shopee Product Id') . '</th>
+						<th class="SortedColumn">' . __('Shopee Store Id') . '</th>
+						<th class="SortedColumn">' . __('URL Shopee') . '</th>
+						<th class="SortedColumn">' . __('QOH Shopee') . '</th>
+						<th class="SortedColumn">' . __('Error') . '</th>
+						<th class="SortedColumn">' . __('Action') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -110,7 +110,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				}
 				
 				$URLShopee = SHOPEE_PREFIX_URL . $ShopeeStoreId . "." . $ShopeeProductId;
-				$LinkShopee = '<li><a rel="external" href="' . $URLShopee . '">' . _('Shopee') . '</a></li>';
+				$LinkShopee = '<li><a rel="external" href="' . $URLShopee . '">' . __('Shopee') . '</a></li>';
 				
 				// Check if we have enough QOH to set it as enabled in Shopee
 				$QOH = ItemMarketplaceQOH($StockID);
@@ -157,13 +157,13 @@ function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPL
 		</p>';
 
 		echo '<fieldset>
-		<legend>' . _('Import file with Shopee Information') . '</legend>';
+		<legend>' . __('Import file with Shopee Information') . '</legend>';
 
-	echo FieldToSelectOneFile("SelectedFile", _('File with Shopee Information'),'','', '', true, false);
+	echo FieldToSelectOneFile("SelectedFile", __('File with Shopee Information'),'','', '', true, false);
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Import File'));
+	echo OneButtonCenteredForm('submit', __('Import File'));
 
 	echo '</div>
 		</form>';

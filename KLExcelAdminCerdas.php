@@ -287,7 +287,7 @@ function submit($TypeOfShop, $TypeOfFile) {
  * @return void Outputs the HTML form.
  */
 function display($RootPath, $Theme) {
-	$Title = _('Excel file for uploading products to Admin Cerdas');
+	$Title = __('Excel file for uploading products to Admin Cerdas');
 
 	include('includes/header.php');
 
@@ -301,23 +301,23 @@ function display($RootPath, $Theme) {
 		</p>';
 
 	echo '<fieldset>
-			<legend>' . _('Admin Cerdas Export Options') . '</legend>';
+			<legend>' . __('Admin Cerdas Export Options') . '</legend>';
 
 	// Marketplace shop selection
-	echo FieldToSelectOneBrand('TypeOfShop', $_POST['TypeOfShop'], _('Marketplace kind of shop'), '', '', 1, true, false);
+	echo FieldToSelectOneBrand('TypeOfShop', $_POST['TypeOfShop'], __('Marketplace kind of shop'), '', '', 1, true, false);
 
 	// ACI File type selection
-	echo FieldToSelectFromThreeOptions('FullUpdate', _('Full Update'),
-										'QOHOnly', _('QOH-Stock available Only'),
-										'PricesOnly', _('Prices Only'),
-										'TypeOfFile', $_POST['TypeOfFile'],	_('Type of ACI File'), '', '', 2, true, false);
+	echo FieldToSelectFromThreeOptions('FullUpdate', __('Full Update'),
+										'QOHOnly', __('QOH-Stock available Only'),
+										'PricesOnly', __('Prices Only'),
+										'TypeOfFile', $_POST['TypeOfFile'],	__('Type of ACI File'), '', '', 2, true, false);
 
 	// Format selection
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 3, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'), '', '', 3, true, false);
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export file to upload products to Admin Cerdas'));
+	echo OneButtonCenteredForm('submit', __('Export file to upload products to Admin Cerdas'));
 
 	echo '</div>
 		 </form>';

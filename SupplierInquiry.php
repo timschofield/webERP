@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
-$Title = _('Supplier Inquiry');
+$Title = __('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
 include('includes/header.php');
@@ -13,10 +13,10 @@ include('includes/SQL_CommonFunctions.php');
 // always figure out the SQL required from the inputs available
 
 if(!isset($_GET['SupplierID']) AND !isset($_SESSION['SupplierID'])) {
-	echo '<br />' . _('To display the enquiry a Supplier must first be selected from the Supplier selection screen') .
+	echo '<br />' . __('To display the enquiry a Supplier must first be selected from the Supplier selection screen') .
 		 '<br />
 			<div class="centre">
-				<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a Supplier to Inquire On') . '</a>
+				<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a Supplier to Inquire On') . '</a>
 			</div>';
 	include('includes/footer.php');
 	exit();
@@ -74,7 +74,7 @@ $SQL = "SELECT suppliers.suppname,
       			paymentterms.terms,
       			paymentterms.daysbeforedue,
       			paymentterms.dayinfollowingmonth";
-$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
+$ErrMsg = __('The supplier details could not be retrieved by the SQL because');
 $SupplierResult = DB_query($SQL, $ErrMsg);
 
 if(DB_num_rows($SupplierResult) == 0) {
@@ -94,7 +94,7 @@ if(DB_num_rows($SupplierResult) == 0) {
 		    ON suppliers.currcode = currencies.currabrev
 			WHERE suppliers.supplierid = '" . $SupplierID . "'";
 
-	$ErrMsg = _('The supplier details could not be retrieved by the SQL because');
+	$ErrMsg = __('The supplier details could not be retrieved by the SQL because');
 
 	$SupplierResult = DB_query($SQL, $ErrMsg);
 
@@ -114,32 +114,32 @@ include('includes/CurrenciesArray.php'); // To get the currency name from the cu
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="', // Icon image.
-	_('Supplier'), '" /> ', // Icon title.
-	_('Supplier'), ': ', $SupplierID, ' - ', $SupplierRecord['suppname'], '<br />',
-		_('All amounts stated in'), ': ', $SupplierRecord['currcode'], ' - ', $CurrencyName[$SupplierRecord['currcode']], '<br />',
-		_('Terms'), ': ', $SupplierRecord['terms'], '</p>';// Page title.
+	__('Supplier'), '" /> ', // Icon title.
+	__('Supplier'), ': ', $SupplierID, ' - ', $SupplierRecord['suppname'], '<br />',
+		__('All amounts stated in'), ': ', $SupplierRecord['currcode'], ' - ', $CurrencyName[$SupplierRecord['currcode']], '<br />',
+		__('Terms'), ': ', $SupplierRecord['terms'], '</p>';// Page title.
 
 if(isset($_GET['HoldType']) AND isset($_GET['HoldTrans'])) {
-	if($_GET['HoldStatus'] == _('Hold')) {
+	if($_GET['HoldStatus'] == __('Hold')) {
 		$SQL = "UPDATE supptrans SET hold=1
 				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
-	} elseif($_GET['HoldStatus'] == _('Release')) {
+	} elseif($_GET['HoldStatus'] == __('Release')) {
 		$SQL = "UPDATE supptrans SET hold=0
 				WHERE type='" . $_GET['HoldType'] . "'
 				AND transno='" . $_GET['HoldTrans'] . "'";
 	}
-	$ErrMsg = _('The Supplier Transactions could not be updated because');
+	$ErrMsg = __('The Supplier Transactions could not be updated because');
 	$UpdateResult = DB_query($SQL, $ErrMsg);
 }
 
 echo '<table class="selection">
 	<tr>
-		<th>' . _('Total Balance') . '</th>
-		<th>' . _('Current') . '</th>
-		<th>' . _('Now Due') . '</th>
-		<th>' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
-		<th>' . _('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Overdue') . '</th>
+		<th>' . __('Total Balance') . '</th>
+		<th>' . __('Current') . '</th>
+		<th>' . __('Now Due') . '</th>
+		<th>' . $_SESSION['PastDueDays1'] . '-' . $_SESSION['PastDueDays2'] . ' ' . __('Days Overdue') . '</th>
+		<th>' . __('Over') . ' ' . $_SESSION['PastDueDays2'] . ' ' . __('Days Overdue') . '</th>
 	</tr>';
 
 echo '<tr>
@@ -156,8 +156,8 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': '  . '<input type="date" name="TransAfterDate" value="' . FormatDateForSQL($_POST['TransAfterDate']) . '" maxlength="10" size="10" />
-	    <input class="noPrint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
+echo __('Show all transactions after') . ': '  . '<input type="date" name="TransAfterDate" value="' . FormatDateForSQL($_POST['TransAfterDate']) . '" maxlength="10" size="10" />
+	    <input class="noPrint" name="Refresh Inquiry" type="submit" value="' . __('Refresh Inquiry') . '" />
     </div>
 	</form>
 	<br />';
@@ -183,11 +183,11 @@ $SQL = "SELECT supptrans.id,
 		AND supptrans.supplierno = '" . $SupplierID . "'
 		AND supptrans.trandate >= '" . $DateAfterCriteria . "'
 		ORDER BY supptrans.trandate";
-$ErrMsg = _('No transactions were returned by the SQL because');
+$ErrMsg = __('No transactions were returned by the SQL because');
 $TransResult = DB_query($SQL, $ErrMsg);
 
 if(DB_num_rows($TransResult) == 0) {
-	echo '<br /><div class="centre">' . _('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
+	echo '<br /><div class="centre">' . __('There are no transactions to display since') . ' ' . $_POST['TransAfterDate'];
 	echo '</div>';
 	include('includes/footer.php');
 	exit();
@@ -198,16 +198,16 @@ if(DB_num_rows($TransResult) == 0) {
 echo '<table class="selection"><thead>
 	<thead>
 	<tr>
-		<th class="SortedColumn">' . _('Date') . '</th>
-		<th class="SortedColumn">' . _('Type') . '</th>
-		<th class="SortedColumn">' . _('Number') . '</th>
-		<th class="SortedColumn">' . _('Reference') . '</th>
-		<th class="SortedColumn">' . _('Comments') . '</th>
-		<th class="SortedColumn">' . _('Total') . '</th>
-		<th class="SortedColumn">' . _('Allocated') . '</th>
-		<th class="SortedColumn">' . _('Balance') . '</th>
-		<th class="noPrint">' . _('More Info') . '</th>
-		<th class="noPrint">' . _('More Info') . '</th>
+		<th class="SortedColumn">' . __('Date') . '</th>
+		<th class="SortedColumn">' . __('Type') . '</th>
+		<th class="SortedColumn">' . __('Number') . '</th>
+		<th class="SortedColumn">' . __('Reference') . '</th>
+		<th class="SortedColumn">' . __('Comments') . '</th>
+		<th class="SortedColumn">' . __('Total') . '</th>
+		<th class="SortedColumn">' . __('Allocated') . '</th>
+		<th class="SortedColumn">' . __('Balance') . '</th>
+		<th class="noPrint">' . __('More Info') . '</th>
+		<th class="noPrint">' . __('More Info') . '</th>
 	</tr>
 	</thead>
 	<tbody>';
@@ -223,11 +223,11 @@ $j = 1;
 
 while($MyRow = DB_fetch_array($TransResult)) {
 	if($MyRow['hold'] == 0 AND $MyRow['settled'] == 0) {
-		$HoldValue = _('Hold');
+		$HoldValue = __('Hold');
 	} elseif($MyRow['settled'] == 1) {
 		$HoldValue = '';
 	} else {
-		$HoldValue = _('Release');
+		$HoldValue = __('Release');
 	}
 
 	// Comment: All table-row (tag tr) must have 10 table-datacells (tag td).
@@ -240,7 +240,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 	// Prints first 8 columns that are in common (columns 1-8):
 	echo '<td class="date">', ConvertSQLDate($MyRow['trandate']), '</td>
-		<td class="text">', _($MyRow['typename']), '</td>
+		<td class="text">', __($MyRow['typename']), '</td>
 		<td class="number"><a href="', $RootPath, '/SuppWhereAlloc.php?TransType=', $MyRow['type'], '&TransNo=', $MyRow['transno'], '">', $MyRow['transno'], '</a></td>
 		<td class="text">', $MyRow['suppreference'], '</td>
 		<td class="text">', $MyRow['transtext'], '</td>
@@ -249,19 +249,19 @@ while($MyRow = DB_fetch_array($TransResult)) {
 		<td class="number">', locale_number_format($MyRow['totalamount']-$MyRow['allocated'], $SupplierRecord['currdecimalplaces']), '</td>';
 
 	// STORE "Link to GL transactions inquiry" column to use in some of the cases (column 10):
-	$GLEntriesTD1 = '<td class="noPrint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['transno'] . '" target="_blank" title="' . _('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" width="16" /> ' . _('GL Entries') . '</a></td>';
+	$GLEntriesTD1 = '<td class="noPrint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['transno'] . '" target="_blank" title="' . __('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" width="16" /> ' . __('GL Entries') . '</a></td>';
 
 	// Now prints columns 9 and 10:
 	if($MyRow['type'] == 20) {// It is a Purchase Invoice (systype = 20).
 		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
 /*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
 			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
-				echo '<td class="noPrint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', _('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', _('Payments'), '</a></td>';// Payment column (column 9).
+				echo '<td class="noPrint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', __('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', __('Payments'), '</a></td>';// Payment column (column 9).
 			} else {// The transaction is NOT settled so show option to hold:
 				if($AuthRow['offhold'] == 0) {
 					echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
 				} else {
-					if($HoldValue == _('Release')) {
+					if($HoldValue == __('Release')) {
 						echo '<td class="noPrint">', $HoldValue , '</a></td>';// Column 9.
 					} else {
 						echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
@@ -277,14 +277,14 @@ while($MyRow = DB_fetch_array($TransResult)) {
 					'<td class="noPrint">&nbsp;</td>';// Column 10.
 			} else {// The transaction is NOT settled so show option to hold:
 				echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '/PaymentAllocations.php?SuppID=',
-						$MyRow['type'], '&amp;InvID=', $MyRow['transno'], '">', _('View Payments'), '</a></td>',// Column 9.
+						$MyRow['type'], '&amp;InvID=', $MyRow['transno'], '">', __('View Payments'), '</a></td>',// Column 9.
 					'<td class="noPrint"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $_POST['TransAfterDate'], '&amp;HoldTrans=', $HoldValue, '&amp;HoldStatus=' .
 						$RootPath, '&amp;FromDate=', $MyRow['supplierno'], '">' . $MyRow['suppreference'], '</a></td>';// Column 10.
 			}
 		}
 
 	} else {// It is NOT a Purchase Invoice (a credit note or a payment).
-		echo '<td class="noPrint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', _('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', _('Allocation'), '</a></td>';// Allocation column (column 9).
+		echo '<td class="noPrint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', __('Allocation'), '</a></td>';// Allocation column (column 9).
 		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
 			echo $GLEntriesTD1;// Column 10.
 		} else {// Do NOT show a link to GL transactions inquiry:

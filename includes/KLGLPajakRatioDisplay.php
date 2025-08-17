@@ -11,10 +11,10 @@ echo '<div>
       <table class="selection">
       <thead>
           <tr>
-              <th class="SortedColumn">' . _('Ratio') . '</th>
-              <th class="SortedColumn">' . _('Benchmark') . '</th>
-              <th class="SortedColumn">' . _('Period Actual') . '</th>
-              <th class="SortedColumn">' . _('Last Year') . '</th>
+              <th class="SortedColumn">' . __('Ratio') . '</th>
+              <th class="SortedColumn">' . __('Benchmark') . '</th>
+              <th class="SortedColumn">' . __('Period Actual') . '</th>
+              <th class="SortedColumn">' . __('Last Year') . '</th>
           </tr>
       </thead>
       <tbody>';

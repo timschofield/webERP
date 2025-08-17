@@ -322,7 +322,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			exit(); // Ensure no further output is sent
 
 		}else{
-			$Title = _('Excel file for Sales Analysis');
+			$Title = __('Excel file for Sales Analysis');
 			include('includes/header.php');
 			prnMsg('No items selected to analyse');
 			include('includes/footer.php');
@@ -335,7 +335,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 function display($RootPath, $Theme){
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Sales Analysis');
+	$Title = __('Excel file for Sales Analysis');
 
 	include('includes/header.php');
 
@@ -345,25 +345,25 @@ function display($RootPath, $Theme){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Analysis') . '" alt="" />' . ' ' . _('Excel file for Sales Analysis') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Excel file for Sales Analysis') . '" alt="" />' . ' ' . __('Excel file for Sales Analysis') . '
 		</p>';
 
 	echo '<fieldset>
-			<legend>' . _('Report Parameters') . '</legend>';
+			<legend>' . __('Report Parameters') . '</legend>';
 
-	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', 1, true, true);
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), __('Select Inventory Categories'), '', '', 1, true, true);
 
-	echo FieldToSelectFromThreeOptions('CODE_FULL', _('Full Item Code'),
-									'CODE_FULL_WITH_RINGS', _('Full Item Code + Rings Grouped'),
-									'CODE_6', _('Basic Item Code (6 Char)'),
-									'CodeDetail', $_POST['CodeDetail'],	_('Item Codes detailed as'), '', '', 2, true, false);
-	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', 3, true, false);
-	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', 4, true, false);
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectFromThreeOptions('CODE_FULL', __('Full Item Code'),
+									'CODE_FULL_WITH_RINGS', __('Full Item Code + Rings Grouped'),
+									'CODE_6', __('Basic Item Code (6 Char)'),
+									'CodeDetail', $_POST['CodeDetail'],	__('Item Codes detailed as'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], __('From'), '', '', 3, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], __('To'), '', '', 4, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export Sales Analysis File'));
+	echo OneButtonCenteredForm('submit', __('Export Sales Analysis File'));
 
 	echo '</div>
          </form>';

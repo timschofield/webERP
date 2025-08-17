@@ -43,11 +43,11 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	//first off validate inputs sensible
 	if (strtotime($FromDateSQL) > strtotime($ToDateSQL)) {
 		$InputError = 1;
-		prnMsg(_('The From Date must be before the To Date'),'error');
+		prnMsg(__('The From Date must be before the To Date'),'error');
 	}
 	if (!isset($_POST['PartnerCode'])) {
 		$InputError = 1;
-		prnMsg(_('Invalid Cempany Code'),'error');
+		prnMsg(__('Invalid Cempany Code'),'error');
 	}
 
 	$ShortPartnerCode = substr($PartnerCode, 2); // Remove first 2 characters from partner code PT or PO
@@ -60,7 +60,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	$ResultSettings = DB_query($SQLSettings);
 	if (DB_num_rows($ResultSettings)==0) {
 		$InputError = 1;
-		prnMsg(_('Invalid Company Settings'),'error');
+		prnMsg(__('Invalid Company Settings'),'error');
 	} else {
 		$MyRowSettings = DB_fetch_array($ResultSettings); //get the only row returned
 	}
@@ -95,7 +95,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$WhereTo 	= " AND trandate <= '". $ToDateSQL ."'";
 
 		$i = 2;
-		$ErrMsg = _('The SQL to find the GL Transactions for '. $PartnerCode);
+		$ErrMsg = __('The SQL to find the GL Transactions for '. $PartnerCode);
 
 		$WhereGroupedAccounts = " ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
 									OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "'
@@ -229,7 +229,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Export Excel with GL Transactions for PT');
+	$Title = __('Export Excel with GL Transactions for PT');
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -239,16 +239,16 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<fieldset><legend>' . _('File Parameters') . '</legend>';
+	echo '<fieldset><legend>' . __('File Parameters') . '</legend>';
 	
-	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), _('Select the company to export GL transactions'), '', 1, true, false);
-	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);
-	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To Date'), '', '', 3, true, false);
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 4, true, false);
+	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], __('Company'), __('Select the company to export GL transactions'), '', 1, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], __('From Date'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], __('To Date'), '', '', 3, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'), '', '', 4, true, false);
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export File GL transactions of a PT'));
+	echo OneButtonCenteredForm('submit', __('Export File GL transactions of a PT'));
 
 	echo '</form>';
 	

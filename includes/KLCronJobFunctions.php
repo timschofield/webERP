@@ -106,7 +106,7 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 
 	$Result = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='KLCronJobChecks_LastRun'");
 	if ($EmailText ==''){
-		prnMsg(_('The system has just run the daily Kapal-Laut checks.'),'info');
+		prnMsg(__('The system has just run the daily Kapal-Laut checks.'),'info');
 		KLSendEmail("UserLoggingIn", "Silent", $_SESSION['UserID'], date('d/M/Y H:i'), $_SERVER["REMOTE_ADDR"]);
 	}
 
@@ -402,7 +402,7 @@ function CleanDiscountForObsoleteItems($ShowMessages, $EmailText){
 			SET discountcategory = ''
 			WHERE discontinued = 1
 				AND discountcategory != ''";
-	$ErrMsg =_('Could not clean discount category for obsolete items  because');
+	$ErrMsg =__('Could not clean discount category for obsolete items  because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Discount Category cleaned for obsolete items.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -425,7 +425,7 @@ function SetObsoleteForCategoryWithoutStock($Category, $ShowMessages, $EmailText
 				AND (SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) = 0";
-	$ErrMsg =_('Could not update items without stock because');
+	$ErrMsg =__('Could not update items without stock because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Items " . $Category . " with QOH = 0 flagged as obsolete.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -447,7 +447,7 @@ function SetRLZeroForObsolete($ShowMessages, $EmailText){
 						FROM stockmaster
 						WHERE stockmaster.stockid = locstock.stockid
 						AND stockmaster.discontinued = 1)";
-	$ErrMsg =_('Could not set RL = 0 for obsolete items because');
+	$ErrMsg =__('Could not set RL = 0 for obsolete items because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "RL updated to zero for obsolete items.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -466,7 +466,7 @@ function SetRLZeroForLocations($ShowMessages, $EmailText){
 	$SQL = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE loccode IN " . LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO;
-	$ErrMsg =_('Could not set RL = 0 for location list because');
+	$ErrMsg =__('Could not set RL = 0 for location list because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "RL updated to zero for location list.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -489,7 +489,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
 				AND enddate > CURRENT_DATE";
-	$ErrMsg =_('Error in function SetEndDatePriceToObsolete because');
+	$ErrMsg =__('Error in function SetEndDatePriceToObsolete because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("STOCK-MOVED-OBS-MOD", $MyRow['items']);
@@ -501,7 +501,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
 				AND enddate > CURRENT_DATE";
-	$ErrMsg =_('Could not set end date to today for obsolete items because');
+	$ErrMsg =__('Could not set end date to today for obsolete items because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Text = "Prices End Date updated to today for obsolete items.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -521,7 +521,7 @@ function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText){
 			WHERE NOT EXISTS (SELECT *
 								FROM stockrequestitems
 								WHERE stockrequest.dispatchid = stockrequestitems.dispatchid )";
-	$ErrMsg =_('Could not delete empty internal requests because');
+	$ErrMsg =__('Could not delete empty internal requests because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Empty Internal Requests removed from DB.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -541,7 +541,7 @@ function CleanObsoleteFromWebsite($ShowMessages, $EmailText){
 			WHERE EXISTS (SELECT * FROM stockmaster
 							WHERE discontinued = 1
 							AND stockmaster.stockid = salescatprod.stockid)";
-	$ErrMsg =_('Could not delete obsolete items from sales category for website because');
+	$ErrMsg =__('Could not delete obsolete items from sales category for website because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Obsolete items removed from website list.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -560,7 +560,7 @@ function CleanWrongPrices($ShowMessages, $EmailText){
 	$SQL = "DELETE FROM prices
 			WHERE startdate > enddate
 			AND enddate != '9999-12-31'";
-	$ErrMsg =_('Could not delete wrong prices because');
+	$ErrMsg =__('Could not delete wrong prices because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Wrong prices removed from DB";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -583,7 +583,7 @@ function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText){
 			SET recqty = shipqty
 			WHERE recdate <= '" . $StartDate. "'
 				AND recqty = 2 * shipqty";
-	$ErrMsg =_('Could not fix double received goods in shops because');
+	$ErrMsg =__('Could not fix double received goods in shops because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Clean old double received goods in transfers";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -609,7 +609,7 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 						FROM purchorderdetails
 						WHERE purchorderdetails.orderno = purchorders.orderno
 						AND completed = 0)";
-	$ErrMsg =_('Could not update old finshed POs to complete because');
+	$ErrMsg =__('Could not update old finshed POs to complete because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Set status = COMPLETED to Finished Purchase Orders older than " . $maxdays . " days.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -629,7 +629,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$SQL = "SELECT COUNT(*) AS total
 			FROM stockrequest
 			WHERE authorised !='1'";
-	$ErrMsg =_('Error in function AuthorizeAllInternalStockRequest because');
+	$ErrMsg =__('Error in function AuthorizeAllInternalStockRequest because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("TRANSFERS-INTREQ", $MyRow['total']);
@@ -637,7 +637,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$SQL = "UPDATE stockrequest
 					SET authorised='1'
 					WHERE authorised !='1'";
-	$ErrMsg =_('Could not authorize all internal stock requests because');
+	$ErrMsg =__('Could not authorize all internal stock requests because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Text = "All pending Internal Stock Requests authorised automatically";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -665,7 +665,7 @@ function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText){
 				AND fullaccess = '" . $access . "'
 				AND blocked = '0'
 				AND userid <> 'TestUser'";
-	$ErrMsg =_('Could not block inactive users because');
+	$ErrMsg =__('Could not block inactive users because');
 	DB_query($SQL,$ErrMsg);
 	$Text = "Blocked inactive users with access level " . $access . " and not logging in for " . $maxdays . " days";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -786,7 +786,7 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 		$EmailText = $EmailText . "Set Top Sales Ranking Table" . "\n\n"; 
 	}	
 	$SQL = "TRUNCATE klsalesperformance";
-	$ErrMsg =_('Could not set TRUNCATE klsalesperformance because');
+	$ErrMsg =__('Could not set TRUNCATE klsalesperformance because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Text = "Truncated klsaleseprformace table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
@@ -799,7 +799,7 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " 
 				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ") ";
 	$Result = DB_query($SQL);
-	$ErrMsg =_('Could not insert items by top sales because');
+	$ErrMsg =__('Could not insert items by top sales because');
 	if (DB_num_rows($Result) != 0){	
 		while ($MyRow = DB_fetch_array($Result)) {
 			$SQLOp="INSERT INTO klsalesperformance
@@ -878,11 +878,11 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 				AND stockmaster.categoryid IN " . $ListCategories . "
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC";
-	$ErrMsg =_('Could not sort items by top sales because');
+	$ErrMsg =__('Could not sort items by top sales because');
 	$Result = DB_query($SQL,$ErrMsg);
 
 	$Position = 1;
-	$ErrMsg =_('Could not update items by top sales because');
+	$ErrMsg =__('Could not update items by top sales because');
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			$SQLOp="UPDATE klsalesperformance

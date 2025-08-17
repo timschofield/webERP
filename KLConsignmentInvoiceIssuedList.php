@@ -8,7 +8,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
 
-$Title = _('List Issued Consignment Invoices');
+$Title = __('List Issued Consignment Invoices');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
@@ -65,12 +65,12 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 			echo '<table class="selection">
 					<thead>
 						<tr>
-							<th>' . _('Partner') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Invoice Number') . '</th>
-							<th>' . _('Goods') . '</th>
-							<th>' . _('PPN') . '</th>
-							<th>' . _('Total') . '</th>
+							<th>' . __('Partner') . '</th>
+							<th>' . __('Date') . '</th>
+							<th>' . __('Invoice Number') . '</th>
+							<th>' . __('Goods') . '</th>
+							<th>' . __('PPN') . '</th>
+							<th>' . __('Total') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -129,8 +129,8 @@ function display($Title) {
 
 	echo '<fieldset>';
 	echo FixedField("CompanyFrom", "PTADU", 'From', '');
-	echo FieldToSelectOneDate('StartDate', $_POST['StartDate'], _('Invoice Consignment Issued from'), '', '', 1, true, false);
-	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Issued to'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('StartDate', $_POST['StartDate'], __('Invoice Consignment Issued from'), '', '', 1, true, false);
+	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], __('Invoice Consignment Issued to'), '', '', 2, true, false);
 	echo '</fieldset>';
 	echo OneButtonCenteredForm("submit", $Title, 3, false, false);
 	echo '</form>';

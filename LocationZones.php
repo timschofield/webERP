@@ -2,7 +2,7 @@
 /* $Id: locationzones.php 6998 2014-11-22 02:28:56Z daintree $*/
 
 include('includes/session.php');
-$Title = _('Location Zones Maintenance');
+$Title = __('Location Zones Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedCode'])){
@@ -17,7 +17,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -32,22 +32,22 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['code']) > 10) {
 		$InputError = 1;
-		prnMsg(_('The zone code must be 10 characters or less long'),'error');
+		prnMsg(__('The zone code must be 10 characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif ($_POST['code']=='') {
 		$InputError = 1;
-		prnMsg( _('The zone code cannot be an empty string'),'error');
+		prnMsg( __('The zone code cannot be an empty string'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif( trim($_POST['description'])==''){
 		$InputError = 1;
-		prnMsg (_('The zone description cannot be empty'),'error');
+		prnMsg (__('The zone description cannot be empty'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif (mb_strlen($_POST['description']) >50) {
 		$InputError = 1;
-		echo prnMsg(_('The zone description must be fifty characters or less long'),'error');
+		echo prnMsg(__('The zone description must be fifty characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	}
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 				smarttransferonweekday6 = '" . $_POST['smarttransferonweekday6'] . "'
 			WHERE code = '".$SelectedCode."'";
 
-		$Msg = _('The location zone') . ' ' . $SelectedCode . ' ' .  _('has been updated');
+		$Msg = __('The location zone') . ' ' . $SelectedCode . ' ' .  __('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The location zone ') . $_POST['code'] . _(' already exist.'),'error');
+			prnMsg( __('The location zone ') . $_POST['code'] . __(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
@@ -104,7 +104,7 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['smarttransferonweekday5'] . "', 
 									'" . $_POST['smarttransferonweekday6'] . "')";
 
-			$Msg = _('Location zone') . ' ' . $_POST['description'] .  ' ' . _('has been created');
+			$Msg = __('Location zone') . ' ' . $_POST['description'] .  ' ' . __('has been created');
 			$CheckSQL = "SELECT count(code)
 						FROM locationzones";
 			$Result = DB_query($CheckSQL);
@@ -140,19 +140,19 @@ if (isset($_POST['submit'])) {
 	       FROM locations
 	       WHERE locations.zone='".$SelectedCode."'";
 
-	$ErrMsg = _('The number of locations using this zone could not be retrieved');
+	$ErrMsg = __('The number of locations using this zone could not be retrieved');
 	$Result = DB_query($SQL,$ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this zone because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this zone code'),'error');
+		prnMsg(__('Cannot delete this zone because locations have been created using this zone') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('locations using this zone code'),'error');
 
 	} else {
 
 		$SQL="DELETE FROM locationzones WHERE code='" . $SelectedCode . "'";
-		$ErrMsg = _('The Location Zone record could not be deleted because');
+		$ErrMsg = __('The Location Zone record could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Location zone') . ' ' . $SelectedCode  . ' ' . _('has been deleted') ,'success');
+		prnMsg(__('Location zone') . ' ' . $SelectedCode  . ' ' . __('has been deleted') ,'success');
 
 		unset ($SelectedCode);
 		unset($_GET['delete']);
@@ -201,15 +201,15 @@ or deletion of the records*/
 				<th colspan="7">' . 'Allow KL Smart Daily Transfers on' . '</th>
 		</tr>
 		<tr>
-				<th class="ascending">' . _('Zone Code') . '</th>
-				<th class="ascending">' . _('Zone Name') . '</th>
-				<th class="ascending">' . _('Sunday') . '</th>
-				<th class="ascending">' . _('Monday') . '</th>
-				<th class="ascending">' . _('Tuesday') . '</th>
-				<th class="ascending">' . _('Wednesday') . '</th>
-				<th class="ascending">' . _('Thusrday') . '</th>
-				<th class="ascending">' . _('Friday') . '</th>
-				<th class="ascending">' . _('Saturday') . '</th>
+				<th class="ascending">' . __('Zone Code') . '</th>
+				<th class="ascending">' . __('Zone Name') . '</th>
+				<th class="ascending">' . __('Sunday') . '</th>
+				<th class="ascending">' . __('Monday') . '</th>
+				<th class="ascending">' . __('Tuesday') . '</th>
+				<th class="ascending">' . __('Wednesday') . '</th>
+				<th class="ascending">' . __('Thusrday') . '</th>
+				<th class="ascending">' . __('Friday') . '</th>
+				<th class="ascending">' . __('Saturday') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -267,8 +267,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 		<td>%s</td>
 		<td>%s</td>
 		<td>%s</td>
-		<td><a href="%sSelectedCode=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
+		<td><a href="%sSelectedCode=%s">' . __('Edit') . '</a></td>
+		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this zone?') . '\');">' . __('Delete') . '</a></td>
 		</tr>',
 		$MyRow['code'],
 		$MyRow['description'],
@@ -291,7 +291,7 @@ if (isset($SelectedCode)) {
 
 	echo '<br />
 			<div class="centre">
-				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Location Zones Defined') . '</a>
+				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show All Location Zones Defined') . '</a>
 			</div>';
 }
 if (! isset($_GET['delete'])) {
@@ -334,10 +334,10 @@ if (! isset($_GET['delete'])) {
 			<input type="hidden" name="code" value="' . $_POST['code'] . '" />
 			<table class="selection">
 			<tr>
-				<th colspan="4"><b>' . _('Location Zones Setup') . '</b></th>
+				<th colspan="4"><b>' . __('Location Zones Setup') . '</b></th>
 			</tr>
 			<tr>
-				<td>' . _('Type Code') . ':</td>
+				<td>' . __('Type Code') . ':</td>
 				<td>' . $_POST['code'] . '</td>
 			</tr>';
 
@@ -347,10 +347,10 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan="4"><b>' . _('Location Zone Setup') . '</b></th>
+					<th colspan="4"><b>' . __('Location Zone Setup') . '</b></th>
 				</tr>
 				<tr>
-					<td>' . _('Type Code') . ':</td>
+					<td>' . __('Type Code') . ':</td>
 					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="11" maxlength="10" name="code" /></td>
 				</tr>';
 	}
@@ -381,118 +381,118 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Location Zone Name') . ':</td>
+			<td>' . __('Location Zone Name') . ':</td>
 			<td><input type="text" name="description" value="' . $_POST['description'] . '" /></td>
 		</tr>';
 
 
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Sunday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Sunday?') . ':</td>
 			<td><select name="smarttransferonweekday0">';
 	if($_POST['smarttransferonweekday0']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday0']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Monday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Monday?') . ':</td>
 			<td><select name="smarttransferonweekday1">';
 	if($_POST['smarttransferonweekday1']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday1']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Tuesday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Tuesday?') . ':</td>
 			<td><select name="smarttransferonweekday2">';
 	if($_POST['smarttransferonweekday2']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday2']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Wednesday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Wednesday?') . ':</td>
 			<td><select name="smarttransferonweekday3">';
 	if($_POST['smarttransferonweekday3']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday3']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Thursday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Thursday?') . ':</td>
 			<td><select name="smarttransferonweekday4">';
 	if($_POST['smarttransferonweekday4']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday4']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Friday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Friday?') . ':</td>
 			<td><select name="smarttransferonweekday5">';
 	if($_POST['smarttransferonweekday5']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday5']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('Allow KL Smart Transfers on Saturday?') . ':</td>
+			<td>' . __('Allow KL Smart Transfers on Saturday?') . ':</td>
 			<td><select name="smarttransferonweekday6">';
 	if($_POST['smarttransferonweekday6']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['smarttransferonweekday6']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	
 	echo '</table>'; // close main table
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="reset" name="Cancel" value="' . _('Cancel') . '" /></div>
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . __('Accept') . '" /><input type="reset" name="Cancel" value="' . __('Cancel') . '" /></div>
 			</div>
           </form>';
 

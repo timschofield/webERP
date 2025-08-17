@@ -43,15 +43,15 @@ function submit($FromPrice, $ToPrice) {
 
 	if ($_POST['FromPrice'] < 0) {
 		$InputError = 1;
-		prnMsg(_('From Price has to be greater than 0'),'error');
+		prnMsg(__('From Price has to be greater than 0'),'error');
 	}
 	if ($_POST['ToPrice'] < 0) {
 		$InputError = 1;
-		prnMsg(_('To Price has to be greater than 0'),'error');
+		prnMsg(__('To Price has to be greater than 0'),'error');
 	}
 	if ($_POST['ToPrice'] < $_POST['FromPrice']) {
 		$InputError = 1;
-		prnMsg(_('To Price has to be greater than From Price'),'error');
+		prnMsg(__('To Price has to be greater than From Price'),'error');
 	}
 
 	if ($InputError == 0){
@@ -72,7 +72,7 @@ function submit($FromPrice, $ToPrice) {
 					AND oc_product.price <= '" . $ToPrice . "'
 				ORDER BY oc_product.model";
 		
-		$ErrMsg = _('The SQL to find the OpenCart Products to export to Zalora');
+		$ErrMsg = __('The SQL to find the OpenCart Products to export to Zalora');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
 
@@ -163,7 +163,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Export file for Zalora');
+	$Title = __('Export file for Zalora');
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -176,11 +176,11 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Price Range Details') . '</legend>';
+		<legend>' . __('Price Range Details') . '</legend>';
 
-	echo FieldToSelectOneText('FromPrice', $_POST['FromPrice'], 20, 20, _('From'), '', '', '', true, false);
-	echo FieldToSelectOneText('ToPrice', $_POST['ToPrice'], 20, 20, _('To (IDR)'), '', '', '', true, false);
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', '', true, false);
+	echo FieldToSelectOneText('FromPrice', $_POST['FromPrice'], 20, 20, __('From'), '', '', '', true, false);
+	echo FieldToSelectOneText('ToPrice', $_POST['ToPrice'], 20, 20, __('To (IDR)'), '', '', '', true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('Format'), '', '', '', true, false);
 
 	echo '</fieldset>';
 

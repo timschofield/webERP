@@ -4,7 +4,7 @@ $PageSecurity = 15; // hard coded in case database is old and PageSecurity stuff
 
 include('includes/session.php');
 
-$Title = _('Upgrade webERP Database');
+$Title = __('Upgrade webERP Database');
 include('includes/header.php');
 
 if (!isset($_POST['DoUpgrade'])) {
@@ -14,43 +14,43 @@ if (!isset($_POST['DoUpgrade'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_SESSION['VersionNumber'])){
-		prnMsg(_('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is not actually recorded at this version'),'info');
+		prnMsg(__('The webERP code is version')  . ' ' . $Version . ' ' . __('and the database version is not actually recorded at this version'),'info');
 		echo '<table class="selection">
 			<tr>
-				<td>' . _('Select the version you are upgrading from:') . '</td>
+				<td>' . __('Select the version you are upgrading from:') . '</td>
 				<td><select name="OldVersion" >
-					<option selected="selected" value="Manual">' . _('Apply database changes manually') . '</option>
-					<option value="3.00">' . _('Version 3.00') . '</option>
-					<option value="3.01">' . _('Version 3.01') . '</option>
-					<option value="3.02">' . _('Version 3.02') . '</option>
-					<option value="3.03">' . _('Version 3.03') . '</option>
-					<option value="3.04">' . _('Version 3.04') . '</option>
-					<option value="3.05">' . _('Version 3.05') . '</option>
-					<option value="3.06">' . _('Version 3.06') . '</option>
-					<option value="3.07">' . _('Version 3.07') . '</option>
-					<option value="3.08">' . _('Version 3.08') . '</option>
-					<option value="3.09">' . _('Version 3.09') . '</option>
-					<option value="3.10">' . _('Version 3.10') . '</option>
-					<option value="3.11.x">' . _('Version 3.11 or 4.01 - 4.02') . '</option>
+					<option selected="selected" value="Manual">' . __('Apply database changes manually') . '</option>
+					<option value="3.00">' . __('Version 3.00') . '</option>
+					<option value="3.01">' . __('Version 3.01') . '</option>
+					<option value="3.02">' . __('Version 3.02') . '</option>
+					<option value="3.03">' . __('Version 3.03') . '</option>
+					<option value="3.04">' . __('Version 3.04') . '</option>
+					<option value="3.05">' . __('Version 3.05') . '</option>
+					<option value="3.06">' . __('Version 3.06') . '</option>
+					<option value="3.07">' . __('Version 3.07') . '</option>
+					<option value="3.08">' . __('Version 3.08') . '</option>
+					<option value="3.09">' . __('Version 3.09') . '</option>
+					<option value="3.10">' . __('Version 3.10') . '</option>
+					<option value="3.11.x">' . __('Version 3.11 or 4.01 - 4.02') . '</option>
 				</select></td>
 			</tr>
 		</table>';
-		prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+		prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
 		echo '<div class="centre">
-					<input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" />
+					<input type="submit" name="DoUpgrade" value="' . __('Perform Database Upgrade') . '" />
 				</div>';
 	} else {
 		if ($_SESSION['VersionNumber']=='4.00RC1'){
 			$_SESSION['VersionNumber']='3.12';
 		}
 		if (strcmp($Version,$_SESSION['VersionNumber'])==0){
-			prnMsg(_('The database is up to date, there are no upgrades to perform'),'info');
+			prnMsg(__('The database is up to date, there are no upgrades to perform'),'info');
 		} else {
-			prnMsg(_('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . _('The webERP code is version')  . ' ' . $Version . ' ' . _('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' ._('Click to do a database backup now before proceeding!') . '</a>','info');
+			prnMsg(__('This script will perform any modifications to the database required to allow the additional functionality in later scripts.') . '<br />' . __('The webERP code is version')  . ' ' . $Version . ' ' . __('and the database version is') . ' ' . $_SESSION['VersionNumber'] . '<br /><a target="_blank" href="' . $RootPath . '/BackupDatabase.php">' .__('Click to do a database backup now before proceeding!') . '</a>','info');
 
 			echo '<input type="hidden" name="OldVersion" value="' . $_SESSION['VersionNumber'] . '" />';
 			echo '<div class="centre">
-					<input type="submit" name="DoUpgrade" value="' . _('Perform Database Upgrade') . '" />
+					<input type="submit" name="DoUpgrade" value="' . __('Perform Database Upgrade') . '" />
 				</div>';
 		}
 	}
@@ -66,10 +66,10 @@ if (isset($_POST['DoUpgrade'])) {
 		$SQLScripts = array();
 
 		if ($_POST['OldVersion']=='Manual') {
-			prnMsg(_('No database updates have been done as you selected to apply these manually - upgrade SQL scripts are in the sql/mysql/ directory in the distribution'),'info');
+			prnMsg(__('No database updates have been done as you selected to apply these manually - upgrade SQL scripts are in the sql/mysql/ directory in the distribution'),'info');
 		} else { //we are into automatically applying database upgrades
 
-			prnMsg(_('If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected'),'info');
+			prnMsg(__('If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected'),'info');
 			switch ($_POST['OldVersion']) {
 				//since there are no "break" statements subsequent upgrade scripts will be added to the array
 				case '3.00':
@@ -160,7 +160,7 @@ if (isset($_POST['DoUpgrade'])) {
 				case '4.09.1':
 				case '4.10.0':
 					if (!is_writable('config.php')) {
-						prnMsg( _('To perform this upgrade the web server must have write access to the config.php file. Currently the web-server is reporting that it does not have appropriate permission. Please ensure config.php is writable and run the upgrade again'), 'warning');
+						prnMsg( __('To perform this upgrade the web server must have write access to the config.php file. Currently the web-server is reporting that it does not have appropriate permission. Please ensure config.php is writable and run the upgrade again'), 'warning');
 						include('includes/footer.php');
 						exit();
 					} else {
@@ -171,7 +171,7 @@ if (isset($_POST['DoUpgrade'])) {
 						$ConfigFileContents = str_replace('allow_demo_mode','AllowDemoMode',$ConfigFileContents);
 						$ConfigFileContents = str_replace('rootpath','RootPath',$ConfigFileContents);
 						file_put_contents('config.php',$ConfigFileContents);
-						prnMsg( _('You should now make the config.php read only for the web server.'), 'warning');
+						prnMsg( __('You should now make the config.php read only for the web server.'), 'warning');
 					}
 					$SQLScripts[] = './sql/mysql/upgrade4.09-4.10.sql';
 				case '4.10.1':
@@ -211,7 +211,7 @@ if (isset($_POST['DoUpgrade'])) {
 			} //end switch
 		}
 	} else { //$DBType is not mysql or mysqli
-		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
+		prnMsg(__('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
 
 	DB_IgnoreForeignKeys();
@@ -225,7 +225,7 @@ if (isset($_POST['DoUpgrade'])) {
 		echo '<br />
 			<table>
 			<tr>
-				<th colspan="2">' . _('Applying') . ' ' . $SQLScriptFile . '</th>
+				<th colspan="2">' . __('Applying') . ' ' . $SQLScriptFile . '</th>
 			</tr>';
 
 		for ($i=0; $i<=$ScriptFileEntries; $i++) {
@@ -253,37 +253,37 @@ if (isset($_POST['DoUpgrade'])) {
 					echo '<tr><td>' . $SQL . '</td>';
 					switch (DB_error_no()) {
 						case 0:
-							echo '<td style="background-color:green">' . _('Success') . '</td></tr>';
+							echo '<td style="background-color:green">' . __('Success') . '</td></tr>';
 							break;
 						case 1025:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Foreign Key already removed') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Foreign Key already removed') . '</td></tr>';
 							break;
 						case 1050:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Table has already been created') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Table has already been created') . '</td></tr>';
 							break;
 						case 1054:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Column has already been changed') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been changed') . '</td></tr>';
 							break;
 						case 1060:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Column has already been created') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Column has already been created') . '</td></tr>';
 							break;
 						case 1061:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Index already exists') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already exists') . '</td></tr>';
 							break;
 						case 1062:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Entry has already been done') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Entry has already been done') . '</td></tr>';
 							break;
 						case 1064:
-							echo '<td style="background-color:red">' . _('Note').' - '.  _('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
+							echo '<td style="background-color:red">' . __('Note').' - '.  __('SQL syntax error. The SQL error message is'). ' ' . DB_error_msg() . '</td></tr>';
 							break;
 						case 1068:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Primary key already exists') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Primary key already exists') . '</td></tr>';
 							break;
 						case 1091:
-							echo '<td style="background-color:yellow">' . _('Note').' - '. _('Index already dropped previously') . '</td></tr>';
+							echo '<td style="background-color:yellow">' . __('Note').' - '. __('Index already dropped previously') . '</td></tr>';
 							break;
 						default:
-							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
+							echo '<td style="background-color:red">' . __('Failure').' - '. 	__('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
 							break;
 					}
 					$SQL='';

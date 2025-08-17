@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Stock Re-Order Level Maintenance');
+$Title = __('Stock Re-Order Level Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
@@ -14,10 +14,10 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-echo '<a class="toplink" href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
+echo '<a class="toplink" href="' . $RootPath . '/SelectProduct.php">' . __('Back to Items') . '</a>';
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 $Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'");
@@ -40,7 +40,7 @@ $SQL = "SELECT locstock.loccode,
 		WHERE locstock.stockid = '" . $StockID . "'
 		ORDER BY locations.locationname";
 
-$ErrMsg = _('The stock held at each location cannot be retrieved because');
+$ErrMsg = __('The stock held at each location cannot be retrieved because');
 
 
 $LocStockResult = DB_query($SQL, $ErrMsg);
@@ -48,15 +48,15 @@ $LocStockResult = DB_query($SQL, $ErrMsg);
 echo '<table class="selection">
 	<thead>
 		<tr>
-		<th colspan="3">' . _('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'._('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
+		<th colspan="3">' . __('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'.__('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . __('Show Re-Order Levels') . '" /></th>
 		</tr>
 		<tr>
-		<th colspan="3"><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . _('In Units of') . ' ' . $MyRow[1] . ')</th>
+		<th colspan="3"><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . __('In Units of') . ' ' . $MyRow[1] . ')</th>
 		</tr>
 		<tr>
-					<th class="SortedColumn">' . _('Location') . '</th>
-					<th class="SortedColumn">' . _('Quantity On Hand') . '</th>
-					<th class="SortedColumn">' . _('Re-Order Level') . '</th>
+					<th class="SortedColumn">' . __('Location') . '</th>
+					<th class="SortedColumn">' . __('Quantity On Hand') . '</th>
+					<th class="SortedColumn">' . __('Re-Order Level') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -76,7 +76,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	}
 	if ($MyRow['canupd']==1) {
-		$UpdateCode='<input title="'._('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
+		$UpdateCode='<input title="'.__('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
 			';
 	} else {
 		$UpdateCode='<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
@@ -93,12 +93,12 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 echo '</tbody>
 	</table>
 	<div class="centre">
-		<input type="submit" name="UpdateData" value="' . _('Update') . '" />';
+		<input type="submit" name="UpdateData" value="' . __('Update') . '" />';
 
-echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
-echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . __('Show Stock Movements') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Stock Usage') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>';
+echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
 	</form>';

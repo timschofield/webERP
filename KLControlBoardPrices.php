@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Pricing Control Board');
+$Title = __('KL Pricing Control Board');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -252,21 +252,21 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 						echo '<table class="selection">
 								<thead>
 									<tr>
-										<th class="SortedColumn">' . _('#') . '</th>
-										<th class="SortedColumn">' . _('Code') . '</th>
-										<th class="SortedColumn">' . _('Description') . '</th>
-										<th class="SortedColumn">' . _('TopSales') . '</th>
-										<th class="SortedColumn">' . _('QOH') . '</th>
-										<th class="SortedColumn">' . _('QOO') . '</th>
-										<th class="SortedColumn">' . _('Std Cost') . '</th>
-										<th class="SortedColumn">' . _('Minimum Price') . '</th>
-										<th class="SortedColumn">' . _('Date Price') . '</th>
-										<th class="SortedColumn">' . _('Current Price') . '</th>
-										<th class="SortedColumn">' . _('Current Factor') . '</th>
-										<th class="SortedColumn">' . _('Optimum Price') . '</th>
-										<th class="SortedColumn">' . _('Recommended Retail') . '</th>
-										<th class="SortedColumn">' . _('% Increase') . '</th>
-										<th class="SortedColumn">' . _('Income Increase') . '</th>
+										<th class="SortedColumn">' . __('#') . '</th>
+										<th class="SortedColumn">' . __('Code') . '</th>
+										<th class="SortedColumn">' . __('Description') . '</th>
+										<th class="SortedColumn">' . __('TopSales') . '</th>
+										<th class="SortedColumn">' . __('QOH') . '</th>
+										<th class="SortedColumn">' . __('QOO') . '</th>
+										<th class="SortedColumn">' . __('Std Cost') . '</th>
+										<th class="SortedColumn">' . __('Minimum Price') . '</th>
+										<th class="SortedColumn">' . __('Date Price') . '</th>
+										<th class="SortedColumn">' . __('Current Price') . '</th>
+										<th class="SortedColumn">' . __('Current Factor') . '</th>
+										<th class="SortedColumn">' . __('Optimum Price') . '</th>
+										<th class="SortedColumn">' . __('Recommended Retail') . '</th>
+										<th class="SortedColumn">' . __('% Increase') . '</th>
+										<th class="SortedColumn">' . __('Income Increase') . '</th>
 									</tr>
 								</thead>
 								<tbody>';
@@ -353,27 +353,27 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				($RecommendedPrice < $MyRow['retailprice'])){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					$TableTitleText = $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0);
+					$TableTitleText = $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . __(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0);
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
 								<tr>
-									<th class="SortedColumn">' . _('#') . '</th>
-									<th class="SortedColumn">' . _('Code') . '</th>
-									<th class="SortedColumn">' . _('Description') . '</th>
-									<th class="SortedColumn">' . _('TopSales') . '</th>
-									<th class="SortedColumn">' . _('QOH') . '</th>
-									<th class="SortedColumn">' . _('QOO') . '</th>
-									<th class="SortedColumn">' . _('Std Cost') . '</th>
-									<th class="SortedColumn">' . _('Minimum Price') . '</th>
-									<th class="SortedColumn">' . _('Date Price') . '</th>
-									<th class="SortedColumn">' . _('Current Price') . '</th>
-									<th class="SortedColumn">' . _('Current Factor') . '</th>
-									<th class="SortedColumn">' . _('Optimum Price') . '</th>
-									<th class="SortedColumn">' . _('Recommended Retail') . '</th>
-									<th class="SortedColumn">' . _('% Decrease') . '</th>
-									<th class="SortedColumn">' . _('Income Decrease') . '</th>
+									<th class="SortedColumn">' . __('#') . '</th>
+									<th class="SortedColumn">' . __('Code') . '</th>
+									<th class="SortedColumn">' . __('Description') . '</th>
+									<th class="SortedColumn">' . __('TopSales') . '</th>
+									<th class="SortedColumn">' . __('QOH') . '</th>
+									<th class="SortedColumn">' . __('QOO') . '</th>
+									<th class="SortedColumn">' . __('Std Cost') . '</th>
+									<th class="SortedColumn">' . __('Minimum Price') . '</th>
+									<th class="SortedColumn">' . __('Date Price') . '</th>
+									<th class="SortedColumn">' . __('Current Price') . '</th>
+									<th class="SortedColumn">' . __('Current Factor') . '</th>
+									<th class="SortedColumn">' . __('Optimum Price') . '</th>
+									<th class="SortedColumn">' . __('Recommended Retail') . '</th>
+									<th class="SortedColumn">' . __('% Decrease') . '</th>
+									<th class="SortedColumn">' . __('Income Decrease') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -458,26 +458,26 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 			if ($MyRow['retailprice'] != $RecommendedPrice){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					$TableTitleText = $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0);
+					$TableTitleText = $CategoryName . __(' Items with retail price below minimum. ') . $Factor . __(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0);
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
 								<tr>
-									<th class="SortedColumn">' . _('#') . '</th>
-									<th class="SortedColumn">' . _('Code') . '</th>
-									<th class="SortedColumn">' . _('Description') . '</th>
-									<th class="SortedColumn">' . _('TopSales') . '</th>
-									<th class="SortedColumn">' . _('QOH') . '</th>
-									<th class="SortedColumn">' . _('QOO') . '</th>
-									<th class="SortedColumn">' . _('Std Cost') . '</th>
-									<th class="SortedColumn">' . _('Date Price') . '</th>
-									<th class="SortedColumn">' . _('Current Price') . '</th>
-									<th class="SortedColumn">' . _('Current Factor') . '</th>
-									<th class="SortedColumn">' . _('Minimum Price') . '</th>
-									<th class="SortedColumn">' . _('Recommended Retail') . '</th>
-									<th class="SortedColumn">' . _('% Increase') . '</th>
-									<th class="SortedColumn">' . _('Income Increase') . '</th>
+									<th class="SortedColumn">' . __('#') . '</th>
+									<th class="SortedColumn">' . __('Code') . '</th>
+									<th class="SortedColumn">' . __('Description') . '</th>
+									<th class="SortedColumn">' . __('TopSales') . '</th>
+									<th class="SortedColumn">' . __('QOH') . '</th>
+									<th class="SortedColumn">' . __('QOO') . '</th>
+									<th class="SortedColumn">' . __('Std Cost') . '</th>
+									<th class="SortedColumn">' . __('Date Price') . '</th>
+									<th class="SortedColumn">' . __('Current Price') . '</th>
+									<th class="SortedColumn">' . __('Current Factor') . '</th>
+									<th class="SortedColumn">' . __('Minimum Price') . '</th>
+									<th class="SortedColumn">' . __('Recommended Retail') . '</th>
+									<th class="SortedColumn">' . __('% Increase') . '</th>
+									<th class="SortedColumn">' . __('Income Increase') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -558,21 +558,21 @@ function PriceWrongRounding($RootPath){
 			
 			if(!IsPriceRoundedOK($MyRow['retailprice'])){
 				if($ShowHeader){
-					$TableTitleText = _('Items with WRONG rounding retail price.');
+					$TableTitleText = __('Items with WRONG rounding retail price.');
 					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
 								<tr>
-									<th class="SortedColumn">' . _('#') . '</th>
-									<th class="SortedColumn">' . _('Code') . '</th>
-									<th class="SortedColumn">' . _('Description') . '</th>
-									<th class="SortedColumn">' . _('Top Sales') . '</th>
-									<th class="SortedColumn">' . _('QOH') . '</th>
-									<th class="SortedColumn">' . _('QOO') . '</th>
-									<th class="SortedColumn">' . _('Rounded Down') . '</th>
-									<th class="SortedColumn">' . _('Current Price') . '</th>
-									<th class="SortedColumn">' . _('Rounded Up') . '</th>
+									<th class="SortedColumn">' . __('#') . '</th>
+									<th class="SortedColumn">' . __('Code') . '</th>
+									<th class="SortedColumn">' . __('Description') . '</th>
+									<th class="SortedColumn">' . __('Top Sales') . '</th>
+									<th class="SortedColumn">' . __('QOH') . '</th>
+									<th class="SortedColumn">' . __('QOO') . '</th>
+									<th class="SortedColumn">' . __('Rounded Down') . '</th>
+									<th class="SortedColumn">' . __('Current Price') . '</th>
+									<th class="SortedColumn">' . __('Rounded Up') . '</th>
 								</tr>
 							</thead>
 							<tbody>';
@@ -640,24 +640,24 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$ShowHeader = TRUE;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				$TableTitleText = _('Items with prices older than ') . $Years . ' years';
+				$TableTitleText = __('Items with prices older than ') . $Years . ' years';
 				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Code') . '</th>
-								<th class="SortedColumn">' . _('Description') . '</th>
-								<th class="SortedColumn">' . _('Top Sales') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('QOO') . '</th>
-								<th class="SortedColumn">' . _('Standard Cost') . '</th>
-								<th class="SortedColumn">' . _('Price Date') . '</th>
-								<th class="SortedColumn">' . _('Current Price') . '</th>
-								<th class="SortedColumn">' . _('Current Factor') . '</th>
-								<th class="SortedColumn">' . _('Increase ') . $IncreaseA. '%' . '</th>
-								<th class="SortedColumn">' . _('Increase ') . $IncreaseB. '%' . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Code') . '</th>
+								<th class="SortedColumn">' . __('Description') . '</th>
+								<th class="SortedColumn">' . __('Top Sales') . '</th>
+								<th class="SortedColumn">' . __('QOH') . '</th>
+								<th class="SortedColumn">' . __('QOO') . '</th>
+								<th class="SortedColumn">' . __('Standard Cost') . '</th>
+								<th class="SortedColumn">' . __('Price Date') . '</th>
+								<th class="SortedColumn">' . __('Current Price') . '</th>
+								<th class="SortedColumn">' . __('Current Factor') . '</th>
+								<th class="SortedColumn">' . __('Increase ') . $IncreaseA. '%' . '</th>
+								<th class="SortedColumn">' . __('Increase ') . $IncreaseB. '%' . '</th>
 							</tr>
 						</thead>
 						<tbody>';

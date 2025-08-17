@@ -1,7 +1,7 @@
 <?php
 
 if (!file_exists('KLConfig.php')){
-	echo '<P>' . _("webERP - Archive connector can't access the KLConfig.php file");
+	echo '<P>' . __("webERP - Archive connector can't access the KLConfig.php file");
 	include('includes/footer.php');
 } else {
 	include('KLConfig.php');
@@ -17,7 +17,7 @@ $db_archive = mysqli_connect($ArchiveDBHost , $ArchiveDBUser, $ArchiveDBPassword
 mysqli_set_charset($db_archive, 'utf8');
 
 if ( !$db_archive ) {
-	prnMsg(_('The configuration in the file KLConfig.php for the Archive database user name, password and host do not provide the information required to connect to the Archive database server'),'error');
+	prnMsg(__('The configuration in the file KLConfig.php for the Archive database user name, password and host do not provide the information required to connect to the Archive database server'),'error');
 	exit;
 }
 
@@ -37,13 +37,13 @@ function DB_query_archive($SQL, $ErrorMessage='', $DebugMessage= '', $Transactio
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
-				$ErrorMessage = _('An error occurred in retrieving the information');
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', __('Database Error'). ' ' . DB_error_no());
 		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
-				$DebugMessage = _('The SQL that failed was');
+				$DebugMessage = __('The SQL that failed was');
 			}
 			ShowDebugBackTrace($DebugMessage, $SQL);	
 		}
@@ -51,9 +51,9 @@ function DB_query_archive($SQL, $ErrorMessage='', $DebugMessage= '', $Transactio
 			$SQL = 'rollback';
 			$Result = DB_query_archive($SQL);
 			if (DB_error_no() != 0) {
-				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error') . ' ' . DB_error_no());
+				prnMsg(__('Error Rolling Back Transaction'), 'error', __('Database Rollback Error') . ' ' . DB_error_no());
 			} else {
-				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Retail Customer Analysis');
+$Title = __('KL Retail Customer Analysis');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');

@@ -1,6 +1,6 @@
 <?php
 include('includes/session.php');
-$Title = _('KL Sales Hourly Report');
+$Title = __('KL Sales Hourly Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
@@ -124,29 +124,29 @@ function HourlyPerformance($numDays, $RootPath){
 		$i = 0; // row counter
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowHeader){
-				$TableTitleText = _('Hourly Sales Performance until '. $Now);
+				$TableTitleText = __('Hourly Sales Performance until '. $Now);
 				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<thead>
 									<tr>
 										<th>#</th>
-										<th>' . _('Shop') . '</th>
+										<th>' . __('Shop') . '</th>
 										<th colspan=2>' . 'Last ' . $numDays . ' days</th>
 										<th colspan=2>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
 										<th colspan=4>' . 'Today' . '</th>
 									</tr>
 									<tr>
 										<th class="SortedColumn">#</th>
-										<th class="SortedColumn">' . _('Name') . '</th>
-										<th class="SortedColumn">' . _('# Sales') . '</th>
-										<th class="SortedColumn">' . _('Value Sales') . '</th>
-										<th class="SortedColumn">' . _('# Sales') . '</th>
-										<th class="SortedColumn">' . _('Value Sales') . '</th>
-										<th class="SortedColumn">' . _('First Sale ') . '</th>
-										<th class="SortedColumn">' . _('Last Sale ') . '</th>
-										<th class="SortedColumn">' . _('# Sales ') . '</th>
-										<th class="SortedColumn">' . _('Value Sales') . '</th>
+										<th class="SortedColumn">' . __('Name') . '</th>
+										<th class="SortedColumn">' . __('# Sales') . '</th>
+										<th class="SortedColumn">' . __('Value Sales') . '</th>
+										<th class="SortedColumn">' . __('# Sales') . '</th>
+										<th class="SortedColumn">' . __('Value Sales') . '</th>
+										<th class="SortedColumn">' . __('First Sale ') . '</th>
+										<th class="SortedColumn">' . __('Last Sale ') . '</th>
+										<th class="SortedColumn">' . __('# Sales ') . '</th>
+										<th class="SortedColumn">' . __('Value Sales') . '</th>
 									</tr>
 								</thead>
 								<tbody>';

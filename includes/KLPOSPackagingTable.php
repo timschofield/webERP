@@ -34,14 +34,14 @@ if ($_SESSION['TypeLoc'] == "SHOPKL"){
 	}
 	echo '<table class="selection">
 			<tr>
-				<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '</th>
+				<th colspan=8>' . __('Kapal-Laut Packaging & Shopping Bags included in this sale') . '</th>
 			</tr>';
 	
 	echo '<tr>
-		<td>' . _('KL Box Large') . ':</td>
+		<td>' . __('KL Box Large') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox01L" maxlength="3" size="3" value="' . $_POST['PackagingBox01L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Pouch Bag Large') . ':</td>
+	echo '<td>' . __('KL Pouch Bag Large') . ':</td>
 		<td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td></td>
@@ -49,24 +49,24 @@ if ($_SESSION['TypeLoc'] == "SHOPKL"){
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('KL Box Medium') . ':</td>
+		<td>' . __('KL Box Medium') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox01M" maxlength="3" size="3" value="' . $_POST['PackagingBox01M'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Pouch Bag Medium') . ':</td>
+	echo '<td>' . __('KL Pouch Bag Medium') . ':</td>
 		<td><input type="text" class="number" name="PackagingPouchBag01M" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01M'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Shopping Bag Medium') . ':</td>
+	echo '<td>' . __('KL Shopping Bag Medium') . ':</td>
 		<td><input type="text" class="number" name="ShoppingBag02M" maxlength="3" size="3" value="' . $_POST['ShoppingBag02M'] . '" /></td>';
 	echo '</tr>';
 	
 	echo '<tr>
-		<td>' . _('KL Box Small') . ':</td>
+		<td>' . __('KL Box Small') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox01S" maxlength="3" size="3" value="' . $_POST['PackagingBox01S'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Pouch Bag Small') . ':</td>
+	echo '<td>' . __('KL Pouch Bag Small') . ':</td>
 		<td><input type="text" class="number" name="PackagingPouchBag01S" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01S'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Shopping Bag Small') . ':</td>
+	echo '<td>' . __('KL Shopping Bag Small') . ':</td>
 		<td><input type="text" class="number" name="ShoppingBag02S" maxlength="3" size="3" value="' . $_POST['ShoppingBag02S'] . '" /></td>';
 	echo '</tr>';
 
@@ -108,7 +108,7 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	}
 	echo '<table class="selection">
 			<tr>
-				<th colspan=8>' . _('BLINK Packaging & Shopping Bags included in this sale') . '
+				<th colspan=8>' . __('BLINK Packaging & Shopping Bags included in this sale') . '
 				</th>
 			</tr>';
 
@@ -116,7 +116,7 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 		<td></td>
 		<td></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Pouch Bag Extra Large') . ':</td>
+	echo '<td>' . __('BLINK Pouch Bag Extra Large') . ':</td>
 		<td><input type="text" class="number" name="BlinkPouchBag03XL" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03XL'] . '" /></td>';
 	echo '<td></td>';
 	echo '<td></td>
@@ -124,35 +124,35 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 	echo '</tr>';
 			
 	echo '<tr>
-		<td>' . _('BLINK Box Large') . ':</td>
+		<td>' . __('BLINK Box Large') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox02L" maxlength="3" size="3" value="' . $_POST['PackagingBox02L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Pouch Bag Large') . ':</td>
+	echo '<td>' . __('BLINK Pouch Bag Large') . ':</td>
 		<td><input type="text" class="number" name="BlinkPouchBag03L" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Shopping Bag Large') . ':</td>
+	echo '<td>' . __('BLINK Shopping Bag Large') . ':</td>
 		<td><input type="text" class="number" name="BlinkShoppingBag04L" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04L'] . '" /></td></tr>';
 	echo '</tr>';
 
 	echo '<tr>
-		<td>' . _('BLINK Box Medium') . ':</td>
+		<td>' . __('BLINK Box Medium') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox02M" maxlength="3" size="3" value="' . $_POST['PackagingBox02M'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Pouch Bag Medium') . ':</td>
+	echo '<td>' . __('BLINK Pouch Bag Medium') . ':</td>
 		<td><input type="text" class="number" name="BlinkPouchBag03M" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03M'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Shopping Bag Medium') . ':</td>
+	echo '<td>' . __('BLINK Shopping Bag Medium') . ':</td>
 		<td><input type="text" class="number" name="BlinkShoppingBag04M" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04M'] . '" /></td>';
 	echo '</tr>';
 	
 	echo '<tr>
-		<td>' . _('BLINK Box Small') . ':</td>
+		<td>' . __('BLINK Box Small') . ':</td>
 		<td><input type="text" class="number" name="PackagingBox02S" maxlength="3" size="3" value="' . $_POST['PackagingBox02S'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Pouch Bag Small') . ':</td>
+	echo '<td>' . __('BLINK Pouch Bag Small') . ':</td>
 		<td><input type="text" class="number" name="BlinkPouchBag03S" maxlength="3" size="3" value="' . $_POST['BlinkPouchBag03S'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('BLINK Shopping Bag Small') . ':</td>
+	echo '<td>' . __('BLINK Shopping Bag Small') . ':</td>
 		<td><input type="text" class="number" name="BlinkShoppingBag04S" maxlength="3" size="3" value="' . $_POST['BlinkShoppingBag04S'] . '" /></td>';
 	echo '</tr>';
 

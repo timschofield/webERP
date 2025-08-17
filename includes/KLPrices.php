@@ -6,8 +6,8 @@ function SetChangePriceFlag($Flag, $StockID){
 			SET klchangingprice = '" . $Flag . "'
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing Price Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockID;
-	$ErrMsg = _('The flag update failed because');
+	$Msg = __('Changing Price Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
+	$ErrMsg = __('The flag update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -18,8 +18,8 @@ function SetMoveDiscount20Flag($Flag, $StockID){
 			SET klmovingdiscount20 = '" . $Flag . "'
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockID;
-	$ErrMsg = _('The flag update failed because');
+	$Msg = __('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
+	$ErrMsg = __('The flag update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -30,8 +30,8 @@ function SetMoveDiscount50Flag($Flag, $StockID){
 			SET klmovingdiscount50 = '" . $Flag . "'
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockID;
-	$ErrMsg = _('The flag update failed because');
+	$Msg = __('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
+	$ErrMsg = __('The flag update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -42,8 +42,8 @@ function SetMoveDiscount80Flag($Flag, $StockID){
 			SET klmovingdiscount80 = '" . $Flag . "'
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockID;
-	$ErrMsg = _('The flag update failed because');
+	$Msg = __('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
+	$ErrMsg = __('The flag update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -53,8 +53,8 @@ function SetFlagPriceChangedInChangePrice($StockID, $Value){
 			SET pricechanged = '" . $Value . "'
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing flag PriceChanged for item') . ' ' . $StockID . ' ' . _('to') . ' ' . $Value;
-	$ErrMsg = _('SetFlagPriceChangedInChangePrice failed because');
+	$Msg = __('Changing flag PriceChanged for item') . ' ' . $StockID . ' ' . __('to') . ' ' . $Value;
+	$ErrMsg = __('SetFlagPriceChangedInChangePrice failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -64,8 +64,8 @@ function SetEndDateChangePrice($StockID){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing End Date of Price change set to today for item code') . ' ' . $StockID;
-	$ErrMsg = _('The End Date update failed because');
+	$Msg = __('Changing End Date of Price change set to today for item code') . ' ' . $StockID;
+	$ErrMsg = __('The End Date update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -75,8 +75,8 @@ function SetEndDateMoveDiscount20($StockID){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockID;
-	$ErrMsg = _('The End Date update failed because');
+	$Msg = __('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockID;
+	$ErrMsg = __('The End Date update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -86,8 +86,8 @@ function SetEndDateMoveDiscount50($StockID){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockID;
-	$ErrMsg = _('The End Date update failed because');
+	$Msg = __('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockID;
+	$ErrMsg = __('The End Date update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -97,8 +97,8 @@ function SetEndDateMoveDiscount80($StockID){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockID."'";
 
-	$Msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockID;
-	$ErrMsg = _('The End Date update failed because');
+	$Msg = __('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockID;
+	$ErrMsg = __('The End Date update failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -112,8 +112,8 @@ function SetRLZeroAtPointOfSales($StockID){
 			WHERE stockid = '".$StockID."'
 				AND loccode NOT IN " . LIST_KANTOR_LOCATIONS  ;
 
-	$Msg = _('Reorder Level set to 0 for') . ' ' . $StockID . ' ' . _('at all Point Of Sale locations');
-	$ErrMsg = _('The update of the Reorder Levels = 0 failed because');
+	$Msg = __('Reorder Level set to 0 for') . ' ' . $StockID . ' ' . __('at all Point Of Sale locations');
+	$ErrMsg = __('The update of the Reorder Levels = 0 failed because');
 	$Result = DB_query($SQL,$ErrMsg, '');
 	prnMsg($Msg , 'success');
 }
@@ -209,9 +209,9 @@ function UpdateTablePrice($StockID, $RetailPrice){
 			SET enddate='" . $Yesterday . "'
 			WHERE stockid ='" . $StockID . "'
 			AND  (enddate > '" . $Yesterday . "' OR enddate = '9999-12-31') ";
-	$ErrMsg = _('Could not update the price because');
+	$ErrMsg = __('Could not update the price because');
 	$Result = DB_query($SQL,$ErrMsg);
-	prnMsg (_('The end date of current prices has been changed to yesterday'),'success');
+	prnMsg (__('The end date of current prices has been changed to yesterday'),'success');
 
 	/* 2nd: set prices in IDR */
 	UpdatePriceItem($StockID, 'RT', 'IDR', $RetailPrice, $Today, TRUE);
@@ -239,10 +239,10 @@ function UpdatePriceItem($StockID, $SalesType, $Currency, $Price, $StartDate, $S
 			$StartDate . "',
 			'9999-12-31')";
 			
-	$ErrMsg = _('Could not add the new KL price');
+	$ErrMsg = __('Could not add the new KL price');
 	$Result = DB_query($SQL,$ErrMsg);
 	if($ShowMessages){
-		prnMsg (_('The ') . $SalesType . _(' price for '). $StockID .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
+		prnMsg (__('The ') . $SalesType . __(' price for '). $StockID .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
 	}
 }
 
@@ -319,7 +319,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									'" . $NewStockAct . "',
 									'" . mb_substr($StockID . ' ' . $reason, 0, 200) . "',
 									'" . ($UnitCost* $StockQtyRow[0]) . "')";
-		$ErrMsg =  _('The stock cost journal could not be inserted because');
+		$ErrMsg =  __('The stock cost journal could not be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '',true);
 		prnMsg ('Changed the value of stock of item: '. $StockID . ' to category ' . $NewCategory . ' Account: ' . $NewStockAct ,'success');
 		$SQL = "INSERT INTO gltrans (type,
@@ -337,7 +337,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									'" . mb_substr($StockID . ' ' .$reason, 0, 200) . "',
 									'" . (-$UnitCost* $StockQtyRow[0]) . "')";
 		$Result = DB_query($SQL, $ErrMsg, '',true);
-		prnMsg (_('Changed the value of stock of item: '). $StockID . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
+		prnMsg (__('Changed the value of stock of item: '). $StockID . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
 	}	
 	
 	/* Update the stockmaster record */
@@ -347,9 +347,9 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 				discountcategory = '" . $DiscountCode . "'
 			WHERE stockid ='" . $StockID . "'";
 
-	$ErrMsg = _('Could not update the price because');
+	$ErrMsg = __('Could not update the price because');
 	$Result = DB_query($SQL,$ErrMsg);
-	prnMsg (_('Updated the Stockmaster record for item: '). $StockID,'success');
+	prnMsg (__('Updated the Stockmaster record for item: '). $StockID,'success');
 
 }
 
@@ -387,7 +387,7 @@ function SendEmailChangePriceReadyForStep02($EmailText){
 				// Send Email
 				KLSendEmail("ItemReadyChangePriceStep02", "Silent", $MyRow['stockid'], $MyRow['description'],$MyRow['qohtotal']);
 				if ($EmailText !=''){
-					$EmailText = $EmailText . _('Item Ready for Price Change Step 02 = '). $MyRow['stockid'] . " QOH = " . $MyRow['qohtotal'] . "\n"; 
+					$EmailText = $EmailText . __('Item Ready for Price Change Step 02 = '). $MyRow['stockid'] . " QOH = " . $MyRow['qohtotal'] . "\n"; 
 				}
 			}
 		}

@@ -11,8 +11,8 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,$YPos-50,0,60);
 
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*1.5),550,$FontSize, _('Stock transfer number ').' ' . $_GET['TransferNo'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*1.5),550,$FontSize, __('Stock transfer number ').' ' . $_GET['TransferNo'] );
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*3),140,$FontSize, __('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. __('Page'). ' ' . $PageNumber);
 
 $YPos -= 60;
 
@@ -31,11 +31,11 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margi
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,  _('Item Number'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+75,$YPos,300-$Left_Margin,$FontSize,  _('Description'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+250,$YPos,300-$Left_Margin,$FontSize,  _('Transfer From'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+350,$YPos,300-$Left_Margin,$FontSize,  _('Transfer To'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Xpos+450,$YPos,300-$Left_Margin,$FontSize,  _('Quantity'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize,  __('Item Number'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos+75,$YPos,300-$Left_Margin,$FontSize,  __('Description'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos+250,$YPos,300-$Left_Margin,$FontSize,  __('Transfer From'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos+350,$YPos,300-$Left_Margin,$FontSize,  __('Transfer To'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Xpos+450,$YPos,300-$Left_Margin,$FontSize,  __('Quantity'), 'centre');
 
 
 $FontSize=8;

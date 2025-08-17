@@ -16,4 +16,4 @@ ChangeColumnDefault('comments', 'woitems', 'longblob', 'NULL', NULL);
 ChangeColumnDefault('closecomments', 'workorders', 'longblob', 'NULL', NULL);
 ChangeColumnDefault('remark', 'workorders', 'text', 'NULL', NULL);
 
-UpdateDBNo(basename(__FILE__, '.php'), _('Set default to nullable fields'));
+UpdateDBNo(basename(__FILE__, '.php'), __('Set default to nullable fields'));

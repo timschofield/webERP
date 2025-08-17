@@ -15,22 +15,22 @@ echo '<td>';
 /* First nested table, about payments */
 echo '<table class="selection">
 		<thead>
-			<th colspan=3>' . _('Payments') . '</th>
+			<th colspan=3>' . __('Payments') . '</th>
 		</thead>
 		<tbody>';
 
 /* Always show cash payments*/
 echo '<tr>
-		<th>' . _('Cash Payments') . '</th>
-		<td>' . _('Cash') . ':</td>
+		<th>' . __('Cash Payments') . '</th>
+		<td>' . __('Cash') . ':</td>
 		<td><input type="text" class="number" name="AmountPaidCash" maxlength="12" size="12" value="' . $_POST['AmountPaidCash'] . '" /></td>
 	</tr>';
 
 /* Only show the CC payments active for the retail partner (set as commission not 0) */
 echo '<tr>
-		<th>' . _('Credit Card Payments') . '</th>';
+		<th>' . __('Credit Card Payments') . '</th>';
 if ($_SESSION['ComissionCCBNI'] != 0){
-	echo '<td>' . _('CC EDC BNI') . ':</td>
+	echo '<td>' . __('CC EDC BNI') . ':</td>
 		<td><input type="text" class="number" name="AmountPaidCCBNI" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBNI'] . '" /></td>';
 }
 echo '</tr>';
@@ -38,7 +38,7 @@ echo '</tr>';
 if ($_SESSION['ComissionCCBCA'] != 0){
 	echo '<tr>
 			<td></td>
-			<td>' . _('CC EDC BCA') . ':</td>
+			<td>' . __('CC EDC BCA') . ':</td>
 			<td><input type="text" class="number" name="AmountPaidCCBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidCCBCA'] . '" /></td>
 		</tr>';
 }
@@ -46,7 +46,7 @@ if ($_SESSION['ComissionCCBCA'] != 0){
 if ($_SESSION['ComissionCCMandiri'] != 0){
 	echo '<tr>
 			<td></td>
-			<td>' . _('CC EDC Mandiri') . ':</td>
+			<td>' . __('CC EDC Mandiri') . ':</td>
 			<td><input type="text" class="number" name="AmountPaidCCMandiri" maxlength="12" size="12" value="' . $_POST['AmountPaidCCMandiri'] . '" /></td>
 		</tr>';
 }
@@ -54,15 +54,15 @@ if ($_SESSION['ComissionCCMandiri'] != 0){
 if ($_SESSION['ComissionCCDanamon'] != 0){
 	echo '<tr>
 			<td></td>
-			<td>' . _('CC EDC Danamon') . ':</td>
+			<td>' . __('CC EDC Danamon') . ':</td>
 			<td><input type="text" class="number" name="AmountPaidCCDanamon" maxlength="12" size="12" value="' . $_POST['AmountPaidCCDanamon'] . '" /></td>
 		</tr>';
 }
 
 echo '<tr>
-		<th>' . _('AMEX Payments') . '</th>';
+		<th>' . __('AMEX Payments') . '</th>';
 if ($_SESSION['ComissionAmexBCA'] != 0){
-	echo '<td>' . _('AMEX EDC BCA') . ':</td>
+	echo '<td>' . __('AMEX EDC BCA') . ':</td>
 		<td><input type="text" class="number" name="AmountPaidAmexBCA" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBCA'] . '" /></td>';
 }
 echo '</tr>';
@@ -70,15 +70,15 @@ echo '</tr>';
 if ($_SESSION['ComissionAmexBNI'] != 0){
 	echo '<tr>
 			<td></td>
-			<td>' . _('AMEX EDC BNI') . ':</td>
+			<td>' . __('AMEX EDC BNI') . ':</td>
 			<td><input type="text" class="number" name="AmountPaidAmexBNI" maxlength="12" size="12" value="' . $_POST['AmountPaidAmexBNI'] . '" /></td>
 		</tr>';
 }
 
 echo '<tr>';
-echo '<th>' . _('Other Payments') . '</th>';
+echo '<th>' . __('Other Payments') . '</th>';
 if ($_SESSION['ComissionQRIS'] != 0){
-	echo '<td>' . _('QRIS Mandiri') . ':</td>
+	echo '<td>' . __('QRIS Mandiri') . ':</td>
 		<td><input type="text" class="number" name="AmountPaidQRIS" maxlength="12" size="12" value="' . $_POST['AmountPaidQRIS'] . '" /></td>';
 }
 echo '</tr>';
@@ -86,7 +86,7 @@ echo '</tr>';
 if ($_SESSION['ComissionWeChat'] != 0){
 	echo '<tr>
 			<td></td>
-			<td>' . _('Alipay/WeChat') . ':</td>
+			<td>' . __('Alipay/WeChat') . ':</td>
 			<td><input type="text" class="number" name="AmountPaidWeChat" maxlength="12" size="12" value="' . $_POST['AmountPaidWeChat'] . '" /></td>
 		</tr>';
 }
@@ -99,37 +99,37 @@ echo '</tbody>
 echo '<td>';
 echo '<table class="selection">
 		<thead>
-			<th colspan=3>' . _('Others') . '</th>
+			<th colspan=3>' . __('Others') . '</th>
 		</thead>
 		<tbody>';
 
 echo '<tr>
-		<th>' . _('Returned Goods') . '</th>
-		<td>' . _('Amount Returned Goods') . ':</td>
+		<th>' . __('Returned Goods') . '</th>
+		<td>' . __('Amount Returned Goods') . ':</td>
 		<td><input type="text" class="number" name="AmountReturnedGoods" maxlength="12" size="12" value="' . $_POST['AmountReturnedGoods'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td></td>
-		<td>' . _('Invoice number') . ':</td>
+		<td>' . __('Invoice number') . ':</td>
 		<td><input type="text" class="text" name="ReturnedGoodsOldInvoice" maxlength="12" size="12" value="' . $_POST['ReturnedGoodsOldInvoice'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td></td>
-		<td>' . _('Invoice Date') . ':</td>
+		<td>' . __('Invoice Date') . ':</td>
 		<td><input type="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ReturnDate" size="10" maxlength="10" value="' . FormatDateForSQL($_POST['ReturnDate']) . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td></td>
-		<td>' . _('Items returned') . ':</td>
+		<td>' . __('Items returned') . ':</td>
 		<td><input type="text" class="text" name="ReturnedGoodsItems" maxlength="40" size="12" value="' . $_POST['ReturnedGoodsItems'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td></td>
-		<td>' . _('Reason of return') . ':</td>
+		<td>' . __('Reason of return') . ':</td>
 		<td><select name="ReturnedGoodsReason">';
 $SQL = "SELECT reasonid,
 				reasonname
@@ -147,14 +147,14 @@ echo '</select></td>
 	</tr>';
 
 echo '<tr>
-		<th>' . _('Vouchers/Discounts') . '</th>
-		<td>' . _('Amount Voucher/Discount') . ':</td>
+		<th>' . __('Vouchers/Discounts') . '</th>
+		<td>' . __('Amount Voucher/Discount') . ':</td>
 		<td><input type="text" class="number" name="AmountVouchers" maxlength="12" size="12" value="' . $_POST['AmountVouchers'] . '" /></td>
 	</tr>';
 
 echo '<tr>
 		<td></td>
-		<td>' . _('Voucher/Discount Code') . ':</td>
+		<td>' . __('Voucher/Discount Code') . ':</td>
 		<td><input type="text" class="text" name="VoucherCode" maxlength="40" size="12" value="' . $_POST['VoucherCode'] . '" /></td>
 	</tr>';
 
@@ -169,7 +169,7 @@ echo '</td>
 /* Show comments section */
 echo '<table class="selection">
 		<tr>
-			<th colspan=2>' . _('Comments') . ':</th>
+			<th colspan=2>' . __('Comments') . ':</th>
 		</tr>
 		<tr>
 			<td colspan=2><textarea name="Comments" cols="100" rows="3">' . stripcslashes($_SESSION['Items' . $identifier]->Comments) . '</textarea></td>

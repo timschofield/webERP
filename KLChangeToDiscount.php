@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Change To Discount');
+$Title = __('Change To Discount');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -12,7 +12,7 @@ include('includes/SQL_CommonFunctions.php');
 
 if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Category']) or !isset($_GET['Action'])){
 	echo '<br />';
-	prnMsg( _('This page must be given the item code and its new Discount Code.'), 'error');
+	prnMsg( __('This page must be given the item code and its new Discount Code.'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -28,18 +28,18 @@ $Title = 'KL Set the ' . $_GET['Discount'] . '% Discount Code';
 if ($_GET['Action'] == "New"){
 	$Title = 'Set the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . $Title . '.</p>';
+				__('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Change"){
 	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Code';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . $Title . '.</p>';
+				__('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Finish"){
 	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Labels';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . $Title . '.</p>';
+				__('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else{
 	echo '<br />';
-	prnMsg( _('Action unknown'), 'error');
+	prnMsg( __('Action unknown'), 'error');
 	include('includes/footer.php');
 	exit();
 }

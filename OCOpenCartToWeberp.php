@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('OpenCart to webERP Syncrhonizer');
+$Title = __('OpenCart to webERP Syncrhonizer');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 

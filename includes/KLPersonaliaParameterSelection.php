@@ -9,15 +9,15 @@ echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
 								'PTBB', 'PT Bumi Biru',
 								'Company', 
 								isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
-								_('For Employees of') . ':');
+								__('For Employees of') . ':');
 
 echo FieldToSelectOnePeriod('PeriodOfFile',
 							isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
-							_('Select Month of the Salaries'));
+							__('Select Month of the Salaries'));
 
-echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
-							'THRONLY', _('THR Only'),
+echo FieldToSelectFromTwoOptions('MONTHLY', __('Monthly Salary'),
+							'THRONLY', __('THR Only'),
 							'SalaryType',
 							isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
-							_('Type Of Salary') . ':');
+							__('Type Of Salary') . ':');
 

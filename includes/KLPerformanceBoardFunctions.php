@@ -92,15 +92,15 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
+		$TableTitleText = __('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . $Typereport . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
 						<th class="SortedColumn">' . 'IDR/Invoice.'. '</th>
 						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
 						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
@@ -327,7 +327,7 @@ function CashStatus($Year,
 	// CASH STATUS ADU IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	$TableTitleText = _('Status Cash IDR PT. Angin Dingin Utara ' . $Year);
+	$TableTitleText = __('Status Cash IDR PT. Angin Dingin Utara ' . $Year);
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';
@@ -481,7 +481,7 @@ function CashStatus($Year,
 	// CASH STATUS ADU USD SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	$TableTitleText = _('Status USD PT. Angin Dingin Utara ');
+	$TableTitleText = __('Status USD PT. Angin Dingin Utara ');
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';
@@ -641,7 +641,7 @@ function CashStatus($Year,
 	// CASH STATUS SMH IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	$TableTitleText = _('Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year);
+	$TableTitleText = __('Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year);
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';
@@ -813,7 +813,7 @@ function CashStatus($Year,
 	// CASH STATUS BB IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	$TableTitleText = _('Status Cash IDR PT. Bumi Biru ' . $Year);
+	$TableTitleText = __('Status Cash IDR PT. Bumi Biru ' . $Year);
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';
@@ -914,7 +914,7 @@ function CashStatus($Year,
 	////////////////////////////////////////////////////////
 		
 	if ($AdminRole){
-		$TableTitleText = _('Status Cash IDR Brankas Kantor and Shareholders ' . $Year);
+		$TableTitleText = __('Status Cash IDR Brankas Kantor and Shareholders ' . $Year);
 		ShowTableTitle($TableTitleText);
 
 		echo '<div>';
@@ -1022,15 +1022,15 @@ function DailySalesRecords($Days, $NumDays, $Since){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate);
+		$TableTitleText = __('Top ') . $Days . __(' retail sales days since '). ConvertSQLDate($FromDate);
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' .  _('#') . '</th>
-						<th class="SortedColumn">' .  _('Date') . '</th>
-						<th class="SortedColumn">' . _('Sales') . '</th>
+						<th class="SortedColumn">' .  __('#') . '</th>
+						<th class="SortedColumn">' .  __('Date') . '</th>
+						<th class="SortedColumn">' . __('Sales') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1135,9 +1135,9 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 						<th colspan="5">' . 'Last year'. '</th>
 					</tr>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Shop') . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Shop') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
 						<th class="SortedColumn">' . 'IDR/Invoice'. '</th>
 						<th class="SortedColumn">' . 'IDR/Piece'. '</th>
 						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
@@ -1246,15 +1246,15 @@ function PettyCashStatus($Currency){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Petty Cash Authorized Status for '). $Currency . ' accounts';
+		$TableTitleText = __('Petty Cash Authorized Status for '). $Currency . ' accounts';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('PC Tab Code') . '</th>
-						<th class="SortedColumn">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('PC Tab Code') . '</th>
+						<th class="SortedColumn">' . __('Amount') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1311,7 +1311,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		$StartDateA = $Current_year . '-01-01';
 		$YesterdayB  = $Typeperiod . substr($YesterdayA, 4, 6);
 		$StartDateB = $Typeperiod . '-01-01';
-		$Title = _('Difference sales for ') . $Typereport . " YTD (Year To Date) and same period in " . $Typeperiod;
+		$Title = __('Difference sales for ') . $Typereport . " YTD (Year To Date) and same period in " . $Typeperiod;
 		$TitleCurrent = $NumDaysA . ' Days This Year';
 		$TitlePrevious = $NumDaysA . ' Days '. $Typeperiod;
 	}
@@ -1321,20 +1321,20 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		if ($Typeperiod == "YEAR"){
 			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
-			$Title = _('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period last year";
+			$Title = __('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period last year";
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days Last Year';
 		}elseif ($Typeperiod == "IMMEDIATE"){
 			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
 			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
-			$Title = _('Difference sales for ') . $Typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
+			$Title = __('Difference sales for ') . $Typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
 			$TitleCurrent = $NumDaysA . ' Last Days';
 			$TitlePrevious = $NumDaysA . ' Previous Days';
 		}else{
 			// comparing with a fixed year
 			$YesterdayB  = $Typeperiod . substr($YesterdayA, 4, 6);
 			$StartDateB = FormatDateForSQL(DateAdd(ConvertSQLDate($YesterdayB),'d',-$NumDaysA));
-			$Title = _('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period in " . $Typeperiod;
+			$Title = __('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period in " . $Typeperiod;
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days '. $Typeperiod;
 		}
@@ -1447,13 +1447,13 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . $Typereport . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
 						<th class="SortedColumn">' . $TitleCurrent . '</th>
 						<th class="SortedColumn">' . $TitlePrevious . '</th>
-						<th class="SortedColumn">' . _('Trend') . '</th>
-						<th class="SortedColumn">' . _('%Rent/Sales') . '</th>
+						<th class="SortedColumn">' . __('Trend') . '</th>
+						<th class="SortedColumn">' . __('%Rent/Sales') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1623,10 +1623,10 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Type') . '</th>
-						<th class="SortedColumn">' . _('TypeNo') . '</th>
-						<th class="SortedColumn">' . _('Unbalance') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
+						<th class="SortedColumn">' . __('Type') . '</th>
+						<th class="SortedColumn">' . __('TypeNo') . '</th>
+						<th class="SortedColumn">' . __('Unbalance') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1677,11 +1677,11 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Type') . '</th>
-						<th class="SortedColumn">' . _('TypeNo') . '</th>
-						<th class="SortedColumn">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
+						<th class="SortedColumn">' . __('Type') . '</th>
+						<th class="SortedColumn">' . __('TypeNo') . '</th>
+						<th class="SortedColumn">' . __('Amount') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1740,10 +1740,10 @@ function ShowKPIHistory($NumDays){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('KPI') . '</th>
-						<th class="SortedColumn">' . _('Minimum') . '</th>
-						<th class="SortedColumn">' . _('Average') . '</th>
-						<th class="SortedColumn">' . _('Maximum') . '</th>
+						<th class="SortedColumn">' . __('KPI') . '</th>
+						<th class="SortedColumn">' . __('Minimum') . '</th>
+						<th class="SortedColumn">' . __('Average') . '</th>
+						<th class="SortedColumn">' . __('Maximum') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1819,7 +1819,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		$ItemsToGetOptimalDaysStock = 0;
 	}
 	
-	$TableTitleText = _('Stock for Brand ' . $BrandText);
+	$TableTitleText = __('Stock for Brand ' . $BrandText);
 	ShowTableTitle($TableTitleText);
 
 	echo '<div>';

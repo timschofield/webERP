@@ -10,8 +10,8 @@ if (isset($_POST['PrintPDF'])
 
 	include('includes/PDFStarter.php');
 
-	$pdf->addInfo('Title',_('Supplier Balance Listing'));
-	$pdf->addInfo('Subject',_('Supplier Balances'));
+	$pdf->addInfo('Title',__('Supplier Balance Listing'));
+	$pdf->addInfo('Subject',__('Supplier Balances'));
 
 	$FontSize=12;
 	$PageNumber=0;
@@ -43,14 +43,14 @@ if (isset($_POST['PrintPDF'])
 				currencies.currency,
 				currencies.decimalplaces";
 
-	$ErrMsg = _('The Supplier details could not be retrieved');
+	$ErrMsg = __('The Supplier details could not be retrieved');
 	$SupplierResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SupplierResult) ==0) {
-		$Title = _('Supplier Balances - Problem Report');
+		$Title = __('Supplier Balances - Problem Report');
 		include('includes/header.php');
-		prnMsg(_('There are no supplier balances to list'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('There are no supplier balances to list'),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -97,13 +97,13 @@ if (isset($_POST['PrintPDF'])
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Supplier Balances At A Period End');
+	$Title=__('Supplier Balances At A Period End');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
-		_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
 	}
@@ -116,17 +116,17 @@ $BookMark = '';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
-			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
 			<input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" />
 		</field>
 		<field>
-			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
+			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
 			<input type="text" maxlength="6" size="7" name="ToCriteria" value="'.$_POST['ToCriteria'].'" />
 		</field>
 		<field>
-			<label for="PeriodEnd">' . _('Balances As At') . ':</label>
+			<label for="PeriodEnd">' . __('Balances As At') . ':</label>
 			<select name="PeriodEnd">';
 
 	$SQL = "SELECT periodno,
@@ -134,7 +134,7 @@ $BookMark = '';
 			FROM periods
 			ORDER BY periodno DESC";
 
-	$ErrMsg = _('Could not retrieve period data because');
+	$ErrMsg = __('Could not retrieve period data because');
 	$Periods = DB_query($SQL, $ErrMsg);
 
 	while ($MyRow = DB_fetch_array($Periods)){
@@ -145,7 +145,7 @@ $BookMark = '';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
 			</div>';
 	echo '</form>';
 	include('includes/footer.php');

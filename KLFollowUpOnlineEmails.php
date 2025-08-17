@@ -2,17 +2,17 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
-$Title = _('KL Follow Up Email System');
+$Title = __('KL Follow Up Email System');
 include('includes/header.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
-	prnMsg( _('We need an order number to send an email to online customer') , 'error');
+	prnMsg( __('We need an order number to send an email to online customer') , 'error');
 	include('includes/footer.php');
 	exit();
 }
 If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
-	prnMsg( _('We need an email type to send an email to online customer') , 'error');
+	prnMsg( __('We need an email type to send an email to online customer') , 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -26,7 +26,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	$Headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
 	if ($_GET['EmailType']=='NoOrderPlaced'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . _('Customer Registration');
+		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Customer Registration');
 		$SQL = "SELECT debtorsmaster.debtorno,
 						debtorsmaster.name AS customername,
 						debtorsmaster.clientsince,
@@ -43,7 +43,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND debtorsmaster.debtorno='" . $_GET['TransNo'] . "'";
 					
 	}elseif ($_GET['EmailType']=='RemindBankTransfer'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . _('Bank Transfer Confirmation needed for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Bank Transfer Confirmation needed for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
@@ -84,7 +84,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 					
 	}elseif ($_GET['EmailType']=='PaymentConfirmation'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . _('Payment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Payment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 					salesorders.customerref,
 					salesorders.comments,
@@ -129,7 +129,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 		
 	}elseif ($_GET['EmailType']=='TrackingConfirmation'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . _('Shipment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
+		$MailSubject = $_SESSION['ShopName'] . ' ' . __('Shipment Confirmation for Order') . ': ' . locale_number_format($_GET['CustomerOrder'],0) . ' (' . locale_number_format($_GET['TransNo'],0) . ')';
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
@@ -173,7 +173,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 					AND (debtortrans.type = 10) 
 					AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 	}elseif ($_GET['EmailType']=='ThankYouOrder'){
-		$MailSubject = $_SESSION['ShopName'] . ' ' . _(' Thank You!') ;
+		$MailSubject = $_SESSION['ShopName'] . ' ' . __(' Thank You!') ;
 		$SQL = "SELECT salesorders.debtorno,
 						salesorders.customerref,
 						salesorders.comments,
@@ -219,12 +219,12 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	}
 
 
-	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+	$ErrMsg = __('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . __('from the database');
 	$Result=DB_query($SQL, $ErrMsg);
 
 	//If there are no rows, there's a problem.
 	if (DB_num_rows($Result)==0){
-		prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+		prnMsg( __('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 		include('includes/footer.php');
 		exit();
 	} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
@@ -232,7 +232,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 		$DeliverBlind = $MyRow['deliverblind'];
 		$DeliveryDate = $MyRow['salesorders.deliverydate'];
 	}else{
-		prnMsg( _('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+		prnMsg( __('Found too many Orders with Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -285,7 +285,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 	$SQL = "UPDATE debtorsmaster 
 			SET klemailnowebshoporder = CURRENT_DATE
 			WHERE debtorno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the customers KL email no order placed date because');
+	$ErrMsg =__('Could not update the customers KL email no order placed date because');
 	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg("Updated date of sending remind of no Online Shop order placed to today");
 }
@@ -294,7 +294,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 	$SQL = "UPDATE salesorders 
 			SET klemailremindbanktransfer = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the sales order KL email remind bank transfer date because');
+	$ErrMsg =__('Could not update the sales order KL email remind bank transfer date because');
 	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
@@ -316,7 +316,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 	$SQL = "UPDATE salesorders 
 			SET klemailpaymentconfirm = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
+	$ErrMsg =__('Could not update the sales order KL email payment confirmation date because');
 	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
@@ -339,7 +339,7 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 	$SQL = "UPDATE salesorders 
 			SET klemailtrackingconfirm = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the sales order KL email tracking confirm date because');
+	$ErrMsg =__('Could not update the sales order KL email tracking confirm date because');
 	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg("Updated date of sending remind bank transfer to online customer to today");
 }
@@ -348,7 +348,7 @@ if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYo
 	$SQL = "UPDATE salesorders 
 			SET klemailthankyouorder = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
-	$ErrMsg =_('Could not update the sales order KL email thank you date because');
+	$ErrMsg =__('Could not update the sales order KL email thank you date because');
 	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg("Updated date of sending thank you! to online customer to today");
 }

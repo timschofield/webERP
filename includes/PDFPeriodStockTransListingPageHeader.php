@@ -16,12 +16,12 @@ $YPos += 30;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=12;
 $YPos -=30;
-$pdf->addText($XPos, $YPos,$FontSize, $TransType . ' ' ._('dated from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
+$pdf->addText($XPos, $YPos,$FontSize, $TransType . ' ' .__('dated from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate']);
 
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
-$pdf->addText($XPos, $YPos+10,$FontSize, _('Page') . ': ' . $PageNumber);
+$pdf->addText($XPos, $YPos+10,$FontSize, __('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
@@ -43,12 +43,12 @@ $YPos -= $LineHeight;
 /*Set up headings */
 $FontSize=8;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,_('Stock Item'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,_('Reference'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,_('Trans Date'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,_('Quantity'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,_('Location'), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,_('Reference'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,__('Stock Item'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,__('Reference'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,__('Trans Date'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,__('Quantity'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,__('Location'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,__('Reference'), 'right');
 $YPos-=$LineHeight;
 
 /*draw a line */

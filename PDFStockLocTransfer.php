@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Stock Location Transfer Docket Error');
+$Title = __('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');
 
@@ -14,20 +14,20 @@ if (!isset($_GET['TransferNo'])){
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
+		'" alt="" />' . ' ' . __('Reprint transfer docket') . '</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Transfer Docket Criteria'), '</legend>';
+			<legend>', __('Transfer Docket Criteria'), '</legend>';
 	echo '<fieldset>
 			<field>
-				<label for="TransferNo">' . _('Transfer docket to reprint') . '</label>
+				<label for="TransferNo">' . __('Transfer docket to reprint') . '</label>
 				<input type="text" class="number" size="10" name="TransferNo" />
 			</field>
 		</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="Print" value="' . _('Print') .'" />
+			<input type="submit" name="Print" value="' . __('Print') .'" />
 		</div>';
     echo '</form>';
 
@@ -36,12 +36,12 @@ if (!isset($_GET['TransferNo'])){
 	echo '<input type="hidden" name="Type" value="Transfer" />';
 	echo '<fieldset>
 			<field>
-				<label for="ORD">' . _('Transfer docket to reprint Shipping Labels') . '</label>
+				<label for="ORD">' . __('Transfer docket to reprint Shipping Labels') . '</label>
 				<input type="text" class="number" size="10" name="ORD" />
 			</field>
 		</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
+			<input type="submit" name="Print" value="' . __('Print Shipping Labels') .'" />
 		</div>';
 	echo '</fieldset>';
     echo '</form>';
@@ -50,13 +50,13 @@ if (!isset($_GET['TransferNo'])){
 	exit();
 }
 
-$pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
-$pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
+$pdf->addInfo('Title', __('Inventory Location Transfer BOL') );
+$pdf->addInfo('Subject', __('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 $FontSize=10;
 $PageNumber=1;
 $LineHeight=30;
 
-$ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>' .  _('This page must be called with a location transfer reference number').'.';
+$ErrMsg = __('An error occurred retrieving the items on the transfer'). '.' . '<p>' .  __('This page must be called with a location transfer reference number').'.';
 $SQL = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
 			   stockmaster.description,
@@ -81,7 +81,7 @@ $Result = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($Result)==0){
 
 	include('includes/header.php');
-	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
+	prnMsg(__('The transfer reference selected does not appear to be set up') . ' - ' . __('enter the items to be transferred first'),'error');
 	include('includes/footer.php');
 	exit();
 }

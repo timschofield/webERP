@@ -5,13 +5,13 @@ include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
-	$Title = _('Select Order To Print');
+	$Title = __('Select Order To Print');
 	include('includes/header.php');
 	echo '<div class="centre">
 		 <br />
 		 <br />
 		 <br />';
-	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
+	prnMsg( __('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
 			<br />
@@ -19,8 +19,8 @@ if (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<tr>
 			<td class="menu_group_item">
 			<ul>
-				<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-				<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 			</ul>
 			</td>
 			</tr>
@@ -34,7 +34,7 @@ if (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorders.debtorno,
 			salesorders.customerref,
@@ -81,18 +81,18 @@ $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-	$Title = _('Print Packing Slip Error');
+	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
-	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+	prnMsg( __('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 			</td>
 			</tr>
 			</table>
@@ -109,24 +109,24 @@ if (DB_num_rows($Result)==0){
 		producing the packlist */
 		$DeliverBlind = $MyRow['deliverblind'];
 		if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
-				$Title = _('Print Packing Slip');
+				$Title = __('Print Packing Slip');
 				$DatePrinted = $MyRow['datepackingslipprinted'];
 				include('includes/header.php');
 				echo '<p>';
-				prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-						_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($DatePrinted) .
-						'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+				prnMsg( __('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
+						__('has previously been printed') . '. ' . __('It was printed on'). ' ' . ConvertSQLDate($DatePrinted) .
+						'<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 			  echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
-				. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+				. __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' .
+				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a>';
 
 				echo '<br /><br /><br />';
-				echo  _('Or select another Order Number to Print');
+				echo  __('Or select another Order Number to Print');
 				echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 						</td>
 						</tr>
 						</table>
@@ -148,8 +148,8 @@ LETS GO */
 $PaperSize = 'A4_Landscape';
 include('includes/PDFStarter.php');
 
-$pdf->addInfo('Title', _('Customer Laser Packing Slip') );
-$pdf->addInfo('Subject', _('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
+$pdf->addInfo('Title', __('Customer Laser Packing Slip') );
+$pdf->addInfo('Subject', __('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
 $FontSize=12;
 $LineHeight=24;
 $PageNumber = 1;
@@ -163,7 +163,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		$pdf->newPage();
 	}
 	/* Now ... Has the order got any line items still outstanding to be invoiced */
-	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+	$ErrMsg = __('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . __('from the database');
 
 	$SQL = "SELECT salesorderdetails.stkcode,
 					stockmaster.description,
@@ -273,9 +273,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 						WHERE bom.parent='" . $MyRow2['stkcode'] . "'
 							AND bom.effectiveafter <= CURRENT_DATE
 							AND bom.effectiveto > CURRENT_DATE";
-				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
+				$ErrMsg = __('Could not retrieve the components of the ordered assembly item');
 				$AssemblyResult = DB_query($SQL, $ErrMsg);
-				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
+				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, __('Assembly Components:-'));
 				$YPos -= ($LineHeight);
 				/*Loop around all the components of the assembly and list the quantity supplied */
 				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
@@ -296,9 +296,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			}
 
 			if ($MyRow2['controlled'] == '1') {
-				$ControlLabel = _('Lot') . ':';
+				$ControlLabel = __('Lot') . ':';
 				if ($MyRow2['serialised'] == 1) {
-					$ControlLabel = _('Serial') . ':';
+					$ControlLabel = __('Serial') . ':';
 				}
 				$SerSQL = "SELECT serialno,
 									moveqty
@@ -341,12 +341,12 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 } /*end for loop to print the whole lot twice */
 
 if ($ListCount == 0) {
-	$Title = _('Print Packing Slip Error');
+	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
-	echo '<p>' .  _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
+	echo '<p>' .  __('There were no outstanding items on the order to deliver') . '. ' . __('A packing slip cannot be printed').
+			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  __('Print Another Packing Slip/Order').
 			'</a>
-			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
 } else {

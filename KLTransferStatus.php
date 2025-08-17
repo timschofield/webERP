@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL General Transfer Status');
+$Title = __('KL General Transfer Status');
 include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLDefines.php');

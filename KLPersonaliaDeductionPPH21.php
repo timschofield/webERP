@@ -4,7 +4,7 @@ include('includes/session.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title=_('Update of PPH21 Deduction');
+$Title=__('Update of PPH21 Deduction');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
@@ -45,7 +45,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$Result = DB_query($SQL);
 
-	echo'<p class="page_title_text">' . _('Company: ') . '' . $_POST['Company'] . ' ' . _('Month: ') . $PeriodName .' </p>';
+	echo'<p class="page_title_text">' . __('Company: ') . '' . $_POST['Company'] . ' ' . __('Month: ') . $PeriodName .' </p>';
 	echo '<form action="KLPersonaliaDeductionPPH21.php" method="post" id="Update">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -54,10 +54,10 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	
 	echo '<thead>
             <tr>
-                <th>' . _('Zone PPH21') . '</th>
-                <th>' . _('Full Name') . '</th>
-                <th>' . _('Code Name') . '</th>
-                <th>' . _('Deduction PPH21') . '</th>
+                <th>' . __('Zone PPH21') . '</th>
+                <th>' . __('Full Name') . '</th>
+                <th>' . __('Code Name') . '</th>
+                <th>' . __('Deduction PPH21') . '</th>
             </tr>
           </thead>
           <tbody>';
@@ -83,7 +83,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	} //end of looping
 	echo'<tr>
 			<td style="text-align:center" colspan="4">
-				<input type="submit" name="submit" value="' . _('Update') . '" />
+				<input type="submit" name="submit" value="' . __('Update') . '" />
 			</td>
 		</tr>
         </tbody>
@@ -99,13 +99,13 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-		<legend>' . _('Selection Parameters') . '</legend>';
+		<legend>' . __('Selection Parameters') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 
 	echo '</fieldset>';
 	
-	echo OneButtonCenteredForm('submit', _('Submit'));
+	echo OneButtonCenteredForm('submit', __('Submit'));
 	
     echo '</div>
           </form>';

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('webERP to OpenCart Daily Synchronizer');
+$Title = __('webERP to OpenCart Daily Synchronizer');
 include('includes/header.php');
 include('includes/GetPrice.php');
 

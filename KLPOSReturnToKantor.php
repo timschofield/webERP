@@ -7,7 +7,7 @@ KL RICARD Clean up of StockLocTransfer so SPG can create transfers from their sh
 /* Inventory Transfer - Bulk Dispatch */
 
 include('includes/session.php');
-$Title = _('Return Transfer from Shop to Kantor');
+$Title = __('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.php');
@@ -30,7 +30,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$Result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'");
 	if (DB_num_rows($Result)!=0){
 		$InputError = true;
-		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now') . '<br />';
+		$ErrorMessage = __('This transaction has already been entered') . '. ' . __('Please start over now') . '<br />';
 		unset($_POST['submit']);
 		unset($_POST['EnterMoreItems']);
 		for ($i=$_POST['LinesCounter']-2;$i<$_POST['LinesCounter'];$i++){
@@ -58,18 +58,18 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 				$MyRow = DB_fetch_row($Result);
 				if ($MyRow[0]==0){
 					$InputError = True;
-					$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
+					$ErrorMessage .= __('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. __('is not set up in the database') . '. ' . __('Only valid parts can be entered for transfers'). '<br />';
 					$_POST['LinesCounter'] -= 1;
 				}
 				DB_free_result( $Result );
 				if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 					$InputError = True;
-					$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric') . '<br />';
+					$ErrorMessage .= __('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. __('for part code'). ' ' . $_POST['StockID' . $i] . ' '. __('is not numeric') . '. ' . __('The quantity entered for transfers is expected to be numeric') . '<br />';
 					$_POST['LinesCounter'] -= 1;
 				}
 				if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
 					$InputError = True;
-					$ErrorMessage .= _('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . _('is less than or equal to 0') . '. ' . _('Please correct this or remove the item') . '<br />';
+					$ErrorMessage .= __('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . __('is less than or equal to 0') . '. ' . __('Please correct this or remove the item') . '<br />';
 					$_POST['LinesCounter'] -= 1;
 				}
 				if ($_SESSION['ProhibitNegativeStock']==1){
@@ -106,20 +106,20 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 
 		if ($TotalItems == 0){
 			$InputError = True;
-			$ErrorMessage .= _('You must enter at least 1 Stock Item to transfer') . '<br />';
+			$ErrorMessage .= __('You must enter at least 1 Stock Item to transfer') . '<br />';
 		}
 
 		/*Ship location and Receive location are different */
 		if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
 			$InputError=True;
-			$ErrorMessage .= _('The transfer must have a different location to receive into and location sent from');
+			$ErrorMessage .= __('The transfer must have a different location to receive into and location sent from');
 		}
 	} //end if the transfer is not a duplicated
 }
 
 if(isset($_POST['Submit']) AND $InputError==False){
 
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to BEGIN Location Transfer transaction');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 
 	$TextToPrint = $InitPrinter . $CenteredJustified;
 	// name of shop
@@ -158,7 +158,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 							'" . Date('Y-m-d H-i-s') . "',
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
 			$ResultLocShip = DB_query($SQL, $ErrMsg);
 
 			if ($_POST['ToStockLocation'] == 'SERDE'){
@@ -170,7 +170,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 		}
 	}
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to COMMIT Location Transfer transaction');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to COMMIT Location Transfer transaction');
 	DB_Txn_Commit();
 
 	$TextToPrint .= $NewLine. $Emphasized . '# Pieces in this transfer: ' . filter_number_format($NumberOfItems) . $NewLine;
@@ -221,7 +221,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	}
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Return Transfer from Shop to Kantor') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Return Transfer from Shop to Kantor') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
@@ -232,14 +232,14 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th colspan="4"><h3>' . _('Return Transfer from Shop to Kantor') . '</h3></th>
+				<th colspan="4"><h3>' . __('Return Transfer from Shop to Kantor') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  _('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
+			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  __('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 	echo '<tr>
-			<th class="SortedColum">' . _('Code') . '</th>
-			<th class="SortedColum">' . _('Quantity') . '</th>
+			<th class="SortedColum">' . __('Code') . '</th>
+			<th class="SortedColum">' . __('Quantity') . '</th>
 			<th colspan="2"></th>
 		</tr>
 		</thead>
@@ -258,7 +258,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 			echo '<tr>
 					<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
 					<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
-					<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
+					<td>' . __('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
 				</tr>';
 			$j++;
 		}
@@ -283,8 +283,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		<br />
 		<div class="centre">
 		<input type="hidden" name="LinesCounter" value="'. $j .'" />
-		<input type="submit" name="EnterMoreItems" value="'. _('Add More Items'). '" />
-		<input type="submit" name="Submit" value="'. _('Create Transfer From Shop To Kantor'). '" />
+		<input type="submit" name="EnterMoreItems" value="'. __('Add More Items'). '" />
+		<input type="submit" name="Submit" value="'. __('Create Transfer From Shop To Kantor'). '" />
 		<br />
 		</div>
 		</div>

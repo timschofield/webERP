@@ -10,7 +10,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started here for password checking and authorisation level check */
 include('includes/session.php');
 
-$Title = _('Contract Charges or Credits');
+$Title = __('Contract Charges or Credits');
 
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
@@ -18,17 +18,17 @@ $BookMark = '';
 include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
+	prnMsg(__('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br />
-		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a supplier') . '</a>';
+		<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>';
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . _('Back to Invoice Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . __('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . _('Back to Credit Note Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . __('Back to Credit Note Entry') . '</a>';
 }
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -47,12 +47,12 @@ if (isset($_POST['AddContractChgToInvoice'])){
 							WHERE status=2
 							AND contractref='" . $_POST['ContractRef'] . "'");
 		if (DB_num_rows($Result)==0){
-			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
+			prnMsg(__('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
 			$InputError =true;
 		} //end if the contract ref entered is not a valid contract
 	}//end if a contract ref was entered manually
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
-		prnMsg(_('The amount entered is not numeric. This contract charge cannot be added to the invoice'),'error');
+		prnMsg(__('The amount entered is not numeric. This contract charge cannot be added to the invoice'),'error');
 		$InputError = True;
 	}
 
@@ -74,23 +74,23 @@ if (isset($_GET['Delete'])){
 /*Show all the selected ContractRefs so far from the SESSION['SuppInv']->Contracts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
 		echo '<div class="centre">
-				<p class="page_title_text">' . _('Contract charges on Invoice') . ' ';
+				<p class="page_title_text">' . __('Contract charges on Invoice') . ' ';
 } else {
 		echo '<div class="centre">
-				<p class="page_title_text">' . _('Contract credits on Credit Note') . ' ';
+				<p class="page_title_text">' . __('Contract credits on Credit Note') . ' ';
 }
 
-echo  $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
+echo  $_SESSION['SuppTrans']->SuppReference . ' ' .__('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
 
 echo '</p></div>';
 
 echo '<table class="selection">
 	<thead>
 		<tr>
-					<th class="SortedColumn">' . _('Contract') . '</th>
-					<th class="SortedColumn">' . _('Amount') . '</th>
-					<th class="SortedColumn">' . _('Narrative') . '</th>
-					<th class="SortedColumn">' . _('Anticipated') . '</th>
+					<th class="SortedColumn">' . __('Contract') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th class="SortedColumn">' . __('Narrative') . '</th>
+					<th class="SortedColumn">' . __('Anticipated') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -100,16 +100,16 @@ $TotalContractsValue = 0;
 foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 
 	if  ($EnteredContract->AnticipatedCost==true) {
-		$AnticipatedCost = _('Yes');
+		$AnticipatedCost = __('Yes');
 	} else {
-		$AnticipatedCost = _('No');
+		$AnticipatedCost = __('No');
 	}
 	echo '<tr>
 			<td>' . $EnteredContract->ContractRef . '</td>
 			<td class="number">' . locale_number_format($EnteredContract->Amount,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . $EnteredContract->Narrative . '</td>
 			<td>' . $AnticipatedCost . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredContract->Counter . '">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredContract->Counter . '">' . __('Delete') . '</a></td>
 		</tr>';
 
 	$TotalContractsValue += $EnteredContract->Amount;
@@ -119,7 +119,7 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 echo '</tbody></table>
 	<table class="selection">
 		<tr>
-		<td class="number">' . _('Total') . ':</td>
+		<td class="number">' . __('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalContractsValue,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>
 	</table>';
@@ -133,13 +133,13 @@ if (!isset($_POST['ContractRef'])) {
 	$_POST['ContractRef']='';
 }
 echo '<fieldset>
-		<legend>', _('Contract Charges'), '</legend>
+		<legend>', __('Contract Charges'), '</legend>
 		<field>
-			<label for="ContractRef">' . _('Contract Reference') . ':</label>
+			<label for="ContractRef">' . __('Contract Reference') . ':</label>
 			<input type="text" name="ContractRef" size="22" maxlength="20" value="' .  $_POST['ContractRef'] . '" />
 		</field>';
 echo '<field>
-		<label for="ContractSelection">' . _('Contract Selection') . ':</label>
+		<label for="ContractSelection">' . __('Contract Selection') . ':</label>
 		<select name="ContractSelection">';
 
 $SQL = "SELECT contractref, name
@@ -159,7 +159,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 
 echo '</select>
-	<fieldhelp>' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</fieldhelp>
+	<fieldhelp>' . __('If you know the code enter it above') . '<br />' . __('otherwise select the contract from the list') . '</fieldhelp>
 </field>';
 
 if (!isset($_POST['Amount'])) {
@@ -169,16 +169,16 @@ if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative']='';
 }
 echo '<field>
-		<label for="Amount">' . _('Amount') . ':</label>
-		<input type="text" class="number" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="" placeholder="'._('Non zero amount').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" />
-		<fieldhelp'._('Amount must be numeric').'</fieldhelp>
+		<label for="Amount">' . __('Amount') . ':</label>
+		<input type="text" class="number" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="" placeholder="'.__('Non zero amount').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['CompanyRecord']['decimalplaces']) . '" />
+		<fieldhelp'.__('Amount must be numeric').'</fieldhelp>
 	</field>';
 echo '<field>
-		<label for="Narrative">' . _('Narrative') . ':</label>
+		<label for="Narrative">' . __('Narrative') . ':</label>
 		<input type="text" name="Narrative" size="42" maxlength="40" value="' .  $_POST['Narrative'] . '" />
 	</field>';
 echo '<field>
-		<label for="AnticipatedCost">' . _('Anticipated Cost') . ':</label>';
+		<label for="AnticipatedCost">' . __('Anticipated Cost') . ':</label>';
 if (isset($_POST['AnticipatedCost']) AND $_POST['AnticipatedCost']==1){
 	echo '<input type="checkbox" name="AnticipatedCost" checked />';
 } else {
@@ -188,7 +188,7 @@ if (isset($_POST['AnticipatedCost']) AND $_POST['AnticipatedCost']==1){
 echo '</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" value="' . _('Enter Contract Charge') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="AddContractChgToInvoice" value="' . __('Enter Contract Charge') . '" /></div>';
 
 echo '</form>';
 include('includes/footer.php');

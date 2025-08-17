@@ -1,14 +1,14 @@
 <?php
 
 include('includes/session.php');
-$Title = _('UTILITY PAGE Change ALL GL Account Code SUFFIX');// Screen identificator.
+$Title = __('UTILITY PAGE Change ALL GL Account Code SUFFIX');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = ''; // Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
-	_('Change ALL GL Account Code SUFFIX'), '" /> ',// Icon title.
-	_('Change ALL GL Account Code SUFFIX'), '</p>';// Page title.
+	__('Change ALL GL Account Code SUFFIX'), '" /> ',// Icon title.
+	__('Change ALL GL Account Code SUFFIX'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -40,20 +40,20 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
-        <legend>' . _('GL Account Code Changes') . '</legend>
+        <legend>' . __('GL Account Code Changes') . '</legend>
         <field>
-            <label for="OldSuffix">' . _('GL Account Code Suffix') . ':</label>
+            <label for="OldSuffix">' . __('GL Account Code Suffix') . ':</label>
             <input type="text" name="OldSuffix" size="2" maxlength="2" />
-            <fieldhelp>' . _('Enter the existing GL account code suffix to change') . '</fieldhelp>
+            <fieldhelp>' . __('Enter the existing GL account code suffix to change') . '</fieldhelp>
         </field>
         <field>
-            <label for="NewSuffix">' . _('New Account Code Suffix') . ':</label>
+            <label for="NewSuffix">' . __('New Account Code Suffix') . ':</label>
             <input type="text" name="NewSuffix" size="2" maxlength="2" />
-            <fieldhelp>' . _('Enter the new GL account code suffix') . '</fieldhelp>
+            <fieldhelp>' . __('Enter the new GL account code suffix') . '</fieldhelp>
         </field>
     </fieldset>
 
-    <input type="submit" name="ProcessGLAccountCode" value="' . _('Process') . '" />
+    <input type="submit" name="ProcessGLAccountCode" value="' . __('Process') . '" />
 	</div>
 	</form>';
 

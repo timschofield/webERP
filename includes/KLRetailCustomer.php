@@ -9,7 +9,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 		// today only
 		$Yesterday  = Date('Y-m-d');
 		$StartDate  = Date('Y-m-d');
-		$TableTitleText = _('Retail Customers By Sex during today ');
+		$TableTitleText = __('Retail Customers By Sex during today ');
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -64,8 +64,8 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Cases') . '</th>
+					<th>' . __('Value') . '</th>
+					<th>' . __('Cases') . '</th>
 					<th>' . '%' . '</th>
 				</tr>
 			</thead>
@@ -178,17 +178,17 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	
 	if (DB_num_rows($Result) != 0){
 		if ($NumDays == -1){
-			$TableTitleText = _('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea;
+			$TableTitleText = __('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea;
 		} else {
-			$TableTitleText = _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea;
+			$TableTitleText = __('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea;
 		}
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th>' . _('Value') . '</th>
-						<th>' . _('Cases') . '</th>
+						<th>' . __('Value') . '</th>
+						<th>' . __('Cases') . '</th>
 						<th>' . '%' . '</th>
 					</tr>
 				</thead>
@@ -280,14 +280,14 @@ function EmailHarvested($NumDays, $TypeOfShops){
 	$MyRow = DB_fetch_array($Result);
 	$NumberEmails = $MyRow[0];
 
-	$TableTitleText = _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
+	$TableTitleText = __('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Cases') . '</th>
+					<th>' . __('Value') . '</th>
+					<th>' . __('Cases') . '</th>
 					<th>' . '%' . '</th>
 				</tr>
 			</thead>
@@ -471,17 +471,17 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 	$NumberCases08 = $MyRow[0];
 
 	if ($NumDays == -1){
-		$TableTitleText = _('Retail Customers By Age during today in ') . $NameOfShops . ' shops';
+		$TableTitleText = __('Retail Customers By Age during today in ') . $NameOfShops . ' shops';
 	} else {
-		$TableTitleText = _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
+		$TableTitleText = __('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
 	}
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Cases') . '</th>
+					<th>' . __('Value') . '</th>
+					<th>' . __('Cases') . '</th>
 					<th>' . '%' . '</th>
 				</tr>
 			</thead>
@@ -610,22 +610,22 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
+		$TableTitleText = __('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="SortedColumn">' . _('SPG') . '</th>
-							<th class="SortedColumn">' . _('Name') . '</th>
-							<th class="SortedColumn">' . _('# Sales') . '</th>
-							<th class="SortedColumn">' . _('% Data') . '</th>
-							<th class="SortedColumn">' . _('% First') . '</th>
-							<th class="SortedColumn">' . _('% Last') . '</th>
-							<th class="SortedColumn">' . _('% Country') . '</th>
-							<th class="SortedColumn">' . _('% DOB') . '</th>
-							<th class="SortedColumn">' . _('% Email') . '</th>
-							<th class="SortedColumn">' . _('% Sex') . '</th>
-							<th class="SortedColumn">' . _('% VIP-PACK') . '</th>
+							<th class="SortedColumn">' . __('SPG') . '</th>
+							<th class="SortedColumn">' . __('Name') . '</th>
+							<th class="SortedColumn">' . __('# Sales') . '</th>
+							<th class="SortedColumn">' . __('% Data') . '</th>
+							<th class="SortedColumn">' . __('% First') . '</th>
+							<th class="SortedColumn">' . __('% Last') . '</th>
+							<th class="SortedColumn">' . __('% Country') . '</th>
+							<th class="SortedColumn">' . __('% DOB') . '</th>
+							<th class="SortedColumn">' . __('% Email') . '</th>
+							<th class="SortedColumn">' . __('% Sex') . '</th>
+							<th class="SortedColumn">' . __('% VIP-PACK') . '</th>
 						</tr>';
 		echo $TableHeader;
 

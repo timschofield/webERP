@@ -68,7 +68,7 @@ function CalcFreightCost ($TotalValue,
 
 	$CalcFreightCostResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
-		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg() . ' - ' . $SQL;
+		echo __('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg() . ' - ' . $SQL;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
 		while ($MyRow = DB_fetch_array($CalcFreightCostResult)) {

@@ -53,9 +53,9 @@ function GenerateReport($LocationForm) {
 		$Result = DB_query($SQL);
 
 		if (DB_num_rows($Result) == 0) {
-			$Title = _('Print Authorized Internal Stock Request still not fulfilled');
+			$Title = __('Print Authorized Internal Stock Request still not fulfilled');
 			include('includes/header.php');
-			prnMsg(_('No Pending Authorized Internal Stock Requests found for the selected location.'), 'info');
+			prnMsg(__('No Pending Authorized Internal Stock Requests found for the selected location.'), 'info');
 			include('includes/footer.php');
 			exit(); // Stop script execution
 		}
@@ -68,7 +68,7 @@ function GenerateReport($LocationForm) {
 		$HTML .= '<html>
 					<head>
 						<meta charset="UTF-8">
-						<title>' . _('Pending Stock Requests') . '</title>
+						<title>' . __('Pending Stock Requests') . '</title>
 						<style>
 							body { font-family: sans-serif; }
 							.page_title_text { text-align: center; font-size: 1.2em; font-weight: bold; padding-bottom: 15px; }
@@ -88,19 +88,19 @@ function GenerateReport($LocationForm) {
 					</head>
 					<body>';
 
-		$HTML .= '<div class="page_title_text">' . _('Pending Authorized Internal Stock Requests for Location:') . ' ' . $LocationForm . '</div>';
+		$HTML .= '<div class="page_title_text">' . __('Pending Authorized Internal Stock Requests for Location:') . ' ' . $LocationForm . '</div>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			$HTML .= '<div class="request-block">';
 			$HTML .= '<div class="request-header">';
-			$HTML .= '<p><strong>' . _('From Location') . ':</strong> ' . $MyRow['locationname'] . '</p>';
-			$HTML .= '<p><strong>' . _('To Department') . ':</strong> ' . $MyRow['departmentdescription'] . '</p>';
-			$HTML .= '<p><strong>' . _('Request Date') . ':</strong> ' . ConvertSQLDate($MyRow['despatchdate']) . '</p>';
-			$HTML .= '<p><strong>' . _('Initiator') . ':</strong> ' . $MyRow['initiator'] . ' - ' . $MyRow['realname'] . '</p>';
-			$HTML .= '<p><strong>' . _('Request #') . ':</strong> ' . $MyRow['dispatchid'] . '</p>';
+			$HTML .= '<p><strong>' . __('From Location') . ':</strong> ' . $MyRow['locationname'] . '</p>';
+			$HTML .= '<p><strong>' . __('To Department') . ':</strong> ' . $MyRow['departmentdescription'] . '</p>';
+			$HTML .= '<p><strong>' . __('Request Date') . ':</strong> ' . ConvertSQLDate($MyRow['despatchdate']) . '</p>';
+			$HTML .= '<p><strong>' . __('Initiator') . ':</strong> ' . $MyRow['initiator'] . ' - ' . $MyRow['realname'] . '</p>';
+			$HTML .= '<p><strong>' . __('Request #') . ':</strong> ' . $MyRow['dispatchid'] . '</p>';
 			if (!empty($MyRow['narrative'])) {
-				$HTML .= '<p><strong>' . _('Narrative') . ':</strong> ' . $MyRow['narrative'] . '</p>';
+				$HTML .= '<p><strong>' . __('Narrative') . ':</strong> ' . $MyRow['narrative'] . '</p>';
 			}
 			$HTML .= '</div>'; // end request-header
 
@@ -129,12 +129,12 @@ function GenerateReport($LocationForm) {
 				$HTML .= '<thead>
 							<tr>
 								<th>#</th>
-								<th>' . _('Item Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Requested') . '</th>
-								<th>' . _('Delivered') . '</th>
-								<th>' . _('Pending') . '</th>
-								<th>' . _('UoM') . '</th>
+								<th>' . __('Item Code') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('Requested') . '</th>
+								<th>' . __('Delivered') . '</th>
+								<th>' . __('Pending') . '</th>
+								<th>' . __('UoM') . '</th>
 							</tr>
 						</thead>';
 				$HTML .= '<tbody>';
@@ -153,7 +153,7 @@ function GenerateReport($LocationForm) {
 				}
 				$HTML .= '</tbody></table>';
 			} else {
-				$HTML .= '<p>' . _('No pending items found for this request.') . '</p>';
+				$HTML .= '<p>' . __('No pending items found for this request.') . '</p>';
 			}
 			$HTML .= '</div>'; // end request-block
 		} // End while loop for requests
@@ -210,7 +210,7 @@ function GenerateReport($LocationForm) {
 			exit(); // Stop script after ODS output
 
 		} else { // Default to 'View' which corresponds to the 'submit' button
-			$Title = _('View Authorized Internal Stock Request still not fulfilled');
+			$Title = __('View Authorized Internal Stock Request still not fulfilled');
 			include('includes/header.php');
 			// Removed the specific image/title echo here, as the $HTML includes a title.
 			// You can add it back if needed:
@@ -221,14 +221,14 @@ function GenerateReport($LocationForm) {
 
 	} else {
 		// Handle Input Errors if validation was added
-		$Title = _('Input Error');
+		$Title = __('Input Error');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/warning.png" title="' . $Title . '" alt="" />' . ' ' . $Title .
 			'</p>';
 		// Display specific error messages here using prnMsg()
 		// prnMsg($InputErrorMessage, "warn");
-		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Back') . '</a>';
+		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Back') . '</a>';
 		include('includes/footer.php');
 	}
 } // End of function GenerateReport()
@@ -236,7 +236,7 @@ function GenerateReport($LocationForm) {
 
 function DisplayOptions() {
     global $RootPath, $_SESSION; // Make global variables available
-	$Title = _('Print Authorized Internal Stock Request still not fulfilled');
+	$Title = __('Print Authorized Internal Stock Request still not fulfilled');
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -247,18 +247,18 @@ function DisplayOptions() {
 		</p>';
 
 	echo '<fieldset>';
-	echo '<legend>' . _('Selection Criteria') . '</legend>';
+	echo '<legend>' . __('Selection Criteria') . '</legend>';
 	// Assuming FieldToSelectOneLocation is a custom function defined elsewhere
 	// Make sure it's included or defined.
-	echo FieldToSelectOneLocation("LocationForm", $_POST['LocationForm'], _('Location from'), '', 'CANVIEW', 1, true, false);
+	echo FieldToSelectOneLocation("LocationForm", $_POST['LocationForm'], __('Location from'), '', 'CANVIEW', 1, true, false);
 	echo '</fieldset>';
 
 	// Buttons similar to FixedAssetRegister.php
 	echo '<div class="centre">
             <br />
-            <input type="submit" name="submit" value="' . _('View Requests') . '" />&nbsp;
-            <input type="submit" name="PrintPDF" value="' . _('Print as PDF') . '" />&nbsp;
-            <input type="submit" name="Spreadsheet" value="' . _('Export as ODS') . '" />
+            <input type="submit" name="submit" value="' . __('View Requests') . '" />&nbsp;
+            <input type="submit" name="PrintPDF" value="' . __('Print as PDF') . '" />&nbsp;
+            <input type="submit" name="Spreadsheet" value="' . __('Export as ODS') . '" />
             <br />
           </div>';
 

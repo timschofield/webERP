@@ -12,8 +12,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['Compa
 
 $YPos -=$LineHeight;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Inventory Control at ') . ' ' . $_POST['Location'] . ' ' . _('location'));
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,__('Inventory Control at ') . ' ' . $_POST['Location'] . ' ' . __('location'));
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$LineHeight);
 
@@ -28,10 +28,10 @@ $pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margi
 $Xpos = $Left_Margin+1;
 
 	
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, _('Item'), 'left');
-$LeftOvers = $pdf->addTextWrap(200,$YPos,60,$FontSize, _('Description'), 'left');
-$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,_('Qty'), 'left');
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Check pricetags'), 'left');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,300-$Left_Margin,$FontSize, __('Item'), 'left');
+$LeftOvers = $pdf->addTextWrap(200,$YPos,60,$FontSize, __('Description'), 'left');
+$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,__('Qty'), 'left');
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,__('Check pricetags'), 'left');
 
 $YPos =$YPos - (2*$LineHeight);
 

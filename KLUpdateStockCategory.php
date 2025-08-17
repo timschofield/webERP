@@ -2,13 +2,13 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
-$Title = _('KL Update stock category');
+$Title = __('KL Update stock category');
 include('includes/header.php');
 include('includes/KLBoards.php');
 
 //Get Out if we have no StockId or OldCat or NewCat
 If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
-	prnMsg( _('We need an item code and Old Category and New Category codes') , 'error');
+	prnMsg( __('We need an item code and Old Category and New Category codes') , 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -16,7 +16,7 @@ If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
 $Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
 $MyRow = DB_fetch_row($Result);
 if (DB_num_rows($Result)==0) {
-	prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
+	prnMsg (__('The entered item code does not exist'),'error',__('Non-existent Item'));
 } elseif ($_GET['OldCat'] != $_GET['NewCat']){
 	ChangeItemStockCategory( $_GET['StockId'], $_GET['OldCat'], $_GET['NewCat']);
 	prnMsg ('Stock Category of ' . $_GET['StockId'] . ' changed from ' . $_GET['OldCat'] . ' to ' . $_GET['NewCat'] ,'success');
@@ -74,9 +74,9 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										CURRENT_DATE,
 										'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 										'" . $NewStockAct . "',
-										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
+										'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 										'" . round($UnitCost * $QOH) . "')";
-			$ErrMsg =  _('The stock cost journal could not be inserted because');
+			$ErrMsg =  __('The stock cost journal could not be inserted because');
 			$Result = DB_query($SQL, $ErrMsg, '',true);
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -90,7 +90,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										CURRENT_DATE,
 										'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 										'" . $OldStockAccount . "',
-										'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
+										'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 										'" . round(-$UnitCost * $QOH) . "')";
 			$Result = DB_query($SQL, $ErrMsg, '',true);
 
@@ -108,7 +108,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										WHERE stockmaster.stockid='". $StockID . "'
 										AND workorders.closed=0
 										GROUP BY workorders.costissued",
-										_('Error retrieving value of finished goods received and cost issued against work orders for this item'));
+										__('Error retrieving value of finished goods received and cost issued against work orders for this item'));
 			$WIPValue = 0;
 			while ($WIPRow=DB_fetch_array($WOCostsResult)){
 				$WIPValue += ($WIPRow['costissued']-$WIPRow['costrecd']);
@@ -127,9 +127,9 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											CURRENT_DATE,
 											'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 											'" . $NewWIPAct . "',
-											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
+											'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 											'" . $WIPValue . "')";
-				$ErrMsg =  _('The WIP cost journal could not be inserted because');
+				$ErrMsg =  __('The WIP cost journal could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '',true);
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -143,7 +143,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											CURRENT_DATE,
 											'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 											'" . $OldWIPAccount . "',
-											'" . mb_substr($StockID . ' ' . _('Change stock category'), 0, 200) . "',
+											'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 											'" . (-$WIPValue) . "')";
 				$Result = DB_query($SQL, $ErrMsg, '',true);
 			}
@@ -152,7 +152,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 				SET categoryid='" . $NewCat . "' 
 				WHERE stockid='".$StockID."'";
 
-		$ErrMsg = _('The stock item could not be updated because');
+		$ErrMsg = __('The stock item could not be updated because');
 		$Result = DB_query($SQL,$ErrMsg,'',true);
 			
 		prnMsg ('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');

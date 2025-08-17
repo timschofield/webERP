@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Change of Retail Price -> Step 02');
+$Title = __('KL Change of Retail Price -> Step 02');
 include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -56,24 +56,24 @@ include('includes/KLUIGeneralFunctions.php');
 				AND klchangeprice.endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Items ready to change Retail Price in KL kantor');
+		$TableTitleText = __('Items ready to change Retail Price in KL kantor');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
               <thead>';
 		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
-							<th>' . _('Transit From Kantor') . '</th>
-							<th>' . _('Transit To Kantor') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('QOH Others') . '</th>
-							<th>' . _('QOH Total') . '</th>
-							<th>' . _('New Retail Price') . '</th>
-							<th>' . _('Labels') . '</th>
+							<th>' . __('#') . '</th>
+							<th>' . __('Code') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . __('Start Date') . '</th>
+							<th>' . __('QOH KL Shops') . '</th>
+							<th>' . __('Transit From Kantor') . '</th>
+							<th>' . __('Transit To Kantor') . '</th>
+							<th>' . __('QOH Kantor') . '</th>
+							<th>' . __('QOH Others') . '</th>
+							<th>' . __('QOH Total') . '</th>
+							<th>' . __('New Retail Price') . '</th>
+							<th>' . __('Labels') . '</th>
 						</tr>';
 		echo $TableHeader;
 		echo '</thead><tbody>';

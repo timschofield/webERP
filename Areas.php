@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title = _('Sales Area Maintenance');
+$Title = __('Sales Area Maintenance');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'Areas';
 include('includes/header.php');
@@ -34,27 +34,27 @@ if (isset($_POST['submit'])) {
 	// mod to handle 3 char area codes
 	if (mb_strlen($_POST['AreaCode']) > 3) {
 		$InputError = 1;
-		prnMsg(_('The area code must be three characters or less long'),'error');
+		prnMsg(__('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
 	} elseif (DB_num_rows($Result)>0 AND !isset($SelectedArea)){
 		$InputError = 1;
-		prnMsg(_('The area code entered already exists'),'error');
+		prnMsg(__('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
 	} elseif (mb_strlen($_POST['AreaDescription']) >25) {
 		$InputError = 1;
-		prnMsg(_('The area description must be twenty five characters or less long'),'error');
+		prnMsg(__('The area description must be twenty five characters or less long'),'error');
 		$Errors[$i] = 'AreaDescription';
 		$i++;
 	} elseif ( trim($_POST['AreaCode']) == '' ) {
 		$InputError = 1;
-		prnMsg(_('The area code may not be empty'),'error');
+		prnMsg(__('The area code may not be empty'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
 	} elseif ( trim($_POST['AreaDescription']) == '' ) {
 		$InputError = 1;
-		prnMsg(_('The area description may not be empty'),'error');
+		prnMsg(__('The area description may not be empty'),'error');
 		$Errors[$i] = 'AreaDescription';
 		$i++;
 	}
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "'
 								WHERE areacode = '" . $SelectedArea . "'";
 
-		$Msg = _('Area code') . ' ' . $SelectedArea  . ' ' . _('has been updated');
+		$Msg = __('Area code') . ' ' . $SelectedArea  . ' ' . __('has been updated');
 
 	} elseif ($InputError !=1) {
 
@@ -80,14 +80,14 @@ if (isset($_POST['submit'])) {
 								)";
 
 		$SelectedArea = $_POST['AreaCode'];
-		$Msg = _('New area code') . ' ' . $_POST['AreaCode'] . ' ' . _('has been inserted');
+		$Msg = __('New area code') . ' ' . $_POST['AreaCode'] . ' ' . __('has been inserted');
 	} else {
 		$Msg = '';
 	}
 
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
-		$ErrMsg = _('The area could not be added or updated because');
+		$ErrMsg = __('The area could not be added or updated because');
 		$Result = DB_query($SQL, $ErrMsg);
 		unset($SelectedArea);
 		unset($_POST['AreaCode']);
@@ -107,8 +107,8 @@ if (isset($_POST['submit'])) {
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow['branches']>0) {
 		$CancelDelete = 1;
-		prnMsg( _('Cannot delete this area because customer branches have been created using this area'),'warn');
-		echo '<br />' . _('There are') . ' ' . $MyRow['branches'] . ' ' . _('branches using this area code');
+		prnMsg( __('Cannot delete this area because customer branches have been created using this area'),'warn');
+		echo '<br />' . __('There are') . ' ' . $MyRow['branches'] . ' ' . __('branches using this area code');
 
 	} else {
 		$SQL= "SELECT COUNT(area) AS records FROM salesanalysis WHERE salesanalysis.area ='$SelectedArea'";
@@ -116,15 +116,15 @@ if (isset($_POST['submit'])) {
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow['records']>0) {
 			$CancelDelete = 1;
-			prnMsg( _('Cannot delete this area because sales analysis records exist that use this area'),'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow['records'] . ' ' . _('sales analysis records referring this area code');
+			prnMsg( __('Cannot delete this area because sales analysis records exist that use this area'),'warn');
+			echo '<br />' . __('There are') . ' ' . $MyRow['records'] . ' ' . __('sales analysis records referring this area code');
 		}
 	}
 
 	if ($CancelDelete==0) {
 		$SQL="DELETE FROM areas WHERE areacode='" . $SelectedArea . "'";
 		$Result = DB_query($SQL);
-		prnMsg(_('Area Code') . ' ' . $SelectedArea . ' ' . _('has been deleted') .' !','success');
+		prnMsg(__('Area Code') . ' ' . $SelectedArea . ' ' . __('has been deleted') .' !','success');
 	} //end if Delete area
 	unset($SelectedArea);
 	unset($_GET['delete']);
@@ -137,21 +137,21 @@ if (!isset($SelectedArea)) {
 				FROM areas";
 	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Area Code') . '</th>
-				<th>' . _('Area Name') . '</th>
+				<th>' . __('Area Code') . '</th>
+				<th>' . __('Area Name') . '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['areacode'] . '</td>
 				<td>' . $MyRow['areadescription'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '&amp;delete=yes">' . _('Delete') . '</a></td>
-				<td><a href="SelectCustomer.php?Area=' . $MyRow['areacode'] . '">' . _('View Customers from this Area') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '&amp;delete=yes">' . __('Delete') . '</a></td>
+				<td><a href="SelectCustomer.php?Area=' . $MyRow['areacode'] . '">' . __('View Customers from this Area') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -161,7 +161,7 @@ if (!isset($SelectedArea)) {
 //end of ifs and buts!
 
 if (isset($SelectedArea)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Areas Defined') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Areas Defined') . '</a></div>';
 }
 
 
@@ -187,9 +187,9 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedArea" value="' . $SelectedArea . '" />';
 		echo '<input type="hidden" name="AreaCode" value="' .$_POST['AreaCode'] . '" />';
 		echo '<fieldset>
-				<legend>', _('Edit existing Sales Area details'), '</legend>
+				<legend>', __('Edit existing Sales Area details'), '</legend>
 				<field>
-					<label for="AreaCode">' . _('Area Code') . ':</label>
+					<label for="AreaCode">' . __('Area Code') . ':</label>
 					<fieldtext>' . $_POST['AreaCode'] . '</fieldtext>
 				</field>';
 
@@ -201,23 +201,23 @@ if (!isset($_GET['delete'])) {
 			$_POST['AreaDescription'] = '';
 		}
 		echo '<fieldset>
-				<legend>', _('Create New Sales Area details'), '</legend>
+				<legend>', __('Create New Sales Area details'), '</legend>
 			<field>
-				<label for="AreaCode">' . _('Area Code') . ':</label>
+				<label for="AreaCode">' . __('Area Code') . ':</label>
 				<input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" required="required" autofocus="autofocus" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" title="" />
-				<fieldhelp>' . _('Enter the sales area code - up to 3 characters are allowed') . '</fieldhelp>
+				<fieldhelp>' . __('Enter the sales area code - up to 3 characters are allowed') . '</fieldhelp>
 			</field>';
 	}
 
 	echo '<field>
-			<label for="AreaDescription">' . _('Area Name') . ':</label>
+			<label for="AreaDescription">' . __('Area Name') . ':</label>
 			<input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" required="required" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size="26" maxlength="25" title="" />
-			<fieldhelp>' . _('Enter the description of the sales area') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the description of the sales area') . '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>
 				<div class="centre">
-					<input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') .'" />
+					<input tabindex="3" type="submit" name="submit" value="' . __('Enter Information') .'" />
 				</div>
 	</form>';
 

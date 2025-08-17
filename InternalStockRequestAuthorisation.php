@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title = _('Authorise Internal Stock Requests');
+$Title = __('Authorise Internal Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'AuthoriseRequest';
 
@@ -63,12 +63,12 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<table class="selection">
 	<tr>
-		<th>' . _('Request Number') . '</th>
-		<th>' . _('Department') . '</th>
-		<th>' . _('Location Of Stock') . '</th>
-		<th>' . _('Requested Date') . '</th>
-		<th>' . _('Narrative') . '</th>
-		<th>' . _('Authorise') . '</th>
+		<th>' . __('Request Number') . '</th>
+		<th>' . __('Department') . '</th>
+		<th>' . __('Location Of Stock') . '</th>
+		<th>' . __('Requested Date') . '</th>
+		<th>' . __('Narrative') . '</th>
+		<th>' . __('Authorise') . '</th>
 	</tr>';
 
 while ($MyRow=DB_fetch_array($Result)) {
@@ -99,10 +99,10 @@ while ($MyRow=DB_fetch_array($Result)) {
 			<td colspan="5" align="left">
 				<table class="selection" align="left">
 				<tr>
-					<th>' . _('Product') . '</th>
-					<th>' . _('Quantity Required') . '</th>
-					<th>' . _('Units') . '</th>
-					<th>' . _('Cancel Line') . '</th>
+					<th>' . __('Product') . '</th>
+					<th>' . __('Quantity Required') . '</th>
+					<th>' . __('Units') . '</th>
+					<th>' . __('Cancel Line') . '</th>
 				</tr>';
 
 	while ($LineRow=DB_fetch_array($LineResult)) {
@@ -118,7 +118,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		</tr>';
 } //end while header loop
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update'). '" /></div>
+echo '<br /><div class="centre"><input type="submit" name="UpdateAll" value="' . __('Update'). '" /></div>
       </div>
       </form>';
 

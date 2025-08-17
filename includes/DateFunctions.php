@@ -214,43 +214,43 @@ function EndDateSQLFromPeriodNo($PeriodNo) {
 function GetMonthText($MonthNumber) {
 	switch ($MonthNumber) {
 		case 1:
-			$Month = _('January');
+			$Month = __('January');
 			break;
 		case 2:
-			$Month = _('February');
+			$Month = __('February');
 			break;
 		case 3:
-			$Month = _('March');
+			$Month = __('March');
 			break;
 		case 4:
-			$Month = _('April');
+			$Month = __('April');
 			break;
 		case 5:
-			$Month = _('May');
+			$Month = __('May');
 			break;
 		case 6:
-			$Month = _('June');
+			$Month = __('June');
 			break;
 		case 7:
-			$Month = _('July');
+			$Month = __('July');
 			break;
 		case 8:
-			$Month = _('August');
+			$Month = __('August');
 			break;
 		case 9:
-			$Month = _('September');
+			$Month = __('September');
 			break;
 		case 10:
-			$Month = _('October');
+			$Month = __('October');
 			break;
 		case 11:
-			$Month = _('November');
+			$Month = __('November');
 			break;
 		case 12:
-			$Month = _('December');
+			$Month = __('December');
 			break;
 		default:
-			$Month = _('error');
+			$Month = __('error');
 			break;
 	}
 	return $Month;
@@ -266,25 +266,25 @@ function GetWeekDayText($WeekDayNumber) {
 	$Day = '';
 	switch ($WeekDayNumber) {
 		case 0:
-			$Day = _('Sunday');
+			$Day = __('Sunday');
 			break;
 		case 1:
-			$Day = _('Monday');
+			$Day = __('Monday');
 			break;
 		case 2:
-			$Day = _('Tuesday');
+			$Day = __('Tuesday');
 			break;
 		case 3:
-			$Day = _('Wednesday');
+			$Day = __('Wednesday');
 			break;
 		case 4:
-			$Day = _('Thursday');
+			$Day = __('Thursday');
 			break;
 		case 5:
-			$Day = _('Friday');
+			$Day = __('Friday');
 			break;
 		case 6:
-			$Day = _('Saturday');
+			$Day = __('Saturday');
 			break;
 	}
 	return $Day;
@@ -408,7 +408,7 @@ function ConvertSQLDate($DateEntry) {
 		}
 	}
 	if ($ErrorInFormat){
-		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
+		prnMsg(__('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
 				return '01/01/1000';
@@ -461,7 +461,7 @@ function ConvertSQLDateTime($DateEntry) {
 	} elseif (mb_strpos($DateEntry, '.')) {
 		$DateArray = explode('.', $DateEntry);
 	} else {
-		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
+		prnMsg(__('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
 				return '01/01/1000';
@@ -1240,12 +1240,12 @@ function CreatePeriod($PeriodNo, $PeriodEnd) {
 										'" . $PeriodNo . "',
 										'" . Date('Y-m-d', $PeriodEnd) . "'
 									)";
-	$ErrMsg = _('An error occurred in adding a new period number');
+	$ErrMsg = __('An error occurred in adding a new period number');
 	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 	$TotalsSQL = "INSERT INTO gltotals (account, period, amount)
 				SELECT accountcode, '" . $PeriodNo . "', 0 FROM chartmaster";
-	$ErrMsg = _('An error occurred in adding a new period number to the gltotals table');
+	$ErrMsg = __('An error occurred in adding a new period number to the gltotals table');
 
 }
 
@@ -1262,7 +1262,7 @@ function PeriodExists($TransDate) {
 
 	$GetPrdSQL = "SELECT periodno FROM periods WHERE lastdate_in_period < '" . Date('Y/m/d', $MonthAfterTransDate) . "' AND lastdate_in_period >= '" . Date('Y/m/d', $TransDate) . "'";
 
-	$ErrMsg = _('An error occurred in retrieving the period number');
+	$ErrMsg = __('An error occurred in retrieving the period number');
 	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 
 	if (DB_num_rows($GetPrdResult) == 0) {
@@ -1316,8 +1316,8 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 	$MyRow = DB_fetch_row($Result);
 
 	if (is_null($MyRow[0])){ //then no periods are currently defined - so set a couple up starting at 0
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",_('Could not insert first period'));
-		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",_('Could not insert second period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')",__('Could not insert first period'));
+		$InsertFirstPeriodResult = DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')",__('Could not insert second period'));
 		$LastPeriod = 1;
 		$LastPeriodEnd = mktime(0, 0, 0, Date('m') + 2, 0, Date('Y'));
 	} else {
@@ -1383,7 +1383,7 @@ function GetPeriod($TransDate, $UseProhibit = true) {
 					WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "'
 					AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
-	$ErrMsg = _('An error occurred in retrieving the period number');
+	$ErrMsg = __('An error occurred in retrieving the period number');
 	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 	$MyRow = DB_fetch_row($GetPrdResult);
 

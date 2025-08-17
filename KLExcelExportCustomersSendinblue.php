@@ -54,15 +54,15 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 	//first off validate inputs sensible
 	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
-		prnMsg(_('Invalid From Date'),'error');
+		prnMsg(__('Invalid From Date'),'error');
 	}
 	if (!Is_Date($_POST['ToDate'])) {
 		$InputError = 1;
-		prnMsg(_('Invalid To Date'),'error');
+		prnMsg(__('Invalid To Date'),'error');
 	}
 	if (FormatDateForSQL($_POST['ToDate']) < FormatDateForSQL($_POST['FromDate'])) {
 		$InputError = 1;
-		prnMsg(_('Date To has to be greater than From Date'),'error');
+		prnMsg(__('Date To has to be greater than From Date'),'error');
 	}
 
 	if ($InputError == 0){
@@ -94,7 +94,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 					AND salesorders.orddate <= '" . $ToDate . "'
 				ORDER BY klretailcustomers.orderno";
 		
-		$ErrMsg = _('The SQL to find the Retail Customer Data to export to Sendinblue');
+		$ErrMsg = __('The SQL to find the Retail Customer Data to export to Sendinblue');
 		$Result = DB_query($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
 			$TxResult = DB_Txn_Begin();
@@ -215,7 +215,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			DB_Txn_Commit();
 
 		}else{
-			$Title = _('Excel file for Sendinblue: Export Retail Customer');
+			$Title = __('Excel file for Sendinblue: Export Retail Customer');
 			include('includes/header.php');
 			prnMsg('No Retail Customer Data to export to Sendinblue');
 			include('includes/footer.php');
@@ -225,7 +225,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 function display($RootPath, $Theme) {
-	$Title = _('Excel file for Sendinblue: Export Retail Customer');
+	$Title = __('Excel file for Sendinblue: Export Retail Customer');
 
 	include('includes/header.php');
 
@@ -235,28 +235,28 @@ function display($RootPath, $Theme) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Retail Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Retail Customer') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Excel file for Sendinblue: Export Retail Customer') . '" alt="" />' . ' ' . __('Excel file for Sendinblue: Export Retail Customer') . '
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Selection Criteria') . '</legend>';
+		<legend>' . __('Selection Criteria') . '</legend>';
 
-	echo FieldToSelectOneDate('FromDate', _('From'), $_POST['FromDate']);
-	echo FieldToSelectOneDate('ToDate', _('To'), $_POST['ToDate']);
+	echo FieldToSelectOneDate('FromDate', __('From'), $_POST['FromDate']);
+	echo FieldToSelectOneDate('ToDate', __('To'), $_POST['ToDate']);
 	
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 	
 	echo '<field>';
-	echo _('Mark as Exported?') . ':';
+	echo __('Mark as Exported?') . ':';
 	echo '<select name="MarkExported">
-			<option selected="selected" value="N">' . _('No') . '</option>
-			<option value="Y">' . _('Yes') . '</option>
+			<option selected="selected" value="N">' . __('No') . '</option>
+			<option value="Y">' . __('Yes') . '</option>
 			</select>';
 	echo '</field>';
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export File for Sendinblue'));
+	echo OneButtonCenteredForm('submit', __('Export File for Sendinblue'));
 
 	echo '</div>
          </form>';

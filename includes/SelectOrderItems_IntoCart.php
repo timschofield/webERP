@@ -22,7 +22,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0
 
 		if (strcasecmp($OrderItem->StockID, $NewItem)==0) {
 			$AlreadyOnThisOrder = 1;
-			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('is already on this order the system is set up to prevent the same item being on the order more than once. However you can change the quantity ordered of the existing line if necessary'));
+			prnMsg(__('The item') . ' ' . $NewItem . ' ' . __('is already on this order the system is set up to prevent the same item being on the order more than once. However you can change the quantity ordered of the existing line if necessary'));
        		}
 	} /* end of the foreach loop to look for preexisting items of the same code */
 }
@@ -50,16 +50,16 @@ if ($AlreadyOnThisOrder!=1){
 			WHERE locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
 			AND stockmaster.stockid = '". $NewItem . "'";
 
-    $ErrMsg = _('The details for') . ' ' . $NewItem . ' ' . _('could not be retrieved because');
+    $ErrMsg = __('The details for') . ' ' . $NewItem . ' ' . __('could not be retrieved because');
     $Result1 = DB_query($SQL, $ErrMsg);
 
     if (DB_num_rows($Result1)==0){
-		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
+		prnMsg(__('The item code') . ' ' . $NewItem  . ' '  . __('could not be found in the database') . ' - ' . __('it has not been added to the order'),'warn',__('Item Does Not Exist'));
 
     } elseif ($MyItemRow = DB_fetch_array($Result1)){
 
     	if ($MyItemRow['discontinued']==1){
-			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
+			prnMsg(__('The item') . ' ' . $NewItem . ' ' . __('could not be added to the order because it has been flagged as obsolete'),'error',__('Obsolete Item'));
 			include('includes/footer.php');
 			exit();
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
@@ -177,7 +177,7 @@ if ($AlreadyOnThisOrder!=1){
 			}
 			if ($SellSupportPercent >0){
 				$Discount += $SellSupportPercent; //combine any discount matrix discount with the sell through support.
-				prnMsg(_('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
+				prnMsg(__('Sell through support available and applied of') . ' ' . locale_number_format($SellSupportPercent*100,2), 'info');
 			}
 
 			$WithinCreditLimit = true;
@@ -190,10 +190,10 @@ if ($AlreadyOnThisOrder!=1){
 				$_SESSION['Items'.$identifier]->CreditAvailable -= round(($NewItemQty * $Price * (1- $Discount)),$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 
 				if ($_SESSION['CheckCreditLimits']==1 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					prnMsg(_('The customer account will breach their credit limit'),'warn');
+					prnMsg(__('The customer account will breach their credit limit'),'warn');
 					$AlreadyWarnedAboutCredit = true;
 				} elseif ($_SESSION['CheckCreditLimits']==2 AND $_SESSION['Items'.$identifier]->CreditAvailable <=0){
-					prnMsg(_('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
+					prnMsg(__('No more lines can be added to this order the customer account is currently at or over their credit limit'),'warn');
 					$WithinCreditLimit = false;
 					$AlreadyWarnedAboutCredit = true;
 				}
@@ -233,7 +233,7 @@ if ($AlreadyOnThisOrder!=1){
 
 			}
          } else {
-			prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
+			prnMsg(__('The item code') . ' ' . $NewItem . ' ' . __('does not have a cost set up and order entry is set up to prohibit sales of items with no cost data entered'),'warn');
 	     }
 	}
 } /* end of if not already on the order */

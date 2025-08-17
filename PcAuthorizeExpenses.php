@@ -10,7 +10,7 @@
 *********************************************************************/
 
 include('includes/session.php');
-$Title = _('Authorisation of Petty Cash Expenses');
+$Title = __('Authorisation of Petty Cash Expenses');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
@@ -38,26 +38,26 @@ if (isset($_POST['Days'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($SelectedTabs == '') {
-		prnMsg(_('You Must First Select a Petty Cash Tab To Authorise'), 'error');
+		prnMsg(__('You Must First Select a Petty Cash Tab To Authorise'), 'error');
 		unset($SelectedTabs);
 	}
 }
 if (isset($_POST['Go'])) {
 	if ($Days <= 0) {
-		prnMsg(_('The number of days must be a positive number'), 'error');
+		prnMsg(__('The number of days must be a positive number'), 'error');
 		$Days = 30;
 	}
 }
 
 echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 
 if (isset($SelectedTabs)) {
 	echo '<form><fieldset>';
 	echo '<field>
-			<label>' . _('Petty Cash Tab') . ':</label>
+			<label>' . __('Petty Cash Tab') . ':</label>
 			<fieldtext>' . $SelectedTabs . '</fieldtext>
 		  </field>';
 	echo '</fieldset></form>';
@@ -73,10 +73,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', _('Detail of tab expenses for the last '), ':</label>
+				<label for="SelectedTabs">', __('Detail of tab expenses for the last '), ':</label>
 				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
-				<input type="submit" name="Go" value="', _('Go'), '" />
+				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', __('Days'), '
+				<input type="submit" name="Go" value="', __('Go'), '" />
 			</field>
 		</fieldset>';
 	// KL RICARD add the receipt text field
@@ -111,13 +111,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">', _('Date of Expense'), '</th>
-					<th class="SortedColumn">', _('Expense Code'), '</th>
-					<th class="SortedColumn">', _('Amount'), '</th>
-					<th>', _('Notes'), '</th>
-					<th>', _('Receipt'), '</th>
-					<th>', _('Receipt Attachment'), '</th>
-					<th class="SortedColumn">', _('Date Authorised'), '</th>
+					<th class="SortedColumn">', __('Date of Expense'), '</th>
+					<th class="SortedColumn">', __('Expense Code'), '</th>
+					<th class="SortedColumn">', __('Amount'), '</th>
+					<th>', __('Notes'), '</th>
+					<th>', __('Receipt'), '</th>
+					<th>', __('Receipt Attachment'), '</th>
+					<th class="SortedColumn">', __('Date Authorised'), '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -169,12 +169,12 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$TagDescription = '';
 		while ($TagRow = DB_fetch_array($TagResult)) {
 			if ($TagRow['tagref'] == 0) {
-				$TagRow['tagdescription'] = _('None');
+				$TagRow['tagdescription'] = __('None');
 			}
 			$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 		}
 
-		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
+		if (isset($_POST['Submit']) and $_POST['Submit'] == __('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
 
@@ -185,7 +185,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			}
 
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['receipt']) . ' - ' . DB_escape_string($MyRow['notes']);
+			$Narrative = __('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['receipt']) . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
 			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
@@ -387,9 +387,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$ReceiptExt = $ReceiptRow['extension'];
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 			} else {
-				$ReceiptText = _('No attachment');
+				$ReceiptText = __('No attachment');
 			}
 
 		echo '<tr class="striped_row">
@@ -417,7 +417,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '</tbody>
 		<tfoot>
 			<tr class="total_row">
-				<td colspan="2" class="number">', _('Current balance'), ':</td>
+				<td colspan="2" class="number">', __('Current balance'), ':</td>
 				<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 				<td colspan="7"></td>
 			</tr>
@@ -425,14 +425,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 
 	// show the success message
 	if($SucessfullyAuthorized > 0) {
-		prnMsg($SucessfullyAuthorized . ' ' . _('Expenses have been correctly authorised'), 'success');
+		prnMsg($SucessfullyAuthorized . ' ' . __('Expenses have been correctly authorised'), 'success');
 	} else {
-		prnMsg(_('No expenses were authorised'), 'warning');
+		prnMsg(__('No expenses were authorised'), 'warning');
 	}
 
 	echo '</table>';
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', _('Update'), '" />
+			<input type="submit" name="Submit" value="', __('Update'), '" />
 		</div>
 	</form>';
 } else {
@@ -446,7 +446,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	$Result = DB_query($SQL);
 	echo '<fieldset>
 			<field>
-				<label>', _('Authorise expenses on petty cash tab'), '</label>
+				<label>', __('Authorise expenses on petty cash tab'), '</label>
 				<select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
@@ -460,15 +460,15 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	
 	// KL RICARD
 	echo '<field>
-			<label>', _('Show only unauthorized expenses'), '</label>
-			<input type="checkbox" title="', _('Check this box to display only the expenses pending of authorization'), '" name="ShowOnlyUnauthorized" />
+			<label>', __('Show only unauthorized expenses'), '</label>
+			<input type="checkbox" title="', __('Check this box to display only the expenses pending of authorization'), '" name="ShowOnlyUnauthorized" />
 		</field>';
 	// KL RICARD END
 	echo '</fieldset>';
 	DB_free_result($Result);
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
+			<input type="submit" name="Process" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }

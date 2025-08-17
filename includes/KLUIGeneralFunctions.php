@@ -196,9 +196,9 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 	
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -240,9 +240,9 @@ function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', 
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 	
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -386,9 +386,9 @@ function FieldToSelectOneKPI($VariableName, $SelectedValue, $Label = '', $HelpTe
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -421,9 +421,9 @@ function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label =
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -486,9 +486,9 @@ function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Labe
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 	
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -522,7 +522,7 @@ function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', 
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -554,9 +554,9 @@ function FieldToSelectOneStockAdjustmentReason($VariableName, $SelectedValue, $L
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 	
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {

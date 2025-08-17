@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Customer Login Configuration');
+$Title = __('Customer Login Configuration');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
@@ -12,13 +12,13 @@ include('includes/LanguagesArray.php');
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />
 		<br />';
-	prnMsg(_('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . _('Select A Customer') . '</a>','info');
+	prnMsg(__('A customer must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectCustomer.php">' . __('Select A Customer') . '</a>','info');
 	include('includes/footer.php');
 	exit();
 }
 
 
-echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectCustomer.php">' . __('Back to Customers') . '</a><br />';
 
 $SQL="SELECT name
 		FROM debtorsmaster
@@ -29,7 +29,7 @@ $MyRow=DB_fetch_array($Result);
 $CustomerName=$MyRow['name'];
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') . '" alt="" />' . ' ' . __('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. __(' has been selected') .
 	'</p>
 	<br />';
 
@@ -45,21 +45,21 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	if (mb_strlen($_POST['UserID'])<4){
 		$InputError = 1;
-		prnMsg(_('The user ID entered must be at least 4 characters long'),'error');
+		prnMsg(__('The user ID entered must be at least 4 characters long'),'error');
 	} elseif (ContainsIllegalCharacters($_POST['UserID']) OR mb_strstr($_POST['UserID'],' ')) {
 		$InputError = 1;
-		prnMsg(_('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . _('or a space'),'error');
+		prnMsg(__('User names cannot contain any of the following characters') . " - ' &amp; + \" \\ " . __('or a space'),'error');
 	} elseif (mb_strlen($_POST['Password'])<5){
 		if (!$SelectedUser){
 			$InputError = 1;
-			prnMsg(_('The password entered must be at least 5 characters long'),'error');
+			prnMsg(__('The password entered must be at least 5 characters long'),'error');
 		}
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
 		$InputError = 1;
-		prnMsg(_('The password cannot contain the user id'),'error');
+		prnMsg(__('The password cannot contain the user id'),'error');
 	} elseif ((mb_strlen($_SESSION['CustomerID'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
-		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
+		prnMsg(__('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
 
 	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
@@ -69,11 +69,11 @@ if (isset($_POST['submit'])) {
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				AND branchcode='" . $_POST['BranchCode'] . "'";
 
-		$ErrMsg = _('The check on validity of the customer code and branch failed because');
+		$ErrMsg = __('The check on validity of the customer code and branch failed because');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result)==0){
-			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'),'error');
+			prnMsg(__('The entered Branch Code is not valid for the entered Customer Code'),'error');
 			$InputError = 1;
 		} else {
 			$MyRow = DB_fetch_row($Result);
@@ -113,9 +113,9 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['Theme'] . "',
 											'". $_POST['UserLanguage'] ."')";
 
-			$ErrMsg = _('The user could not be added because');
+			$ErrMsg = __('The user could not be added because');
 			$Result = DB_query($SQL, $ErrMsg);
-			prnMsg( _('A new customer login has been created'), 'success' );
+			prnMsg( __('A new customer login has been created'), 'success' );
 			include('includes/footer.php');
 			exit();
 		}
@@ -127,11 +127,11 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>', _('Login details for customer'), ' ', $CustomerName, '</legend>
+		<legend>', __('Login details for customer'), ' ', $CustomerName, '</legend>
 		<field>
-			<label for="UserID">' . _('User Login') . ':</label>
+			<label for="UserID">' . __('User Login') . ':</label>
 			<input type="text" name="UserID" required="required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus="autofocus"') . 'title="" size="22" maxlength="20" />
-			<fieldhelp>' . _('Enter a userid for this customer login') . '</fieldhelp>
+			<fieldhelp>' . __('Enter a userid for this customer login') . '</fieldhelp>
 		</field>';
 
 if (!isset($_POST['Password'])) {
@@ -149,26 +149,26 @@ if (!isset($_POST['Email'])) {
 
 echo '<input type="hidden" name="Access" value="1" />';
 echo '<field>
-		<label for="Password">' . _('Password') . ':</label>
+		<label for="Password">' . __('Password') . ':</label>
 		<input type="password" name="Password" required="required" ' . (isset($_GET['SelectedUser']) ? 'autofocus="autofocus"':'') . ' title="" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
-		<fieldhelp>' . _('Enter a password for this customer login') . '</fieldhelp>
+		<fieldhelp>' . __('Enter a password for this customer login') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="RealName">' . _('Full Name') . ':</label>
+		<label for="RealName">' . __('Full Name') . ':</label>
 		<input type="text" name="RealName" value="' . $_POST['RealName'] . '" required="required" title="" size="36" maxlength="35" />
-		<fieldhelp>' . _('Enter the user\'s real name') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the user\'s real name') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="Phone">' . _('Telephone No') . ':</label>
+		<label for="Phone">' . __('Telephone No') . ':</label>
 		<input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" />
 	</field>
 	<field>
-		<label for="Email">' . _('Email Address') .':</label>
+		<label for="Email">' . __('Email Address') .':</label>
 		<input type="email" name="Email" value="' . $_POST['Email'] .'" required="required" title="" size="32" maxlength="55" />
-		<fieldhelp>' . _('Enter the user\'s email address') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the user\'s email address') . '</fieldhelp>
 	</field>
     <field>
-		<label for="BranchCode">' . _('Branch Code') . ':</label>
+		<label for="BranchCode">' . __('Branch Code') . ':</label>
 		<select name="BranchCode">';
 
 $SQL = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
@@ -191,55 +191,55 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="PageSize">' . _('Reports Page Size') .':</label>
+		<label for="PageSize">' . __('Reports Page Size') .':</label>
 		<select name="PageSize">';
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
-	echo '<option selected="selected" value="A4">' . _('A4')  . '</option>';
+	echo '<option selected="selected" value="A4">' . __('A4')  . '</option>';
 } else {
-	echo '<option value="A4">' . _('A4') . '</option>';
+	echo '<option value="A4">' . __('A4') . '</option>';
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3'){
-	echo '<option selected="selected" value="A3">' . _('A3')  . '</option>';
+	echo '<option selected="selected" value="A3">' . __('A3')  . '</option>';
 } else {
-	echo '<option value="A3">' . _('A3')  . '</option>';
+	echo '<option value="A3">' . __('A3')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A3_landscape'){
-	echo '<option selected="selected" value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
+	echo '<option selected="selected" value="A3_landscape">' . __('A3') . ' ' . __('landscape')  . '</option>';
 } else {
-	echo '<option value="A3_landscape">' . _('A3') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="A3_landscape">' . __('A3') . ' ' . __('landscape')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter'){
-	echo '<option selected="selected" value="letter">' . _('Letter')  . '</option>';
+	echo '<option selected="selected" value="letter">' . __('Letter')  . '</option>';
 } else {
-	echo '<option value="letter">' . _('Letter')  . '</option>';
+	echo '<option value="letter">' . __('Letter')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='letter_landscape'){
-	echo '<option selected="selected" value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
+	echo '<option selected="selected" value="letter_landscape">' . __('Letter') . ' ' . __('landscape')  . '</option>';
 } else {
-	echo '<option value="letter_landscape">' . _('Letter') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="letter_landscape">' . __('Letter') . ' ' . __('landscape')  . '</option>';
 }
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal'){
-	echo '<option selected="selected" value="legal">' . _('Legal')  . '</option>';
+	echo '<option selected="selected" value="legal">' . __('Legal')  . '</option>';
 } else {
-	echo '<option value="legal">' . _('Legal')  . '</option>';
+	echo '<option value="legal">' . __('Legal')  . '</option>';
 }
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
-	echo '<option selected="selected" value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
+	echo '<option selected="selected" value="legal_landscape">' . __('Legal') . ' ' . __('landscape')  . '</option>';
 } else {
-	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
+	echo '<option value="legal_landscape">' . __('Legal') . ' ' . __('landscape')  . '</option>';
 }
 
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Theme">' . _('Theme') . ':</label>
+		<label for="Theme">' . __('Theme') . ':</label>
 		<select name="Theme">';
 
 $ThemeDirectory = dir('css/');
@@ -262,7 +262,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="UserLanguage">' . _('Language') . ':</label>
+		<label for="UserLanguage">' . __('Language') . ':</label>
 		<select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
@@ -280,7 +280,7 @@ echo '</select>
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
     </div>
 	</form>';
 

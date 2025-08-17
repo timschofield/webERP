@@ -6,7 +6,7 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Email Salary Slips To Employees');
+$Title = __('Email Salary Slips To Employees');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
@@ -25,9 +25,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Slip Gaji ') . $PeriodMonth;
+		$PageTitle = __('Slip Gaji ') . $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Slip THR ') . $PeriodMonth;
+		$PageTitle = __('Slip THR ') . $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -198,7 +198,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Parameters Selection') . '</legend>';
+		<legend>' . __('Parameters Selection') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 

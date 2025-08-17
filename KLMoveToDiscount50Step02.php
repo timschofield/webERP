@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Move To 50% Discount -> Step 02');
+$Title = __('Move To 50% Discount -> Step 02');
 include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -56,23 +56,23 @@ include('includes/KLUIGeneralFunctions.php');
 				AND klmovetodiscount50.endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Items ready to be moved to 50% Discount in Kantor');
+		$TableTitleText = __('Items ready to be moved to 50% Discount in Kantor');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead><tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH Shops') . '</th>
-							<th>' . _('Transit From Kantor') . '</th>
-							<th>' . _('Transit To Kantor') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('QOH Others') . '</th>
-							<th>' . _('QOH Total') . '</th>
-							<th>' . _('Discount') . '</th>
-							<th>' . _('Labels') . '</th>
+							<th>' . __('#') . '</th>
+							<th>' . __('Code') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . __('Start Date') . '</th>
+							<th>' . __('QOH Shops') . '</th>
+							<th>' . __('Transit From Kantor') . '</th>
+							<th>' . __('Transit To Kantor') . '</th>
+							<th>' . __('QOH Kantor') . '</th>
+							<th>' . __('QOH Others') . '</th>
+							<th>' . __('QOH Total') . '</th>
+							<th>' . __('Discount') . '</th>
+							<th>' . __('Labels') . '</th>
 						</tr></thead><tbody>';
 		echo $TableHeader;
 		$i = 1;
