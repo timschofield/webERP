@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$ErrMsg = __('An error occurred getting the days between delivery requested and actual invoice');
 	$Result = DB_query($SQL, $ErrMsg, '', false);
-	
+
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('DIFOT Report Error');
 		include('includes/header.php');

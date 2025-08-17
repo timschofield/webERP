@@ -296,7 +296,7 @@ if (isset($PrintPDF)
 
 			$ErrMsg = __('There was a problem retrieving the invoice or credit note stock movement details for invoice number') . ' ' . $FromTransNo;
 			$Result = DB_query($SQL, $ErrMsg);
-			
+
 			if ($InvOrCredit=='Invoice') {
 				/* Calculate Due Date info. This reference is used in the PDFTransPageHeader.php file. */
 				$DisplayDueDate = CalcDueDate(ConvertSQLDate($MyRow['trandate']), $MyRow['dayinfollowingmonth'], $MyRow['daysbeforedue']);

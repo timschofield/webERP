@@ -58,7 +58,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			if ($DebugMessage == '') {
 				$DebugMessage = __('The SQL that failed was');
 			}
-			ShowDebugBackTrace($DebugMessage, $SQL);	
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';

@@ -47,7 +47,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$ErrMsg = __('An error occurred getting the payments');
 	$Result = DB_query($SQL, $ErrMsg, '', false);
-	
+
 	if (DB_num_rows($Result) == 0){
 		$Title = __('Payment Listing');
 		include('includes/header.php');

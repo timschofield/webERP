@@ -59,7 +59,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$ErrMsg = __('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'];
 	$CustRecs = DB_query($SQL, $ErrMsg, '', false);
-	
+
 	$SQL = "SELECT narrative,
 			amount
 		FROM gltrans
