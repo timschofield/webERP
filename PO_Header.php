@@ -1024,7 +1024,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 	echo '<field>
 			<label for="DeliveryBy">' . __('Delivery By') . ':</label>
 			<select name="DeliveryBy">';
-	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers");
+	$ShipperResult = DB_query("SELECT shipper_id, shippername FROM shippers ORDER BY shippername");
 	while ($ShipperRow = DB_fetch_array($ShipperResult)) {
 		if (isset($_POST['DeliveryBy']) and ($_POST['DeliveryBy'] == $ShipperRow['shipper_id'])) {
 			echo '<option selected="selected" value="' . $ShipperRow['shipper_id'] . '">' . $ShipperRow['shippername'] . '</option>';

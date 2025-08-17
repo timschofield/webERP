@@ -870,7 +870,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 
-	$SQL = "SELECT shipper_id, shippername FROM shippers";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ShipperResults = DB_query($SQL);
 	if (DB_num_rows($ShipperResults)==0){
 		echo '</fieldset>';

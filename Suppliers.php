@@ -869,7 +869,7 @@ if (!isset($SupplierID)) {
 		</field>';
 
 	// Default_Shipper
-	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ErrMsg = __('Could not load shippers');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
@@ -1187,7 +1187,7 @@ if (!isset($SupplierID)) {
 		</field>';
 
 	// Default_Shipper
-	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ErrMsg = __('Could not load shippers');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
