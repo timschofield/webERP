@@ -30,7 +30,7 @@ $Language = $_SESSION['Language'];
  when we get here the 'gettext' function is always defined. It can be either the function from the php native
  extension, or the one from the polyfill-gettext php package.
  Was:
-   Since LanguagesArray requires the function __() to translate the language names - we must provide a substitute if
+   Since LanguagesArray requires the function _() to translate the language names - we must provide a substitute if
    it doesn't exist already before we include includes/LanguagesArray.php
    PHPGettext integration by Braian Gomez - http://www.vairux.com/
 */
@@ -97,7 +97,7 @@ if (!function_exists('__')) {
 	 * @param string $message
 	 * @return string
 	 */
-	function ___($message) {
+	function __($message) {
 		return T::gettext($message);
 	}
 }
