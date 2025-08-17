@@ -2,7 +2,7 @@
 
 /*****************************************************************************************************************************************
  * 
- * KL RICARD: Order shippers alphabetically
+ * KL RICARD: Add order time
  * 			Change "Customer reference" for "Opencart/Marketplace/Other Ref"
  * 
  *****************************************************************************************************************************************/
@@ -840,7 +840,6 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k = 0;//row colour counter
 
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
@@ -1127,7 +1126,6 @@ echo'<field>
 
 		$ErrMsg = __('The shipper details could not be retrieved');
 
-		// KL RICARD: Order shippers alphabetically
 		$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 		$ShipperResults = DB_query($SQL, $ErrMsg);
 		while ($MyRow=DB_fetch_array($ShipperResults)) {

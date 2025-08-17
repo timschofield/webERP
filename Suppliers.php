@@ -879,7 +879,7 @@ KL RICARD END we don't associate salesman (SPG) as suppliers */
 		</field>';
 
 	// Default_Shipper
-	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ErrMsg = __('Could not load shippers');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
@@ -1200,7 +1200,7 @@ KL RICARD we don't associate salesman (SPG) as suppliers */
 		</field>';
 
 	// Default_Shipper
-	$SQL = "SELECT shipper_id, shippername FROM shippers orDER BY shippername";
+	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ErrMsg = __('Could not load shippers');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<field>
