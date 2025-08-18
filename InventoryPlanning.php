@@ -57,7 +57,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
 	}
 	$ErrMsg = __('The inventory quantities could not be retrieved');
-	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 
 	$HTML = '';
 
@@ -157,7 +157,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 		}
 
 		$ErrMsg = __('The sales quantities could not be retrieved');
-		$SalesResult = DB_query($SQL, $ErrMsg, '', false);
+		$SalesResult = DB_query($SQL, $ErrMsg);
 		$ListCount = DB_num_rows($SalesResult);
 		$SalesRow = DB_fetch_array($SalesResult);
 

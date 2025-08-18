@@ -243,7 +243,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				HAVING ABS(SUM(debtortrans.balance)) >0.005";
 	}
 	$ErrMsg = __('The customer details could not be retrieved');
-	$CustomerResult = DB_query($SQL, $ErrMsg , '', false);
+	$CustomerResult = DB_query($SQL, $ErrMsg);
 
 	$HTML = '';
 
@@ -263,7 +263,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 					' . __('And Trading in') . ' ' . $_POST['Currency'] . '<br />';
 	if (trim($_POST['Salesman'])!=''){
 		$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
-		$rs = DB_query($SQL,'','',False,False);
+		$rs = DB_query($SQL, '', '', false, false);
 		$Row = DB_fetch_array($rs);
 		$HTML .= __('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'] . '<br />';
 	}
@@ -363,7 +363,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			}
 
 			$ErrMsg = __('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . __('could not be retrieved');
-			$DetailResult = DB_query($SQL, $ErrMsg, '', false);
+			$DetailResult = DB_query($SQL, $ErrMsg);
 
 			$HTML .= '<tr>
 						<td colspan="6">

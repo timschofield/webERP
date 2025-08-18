@@ -132,7 +132,7 @@ if (isset($_POST['PrintPDF'])) {
 			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
 
 	$ErrMsg = __('The MRP shortages and excesses could not be retrieved');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('MRP Shortages and Excesses') . ' - ' . __('Problem Report');

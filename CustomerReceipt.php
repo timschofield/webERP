@@ -644,7 +644,7 @@ if (isset($_POST['Search'])){
 							AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "')";
 		}
 		$ErrMsg = __('The searched customer records requested cannot be retrieved');
-		$CustomerSearchResult = DB_query($SQL, $ErrMsg, '', false);
+		$CustomerSearchResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($CustomerSearchResult)==1){
 			$MyRow=DB_fetch_array($CustomerSearchResult);

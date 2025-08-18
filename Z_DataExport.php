@@ -62,7 +62,7 @@ if ( isset($_POST['pricelist']) ) {
 				stockmaster.stockid";
 
 	$ErrMsg = __('The Price List could not be retrieved');
-	$PricesResult = DB_query($SQL, $ErrMsg, '', false);
+	$PricesResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('stockid') . ',' .
 			stripcomma('description') . ',' .
@@ -147,7 +147,7 @@ if ( isset($_POST['pricelist']) ) {
 		AND ((defaultlocation = '".$_POST['Location']."') OR (defaultlocation = '') OR (defaultlocation IS NULL))";
 
 	$ErrMsg = __('The Customer List could not be retrieved by the SQL');
-	$CustResult = DB_query($SQL, $ErrMsg , '', false);
+	$CustResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('debtorno') . ',' .
 			stripcomma('branchcode') . ',' .
@@ -227,7 +227,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM salesman";
 
 	$ErrMsg = __('The Salesman List could not be retrieved');
-	$SalesManResult = DB_query($SQL, $ErrMsg, '', false);
+	$SalesManResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('salesmancode') . ',' .
 			stripcomma('salesmanname') . ',' .
@@ -264,7 +264,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM stockmaster
 		ORDER BY stockid";
 	$ErrMsg = __('The Image List could not be retrieved');
-	$ImageResult = DB_query($SQL, $ErrMsg, '', false);
+	$ImageResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('stockid') . ','.
 				  stripcomma('filename') . ','.
@@ -292,7 +292,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM securitytokens";
 
 	$ErrMsg = __('The Security Token List could not be retrieved');
-	$SecTokenResult = DB_query($SQL, $ErrMsg, '', false);
+	$SecTokenResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('tokenid') . ',' .
 			stripcomma('tokenname') . "\n";
@@ -316,7 +316,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM securityroles";
 
 	$ErrMsg = __('The Security Role List could not be retrieved');
-	$SecRoleResult = DB_query($SQL, $ErrMsg, '', false);
+	$SecRoleResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('secrolename') . "\n";
@@ -340,7 +340,7 @@ if ( isset($_POST['pricelist']) ) {
 		FROM securitygroups";
 
 	$ErrMsg = __('The Security Group List could not be retrieved');
-	$SecGroupResult = DB_query($SQL, $ErrMsg, '', false);
+	$SecGroupResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('tokenid') . "\n";
@@ -380,7 +380,7 @@ if ( isset($_POST['pricelist']) ) {
 			(NOT customerid IS NULL)";
 
 	$ErrMsg = __('The Security User List could not be retrieved');
-	$SecUserResult = DB_query($SQL, $ErrMsg, '', false);
+	$SecUserResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('userid') . ',' .
 			stripcomma('password') . ','.

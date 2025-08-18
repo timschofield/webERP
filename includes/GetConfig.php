@@ -31,7 +31,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	/* Load the pagesecurity settings from the database */
 	$SQL="SELECT script, pagesecurity FROM scripts";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()!=0) {
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
@@ -96,7 +96,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				timeout,
 				auth
 			FROM emailsettings";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()==0 and DB_num_rows($Result) > 0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
@@ -115,7 +115,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 	//Check that the favourites table exists (upgrades will choke otherwise)
 
 	$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_num_rows($Result)>0) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];

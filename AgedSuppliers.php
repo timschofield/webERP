@@ -96,7 +96,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 	}
 
-	$SupplierResult = DB_query($SQL,'','',False,False); /*dont trap errors */
+	$SupplierResult = DB_query($SQL, '', '', false, false); /*dont trap errors */
 
 
 	$HTML = '';
@@ -197,7 +197,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 							AND supptrans.settled = 0
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
-			$DetailResult = DB_query($SQL,'','',False,False); /*dont trap errors - trapped below*/
+			$DetailResult = DB_query($SQL, '', '', false, false); /*dont trap errors - trapped below*/
 
 			$HTML .= '<tr>
 						<td colspan="6">

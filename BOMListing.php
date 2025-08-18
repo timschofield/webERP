@@ -27,7 +27,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					bom.component";
 
 	$ErrMsg = ('The Bill of Material listing could not be retrieved');
-	$BOMResult = DB_query($SQL, $ErrMsg, '', false);
+	$BOMResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($BOMResult)==0){
 	   $Title = __('Bill of Materials Listing') . ' - ' . __('Problem Report');

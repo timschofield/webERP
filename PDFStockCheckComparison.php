@@ -28,7 +28,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 						stockcheckfreeze.stockid";
 
 		$ErrMsg = __('The inventory check file could not be retrieved');
-		$StockChecks = DB_query($SQL, $ErrMsg, '', false);
+		$StockChecks = DB_query($SQL, $ErrMsg);
 
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
@@ -236,7 +236,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 				AND stockid = '" . $CheckItemRow['stockid'] . "'";
 
 		$ErrMsg = __('The inventory counts could not be retrieved');
-		$Counts = DB_query($SQL, $ErrMsg, '', false);
+		$Counts = DB_query($SQL, $ErrMsg);
 
 		if ($CheckItemRow['qoh']!=0 OR DB_num_rows($Counts)>0) {
 			$YPos -=$LineHeight;

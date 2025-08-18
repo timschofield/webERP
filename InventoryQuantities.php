@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$ErrMsg = __('The Inventory Quantity report could not be retrieved');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==0){
 			$Title = __('Print Inventory Quantities Report');

@@ -723,7 +723,7 @@ then do the updates and inserts to process the credit note entered */
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added because');
 
-				$Result = DB_query($SQL, $ErrMsg, '', True);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				InsertGLTags($EnteredGLCode->Tag);
 
 				$LocalTotal += ($EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate);
@@ -774,7 +774,7 @@ then do the updates and inserts to process the credit note entered */
 										'" . mb_substr($_SESSION['SuppTrans']->SupplierID . ' ' . __('Asset Credit') . ' ' . $AssetAddition->AssetID . ': '  . $AssetAddition->Description, 0, 200) . "',
 										'" . -$AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate . "')";
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction for the asset addition could not be added because');
- 				$Result = DB_query($SQL, $ErrMsg, '', True);
+ 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
  				$LocalTotal += $AssetAddition->Amount/ $_SESSION['SuppTrans']->ExRate;
 			}
@@ -808,7 +808,7 @@ then do the updates and inserts to process the credit note entered */
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction for the contract') . ' ' . $Contract->ContractRef . ' ' . __('could not be added because');
 
-				$Result = DB_query($SQL, $ErrMsg, '', True);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$LocalTotal += ($Contract->Amount/ $_SESSION['SuppTrans']->ExRate);
 
@@ -840,7 +840,7 @@ then do the updates and inserts to process the credit note entered */
 
 						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added because');
 
-						$Result = DB_query($SQL, $ErrMsg, '', True);
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					}
 
@@ -897,7 +897,7 @@ then do the updates and inserts to process the credit note entered */
 
 									$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added for the price variance of the stock item because');
 
-									$Result = DB_query($SQL, $ErrMsg, '', True);
+									$Result = DB_query($SQL, $ErrMsg, '', true);
 								}
 								/*Now post any remaining price variance to stock rather than price variances */
 
@@ -920,7 +920,7 @@ then do the updates and inserts to process the credit note entered */
 
 								$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added for the price variance of the stock item because');
 
-								$Result = DB_query($SQL, $ErrMsg, '', True);
+								$Result = DB_query($SQL, $ErrMsg, '', true);
 
 								/*Now to update the stock cost with the new weighted average */
 
@@ -939,11 +939,11 @@ then do the updates and inserts to process the credit note entered */
 																	materialcost=materialcost-" . $CostIncrement . "
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 
-									$Result = DB_query($SQL, $ErrMsg, '', True);
+									$Result = DB_query($SQL, $ErrMsg, '', true);
 								} else {
 									$SQL = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
 																	materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-									$Result = DB_query($SQL, $ErrMsg, '', True);
+									$Result = DB_query($SQL, $ErrMsg, '', true);
 								}
 								/* End of Weighted Average Costing Code */
 
@@ -966,7 +966,7 @@ then do the updates and inserts to process the credit note entered */
 
 								$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added for the price variance of the stock item because');
 
-								$Result = DB_query($SQL, $ErrMsg, '', True);
+								$Result = DB_query($SQL, $ErrMsg, '', true);
 							}
 						} else {
 
@@ -1004,7 +1004,7 @@ then do the updates and inserts to process the credit note entered */
 											'" . (-$PurchPriceVar) . "')";
 
 							$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added for the price variance of the stock item because');
-							$Result = DB_query($SQL, $ErrMsg, '', True);
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 						}
 					}
 				} else {
@@ -1029,7 +1029,7 @@ then do the updates and inserts to process the credit note entered */
 								)";
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction could not be added because');
-					$Result = DB_query($SQL, $ErrMsg, '', True);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
 				$LocalTotal += ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv / $_SESSION['SuppTrans']->ExRate);
@@ -1056,7 +1056,7 @@ then do the updates and inserts to process the credit note entered */
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction for the tax could not be added because');
 
-					$Result = DB_query($SQL, $ErrMsg, '', True);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}/* if the tax is not 0 */
 			} /*end of loop to post the tax */
 			/* Now the control account */
@@ -1077,7 +1077,7 @@ then do the updates and inserts to process the credit note entered */
 						'" . ($LocalTotal + ($TaxTotal / $_SESSION['SuppTrans']->ExRate)) . "')";
 
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction for the control total could not be added because');
-			$Result = DB_query($SQL, $ErrMsg, '', True);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} /*Thats the end of the GL postings */
 
@@ -1135,13 +1135,13 @@ then do the updates and inserts to process the credit note entered */
 					WHERE podetailitem = '" . $EnteredGRN->PODetailItem ."'";
 
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The quantity credited of the purchase order line could not be updated because');
-			$Result = DB_query($SQL, $ErrMsg, '', True);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$SQL = "UPDATE grns SET quantityinv = quantityinv - " .
 					 $EnteredGRN->This_QuantityInv . " WHERE grnno = '" . $EnteredGRN->GRNNo . "'";
 
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The quantity credited off the goods received record could not be updated because');
-			$Result = DB_query($SQL, $ErrMsg, '', True);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*Update the shipment's accum value for the total local cost of shipment items being credited
 			the total value credited against shipments is apportioned between all the items on the shipment
@@ -1163,7 +1163,7 @@ then do the updates and inserts to process the credit note entered */
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The shipment charge record for the shipment') . ' ' . $EnteredGRN->ShiptRef . ' ' . __('could not be added because');
 
-				$Result = DB_query($SQL, $ErrMsg, '', True);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 			if ($EnteredGRN->AssetID!=0) { //then it is an asset
 				$PurchPriceVar = $EnteredGRN->This_QuantityInv * (($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit);
@@ -1213,7 +1213,7 @@ then do the updates and inserts to process the credit note entered */
 							)";
 
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The shipment charge record for the shipment') . ' ' . $ShiptChg->ShiptRef . ' ' . __('could not be added because');
-			$Result = DB_query($SQL, $ErrMsg, '', True);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
 		/*Add contract charges records as necessary */
@@ -1240,7 +1240,7 @@ then do the updates and inserts to process the credit note entered */
 												'" . $Anticipated . "')";
 
 			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The contract charge record for contract') . ' ' . $Contract->ContractRef . ' ' . __('could not be added because');
-			$Result = DB_query($SQL, $ErrMsg, '', True);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		} //end of loop around contracts on credit note
 
 

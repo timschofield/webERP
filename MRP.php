@@ -546,7 +546,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$SQL = "SELECT * FROM mrpparameters";
-		$Result = DB_query($SQL,'','',false,false);
+		$Result = DB_query($SQL, '', '', false, false);
 		$MyRow = DB_fetch_array($Result);
 	}
 	if (DB_error_no()==0){

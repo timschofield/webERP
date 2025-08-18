@@ -167,7 +167,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL .= " ORDER BY salesorders.orderno";
 
 	$ErrMsg = __('An error occurred getting the orders details');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==0){
 		$Title=__('Order Status Report - No Data');

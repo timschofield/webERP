@@ -69,7 +69,7 @@ if (isset($PrintPDF)
 					bankaccounts.bankaccountcode
 				FROM bankaccounts
 				WHERE bankaccounts.invoice = '1'";
-		$Result = DB_query($SQL,'','',false,false);
+		$Result = DB_query($SQL, '', '', false, false);
 		if(DB_error_no()!=1) {
 			if(DB_num_rows($Result)==1) {
 				$MyRow = DB_fetch_array($Result);
@@ -220,7 +220,7 @@ if (isset($PrintPDF)
 		} // end else
 
 		$ErrMsg = __('There was a problem retrieving the invoice or credit note details for note number') . ' ' . $InvoiceToPrint;
-		$Result = DB_query($SQL, $ErrMsg, '', false);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result)==1) {
 			$MyRow = DB_fetch_array($Result);

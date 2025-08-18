@@ -78,7 +78,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
 					AND period ='" . ($MyRow['period']+1) . "'";
 
-				$UpdChartDetails = DB_query($SQL, '', '', '', false);
+				$UpdChartDetails = DB_query($SQL, '', '', false, false);
 			}
 		}
 

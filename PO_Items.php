@@ -437,7 +437,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 				FROM chartmaster
 				WHERE accountcode ='" . $_POST['GLCode'] . "'";
 		$ErrMsg =  __('The account details for') . ' ' . $_POST['GLCode'] . ' ' . __('could not be retrieved');
-		$GLValidResult = DB_query($SQL, $ErrMsg, '', false);
+		$GLValidResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($GLValidResult) == 0) { /*The GLCode entered does not exist */
 			$AllowUpdate = false;
 			prnMsg( __('Cannot enter this order line') . ':<br />' . __('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . __('is not a general ledger code that is defined in the chart of accounts') . ' . ' . __('Please use a code that is already defined') . '. ' . __('See the Chart list from the link below'),'error');

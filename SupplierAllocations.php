@@ -116,7 +116,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The existing allocation for') . ' ' . $AllocnItem->TransType .' ' . $AllocnItem->TypeNo . ' ' . __('could not be deleted because');
 
-				$Result = DB_query($SQL, $ErrMsg, '', True);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			 }
 
 			 if ($AllocnItem->OrigAlloc != $AllocnItem->AllocAmt){
@@ -137,7 +137,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 						 $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .  __('The supplier allocation record for') . ' ' . $AllocnItem->TransType . ' ' .  $AllocnItem->TypeNo . ' ' .__('could not be inserted because');
 
-					     $Result = DB_query($SQL, $ErrMsg, '', True);
+					     $Result = DB_query($SQL, $ErrMsg, '', true);
 				     }
 				     $NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 
@@ -154,7 +154,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 					 $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The debtor transaction record could not be modified for the allocation against it because');
 
-					 $Result = DB_query($SQL, $ErrMsg, '', True);
+					 $Result = DB_query($SQL, $ErrMsg, '', true);
 
 			 } /*end if the new allocation is different to what it was before */
 
@@ -177,7 +177,7 @@ if (isset($_POST['UpdateDatabase'])){
 		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 					 __('The supplier payment or credit note transaction could not be modified for the new allocation and exchange difference because');
 
-		$Result = DB_query($SQL, $ErrMsg, '', True);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Almost there ... if there is a change in the total diff on exchange
 		 and if the GLLink to debtors is active - need to post diff on exchange to GL */
@@ -208,7 +208,7 @@ if (isset($_POST['UpdateDatabase'])){
 
 		      $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
-		      $Result = DB_query($SQL, $ErrMsg, '', True);
+		      $Result = DB_query($SQL, $ErrMsg, '', true);
 
 		      $SQL = "INSERT INTO gltrans (type,
 							typeno,
@@ -228,7 +228,7 @@ if (isset($_POST['UpdateDatabase'])){
 		      $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ' : ' .
 		      			 __('The GL entry for the difference on exchange arising out of this allocation could not be inserted because');
 
-		      $Result = DB_query($SQL, $ErrMsg, '', True);
+		      $Result = DB_query($SQL, $ErrMsg, '', true);
 
 		   }
 

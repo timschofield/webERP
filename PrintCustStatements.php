@@ -108,7 +108,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				bankaccounts.bankaccountcode
 			FROM bankaccounts
 			WHERE bankaccounts.invoice = '1'";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()!=1) {
 		if (DB_num_rows($Result)==1){
 			$MyRow = DB_fetch_array($Result);

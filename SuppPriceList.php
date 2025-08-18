@@ -123,7 +123,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 		}
 	}
 	$ErrMsg =  __('The Price List could not be retrieved');
-	$PricesResult = DB_query($SQL, $ErrMsg, '', false);
+	$PricesResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($PricesResult)==0) {
 

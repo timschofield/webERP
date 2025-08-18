@@ -47,7 +47,7 @@ $SQL= "SELECT salesorders.orderno,
 		 ORDER BY salesorders.orderno";
 
 $ErrMsg = __('An error occurred getting the orders details');
-$Result = DB_query($SQL, $ErrMsg , '', false);
+$Result = DB_query($SQL, $ErrMsg);
 
 $PaperSize="Letter_Landscape";
 include('includes/PDFStarter.php');

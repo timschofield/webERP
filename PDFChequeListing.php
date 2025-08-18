@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 	$ErrMsg = __('An error occurred getting the payments');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0){
 		$Title = __('Payment Listing');
@@ -109,7 +109,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					AND gltrans.type='" . $MyRow['type'] . "'";
 
 		$ErrMsg = __('An error occurred getting the GL transactions');
-		$GLTransResult = DB_query($SQL, $ErrMsg, '', false);
+		$GLTransResult = DB_query($SQL, $ErrMsg);
 
 		while ($GLRow=DB_fetch_array($GLTransResult)){
 			// if user is allowed to see the account we show it, other wise we show "OTHERS ACCOUNTS"

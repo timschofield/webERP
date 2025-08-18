@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF'])) {
 			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
 	$ErrMsg = __('The Stock Dispatch report could not be retrieved');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) ==0) {
 		$Title = __('Stock Dispatch - Problem Report');

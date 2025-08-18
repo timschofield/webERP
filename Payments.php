@@ -470,7 +470,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$PaymentItem->Cheque . "'
 							)";
 					$ErrMsg = __('Cannot insert a GL entry for the payment using the SQL');
-					$Result = DB_query($SQL, $ErrMsg, __('The SQL that failed was') , true);
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					InsertGLTags($PaymentItem->Tag);
 					$TotalAmount += $PaymentItem->Amount;
 				}

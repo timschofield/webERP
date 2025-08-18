@@ -75,7 +75,7 @@ If ((isset($_POST['PrintPDF']))
 						 supptrans.transno";
 
 		$ErrMsg = __('The details of the payment to the supplier could not be retrieved');
-		$TransResult = DB_query($SQL, $ErrMsg, '', false);
+		$TransResult = DB_query($SQL, $ErrMsg);
 
 		while ($DetailTrans = DB_fetch_array($TransResult)){
 
