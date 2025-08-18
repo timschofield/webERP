@@ -203,13 +203,13 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		StockByBrand("SHOPKL", 75, 150, false);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOK", 75, 150, false);
-		$NumberOfTestExecuted++;
 		StockByBrand("SHOPBL", 75, 150, false);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOB", 75, 150, false);
-		$NumberOfTestExecuted++;
 		StockByBrand("SHOPOU", 75, 150, false);
+		$NumberOfTestExecuted++;
+		StockByBrand("SHOPOK", 75, 150, false);
+		$NumberOfTestExecuted++;
+		StockByBrand("SHOPOB", 75, 150, false);
 		$NumberOfTestExecuted++;
 		StockByBrand("SHOPOG", 75, 150, false);
 		$NumberOfTestExecuted++;
