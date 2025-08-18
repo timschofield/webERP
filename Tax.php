@@ -36,7 +36,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 				ORDER BY debtortrans.id";
 
 	$ErrMsg = __('The accounts receivable transaction details could not be retrieved');
-	$DebtorTransResult = DB_query($SQL, $ErrMsg, '', false);
+	$DebtorTransResult = DB_query($SQL, $ErrMsg);
 
 	$SalesCount = 0;
 	$SalesNet = 0;
@@ -133,7 +133,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 				ORDER BY supptrans.id"; // ORDER BY supptrans.recno ?
 
 	$ErrMsg = __('The accounts payable transaction details could not be retrieved');
-	$SuppTransResult = DB_query($SQL, $ErrMsg, '', false);
+	$SuppTransResult = DB_query($SQL, $ErrMsg);
 
 	$PettyCashSQL = "SELECT pcashdetails.date AS trandate,
 							pcashdetailtaxes.pccashdetail AS transno,

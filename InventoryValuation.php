@@ -58,7 +58,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['Spreadsheet']) or isset($_POST['V
 					stockmaster.stockid";
 	}
 	$ErrMsg =  __('The inventory valuation could not be retrieved');
-	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = __('Print Inventory Valuation Error');

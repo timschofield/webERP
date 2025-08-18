@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				ORDER BY stockmaster.stockid";
 
 	$ErrMsg = __('The low GP items could not be retrieved');
-	$LowGPSalesResult = DB_query($SQL, $ErrMsg, '', false);
+	$LowGPSalesResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($LowGPSalesResult) == 0) {
 		include('includes/header.php');

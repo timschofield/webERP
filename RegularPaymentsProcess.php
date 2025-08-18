@@ -101,7 +101,7 @@ if (isset($_POST['Add'])) {
 									'" . $ID . "'
 								)";
 		$ErrMsg = __('Cannot insert a GL entry for the payment using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, __('The SQL that failed was'), true);
+		$Result = DB_query($SQL, $ErrMsg,'', true);
 		InsertGLTags($PaymentItem['Tags']);
 
 		$SQL = "INSERT INTO gltrans (type,
@@ -123,7 +123,7 @@ if (isset($_POST['Add'])) {
 									'" . $ID . "'
 								)";
 		$ErrMsg = __('Cannot insert a GL entry for the payment using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, __('The SQL that failed was'), true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO banktrans (transno,
 									type,

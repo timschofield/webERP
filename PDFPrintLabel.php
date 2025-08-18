@@ -35,7 +35,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				prices.startdate";
 
 	$ErrMsg = __('The Price Labels could not be retrieved');
-	$LabelsResult = DB_query($SQL, $ErrMsg, '', false);
+	$LabelsResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($LabelsResult)==0){
 		prnMsg(__('There were no price labels to print out for the category specified'),'warn');

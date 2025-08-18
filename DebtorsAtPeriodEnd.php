@@ -36,7 +36,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				currencies.decimalplaces";
 
 	$ErrMsg = ('The customer details could not be retrieved');
-	$CustomerResult = DB_query($SQL, $ErrMsg, '', false);
+	$CustomerResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($CustomerResult) == 0) {
 		$Title = __('Customer Balances') . ' - ' . __('Problem Report');

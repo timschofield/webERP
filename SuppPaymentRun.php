@@ -105,7 +105,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.transno";
 
 		$ErrMsg = __('The details of supplier invoices due could not be retrieved');
-		$TransResult = DB_query($SQL, $ErrMsg , '', false);
+		$TransResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($TransResult)==0) {
 			include('includes/header.php');
 			prnMsg(__('There are no outstanding supplier invoices to pay'),'info');
@@ -293,7 +293,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	$ErrMsg = __('The bank accounts could not be retrieved');
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
-	$AccountsResults = DB_query($SQL, $ErrMsg, '', false);
+	$AccountsResults = DB_query($SQL, $ErrMsg);
 
 	echo '<field>
 			<label for="BankAccount">' . __('Pay From Account') . ':</label>

@@ -58,7 +58,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		AND debtortrans.type=12";
 
 	$ErrMsg = __('An error occurred getting the customer receipts for batch number') . ' ' . $_POST['BatchNo'];
-	$CustRecs = DB_query($SQL, $ErrMsg, '', false);
+	$CustRecs = DB_query($SQL, $ErrMsg);
 
 	$SQL = "SELECT narrative,
 			amount
@@ -69,7 +69,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		AND gltrans.account !='" . $_SESSION['CompanyRecord']['debtorsact'] . "'";
 
 	$ErrMsg = __('An error occurred getting the GL receipts for batch number') . ' ' . $_POST['BatchNo'];
-	$GLRecs = DB_query($SQL, $ErrMsg, '', false);
+	$GLRecs = DB_query($SQL, $ErrMsg);
 
 	$HTML = '';
 

@@ -39,7 +39,7 @@ if (isset($_POST['PrintPDF'])){
 					   AND stockmaster.mbflag!='D'";
 
 		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
-		$Result = DB_query($SQL, $ErrMsg, '', false);
+		$Result = DB_query($SQL, $ErrMsg);
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF'])){
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
 		$ErrMsg = __('The old quantities could not be deleted from the freeze file');
-		$Result = DB_query($SQL, $ErrMsg, '', false);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$SQL = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
@@ -70,7 +70,7 @@ if (isset($_POST['PrintPDF'])){
 				AND stockmaster.mbflag!='D'";
 
 		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
-		$Result = DB_query($SQL, $ErrMsg, '', false);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$Title = __('Stock Check Freeze Update');
 		include('includes/header.php');
@@ -101,7 +101,7 @@ if (isset($_POST['PrintPDF'])){
 	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
 	$ErrMsg = __('The inventory quantities could not be retrieved');
-	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($InventoryResult) ==0) {
 		$Title = __('Stock Count Sheets - Problem Report');

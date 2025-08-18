@@ -81,7 +81,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.stockid";
 
 	$ErrMsg = __('The sell through support items to claim could not be retrieved');
-	$ClaimsResult = DB_query($SQL, $ErrMsg , '', false);
+	$ClaimsResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ClaimsResult) == 0) {
 

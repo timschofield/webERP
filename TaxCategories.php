@@ -85,7 +85,7 @@ if(isset($_POST['submit'])) {
 						'" . $_POST['TaxCategoryName'] ."'
 						)";
 			$ErrMsg = __('The new tax category could not be added');
-			$Result = DB_query($SQL, $ErrMsg,true);
+			$Result = DB_query($SQL, $ErrMsg,'', true);
 
 			$LastTaxCatID = DB_Last_Insert_ID('taxcategories','taxcatid');
 
@@ -96,7 +96,7 @@ if(isset($_POST['submit'])) {
  					taxprovinces.taxprovinceid,
 					'" . $LastTaxCatID . "'
 				FROM taxauthorities CROSS JOIN taxprovinces";
-			$Result = DB_query($SQL, $ErrMsg,true);
+			$Result = DB_query($SQL, $ErrMsg,'', true);
 
 			DB_Txn_Commit();
 		}

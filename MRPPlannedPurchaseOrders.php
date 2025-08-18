@@ -89,7 +89,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}
 	$ErrMsg = __('The MRP planned purchase orders could not be retrieved');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==0){ //then there is nothing to print
 		$Title = __('Print MRP Planned Purchase Orders');

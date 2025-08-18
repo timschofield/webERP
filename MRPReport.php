@@ -28,7 +28,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			ORDER BY daterequired,whererequired";
 
 	$ErrMsg = __('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc');
-	$Result = DB_query($SQL, $ErrMsg, '', false);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_error_no() !=0) {
 		$Errors = 1;
 	}

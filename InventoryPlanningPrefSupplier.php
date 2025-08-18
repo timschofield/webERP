@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF'])){
 				stockmaster.stockid";
 	}
 	$ErrMsg = __('The inventory quantities could not be retrieved');
-	$InventoryResult = DB_query($SQL, $ErrMsg, '', false);
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 	$ListCount = DB_num_rows($InventoryResult);
 
 	NewPageHeader();
@@ -224,7 +224,7 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		$ErrMsg = __('The sales quantities could not be retrieved');
-		$SalesResult = DB_query($SQL, $ErrMsg, '', false);
+		$SalesResult = DB_query($SQL, $ErrMsg);
 
 		$SalesRow = DB_fetch_array($SalesResult);
 

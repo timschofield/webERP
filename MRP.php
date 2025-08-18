@@ -543,7 +543,7 @@ if (isset($_POST['submit'])) {
 
 	// Display parameters from last run
 	$SQL = "SELECT * FROM mrpparameters";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()==0){
 
 		$MyRow = DB_fetch_array($Result);
