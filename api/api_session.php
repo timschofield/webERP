@@ -4,7 +4,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = __DIR__ . '/../';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 /// @todo error out if config.php does not yet exist
 include($PathPrefix . 'config.php');

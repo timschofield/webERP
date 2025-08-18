@@ -24,7 +24,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 // KL RICARD: Include the specific KL session functions
 include($PathPrefix . 'KLsession.php');

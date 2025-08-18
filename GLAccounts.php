@@ -1,4 +1,5 @@
 <?php
+
 /* Defines the general ledger accounts */
 /* To delete, insert, or update an account. */
 
@@ -26,6 +27,7 @@ function CashFlowsActivityName($Activity) {
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
+
 $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccounts';

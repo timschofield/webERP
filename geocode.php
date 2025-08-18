@@ -1,12 +1,13 @@
 <?php
-// geocode.php
 
 //$PageSecurity = 3;
-$Title = __('Geocode Generate');
 
 include('includes/session.php');
-include('includes/header.php');
+
 //include('includes/SQL_CommonFunctions.php');
+
+$Title = __('Geocode Generate');
+include('includes/header.php');
 
 $SQL = "SELECT * FROM geocode_param";
 $Resultgeo = DB_query($SQL);

@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require(__DIR__.'/../vendor/autoload.php');
 
 ini_set('max_execution_time', "6000");
 session_name('weberp_installation');

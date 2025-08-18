@@ -186,7 +186,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/footer.php');
 	}
 } else {
-	include  ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('PC Expense Report'). '" alt="" />' . ' ' . $Title . '

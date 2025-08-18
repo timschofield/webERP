@@ -1,14 +1,16 @@
 <?php
-// POReport.php
+
 // Inquiry on Purchase Orders
 
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.php');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-$ViewTopic = 'PurchaseOrdering';/* ?????????? */
+
+$ViewTopic = 'PurchaseOrdering'; /* ?????????? */
 $BookMark = 'POReport';
 $Title = __('Purchase Order Report');
 include('includes/header.php');

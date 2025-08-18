@@ -1,7 +1,6 @@
 <?php
 
 //$PageSecurity = 3;
-$Title = __('Geocode Generate XML');
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
@@ -15,6 +14,8 @@ function parseToXML($htmlStr)
     $xmlStr=str_replace("&",'&amp;',$xmlStr);
     return $xmlStr;
 }
+
+$Title = __('Geocode Generate XML');
 
 $SQL = "SELECT * FROM custbranch";
 $Result = DB_query($SQL);

@@ -1,6 +1,6 @@
 <?php
 
-function standard_deviation($Data){
+function standard_deviation($Data) {
 	$Total = 0;
 	$Counter = 0;
 	foreach ($Data as $Element){
@@ -95,6 +95,7 @@ function NewPageHeader () {
 }
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 

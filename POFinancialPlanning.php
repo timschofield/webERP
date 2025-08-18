@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier');
 include('includes/header.php');
 

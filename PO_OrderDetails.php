@@ -10,7 +10,6 @@ if (isset($_GET['OrderNo'])) {
 }
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (isset($_GET['FromGRNNo'])){
