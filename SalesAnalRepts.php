@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($_POST['GroupByData1']=='' OR !isset($_POST['GroupByData1']) OR $_POST['GroupByData1']=='Not Used') {
 	      $InputError = 1;
-	      prnMsg (__('A group by item must be specified for the report to have any output'),'error',__('No Group By selected'));
+	      prnMsg(__('A group by item must be specified for the report to have any output'),'error',__('No Group By selected'));
 	}
 	if ($_POST['GroupByData3']=='Not Used' AND $_POST['GroupByData4']!='Not Used') {
 		// If GroupByData3 is blank but GroupByData4 is used then move GroupByData3 to GroupByData2
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (($_POST['Lower1']=='' OR $_POST['Upper1']=='')) {
 	     $InputError = 1;
-	     prnMsg (__('Group by Level 1 is set but the upper and lower limits are not set') . ' - ' . __('these must be specified for the report to have any output'),'error',__('Upper/Lower limits not set'));
+	     prnMsg(__('Group by Level 1 is set but the upper and lower limits are not set') . ' - ' . __('these must be specified for the report to have any output'),'error',__('Upper/Lower limits not set'));
 	}
 	if (($_POST['GroupByData2']!='Not Used') AND ($_POST['Lower2']=='' OR $_POST['Upper2']=='')) {
 	     $InputError = 1;

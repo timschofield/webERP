@@ -43,7 +43,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif( trim($_POST['Sales_Type'])==''){
 		$InputError = 1;
-		prnMsg (__('The sales type (price list) description cannot be empty'),'error');
+		prnMsg(__('The sales type (price list) description cannot be empty'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	} elseif (mb_strlen($_POST['Sales_Type']) >40) {
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='AN'){
 		$InputError = 1;
-		prnMsg (__('The sales type code cannot be AN since this is a system defined abbreviation for any sales type in general ledger interface lookups'),'error');
+		prnMsg(__('The sales type code cannot be AN since this is a system defined abbreviation for any sales type in general ledger interface lookups'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	}
@@ -148,7 +148,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg (__('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customers with this sales type code'));
+			prnMsg(__('Cannot delete this sale type because customers are currently set up to use this sales type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customers with this sales type code'));
 		} else {
 
 			$SQL="DELETE FROM salestypes WHERE typeabbrev='" . $SelectedType . "'";

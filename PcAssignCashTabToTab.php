@@ -54,7 +54,7 @@ if (isset($_POST['Process'])) {
 			if ($Currency === '') {
 				$Currency = $CurrRow['currency'];
 			} elseif ($Currency != $CurrRow['currency']) {
-				prnMsg (__('The currency of the tab transferred from should be the same as the tab being transferred to'),'error');
+				prnMsg(__('The currency of the tab transferred from should be the same as the tab being transferred to'),'error');
 				unset($SelectedTabs);
 				unset($SelectedTabsTo);
 				unset($_POST['Process']);

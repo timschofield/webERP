@@ -59,7 +59,7 @@ if (isset($_GET['SelectedShipment'])){
 	$GetShiptHdrResult = DB_query($ShipmentHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetShiptHdrResult)==0) {
-		prnMsg ( __('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
+		prnMsg( __('Unable to locate Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -107,7 +107,7 @@ if (isset($_GET['SelectedShipment'])){
 			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 		if (DB_num_rows($GetShiptHdrResult)==0) {
-			prnMsg ( __('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
+			prnMsg( __('Unable to locate lines for Shipment') . ' '. $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 			include('includes/footer.php');
 			exit();
 		}

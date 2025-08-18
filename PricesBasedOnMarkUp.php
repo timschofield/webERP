@@ -201,15 +201,15 @@ if (isset($_POST['UpdatePrices'])){
 
 	if (! Is_Date($_POST['PriceEndDate']) AND $_POST['PriceEndDate']!=''){
 		$InputError =1;
-		prnMsg (__('The date the new price is to be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The date the new price is to be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
 	if (! Is_Date($_POST['PriceStartDate'])){
 		$InputError =1;
-		prnMsg (__('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
 	if (Date1GreaterThanDate2($_POST['PriceStartDate'],$_POST['PriceEndDate']) AND $_POST['PriceEndDate']!=''){
 		$InputError =1;
-		prnMsg (__('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
+		prnMsg(__('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 	}
 	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['PriceStartDate'])){
 		$InputError =1;

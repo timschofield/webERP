@@ -257,7 +257,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 		$InputError = true;
 	}
 	if (! Is_Date($_POST['RequiredDate'])){
-		prnMsg (__('The date the contract is required to be completed by must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The date the contract is required to be completed by must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		$InputError =true;
 	}
 	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['RequiredDate']) AND $_POST['RequiredDate']!=''){

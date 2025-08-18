@@ -120,7 +120,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (__('Cannot delete this type because suppliers are currently set up to use this type') . '<br />' .
+		prnMsg(__('Cannot delete this type because suppliers are currently set up to use this type') . '<br />' .
 			__('There are') . ' ' . $MyRow[0] . ' ' . __('suppliers with this type code'));
 	} else {
 

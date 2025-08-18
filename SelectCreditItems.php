@@ -924,7 +924,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  $OKToProcess = true;
 		/*Check for the worst */
 		  if (isset($_POST['CreditType']) and $_POST['CreditType']=='WriteOff' AND !isset($_POST['WriteOffGLCode'])){
-			prnMsg (__('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
+			prnMsg(__('The GL code to write off the credit value to must be specified. Please select the appropriate GL code for the selection box'),'info');
 			$OKToProcess = false;
 		  }
 		  echo '<div class="centre">

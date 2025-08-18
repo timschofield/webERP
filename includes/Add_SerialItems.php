@@ -37,17 +37,17 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 					if (((filter_number_format($_POST['Qty' . $i]))*$InOutModifier) > $ExistingBundleQty){
 						if ($LineItem->Serialised ==1){
 							echo '<br />';
-							prnMsg ( $_POST['SerialNo' . $i] . ' ' .
+							prnMsg( $_POST['SerialNo' . $i] . ' ' .
 								 __('has already been sold'),'warn' );
 							$AddThisBundle = false;
 						} elseif ($ExistingBundleQty==0) { /* and its a batch */
 							echo '<br />';
-							prnMsg ( __('There is none of') . ' '. $_POST['SerialNo' . $i] .
+							prnMsg( __('There is none of') . ' '. $_POST['SerialNo' . $i] .
 								' '. __('remaining').'.', 'warn');
 							$AddThisBundle = false;
 						} else {
 							echo '<br />';
-						 	prnMsg (  __('There is only'). ' ' . $ExistingBundleQty .
+						 	prnMsg(  __('There is only'). ' ' . $ExistingBundleQty .
 									' '.__('of') . ' ' . $_POST['SerialNo' . $i] . ' '. __('remaining') . '. ' .
 									__('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll'),
 									'warn');

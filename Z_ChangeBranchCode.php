@@ -20,7 +20,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 						WHERE debtorno='" . $_POST['DebtorNo'] . "'
 						AND branchcode='" . $_POST['OldBranchCode'] . "'");
 	if (DB_num_rows($Result)==0){
-		prnMsg (__('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . __('does not currently exist as a customer branch code in the system'),'error');
+		prnMsg(__('The customer branch code') . ': ' . $_POST['DebtorNo'] . ' - ' . $_POST['OldBranchCode'] . ' ' . __('does not currently exist as a customer branch code in the system'),'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -113,7 +113,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$ErrMsg = __('The SQL to insert the new customer branch master record failed because');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
-	prnMsg (__('Changing customer transaction records'),'info');
+	prnMsg(__('Changing customer transaction records'),'info');
 	$SQL = "UPDATE debtortrans SET
 					branchcode='" . $_POST['NewBranchCode'] . "'
 					WHERE debtorno='" . $_POST['DebtorNo'] . "'
@@ -142,7 +142,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
 
-	prnMsg (__('Changing pricing records'),'info');
+	prnMsg(__('Changing pricing records'),'info');
 	$SQL = "UPDATE prices
 				SET branchcode='" . $_POST['NewBranchCode'] . "'
 				WHERE debtorno='" . $_POST['DebtorNo'] . "'

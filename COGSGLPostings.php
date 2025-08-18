@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 
 	$Result = DB_query($SQL);
-	prnMsg ($Msg,'info');
+	prnMsg($Msg,'info');
 	unset ($SelectedCOGSPostingID);
 
 } elseif (isset($_GET['delete'])) {
@@ -87,7 +87,7 @@ if (!isset($SelectedCOGSPostingID)) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
-		prnMsg (__('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
+		prnMsg(__('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<table class="selection">
 			<tr>
 				<th>' . __('Area') . '</th>

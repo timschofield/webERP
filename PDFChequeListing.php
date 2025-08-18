@@ -51,7 +51,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (DB_num_rows($Result) == 0){
 		$Title = __('Payment Listing');
 		include('includes/header.php');
-		prnMsg (__('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '. ' .__('Please try again selecting a different date range or account'), 'error');
+		prnMsg(__('There were no bank transactions found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '. ' .__('Please try again selecting a different date range or account'), 'error');
 		include('includes/footer.php');
 		exit();
 	}

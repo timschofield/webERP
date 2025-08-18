@@ -61,7 +61,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -71,7 +71,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$Head = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
-			prnMsg (__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
+			prnMsg(__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -89,7 +89,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
-			prnMsg (__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -107,21 +107,21 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] != 0) {
 			$InputError = 1;
-			prnMsg (__('Stock item '. $StockID. ' already exists'),'error');
+			prnMsg(__('Stock item '. $StockID. ' already exists'),'error');
 		}
 
 		//next validate inputs are sensible
 		if (!$MyRow[1] or mb_strlen($MyRow[1]) > 50 OR mb_strlen($MyRow[1])==0) {
 			$InputError = 1;
-			prnMsg (__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'). ' ("'. implode('","',$MyRow). $stockid. '") ','error');
+			prnMsg(__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'). ' ("'. implode('","',$MyRow). $stockid. '") ','error');
 		}
 		if (mb_strlen($MyRow[2])==0) {
 			$InputError = 1;
-			prnMsg (__('The stock item description cannot be a zero length string') . ' - ' . __('a long description is required'),'error');
+			prnMsg(__('The stock item description cannot be a zero length string') . ' - ' . __('a long description is required'),'error');
 		}
 		if (mb_strlen($StockID) ==0) {
 			$InputError = 1;
-			prnMsg (__('The Stock Item code cannot be empty'),'error');
+			prnMsg(__('The Stock Item code cannot be empty'),'error');
 		}
 		if (ContainsIllegalCharacters($StockID) OR mb_strstr($StockID,' ')) {
 			$InputError = 1;
@@ -138,11 +138,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 		if ($MyRow[10]!=0 AND $MyRow[10]!=1) {
 			$InputError = 1;
-			prnMsg (__('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
+			prnMsg(__('Values in the Perishable field must be either 0 (No) or 1 (Yes)') ,'error');
 		}
 		if (!is_numeric($MyRow[11])) {
 			$InputError = 1;
-			prnMsg (__('The volume of the packaged item in cubic metres must be numeric') ,'error');
+			prnMsg(__('The volume of the packaged item in cubic metres must be numeric') ,'error');
 		}
 		if ($MyRow[11] <0) {
 			$InputError = 1;
@@ -162,7 +162,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 		if ($MyRow[6] <0) {
 			$InputError = 1;
-			prnMsg (__('The economic order quantity must be a positive number'),'error');
+			prnMsg(__('The economic order quantity must be a positive number'),'error');
 		}
 		if ($MyRow[8]==0 AND $MyRow[9]==1){
 			$InputError = 1;

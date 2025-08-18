@@ -174,7 +174,7 @@ $ColsResult = DB_query($GetColsSQL);
 if (DB_num_rows($ColsResult)== 0) {
     $Title = __('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.php');
-    prnMsg (  __('The report does not have any output columns') . '. ' . __('You need to set up the data columns that you wish to show in the report'),'error',__('No Columns'));
+    prnMsg(  __('The report does not have any output columns') . '. ' . __('You need to set up the data columns that you wish to show in the report'),'error',__('No Columns'));
     echo '<br /><a href="' . $RootPath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . __('Enter Columns for this report') . '</a>';
     echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
     include('includes/footer.php');
@@ -182,7 +182,7 @@ if (DB_num_rows($ColsResult)== 0) {
 } elseif (DB_num_rows($ColsResult) >10){
     $Title = __('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.php');
-    prnMsg (__('The report cannot have more than 10 columns in it') . '. ' . __('Please delete one or more columns before attempting to run it'),'error',__('Too Many Columns'));
+    prnMsg(__('The report cannot have more than 10 columns in it') . '. ' . __('Please delete one or more columns before attempting to run it'),'error',__('Too Many Columns'));
     echo '<br /><a href="' . $RootPath . '/SalesAnalReptCols.php?ReportID=' . $_GET['ReportID'] . '">' . __('Maintain Columns for this report') . '</a>';
     echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
     include('includes/footer.php');
@@ -289,7 +289,7 @@ while ($Cols = DB_fetch_array($ColsResult)){
 
 	$Length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
 	 if ($Length_ColDen == 0){
-	     prnMsg (__('Calculated fields must use columns defined in the report specification') . '. ' . __('The denominator column number entered for this calculation is not defined in the report'),'error',__('Calculation With Undefined Denominator'));
+	     prnMsg(__('Calculated fields must use columns defined in the report specification') . '. ' . __('The denominator column number entered for this calculation is not defined in the report'),'error',__('Calculation With Undefined Denominator'));
 	     exit();
 	}
 

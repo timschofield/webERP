@@ -61,7 +61,7 @@ if (isset($_POST['UpdateData'])){
 	$Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$MyRow = DB_fetch_row($Result);
 	if (DB_num_rows($Result)==0) {
-		prnMsg (__('The entered item code does not exist'),'error',__('Non-existent Item'));
+		prnMsg(__('The entered item code does not exist'),'error',__('Non-existent Item'));
 	} elseif (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
 		DB_Txn_Begin();

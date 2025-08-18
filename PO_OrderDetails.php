@@ -66,9 +66,9 @@ $GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 if (DB_num_rows($GetOrdHdrResult)!=1) {
 	echo '<br /><br />';
 	if (DB_num_rows($GetOrdHdrResult) == 0){
-		prnMsg ( __('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . __('Please look up another one') . '. ' . __('The order requested could not be retrieved') . ' - ' . __('the SQL returned either 0 or several purchase orders'), 'error');
+		prnMsg( __('Unable to locate this PO Number') . ' '. $_GET['OrderNo'] . '. ' . __('Please look up another one') . '. ' . __('The order requested could not be retrieved') . ' - ' . __('the SQL returned either 0 or several purchase orders'), 'error');
 	} else {
-		prnMsg ( __('The order requested could not be retrieved') . ' - ' . __('the SQL returned either several purchase orders'), 'error');
+		prnMsg( __('The order requested could not be retrieved') . ' - ' . __('the SQL returned either several purchase orders'), 'error');
 	}
 		echo '<table class="table_index">
 				<tr>
