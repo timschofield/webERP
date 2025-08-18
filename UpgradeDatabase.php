@@ -234,7 +234,7 @@ if (isset($_POST['DoUpgrade'])) {
 
 			if (mb_substr($SQLEntries[$i], 0, 2) != '--'
 				AND mb_substr($SQLEntries[$i], 0, 3) != 'USE'
-				AND mb_strstr($SQLEntries[$i],'/*')==FALSE
+				AND mb_strstr($SQLEntries[$i],'/*')==false
 				AND mb_strlen($SQLEntries[$i])>1){
 
 				$SQL .= ' ' . $SQLEntries[$i];

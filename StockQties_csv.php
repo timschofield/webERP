@@ -29,7 +29,7 @@ $FileName = $_SESSION['reports_dir'] . '/StockQties.csv';
 
 $fp = fopen($FileName,'w');
 
-if ($fp==FALSE){
+if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
 	include('includes/footer.php');

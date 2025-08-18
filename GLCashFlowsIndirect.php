@@ -213,10 +213,10 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$Result = DB_query($Sql);
 	$IdSection = -1;
 	// Looks for an account without setting up:
-	$NeedSetup = FALSE;
+	$NeedSetup = false;
 	while($MyRow = DB_fetch_array($Result)) {
 		if($MyRow['cashflowsactivity'] == -1) {
-			$NeedSetup = TRUE;
+			$NeedSetup = true;
 			echo '<tr><td colspan="6">&nbsp;</td></tr>';
 			break;
 		}
@@ -424,7 +424,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
+	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 		__('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.') . '<br />' .
 		__('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.') . '<br />' .
 		__('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.') . '<br />' .

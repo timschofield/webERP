@@ -18,22 +18,22 @@ function CalcFreightCost ($TotalValue,
 	$CalcBestShipper ='';
 	global $CountriesArray;
 
-	$ParameterError = FALSE;
+	$ParameterError = false;
 	if ((!isset($BrAdd2)) AND (!isset($BrAdd3)) AND (!isset($BrAdd4)) AND (!isset($BrAdd5)) AND (!isset($BrAddCountry))){
 		// No address field to detect destination ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if ((!isset($TotalVolume)) AND (!isset($TotalWeight))){
 		// No weight AND no volume ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if (!isset($FromLocation)){
 		// No location FROM ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if (!isset($Currency)){
 		// No Currency ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if($ParameterError){
 		return array ("NOT AVAILABLE", "NOT AVAILABLE");

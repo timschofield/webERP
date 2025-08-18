@@ -56,7 +56,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 	//loop through file rows
 	$LineNumber = 1;
-	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 		$StockID = mb_strtoupper($MyRow[0]);
 
