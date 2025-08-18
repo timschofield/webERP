@@ -1,13 +1,13 @@
 <?PHP
-/* This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
-in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group
-specified to create a list of links for insertion into a table to choose a report. Two table sections will
-be generated, one for standard reports and the other for custom reports.
 
-For use with webERP
-
-Revision History:
-Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
+/**
+ * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
+ * in the associative array $ReportGroups[]. It will fetch the reports belonging solely to the group
+ * specified to create a list of links for insertion into a table to choose a report. Two table sections will
+ * be generated, one for standard reports and the other for custom reports.
+ *
+ * Revision History:
+ * Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
 function GetRptLinks($GroupID) {
 	global $RootPath;

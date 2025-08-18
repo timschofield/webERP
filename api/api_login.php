@@ -4,7 +4,7 @@ function  LoginAPI($databasename, $user, $password) {
 	global  $PathPrefix;		// For included files
 	include('../config.php');
 	// Include now for the error code values.
-	include  '../includes/UserLogin.php';	/* Login checking and setup */
+	include('../includes/UserLogin.php');	/* Login checking and setup */
 	$RetCode = array();		// Return result.
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
 		// Establish the database connection for this session.

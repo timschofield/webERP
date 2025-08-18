@@ -32,7 +32,7 @@ if ( !$db ) {
 	exit();
 }
 
-require_once ($PathPrefix .'includes/MiscFunctions.php');
+require_once($PathPrefix .'includes/MiscFunctions.php');
 
 // DB wrapper functions to change only once for whole application
 

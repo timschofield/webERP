@@ -314,7 +314,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
     echo '</form>';
 } else {
-	include  ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';

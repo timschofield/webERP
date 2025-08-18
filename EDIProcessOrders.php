@@ -9,7 +9,7 @@ $BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
-require_once ('includes/MiscFunctions.php');
+require_once('includes/MiscFunctions.php');
 
 /*The logic outline is this ....
 
@@ -1095,7 +1095,7 @@ echo '</pre>';
 }
 
 function UpdateOrder($Order){
-//include 'DeliveryDetails.php';
+//include('DeliveryDetails.php');
 /*
 echo '<pre>';
 print_r($Order);

@@ -1,6 +1,8 @@
 <?php
 
-/*Code to check that ShiptRef and Contract or JobRef entered are valid entries
+/// @deprecated seems unused... Also, it looks like it should be in the includes folder...
+
+/* Code to check that ShiptRef and Contract or JobRef entered are valid entries
 This is used by the UpdateLine button when a purchase order line item is updated and
 by the EnterLine button when a new purchase order line item is entered
 */
