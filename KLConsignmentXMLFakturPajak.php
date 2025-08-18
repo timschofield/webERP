@@ -226,7 +226,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 							AND fakturpajakdate = '1000-01-01'
 							AND saledate <= '" . $EndDateSQL . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
-				$Result = DB_query($SQL,$ErrMsg,'',true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				DB_Txn_Commit();
 			}
 

@@ -975,7 +975,7 @@ function SetReorderLevel($Reason, $StockID, $loccode, $OldRL, $NewRL, $UpdateDB)
 						'". $OldRL ."',
 						'". $NewRL ."')";		
 		$ErrMsg =__('Could not insert the KLAdjustRL Log');
-		DB_query($SQL,$ErrMsg,'',true);
+		DB_query($SQL, $ErrMsg, '', true);
 		}
 	}
 }

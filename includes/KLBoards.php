@@ -676,7 +676,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 			WHERE stockid='" . $StockID . "'";
 
 	$ErrMsg = __('The cost details for the stock item could not be updated because');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 	DB_Txn_Commit();
 	UpdateCost($StockID); //Update any affected BOMs
 }

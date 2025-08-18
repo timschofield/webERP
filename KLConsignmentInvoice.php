@@ -333,7 +333,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 							AND invoicedtopartner = '1000-01-01'
 							AND saledate <= '" . $EndDate . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
-				$Result = DB_query($SQL,$ErrMsg,'',true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				if ($CompanyFrom == 'PTADU'){
 					$PeriodNo = GetPeriod(ConvertSQLDate($EndDate));

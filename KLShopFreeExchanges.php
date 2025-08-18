@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 		
 		$Msg = __('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . __('has been created');
 		$ErrMsg = __('The insert of the KL tali exchange failed because');
-		$Result = DB_query($SQL,$ErrMsg, '');
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg($Msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);

@@ -24,12 +24,12 @@ UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 1, "", 
 
 $SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
 $ErrMsg = __('Cannot delete the sales order details because');
-$Result = DB_query($SQL,$ErrMsg,'',true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg( __('Deleted Sales Order Lines ').  $_GET['OrderNo']);
 
 $SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
 $ErrMsg = __('Cannot delete the sales order because');
-$Result = DB_query($SQL,$ErrMsg,'',true);
+$Result = DB_query($SQL, $ErrMsg, '', true);
 prnMsg( __('Deleted Sales Order Header ').  $_GET['OrderNo']);
 
 

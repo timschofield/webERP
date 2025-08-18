@@ -8,7 +8,7 @@ function SetChangePriceFlag($Flag, $StockID){
 
 	$Msg = __('Changing Price Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
 	$ErrMsg = __('The flag update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -20,7 +20,7 @@ function SetMoveDiscount20Flag($Flag, $StockID){
 
 	$Msg = __('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
 	$ErrMsg = __('The flag update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -32,7 +32,7 @@ function SetMoveDiscount50Flag($Flag, $StockID){
 
 	$Msg = __('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
 	$ErrMsg = __('The flag update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -44,7 +44,7 @@ function SetMoveDiscount80Flag($Flag, $StockID){
 
 	$Msg = __('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . __('for item code') . ' ' . $StockID;
 	$ErrMsg = __('The flag update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -55,7 +55,7 @@ function SetFlagPriceChangedInChangePrice($StockID, $Value){
 
 	$Msg = __('Changing flag PriceChanged for item') . ' ' . $StockID . ' ' . __('to') . ' ' . $Value;
 	$ErrMsg = __('SetFlagPriceChangedInChangePrice failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -66,7 +66,7 @@ function SetEndDateChangePrice($StockID){
 
 	$Msg = __('Changing End Date of Price change set to today for item code') . ' ' . $StockID;
 	$ErrMsg = __('The End Date update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -77,7 +77,7 @@ function SetEndDateMoveDiscount20($StockID){
 
 	$Msg = __('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockID;
 	$ErrMsg = __('The End Date update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -88,7 +88,7 @@ function SetEndDateMoveDiscount50($StockID){
 
 	$Msg = __('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockID;
 	$ErrMsg = __('The End Date update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -99,7 +99,7 @@ function SetEndDateMoveDiscount80($StockID){
 
 	$Msg = __('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockID;
 	$ErrMsg = __('The End Date update failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 
@@ -114,7 +114,7 @@ function SetRLZeroAtPointOfSales($StockID){
 
 	$Msg = __('Reorder Level set to 0 for') . ' ' . $StockID . ' ' . __('at all Point Of Sale locations');
 	$ErrMsg = __('The update of the Reorder Levels = 0 failed because');
-	$Result = DB_query($SQL,$ErrMsg, '');
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg($Msg , 'success');
 }
 

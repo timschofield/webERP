@@ -813,7 +813,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . (float)$Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 function GLAccountBelongsTo($Account){
@@ -1056,7 +1056,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				)";
 				
 		$ErrMsg = __('Cannot insert a receipt transaction against the customer because') ;
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE debtorsmaster
 					SET lastpaiddate = CURRENT_DATE,
@@ -1064,7 +1064,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
 		$ErrMsg = __('Cannot update the customer record for the date of the last payment received because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -1089,7 +1089,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . $Currency . "'
 			)";
 		$ErrMsg = __('Cannot insert a bank transaction');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL="INSERT INTO gltrans (type,
 									typeno,
@@ -1108,7 +1108,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . $NetAmount . "'
 			)";
 		$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($Commission > 0){
 			$SQL="INSERT INTO gltrans (type,
@@ -1128,7 +1128,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . (float)$Commission . "'
 									)";
 			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,'',true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
 		if ($CommissionPPN > 0){
@@ -1149,7 +1149,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . (float)$CommissionPPN . "'
 									)";
 			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,'',true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
 		$SQL="INSERT INTO gltrans ( type,
@@ -1169,7 +1169,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									'" . -$TotalAmount . "'
 									)";
 		$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
-		$Result = DB_query($SQL,$ErrMsg,'',true);			
+		$Result = DB_query($SQL, $ErrMsg, '', true);			
 
 		// update the salesorder table, from quotation to confirmed order
 		if  (($PaymentCode == "tokopedia") OR 
@@ -1188,7 +1188,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}
 		$ErrMsg = __('Cannot update the quotation flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if (($CustomerCode == "WEB-KL-IDR") OR ($CustomerCode == "WEB-WH-IDR")) {
 			// online sale from our website, we must update the status of the order in OpenCart
@@ -1209,7 +1209,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					SET klpaidcash = '" . $TotalAmount . "'
 				WHERE salesorders.orderno='" . $OrderNo . "'";
 		$ErrMsg = __('Cannot update the payment flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$Result = DB_Txn_Commit();
 	}
@@ -1309,7 +1309,7 @@ function InsertKPI($KPICode, $Value){
 				'" . mb_substr($KPICode, 0, 30) . "',
 				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
-		DB_query($SQL,$ErrMsg,'',true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 

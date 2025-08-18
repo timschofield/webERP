@@ -27,7 +27,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";
 		$ErrMsg =__('The SQL to set RL = 0 at location TO failed');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		
 		$SQL = "SELECT stockid,
@@ -59,7 +59,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 						WHERE stockid = '" . $MyRow['stockid'] . "'
 							AND loccode = '" . $_POST['ToLocationID'] . "'";
 				$ErrMsg = "The SQL to set RL to item " . $MyRow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
-				$Resultitem = DB_query($SQL,$ErrMsg,'',true);
+				$Resultitem = DB_query($SQL, $ErrMsg, '', true);
 
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				echo '<tr class="striped_row">

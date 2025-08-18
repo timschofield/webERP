@@ -677,10 +677,10 @@ Function GetNextSequenceNo ($TransType){
 	DB_query("SELECT typeno FROM systypes WHERE typeid='" . $TransType ."' FOR UPDATE");
 	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The transaction number could not be incremented');
-	DB_query($SQL,$ErrMsg,'');
+	DB_query($SQL,$ErrMsg);
 	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . __('The next transaction number could not be retrieved from the database because');
-	$GetTransNoResult = DB_query($SQL,$ErrMsg,'');
+	$GetTransNoResult = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];	
 }
@@ -725,7 +725,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 			WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
 	$ErrMsg = __('Cannot update the customer record for the date of the last payment received because');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 	/*now enter the BankTrans entry */
 	//First get the currency and rate for the bank account
@@ -755,7 +755,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 			'" . $CustomerCurrency . "'
 		)";
 	$ErrMsg = __('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 
 	/* then enter GLTrans records for discount, bank and debtors */
@@ -777,7 +777,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 					'" . ($AmountPaid) /$Rate . "'
 				)";
 	$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -795,7 +795,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . -(($AmountPaid) /$Rate). "' )";
 	$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
@@ -858,7 +858,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 							'" .$Currency . "'
 						)";
 	$ErrMsg = __('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 	/* Bank account entry first */
 	$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . __('Fees for Transaction ID') . ': ' . $TransactionID;
@@ -878,7 +878,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 					'" . -($Commission /$Rate) . "'
 				)";
 	$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -896,7 +896,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . ($Commission /$Rate). "' )";
 	$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 	EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
 }
 

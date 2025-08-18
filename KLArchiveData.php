@@ -279,7 +279,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 					$SQLDelete = "DELETE FROM gltrans 
 									WHERE periodno = " . $MyConsolidatedRow['periodno'] . "
 										AND account = '" . $MyConsolidatedRow['account'] . "'";
-					DB_query($SQLDelete, $ErrMsg, '');
+					DB_query($SQLDelete, $ErrMsg);
 					
 					$Typeno = GetNextTransNo(1000);
 					$SQLInsert = "INSERT INTO gltrans 
@@ -302,7 +302,7 @@ function ArchiveTableGltrans($ArchiveToPeriod) {
 									'" . mb_substr('CONSOLIDATED ACCOUNTING', 0, 200) . "',
 									'" . $MyConsolidatedRow['consolidated'] . "',
 									'')";
-					DB_query($SQLInsert, $ErrMsg, '');
+					DB_query($SQLInsert, $ErrMsg);
 				}
 				prnMsg("Inserted consolidated accounting records in production DB gltrans table");
 
@@ -435,7 +435,7 @@ function ArchiveTableStockmoves($ArchiveToPeriod) {
 			
 			$SQLDelete = "DELETE FROM stockmoves 
 							WHERE prd <= " . $ArchiveToPeriod . "";
-			DB_query($SQLDelete, $ErrMsg, '');
+			DB_query($SQLDelete, $ErrMsg);
 			prnMsg("Deleted stockmoves records in Production DB");
 			
 			UpdateArchiveTablePeriod('stockmoves', $ArchiveToPeriod);
@@ -514,7 +514,7 @@ function ArchiveTableStockmovestaxes() {
 					LEFT JOIN stockmoves sm 
 						ON st.stkmoveno = sm.stkmoveno
 					WHERE sm.stkmoveno IS NULL";
-		DB_query($SQLDelete, $ErrMsg, '');
+		DB_query($SQLDelete, $ErrMsg);
 		prnMsg("Deleted stockmovestaxes records in webERP production DB");
 
 		// count how many records are on stockmovestaxes in webERP production DB
@@ -603,7 +603,7 @@ function ArchiveTableLoctransfersObsoletes($ArchiveToPeriod) {
 						ON lt.stockid = sm.stockid
 					WHERE sm.discontinued = 1
 						AND sm.date_updated <= '" . $ArchiveToEndDate . "'";
-		DB_query($SQLDelete, $ErrMsg, '');
+		DB_query($SQLDelete, $ErrMsg);
 		prnMsg("Deleted loctransfers records in webERP production DB");
 
 		// count how many records are on loctransfers in webERP production DB
@@ -824,7 +824,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 					$SQLDelete = "DELETE FROM debtortrans 
 									WHERE prd = " . $MyConsolidatedRow['prd'] . "
 										AND debtorno = '" . $MyConsolidatedRow['debtorno'] . "'";
-					DB_query($SQLDelete, $ErrMsg, '');
+					DB_query($SQLDelete, $ErrMsg);
 
 					$Transno = GetNextTransNo(1001);
 					$SQLInsert = "INSERT INTO debtortrans 
@@ -879,7 +879,7 @@ function ArchiveTableDebtortrans($ArchiveToPeriod) {
 							'" . '1' . "',
 							'" . '999' . "',
 							'" . $MyConsolidatedRow['balance_consolidated'] . "')";
-					DB_query($SQLInsert, $ErrMsg, '');
+					DB_query($SQLInsert, $ErrMsg);
 				}
 				prnMsg("Inserted consolidated accounting records in production DB debtortrans table");
 
@@ -957,7 +957,7 @@ function ArchiveTableDebtortranstaxes() {
 					LEFT JOIN debtortrans
 						ON debtortranstaxes.debtortransid = debtortrans.id
 					WHERE debtortrans.id IS NULL";
-		DB_query($SQLDelete, $ErrMsg, '');
+		DB_query($SQLDelete, $ErrMsg);
 		prnMsg("Deleted debtortranstaxes records in webERP production DB");
 
 		// count how many records are on debtortranstaxes in webERP production DB
@@ -1033,7 +1033,7 @@ function ArchiveTableCustallocns() {
 					LEFT JOIN debtortrans
 						ON custallocns.transid_allocfrom = debtortrans.id
 					WHERE debtortrans.id IS NULL";
-		DB_query($SQLDelete, $ErrMsg, '');
+		DB_query($SQLDelete, $ErrMsg);
 		prnMsg("Deleted custallocns records in webERP production DB");
 
 		// count how many records are on custallocns in webERP production DB
@@ -1173,7 +1173,7 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 									WHERE transdate = '" . $MyConsolidatedRow['transdate'] . "'
 										AND bankact = '" . $MyConsolidatedRow['bankact'] . "'
 										AND currcode = '" . $MyConsolidatedRow['currcode'] . "'";
-					DB_query($SQLDelete, $ErrMsg, '');
+					DB_query($SQLDelete, $ErrMsg);
 
 					$Transno = GetNextTransNo(1002);
 					$SQLInsert = "INSERT INTO banktrans 
@@ -1202,7 +1202,7 @@ function ArchiveTableBanktrans($ArchiveToPeriod) {
 							'" . $MyConsolidatedRow['amount_consolidated'] . "',
 							'" . $MyConsolidatedRow['currcode'] . "',
 							'" . '' . "')";
-					DB_query($SQLInsert, $ErrMsg, '');
+					DB_query($SQLInsert, $ErrMsg);
 				}
 				prnMsg("Inserted consolidated accounting records in production DB banktrans table");
 

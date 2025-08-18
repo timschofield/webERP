@@ -210,7 +210,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 										WHERE salesorders.orderno = klretailcustomers.orderno
 											AND salesorders.orddate >= '" . $FromDate . "'
 											AND salesorders.orddate <= '" . $ToDate . "')";
-				$ResultUpdate = DB_query($SQL,'','',true);
+				$ResultUpdate = DB_query($SQL, '', '', true);
 			}
 			DB_Txn_Commit();
 

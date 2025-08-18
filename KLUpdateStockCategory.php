@@ -153,7 +153,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 				WHERE stockid='".$StockID."'";
 
 		$ErrMsg = __('The stock item could not be updated because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 			
 		prnMsg('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
 	}else{

@@ -213,7 +213,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 							AND salesorders.orddate <= '" . $ToDate . "'
 							AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")" .
 						$SQLCustomers;
-				$ResultUpdate = DB_query($SQL,'','',true);
+				DB_query($SQL, '', '', true);
 			}
 			DB_Txn_Commit();
 
