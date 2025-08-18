@@ -1188,7 +1188,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 									 VALUES ('" . $WONo . "',
 											'" . $_SESSION['DefaultFactoryLocation'] . "',
 											CURRENT_DATE,
-											'" . Date('Y-m-d'). "')",
+											CURRENT_DATE)",
 											$ErrMsg,
 											'',
 											true);
