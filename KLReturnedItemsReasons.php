@@ -96,7 +96,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (__('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
+		prnMsg(__('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
 			__('There are') . ' ' . $MyRow[0] . ' ' . __('returns using this reason'));
 	} else {
 

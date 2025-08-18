@@ -16,10 +16,10 @@ If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
 $Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
 $MyRow = DB_fetch_row($Result);
 if (DB_num_rows($Result)==0) {
-	prnMsg (__('The entered item code does not exist'),'error',__('Non-existent Item'));
+	prnMsg(__('The entered item code does not exist'),'error',__('Non-existent Item'));
 } elseif ($_GET['OldCat'] != $_GET['NewCat']){
 	ChangeItemStockCategory( $_GET['StockId'], $_GET['OldCat'], $_GET['NewCat']);
-	prnMsg ('Stock Category of ' . $_GET['StockId'] . ' changed from ' . $_GET['OldCat'] . ' to ' . $_GET['NewCat'] ,'success');
+	prnMsg('Stock Category of ' . $_GET['StockId'] . ' changed from ' . $_GET['OldCat'] . ' to ' . $_GET['NewCat'] ,'success');
 }
 
 include('includes/footer.php');
@@ -155,9 +155,9 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 		$ErrMsg = __('The stock item could not be updated because');
 		$Result = DB_query($SQL,$ErrMsg,'',true);
 			
-		prnMsg ('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
+		prnMsg('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
 	}else{
-		prnMsg ('Item ' . $StockID . ' belongs to ' . $OldCatInStockMaster . ' not to ' . $OldCat,'error');
+		prnMsg('Item ' . $StockID . ' belongs to ' . $OldCatInStockMaster . ' not to ' . $OldCat,'error');
 	}
 
 	$Result = DB_Txn_Commit();

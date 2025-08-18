@@ -44,10 +44,10 @@ $NewCost = $_GET['NewCost'];
 $Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
 $MyRow = DB_fetch_row($Result);
 if (DB_num_rows($Result)==0) {
-	prnMsg (__('The entered item code does not exist'),'error',__('Non-existent Item'));
+	prnMsg(__('The entered item code does not exist'),'error',__('Non-existent Item'));
 } elseif ($OldCost != $NewCost){
 	ChangeItemStandardCost( $_GET['StockId'], $NewCost, $OldCost, $OldRow['totalqoh']);
-	prnMsg (__('Standard Cost of ') . $_GET['StockId'] . ' changed from ' . locale_number_format($OldCost,0) . ' to ' . locale_number_format($NewCost,0),'success');
+	prnMsg(__('Standard Cost of ') . $_GET['StockId'] . ' changed from ' . locale_number_format($OldCost,0) . ' to ' . locale_number_format($NewCost,0),'success');
 }
 
 include('includes/footer.php');

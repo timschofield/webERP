@@ -211,7 +211,7 @@ function UpdateTablePrice($StockID, $RetailPrice){
 			AND  (enddate > '" . $Yesterday . "' OR enddate = '9999-12-31') ";
 	$ErrMsg = __('Could not update the price because');
 	$Result = DB_query($SQL,$ErrMsg);
-	prnMsg (__('The end date of current prices has been changed to yesterday'),'success');
+	prnMsg(__('The end date of current prices has been changed to yesterday'),'success');
 
 	/* 2nd: set prices in IDR */
 	UpdatePriceItem($StockID, 'RT', 'IDR', $RetailPrice, $Today, true);
@@ -242,7 +242,7 @@ function UpdatePriceItem($StockID, $SalesType, $Currency, $Price, $StartDate, $S
 	$ErrMsg = __('Could not add the new KL price');
 	$Result = DB_query($SQL,$ErrMsg);
 	if($ShowMessages){
-		prnMsg (__('The ') . $SalesType . __(' price for '). $StockID .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
+		prnMsg(__('The ') . $SalesType . __(' price for '). $StockID .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
 	}
 }
 
@@ -321,7 +321,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									'" . ($UnitCost* $StockQtyRow[0]) . "')";
 		$ErrMsg =  __('The stock cost journal could not be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '',true);
-		prnMsg ('Changed the value of stock of item: '. $StockID . ' to category ' . $NewCategory . ' Account: ' . $NewStockAct ,'success');
+		prnMsg('Changed the value of stock of item: '. $StockID . ' to category ' . $NewCategory . ' Account: ' . $NewStockAct ,'success');
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -337,7 +337,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 									'" . mb_substr($StockID . ' ' .$reason, 0, 200) . "',
 									'" . (-$UnitCost* $StockQtyRow[0]) . "')";
 		$Result = DB_query($SQL, $ErrMsg, '',true);
-		prnMsg (__('Changed the value of stock of item: '). $StockID . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
+		prnMsg(__('Changed the value of stock of item: '). $StockID . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
 	}	
 	
 	/* Update the stockmaster record */
@@ -349,7 +349,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 
 	$ErrMsg = __('Could not update the price because');
 	$Result = DB_query($SQL,$ErrMsg);
-	prnMsg (__('Updated the Stockmaster record for item: '). $StockID,'success');
+	prnMsg(__('Updated the Stockmaster record for item: '). $StockID,'success');
 
 }
 

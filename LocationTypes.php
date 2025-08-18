@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif( trim($_POST['description'])==''){
 		$InputError = 1;
-		prnMsg (__('The type description cannot be empty'),'error');
+		prnMsg(__('The type description cannot be empty'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif (mb_strlen($_POST['description']) >50) {

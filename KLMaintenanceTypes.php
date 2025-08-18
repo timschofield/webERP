@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif( trim($_POST['Description'])==''){
 		$InputError = 1;
-		prnMsg (__('The maintenance description cannot be empty'),'error');
+		prnMsg(__('The maintenance description cannot be empty'),'error');
 		$Errors[$i] = 'MaintenanceType';
 		$i++;
 	} elseif (mb_strlen($_POST['Description']) >50) {
