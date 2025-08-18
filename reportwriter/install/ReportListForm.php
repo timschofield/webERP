@@ -1,14 +1,14 @@
 <?PHP
-/* This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
-in the acssociative array $ReportGroups[]. It will fetch the reports belonging solely to the group
-specified to create a select form to choose a report. Two on-submit select forms will be generated, one
-for default reports and the other for custom reports.
 
-For use with webERP
-
-Revision History:
-Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
-*/
+/**
+ * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
+ * in the associative array $ReportGroups[]. It will fetch the reports belonging solely to the group
+ * specified to create a select form to choose a report. Two on-submit select forms will be generated, one
+ * for default reports and the other for custom reports.
+ *
+ * Revision History:
+ * Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
+ */
 function GetReports($GroupID) {
 	global $RootPath;
 	$Title= array(__('Custom Reports'), __('Default Reports'));

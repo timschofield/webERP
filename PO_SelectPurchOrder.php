@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Search Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';

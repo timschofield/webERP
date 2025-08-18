@@ -13,7 +13,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = __DIR__ . '/../';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 $DefaultDatabase = 'weberp';
 

@@ -1,5 +1,6 @@
-### Release 2.0.0-xxx (not yet released)
+### Release 2.0.0-beta3 2025-8-18
 
+* fixed warning due to usage of deprecated `${` syntax
 * added public class members `T::$reader_class`, `T::$stream_reader_class` and `T::$enable_cache`, which can be modified
   to implement custom storage of .mo files, or even loading translation strings from different file formats
 * added protected methods `T::build_reader` and `T::build_stream_reader`, which can be overridden in subclasses

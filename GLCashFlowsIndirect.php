@@ -1,5 +1,5 @@
 <?php
-// GLCashFlowsIndirect.php
+
 // Shows a statement of cash flows for the period using the indirect method.
 // This program is under the GNU General Public License, last version. 2016-10-08.
 // This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
@@ -30,6 +30,7 @@ function CashFlowsActivityName($Activity) {
 		default: return __('Unknown');
 	}
 }
+
 function colDebitCredit($Amount) {
 	// Function to display in debit or Credit columns in a HTML table.
 	if($Amount < 0) {
