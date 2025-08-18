@@ -12,6 +12,6 @@ include('includes/KLDefines.php');
 include('includes/OCOpenCartConnectDB.php');
 include('includes/OCWeberpToOpenCartSync.php');
 
-WeberpToOpenCartDailySync(TRUE );
+WeberpToOpenCartDailySync(true );
 
 include('includes/footer.php');

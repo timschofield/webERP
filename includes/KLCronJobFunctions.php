@@ -64,30 +64,30 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/ArchiveConnectDB.php');
 	
 	if ($Group == "0010-HourlySyncOpenCart"){
-		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
-		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
+		$EmailText = WeberpToOpenCartHourlySync(false , true, $EmailText);
+		$EmailText = OpenCartToWeberpSync(false , $EmailText);
 	}elseif ($Group == "0100-CleanDB"){
-		$EmailText = KL_DailyCleanDB(FALSE, $EmailText);
+		$EmailText = KL_DailyCleanDB(false, $EmailText);
 	}elseif ($Group == "0200-Obsolete"){
-		$EmailText = KL_DailySetObsoleteNoStock(FALSE, $EmailText);
+		$EmailText = KL_DailySetObsoleteNoStock(false, $EmailText);
 	}elseif ($Group == "0250-TopSales"){
-		$EmailText = SetTopSalesRanking(FALSE, $EmailText);
+		$EmailText = SetTopSalesRanking(false, $EmailText);
 	}elseif ($Group == "0300-EmailsToStaff"){
 		$EmailText = KL_DailyEmailsToStaff($EmailText);
 	}elseif ($Group == "0400-OnlineRLAdjustments"){
-		$EmailText = KL_DailyRLAdjustmentsForOnline(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOnline(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0500-RLForTopSalesKL"){
-		$EmailText = KL_DailyRLAdjustmentsForKL(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForKL(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0600-RLForTopSalesBL"){
-		$EmailText = KL_DailyRLAdjustmentsForBlink(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForBlink(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0700-RLForTopSalesOU"){
-		$EmailText = KL_DailyRLAdjustmentsForOutlet(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOutlet(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0800-RLRebalancing"){
-		$EmailText = KL_DailyRLRebalancing(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLRebalancing(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0900-RLZeroNotAvailable"){
-		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLZeroNotAvailable(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1000-RLAdjustPackaging"){
-		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1050-SmartStockTransfersKL"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for KL
 	}elseif ($Group == "1060-SmartStockTransfersBL"){
@@ -95,11 +95,11 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	}elseif ($Group == "1070-SmartStockTransfersOU"){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
-		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $EmailText);
+		$EmailText = KL_DailyOptimizationDatabase(5, false, $EmailText);
 	}elseif ($Group == "1200-DailySyncOpenCart"){
-		$EmailText = KL_DailyCleanOpenCartDB(FALSE , $EmailText);
-		$EmailText = WeberpToOpenCartDailySync(FALSE , $EmailText);
-		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
+		$EmailText = KL_DailyCleanOpenCartDB(false , $EmailText);
+		$EmailText = WeberpToOpenCartDailySync(false , $EmailText);
+		$EmailText = OpenCartToWeberpSync(false , $EmailText);
 	}else{
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}

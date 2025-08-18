@@ -25,7 +25,7 @@ function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
 //	$EmailText = MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun , $EmailText);
 
 	// do all hourly maintenance as well...
-	$EmailText = WeberpToOpenCartHourlySync($ShowMessages , FALSE, $EmailText);
+	$EmailText = WeberpToOpenCartHourlySync($ShowMessages , false, $EmailText);
 
 	// recreate the list of featured in OpenCart
 // NOT READY FOR OC v3.0, OC_SETTING IS DIFFERENT
@@ -56,7 +56,7 @@ function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
 	return $EmailText;
 }
 
-function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = TRUE, $EmailText=''){
+function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = true, $EmailText=''){
 	$begintime = time_start();
 	if ($ControlTx){
 		DB_Txn_Begin();
@@ -431,7 +431,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 					// it's a general item, so we assign to KL.
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}
-				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE);
+				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, false);
 			}
 			
 			/* Assign access rights to the right customer groups. */
@@ -586,7 +586,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 			// Let's get the OpenCart primary key for product
 			$ProductId = GetOpenCartProductId($Model);
 			
-			AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE);
+			AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, false);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1272,7 +1272,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($ImageFiles as $file) {
 		$multipleimage = 1;
-		$exist_multiple = TRUE;
+		$exist_multiple = true;
 		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
 			if (strpos($file, $suffix) !== false){
@@ -1283,7 +1283,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 				if ($ProductId > 0){
 					// insert info about multiple images
 					$Image = PATH_OPENCART_IMAGES . $file;
-					if (DataExistsInOpenCart("oc_product_image", "product_id", $ProductId, "image", $Image)== FALSE){
+					if (DataExistsInOpenCart("oc_product_image", "product_id", $ProductId, "image", $Image)== false){
 						$SQLInsert = "INSERT INTO oc_product_image
 										(product_id,
 										image,

@@ -13,6 +13,6 @@ include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/OCOpenCartToWeberpSync.php');
 include('includes/OCOpenCartConnectDB.php');
 
-OpenCartToWeberpSync(TRUE , '');
+OpenCartToWeberpSync(true , '');
 
 include('includes/footer.php');

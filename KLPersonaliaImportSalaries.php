@@ -58,7 +58,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	$SpreadSheet = $objReader->load($Target_file);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	// The date on the excel should be the same as the date selected by the user
 	$ExcelSheetName = "General Settings";
@@ -77,7 +77,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 		$PageTitle = __('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
 	}else{
 		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
-		$InputError = TRUE;
+		$InputError = true;
 	}
 	
 	echo '<p class="page_title_text">
@@ -86,14 +86,14 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 	if($ExcelPeriod != $PeriodSelectedByUser){
 		prnMsg("The month selected by the user " . MonthAndYearFromPeriodNo($PeriodSelectedByUser) . " is not the same as the month of the Excel file " .  MonthAndYearFromPeriodNo($ExcelPeriod),"warn");
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodSelectedByUser + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
-//			$InputError = TRUE;
+//			$InputError = true;
 		}
 	}
 	
@@ -101,7 +101,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodSelectedByUser)){
 			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	

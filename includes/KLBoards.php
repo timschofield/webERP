@@ -1710,7 +1710,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				AND discontinued = 0
 			ORDER BY stockid";
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
 		$UsageXDays = 0;
@@ -1854,7 +1854,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 									<tbody>';
 					}
 					echo $TableHeader;
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 
 				$UsageXDays += $UsedLastXDays;
@@ -2271,8 +2271,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			ORDER BY stockmaster.stockid";
 	$Result = DB_query($SQL);
 
-	$ShowHeader = FALSE;
-	$ShowReport = FALSE;
+	$ShowHeader = false;
+	$ShowReport = false;
 	$NumItems = 0;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2310,11 +2310,11 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 
 			if ($ShowAll OR (($MyRow['qoh'] < $MyRow['rl']) AND ($TableResult[$NumItems]['toship'] > 0))){
 				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
-				$TableResult[$NumItems]['show'] = TRUE;
-				$ShowHeader = TRUE;
-				$ShowReport = TRUE;
+				$TableResult[$NumItems]['show'] = true;
+				$ShowHeader = true;
+				$ShowReport = true;
 			}else{
-				$TableResult[$NumItems]['show'] = FALSE;
+				$TableResult[$NumItems]['show'] = false;
 			}
 		}
 	}
@@ -2348,7 +2348,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 								</thead>
 								<tbody>';
 				echo $TableHeader;
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferFromGudang.php?From=' . $ParentGudang
 																								. '&To=' . $LocCode;
 			}

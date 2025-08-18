@@ -9,7 +9,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
 
-$UpdateDB = TRUE;
+$UpdateDB = true;
 
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
@@ -81,7 +81,7 @@ if (DB_num_rows($Result) != 0){
 					// KL brand detected ;-) select the sub category 
 					$WebsiteCategory = WebsiteCategorySilverJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
@@ -91,7 +91,7 @@ if (DB_num_rows($Result) != 0){
 					// Blink brand detected ;-)
 					$WebsiteCategory = WebsiteCategoryBlinkJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{

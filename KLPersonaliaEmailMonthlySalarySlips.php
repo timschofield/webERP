@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$YearMonth = YearAndMonthFromSQLDate(EndDateSQLFromPeriodNo($PeriodOfFile), true);
@@ -30,7 +30,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		$PageTitle = __('Slip THR ') . $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	include('includes/header.php');
@@ -39,7 +39,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -47,7 +47,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 

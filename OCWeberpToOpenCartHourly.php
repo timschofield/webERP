@@ -12,6 +12,6 @@ include('includes/KLMarketplaceFunctions.php');
 include('includes/OCWeberpToOpenCartSync.php');
 include('includes/OCOpenCartConnectDB.php');
 
-WeberpToOpenCartHourlySync(TRUE , TRUE, '');
+WeberpToOpenCartHourlySync(true , true, '');
 
 include('includes/footer.php');

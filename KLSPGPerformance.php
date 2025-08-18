@@ -689,7 +689,7 @@ function HourlySales($numDays, $RootPath){
 
 
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	$GrandTotal = 0;
 	
 	if (DB_num_rows($Result) != 0){
@@ -750,7 +750,7 @@ function HourlySales($numDays, $RootPath){
 							</thead>
 							<tbody>';
 				echo $TableHeader;
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 			}
 			$TotalSales = $MyRow['sales07'] +
 						$MyRow['sales08'] +

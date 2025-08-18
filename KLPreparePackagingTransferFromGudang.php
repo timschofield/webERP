@@ -26,14 +26,14 @@ if (!isset($_GET['To'])){
 }
 
 $NumParam = 1;
-$CheckParam = TRUE;
+$CheckParam = true;
 while ($CheckParam){
 	$VarItem = 'Item'.$NumParam;
 	$VarQty = 'Qty'.$NumParam;
 	if (isset($_GET[$VarItem])){
 		$EmailText = $EmailText . $_GET[$VarQty] . " x " . $_GET[$VarItem] . " " . GetItemDescriptionFromCode($_GET[$VarItem]) . "\n" ;
 	}else{
-		$CheckParam = FALSE;
+		$CheckParam = false;
 	}
 	$NumParam++;
 }

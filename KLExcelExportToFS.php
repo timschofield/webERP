@@ -210,7 +210,7 @@ function submit($TypeOfFile) {
 				$Height = ceil($MyRow['height']/$FactorLenght);
 				$Weight = ceil($MyRow['grossweight'] * 1000); // weight in grams
 
-				$PackagingImage = FALSE;
+				$PackagingImage = false;
 				list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
 				list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
 				list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);

@@ -214,7 +214,7 @@ function UpdateTablePrice($StockID, $RetailPrice){
 	prnMsg (__('The end date of current prices has been changed to yesterday'),'success');
 
 	/* 2nd: set prices in IDR */
-	UpdatePriceItem($StockID, 'RT', 'IDR', $RetailPrice, $Today, TRUE);
+	UpdatePriceItem($StockID, 'RT', 'IDR', $RetailPrice, $Today, true);
 
 }
 

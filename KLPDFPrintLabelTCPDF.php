@@ -205,7 +205,7 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 
 	for ($i = 0; $i < $_POST['NoOfLabels']; $i++){
 		if (isset($_POST['PrintLabel' . $i]) AND ($_POST['LabelsToPrint' . $i] > 0)){
-			$LabelsToBePrinted = TRUE;
+			$LabelsToBePrinted = true;
 		}
 	}
 	if (!$LabelsToBePrinted){
@@ -302,7 +302,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	$Pdf->SetFooterMargin(0);
 	$Pdf->setPrintHeader(false);
 	$Pdf->setPrintFooter(false);
-	$Pdf->SetAutoPageBreak(TRUE, 0);
+	$Pdf->SetAutoPageBreak(true, 0);
 	$Pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 	// now print the labels

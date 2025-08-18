@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$Today = date('Y-m-d');
@@ -31,14 +31,14 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		$PageTitle = __('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer Danamon Cash Connect should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 		
@@ -46,7 +46,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 

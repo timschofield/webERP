@@ -50,7 +50,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	$SpreadSheet = $objReader->load($Target_file);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 

@@ -29,7 +29,7 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -40,14 +40,14 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 		$PageTitle = __('Move THR Only to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to Move Monthly Salaries Data to Petty Cash should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -55,7 +55,7 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to Move THR Only Data to Petty Cash should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 

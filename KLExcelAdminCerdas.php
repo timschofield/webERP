@@ -187,7 +187,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$QOH = ItemMarketplaceQOH($MyRow['stockid']);
 
 					// Get image URLs, handling packaging image logic
-					$PackagingImage = FALSE;
+					$PackagingImage = false;
 					list($Url1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
 					list($Url2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
 					list($Url3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);

@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
 function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -37,14 +37,14 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 		$PageTitle = __('Export PPh21 THR Only Info for '). $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PPh21 Monthly Salary Slips should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -52,7 +52,7 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PPh21 THR Only Salary Slips should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	

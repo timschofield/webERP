@@ -106,7 +106,7 @@ function HourlyPerformance($numDays, $RootPath){
 				debtorsmaster.debtorno";
 
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	$FirstSaleFull = '99:99:99';
 	$LastSaleFull = '00:00:00';
 	$TotalSalesFull = 0;
@@ -151,7 +151,7 @@ function HourlyPerformance($numDays, $RootPath){
 								</thead>
 								<tbody>';
 				echo $TableHeader;
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 			}
 			$i++;
 			echo '<tr class="striped_row">

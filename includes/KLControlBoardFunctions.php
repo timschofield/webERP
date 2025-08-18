@@ -217,7 +217,7 @@ function ActiveItemsWithoutPicture($RootPath){
 				WHERE locstock.stockid = stockmaster.stockid) > 0
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -238,7 +238,7 @@ function ActiveItemsWithoutPicture($RootPath){
 							</thead>
 							<tbody>';
 					$i = 1;
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				echo '<tr class="striped_row">
@@ -1077,7 +1077,7 @@ function PettyCashBalanceControl($Currency, $PCGLAccounts, $AcceptedDifference, 
 
 
 function ImagesWithoutProduct($RootPath){
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
@@ -1130,7 +1130,7 @@ function ImagesWithoutProduct($RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				echo '<tr class="striped_row">
 						<td>' . $_SESSION['part_pics_dir'].'/'.$File . '</td>
@@ -1766,7 +1766,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
-		$ShowHeader = TRUE;
+		$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (    ($Check != "ReadyToTest") 
 				OR (($Check == "ReadyToTest") 
@@ -1785,7 +1785,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				$RLLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . locale_number_format($MyRow['QOH'],0) . '</a>';
@@ -2091,7 +2091,7 @@ function ItemsShouldBeInWebsite(){
 								FROM salescatprod
 								WHERE salescatprod.stockid = stockmaster.stockid)";
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
@@ -2109,7 +2109,7 @@ function ItemsShouldBeInWebsite(){
 							</thead>
 							<tbody>';
 					$i = 1;
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				echo '<tr class="striped_row">
 						<td class="number">' . $i . '</td>
@@ -2164,7 +2164,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 								OR l2.loccode = " . CODE_KANTOR . ")
 					) <= " . $MinAvailable;
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2185,7 +2185,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				echo '<tr class="striped_row">
@@ -3247,7 +3247,7 @@ function OpenCartItemsWithoutPicture($RootPath ){
 			WHERE oc_product.status = 1
 			ORDER BY oc_product.model";
 	$Result = DB_query_oc($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -3265,7 +3265,7 @@ function OpenCartItemsWithoutPicture($RootPath ){
 							</thead>
 							<tbody>';
 					$i = 1;
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				echo '<tr class="striped_row">
@@ -4090,11 +4090,11 @@ function WrongItemsOnPurchaseOrders($RootPath){
 					purchorderdetails.itemcode";
 
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if (TRUE){
+			if (true){
 				if ($ShowHeader){
 					$TableTitleText = __('Wrong items (No More Purchasing, Discount or Obsolete) in Active POs');
 					ShowTableTitle($TableTitleText);
@@ -4110,7 +4110,7 @@ function WrongItemsOnPurchaseOrders($RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $MyRow['itemcode'] . '">' . $MyRow['itemcode'] . '</a>';
 				echo '<tr class="striped_row">
@@ -4148,11 +4148,11 @@ function WrongItemsOnWorkOrders($RootPath){
 					woitems.stockid";
 
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if (TRUE){
+			if (true){
 				if ($ShowHeader){
 					$TableTitleText = __('Wrong items (No More Purchasing, Discount or Obsolete) in Active Work Orders');
 					ShowTableTitle($TableTitleText);
@@ -4168,7 +4168,7 @@ function WrongItemsOnWorkOrders($RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				echo '<tr class="striped_row">
 						<td class="number">' . $i . '</td>
@@ -4200,7 +4200,7 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 			ORDER BY oc_order.date_modified";
 	$Result = DB_query_oc($SQL);
 	if (DB_num_rows($Result) != 0){
-		$ShowHeader = TRUE;
+		$ShowHeader = true;
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowHeader){
@@ -4227,7 +4227,7 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 							</tr>
 						</thead>
 						<tbody>';
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 			}
 			if ($MyRow['currency_code'] == "IDR"){
 				$RoundingDecimals = 0;

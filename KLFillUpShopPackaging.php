@@ -9,6 +9,6 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 include('includes/KLUIGeneralFunctions.php');
 
-CheckPackagingToBeRefilled(TRUE, TRUE, $RootPath);
+CheckPackagingToBeRefilled(true, true, $RootPath);
 
 include('includes/footer.php');

@@ -970,10 +970,10 @@ function KLPrintReceiptCustomerFooter($Identifier, $OrderNo){
 	$TextToPrint = $NewLine;
 
 	// Discounted items no refund...
-	$DiscountedItems = FALSE;
+	$DiscountedItems = false;
 	foreach ($_SESSION['Items' . $Identifier]->LineItems as $OrderLine) {
 		if ($OrderLine->DiscountPercent != 0){
-			$DiscountedItems = TRUE;
+			$DiscountedItems = true;
 		}
 	}
 	if ($DiscountedItems){

@@ -41,7 +41,7 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 	$EndDate = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	if(!$InputError){
 		// get the conignment sales for the period

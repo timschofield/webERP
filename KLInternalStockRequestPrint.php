@@ -28,7 +28,7 @@ function GenerateReport($LocationForm) {
 	global $RootPath, $Theme, $_SESSION; // Make global variables available
 
 	// Initialise no input errors
-	$InputError = FALSE; // In a real scenario, add validation if needed
+	$InputError = false; // In a real scenario, add validation if needed
 
 	if (!$InputError) {
 		$SQL = "SELECT stockrequest.dispatchid,

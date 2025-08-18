@@ -10,7 +10,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 include('KLDailyChecks.php');
 
-KL_DailyCleanDB(TRUE, '');
+KL_DailyCleanDB(true, '');
 
 
 include('includes/footer.php');

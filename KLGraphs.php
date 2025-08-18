@@ -10,7 +10,7 @@ $Title=__('KPI Graph');
 
 include('includes/header.php');
 
-$ErrorInDates =FALSE;
+$ErrorInDates =false;
 
 $_POST['GraphType'] = 'lines';
 
@@ -29,7 +29,7 @@ if (!isset($_POST['KPICode'])){
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 	if (FormatDateForSQL($_POST['FromDate']) > FormatDateForSQL($_POST['ToDate'])){
 		prnMsg(__('The selected date from is actually after the date to!'),'error');
-		$ErrorInDates =TRUE;
+		$ErrorInDates =true;
 	}
 }
 

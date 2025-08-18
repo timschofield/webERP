@@ -15,7 +15,7 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 $Errors = array();
-$InputError = FALSE;
+$InputError = false;
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
 	$i = 1;
 //	if ($MyRow[0]!=0 and !isset($SelectedIndex)) {
-//		$InputError = TRUE;
+//		$InputError = true;
 //		prnMsg( __('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
 //		$Errors[$i] = 'CounterIndex';
 //		$i++;
@@ -87,17 +87,17 @@ if (isset($_POST['submit'])) {
 			// Validate inputs before trying to insert
 			if ($_POST['LocCode'] == '') {
 				prnMsg(__('A location must be selected'), 'error');
-				$InputError = TRUE;
+				$InputError = true;
 			}
 			
 			if ($_POST['MaintenanceType'] == '') {
 				prnMsg(__('A maintenance type must be selected'), 'error');
-				$InputError = TRUE;
+				$InputError = true;
 			}
 			
 			if ($_POST['Description'] == '') {
 				prnMsg(__('A description must be entered'), 'error');
-				$InputError = TRUE;
+				$InputError = true;
 			}
 			
 			if (!$InputError) {

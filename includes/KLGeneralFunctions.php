@@ -552,7 +552,7 @@ function StartSameColourRow($k){
 }
 
 function getDirectoryTree($outerDir){ 
-	$dirs = FALSE; 
+	$dirs = false; 
 	if (is_dir($outerDir)){
 		$Directory = scandir( $outerDir );
 		if (is_array($Directory)){
@@ -564,7 +564,7 @@ function getDirectoryTree($outerDir){
 
 function ItemInList($Item, $List){
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
-	if (strpos(strtolower($List), strtolower($Item)) === FALSE){
+	if (strpos(strtolower($List), strtolower($Item)) === false){
 		return false;
 	}else{
 		return true;
@@ -870,7 +870,7 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 			$Brand = $MyRow['manufacturers_id'];	
 		}else{
 			// we check the description, if we get any info
-				if (mb_stristr($Description, "silver") != FALSE){
+				if (mb_stristr($Description, "silver") != false){
 					// description contains "silver", should be KL
 					$Brand = 1;	
 				}else{
@@ -1214,7 +1214,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 }
 
 function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
-	$PackagingImage =  FALSE;
+	$PackagingImage =  false;
 	if ($NumberOfImage == 1){
 		// main image
 		$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.jpg';
@@ -1222,7 +1222,7 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 		// last image of the lot MUST be a packaging image if still not found a packaging image
 		if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 			$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
-			$PackagingImage =  TRUE;
+			$PackagingImage =  true;
 		}else{
 			$URL = "";
 		}
@@ -1234,7 +1234,7 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 		}else{
 			if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 				$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
-				$PackagingImage =  TRUE;
+				$PackagingImage =  true;
 			}else{
 				$URL = "";
 			}

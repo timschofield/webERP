@@ -4,24 +4,24 @@ include('includes/session.php');
 $Title = __('KL General Performance Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
-$ShowSectionInfo = FALSE;
-$ProcessSection01 = FALSE;
-$ProcessSection02 = FALSE;
-$ProcessSection03 = FALSE;
+$ShowSectionInfo = false;
+$ProcessSection01 = false;
+$ProcessSection02 = false;
+$ProcessSection03 = false;
 
 if (!isset($_GET['Section'])){
-	$ProcessSection01 = TRUE;
-	$ProcessSection02 = TRUE;
-	$ProcessSection03 = TRUE;
+	$ProcessSection01 = true;
+	$ProcessSection02 = true;
+	$ProcessSection03 = true;
 }else{
-	$ShowSectionInfo = TRUE;
+	$ShowSectionInfo = true;
 		$Title = 'KL General Performance Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
-		$ProcessSection01 = TRUE;
+		$ProcessSection01 = true;
 	}elseif($_GET['Section'] == '02'){
-		$ProcessSection02 = TRUE;
+		$ProcessSection02 = true;
 	}elseif($_GET['Section'] == '03'){
-		$ProcessSection03 = TRUE;
+		$ProcessSection03 = true;
 	}
 }
 
@@ -47,21 +47,21 @@ $yesterday_year = date('Y', strtotime("-1 days"));
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-/*	$KL_SystemAdmin = TRUE;
-	$KL_OperationalManager = TRUE;
-	$KL_OperationalLeader = TRUE;
-	$KL_AdministrationTeam = TRUE;
-	$KL_BusinessDevelopmentManager = TRUE;
- 	$KL_SalesDirector = TRUE;
-	$KL_PurchasingTeam = TRUE;
-	$KL_ShopSupportTeam = TRUE;
-	$KL_ShopSupportLeader = TRUE;
-	$KL_OnlineSales = TRUE;
-	$KL_ShopManager = TRUE;
-	$KL_SPGSeniorOrSupport = TRUE;
-	$KL_SPGJunior = TRUE;
-	$KL_PettyCash = TRUE;
-	$KL_ITSupport = TRUE;
+/*	$KL_SystemAdmin = true;
+	$KL_OperationalManager = true;
+	$KL_OperationalLeader = true;
+	$KL_AdministrationTeam = true;
+	$KL_BusinessDevelopmentManager = true;
+ 	$KL_SalesDirector = true;
+	$KL_PurchasingTeam = true;
+	$KL_ShopSupportTeam = true;
+	$KL_ShopSupportLeader = true;
+	$KL_OnlineSales = true;
+	$KL_ShopManager = true;
+	$KL_SPGSeniorOrSupport = true;
+	$KL_SPGJunior = true;
+	$KL_PettyCash = true;
+	$KL_ITSupport = true;
 */
 //	phpinfo();
 }

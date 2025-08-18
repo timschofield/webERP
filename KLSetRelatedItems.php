@@ -9,7 +9,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$UpdateDB = TRUE;
+$UpdateDB = true;
 
 $begintime = time_start();
 

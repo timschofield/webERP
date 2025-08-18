@@ -45,7 +45,7 @@ function submit($CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 	$PageTitle = 'Invoice-' . $InvoiceNumber;
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	if(!$InputError){
 		$SQL = "SELECT klconsignment.stockid,

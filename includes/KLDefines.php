@@ -323,7 +323,7 @@ define("GOOGLE_GENDER", 'Female');
 define("GOOGLE_AGEGROUP", 'Adult');
 define("GOOGLE_CONDITION", 'New');
 define("GOOGLE_OOS_STATUS", 'Available for Order');
-define("GOOGLE_IDENTIFIER", 'TRUE');
+define("GOOGLE_IDENTIFIER", 'true');
 
 /*	From webERP to OpenCart */
 define("REDIRECT_RESPONSE_CODE", 301);

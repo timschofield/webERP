@@ -478,9 +478,9 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $MyRow['quantitybreak'], $Priority, $DiscountedPrice);
 				// Now we add the item to the category discount 
 				if ($ManufacturerId == 1){
-					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, FALSE);
+					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, false);
 				}else{
-					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, FALSE);
+					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, false);
 				}
 			}
 		}
@@ -1145,7 +1145,7 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 		
 		if (StringContainsTag($LongText, $MyRow['tagtext'])){
 			// we found a tag in the text, so a candidate for tag
-			if ((InconsistentTag($ListOfTags, 'earring', $MyRow['tagtext'], 'ring')) == FALSE){
+			if ((InconsistentTag($ListOfTags, 'earring', $MyRow['tagtext'], 'ring')) == false){
 				//  but, we must filter inconsistencies
 				if ($ListOfTags == ""){
 					// the very first one

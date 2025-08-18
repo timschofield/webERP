@@ -256,10 +256,10 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	if($_SESSION['ShopMode']=='test'){
 		// do not bother customers if we are doing tests with their data
 		$MailTo = $_SESSION['ShopManagerEmail'];
-		$SendEmail = TRUE;
+		$SendEmail = true;
 	}else{
 		$MailTo = $MyRow['contactemail'];
-		$SendEmail = FALSE;
+		$SendEmail = false;
 	}
 
 	// send the email

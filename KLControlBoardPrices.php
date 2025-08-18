@@ -19,19 +19,19 @@ $IssuesFound = 0;
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /* Assign the sections to be executed, to avoid error 504*/
-$ShowSectionInfo = FALSE;
-$ProcessSection01 = FALSE;
-$ProcessSection02 = FALSE;
+$ShowSectionInfo = false;
+$ProcessSection01 = false;
+$ProcessSection02 = false;
 
 if (!isset($_GET['Section'])){
-	$ProcessSection01 = TRUE;
-	$ProcessSection02 = TRUE;
+	$ProcessSection01 = true;
+	$ProcessSection02 = true;
 }else{
-	$ShowSectionInfo = TRUE;
+	$ShowSectionInfo = true;
 	if ($_GET['Section'] == '01'){
-		$ProcessSection01 = TRUE;
+		$ProcessSection01 = true;
 	}elseif($_GET['Section'] == '02'){
-		$ProcessSection02 = TRUE;
+		$ProcessSection02 = true;
 	}
 }
 
@@ -40,20 +40,20 @@ if (!isset($_GET['Section'])){
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-//	$KL_SystemAdmin = TRUE;
-//	$KL_OperationalManager = TRUE;
-//	$KL_OperationalLeader = TRUE;
-//	$KL_AdministrationTeam = TRUE;
-//	$KL_BusinessDevelopmentManager = TRUE;
-//	$KL_PurchasingTeam = TRUE;
-//	$KL_ShopSupportTeam = TRUE;
-//	$KL_ShopSupportLeader = TRUE;
-//	$KL_OnlineSales = TRUE;
-//	$KL_ShopManager = TRUE;
-//	$KL_SPGSeniorOrSupport = TRUE;
-//	$KL_SPGJunior = TRUE;
-//	$KL_PettyCash = TRUE;
-//	$KL_ITSupport = TRUE;
+//	$KL_SystemAdmin = true;
+//	$KL_OperationalManager = true;
+//	$KL_OperationalLeader = true;
+//	$KL_AdministrationTeam = true;
+//	$KL_BusinessDevelopmentManager = true;
+//	$KL_PurchasingTeam = true;
+//	$KL_ShopSupportTeam = true;
+//	$KL_ShopSupportLeader = true;
+//	$KL_OnlineSales = true;
+//	$KL_ShopManager = true;
+//	$KL_SPGSeniorOrSupport = true;
+//	$KL_SPGJunior = true;
+//	$KL_PettyCash = true;
+//	$KL_ITSupport = true;
 //	phpinfo();
 }
 
@@ -231,7 +231,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$ShowHeader = TRUE;
+		$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], $DaysTopSales);
 			if ($PositionTopSales < $TopSales){
@@ -270,7 +270,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 									</tr>
 								</thead>
 								<tbody>';
-						$ShowHeader = FALSE;
+						$ShowHeader = false;
 					}
 					$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
@@ -341,7 +341,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-			$ShowHeader = TRUE;
+			$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], $DaysTopSales);
 			$MaxPrice = $MyRow['standardcost'] * $FactorMax;
@@ -377,7 +377,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
@@ -451,7 +451,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$i = 0;
-		$ShowHeader = TRUE;
+		$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$NewPrice = $MyRow['standardcost'] * $Factor;
 			$RecommendedPrice = round_price($NewPrice, "UP");
@@ -481,7 +481,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$Issues++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
@@ -551,7 +551,7 @@ function PriceWrongRounding($RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$k = 0; //row colour counter
-		$ShowHeader = TRUE;
+		$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$RoundedDown = round_price($MyRow['retailprice'], "DOWN");
 			$RoundedUp = round_price($MyRow['retailprice'], "UP");
@@ -576,7 +576,7 @@ function PriceWrongRounding($RootPath){
 								</tr>
 							</thead>
 							<tbody>';
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
@@ -637,7 +637,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			ORDER BY prices.startdate";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-			$ShowHeader = TRUE;
+			$ShowHeader = true;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
 				$TableTitleText = __('Items with prices older than ') . $Years . ' years';
@@ -661,7 +661,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 			}
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			$PriceA = round_price(($MyRow['retailprice']*(1+($IncreaseA/100))), "UP");

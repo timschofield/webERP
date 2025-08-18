@@ -326,7 +326,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
-	if (!isset($_SESSION['ShowPageHelp']) || $_SESSION['ShowPageHelp']) { // If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is TRUE, shows the page help text:
+	if (!isset($_SESSION['ShowPageHelp']) || $_SESSION['ShowPageHelp']) { // If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is true, shows the page help text:
 		echo '<div class="page_help_text">',
 			__('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
 			__('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',

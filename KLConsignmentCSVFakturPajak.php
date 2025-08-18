@@ -49,7 +49,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 
