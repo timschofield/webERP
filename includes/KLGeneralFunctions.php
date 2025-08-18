@@ -719,7 +719,10 @@ function GetItemStandardCostFromCode($StockID){
 
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
-	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
+	$SQL="SELECT COUNT(*)
+		FROM stockmaster
+		WHERE klchangingprice = '1'
+			AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_TEST . "";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
