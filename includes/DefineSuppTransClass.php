@@ -70,7 +70,7 @@ Class SuppTrans {
 			AND taxauthrates.taxcatid = " . $_SESSION['DefaultTaxCategory'] . "
 			ORDER BY taxgrouptaxes.calculationorder";
 
-		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
+		$ErrMsg = __('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 
 		while ($MyRow = DB_fetch_array($GetTaxRatesResult)){

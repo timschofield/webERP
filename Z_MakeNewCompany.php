@@ -12,7 +12,7 @@ if (isset($_POST['EnterCompanyDetails'])) {
 	header ('Location:' . $RootPath . '/CompanyPreferences.php');
 	exit();
 }
-$Title = _('Make New Company Database Utility');
+$Title = __('Make New Company Database Utility');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 
@@ -21,7 +21,7 @@ include('includes/header.php');
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */
 if (! is_writeable('./companies/')){
-		prnMsg(_('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
+		prnMsg(__('The web-server does not appear to be able to write to the companies directory to create the required directories for the new company and to upload the logo to. The system administrator will need to modify the permissions on your installation before a new company can be created'),'error');
 		include('includes/footer.php');
 		exit();
 }
@@ -30,7 +30,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 	if(mb_strlen($_POST['NewDatabase'])>32
 		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
-		prnMsg(_('Company database must not contain spaces illegal characters') . ' ' . '" \' - &amp; or a space','error');
+		prnMsg(__('Company database must not contain spaces illegal characters') . ' ' . '" \' - &amp; or a space','error');
 	} else {
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">
@@ -47,24 +47,24 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 			//But check for the worst
 			if (mb_strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
-				prnMsg(_('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
+				prnMsg(__('Only jpg files are supported - a file extension of .jpg is expected'),'warn');
 				$UploadTheLogo ='No';
 			} elseif ( $_FILES['LogoFile']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
-				prnMsg(_('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
+				prnMsg(__('The file size is over the maximum allowed. The maximum size allowed in KB is') . ' ' . $_SESSION['MaxImageSize'],'warn');
 				$UploadTheLogo ='No';
 			} elseif ( $_FILES['LogoFile']['type'] == "text/plain" ) {  //File Type Check
-				prnMsg( _('Only graphics files can be uploaded'),'warn');
+				prnMsg( __('Only graphics files can be uploaded'),'warn');
 				$UploadTheLogo ='No';
 			} elseif (file_exists($FileName)){
-				prnMsg(_('Attempting to overwrite an existing item image'),'warn');
+				prnMsg(__('Attempting to overwrite an existing item image'),'warn');
 				$Result = unlink($FileName);
 				if (!$Result){
-					prnMsg(_('The existing image could not be removed'),'error');
+					prnMsg(__('The existing image could not be removed'),'error');
 					$UploadTheLogo ='No';
 				}
 			}
 
-			if ($_POST['CreateDB']==TRUE){
+			if ($_POST['CreateDB']==true){
 				/* Need to read in the sql script and process the queries to iniate a new DB */
 
 				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
@@ -97,7 +97,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				}
 
 				$ScriptFileEntries = sizeof($SQLScriptFile);
-				$ErrMsg = _('The script to create the new company database failed because');
+				$ErrMsg = __('The script to create the new company database failed because');
 				$SQL ='';
 				$InAFunction = false;
 
@@ -107,7 +107,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 					if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
 						AND mb_substr($SQLScriptFile[$i], 0, 3) != 'USE'
-						AND mb_strstr($SQLScriptFile[$i],'/*')==FALSE
+						AND mb_strstr($SQLScriptFile[$i],'/*')==false
 						AND mb_strlen($SQLScriptFile[$i])>1){
 
 						$SQL .= ' ' . $SQLScriptFile[$i];
@@ -130,7 +130,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				} //end of for loop around the lines of the sql script
 			} //end if CreateDB was checked
 
-			prnMsg (_('Attempting to create the new company directories') . '.....<br />', 'info');
+			prnMsg(__('Attempting to create the new company directories') . '.....<br />', 'info');
 			$Result = mkdir('./companies/' . $_POST['NewDatabase']);
 
 			// Sub-directories listed alphabetically to ease referencing.
@@ -155,22 +155,22 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
 				$Result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $FileName);
-				$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
+				$Message = ($Result) ? __('File url') . '<a href="' . $FileName . '">' .  $FileName . '</a>' : __('Something is wrong with uploading a file');
 			}
 
 		} else {
-			prnMsg(_('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
+			prnMsg(__('This company cannot be added because either it already exists or no logo is being uploaded!'),'error');
 
 			if (isset($_FILES['LogoFile'])){
-				prnMsg('_Files[LogoFile] ' . _('is set ok'), 'info');
+				prnMsg('_Files[LogoFile] ' . __('is set ok'), 'info');
 			} else  {
-				prnMsg('_FILES[LogoFile] ' . _('is not set'), 'info');
+				prnMsg('_FILES[LogoFile] ' . __('is not set'), 'info');
 			}
 
 			if($_FILES['LogoFile']['name'] !=''){
-				prnMsg('_FILES[LogoFile][name] ' . _('is not blank'), 'info');
+				prnMsg('_FILES[LogoFile][name] ' . __('is not blank'), 'info');
 			} else  {
-				prnMsg('_FILES[LogoFile][name] ' . _('is blank'), 'info');
+				prnMsg('_FILES[LogoFile][name] ' . __('is blank'), 'info');
 			}
 
 			echo '</div>
@@ -188,7 +188,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
             $_POST['NewCompany'] =  html_entity_decode($_POST['NewCompany'],ENT_QUOTES,'UTF-8');
             $config_php = preg_replace('/\/\/End Installed companies-do not change this line/', "\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".$_POST['NewCompany']."');\n//End Installed companies-do not change this line", $config_php);
             if (!$fp = fopen($ConfigFile, 'wb')) {
-                prnMsg(_('Cannot open the configuration file' . ': ').$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
+                prnMsg(__('Cannot open the configuration file' . ': ').$ConfigFile.". Please add the following line to the end of the file:\n\$CompanyList[] = array('database'=>'".$_POST['NewDatabase']."' ,'company'=>'".htmlspecialchars($_POST['NewCompany'],ENT_QUOTES,'UTF-8').");",'error');
             } else {
                 fwrite ($fp, $config_php);
                 fclose ($fp);
@@ -222,11 +222,11 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		include('includes/GetConfig.php');
 		$ForceConfigReload=false;
 
-		prnMsg (_('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
-		echo '<p><a href="', $RootPath, '/CompanyPreferences.php">', _('Set Up New Company Details'), '</a></p>
-			<p><a href="', $RootPath, '/SystemParameters.php">', _('Set Up Configuration Details'), '</a></p>
-			<p><a href="', $RootPath, '/WWW_Users.php">', _('Set Up User Accounts'), '</a></p>
+		echo '<p><a href="', $RootPath, '/CompanyPreferences.php">', __('Set Up New Company Details'), '</a></p>
+			<p><a href="', $RootPath, '/SystemParameters.php">', __('Set Up Configuration Details'), '</a></p>
+			<p><a href="', $RootPath, '/WWW_Users.php">', __('Set Up User Accounts'), '</a></p>
 			</div>
 		</form>';
 		include('includes/footer.php');
@@ -236,8 +236,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 }
 
 
-prnMsg (_('This utility will create a new company') . '. ' .
-		_('If the company name already exists then you cannot recreate it') . '.', 'info', _('PLEASE NOTE'));
+prnMsg(__('This utility will create a new company') . '. ' .
+		__('If the company name already exists then you cannot recreate it') . '.', 'info', __('PLEASE NOTE'));
 
 echo '<br /><br />
 	<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">
@@ -245,24 +245,24 @@ echo '<br /><br />
 		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
 		<table>
 			<tr>
-				<td>' . _('Enter the name of the database used for the company up to 32 characters in lower case') . ':</td>
+				<td>' . __('Enter the name of the database used for the company up to 32 characters in lower case') . ':</td>
 				<td><input type="text" size="33" maxlength="32" name="NewDatabase" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Enter a unique name for the company of up to 50 characters') . ':</td>
+				<td>' . __('Enter a unique name for the company of up to 50 characters') . ':</td>
 				<td><input type="text" size="33" maxlength="32" name="NewCompany" /></td>
 			</tr>
 			<tr>
-				<td>' .  _('Logo Image File (.jpg)') . ':</td>
+				<td>' .  __('Logo Image File (.jpg)') . ':</td>
 				<td><input type="file" required="true" id="LogoFile" name="LogoFile" /></td>
 			</tr>
 			<tr>
-				<td>' . _('Create Database?') . '</td>
+				<td>' . __('Create Database?') . '</td>
 				<td><input type="checkbox" name="CreateDB" /></td>
 			</tr>
 		</table>
 		<br />
-		<input type="submit" name="submit" value="', _('Proceed'), '" />
+		<input type="submit" name="submit" value="', __('Proceed'), '" />
 	</div>
 	</form>';
 

@@ -3,12 +3,12 @@
 // Script to rebuild sales analysis records from stock movements
 $PageSecurity = 15;
 include('includes/session.php');
-$Title = _('Rebuild sales analysis Records');
+$Title = __('Rebuild sales analysis Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
-echo '<br /><br />' . _('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');
+echo '<br /><br />' . __('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');
 
 $Result = DB_query("TRUNCATE TABLE salesanalysis");
 
@@ -57,10 +57,10 @@ $SQL = "INSERT INTO salesanalysis (typeabbrev,
 				categoryid
 		ORDER BY prd";
 
-$ErrMsg = _('The sales analysis data could not be recreated because');
+$ErrMsg = __('The sales analysis data could not be recreated because');
 $Result = DB_query($SQL, $ErrMsg);
 
 echo '<p />';
-prnMsg(_('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');
+prnMsg(__('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');
 
 include('includes/footer.php');

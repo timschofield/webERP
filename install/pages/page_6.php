@@ -65,7 +65,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 	$DB = @mysqli_connect($HostName, $UserName, $Password, null, $MySQLPort);
 
 	if (!$DB) {
-		$Errors[] = _('Failed to connect the database management system');
+		$Errors[] = __('Failed to connect the database management system');
 		return $Errors;
 	} else {
 		// avoid exceptions being thrown on query errors
@@ -87,12 +87,12 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
 
 	if ($Rows == 0) { /* Then the database does not exist */
 		if ($Privileges == 0) {
-			$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
+			$Errors[] = __('The database does not exist, and this database user does not have privileges to create it');
 		} else { /* Then we can create the database */
 			/// @todo add utf8-mb4 as default charset
 			$SQL = "CREATE DATABASE " . $DataBaseName;
 			if (!@mysqli_query($DB, $SQL)) {
-				$Errors[] = _('Failed creating the database');
+				$Errors[] = __('Failed creating the database');
 			}
 		}
 	} else { /* Need to make sure any data is removed from existing DB */
@@ -135,7 +135,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
 		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
 		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
-		echo '<div class="success">' . _('The companies directory has been successfully created') . '</div>';
+		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
 		ob_flush();
 
 		/* Upload logo file */
@@ -151,38 +151,38 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 				if($check !== false) {
 					$UploadOK = 1;
 				} else {
-					echo '<div class="error">' . _('Logo file is not an image.') . '</div>';
+					echo '<div class="error">' . __('Logo file is not an image.') . '</div>';
 					$UploadOK = 0;
 				}
 			}
 
 			// Check if file already exists
 			if (file_exists($TargetFile)) {
-				echo '<div class="error">' . _('Sorry, logo file already exists.') . '</div>';
+				echo '<div class="error">' . __('Sorry, logo file already exists.') . '</div>';
 				$UploadOK = 0;
 			}
 
 			// Check file size
 			if ($_FILES["LogoFile"]["size"] > 500000) {
-				echo '<div class="error">' . _('Sorry, your logo file is too large.') . '</div>';
+				echo '<div class="error">' . __('Sorry, your logo file is too large.') . '</div>';
 				$UploadOK = 0;
 			}
 
 			// Allow certain file formats
 			if ($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
-				echo '<div class="error">' . _('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
+				echo '<div class="error">' . __('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
 				$UploadOK = 0;
 			}
 
 			// Check if $UploadOK is set to 0 by an error
 			if ($UploadOK == 0) {
-				echo '<div class="error">' . _('Sorry, your logo file was not uploaded.') . '</div>';
+				echo '<div class="error">' . __('Sorry, your logo file was not uploaded.') . '</div>';
 				// if everything is ok, try to upload file
 			} else {
 				if (move_uploaded_file($_FILES["LogoFile"]["tmp_name"], $TargetFile)) {
-					echo '<div class="success">' . _('Your logo has been successfully uploaded') . '</div>';
+					echo '<div class="success">' . __('Your logo has been successfully uploaded') . '</div>';
 				} else {
-					echo '<div class="warn">' . _('Your logo could not be uploaded. You must copy this to your companies directory later.') . '</div>';
+					echo '<div class="warn">' . __('Your logo could not be uploaded. You must copy this to your companies directory later.') . '</div>';
 				}
 			}
 			ob_flush();
@@ -216,7 +216,7 @@ $NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the ma
 
 // Read the content of the sample config file
 if (!file_exists($SampleConfigFile)) {
-	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
+	echo '<div class="error">' . __('The sample configuration file does not exist.') . '</div>';
 }
 
 // Open the sample file for reading and create the new config file for writing
@@ -251,15 +251,15 @@ if ($SampleHandle) {
 
     fclose($SampleHandle);
 } else {
-	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
+	echo '<div class="error">' . __('Unable to read the sample configuration file.') . '</div>';
 }
 
 // Write the updated content to the new config file
 $NewConfigContent = implode($NewLines);
 if (file_put_contents($NewConfigFile, $NewConfigContent)) {
-    echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
+    echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
 } else {
-	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';
+	echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
 }
 
 function CreateTables($Path_To_Root) {
@@ -272,9 +272,9 @@ function CreateTables($Path_To_Root) {
 		$DBErrors += DB_error_no($Result);
 	}
 	if ($DBErrors > 0) {
-		echo '<div class="error">' . _("Database tables could not be created") . '</div>';
+		echo '<div class="error">' . __('Database tables could not be created') . '</div>';
 	} else {
-		echo '<div class="success">' . _("All database tables have been created") . '</div>';
+		echo '<div class="success">' . __('All database tables have been created') . '</div>';
 	}
 	ob_flush();
 }
@@ -314,7 +314,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 									) VALUES (
 										'" . $AdminUser . "',
 										'" . CryptPass($AdminPassword) . "',
-										'" . _('Administrator') . "',
+										'" . __('Administrator') . "',
 										'',
 										'',
 										'',
@@ -341,9 +341,9 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 									)";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
 
@@ -375,7 +375,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 						DB_IgnoreForeignKeys();
 						$Result = DB_query($SQL);
 						if (DB_error_no($Result) != 0) {
-							echo '<div class="error">' . _('Your chosen chart of accounts could not be uploaded') . '</div>';
+							echo '<div class="error">' . __('Your chosen chart of accounts could not be uploaded') . '</div>';
 						}
 					}
 					$SQL = '';
@@ -384,24 +384,24 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			} //end if its a valid sql line not a comment
 
 		} //end of for loop around the lines of the sql script
-		echo '<div class="success">' . _('Your chosen chart of accounts has been uploaded') . '</div>';
+		echo '<div class="success">' . __('Your chosen chart of accounts has been uploaded') . '</div>';
 		ob_flush();
 
 		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been given permissions on all GL accounts.') . '</div>';
+			echo '<div class="success">' . __('The admin user has been given permissions on all GL accounts.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The default GL tag has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The default GL tag has been inserted.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
 
@@ -413,18 +413,18 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$DBErrors += DB_error_no($Result);
 		}
 		if ($DBErrors > 0) {
-			echo '<div class="error">' . _("Database tables could not be created") . '</div>';
+			echo '<div class="error">' . __('Database tables could not be created') . '</div>';
 		} else {
-			echo '<div class="success">' . _("All database tables have been created") . '</div>';
+			echo '<div class="success">' . __('All database tables have been created') . '</div>';
 		}
 		ob_flush();
 
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName('../') . ")";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The database update revision has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The database update revision has been inserted.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
 
@@ -458,14 +458,14 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										)";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The company record has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The company record has been inserted.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
 
 	} else {
-		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
+		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
 
 		PopulateSQLDataBySQL(__DIR__ . '/../sql/demo.sql');
 
@@ -509,7 +509,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 									) VALUES (
 										'" . $AdminUser . "',
 										'" . CryptPass($AdminPassword) . "',
-										'" . _('Administrator') . "',
+										'" . __('Administrator') . "',
 										'',
 										'',
 										'',
@@ -537,12 +537,12 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$Result = DB_query($SQL);
 
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
 		} else {
-			echo '<div class="error">' . _('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
+			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		ob_flush();
-		echo '<div class="success">' . _('Database now contains the demo data.') . '</div>';
+		echo '<div class="success">' . __('Database now contains the demo data.') . '</div>';
 	}
 }
 
@@ -567,7 +567,7 @@ $Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION
 
 if (!fwrite($CompanyFileHandler, $Contents)) {
 	fclose($CompanyFileHandler);
-	echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+	echo '<div class="error">' . __('Cannot write to the Companies.php file') . '</div>';
 }
 //close file
 fclose($CompanyFileHandler);
@@ -624,9 +624,9 @@ function CreateGLTriggers($Path_To_Root)
 		$DBErrors += DB_error_no();
 	}
 	if ($DBErrors > 0) {
-		echo '<div class="error">' . _("Database triggers could not be created") . '</div>';
+		echo '<div class="error">' . __('Database triggers could not be created') . '</div>';
 	} else {
-		echo '<div class="success">' . _("All database triggers have been created") . '</div>';
+		echo '<div class="success">' . __('All database triggers have been created') . '</div>';
 	}
 
 	return $DBErrors;

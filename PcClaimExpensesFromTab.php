@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
-$Title = _('Claim Petty Cash Expenses From Tab');
+$Title = __('Claim Petty Cash Expenses From Tab');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'ExpenseClaim';
@@ -35,13 +35,13 @@ if (isset($_POST['Cancel'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedTabs'] == '') {
-		prnMsg(_('You have not selected a tab to claim the expenses on'), 'error');
+		prnMsg(__('You have not selected a tab to claim the expenses on'), 'error');
 		unset($SelectedTabs);
 	}
 }
 if (isset($_POST['Go'])) {
 	if ($Days <= 0) {
-		prnMsg(_('The number of days must be a positive number'), 'error');
+		prnMsg(__('The number of days must be a positive number'), 'error');
 		$Days = 30;
 	}
 }
@@ -56,14 +56,14 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	if ($_POST['SelectedExpense'] == '') {
 		$InputError = 1;
-		prnMsg(_('You have not selected an expense to claim on this tab'), 'error');
+		prnMsg(__('You have not selected an expense to claim on this tab'), 'error');
 	} elseif ($_POST['Amount'] == 0) {
 		$InputError = 1;
-		prnMsg(_('The amount must be greater than 0'), 'error');
+		prnMsg(__('The amount must be greater than 0'), 'error');
 	}
 	if (!is_date($_POST['Date'])) {
 		$InputError = 1;
-		prnMsg(_('The date input is not in the correct format'), 'error');
+		prnMsg(__('The date input is not in the correct format'), 'error');
 	}
 	if (isset($SelectedIndex) and $InputError != 1) { //Edit
 		$SQL = "UPDATE pcashdetails
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
 				purpose='" . $_POST['Purpose'] . "',
 				notes = '" . $_POST['Notes'] . "'
 			WHERE counterindex = '" . $SelectedIndex . "'";
-		$Msg = _('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been updated');
+		$Msg = __('The expense record on tab') . ' ' . $SelectedTabs . ' ' . __('has been updated');
 		$Result = DB_query($SQL);
 		foreach ($_POST as $Index => $Value) {
 			if (substr($Index, 0, 5) == 'index') {
@@ -110,34 +110,34 @@ if (isset($_POST['submit'])) {
 			$UploadTheFile = 'Yes'; //Assume all is well to start off with, but check for the worst
 			$ReceiptSupportedMime = array('image/png','image/jpeg','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //list of support mime types, corresponding to the list of support file extensions in $ReceiptSupportedExt
 			if ($UploadSize > ($_SESSION['MaxImageSize'] * 1024)) { //Server-side file size check. This will usually be caught by $UploadError == 2 (MAX_FILE_SIZE), but we must not trust the user.
-				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				prnMsg(__('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
 				$UploadTheFile = 'No';
 			} elseif (!in_array($UploadType, $ReceiptSupportedMime) and $UploadError != 2) { //File type check. If $UploadError == 2, then $UploadType will be empty.
-				prnMsg(_('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
+				prnMsg(__('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
 				$UploadTheFile = 'No';
 			} elseif ($UploadError == 1 ) {  //upload_max_filesize error check
-				prnMsg(_('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
+				prnMsg(__('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 2 ) {  //Client-side file size error check (MAX_FILE_SIZE)
-				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				prnMsg(__('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 3 ) {  //Partial upload error check
-				prnMsg( _('The uploaded file was only partially uploaded. Please try again.'), 'warn');
+				prnMsg( __('The uploaded file was only partially uploaded. Please try again.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 4 ) {  //No file uploaded error check
-				prnMsg( _('No file was uploaded'), 'warn');
+				prnMsg( __('No file was uploaded'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 5 ) {  //Undefined error check
-				prnMsg( _('Undefined error'), 'warn');
+				prnMsg( __('Undefined error'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 6 ) {  //Temp directory error check
-				prnMsg( _('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
+				prnMsg( __('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 7 ) {  //Disk write failure error check
-				prnMsg( _('Cannot write file to disk. Please contact your system administrator.'), 'warn');
+				prnMsg( __('Cannot write file to disk. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 8 ) {  //Upload stopped by PHP extension error check
-				prnMsg( _('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
+				prnMsg( __('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			}
 			if ($UploadTheFile == 'Yes') { //Passed all the above validation
@@ -221,7 +221,7 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['Purpose'] . "',
 										'" . $_POST['Notes'] . "'
 										)";
-		$Msg = _('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
+		$Msg = __('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . __('has been created');
 		$Result = DB_query($SQL);
 		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
 
@@ -270,34 +270,34 @@ if (isset($_POST['submit'])) {
 			$UploadTheFile = 'Yes'; //Assume all is well to start off with, but check for the worst
 			$ReceiptSupportedMime = array('image/png','image/jpeg','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //list of support mime types, corresponding to the list of support file extensions in $ReceiptSupportedExt
 			if ($UploadSize > ($_SESSION['MaxImageSize'] * 1024)) { //Server-side file size check. This will usually be caught by $UploadError == 2 (MAX_FILE_SIZE), but we must not trust the user.
-				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				prnMsg(__('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
 				$UploadTheFile = 'No';
 			} elseif (!in_array($UploadType, $ReceiptSupportedMime) and $UploadError != 2) { //File type check. If $UploadError == 2, then $UploadType will be empty.
-				prnMsg(_('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
+				prnMsg(__('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
 				$UploadTheFile = 'No';
 			} elseif ($UploadError == 1 ) {  //upload_max_filesize error check
-				prnMsg(_('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
+				prnMsg(__('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 2 ) {  //Client-side file size error check (MAX_FILE_SIZE)
-				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				prnMsg(__('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 3 ) {  //Partial upload error check
-				prnMsg( _('The uploaded file was only partially uploaded. Please try again.'), 'warn');
+				prnMsg( __('The uploaded file was only partially uploaded. Please try again.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 4 ) {  //No file uploaded error check
-				prnMsg( _('No file was uploaded'), 'warn');
+				prnMsg( __('No file was uploaded'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 5 ) {  //Undefined error check
-				prnMsg( _('Undefined error'), 'warn');
+				prnMsg( __('Undefined error'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 6 ) {  //Temp directory error check
-				prnMsg( _('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
+				prnMsg( __('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 7 ) {  //Disk write failure error check
-				prnMsg( _('Cannot write file to disk. Please contact your system administrator.'), 'warn');
+				prnMsg( __('Cannot write file to disk. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			} elseif ($UploadError == 8 ) {  //Upload stopped by PHP extension error check
-				prnMsg( _('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
+				prnMsg( __('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
 				$UploadTheFile ='No';
 			}
 			if ($UploadTheFile == 'Yes') { //Passed all the above validation
@@ -355,7 +355,7 @@ if (isset($_POST['submit'])) {
 	//Delete receipt file info from database
 	$SQL = "DELETE FROM pcreceipts
 			WHERE pccashdetail='" . $SelectedIndex . "'";
-	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
+	$ErrMsg = __('Petty Cash Expense record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 	}
 	//Delete associated taxes
@@ -367,7 +367,7 @@ if (isset($_POST['submit'])) {
 	$SQL = "DELETE FROM pcashdetails
 			WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
+	prnMsg(__('The expense record on tab') . ' ' . $SelectedTabs . ' ' . __('has been deleted'), 'success');
 	unset($_GET['delete']);
 } //end of get delete
 if (!isset($SelectedTabs)) {
@@ -376,19 +376,19 @@ if (!isset($SelectedTabs)) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Payment Entry'), '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
 		</p>';
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', _('Clain expenses on petty cash tab'), ':</label>
+				<label for="SelectedTabs">', __('Clain expenses on petty cash tab'), ':</label>
 				<select required="required" name="SelectedTabs">';
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE usercode='" . $_SESSION['UserID'] . "'";
 	$Result = DB_query($SQL);
-	echo '<option value="">', _('Not Yet Selected'), '</option>';
+	echo '<option value="">', __('Not Yet Selected'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
@@ -400,14 +400,14 @@ if (!isset($SelectedTabs)) {
 		</field>';
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
+			<input type="submit" name="Process" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 } else { // isset($SelectedTabs)
-	echo '<a class="toplink" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>';
+	echo '<a class="toplink" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Select another tab'), '</a>';
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (!isset($Days)) {
@@ -427,10 +427,10 @@ if (!isset($SelectedTabs)) {
 		//Limit expenses history to X days
 		echo '<fieldset>
 				<field>
-					<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+					<label for="SelectedTabs">', __('Detail of Tab Movements For Last '), ':</label>
 					<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', _('Days'), '
-					<input type="submit" name="Go" value="', _('Go'), '" />
+					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', __('Days'), '
+					<input type="submit" name="Go" value="', __('Go'), '" />
 				</field>
 			</fieldset>';
 		if (isset($_POST['Cancel'])) {
@@ -460,16 +460,16 @@ if (!isset($SelectedTabs)) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">', _('Date of Expense'), '</th>
-						<th class="SortedColumn">', _('Expense Code'), '</th>
-						<th class="SortedColumn">', _('Gross Amount'), '</th>
-						<th>', _('Tax'), '</th>
-						<th>', _('Tax Group'), '</th>
-						<th>', _('Tag'), '</th>
-						<th>', _('Business Purpose'), '</th>
-						<th>', _('Notes'), '</th>
-						<th>', _('Receipt Attachment'), '</th>
-						<th>', _('Date Authorised'), '</th>
+						<th class="SortedColumn">', __('Date of Expense'), '</th>
+						<th class="SortedColumn">', __('Expense Code'), '</th>
+						<th class="SortedColumn">', __('Gross Amount'), '</th>
+						<th>', __('Tax'), '</th>
+						<th>', __('Tax Group'), '</th>
+						<th>', __('Tag'), '</th>
+						<th>', __('Business Purpose'), '</th>
+						<th>', __('Notes'), '</th>
+						<th>', __('Receipt Attachment'), '</th>
+						<th>', __('Date Authorised'), '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -488,7 +488,7 @@ if (!isset($SelectedTabs)) {
 			}
 
 			if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
-				$AuthorisedDate = _('Unauthorised');
+				$AuthorisedDate = __('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 			}
@@ -505,11 +505,11 @@ if (!isset($SelectedTabs)) {
 				$ReceiptExt = $ReceiptRow['extension'];
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
 				$ReceiptText = '';
 			} else {
-				$ReceiptText = _('No attachment');
+				$ReceiptText = __('No attachment');
 			}
 
 			$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
@@ -517,7 +517,7 @@ if (!isset($SelectedTabs)) {
 			$TagDescription = '';
 			while ($TagRow = DB_fetch_array($TagResult)) {
 				if ($TagRow['tagref'] == 0) {
-					$TagRow['tagdescription'] = _('None');
+					$TagRow['tagdescription'] = __('None');
 				}
 				if ($ExpenseCodeDes != 'ASSIGNCASH') {
 					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
@@ -555,8 +555,8 @@ if (!isset($SelectedTabs)) {
 						<td>', $MyRow['notes'], '</td>
 						<td>', $ReceiptText, '</td>
 						<td>', $AuthorisedDate, '</td>
-						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
-						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this expense?') . '");\'>' . _('Delete') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . __('Edit') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . __('Are you sure you wish to delete this expense?') . '");\'>' . __('Delete') . '</a></td>
 					</tr>';
 			} else {
 				echo '<tr class="striped_row">
@@ -578,7 +578,7 @@ if (!isset($SelectedTabs)) {
 		echo '</tbody>
 				<tfoot>
 					<tr class="total_row">
-						<td colspan="2" class="number">', _('Current balance'), ':</td>
+						<td colspan="2" class="number">', __('Current balance'), ':</td>
 						<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 						<td colspan="9"></td>
 					</tr>
@@ -622,16 +622,16 @@ if (!isset($SelectedTabs)) {
 		}
 		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<legend>', _('Update Expense'), '</legend>';
+			echo '<legend>', __('Update Expense'), '</legend>';
 		} else {
-			echo '<legend>', _('New Expense'), '</legend>';
+			echo '<legend>', __('New Expense'), '</legend>';
 		}
 		echo '<field>
-				<label for="Date">', _('Date of Expense'), ':</label>
+				<label for="Date">', __('Date of Expense'), ':</label>
 				<input type="date" name="Date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['Date']), '" />
 			</field>
 			<field>
-				<label for="SelectedExpense">', _('Expense Code'), ':</label>
+				<label for="SelectedExpense">', __('Expense Code'), ':</label>
 				<select required="required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
@@ -642,7 +642,7 @@ if (!isset($SelectedTabs)) {
 				AND pctabs.tabcode = '" . $SelectedTabs . "'
 			ORDER BY pcexpenses.codeexpense ASC";
 		$Result = DB_query($SQL);
-		echo '<option value="">', _('Not Yet Selected'), '</option>';
+		echo '<option value="">', __('Not Yet Selected'), '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense'] == $_POST['SelectedExpense']) {
 				echo '<option selected="selected" value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
@@ -656,7 +656,7 @@ if (!isset($SelectedTabs)) {
 			$_POST['Amount'] = 0;
 		}
 		echo '<field>
-				<label for="Amount">', _('Gross Amount'), ':</label>
+				<label for="Amount">', __('Gross Amount'), ':</label>
 				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" />
 			</field>';
 		if (isset($_GET['edit'])) {
@@ -730,7 +730,7 @@ if (!isset($SelectedTabs)) {
 				ORDER BY tagref";
 		$Result = DB_query($SQL);
 		echo '<field>
-				<label for="tag">', _('Tag'), '</label>
+				<label for="tag">', __('Tag'), '</label>
 				<select multiple="multiple" name="tag[]">';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($TagArray) and in_array($MyRow['tagref'], $TagArray)) {
@@ -748,16 +748,16 @@ if (!isset($SelectedTabs)) {
 			return '.' . $ReceiptSupportedExt;
 		}, $ReceiptSupportedExt);
 		echo '<field>
-				<label for="Receipt">', _('Attach Receipt'), ':</label>
+				<label for="Receipt">', __('Attach Receipt'), ':</label>
 				<input type="hidden" name="MAX_FILE_SIZE" value="' . $_SESSION['MaxImageSize'] * 1024 . '" />
-				<input type="file" name="Receipt" id="Receipt" accept="' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', _('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
+				<input type="file" name="Receipt" id="Receipt" accept="' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', __('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
 			</field>';
 
 		if (!isset($_POST['Purpose'])) {
 			$_POST['Purpose'] = '';
 		}
 		echo '<field>
-				<label for="Purpose">', _('Business Purpose'), ':</label>
+				<label for="Purpose">', __('Business Purpose'), ':</label>
 				<input type="text" name="Purpose" size="50" maxlength="49" required="required" value="', $_POST['Purpose'], '" />s
 			</field>';
 
@@ -765,13 +765,13 @@ if (!isset($SelectedTabs)) {
 			$_POST['Notes'] = '';
 		}
 		echo '<field>
-				<label for="Notes">', _('Notes'), ':</label>
+				<label for="Notes">', __('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
 
 		echo '<div class="centre">
-			<input type="submit" name="submit" value="', _('Accept'), '" />
-			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
+			<input type="submit" name="submit" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 			</div>';
 		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';

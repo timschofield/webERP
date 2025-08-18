@@ -11,13 +11,13 @@ $FontSize=15;
 
 $XPos = $Left_Margin;
 $YPos -= 40;
-$pdf->addText($XPos, $YPos,$FontSize, $BankAccountName . ' ' . _('Payments Summary'));
+$pdf->addText($XPos, $YPos,$FontSize, $BankAccountName . ' ' . __('Payments Summary'));
 $FontSize=12;
-$pdf->addText($XPos, $YPos-20,$FontSize, _('From') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' .  $_POST['ToDate']);
+$pdf->addText($XPos, $YPos-20,$FontSize, __('From') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' .  $_POST['ToDate']);
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
-$pdf->addText($XPos, $YPos,$FontSize, _('Page') . ': ' . $PageNumber);
+$pdf->addText($XPos, $YPos,$FontSize, __('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
@@ -33,8 +33,8 @@ $YPos -= $LineHeight;
 /*Set up headings */
 $FontSize=8;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Amount'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,180,$FontSize,_('Reference / General Ledger Posting Details'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,__('Amount'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,180,$FontSize,__('Reference / General Ledger Posting Details'), 'centre');
 $YPos-=$LineHeight;
 
 /*draw a line */

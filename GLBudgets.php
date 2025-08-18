@@ -2,7 +2,7 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
-$Title = _('Enter GL Budget amounts');
+$Title = __('Enter GL Budget amounts');
 
 if (isset($_POST['SelectedBudget'])) {
 	$SelectedBudget = $_POST['SelectedBudget'];
@@ -32,9 +32,9 @@ if (isset($_POST['Update'])) {
 		$Errors+= DB_error_no();
 	}
 	if ($Errors == 0) {
-		prnMsg(_('The budget figures were update successfully'), 'success');
+		prnMsg(__('The budget figures were update successfully'), 'success');
 	} else {
-		prnMsg(_('There was a problem updating the budget figures'), 'error');
+		prnMsg(__('There was a problem updating the budget figures'), 'error');
 	}
 }
 
@@ -43,18 +43,18 @@ if (!isset($SelectedBudget)) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<p class="page_title_text" >
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Budgets'), '" alt="', _('Budgets'), '" />', ' ', _('Select Budget'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Budgets'), '" alt="', __('Budgets'), '" />', ' ', __('Select Budget'), '
 		</p>';
 
 	echo '<fieldset>
-			<legend>', _('Select a Budget'), '</legend>';
+			<legend>', __('Select a Budget'), '</legend>';
 
 	$SQL = "SELECT `id`,
 					`name`
 				FROM glbudgetheaders";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="SelectedBudget">', _('Budget to enter amounts in'), '</label>
+			<label for="SelectedBudget">', __('Budget to enter amounts in'), '</label>
 			<select name="SelectedBudget">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
@@ -64,7 +64,7 @@ if (!isset($SelectedBudget)) {
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Select" value="', _('Select'), '" />
+			<input type="submit" name="Select" value="', __('Select'), '" />
 		</div>';
 
 	echo '</form>';
@@ -75,11 +75,11 @@ if (!isset($SelectedBudget)) {
 	echo '<input type="hidden" name="SelectedBudget" value="', $SelectedBudget, '" />';
 
 	echo '<p class="page_title_text" >
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', _('Enter Budget Amounts'), '" alt="', _('Enter Budget Amounts'), '" />', ' ', _('Enter Budget Amounts'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Enter Budget Amounts'), '" alt="', __('Enter Budget Amounts'), '" />', ' ', __('Enter Budget Amounts'), '
 		</p>';
 
 	echo '<fieldset>
-			<legend>', _('General ledger account selection'), '</legend>';
+			<legend>', __('General ledger account selection'), '</legend>';
 
 	$SQL = "SELECT accountcode
 				FROM chartmaster
@@ -126,9 +126,9 @@ if (!isset($SelectedBudget)) {
 	echo '<input type="hidden" name="SelectedAccount" value="', $_POST['SelectedAccount'], '" />';
 
 	echo '<field>
-			<label for="SelectedAccount">', _('Select GL Account'), ':</label>
+			<label for="SelectedAccount">', __('Select GL Account'), ':</label>
 			<select name="SelectedAccount">
-			<option value="">' . _('Select a general ledger account code') . '</option>';
+			<option value="">' . __('Select a general ledger account code') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectedAccount']) and $_POST['SelectedAccount'] == $MyRow['accountcode']) {
 			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
@@ -143,15 +143,15 @@ if (!isset($SelectedBudget)) {
 
 	echo '<div class="centre">';
 	if ($AccountIndex == 0) {
-		echo '<input type="submit" disabled="true" class="previous_button" name="Previous', $AccountIndex, '" value="', _('Prev Account'), '" />';
+		echo '<input type="submit" disabled="true" class="previous_button" name="Previous', $AccountIndex, '" value="', __('Prev Account'), '" />';
 	} else {
-		echo '<input type="submit" class="previous_button" name="Previous', $AccountIndex, '" value="', _('Prev Account'), '" />';
+		echo '<input type="submit" class="previous_button" name="Previous', $AccountIndex, '" value="', __('Prev Account'), '" />';
 	}
-	echo '<input type="submit" name="Select" value="', _('Select Account'), '" />';
+	echo '<input type="submit" name="Select" value="', __('Select Account'), '" />';
 	if ($AccountIndex == array_search(end($AccountList), $AccountList)) {
-		echo '<input type="submit" disabled="true" class="next_button" name="Next', $AccountIndex, '" value="', _('Next Account'), '" />';
+		echo '<input type="submit" disabled="true" class="next_button" name="Next', $AccountIndex, '" value="', __('Next Account'), '" />';
 	} else {
-		echo '<input type="submit" class="next_button" name="Next', $AccountIndex, '" value="', _('Next Account'), '" />';
+		echo '<input type="submit" class="next_button" name="Next', $AccountIndex, '" value="', __('Next Account'), '" />';
 	}
 	echo '</div>';
 
@@ -165,7 +165,7 @@ if (!isset($SelectedBudget)) {
 	$MyRow = DB_fetch_array($Result);
 
 	echo '<fieldset>
-			<legend>', _('Budget values for account'), ' ', $_POST['SelectedAccount'], ' - ', $MyRow['accountname'], '</legend>';
+			<legend>', __('Budget values for account'), ' ', $_POST['SelectedAccount'], ' - ', $MyRow['accountname'], '</legend>';
 
 	$SQL = "SELECT `owner`,
 					`name`,
@@ -212,14 +212,14 @@ if (!isset($SelectedBudget)) {
 			</field>';
 	}
 	echo '<field>
-			<label for="Total">', _('Total'), '</label>
+			<label for="Total">', __('Total'), '</label>
 			<input readonly="readonly" type="text" class="number" id="Total" name="Total" value="', $Total, '" />
 		</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="', _('Update Budget'), '" />
+			<input type="submit" name="Update" value="', __('Update Budget'), '" />
 		</div>';
 
 	echo '</form>';

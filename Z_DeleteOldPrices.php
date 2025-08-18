@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('UTILITY PAGE To Delete All Old Prices');
+$Title = __('UTILITY PAGE To Delete All Old Prices');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -35,7 +35,7 @@ if (isset($_POST['DeleteOldPrices'])){
 													AND enddate='9999-12-31'
 													AND startdate<'" . $MyRow['lateststart'] . "'",'','',true);
 	}
-	prnMsg(_('All old prices have been deleted'),'success');
+	prnMsg(__('All old prices have been deleted'),'success');
 	DB_Txn_Commit();
 }
 
@@ -43,7 +43,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<div class="centre">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<br />
-	<input type="submit" name="DeleteOldPrices" value="' . _('Purge Old Prices') . '" onclick="return confirm(\'' . _('Are You Sure you wish to delete all old prices?') . '\');" />
+	<input type="submit" name="DeleteOldPrices" value="' . __('Purge Old Prices') . '" onclick="return confirm(\'' . __('Are You Sure you wish to delete all old prices?') . '\');" />
 	</div>
       </form>';
 

@@ -6,21 +6,21 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-$Title = _('Enter Supplier Invoice Against Goods Received');
+$Title = __('Enter Supplier Invoice Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') .
 		'" alt="" />' . ' ' . $Title . '
 	</p>';
 
 $Complete=false;
 if (!isset($_SESSION['SuppTrans'])){
-	prnMsg(_('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice must be clicked on'),'info');
+	prnMsg(__('To enter a supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice must be clicked on'),'info');
 	echo '<br />
-			<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier to Enter a Transaction For') . '</a>';
+			<a href="' . $RootPath . '/SelectSupplier.php">' . __('Select A Supplier to Enter a Transaction For') . '</a>';
 	include('includes/footer.php');
 	exit();
 	/*It all stops here if there aint no supplier selected and invoice initiated ie $_SESSION['SuppTrans'] started off*/
@@ -65,16 +65,16 @@ if (isset($_POST['ModifyGRN'])){
 		}
 
 		if (filter_number_format($_POST['This_QuantityInv'.$i])+$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->Prev_QuantityInv-$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->QtyRecd > 0){
-			prnMsg(_('The quantity being invoiced is more than the outstanding quantity that was delivered. It is not possible to enter an invoice for a quantity more than was received into stock'),'warn');
+			prnMsg(__('The quantity being invoiced is more than the outstanding quantity that was delivered. It is not possible to enter an invoice for a quantity more than was received into stock'),'warn');
 			$InputError = True;
 		}
 		if (!is_numeric(filter_number_format($_POST['ChgPrice' . $i])) AND filter_number_format($_POST['ChgPrice' . $i])<0){
 			$InputError = True;
-			prnMsg(_('The price charged in the suppliers currency is either not numeric or negative') . '. ' . _('The goods received cannot be invoiced at this price'),'error');
+			prnMsg(__('The price charged in the suppliers currency is either not numeric or negative') . '. ' . __('The goods received cannot be invoiced at this price'),'error');
 		} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True AND $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice != 0) {
 			if (filter_number_format($_POST['ChgPrice' . $i])/$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice > (1+ ($_SESSION['OverChargeProportion'] / 100))){
-				prnMsg(_('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' .
-				_('The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
+				prnMsg(__('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' .
+				__('The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
 				$Hold=True;
 			}
 		}
@@ -112,18 +112,18 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<table class="selection">
 		<thead>
 		<tr>
-			<th colspan="10"><h3>', _('Invoiced Goods Received Selected'), '</h3></th>
+			<th colspan="10"><h3>', __('Invoiced Goods Received Selected'), '</h3></th>
 		</tr>
 		<tr>
-			<th>' . _('Sequence') . ' #</th>
-			<th>' . _("Supplier's Ref") . '</th>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity Yet To Inv') . '</th>
-			<th>' . _('Quantity Inv') . '</th>
-			<th>' . _('Order Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-			<th>' . _('Inv Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-			<th>' . _('Order Value') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			<th>' . __('Sequence') . ' #</th>
+			<th>' . __('Supplier\'s Ref') . '</th>
+			<th>' . __('Item Code') . '</th>
+			<th>' . __('Description') . '</th>
+			<th>' . __('Quantity Yet To Inv') . '</th>
+			<th>' . __('Quantity Inv') . '</th>
+			<th>' . __('Order Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			<th>' . __('Inv Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+			<th>' . __('Order Value') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			<th>&nbsp;</th>
 		</tr>
 		</thead>
@@ -149,7 +149,7 @@ foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			<td class="number">', $DisplayPrice, '</td>
 			<td class="number"><input class="number" maxlength="10" name="ChgPrice', $i, '" size="11" type="text" value="', locale_number_format($EnteredGRN->ChgPrice, $_SESSION['SuppTrans']->CurrDecimalPlaces), '" /></td>
 			<td class="number">', locale_number_format($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv, $_SESSION['SuppTrans']->CurrDecimalPlaces), '</td>
-			<td class="text"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Delete=', $EnteredGRN->GRNNo, '">', _('Delete'), '</a></td>
+			<td class="text"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Delete=', $EnteredGRN->GRNNo, '">', __('Delete'), '</a></td>
 		</tr>
 		<input type="hidden" name="GRNNo' . $i . '" . value="' . $EnteredGRN->GRNNo . '" />';
 	$i++;
@@ -159,12 +159,12 @@ echo '</tbody>
 	</table>
 	<div class="centre">
 		<p>
-			<input type="submit" name="ModifyGRN" value="' . _('Update Amounts Invoiced') . '" />
+			<input type="submit" name="ModifyGRN" value="' . __('Update Amounts Invoiced') . '" />
 		</p>
 	</div>
 	<br />
 	<div class="centre">
-		<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
+		<a href="' . $RootPath . '/SupplierInvoice.php">' . __('Back to Invoice Entry') . '</a>
 	</div>
 	<br />';
 
@@ -197,8 +197,8 @@ $SQL = "SELECT grnbatch,
 $GRNResults = DB_query($SQL);
 
 if (DB_num_rows($GRNResults)==0){
-	prnMsg(_('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . _('that have not been invoiced by them') . '<br />' . _('The goods must first be received using the link below to select purchase orders to receive'),'warn');
-	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . _('Select Purchase Orders to Receive')  . '</a></p></div>';
+	prnMsg(__('There are no outstanding goods received from') . ' ' . $_SESSION['SuppTrans']->SupplierName . ' ' . __('that have not been invoiced by them') . '<br />' . __('The goods must first be received using the link below to select purchase orders to receive'),'warn');
+	echo '<div class="centre"><p><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SupplierID=' . $_SESSION['SuppTrans']->SupplierID .'">' . __('Select Purchase Orders to Receive')  . '</a></p></div>';
 	include('includes/footer.php');
 	exit();
 }
@@ -250,24 +250,24 @@ if (!isset($_GET['Modify'])){
 	if (count( $_SESSION['SuppTransTmp']->GRNs)>0){   /*if there are any outstanding GRNs then */
 		echo '<table class="selection">
 				<tr>
-					<th><h3>' . _('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
+					<th><h3>' . __('Goods Received Yet to be Invoiced From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
 				</tr>
 				</table>
 				<table>
 					<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Sequence') . ' #</th>
-						<th class="SortedColumn">' . _('GRN Number') . '</th>
-						<th class="SortedColumn">' . _('Supplier\'s Ref') . '</th>
-						<th class="SortedColumn">' . _('Order') . '</th>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Description') . '</th>
-						<th class="SortedColumn">' . _('Total Qty Received') . '</th>
-						<th class="SortedColumn">' . _('Qty Already Invoiced') . '</th>
-						<th class="SortedColumn">' . _('Qty Yet To Invoice') . '</th>
-						<th class="SortedColumn">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="SortedColumn">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="SortedColumn">' . _('Select'), '</th>
+						<th class="SortedColumn">' . __('Sequence') . ' #</th>
+						<th class="SortedColumn">' . __('GRN Number') . '</th>
+						<th class="SortedColumn">' . __('Supplier\'s Ref') . '</th>
+						<th class="SortedColumn">' . __('Order') . '</th>
+						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('Description') . '</th>
+						<th class="SortedColumn">' . __('Total Qty Received') . '</th>
+						<th class="SortedColumn">' . __('Qty Already Invoiced') . '</th>
+						<th class="SortedColumn">' . __('Qty Yet To Invoice') . '</th>
+						<th class="SortedColumn">' . __('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . __('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . __('Select'), '</th>
 					</tr>
 					</thead>
 					<tbody>';
@@ -279,7 +279,7 @@ if (!isset($_GET['Modify'])){
 				$POs[$GRNTmp->PONo] = $GRNTmp->PONo;
 				echo '<tr>
 						<td><input type="submit" name="AddPOToTrans" value="' . $GRNTmp->PONo . '" /></td>
-						<td colspan="3">' . _('Add Whole PO to Invoice') . '</td>
+						<td colspan="3">' . __('Add Whole PO to Invoice') . '</td>
 							</tr>';
 			}
 			echo '<tr>
@@ -305,10 +305,10 @@ if (!isset($_GET['Modify'])){
 			</table>
 			<br />
 			<div class="centre">
-				<input type="submit" name="SelectAll" value="' . _('Select All') . '" />
-				<input type="submit" name="DeSelectAll" value="' . _('Deselect All') . '" />
+				<input type="submit" name="SelectAll" value="' . __('Select All') . '" />
+				<input type="submit" name="DeSelectAll" value="' . __('Deselect All') . '" />
 				<br />
-				<input type="submit" name="AddGRNToTrans" value="' . _('Add to Invoice') . '" />
+				<input type="submit" name="AddGRNToTrans" value="' . __('Add to Invoice') . '" />
 			</div>';
 	}
 }

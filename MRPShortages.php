@@ -3,10 +3,10 @@
 include('includes/session.php');
 
 if (!DB_table_exists('mrprequirements')) {
-	$Title = _('MRP error');
+	$Title = __('MRP error');
 	include('includes/header.php');
 	echo '<br />';
-	prnMsg(_('The MRP calculation must be run before you can run this report') . '<br />' . _('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . _('here') . '</a>', 'error');
+	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -15,11 +15,11 @@ if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addInfo('Title', _('MRP Shortages Report'));
-		$pdf->addInfo('Subject', _('MRP Shortages'));
+		$pdf->addInfo('Title', __('MRP Shortages Report'));
+		$pdf->addInfo('Subject', __('MRP Shortages'));
 	} else {
-		$pdf->addInfo('Title', _('MRP Excess Report'));
-		$pdf->addInfo('Subject', _('MRP Excess'));
+		$pdf->addInfo('Title', __('MRP Excess Report'));
+		$pdf->addInfo('Subject', __('MRP Excess'));
 	}
 	$FontSize = 9;
 	$PageNumber = 1;
@@ -32,7 +32,7 @@ if (isset($_POST['PrintPDF'])) {
 				part char(20),
 				demand double,
 				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
-	$Result = DB_query($SQL, _('Create of demandtotal failed because'));
+	$Result = DB_query($SQL, __('Create of demandtotal failed because'));
 
 	$SQL = "INSERT INTO demandtotal
 						(part,
@@ -47,7 +47,7 @@ if (isset($_POST['PrintPDF'])) {
 				part char(20),
 				supply double,
 				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
-	$Result = DB_query($SQL, _('Create of supplytotal failed because'));
+	$Result = DB_query($SQL, __('Create of supplytotal failed because'));
 
 	/* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */
 
@@ -130,28 +130,15 @@ if (isset($_POST['PrintPDF'])) {
 			   stockmaster.actualcost,
 			   supplytotal.supply,
 			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
-	$Result = DB_query($SQL, '', '', false, true);
 
-	if (DB_error_no() != 0) {
-		$Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg(_('The MRP shortages and excesses could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-		echo '<br/><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br/>' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
+	$ErrMsg = __('The MRP shortages and excesses could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result) == 0) {
-		$Title = _('MRP Shortages and Excesses') . ' - ' . _('Problem Report');
+		$Title = __('MRP Shortages and Excesses') . ' - ' . __('Problem Report');
 		include('includes/header.php');
-		prnMsg(_('No MRP shortages - Excess retrieved'), 'warn');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug == 1) {
-			echo '<br />' . $SQL;
-		}
+		prnMsg(__('No MRP shortages - Excess retrieved'), 'warn');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -211,12 +198,12 @@ if (isset($_POST['PrintPDF'])) {
 		PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 	}
 	/*Print out the grand totals */
-	$pdf->addTextWrap($Left_Margin, $YPos, 120, $FontSize, _('Number of Parts: '), 'left');
+	$pdf->addTextWrap($Left_Margin, $YPos, 120, $FontSize, __('Number of Parts: '), 'left');
 	$pdf->addTextWrap(150, $YPos, 30, $FontSize, $Partctr, 'left');
 	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap(300, $YPos, 180, $FontSize, _('Total Extended Shortage:'), 'right');
+		$pdf->addTextWrap(300, $YPos, 180, $FontSize, __('Total Extended Shortage:'), 'right');
 	} else {
-		$pdf->addTextWrap(300, $YPos, 180, $FontSize, _('Total Extended Excess:'), 'right');
+		$pdf->addTextWrap(300, $YPos, 180, $FontSize, __('Total Extended Excess:'), 'right');
 	}
 	$DisplayTotalVal = locale_number_format($Total_Shortage, 2);
 	$pdf->addTextWrap(510, $YPos, 60, $FontSize, $DisplayTotalVal, 'right');
@@ -229,23 +216,23 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->__destruct();
 } else { /*The option to print PDF was not hit so display form */
 
-	$Title = _('MRP Shortages - Excess Reporting');
+	$Title = __('MRP Shortages - Excess Reporting');
 	$ViewTopic = 'MRP';
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="CategoryID">' . _('Inventory Category') . ':</label>
+			<label for="CategoryID">' . __('Inventory Category') . ':</label>
 			<select name="CategoryID">';
-	echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
+	echo '<option selected="selected" value="All">' . __('All Stock Categories') . '</option>';
 	$SQL = "SELECT categoryid,
 			categorydescription
 			FROM stockcategory";
@@ -257,31 +244,31 @@ if (isset($_POST['PrintPDF'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Sort">' . _('Sort') . ':</label>
+			<label for="Sort">' . __('Sort') . ':</label>
 			<select name="Sort">
-				<option selected="selected" value="extcost">' . _('Extended Shortage Dollars') . '</option>
-				<option value="stockid">' . _('Part Number') . '</option>
+				<option selected="selected" value="extcost">' . __('Extended Shortage Dollars') . '</option>
+				<option value="stockid">' . __('Part Number') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for="ReportType">' . _('Shortage-Excess Option') . ':</label>
+			<label for="ReportType">' . __('Shortage-Excess Option') . ':</label>
 			<select name="ReportType">
-				<option selected="selected" value="Shortage">' . _('Report MRP Shortages') . '</option>
-				<option value="Excess">' . _('Report MRP Excesses') . '</option>
+				<option selected="selected" value="Shortage">' . __('Report MRP Shortages') . '</option>
+				<option value="Excess">' . __('Report MRP Excesses') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label for="Fill">' . _('Print Option') . ':</label>
+			<label for="Fill">' . __('Print Option') . ':</label>
 			<select name="Fill">
-				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-				<option value="no">' . _('Plain Print') . '</option>
+				<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+				<option value="no">' . __('Plain Print') . '</option>
 			</select>
 		</field>';
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
 		</div>
 		</form>';
 
@@ -304,12 +291,12 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 
 	$YPos-= $LineHeight;
 	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('MRP Shortages Report'));
+		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('MRP Shortages Report'));
 	} else {
-		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('MRP Excess Report'));
+		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('MRP Excess Report'));
 	}
 
-	$pdf->addTextWrap($Page_Width - $Right_Margin - 110, $YPos, 160, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber, 'left');
+	$pdf->addTextWrap($Page_Width - $Right_Margin - 110, $YPos, 160, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
 
 	$YPos-= (2 * $LineHeight);
 
@@ -322,18 +309,18 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 	/*set up the headings */
 	$Xpos = $Left_Margin + 1;
 
-	$pdf->addTextWrap($Xpos, $YPos, 130, $FontSize, _('Part Number'), 'left');
-	$pdf->addTextWrap(130, $YPos, 150, $FontSize, _('Description'), 'left');
-	$pdf->addTextWrap(285, $YPos, 20, $FontSize, _('M/B'), 'right');
-	$pdf->addTextWrap(305, $YPos, 55, $FontSize, _('Unit Cost'), 'right');
-	$pdf->addTextWrap(360, $YPos, 50, $FontSize, _('Supply'), 'right');
-	$pdf->addTextWrap(410, $YPos, 50, $FontSize, _('Demand'), 'right');
+	$pdf->addTextWrap($Xpos, $YPos, 130, $FontSize, __('Part Number'), 'left');
+	$pdf->addTextWrap(130, $YPos, 150, $FontSize, __('Description'), 'left');
+	$pdf->addTextWrap(285, $YPos, 20, $FontSize, __('M/B'), 'right');
+	$pdf->addTextWrap(305, $YPos, 55, $FontSize, __('Unit Cost'), 'right');
+	$pdf->addTextWrap(360, $YPos, 50, $FontSize, __('Supply'), 'right');
+	$pdf->addTextWrap(410, $YPos, 50, $FontSize, __('Demand'), 'right');
 	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap(460, $YPos, 50, $FontSize, _('Shortage'), 'right');
-		$pdf->addTextWrap(510, $YPos, 60, $FontSize, _('Ext. Shortage'), 'right');
+		$pdf->addTextWrap(460, $YPos, 50, $FontSize, __('Shortage'), 'right');
+		$pdf->addTextWrap(510, $YPos, 60, $FontSize, __('Ext. Shortage'), 'right');
 	} else {
-		$pdf->addTextWrap(460, $YPos, 50, $FontSize, _('Excess'), 'right');
-		$pdf->addTextWrap(510, $YPos, 60, $FontSize, _('Ext. Excess'), 'right');
+		$pdf->addTextWrap(460, $YPos, 50, $FontSize, __('Excess'), 'right');
+		$pdf->addTextWrap(510, $YPos, 60, $FontSize, __('Ext. Excess'), 'right');
 	}
 	$FontSize = 8;
 	$YPos = $YPos - (2 * $LineHeight);

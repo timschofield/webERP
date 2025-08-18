@@ -108,7 +108,7 @@ $PaperSize = $FormDesign->PaperSize;
 $LineHeight = $FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $PageNumber = 1;
-$pdf->addInfo('Title', _('FG Label'));
+$pdf->addInfo('Title', __('FG Label'));
 
 if ($SelectedORD == 'Preview') {
 	$NoOfLabels = 1;
@@ -182,7 +182,7 @@ if ($SelectedORD == 'Preview') {
 							WHERE loctransfers.reference='" . $SelectedORD . "'";
 	}
 	//echo $OrderHeaderSQL;
-	$ErrMsg = _('The order cannot be retrieved because');
+	$ErrMsg = __('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
 	if (DB_num_rows($GetOrdHdrResult) > 0) {
@@ -258,7 +258,7 @@ if ($NoOfLabels > 0) {
 		$AddressLine = 0;
 		$pdf->addJpegFromFile($_SESSION['LogoFile'], $FormDesign->logo->x, $Page_Height - $FormDesign->logo->y, $FormDesign->logo->width, $FormDesign->logo->height);
 		$pdf->setFont('', 'B');
-		$pdf->addText($FormDesign->CompanyAddress->CompanyLabel->x, $Page_Height - $FormDesign->CompanyAddress->CompanyLabel->y, $FormDesign->CompanyAddress->CompanyLabel->FontSize, _('Ship From') . ': ');
+		$pdf->addText($FormDesign->CompanyAddress->CompanyLabel->x, $Page_Height - $FormDesign->CompanyAddress->CompanyLabel->y, $FormDesign->CompanyAddress->CompanyLabel->FontSize, __('Ship From') . ': ');
 		$pdf->setFont('', '');
 		$pdf->addText($FormDesign->CompanyAddress->CompanyName->x, $Page_Height - $FormDesign->CompanyAddress->CompanyName->y, $FormDesign->CompanyAddress->CompanyName->FontSize, $_SESSION['CompanyRecord']['coyname']);
 		$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice1']);
@@ -285,7 +285,7 @@ if ($NoOfLabels > 0) {
 		}
 		$pdf->Line($FormDesign->LabelLine->startx, $Page_Height - $FormDesign->LabelLine->starty, $FormDesign->LabelLine->endx, $Page_Height - $FormDesign->LabelLine->endy);
 		$pdf->setFont('', 'B');
-		$pdf->addText($FormDesign->DeliveryAddress->DelLabel->x, $Page_Height - $FormDesign->DeliveryAddress->DelLabel->y, $FormDesign->DeliveryAddress->DelLabel->FontSize, _('Ship To') . ': ');
+		$pdf->addText($FormDesign->DeliveryAddress->DelLabel->x, $Page_Height - $FormDesign->DeliveryAddress->DelLabel->y, $FormDesign->DeliveryAddress->DelLabel->FontSize, __('Ship To') . ': ');
 		$pdf->setFont('', '');
 		$pdf->addText($FormDesign->DeliveryAddress->DelName->x, $Page_Height - $FormDesign->DeliveryAddress->DelName->y, $FormDesign->DeliveryAddress->DelName->FontSize, $MyArray[$i]['deliverto']);
 		$AddressLine = 0;
@@ -312,9 +312,9 @@ if ($NoOfLabels > 0) {
 			++$AddressLine;
 		}
 
-		$pdf->addText($FormDesign->PONbr->x, $Page_Height - $FormDesign->PONbr->y, $FormDesign->PONbr->FontSize, _('Order') . ': ' . $MyArray[$i]['customerref']);
-		$pdf->addText($FormDesign->ItemNbr->x, $Page_Height - $FormDesign->ItemNbr->y, $FormDesign->ItemNbr->FontSize, _('Item') . ': ' . $MyArray[$i]['stockid']);
-		$pdf->addText($FormDesign->CustItem->x, $Page_Height - $FormDesign->CustItem->y, $FormDesign->CustItem->FontSize, _('Customer Item') . ': ' . $MyArray[$i]['custitem']);
+		$pdf->addText($FormDesign->PONbr->x, $Page_Height - $FormDesign->PONbr->y, $FormDesign->PONbr->FontSize, __('Order') . ': ' . $MyArray[$i]['customerref']);
+		$pdf->addText($FormDesign->ItemNbr->x, $Page_Height - $FormDesign->ItemNbr->y, $FormDesign->ItemNbr->FontSize, __('Item') . ': ' . $MyArray[$i]['stockid']);
+		$pdf->addText($FormDesign->CustItem->x, $Page_Height - $FormDesign->CustItem->y, $FormDesign->CustItem->FontSize, __('Customer Item') . ': ' . $MyArray[$i]['custitem']);
 
 	} //end of loop labels
 
@@ -329,29 +329,29 @@ if ($NoOfLabels > 0) {
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 										array($_POST['EmailTo'] => ''),
-										_('Work Order Number') . ' ' . $SelectedORD,
-										_('Please Process this Work order number') . ' ' . $SelectedORD,
+										__('Work Order Number') . ' ' . $SelectedORD,
+										__('Please Process this Work order number') . ' ' . $SelectedORD,
 										array(sys_get_temp_dir() . '/' . $PdfFileName)
 									);
 
 		if ($Success == 1) {
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
-			prnMsg(_('Work Order') . ' ' . $SelectedORD . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
+			prnMsg(__('Work Order') . ' ' . $SelectedORD . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 
 		} else { //email failed
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
-			prnMsg(_('Emailing Work order') . ' ' . $SelectedORD . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
+			prnMsg(__('Emailing Work order') . ' ' . $SelectedORD . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 	}
 	unlink(sys_get_temp_dir() . '/' . $PdfFileName);
 	include('includes/footer.php');
 
 } else { //there were not labels to print
-	$Title = _('Label Error');
+	$Title = __('Label Error');
 	include('includes/header.php');
-	prnMsg(_('There were no labels to print'), 'warn');
-	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+	prnMsg(__('There were no labels to print'), 'warn');
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }

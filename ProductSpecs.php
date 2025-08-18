@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Product Specifications Maintenance');
+$Title = __('Product Specifications Maintenance');
 $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_ProdSpecs';// Anchor's id in the manual's html document.
 include('includes/header.php');
@@ -36,16 +36,16 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 	if (!isset($_POST['CopyTo']) OR $_POST['CopyTo']=='' ) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />
+		echo __('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
-				<input type="submit" name="CopySpec" value="' . _('Copy') . '" />
+				<input type="submit" name="CopySpec" value="' . __('Copy') . '" />
 			</div>
 			</form>';
 		include('includes/footer.php');
@@ -73,8 +73,8 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 								showontestplan,
 								active
 					FROM prodspecs WHERE keyval='" .$KeyValue. "'";
-			$Msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
-			$ErrMsg = _('The insert of the Product Specification failed because');
+			$Msg = __('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
+			$ErrMsg = __('The insert of the Product Specification failed because');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Msg , 'success');
 		$KeyValue=$_POST['CopyTo'];
@@ -89,19 +89,19 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<fieldset>
 				<field>
-					<label for="KeyValue">' . _('Enter Specification Name') .':</label>
+					<label for="KeyValue">' . __('Enter Specification Name') .':</label>
 					<input type="text" name="KeyValue" size="25" maxlength="25" />
 				</field>
 			</fieldset>
 			<div>
-				<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+				<input type="submit" name="pickspec" value="' . __('Submit') . '" />
 			</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 				<field>
-					<label for="KeyValue">' . _('Or Select Existing Specification') .':</label>';
+					<label for="KeyValue">' . __('Or Select Existing Specification') .':</label>';
 
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
@@ -119,7 +119,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 			</field>
 		</fieldset>
 		<div>
-			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
+			<input type="submit" name="pickspec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
 
@@ -132,7 +132,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 
 	$ResultSelection=DB_query($SQLSpecSelect);
 	$MyRowSelection=DB_fetch_array($ResultSelection);
-	echo '<h3>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '</h3>';
+	echo '<h3>' . __('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '</h3>';
 }
 if (isset($_GET['ListTests'])) {
 	$SQL = "SELECT qatests.testid,
@@ -156,14 +156,14 @@ if (isset($_GET['ListTests'])) {
 			<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Add') . '</th>
-					<th class="SortedColumn">' . _('Name') . '</th>
-					<th class="SortedColumn">' . _('Method') . '</th>
-					<th class="SortedColumn">' . _('Units') . '</th>
-					<th>' . _('Possible Values') . '</th>
-					<th>' . _('Target Value') . '</th>
-					<th>' . _('Range Min') . '</th>
-					<th>' . _('Range Max') . '</th>
+					<th class="SortedColumn">' . __('Add') . '</th>
+					<th class="SortedColumn">' . __('Name') . '</th>
+					<th class="SortedColumn">' . __('Method') . '</th>
+					<th class="SortedColumn">' . __('Units') . '</th>
+					<th>' . __('Possible Values') . '</th>
+					<th>' . __('Target Value') . '</th>
+					<th>' . __('Range Min') . '</th>
+					<th>' . __('Range Max') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -177,28 +177,28 @@ if (isset($_GET['ListTests'])) {
 	$RangeMin='';
 	$RangeMax='';
 	if ($MyRow['numericvalue'] == 1) {
-		$IsNumeric = _('Yes');
+		$IsNumeric = __('Yes');
 		$Class="number";
 	} else {
-		$IsNumeric = _('No');
+		$IsNumeric = __('No');
 	}
 
 	switch ($MyRow['type']) {
 	 	case 0; //textbox
-	 		$TypeDisp=_('Text Box');
+	 		$TypeDisp=__('Text Box');
 	 		break;
 	 	case 1; //select box
-	 		$TypeDisp=_('Select Box');
+	 		$TypeDisp=__('Select Box');
 			break;
 		case 2; //checkbox
-			$TypeDisp=_('Check Box');
+			$TypeDisp=__('Check Box');
 			break;
 		case 3; //datebox
-			$TypeDisp=_('Date Box');
+			$TypeDisp=__('Date Box');
 			$Class="date";
 			break;
 		case 4; //range
-			$TypeDisp=_('Range');
+			$TypeDisp=__('Range');
 			$RangeMin='<input  class="' .$Class. '" type="text" name="AddRangeMin' .$x.'" />';
 			$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
 			break;
@@ -221,7 +221,7 @@ if (isset($_GET['ListTests'])) {
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
 				<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
-				<input type="submit" name="AddTests" value="' . _('Add') . '" />
+				<input type="submit" name="AddTests" value="' . __('Add') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -263,8 +263,8 @@ if (isset($_POST['AddTests'])) {
 								showontestplan,
 								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
-			$Msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
-			$ErrMsg = _('The insert of the Product Specification failed because');
+			$Msg = __('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
+			$ErrMsg = __('The insert of the Product Specification failed because');
 			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg($Msg , 'success');
 		} //if on
@@ -297,8 +297,8 @@ if (isset($_POST['submit'])) {
 				WHERE prodspecs.keyval = '".$KeyValue."'
 				AND prodspecs.testid = '".$SelectedQATest."'";
 
-		$Msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
-		$ErrMsg = _('The update of the Product Specification failed because');
+		$Msg = __('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  __('has been updated');
+		$ErrMsg = __('The update of the Product Specification failed because');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg , 'success');
@@ -323,14 +323,14 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this Product Specification because there are test results tied to it'),'error');
+		prnMsg(__('Cannot delete this Product Specification because there are test results tied to it'),'error');
 	} else {
 		$SQL="DELETE FROM prodspecs WHERE keyval='". $KeyValue."'
 									AND testid='". $SelectedQATest."'";
-		$ErrMsg = _('The Product Specification could not be deleted because');
+		$ErrMsg = __('The Product Specification could not be deleted because');
 		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . _('has been deleted from the database'),'success');
+		prnMsg(__('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . __('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
 		unset($Delete);
 		unset ($_GET['delete']);
@@ -367,18 +367,18 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="SortedColumn">' . _('Name') . '</th>
-			<th class="SortedColumn">' . _('Method') . '</th>
-			<th class="SortedColumn">' . _('Units') . '</th>
-			<th class="SortedColumn">' . _('Type') . '</th>
-			<th>' . _('Possible Values') . '</th>
-			<th>' . _('Target Value') . '</th>
-			<th>' . _('Range Min') . '</th>
-			<th>' . _('Range Max') . '</th>
-			<th class="SortedColumn">' . _('Show on Cert') . '</th>
-			<th class="SortedColumn">' . _('Show on Spec') . '</th>
-			<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
-			<th class="SortedColumn">' . _('Active') . '</th>
+			<th class="SortedColumn">' . __('Name') . '</th>
+			<th class="SortedColumn">' . __('Method') . '</th>
+			<th class="SortedColumn">' . __('Units') . '</th>
+			<th class="SortedColumn">' . __('Type') . '</th>
+			<th>' . __('Possible Values') . '</th>
+			<th>' . __('Target Value') . '</th>
+			<th>' . __('Range Min') . '</th>
+			<th>' . __('Range Max') . '</th>
+			<th class="SortedColumn">' . __('Show on Cert') . '</th>
+			<th class="SortedColumn">' . __('Show on Spec') . '</th>
+			<th class="SortedColumn">' . __('Show on Test Plan') . '</th>
+			<th class="SortedColumn">' . __('Active') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -386,30 +386,30 @@ or deletion of the records*/
 	while ($MyRow=DB_fetch_array($Result)) {
 
 	if ($MyRow['active'] == 1) {
-		$ActiveText = _('Yes');
+		$ActiveText = __('Yes');
 	} else {
-		$ActiveText = _('No');
+		$ActiveText = __('No');
 	}
 	if ($MyRow['numericvalue'] == 1) {
-		$IsNumeric = _('Yes');
+		$IsNumeric = __('Yes');
 		$Class="number";
 	} else {
-		$IsNumeric = _('No');
+		$IsNumeric = __('No');
 	}
 	if ($MyRow['showoncert'] == 1) {
-		$ShowOnCertText = _('Yes');
+		$ShowOnCertText = __('Yes');
 	} else {
-		$ShowOnCertText = _('No');
+		$ShowOnCertText = __('No');
 	}
 	if ($MyRow['showonspec'] == 1) {
-		$ShowOnSpecText = _('Yes');
+		$ShowOnSpecText = __('Yes');
 	} else {
-		$ShowOnSpecText = _('No');
+		$ShowOnSpecText = __('No');
 	}
 	if ($MyRow['showontestplan'] == 1) {
-		$ShowOnTestPlanText = _('Yes');
+		$ShowOnTestPlanText = __('Yes');
 	} else {
-		$ShowOnTestPlanText = _('No');
+		$ShowOnTestPlanText = __('No');
 	}
 	switch ($MyRow['type']) {
 	 	case 0; //textbox
@@ -443,8 +443,8 @@ or deletion of the records*/
 				<td>', $ShowOnSpecText, '</td>
 				<td>', $ShowOnTestPlanText, '</td>
 				<td>', $ActiveText, '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '">' .  _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this Product Specification ?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '">' .  __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this Product Specification ?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -452,7 +452,7 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedQATest)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?KeyValue=' .$KeyValue .'">' . _('Show All Product Specs') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?KeyValue=' .$KeyValue .'">' . __('Show All Product Specs') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -507,7 +507,7 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="TestID" value="' . $_POST['SelectedQATest'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('Test Name') . ':</td>
+					<td>' . __('Test Name') . ':</td>
 					<td>' . $_POST['QATestName'] . '</td>
 				</tr>';
 
@@ -521,7 +521,7 @@ if (! isset($_GET['delete'])) {
 			$_POST['ShowOnSpec']=1;
 		}
 		if ($MyRow['numericvalue'] == 1) {
-			$IsNumeric = _('Yes');
+			$IsNumeric = __('Yes');
 			$Class="number";
 		}
 		switch ($MyRow['type']) {
@@ -544,90 +544,90 @@ if (! isset($_GET['delete'])) {
 		} //end switch
 		if ($TypeDisp=='Select Box') {
 			echo '<tr>
-					<td>' . _('Possible Values') . ':</td>
+					<td>' . __('Possible Values') . ':</td>
 					<td><input type="text" name="DefaultValue" size="50" maxlength="150" value="' . $_POST['DefaultValue']. '" /></td>
 				</tr>';
 		}
 		echo '<tr>
-				<td>' . _('Target Value') . ':</td>
+				<td>' . __('Target Value') . ':</td>
 				<td><input type="text" class="' . $Class.'" name="TargetValue" size="15" maxlength="15" value="' . $_POST['TargetValue']. '" />&nbsp;'.$_POST['Units'].'</td>
 			</tr>';
 
 		if ($TypeDisp=='Range') {
 			echo '<tr>
-					<td>' . _('Range Min') . ':</td>
+					<td>' . __('Range Min') . ':</td>
 					<td><input class="' . $Class.'" type="text" name="RangeMin" size="10" maxlength="10" value="' . $_POST['RangeMin']. '" /></td>
 				</tr>';
 			echo '<tr>
-					<td>' . _('Range Max') . ':</td>
+					<td>' . __('Range Max') . ':</td>
 					<td><input class="' . $Class.'" type="text" name="RangeMax" size="10" maxlength="10" value="' . $_POST['RangeMax']. '" /></td>
 				</tr>';
 		}
 		echo '<tr>
-				<td>' . _('Show On Cert?') . ':</td>
+				<td>' . __('Show On Cert?') . ':</td>
 				<td><select name="ShowOnCert">';
 		if ($_POST['ShowOnCert']==1){
-			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		} else {
-			echo '<option value="1">' . _('Yes') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
 		}
 		if ($_POST['ShowOnCert']==0){
-			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
 		} else {
-			echo '<option value="0">' . _('No') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
 		}
 		echo '</select></td></tr><tr>
-				<td>' . _('Show On Spec?') . ':</td>
+				<td>' . __('Show On Spec?') . ':</td>
 				<td><select name="ShowOnSpec">';
 		if ($_POST['ShowOnSpec']==1){
-			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		} else {
-			echo '<option value="1">' . _('Yes') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
 		}
 		if ($_POST['ShowOnSpec']==0){
-			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
 		} else {
-			echo '<option value="0">' . _('No') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
 		}
 		echo '</select></td></tr><tr>
-			<td>' . _('Show On Test Plan?') . ':</td>
+			<td>' . __('Show On Test Plan?') . ':</td>
 			<td><select name="ShowOnTestPlan">';
 		if ($_POST['ShowOnTestPlan']==1){
-			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		} else {
-			echo '<option value="1">' . _('Yes') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
 		}
 		if ($_POST['ShowOnTestPlan']==0){
-			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
 		} else {
-			echo '<option value="0">' . _('No') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
 		}
 		echo '</select></td></tr><tr>
-				<td>' . _('Active?') . ':</td>
+				<td>' . __('Active?') . ':</td>
 				<td><select name="Active">';
 		if ($_POST['Active']==1){
-			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 		} else {
-			echo '<option value="1">' . _('Yes') . '</option>';
+			echo '<option value="1">' . __('Yes') . '</option>';
 		}
 		if ($_POST['Active']==0){
-			echo '<option selected="selected" value="0">' . _('No') . '</option>';
+			echo '<option selected="selected" value="0">' . __('No') . '</option>';
 		} else {
-			echo '<option value="0">' . _('No') . '</option>';
+			echo '<option value="0">' . __('No') . '</option>';
 		}
 		echo '</select></td>
 			</tr>
 			</table>
 			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+				<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 			</div>
 			</form>';
 	}
 	if (isset($KeyValue)) {
-		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ListTests=yes&amp;KeyValue=' .$KeyValue .'">' . _('Add More Tests') . '</a></div>';
-		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?CopySpec=yes&amp;KeyValue=' .$KeyValue .'">' . _('Copy This Specification') . '</a></div>';
-		echo '<div class="centre"><a target="_blank" href="'. $RootPath . '/PDFProdSpec.php?KeyValue=' .$KeyValue .'">' . _('Print Product Specification') . '</a></div>';
-		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Product Specification Main Page') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ListTests=yes&amp;KeyValue=' .$KeyValue .'">' . __('Add More Tests') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?CopySpec=yes&amp;KeyValue=' .$KeyValue .'">' . __('Copy This Specification') . '</a></div>';
+		echo '<div class="centre"><a target="_blank" href="'. $RootPath . '/PDFProdSpec.php?KeyValue=' .$KeyValue .'">' . __('Print Product Specification') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Product Specification Main Page') . '</a></div>';
 	}
 } //end if record deleted no point displaying form to add record
 

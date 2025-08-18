@@ -6,7 +6,7 @@ global $RootPath;
 
 if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$SQL = "SELECT confname, confvalue FROM config";
-	$ErrMsg = _('Could not get the configuration parameters from the database because');
+	$ErrMsg = __('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
 	while( $MyRow = DB_fetch_array($ConfigResult) ) {
 		if (is_numeric($MyRow['confvalue']) AND $MyRow['confname']!='DefaultPriceList' AND $MyRow['confname']!='VersionNumber'){
@@ -31,7 +31,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 
 	/* Load the pagesecurity settings from the database */
 	$SQL="SELECT script, pagesecurity FROM scripts";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()!=0) {
 		/* the table may not exist with the pagesecurity field in it if it is an older webERP database
 		 * divert to the db upgrade if the VersionNumber is not in the config table
@@ -74,12 +74,12 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				INNER JOIN currencies ON companies.currencydefault=currencies.currabrev
 				WHERE coycode=1";
 
-	$ErrMsg = _('An error occurred accessing the database to retrieve the company information');
+	$ErrMsg = __('An error occurred accessing the database to retrieve the company information');
 	$ReadCoyResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ReadCoyResult)==0) {
       		echo '<br /><b>';
-		prnMsg( _('The company record has not yet been set up') . '</b><br />' . _('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',_('CRITICAL PROBLEM'));
+		prnMsg( __('The company record has not yet been set up') . '</b><br />' . __('From the system setup tab select company maintenance to enter the company information and system preferences'),'error',__('CRITICAL PROBLEM'));
 		exit();
 	} else {
 		$_SESSION['CompanyRecord'] = DB_fetch_array($ReadCoyResult);
@@ -96,7 +96,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 				timeout,
 				auth
 			FROM emailsettings";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_error_no()==0 and DB_num_rows($Result) > 0) {
 		/*test to ensure that the emailsettings table exists!!
 		 * if it doesn't exist then we are into an UpgradeDatabase scenario anyway
@@ -115,7 +115,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 	//Check that the favourites table exists (upgrades will choke otherwise)
 
 	$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-	$Result = DB_query($SQL,'','',false,false);
+	$Result = DB_query($SQL, '', '', false, false);
 	if (DB_num_rows($Result)>0) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];

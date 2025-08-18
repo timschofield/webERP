@@ -5,9 +5,9 @@ CreateTable('salescommissiontypes', "CREATE TABLE `salescommissiontypes` (
   PRIMARY KEY (`commissiontypeid`)
 )");
 
-InsertRecord('salescommissiontypes', array('commissiontypename'), array(_('Stock Category')), array('commissiontypename'), array(_('Stock Category')));
-InsertRecord('salescommissiontypes', array('commissiontypename'), array(_('Sales Area')), array('commissiontypename'), array(_('Sales Area')));
-InsertRecord('salescommissiontypes', array('commissiontypename'), array(_('Time as Customer')), array('commissiontypename'), array(_('Time as Customer')));
+InsertRecord('salescommissiontypes', array('commissiontypename'), array(__('Stock Category')), array('commissiontypename'), array(__('Stock Category')));
+InsertRecord('salescommissiontypes', array('commissiontypename'), array(__('Sales Area')), array('commissiontypename'), array(__('Sales Area')));
+InsertRecord('salescommissiontypes', array('commissiontypename'), array(__('Time as Customer')), array('commissiontypename'), array(__('Time as Customer')));
 
 CreateTable('salescommissionrates', "CREATE TABLE `salescommissionrates` (
   `salespersoncode` varchar(4) NOT NULL DEFAULT '',
@@ -55,5 +55,5 @@ NewScript('SalesCommissionReports.php', 3);
 NewSysType(39, 'Sales Commision Accruals');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), _('Database updates for new sales commission functionality'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Database updates for new sales commission functionality'));
 }

@@ -48,12 +48,12 @@ function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
 	global $Messages;
     if($Return){
         $Prefix = $Type == 'info'
-            ? _('INFORMATION') . ' ' . _('Message')
+            ? __('INFORMATION') . ' ' . __('Message')
             : ($Type == 'warning' || $Type == 'warn'
-                ? _('WARNING') . ' ' . _('Report')
+                ? __('WARNING') . ' ' . __('Report')
                 : ($Type == 'error'
-                    ? _('ERROR') . ' ' . _('Report')
-                    : _('SUCCESS') . ' ' . _('Report')
+                    ? __('ERROR') . ' ' . __('Report')
+                    : __('SUCCESS') . ' ' . __('Report')
                 )
             );
         return '<div id="MessageContainerFoot">
@@ -306,8 +306,8 @@ function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
 	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
 		' ' . $_SESSION['CompanyRecord']['regoffice6']);
-	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
-		' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  __('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+		' ' . __('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
 	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
 }
 
@@ -371,12 +371,12 @@ function wikiLink($WikiType, $WikiPageID) {
 		$WikiPath = '../' . $_SESSION['WikiPath'] . '/';
 	}
 
-	if ($_SESSION['WikiApp'] == _('WackoWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
-	} elseif ($_SESSION['WikiApp'] == _('MediaWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
-	} elseif ($_SESSION['WikiApp'] == _('DokuWiki')) {
-		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
+	if ($_SESSION['WikiApp'] == __('WackoWiki')) {
+		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
+	} elseif ($_SESSION['WikiApp'] == __('MediaWiki')) {
+		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
+	} elseif ($_SESSION['WikiApp'] == __('DokuWiki')) {
+		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . __('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
 	}
 }
 
@@ -532,7 +532,7 @@ function GetMailList($MailGroup) {
 			FROM mailgroupdetails INNER JOIN www_users
 			ON www_users.userid=mailgroupdetails.userid
 			WHERE mailgroupdetails.groupname='" . $MailGroup . "'";
-	$ErrMsg = _('Failed to retrieve mail lists');
+	$ErrMsg = __('Failed to retrieve mail lists');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) != 0) {
 		//Create the string which meets the Recipients requirements
@@ -546,11 +546,11 @@ function GetMailList($MailGroup) {
 function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue) {
 	/* Used in Z_ scripts to change one field across the table.
 	*/
-	echo '<br />' . _('Changing') . ' ' . $TableName . ' ' . _('records');
+	echo '<br />' . __('Changing') . ' ' . $TableName . ' ' . __('records');
 	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
-	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
+	$ErrMsg = __('The SQL to update' . ' ' . $TableName . ' ' . __('records failed'));
 	$Result = DB_query($SQL, $ErrMsg, '', true);
-	echo ' ... ' . _('completed');
+	echo ' ... ' . __('completed');
 }
 
 /* Used in report scripts for standard periods.
@@ -560,21 +560,21 @@ function ReportPeriodList($Choice, $Options = array('t', 'l', 'n')) {
 	$Periods = array();
 
 	if (in_array('t', $Options)) {
-		$Periods[] = _('This Month');
-		$Periods[] = _('This Year');
-		$Periods[] = _('This Financial Year');
+		$Periods[] = __('This Month');
+		$Periods[] = __('This Year');
+		$Periods[] = __('This Financial Year');
 	}
 
 	if (in_array('l', $Options)) {
-		$Periods[] = _('Last Month');
-		$Periods[] = _('Last Year');
-		$Periods[] = _('Last Financial Year');
+		$Periods[] = __('Last Month');
+		$Periods[] = __('Last Year');
+		$Periods[] = __('Last Financial Year');
 	}
 
 	if (in_array('n', $Options)) {
-		$Periods[] = _('Next Month');
-		$Periods[] = _('Next Year');
-		$Periods[] = _('Next Financial Year');
+		$Periods[] = __('Next Month');
+		$Periods[] = __('Next Year');
+		$Periods[] = __('Next Financial Year');
 	}
 
 	$Count = count($Periods);
@@ -617,11 +617,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	// Find total number of days in next month:
 	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
 	switch ($PeriodName) {
-		case _('This Month'):
+		case __('This Month'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $ThisMonth, $TotalDays, $ThisYear));
 		break;
-		case _('This Quarter'):
+		case __('This Quarter'):
 			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 + 1;
 			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 3;
 			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
@@ -630,11 +630,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
 		break;
-		case _('This Year'):
+		case __('This Year'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $ThisYear));
 		break;
-		case _('This Financial Year'):
+		case __('This Financial Year'):
 			if (Date('m') > $_SESSION['YearEnd']) {
 				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y')));
 			} else {
@@ -642,11 +642,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], 0));
 		break;
-		case _('Last Month'):
+		case __('Last Month'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $LastMonth, $TotalDaysLast, $ThisYear));
 		break;
-		case _('Last Quarter'):
+		case __('Last Quarter'):
 			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 - 2;
 			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 0;
 			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
@@ -655,11 +655,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
 		break;
-		case _('Last Year'):
+		case __('Last Year'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $LastYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $LastYear));
 		break;
-		case _('Last Financial Year'):
+		case __('Last Financial Year'):
 			if (Date('m') > $_SESSION['YearEnd']) {
 				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') - 1));
 			} else {
@@ -667,11 +667,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			}
 			$DateEnd = date($_SESSION['DefaultDateFormat'], YearEndDate($_SESSION['YearEnd'], -1));
 		break;
-		case _('Next Month'):
+		case __('Next Month'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $NextMonth, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $NextMonth, $TotalDaysNext, $ThisYear));
 		break;
-		case _('Next Quarter'):
+		case __('Next Quarter'):
 			$QtrStrt = intval(($ThisMonth - 1) / 3) * 3 + 4;
 			$QtrEnd = intval(($ThisMonth - 1) / 3) * 3 + 6;
 			if ($QtrEnd == 4 or $QtrEnd == 6 or $QtrEnd == 9 or $QtrEnd == 11) {
@@ -680,11 +680,11 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrStrt, 1, $ThisYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $QtrEnd, $TotalDays, $ThisYear));
 		break;
-		case _('Next Year'):
+		case __('Next Year'):
 			$DateStart = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 1, 1, $NextYear));
 			$DateEnd = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, 12, 31, $NextYear));
 		break;
-		case _('Next Financial Year'):
+		case __('Next Financial Year'):
 			if (Date('m') > $_SESSION['YearEnd']) {
 				$DateStart = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 1, 1, Date('Y') + 1));
 			} else {
@@ -723,7 +723,7 @@ function FYStartPeriod($PeriodNumber) {
 }
 
 function fShowFieldHelp($HelpText) {
-	// Shows field help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	// Shows field help text if $_SESSION['ShowFieldHelp'] is true or is not set.
 	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
 		echo '<span class="field_help_text">', $HelpText, '</span>';
 	}
@@ -731,7 +731,7 @@ function fShowFieldHelp($HelpText) {
 }
 
 function fShowPageHelp($HelpText) {
-	// Shows page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set.
+	// Shows page help text if $_SESSION['ShowFieldHelp'] is true or is not set.
 	if ($_SESSION['ShowPageHelp'] || !isset($_SESSION['ShowPageHelp'])) {
 		echo '<div class="page_help_text">', $HelpText, '</div><br />';
 	}
@@ -818,10 +818,10 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 	if (!$Silent) {
 		// Check if $EmailSent is a boolean true or a string (error message)
 		if ($EmailSent === true) {
-			prnMsg( _('Email has been sent.'), 'success');
+			prnMsg( __('Email has been sent.'), 'success');
 		} else {
-			$ErrorMessage = is_string($EmailSent) ? $EmailSent : _('Unknown error');
-			prnMsg( _('Email not sent. An error was encountered: ') . $ErrorMessage, 'error');
+			$ErrorMessage = is_string($EmailSent) ? $EmailSent : __('Unknown error');
+			prnMsg( __('Email not sent. An error was encountered: ') . $ErrorMessage, 'error');
 		}
 	}
 	return $EmailSent;
@@ -931,19 +931,19 @@ function ShowDebugBackTrace($DebugMessage, $SQL){
 		return;
 	}
 
-	prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $Trace[0]['file'] . _('on line') . ' ' . $Trace[0]['line'],
-				'error', _('Database SQL Failure'));
+	prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . __('in file') . ' ' . $Trace[0]['file'] . __('on line') . ' ' . $Trace[0]['line'],
+				'error', __('Database SQL Failure'));
 
 	echo '<div class="centre">
 		<table class="selection">
-		<tr><th colspan="6">' . _('Function Call Stack') . '</th></tr>
+		<tr><th colspan="6">' . __('Function Call Stack') . '</th></tr>
 		<tr>
-		<th>' . _('Frame') . '</th>
-		<th>' . _('File') . '</th>
-		<th>' . _('Line') . '</th>
-		<th>' . _('Function') . '</th>
-		<th>' . _('Class') . '</th>
-		<th>' . _('Arguments') . '</th>
+		<th>' . __('Frame') . '</th>
+		<th>' . __('File') . '</th>
+		<th>' . __('Line') . '</th>
+		<th>' . __('Function') . '</th>
+		<th>' . __('Class') . '</th>
+		<th>' . __('Arguments') . '</th>
 		</tr>';
 	foreach ($Trace as $Index => $Frame) {
 		if (isset($Frame['args']) && count($Frame['args']) > 0) {

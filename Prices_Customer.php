@@ -17,7 +17,7 @@ $SalesType = $MyRow['salestype'];
 $CurrDecimalPlaces = $MyRow['currdecimalplaces'];
 $Name = $MyRow['name'];
 
-$Title = _('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
+$Title = __('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
 
 $ViewTopic = 'Sales';
 $BookMark = '';
@@ -31,16 +31,16 @@ if (isset($_GET['Item'])){
 
 if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']==''){
 
-	prnMsg( _('A customer must be selected from the customer selection screen') . ', '
-		. _('then an item must be selected before this page is called') . '. '
-			. _('The product selection page should call this page with a valid product code'),'info');
+	prnMsg( __('A customer must be selected from the customer selection screen') . ', '
+		. __('then an item must be selected before this page is called') . '. '
+			. __('The product selection page should call this page with a valid product code'),'info');
 	echo '<br />';
 	include('includes/footer.php');
 	exit();
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . _('Special Customer Prices') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') .
+		'" alt="" />' . __('Special Customer Prices') . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 
 	if (!is_numeric(filter_number_format($_POST['Price'])) OR $_POST['Price']=='') {
 		$InputError = 1;
-		$Msg = _('The price entered must be numeric');
+		$Msg = __('The price entered must be numeric');
 	}
 
 	if ($_POST['Branch'] !=''){
@@ -66,26 +66,26 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) ==0){
 			$InputError =1;
-			$Msg = _('The branch code entered is not currently defined');
+			$Msg = __('The branch code entered is not currently defined');
 		}
 	}
 
 	if (! Is_Date($_POST['StartDate'])){
 		$InputError =1;
-		$Msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$Msg = __('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
 	if ($_POST['EndDate']!='9999-12-31'){
 		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){ //EndDate can also be blank for default prices
 			$InputError =1;
-			$Msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+			$Msg = __('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		}
 		if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate']) AND $_POST['EndDate']!=''){
 			$InputError =1;
-			$Msg = _('The end date is expected to be after the start date, enter an end date after the start date for this price');
+			$Msg = __('The end date is expected to be after the start date, enter an end date after the start date for this price');
 		}
 		if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['EndDate']) AND $_POST['EndDate']!=''){
 			$InputError =1;
-			$Msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
+			$Msg = __('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 		}
 		if (trim($_POST['EndDate'])==''){
 			$_POST['EndDate'] = '9999-12-31';
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 				AND prices.enddate='" . $_POST['OldEndDate'] . "'
 				AND prices.debtorno='" . $_SESSION['CustomerID'] . "'";
 
-		$Msg = _('Price Updated');
+		$Msg = __('Price Updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected price is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new price form */
@@ -131,16 +131,16 @@ if (isset($_POST['submit'])) {
 								'" . FormatDateForSQL($_POST['StartDate']) . "',
 								'" . FormatDateForSQL($_POST['EndDate']) . "'
 							)";
-		$Msg = _('Price added') . '.';
+		$Msg = __('Price added') . '.';
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError!=1){
-		$Result = DB_query($SQL,'','',false,false);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no()!=0){
-		   if ($Msg==_('Price Updated')){
-				$Msg = _('The price could not be updated because') . ' - ' . DB_error_msg();
+		   if ($Msg==__('Price Updated')){
+				$Msg = __('The price could not be updated because') . ' - ' . DB_error_msg();
 			} else {
-				$Msg = _('The price could not be added because') . ' - ' . DB_error_msg();
+				$Msg = __('The price could not be added because') . ' - ' . DB_error_msg();
 			}
 		}else {
 			ReSequenceEffectiveDates ($Item, $SalesType, $CurrCode, $_SESSION['CustomerID']);
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 			AND prices.enddate='" . $_GET['EndDate'] . "'";
 
 	$Result = DB_query($SQL);
-	prnMsg( _('This price has been deleted') . '!','success');
+	prnMsg( __('This price has been deleted') . '!','success');
 }
 
 
@@ -186,18 +186,18 @@ $SQL = "SELECT prices.price,
 						typeabbrev,
 						startdate";
 
-$ErrMsg = _('Could not retrieve the normal prices set up because');
+$ErrMsg = __('Could not retrieve the normal prices set up because');
 $Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 
 if (DB_num_rows($Result) == 0) {
-	prnMsg(  _('There are no default prices set up for this part'), 'info');
+	prnMsg(  __('There are no default prices set up for this part'), 'info');
 } else {
-	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
+	echo '<tr><th>' . __('Normal Price') . '</th></tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['enddate']=='9999-12-31'){
-			$EndDateDisplay = _('No End Date');
+			$EndDateDisplay = __('No End Date');
 		} else {
 			$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 		}
@@ -229,34 +229,34 @@ $SQL = "SELECT prices.price,
 		ORDER BY prices.branchcode,
 				prices.startdate";
 
-$ErrMsg = _('Could not retrieve the special prices set up because');
+$ErrMsg = __('Could not retrieve the special prices set up because');
 $Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 
 if (DB_num_rows($Result) == 0) {
-	prnMsg( _('There are no special prices set up for this part'), 'warn');
+	prnMsg( __('There are no special prices set up for this part'), 'warn');
 } else {
 /*THERE IS ALREADY A spl price setup */
 	echo '<tr>
-			<th>' . _('Special Price') . '</th>
-			<th>' . _('Branch') . '</th>
-			<th>' . _('Units') . '</th>
-			<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
-			<th>' . _('Start Date') . '</th>
-			<th>' . _('End Date') . '</th>
+			<th>' . __('Special Price') . '</th>
+			<th>' . __('Branch') . '</th>
+			<th>' . __('Units') . '</th>
+			<th>' . __('Conversion') . '<br />' . __('Factor') . '</th>
+			<th>' . __('Start Date') . '</th>
+			<th>' . __('End Date') . '</th>
 			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 	if ($MyRow['branchcode']==''){
-		$Branch = _('All Branches');
+		$Branch = __('All Branches');
 	} else {
 		$Branch = $MyRow['brname'];
 	}
 	if ($MyRow['enddate']=='9999-12-31'){
-		$EndDateDisplay = _('No End Date');
+		$EndDateDisplay = __('No End Date');
 	} else {
 		$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 	}
@@ -281,8 +281,8 @@ if (DB_num_rows($Result) == 0) {
 				<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
 				<td>' . $EndDateDisplay . '</td>
 				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$MyRow['price'].'&amp;Branch='.$MyRow['branchcode'].
-					'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$MyRow['branchcode'].'&amp;StartDate='.$MyRow['startdate'] .'&amp;EndDate='.$MyRow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
+					'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'].'&amp;Edit=1">' . __('Edit') . '</a></td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$MyRow['branchcode'].'&amp;StartDate='.$MyRow['startdate'] .'&amp;EndDate='.$MyRow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this price?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 
@@ -331,7 +331,7 @@ $SQL = "SELECT branchcode,
 $Result = DB_query($SQL);
 
 echo '<fieldset>';
-echo '<legend><b>' . htmlspecialchars($Name, ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $CurrCode . '' . ' ' . _('for') . ' ';
+echo '<legend><b>' . htmlspecialchars($Name, ENT_QUOTES, 'UTF-8') . ' ' . __('in') . ' ' . $CurrCode . '' . ' ' . __('for') . ' ';
 
 $Result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
@@ -340,23 +340,23 @@ $Result = DB_query("SELECT stockmaster.description,
 
 $MyRow = DB_fetch_row($Result);
 if (DB_num_rows($Result)==0){
-	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
+	prnMsg( __('The part code entered does not exist in the database') . '. ' . __('Only valid parts can have prices entered against them'),'error');
 	$InputError=1;
 }
 if ($MyRow[1]=='K'){
-	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
+	prnMsg(__('The part selected is a kit set item') .', ' . __('these items explode into their components when selected on an order') . ', ' . __('prices must be set up for the components and no price can be set for the whole kit'),'error');
 	exit();
 }
 
 echo $Item . ' - ' . $MyRow[0] . '</b></legend>';
 
 echo '<field>
-		<label for="Branch">' . _('Branch') . ':</label>
+		<label for="Branch">' . __('Branch') . ':</label>
 		<select name="Branch">';
 if (isset($MyRow['branchcode']) and $MyRow['branchcode']=='') {
-	echo '<option selected="selected" value="">' . _('All Branches') . '</option>';
+	echo '<option selected="selected" value="">' . __('All Branches') . '</option>';
 } else {
-	echo '<option value="">' . _('All Branches') . '</option>';
+	echo '<option value="">' . __('All Branches') . '</option>';
 }
 
 while ($MyRow=DB_fetch_array($Result)) {
@@ -370,23 +370,23 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="StartDate">' . _('Start Date') . ':</label>
+		<label for="StartDate">' . __('Start Date') . ':</label>
 		<input name="StartDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 	</field>';
 echo '<field>
-		<label for="EndDate">' . _('End Date') . ':</label>
+		<label for="EndDate">' . __('End Date') . ':</label>
 		<input name="EndDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
 	</field>';
 
 echo '<field>
-		<label for="Price">' . _('Price') . ':</label>
+		<label for="Price">' . __('Price') . ':</label>
 		<input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" />
 	</field>
 </fieldset>';
 
 
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 </form>';
 

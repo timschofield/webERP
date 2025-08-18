@@ -6,7 +6,7 @@ $SuppliersSecurity = 9; //don't show supplier purchasing info unless security to
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
 include('includes/session.php');
-$Title = _('Search Inventory Items');
+$Title = __('Search Inventory Items');
 $ViewTopic = 'Inventory';
 $BookMark = 'SelectingInventory';
 include('includes/header.php');
@@ -44,8 +44,8 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
-	prnMsg (_('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
-	echo '<a class="toplink" href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a><br /><br />';
+	prnMsg(__('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
+	echo '<a class="toplink" href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a><br /><br />';
 	include('includes/footer.php');
 	exit();
 }
@@ -56,14 +56,14 @@ $TableHead =
 		<thead>
 			<tr>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
-					_('Item Inquiries') . '</th>
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . __('Inquiries and Reports') . '" />' .
+					__('Item Inquiries') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
-					_('Item Transactions') . '</th>
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . __('Transactions') . '" />' .
+					__('Item Transactions') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
-					_('Item Maintenance') . '</th>
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Maintenance') . '" />' .
+					__('Item Maintenance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -99,44 +99,44 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Its_A_Kitset = false;
 	$Its_A_Labour_Item = false;
 	if ($MyRow['discontinued']==1){
-		$ItemStatus = '<p class="bad">' ._('Obsolete') . '</p>';
+		$ItemStatus = '<p class="bad">' .__('Obsolete') . '</p>';
 	} else {
 		$ItemStatus = '';
 	}
 /*	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/inventory.png" title="', // Icon image.
-		_('Inventory Item'), '" /> ', // Icon title.
+		__('Inventory Item'), '" /> ', // Icon title.
 		'<b title="', $MyRow['longdescription'], '">',
-		_('Inventory Item'), ': ', $StockID, ' - ', $MyRow['description'], '</b> ', $ItemStatus, '</p>';// Page title.*/
+		__('Inventory Item'), ': ', $StockID, ' - ', $MyRow['description'], '</b> ', $ItemStatus, '</p>';// Page title.*/
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/inventory.png" title="', // Icon image.
-		_('Inventory Item'), '" /> ', // Icon title.
-		_('Inventory Item'), ': ', $StockID, ' - ', $MyRow['description'], ' ', $ItemStatus, '</p>';// Page title.
+		__('Inventory Item'), '" /> ', // Icon title.
+		__('Inventory Item'), ': ', $StockID, ' - ', $MyRow['description'], ' ', $ItemStatus, '</p>';// Page title.
 
 	echo '<table width="90%">
 		<tr>
 			<td style="width:40%" valign="top">
 			<table>'; //nested table
-	echo '<tr><th class="number">' . _('Category') . ':</th> <td colspan="6" class="select">' . $MyRow['categorydescription'] , '</td></tr>';
-	echo '<tr><th class="number">' . _('Item Type') . ':</th>
+	echo '<tr><th class="number">' . __('Category') . ':</th> <td colspan="6" class="select">' . $MyRow['categorydescription'] , '</td></tr>';
+	echo '<tr><th class="number">' . __('Item Type') . ':</th>
 			<td colspan="2" class="select">';
 	switch ($MyRow['mbflag']) {
 		case 'A':
-			echo _('Assembly Item');
+			echo __('Assembly Item');
 			$Its_A_Kitset_Assembly_Or_Dummy = True;
 		break;
         case 'G':
-            echo _('Phantom Assembly Item');
+            echo __('Phantom Assembly Item');
             $Its_A_Kitset_Assembly_Or_Dummy = True;
             $Its_A_Kitset = True;
         break;
 		case 'K':
-			echo _('Kitset Item');
+			echo __('Kitset Item');
 			$Its_A_Kitset_Assembly_Or_Dummy = True;
 			$Its_A_Kitset = True;
 		break;
 		case 'D':
-			echo _('Service/Labour Item');
+			echo __('Service/Labour Item');
 			$Its_A_Kitset_Assembly_Or_Dummy = True;
 			$Its_A_Dummy = True;
 			if ($MyRow['stocktype'] == 'L') {
@@ -144,27 +144,27 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			}
 		break;
 		case 'B':
-			echo _('Purchased Item');
+			echo __('Purchased Item');
 		break;
 		default:
-			echo _('Manufactured Item');
+			echo __('Manufactured Item');
 		break;
 	}
-	echo '</td><th class="number">' . _('Control Level') . ':</th><td class="select">';
+	echo '</td><th class="number">' . __('Control Level') . ':</th><td class="select">';
 	if ($MyRow['serialised'] == 1) {
-		echo _('serialised');
+		echo __('serialised');
 	} elseif ($MyRow['controlled'] == 1) {
-		echo _('Batchs/Lots');
+		echo __('Batchs/Lots');
 	} else {
-		echo _('N/A');
+		echo __('N/A');
 	}
-	echo '</td><th class="number">' . _('Units') . ':</th>
+	echo '</td><th class="number">' . __('Units') . ':</th>
 			<td class="select">' . $MyRow['units'] . '</td></tr>';
-	echo '<tr><th class="number">' . _('Volume') . ':</th>
+	echo '<tr><th class="number">' . __('Volume') . ':</th>
 			<td class="select" colspan="2">' . locale_number_format($MyRow['volume'], 3) . '</td>
-			<th class="number">' . _('Weight') . ':</th>
+			<th class="number">' . __('Weight') . ':</th>
 			<td class="select">' . locale_number_format($MyRow['grossweight'], 3) . '</td>
-			<th class="number">' . _('EOQ') . ':</th>
+			<th class="number">' . __('EOQ') . ':</th>
 			<td class="select">' . locale_number_format($MyRow['eoq'], $MyRow['decimalplaces']) . '</td></tr>';
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		$PriceResult = DB_query("SELECT typeabbrev,
@@ -190,9 +190,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$Cost = $MyRow['cost'];
 		}
 		echo '<tr>
-				<th class="number">' . _('Price') . ':</th>';
+				<th class="number">' . __('Price') . ':</th>';
 		if (DB_num_rows($PriceResult) == 0) {
-			echo '<td class="select" colspan="2">' . _('No Default Price Set') . '</td>';
+			echo '<td class="select" colspan="2">' . __('No Default Price Set') . '</td>';
 			$Price = 0;
 		} else {
 			$PriceRow = DB_fetch_row($PriceResult);
@@ -200,14 +200,14 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			echo '<td class="select" colspan="2" style="text-align:right">' . locale_number_format($Price, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 		}
 		if (in_array($CostSecurity,$_SESSION['AllowedPageSecurityTokens'])) {
-		echo '<th class="number">' . _('Cost') . ':</th>
+		echo '<th class="number">' . __('Cost') . ':</th>
 			<td class="select" style="text-align:right">' . locale_number_format($Cost, $_SESSION['StandardCostDecimalPlaces']) . '</td>
-			<th class="number">' . _('Gross Profit') . ':</th>
+			<th class="number">' . __('Gross Profit') . ':</th>
 			<td class="select" style="text-align:right">';
 		if ($Price > 0) {
 			echo locale_number_format(($Price - $Cost) * 100 / $Price, 1) . '%';
 		} else {
-			echo _('N/A');
+			echo __('N/A');
 		}
 		echo '</td>';
 		}
@@ -235,7 +235,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 									AND stkcatpropid ='" . $PropertyRow['stkcatpropid']."'");
 		$PropValRow = DB_fetch_row($PropValResult);
 		if (DB_num_rows($PropValResult)==0){
-			$PropertyValue = _('Not Set');
+			$PropertyValue = __('Not Set');
 		} else {
 			$PropertyValue = $PropValRow[0];
 		}
@@ -248,12 +248,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			break;
 			case 2; //checkbox
 				echo '<td class="select" style="width:60px">';
-				if ($PropertyValue == _('Not Set')){
-					echo _('Not Set');
+				if ($PropertyValue == __('Not Set')){
+					echo __('Not Set');
 				} elseif ($PropertyValue == 1){
-					echo _('Yes');
+					echo __('Yes');
 				} else {
-					echo _('No');
+					echo __('No');
 				}
 			break;
 		} //end switch
@@ -268,8 +268,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		case 'A':
 		case 'D':
 		case 'K':
-			$QOH = _('N/A');
-			$QOO = _('N/A');
+			$QOH = __('N/A');
+			$QOO = __('N/A');
 		break;
 		case 'M':
 		case 'B':
@@ -283,15 +283,15 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$Demand = GetDemand($StockID, 'ALL');
 
 	echo '<tr>
-			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
+			<th class="number" style="width:15%">' . __('Quantity On Hand') . ':</th>
 			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOH, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
+			<th class="number" style="width:15%">' . __('Quantity Demand') . ':</th>
 			<td style="width:17%; text-align:right" class="select">' . locale_number_format($Demand, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
+			<th class="number" style="width:15%">' . __('Quantity On Order') . ':</th>
 			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOO, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		</table>'; //end of nested table
@@ -301,13 +301,13 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		AND (in_array($SuppliersSecurity, $_SESSION['AllowedPageSecurityTokens']))){
 
 		echo '<td style="width:50%" valign="top"><table>
-				<tr><th style="width:20%">' . _('Supplier') . '</th>
-					<th style="width:15%">' . _('Code') . '</th>
-					<th style="width:15%">' . _('Cost') . '</th>
-					<th style="width:5%">' . _('Curr') . '</th>
-					<th style="width:10%">' . _('Lead Time') . '</th>
-					<th style="width:10%">' . _('Min Order Qty') . '</th>
-					<th style="width:5%">' . _('Prefer') . '</th></tr>';
+				<tr><th style="width:20%">' . __('Supplier') . '</th>
+					<th style="width:15%">' . __('Code') . '</th>
+					<th style="width:15%">' . __('Cost') . '</th>
+					<th style="width:5%">' . __('Curr') . '</th>
+					<th style="width:10%">' . __('Lead Time') . '</th>
+					<th style="width:10%">' . __('Min Order Qty') . '</th>
+					<th style="width:5%">' . __('Prefer') . '</th></tr>';
 		$SuppResult = DB_query("SELECT suppliers.suppname,
 										suppliers.currcode,
 										suppliers.supplierid,
@@ -337,12 +337,12 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 					<td class="select" style="text-align:right">' . $SuppRow['minorderqty'] . '</td>';
 
 			if ($SuppRow['preferred']==1) { //then this is the preferred supplier
-				echo '<td class="select">' . _('Yes') . '</td>';
+				echo '<td class="select">' . __('Yes') . '</td>';
 			} else {
-				echo '<td class="select">' . _('No') . '</td>';
+				echo '<td class="select">' . __('No') . '</td>';
 			}
 			echo '<td class="select"><a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SelectedSupplier=' .
-				$SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . _('Order') . ' </a></td>';
+				$SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$SuppRow['minorderqty'].'&amp;LeadTime='.$SuppRow['leadtime'] . '">' . __('Order') . ' </a></td>';
 			echo '</tr>';
 		}
 		echo '</table>';
@@ -351,22 +351,22 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	echo '</td>
 		</tr>
 		</table>',// End first item details table
-		'<div class="page_help_text">', _('Select a menu option to operate using this inventory item.'), '</div>',// Page help text.
+		'<div class="page_help_text">', __('Select a menu option to operate using this inventory item.'), '</div>',// Page help text.
 		'<br />',
 		$TableHead,
 			'<tr>
 				<td valign="top" class="select">';
 	/*Stock Inquiry Options */
-	echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Movements') . '</a><br />';
+	echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Movements') . '</a><br />';
 	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Status') . '</a><br />';
-		echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . _('Show Stock Usage') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Status') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Usage') . '</a><br />';
 	}
-	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Sales Orders') . '</a><br />';
-	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Completed Sales Orders') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Sales Orders') . '</a><br />';
+	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Completed Sales Orders') . '</a><br />';
 	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-		echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
-		echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search All Purchase Orders') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Purchase Orders') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search All Purchase Orders') . '</a><br />';
 
 		$PossibleImageFiles = glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{png,jpg,jpeg}', GLOB_BRACE);
 		if (count($PossibleImageFiles)>0) {
@@ -374,21 +374,21 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		} else {
 			$ImageFile ='';
 		}
-		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . __('Show Part Picture (if available)') . '</a><br />';
 	}
 	if ($Its_A_Dummy == False) {
-		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . _('View Costed Bill Of Material') . '</a><br />';
-		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Item Is Used') . '</a><br />';
+		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Material') . '</a><br />';
+		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Item Is Used') . '</a><br />';
 	}
 	if ($Its_A_Labour_Item == True) {
-		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . _('Where This Labour Item Is Used') . '</a><br />';
+		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Labour Item Is Used') . '</a><br />';
 	}
 	wikiLink('Product', $StockID);
 	echo '</td><td valign="top" class="select">';
 	/* Stock Transactions */
 	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
-		echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . urlencode($StockID) . '">' . _('Quantity Adjustments') . '</a><br />';
-		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockAdjustments.php?StockID=' . urlencode($StockID) . '">' . __('Quantity Adjustments') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . __('Location Transfers') . '</a><br />';
 
 		//show the item image if it has been uploaded
 		$StockImgLink = GetImageLink($ImageFile, $StockID, 200, 200, "", "");
@@ -416,7 +416,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 					} else {
 						$EOQ = $MyRow['eoq'];
 					}
-					echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">' .  _('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
+					echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes' . '&amp;SelectedSupplier=' . $SuppRow['supplierid'] . '&amp;StockID=' . urlencode($StockID) . '&amp;Quantity='.$EOQ.'&amp;LeadTime='.$SuppRow['leadtime'].'">' .  __('Purchase this Item from') . ' ' . $SuppRow['suppname'] . '</a>
 					<br />';
 					$LastSupplierShown = $SuppRow['supplierid'];
 				}
@@ -426,28 +426,28 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == False) */
 	echo '</td><td valign="top" class="select">';
 	/* Stock Maintenance Options */
-	echo '<a href="' . $RootPath . '/Stocks.php?">' . _('Insert New Item') . '</a><br />';
-	echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . _('Modify Item Details') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Stocks.php?">' . __('Insert New Item') . '</a><br />';
+	echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . __('Modify Item Details') . '</a><br />';
 	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
-		echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Reorder Levels') . '</a><br />';
-		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
-		echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Purchasing Data') . '</a><br />';
-		echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Customer Item Data') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Reorder Levels') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Purchasing Data') . '</a><br />';
+		echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Customer Item Data') . '</a><br />';
 	}
 	if ($Its_A_Labour_Item == True) {
-		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Standard Cost') . '</a><br />';
+		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
 	}
 	if (!$Its_A_Kitset) {
-		echo '<a href="' . $RootPath . '/Prices.php?Item=' . urlencode($StockID) . '">' . _('Maintain Pricing') . '</a><br />';
+		echo '<a href="' . $RootPath . '/Prices.php?Item=' . urlencode($StockID) . '">' . __('Maintain Pricing') . '</a><br />';
 		if (isset($_SESSION['CustomerID'])
 			AND $_SESSION['CustomerID'] != ''
 			AND mb_strlen($_SESSION['CustomerID']) > 0) {
-			echo '<a href="' . $RootPath . '/Prices_Customer.php?Item=' . urlencode($StockID) . '">' . _('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
+			echo '<a href="' . $RootPath . '/Prices_Customer.php?Item=' . urlencode($StockID) . '">' . __('Special Prices for customer') . ' - ' . $_SESSION['CustomerID'] . '</a><br />';
 		}
-		echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Discount Category') . '</a><br />';
-	    echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . urlencode($StockID) . '">' . _('Clone This Item') . '</a><br />';
-		echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . urlencode($StockID) . '">' . _('Maintain Related Items') . '</a><br />';
-		echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . urlencode($StockID) . '">' . _('Maintain Price Matrix') . '</a><br />';
+		echo '<a href="' . $RootPath . '/DiscountCategories.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Discount Category') . '</a><br />';
+	    echo '<a href="' . $RootPath . '/StockClone.php?OldStockID=' . urlencode($StockID) . '">' . __('Clone This Item') . '</a><br />';
+		echo '<a href="' . $RootPath . '/RelatedItemsUpdate.php?Item=' . urlencode($StockID) . '">' . __('Maintain Related Items') . '</a><br />';
+		echo '<a href="' . $RootPath . '/PriceMatrix.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Price Matrix') . '</a><br />';
 	}
 	echo '</td></tr><tbody></table>';
 } else {
@@ -456,35 +456,35 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	// Inventory Item is not selected yet
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/inventory.png" title="', // Icon image.
-		_('Inventory Items'), '" /> ', // Icon title.
-		_('Inventory Items'), '</p>',// Page title.
+		__('Inventory Items'), '" /> ', // Icon title.
+		__('Inventory Items'), '</p>',// Page title.
 		'<br />',
 		$TableHead,
 		'<tr>',
 			'<td class="select"></td>',// Item inquiries options.
 			'<td class="select"></td>',// Item transactions options.
-			'<td class="select"><a href="', $RootPath, '/Stocks.php?">', _('Insert New Item'), '</a></td>',// Stock Maintenance Options.
+			'<td class="select"><a href="', $RootPath, '/Stocks.php?">', __('Insert New Item'), '</a></td>',// Stock Maintenance Options.
 		'</tr><tbody></table>';
 }// end displaying item options if there is one and only one record
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Inventory Items'). '</p>';
 
 echo '<fieldset>
-		<legend class="search">', _('Search for Stock Item'), '</legend>';
+		<legend class="search">', __('Search for Stock Item'), '</legend>';
 
 echo '<field>
-		<label for="StockCat">' . _('In Stock Category') . ':</label>';
+		<label for="StockCat">' . __('In Stock Category') . ':</label>';
 echo '<select name="StockCat">';
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] ='';
 }
 if ($_POST['StockCat'] == 'All') {
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	echo '<option selected="selected" value="All">' . __('All') . '</option>';
 } else {
-	echo '<option value="All">' . _('All') . '</option>';
+	echo '<option value="All">' . __('All') . '</option>';
 }
 while ($MyRow1 = DB_fetch_array($Result1)) {
 	if ($MyRow1['categoryid'] == $_POST['StockCat']) {
@@ -497,36 +497,36 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Keywords">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
+		<label for="Keywords">' . __('Enter partial') . '<b> ' . __('Description') . '</b>:</label>';
 if (isset($_POST['Keywords'])) {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" title="' . __('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 } else {
-	echo '<input type="text" autofocus="autofocus" name="Keywords" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
+	echo '<input type="text" autofocus="autofocus" name="Keywords" title="' . __('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 }
 echo '</field>';
 
 echo '<field>
-		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+		<label for="StockCode">' . '<b>' . __('OR') . ' </b>' . __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
 if (isset($_POST['StockCode'])) {
-	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . __('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
-	echo '<input type="text" name="StockCode" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="StockCode" title="' . __('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 }
 echo '<field>';
 
 echo '<field>
-		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Stock Code') . '</b>:</label>';
+		<label>' . '<b>' . __('OR') . ' </b>' . __('Enter partial') . ' <b>' . __('Supplier Stock Code') . '</b>:</label>';
 if (isset($_POST['SupplierStockCode'])) {
 	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="" size="15" maxlength="18" />
-		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
+		<fieldhelp>' . __('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
 } else {
 	echo '<input type="text" name="SupplierStockCode" title="" size="15" maxlength="18" />
-		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
+		<fieldhelp>' . __('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
 }
 echo '</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="Search" value="' . __('Search Now') . '" /></div>';
 echo '</form>';
 // query for list of record(s)
 if (isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
@@ -538,13 +538,13 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['PageOffset'] = 1;
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg (_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 	$SQL = GenerateStockmasterQuery($_POST);
-	$ErrMsg = _('No stock items were returned by the SQL because');
+	$ErrMsg = __('No stock items were returned by the SQL because');
 	$SearchResult = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($SearchResult) == 0) {
-		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
+		prnMsg(__('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
@@ -572,7 +572,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if ($ListPageMax > 1) {
-			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while ($ListPage <= $ListPageMax) {
@@ -584,9 +584,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . _('Go') . '" />
-				<input type="submit" name="Previous" value="' . _('Previous') . '" />
-				<input type="submit" name="Next" value="' . _('Next') . '" />
+				<input type="submit" name="Go" value="' . __('Go') . '" />
+				<input type="submit" name="Previous" value="' . __('Previous') . '" />
+				<input type="submit" name="Next" value="' . __('Next') . '" />
 				<input type="hidden" name="Keywords" value="'.$_POST['Keywords'].'" />
 				<input type="hidden" name="StockCat" value="'.$_POST['StockCat'].'" />
 				<input type="hidden" name="StockCode" value="'.$_POST['StockCode'].'" />
@@ -596,12 +596,12 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<table id="ItemSearchTable" class="selection">
 			<thead>
 				<tr>
-							<th>' . _('Stock Status') . '</th>
-							<th class="SortedColumn">' . _('Code') . '</th>
-                            				<th>'. _('Image').'</th>
-							<th class="SortedColumn">' . _('Description') . '</th>
-							<th>' . _('Total Qty On Hand') . '</th>
-							<th>' . _('Units') . '</th>
+							<th>' . __('Stock Status') . '</th>
+							<th class="SortedColumn">' . __('Code') . '</th>
+                            				<th>'. __('Image').'</th>
+							<th class="SortedColumn">' . __('Description') . '</th>
+							<th>' . __('Total Qty On Hand') . '</th>
+							<th>' . __('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -613,12 +613,12 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		while (($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($MyRow['mbflag'] == 'D') {
-				$QOH = _('N/A');
+				$QOH = __('N/A');
 			} else {
 				$QOH = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 			}
 			if ($MyRow['discontinued']==1){
-				$ItemStatus = '<p class="bad">' . _('Obsolete') . '</p>';
+				$ItemStatus = '<p class="bad">' . __('Obsolete') . '</p>';
 			} else {
 				$ItemStatus ='';
 			}
@@ -638,7 +638,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<td title="'. $MyRow['longdescription'] . '">' . $MyRow['description'] . '</td>
 			<td class="number">' . $QOH . '</td>
 			<td>' . $MyRow['units'] . '</td>
-			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . _('View') . '</a></td>
+			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . __('View') . '</a></td>
 			</tr>';
 
 			$RowIndex = $RowIndex + 1;

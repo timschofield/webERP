@@ -23,11 +23,11 @@ global $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
 if ( !$db ) {
-	if ($Debug==1) {
+	if ($Debug >= 1) {
 		echo '<br>' . $PgConnStr . '<br>';
 	}
-	echo '<br>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . _(' Try logging in with an alternative company name.');
-	echo '<br><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
+	echo '<br>' . __('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . __(' Try logging in with an alternative company name.');
+	echo '<br><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 	unset($_SESSION['DatabaseName']);
 	exit();
 }
@@ -50,23 +50,23 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
-				$ErrorMessage = _('An error occurred in retrieving the information');
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', _('DB ERROR:'));
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', __('DB ERROR:'));
 		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
-				$DebugMessage = _('The SQL that failed was');
+				$DebugMessage = __('The SQL that failed was');
 			}
-			ShowDebugBackTrace($DebugMessage, $SQL);	
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if (DB_error_no() !=0) {
-				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), 'error', _('DB Database Rollback Error') . ' ' . DB_error_no());
+				prnMsg('<br />' . __('Error Rolling Back Transaction!!'), 'error', __('DB Database Rollback Error') . ' ' . DB_error_no());
 			} else {
-				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
@@ -149,7 +149,7 @@ function interval( $val, $Inter ) {
 
 function DB_Maintenance() {
 
-	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
+	prnMsg(__('The system has just run the regular database administration and optimisation routine'),'info');
 
 	$Result = DB_query('VACUUM ANALYZE');
 

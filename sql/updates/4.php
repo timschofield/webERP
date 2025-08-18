@@ -20,5 +20,5 @@ NewScript('RegularPaymentsSetup.php', 5);
 NewScript('RegularPaymentsProcess.php', 5);
 
 if ($_SESSION['Updates']['Errors'] == 0) {
-	UpdateDBNo(basename(__FILE__, '.php'), _('Database changes to process regular payments'));
+	UpdateDBNo(basename(__FILE__, '.php'), __('Database changes to process regular payments'));
 }

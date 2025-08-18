@@ -9,15 +9,15 @@ by the EnterLine button when a new purchase order line item is entered
 
               	/*Check for existance of Shipment Selected */
               $SQL = "SELECT COUNT(*) FROM shipments WHERE shiptref ='".  $_POST['ShiptRef'] . "' AND closed =0";
-                     $ShiptResult = DB_query($SQL,'','',false,false);
+                     $ShiptResult = DB_query($SQL, '', '', false, false);
                      if (DB_error_no()!=0 OR DB_num_rows($ShiptResult)==0){
                              $AllowUpdate = False;
-                             prnMsg(_('The update could not be processed') . '<br />' . _('There was some snag in retrieving the shipment reference entered') . ' - ' . _('see the listing of open shipments to ensure a valid shipment reference is entered'),'error');
+                             prnMsg(__('The update could not be processed') . '<br />' . __('There was some snag in retrieving the shipment reference entered') . ' - ' . __('see the listing of open shipments to ensure a valid shipment reference is entered'),'error');
                      } else {
                             $ShiptRow = DB_fetch_row($ShiptResult);
                             if($ShiptRow[0]!=1){
                                    $AllowUpdate = False;
-                                   prnMsg( _('The update could not be processed') . '<br />' . _('The shipment entered is either closed or not set up in the database') . '. ' . _('Please refer to the list of open shipments from the link to ensure a valid shipment reference is entered'),'error');
+                                   prnMsg( __('The update could not be processed') . '<br />' . __('The shipment entered is either closed or not set up in the database') . '. ' . __('Please refer to the list of open shipments from the link to ensure a valid shipment reference is entered'),'error');
                             }
                      }
               }
@@ -28,12 +28,12 @@ by the EnterLine button when a new purchase order line item is entered
                      $JobResult = DB_query($SQL);
                      if (DB_error_no!=0 OR DB_num_rows($JobResult)==0){
                              $AllowUpdate = False;
-                             prnMsg(_('The update could not be processed') . '<br />' . _('There was a problem retrieving the contract reference entered') . ' - ' . _('see the listing of contracts to ensure a valid contract reference is entered'),'error');
+                             prnMsg(__('The update could not be processed') . '<br />' . __('There was a problem retrieving the contract reference entered') . ' - ' . __('see the listing of contracts to ensure a valid contract reference is entered'),'error');
                      } else {
                             $JobRow = DB_fetch_row($JobResult);
                             if($JobRow[0]!=1){
                                    $AllowUpdate = False;
-                                   prnMsg( _('The update could not be processed') . '<br />' . _('The contract reference entered is not set up in the database') . '. ' . _('Please refer to the list of contracts from the link to ensure a valid contract reference is entered') . '. ' . _('If you do not wish to reference the cost of this item to a contract then leave the contract reference field blank'),'error');
+                                   prnMsg( __('The update could not be processed') . '<br />' . __('The contract reference entered is not set up in the database') . '. ' . __('Please refer to the list of contracts from the link to ensure a valid contract reference is entered') . '. ' . __('If you do not wish to reference the cost of this item to a contract then leave the contract reference field blank'),'error');
                             }
                      }
               }

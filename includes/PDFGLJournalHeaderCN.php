@@ -11,7 +11,7 @@ $LeftOvers = $pdf->addText($FormDesign->GRNNumber2->x+3,$Page_Height-$FormDesign
 $JournalNo=str_pad($JournalNo, 9, '0', STR_PAD_LEFT);
 $LeftOvers = $pdf->addText($FormDesign->GRNNumber->x+3,$Page_Height-$FormDesign->GRNNumber->y,$FormDesign->GRNNumber->FontSize, '凭证编号：'.$JournalNo,'right' );
 $LeftOvers = $pdf->addText($FormDesign->OrderNumber->x+3,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, '记 账 凭 证 ');
-$LeftOvers = $pdf->addText($FormDesign->PrintDate->x+3,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, _('Printed').'：' . Date($_SESSION['DefaultDateFormat']), 'right');
+$LeftOvers = $pdf->addText($FormDesign->PrintDate->x+3,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, __('Printed').'：' . Date($_SESSION['DefaultDateFormat']), 'right');
 $pdf->setlineStyle(array('width'=>1.2));
 $pdf->SetLineStyle(array('color'=>array(0,0,255)));
 /*Draw a rectangle to put the headings in     */

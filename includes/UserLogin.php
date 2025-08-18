@@ -15,7 +15,6 @@ define('UL_MAINTENANCE', 5);
  */
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 
-	global $Debug;
 	global $PathPrefix;
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
@@ -42,8 +41,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'";
 
-		$ErrMsg = _('Could not retrieve user details on login because');
-		$Debug = 1;
+		$ErrMsg = __('Could not retrieve user details on login because');
         $PasswordVerified = false;
 		$Auth_Result = DB_query($SQL, $ErrMsg);
 
@@ -155,10 +153,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				return  UL_CONFIGERR;
 			} else {
 				$i = 0;
-				$UserIsSysAdmin = FALSE;
+				$UserIsSysAdmin = false;
 				while ($MyRow = DB_fetch_row($Sec_Result)) {
 					if ($MyRow[0] == 15) {
-						$UserIsSysAdmin = TRUE;
+						$UserIsSysAdmin = true;
 					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
 					$i++;
@@ -182,7 +180,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 						if (isset($_SESSION['MonthsAuditTrail'])) {
 							 $SQL = "DELETE FROM audittrail
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
-							$ErrMsg = _('There was a problem deleting expired audit-trail history');
+							$ErrMsg = __('There was a problem deleting expired audit-trail history');
 							$Result = DB_query($SQL);
 						}
 					}
@@ -268,9 +266,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				$Auth_Result = DB_query($SQL);
 
 				if ($SysAdminEmail != ''){
-					$EmailSubject = _('User access blocked'). ' ' . $Name ;
-					$EmailText =  _('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . _('has been blocked access at') . ' ' .
-								Date('Y-m-d H:i:s') . ' ' . _('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . _('due to too many failed attempts.');
+					$EmailSubject = __('User access blocked'). ' ' . $Name ;
+					$EmailText =  __('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . __('has been blocked access at') . ' ' .
+								Date('Y-m-d H:i:s') . ' ' . __('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . __('due to too many failed attempts.');
 					SendEmailFromWebERP($SysAdminEmail,
 										$SysAdminEmail,
 										$EmailSubject,

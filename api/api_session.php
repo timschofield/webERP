@@ -38,7 +38,7 @@ if (!isset($_SESSION['AttemptsCounter'])){
 
 if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
 		exit();
 	}
 }

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Authorisation of Assigned Cash');
+$Title = __('Authorisation of Assigned Cash');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeCash';
@@ -24,25 +24,25 @@ if (isset($_POST['Days'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($SelectedTabs == '') {
-		prnMsg(_('You must first select a petty cash tab to authorise'), 'error');
+		prnMsg(__('You must first select a petty cash tab to authorise'), 'error');
 		unset($SelectedTabs);
 	}
 }
 if (isset($_POST['Go'])) {
 	if ($Days <= 0) {
-		prnMsg(_('The number of days must be a positive number'), 'error');
+		prnMsg(__('The number of days must be a positive number'), 'error');
 		$Days = 30;
 	}
 }
 
 echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 if (isset($SelectedTabs)) {
 echo '<form><fieldset>';
 echo '<field>
-		<label>' . _('Petty Cash Tab') . ':</label>
+		<label>' . __('Petty Cash Tab') . ':</label>
 		<fieldtext>' . $SelectedTabs . '</fieldtext>
 	</field>';
 echo '</form></fieldset>';
@@ -58,10 +58,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', _('Detail of tab cash assignments for the last'), ' :</label>
+				<label for="SelectedTabs">', __('Detail of tab cash assignments for the last'), ' :</label>
 				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
-				<input type="submit" name="Go" value="', _('Go'), '" />
+				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', __('Days'), '
+				<input type="submit" name="Go" value="', __('Go'), '" />
 			</field>
 		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
@@ -88,18 +88,18 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>
-				<th>', _('Date'), '</th>
-				<th>', _('Expense Code'), '</th>
-				<th>', _('Amount'), '</th>
-				<th>', _('Notes'), '</th>
-				<th>', _('Date Authorised'), '</th>
+				<th>', __('Date'), '</th>
+				<th>', __('Expense Code'), '</th>
+				<th>', __('Amount'), '</th>
+				<th>', __('Notes'), '</th>
+				<th>', __('Date Authorised'), '</th>
 			</tr>';
 
 	$CurrDecimalPlaces = 2;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
-		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']]) and $MyRow['posted'] == 0) {
+		if (isset($_POST['Submit']) and $_POST['Submit'] == __('Update') and isset($_POST[$MyRow['counterindex']]) and $MyRow['posted'] == 0) {
 			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
 			if ($MyRow['rate'] == 1) { // functional currency
 				$Amount = $MyRow['amount'];
@@ -113,7 +113,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
+			$Narrative = __('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
 			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
@@ -184,7 +184,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . -$MyRow['amount'] . "',
 											'" . $MyRow['currency'] . "'
 										)";
-			$ErrMsg = _('Cannot insert a bank transaction because');
+			$ErrMsg = __('Cannot insert a bank transaction because');
 			$ResultBank = DB_query($SQLBank, $ErrMsg, '', true);
 
 			$SQL = "UPDATE pcashdetails
@@ -194,9 +194,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$Resultupdate = DB_query($SQL, '', '', true);
 			DB_Txn_Commit();
 			if (DB_error_no() == 0) {
-				prnMsg(_('The cash was successfully authorised and has been posted to the General Ledger'), 'success');
+				prnMsg(__('The cash was successfully authorised and has been posted to the General Ledger'), 'success');
 			} else {
-				prnMsg(_('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
+				prnMsg(__('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
 			}
 		}
 
@@ -221,13 +221,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	} //end of looping
 	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '<tr>
-			<td colspan="2" class="number">', _('Current balance'), ':</td>
+			<td colspan="2" class="number">', __('Current balance'), ':</td>
 			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
 
 	echo '</table>';
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', _('Update'), '" />
+			<input type="submit" name="Submit" value="', __('Update'), '" />
 		</div>
 	</form>';
 } else {
@@ -240,7 +240,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>
-				<td>', _('Authorise cash assigned to petty cash tab'), ':</td>
+				<td>', __('Authorise cash assigned to petty cash tab'), ':</td>
 				<td><select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
@@ -254,8 +254,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		</tr>';
 	echo '</table>'; // close main table
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
+			<input type="submit" name="Process" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }

@@ -18,55 +18,55 @@
 /* RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ? */
 
 include('includes/session.php');
-$Title = _('Form Designer');
+$Title = __('Form Designer');
 $ViewTopic = 'Setup';
 $BookMark = 'FormDesigner';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" title="', // Icon image.
-_('Form Designer'), '" /> ', // Icon title.
-_('Form Designer'), '</p>'; // Page title.
+__('Form Designer'), '" /> ', // Icon title.
+__('Form Designer'), '</p>'; // Page title.
 
 
 // BEGIN: Functions division ---------------------------------------------------
 function InputX($keyName, $keyValue) {
 	// Function to input the X coordinate from the left side of the sheet to the left side of the field in points (72 points = 25,4 mm).
-	echo '<td class="number"><label for="', $keyName, 'x">', _('x'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'x" maxlength="4" name="', $keyName, 'x" size="4" title="', _('Distance from the left side of the sheet to the left side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'x">', __('x'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'x" maxlength="4" name="', $keyName, 'x" size="4" title="', __('Distance from the left side of the sheet to the left side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
 function InputY($keyName, $keyValue) {
 	// Function to input the Y coordinate from the lower side of the sheet to the top side of the field in points (72 points = 25,4 mm).
-	echo '<td class="number"><label for="', $keyName, 'y">', _('y'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'y" maxlength="4" name="', $keyName, 'y" size="4" title="', _('Distance from the lower side of the sheet to the top side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'y">', __('y'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'y" maxlength="4" name="', $keyName, 'y" size="4" title="', __('Distance from the lower side of the sheet to the top side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
 function InputLength($keyName, $keyValue) {
 	// Function to input the the Length of the field in points (72 points = 25,4 mm).
-	echo '<td class="number"><label for="', $keyName, 'Length">', _('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'Length" maxlength="4" name="', $keyName, 'Length" size="4" title="', _('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'Length">', __('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'Length" maxlength="4" name="', $keyName, 'Length" size="4" title="', __('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "Length" to "Width" before changing the xml name.**********
 
 }
 function InputWidth($keyName, $keyValue) {
 	// Function to input the the width of the field in points (72 points = 25,4 mm).
-	echo '<td class="number"><label for="', $keyName, 'width">', _('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'width" maxlength="4" name="', $keyName, 'width" size="4" title="', _('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'width">', __('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'width" maxlength="4" name="', $keyName, 'width" size="4" title="', __('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "width" to "Width" before changing the xml name.**********
 
 }
 function InputHeight($keyName, $keyValue) {
 	// Function to input the the height of the field in points (72 points = 25,4 mm).
-	echo '<td class="number"><label for="', $keyName, 'height">', _('Height'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'height" maxlength="4" name="', $keyName, 'height" size="4" title="', _('Height of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'height">', __('Height'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'height" maxlength="4" name="', $keyName, 'height" size="4" title="', __('Height of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "height" to "Height" before changing the xml name.**********
 
 }
 function SelectAlignment($keyName, $keyValue) {
 	// Function to select a text alignment.
 	$Alignments = array(); // Possible alignments
-	$Alignments['left']['Caption'] = _('Left');
-	$Alignments['left']['Title'] = _('Text lines are rendered flush left');
-	$Alignments['centre']['Caption'] = _('Centre');
-	$Alignments['centre']['Title'] = _('Text lines are centred');
-	$Alignments['right']['Caption'] = _('Right');
-	$Alignments['right']['Title'] = _('Text lines are rendered flush right');
-	$Alignments['full']['Caption'] = _('Justify');
-	$Alignments['full']['Title'] = _('Text lines are justified to both margins');
-	echo '<td>' . _('Alignment') . ' = </td><td><select name="', $keyName, 'Alignment">';
+	$Alignments['left']['Caption'] = __('Left');
+	$Alignments['left']['Title'] = __('Text lines are rendered flush left');
+	$Alignments['centre']['Caption'] = __('Centre');
+	$Alignments['centre']['Title'] = __('Text lines are centred');
+	$Alignments['right']['Caption'] = __('Right');
+	$Alignments['right']['Title'] = __('Text lines are rendered flush right');
+	$Alignments['full']['Caption'] = __('Justify');
+	$Alignments['full']['Title'] = __('Text lines are justified to both margins');
+	echo '<td>' . __('Alignment') . ' = </td><td><select name="', $keyName, 'Alignment">';
 	foreach ($Alignments as $AlignmentValue => $AlignmentOption) {
 		echo '<option';
 		if ($AlignmentValue == $keyValue) {
@@ -78,16 +78,16 @@ function SelectAlignment($keyName, $keyValue) {
 }
 function InputFontSize($keyName, $keyValue) {
 	// Function to select a text font size.
-	echo '<td class="number"><label for="', $keyName, 'FontSize">', _('Font Size'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'FontSize" maxlength="4" name="', $keyName, 'FontSize" size="4" title="', _('Font size in points'), '" type="number" value="', $keyValue, '" /></td>';
+	echo '<td class="number"><label for="', $keyName, 'FontSize">', __('Font Size'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'FontSize" maxlength="4" name="', $keyName, 'FontSize" size="4" title="', __('Font size in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
 function SelectShowElement($keyName, $keyValue) {
 	// Function to select to show or not an element.
 	$Shows = array(); // Possible alignments
-	$Shows['No']['Caption'] = _('No');
-	$Shows['No']['Title'] = _('Does not display this element');
-	$Shows['Yes']['Caption'] = _('Yes');
-	$Shows['Yes']['Title'] = _('Displays this element');
-	echo '<td><label for="', $keyName, 'Show">', _('Show'), ' = </label></td>', '<td><select id="', $keyName, 'Show" name="', $keyName, 'Show">';
+	$Shows['No']['Caption'] = __('No');
+	$Shows['No']['Title'] = __('Does not display this element');
+	$Shows['Yes']['Caption'] = __('Yes');
+	$Shows['Yes']['Title'] = __('Displays this element');
+	echo '<td><label for="', $keyName, 'Show">', __('Show'), ' = </label></td>', '<td><select id="', $keyName, 'Show" name="', $keyName, 'Show">';
 	foreach ($Shows as $ShowValue => $ShowOption) {
 		echo '<option';
 		if ($ShowValue == $keyValue) {
@@ -166,7 +166,7 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 		if (is_writable($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName'])) {
 			$FormDesign->asXML($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName']);
 		} else {
-			prnMsg(_('The web server does not have write permissions on the file ') . '<br />' . $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName'] . '<br />' . _('Your changes cannot be saved') . '<br />' . _('See your system administrator to correct this problem'), 'error');
+			prnMsg(__('The web server does not have write permissions on the file ') . '<br />' . $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName'] . '<br />' . __('Your changes cannot be saved') . '<br />' . __('See your system administrator to correct this problem'), 'error');
 		}
 	}
 }
@@ -176,10 +176,10 @@ if (empty($_POST['FormName'])) {
 		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
 		<table class="selection">
 			<tr>
-				<th colspan="2">', _('Edit Form Layout'), '</th>
+				<th colspan="2">', __('Edit Form Layout'), '</th>
 			</tr>
 			<tr>
-				<td>', _('Select the form to edit'), '</td>
+				<td>', __('Select the form to edit'), '</td>
 				<td>
 					<select name="FormName">';
 	// Iterate throght the appropriate companies FormDesigns/ directory and extract the form name from each of the xml files found:
@@ -188,7 +188,7 @@ if (empty($_POST['FormName'])) {
 			if ($File[0] != '.') {
 				$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $File);
 				//echo "name is". $FormDesign['name'];
-				echo '<option value="', $File, '">' . /*_(*/
+				echo '<option value="', $File, '">' . /*__(*/
 				$FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
@@ -198,8 +198,8 @@ if (empty($_POST['FormName'])) {
 				</td>
 			</tr>
 			<tr>
-				<td colspan="2">', '<div class="centre">', '<button name="Submit" type="submit" value="Submit">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-	'<button onclick="window.location=\'index.php?Application=system\'" type="button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+				<td colspan="2">', '<div class="centre">', '<button name="Submit" type="submit" value="Submit">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
+	'<button onclick="window.location=\'index.php?Application=system\'" type="button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 	'</div>
 				</td>
 			</tr>
@@ -212,7 +212,7 @@ if (empty($_POST['FormName'])) {
 if (empty($_POST['preview'])) {
 	$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName']);
 }
-echo '<div class="page_help_text">' . _('Enter the changes that you want in the form layout below.') . '<br /> ' . _('All measurements are in PostScript points (72 points = 25,4 mm).') . '<br /> ' . _('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
+echo '<div class="page_help_text">' . __('Enter the changes that you want in the form layout below.') . '<br /> ' . __('All measurements are in PostScript points (72 points = 25,4 mm).') . '<br /> ' . __('All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.') . '</div><br />';
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="Form" method="post" >';
 echo '<div>';
@@ -224,11 +224,11 @@ echo '<table class="selection">
 				<th colspan="2">', _((string)$FormDesign['name']), '</th>
 			</tr>
 			<tr>
-				<td><label for="formname">', _('Form Name'), '</label></td>
+				<td><label for="formname">', __('Form Name'), '</label></td>
 				<td><input id="formname" name="formname" type="text" value="', $FormDesign['name'], '" /></td>
 			</tr>
 			<tr>', // Select the paper size/orientation:
-'<td><label for="PaperSize">', _('Paper Size'), '</label></td>
+'<td><label for="PaperSize">', __('Paper Size'), '</label></td>
 				<td>
 					<select id="PaperSize" name="PaperSize">';
 foreach ($PaperSizes as $Paper) {
@@ -247,8 +247,8 @@ echo '</select>
 				</td>
 			</tr>
 			<tr>', // Sets the standard line height for the form:
-'<td><label for="LineHeight">', _('Line Height'), '</label></td>
-				<td><input class="number" id="LineHeight" maxlength="4" name="LineHeight" size="4" title="', _('Standard line height for the form'), '" type="number" value="', $FormDesign->LineHeight, '" /></td>
+'<td><label for="LineHeight">', __('Line Height'), '</label></td>
+				<td><input class="number" id="LineHeight" maxlength="4" name="LineHeight" size="4" title="', __('Standard line height for the form'), '" type="number" value="', $FormDesign->LineHeight, '" /></td>
 			</tr>
 		</table>
 		<hr />
@@ -311,8 +311,8 @@ foreach ($FormDesign as $key) {
 				<tr>', InputWidth($key['id'], $key->width), '</tr>
 				<tr>', InputHeight($key['id'], $key->height), '</tr>
 				<tr>
-					<td class="number">', _('Radius'), ' = ', '</td>
-					<td><input class="number" maxlength="4" name="', $key['id'], 'radius" size="4" title="', _('Radius of the rounded corners'), '" type="number" value="', $key->radius, '" /></td>
+					<td class="number">', __('Radius'), ' = ', '</td>
+					<td><input class="number" maxlength="4" name="', $key['id'], 'radius" size="4" title="', __('Radius of the rounded corners'), '" type="number" value="', $key->radius, '" /></td>
 				</tr>'; // Requires to standardize xml files from "radius" to "Radius" before changing the html name.
 			/* RCHACON: Attributes to add:
 			Show: To turn on/off the use of this rectangle.
@@ -331,10 +331,10 @@ foreach ($FormDesign as $key) {
 		case 'Line':
 			echo '<tr><th colspan="6">' . _((string)$key['name']) . '</th></tr>';
 			echo '<tr>';
-			echo '<td class="number">', _('Start x co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'startx" size="4" maxlength="4" value="' . $key->startx . '" /></td>';
-			echo '<td class="number">', _('Start y co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'starty" size="4" maxlength="4" value="' . $key->starty . '" /></td></tr><tr>';
-			echo '<td class="number">', _('End x co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'endx" size="4" maxlength="4" value="' . $key->endx . '" /></td>';
-			echo '<td class="number">', _('End y co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'endy" size="4" maxlength="4" value="' . $key->endy . '" /></td>';
+			echo '<td class="number">', __('Start x co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'startx" size="4" maxlength="4" value="' . $key->startx . '" /></td>';
+			echo '<td class="number">', __('Start y co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'starty" size="4" maxlength="4" value="' . $key->starty . '" /></td></tr><tr>';
+			echo '<td class="number">', __('End x co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'endx" size="4" maxlength="4" value="' . $key->endx . '" /></td>';
+			echo '<td class="number">', __('End y co-ordinate') . ' = ' . '</td><td><input type="text" class="number" name="' . $key['id'] . 'endy" size="4" maxlength="4" value="' . $key->endy . '" /></td>';
 			echo '</tr>';
 		break;
 		default:
@@ -346,8 +346,8 @@ foreach ($FormDesign as $key) {
 echo '</div>
 	<br />
 		<div class="centre" style="float:none;clear: left;">
-			<input type="submit" name="preview" value="' . _('Preview the Form Layout') . '" />
-			<input type="submit" name="save" value="' . _('Save the Form Layout') . '" />', '<button onclick="window.location=\'index.php?Application=system\'" type="button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			<input type="submit" name="preview" value="' . __('Preview the Form Layout') . '" />
+			<input type="submit" name="save" value="' . __('Save the Form Layout') . '" />', '<button onclick="window.location=\'index.php?Application=system\'" type="button">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 '</div>';
 
 echo '</div>', '</form>';

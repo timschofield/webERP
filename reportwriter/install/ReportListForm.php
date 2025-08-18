@@ -11,7 +11,7 @@ Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
 */
 function GetReports($GroupID) {
 	global $RootPath;
-	$Title= array(_('Custom Reports'), _('Default Reports'));
+	$Title= array(__('Custom Reports'), __('Default Reports'));
 	$RptForm = '<form name="ReportList" method="post" action="'.$RootPath.'/reportwriter/ReportMaker.php?action=go">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$RptForm .= '<table align="center" border="0" cellspacing="1" cellpadding="1" class="table_index">';
@@ -28,7 +28,7 @@ function GetReports($GroupID) {
 			}
 			$RptForm .= '</select></td></tr>';
 		} else {
-			$RptForm .= '<tr><td colspan="2">'._('There are no reports to show!').'</td></tr>';
+			$RptForm .= '<tr><td colspan="2">'.__('There are no reports to show!').'</td></tr>';
 		}
 	}
 	$RptForm .= '</table></form>';
