@@ -124,7 +124,7 @@ if (isset($_POST['MakeCSV'])) {
 
 	$fp = fopen($FileName, 'w');
 
-	if ($fp == FALSE) {
+	if ($fp == false) {
 		prnMsg(__('Could not open or create the file under') . ' ' . $FileName, 'error');
 		include('includes/footer.php');
 		exit();

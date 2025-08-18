@@ -116,7 +116,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		(($_POST['ShowNotes']) ? '<br />* ' . __('Notes') . '.' : ''),
 		'<p>';
 	echo '</div>';// div id="Report".
-	$IsIncluded = TRUE;
+	$IsIncluded = true;
 	$PageBreak = '<hr class="PageBreak"/>' . chr(12);// Marker to indicate that the content that follows is part of a new page.
 	// Displays the statements using the corresponding scripts:
 	$_POST['ShowDetail'] = 'Detailed';
@@ -164,7 +164,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
+	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 		__('Shows a set of financial statements.') . '<br />' .
 		__('A complete set of financial statements comprises:(a) a statement of financial position as at the end and at the beginning of the period;(b) a statement of comprehensive income for the period;(c) a statement of changes in equity for the period;(d) a statement of cash flows for the period; and(e) notes that summarize the significant accounting policies and other explanatory information.') . '<br />' .
 		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
@@ -225,7 +225,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	// Show the budget:
 			'<field>
 				<label for="ShowBudget">', __('Show the budget'), '</label>
-			 	<input', ($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
+			 	<input', ($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is true.
 			 	'<fieldhelp>', __('Check this box to show the budget'), '</fieldhelp>
 			</field>',
 	// Show accounts with zero balance:

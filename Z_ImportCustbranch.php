@@ -134,7 +134,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$ExistDebtorNos=array();
 	$NotExistDebtorNos=array();
 	$ExistedBranches = array();
-	while ( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while ( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($Filerow);

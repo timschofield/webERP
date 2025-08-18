@@ -61,7 +61,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 	//loop through file rows
 	$LineNumber = 1;
-	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);

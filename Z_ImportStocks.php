@@ -84,7 +84,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//loop through file rows
 	$Row = 1;
-	while ( ($MyRow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ",")) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);

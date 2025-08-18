@@ -24,7 +24,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 	$mail->Host = $_POST['Host'];
 	$mail->Port = $_POST['Port'];
 
-	// This function returns TRUE if authentication
+	// This function returns true if authentication
 	// was successful, or throws an exception otherwise
 	try {
 		$Connection = $mail->SmtpConnect();

@@ -559,7 +559,7 @@ else {
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . // Icon image.
 	$Title2 . '" /> ' . // Icon title.
 	$Title . '</p>'; // Page title.
-	fShowPageHelp( // Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
+	fShowPageHelp( // Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
 	__('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the top line) is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the bottom line).') . '<br />' . __('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />' . __('The P&amp;L represents a period of time. This contrasts with the Balance Sheet . which represents a single moment in time.') . '<br />' . __('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer . and when expenses are owed based on the supplier invoice date.')); // Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo
 	// Shows a form to input the report parameters:

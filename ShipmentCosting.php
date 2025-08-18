@@ -275,7 +275,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 									 " . $WriteOffToVariances . ")";
 
 						$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL entry for the shipment variance posting for'). ' ' . $MyRow['itemcode'] . ' '. __('could not be inserted into the database because');
-			   			$Result = DB_query($SQL, $ErrMsg,'',TRUE);
+			   			$Result = DB_query($SQL, $ErrMsg,'',true);
 
 					}
 				/*Now post any remaining price variance to stock rather than price variances */
@@ -295,7 +295,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												'" . ($MyRow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit)- $WriteOffToVariances) . "')";
 
 					$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL entry for the shipment average cost adjustment for'). ' ' . $MyRow['itemcode'] . ' '. __('could not be inserted into the database because');
-					$Result = DB_query($SQL, $ErrMsg,'',TRUE);
+					$Result = DB_query($SQL, $ErrMsg,'',true);
 
 				} /* end of average cost GL stuff */
 
@@ -320,7 +320,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
-					$Result = DB_query($SQL, $ErrMsg, '','',TRUE);
+					$Result = DB_query($SQL, $ErrMsg, '','',true);
 
 				} else {
 					$SQL = "UPDATE stockmaster
@@ -329,7 +329,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
-					$Result = DB_query($SQL, $ErrMsg, '','',TRUE);
+					$Result = DB_query($SQL, $ErrMsg, '','',true);
 
 				}
 				/* End of Weighted Average Costing Code */
@@ -354,7 +354,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 										" . -$Variance * $MyRow['totqtyrecd'] . ")";
 
 					$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The Positive GL entry for the shipment variance posting for'). ' ' . $MyRow['itemcode'] . ' '. __('could not be inserted into the database because');
-		   			$Result = DB_query($SQL, $ErrMsg,'',TRUE);
+		   			$Result = DB_query($SQL, $ErrMsg,'',true);
 				 }
 			} /* end of the costing specific updates */
 
@@ -378,7 +378,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 				  $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The credit GL entry for the shipment variance posting for') . ' ' . $MyRow['itemcode'] . ' ' . __('could not be inserted because');
 
-				  $Result = DB_query($SQL, $ErrMsg,'',TRUE);
+				  $Result = DB_query($SQL, $ErrMsg,'',true);
 						 }
 
 				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){
@@ -410,7 +410,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 						   $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL credit for the shipment stock cost adjustment posting could not be inserted because'). ' ' . DB_error_msg();
 
-						   $Result = DB_query($SQL, $ErrMsg,'',TRUE);
+						   $Result = DB_query($SQL, $ErrMsg,'',true);
 
 						   $SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -429,7 +429,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 						   $ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The GL debit for stock cost adjustment posting could not be inserted because') .' '. DB_error_msg();
 
-						   $Result = DB_query($SQL, $ErrMsg,'',TRUE);
+						   $Result = DB_query($SQL, $ErrMsg,'',true);
 
 					} /*end of GL entries for a standard cost update */
 
@@ -443,7 +443,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg();
 
-					$Result = DB_query($SQL, $ErrMsg,'',TRUE);
+					$Result = DB_query($SQL, $ErrMsg,'',true);
 
 				} // end of update cost code
 		} // end of Close shipment item updates
@@ -658,9 +658,9 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 							WHERE shiptref = '" . $_GET['SelectedShipment'] ."'",
 							__('Could not complete the purchase order lines on this shipment'),
 							'',
-							TRUE);
+							true);
 
-	$Result = DB_query("UPDATE shipments SET closed=1 WHERE shiptref='" .$_GET['SelectedShipment']. "'",__('Could not update the shipment to closed'),'',TRUE);
+	$Result = DB_query("UPDATE shipments SET closed=1 WHERE shiptref='" .$_GET['SelectedShipment']. "'",__('Could not update the shipment to closed'),'',true);
 	DB_Txn_Commit();
 
 	echo '<br /><br />';

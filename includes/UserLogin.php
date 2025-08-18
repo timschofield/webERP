@@ -153,10 +153,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				return  UL_CONFIGERR;
 			} else {
 				$i = 0;
-				$UserIsSysAdmin = FALSE;
+				$UserIsSysAdmin = false;
 				while ($MyRow = DB_fetch_row($Sec_Result)) {
 					if ($MyRow[0] == 15) {
-						$UserIsSysAdmin = TRUE;
+						$UserIsSysAdmin = true;
 					}
 					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
 					$i++;

@@ -13,7 +13,7 @@ $graph->SetBackgroundColor("wheat");
 $graph->SetTitleColor("blue");
 $graph->SetPlotType('bars');
 $graph->SetShading(5);
-$graph->SetDrawYGrid(TRUE);
+$graph->SetDrawYGrid(true);
 $graph->SetMarginsPixels(60, 40, 40, 40);
 $graph->SetDataType('text-data');
 
@@ -146,7 +146,7 @@ if ($NumberOfPeriodsUsage != 24) {
         $UsageArray[$i][2] = $UsageRow['qtyused'];
     }
 }
-//$graph->SetDrawXGrid(TRUE);
+//$graph->SetDrawXGrid(true);
 $graph->SetDataValues($UsageArray);
 $graph->SetDataColors(
     array("blue","red"),  //Data Colors

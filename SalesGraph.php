@@ -327,7 +327,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetPlotType($_POST['GraphType']);
 	$graph->SetIsInline('1');
 	$graph->SetShading(5);
-	$graph->SetDrawYGrid(TRUE);
+	$graph->SetDrawYGrid(true);
 	$graph->SetDataType('text-data');
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);

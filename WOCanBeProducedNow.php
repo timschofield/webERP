@@ -100,7 +100,7 @@ function submit($RootPath, $Location) {
 
 			$ErrMsg = __('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
-			$ItemCanBeproduced = TRUE;
+			$ItemCanBeproduced = true;
 
 			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
@@ -111,7 +111,7 @@ function submit($RootPath, $Location) {
 					$Available = "OK";
 				}else{
 					$Available = "";
-					$ItemCanBeproduced = FALSE;
+					$ItemCanBeproduced = false;
 				}
 
 				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';

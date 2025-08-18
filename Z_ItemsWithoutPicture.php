@@ -15,7 +15,7 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockcategory.stocktype != 'D'
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 $Result = DB_query($SQL);
-$PrintHeader = TRUE;
+$PrintHeader = true;
 
 if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text"><strong>' . __('Current Items without picture in webERP') . '</strong></p>';
@@ -35,7 +35,7 @@ if (DB_num_rows($Result) != 0){
 								<th>' . __('Description') . '</th>
 								</tr>';
 				echo $TableHeader;
-				$PrintHeader = FALSE;
+				$PrintHeader = false;
 			}
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';

@@ -64,7 +64,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				}
 			}
 
-			if ($_POST['CreateDB']==TRUE){
+			if ($_POST['CreateDB']==true){
 				/* Need to read in the sql script and process the queries to iniate a new DB */
 
 				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
@@ -107,7 +107,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 					if (mb_substr($SQLScriptFile[$i], 0, 2) != '--'
 						AND mb_substr($SQLScriptFile[$i], 0, 3) != 'USE'
-						AND mb_strstr($SQLScriptFile[$i],'/*')==FALSE
+						AND mb_strstr($SQLScriptFile[$i],'/*')==false
 						AND mb_strlen($SQLScriptFile[$i])>1){
 
 						$SQL .= ' ' . $SQLScriptFile[$i];

@@ -33,7 +33,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 		$FileHandle = fopen($_FILES['SelectedTransferFile']['tmp_name'], 'r');
 		$TotalItems=0;
 		//loop through file rows
-		while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+		while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 			if (count($MyRow) != 2){
 				prnMsg (__('File contains') . ' '. count($MyRow) . ' ' . __('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');

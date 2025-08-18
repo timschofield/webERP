@@ -41,7 +41,7 @@ unlink($ItemsFileName);
 
 $fp = fopen($ItemsFileName,'w');
 
-if ($fp==FALSE){
+if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $ItemsFileName,'error');
 	include('includes/footer.php');
@@ -71,7 +71,7 @@ unlink($CustomersFileName);
 
 $fp = fopen($CustomersFileName,'w');
 
-if ($fp==FALSE){
+if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $CustomersFileName,'error');
 	include('includes/footer.php');
@@ -116,7 +116,7 @@ unlink($SalesFileName);
 
 $fp = fopen($SalesFileName,'w');
 
-if ($fp==FALSE){
+if ($fp==false){
 
 	prnMsg(__('Could not open or create the file under') . ' ' . $SalesFileName,'error');
 	include('includes/footer.php');
