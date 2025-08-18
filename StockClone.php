@@ -135,25 +135,25 @@ if (isset($_POST['submit'])) {
 
 	if (!isset($_POST['Description']) OR mb_strlen($_POST['Description']) > 50 OR mb_strlen($_POST['Description'])==0) {
 		$InputError = 1;
-		prnMsg (__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'),'error');
+		prnMsg(__('The stock item description must be entered and be fifty characters or less long') . '. ' . __('It cannot be a zero length string either') . ' - ' . __('a description is required'),'error');
 		$Errors[$i] = 'Description';
 		$i++;
 	}
 	if (mb_strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
-		prnMsg (__('The stock item description cannot be a zero length string') . ' - ' . __('a long description is required'),'error');
+		prnMsg(__('The stock item description cannot be a zero length string') . ' - ' . __('a long description is required'),'error');
 		$Errors[$i] = 'LongDescription';
 		$i++;
 	}
 	if ($_POST['StockID'] == $_POST['OldStockID']) {
 		$InputError = 1;
-		prnMsg (__('The Stock Item code must be unique. Please re-enter a unique Stock Item code.'),'error');
+		prnMsg(__('The Stock Item code must be unique. Please re-enter a unique Stock Item code.'),'error');
 		$Errors[$i] = 'StockID';
 		$i++;
 	}
 	if (mb_strlen($_POST['StockID']) ==0) {
 		$InputError = 1;
-		prnMsg (__('The Stock Item code cannot be empty. Please enter a unique Stock Item code.'),'error');
+		prnMsg(__('The Stock Item code cannot be empty. Please enter a unique Stock Item code.'),'error');
 		$Errors[$i] = 'StockID';
 		$i++;
 	}
@@ -178,7 +178,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (!is_numeric(filter_number_format($_POST['Volume']))) {
 		$InputError = 1;
-		prnMsg (__('The volume of the packaged item in cubic metres must be numeric') ,'error');
+		prnMsg(__('The volume of the packaged item in cubic metres must be numeric') ,'error');
 		$Errors[$i] = 'Volume';
 		$i++;
 	}
@@ -220,7 +220,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (filter_number_format($_POST['EOQ']) <0) {
 		$InputError = 1;
-		prnMsg (__('The economic order quantity must be a positive number'),'error');
+		prnMsg(__('The economic order quantity must be a positive number'),'error');
 		$Errors[$i] = 'EOQ';
 		$i++;
 	}

@@ -36,7 +36,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 		while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 			if (count($MyRow) != 2){
-				prnMsg (__('File contains') . ' '. count($MyRow) . ' ' . __('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
+				prnMsg(__('File contains') . ' '. count($MyRow) . ' ' . __('columns, but only 2 columns are expected. The comma separated file should have just two columns the first for the item code and the second for the quantity to transfer'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit();

@@ -136,7 +136,7 @@ if (isset($_POST['SelectedLabelID'])){
 														barcode='" . $_POST['Barcode' . $i] . "'
 								WHERE labelfieldid='" . $_POST['LabelFieldID' . $i] . "'");
 			} else {
-				prnMsg (__('Entries for Vertical Position, Horizontal Position, and Font Size must be integers.'),'error');
+				prnMsg(__('Entries for Vertical Position, Horizontal Position, and Font Size must be integers.'),'error');
 			}
 		}
 	}

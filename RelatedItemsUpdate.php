@@ -43,7 +43,7 @@ if (DB_num_rows($Result)==0){
 
 if (!isset($Item)){
 	echo '<p>';
-	prnMsg (__('An item must first be selected before this page is called') . '. ' . __('The product selection page should call this page with a valid product code'),'error');
+	prnMsg(__('An item must first be selected before this page is called') . '. ' . __('The product selection page should call this page with a valid product code'),'error');
 	include('includes/footer.php');
 	exit();
 }

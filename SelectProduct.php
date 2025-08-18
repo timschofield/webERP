@@ -44,7 +44,7 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
-	prnMsg (__('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
+	prnMsg(__('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
 	echo '<a class="toplink" href="' . $RootPath . '/StockCategories.php">' . __('Define Stock Categories') . '</a><br /><br />';
 	include('includes/footer.php');
 	exit();
@@ -538,7 +538,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$_POST['PageOffset'] = 1;
 	}
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg (__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 	$SQL = GenerateStockmasterQuery($_POST);
 	$ErrMsg = __('No stock items were returned by the SQL because');

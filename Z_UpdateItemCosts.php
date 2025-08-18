@@ -34,7 +34,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) ,'error');
+		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) ,'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -44,7 +44,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 	$HeadingColumnNumber = 0;
 	foreach ($HeadRow as $HeadField) {
 		if (trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
-			prnMsg (__('The file to import the item cost updates from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, Material Cost, Labour Cost, Overhead Cost','error');
+			prnMsg(__('The file to import the item cost updates from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, Material Cost, Labour Cost, Overhead Cost','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();

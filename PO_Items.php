@@ -661,7 +661,7 @@ if (isset($_POST['NewItem'])
 															$LeadTime,
 															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
-					prnMsg (__('The item code') . ' ' . $ItemCode . ' ' . __('does not exist in the database and therefore cannot be added to the order'),'error');
+					prnMsg(__('The item code') . ' ' . $ItemCode . ' ' . __('does not exist in the database and therefore cannot be added to the order'),'error');
 					include('includes/footer.php');
 					exit();
 				}
@@ -820,7 +820,7 @@ if (isset($_POST['UploadFile'])) {
 																$SuppliersPartNo);
 						++$InsertNum;
 					} else { //no rows returned by the SQL to get the item
-						prnMsg (__('The item code') . ' ' . $ItemCode . ' ' . __('does not exist in the database and therefore cannot be added to the order'),'error');
+						prnMsg(__('The item code') . ' ' . $ItemCode . ' ' . __('does not exist in the database and therefore cannot be added to the order'),'error');
 					}
 				} /* end of if not already on the order */
 			} /* end if the $_POST has NewQty in the variable name */

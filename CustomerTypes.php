@@ -154,7 +154,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg (__('Cannot delete this type because customers are currently set up to use this type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customers with this type code'));
+			prnMsg(__('Cannot delete this type because customers are currently set up to use this type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customers with this type code'));
 		} else {
 			$Result = DB_query("SELECT typename FROM debtortype WHERE typeid='".$SelectedType."'");
 			if (DB_Num_Rows($Result)>0){

@@ -64,7 +64,7 @@ if(isset($_POST['submit'])) {
 		$ErrMsg = __('Could not update the account because');
 		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg (__('The general ledger account has been updated'),'success');
+		prnMsg(__('The general ledger account has been updated'),'success');
 	} elseif($InputError != 1) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */

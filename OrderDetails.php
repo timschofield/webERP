@@ -63,7 +63,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
 	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
-		prnMsg (__('Your customer login will only allow you to view your own purchase orders'),'error');
+		prnMsg(__('Your customer login will only allow you to view your own purchase orders'),'error');
 		include('includes/footer.php');
 		exit();
 	}

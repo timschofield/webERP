@@ -38,7 +38,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings). '. ' . __('Download the template to see the expected columns.'),'error');
+		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings). '. ' . __('Download the template to see the expected columns.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -48,7 +48,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 	$HeadingColumnNumber = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
-			prnMsg (__('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
+			prnMsg(__('The file to import the price list from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('The column headings must be') . ' StockID, SalesType, CurrencyCode, Price','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -66,7 +66,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
-			prnMsg ($FieldTarget . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
+			prnMsg($FieldTarget . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -85,7 +85,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (__('Stock item') . ' "'. $MyRow[0]. '" ' . __('does not exist'),'error');
+			prnMsg(__('Stock item') . ' "'. $MyRow[0]. '" ' . __('does not exist'),'error');
 		}
 		//Then check that the price list actually exists
 		$SQL = "SELECT COUNT(typeabbrev) FROM salestypes WHERE typeabbrev='" . $MyRow[1] . "'";
@@ -93,7 +93,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (__('SalesType/Price List') . ' "' . $MyRow[1]. '" ' . __('does not exist'),'error');
+			prnMsg(__('SalesType/Price List') . ' "' . $MyRow[1]. '" ' . __('does not exist'),'error');
 		}
 
 		//Then check that the currency code actually exists
@@ -102,7 +102,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (__('Currency') . ' "' . $MyRow[2] . '" ' . __('does not exist'),'error');
+			prnMsg(__('Currency') . ' "' . $MyRow[2] . '" ' . __('does not exist'),'error');
 		}
 
 		//Finally force the price to be a double

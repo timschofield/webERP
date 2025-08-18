@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 /* write the new header then the rest of the language file to a new file */
 
-	prnMsg (__('Writing the language file header') . '.....<br />', 'info', ' ');
+	prnMsg(__('Writing the language file header') . '.....<br />', 'info', ' ');
 
 	$fpOut = fopen($PathToNewLanguage, 'w');
 
@@ -45,7 +45,7 @@ if (isset($_POST['submit'])) {
 		$Result = fputs($fpOut, stripslashes(html_entity_decode($_POST['Header_'.$i]))."\n");
 	}
 
-	prnMsg (__('Writing the rest of the language file') . '.....<br />', 'info', ' ');
+	prnMsg(__('Writing the rest of the language file') . '.....<br />', 'info', ' ');
 
 	while (!feof($fpIn)) {
 		$FileContents = fgets($fpIn);
@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-	prnMsg (__('Done') . '<br />', 'info', ' ');
+	prnMsg(__('Done') . '<br />', 'info', ' ');
 
 	echo '</form>';
 	echo '</td></tr></table>';
@@ -86,7 +86,7 @@ else
   echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 	echo '<div class="centre">';
 	echo '<br />';
-	prnMsg (__('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br /><br />' .
+	prnMsg(__('Your existing translation file (messages.po) will be backed up as messages.po.old') . '<br /><br />' .
 				__('Make sure you know what you are doing BEFORE you edit the header'), 'info', __('PLEASE NOTE'));
 	echo '<br /></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

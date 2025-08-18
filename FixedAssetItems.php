@@ -82,13 +82,13 @@ if (isset($_POST['submit'])) {
 
 	if (!isset($_POST['Description']) or mb_strlen($_POST['Description']) > 50 OR mb_strlen($_POST['Description'])==0) {
 		$InputError = 1;
-		prnMsg (__('The asset description must be entered and be fifty characters or less long. It cannot be a zero length string either, a description is required'),'error');
+		prnMsg(__('The asset description must be entered and be fifty characters or less long. It cannot be a zero length string either, a description is required'),'error');
 		$Errors[$i] = 'Description';
 		$i++;
 	}
 	if (mb_strlen($_POST['LongDescription'])==0) {
 		$InputError = 1;
-		prnMsg (__('The asset long description cannot be a zero length string, a long description is required'),'error');
+		prnMsg(__('The asset long description cannot be a zero length string, a long description is required'),'error');
 		$Errors[$i] = 'LongDescription';
 		$i++;
 	}

@@ -50,7 +50,7 @@ function ProcessSupplier($OldCode, $NewCode) {
 
 	// First check the Supplier code exists
 	if (!checkSupplierExist($OldCode)) {
-		prnMsg ('<br /><br />' . __('The Supplier code') . ': ' . $OldCode . ' ' .
+		prnMsg('<br /><br />' . __('The Supplier code') . ': ' . $OldCode . ' ' .
 				__('does not currently exist as a supplier code in the system'),'error');
 		return;
 	}
@@ -113,7 +113,7 @@ function checkSupplierExist($CodeSupplier) {
 function checkNewCode($Code) {
 	$tmp = str_replace(' ','',$Code);
 	if ($tmp != $Code) {
-		prnMsg ('<br /><br />' . __('The New supplier code') . ': ' . $Code . ' ' .
+		prnMsg('<br /><br />' . __('The New supplier code') . ': ' . $Code . ' ' .
 				__('must be not empty nor with spaces'),'error');
 		return false;
 	}

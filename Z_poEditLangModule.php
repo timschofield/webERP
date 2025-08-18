@@ -64,7 +64,7 @@ if (isset($_POST['module'])) {
 
     /* write the new language file */
 
-		prnMsg (__('Writing the language file') . '.....<br />', 'info', ' ');
+		prnMsg(__('Writing the language file') . '.....<br />', 'info', ' ');
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
@@ -93,7 +93,7 @@ if (isset($_POST['module'])) {
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($MsgfmtCommand);
 
-		prnMsg (__('Done') . '<br />', 'info', ' ');
+		prnMsg(__('Done') . '<br />', 'info', ' ');
 
 		echo '</form>';
 		echo '</td></tr></table>';
@@ -123,7 +123,7 @@ if (isset($_POST['module'])) {
     echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
-		prnMsg (__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
+		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />

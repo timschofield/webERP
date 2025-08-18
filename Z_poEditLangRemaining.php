@@ -43,7 +43,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
     /* write the new language file */
 
-		prnMsg (__('Writing the language file') . '.....<br />', 'info', ' ');
+		prnMsg(__('Writing the language file') . '.....<br />', 'info', ' ');
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
@@ -72,7 +72,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($MsgfmtCommand);
 
-		prnMsg (__('Done') . '<br />', 'info', ' ');
+		prnMsg(__('Done') . '<br />', 'info', ' ');
 
 		echo '</form>';
 		echo '</td></tr></table>';
@@ -102,7 +102,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
     echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
-		prnMsg (__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
+		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
 		echo '</div>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

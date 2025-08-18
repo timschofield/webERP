@@ -56,7 +56,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 		/* check for directory existence */
 
 		if (!file_exists('./locale/' . $_POST['NewLanguage'])) {
-			prnMsg (__('Attempting to create the new language file') . '.....<br />', 'info', ' ');
+			prnMsg(__('Attempting to create the new language file') . '.....<br />', 'info', ' ');
 			$Result = mkdir('./locale/' . $_POST['NewLanguage'] . '.utf8');
 			$Result = mkdir('./locale/' . $_POST['NewLanguage'] . '.utf8/LC_MESSAGES');
 		} else {
@@ -70,7 +70,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 		$PathToNewLanguage = './locale/' . $_POST['NewLanguage'] . '.utf8/LC_MESSAGES/messages.po';
 		$Result = copy($PathToDefault, $PathToNewLanguage);
 
-		prnMsg (__('Done. You should now change to your newly created language from the user settings link above. Then you can edit the new language file header and use the language module editor to translate the system strings'), 'info');
+		prnMsg(__('Done. You should now change to your newly created language from the user settings link above. Then you can edit the new language file header and use the language module editor to translate the system strings'), 'info');
 
 		echo '</form>';
 		echo '</div>';
@@ -83,7 +83,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewLanguage'])) {
 
 echo '<div class="centre">';
 echo '<br />';
-prnMsg (__('This utility will create a new language and a new language translation file for it from the system default') . '<br /><br />' .
+prnMsg(__('This utility will create a new language and a new language translation file for it from the system default') . '<br /><br />' .
 		__('If the language already exists then you cannot recreate it'), 'info', __('PLEASE NOTE'));
 echo '<br /></div>';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

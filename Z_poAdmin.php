@@ -19,7 +19,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 /* Check if we have gettext - we're useless without it... */
 
 if (!function_exists('gettext')){
-	prnMsg (__('gettext is not installed on this system') . '. ' . __('You cannot use the language files without it'),'error');
+	prnMsg(__('gettext is not installed on this system') . '. ' . __('You cannot use the language files without it'),'error');
 	exit();
 }
 

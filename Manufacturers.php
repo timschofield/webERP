@@ -216,7 +216,7 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result)==0){
-		prnMsg (__('There are no manufacturers to display'),'error');
+		prnMsg(__('There are no manufacturers to display'),'error');
 	}
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
 			__('Manufacturers') . '" alt="" />' . ' ' . $Title . '</p>';

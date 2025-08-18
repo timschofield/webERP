@@ -32,10 +32,10 @@ if (isset($_POST['submit'])) {
 	echo '<br /><table><tr><td>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	prnMsg (__('Rebuilding the default language file ') . '.....<br />', 'info', ' ');
+	prnMsg(__('Rebuilding the default language file ') . '.....<br />', 'info', ' ');
 	$Result = rename($PathToDefault, $PathToDefault . '.old');// Renames pot file to bak.
 	system($xgettextCmd);// Runs xgettext to recreate the default message.po language file.
-	prnMsg (__('Done') .  '. ' . __('You should now edit the default language file header') . '<br />', 'info', ' ');
+	prnMsg(__('Done') .  '. ' . __('You should now edit the default language file header') . '<br />', 'info', ' ');
 	echo "<div class='centre'><a href='" . $RootPath . "/Z_poAdmin.php'>" . __('Back to the menu') . "</a></div>";
 	echo '</form>';
 	echo '</td></tr></table>';
@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
 	/* set up the page for editing */
 	echo '<div class="centre">';
 	echo '<br />';
-	prnMsg (__('Every new language creates a new translation file from the system default one') . '.<br />' .
+	prnMsg(__('Every new language creates a new translation file from the system default one') . '.<br />' .
           __('This utility will recreate the system default language file by going through all the script files to get all the strings') . '.<br />' .
           __('This is not usually necessary but if done before a new language is created then that language will have any new or recently modified strings') . '.<br />' .
           __('Existing languages are not affected.') . '.', 'info', __('PLEASE NOTE'));

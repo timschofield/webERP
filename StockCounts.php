@@ -137,7 +137,7 @@ if ($_GET['Action'] == 'Enter') {
 
 		//check for correct number of fields
 		if ( count($HeadRow) != count($FieldHeadings) ) {
-			prnMsg (__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+			prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -147,7 +147,7 @@ if ($_GET['Action'] == 'Enter') {
 		$Head = 0;
 		foreach ($HeadRow as $HeadField) {
 			if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
-				prnMsg (__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
+				prnMsg(__('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit();
@@ -165,7 +165,7 @@ if ($_GET['Action'] == 'Enter') {
 			//check for correct number of fields
 			$FieldCount = count($MyRow);
 			if ($FieldCount != $FieldTarget){
-				prnMsg (__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+				prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit();
@@ -192,7 +192,7 @@ if ($_GET['Action'] == 'Enter') {
 			}
 			else if (!is_numeric($MyRow[1])) {
 				$InputError = 1;
-				prnMsg (__('The quantity counted must be numeric') ,'error');
+				prnMsg(__('The quantity counted must be numeric') ,'error');
 			}
 			else if ($MyRow[1] < 0) {
 				$InputError = 1;

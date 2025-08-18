@@ -811,7 +811,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$SearchResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($SearchResult)==0 ){
-			prnMsg (__('There are no products available meeting the criteria specified'),'info');
+			prnMsg(__('There are no products available meeting the criteria specified'),'info');
 		}
 		if (DB_num_rows($SearchResult)==1){
 			$MyRow=DB_fetch_array($SearchResult);

@@ -71,7 +71,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings)) {
-		prnMsg (__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -116,7 +116,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$Head = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head])) {
-			prnMsg (__('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
+			prnMsg(__('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -139,7 +139,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//check for correct number of fields
 		$FieldCount = count($Filerow);
 		if ($FieldCount != $FieldTarget) {
-			prnMsg (__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();

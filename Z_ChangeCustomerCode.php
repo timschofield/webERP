@@ -16,7 +16,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 /*First check the customer code exists */
 	$Result = DB_query("SELECT debtorno FROM debtorsmaster WHERE debtorno='" . $_POST['OldDebtorNo'] . "'");
 	if (DB_num_rows($Result)==0){
-		prnMsg ('<br /><br />' . __('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . __('does not currently exist as a customer code in the system'),'error');
+		prnMsg('<br /><br />' . __('The customer code') . ': ' . $_POST['OldDebtorNo'] . ' ' . __('does not currently exist as a customer code in the system'),'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -173,7 +173,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$ErrMsg = __('The SQL to update Sales Analysis records failed');
 	$Result = DB_query($SQL, $ErrMsg, '', true);
 
-	prnMsg (__('Changing order delivery differences records'),'info');
+	prnMsg(__('Changing order delivery differences records'),'info');
 	$SQL = "UPDATE orderdeliverydifferenceslog SET debtorno='" . $_POST['NewDebtorNo'] . "' WHERE debtorno='" . $_POST['OldDebtorNo'] . "'";
 	$ErrMsg = __('The SQL to update order delivery differences records failed');
 	$Result = DB_query($SQL, $ErrMsg, '', true);

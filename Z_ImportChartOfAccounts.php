@@ -36,7 +36,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -46,7 +46,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	$HeadingColumnNumber = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
-			prnMsg (__('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+			prnMsg(__('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -64,7 +64,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldHeadings)){
-			prnMsg (count($FieldHeadings) . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
+			prnMsg(count($FieldHeadings) . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -83,7 +83,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (__('Account Group') . ' "' . $MyRow[2]. '" ' . __('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
+			prnMsg(__('Account Group') . ' "' . $MyRow[2]. '" ' . __('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
 		}
 
 		if ($InputError !=1){

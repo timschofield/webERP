@@ -130,7 +130,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				} //end of for loop around the lines of the sql script
 			} //end if CreateDB was checked
 
-			prnMsg (__('Attempting to create the new company directories') . '.....<br />', 'info');
+			prnMsg(__('Attempting to create the new company directories') . '.....<br />', 'info');
 			$Result = mkdir('./companies/' . $_POST['NewDatabase']);
 
 			// Sub-directories listed alphabetically to ease referencing.
@@ -222,7 +222,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		include('includes/GetConfig.php');
 		$ForceConfigReload=false;
 
-		prnMsg (__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
 		echo '<p><a href="', $RootPath, '/CompanyPreferences.php">', __('Set Up New Company Details'), '</a></p>
 			<p><a href="', $RootPath, '/SystemParameters.php">', __('Set Up Configuration Details'), '</a></p>
@@ -236,7 +236,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 }
 
 
-prnMsg (__('This utility will create a new company') . '. ' .
+prnMsg(__('This utility will create a new company') . '. ' .
 		__('If the company name already exists then you cannot recreate it') . '.', 'info', __('PLEASE NOTE'));
 
 echo '<br /><br />

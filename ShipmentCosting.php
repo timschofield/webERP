@@ -81,7 +81,7 @@ $ErrMsg = __('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('general c
 $GetShiptCostsResult = DB_query($SQL, $ErrMsg);
 if (DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
-	prnMsg (__('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
+	prnMsg(__('No General Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -101,7 +101,7 @@ $ErrMsg = __('Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('Item cost
 $GetShiptCostsResult = DB_query($SQL);
 if (DB_error_no() !=0 OR DB_num_rows($GetShiptCostsResult)==0) {
 	echo '<br />';
-	prnMsg ( __('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
+	prnMsg( __('No Item Cost Records exist for Shipment') . ' ' . $_GET['SelectedShipment'] . ' ' . __('in the database'), 'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -667,11 +667,11 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 	prnMsg( __('Shipment'). ' ' . $_GET['SelectedShipment'] . ' ' . __('has been closed') );
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1) {
 		echo '<br />';
-		prnMsg ( __('All variances were posted to the general ledger') );
+		prnMsg( __('All variances were posted to the general ledger') );
 	}
 	if (isset($_POST['UpdateCost']) AND $_POST['UpdateCost']=='Yes'){
 		echo '<br />';
-		prnMsg ( __('All shipment items have had their standard costs updated') );
+		prnMsg( __('All shipment items have had their standard costs updated') );
 	}
 }
 

@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 						)";
 			$Msg = __('The new sales GL posting record has been inserted');
 		} else {
-			prnMsg (__('A sales gl posting account already exists for the selected area, stock category, salestype'),'warn');
+			prnMsg(__('A sales gl posting account already exists for the selected area, stock category, salestype'),'warn');
 			$InputError = true;
 		}
 	}
@@ -108,7 +108,7 @@ if (!isset($SelectedSalesPostingID)) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
-		prnMsg (__('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
+		prnMsg(__('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<table class="selection">
 				<tr>
 					<th>' . __('Area') . '</th>

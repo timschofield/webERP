@@ -41,7 +41,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//check for correct number of fields
 	if (count($HeadRow) != count($FieldHeadings)) {
-		prnMsg (__('File contains') . ' '. count($HeadRow) . ' ' . __('columns, expected') . ' ' . count($FieldHeadings) . '. ' . __('Try downloading a new template'),'error');
+		prnMsg(__('File contains') . ' '. count($HeadRow) . ' ' . __('columns, expected') . ' ' . count($FieldHeadings) . '. ' . __('Try downloading a new template'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -51,7 +51,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$i = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$i]))) {
-			prnMsg (__('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . __('Try downloading a new template'),'error');
+			prnMsg(__('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . __('Try downloading a new template'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -81,7 +81,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
-			prnMsg (__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -99,13 +99,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$TestRow = DB_fetch_row($Result);
 		if ($TestRow[0] == 0) {
 			$InputError = 1;
-			prnMsg (__('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
+			prnMsg(__('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
 		}
 
 		//Then check that the date is in a correct format
 		if (!Is_date($MyRow[0])) {
 			$InputError = 1;
-			prnMsg (__('The date') . ' ' . $MyRow[0]. ' ' . __('is not in the correct format'),'error');
+			prnMsg(__('The date') . ' ' . $MyRow[0]. ' ' . __('is not in the correct format'),'error');
 		}
 
 		//Find the period number from the date
@@ -114,7 +114,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//All transactions must be in the same period
 		if (isset($PreviousPeriod) and $PreviousPeriod != $Period) {
 			$InputError = 1;
-			prnMsg (__('All transactions must be in the same period'),'error');
+			prnMsg(__('All transactions must be in the same period'),'error');
 		}
 
 		//Finally force the amount to be a double
@@ -194,7 +194,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError != 1 and round($TransactionTotal, 2) != 0) {
 		$InputError = 1;
-		prnMsg (__('The total of the transactions must balance back to zero'),'error');
+		prnMsg(__('The total of the transactions must balance back to zero'),'error');
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback

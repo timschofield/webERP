@@ -202,7 +202,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 																			$MyRow['units'],
 																			$MyRow['decimalplaces']);
 				} else {
-					prnMsg (__('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . __('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
+					prnMsg(__('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . __('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
 					include('includes/footer.php');
 					exit();
 				}

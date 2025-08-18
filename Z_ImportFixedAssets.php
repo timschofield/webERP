@@ -37,7 +37,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 /*
 	if ($_FILES['SelectedAssetFile']['type'] != 'text/csv') {
-		prnMsg (__('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . __('but only "text/csv" is allowed.'),'error');
+		prnMsg(__('File has type') . ' ' . $_FILES['SelectedAssetFile']['type'] . ', ' . __('but only "text/csv" is allowed.'),'error');
 		include('includes/footer.php');
 		exit();
 	}
@@ -54,7 +54,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 	//check for correct number of fields
 	if ( count($HeaderRow) != count($FieldNames) ) {
-		prnMsg (__('File contains') . ' '. count($HeaderRow). ' ' . __('columns, expected') . ' '. count($FieldNames). '. ' . __('Study a downloaded template to see the format for the file'),'error');
+		prnMsg(__('File contains') . ' '. count($HeaderRow). ' ' . __('columns, expected') . ' '. count($FieldNames). '. ' . __('Study a downloaded template to see the format for the file'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit();
@@ -64,7 +64,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 	$i = 0;
 	foreach ($HeaderRow as $FieldName) {
 		if ( mb_strtoupper($FieldName) != mb_strtoupper($FieldNames[$i]) ) {
-			prnMsg (__('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). '. ' .__('Download a template and ensure that fields are in the same sequence as the template.')),'error');
+			prnMsg(__('The selected file contains fields in the incorrect order ('. mb_strtoupper($FieldName). ' != '. mb_strtoupper($FieldNames[$i]). '. ' .__('Download a template and ensure that fields are in the same sequence as the template.')),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();
@@ -82,7 +82,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldNames)){
-			prnMsg (count($FieldNames) . ' ' . __('fields are required, but') . ' '. $FieldCount . ' ' . __('fields were received'),'error');
+			prnMsg(count($FieldNames) . ' ' . __('fields are required, but') . ' '. $FieldCount . ' ' . __('fields were received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit();

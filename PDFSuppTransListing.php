@@ -80,7 +80,7 @@ if (DB_num_rows($Result) == 0){
 	$Title = __('Payment Listing');
 	include('includes/header.php');
 	echo '<br />';
-  	prnMsg (__('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '.__('Please try again selecting a different date'), 'info');
+  	prnMsg(__('There were no transactions found in the database for the date') . ' ' . $_POST['Date'] .'. '.__('Please try again selecting a different date'), 'info');
 	include('includes/footer.php');
   	exit();
 }
