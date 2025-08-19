@@ -16,7 +16,7 @@ include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Import Excel with Tokopedia URL information');
+$Title = __('Import Excel with Tokopedia URL information');
 
 include('includes/header.php');
 
@@ -50,7 +50,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	$SpreadSheet = $objReader->load($Target_file);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 
@@ -66,13 +66,13 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Item Code') . '</th>
-						<th class="SortedColumn">' . _('Tokopedia Product Id') . '</th>
-						<th class="SortedColumn">' . _('URL Tokopedia') . '</th>
-						<th class="SortedColumn">' . _('QOH Tokopedia') . '</th>
-						<th class="SortedColumn">' . _('Error') . '</th>
-						<th class="SortedColumn">' . _('Action') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Item Code') . '</th>
+						<th class="SortedColumn">' . __('Tokopedia Product Id') . '</th>
+						<th class="SortedColumn">' . __('URL Tokopedia') . '</th>
+						<th class="SortedColumn">' . __('QOH Tokopedia') . '</th>
+						<th class="SortedColumn">' . __('Error') . '</th>
+						<th class="SortedColumn">' . __('Action') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -84,7 +84,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			$TokopediaProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
 			$StockID = $worksheet->getCell('K'.$Row)->getCalculatedValue();
 			$URLTokopedia = $worksheet->getCell('AC'.$Row)->getCalculatedValue();
-			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
+			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . __('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
 			$QOH = ItemMarketplaceQOH($StockID);
@@ -129,13 +129,13 @@ function display($RootPath, $Theme, $Title)
 		</p>';
 	
 	echo '<fieldset>
-			<legend>' . _('Import file with Tokopedia Information from TikTok') . '</legend>';
+			<legend>' . __('Import file with Tokopedia Information from TikTok') . '</legend>';
 
-	echo FieldToSelectOneFile("SelectedFile", _('File with Tokopedia Information'),'','', '', true, false);	
+	echo FieldToSelectOneFile("SelectedFile", __('File with Tokopedia Information'),'','', '', true, false);	
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Import File'));
+	echo OneButtonCenteredForm('submit', __('Import File'));
 
 	echo '</div>
 		</form>';

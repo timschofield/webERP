@@ -210,7 +210,7 @@ function submit($TypeOfFile) {
 				$Height = ceil($MyRow['height']/$FactorLenght);
 				$Weight = ceil($MyRow['grossweight'] * 1000); // weight in grams
 
-				$PackagingImage = FALSE;
+				$PackagingImage = false;
 				list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
 				list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
 				list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
@@ -319,7 +319,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for uploading products to FORSTOK');
+	$Title = __('Excel file for uploading products to FORSTOK');
 
 	include('includes/header.php');
 
@@ -333,19 +333,19 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		</p>';
 
 	echo '<fieldset>
-			<legend>' . _('FORSTOK Export Options') . '</legend>';
+			<legend>' . __('FORSTOK Export Options') . '</legend>';
 
 	// FORSTOK File type selection
-	echo FieldToSelectFromThreeOptions('FSMaster', _('Master FORSTOK'),
-										'FSQOH', _('QOH FORSTOK Update'),
-										'FSPrice', _('Price FORSTOK Update'),
-										'TypeOfFile', $_POST['TypeOfFile'],	_('Type of FORSTOK File'), '', '', 2, true, false);
+	echo FieldToSelectFromThreeOptions('FSMaster', __('Master FORSTOK'),
+										'FSQOH', __('QOH FORSTOK Update'),
+										'FSPrice', __('Price FORSTOK Update'),
+										'TypeOfFile', $_POST['TypeOfFile'],	__('Type of FORSTOK File'), '', '', 2, true, false);
 
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export file to upload products to FORSTOK'));
+	echo OneButtonCenteredForm('submit', __('Export file to upload products to FORSTOK'));
 
 	echo '</div>
          </form>';

@@ -1,6 +1,6 @@
 <?php
 include('includes/session.php');
-$Title = _('Shop Inventory Control for SPG');
+$Title = __('Shop Inventory Control for SPG');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -18,16 +18,16 @@ $SQL = "SELECT locstock.stockid,
 		ORDER BY locstock.stockid";
 $Result = DB_query($SQL);
 
-$TableTitleText = _('Stock Available at ') . $LocationName;
+$TableTitleText = __('Stock Available at ') . $LocationName;
 echo ShowTableTitle($TableTitleText);
 
 echo '<table class="selection">
 		<thead>';
 $TableHeader = '<tr>
 					<th class="SortedColumn">' . '#' . '</th>
-					<th class="SortedColumn">' . _('Code') . '</th>
-					<th class="SortedColumn">' . _('Description') . '</th>
-					<th class="SortedColumn">' . _('QOH') . '</th>
+					<th class="SortedColumn">' . __('Code') . '</th>
+					<th class="SortedColumn">' . __('Description') . '</th>
+					<th class="SortedColumn">' . __('QOH') . '</th>
 				</tr>';
 echo $TableHeader;
 echo '</thead>

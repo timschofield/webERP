@@ -2,15 +2,15 @@
 /* Select a picking list */
 
 include('includes/session.php');
-$Title = _('Search Pick Lists');
+$Title = __('Search Pick Lists');
 $ViewTopic = 'Sales';
 $BookMark = 'SelectPickingLists';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="', // Icon image.
-	_('Pick Lists'), '" /> ', // Icon title.
-	_('Pick Lists'), '</p>';// Page title.
+	__('Pick Lists'), '" /> ', // Icon title.
+	__('Pick Lists'), '</p>';// Page title.
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = $_GET['SelectedStockItem'];
@@ -49,25 +49,25 @@ if (isset($_POST['ResetPart'])) {
 
 if (isset($OrderNumber) and $OrderNumber != '') {
 	if (!is_numeric($OrderNumber)) {
-		prnMsg(_('The Order Number entered') . ' <u>' . _('MUST') . '</u> ' . _('be numeric'), 'error');
+		prnMsg(__('The Order Number entered') . ' <u>' . __('MUST') . '</u> ' . __('be numeric'), 'error');
 		unset($OrderNumber);
 	} else {
-		echo _('Order Number') . ' - ' . $OrderNumber;
+		echo __('Order Number') . ' - ' . $OrderNumber;
 	}
 }
 
 if (isset($PickList) and $PickList != '') {
 	if (!is_numeric($PickList)) {
-		prnMsg(_('The Pick List entered') . ' <u>' . _('MUST') . '</u> ' . _('be numeric'), 'error');
+		prnMsg(__('The Pick List entered') . ' <u>' . __('MUST') . '</u> ' . __('be numeric'), 'error');
 		unset($PickList);
 	} else {
-		echo _('Pick List') . ' - ' . $PickList;
+		echo __('Pick List') . ' - ' . $PickList;
 	}
 }
 
 if (isset($_POST['SearchParts'])) {
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
-		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -158,23 +158,23 @@ if (isset($_POST['SearchParts'])) {
 				ORDER BY stockmaster.stockid";
 	}
 
-	$ErrMsg = _('No stock items were returned by the SQL because');
+	$ErrMsg = __('No stock items were returned by the SQL because');
 	$StockItemsResult = DB_query($SQL, $ErrMsg);
 }
 
 if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right now always show all inputs
 	echo '<fieldset>
-			<legend class="search">', _('Picking List Search'), '</legend>
+			<legend class="search">', __('Picking List Search'), '</legend>
 			<field>';
 	if (isset($SelectedStockItem) and $SelectedStockItem != '') {
-		echo '<td>', _('For the part'), ': <b>', $SelectedStockItem, '</b>', ' ', _('and'), '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" /></td>';
+		echo '<td>', __('For the part'), ': <b>', $SelectedStockItem, '</b>', ' ', __('and'), '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" /></td>';
 	}
 
-	echo '<label for="OrderNumber">', _('Sales Order'), ':</label>
+	echo '<label for="OrderNumber">', __('Sales Order'), ':</label>
 			<input name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" value="', $OrderNumber, '"/>
 		</field>';
 	echo '<field>
-			<label for="PickList">', _('Pick List'), ':</label>
+			<label for="PickList">', __('Pick List'), ':</label>
 			<input name="PickList" maxlength="10" size="10" value="', $PickList, '"/>
 		</field>';
 
@@ -187,7 +187,7 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 					AND locationusers.canview=1";
 	$ResultStkLocs = DB_query($SQL);
 	echo '<field>
-			<label for="StockLocation">', _('Into Stock Location'), ':</label>
+			<label for="StockLocation">', __('Into Stock Location'), ':</label>
 			<select name="StockLocation">';
 
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
@@ -207,33 +207,33 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 		</field>';
 
 	echo '<field>
-			<label for="Status">', _('Pick List Status'), ':</label>
+			<label for="Status">', __('Pick List Status'), ':</label>
 			<select name="Status">';
 
 	if ($_POST['Status'] == 'New') {
-		echo '<option selected="selected" value="New">', _('New'), '</option>';
+		echo '<option selected="selected" value="New">', __('New'), '</option>';
 	} else {
-		echo '<option value="New">', _('New'), '</option>';
+		echo '<option value="New">', __('New'), '</option>';
 	}
 	if ($_POST['Status'] == 'Picked') {
-		echo '<option selected="selected" value="Picked">', _('Picked'), '</option>';
+		echo '<option selected="selected" value="Picked">', __('Picked'), '</option>';
 	} else {
-		echo '<option value="Picked">', _('Picked'), '</option>';
+		echo '<option value="Picked">', __('Picked'), '</option>';
 	}
 	if ($_POST['Status'] == 'Shipped') {
-		echo '<option selected="selected" value="Shipped">', _('Shipped'), '</option>';
+		echo '<option selected="selected" value="Shipped">', __('Shipped'), '</option>';
 	} else {
-		echo '<option value="Shipped">', _('Shipped'), '</option>';
+		echo '<option value="Shipped">', __('Shipped'), '</option>';
 	}
 	if ($_POST['Status'] == 'Invoiced') {
-		echo '<option selected="selected" value="Invoiced">', _('Invoiced'), '</option>';
+		echo '<option selected="selected" value="Invoiced">', __('Invoiced'), '</option>';
 	} else {
-		echo '<option value="Invoiced">', _('Invoiced'), '</option>';
+		echo '<option value="Invoiced">', __('Invoiced'), '</option>';
 	}
 	if ($_POST['Status'] == 'Cancelled') {
-		echo '<option selected="selected" value="Cancelled">', _('Cancelled'), '</option>';
+		echo '<option selected="selected" value="Cancelled">', __('Cancelled'), '</option>';
 	} else {
-		echo '<option value="Cancelled">', _('Cancelled'), '</option>';
+		echo '<option value="Cancelled">', __('Cancelled'), '</option>';
 	}
 
 	echo '</select>
@@ -241,7 +241,7 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="SearchPickLists" value="' . _('Search Pick Lists') . '" />
+			<input type="submit" name="SearchPickLists" value="' . __('Search Pick Lists') . '" />
 		</div>';
 }
 $SQL = "SELECT categoryid,
@@ -251,9 +251,9 @@ $SQL = "SELECT categoryid,
 $Result1 = DB_query($SQL);
 
 echo '<fieldset>
-		<legend class="search">', _('To search for Pick Lists for a specific part use the part selection facilities below'), '</legend>';
+		<legend class="search">', __('To search for Pick Lists for a specific part use the part selection facilities below'), '</legend>';
 echo '<field>
-		<label for="StockCat">', _('Select a stock category'), ':</label>
+		<label for="StockCat">', __('Select a stock category'), ':</label>
 		<select name="StockCat">';
 
 while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -268,28 +268,28 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Keywords">', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</label>
+		<label for="Keywords">', __('Enter text extracts in the'), ' <b>', __('description'), '</b>:</label>
 		<input type="text" name="Keywords" size="20" maxlength="25" />
 	</field>
 	<field>
-		<label for="StockCode">', '<b>' . _('OR') . ' </b>' . _('Enter extract of the'), '<b> ', _('Stock Code'), '</b>:</label>
+		<label for="StockCode">', '<b>' . __('OR') . ' </b>' . __('Enter extract of the'), '<b> ', __('Stock Code'), '</b>:</label>
 		<input type="text" name="StockCode" size="15" maxlength="18" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="SearchParts" value="', _('Search Parts Now'), '" />
-		<input type="submit" name="ResetPart" value="', _('Show All'), '" />
+		<input type="submit" name="SearchParts" value="', __('Search Parts Now'), '" />
+		<input type="submit" name="ResetPart" value="', __('Show All'), '" />
 	</div>';
 
 if (isset($StockItemsResult)) {
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">', _('Code'), '</th>
-					<th class="SortedColumn">', _('Description'), '</th>
-					<th class="SortedColumn">', _('On Hand'), '</th>
-					<th class="SortedColumn">', _('Picked'), '</th>
-					<th class="SortedColumn">', _('Units'), '</th>
+					<th class="SortedColumn">', __('Code'), '</th>
+					<th class="SortedColumn">', __('Description'), '</th>
+					<th class="SortedColumn">', __('On Hand'), '</th>
+					<th class="SortedColumn">', __('Picked'), '</th>
+					<th class="SortedColumn">', __('Units'), '</th>
 				</tr>
 			</thead>';
 	echo '<tbody>';
@@ -426,7 +426,7 @@ else {
 		} //no customer selected
 
 	} //end not order number selected
-	$ErrMsg = _('No pick lists were returned by the SQL because');
+	$ErrMsg = __('No pick lists were returned by the SQL because');
 	$PickReqResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($PickReqResult) > 0) {
@@ -434,17 +434,17 @@ else {
 		echo '<table cellpadding="2" width="90%" class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">', _('Modify'), '</th>
-						<th class="SortedColumn">', _('Picking List'), '</th>
-						<th class="SortedColumn">', _('Packing List'), '</th>
-						<th class="SortedColumn">', _('Labels'), '</th>
-						<th class="SortedColumn">', _('Order'), '</th>
-						<th class="SortedColumn">', _('Customer'), '</th>
-						<th class="SortedColumn">', _('Request Date'), '</th>
-						<th class="SortedColumn">', _('Ship Date'), '</th>
-						<th class="SortedColumn">', _('Shipped By'), '</th>
-						<th class="SortedColumn">', _('Initiated On'), '</th>
-						<th class="SortedColumn">', _('Initiated By'), '</th>
+						<th class="SortedColumn">', __('Modify'), '</th>
+						<th class="SortedColumn">', __('Picking List'), '</th>
+						<th class="SortedColumn">', __('Packing List'), '</th>
+						<th class="SortedColumn">', __('Labels'), '</th>
+						<th class="SortedColumn">', __('Order'), '</th>
+						<th class="SortedColumn">', __('Customer'), '</th>
+						<th class="SortedColumn">', __('Request Date'), '</th>
+						<th class="SortedColumn">', __('Ship Date'), '</th>
+						<th class="SortedColumn">', __('Shipped By'), '</th>
+						<th class="SortedColumn">', __('Initiated On'), '</th>
+						<th class="SortedColumn">', __('Initiated By'), '</th>
 					</tr>
 				</thead>';
 
@@ -464,9 +464,9 @@ else {
 			}
 
 			if ($MyRow['printedpackingslip'] == 0) {
-				$PrintText = _('Print');
+				$PrintText = __('Print');
 			} else {
-				$PrintText = _('Reprint');
+				$PrintText = __('Reprint');
 				$PrintDispatchNote .= '&Reprint=OK';
 			}
 
@@ -477,14 +477,14 @@ else {
 			$Confirm_Invoice = '';
 
 			if ($MyRow['status'] == "Shipped") {
-				$Confirm_Invoice = '<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . $MyRow['orderno'] . '">' . _('Invoice Order') . '</a></td>';
+				$Confirm_Invoice = '<td><a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?OrderNumber=' . $MyRow['orderno'] . '">' . __('Invoice Order') . '</a></td>';
 			}
 
 			echo '<tr class="striped_row">
 					<td><a href="', $ModifyPickList, '">', str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT), '</a></td>
-					<td><a href="', $PrintPickList, '">Print <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
-					<td><a target="_blank" href="', $PrintDispatchNote, '">', $PrintText, ' <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
-					<td><a target="_blank" href="', $PrintLabels . '">' . _('Labels') . '</a></td>
+					<td><a href="', $PrintPickList, '">Print <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /></a></td>
+					<td><a target="_blank" href="', $PrintDispatchNote, '">', $PrintText, ' <img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /></a></td>
+					<td><a target="_blank" href="', $PrintLabels . '">' . __('Labels') . '</a></td>
 					<td>', $MyRow['orderno'], '</td>
 					<td>', $MyRow['name'], '</td>
 					<td class="date">', $FormatedRequestDate, '</td>

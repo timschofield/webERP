@@ -2,11 +2,9 @@
 
 include('includes/session.php');
 
-$Title = _('Authorise Purchase Orders');
-
+$Title = __('Authorise Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
@@ -21,7 +19,7 @@ if (isset($_POST['UpdateAll'])) {
 		if (mb_substr($key,0,6)=='Status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['Status'.$OrderNo];
-			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
+			$Comment=date($_SESSION['DefaultDateFormat']).' - '.__('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
 			$SQL="UPDATE purchorders
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
@@ -56,12 +54,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 /* Create the table for the purchase order header */
 echo '<thead>
 		<tr>
-		<th class="SortedColumn">' . _('Order Number') . '</th>
-		<th class="SortedColumn">' . _('Supplier') . '</th>
-		<th class="SortedColumn">' . _('Date Ordered') . '</th>
-		<th class="SortedColumn">' . _('Initiator') . '</th>
-		<th class="SortedColumn">' . _('Delivery Date') . '</th>
-		<th class="SortedColumn">' . _('Status') . '</th>
+		<th class="SortedColumn">' . __('Order Number') . '</th>
+		<th class="SortedColumn">' . __('Supplier') . '</th>
+		<th class="SortedColumn">' . __('Date Ordered') . '</th>
+		<th class="SortedColumn">' . __('Initiator') . '</th>
+		<th class="SortedColumn">' . __('Delivery Date') . '</th>
+		<th class="SortedColumn">' . __('Status') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -92,10 +90,10 @@ while ($MyRow=DB_fetch_array($Result)) {
 				<td><a href="mailto:'.$MyRow['email'].'">' . $MyRow['realname'] . '</td>
 				<td class="date">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 				<td><select name="Status'.$MyRow['orderno'].'">
-					<option selected="selected" value="Pending">' . _('Pending') . '</option>
-					<option value="Authorised">' . _('Authorised') . '</option>
-					<option value="Rejected">' . _('Rejected') . '</option>
-					<option value="Cancelled">' . _('Cancelled') . '</option>
+					<option selected="selected" value="Pending">' . __('Pending') . '</option>
+					<option value="Authorised">' . __('Authorised') . '</option>
+					<option value="Rejected">' . __('Rejected') . '</option>
+					<option value="Cancelled">' . __('Cancelled') . '</option>
 					</select></td>
 			</tr>';
 		echo '<input type="hidden" name="comment" value="' . htmlspecialchars($MyRow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
@@ -114,11 +112,11 @@ while ($MyRow=DB_fetch_array($Result)) {
 					<table class="selection" align="left">
 					<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Product') . '</th>
-						<th class="SortedColumn">' . _('Quantity Ordered') . '</th>
-						<th class="SortedColumn">' . _('Currency') . '</th>
-						<th class="SortedColumn">' . _('Price') . '</th>
-						<th class="SortedColumn">' . _('Line Total') . '</th>
+						<th class="SortedColumn">' . __('Product') . '</th>
+						<th class="SortedColumn">' . __('Quantity Ordered') . '</th>
+						<th class="SortedColumn">' . __('Currency') . '</th>
+						<th class="SortedColumn">' . __('Price') . '</th>
+						<th class="SortedColumn">' . __('Line Total') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -145,7 +143,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 echo '</tbody>
 	</table>
 		<div class="centre">
-			<input type="submit" name="UpdateAll" value="' . _('Update'). '" />
+			<input type="submit" name="UpdateAll" value="' . __('Update'). '" />
 		</div>
 		</form>';
 include('includes/footer.php');

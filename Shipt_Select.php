@@ -1,11 +1,11 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Search Shipments');
+$Title = __('Search Shipments');
 $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
 	'" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedStockItem'])){
@@ -37,18 +37,18 @@ if (isset($_POST['ResetPart'])) {
 if (isset($ShiptRef) AND $ShiptRef!='') {
 	if (!is_numeric($ShiptRef)){
 		  echo '<br />';
-		  prnMsg( _('The Shipment Number entered MUST be numeric') );
+		  prnMsg( __('The Shipment Number entered MUST be numeric') );
 		  unset ($ShiptRef);
 	} else {
-		echo _('Shipment Number'). ' - '. $ShiptRef;
+		echo __('Shipment Number'). ' - '. $ShiptRef;
 	}
 } else {
 	if (isset($SelectedSupplier)) {
-		echo '<h3>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). '</h3>';
+		echo '<h3>' .__('For supplier'). ': '. $SelectedSupplier . ' ' . __('and'). '</h3>';
 		echo '<input type="hidden" name="SelectedSupplier" value="'. $SelectedSupplier. '" />';
 	}
 	if (isset($SelectedStockItem)) {
-		echo '<h3>', _('for the part'). ': ' . $SelectedStockItem . '</h3>';
+		echo '<h3>', __('for the part'). ': ' . $SelectedStockItem . '</h3>';
 		echo '<input type="hidden" name="SelectedStockItem" value="'. $SelectedStockItem. '" />';
 	}
 }
@@ -57,7 +57,7 @@ if (isset($_POST['SearchParts'])) {
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		echo '<br />';
-		prnMsg( _('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
+		prnMsg( __('Stock description keywords have been used in preference to the Stock code extract entered'),'info');
 	}
 	$SQL = "SELECT stockmaster.stockid,
 			description,
@@ -97,20 +97,20 @@ if (isset($_POST['SearchParts'])) {
 						stockmaster.decimalplaces,
 						stockmaster.units";
 
-	$ErrMsg = _('No Stock Items were returned from the database because'). ' - '. DB_error_msg();
+	$ErrMsg = __('No Stock Items were returned from the database because'). ' - '. DB_error_msg();
 	$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 }
 
 if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '<fieldset>
-			<legend class="search">', _('Search Criteria'), '</legend>
+			<legend class="search">', __('Search Criteria'), '</legend>
 			<field>
-				<label for="ShiptRef">', _('Shipment Number'). ':</label>
+				<label for="ShiptRef">', __('Shipment Number'). ':</label>
 				<input type="text" name="ShiptRef" maxlength="10" size="10" />
 			</field>
 			<field>
-				<label for="StockLocation">', _('Into Stock Location').':</label>
+				<label for="StockLocation">', __('Into Stock Location').':</label>
 				<select name="StockLocation"> ';
 	$SQL = "SELECT loccode, locationname FROM locations";
 	$ResultStkLocs = DB_query($SQL);
@@ -132,22 +132,22 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="OpenOrClosed">', _('Search For'), '</label>
+			<label for="OpenOrClosed">', __('Search For'), '</label>
 			<select name="OpenOrClosed">';
 	if (isset($_POST['OpenOrClosed']) AND $_POST['OpenOrClosed']==1){
-		echo '<option selected="selected" value="1">' .  _('Closed Shipments Only')  . '</option>';
-		echo '<option value="0">' .  _('Open Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="1">' .  __('Closed Shipments Only')  . '</option>';
+		echo '<option value="0">' .  __('Open Shipments Only')  . '</option>';
 	} else {
 		$_POST['OpenOrClosed']=0;
-		echo '<option value="1">' .  _('Closed Shipments Only')  . '</option>';
-		echo '<option selected="selected" value="0">' .  _('Open Shipments Only')  . '</option>';
+		echo '<option value="1">' .  __('Closed Shipments Only')  . '</option>';
+		echo '<option selected="selected" value="0">' .  __('Open Shipments Only')  . '</option>';
 	}
 	echo '</select>
 		</field>
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="SearchShipments" value="'. _('Search Shipments'). '" />
+			<input type="submit" name="SearchShipments" value="'. __('Search Shipments'). '" />
 		</div>';
 }
 
@@ -159,9 +159,9 @@ $SQL="SELECT categoryid,
 $Result1 = DB_query($SQL);
 
 echo '<fieldset>';
-echo '<legend class="search">' . _('To search for shipments for a specific part use the part selection facilities below') . '</legend>
+echo '<legend class="search">' . __('To search for shipments for a specific part use the part selection facilities below') . '</legend>
 	<field>
-		<label for="StockCat">' . _('Select a stock category') . ':</label>
+		<label for="StockCat">' . __('Select a stock category') . ':</label>
 		<select name="StockCat">';
 
 while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -174,29 +174,29 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 echo '</select>
 	</field>
 	<field>
-		<label for="Keywords">' . _('Enter text extracts in the') . '<b> ' . _('description') . '</b>:</label>
+		<label for="Keywords">' . __('Enter text extracts in the') . '<b> ' . __('description') . '</b>:</label>
 		<input type="text" name="Keywords" size="20" maxlength="25" />
 	</field>
 	<field>
-		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</label>
+		<label for="StockCode">' . '<b>' . __('OR') . ' </b>' . __('Enter extract of the') . ' <b> ' . __('Stock Code') . '</b>:</label>
 		<input type="text" name="StockCode" size="15" maxlength="18" />
 	</field>
 	</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="SearchParts" value="'._('Search Parts Now').'" />
-		<input type="submit" name="ResetPart" value="'. _('Show All') .'" />
+		<input type="submit" name="SearchParts" value="'.__('Search Parts Now').'" />
+		<input type="submit" name="ResetPart" value="'. __('Show All') .'" />
 	</div>';
 
 if (isset($StockItemsResult)) {
 
 	echo '<table class="selection">
 			<tr>
-				<th>' .  _('Code') . '</th>
-				<th>' .  _('Description') . '</th>
-				<th>' .  _('On Hand') . '</th>
-				<th>' .  _('Orders') . '<br />' . _('Outstanding') . '</th>
-				<th>' .  _('Units') . '</th>
+				<th>' .  __('Code') . '</th>
+				<th>' .  __('Description') . '</th>
+				<th>' .  __('On Hand') . '</th>
+				<th>' .  __('Orders') . '<br />' . __('Outstanding') . '</th>
+				<th>' .  __('Units') . '</th>
 				<th colspan="3"></th>
 			</tr>';
 
@@ -266,7 +266,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 		} //end selected supplier
 	} //end not order number selected
 
-	$ErrMsg = _('No shipments were returned by the SQL because');
+	$ErrMsg = __('No shipments were returned by the SQL because');
 	$ShipmentsResult = DB_query($SQL, $ErrMsg);
 
 
@@ -275,11 +275,11 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 		echo '<table width="95%" class="selection">
 				<tr>
-					<th>' .  _('Shipment'). '</th>
-					<th>' .  _('Supplier'). '</th>
-					<th>' .  _('Vessel'). '</th>
-					<th>' .  _('Voyage'). '</th>
-					<th>' .  _('Expected Arrival'). '</th>
+					<th>' .  __('Shipment'). '</th>
+					<th>' .  __('Supplier'). '</th>
+					<th>' .  __('Vessel'). '</th>
+					<th>' .  __('Voyage'). '</th>
+					<th>' .  __('Expected Arrival'). '</th>
 					<th colspan="3"></th>
 				</tr>';
 
@@ -301,9 +301,9 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						<td>', $MyRow['vessel'], '</td>
 						<td>', $MyRow['voyageref'], '</td>
 						<td>', $FormatedETA, '</td>
-						<td><a href="', $URL_View_Shipment, '">' . _('Costing') . '</a></td>
-						<td><a href="', $URL_Modify_Shipment, '">' . _('Modify') . '</a></td>
-						<td><a href="', $URL_Close_Shipment, '"><b>' . _('Close') . '</b></a></td>
+						<td><a href="', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
+						<td><a href="', $URL_Modify_Shipment, '">' . __('Modify') . '</a></td>
+						<td><a href="', $URL_Close_Shipment, '"><b>' . __('Close') . '</b></a></td>
 					</tr>';
 
 			} else {
@@ -313,7 +313,7 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						<td>', $MyRow['vessel'], '</td>
 						<td>', $MyRow['voyage'], '</td>
 						<td>', $FormatedETA, '</td>
-						<td><a href="', $URL_View_Shipment, '">' . _('Costing') . '</a></td>
+						<td><a href="', $URL_View_Shipment, '">' . __('Costing') . '</a></td>
 						</tr>';
 			}
 		//end of page full new headings if

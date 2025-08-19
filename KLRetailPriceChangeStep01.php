@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Change of Retail Price -> Step 01');
+$Title = __('KL Change of Retail Price -> Step 01');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
@@ -22,7 +22,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('KL Retail Price Change') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('KL Retail Price Change') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
 	
@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 						WHERE stockid='" . $_POST['Stockid'] . "'");
 	$MyRow = DB_fetch_array($Result);
 	if (DB_num_rows($Result)==0) {
-		prnMsg( _('The entered item code does not exist'),'error');
+		prnMsg( __('The entered item code does not exist'),'error');
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
 		$i++;
@@ -57,42 +57,42 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'MaxItemsChangingPrice';
 		$i++;
-		prnMsg(_('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
+		prnMsg(__('Too many items changing price at the same time. Maximum = '). MAX_ITEMS_CHANGING_PRICE,'error');
 	}elseif (!is_numeric(filter_number_format($_POST['NewRetailPrice']))) {
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
-		prnMsg(_('The new retail price must be a number'),'error');
+		prnMsg(__('The new retail price must be a number'),'error');
 	}elseif (!IsPriceRoundedOK($_POST['NewRetailPrice'])){
 		$InputError = 1;
 		$Errors[$i] = 'NewRetailPrice';
 		$i++;
-		prnMsg(_('The new retail price is not a correct rounded number.'),'error');
+		prnMsg(__('The new retail price is not a correct rounded number.'),'error');
 	}elseif ($MyRow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'klchangingprice';
 		$i++;
-		prnMsg(_('This item is already in changing price procedure.'),'error');
+		prnMsg(__('This item is already in changing price procedure.'),'error');
 	}elseif ($MyRow['klmovingdiscount20'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount20';
 		$i++;
-		prnMsg(_('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
+		prnMsg(__('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
 	}elseif ($MyRow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount50';
 		$i++;
-		prnMsg(_('This item is already being Moved to 50% Discount procedure. Finish or delete this process first'),'error');
+		prnMsg(__('This item is already being Moved to 50% Discount procedure. Finish or delete this process first'),'error');
 	}elseif ($MyRow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount80';
 		$i++;
-		prnMsg(_('This item is already being Moved to 80% Discount procedure. Finish or delete this process first'),'error');
+		prnMsg(__('This item is already being Moved to 80% Discount procedure. Finish or delete this process first'),'error');
 	}elseif ($MyRow['discontinued'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'Discontinued';
 		$i++;
-		prnMsg(_('This item is already an Obsolete item. '),'error');
+		prnMsg(__('This item is already an Obsolete item. '),'error');
 	}
 
 	if (!isset($_POST['Stockid'])){
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 					endprocessdate='1000-01-01'
 				WHERE counterpricechange = '".$SelectedPriceChange."'";
 
-		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
+		$Msg = __('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . __('has been updated');
 	} elseif ($InputError !=1) {
 
 		$SQL = "INSERT INTO klchangeprice 
@@ -128,13 +128,13 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format($_POST['NewRetailPrice']) . "',
 					0,
 					'1000-01-01')";
-		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
+		$Msg = __('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . __('has been created');
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		DB_Txn_Begin();
 
-		$ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
+		$ErrMsg = __('The insert or update of the KL Retail Price Change Step 01 failed because');
 		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg($Msg , 'success');
 
@@ -172,10 +172,10 @@ if (isset($_POST['submit'])) {
 	SetChangePriceFlag(0,$MyRow['stockid']);
 
 	$SQL="DELETE FROM klchangeprice WHERE counterpricechange='". $SelectedPriceChange."'";
-	$ErrMsg = _('The KL Retail Price Change Step 01 could not be deleted because');
+	$ErrMsg = __('The KL Retail Price Change Step 01 could not be deleted because');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	prnMsg(_('KL Retail Price Change Step 01') . ' ' . $SelectedPriceChange . ' ' . _('has been deleted from the database'),'success');
+	prnMsg(__('KL Retail Price Change Step 01') . ' ' . $SelectedPriceChange . ' ' . __('has been deleted from the database'),'success');
 
 	unset ($SelectedPriceChange);
 	unset($Delete);
@@ -200,11 +200,11 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>';
 	echo '<tr>
-			<th>' . _('#') . '</th>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('QOH Total') . '</th>
-			<th>' . _('New Retail Price') . '</th>
-			<th>' . _('Start Date') . '</th>
+			<th>' . __('#') . '</th>
+			<th>' . __('Item Code') . '</th>
+			<th>' . __('QOH Total') . '</th>
+			<th>' . __('New Retail Price') . '</th>
+			<th>' . __('Start Date') . '</th>
 		</tr>';
 	echo '</thead>';
 	echo '<tbody>';
@@ -215,8 +215,8 @@ or deletion of the records*/
 				<td class="number">'.locale_number_format(ItemCodeQOH($MyRow['stockid'],'CODE_FULL', "ALL"),0).'</td>
 				<td class="number">'.locale_number_format($MyRow['newretailprice'],0).'</td>
 				<td>'.ConvertSQLDate($MyRow['startprocessdate']).'</td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPriceChange='.$MyRow['counterpricechange'].'">'. _('Edit').'</a></td>
-				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPriceChange='.$MyRow['counterpricechange'].'&amp;delete=1" onclick="return confirm(\''._('Are you sure you wish to delete this price change?').'\');">'._('Delete').'</a></td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPriceChange='.$MyRow['counterpricechange'].'">'. __('Edit').'</a></td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPriceChange='.$MyRow['counterpricechange'].'&amp;delete=1" onclick="return confirm(\''.__('Are you sure you wish to delete this price change?').'\');">'.__('Delete').'</a></td>
 				</tr>';
 		$i++;
 	} //END WHILE LIST LOOP
@@ -225,7 +225,7 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedPriceChange)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Current Price Changes') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Current Price Changes') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -263,11 +263,11 @@ if (! isset($_GET['delete'])) {
 	  $_POST['NewRetailPrice']=0;
 	}
 
-	echo '<fieldset><legend>' . _('Price Change') . '</legend>';
-	echo FieldToSelectOneText('Stockid', $_POST['Stockid'], 20, 20, _('Item Code'), '', '', '', true, false);
-	echo FieldToSelectOneText('NewRetailPrice', $_POST['NewRetailPrice'], 12, 11, _('New Retail Price'), '', 'class="number"', '', true, false);
+	echo '<fieldset><legend>' . __('Price Change') . '</legend>';
+	echo FieldToSelectOneText('Stockid', $_POST['Stockid'], 20, 20, __('Item Code'), '', '', '', true, false);
+	echo FieldToSelectOneText('NewRetailPrice', $_POST['NewRetailPrice'], 12, 11, __('New Retail Price'), '', 'class="number"', '', true, false);
 	echo '</fieldset>';
-	echo OneButtonCenteredForm('submit', _('Enter Price Change'));
+	echo OneButtonCenteredForm('submit', __('Enter Price Change'));
 	echo '</div>
 		</form>';
 

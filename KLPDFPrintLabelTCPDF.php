@@ -29,7 +29,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['StockCategory'])
 	AND mb_strlen($_POST['StockCategory']) >= 1){
 
-	$Title = _('Print Labels');
+	$Title = __('Print Labels');
 	include('includes/header.php');
 	
 	if ($_POST['LabelID'] == 'T570'){
@@ -114,15 +114,15 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 
 	$LabelsResult = DB_query($SQL, '', '', false, false);
 	if (DB_error_no() != 0) {
-		prnMsg(_('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($LabelsResult) == 0){
-		prnMsg(_('There were no price labels to print out for the category specified'), 'warn');
+		prnMsg(__('There were no price labels to print out for the category specified'), 'warn');
 		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . 
-			_('Back') . '</a>';
+			__('Back') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -131,15 +131,15 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Category') . '</th>
-				<th>' . _('Item Description') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('# Labels') . '</th>
-				<th>' . _('Print') . ' ?</th>
+				<th>' . __('Item Code') . '</th>
+				<th>' . __('Category') . '</th>
+				<th>' . __('Item Description') . '</th>
+				<th>' . __('Price') . '</th>
+				<th>' . __('# Labels') . '</th>
+				<th>' . __('Print') . ' ?</th>
 			</tr>
 			<tr>
-				<th colspan="6">' . _('Select All Labels') . '<input type="checkbox" name="CheckAll" ';
+				<th colspan="6">' . __('Select All Labels') . '<input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])){
 		echo 'checked="checked" ';
 	}
@@ -193,7 +193,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<br />
 		<div class="centre">
 
-			<input type="submit" name="PrintLabels" value="' . _('Print Labels') . '" />
+			<input type="submit" name="PrintLabels" value="' . __('Print Labels') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -205,11 +205,11 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 
 	for ($i = 0; $i < $_POST['NoOfLabels']; $i++){
 		if (isset($_POST['PrintLabel' . $i]) AND ($_POST['LabelsToPrint' . $i] > 0)){
-			$LabelsToBePrinted = TRUE;
+			$LabelsToBePrinted = true;
 		}
 	}
 	if (!$LabelsToBePrinted){
-		prnMsg(_('There are no labels selected to print'), 'info');
+		prnMsg(__('There are no labels selected to print'), 'info');
 	}
 }
 if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
@@ -302,7 +302,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	$Pdf->SetFooterMargin(0);
 	$Pdf->setPrintHeader(false);
 	$Pdf->setPrintFooter(false);
-	$Pdf->SetAutoPageBreak(TRUE, 0);
+	$Pdf->SetAutoPageBreak(true, 0);
 	$Pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 	// now print the labels
@@ -426,15 +426,15 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 } else { /*The option to print PDF was not hit */
 
-	$Title = _('KL Print Labels');
+	$Title = __('KL Print Labels');
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . 
-		_('Price Labels') . '" alt="" />
-         ' . ' ' . _('Print Price Labels') . '</p>';
+		__('Price Labels') . '" alt="" />
+         ' . ' ' . __('Print Price Labels') . '</p>';
 
 	if (!function_exists('gd_info')) {
-		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. 
+		prnMsg(__('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. 
 			You will most likely experience problems with this script until the GD module is enabled.'), 'error');
 		include('includes/footer.php');
 		exit();
@@ -446,21 +446,21 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
-				<legend>' . _('Label Selection') . '</legend>';
+				<legend>' . __('Label Selection') . '</legend>';
 		echo FieldToSelectFromTwoOptions('T570', 'Pricetags T570', 
 										'CodeSticker', 'Code Stickers',
-										'LabelID', $_POST['LabelID'], _('Label Type'), '', '', 1, true, false);
+										'LabelID', $_POST['LabelID'], __('Label Type'), '', '', 1, true, false);
 		echo FieldToSelectOneStockCategory('StockCategory', 
 										(isset($_POST['StockCategory']) ? $_POST['StockCategory'] : ''), 
-										_('For Stock Category'), '', '', true, 2, true, false);
-		echo FieldToSelectOneNumber('LabelsPerItem', $_POST['LabelsPerItem'], 3, 4, _('Fixed number of labels'), 
+										__('For Stock Category'), '', '', true, 2, true, false);
+		echo FieldToSelectOneNumber('LabelsPerItem', $_POST['LabelsPerItem'], 3, 4, __('Fixed number of labels'), 
 									'', '', 3, false, false);
-		$LabelLocationField = '<b>' . _('OR') . ' </b> ' . 'QOH at Location';
+		$LabelLocationField = '<b>' . __('OR') . ' </b> ' . 'QOH at Location';
 		echo FieldToSelectFromTwoOptions
 							('', ' ',
 							'KANTO', '000-Kantor',
 							'Location', $_POST['Location'], $LabelLocationField, '', '',  4, false, false);
-		$LabelItemsThatField = '<b>' . _('OR') . ' </b> ' . ' items that';
+		$LabelItemsThatField = '<b>' . __('OR') . ' </b> ' . ' items that';
 		echo FieldToSelectFromFiveOptions('Nothing', ' ',
 										'ChangePrice', 'Changed price today', 
 										'ChangeDisc20', 'Changed to Discount 20% today',
@@ -470,7 +470,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 		echo '</fieldset>';
 
-		echo OneButtonCenteredForm('ShowLabels', _('Show Labels'));
+		echo OneButtonCenteredForm('ShowLabels', __('Show Labels'));
 
 		echo '</form>';
 	}

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Set Retail Price');
+$Title = __('Set Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -12,23 +12,23 @@ include('includes/KLEmails.php');
  
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action'])){
 	echo '<br />';
-	prnMsg( _('This page must be given the item code, Retail price and action due.'), 'error');
+	prnMsg( __('This page must be given the item code, Retail price and action due.'), 'error');
 	include('includes/footer.php');
 	exit();
 }
 
 if ($_GET['Action'] == "New"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('Retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
+				__('Retail Price') . '" alt="" />' . ' ' . __('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Change"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('Retail Price') . '" alt="" />' . ' ' . _('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
+				__('Retail Price') . '" alt="" />' . ' ' . __('KL Change Retail Prices for').' ' . $_GET['Item']. '.</p>';
 }else if ($_GET['Action'] == "Finish"){
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('Retail Price') . '" alt="" />' . ' ' . _('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
+				__('Retail Price') . '" alt="" />' . ' ' . __('KL Change Labels for item').' ' . $_GET['Item']. '.</p>';
 }else{
 	echo '<br />';
-	prnMsg( _('Action unknown'), 'error');
+	prnMsg( __('Action unknown'), 'error');
 	include('includes/footer.php');
 	exit();
 }

@@ -17,21 +17,21 @@
 	$YPos -= $LineHeight;
 	$FontSize =10;
 	$pdf->setFont('','B');
-	$Heading = _('Profit and loss for the ') . $NumberOfMonths . _(' months to ') . _('and including ') . $PeriodToDate;
-	$Heading1 = _('Transactions for tag') . ':     '.$_POST['tag'].' - '.$Tag;
+	$Heading = __('Profit and loss for the ') . $NumberOfMonths . __(' months to ') . __('and including ') . $PeriodToDate;
+	$Heading1 = __('Transactions for tag') . ':     '.$_POST['tag'].' - '.$Tag;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 	$pdf->addText($Left_Margin, $YPos-$LineHeight, $FontSize, $Heading1);
 
 	$FontSize = 8;
 	$pdf->setFont('','');
 	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize,
-		_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
-		. '   '. _('Page'). ' ' . $PageNumber);
+		__('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
+		. '   '. __('Page'). ' ' . $PageNumber);
 
 	$YPos -= (3 * $LineHeight);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Account'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Account Name'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,_('Period Actual'),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,_('Period Budget'),'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,_('Last Year'),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,__('Account'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,__('Account Name'));
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,__('Period Actual'),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,__('Period Budget'),'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,__('Last Year'),'right');
 	$YPos -= (3 * $LineHeight);

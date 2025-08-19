@@ -4,11 +4,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	// allow dashboard applet to run standalone
 	$DirectoryLevelsDeep = 1;
 	$PathPrefix = __DIR__ . '/../';
-	require_once ($PathPrefix . 'includes/session.php');
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 }
 
-	$ScriptTitle = _('Latest unpaid customer invoices');
+	$ScriptTitle = __('Latest unpaid customer invoices');
 
 	$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 	$DashboardResult = DB_query($SQL);
@@ -18,7 +18,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		<tr>
 			<th colspan="5">
 				<div class="CanvasTitle">', $ScriptTitle, '
-						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
 				</div>
 			</th>
 		</tr>';
@@ -58,11 +58,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SalesOrdersResult1 = DB_query($SQL);
 
 	echo '<tr>
-		<th>', _('Customer'), '</th>
-		<th>', _('Order Date'), '</th>
-		<th>', _('Delivery Date'), '</th>
-		<th>', _('Delivery To'), '</th>
-		<th>', _('Order Total'), '</th>
+		<th>', __('Customer'), '</th>
+		<th>', __('Order Date'), '</th>
+		<th>', __('Delivery Date'), '</th>
+		<th>', __('Delivery To'), '</th>
+		<th>', __('Order Total'), '</th>
 	</tr> ';
 
 	$TotalOrderValue = 0;
@@ -86,7 +86,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 
 	if (DB_num_rows($SalesOrdersResult1) > 0) {
 		echo '<tr class="total_row">
-			<td colspan="4">', _('Total'), '</td>
+			<td colspan="4">', __('Total'), '</td>
 			<td class="number">', locale_number_format($TotalOrderValue, $DecimalPlaces), '</td>
 		</tr>
 	</tbody>';

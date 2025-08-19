@@ -1,14 +1,14 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Audit Scripts');
+$Title = __('Audit Scripts');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' 
-	. _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	. __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -35,18 +35,18 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-	<legend>' . _('Audit Script Selection Criteria') . '</legend>';
+	<legend>' . __('Audit Script Selection Criteria') . '</legend>';
 
-echo FieldToSelectOneDate('FromDate', FormatDateForSQL($_POST['FromDate']), _('From Date'), '', '', '1', true, true);
-echo FieldToSelectOneDate('ToDate', FormatDateForSQL($_POST['ToDate']), _('To Date'), '', '', '2', true, false);
-echo FieldToSelectOneUser('SelectedUser', isset($_POST['SelectedUser']) ? $_POST['SelectedUser'] : 'All', _('User ID'), '', '', '3', true, false);
-echo FieldToSelectOneText('ContainingText', $_POST['ContainingText'], 80, 80, _('Containing text'), '', '', '4', false, false);
-echo FieldToSelectFromTwoOptions('No', _('Summary Report'), 
-                                'Yes', _('Detailed Report'), 
-                                'DetailedReport', $_POST['DetailedReport'], _('Summary or detailed report'), '', '', '5', true, false);
+echo FieldToSelectOneDate('FromDate', FormatDateForSQL($_POST['FromDate']), __('From Date'), '', '', '1', true, true);
+echo FieldToSelectOneDate('ToDate', FormatDateForSQL($_POST['ToDate']), __('To Date'), '', '', '2', true, false);
+echo FieldToSelectOneUser('SelectedUser', isset($_POST['SelectedUser']) ? $_POST['SelectedUser'] : 'All', __('User ID'), '', '', '3', true, false);
+echo FieldToSelectOneText('ContainingText', $_POST['ContainingText'], 80, 80, __('Containing text'), '', '', '4', false, false);
+echo FieldToSelectFromTwoOptions('No', __('Summary Report'), 
+                                'Yes', __('Detailed Report'), 
+                                'DetailedReport', $_POST['DetailedReport'], __('Summary or detailed report'), '', '', '5', true, false);
 
 echo '</fieldset>';
-echo OneButtonCenteredForm('View', _('View'));
+echo OneButtonCenteredForm('View', __('View'));
 echo '</div>
 	</form>';
 
@@ -88,10 +88,10 @@ if (isset($_POST['View'])) {
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Script') . '</th>
-				<th class="SortedColumn">' . _('# Executions') . '</th>
-				<th class="SortedColumn">' . _('Seconds Needed') . '</th>
-				<th class="SortedColumn">' . _('Secs/Execution') . '</th>
+				<th class="SortedColumn">' . __('Script') . '</th>
+				<th class="SortedColumn">' . __('# Executions') . '</th>
+				<th class="SortedColumn">' . __('Seconds Needed') . '</th>
+				<th class="SortedColumn">' . __('Secs/Execution') . '</th>
 			</tr>
 		</thead>';
 	echo '<tbody>';
@@ -141,10 +141,10 @@ if (isset($_POST['View'])) {
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th class="SortedColumn">' . _('User') . '</th>
-				<th class="SortedColumn">' . _('# Executions') . '</th>
-				<th class="SortedColumn">' . _('Seconds Needed') . '</th>
-				<th class="SortedColumn">' . _('Secs/Execution') . '</th>
+				<th class="SortedColumn">' . __('User') . '</th>
+				<th class="SortedColumn">' . __('# Executions') . '</th>
+				<th class="SortedColumn">' . __('Seconds Needed') . '</th>
+				<th class="SortedColumn">' . __('Secs/Execution') . '</th>
 			</tr>
 		</thead>';
 	
@@ -195,10 +195,10 @@ if (isset($_POST['View'])) {
 		echo '<table class="selection">';
 		echo '<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Date/Time') . '</th>
-					<th class="SortedColumn">' . _('User') . '</th>
-					<th class="SortedColumn">' . _('Seconds') . '</th>
-					<th class="SortedColumn">' . _('Script') . '</th>
+					<th class="SortedColumn">' . __('Date/Time') . '</th>
+					<th class="SortedColumn">' . __('User') . '</th>
+					<th class="SortedColumn">' . __('Seconds') . '</th>
+					<th class="SortedColumn">' . __('Script') . '</th>
 				</tr>';
 		echo '</thead>';
 		echo '<tbody>';

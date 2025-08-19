@@ -150,7 +150,7 @@ function submit($ListCategories, $DaysTopSales) {
 			}
 
 		}else{
-			$Title = _('Excel file for Price Analysis');
+			$Title = __('Excel file for Price Analysis');
 			include('includes/header.php');
 			prnMsg('No items selected to analyse');
 			include('includes/footer.php');
@@ -163,7 +163,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Price Analysis');
+	$Title = __('Excel file for Price Analysis');
 
 	include('includes/header.php');
 
@@ -171,24 +171,24 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Price Analysis') . '" alt="" />' . ' ' . _('Excel file for Price Analysis') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Excel file for Price Analysis') . '" alt="" />' . ' ' . __('Excel file for Price Analysis') . '
 		</p>';
 
 	echo '<fieldset>
-	        <legend>' . _('Analysis Parameters') . '</legend>';
+	        <legend>' . __('Analysis Parameters') . '</legend>';
 
-	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', 1, true, true);
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), __('Select Inventory Categories'), '', '', 1, true, true);
 
-	echo FieldToSelectFromThreeOptions('30', _('30 days'),
-									'60', _('60 days'),
-									'90', _('90 days'),
-									'DaysTopSales', $_POST['DaysTopSales'],	_('# Days for Top Sales Ranking'), '', '', 2, true, false);
+	echo FieldToSelectFromThreeOptions('30', __('30 days'),
+									'60', __('60 days'),
+									'90', __('90 days'),
+									'DaysTopSales', $_POST['DaysTopSales'],	__('# Days for Top Sales Ranking'), '', '', 2, true, false);
 
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', 3, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('Format'), '', '', 3, true, false);
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export Price Analysis File'));
+	echo OneButtonCenteredForm('submit', __('Export Price Analysis File'));
 	
 	echo '</form>';
 	include('includes/footer.php');

@@ -39,7 +39,7 @@ function submit($MarkExported) {
 				WHERE oc_ne_marketing.subscribed = 1
 					AND oc_ne_marketing.exported = 'N'";
 		
-		$ErrMsg = _('The SQL to find the OpenCart Newsletter Subscribers Data to export to Sendinblue');
+		$ErrMsg = __('The SQL to find the OpenCart Newsletter Subscribers Data to export to Sendinblue');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
 
@@ -122,7 +122,7 @@ function submit($MarkExported) {
 			}
 
 		}else{
-			$Title = _('Excel file for Sendinblue: Export Newsletter Subscribers');
+			$Title = __('Excel file for Sendinblue: Export Newsletter Subscribers');
 			include('includes/header.php');
 			prnMsg('No Newsletter Subscribers Data to export to Sendinblue');
 			include('includes/footer.php');
@@ -135,7 +135,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Sendinblue: Export Newsletter from OpenCart');
+	$Title = __('Excel file for Sendinblue: Export Newsletter from OpenCart');
 
 	include('includes/header.php');
 
@@ -145,25 +145,25 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Excel file for Sendinblue: Export Newsletter from OpenCart') . '" alt="" />' . ' ' . __('Excel file for Sendinblue: Export Newsletter from OpenCart') . '
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Export Options') . '</legend>';
+		<legend>' . __('Export Options') . '</legend>';
 		
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 
 	echo '<field>';
-	echo _('Mark as Exported?') . ':';
+	echo __('Mark as Exported?') . ':';
 	echo '<select name="MarkExported">
-			<option selected="selected" value="N">' . _('No') . '</option>
-			<option value="Y">' . _('Yes') . '</option>
+			<option selected="selected" value="N">' . __('No') . '</option>
+			<option value="Y">' . __('Yes') . '</option>
 			</select>';
 	echo '</field>';
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export File for Sendinblue'));
+	echo OneButtonCenteredForm('submit', __('Export File for Sendinblue'));
 
 	echo '</div>
          </form>';

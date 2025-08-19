@@ -5,7 +5,7 @@
 include('includes/session.php');
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
-$Title = _('Price break matrix Maintenance');
+$Title = __('Price break matrix Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
@@ -17,7 +17,7 @@ if (isset($Errors)) {
 $Errors = array();
 $i=1;
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -27,28 +27,28 @@ if (isset($_POST['submit'])) {
 		$StockID = trim(strtoupper($_POST['StockID']));
 	}
 	if (!is_numeric(filter_number_format($_POST['QuantityBreak']))){
-		prnMsg( _('The quantity break must be entered as a positive number'),'error');
+		prnMsg( __('The quantity break must be entered as a positive number'),'error');
 		$InputError =1;
 	}
 
 	if (filter_number_format($_POST['QuantityBreak'])<=0){
-		prnMsg( _('The quantity of all items on an order in the discount category') . ' ' . $StockID . ' ' . _('at which the price will apply is 0 or less than 0') . '. ' . _('Positive numbers are expected for this entry'),'warn');
+		prnMsg( __('The quantity of all items on an order in the discount category') . ' ' . $StockID . ' ' . __('at which the price will apply is 0 or less than 0') . '. ' . __('Positive numbers are expected for this entry'),'warn');
 		$InputError =1;
 	}
 	if (!is_numeric(filter_number_format($_POST['Price']))){
-		prnMsg( _('The price must be entered as a positive number'),'warn');
+		prnMsg( __('The price must be entered as a positive number'),'warn');
 		$InputError =1;
 	}
 	if (!Is_Date($_POST['StartDate'])){
 		$InputError = 1;
-		prnMsg(_('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 	}
 	if (!Is_Date($_POST['EndDate'])){
 		$InputError = 1;
-		prnMsg(_('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 		if (Date1GreaterThanDate2($_POST['StartDate'],$_POST['EndDate'])){
 			$InputError = 1;
-			prnMsg(_('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
+			prnMsg(__('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 		}
 	}
 
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])){
-		prnMsg(_('This price has already been entered. To change it you should edit it'),'warn');
+		prnMsg(__('This price has already been entered. To change it you should edit it'),'warn');
 		$InputError = 1;
 	}
 
@@ -91,12 +91,12 @@ if (isset($_POST['submit'])) {
 				AND currabrev='" . $_POST['OldCurrAbrev'] . "'
 				AND quantitybreak='" . filter_number_format($_POST['OldQuantityBreak']) . "'";
 
-		$ErrMsg = _('Could not be update the existing prices');
+		$ErrMsg = __('Could not be update the existing prices');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		ReSequenceEffectiveDates ($StockID, $_POST['SalesType'],$_POST['CurrAbrev'],$_POST['QuantityBreak']);
 
-		prnMsg(_('The price has been updated'),'success');
+		prnMsg(__('The price has been updated'),'success');
 	} elseif ($InputError != 1) {
 
 	/* actions to take once the user has clicked the submit button
@@ -116,9 +116,9 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['CurrAbrev'] . "',
 						'" . $SQLStartDate . "',
 						'" . $SQLEndDate . "')";
-		$ErrMsg = _('Failed to insert price data');
+		$ErrMsg = __('Failed to insert price data');
 		$Result = DB_query($SQL, $ErrMsg);
-		prnMsg( _('The price matrix record has been added'),'success');
+		prnMsg( __('The price matrix record has been added'),'success');
 		echo '<br />';
 		unset($_POST['StockID']);
 		unset($_POST['SalesType']);
@@ -140,9 +140,9 @@ if (isset($_POST['submit'])) {
 		AND price='" . $_GET['Price'] . "'
 		AND startdate='" . $_GET['StartDate'] . "'
 		AND enddate='" . $_GET['EndDate'] . "'";
-	$ErrMsg = _('Failed to delete price data');
+	$ErrMsg = __('Failed to delete price data');
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg( _('The price matrix record has been deleted'),'success');
+	prnMsg( __('The price matrix record has been deleted'),'success');
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -165,9 +165,9 @@ $SQL = "SELECT currabrev FROM currencies";
 $Result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
 echo '<fieldset>
-		<legend>', _('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
+		<legend>', __('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>
-		<label for="CurrAbrev">' . _('Currency') . ':</label>
+		<label for="CurrAbrev">' . __('Currency') . ':</label>
 		<select name="CurrAbrev">';
 while ($MyRow = DB_fetch_array($Result)){
 	echo '<option';
@@ -186,7 +186,7 @@ $SQL = "SELECT typeabbrev,
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for="SalesType">' . _('Customer Price List') . ' (' . _('Sales Type') . '):</label>';
+		<label for="SalesType">' . __('Customer Price List') . ' (' . __('Sales Type') . '):</label>';
 echo '<select tabindex="1" name="SalesType">';
 
 while ($MyRow = DB_fetch_array($Result)){
@@ -204,7 +204,7 @@ if(isset($_GET['StockID'])){
 }elseif(isset($_POST['StockID'])){
 	$StockID = trim(strtoupper($_POST['StockID']));
 }elseif(!isset($StockID)){
-	prnMsg(_('You must select a stock item first before set a price maxtrix'),'error');
+	prnMsg(__('You must select a stock item first before set a price maxtrix'),'error');
 	include('includes/footer.php');
 	exit();
 }
@@ -222,28 +222,28 @@ if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
 echo '<field>
-		<label for="StartDate">'. _('Price Effective From Date') . ':</label>
+		<label for="StartDate">'. __('Price Effective From Date') . ':</label>
 		<input type="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
-		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the date from which this price should take effect.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for="EndDate">' . _('Price Effective To Date') . ':</label>
+		<label for="EndDate">' . __('Price Effective To Date') . ':</label>
 		<input type="date" name="EndDate" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
-		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for="QuantityBreak">' . _('Quantity Break') . '</label>
+		<label for="QuantityBreak">' . __('Quantity Break') . '</label>
 		<input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex="3" required="required" type="number" name="QuantityBreak" size="10" value="'. $_POST['QuantityBreak'].'" maxlength="10" />
 	</field>
 	<field>
-		<label for="Price">' . _('Price') . ' :</label>
-		<input class="number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex="4" type="text" required="required" name="Price" value="'.$_POST['Price'].'" title="' . _('The price to apply to orders where the quantity exceeds the specified quantity') . '" size="5" maxlength="5" />
+		<label for="Price">' . __('Price') . ' :</label>
+		<input class="number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex="4" type="text" required="required" name="Price" value="'.$_POST['Price'].'" title="' . __('The price to apply to orders where the quantity exceeds the specified quantity') . '" size="5" maxlength="5" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input tabindex="5" type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>';
 
 $SQL = "SELECT sales_type,
@@ -271,12 +271,12 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) > 0) {
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Currency') . '</th>
-			<th>' . _('Sales Type') . '</th>
-			<th>' . _('Price Effective From Date') . '</th>
-			<th>' . _('Price Effective To Date') .'</th>
-			<th>' . _('Quantity Break') . '</th>
-			<th>' . _('Sell Price') . '</th>
+			<th>' . __('Currency') . '</th>
+			<th>' . __('Sales Type') . '</th>
+			<th>' . __('Price Effective From Date') . '</th>
+			<th>' . __('Price Effective To Date') .'</th>
+			<th>' . __('Quantity Break') . '</th>
+			<th>' . __('Sell Price') . '</th>
 			<th colspan="2"></th>
 		</tr>';
 
@@ -292,8 +292,8 @@ if (DB_num_rows($Result) > 0) {
 					<td>', ConvertSQLDate($MyRow['enddate']), '</td>
 					<td class="number">', $MyRow['quantitybreak'], '</td>
 					<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
-					<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
-					<td><a href="', $EditURL, '">'._('Edit').'</a></td>
+					<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . __('Are you sure you wish to delete this discount matrix record?') . '\');">' . __('Delete') . '</a></td>
+					<td><a href="', $EditURL, '">'.__('Edit').'</a></td>
 				</tr>';
 		} else {
 			echo '<tr class="striped_row">

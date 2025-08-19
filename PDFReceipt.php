@@ -5,7 +5,7 @@ include('includes/session.php');
 include('includes/PDFStarter.php');
 
 $FontSize=10;
-$pdf->addInfo('Title', _('Sales Receipt') );
+$pdf->addInfo('Title', __('Sales Receipt') );
 
 $PageNumber=1;
 $LineHeight=12;
@@ -29,8 +29,8 @@ $LeftOvers = $pdf->addTextWrap(50,$YPos-($LineHeight*10),300,$FontSize,$_SESSION
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($LineHeight*11),300,$FontSize,$_SESSION['CompanyRecord']['regoffice5']);
 $LeftOvers = $pdf->addTextWrap(50,$YPos-($LineHeight*12),300,$FontSize,$_SESSION['CompanyRecord']['regoffice6']);
 
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*3),550,$FontSize, _('Customer Receipt Number ').'  : ' . $_GET['BatchNumber'] .'/'.$_GET['ReceiptNumber'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*4.5),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*3),550,$FontSize, __('Customer Receipt Number ').'  : ' . $_GET['BatchNumber'] .'/'.$_GET['ReceiptNumber'] );
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*4.5),140,$FontSize, __('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. __('Page'). ' ' . $PageNumber);
 
 $YPos -= 150;
 
@@ -92,7 +92,7 @@ $Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 
 /* Prints customer info */
-$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,_('Received From').' :');
+$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize,__('Received From').' :');
 $LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize, htmlspecialchars_decode($MyRow['name']));
 $LeftOvers = $pdf->addTextWrap(150,$YPos-($LineHeight*1),300,$FontSize, htmlspecialchars_decode($MyRow['address1']));
 $LeftOvers = $pdf->addTextWrap(150,$YPos-($LineHeight*2),300,$FontSize, htmlspecialchars_decode($MyRow['address2']));
@@ -103,18 +103,18 @@ $LeftOvers = $pdf->addTextWrap(150,$YPos-($LineHeight*6),300,$FontSize, htmlspec
 
 $YPos=$YPos-($LineHeight*8);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize, _('The Sum Of').' :');
+$LeftOvers = $pdf->addTextWrap(50,$YPos,300,$FontSize, __('The Sum Of').' :');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 $LeftOvers = $pdf->addTextWrap(150,$YPos,300,$FontSize, locale_number_format(-$Amount,$DecimalPlaces).' '. $CurrencyCode . '-' . $CurrencyName[$CurrencyCode]);
 
 $YPos=$YPos-($LineHeight*2);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize, _('Details').' :');
+$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize, __('Details').' :');
 $LeftOvers = $pdf->addTextWrap(150,$YPos,500,$FontSize, $Narrative);
 
 $YPos=$YPos-($LineHeight*8);
 
-$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize,_('Signed On Behalf Of').' :     '.$_SESSION['CompanyRecord']['coyname']);
+$LeftOvers = $pdf->addTextWrap(50,$YPos,500,$FontSize,__('Signed On Behalf Of').' :     '.$_SESSION['CompanyRecord']['coyname']);
 
 $YPos=$YPos-($LineHeight*10);
 

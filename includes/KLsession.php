@@ -7,7 +7,7 @@
 
 function KLDatabaseSelection(){
 	// KL RICARD Select the default database depending on the code version
-	if (URLWithoutScriptNameContains("LOCAL-TEST")){
+	if (URLWithoutScriptNameContains(".LOCAL")){
 		// the current script filename resides in the WAMPP localhost, we are on TEST code
 		$DefaultDatabase = 'test_erp';
 	} else {
@@ -24,7 +24,7 @@ function KLDatabaseSelection(){
 }
 
 function KLThemeSelection(){
-	if (URLWithoutScriptNameContains("LOCAL-TEST")){
+	if (URLWithoutScriptNameContains(".LOCAL")){
 		// the current script filename resides in the WAMPP localhost, we are on TEST code
 		// loalhost development environment must go with the test DB (safest)
 		$Theme = 'silverwolf'; 
@@ -54,7 +54,7 @@ function KLThemeSelection(){
 }
 
 function KLwebERPScriptCalledFromTEST() {
-	return (URLWithoutScriptNameContains("LOCAL-TEST") || URLWithoutScriptNameContains("TEST"));
+	return (URLWithoutScriptNameContains(".LOCAL") || URLWithoutScriptNameContains("TEST"));
 }
 
 function URLWithoutScriptNameContains($keyword) {

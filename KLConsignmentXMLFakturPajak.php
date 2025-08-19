@@ -6,7 +6,7 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Export XML File for Faktur Pajak');
+$Title = __('Export XML File for Faktur Pajak');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
@@ -45,7 +45,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 
@@ -226,7 +226,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 							AND fakturpajakdate = '1000-01-01'
 							AND saledate <= '" . $EndDateSQL . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
-				$Result = DB_query($SQL,$ErrMsg,'',true);
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				DB_Txn_Commit();
 			}
 
@@ -283,11 +283,11 @@ function display($Title)
 
 	echo '<fieldset>';
 	echo FixedField("CompanyFrom", "PTADU", 'From', '');	
-	echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak', '', 1, true, false);
-	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '', '', 2, true, false);
+	echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], __('To'), 'Select the company receiving the Faktur Pajak', '', 1, true, false);
+	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], __('Invoice Consignment Sales until'), '', '', 2, true, false);
 	echo FieldToSelectFromTwoOptions('DRAFT', 'Draft', 
 									'INVOICE', 'Invoice',
-									'DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
+									'DraftOrInvoice', $_POST['DraftOrInvoice'], __('Draft or Invoice'), '', '', 3, true, false);
 	echo FieldToSelectOneText("NomorSeriFP", $_POST['NomorSeriFP'], 14, 13, 'Nomor Seri Faktur Pajak', '', '', 4, true, false);
 	echo '</fieldset>';
 

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Items with stock available not in shop');
+$Title = __('Items with stock available not in shop');
 include('includes/header.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -11,7 +11,7 @@ include('includes/KLDefines.php');
 if (!(isset($_POST['Search']))) {
 			
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Items with Stock Available but not in a location') . '" alt="" />' . ' ' . _('Items with Stock Available but not in a location') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Items with Stock Available but not in a location') . '" alt="" />' . ' ' . __('Items with Stock Available but not in a location') . '
 		</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
@@ -19,11 +19,11 @@ if (!(isset($_POST['Search']))) {
 
 	echo '<fieldset>';
 	echo FieldToSelectMultipleStockCategories("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items', '', 1, true, false);
-	echo FieldToSelectOneLocation("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW', 2, true, false);
-	echo FieldToSelectOneLocation("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS', 3, true, false);
+	echo FieldToSelectOneLocation("FromLoc", $_POST['FromLoc'], __('Available at'), '', 'CANVIEW', 2, true, false);
+	echo FieldToSelectOneLocation("Shop", $_POST['Shop'], __('But NOT available at'), '', 'BALISHOPS', 3, true, false);
     echo '</fieldset>';
 	
-	echo OneButtonCenteredForm("Search", _('Search'), 4, false, false);
+	echo OneButtonCenteredForm("Search", __('Search'), 4, false, false);
 	echo '</form>';
 
 } else {
@@ -61,17 +61,17 @@ if (!(isset($_POST['Search']))) {
 
 	$Result = DB_query($SQL);
 	
-	$TableTitleText = _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'];
+	$TableTitleText = __('Items with Stock Available at ') . $_POST['FromLoc'] . __(' but RL = 0 in Shop ') . $_POST['Shop'];
 	ShowTableTitle($TableTitleText);
 
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('#') . '</th>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Category') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Qty at ') . $_POST['FromLoc'] . '</th>
+					<th>' . __('#') . '</th>
+					<th>' . __('Code') . '</th>
+					<th>' . __('Category') . '</th>
+					<th>' . __('Description') . '</th>
+					<th>' . __('Qty at ') . $_POST['FromLoc'] . '</th>
 				</tr>
 			</thead>
 			<tbody>';

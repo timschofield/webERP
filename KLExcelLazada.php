@@ -220,7 +220,7 @@ function submit($TypeOfShop) {
 					$Height = $MyRow['height']/$FactorLenght; 
 					$Weight = $MyRow['grossweight'];
 
-					$PackagingImage = FALSE;
+					$PackagingImage = false;
 					list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
 					list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
 					list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
@@ -333,7 +333,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for uploading products to Lazada');
+	$Title = __('Excel file for uploading products to Lazada');
 
 	include('includes/header.php');
 
@@ -347,14 +347,14 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		</p>';
 
 	echo '<fieldset>
-			<legend>' . _('Lazada Shop Selection') . '</legend>';
+			<legend>' . __('Lazada Shop Selection') . '</legend>';
 			
-	echo FieldToSelectOneBrand('TypeOfShop', '', _('Lazada shop'), '', '', '', true, true);
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectOneBrand('TypeOfShop', '', __('Lazada shop'), '', '', '', true, true);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export file to upload products to Lazada'));
+	echo OneButtonCenteredForm('submit', __('Export file to upload products to Lazada'));
 
 	echo '</div>
          </form>';

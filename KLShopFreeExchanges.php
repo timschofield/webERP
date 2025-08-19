@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('SPG Last 10 Shop Tali Exchanges');
+$Title = __('SPG Last 10 Shop Tali Exchanges');
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
@@ -21,7 +21,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('My Last 10 Shop Tali Exchanges') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('My Last 10 Shop Tali Exchanges') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -36,22 +36,22 @@ if (isset($_POST['submit'])) {
 		$InputError = 1;
 		$Errors[$i] = 'ItemFromEmpty';
 		$i++;
-		prnMsg(_('The Item FROM must be one valid code'),'error');
+		prnMsg(__('The Item FROM must be one valid code'),'error');
 	}elseif ($_POST['ItemTo'] == '') {
 		$InputError = 1;
 		$Errors[$i] = 'ItemToEmpty';
 		$i++;
-		prnMsg(_('The Item TO must be one valid code'),'error');
+		prnMsg(__('The Item TO must be one valid code'),'error');
 	}elseif ($_POST['InvoiceNumber'] == '') {
 		$InputError = 1;
 		$Errors[$i] = 'InvoiceNumber';
 		$i++;
-		prnMsg(_('Yellow Invoice Number can not be empty'),'error');
+		prnMsg(__('Yellow Invoice Number can not be empty'),'error');
 	}elseif ($_POST['ItemFrom'] == $_POST['ItemTo']) {
 		$InputError = 1;
 		$Errors[$i] = 'SameItem';
 		$i++;
-		prnMsg(_('Item FROM and TO can not be the same'),'error');
+		prnMsg(__('Item FROM and TO can not be the same'),'error');
 	}
 
 	if (!isset($_POST['ItemFrom'])){
@@ -80,9 +80,9 @@ if (isset($_POST['submit'])) {
 					'" . $_SESSION['UserID'] . "',
 					'" . $_POST['InvoiceNumber'] . "')";
 		
-		$Msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
-		$ErrMsg = _('The insert of the KL tali exchange failed because');
-		$Result = DB_query($SQL,$ErrMsg, '');
+		$Msg = __('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . __('has been created');
+		$ErrMsg = __('The insert of the KL tali exchange failed because');
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg($Msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);
@@ -129,14 +129,14 @@ if (isset($_POST['submit'])) {
 									)";
 
 
-		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
+		$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock movement record cannot be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity + 1
 				WHERE stockid='" . $_POST['ItemFrom'] . "'
 				AND loccode='" . $_SESSION['UserStockLocation'] . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('The location stock record could not be updated because');
 
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
@@ -180,14 +180,14 @@ if (isset($_POST['submit'])) {
 									)";
 
 
-		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
+		$ErrMsg =  __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock movement record cannot be inserted because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE locstock SET quantity = quantity - 1
 				WHERE stockid='" . $_POST['ItemTo'] . "'
 				AND loccode='" . $_SESSION['UserStockLocation'] . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('The location stock record could not be updated because');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .__('The location stock record could not be updated because');
 
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
@@ -226,11 +226,11 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th>' . _('Exchange #') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('From') . '</th>
-				<th>' . _('To') . '</th>
-				<th>' . _('Yellow#') . '</th>
+				<th>' . __('Exchange #') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('From') . '</th>
+				<th>' . __('To') . '</th>
+				<th>' . __('Yellow#') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -248,7 +248,7 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedExchange)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show my last 10 Tali exchanges') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show my last 10 Tali exchanges') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -269,14 +269,14 @@ if (! isset($_GET['delete'])) {
 
 	
 	echo '<tr>
-			<td>' . _('From') . ':</td>
+			<td>' . __('From') . ':</td>
 			<td><select name="ItemFrom">';
 	$SQL="SELECT stockid 
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
 	$TaliResult= DB_query($SQL);
-	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
+	echo '<option selected="selected" value="">' . __('Select Tali Model')  . '</option>';
 
 	While ($MyRow = DB_fetch_array($TaliResult)){
 		echo '<option value="' . $MyRow['stockid'] . '">' . $MyRow['stockid']  . '</option>';
@@ -284,21 +284,21 @@ if (! isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('To') . ':</td>
+			<td>' . __('To') . ':</td>
 			<td><select name="ItemTo">';
 	$SQL="SELECT stockid 
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
 	$TaliResult= DB_query($SQL);
-	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
+	echo '<option selected="selected" value="">' . __('Select Tali Model')  . '</option>';
 	While ($MyRow = DB_fetch_array($TaliResult)){
 		echo '<option value="' . $MyRow['stockid'] . '">' . $MyRow['stockid']  . '</option>';
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Yellow #') . ':</td>
+			<td>' . __('Yellow #') . ':</td>
 			<td><input type="text" name="InvoiceNumber" size="20" maxlength="20" value="' . $_POST['InvoiceNumber'] . '" /></td>
 		</tr>';
 
@@ -307,7 +307,7 @@ if (! isset($_GET['delete'])) {
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Shop Tali Exchange') . '" />
+			<input type="submit" name="submit" value="' . __('Enter Shop Tali Exchange') . '" />
 		</div>
         </div>
 		</form>';

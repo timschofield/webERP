@@ -1,24 +1,24 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Fixed Asset Locations');
+$Title = __('Fixed Asset Locations');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetLocations';
 
 include('includes/header.php');
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 if (isset($_POST['submit']) AND !isset($_POST['delete'])) {
 	$InputError=0;
 	if (!isset($_POST['LocationID']) OR mb_strlen($_POST['LocationID'])<1) {
-		prnMsg(_('You must enter at least one character in the location ID'),'error');
+		prnMsg(__('You must enter at least one character in the location ID'),'error');
 		$InputError=1;
 	}
 	if (!isset($_POST['LocationDescription']) OR mb_strlen($_POST['LocationDescription'])<1) {
-		prnMsg(_('You must enter at least one character in the location description'),'error');
+		prnMsg(__('You must enter at least one character in the location description'),'error');
 		$InputError=1;
 	}
 	if ($InputError==0) {
@@ -48,7 +48,7 @@ if (isset($_GET['SelectedLocation'])) {
 if (isset($_POST['update']) and !isset($_POST['delete'])) {
 		$InputError=0;
 		if (!isset($_POST['LocationDescription']) or mb_strlen($_POST['LocationDescription'])<1) {
-			prnMsg(_('You must enter at least one character in the location description'),'error');
+			prnMsg(__('You must enter at least one character in the location description'),'error');
 			$InputError=1;
 		}
 		if ($InputError==0) {
@@ -69,20 +69,20 @@ if (isset($_POST['update']) and !isset($_POST['delete'])) {
 		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg(_('This location has child locations so cannot be removed'), 'warning');
+			prnMsg(__('This location has child locations so cannot be removed'), 'warning');
 			$InputError=1;
 		}
 		$SQL="SELECT COUNT(assetid) FROM fixedassets WHERE assetlocation='" . $_POST['LocationID']."'";
 		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg(_('You have assets in this location so it cannot be removed'), 'warn');
+			prnMsg(__('You have assets in this location so it cannot be removed'), 'warn');
 			$InputError=1;
 		}
 		if ($InputError==0) {
 			$SQL = "DELETE FROM fixedassetlocations WHERE locationid = '".$_POST['LocationID']."'";
 			$Result = DB_query($SQL);
-			prnMsg(_('The location has been deleted successfully'), 'success');
+			prnMsg(__('The location has been deleted successfully'), 'success');
 		}
 	}
 }
@@ -94,9 +94,9 @@ if (DB_num_rows($Result) > 0) {
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="SortedColumn">' . _('Location ID') . '</th>
-			<th class="SortedColumn">' . _('Location Description') . '</th>
-			<th class="SortedColumn">' . _('Parent Location') . '</th>
+			<th class="SortedColumn">' . __('Location ID') . '</th>
+			<th class="SortedColumn">' . __('Location Description') . '</th>
+			<th class="SortedColumn">' . __('Parent Location') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -111,9 +111,9 @@ if (DB_num_rows($Result) > 0) {
 			$ParentRow=DB_fetch_array($ParentResult);
 			echo '<td>' . $ParentRow['locationdescription'] . '</td>';
 		} else {
-			echo '<td>', _('No Parent Location'), '</td>';
+			echo '<td>', __('No Parent Location'), '</td>';
 		}
-		echo '<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($MyRow['locationid']), '">', _('Edit'), '</a></td></tr>';
+		echo '<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($MyRow['locationid']), '">', __('Edit'), '</a></td></tr>';
 	}
 
 	echo '</tbody></table>';
@@ -124,30 +124,30 @@ if (DB_num_rows($Result) > 0) {
 
 	echo '<fieldset>';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<legend>', _('Edit Asset Location'), '</legend>';
+	echo '<legend>', __('Edit Asset Location'), '</legend>';
 
 	echo '<field>
-			<label for="LocationID">' . _('Location ID') . '</label>
+			<label for="LocationID">' . __('Location ID') . '</label>
 			<input type="hidden" name="LocationID" value="'.$LocationID.'" />
 			<fieldtext>' . $LocationID . '</fieldtext>
 		</field>';
 } else {
-	echo '<legend>', _('Create Asset Location'), '</legend>
+	echo '<legend>', __('Create Asset Location'), '</legend>
 			<field>
-				<label for="LocationID">' . _('Location ID') . '</label>
+				<label for="LocationID">' . __('Location ID') . '</label>
 				<input type="text" name="LocationID" required="required" title="" data-type="no-illegal-chars" size="6" value="'.$LocationID.'" />
-				<fieldhelp>' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '</fieldhelp>
+				<fieldhelp>' . __('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '</fieldhelp>
 		</field>';
 }
 
 echo '<field>
-		<label for="LocationDescription">' . _('Location Description') . '</label>
+		<label for="LocationDescription">' . __('Location Description') . '</label>
 		<input type="text" name="LocationDescription" required="required" title="" size="20" value="'.$LocationDescription.'" />
-		<fieldhelp>' . _('Enter the fixed asset location description. Up to 20 characters') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the fixed asset location description. Up to 20 characters') . '</fieldhelp>
 	</field>';
 
 echo '<field>
-		<label for="ParentLocationID">' . _('Parent Location') . '</label>
+		<label for="ParentLocationID">' . __('Parent Location') . '</label>
 		<select name="ParentLocationID">';
 
 $SQL="SELECT locationid, locationdescription FROM fixedassetlocations";
@@ -169,11 +169,11 @@ echo '</select>
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="submit" name="update" value="' . _('Update Information') . '" />
+	echo '<input type="submit" name="update" value="' . __('Update Information') . '" />
 		<br /><br />
-		<input type="reset" name="delete" value="' . _('Delete This Location') . '" />';
+		<input type="reset" name="delete" value="' . __('Delete This Location') . '" />';
 } else {
-	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
+	echo '<input type="submit" name="submit" value="' . __('Enter Information') . '" />';
 }
 echo '</div>
 	</form>';

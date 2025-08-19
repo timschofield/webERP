@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Copy all reorder levels from one location to another');// Screen identificator.
+$Title = __('Copy all reorder levels from one location to another');// Screen identificator.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
@@ -18,7 +18,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	$InputError =0;
 	
 	if($_POST['FromLocationID']==$_POST['ToLocationID']) {
-		prnMsg(_('Location FROM must be different from location TO'),'error');
+		prnMsg(__('Location FROM must be different from location TO'),'error');
 		$InputError =1;
 	}
 	
@@ -26,8 +26,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$Result = DB_Txn_Begin();
 
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";
-		$ErrMsg =_('The SQL to set RL = 0 at location TO failed');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg =__('The SQL to set RL = 0 at location TO failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		
 		$SQL = "SELECT stockid,
@@ -39,15 +39,15 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
-			$TableTitleText = _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'];
+			$TableTitleText = __('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'];
 			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Item Code') . '</th>
-							<th class="SortedColumn">' . _('Reorder Level') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Item Code') . '</th>
+							<th class="SortedColumn">' . __('Reorder Level') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -59,7 +59,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 						WHERE stockid = '" . $MyRow['stockid'] . "'
 							AND loccode = '" . $_POST['ToLocationID'] . "'";
 				$ErrMsg = "The SQL to set RL to item " . $MyRow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
-				$Resultitem = DB_query($SQL,$ErrMsg,'',true);
+				$Resultitem = DB_query($SQL, $ErrMsg, '', true);
 
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				echo '<tr class="striped_row">
@@ -83,8 +83,8 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>';
-echo FieldToSelectOneLocation("FromLocationID", $_POST['FromLocationID'], _('Select Location to copy the Reorder Levels FROM'), '', 'CANVIEW', 1, true, false);
-echo FieldToSelectOneLocation("ToLocationID", $_POST['ToLocationID'], _('Select Location to copy the Reorder Levels TO'), '', 'CANUPDATE', 2, true, false);
+echo FieldToSelectOneLocation("FromLocationID", $_POST['FromLocationID'], __('Select Location to copy the Reorder Levels FROM'), '', 'CANVIEW', 1, true, false);
+echo FieldToSelectOneLocation("ToLocationID", $_POST['ToLocationID'], __('Select Location to copy the Reorder Levels TO'), '', 'CANUPDATE', 2, true, false);
 echo '</fieldset>';
 
 echo OneButtonCenteredForm("ProcessCopyAuthority", $Title, 3, false, false);

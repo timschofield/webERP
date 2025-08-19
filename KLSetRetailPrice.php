@@ -1,17 +1,17 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Set Initial Retail Price');
+$Title = __('Set Initial Retail Price');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLPrices.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-				_('retail Price') . '" alt="" />' . ' ' . _('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
+				__('retail Price') . '" alt="" />' . ' ' . __('KL Set Initial Retail Prices for').' ' . $_GET['Item']. '.</p>';
 
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
-	prnMsg( _('This page must be given the item code and its new Retail price.'), 'error');
+	prnMsg( __('This page must be given the item code and its new Retail price.'), 'error');
 	include('includes/footer.php');
 	exit();
 }

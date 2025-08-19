@@ -18,7 +18,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				part char(20),
 				extendedqpa double,
 				sortpart text) DEFAULT CHARSET=utf8";
-	$ErrMsg = _('The SQL to create passbom failed with the message');
+	$ErrMsg = __('The SQL to create passbom failed with the message');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	$SQL = "CREATE TEMPORARY TABLE tempbom (
@@ -31,7 +31,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$Result = DB_query($SQL,_('Create of tempbom failed because'));
+	$Result = DB_query($SQL,__('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
@@ -141,18 +141,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	} // End of while $ComponentCounter > 0
 
-	if (DB_error_no() !=0) {
-		$Title = _('Quantity Extended BOM Listing') . ' - ' . _('Problem Report');
-		include('includes/header.php');
-		prnMsg( _('The Quantiy Extended BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit();
-	}
-
 	$Tot_Val=0;
 	$SQL = "SELECT tempbom.component,
 				   SUM(tempbom.quantity) as quantity,
@@ -207,21 +195,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Extended Quantity BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
-					' . _('Build Quantity:') . ' ' . locale_number_format($_POST['Quantity'],'Variable') . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Extended Quantity BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
+					' . __('Build Quantity:') . ' ' . locale_number_format($_POST['Quantity'],'Variable') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Part Number') . '</th>
-							<th>' . _('M/B') . '</th>
-							<th>' . _('Part Description') . '</th>
-							<th>' . _('Build') . '<br />' . _('Quantity') . '</th>
-							<th>' . _('On Hand') . '<br />' . _('Quantity') . '</th>
-							<th>' . _('P.O.') . '<br />' . _('Quantity') . '</th>
-							<th>' . _('W.O.') . '<br />' . _('Quantity') . '</th>
-							<th>' . _('Shortage') . '</th>
+							<th>' . __('Part Number') . '</th>
+							<th>' . __('M/B') . '</th>
+							<th>' . __('Part Description') . '</th>
+							<th>' . __('Build') . '<br />' . __('Quantity') . '</th>
+							<th>' . __('On Hand') . '<br />' . __('Quantity') . '</th>
+							<th>' . __('P.O.') . '<br />' . __('Quantity') . '</th>
+							<th>' . __('W.O.') . '<br />' . __('Quantity') . '</th>
+							<th>' . __('Shortage') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -261,7 +249,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -282,7 +270,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('BOM Extended Quantity');
+		$Title = __('BOM Extended Quantity');
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
@@ -294,34 +282,34 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ViewTopic = 'Manufacturing';
 	$BookMark = '';
 
-	$Title=_('Quantity Extended BOM Listing');
+	$Title=__('Quantity Extended BOM Listing');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="Part">' . _('Part') . ':</label>
+			<label for="Part">' . __('Part') . ':</label>
 			<input type="text" autofocus="autofocus" required="required" name="Part" size="20" title="" />
-			<fieldhelp>' . _('Enter the item code that you wish to display the extended bill of material for') . '</fieldhelp
+			<fieldhelp>' . __('Enter the item code that you wish to display the extended bill of material for') . '</fieldhelp
 		</field>
 		<field>
-			<label for="Quantity">' . _('Quantity') . ':</label>
+			<label for="Quantity">' . __('Quantity') . ':</label>
 			<input type="text" class="number" required="required" name="Quantity" size="4" />
 		</field>
 		<field>
-			<label for="Select">' . _('Selection Option') . ':</label>
+			<label for="Select">' . __('Selection Option') . ':</label>
 			<select name="Select">
-				<option selected="selected" value="All">' . _('Show All Parts') . '</option>
-				<option value="Shortages">' . _('Only Show Shortages') . '</option>
+				<option selected="selected" value="All">' . __('Show All Parts') . '</option>
+				<option value="Shortages">' . __('Only Show Shortages') . '</option>
 			</select>
 		</field>
 		</fieldset>
 		<div class="centre">
-				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
 	</form>';
 

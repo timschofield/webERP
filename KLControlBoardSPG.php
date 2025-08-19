@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL SPG Control Board');
+$Title = __('KL SPG Control Board');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -80,22 +80,22 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.";
+		$TableTitleText = __('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' .  _('Code') . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
-						<th class="SortedColumn">' . _('MTD') . '</th>
-						<th class="SortedColumn">' . _('Trend') . '</th>
-						<th class="SortedColumn">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' .  __('Code') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . __(' days') . '</th>
+						<th class="SortedColumn">' . __('MTD') . '</th>
+						<th class="SortedColumn">' . __('Trend') . '</th>
+						<th class="SortedColumn">' . 'Forecast '. $NumDaysC . __(' days') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -165,18 +165,18 @@ function SPGTypePayments($SPG, $maxdays){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG');
+		$TableTitleText = __('Distribution Cash / Credit Card during the last ') . $maxdays . __(' days by SPG');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . _('% Cash') . '</th>
-						<th class="SortedColumn">' . _('% Credit') . '</th>
-						<th class="SortedColumn">' . _('% Returns') . '</th>
-						<th class="SortedColumn">' . _('% Vouchers') . '</th>
+						<th class="SortedColumn">' . __('Code') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
+						<th class="SortedColumn">' . __('% Cash') . '</th>
+						<th class="SortedColumn">' . __('% Credit') . '</th>
+						<th class="SortedColumn">' . __('% Returns') . '</th>
+						<th class="SortedColumn">' . __('% Vouchers') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -236,14 +236,14 @@ function lastSalesSPG($spg, $NumDaysA){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('webERP#') . '</th>
-						<th class="SortedColumn">' . _('Yellow#') . '</th>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Cash') . '</th>
-						<th class="SortedColumn">' . _('Credit Card') . '</th>
-						<th class="SortedColumn">' . _('Returned Goods') . '</th>
-						<th class="SortedColumn">' . _('Vouchers') . '</th>
-						<th class="SortedColumn">' . _('Total') . '</th>
+						<th class="SortedColumn">' . __('webERP#') . '</th>
+						<th class="SortedColumn">' . __('Yellow#') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
+						<th class="SortedColumn">' . __('Cash') . '</th>
+						<th class="SortedColumn">' . __('Credit Card') . '</th>
+						<th class="SortedColumn">' . __('Returned Goods') . '</th>
+						<th class="SortedColumn">' . __('Vouchers') . '</th>
+						<th class="SortedColumn">' . __('Total') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

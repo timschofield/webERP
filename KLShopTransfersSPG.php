@@ -1,6 +1,6 @@
 <?php
 include('includes/session.php');
-$Title = _('List of Transfers from/to shop');
+$Title = __('List of Transfers from/to shop');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -61,12 +61,12 @@ echo '<table class="selection">
 		<thead>
 			<tr>
 				<th>' . '# Transfer' . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Item') . '</th>
-				<th>' . _('From') . '</th>
-				<th>' . _('Qty Send') . '</th>
-				<th>' . _('To') . '</th>
-				<th>' . _('Qty Received') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('Item') . '</th>
+				<th>' . __('From') . '</th>
+				<th>' . __('Qty Send') . '</th>
+				<th>' . __('To') . '</th>
+				<th>' . __('Qty Received') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -127,13 +127,13 @@ echo '<table class="selection">
 		<thead>
 			<tr>
 				<th>' . '# Transfer' . '</th>
-				<th>' . _('From / To') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('Item') . '</th>
-				<th>' . _('Qty') . '</th>
-				<th>' . _('QOH') . '</th>
-				<th>' . _('User') . '</th>
-				<th>' . _('Notes') . '</th>
+				<th>' . __('From / To') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('Item') . '</th>
+				<th>' . __('Qty') . '</th>
+				<th>' . __('QOH') . '</th>
+				<th>' . __('User') . '</th>
+				<th>' . __('Notes') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

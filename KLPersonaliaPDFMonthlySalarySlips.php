@@ -6,7 +6,7 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Export PDF Salary Slips');
+$Title = __('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
 	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
@@ -17,7 +17,7 @@ if (isset($_POST['submit'])) {
 function submit($Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -25,19 +25,19 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export PDF Monthly Salary Slips for ') . $PeriodMonth;
+		$PageTitle = __('Export PDF Monthly Salary Slips for ') . $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export PDF THR Only Slips for ') . $PeriodMonth;
+		$PageTitle = __('Export PDF THR Only Slips for ') . $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -45,7 +45,7 @@ function submit($Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 
@@ -213,7 +213,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Parameters Selection') . '</legend>';
+		<legend>' . __('Parameters Selection') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 

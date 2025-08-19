@@ -7,13 +7,13 @@
 ****************************************************************************************/
 
 include('includes/session.php');
-$Title = _('WO items can be produced with available stock');
+$Title = __('WO items can be produced with available stock');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_POST['submit'])) {
@@ -43,7 +43,7 @@ function submit($RootPath, $Location) {
 			"ORDER BY woitems.wo, woitems.stockid"
 			;
 
-	$ErrMsg = _('The SQL to find the WO items to produce ');
+	$ErrMsg = __('The SQL to find the WO items to produce ');
 	$ResultItems = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($ResultItems) != 0){
 
@@ -52,20 +52,20 @@ function submit($RootPath, $Location) {
 
 		while ($MyItem = DB_fetch_array($ResultItems)) {
 			echo '<tr>
-					<th>' . _('WO') . '</th>
-							<th>' . _('WO Date') . '</th>
-					<th>' . _('Stock ID') . '</th>
-					<th>' . _('Requested') . '</th>
-					<th>' . _('Received') . '</th>
-					<th>' . _('Pending') . '</th>
-					<th>' . _('UOM') . '</th>
-					<th>' . _('Component') . '</th>
-					<th>' . _('QOH') . '</th>
-					<th>' . _('Needed') . '</th>
-					<th>' . _('Shrinkage') . '</th>
-					<th>' . _('UOM') . '</th>
+					<th>' . __('WO') . '</th>
+							<th>' . __('WO Date') . '</th>
+					<th>' . __('Stock ID') . '</th>
+					<th>' . __('Requested') . '</th>
+					<th>' . __('Received') . '</th>
+					<th>' . __('Pending') . '</th>
+					<th>' . __('UOM') . '</th>
+					<th>' . __('Component') . '</th>
+					<th>' . __('QOH') . '</th>
+					<th>' . __('Needed') . '</th>
+					<th>' . __('Shrinkage') . '</th>
+					<th>' . __('UOM') . '</th>
 					<th></th>
-					<th>' . _('Result') . '</th>
+					<th>' . __('Result') . '</th>
 				</tr>';
 
 			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
@@ -108,9 +108,9 @@ function submit($RootPath, $Location) {
                         AND bom.effectiveafter <= CURRENT_DATE
                         AND bom.effectiveto > CURRENT_DATE";
 
-			$ErrMsg = _('The bill of material could not be retrieved because');
+			$ErrMsg = __('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
-			$ItemCanBeproduced = TRUE;
+			$ItemCanBeproduced = true;
 
 			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
@@ -121,7 +121,7 @@ function submit($RootPath, $Location) {
 					$Available = "OK";
 				}else{
 					$Available = "";
-					$ItemCanBeproduced = FALSE;
+					$ItemCanBeproduced = false;
 				}
 
 				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';
@@ -184,10 +184,10 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<p class="page_title_text" align="center"><strong>' . "List of items in WO ready to be produced in: " . '</strong></p>';
 
 	echo '<fieldset>
-			<legend>', _('Select Location'), '</legend>';
+			<legend>', __('Select Location'), '</legend>';
 
 	echo '<field>
-			<label for="Location">' . _('For Factory Location') . ':</label>
+			<label for="Location">' . __('For Factory Location') . ':</label>
 			<select name="Location">';
 
 	$SQL = "SELECT locations.loccode,
@@ -210,7 +210,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Search Items To Produce') . '" />
+			<input type="submit" name="submit" value="' . __('Search Items To Produce') . '" />
 		</div>';
 	echo '</form>';
 

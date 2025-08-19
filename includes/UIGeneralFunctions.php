@@ -85,9 +85,9 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($Required){
-		$HTML .= '<option value="All">' . _('All Customer Types') . '</option>';
+		$HTML .= '<option value="All">' . __('All Customer Types') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="All">' . _('All Customer Types') . '</option>';
+		$HTML .= '<option selected="selected" value="All">' . __('All Customer Types') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -142,9 +142,9 @@ function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = 
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -207,9 +207,9 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if ($Required){
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -251,7 +251,7 @@ $SQL = "SELECT periodno,
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($SelectedValue) AND ($MyRow['periodno'] == $SelectedValue)) {
@@ -284,7 +284,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -334,14 +334,14 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	
 		if ($AllowAll) {
 			if (!isset($SelectedValue)) {
-				$HTML .= '<option selected="selected" value="All">' . _('All Sales Persons') . '</option>';
+				$HTML .= '<option selected="selected" value="All">' . __('All Sales Persons') . '</option>';
 			} 
 			else {
-				$HTML .= '<option value="All">' . _('All Sales Persons') . '</option>';
+				$HTML .= '<option value="All">' . __('All Sales Persons') . '</option>';
 			}
 		} 
 		else {
-			$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+			$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 		}
 	
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -377,14 +377,14 @@ function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '
 
 	if ($AllowAll) {
 		if (!isset($SelectedValue)) {
-			$HTML .= '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
+			$HTML .= '<option selected="selected" value="All">' . __('All Stock Categories') . '</option>';
 		} 
 		else {
-			$HTML .= '<option value="All">' . _('All Stock Categories') . '</option>';
+			$HTML .= '<option value="All">' . __('All Stock Categories') . '</option>';
 		}
 	} 
 	else {
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	}
 		
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -419,7 +419,7 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
-		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 	}
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -442,7 +442,7 @@ function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLeng
 				<fieldhelp>' . $HelpText . '</fieldhelp>
 				<input type="password" pattern=".{5,}"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= '" name="' . $VariableName . '"  placeholder="'._('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+	$HTML .= '" name="' . $VariableName . '"  placeholder="'.__('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
 			</field>';
 	return $HTML;
 }
@@ -518,14 +518,14 @@ function FieldToSelectOneUser($VariableName, $SelectedValue, $Label = '', $HelpT
 
 	if ($AllowAll) {
 		if (!isset($SelectedValue)) {
-			$HTML .= '<option selected="selected" value="All">' . _('All Users') . '</option>';
+			$HTML .= '<option selected="selected" value="All">' . __('All Users') . '</option>';
 		} 
 		else {
-			$HTML .= '<option value="All">' . _('All Users') . '</option>';
+			$HTML .= '<option value="All">' . __('All Users') . '</option>';
 		}
 	} 
 	else {
-		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+		$HTML .= '<option value="">' . __('Not Yet Selected') . '</option>';
 	}
 		
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -625,10 +625,10 @@ function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastS
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($FirstSelectedValue) AND $MyRow['periodno'] >= $FirstSelectedValue AND $MyRow['periodno'] <= $LastSelectedValue) {
-			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
+			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 		}
 		else {
-			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
+			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . __(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 		}
 	}
 	$HTML .= '</select>

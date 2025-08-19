@@ -7,7 +7,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Move Monthly Salaries Data to Petty Cash');
+$Title = __('Move Monthly Salaries Data to Petty Cash');
 include('includes/header.php');
 
 echo '<p class="page_title_text">
@@ -29,25 +29,25 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Move Monthly Salary to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
+		$PageTitle = __('Move Monthly Salary to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Move THR Only to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
+		$PageTitle = __('Move THR Only to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to Move Monthly Salaries Data to Petty Cash should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -55,7 +55,7 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to Move THR Only Data to Petty Cash should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 
@@ -104,17 +104,17 @@ function submit($Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 			echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . _('Fixed') . '</th>
-						<th class="SortedColumn">' . _('Makan') . '</th>
-						<th class="SortedColumn">' . _('Bensin') . '</th>
-						<th class="SortedColumn">' . _('Commissions') . '</th>
-						<th class="SortedColumn">' . _('Shifts') . '</th>
-						<th class="SortedColumn">' . _('THR') . '</th>
-						<th class="SortedColumn">' . _('Lain2') . '</th>
-						<th class="SortedColumn">' . _('JHT ASKES') . '</th>
-						<th class="SortedColumn">' . _('PPH21') . '</th>
-						<th class="SortedColumn">' . _('Rounding') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
+						<th class="SortedColumn">' . __('Fixed') . '</th>
+						<th class="SortedColumn">' . __('Makan') . '</th>
+						<th class="SortedColumn">' . __('Bensin') . '</th>
+						<th class="SortedColumn">' . __('Commissions') . '</th>
+						<th class="SortedColumn">' . __('Shifts') . '</th>
+						<th class="SortedColumn">' . __('THR') . '</th>
+						<th class="SortedColumn">' . __('Lain2') . '</th>
+						<th class="SortedColumn">' . __('JHT ASKES') . '</th>
+						<th class="SortedColumn">' . __('PPH21') . '</th>
+						<th class="SortedColumn">' . __('Rounding') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -221,7 +221,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 			$MyRow = DB_fetch_array($Result);
 			$TabCode = $MyRow['pctabcode'];
 			$ExpenseType = $MyRow['pcexpensecode'];
-			$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
+			$InsertErrMsg = __('The SQL to insert Salary Transaction to Petty Cash failed');
 			$SQL = "INSERT INTO pcashdetails (tabcode, 
 											date, 
 											codeexpense, 
@@ -253,11 +253,11 @@ function display($Title)
           <div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<fieldset><legend>' . _('Parameters Selection') . '</legend>';
+	echo '<fieldset><legend>' . __('Parameters Selection') . '</legend>';
 	
 	include('includes/KLPersonaliaParameterSelection.php');
 
- 	echo FieldToSelectOneDate('PaymentDate', ConvertSQLDate(EndDateSQLFromPeriodNo($PeriodNow - 1)), _('Payment date'), '', '', '', true, false);
+ 	echo FieldToSelectOneDate('PaymentDate', ConvertSQLDate(EndDateSQLFromPeriodNo($PeriodNow - 1)), __('Payment date'), '', '', '', true, false);
 	echo '</fieldset>';
 
 	echo OneButtonCenteredForm('submit', $Title);

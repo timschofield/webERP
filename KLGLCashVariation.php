@@ -12,13 +12,13 @@
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch ($Activity) {
-		case -1: return _('Without setting up');
-		case 0: return _('No effect on cash flow');
-		case 1: return _('Operating activities (Net change in stock)');
-		case 2: return _('Investing activities (Including depreciation)');
-		case 3: return _('Financing activities');
-		case 4: return _('Cash or cash equivalent');
-		default: return _('Unknown');
+		case -1: return __('Without setting up');
+		case 0: return __('No effect on cash flow');
+		case 1: return __('Operating activities (Net change in stock)');
+		case 2: return __('Investing activities (Including depreciation)');
+		case 3: return __('Financing activities');
+		case 4: return __('Cash or cash equivalent');
+		default: return __('Unknown');
 	}
 }
 
@@ -43,7 +43,7 @@ function colDebitCreditPercent($Amount) {
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
-$Title = _('KL Statement of Cash Flows, Cash Accounts Difference Method');
+$Title = __('KL Statement of Cash Flows, Cash Accounts Difference Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
 include('includes/header.php');
@@ -70,7 +70,7 @@ if ($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	unset($_POST['PeriodFrom']);
 	unset($_POST['PeriodTo']);
-	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
+	prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
 
 if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action'] != 'New') { // If all parameters are set and valid, generates the report:
@@ -84,18 +84,18 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	$PeriodFromDate = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
 	$PeriodToDate = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
 	
-	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromDate),
-		' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToDate), '<br />'; // Page title, reporting period.
+	echo __('From'), ' ', MonthAndYearFromSQLDate($PeriodFromDate),
+		' ', __('to'), ' ', MonthAndYearFromSQLDate($PeriodToDate), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name.
-	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>'; // Page title, reporting presentation currency and level of rounding used.
+	echo __('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>'; // Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:
 		'<thead>
 			<tr>
-				<th>', _('Account'), '</th>
-				<th>', _('Account Name'), '</th>
-				<th colspan="2">', _('Period Actual'), '</th>',
-				'<th colspan="2">', _('Last Year Actual'), '</th>'; // Added Last Year Actual header
+				<th>', __('Account'), '</th>
+				<th>', __('Account Name'), '</th>
+				<th colspan="2">', __('Period Actual'), '</th>',
+				'<th colspan="2">', __('Last Year Actual'), '</th>'; // Added Last Year Actual header
 	// Initialise section accumulators:
 	$ActualSection = 0;
 	$ActualTotal = 0;
@@ -125,10 +125,10 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		</thead><tfoot>
 			<tr>',
 				'<td class="text" colspan="6">', // Prints an explanation of signs in actual and relative changes: // Adjusted colspan
-					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
+					'<br /><b>', __('Notes'), ':</b><br />',
+					__('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
 	if ($_POST['ShowCash']) {
-		echo _('Cash signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
+		echo __('Cash signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
 	}
 	echo '</td>
 			</tr>
@@ -186,7 +186,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		$LYActualBeginning = $MyRow['LYActualAmount'] ?? 0; // Ensure not null
 	}
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Cash at beginning of period'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Cash at beginning of period'), '</b></td>',
 			colDebitCredit($ActualBeginning),
 			colDebitCredit($LYActualBeginning), // Added LY Actual cell
 		'</tr>';
@@ -246,7 +246,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		$LYActualEnd = $MyRow['LYActualAmount'] ?? 0; // Ensure not null
 	}
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Cash at End of period'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Cash at End of period'), '</b></td>',
 			colDebitCredit($ActualEnd),
 			colDebitCredit($LYActualEnd), // Added LY Actual cell
 		'</tr>';
@@ -257,7 +257,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	$LYCashVariation = $LYCashAtEndPeriod - $LYCashAtStartPeriod; // Added LY variable
 
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Net Cash Flow'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Net Cash Flow'), '</b></td>',
 			colDebitCredit($CashVariation),
 			colDebitCredit($LYCashVariation), // Added LY Actual cell
 		'</tr>';
@@ -269,32 +269,32 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	$MonthlyPercent = ($CashAtStartPeriod != 0) ? ROUND($MonthlyVariation / $CashAtStartPeriod * 100, 1) : 0; // Avoid division by zero
 	$LYMonthlyPercent = ($LYCashAtStartPeriod != 0) ? ROUND($LYMonthlyVariation / $LYCashAtStartPeriod * 100, 1) : 0; // Added LY variable & check
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Average monthly cash variation'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Average monthly cash variation'), '</b></td>',
 			colDebitCredit($MonthlyVariation),
 			colDebitCredit($LYMonthlyVariation), // Added LY Actual cell
 		'</tr>';
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Average monthly cash variation in %'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Average monthly cash variation in %'), '</b></td>',
 			colDebitCreditPercent($MonthlyPercent),
 			colDebitCreditPercent($LYMonthlyPercent), // Added LY Actual cell
 		'</tr>';
 	if ($CashVariation < 0) {
 		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Cash needed to Shutdown'), '</b></td>',
+				<td class="text" colspan="2"><b>', __('Cash needed to Shutdown'), '</b></td>',
 				colDebitCredit(MINIMUM_SURVIVAL_CASH),
 				'<td>&nbsp;</td><td>&nbsp;</td>', // Placeholder for LY
 			'</tr>';
 		$CashAvailable = round($CashAtEndPeriod - MINIMUM_SURVIVAL_CASH, 0, PHP_ROUND_HALF_DOWN);
 		$LYCashAvailable = round($LYCashAtEndPeriod - MINIMUM_SURVIVAL_CASH, 0, PHP_ROUND_HALF_DOWN); // Added LY variable
 		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Cash Still Available'), '</b></td>',
+				<td class="text" colspan="2"><b>', __('Cash Still Available'), '</b></td>',
 				colDebitCredit($CashAvailable),
 				colDebitCredit($LYCashAvailable), // Added LY Actual cell
 			'</tr>';
 		$SurvivalMonths = ($MonthlyVariation != 0) ? -round($CashAvailable / $MonthlyVariation, 0, PHP_ROUND_HALF_DOWN) : 0; // Avoid division by zero
 		$LYSurvivalMonths = ($LYMonthlyVariation != 0) ? -round($LYCashAvailable / $LYMonthlyVariation, 0, PHP_ROUND_HALF_DOWN) : 0; // Added LY variable & check
 		echo '<tr>
-				<td class="text" colspan="2"><b>', _('Cash survival in months'), '</b></td>',
+				<td class="text" colspan="2"><b>', __('Cash survival in months'), '</b></td>',
 				colDebitCredit($SurvivalMonths),
 				colDebitCredit($LYSurvivalMonths), // Added LY Actual cell
 			'</tr>';
@@ -312,26 +312,26 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		'<div class="centre noprint">'; // Form buttons:
 	if ($NeedSetup) { // Assuming $NeedSetup is defined elsewhere
 		echo '<button onclick="javascript:window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
+				'/images/maintenance.png" /> ', __('Run Setup'), '</button>'; // "Run Setup" button.
 	}
 	echo '<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-			'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+			'/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
 		'<button name="Action" type="submit" value="New"><img alt="" src="', $RootPath, '/css/', $Theme,
-			'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+			'/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
 		'<button onclick="javascript:window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-			'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>';
 } else { // If one or more parameters are NOT set or NOT valid, shows a parameters input form:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/reports.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
-	if (!isset($_SESSION['ShowPageHelp']) || $_SESSION['ShowPageHelp']) { // If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is TRUE, shows the page help text:
+	if (!isset($_SESSION['ShowPageHelp']) || $_SESSION['ShowPageHelp']) { // If it is not set the $_SESSION['ShowPageHelp'] parameter OR it is true, shows the page help text:
 		echo '<div class="page_help_text">',
-			_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
-			_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
-			_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
-			_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
+			__('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.'), '<br />',
+			__('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.'), '<br />',
+			__('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.'), '<br />',
+			__('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'),
 			'</div>';
 	}
 	// Shows a form to allow input of criteria for the report to generate:
@@ -340,7 +340,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '"/>'; // Form's head.
 
 	// Input fieldset:
-	echo '<fieldset><legend>', _('Report Parameters'), '</legend>'; // Replaced table header
+	echo '<fieldset><legend>', __('Report Parameters'), '</legend>'; // Replaced table header
 
 	// Select period from:
 	if (!isset($_POST['PeriodFrom'])) {
@@ -354,8 +354,8 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	}
 	echo FieldToSelectOnePeriod('PeriodFrom',
 								$_POST['PeriodFrom'],
-								_('Select period from'),
-								(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the beginning of the reporting period') : ''),
+								__('Select period from'),
+								(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? __('Select the beginning of the reporting period') : ''),
 								'', // Filter
 								'', // TabIndex
 								true, // Required
@@ -367,32 +367,32 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	}
 	echo FieldToSelectOnePeriod('PeriodTo',
 								$_POST['PeriodTo'],
-								_('Select period to'),
-								(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Select the end of the reporting period') : ''),
+								__('Select period to'),
+								(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? __('Select the end of the reporting period') : ''),
 								'', // Filter
 								'', // TabIndex
 								true, // Required
 								false); // AutoFocus
 
 	// Show accounts with zero balance:
-	echo FieldToSelectFromTwoOptions(1, _('Yes'),
-									0, _('No'),
+	echo FieldToSelectFromTwoOptions(1, __('Yes'),
+									0, __('No'),
 									'ShowZeroBalance',
 									(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? 1 : 0),
-									_('Show accounts with zero balance'),
-									(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show all accounts including those with zero balance') : ''),
+									__('Show accounts with zero balance'),
+									(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? __('Check this box to show all accounts including those with zero balance') : ''),
 									'', // Filter
 									'', // TabIndex
 									false, // Required
 									false); // AutoFocus
 
 	// Show cash accounts:
-	echo FieldToSelectFromTwoOptions(1, _('Yes'),
-									0, _('No'),
+	echo FieldToSelectFromTwoOptions(1, __('Yes'),
+									0, __('No'),
 									'ShowCash',
 									(isset($_POST['ShowCash']) && $_POST['ShowCash'] ? 1 : 0),
-									_('Show cash accounts'),
-									(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? _('Check this box to show cash accounts') : ''),
+									__('Show cash accounts'),
+									(!isset($_SESSION['ShowFieldHelp']) || $_SESSION['ShowFieldHelp'] ? __('Check this box to show cash accounts') : ''),
 									'', // Filter
 									'', // TabIndex
 									false, // Required
@@ -401,7 +401,7 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 	echo '</fieldset>'; // Close fieldset
 
 	// Replace submit buttons
-	echo TwoButtonsCenteredForm('Submit', _('Submit'), 'Cancel', _('Return'), 'index.php?Application=GL');
+	echo TwoButtonsCenteredForm('Submit', __('Submit'), 'Cancel', __('Return'), 'index.php?Application=GL');
 }
 echo '</form>';
 include('includes/footer.php');

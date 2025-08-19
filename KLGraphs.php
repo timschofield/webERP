@@ -6,11 +6,11 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title=_('KPI Graph');
+$Title=__('KPI Graph');
 
 include('includes/header.php');
 
-$ErrorInDates =FALSE;
+$ErrorInDates =false;
 
 $_POST['GraphType'] = 'lines';
 
@@ -28,8 +28,8 @@ if (!isset($_POST['KPICode'])){
 
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 	if (FormatDateForSQL($_POST['FromDate']) > FormatDateForSQL($_POST['ToDate'])){
-		prnMsg(_('The selected date from is actually after the date to!'),'error');
-		$ErrorInDates =TRUE;
+		prnMsg(__('The selected date from is actually after the date to!'),'error');
+		$ErrorInDates =true;
 	}
 }
 
@@ -43,18 +43,18 @@ if (!isset($_POST['FromDate'])
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<fieldset>
-			<legend>' . _('KPI Graph Parameters') . '</legend>';
+			<legend>' . __('KPI Graph Parameters') . '</legend>';
 
-	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', '', true, false);
-	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', '', true, false);
-	echo FieldToSelectOneKPI('KPICode', $_POST['KPICode'], _('KPI to Graph'), '', '', '', true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], __('From'), '', '', '', true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], __('To'), '', '', '', true, false);
+	echo FieldToSelectOneKPI('KPICode', $_POST['KPICode'], __('KPI to Graph'), '', '', '', true, false);
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('ShowGraph', _('Show KPI Graph'));
+	echo OneButtonCenteredForm('ShowGraph', __('Show KPI Graph'));
 	
 	echo '</div>
         </form>';
@@ -73,13 +73,13 @@ if (!isset($_POST['FromDate'])
 	$KPIResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 
-		prnMsg(_('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
+		prnMsg(__('The KPI graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 		prnMsg($SQL);
 		include('includes/footer.php');
 		exit();
 	}
 	if (DB_num_rows($KPIResult)==0){
-		prnMsg(_('There is not KPI data for the criteria entered to graph'),'info');
+		prnMsg(__('There is not KPI data for the criteria entered to graph'),'info');
 		prnMsg($SQL);
 		include('includes/footer.php');
 		exit();
@@ -123,8 +123,8 @@ if (!isset($_POST['FromDate'])
 	$graph = new Phplot\Phplot\phplot(1200, 600);
 	$graph->SetTitle($GraphTitle);
 	$graph->SetOutputFile($_SESSION['reports_dir'] . '/kpigraph.png');
-	$graph->SetXTitle(_('Date'));
-	$graph->SetYTitle(_('KPI Value'));
+	$graph->SetXTitle(__('Date'));
+	$graph->SetYTitle(__('KPI Value'));
 	$graph->SetXTickPos('none');
 	$graph->SetXTickLabelPos('none');
 //	$graph->SetXDataLabelPos('none'); do not draw the dates in X axis

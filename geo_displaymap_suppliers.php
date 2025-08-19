@@ -5,7 +5,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
 $SQL="SELECT * FROM geocode_param";
-$ErrMsg = _('An error occurred in retrieving the currency information');
+$ErrMsg = __('An error occurred in retrieving the currency information');
 $Result = DB_query($SQL, $ErrMsg);
 $MyRow = DB_fetch_array($Result);
 
@@ -17,7 +17,7 @@ $Map_Height = $MyRow['map_height'];
 $Map_Width = $MyRow['map_width'];
 $Map_Host = $MyRow['map_host'];
 
-$Title = _('Geocoded Supplier Report');
+$Title = __('Geocoded Supplier Report');
 $BodyOnLoad='load();';
 $ExtraHeadContent = '<style>
     html, body, #map-canvas {
@@ -106,5 +106,5 @@ include('includes/header.php');
 <?php echo '<div class="centre" id="map" style="width: ' . $Map_Width . 'px; height: ' . $Map_Height . 'px"></div>'; ?>
 </p>
 <?php
-	echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . _('Go to Geocode Setup') . '</a></div></p>';
+	echo '<div class="centre"><a href="' . $RootPath . '/GeocodeSetup.php">' . __('Go to Geocode Setup') . '</a></div></p>';
 	include('includes/footer.php');

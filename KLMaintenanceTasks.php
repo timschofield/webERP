@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Open Location Maintenance Tasks');
+$Title = __('Open Location Maintenance Tasks');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 
@@ -15,9 +15,9 @@ if (isset($Errors)) {
 	unset($Errors);
 }
 $Errors = array();
-$InputError = FALSE;
+$InputError = false;
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
 	<br />';
 
@@ -53,8 +53,8 @@ if (isset($_POST['submit'])) {
 
 	$i = 1;
 //	if ($MyRow[0]!=0 and !isset($SelectedIndex)) {
-//		$InputError = TRUE;
-//		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
+//		$InputError = true;
+//		prnMsg( __('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
 //		$Errors[$i] = 'CounterIndex';
 //		$i++;
 //	}
@@ -86,18 +86,18 @@ if (isset($_POST['submit'])) {
 			
 			// Validate inputs before trying to insert
 			if ($_POST['LocCode'] == '') {
-				prnMsg(_('A location must be selected'), 'error');
-				$InputError = TRUE;
+				prnMsg(__('A location must be selected'), 'error');
+				$InputError = true;
 			}
 			
 			if ($_POST['MaintenanceType'] == '') {
-				prnMsg(_('A maintenance type must be selected'), 'error');
-				$InputError = TRUE;
+				prnMsg(__('A maintenance type must be selected'), 'error');
+				$InputError = true;
 			}
 			
 			if ($_POST['Description'] == '') {
-				prnMsg(_('A description must be entered'), 'error');
-				$InputError = TRUE;
+				prnMsg(__('A description must be entered'), 'error');
+				$InputError = true;
 			}
 			
 			if (!$InputError) {
@@ -115,7 +115,7 @@ if (isset($_POST['submit'])) {
 							'" . $_SESSION['UserID'] . "',
 							NOW())";
 
-				$Msg = _('A new maintenance task has been created');
+				$Msg = __('A new maintenance task has been created');
 				$Result = DB_query($SQL);
 				prnMsg($Msg, 'success');
 				unset($SelectedIndex);
@@ -188,8 +188,8 @@ or deletion of the records*/
 				<td>' . $MyRow['creationuser'] . '</td>
 				<td>' . ConvertSQLDateTime($MyRow['creationdate']) . '</td>
 				<td>' . $MyRow['taskdescription'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '">' . _('Update') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '&amp;close=1" onclick="return confirm(\'' . _('Are you sure you wish to close this maintenance task?') . '\');">' . _('Close') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '">' . __('Update') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '&amp;close=1" onclick="return confirm(\'' . __('Are you sure you wish to close this maintenance task?') . '\');">' . __('Close') . '</a></td>
 				</tr>';
 
 		// check if there are any updates to show
@@ -220,7 +220,7 @@ or deletion of the records*/
 
 if (isset($SelectedIndex)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show Open Maintenance Tasks') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show Open Maintenance Tasks') . '</a>
 		</div>';
 }
 
@@ -259,19 +259,19 @@ if (!isset($_GET['close'])) {
 		echo '<input type="hidden" name="CounterIndex" value="' . $_POST['CounterIndex'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>' .  _('# Task') .':</td>
+					<td>' .  __('# Task') .':</td>
 					<td>' . $_POST['CounterIndex'] . '</td>
 				</tr>';
 		echo '	<tr>
-					<td>' .  _('Location') .':</td>
+					<td>' .  __('Location') .':</td>
 					<td>' . $MyRow['locationname'] . '</td>
 				</tr>';
 		echo '	<tr>
-					<td>' .  _('Maintenance Type') .':</td>
+					<td>' .  __('Maintenance Type') .':</td>
 					<td>' . $MyRow['typedescription'] . '</td>
 				</tr>';
 		echo '	<tr>
-					<td>' .  _('Description') .':</td>
+					<td>' .  __('Description') .':</td>
 					<td>' . $MyRow['creationuser']. " @ " . ConvertSQLDateTime($MyRow['creationdate']) . ": " . $MyRow['description'] . '</td>
 				</tr>';
 		// check if there are any updates to show
@@ -316,7 +316,7 @@ if (!isset($_GET['close'])) {
 		$ResultStkLocs = DB_query($SQL);
 
 		echo '<tr>
-				<td>' . _('Location') . ':</td>
+				<td>' . __('Location') . ':</td>
 				<td><select name="LocCode">';
 
 		while ($MyRow=DB_fetch_array($ResultStkLocs)){
@@ -339,7 +339,7 @@ if (!isset($_GET['close'])) {
 		$ResultTypes = DB_query($SQL);
 
 		echo '<tr>
-				<td>' . _('Maintenance Type') . ':</td>
+				<td>' . __('Maintenance Type') . ':</td>
 				<td><select name="MaintenanceType">';
 
 		while ($MyRow=DB_fetch_array($ResultTypes)){
@@ -364,7 +364,7 @@ if (!isset($_GET['close'])) {
 		$Description ='';
 	}
 	echo '<tr>
-			<td>' . _('Task Description') . '):</td>
+			<td>' . __('Task Description') . '):</td>
 			<td><textarea ' . (in_array('Description',$Errors) ?  'class="texterror"' : '' ) .'  name="Description" cols="60" rows="5">' . stripslashes($Description) . '</textarea></td>
 		</tr>';
 

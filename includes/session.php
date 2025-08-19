@@ -24,7 +24,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 // KL RICARD: Include the specific KL session functions
 include($PathPrefix . 'KLsession.php');
@@ -126,7 +126,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
 		//retrieve the sql data;
 		$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-		$ErrMsg = _('Failed to retrieve favorites');
+		$ErrMsg = __('Failed to retrieve favorites');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) > 0) {
 			$SQL = array();
@@ -222,20 +222,20 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit();
 
 		case UL_CONFIGERR:
-			$Title = _('Account Error Report');
+			$Title = __('Account Error Report');
 			include($PathPrefix . 'includes/header.php');
 			echo '<br /><br /><br />';
-			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
+			prnMsg(__('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
 			include($PathPrefix . 'includes/footer.php');
 			exit();
 
 		case UL_NOTVALID:
-			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . __('incorrect password') . '</b></font><br /><b>' . __('The user/password combination') . '<br />' . __('is not a valid user of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 
 		case UL_MAINTENANCE:
-			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . __('system maintenance') . '</b></font><br /><b>' . __('webERP is not available right now') . '<br />' . __('during maintenance of the system') . '</b>';
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 	}
@@ -245,9 +245,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		/* If script is from TEST weberp or from localhost */
 		if ($_SESSION['DatabaseName'] != "test_erp"){
 			/* If DB is not test_erp we have a problem and should stop*/
-			$Title = _('Wrong webERP Type');
+			$Title = __('Wrong webERP Type');
 			include($PathPrefix . 'includes/header.php');
-			prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
+			prnMsg(__('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
 			exit();
 		}
@@ -256,7 +256,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		if ($_SESSION['DatabaseName'] != "kurakura_kl_erp"){
 			/* If DB is not kurakura_kl_erp we have a problem and should stop*/
 			include($PathPrefix . 'includes/header.php');
-			prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
+			prnMsg(__('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
 			exit();
 		}
@@ -281,7 +281,7 @@ $_SESSION['Theme'] = KLThemeSelection();
 /* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
 		exit();
 	}
 }
@@ -290,10 +290,10 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobToBeRun)) {
-	$Title = _('Account Error Report');
+	$Title = __('Account Error Report');
 	include($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
-	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
+	prnMsg(__('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include($PathPrefix . 'includes/footer.php');
 	exit();
 }
@@ -309,14 +309,14 @@ if (!isset($PageSecurity)) {
 
 if (!isset($AllowCronJobToBeRun)){
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		$Title = _('Security Permissions Problem');
+		$Title = __('Security Permissions Problem');
 		include($PathPrefix . 'includes/header.php');
 		echo '<tr>
 				<td class="menu_group_items">
 					<table width="100%" class="table_index">
 						<tr>
 							<td class="menu_group_item">
-								<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>
+								<b><font style="size:+1; text-align:center;">' . __('The security settings on your account do not permit you to access this function') . '</font></b>
 							</td>
 						</tr>
 					</table>
@@ -340,12 +340,6 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 } else {
 	$CustomerLogin = 0;
 }
-if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$Debug = 1; //allow debug messages
-
-} else {
-	$Debug = 0; //don't allow debug messages
-}
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
@@ -354,9 +348,9 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Session verification error');
+		$Title = __('Session verification error');
 		include('includes/header.php');
-		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
+		prnMsg(__('This page was not submitted with a correct FormID'), 'error');
 		include('includes/footer.php');
 		exit();
 	}

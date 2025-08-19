@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Set Related Items');
+$Title = __('KL Set Related Items');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -9,7 +9,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$UpdateDB = TRUE;
+$UpdateDB = true;
 
 $begintime = time_start();
 
@@ -25,15 +25,15 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
-	$TableTitleText = _('Find Related Items For Online Shop');
+	$TableTitleText = __('Find Related Items For Online Shop');
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
 	echo '<thead>';
 	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Related') . '</th>
+						<th>' . __('#') . '</th>
+						<th>' . __('Code') . '</th>
+						<th>' . __('Related') . '</th>
 					</tr>';
 	echo $TableHeader;
 	echo '</thead>';
@@ -70,7 +70,7 @@ if (DB_num_rows($Result) != 0){
 						VALUES (
 							UPPER('" . $MyRow['stockid'] . "'),
 							UPPER('" . $MyRelated['stockid'] . "'))";
-				$ErrMsg =_('Could not insert the related items because');
+				$ErrMsg =__('Could not insert the related items because');
 				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;
@@ -100,7 +100,7 @@ if (DB_num_rows($Result) != 0){
 						VALUES (
 							UPPER('" . $MyRow['stockid'] . "'),
 							'WKPC01')";
-				$ErrMsg =_('Could not insert the related items because');
+				$ErrMsg =__('Could not insert the related items because');
 				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;

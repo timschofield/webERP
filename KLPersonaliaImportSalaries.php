@@ -15,7 +15,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Import Excel with Monthly Salary Information');
+$Title = __('Import Excel with Monthly Salary Information');
 include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
@@ -58,7 +58,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	$SpreadSheet = $objReader->load($Target_file);
 	
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 	
 	// The date on the excel should be the same as the date selected by the user
 	$ExcelSheetName = "General Settings";
@@ -72,12 +72,12 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
+		$PageTitle = __('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
+		$PageTitle = __('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
 	}else{
 		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
-		$InputError = TRUE;
+		$InputError = true;
 	}
 	
 	echo '<p class="page_title_text">
@@ -86,14 +86,14 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 	if($ExcelPeriod != $PeriodSelectedByUser){
 		prnMsg("The month selected by the user " . MonthAndYearFromPeriodNo($PeriodSelectedByUser) . " is not the same as the month of the Excel file " .  MonthAndYearFromPeriodNo($ExcelPeriod),"warn");
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodSelectedByUser + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
-//			$InputError = TRUE;
+//			$InputError = true;
 		}
 	}
 	
@@ -101,7 +101,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodSelectedByUser)){
 			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -120,17 +120,17 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
 		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
-		$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
+		$InsertErrMsg = __('The SQL to insert Imported Salary Info failed');
 		
 		echo '<div>';
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('#') . '</th>
-					<th class="SortedColumn">' . _('Type') . '</th>
-					<th class="SortedColumn">' . _('Code Name') . '</th>
-					<th class="SortedColumn">' . _('Position') . '</th>
-					<th class="SortedColumn">' . _('Via') . '</th>
+					<th class="SortedColumn">' . __('#') . '</th>
+					<th class="SortedColumn">' . __('Type') . '</th>
+					<th class="SortedColumn">' . __('Code Name') . '</th>
+					<th class="SortedColumn">' . __('Position') . '</th>
+					<th class="SortedColumn">' . __('Via') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -344,27 +344,27 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 	global $RootPath;	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . __('Import Excel with Monthly Salary Information') . '
 		</p>';
 
 	echo '<fieldset>';
 
 	echo FieldToSelectOnePeriod('PeriodSelectedByUser',
 								isset($_POST['PeriodSelectedByUser']) ? $_POST['PeriodSelectedByUser'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
-								_('Select Month of the Salaries'));
+								__('Select Month of the Salaries'));
 
-	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
-									'THRONLY', _('THR Only'),
+	echo FieldToSelectFromTwoOptions('MONTHLY', __('Monthly Salary'),
+									'THRONLY', __('THR Only'),
 									'SalaryType', 
 									$_POST['SalaryType'],
-									_('Type Of Salary'));
+									__('Type Of Salary'));
 
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], __('File Format'));
 
-	echo FieldToSelectOneFile('SelectedFile', _('File with Gaji Information'));
+	echo FieldToSelectOneFile('SelectedFile', __('File with Gaji Information'));
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Import File'));
+	echo OneButtonCenteredForm('submit', __('Import File'));
 
 	echo '</div>
 		</form>';

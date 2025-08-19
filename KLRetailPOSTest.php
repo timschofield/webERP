@@ -1,7 +1,7 @@
 <?php
 include('includes/session.php');
 
-$Title = _('TEST ESCPOS FILE');
+$Title = __('TEST ESCPOS FILE');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

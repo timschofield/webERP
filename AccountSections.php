@@ -2,7 +2,7 @@
 /* Defines the sections in the general ledger reports */
 
 include('includes/session.php');
-$Title = _('Account Sections');
+$Title = __('Account Sections');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountSections';
 include('includes/header.php');
@@ -57,32 +57,32 @@ if(isset($_POST['submit'])) {
 
 		if((DB_num_rows($Result)!=0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
-			prnMsg( _('The account section already exists in the database'),'error');
+			prnMsg( __('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
 			$i++;
 		}
 	}
 	if(ContainsIllegalCharacters($_POST['SectionName'])) {
 		$InputError = 1;
-		prnMsg( _('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
+		prnMsg( __('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
 	if(mb_strlen($_POST['SectionName'])==0) {
 		$InputError = 1;
-		prnMsg( _('The account section name must contain at least one character') ,'error');
+		prnMsg( __('The account section name must contain at least one character') ,'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
 	if(isset($_POST['SectionID']) AND (!is_numeric($_POST['SectionID']))) {
 		$InputError = 1;
-		prnMsg( _('The section number must be an integer'),'error');
+		prnMsg( __('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
 	if(isset($_POST['SectionID']) AND mb_strpos($_POST['SectionID'],".")>0) {
 		$InputError = 1;
-		prnMsg( _('The section number must be an integer'),'error');
+		prnMsg( __('The section number must be an integer'),'error');
 		$Errors[$i] = 'SectionID';
 		$i++;
 	}
@@ -94,7 +94,7 @@ if(isset($_POST['submit'])) {
 		$SQL = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
-		$Msg = _('Record Updated');
+		$Msg = __('Record Updated');
 	} elseif($InputError !=1) {
 
 	/*SelectedSectionID is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account section form */
@@ -104,7 +104,7 @@ if(isset($_POST['submit'])) {
 										) VALUES (
 											'" . $_POST['SectionID'] . "',
 											'" . $_POST['SectionName'] ."')";
-		$Msg = _('Record inserted');
+		$Msg = __('Record inserted');
 	}
 
 	if($InputError!=1) {
@@ -124,9 +124,9 @@ if(isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	if($MyRow['sections']>0) {
-		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
+		prnMsg( __('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
 		echo '<div>',
-			'<br />', _('There are'), ' ', $MyRow['sections'], ' ', _('general ledger accounts groups that refer to this account section'),
+			'<br />', __('There are'), ' ', $MyRow['sections'], ' ', __('general ledger accounts groups that refer to this account section'),
 			'</div>';
 
 	} else {
@@ -138,7 +138,7 @@ if(isset($_POST['submit'])) {
 
 		$SQL="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
 		$Result = DB_query($SQL);
-		prnMsg( $SectionName . ' ' . _('section has been deleted') . '!','success');
+		prnMsg( $SectionName . ' ' . __('section has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
 	unset ($_GET['SelectedSectionID']);
@@ -163,19 +163,19 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		FROM accountsection
 		ORDER BY sectionid";
 
-	$ErrMsg = _('Could not get account group sections because');
+	$ErrMsg = __('Could not get account group sections because');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img alt="" class="noPrint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.
-		_('Account Sections'), '" /> ', // Icon title.
-		_('Account Sections'), '</p>';// Page title.
+		__('Account Sections'), '" /> ', // Icon title.
+		__('Account Sections'), '</p>';// Page title.
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', _('Section Number'), '</th>
-				<th class="SortedColumn">', _('Section Description'), '</th>
+				<th class="SortedColumn">', __('Section Number'), '</th>
+				<th class="SortedColumn">', __('Section Description'), '</th>
 				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -186,12 +186,12 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		echo '<tr class="striped_row">
 				<td class="number">', $MyRow['sectionid'], '</td>
 				<td class="text">', $MyRow['sectionname'], '</td>
-				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', __('Edit'), '</a></td>
 				<td class="noPrint">';
 		if( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
-			echo '<b>', _('Restricted'), '</b>';
+			echo '<b>', __('Restricted'), '</b>';
 		} else {
-			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', _('Delete'), '</a>';
+			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', __('Delete'), '</a>';
 		}
 		echo '</td>
 			</tr>';
@@ -202,7 +202,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 
 if(isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Sections') . '</a>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Sections') . '</a>';
 }
 
 if(! isset($_GET['delete'])) {
@@ -220,7 +220,7 @@ if(! isset($_GET['delete'])) {
 
 		$Result = DB_query($SQL);
 		if( DB_num_rows($Result) == 0 ) {
-			prnMsg( _('Could not retrieve the requested section please try again.'),'warn');
+			prnMsg( __('Could not retrieve the requested section please try again.'),'warn');
 			unset($_GET['SelectedSectionID']);
 		} else {
 			$MyRow = DB_fetch_array($Result);
@@ -231,9 +231,9 @@ if(! isset($_GET['delete'])) {
 			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />';
 
 			echo '<fieldset>
-					<legend>', _('Edit Account Section Details'), '</legend>
+					<legend>', __('Edit Account Section Details'), '</legend>
 					<field>
-						<label for="SectionID">', _('Section Number'), ':</label>
+						<label for="SectionID">', __('Section Number'), ':</label>
 						<fieldtext>', $_POST['SectionID'], '</fieldtext>
 					</field>';
 		}
@@ -250,27 +250,27 @@ if(! isset($_GET['delete'])) {
 			$_POST['SectionName']='';
 		}
 		echo '<fieldset>
-				<legend>', _('New Account Section Details'), '</legend>
+				<legend>', __('New Account Section Details'), '</legend>
 				<field>
-					<label for="SectionID">', _('Section Number'), ':</label>
+					<label for="SectionID">', __('Section Number'), ':</label>
 					<input autofocus="autofocus" ',
 						( in_array('SectionID',$Errors) ? 'class="inputerror number"' : 'class="number" ' ),
 						'maxlength="4" name="SectionID" required="required" size="4" tabindex="1" type="text" value="', $_POST['SectionID'], '" />
-					<fieldhelp>', _('Enter a unique integer identifier for this section'), '</fieldhelp>
+					<fieldhelp>', __('Enter a unique integer identifier for this section'), '</fieldhelp>
 				</field>';
 	}
 	echo	'<field>
-				<label for="SectionName">', _('Section Description'), ':</label>
+				<label for="SectionName">', __('Section Description'), ':</label>
 				<input ',
 					( in_array('SectionName',$Errors) ? 'class="inputerror text" ' : 'class="text" ' ),
 					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" />
-				<fieldhelp>', _('Enter a description for this section'), '</fieldhelp>
+				<fieldhelp>', __('Enter a description for this section'), '</fieldhelp>
 			</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" />
+			<input name="submit" tabindex="3" type="submit" value="', __('Enter Information'), '" />
 		</div>
 	</form>';
 } //end if record deleted no point displaying form to add record

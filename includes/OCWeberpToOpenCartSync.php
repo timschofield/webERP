@@ -25,7 +25,7 @@ function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
 //	$EmailText = MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun , $EmailText);
 
 	// do all hourly maintenance as well...
-	$EmailText = WeberpToOpenCartHourlySync($ShowMessages , FALSE, $EmailText);
+	$EmailText = WeberpToOpenCartHourlySync($ShowMessages , false, $EmailText);
 
 	// recreate the list of featured in OpenCart
 // NOT READY FOR OC v3.0, OC_SETTING IS DIFFERENT
@@ -56,7 +56,7 @@ function WeberpToOpenCartDailySync($ShowMessages , $EmailText=''){
 	return $EmailText;
 }
 
-function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = TRUE, $EmailText=''){
+function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = true, $EmailText=''){
 	$begintime = time_start();
 	if ($ControlTx){
 		DB_Txn_Begin();
@@ -147,22 +147,22 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product Basic Info') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product Basic Info') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('QOH') . '</th>
-								<th>' . _('Basic Price') . '</th>
-								<th>' . _('Store') . '</th>
-								<th>' . _('Tag') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('QOH') . '</th>
+								<th>' . __('Basic Price') . '</th>
+								<th>' . __('Store') . '</th>
+								<th>' . __('Tag') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Basic Product Information in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert Basic Product Information in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Basic Product Information in Opencart failed');
+		$InsertErrMsg = __('The SQL to insert Basic Product Information in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -431,7 +431,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 					// it's a general item, so we assign to KL.
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}
-				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE);
+				AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, false);
 			}
 			
 			/* Assign access rights to the right customer groups. */
@@ -527,10 +527,10 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Products synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Products synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product Basic Info synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Product Basic Info synchronized from webERP to OpenCart') . "\n\n";
 	}
 
 	return $EmailText;
@@ -556,15 +556,15 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product - Sales Categories') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product - Sales Categories') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Sales Category') . '</th>
-								<th>' . _('Manufacturer Id') . '</th>
-								<th>' . _('Featured') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Sales Category') . '</th>
+								<th>' . __('Manufacturer Id') . '</th>
+								<th>' . __('Featured') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -586,7 +586,7 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 			// Let's get the OpenCart primary key for product
 			$ProductId = GetOpenCartProductId($Model);
 			
-			AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, FALSE);
+			AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, false);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -615,10 +615,10 @@ function SyncProductSalesCategories($ShowMessages, $LastTimeRun , $EmailText= ''
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Products to Sales Categories synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Products to Sales Categories synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product - Sales Categories synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Product - Sales Categories synchronized from webERP to OpenCart') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -650,18 +650,18 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product Prices Updates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product Prices Updates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('New Price') . '</th>
-								<th>' . _('Discount Category') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('New Price') . '</th>
+								<th>' . __('Discount Category') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Product Prices in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Product Prices in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -708,10 +708,10 @@ function SyncProductPrices($ShowMessages, $LastTimeRun , $EmailText = ''){
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Product Prices synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Product Prices synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product Prices synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Product Prices synchronized from webERP to OpenCart') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -738,17 +738,17 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product QOH Updates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product QOH Updates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Online QOH') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Online QOH') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Product QOH in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -805,10 +805,10 @@ function SyncProductQOH($ShowMessages, $LastTimeRun , $EmailText=''){
 	}
 	
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Product QOH synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Product QOH synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product QOH synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Product QOH synchronized from webERP to OpenCart') . "\n\n";
 	}
 
 	return $EmailText;
@@ -837,17 +837,17 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product QOH Available for Marketplaces Updates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product QOH Available for Marketplaces Updates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Marketplace QOH') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Marketplace QOH') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Product QOH in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Product QOH in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -895,10 +895,10 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 	}
 	
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Products set as Enabled/Disabled for Marketplaces in webERP'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Products set as Enabled/Disabled for Marketplaces in webERP'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Products set as Enabled/Disabled for Marketplaces in webERP') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Products set as Enabled/Disabled for Marketplaces in webERP') . "\n\n";
 	}
 
 	// second round... now update Opencart oc_product_link table with current information
@@ -922,20 +922,20 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product Links to Marketplaces Updates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product Links to Marketplaces Updates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Tokopedia Enabled') . '</th>
-								<th>' . _('Shopee Enabled') . '</th>
-								<th>' . _('Lazada Enabled') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Tokopedia Enabled') . '</th>
+								<th>' . __('Shopee Enabled') . '</th>
+								<th>' . __('Lazada Enabled') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Product Links to marketplaces in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert Product Links to marketplaces in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Product Links to marketplaces in Opencart failed');
+		$InsertErrMsg = __('The SQL to insert Product Links to marketplaces in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1040,10 +1040,10 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun , $EmailText='
 	}
 
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Marketplaces links updated to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Marketplaces links updated to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Marketplaces links updated to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Marketplaces links updated to OpenCart') . "\n\n";
 	}
 
 	return $EmailText;
@@ -1104,20 +1104,20 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 	$i = 0;
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Product Description Translations Updates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Product Description Translations Updates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('StockID') . '</th>
-								<th>' . _('Language') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Long Description') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('StockID') . '</th>
+								<th>' . __('Language') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('Long Description') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$InsertErrMsg = _('The SQL to insert Product Description Translations in Opencart failed');
-		$UpdateErrMsg = _('The SQL to update Product Description Translations in Opencart failed');
+		$InsertErrMsg = __('The SQL to insert Product Description Translations in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Product Description Translations in Opencart failed');
 
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1239,10 +1239,10 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun , $Email
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Product Description Translations synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Product Description Translations synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Product Description Translations synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Product Description Translations synchronized from webERP to OpenCart') . "\n\n";
 	}
 
 	return $EmailText;
@@ -1255,12 +1255,12 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	}
 
 	if ($ShowMessages){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Synchronize multiple images per item') .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . __('Synchronize multiple images per item') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th>' . _('webERP Code') . '</th>
-							<th>' . _('File') . '</th>
+							<th>' . __('webERP Code') . '</th>
+							<th>' . __('File') . '</th>
 						</tr>';
 		echo $TableHeader;
 	}
@@ -1272,7 +1272,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($ImageFiles as $file) {
 		$multipleimage = 1;
-		$exist_multiple = TRUE;
+		$exist_multiple = true;
 		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
 			if (strpos($file, $suffix) !== false){
@@ -1283,7 +1283,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 				if ($ProductId > 0){
 					// insert info about multiple images
 					$Image = PATH_OPENCART_IMAGES . $file;
-					if (DataExistsInOpenCart("oc_product_image", "product_id", $ProductId, "image", $Image)== FALSE){
+					if (DataExistsInOpenCart("oc_product_image", "product_id", $ProductId, "image", $Image)== false){
 						$SQLInsert = "INSERT INTO oc_product_image
 										(product_id,
 										image,
@@ -1313,10 +1313,10 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 		echo '</table>
 				</div>
 				</form>';
-		prnMsg(locale_number_format($i,0) . ' ' . _('Multiple Images Synchronized'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Multiple Images Synchronized'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Multiple Images Synchronized') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Multiple Images Synchronized') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -1341,18 +1341,18 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Currency exchange rates') .'</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . __('Currency exchange rates') .'</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('Currency') . '</th>
-								<th>' . _('Rate') . '</th>
-								<th>' . _('Action') . '</th>
+								<th>' . __('Currency') . '</th>
+								<th>' . __('Rate') . '</th>
+								<th>' . __('Action') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
-		$UpdateErrMsg = _('The SQL to update Currency Exchange Rates in Opencart failed');
-		$InsertErrMsg = _('The SQL to insert Currency Exchange Rates in Opencart failed');
+		$UpdateErrMsg = __('The SQL to update Currency Exchange Rates in Opencart failed');
+		$InsertErrMsg = __('The SQL to insert Currency Exchange Rates in Opencart failed');
 
 		$k = 0; //row colour counter
 		$i = 0;
@@ -1418,10 +1418,10 @@ function SyncCurrencies($ShowMessages, $LastTimeRun , $EmailText= ''){
 		}
 	}
 	if ($ShowMessages){
-		prnMsg(locale_number_format($i,0) . ' ' . _('Currency exchange rates synchronized from webERP to OpenCart'),'success');
+		prnMsg(locale_number_format($i,0) . ' ' . __('Currency exchange rates synchronized from webERP to OpenCart'),'success');
 	}
 	if ($EmailText !=''){
-		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . _('Currency exchange rates synchronized from webERP to OpenCart') . "\n\n";
+		$EmailText = $EmailText . locale_number_format($i,0) . ' ' . __('Currency exchange rates synchronized from webERP to OpenCart') . "\n\n";
 	}
 	return $EmailText;
 }
@@ -1469,9 +1469,9 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('Coupon ID') . '</th>
-								<th>' . _('Name') . '</th>
-								<th>' . _('Code') . '</th>
+								<th>' . __('Coupon ID') . '</th>
+								<th>' . __('Name') . '</th>
+								<th>' . __('Code') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -1546,9 +1546,9 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('Order ID') . '</th>
-								<th>' . _('Name') . '</th>
-								<th>' . _('Comment') . '</th>
+								<th>' . __('Order ID') . '</th>
+								<th>' . __('Name') . '</th>
+								<th>' . __('Comment') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -1620,9 +1620,9 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('Order ID') . '</th>
-								<th>' . _('Name') . '</th>
-								<th>' . _('Comment') . '</th>
+								<th>' . __('Order ID') . '</th>
+								<th>' . __('Name') . '</th>
+								<th>' . __('Comment') . '</th>
 							</tr>';
 			echo $TableHeader;
 		}
@@ -1673,7 +1673,7 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays , $EmailText= ''
 function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
 	/* Now, insert it, if it is not there yet*/
 	if (!DataExistsInOpenCart('oc_product_to_customer_group', 'product_id', $ProductId, 'customer_group_id', $CustomerGroupId)){
-		$InsertErrMsg = _('The SQL on fucntion AssignAcessRightsProductsToCustomerGroupInOpenCart failed');
+		$InsertErrMsg = __('The SQL on fucntion AssignAcessRightsProductsToCustomerGroupInOpenCart failed');
 		$SQLInsert = "INSERT INTO oc_product_to_customer_group
 						(product_id,
 						customer_group_id)
@@ -1686,7 +1686,7 @@ function AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $Custome
 }
 
 function RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, $CustomerGroupId){
-	$DeleteErrMsg = _('The SQL on fucntion RevokeAcessRightsProductsToCustomerGroupInOpenCart failed');
+	$DeleteErrMsg = __('The SQL on fucntion RevokeAcessRightsProductsToCustomerGroupInOpenCart failed');
 
 	/* Now, revoke (delete) the access rights*/
 	$SQL = "DELETE FROM oc_product_to_customer_group

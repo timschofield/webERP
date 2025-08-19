@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Goods Received But Not Invoiced Yet');
+$Title = __('Goods Received But Not Invoiced Yet');
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -33,33 +33,33 @@ $SQL = "SELECT grns.supplierid,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) != 0) {
-	$TableTitleText = _('Goods Received but not invoiced Yet');
+	$TableTitleText = __('Goods Received but not invoiced Yet');
 	ShowTableTitle($TableTitleText);
 
 	echo '<div class="page_help_text">'
-		. _('Shows the list of Goods Received Not Yet Invoiced, both in supplier currency and home currency.') . '<br />'
-		. _('Total in home currency calculated at Purchasing Price converted at current exchange rate, not Standard cost!') . '<br />'
+		. __('Shows the list of Goods Received Not Yet Invoiced, both in supplier currency and home currency.') . '<br />'
+		. __('Total in home currency calculated at Purchasing Price converted at current exchange rate, not Standard cost!') . '<br />'
 		. '</div>';
 
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('Supplier') . '</th>
-							<th class="SortedColumn">' . _('PO#') . '</th>
-							<th class="SortedColumn">' . _('Item Code') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Qty Received') . '</th>
-							<th>' . _('Qty Invoiced') . '</th>
-							<th>' . _('Qty Pending') . '</th>
-							<th>' . _('Unit Price') . '</th>
+							<th class="SortedColumn">' . __('Supplier') . '</th>
+							<th class="SortedColumn">' . __('PO#') . '</th>
+							<th class="SortedColumn">' . __('Item Code') . '</th>
+							<th>' . __('Date') . '</th>
+							<th>' . __('Qty Received') . '</th>
+							<th>' . __('Qty Invoiced') . '</th>
+							<th>' . __('Qty Pending') . '</th>
+							<th>' . __('Unit Price') . '</th>
 							<th>' . '' . '</th>
-							<th>' . _('Line Total') . '</th>
+							<th>' . __('Line Total') . '</th>
 							<th>' . '' . '</th>
-							<th>' . _('IDR Total') . '</th>
+							<th>' . __('IDR Total') . '</th>
 							<th>' . '' . '</th>
-							<th>' . _('Std Cost') . '</th>
-							<th>' . _('Std Cost Total') . '</th>
+							<th>' . __('Std Cost') . '</th>
+							<th>' . __('Std Cost Total') . '</th>
 							<th>' . '' . '</th>
 						</tr>
 					</thead>
@@ -97,7 +97,7 @@ if (DB_num_rows($Result) != 0) {
 
 	echo '<tr class="striped_row">
 			<td colspan="10">' . '' . '</td>
-			<td>' . _('Total') . ':' . '</td>
+			<td>' . __('Total') . ':' . '</td>
 			<td class="number">' . locale_number_format($TotalHomeCurrency, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td>' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
 			<td>' . '' . '</td>

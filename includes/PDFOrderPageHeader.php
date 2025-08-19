@@ -35,8 +35,8 @@ $pdf->addText($XPos, $YPos,$FontSize, $MyRow['shippername']);
 
 $XPos=630;
 $YPos=567;
-$pdf->addText($XPos, $YPos,$FontSize, _('Order No') . ': ' . $_GET['TransNo']);
-$pdf->addText($XPos, $YPos-14,$FontSize, _('Your Ref') . ': ' . $MyRow['customerref']);
+$pdf->addText($XPos, $YPos,$FontSize, __('Order No') . ': ' . $_GET['TransNo']);
+$pdf->addText($XPos, $YPos-14,$FontSize, __('Your Ref') . ': ' . $MyRow['customerref']);
 
 
 $XPos=687;
@@ -45,12 +45,12 @@ $pdf->addText($XPos, $YPos,$FontSize,  ConvertSQLDate($MyRow['orddate']));
 
 $XPos=630;
 $YPos=525;
-$pdf->addText($XPos, $YPos,$FontSize, _('Cust') . ': ' . $MyRow['debtorno']);
-$pdf->addText($XPos, $YPos-14,$FontSize, _('Branch') . ': ' . $MyRow['branchcode']);
+$pdf->addText($XPos, $YPos,$FontSize, __('Cust') . ': ' . $MyRow['debtorno']);
+$pdf->addText($XPos, $YPos-14,$FontSize, __('Branch') . ': ' . $MyRow['branchcode']);
 
-$pdf->addText($XPos, $YPos-32,$FontSize, _('Page') . ': ' . $PageNumber);
+$pdf->addText($XPos, $YPos-32,$FontSize, __('Page') . ': ' . $PageNumber);
 
-$pdf->addText($XPos, $YPos-46,$FontSize,  _('From') . ': ' . $MyRow['locationname']);
+$pdf->addText($XPos, $YPos-46,$FontSize,  __('From') . ': ' . $MyRow['locationname']);
 
 
 /*Print the order number */

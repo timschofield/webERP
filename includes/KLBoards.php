@@ -80,20 +80,20 @@ function ActiveTransfersByLocation(){
 		ORDER BY (COALESCE(lt_ship.qtyout, 0) + COALESCE(lt_rec.qtyin, 0)) DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Pending Goods to be transferred by shop');
+		$TableTitleText = __('Pending Goods to be transferred by shop');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Shop') . '</th>
-						<th class="SortedColumn">' . _('Transfer OUT') . '</th>
-						<th class="SortedColumn">' . _('Transfer IN') . '</th>
-						<th class="SortedColumn">' . _('Transfer Total') . '</th>
-						<th class="SortedColumn">' . _('Pcs OUT') . '</th>
-						<th class="SortedColumn">' . _('Pcs IN') . '</th>
-						<th class="SortedColumn">' . _('Pcs Total') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Shop') . '</th>
+						<th class="SortedColumn">' . __('Transfer OUT') . '</th>
+						<th class="SortedColumn">' . __('Transfer IN') . '</th>
+						<th class="SortedColumn">' . __('Transfer Total') . '</th>
+						<th class="SortedColumn">' . __('Pcs OUT') . '</th>
+						<th class="SortedColumn">' . __('Pcs IN') . '</th>
+						<th class="SortedColumn">' . __('Pcs Total') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -157,18 +157,18 @@ function ActiveTransferStatus($RootPath){
 			ORDER BY lt.shipdate ASC, lt.reference ASC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('List of Active Transfers');
+		$TableTitleText = __('List of Active Transfers');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Date') . '</th>
-						<th class="SortedColumn">' . _('Transfer') . '</th>
-						<th class="SortedColumn">' . _('From') . '</th>
-						<th class="SortedColumn">' . _('To') . '</th>
-						<th class="SortedColumn">' . _('Qty') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Date') . '</th>
+						<th class="SortedColumn">' . __('Transfer') . '</th>
+						<th class="SortedColumn">' . __('From') . '</th>
+						<th class="SortedColumn">' . __('To') . '</th>
+						<th class="SortedColumn">' . __('Qty') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -272,15 +272,15 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Concept') . '</th>
-						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
-						<th class="SortedColumn">' . _('Trend') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Concept') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysE . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysF . __(' days') . '</th>
+						<th class="SortedColumn">' . __('Trend') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -491,12 +491,12 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Year == "LastYear"){
-			$TableTitleText = _('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
+			$TableTitleText = __('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 		} else {
 			if ($Shop == "All"){
-				$TableTitleText = _('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
+				$TableTitleText = __('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			} else {
-				$TableTitleText = _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
+				$TableTitleText = __('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			}
 		}
 		ShowTableTitle($TableTitleText);
@@ -504,17 +504,17 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
 						<th>' . $TypeReport . '</th>
-						<th class="SortedColumn">' . _('Name') . '</th>
-						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
-						<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
-						<th class="SortedColumn">' . _('MTD') . '</th>
-						<th class="SortedColumn">' . _('Trend') . '</th>
+						<th class="SortedColumn">' . __('Name') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysE . __(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysF . __(' days') . '</th>
+						<th class="SortedColumn">' . __('MTD') . '</th>
+						<th class="SortedColumn">' . __('Trend') . '</th>
 						<th class="SortedColumn">' . 'Monthly Forecast' . '</th>
 					</tr>
 				</thead>
@@ -675,8 +675,8 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 				lastcostupdate = CURRENT_DATE
 			WHERE stockid='" . $StockID . "'";
 
-	$ErrMsg = _('The cost details for the stock item could not be updated because');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('The cost details for the stock item could not be updated because');
+	DB_query($SQL, $ErrMsg, '', true);
 	DB_Txn_Commit();
 	UpdateCost($StockID); //Update any affected BOMs
 }
@@ -729,16 +729,16 @@ function MaintenanceTasksList($Status, $NumDays){
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Task') . '</th>
-							<th class="SortedColumn">' . _('Location') . '</th>
-							<th class="SortedColumn">' . _('Type') . '</th>
-							<th class="SortedColumn">' . _('Description') . '</th>
-							<th class="SortedColumn">' . _('Created By') . '</th>
-							<th class="SortedColumn">' . _('Created Date') . '</th>
-							<th class="SortedColumn">' . _('Closed By') . '</th>
-							<th class="SortedColumn">' . _('Closed Date') . '</th>
-							<th class="SortedColumn">' . _('Days') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Task') . '</th>
+							<th class="SortedColumn">' . __('Location') . '</th>
+							<th class="SortedColumn">' . __('Type') . '</th>
+							<th class="SortedColumn">' . __('Description') . '</th>
+							<th class="SortedColumn">' . __('Created By') . '</th>
+							<th class="SortedColumn">' . __('Created Date') . '</th>
+							<th class="SortedColumn">' . __('Closed By') . '</th>
+							<th class="SortedColumn">' . __('Closed Date') . '</th>
+							<th class="SortedColumn">' . __('Days') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -830,18 +830,18 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 	$TotalCost = 0;
 	if (DB_num_rows($Result) != 0){
 		if (!$ShowOnlyTotal){
-			$TableTitleText = _('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).');
+			$TableTitleText = __('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).');
 			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Code') . '</th>
-								<th class="SortedColumn">' . _('Description') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('UOM') . '</th>
-								<th class="SortedColumn">' . _('Stock value') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Code') . '</th>
+								<th class="SortedColumn">' . __('Description') . '</th>
+								<th class="SortedColumn">' . __('QOH') . '</th>
+								<th class="SortedColumn">' . __('UOM') . '</th>
+								<th class="SortedColumn">' . __('Stock value') . '</th>
 							</tr>
 							</thead>
 							<tbody>';
@@ -917,23 +917,23 @@ function ErrorsInTransfers($maxdays, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Errors on Closed Transfers during the last ') . $maxdays . _(' days ');
+		$TableTitleText = __('Errors on Closed Transfers during the last ') . $maxdays . __(' days ');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Transfer') . '</th>
-							<th class="SortedColumn">' . _('Date') . '</th>
-							<th class="SortedColumn">' . _('From') . '</th>
-							<th class="SortedColumn">' . _('To') . '</th>
-							<th class="SortedColumn">' . _('Total Models') . '</th>
-							<th class="SortedColumn">' . _('Cancelled Models') . '</th>
-							<th class="SortedColumn">' . _('% Models') . '</th>
-							<th class="SortedColumn">' . _('Total Qty') . '</th>
-							<th class="SortedColumn">' . _('Cancelled Qty') . '</th>
-							<th class="SortedColumn">' . _('% Qty') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Transfer') . '</th>
+							<th class="SortedColumn">' . __('Date') . '</th>
+							<th class="SortedColumn">' . __('From') . '</th>
+							<th class="SortedColumn">' . __('To') . '</th>
+							<th class="SortedColumn">' . __('Total Models') . '</th>
+							<th class="SortedColumn">' . __('Cancelled Models') . '</th>
+							<th class="SortedColumn">' . __('% Models') . '</th>
+							<th class="SortedColumn">' . __('Total Qty') . '</th>
+							<th class="SortedColumn">' . __('Cancelled Qty') . '</th>
+							<th class="SortedColumn">' . __('% Qty') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -1095,16 +1095,16 @@ function FinishedStockDistribution($Kind, $ByReport){
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
 								<th class="SortedColumn">' . $Titleheader . '</th>
-								<th class="SortedColumn">' . _('QOH Pcs') . '</th>
-								<th class="SortedColumn">' . _('RL Pcs') . '</th>
-								<th class="SortedColumn">' . _('% Pcs') . '</th>
-								<th class="SortedColumn">' . _('QOH Models') . '</th>
-								<th class="SortedColumn">' . _('RL Models') . '</th>
-								<th class="SortedColumn">' . _('% Models') . '</th>
-								<th class="SortedColumn">' . _('QOH Pcs/Model') . '</th>
-								<th class="SortedColumn">' . _('RL Pcs/Model') . '</th>
+								<th class="SortedColumn">' . __('QOH Pcs') . '</th>
+								<th class="SortedColumn">' . __('RL Pcs') . '</th>
+								<th class="SortedColumn">' . __('% Pcs') . '</th>
+								<th class="SortedColumn">' . __('QOH Models') . '</th>
+								<th class="SortedColumn">' . __('RL Models') . '</th>
+								<th class="SortedColumn">' . __('% Models') . '</th>
+								<th class="SortedColumn">' . __('QOH Pcs/Model') . '</th>
+								<th class="SortedColumn">' . __('RL Pcs/Model') . '</th>
 							</tr>
 						</thead>
 						<tbody>';
@@ -1368,27 +1368,27 @@ function FinishedStockDistributionByShopAndCategory(){
 						<th></th>
 					</tr>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . "Location" . '</th>
-						<th>' . _('Test') . '</th>
-						<th>' . _('Stable') . '</th>
-						<th>' . _('NO PO') . '</th>
-						<th>' . _('D 20%') . '</th>
-						<th>' . _('D 50%') . '</th>
-						<th>' . _('D 80%') . '</th>
-						<th>' . _('Test') . '</th>
-						<th>' . _('Stable') . '</th>
-						<th>' . _('NO PO') . '</th>
-						<th>' . _('D 20%') . '</th>
-						<th>' . _('D 50%') . '</th>
-						<th>' . _('D 80%') . '</th>
-						<th>' . _('Test') . '</th>
-						<th>' . _('Stable') . '</th>
-						<th>' . _('NO PO') . '</th>
-						<th>' . _('D 20%') . '</th>
-						<th>' . _('D 50%') . '</th>
-						<th>' . _('D 80%') . '</th>
-						<th>' . _('Total') . '</th>
+						<th>' . __('Test') . '</th>
+						<th>' . __('Stable') . '</th>
+						<th>' . __('NO PO') . '</th>
+						<th>' . __('D 20%') . '</th>
+						<th>' . __('D 50%') . '</th>
+						<th>' . __('D 80%') . '</th>
+						<th>' . __('Test') . '</th>
+						<th>' . __('Stable') . '</th>
+						<th>' . __('NO PO') . '</th>
+						<th>' . __('D 20%') . '</th>
+						<th>' . __('D 50%') . '</th>
+						<th>' . __('D 80%') . '</th>
+						<th>' . __('Test') . '</th>
+						<th>' . __('Stable') . '</th>
+						<th>' . __('NO PO') . '</th>
+						<th>' . __('D 20%') . '</th>
+						<th>' . __('D 50%') . '</th>
+						<th>' . __('D 80%') . '</th>
+						<th>' . __('Total') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1461,7 +1461,7 @@ function GetTotalQtyItemsForSale(){
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.categoryid NOT IN ('SHDISP', 'SHCONS', 'SHPACK', 'SHOTHE')";
-	$ErrMsg = _('Error in function GetTotalQtyItemsForSale()');
+	$ErrMsg = __('Error in function GetTotalQtyItemsForSale()');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
 	return $Row['0'];
@@ -1485,7 +1485,7 @@ function GetTotalValueItemsForSale($period){
 							'111519000AD',
 							'111519100AD')
 				AND period = ". $period . "";
-	$ErrMsg = _('Error in function GetTotalValueItemsForSale()');
+	$ErrMsg = __('Error in function GetTotalValueItemsForSale()');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
 	return $Row['0'];
@@ -1571,13 +1571,13 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
-			$TableTitleText = _('Components ready to WO in kantor used ONLY for Discount items');
+			$TableTitleText = __('Components ready to WO in kantor used ONLY for Discount items');
 			$BusinessConcept = "COMP-ONLY-DISC-ITEM-IDR";
 		}elseif ($ParentCategory == "DISCOUNT"){
-			$TableTitleText = _('Components ready to WO in kantor used for Discount items');
+			$TableTitleText = __('Components ready to WO in kantor used for Discount items');
 			$BusinessConcept = "COMP-DISC-ITEM-IDR";
 		}else{
-			$TableTitleText = _('Components ready to WO in kantor for any items');
+			$TableTitleText = __('Components ready to WO in kantor for any items');
 			$BusinessConcept = "COMP-ANY-ITEM-IDR";
 		}
 		ShowTableTitle($TableTitleText);
@@ -1585,12 +1585,12 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Description') . '</th>
-						<th class="SortedColumn">' . _('QOH') . '</th>
-						<th class="SortedColumn">' . _('UOM') . '</th>
-						<th class="SortedColumn">' . _('Stock value') . '</th>
+						<th class="SortedColumn">' . __('#') . '</th>
+						<th class="SortedColumn">' . __('Code') . '</th>
+						<th class="SortedColumn">' . __('Description') . '</th>
+						<th class="SortedColumn">' . __('QOH') . '</th>
+						<th class="SortedColumn">' . __('UOM') . '</th>
+						<th class="SortedColumn">' . __('Stock value') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -1710,7 +1710,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				AND discontinued = 0
 			ORDER BY stockid";
 	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
+	$ShowHeader = true;
 	if (DB_num_rows($Result) != 0){
 		$i = 1;
 		$UsageXDays = 0;
@@ -1815,46 +1815,46 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					if ($ExtendedVersion){
 						$TableHeader = '<thead>
 										<tr>
-										<th class="SortedColumn">' . _('#') . '</th>
-										<th class="SortedColumn">' . _('Code') . '</th>
-										<th class="SortedColumn">' . _('Description') . '</th>
-										<th class="SortedColumn">' . _('Current Daily Usage') . '</th>
-										<th class="SortedColumn">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
-										<th class="SortedColumn">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
-										<th class="SortedColumn">' . _('Min QTY Gudang') . '</th>
-										<th class="SortedColumn">' . _('QTY Optimum') . '</th>
-										<th class="SortedColumn">' . _('QOH Gudang') . '</th>
-										<th class="SortedColumn">' . _('QOH Shops') . '</th>
-										<th class="SortedColumn">' . _('QOH Total') . '</th>
-										<th class="SortedColumn">' . _('QOH Days') . '</th>
-										<th class="SortedColumn">' . _('QTY Shortage') . '</th>
-										<th class="SortedColumn">' . _('% Shortage') . '</th>
-										<th class="SortedColumn">' . _('QOO Running') . '</th>
-										<th class="SortedColumn">' . _('Next Order') . '</th>
+										<th class="SortedColumn">' . __('#') . '</th>
+										<th class="SortedColumn">' . __('Code') . '</th>
+										<th class="SortedColumn">' . __('Description') . '</th>
+										<th class="SortedColumn">' . __('Current Daily Usage') . '</th>
+										<th class="SortedColumn">' . __('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
+										<th class="SortedColumn">' . __('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
+										<th class="SortedColumn">' . __('Min QTY Gudang') . '</th>
+										<th class="SortedColumn">' . __('QTY Optimum') . '</th>
+										<th class="SortedColumn">' . __('QOH Gudang') . '</th>
+										<th class="SortedColumn">' . __('QOH Shops') . '</th>
+										<th class="SortedColumn">' . __('QOH Total') . '</th>
+										<th class="SortedColumn">' . __('QOH Days') . '</th>
+										<th class="SortedColumn">' . __('QTY Shortage') . '</th>
+										<th class="SortedColumn">' . __('% Shortage') . '</th>
+										<th class="SortedColumn">' . __('QOO Running') . '</th>
+										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
 									<tbody>';
 					}else{
 						$TableHeader = '<thead>
 										<tr>
-										<th class="SortedColumn">' . _('#') . '</th>
-										<th class="SortedColumn">' . _('Code') . '</th>
-										<th class="SortedColumn">' . _('Description') . '</th>
-										<th class="SortedColumn">' . _('Optimum QTY') . '</th>
-										<th class="SortedColumn">' . _('QOH Gudang') . '</th>
-										<th class="SortedColumn">' . _('QOH Shops') . '</th>
-										<th class="SortedColumn">' . _('QOH Total') . '</th>
-										<th class="SortedColumn">' . _('QOH Days') . '</th>
-										<th class="SortedColumn">' . _('Shortage QTY') . '</th>
-										<th class="SortedColumn">' . _('% Shortage') . '</th>
-										<th class="SortedColumn">' . _('Running QOO') . '</th>
-										<th class="SortedColumn">' . _('Next Order') . '</th>
+										<th class="SortedColumn">' . __('#') . '</th>
+										<th class="SortedColumn">' . __('Code') . '</th>
+										<th class="SortedColumn">' . __('Description') . '</th>
+										<th class="SortedColumn">' . __('Optimum QTY') . '</th>
+										<th class="SortedColumn">' . __('QOH Gudang') . '</th>
+										<th class="SortedColumn">' . __('QOH Shops') . '</th>
+										<th class="SortedColumn">' . __('QOH Total') . '</th>
+										<th class="SortedColumn">' . __('QOH Days') . '</th>
+										<th class="SortedColumn">' . __('Shortage QTY') . '</th>
+										<th class="SortedColumn">' . __('% Shortage') . '</th>
+										<th class="SortedColumn">' . __('Running QOO') . '</th>
+										<th class="SortedColumn">' . __('Next Order') . '</th>
 									</tr>
 									</thead>
 									<tbody>';
 					}
 					echo $TableHeader;
-					$ShowHeader = FALSE;
+					$ShowHeader = false;
 				}
 
 				$UsageXDays += $UsedLastXDays;
@@ -2021,18 +2021,18 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$CategoryName = GetCategoryNameFromCode($StockCat);
-		$TableTitleText = $CategoryName . _(' Items without active retail price');
+		$TableTitleText = $CategoryName . __(' Items without active retail price');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Code') . '</th>
-							<th class="SortedColumn">' . _('Description') . '</th>
-							<th class="SortedColumn">' . _('Std Cost') . '</th>
-							<th class="SortedColumn">' . _('Factor') . '</th>
-							<th class="SortedColumn">' . _('Recommended Retail') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Code') . '</th>
+							<th class="SortedColumn">' . __('Description') . '</th>
+							<th class="SortedColumn">' . __('Std Cost') . '</th>
+							<th class="SortedColumn">' . __('Factor') . '</th>
+							<th class="SortedColumn">' . __('Recommended Retail') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -2092,29 +2092,29 @@ function LocationInformationReview($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Shop Information Review');
+		$TableTitleText = __('Shop Information Review');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Location') . '</th>
-							<th class="SortedColumn">' . _('Zone') . '</th>
-							<th class="SortedColumn">' . _('Type') . '</th>
-							<th class="SortedColumn">' . _('Partner') . '</th>
-							<th class="SortedColumn">' . _('Rent (jt)') . '</th>
-							<th class="SortedColumn">' . _('Priority') . '</th>
-							<th class="SortedColumn">' . _('Max Daily Tr') . '</th>
-							<th class="SortedColumn">' . _('Stock Online?') . '</th>
-							<th class="SortedColumn">' . _('All Test?') . '</th>
-							<th class="SortedColumn">' . _('All Stable?') . '</th>
-							<th class="SortedColumn">' . _('All NOPO?') . '</th>
-							<th class="SortedColumn">' . _('Sell 20%D?') . '</th>
-							<th class="SortedColumn">' . _('Sell 50%D?') . '</th>
-							<th class="SortedColumn">' . _('Sell 80%D?') . '</th>
-							<th class="SortedColumn">' . _('Pack Factor') . '</th>
-							<th class="SortedColumn">' . _('Pack Days') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Location') . '</th>
+							<th class="SortedColumn">' . __('Zone') . '</th>
+							<th class="SortedColumn">' . __('Type') . '</th>
+							<th class="SortedColumn">' . __('Partner') . '</th>
+							<th class="SortedColumn">' . __('Rent (jt)') . '</th>
+							<th class="SortedColumn">' . __('Priority') . '</th>
+							<th class="SortedColumn">' . __('Max Daily Tr') . '</th>
+							<th class="SortedColumn">' . __('Stock Online?') . '</th>
+							<th class="SortedColumn">' . __('All Test?') . '</th>
+							<th class="SortedColumn">' . __('All Stable?') . '</th>
+							<th class="SortedColumn">' . __('All NOPO?') . '</th>
+							<th class="SortedColumn">' . __('Sell 20%D?') . '</th>
+							<th class="SortedColumn">' . __('Sell 50%D?') . '</th>
+							<th class="SortedColumn">' . __('Sell 80%D?') . '</th>
+							<th class="SortedColumn">' . __('Pack Factor') . '</th>
+							<th class="SortedColumn">' . __('Pack Days') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -2271,8 +2271,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			ORDER BY stockmaster.stockid";
 	$Result = DB_query($SQL);
 
-	$ShowHeader = FALSE;
-	$ShowReport = FALSE;
+	$ShowHeader = false;
+	$ShowReport = false;
 	$NumItems = 0;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2310,11 +2310,11 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 
 			if ($ShowAll OR (($MyRow['qoh'] < $MyRow['rl']) AND ($TableResult[$NumItems]['toship'] > 0))){
 				// at least 1 item needs to be refilled at the location and we can ship it, so we have to show the report
-				$TableResult[$NumItems]['show'] = TRUE;
-				$ShowHeader = TRUE;
-				$ShowReport = TRUE;
+				$TableResult[$NumItems]['show'] = true;
+				$ShowHeader = true;
+				$ShowReport = true;
 			}else{
-				$TableResult[$NumItems]['show'] = FALSE;
+				$TableResult[$NumItems]['show'] = false;
 			}
 		}
 	}
@@ -2333,22 +2333,22 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 				echo '<table class="selection">';
 				$TableHeader = '<thead>
 								<tr>
-									<th class="SortedColumn">' . _('Code') . '</th>
-									<th class="SortedColumn">' . _('Description') . '</th>
-									<th class="SortedColumn">' . _('QOH @ ') . $ParentGudang . '</th>
-									<th class="SortedColumn">' . _('QOH @ ') . $LocCode . '</th>
-									<th class="SortedColumn">' . _('RL @ ') . $LocCode . '</th>
-									<th class="SortedColumn">' . _('Optimum') . '</th>
-									<th class="SortedColumn">' . _('Needing') . '</th>
-									<th class="SortedColumn">' . _('%') . '</th>
-									<th class="SortedColumn">' . _('Transit') . '</th>
-									<th class="SortedColumn">' . _('To Ship') . '</th>
-									<th class="SortedColumn">' . _('Reason') . '</th>
+									<th class="SortedColumn">' . __('Code') . '</th>
+									<th class="SortedColumn">' . __('Description') . '</th>
+									<th class="SortedColumn">' . __('QOH @ ') . $ParentGudang . '</th>
+									<th class="SortedColumn">' . __('QOH @ ') . $LocCode . '</th>
+									<th class="SortedColumn">' . __('RL @ ') . $LocCode . '</th>
+									<th class="SortedColumn">' . __('Optimum') . '</th>
+									<th class="SortedColumn">' . __('Needing') . '</th>
+									<th class="SortedColumn">' . __('%') . '</th>
+									<th class="SortedColumn">' . __('Transit') . '</th>
+									<th class="SortedColumn">' . __('To Ship') . '</th>
+									<th class="SortedColumn">' . __('Reason') . '</th>
 								</tr>
 								</thead>
 								<tbody>';
 				echo $TableHeader;
-				$ShowHeader = FALSE;
+				$ShowHeader = false;
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferFromGudang.php?From=' . $ParentGudang
 																								. '&To=' . $LocCode;
 			}
@@ -2677,31 +2677,31 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th colspan="10">' . _('Order') . '</th>
-							<th colspan="3">' . _('Supplier DP') . '</th>
-							<th colspan="3">' . _('Payment Needed') . '</th>
-							<th colspan="3">' . _('Acummulated Payment') . '</th>
+							<th colspan="10">' . __('Order') . '</th>
+							<th colspan="3">' . __('Supplier DP') . '</th>
+							<th colspan="3">' . __('Payment Needed') . '</th>
+							<th colspan="3">' . __('Acummulated Payment') . '</th>
 						</tr>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('PO') . '</th>
-							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('PO') . '</th>
+							<th class="SortedColumn">' . __('Supplier') . '</th>
 							<th class="SortedColumn">' . $FieldName1 . '</th>
 							<th class="SortedColumn">' . $FieldName2 . '</th>
 							<th class="SortedColumn">' . $ShipmentAWB . '</th>
-							<th class="SortedColumn">' . _('# pcs') . '</th>
-							<th>' . _('IDR') . '</th>
-							<th>' . _('USD') . '</th>
-							<th>' . _('THB') . '</th>
-							<th>' . _('IDR') . '</th>
-							<th>' . _('USD') . '</th>
-							<th>' . _('THB') . '</th>
-							<th>' . _('IDR') . '</th>
-							<th>' . _('USD') . '</th>
-							<th>' . _('THB') . '</th>
-							<th>' . _('IDR') . '</th>
-							<th>' . _('USD') . '</th>
-							<th>' . _('THB') . '</th>
+							<th class="SortedColumn">' . __('# pcs') . '</th>
+							<th>' . __('IDR') . '</th>
+							<th>' . __('USD') . '</th>
+							<th>' . __('THB') . '</th>
+							<th>' . __('IDR') . '</th>
+							<th>' . __('USD') . '</th>
+							<th>' . __('THB') . '</th>
+							<th>' . __('IDR') . '</th>
+							<th>' . __('USD') . '</th>
+							<th>' . __('THB') . '</th>
+							<th>' . __('IDR') . '</th>
+							<th>' . __('USD') . '</th>
+							<th>' . __('THB') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3000,22 +3000,22 @@ function PurchaseOrdersProcessTime($NumDays){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Process time (in days) for POs arrived during the last ') . $NumDays . " days";
+		$TableTitleText = __('Process time (in days) for POs arrived during the last ') . $NumDays . " days";
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('Country') . '</th>
-							<th class="SortedColumn">' . _('#POs') . '</th>
-							<th class="SortedColumn">' . _('Production') . '</th>
-							<th class="SortedColumn">' . _('Payment') . '</th>
-							<th class="SortedColumn">' . _('Ready To Ship') . '</th>
-							<th class="SortedColumn">' . _('Transit') . '</th>
-							<th class="SortedColumn">' . _('Customs') . '</th>
-							<th class="SortedColumn">' . _('Min Days') . '</th>
-							<th class="SortedColumn">' . _('Max Days') . '</th>
-							<th class="SortedColumn">' . _('Average Days') . '</th>
+							<th class="SortedColumn">' . __('Country') . '</th>
+							<th class="SortedColumn">' . __('#POs') . '</th>
+							<th class="SortedColumn">' . __('Production') . '</th>
+							<th class="SortedColumn">' . __('Payment') . '</th>
+							<th class="SortedColumn">' . __('Ready To Ship') . '</th>
+							<th class="SortedColumn">' . __('Transit') . '</th>
+							<th class="SortedColumn">' . __('Customs') . '</th>
+							<th class="SortedColumn">' . __('Min Days') . '</th>
+							<th class="SortedColumn">' . __('Max Days') . '</th>
+							<th class="SortedColumn">' . __('Average Days') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3215,23 +3215,23 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('POs with wrong planned dates OR wrong status');
+		$TableTitleText = __('POs with wrong planned dates OR wrong status');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#PO') . '</th>
-							<th class="SortedColumn">' . _('Supplier') . '</th>
-							<th class="SortedColumn">' . _('Order value') . '</th>
-							<th class="SortedColumn">' . _('KL Status') . '</th>
-							<th class="SortedColumn">' . _('Order') . '</th>
-							<th class="SortedColumn">' . _('Agreed Delivery') . '</th>
-							<th class="SortedColumn">' . _('Delivery') . '</th>
-							<th class="SortedColumn">' . _('Payment') . '</th>
-							<th class="SortedColumn">' . _('Shipment') . '</th>
-							<th class="SortedColumn">' . _('Customs') . '</th>
-							<th class="SortedColumn">' . _('Arrival') . '</th>
+							<th class="SortedColumn">' . __('#PO') . '</th>
+							<th class="SortedColumn">' . __('Supplier') . '</th>
+							<th class="SortedColumn">' . __('Order value') . '</th>
+							<th class="SortedColumn">' . __('KL Status') . '</th>
+							<th class="SortedColumn">' . __('Order') . '</th>
+							<th class="SortedColumn">' . __('Agreed Delivery') . '</th>
+							<th class="SortedColumn">' . __('Delivery') . '</th>
+							<th class="SortedColumn">' . __('Payment') . '</th>
+							<th class="SortedColumn">' . __('Shipment') . '</th>
+							<th class="SortedColumn">' . __('Customs') . '</th>
+							<th class="SortedColumn">' . __('Arrival') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3318,21 +3318,21 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($maxdays == 1){
-			$TableTitleText = _('List of Transfers Closed today ');
+			$TableTitleText = __('List of Transfers Closed today ');
 		}else{
-			$TableTitleText = _('List of Transfers Closed during last ') . $maxdays  . ' days';
+			$TableTitleText = __('List of Transfers Closed during last ') . $maxdays  . ' days';
 		}
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Date') . '</th>
-							<th class="SortedColumn">' . _('Transfer') . '</th>
-							<th class="SortedColumn">' . _('From') . '</th>
-							<th class="SortedColumn">' . _('To') . '</th>
-							<th class="SortedColumn">' . _('Qty') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Date') . '</th>
+							<th class="SortedColumn">' . __('Transfer') . '</th>
+							<th class="SortedColumn">' . __('From') . '</th>
+							<th class="SortedColumn">' . __('To') . '</th>
+							<th class="SortedColumn">' . __('Qty') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3429,17 +3429,17 @@ function TransfersDelayed($maxdays, $RootPath){
 			ORDER BY reference";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('Transfers delayed more than ') . $maxdays . _(' days ');
+		$TableTitleText = __('Transfers delayed more than ') . $maxdays . __(' days ');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Transfer') . '</th>
-							<th class="SortedColumn">' . _('Date') . '</th>
-							<th class="SortedColumn">' . _('From') . '</th>
-							<th class="SortedColumn">' . _('To') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Transfer') . '</th>
+							<th class="SortedColumn">' . __('Date') . '</th>
+							<th class="SortedColumn">' . __('From') . '</th>
+							<th class="SortedColumn">' . __('To') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3523,48 +3523,48 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 // EXPLAIN SQL 2014-05-31
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%';
+		$TableTitleText = $StockCat . ' Items from ' . $Country . __(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		if ($Mode == "SHOWONLY"){
 			$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Code') . '</th>
-								<th class="SortedColumn">' . _('Description') . '</th>
-								<th class="SortedColumn">' . _('Supplier') . '</th>
-								<th class="SortedColumn">' . _('From') . '</th>
-								<th class="SortedColumn">' . _('Price') . '</th>
-								<th class="SortedColumn">' . _('Currency') . '</th>
-								<th class="SortedColumn">' . _('Rate') . '</th>
-								<th class="SortedColumn">' . _('Supplier UOM') . '</th>
-								<th class="SortedColumn">' . _('UOM Factor') . '</th>
-								<th class="SortedColumn">' . _('Date Std Cost') . '</th>
-								<th class="SortedColumn">' . _('Wrong Std Cost') . '</th>
-								<th class="SortedColumn">' . _('Real Std Cost') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Code') . '</th>
+								<th class="SortedColumn">' . __('Description') . '</th>
+								<th class="SortedColumn">' . __('Supplier') . '</th>
+								<th class="SortedColumn">' . __('From') . '</th>
+								<th class="SortedColumn">' . __('Price') . '</th>
+								<th class="SortedColumn">' . __('Currency') . '</th>
+								<th class="SortedColumn">' . __('Rate') . '</th>
+								<th class="SortedColumn">' . __('Supplier UOM') . '</th>
+								<th class="SortedColumn">' . __('UOM Factor') . '</th>
+								<th class="SortedColumn">' . __('Date Std Cost') . '</th>
+								<th class="SortedColumn">' . __('Wrong Std Cost') . '</th>
+								<th class="SortedColumn">' . __('Real Std Cost') . '</th>
 							</tr>
 							</thead>
 							<tbody>';
 		}else{
 			$TableHeader = '<thead>
 							<tr>
-								<th class="SortedColumn">' . _('#') . '</th>
-								<th class="SortedColumn">' . _('Code') . '</th>
-								<th class="SortedColumn">' . _('Description') . '</th>
-								<th class="SortedColumn">' . _('Supplier') . '</th>
-								<th class="SortedColumn">' . _('From') . '</th>
-								<th class="SortedColumn">' . _('Price') . '</th>
-								<th class="SortedColumn">' . _('Currency') . '</th>
-								<th class="SortedColumn">' . _('Rate') . '</th>
-								<th class="SortedColumn">' . _('Supplier UOM') . '</th>
-								<th class="SortedColumn">' . _('UOM Factor') . '</th>
-								<th class="SortedColumn">' . _('Date Std Cost') . '</th>
-								<th class="SortedColumn">' . _('Wrong Std Cost') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-									<th class="SortedColumn">' . _('KL UOM') . '</th>
-								<th class="SortedColumn">' . _('Real Std Cost') . '</th>
-								<th class="SortedColumn">' . _('% Dif') . '</th>
+								<th class="SortedColumn">' . __('#') . '</th>
+								<th class="SortedColumn">' . __('Code') . '</th>
+								<th class="SortedColumn">' . __('Description') . '</th>
+								<th class="SortedColumn">' . __('Supplier') . '</th>
+								<th class="SortedColumn">' . __('From') . '</th>
+								<th class="SortedColumn">' . __('Price') . '</th>
+								<th class="SortedColumn">' . __('Currency') . '</th>
+								<th class="SortedColumn">' . __('Rate') . '</th>
+								<th class="SortedColumn">' . __('Supplier UOM') . '</th>
+								<th class="SortedColumn">' . __('UOM Factor') . '</th>
+								<th class="SortedColumn">' . __('Date Std Cost') . '</th>
+								<th class="SortedColumn">' . __('Wrong Std Cost') . '</th>
+								<th class="SortedColumn">' . __('QOH') . '</th>
+									<th class="SortedColumn">' . __('KL UOM') . '</th>
+								<th class="SortedColumn">' . __('Real Std Cost') . '</th>
+								<th class="SortedColumn">' . __('% Dif') . '</th>
 							</tr>
 							</thead>
 							<tbody>';
@@ -3725,17 +3725,17 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Customer') . '</th>
-							<th class="SortedColumn">' . _('Name') . '</th>
-							<th class="SortedColumn">' . _('Order') . '</th>
-							<th class="SortedColumn">' . _('#MarketPlace') . '</th>
-							<th class="SortedColumn">' . _('Order Date') . '</th>
-							<th class="SortedColumn">' . _('Order Value') . '</th>
-							<th class="SortedColumn">' . _('Currency') . '</th>
+							<th class="SortedColumn">' . __('#') . '</th>
+							<th class="SortedColumn">' . __('Customer') . '</th>
+							<th class="SortedColumn">' . __('Name') . '</th>
+							<th class="SortedColumn">' . __('Order') . '</th>
+							<th class="SortedColumn">' . __('#MarketPlace') . '</th>
+							<th class="SortedColumn">' . __('Order Date') . '</th>
+							<th class="SortedColumn">' . __('Order Value') . '</th>
+							<th class="SortedColumn">' . __('Currency') . '</th>
 							<th class="SortedColumn">' . '' . '</th>
-							<th class="SortedColumn">' . _('Paid Tokopedia') . '</th>
-							<th class="SortedColumn">' . _('Paid Shopee') . '</th>
+							<th class="SortedColumn">' . __('Paid Tokopedia') . '</th>
+							<th class="SortedColumn">' . __('Paid Shopee') . '</th>
 						</tr>
 						</thead>
 						<tbody>';
@@ -3888,20 +3888,20 @@ function MaintenanceTasksDistribution($Status, $NumDays, $UserIsSystemAdmin){
 			$TableResult[$MyRow['loccode']][$MyRow['maintenancetype']] = $MyRow['total'];
 		}
 		$TableHeader = '<tr>
-						<th class="SortedColumn">' . _('Location') . '</th>
-						<th class="SortedColumn">' . _('AC') . '</th>
-						<th class="SortedColumn">' . _('Bocor') . '</th>
-						<th class="SortedColumn">' . _('Furniture') . '</th>
-						<th class="SortedColumn">' . _('IT') . '</th>
-						<th class="SortedColumn">' . _('Kanopi') . '</th>
-						<th class="SortedColumn">' . _('Lampu') . '</th>
-						<th class="SortedColumn">' . _('Listrik') . '</th>
-						<th class="SortedColumn">' . _('Paint') . '</th>
-						<th class="SortedColumn">' . _('Pintukaca') . '</th>
-						<th class="SortedColumn">' . _('Toilet') . '</th>
-						<th class="SortedColumn">' . _('Wallpaper') . '</th>
-						<th class="SortedColumn">' . _('DLL') . '</th>
-						<th class="SortedColumn">' . _('Total') . '</th>
+						<th class="SortedColumn">' . __('Location') . '</th>
+						<th class="SortedColumn">' . __('AC') . '</th>
+						<th class="SortedColumn">' . __('Bocor') . '</th>
+						<th class="SortedColumn">' . __('Furniture') . '</th>
+						<th class="SortedColumn">' . __('IT') . '</th>
+						<th class="SortedColumn">' . __('Kanopi') . '</th>
+						<th class="SortedColumn">' . __('Lampu') . '</th>
+						<th class="SortedColumn">' . __('Listrik') . '</th>
+						<th class="SortedColumn">' . __('Paint') . '</th>
+						<th class="SortedColumn">' . __('Pintukaca') . '</th>
+						<th class="SortedColumn">' . __('Toilet') . '</th>
+						<th class="SortedColumn">' . __('Wallpaper') . '</th>
+						<th class="SortedColumn">' . __('DLL') . '</th>
+						<th class="SortedColumn">' . __('Total') . '</th>
 					</tr>';
 		$TableTitleText = $Title;
 		ShowTableTitle($TableTitleText);
@@ -4096,15 +4096,15 @@ function QualityIssuesByReason($Days, $RootPath){
 	$TotalReturned = 0;
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _('# Items returned by customer by Reason during the last ') . $Days . ' days';
+		$TableTitleText = __('# Items returned by customer by Reason during the last ') . $Days . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Reason') . '</th>
-						<th class="SortedColumn">' . _('# Items returned') . '</th>
-						<th class="SortedColumn">' . _('Daily Average') . '</th>
+						<th class="SortedColumn">' . __('Reason') . '</th>
+						<th class="SortedColumn">' . __('# Items returned') . '</th>
+						<th class="SortedColumn">' . __('Daily Average') . '</th>
 				</tr>
 				</thead>	
 				<tbody>';
@@ -4167,15 +4167,15 @@ $SQL = "SELECT stockadjustmentreasons.reasonid,
 $TotalAdjusted = 0;
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
-	$TableTitleText = _('# stock adjustments by Reason during the last ') . $Days . ' days';
+	$TableTitleText = __('# stock adjustments by Reason during the last ') . $Days . ' days';
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Reason') . '</th>
-					<th class="SortedColumn">' . _('Qty adjusted') . '</th>
-					<th class="SortedColumn">' . _('Daily Average') . '</th>
+					<th class="SortedColumn">' . __('Reason') . '</th>
+					<th class="SortedColumn">' . __('Qty adjusted') . '</th>
+					<th class="SortedColumn">' . __('Daily Average') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

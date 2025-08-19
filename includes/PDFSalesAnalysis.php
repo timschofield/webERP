@@ -23,7 +23,7 @@ $pdf->cMargin = 0;
 $pdf->addInfo('Author','webERP ' . $Version);
 $pdf->addInfo('Creator','webERP https://www.weberp.org');
 $pdf->addInfo('Title',$ReportSpec['reportheading']);
-$pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
+$pdf->addInfo('Subject',__('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
 
 $PageNumber = 0;
 $LineHeight=12;
@@ -65,7 +65,7 @@ while ($MyRow = DB_fetch_array($Result)){
 		if ($MyRow['col5']!=$GrpData3 && $MyRow['col5']!='0' && $MyRow['col7']!='0'){
 			/*Totals only relevant to GrpByLevel 3 if GrpByLevel 4 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
+				$TotalText = mb_substr(__('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 				$LeftOvers = $pdf->addTextWrap(40,$Ypos,180,$FontSize,$TotalText);
 
 				DB_data_seek($ColsResult,0);
@@ -119,7 +119,7 @@ while ($MyRow = DB_fetch_array($Result)){
 		if ($MyRow['col3']!=$GrpData2 AND $MyRow['col3']!='0' AND $MyRow['col5']!='0'){
 		/*Totals only relevant to GrpByLevel 2 if GrpByLevel 3 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,43);
+				$TotalText = mb_substr(__('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,43);
 				$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 				DB_data_seek($ColsResult,0);
 				while ($Cols = DB_fetch_array($ColsResult)){
@@ -172,7 +172,7 @@ while ($MyRow = DB_fetch_array($Result)){
 		if ($MyRow['col1']!=$GrpData1  && $MyRow['col3']!='0'){
 			/*Totals only relevant to GrpByLevel 1 if GrpByLevel 2 also used */
 			if ($Counter > 0){ /*Dont want to print totals if this is the first record */
-				$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,46);
+				$TotalText = mb_substr(__('TOTAL') . ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,46);
 				$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
 				DB_data_seek($ColsResult,0);
 				while ($Cols = DB_fetch_array($ColsResult)){
@@ -306,7 +306,7 @@ while ($MyRow = DB_fetch_array($Result)){
 if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 /* if GrpBY3 and GrpBy4 are both set need to show totals for GrpBy3 */
 	if ($Counter>0){ /*Dont want to print totals if this is the first record */
-		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
+		$TotalText = mb_substr(__('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 
 		DB_data_seek($ColsResult,0);
@@ -358,7 +358,7 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 /* if GrpBY2 and GrpBy3 are both set need to show totals for GrpBy2 */
 	if ($Counter>0){ /*Dont want to print totals if this is the first record */
-		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
+		$TotalText = mb_substr(__('TOTAL') . ' ' . $LastLine['col3'] . ' - ' . $LastLine['col4'],0,33);
 		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
 		DB_data_seek($ColsResult,0);
 		while ($Cols = DB_fetch_array($ColsResult)){
@@ -408,7 +408,7 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 if ($LastLine['col3']!='0'){
 /* GrpBY1 must always be set but if GrpBy2 is also set need to show totals for GrpBy2 */
 	if ($Counter>1){ /*Dont want to print totals if this is the first record */
-		$TotalText = mb_substr(_('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
+		$TotalText = mb_substr(__('TOTAL') .  ' ' . $LastLine['col1'] . ' - ' . $LastLine['col2'],0,30);
 		$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$TotalText);
 		DB_data_seek($ColsResult,0);
 		while ($Cols = DB_fetch_array($ColsResult)){
@@ -455,7 +455,7 @@ if ($LastLine['col3']!='0'){
 	}
 }
 if ($Counter>0){
-	$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,_('GRAND TOTAL'));
+	$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,__('GRAND TOTAL'));
 
 	DB_data_seek($ColsResult,0);
 	while ($Cols = DB_fetch_array($ColsResult)){
@@ -535,7 +535,7 @@ if (isset($_GET['ProduceCVSFile'])){
 			fputs($fp, $Line."\n");
 	      }
 	 }
-	 $Title = _('Sales Analysis Comma Separated File (CSV) Generation');
+	 $Title = __('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.php');
 
 	// gg: what was this line supposed to do ?
@@ -543,6 +543,6 @@ if (isset($_GET['ProduceCVSFile'])){
 	/// @todo this meta tag should be moved into the HTML HEAD, and thus be outputted within `header.php`
 	echo "<meta http-equiv='Refresh' content='0; url=" . $RootPath . '/' . $_SESSION['reports_dir'] .  "/SalesAnalysis.csv'>";
 
-	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue')  . '<br />';
+	 echo '<p>' . __('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . __('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . __('click here') . '</a> ' . __('to continue')  . '<br />';
 	 include('includes/footer.php');
 }

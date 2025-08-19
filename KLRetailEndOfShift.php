@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('SPG End Of Shift Report');
+$Title = __('SPG End Of Shift Report');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -46,19 +46,19 @@ $SQL = "SELECT salesorders.orderno,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) != 0){
-	$TableTitleText = $_SESSION['SalesmanLogin'] . _('SPG End Of Shift Report');
+	$TableTitleText = $_SESSION['SalesmanLogin'] . __('SPG End Of Shift Report');
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<thead><tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Order#') . '</th>
-						<th>' . _('Invoice#') . '</th>
-						<th>' . _('Cash') . '</th>
-						<th>' . _('Credit Card') . '</th>
-						<th>' . _('Returned Goods') . '</th>
-						<th>' . _('Voucher Discount') . '</th>
-						<th>' . _('Total') . '</th>
+						<th>' . __('#') . '</th>
+						<th>' . __('Order#') . '</th>
+						<th>' . __('Invoice#') . '</th>
+						<th>' . __('Cash') . '</th>
+						<th>' . __('Credit Card') . '</th>
+						<th>' . __('Returned Goods') . '</th>
+						<th>' . __('Voucher Discount') . '</th>
+						<th>' . __('Total') . '</th>
 					</tr></thead><tbody>';
 	echo $TableHeader;
 	
@@ -70,14 +70,14 @@ if (DB_num_rows($Result) != 0){
 		$TotalReturned += $MyRow['klreturnedgoods'];
 		$TotalVouchers += $MyRow['klvouchers'];
 		$Total += $SubTotal;
-		$FirstLinePrinted = FALSE;
+		$FirstLinePrinted = false;
 
 		$TextInvoice = $MyRow['customerref'];
 		if ($MyRow['klpaidcash'] > 0){
 			$TextPayment = 'Cash: ' . number_format($MyRow['klpaidcash'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
-				$FirstLinePrinted = TRUE;
+				$FirstLinePrinted = true;
 			}else{
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
@@ -86,7 +86,7 @@ if (DB_num_rows($Result) != 0){
 			$TextPayment = 'Credit Card: ' . number_format($MyRow['klpaidcreditcard'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
-				$FirstLinePrinted = TRUE;
+				$FirstLinePrinted = true;
 			}else{
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
@@ -95,7 +95,7 @@ if (DB_num_rows($Result) != 0){
 			$TextPayment = 'Returned Goods: ' . number_format($MyRow['klreturnedgoods'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
-				$FirstLinePrinted = TRUE;
+				$FirstLinePrinted = true;
 			}else{
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
@@ -104,7 +104,7 @@ if (DB_num_rows($Result) != 0){
 			$TextPayment = 'Voucher/Discount: ' . number_format($MyRow['klvouchers'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
-				$FirstLinePrinted = TRUE;
+				$FirstLinePrinted = true;
 			}else{
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}

@@ -3,14 +3,14 @@
 /* Defines the KL online Partners */
 
 include('includes/session.php');
-$Title = _('KL Online Partners Maintenance');// Screen identification.
+$Title = __('KL Online Partners Maintenance');// Screen identification.
 $ViewTopic = '';// Filename's id in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="',// Icon image.
-	_('Setup'), '" /> ',// Icon title.
-	_('KL Online Partners Maintenance'), '</p>';// Page title.
+	__('Setup'), '" /> ',// Icon title.
+	__('KL Online Partners Maintenance'), '</p>';// Page title.
 
 include('includes/CountriesArray.php');
 
@@ -30,7 +30,7 @@ if(isset($_POST['submit'])) {
 	$_POST['OnlinePartnerCode']=mb_strtoupper($_POST['OnlinePartnerCode']);
 	if(trim($_POST['OnlinePartnerCode']) == '') {
 		$InputError = 1;
-		prnMsg(_('The Partner Code code may not be empty'), 'error');
+		prnMsg(__('The Partner Code code may not be empty'), 'error');
 	}
 
 	if(isset($SelectedPartner) AND $InputError !=1) {
@@ -78,10 +78,10 @@ if(isset($_POST['submit'])) {
 					foreigncurrencysurchargefactor ='" . $_POST['ForeignCurrencySurchargeFactor'] . "'
 				WHERE onlinepartnercode = '" . $SelectedPartner . "'";
 
-		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('online partner record because');
+		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . __('online partner record because');
 		$Result = DB_query($SQL,$ErrMsg);
 
-		prnMsg(_('The online partner record has been updated'),'success');
+		prnMsg(__('The online partner record has been updated'),'success');
 
 		unset($SelectedPartner);
 		unset($_POST['OnlinePartnerCode']);
@@ -214,10 +214,10 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['ComissionLazadaPercent'] . "',
 								'" . $_POST['ForeignCurrencySurchargeFactor'] . "')";
 
-		$ErrMsg = _('An error occurred inserting the new online partner record because');
+		$ErrMsg = __('An error occurred inserting the new online partner record because');
 		$Result = DB_query($SQL,$ErrMsg);
 
-		prnMsg(_('The new online partner record has been added'),'success');
+		prnMsg(__('The new online partner record has been added'),'success');
 
 		unset($SelectedPartner);
 		unset($_POST['OnlinePartnerCode']);
@@ -272,12 +272,12 @@ if(isset($_POST['submit'])) {
 	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0]>0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this online partner because there are locations related to it.'),'warn');
-		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this online partner');
+		prnMsg(__('Cannot delete this online partner because there are locations related to it.'),'warn');
+		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('locations using this online partner');
 	}
 	if(! $CancelDelete) {
 		$Result = DB_query("DELETE FROM klonlinepartners WHERE onlinepartnercode='" . $SelectedPartner . "'");
-		prnMsg(_('Online Partner') . ' ' . $SelectedPartner . ' ' . _('has been deleted') . '!', 'success');
+		prnMsg(__('Online Partner') . ' ' . $SelectedPartner . ' ' . __('has been deleted') . '!', 'success');
 		unset ($SelectedPartner);
 	}//end if Delete Online Partner
 	unset($SelectedPartner);
@@ -301,17 +301,17 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	if(DB_num_rows($Result)==0) {
-		prnMsg(_('There are no online partners'),'error');
+		prnMsg(__('There are no online partners'),'error');
 	}
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">', _('Code'), '</th>
-				<th class="SortedColumn">', _('Name'), '</th>
-				<th class="SortedColumn">', _('PayPal Account'), '</th>
-				<th class="SortedColumn">', _('Test?'), '</th>
-				<th class="SortedColumn">', _('Foreign Factor'), '</th>
+				<th class="SortedColumn">', __('Code'), '</th>
+				<th class="SortedColumn">', __('Name'), '</th>
+				<th class="SortedColumn">', __('PayPal Account'), '</th>
+				<th class="SortedColumn">', __('Test?'), '</th>
+				<th class="SortedColumn">', __('Foreign Factor'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -324,8 +324,8 @@ or deletion of the records*/
 				<td>' . $MyRow['paypalaccount'] . '</td>
 				<td>' . $PayPalTest . '</td>
 				<td class="number">' . locale_number_format($MyRow['foreigncurrencysurchargefactor'],2) . '</td>
-				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
+				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '">' . __('Edit') . '</a></td>
+				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this online partner?') . '\');">' . __('Delete') . '</a></td>
 				</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -336,7 +336,7 @@ or deletion of the records*/
 
 echo '<br />';
 if(isset($SelectedPartner)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Records') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 echo '<br />';
 
@@ -442,10 +442,10 @@ if(!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" />';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th colspan="2">' . _('Amend Online Partner details') . '</th>
+				<th colspan="2">' . __('Amend Online Partner details') . '</th>
 			</tr>';
 		echo '<tr>
-				<td>' . _('Online Partner Code') . ':</td>
+				<td>' . __('Online Partner Code') . ':</td>
 				<td>' . $_POST['OnlinePartnerCode'] . '</td>
 			</tr>';
 	} else {//end of if $SelectedPartner only do the else when a new record is being entered
@@ -454,11 +454,11 @@ if(!isset($_GET['delete'])) {
 		}
 		echo '<table class="selection">
 				<tr>
-					<th colspan="2"><h3>' . _('New Online Partner details') . '</h3></th>
+					<th colspan="2"><h3>' . __('New Online Partner details') . '</h3></th>
 				</tr>';
 		echo '<tr>
-				<td>' . _('Partner Code') . ':</td>
-				<td><input type="text" autofocus="autofocus" required="required" title="' . _('Enter up to 10 characters for the online partner code') . '" data-type="no-illegal-chars" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" size="11" maxlength="10" /></td>
+				<td>' . __('Partner Code') . ':</td>
+				<td><input type="text" autofocus="autofocus" required="required" title="' . __('Enter up to 10 characters for the online partner code') . '" data-type="no-illegal-chars" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" size="11" maxlength="10" /></td>
 			</tr>';
 	}
 	if(!isset($_POST['OnlinePartnerName'])) {
@@ -583,18 +583,18 @@ if(!isset($_GET['delete'])) {
 	}
 
 	echo '<tr>
-			<td>' . _('Partner Name') . ':' . '</td>
-			<td><input type="text" name="OnlinePartnerName" required="required" value="'. $_POST['OnlinePartnerName'] . '" title="' . _('Enter the online partner name') . '" namesize="51" maxlength="50" /></td>
+			<td>' . __('Partner Name') . ':' . '</td>
+			<td><input type="text" name="OnlinePartnerName" required="required" value="'. $_POST['OnlinePartnerName'] . '" title="' . __('Enter the online partner name') . '" namesize="51" maxlength="50" /></td>
 		</tr>
 		<tr>';
 
 	echo '<tr>
-			<td>' . _('Foreign Currency Surcharge Factor') . ':</td>
+			<td>' . __('Foreign Currency Surcharge Factor') . ':</td>
 			<td><input type="text" name="ForeignCurrencySurchargeFactor" class="number"  value="' . $_POST['ForeignCurrencySurchargeFactor'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 	
 	echo '<tr>
-		<td>' . _('PPN Paid in Commissions GL Account') . ':' . '</td>
+		<td>' . __('PPN Paid in Commissions GL Account') . ':' . '</td>
 		<td><select name="AccountComissionPPN">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -611,7 +611,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Mandiri Bank Transfer IDR GL Account') . ':' . '</td>
+		<td>' . __('Mandiri Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferMandiri">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -624,7 +624,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('BCA Bank Transfer IDR GL Account') . ':' . '</td>
+		<td>' . __('BCA Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferBCA">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -637,7 +637,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('Danamon Bank Transfer IDR GL Account') . ':' . '</td>
+		<td>' . __('Danamon Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferDanamon">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -653,38 +653,38 @@ if(!isset($_GET['delete'])) {
 			<th colspan="2">' . 'PayPal Details' . '</th>
 		</tr>';
 
-	echo '<td>' . _('PayPal Account') . ':' . '</td>
+	echo '<td>' . __('PayPal Account') . ':' . '</td>
 			<td><input type="text" name="PayPalAccount" value="' . $_POST['PayPalAccount'] . '" size="51" maxlength="50" /></td>
 		</tr>';
 	echo '<tr>
-			<td>' . _('Test Account?') . ':</td>
+			<td>' . __('Test Account?') . ':</td>
 			<td><select name="PayPalTest">';
 	if($_POST['PayPalTest']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['PayPalTest']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-			<td>' . _('PayPal Username') . ':' . '</td>
+			<td>' . __('PayPal Username') . ':' . '</td>
 			<td><input type="text" name="PayPalUsername" value="' . $_POST['PayPalUsername'] . '" size="51" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' . _('PayPal Password') . ':' . '</td>
+			<td>' . __('PayPal Password') . ':' . '</td>
 			<td><input type="text" name="PayPalPassword" value="' . $_POST['PayPalPassword'] . '" size="51" maxlength="50" /></td>
 		</tr>
 		<tr>
-			<td>' . _('PayPal Signature') . ':' . '</td>
+			<td>' . __('PayPal Signature') . ':' . '</td>
 			<td><input type="text" name="PayPalSignature" value="' . $_POST['PayPalSignature'] . '" size="51" maxlength="100" /></td>
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('PayPal AUD GL Account') . ':' . '</td>
+		<td>' . __('PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -696,7 +696,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission PayPal AUD GL Account') . ':' . '</td>
+		<td>' . __('Comission PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -709,7 +709,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-		<td>' . _('PayPal USD GL Account') . ':' . '</td>
+		<td>' . __('PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -721,7 +721,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission PayPal USD GL Account') . ':' . '</td>
+		<td>' . __('Comission PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -734,7 +734,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('PayPal EUR GL Account') . ':' . '</td>
+		<td>' . __('PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -746,7 +746,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission PayPal EUR GL Account') . ':' . '</td>
+		<td>' . __('Comission PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -763,7 +763,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Midtrans IDR GL Account') . ':' . '</td>
+		<td>' . __('Midtrans IDR GL Account') . ':' . '</td>
 		<td><select name="AccountMidtransIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -776,8 +776,8 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Midtrans') . ':</td>
-			<td>' . _('MidTrans has commissions but we cannot integrate them. We account full order, later manually we process commissions') . ':</td>
+			<td>' . __('% Fee Comission Midtrans') . ':</td>
+			<td>' . __('MidTrans has commissions but we cannot integrate them. We account full order, later manually we process commissions') . ':</td>
 		</tr>';
 
 
@@ -786,7 +786,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Tokopedia IDR GL Account') . ':' . '</td>
+		<td>' . __('Tokopedia IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTokopediaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -798,7 +798,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission Tokopedia IDR GL Account') . ':' . '</td>
+		<td>' . __('Comission Tokopedia IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTokopediaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -811,17 +811,17 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 	
 	echo '<tr>
-			<td>' . _('% Fee Comission Tokopedia') . ':</td>
+			<td>' . __('% Fee Comission Tokopedia') . ':</td>
 			<td><input type="text" name="ComissionTokopediaPercent" class="number"  value="' . $_POST['ComissionTokopediaPercent'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Tokopedia When Free Shipping per Item') . ':</td>
+			<td>' . __('% Fee Comission Tokopedia When Free Shipping per Item') . ':</td>
 			<td><input type="text" name="ComissionTokopediaFreeShippingPerItem" class="number"  value="' . $_POST['ComissionTokopediaFreeShippingPerItem'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Tokopedia When Free Shipping Maximum') . ':</td>
+			<td>' . __('% Fee Comission Tokopedia When Free Shipping Maximum') . ':</td>
 			<td><input type="text" name="ComissionTokopediaFreeShippingMaximum" class="number"  value="' . $_POST['ComissionTokopediaFreeShippingMaximum'] . '" size="10" maxlength="10" /></td>
 		</tr>';
 
@@ -830,7 +830,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Shopee IDR GL Account') . ':' . '</td>
+		<td>' . __('Shopee IDR GL Account') . ':' . '</td>
 		<td><select name="AccountShopeeIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -842,7 +842,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission Shopee IDR GL Account') . ':' . '</td>
+		<td>' . __('Comission Shopee IDR GL Account') . ':' . '</td>
 		<td><select name="AccountShopeeComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -855,17 +855,17 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';	
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Shopee') . ':</td>
+			<td>' . __('% Fee Comission Shopee') . ':</td>
 			<td><input type="text" name="ComissionShopeePercent" class="number"  value="' . $_POST['ComissionShopeePercent'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Shopee When Free Shipping per Item') . ':</td>
+			<td>' . __('% Fee Comission Shopee When Free Shipping per Item') . ':</td>
 			<td><input type="text" name="ComissionShopeeFreeShippingPerItem" class="number"  value="' . $_POST['ComissionShopeeFreeShippingPerItem'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Shopee When Free Shipping Maximum') . ':</td>
+			<td>' . __('% Fee Comission Shopee When Free Shipping Maximum') . ':</td>
 			<td><input type="text" name="ComissionShopeeFreeShippingMaximum" class="number"  value="' . $_POST['ComissionShopeeFreeShippingMaximum'] . '" size="10" maxlength="10" /></td>
 		</tr>';
 
@@ -874,7 +874,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Lazada IDR GL Account') . ':' . '</td>
+		<td>' . __('Lazada IDR GL Account') . ':' . '</td>
 		<td><select name="AccountLazadaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -886,7 +886,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission Lazada IDR GL Account') . ':' . '</td>
+		<td>' . __('Comission Lazada IDR GL Account') . ':' . '</td>
 		<td><select name="AccountLazadaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -899,7 +899,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Comission Lazada') . ':</td>
+			<td>' . __('% Fee Comission Lazada') . ':</td>
 			<td><input type="text" name="ComissionLazadaPercent" class="number"  value="' . $_POST['ComissionLazadaPercent'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
@@ -908,7 +908,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Doku IDR GL Account') . ':' . '</td>
+		<td>' . __('Doku IDR GL Account') . ':' . '</td>
 		<td><select name="AccountDokuIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -920,7 +920,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
-		<td>' . _('Comission Doku IDR GL Account') . ':' . '</td>
+		<td>' . __('Comission Doku IDR GL Account') . ':' . '</td>
 		<td><select name="AccountDokuComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -933,12 +933,12 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Flat Fee Commission DOKU for all tx (in IDR)') . ':</td>
+			<td>' . __('Flat Fee Commission DOKU for all tx (in IDR)') . ':</td>
 			<td><input type="text" name="ComissionFlatDoku" class="number"  value="' . $_POST['ComissionFlatDoku'] . '" size="20" maxlength="20" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Commission DOKU for CC only (%))') . ':</td>
+			<td>' . __('% Fee Commission DOKU for CC only (%))') . ':</td>
 			<td><input type="text" name="ComissionCCDoku" class="number"  value="' . $_POST['ComissionCCDoku'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
@@ -947,7 +947,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 
 	echo '<tr>
-		<td>' . _('Xendit IDR GL Account') . ':' . '</td>
+		<td>' . __('Xendit IDR GL Account') . ':' . '</td>
 		<td><select name="AccountXenditIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -960,7 +960,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-		<td>' . _('Comission Xendit IDR GL Account') . ':' . '</td>
+		<td>' . __('Comission Xendit IDR GL Account') . ':' . '</td>
 		<td><select name="AccountXenditComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
 	while ($MyRow=DB_fetch_array($GLAccount)) {
@@ -973,24 +973,24 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('Flat Fee Commission Xendit for Bank Transfers (in IDR)') . ':</td>
+			<td>' . __('Flat Fee Commission Xendit for Bank Transfers (in IDR)') . ':</td>
 			<td><input type="text" name="ComissionXenditFlatTransfer" class="number"  value="' . $_POST['ComissionXenditFlatTransfer'] . '" size="20" maxlength="20" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('Flat Fee Commission Xendit for CC (in IDR)') . ':</td>
+			<td>' . __('Flat Fee Commission Xendit for CC (in IDR)') . ':</td>
 			<td><input type="text" name="ComissionXenditFlatCC" class="number"  value="' . $_POST['ComissionXenditFlatCC'] . '" size="20" maxlength="20" /></td>
 		</tr>';
 
 	echo '<tr>
-			<td>' . _('% Fee Commission Xendit for CC only (%))') . ':</td>
+			<td>' . __('% Fee Commission Xendit for CC only (%))') . ':</td>
 			<td><input type="text" name="ComissionXenditPercentCC" class="number"  value="' . $_POST['ComissionXenditPercentCC'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
 	echo '</tbody></table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 		</div>
 		</div>
 		</form>';

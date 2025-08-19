@@ -552,7 +552,7 @@ function StartSameColourRow($k){
 }
 
 function getDirectoryTree($outerDir){ 
-	$dirs = FALSE; 
+	$dirs = false; 
 	if (is_dir($outerDir)){
 		$Directory = scandir( $outerDir );
 		if (is_array($Directory)){
@@ -564,7 +564,7 @@ function getDirectoryTree($outerDir){
 
 function ItemInList($Item, $List){
 	// http://www.php.net/manual/en/function.strpos.php for details on ===	
-	if (strpos(strtolower($List), strtolower($Item)) === FALSE){
+	if (strpos(strtolower($List), strtolower($Item)) === false){
 		return false;
 	}else{
 		return true;
@@ -719,7 +719,10 @@ function GetItemStandardCostFromCode($StockID){
 
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
-	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
+	$SQL="SELECT COUNT(*)
+		FROM stockmaster
+		WHERE klchangingprice = '1'
+			AND categoryid NOT IN " . LIST_STOCK_CATEGORIES_TEST . "";
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$Row = DB_fetch_row($Result);
@@ -810,7 +813,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . (float)$Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
-	DB_query($SQL,$ErrMsg,'',true);
+	DB_query($SQL, $ErrMsg, '', true);
 }
 
 function GLAccountBelongsTo($Account){
@@ -870,7 +873,7 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 			$Brand = $MyRow['manufacturers_id'];	
 		}else{
 			// we check the description, if we get any info
-				if (mb_stristr($Description, "silver") != FALSE){
+				if (mb_stristr($Description, "silver") != false){
 					// description contains "silver", should be KL
 					$Brand = 1;	
 				}else{
@@ -1052,16 +1055,16 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					''
 				)";
 				
-		$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot insert a receipt transaction against the customer because') ;
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE debtorsmaster
 					SET lastpaiddate = CURRENT_DATE,
 					lastpaid = '" . $TotalAmount ."'
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
-		$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot update the customer record for the date of the last payment received because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -1085,8 +1088,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . (float)($NetAmount * $FunctionalExRate * $ExRate) . "',
 				'" . $Currency . "'
 			)";
-		$ErrMsg = _('Cannot insert a bank transaction');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot insert a bank transaction');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL="INSERT INTO gltrans (type,
 									typeno,
@@ -1104,8 +1107,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . mb_substr($Narrative, 0, 200) . "',
 				'" . $NetAmount . "'
 			)";
-		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if ($Commission > 0){
 			$SQL="INSERT INTO gltrans (type,
@@ -1124,8 +1127,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$Commission . "'
 									)";
-			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,'',true);
+			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
 		if ($CommissionPPN > 0){
@@ -1145,8 +1148,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 										'" . mb_substr($Narrative, 0, 200) . "',
 										'" . (float)$CommissionPPN . "'
 									)";
-			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$Result = DB_query($SQL,$ErrMsg,'',true);
+			$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		}
 
 		$SQL="INSERT INTO gltrans ( type,
@@ -1165,8 +1168,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									'" . mb_substr($Narrative, 0, 200) . "',
 									'" . -$TotalAmount . "'
 									)";
-		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-		$Result = DB_query($SQL,$ErrMsg,'',true);			
+		$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
+		$Result = DB_query($SQL, $ErrMsg, '', true);			
 
 		// update the salesorder table, from quotation to confirmed order
 		if  (($PaymentCode == "tokopedia") OR 
@@ -1184,8 +1187,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}
-		$ErrMsg = _('Cannot update the quotation flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot update the quotation flag of the sales order because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		if (($CustomerCode == "WEB-KL-IDR") OR ($CustomerCode == "WEB-WH-IDR")) {
 			// online sale from our website, we must update the status of the order in OpenCart
@@ -1205,8 +1208,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$SQL = "UPDATE salesorders
 					SET klpaidcash = '" . $TotalAmount . "'
 				WHERE salesorders.orderno='" . $OrderNo . "'";
-		$ErrMsg = _('Cannot update the payment flag of the sales order because');
-		$Result = DB_query($SQL,$ErrMsg,'',true);
+		$ErrMsg = __('Cannot update the payment flag of the sales order because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$Result = DB_Txn_Commit();
 	}
@@ -1214,7 +1217,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 }
 
 function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
-	$PackagingImage =  FALSE;
+	$PackagingImage =  false;
 	if ($NumberOfImage == 1){
 		// main image
 		$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.jpg';
@@ -1222,7 +1225,7 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 		// last image of the lot MUST be a packaging image if still not found a packaging image
 		if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 			$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
-			$PackagingImage =  TRUE;
+			$PackagingImage =  true;
 		}else{
 			$URL = "";
 		}
@@ -1234,7 +1237,7 @@ function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 		}else{
 			if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 				$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
-				$PackagingImage =  TRUE;
+				$PackagingImage =  true;
 			}else{
 				$URL = "";
 			}
@@ -1256,7 +1259,7 @@ function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 				WHERE " . $f1 . " = '" . $v1 . "'
 					AND " . $f2 . " = '" . $v2 . "'";
 	}
-	$ErrMsg =_('Could not check existence of data in webERP because');
+	$ErrMsg =__('Could not check existence of data in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 
 	if(DB_num_rows($Result) != 0){
@@ -1281,7 +1284,7 @@ function DataExistsInArchive($Table, $f1, $v1, $f2 = '', $v2 = ''){
 				WHERE " . $f1 . " = '" . $v1 . "'
 					AND " . $f2 . " = '" . $v2 . "'";
 	}
-	$ErrMsg =_('Could not check existence of data in webERP because');
+	$ErrMsg =__('Could not check existence of data in webERP because');
 	$Result = DB_query_archive($SQL,$ErrMsg);
 
 	if(DB_num_rows($Result) != 0){
@@ -1306,7 +1309,7 @@ function InsertKPI($KPICode, $Value){
 				'" . mb_substr($KPICode, 0, 30) . "',
 				'" . (float)$Value . "')";
 		$ErrMsg = 'Error in function InsertKPI()';
-		DB_query($SQL,$ErrMsg,'',true);
+		DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
@@ -1392,34 +1395,34 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 		$SQL="SELECT userid FROM audittrail where userid = '" . $SelectedUser ."'";
 		$Result=DB_query($SQL);
 		if(DB_num_rows($Result)!=0) {
-			prnMsg(_('Cannot delete user as entries still exist in the audit trail'), 'error');
+			prnMsg(__('Cannot delete user as entries still exist in the audit trail'), 'error');
 		} else {
 			$SQL="DELETE FROM locationusers WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The Location - User could not be deleted because');;
+			$ErrMsg = __('The Location - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM glaccountusers WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The GL Account - User could not be deleted because');;
+			$ErrMsg = __('The GL Account - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM bankaccountusers WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
+			$ErrMsg = __('The Bank Accounts - User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM purchorderauth WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
+			$ErrMsg = __('The Purchase Orders Authority could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM sessions WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The Sessions User could not be deleted because');
+			$ErrMsg = __('The Sessions User could not be deleted because');
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM session_data WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The Session Data User could not be deleted because');
+			$ErrMsg = __('The Session Data User could not be deleted because');
 			$Result = DB_query($SQL,$ErrMsg);
 
 			$SQL="DELETE FROM www_users WHERE userid = '" . $SelectedUser . "'";
-			$ErrMsg = _('The User could not be deleted because');;
+			$ErrMsg = __('The User could not be deleted because');;
 			$Result = DB_query($SQL,$ErrMsg);
 
 			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser);
@@ -1673,17 +1676,17 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 	/*First check the code exists */
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
 	if(DB_num_rows($Result) == 0) {
-		prnMsg(_('The GL account code') . ': ' . $OldGL . ' ' . _('does not currently exist as a GL account code in the system'), 'error');
+		prnMsg(__('The GL account code') . ': ' . $OldGL . ' ' . __('does not currently exist as a GL account code in the system'), 'error');
 		$InputError = 1;
 	}
 
 	if(ContainsIllegalCharacters($NewGL)) {
-		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'), 'error');
+		prnMsg(__('The new GL account code to change the old code to contains illegal characters - no changes will be made'), 'error');
 		$InputError = 1;
 	}
 
 	if($NewGL == '') {
-		prnMsg(_('The new GL account code to change the old code to must be entered as well'), 'error');
+		prnMsg(__('The new GL account code to change the old code to must be entered as well'), 'error');
 		$InputError = 1;
 	}
 
@@ -1691,14 +1694,14 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
 	if(DB_num_rows($Result) != 0) {
 		echo '<br /><br />';
-		prnMsg(_('The replacement GL account code') . ': ' . $NewGL . ' ' . _('already exists as a GL account code in the system') . ' - ' . 
-			_('a unique GL account code must be entered for the new code'), 'error');
+		prnMsg(__('The replacement GL account code') . ': ' . $NewGL . ' ' . __('already exists as a GL account code in the system') . ' - ' . 
+			__('a unique GL account code must be entered for the new code'), 'error');
 		$InputError = 1;
 	}
 
 	if($InputError == 0) {// no input errors
 		DB_Txn_Begin();
-		echo '<br />' . _('Adding the new chartmaster record');
+		echo '<br />' . __('Adding the new chartmaster record');
 		$SQL = "INSERT INTO chartmaster (accountcode,
 										accountname,
 										group_,
@@ -1712,9 +1715,9 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 				FROM chartmaster
 				WHERE accountcode='" . $OldGL . "'";
 
-		$ErrMsg = _('The SQL to insert the new chartmaster record failed');
+		$ErrMsg = __('The SQL to insert the new chartmaster record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		echo ' ... ' . _('completed');
+		echo ' ... ' . __('completed');
 
 		DB_IgnoreForeignKeys();
 
@@ -1834,13 +1837,13 @@ function ChangeGLAcoountCode($NewGL, $OldGL) {
 
 		DB_Txn_Commit();
 
-		echo '<br />' . _('Deleting the old chartmaster record');
+		echo '<br />' . __('Deleting the old chartmaster record');
 		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
-		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
+		$ErrMsg = __('The SQL to delete the old chartmaster record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
-		echo ' ... ' . _('completed');
+		echo ' ... ' . __('completed');
 
-		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
+		echo '<p>' . __('GL account Code') . ': ' . $OldGL . ' ' . __('was successfully changed to') . ' : ' . $NewGL;
 	}//only do the stuff above if  $InputError==0
 }
 

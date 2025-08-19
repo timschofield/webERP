@@ -16,7 +16,7 @@ cat /etc/my.cnf (or filename)
 scp -P 8288 root@202.157.184.151:/etc/my.cnf .
 
 /* Create a backup of a file in the server */
-cp /etc/my.cnf /etc/my.cnf.backup
+cp /etc/my.cnf /etc/my.cnf.backup_ricard_05
 
 /* Edit one file in the server via nano */
 nano /etc/my.cnf
@@ -24,3 +24,20 @@ nano /etc/my.cnf
 /* Delete a file in the server */
 rm /etc/my.cnf.backup
 
+/* after uploading the file to the main user folder */
+cd /var/www/vhosts/kapal-laut.com
+
+/* copy the uploaded config file into the proper folder */
+cp /var/www/vhosts/kapal-laut.com/my.cnf /etc/my.cnf 
+
+/* backup the new file */
+cp /etc/my.cnf /etc/my.cnf.backup_ricard_07
+
+/* reinstate the backup file if restart MariaDB failed */
+cp /etc/my.cnf.backup_ricard_05 /etc/my.cnf
+
+/* restart MariaDB services */
+systemctl restart mariadb
+
+/* after restart MariaDB services, check the running status */
+systemctl status mariadb

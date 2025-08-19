@@ -3,17 +3,17 @@
 // Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
 include('includes/session.php');
-$Title = _('Bank Account Users');
+$Title = __('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
 include('includes/header.php');
 
-echo '<a class="toplink" href="BankAccountUsers.php">', _('Select another bank account'), '</a>';
+echo '<a class="toplink" href="BankAccountUsers.php">', __('Select another bank account'), '</a>';
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
-	_('Bank Account Authorised Users') . '" /> ' .// Icon title.
-	_('Maintenance Of Bank Account Authorised Users') . '</p>';// Page title.
+	__('Bank Account Authorised Users') . '" /> ' .// Icon title.
+	__('Maintenance Of Bank Account Authorised Users') . '</p>';// Page title.
 
 if (isset($_POST['SelectedUser'])) {
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
@@ -36,7 +36,7 @@ if (isset($_POST['Cancel'])) {
 
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedBankAccount'] == '') {
-		prnMsg(_('You have not selected any bank account'),'error');
+		prnMsg(__('You have not selected any bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 		unset($_POST['SelectedBankAccount']);
@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedUser']=='') {
 		$InputError=1;
-		prnMsg(_('You have not selected an user to be authorised to use this bank account'),'error');
+		prnMsg(__('You have not selected an user to be authorised to use this bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 	}
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] >0) {
 			$InputError = 1;
-			prnMsg( _('The user') . ' ' . $_POST['SelectedUser'] . ' ' ._('already authorised to use this bank account'),'error');
+			prnMsg( __('The user') . ' ' . $_POST['SelectedUser'] . ' ' .__('already authorised to use this bank account'),'error');
 		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO bankaccountusers (accountcode,
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$Msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
+			$Msg = __('User') . ': ' . $_POST['SelectedUser'].' '.__('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . __('bank account');
 			$Result = DB_query($SQL);
 			prnMsg($Msg,'success');
 			unset($_POST['SelectedUser']);
@@ -87,9 +87,9 @@ if (isset($_POST['submit'])) {
 		WHERE accountcode='".$SelectedBankAccount."'
 		AND userid='".$SelectedUser."'";
 
-	$ErrMsg = _('The bank account user record could not be deleted because');
+	$ErrMsg = __('The bank account user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg(_('User').' '. $SelectedUser .' '. _('has been un-authorised to use').' '. $SelectedBankAccount .' '. _('bank account') ,'success');
+	prnMsg(__('User').' '. $SelectedUser .' '. __('has been un-authorised to use').' '. $SelectedBankAccount .' '. __('bank account') ,'success');
 	unset($_GET['delete']);
 }
 
@@ -101,9 +101,9 @@ then none of the above are true. These will call the same page again and allow u
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Select Bank Account'), '</legend>
+			<legend>', __('Select Bank Account'), '</legend>
 			<field>
-				<label for="SelectedBankAccount">' . _('Select Bank Account') . ':</label>
+				<label for="SelectedBankAccount">' . __('Select Bank Account') . ':</label>
 				<select name="SelectedBankAccount">';
 
 	$SQL = "SELECT
@@ -112,9 +112,9 @@ then none of the above are true. These will call the same page again and allow u
 				currcode
 			FROM bankaccounts
 			ORDER BY accountcode";
-	$ErrMsg = _('The bank accounts could not be retrieved because');
+	$ErrMsg = __('The bank accounts could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<option value="">' . _('Not Yet Selected') . '</option>';
+	echo '<option value="">' . __('Not Yet Selected') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		// Lists bank accounts order by accountcode
 		echo '<option',
@@ -127,8 +127,8 @@ then none of the above are true. These will call the same page again and allow u
     DB_free_result($Result);
 
 	echo '<div class="centre">
-			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="submit" name="Process" value="' . __('Accept') . '" />
+			<input type="reset" name="Cancel" value="' . __('Cancel') . '" />
 		</div>';
 
 	echo '</form>';
@@ -158,10 +158,10 @@ if (isset($_POST['process'])OR isset($SelectedBankAccount)) {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="3">' . _('Authorised users for bank account') . ' ' .$SelectedBankName. '</th></tr>';
+	echo '<tr><th colspan="3">' . __('Authorised users for bank account') . ' ' .$SelectedBankName. '</th></tr>';
 	echo '<tr>
-			<th>' . _('User Code') . '</th>
-			<th>' . _('User Name') . '</th>
+			<th>' . __('User Code') . '</th>
+			<th>' . __('User Name') . '</th>
 			<th></th>
 		</tr>';
 
@@ -169,7 +169,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	echo '<tr class="striped_row">
 			<td>', $MyRow['userid'], '</td>
 			<td>', $MyRow['realname'], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedUser=', $MyRow['userid'], '&amp;delete=yes&amp;SelectedBankAccount=' . $SelectedBankAccount . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this user?') . '\');">' . _('Un-authorise') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedUser=', $MyRow['userid'], '&amp;delete=yes&amp;SelectedBankAccount=' . $SelectedBankAccount . '" onclick="return confirm(\'' . __('Are you sure you wish to un-authorise this user?') . '\');">' . __('Un-authorise') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -179,10 +179,10 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 
 		echo '<fieldset>
-				<legend>', _('Select User'), '</legend>';
+				<legend>', __('Select User'), '</legend>';
 
 		echo '<field>
-				<label for="SelectedUser">' . _('Select User') . ':</label>
+				<label for="SelectedUser">' . __('Select User') . ':</label>
 				<select name="SelectedUser">';
 
 		$SQL = "SELECT userid,
@@ -191,7 +191,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 		$Result = DB_query($SQL);
 		if (!isset($_POST['SelectedUser'])) {
-			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+			echo '<option selected="selected" value="">' . __('Not Yet Selected') . '</option>';
 		}
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($_POST['SelectedUser']) AND $MyRow['userid']==$_POST['SelectedUser']) {
@@ -210,8 +210,8 @@ while ($MyRow = DB_fetch_array($Result)) {
         DB_free_result($Result);
 
 		echo '<div class="centre">
-				<input type="submit" name="submit" value="' . _('Accept') . '" />
-									<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
+				<input type="submit" name="submit" value="' . __('Accept') . '" />
+									<input type="reset" name="Cancel" value="' . __('Cancel') . '" />
 			</div>';
 
 		echo '</form>';

@@ -53,13 +53,13 @@ if (!function_exists('gettext')) {
 		$PhpGettext = new gettext_reader($input);
 
 		if (!function_exists('_')){
-			function _($Text) {
+			function __($Text) {
 				global $PhpGettext;
 				return $PhpGettext->translate($Text);
 			}
 		}
 	} elseif (!function_exists('_')) {
-		function _($Text){
+		function __($Text){
 			return $Text;
 		}
 	}

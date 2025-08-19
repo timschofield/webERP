@@ -129,14 +129,14 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 }
 
 if ( !extension_loaded('gd') OR (!$automake && !isset($FileName)) ) {
-	$Title = _('Stock Image Retrieval ....');
+	$Title = __('Stock Image Retrieval ....');
 	include('includes/header.php');
 	if ( !extension_loaded('gd') ) {
-		prnMsg( _('The Image could not be retrieved because the GD extension is missing'), 'error');
+		prnMsg( __('The Image could not be retrieved because the GD extension is missing'), 'error');
 	} else {
-		prnMsg( _('The Image could not be retrieved because it does not exist'), 'error');
+		prnMsg( __('The Image could not be retrieved because it does not exist'), 'error');
 	}
-	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu'). '</a>';
+	echo '<br /><a href="' .$RootPath .'/index.php">' . __('Back to the menu'). '</a>';
 	include('includes/footer.php');
 	exit();
 }

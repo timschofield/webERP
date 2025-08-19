@@ -22,12 +22,12 @@ function CreateTrigger($Table, $TriggerName, $Event, $Row, $EventSql) {
 		$SQL = "CREATE TRIGGER " . $TriggerName . " " . $Event . " ON " . $Table . " FOR EACH ROW SET " . $Row . "." . $EventSql;
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The trigger') . ' ' . $TriggerName . ' ' . _('has been created'), 'success');
+			OutputResult(__('The trigger') . ' ' . $TriggerName . ' ' . __('has been created'), 'success');
 		} else {
-			OutputResult(_('The trigger') . ' ' . $TriggerName . ' ' . _('could not be created') . '<br />' . $SQL, 'error');
+			OutputResult(__('The trigger') . ' ' . $TriggerName . ' ' . __('could not be created') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The trigger') . ' ' . $TriggerName . ' ' . _('already exists'), 'info');
+		OutputResult(__('The trigger') . ' ' . $TriggerName . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -43,12 +43,12 @@ function NewSecurityToken($TokenId, $TokenName) {
 										)";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The security token') . ' ' . $TokenId . ' ' . _('has been created'), 'success');
+			OutputResult(__('The security token') . ' ' . $TokenId . ' ' . __('has been created'), 'success');
 		} else {
-			OutputResult(_('The security token') . ' ' . $TokenId . ' ' . _('could not be created') . '<br />' . $SQL, 'error');
+			OutputResult(__('The security token') . ' ' . $TokenId . ' ' . __('could not be created') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The security token') . ' ' . $TokenId . ' ' . _('already exists'), 'info');
+		OutputResult(__('The security token') . ' ' . $TokenId . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -60,12 +60,12 @@ function NewSysType($TypeID, $TypeDescription) {
 		$SQL = "INSERT INTO `systypes` (`typeid`, `typename`) VALUES ('" . $TypeID . "', '" . $TypeDescription . "')";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The type') . ' ' . $TypeDescription . ' ' . _('has been inserted'), 'success');
+			OutputResult(__('The type') . ' ' . $TypeDescription . ' ' . __('has been inserted'), 'success');
 		} else {
-			OutputResult(_('The type') . ' ' . $TypeDescription . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+			OutputResult(__('The type') . ' ' . $TypeDescription . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The script') . ' ' . $TypeDescription . ' ' . _('already exists'), 'info');
+		OutputResult(__('The script') . ' ' . $TypeDescription . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -77,12 +77,12 @@ function NewScript($ScriptName, $PageSecurity) {
 		$SQL = "INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES ('" . $ScriptName . "', '" . $PageSecurity . "', '')";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('has been inserted'), 'success');
+			OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('has been inserted'), 'success');
 		} else {
-			OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+			OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('already exists'), 'info');
+		OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -94,12 +94,12 @@ function RemoveScript($ScriptName) {
 		$SQL = "DELETE FROM `scripts` WHERE script='" . $ScriptName . "'";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('has been removed'), 'success');
+			OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('has been removed'), 'success');
 		} else {
-			OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('could not be removed'), 'error');
+			OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('could not be removed'), 'error');
 		}
 	} else {
-		OutputResult(_('The script') . ' ' . $ScriptName . ' ' . _('does not exist'), 'info');
+		OutputResult(__('The script') . ' ' . $ScriptName . ' ' . __('does not exist'), 'info');
 	}
 }
 
@@ -129,13 +129,13 @@ function NewModule($Link, $Report, $Name, $Sequence) {
 										)";
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The module') . ' ' . $Name . ' ' . _('has been inserted'), 'success');
+				OutputResult(__('The module') . ' ' . $Name . ' ' . __('has been inserted'), 'success');
 			} else {
-				OutputResult(_('The module') . ' ' . $Name . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+				OutputResult(__('The module') . ' ' . $Name . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 			}
 		}
 	} else {
-		OutputResult(_('The module') . ' ' . $Name . ' ' . _('already exists'), 'info');
+		OutputResult(__('The module') . ' ' . $Name . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -169,13 +169,13 @@ function NewMenuItem($Link, $Section, $Caption, $URL, $Sequence) {
 											)";
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('has been inserted'), 'success');
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('has been inserted'), 'success');
 			} else {
-				OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 			}
 		}
 	} else {
-		OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('already exists'), 'info');
+		OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -192,13 +192,13 @@ function RemoveMenuItem($Link, $Section, $Caption, $URL) {
 											AND url='" . $URL . "'";
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('has been deleted'), 'success');
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('has been deleted'), 'success');
 			} else {
-				OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('could not be deleted') . '<br />' . $SQL, 'error');
+				OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('could not be deleted') . '<br />' . $SQL, 'error');
 			}
 		}
 	} else {
-		OutputResult(_('The menu link') . ' ' . $Caption . ' ' . _('does not exist'), 'info');
+		OutputResult(__('The menu link') . ' ' . $Caption . ' ' . __('does not exist'), 'info');
 	}
 }
 
@@ -215,12 +215,12 @@ function AddColumn($Column, $Table, $Type, $Null, $Default, $After) {
 			}
 			$SQL = "ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " " . $Null . " DEFAULT '" . $Default . "' AFTER `" . $After . "`";
 			if ($Response == 0) {
-				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been inserted'), 'success');
+				OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been inserted'), 'success');
 			} else {
-				OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+				OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be inserted') . '<br />' . $SQL, 'error');
 			}
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('already exists'), 'info');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('already exists'), 'info');
 		}
 	}
 }
@@ -238,12 +238,12 @@ function AddIndex($Columns, $Table, $Name) {
 			$SQL.= ")";
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The index has been inserted'), 'success');
+				OutputResult(__('The index has been inserted'), 'success');
 			} else {
-				OutputResult(_('The index could not be inserted') . '<br />' . $SQL, 'error');
+				OutputResult(__('The index could not be inserted') . '<br />' . $SQL, 'error');
 			}
 		} else {
-			OutputResult(_('The index already exists'), 'info');
+			OutputResult(__('The index already exists'), 'info');
 		}
 	}
 }
@@ -256,12 +256,12 @@ function DropIndex($Table, $Name) {
 			$SQL = "ALTER TABLE `" . $Table . "` DROP INDEX " . $Name;
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The index has been droppeed'), 'success');
+				OutputResult(__('The index has been droppeed'), 'success');
 			} else {
-				OutputResult(_('The index could not be dropped'), 'error');
+				OutputResult(__('The index could not be dropped'), 'error');
 			}
 		} else {
-			OutputResult(_('The index does not exist'), 'info');
+			OutputResult(__('The index does not exist'), 'info');
 		}
 	}
 }
@@ -274,12 +274,12 @@ function DropColumn($Column, $Table) {
 		if (isset($SQLFile) or DB_num_rows($Result) != 0) {
 			$Response = executeSQL("ALTER TABLE `" . $Table . "` DROP `" . $Column, False);
 			if ($Response == 0) {
-				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been removed'), 'success');
+				OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been removed'), 'success');
 			} else {
-				OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be removed'), 'error');
+				OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be removed'), 'error');
 			}
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('is already removed'), 'info');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already removed'), 'info');
 		}
 	}
 }
@@ -295,12 +295,12 @@ function ChangeColumnSize($Column, $Table, $Type, $Null, $Default, $Size) {
 	if ($MyRow[0] <> $Size) {
 		$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been changed'), 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be changed'), 'error');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be changed'), 'error');
 		}
 	} else {
-		OutputResult(_('The column') . ' ' . $Column . ' ' . _('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already changed'), 'info');
 	}
 }
 
@@ -324,12 +324,12 @@ function ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $A
 			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement, False);
 		}
 		if ($Response == 0) {
-			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('has been renamed') . ' ' . $NewName, 'success');
+			OutputResult(__('The column') . ' ' . $OldName . ' ' . __('has been renamed') . ' ' . $NewName, 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('could not be renamed'), 'error');
+			OutputResult(__('The column') . ' ' . $OldName . ' ' . __('could not be renamed'), 'error');
 		}
 	} else {
-		OutputResult(_('The column') . ' ' . $OldName . ' ' . _('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $OldName . ' ' . __('is already changed'), 'info');
 	}
 }
 
@@ -350,12 +350,12 @@ function ChangeColumnType($Column, $Table, $Type, $Null, $Default) {
 			$Response = executeSQL($SQL, False);
 		}
 		if ($Response == 0) {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been changed'), 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('in the table') . ' ' . $Table . ' ' . _('could not be changed to type') . ' ' . $Type . ' ' . _('and returned error number') . ' ' . $Response . '<br />' . $SQL, 'error');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('in the table') . ' ' . $Table . ' ' . __('could not be changed to type') . ' ' . $Type . ' ' . __('and returned error number') . ' ' . $Response . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The column') . ' ' . $Column . ' ' . _('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already changed'), 'info');
 	}
 }
 
@@ -370,12 +370,12 @@ function ChangeColumnDefault($Column, $Table, $Type, $Null, $Default) {
 	if ($MyRow[0] <> $Default) {
 		$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been changed'), 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be changed'), 'error');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be changed'), 'error');
 		}
 	} else {
-		OutputResult(_('The column') . ' ' . $Column . ' ' . _('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already changed'), 'info');
 	}
 }
 
@@ -390,12 +390,12 @@ function RemoveAutoIncrement($Column, $Table, $Type, $Null, $Default) {
 	if ($MyRow[0] <> $Default) {
 		$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('has been changed'), 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be changed'), 'error');
+			OutputResult(__('The column') . ' ' . $Column . ' ' . __('could not be changed'), 'error');
 		}
 	} else {
-		OutputResult(_('The column') . ' ' . $Column . ' ' . _('is already changed'), 'info');
+		OutputResult(__('The column') . ' ' . $Column . ' ' . __('is already changed'), 'info');
 	}
 }
 
@@ -408,12 +408,12 @@ function NewConfigValue($ConfName, $ConfValue) {
 	if (DB_num_rows($Result) == 0) {
 		$Response = executeSQL("INSERT INTO `config` (`confname`, `confvalue`) VALUES ('" . $ConfName . "', '" . $ConfValue . "')", False);
 		if ($Response == 0) {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('has been inserted'), 'success');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('has been inserted'), 'success');
 		} else {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('could not be inserted'), 'error');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('could not be inserted'), 'error');
 		}
 	} else {
-		OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('is in'), 'info');
+		OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('is in'), 'info');
 	}
 }
 
@@ -427,12 +427,12 @@ function ChangeConfigValue($ConfName, $NewConfigValue) {
 	if (DB_num_rows($Result) == 0) {
 		$Response = executeSQL("UPDATE `config` SET `confvalue`='" . $NewConfigValue . "' WHERE `confname`='" . $ConfName . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('has been updated'), 'success');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('has been updated'), 'success');
 		} else {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('could not be updated'), 'error');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('could not be updated'), 'error');
 		}
 	} else {
-		OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('is already set to') . ' ' . $NewConfigValue, 'info');
+		OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('is already set to') . ' ' . $NewConfigValue, 'info');
 	}
 }
 
@@ -445,12 +445,12 @@ function ChangeConfigName($OldConfName, $NewConfName) {
 	if (DB_num_rows($Result) == 0) {
 		$Response = executeSQL("UPDATE `config` SET `confname`='" . $NewConfName . "' WHERE `confname`='" . $OldConfName . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The config value') . ' ' . $OldConfName . ' ' . _('has been updated'), 'success');
+			OutputResult(__('The config value') . ' ' . $OldConfName . ' ' . __('has been updated'), 'success');
 		} else {
-			OutputResult(_('The config value') . ' ' . $OldConfName . ' ' . _('could not be updated'), 'error');
+			OutputResult(__('The config value') . ' ' . $OldConfName . ' ' . __('could not be updated'), 'error');
 		}
 	} else {
-		OutputResult(_('The config value') . ' ' . $OldConfName . ' ' . _('is already changed to') . ' ' . $NewConfName, 'info');
+		OutputResult(__('The config value') . ' ' . $OldConfName . ' ' . __('is already changed to') . ' ' . $NewConfName, 'info');
 	}
 }
 
@@ -463,12 +463,12 @@ function DeleteConfigValue($ConfName) {
 	if (DB_num_rows($Result) == 0) {
 		$Response = executeSQL("DELETE FROM `config` WHERE `confname`='" . $ConfName . "'", False);
 		if ($Response == 0) {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('has been removed'), 'success');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('has been removed'), 'success');
 		} else {
-			OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('could not be removed'), 'error');
+			OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('could not be removed'), 'error');
 		}
 	} else {
-		OutputResult(_('The config value') . ' ' . $ConfName . ' ' . _('is already removed'), 'info');
+		OutputResult(__('The config value') . ' ' . $ConfName . ' ' . __('is already removed'), 'info');
 	}
 }
 
@@ -481,12 +481,12 @@ function CreateTable($Table, $SQL) {
 		$Response = executeSQL($SQL . ' ENGINE=InnoDB DEFAULT CHARSET=utf8', False);
 		DB_ReinstateForeignKeys();
 		if ($Response == 0) {
-			OutputResult(_('The table') . ' ' . $Table . ' ' . _('has been created'), 'success');
+			OutputResult(__('The table') . ' ' . $Table . ' ' . __('has been created'), 'success');
 		} else {
-			OutputResult(_('The table') . ' ' . $Table . ' ' . _('could not be created'), 'error');
+			OutputResult(__('The table') . ' ' . $Table . ' ' . __('could not be created'), 'error');
 		}
 	} else {
-		OutputResult(_('The table') . ' ' . $Table . ' ' . _('already exists'), 'info');
+		OutputResult(__('The table') . ' ' . $Table . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -508,12 +508,12 @@ function DropConstraint($Table, $Constraint) {
 	if (ConstraintExists($Table, $Constraint)) {
 		$Response = executeSQL("ALTER TABLE `" . $Table . "` DROP FOREIGN KEY `" . $Constraint . "`", False);
 		if ($Response == 0) {
-			OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('has been removed'), 'success');
+			OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('has been removed'), 'success');
 		} else {
-			OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('could not be removed'), 'error');
+			OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('could not be removed'), 'error');
 		}
 	} else {
-		OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('does not exist'), 'info');
+		OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('does not exist'), 'info');
 	}
 }
 
@@ -530,12 +530,12 @@ function AddConstraint($Table, $Constraint, $Field, $ReferenceTable, $ReferenceF
 		$SQL = "ALTER TABLE " . $Table . " ADD CONSTRAINT " . $Constraint . " FOREIGN KEY (" . $Field . ") REFERENCES " . $ReferenceTable . " (" . $ReferenceField . ")";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('has been added'), 'success');
+			OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('has been added'), 'success');
 		} else {
-			OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('could not be added') . '<br />' . $SQL, 'error');
+			OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('could not be added') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('already exists'), 'info');
+		OutputResult(__('The constraint') . ' ' . $Constraint . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -556,12 +556,12 @@ function UpdateField($Table, $Field, $NewValue, $Criteria) {
 			$SQL = "UPDATE " . $Table . " SET " . $Field . "='" . $NewValue . "' WHERE " . $Criteria;
 			$Response = executeSQL($SQL, False);
 			if ($Response == 0) {
-				OutputResult(_('The field') . ' ' . $Field . ' ' . _('has been updated'), 'success');
+				OutputResult(__('The field') . ' ' . $Field . ' ' . __('has been updated'), 'success');
 			} else {
-				OutputResult(_('The field') . ' ' . $Field . ' ' . _('could not be updated') . '<br />' . $SQL, 'error');
+				OutputResult(__('The field') . ' ' . $Field . ' ' . __('could not be updated') . '<br />' . $SQL, 'error');
 			}
 		} else {
-			OutputResult(_('The field') . ' ' . $Field . ' ' . _('is already correct'), 'info');
+			OutputResult(__('The field') . ' ' . $Field . ' ' . __('is already correct'), 'info');
 		}
 	} else if (isset($SQLFile)) {
 		$Response = executeSQL("UPDATE " . $Table . " SET " . $Field . "='" . $NewValue . "' WHERE " . $Criteria, False);
@@ -574,12 +574,12 @@ function DeleteRecords($Table, $Criteria) {
 	if (DB_num_rows($Result) > 0) {
 		$Response = executeSQL("DELETE FROM " . $Table . " WHERE " . $Criteria, False);
 		if ($Response == 0) {
-			OutputResult(_('Rows have been deleted from') . ' ' . $Table, 'success');
+			OutputResult(__('Rows have been deleted from') . ' ' . $Table, 'success');
 		} else {
-			OutputResult(_('Rows could not be deleted from') . ' ' . $Table, 'error');
+			OutputResult(__('Rows could not be deleted from') . ' ' . $Table, 'error');
 		}
 	} else {
-		OutputResult(_('There was nothing to delete from') . ' ' . $Table, 'info');
+		OutputResult(__('There was nothing to delete from') . ' ' . $Table, 'info');
 	}
 }
 
@@ -589,12 +589,12 @@ function DropTable($Table) {
 	if (DB_num_rows($Result) > 0) {
 		$Response = executeSQL("DROP TABLE IF EXISTS `" . $Table . "`");
 		if ($Response == 0) {
-			OutputResult(_('The old table') . ' ' . $Table . ' ' . _('has been removed'), 'success');
+			OutputResult(__('The old table') . ' ' . $Table . ' ' . __('has been removed'), 'success');
 		} else {
-			OutputResult(_('The old table') . ' ' . $Table . ' ' . _('could not be removed'), 'error');
+			OutputResult(__('The old table') . ' ' . $Table . ' ' . __('could not be removed'), 'error');
 		}
 	} else {
-		OutputResult(_('The old table') . ' ' . $Table . ' ' . _('has already been removed'), 'info');
+		OutputResult(__('The old table') . ' ' . $Table . ' ' . __('has already been removed'), 'info');
 	}
 }
 
@@ -622,12 +622,12 @@ function InsertRecord($Table, $CheckFields, $CheckValues, $Fields, $Values) {
 		$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1) . ")";
 		$Response = executeSQL($SQL);
 		if ($Response == 0) {
-			OutputResult(_('The record has been inserted'), 'success');
+			OutputResult(__('The record has been inserted'), 'success');
 		} else {
-			OutputResult(_('The record could not be inserted') . ' ' . _('The sql used was') . '<br />' . $SQL, 'error');
+			OutputResult(__('The record could not be inserted') . ' ' . __('The sql used was') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The record is already in the table'), 'info');
+		OutputResult(__('The record is already in the table'), 'info');
 	}
 }
 
@@ -643,12 +643,12 @@ function DropPrimaryKey($Table, $OldKey) {
 		$SQL = "ALTER TABLE " . $Table . " DROP PRIMARY KEY";
 		$Response = executeSQL($SQL);
 		if ($Response == 0) {
-			OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('has been removed'), 'success');
+			OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('has been removed'), 'success');
 		} else {
-			OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('could not be removed') . '<br />' . $SQL, 'error');
+			OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('could not be removed') . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('has already been removed'), 'info');
+		OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('has already been removed'), 'info');
 	}
 }
 
@@ -660,12 +660,12 @@ function AddPrimaryKey($Table, $Fields) {
 		$KeyString = implode(",", $Fields);
 		$Response = executeSQL("ALTER TABLE " . $Table . " ADD PRIMARY KEY ( " . $KeyString . " )");
 		if ($Response == 0) {
-			OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('has been added'), 'success');
+			OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('has been added'), 'success');
 		} else {
-			OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('could not be added') . '<br />' . "ALTER TABLE " . $Table . " ADD PRIMARY KEY ( " . $KeyString . " )", 'error');
+			OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('could not be added') . '<br />' . "ALTER TABLE " . $Table . " ADD PRIMARY KEY ( " . $KeyString . " )", 'error');
 		}
 	} else {
-		OutputResult(_('The primary key in') . ' ' . $Table . ' ' . _('has already been added'), 'info');
+		OutputResult(__('The primary key in') . ' ' . $Table . ' ' . __('has already been added'), 'info');
 	}
 }
 
@@ -682,12 +682,12 @@ function RenameTable($OldName, $NewName) {
 		$SQL = "RENAME TABLE " . $OldName . " to " . $NewName;
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
-			OutputResult(_('The table') . ' ' . $OldName . ' ' . _('has been renamed to') . ' ' . $NewName, 'success');
+			OutputResult(__('The table') . ' ' . $OldName . ' ' . __('has been renamed to') . ' ' . $NewName, 'success');
 		} else {
-			OutputResult(_('The table') . ' ' . $OldName . ' ' . _('could not be renamed to') . ' ' . $NewName . '<br />' . $SQL, 'error');
+			OutputResult(__('The table') . ' ' . $OldName . ' ' . __('could not be renamed to') . ' ' . $NewName . '<br />' . $SQL, 'error');
 		}
 	} else {
-		OutputResult(_('The table') . ' ' . $NewName . ' ' . _('already exists'), 'info');
+		OutputResult(__('The table') . ' ' . $NewName . ' ' . __('already exists'), 'info');
 	}
 }
 
@@ -696,10 +696,10 @@ function SetAutoIncStart($Table, $Field, $StartNumber) {
 	$GetLargestResult = DB_query($GetLargestSQL);
 	$LargestRow = DB_fetch_array($GetLargestResult);
 	if ($LargestRow['highest'] > $StartNumber) {
-		OutputResult(_('Cannot update the auto increment field in table') . ' ' . $Table . '<br />' . $SQL, 'error');
+		OutputResult(__('Cannot update the auto increment field in table') . ' ' . $Table . '<br />' . $SQL, 'error');
 	} else {
 		$Response = executeSQL("ALTER TABLE " . $Table . " AUTO_INCREMENT = " . $StartNumber, False);
-		OutputResult(_('The auto increment field in table') . ' ' . $Table . _('has been updated'), 'success');
+		OutputResult(__('The auto increment field in table') . ' ' . $Table . __('has been updated'), 'success');
 	}
 }
 

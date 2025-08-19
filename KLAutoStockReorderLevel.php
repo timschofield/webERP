@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Automatic Setting of Stock Re-Order Level');
+$Title = __('Automatic Setting of Stock Re-Order Level');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -47,7 +47,7 @@ if (isset($_GET['AllShops'])){
 }
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -64,7 +64,7 @@ $MyItem=DB_fetch_array($Result);
 echo '<table class="selection">
 	<thead>
 		<tr>
-			<th colspan="3"><h3><b>' . $StockID . ' - ' . $MyItem['description'] . '</b>  (' . _('In Units of') . ' ' . $MyItem['units'] . ')</h3></th>
+			<th colspan="3"><h3><b>' . $StockID . ' - ' . $MyItem['description'] . '</b>  (' . __('In Units of') . ' ' . $MyItem['units'] . ')</h3></th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -116,13 +116,13 @@ $SQL = "SELECT locstock.loccode,
 		$FilterLoc ."
 		ORDER BY locations.locationname";
 
-$ErrMsg = _('The stock held at each location cannot be retrieved because');
+$ErrMsg = __('The stock held at each location cannot be retrieved because');
 $LocStockResult = DB_query($SQL, $ErrMsg);
 
 $TableHeader = '<tr>
-					<th class="SortedColumn">' . _('Location') . '</th>
-					<th class="SortedColumn">' . _('Quantity On Hand') . '</th>
-					<th class="SortedColumn">' . _('Re-Order Level') . '</th>
+					<th class="SortedColumn">' . __('Location') . '</th>
+					<th class="SortedColumn">' . __('Quantity On Hand') . '</th>
+					<th class="SortedColumn">' . __('Re-Order Level') . '</th>
 				</tr>';
 
 echo $TableHeader;

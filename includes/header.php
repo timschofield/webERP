@@ -57,7 +57,7 @@ echo '<!DOCTYPE html>';
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 <head>
 	<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
-	<title>', _('webERP'), ' - ', $Title, '</title>
+	<title>', __('webERP'), ' - ', $Title, '</title>
 	<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
 	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
 	<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
@@ -240,7 +240,7 @@ echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">'
 /* KL RICARD Comment these lines as only show an X on the left top corner
 echo '<div class="help-bubble" id="help-bubble">
 	<div class="help-header" id="help-header">
-		<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+		<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
 	</div>
 	<div class="help-content" id="help-content"></div>
 </div>';
@@ -250,7 +250,7 @@ KL RICARD Comment these lines as only show an X on the left top corner */
 echo '<div class="help-bubble" id="help-bubble">
 		<link rel="stylesheet" type="text/css" href="doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
-			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
 		</div>
 		<div class="help-content" id="help-content"></div>
 	</div>';
@@ -312,7 +312,7 @@ KL RICARD END: Do NOT Show the company logo */
 
 // User info section - left side of header
 echo '<div id="Info" style="display: flex; align-items: center;">
-		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $RootPath, '/UserSettings.php">
+		<a class="FontSize" data-title="', __('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $RootPath, '/UserSettings.php">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', stripslashes($_SESSION['UsersRealName']), '" />', $_SESSION['UsersRealName'], '
 		</a>
 	</div>';
@@ -323,23 +323,23 @@ echo '<div style="display: flex; align-items: center; gap: 10px;">';
 // Fix: Ensure AllowedPageSecurityTokens is an array before counting
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
-	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . __('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . __('Help') . '" /></a></div>';
 
 	// Mobile menu - enhanced select dropdown
 	echo '<div class="mobile-menu-container">
 		<select class="mobile-menu-select" onchange="navigateToSelected(this)">
-			<option value="" disabled selected>📱 ', _('Top Menu'), '</option>
-			<option value="', $RootPath, '/index.php">� ', _('Main Menu'), '</option>';
+			<option value="" disabled selected>📱 ', __('Top Menu'), '</option>
+			<option value="', $RootPath, '/index.php">� ', __('Main Menu'), '</option>';
 			
 	if (!$KL_SPGSeniorOrSupport AND !$KL_SPGJunior){
-		echo '<option value="', $RootPath, '/SelectCustomer.php">👥 ', _('Customers'), '</option>';
-		echo '<option value="', $RootPath, '/SelectProduct.php">📦 ', _('Items'), '</option>';
-		echo '<option value="', $RootPath, '/SelectSupplier.php">🏢 ', _('Suppliers'), '</option>';
+		echo '<option value="', $RootPath, '/SelectCustomer.php">👥 ', __('Customers'), '</option>';
+		echo '<option value="', $RootPath, '/SelectProduct.php">📦 ', __('Items'), '</option>';
+		echo '<option value="', $RootPath, '/SelectSupplier.php">🏢 ', __('Suppliers'), '</option>';
 	}
 	
-	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', _('Intranet'), '</option>
-			<option value="https://kapal-laut.com">🛒 ', _('Online Shop'), '</option>
-			<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">🚪 ', _('Logout'), '</option>
+	echo '<option value="https://ptadu.com/wiki/index.php">🌐 ', __('Intranet'), '</option>
+			<option value="https://kapal-laut.com">🛒 ', __('Online Shop'), '</option>
+			<option value="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">🚪 ', __('Logout'), '</option>
 		</select>
 	</div>';
 
@@ -349,8 +349,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	/* KL RICARD Customized Action Icons on every page */
 	// 1st - Main menu
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
+		<a class="FontSize" data-title="', __('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', __('Main Menu'), '" />', __('Main Menu'), '
 		</a>
 	</div>';
 
@@ -358,20 +358,20 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 	if (!$KL_SPGSeniorOrSupport 
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
+			<a class="FontSize" data-title="', __('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', __('Customers'), '" />', __('Customers'), '
 			</a>
 		</div>';
 
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', _('Items'), '" />', _('Items'), '
+			<a class="FontSize" data-title="', __('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', __('Items'), '" />', __('Items'), '
 			</a>
 		</div>';
 
 		echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
+			<a class="FontSize" data-title="', __('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', __('Suppliers'), '" />', __('Suppliers'), '
 			</a>
 		</div>';
 
@@ -379,22 +379,22 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 	// 3rd - Intranet
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Intranet'), '" href="https://ptadu.com/wiki/index.php">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', _('Intranet'), '" />', _('Intranet'), '
+		<a class="FontSize" data-title="', __('Intranet'), '" href="https://ptadu.com/wiki/index.php">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', __('Intranet'), '" />', __('Intranet'), '
 		</a>
 	</div>';
 
 	// 4th - Online Shop
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
+		<a class="FontSize" data-title="', __('Online Shop'), '" href="https://kapal-laut.com">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', __('Online Shop'), '" />', __('Online Shop'), '
 		</a>
 	</div>';
 
 	echo '</div>'; // Close desktop container
 
 	/* KL RICARD No show the Manual Link
-	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . __('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . __('Help') . '" /></a></div>';
 
 	if ($ScriptName != 'index.php') {
 		if (strstr($_SESSION['Language'], 'en')) {
@@ -402,8 +402,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		} else {
 			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
 				echo '<div id="ActionIcon">
-						<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
-							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+						<a data-title="', __('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 						</a>
 					</div>';
 			} else {
@@ -412,8 +412,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		}
 	} else {
 		echo '<div id="ActionIcon">
-				<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
-					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+				<a data-title="', __('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 				</a>
 			</div>';
 	}
@@ -431,23 +431,23 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 	echo '<div id="ActionIcon">
 			<select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)">';
-	echo '<option value=""><i>', _('Commonly used scripts'), '</i></option>';
+	echo '<option value=""><i>', __('Commonly used scripts'), '</i></option>';
 	foreach ($_SESSION['Favourites'] as $Url => $Caption) {
-		echo '<option value="', $Url, '">', _($Caption), '</option>';
+		echo '<option value="', $Url, '">', __($Caption), '</option>';
 	}
 	echo '</select>
 		</div>';
 	if ($ScriptName != 'index.php') {
 		if (!isset($_SESSION['Favourites'][$ScriptName]) or $_SESSION['Favourites'][$ScriptName] == '') {
 			echo '<div id="ActionIcon">
-					<a data-title="', _('Add this script to your list of commonly used'), '">
-						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', _('Add to commonly used'), '" />
+					<a data-title="', __('Add this script to your list of commonly used'), '">
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', __('Add to commonly used'), '" />
 					</a>
 				</div>';
 		} else {
 			echo '<div id="ActionIcon">
-					<a data-title="', _('Remove this script from your list of commonly used'), '">
-						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', _('Remove from commonly used'), '" />
+					<a data-title="', __('Remove this script from your list of commonly used'), '">
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', __('Remove from commonly used'), '" />
 					</a>
 				</div>';
 		}
@@ -457,8 +457,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 // Logout button - always visible on the right
 echo '<div id="ExitIcon">
-		<a data-title="', _('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', _('Logout'), '" />
+		<a data-title="', __('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', __('Logout'), '" />
 		</a>
 	</div>';
 
@@ -468,8 +468,8 @@ echo '</div>'; // Close header-container
 /* KL RICARD No show the Dashboard
 if ($ScriptName != 'Dashboard.php') {
 	echo '<div id="ActionIcon">
-			<a data-title="', _('Show Dashboard'), '" href="', $PathPrefix, $RootPath, '/Dashboard.php">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/dashboard-icon.png" alt="', _('Show Dashboard'), '" />
+			<a data-title="', __('Show Dashboard'), '" href="', $PathPrefix, $RootPath, '/Dashboard.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/dashboard-icon.png" alt="', __('Show Dashboard'), '" />
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
@@ -489,25 +489,25 @@ if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 /*	KL RICARD No show the Font Size
 	if ($_SESSION['ScreenFontSize'] == 0) {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', _('Small text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', _('Small text size'), '">A</a>';
+		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '">A</a>';
 	}
 	if ($_SESSION['ScreenFontSize'] == 1) {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', _('Medium text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', _('Medium text size'), '">A</a>';
+		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '">A</a>';
 	}
 	if ($_SESSION['ScreenFontSize'] == 2) {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
+		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '">A</a>';
 	}
 KL RICARD No show the Font Size */
 
 /*	KL RICARD No show the theme
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';
+	echo '<div class="ScriptTitle">', __('Theme'), ':</div>';
 
 	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
 

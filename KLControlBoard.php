@@ -1,23 +1,23 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL General Control Board');
+$Title = __('KL General Control Board');
 
 /* Assign the sections to be executed, to avoid error 504*/
-$ShowSectionInfo = FALSE;
-$ProcessSection01 = FALSE;
-$ProcessSection02 = FALSE;
+$ShowSectionInfo = false;
+$ProcessSection01 = false;
+$ProcessSection02 = false;
 
 if (!isset($_GET['Section'])){
-	$ProcessSection01 = TRUE;
-	$ProcessSection02 = TRUE;
+	$ProcessSection01 = true;
+	$ProcessSection02 = true;
 }else{
-	$ShowSectionInfo = TRUE;
+	$ShowSectionInfo = true;
 		$Title = 'KL General Control Board Section ' . $_GET['Section'];
 	if ($_GET['Section'] == '01'){
-		$ProcessSection01 = TRUE;
+		$ProcessSection01 = true;
 	}elseif($_GET['Section'] == '02'){
-		$ProcessSection02 = TRUE;
+		$ProcessSection02 = true;
 	}
 }
 
@@ -53,22 +53,22 @@ if ($_SESSION['UserID'] == "Ricard"){
 
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
-/*	$KL_SystemAdmin = TRUE;
-	$KL_OperationalManager = TRUE;
-	$KL_OperationalLeader = TRUE;
-	$KL_AdministrationLeader = TRUE;
-	$KL_AdministrationTeam = TRUE;
-	$KL_BusinessDevelopmentManager = TRUE;
- 	$KL_SalesDirector = TRUE;
-	$KL_PurchasingTeam = TRUE;
-	$KL_ShopSupportTeam = TRUE;
-	$KL_ShopSupportLeader = TRUE;
-	$KL_OnlineSales = TRUE;
-	$KL_ShopManager = TRUE;
-	$KL_SPGSeniorOrSupport = TRUE;
-	$KL_SPGJunior = TRUE;
-	$KL_PettyCash = TRUE;
-	$KL_ITSupport = TRUE;
+/*	$KL_SystemAdmin = true;
+	$KL_OperationalManager = true;
+	$KL_OperationalLeader = true;
+	$KL_AdministrationLeader = true;
+	$KL_AdministrationTeam = true;
+	$KL_BusinessDevelopmentManager = true;
+ 	$KL_SalesDirector = true;
+	$KL_PurchasingTeam = true;
+	$KL_ShopSupportTeam = true;
+	$KL_ShopSupportLeader = true;
+	$KL_OnlineSales = true;
+	$KL_ShopManager = true;
+	$KL_SPGSeniorOrSupport = true;
+	$KL_SPGJunior = true;
+	$KL_PettyCash = true;
+	$KL_ITSupport = true;
 */
 //	phpinfo();
 
@@ -651,12 +651,12 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager){
-		CheckPackagingToBeRefilled(FALSE, FALSE, $RootPath);
+		CheckPackagingToBeRefilled(false, false, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportLeader){
-		CheckPackagingToBeRefilled(FALSE, TRUE, $RootPath);
+		CheckPackagingToBeRefilled(false, true, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 

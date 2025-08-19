@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Update Standard Cost for all suppliers');
+$Title = __('KL Update Standard Cost for all suppliers');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');

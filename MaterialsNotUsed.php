@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Raw Materials Not Used Anywhere');
+$Title = __('Raw Materials Not Used Anywhere');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
@@ -27,17 +27,17 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
 	$TotalValue = 0;
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Raw Materials Not Used in any BOM') . '" alt="" />
-			' . _('Raw Materials Not Used in any BOM') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Raw Materials Not Used in any BOM') . '" alt="" />
+			' . __('Raw Materials Not Used in any BOM') . '
 		</p>';
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('#') . '</th>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('QOH') . '</th>
-				<th>' . _('Std Cost') . '</th>
-				<th>' . _('Value') . '</th>
+				<th>' . __('#') . '</th>
+				<th>' . __('Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('QOH') . '</th>
+				<th>' . __('Std Cost') . '</th>
+				<th>' . __('Value') . '</th>
 			</tr>';
 	$i = 1;
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -59,7 +59,7 @@ if (DB_num_rows($Result) != 0){
 
 	echo '<tr class="total_row">
 			<td colspan="4"></td>
-			<td>', _('Total').':</td>
+			<td>', __('Total').':</td>
 			<td class="number">', locale_number_format($TotalValue,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
 		</tr>';
 

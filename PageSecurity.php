@@ -1,15 +1,15 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Page Security Levels');
+$Title = __('Page Security Levels');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'PageSecurity';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . _('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/security.png" title="' . __('Page Security Levels') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if ($AllowDemoMode) {
-	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
@@ -19,7 +19,7 @@ if (isset($_POST['Update'])) {
 		if ($ScriptName != 'Update' and $ScriptName != 'FormID') {
 			$ScriptName = mb_substr($ScriptName, 0, mb_strlen($ScriptName) - 4) . '.php';
 			$SQL = "UPDATE scripts SET pagesecurity='" . $PageSecurityValue . "' WHERE script='" . $ScriptName . "'";
-			$UpdateResult = DB_query($SQL, _('Could not update the page security value for the script because'));
+			$UpdateResult = DB_query($SQL, __('Could not update the page security value for the script because'));
 		}
 	}
 }
@@ -35,7 +35,7 @@ echo '<form method="post" id="PageSecurity" action="' . htmlspecialchars($_SERVE
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>', _('Assign Security Levels to Scripts'), '</legend>';
+		<legend>', __('Assign Security Levels to Scripts'), '</legend>';
 
 $TokenSql = "SELECT tokenid,
 					tokenname
@@ -63,7 +63,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="Update" value="' . _('Update Security Levels') . '" />
+		<input type="submit" name="Update" value="' . __('Update Security Levels') . '" />
 	</div>
 	<br />
     </div>

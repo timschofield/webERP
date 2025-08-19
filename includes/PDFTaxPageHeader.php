@@ -17,17 +17,17 @@ $FontSize = 10;
 $pdf->addText($Left_Margin, $YPos, $FontSize,
 	$_SESSION['CompanyRecord']['coyname']);// Prints company name.
 $pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize,
-	_('Page'). ' ' . $PageNumber, 'right');// Page number.
+	__('Page'). ' ' . $PageNumber, 'right');// Page number.
 $YPos -= $FontSize;
 
 $pdf->addText($Left_Margin, $YPos, $FontSize,
-	_('Tax Report') . ': ' . $TaxAuthorityName);// Prints tax authority name.
+	__('Tax Report') . ': ' . $TaxAuthorityName);// Prints tax authority name.
 $pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize,
-	_('Printed') . ': ' . date($_SESSION['DefaultDateFormat']), 'right');// Date printed.
+	__('Printed') . ': ' . date($_SESSION['DefaultDateFormat']), 'right');// Date printed.
 $YPos -= $FontSize;
 
 $pdf->addText($Left_Margin, $YPos, $FontSize,
-	$_POST['NoOfPeriods'] . ' ' . _('months to') . ' ' . $PeriodEnd);// Prints NoOfPeriods and PeriodEnd.
+	$_POST['NoOfPeriods'] . ' ' . __('months to') . ' ' . $PeriodEnd);// Prints NoOfPeriods and PeriodEnd.
 $pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize,
 	date('H:i:s'), 'right');// Time printed.
 $YPos -= $FontSize;

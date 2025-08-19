@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Inventory Distribution by Type');
+$Title = __('Inventory Distribution by Type');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
@@ -34,7 +34,7 @@ function submit($ListCategories, $ListLocations) {
 		$ResultLocation = DB_query($SQL);
 		
 		if (DB_num_rows($ResultLocation) != 0){
-			$TableTitleText = _('Inventory distribution of models by type ');
+			$TableTitleText = __('Inventory distribution of models by type ');
 			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
@@ -53,20 +53,20 @@ function submit($ListCategories, $ListLocations) {
 			$TotalUnknown = 0;
 
 			$TableHeader = '<tr>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Ring') . '</th>
-							<th>' . _('ToeRing') . '</th>
-							<th>' . _('Bead') . '</th>
-							<th>' . _('Earring') . '</th>
-							<th>' . _('EarCuff') . '</th>
-							<th>' . _('Bracelet') . '</th>
-							<th>' . _('Anklet') . '</th>
-							<th>' . _('Pendant') . '</th>
-							<th>' . _('Necklace') . '</th>
-							<th>' . _('Bag') . '</th>
-							<th>' . _('Tali') . '</th>
-							<th>' . _('Others') . '</th>
-							<th>' . _('TOTAL') . '</th>
+							<th>' . __('Location') . '</th>
+							<th>' . __('Ring') . '</th>
+							<th>' . __('ToeRing') . '</th>
+							<th>' . __('Bead') . '</th>
+							<th>' . __('Earring') . '</th>
+							<th>' . __('EarCuff') . '</th>
+							<th>' . __('Bracelet') . '</th>
+							<th>' . __('Anklet') . '</th>
+							<th>' . __('Pendant') . '</th>
+							<th>' . __('Necklace') . '</th>
+							<th>' . __('Bag') . '</th>
+							<th>' . __('Tali') . '</th>
+							<th>' . __('Others') . '</th>
+							<th>' . __('TOTAL') . '</th>
 						</tr>';
 			echo $TableHeader;
 			$k = 0; //row colour counter
@@ -264,19 +264,19 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Inventory Distribution by Type') . '" alt="" />' . ' ' . _('Inventory Distribution by Type') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Inventory Distribution by Type') . '" alt="" />' . ' ' . __('Inventory Distribution by Type') . '
 		</p>';
 
     echo '<fieldset>
-            <legend>' . _('Selection Criteria') . '</legend>';
+            <legend>' . __('Selection Criteria') . '</legend>';
 
     echo FieldToSelectMultipleStockCategories('Categories', (isset($_POST['Categories']) ? $_POST['Categories'] : array()), 
-                                            _('Select Inventory Categories'), '', '', '', true, true);
+                                            __('Select Inventory Categories'), '', '', '', true, true);
     echo FieldToSelectMultipleLocations('Locations', (isset($_POST['Locations']) ? $_POST['Locations'] : array()), 
-                                      _('Select Inventory Locations'), '', 'CANVIRE', '', true, false);
+                                      __('Select Inventory Locations'), '', 'CANVIRE', '', true, false);
     echo '</fieldset>';
 
-    echo OneButtonCenteredForm('submit', _('Inventory Distribution by Type'));
+    echo OneButtonCenteredForm('submit', __('Inventory Distribution by Type'));
     
     echo '</div>
          </form>';

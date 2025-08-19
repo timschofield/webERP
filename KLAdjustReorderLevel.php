@@ -3,7 +3,7 @@
 define("NUMBER_OF_TESTS", 7); 
 
 include('includes/session.php');
-$Title = _('KL Reorder Level Adjustments');
+$Title = __('KL Reorder Level Adjustments');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -13,7 +13,7 @@ include('includes/KLReorderLevel.php');
 
 $begintime = time_start();
 
-// if testing only and do not want update the DB, set the flag to FALSE. For regular operations set to TRUE.
+// if testing only and do not want update the DB, set the flag to false. For regular operations set to true.
 //$UpdateDB = false;
 $UpdateDB = true;
 $ShowMessages = true;

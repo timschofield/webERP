@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Set Online Shop Categories');
+$Title = __('KL Set Online Shop Categories');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -9,7 +9,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
 
-$UpdateDB = TRUE;
+$UpdateDB = true;
 
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
@@ -30,20 +30,20 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
-	$TableTitleText = _('Items To Classify for Online Shop Categories');
+	$TableTitleText = __('Items To Classify for Online Shop Categories');
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th>' . _('#') . '</th>
-					<th>' . _('Code') . '</th>
-					<th>' . _('Description') . '</th>
-					<th>' . _('Stock Category') . '</th>
-					<th>' . _('Weight Kg') . '</th>
-					<th>' . _('Volume m3') . '</th>
-					<th>' . _('Brand') . '</th>
-					<th>' . _('Website Category') . '</th>
+					<th>' . __('#') . '</th>
+					<th>' . __('Code') . '</th>
+					<th>' . __('Description') . '</th>
+					<th>' . __('Stock Category') . '</th>
+					<th>' . __('Weight Kg') . '</th>
+					<th>' . __('Volume m3') . '</th>
+					<th>' . __('Brand') . '</th>
+					<th>' . __('Website Category') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -81,7 +81,7 @@ if (DB_num_rows($Result) != 0){
 					// KL brand detected ;-) select the sub category 
 					$WebsiteCategory = WebsiteCategorySilverJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
@@ -91,7 +91,7 @@ if (DB_num_rows($Result) != 0){
 					// Blink brand detected ;-)
 					$WebsiteCategory = WebsiteCategoryBlinkJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, false, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
@@ -142,7 +142,7 @@ function DeleteWebsiteSalesCategories($StockID, $UpdateDB){
 	if($UpdateDB){
 		$SQL =	"DELETE FROM salescatprod 
 					WHERE stockid ='" .  $StockID . "'";
-		$ErrMsg =_('Could not delete the previous website category for the item because');
+		$ErrMsg =__('Could not delete the previous website category for the item because');
 		$Result = DB_query($SQL,$ErrMsg);
 	}
 }
@@ -194,7 +194,7 @@ function UpdateWeight($StockID, $UpdateDB){
 		$SQL = "UPDATE stockmaster 
 				SET grossweight = " . $Weight . "
 				WHERE stockid =	'" . $StockID . "'";
-		$ErrMsg =_('Could not update the item weight because');
+		$ErrMsg =__('Could not update the item weight because');
 		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Weight;
@@ -292,7 +292,7 @@ function UpdateVolume($StockID, $UpdateDB){
 					width =  " . $Width . ",
 					height =  " . $Height . "
 				WHERE stockid =	'" . $StockID . "'";
-		$ErrMsg =_('Could not update the item volume and dimensions because');
+		$ErrMsg =__('Could not update the item volume and dimensions because');
 		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Volume;
@@ -331,7 +331,7 @@ function UpdateVolumeByPackaging($StockID, $Packaging, $UpdateDB){
 					width =  " . $Width . ",
 					height =  " . $Height . "
 				WHERE stockid =	'" . $StockID . "'";
-		$ErrMsg =_('Could not update the item volume and dimensions because');
+		$ErrMsg =__('Could not update the item volume and dimensions because');
 		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Volume;
@@ -393,7 +393,7 @@ function UpdatePackaging($StockID, $Category, $Brand, $UpdateDB){
 		$SQL = "UPDATE stockmaster 
 				SET klpackaging = '" . $Packaging . "'
 				WHERE stockid =	'" . $StockID . "'";
-		$ErrMsg =_('Could not update the packaging set because');
+		$ErrMsg =__('Could not update the packaging set because');
 		$Result = DB_query($SQL,$ErrMsg);
 	}
 	

@@ -102,7 +102,7 @@ function SetLastTimeRun($Script){
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'WeberpToOpenCartDaily_LastRun'";
 	}
-	$ErrMsg =_('Could not update Last Run Time of this script because');
+	$ErrMsg =__('Could not update Last Run Time of this script because');
 	DB_query($SQL,$ErrMsg);
 }
 
@@ -119,7 +119,7 @@ function DataExistsInOpenCart($Table, $f1, $v1, $f2 = '', $v2 = ''){
 				WHERE " . $f1 . " = '" . $v1 . "'
 					AND " . $f2 . " = '" . $v2 . "'";
 	}
-	$ErrMsg =_('Could not check existence of data in OpenCart because');
+	$ErrMsg =__('Could not check existence of data in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 
 	if(DB_num_rows($Result) != 0){
@@ -135,7 +135,7 @@ function GetOpenCartProductId($model){
 	$SQL = "SELECT product_id
 			FROM oc_product
 			WHERE model = '" . $model . "'";
-	$ErrMsg =_('Could not get the ProductId in OpenCart because');
+	$ErrMsg =__('Could not get the ProductId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -149,7 +149,7 @@ function GetManufacturerFromProductId($ProductId){
 	$SQL = "SELECT manufacturer_id
 			FROM oc_product
 			WHERE product_id = '" . $ProductId . "'";
-	$ErrMsg =_('Could not get the ManufacturerId in OpenCart because');
+	$ErrMsg =__('Could not get the ManufacturerId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -164,7 +164,7 @@ function GetOpenCartLanguageId($language){
 	$SQL = "SELECT language_id
 			FROM oc_language
 			WHERE locale LIKE '%" . $language . "%'";
-	$ErrMsg =_('Could not get the LanguageId in OpenCart because');
+	$ErrMsg =__('Could not get the LanguageId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -178,7 +178,7 @@ function GetWeberpCustomerIdFromEmail($email){
 	$SQL = "SELECT debtorno
 			FROM custbranch
 			WHERE email = '" . $email . "'";
-	$ErrMsg =_('Could not get the CustomerId in webERP because');
+	$ErrMsg =__('Could not get the CustomerId in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -322,7 +322,7 @@ function GetWeberpOrderNo($CustomerId, $OrderId){
 			WHERE debtorno = '" . $CustomerId . "'
 				AND branchcode = '" . $CustomerId . "'
 				AND customerref = '" . $OrderId . "'";
-	$ErrMsg =_('Could not get the OrderNo in webERP because');
+	$ErrMsg =__('Could not get the OrderNo in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -336,7 +336,7 @@ function GetOnlineOrderNoFromWeberp($OrderId){
 	$SQL = "SELECT customerref
 			FROM salesorders
 			WHERE orderno = '" . $OrderId . "'";
-	$ErrMsg =_('Could not get the Online Order No in webERP because');
+	$ErrMsg =__('Could not get the Online Order No in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -350,7 +350,7 @@ function GetWeberpCustomerCurrency($CustomerId){
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
 			WHERE debtorno = '" . $CustomerId . "'";
-	$ErrMsg =_('Could not get the CustomerCurrency in webERP because');
+	$ErrMsg =__('Could not get the CustomerCurrency in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -364,7 +364,7 @@ function GetWeberpCurrencyRate($CurrencyCode){
 	$SQL = "SELECT rate
 			FROM currencies
 			WHERE currabrev = '" . $CurrencyCode . "'";
-	$ErrMsg =_('Could not get the Currency Rate in webERP because');
+	$ErrMsg =__('Could not get the Currency Rate in webERP because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -379,7 +379,7 @@ function GetTotalTitleFromOrder($Concept, $OrderId){
 			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
 				AND code = '" . $Concept . "'";
-	$ErrMsg =_('Could not get the '. $Concept . ' title from OpenCart because');
+	$ErrMsg =__('Could not get the '. $Concept . ' title from OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -394,7 +394,7 @@ function GetTotalFromOrder($Concept, $OrderId){
 			FROM oc_order_total
 			WHERE order_id = '" . $OrderId . "'
 				AND code = '" . $Concept . "'";
-	$ErrMsg =_('Could not get the '. $Concept . ' total from OpenCart because');
+	$ErrMsg =__('Could not get the '. $Concept . ' total from OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -410,7 +410,7 @@ function ItemOnlineQOH($StockID){
 			WHERE locstock.loccode = locations.loccode
 				AND locstock.stockid = '" . $StockID . "'
 				AND locations.stockavailableforonline = '1'";
-	$ErrMsg =_('Could not get the QOH available in webERP for OpenCart because');
+	$ErrMsg =__('Could not get the QOH available in webERP for OpenCart because');
 	$Result = DB_query($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -459,7 +459,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 		// so we delete it in OpenCart
 		$SQL = "DELETE FROM oc_" . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . "
 				WHERE product_id = '" . $ProductId . "'";
-		$DeleteErrMsg = _('The SQL to delete the product discount in Opencart table ') . ' ' . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . ' ' . ('failed');
+		$DeleteErrMsg = __('The SQL to delete the product discount in Opencart table ') . ' ' . WEBERP_DISCOUNTS_IN_OPENCART_TABLE . ' ' . ('failed');
 		DB_query_oc($SQL,$DeleteErrMsg,'',true);
 	}else{
 		// ProductId has some discount in webERP
@@ -470,7 +470,7 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 				WHERE salestype = '" . $PriceList . "'
 					AND discountcategory = '" . $DiscountCategory . "'
 				ORDER BY quantitybreak";
-		$ErrMsg =_('Could not get the discount matrix in webERP because');
+		$ErrMsg =__('Could not get the discount matrix in webERP because');
 		$Result = DB_query($SQL,$ErrMsg);
 		if(DB_num_rows($Result) != 0){
 			while ($MyRow = DB_fetch_array($Result)){
@@ -478,9 +478,9 @@ function MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, 
 				UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $MyRow['quantitybreak'], $Priority, $DiscountedPrice);
 				// Now we add the item to the category discount 
 				if ($ManufacturerId == 1){
-					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, FALSE);
+					AssignSalesCategoryToProductInOpenCart($ProductId, KL_OUTLET, false);
 				}else{
-					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, FALSE);
+					AssignSalesCategoryToProductInOpenCart($ProductId, BLINK_OUTLET, false);
 				}
 			}
 		}
@@ -496,7 +496,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 					AND quantity = '" . $Quantity . "'
 					AND customer_group_id = '" . $CustomerGroupId ."'";
 
-		$ErrMsg =_('Could not get the product discount in OpenCart because');
+		$ErrMsg =__('Could not get the product discount in OpenCart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($Result) != 0){
 			// There is already a discount, so we need to update it
@@ -507,7 +507,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 					WHERE product_id = '" . $ProductId . "'
 						AND quantity = '" . $Quantity . "'
 						AND customer_group_id = '" . $CustomerGroupId ."'";
-			$UpdateErrMsg = _('The SQL to update the product discount in Opencart failed');
+			$UpdateErrMsg = __('The SQL to update the product discount in Opencart failed');
 			DB_query_oc($SQL,$UpdateErrMsg,'',true);
 		}else{
 			// there is no discount in OpenCart yet, so we need to create one
@@ -524,7 +524,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						'" . $Priority . "',
 						'" . $DiscountedPrice . "'
 					)";
-			$InsertErrMsg = _('The SQL to insert the product discount in Opencart failed');
+			$InsertErrMsg = __('The SQL to insert the product discount in Opencart failed');
 			DB_query_oc($SQL,$InsertErrMsg,'',true);
 		}
 	}else{
@@ -534,7 +534,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 				WHERE product_id = '" . $ProductId . "'
 					AND customer_group_id = '" . $CustomerGroupId ."'";
 
-		$ErrMsg =_('Could not get the product special in OpenCart because');
+		$ErrMsg =__('Could not get the product special in OpenCart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($Result) != 0){
 			// There is already a special, so we need to update it
@@ -543,7 +543,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						price = '" . $DiscountedPrice . "'
 					WHERE product_id = '" . $ProductId . "'
 						AND customer_group_id = '" . $CustomerGroupId ."'";
-			$UpdateErrMsg = _('The SQL to update the product special in Opencart failed');
+			$UpdateErrMsg = __('The SQL to update the product special in Opencart failed');
 			DB_query_oc($SQL,$UpdateErrMsg,'',true);
 		}else{
 			// there is no special in OpenCart yet, so we need to create one
@@ -558,7 +558,7 @@ function UpdateDiscountInOpenCart($ProductId, $CustomerGroupId, $Quantity, $Prio
 						'" . $Priority . "',
 						'" . $DiscountedPrice . "'
 					)";
-			$InsertErrMsg = _('The SQL to insert the product special in Opencart failed');
+			$InsertErrMsg = __('The SQL to insert the product special in Opencart failed');
 			DB_query_oc($SQL,$InsertErrMsg,'',true);
 		}
 	}
@@ -570,7 +570,7 @@ function GetOpenCartSettingId($Store, $Code, $Key){
 			WHERE store_id = '" . $Store . "'
 				AND `code` = '" . $Code . "'
 				AND `key` = '" . $Key . "'";
-	$ErrMsg =_('Could not get the SettingId in OpenCart because');
+	$ErrMsg =__('Could not get the SettingId in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -582,7 +582,7 @@ function GetOpenCartSettingId($Store, $Code, $Key){
 
 
 function UpdateSettingValueOpenCart($SettingId, $Value){
-	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
+	$UpdateErrMsg = __('The SQL to update setting value in Opencart failed');
 	$SQLUpdate = "UPDATE oc_setting
 					SET	value = '" . $Value . "'
 				WHERE setting_id = '" . $SettingId . "'";
@@ -676,11 +676,11 @@ Function GetNextSequenceNo ($TransType){
 	
 	DB_query("SELECT typeno FROM systypes WHERE typeid='" . $TransType ."' FOR UPDATE");
 	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
-	DB_query($SQL,$ErrMsg,'');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The transaction number could not be incremented');
+	DB_query($SQL,$ErrMsg);
 	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
-	$GetTransNoResult = DB_query($SQL,$ErrMsg,'');
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . __('The next transaction number could not be retrieved from the database because');
+	$GetTransNoResult = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];	
 }
@@ -714,9 +714,9 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 									'" . $Rate . "',
 									'" . round(-($AmountPaid-$FreightCost),2) . "',
 									'" . round(-($FreightCost),2) . "',
-									'" . $PaymentSystem . _(' OC Payment') . "')";
+									'" . $PaymentSystem . __(' OC Payment') . "')";
 
-	$ErrMsg = _('The customer receipt cannot be added because');
+	$ErrMsg = __('The customer receipt cannot be added because');
 	DB_query($HeaderSQL,$ErrMsg,'');
 
 	$SQL = "UPDATE debtorsmaster
@@ -724,8 +724,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 				lastpaid='" . $AmountPaid ."'
 			WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
-	$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot update the customer record for the date of the last payment received because');
+	DB_query($SQL, $ErrMsg, '', true);
 
 	/*now enter the BankTrans entry */
 	//First get the currency and rate for the bank account
@@ -746,21 +746,21 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 		VALUES (12,
 			'" . $CustomerReceiptNo . "',
 			'" . $BankAccount . "',
-			'" . _('OC Receipt') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
+			'" . __('OC Receipt') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
 			'" . $Rate / $FunctionalRate  . "',
 			'" . $FunctionalRate . "',
 			CURRENT_DATE,
-			'" . $PaymentSystem . ' ' . _('online') . "',
+			'" . $PaymentSystem . ' ' . __('online') . "',
 			'" . ($AmountPaid * $Rate / $FunctionalRate) . "',
 			'" . $CustomerCurrency . "'
 		)";
-	$ErrMsg = _('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a bank transaction');
+	DB_query($SQL, $ErrMsg, '', true);
 
 
 	/* then enter GLTrans records for discount, bank and debtors */
 	/* Bank account entry first */
-	$Narrative = $CustomerCode . ' ' . _('payment for order') . ' ' . $OrderNo . ' ' . _('Transaction ID') . ': ' . $TransactionID;
+	$Narrative = $CustomerCode . ' ' . __('payment for order') . ' ' . $OrderNo . ' ' . __('Transaction ID') . ': ' . $TransactionID;
 	$SQL="INSERT INTO gltrans (	type,
 								typeno,
 								trandate,
@@ -776,8 +776,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . ($AmountPaid) /$Rate . "'
 				)";
-	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+	DB_query($SQL, $ErrMsg, '', true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -794,8 +794,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . -(($AmountPaid) /$Rate). "' )";
-	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
+	DB_query($SQL, $ErrMsg, '', true);
 	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
@@ -809,7 +809,7 @@ function EnsureGLEntriesBalanceOpenCart($TransType, $TransTypeNo) {
 	$Difference = $MyRow[0];
 	if (abs($Difference)!=0){
 		if (abs($Difference)>0.1){
-//			message_log(_('The general ledger entries created do not balance. See your system administrator'),'error');
+//			message_log(__('The general ledger entries created do not balance. See your system administrator'),'error');
 		} else {
 			$Result = DB_query("SELECT counterindex,
 										MAX(amount)
@@ -849,19 +849,19 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 						VALUES (1,
 							'" . $PaymentNo . "',
 							'" . $BankAccount . "',
-							'" . $PaymentSystem . ' ' . _('Transaction Fees') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
+							'" . $PaymentSystem . ' ' . __('Transaction Fees') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
 							'" . $Rate / $FunctionalRate  . "',
 							'" . $FunctionalRate . "',
 							CURRENT_DATE,
-							'" . $PaymentSystem . ' ' . _('Transaction Fees') . "',
+							'" . $PaymentSystem . ' ' . __('Transaction Fees') . "',
 							'" . -($Commission * $Rate / $FunctionalRate) . "',
 							'" .$Currency . "'
 						)";
-	$ErrMsg = _('Cannot insert a bank transaction');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a bank transaction');
+	DB_query($SQL, $ErrMsg, '', true);
 
 	/* Bank account entry first */
-	$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . _('Fees for Transaction ID') . ': ' . $TransactionID;
+	$Narrative = $CustomerCode . ' ' . $PaymentSystem . ' ' . __('Fees for Transaction ID') . ': ' . $TransactionID;
 	$SQL="INSERT INTO gltrans (	type,
 								typeno,
 								trandate,
@@ -877,8 +877,8 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 					'" . mb_substr($Narrative, 0, 200) . "',
 					'" . -($Commission /$Rate) . "'
 				)";
-	$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a GL transaction for the bank account debit');
+	DB_query($SQL, $ErrMsg, '', true);
 
 /* Now Credit Debtors account with receipts + discounts */
 	$SQL="INSERT INTO gltrans ( type,
@@ -895,13 +895,13 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 						'". $CommissionAccount . "',
 						'" . mb_substr($Narrative, 0, 200) . "',
 						'" . ($Commission /$Rate). "' )";
-	$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-	DB_query($SQL,$ErrMsg,'',true);
+	$ErrMsg = __('Cannot insert a GL transaction for the debtors account credit');
+	DB_query($SQL, $ErrMsg, '', true);
 	EnsureGLEntriesBalanceOpenCart(1,$PaymentNo);
 }
 
 function ChangeOrderQuotationFlag($OrderNo, $Flag){
-	$ErrMsg = _('The Change of quotation flag in salesorders table');
+	$ErrMsg = __('The Change of quotation flag in salesorders table');
 	$SQLUpdate = "UPDATE salesorders
 					SET quotation = " . $Flag . "
 					WHERE orderno = '" . $OrderNo . "'";
@@ -930,21 +930,21 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId){
 				WHERE query = '" . $SEOQuery . "'
 					AND store_id = '" . $StoreId . "'
 					AND language_id = '" .  $LanguageId . "'";
-		$ErrMsg =_('Could not get the SEO URL in Opencart because');
+		$ErrMsg =__('Could not get the SEO URL in Opencart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($Result) != 0){
 			// if we have it, we update it
 			$MyRow = DB_fetch_array($Result);
 			$SeoUrlId = $MyRow['seo_url_id'];
 			
-			$ErrMsg = _('The MaintainSeoUrl function failed');
+			$ErrMsg = __('The MaintainSeoUrl function failed');
 			$SQLUpdate = "UPDATE oc_seo_url SET
 							keyword ='" . $SEOKeyword . "'
 						WHERE seo_url_id = '" . $SeoUrlId . "'";
 			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
 		}else{
 			// otherwise we insert it
-			$ErrMsg = _('The MaintainSeoUrl function failed');
+			$ErrMsg = __('The MaintainSeoUrl function failed');
 			$SQLInsert = "INSERT INTO oc_seo_url
 							(store_id,
 							language_id,
@@ -977,7 +977,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 		$CarrierPowerTrack = "";
 	}
 
-	$UpdateErrMsg = _('The SQL to Update OpenCart Order Status failed');
+	$UpdateErrMsg = __('The SQL to Update OpenCart Order Status failed');
 	$SQLUpdate = "UPDATE oc_order
 					SET	order_status_id = '" . $StatusId . "',
 						date_modified = '" . $ServerNow . "'
@@ -985,7 +985,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 	DB_query_oc($SQLUpdate,$UpdateErrMsg,'',true);
 
 	// Insert the status change into the history table
-	$ErrMsg = _('The SQL to Insert OpenCart Order Status failed');
+	$ErrMsg = __('The SQL to Insert OpenCart Order Status failed');
 	$SQLInsert = "INSERT INTO oc_order_history
 					(order_id,
 					order_status_id,
@@ -1028,7 +1028,7 @@ function UpdateOpenCartOrderPayment($OrderId){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
-	$UpdateErrMsg = _('The SQL to Update OpenCart Order Payment failed');
+	$UpdateErrMsg = __('The SQL to Update OpenCart Order Payment failed');
 	$SQLUpdate = "UPDATE oc_order
 					SET	kl_payment_sync_to_weberp = '" . $ServerNow . "'
 				WHERE order_id = '" . $OrderId . "'";
@@ -1145,7 +1145,7 @@ function CreateTagsForItem($LanguageId, $Description, $LongDescription, $SalesCa
 		
 		if (StringContainsTag($LongText, $MyRow['tagtext'])){
 			// we found a tag in the text, so a candidate for tag
-			if ((InconsistentTag($ListOfTags, 'earring', $MyRow['tagtext'], 'ring')) == FALSE){
+			if ((InconsistentTag($ListOfTags, 'earring', $MyRow['tagtext'], 'ring')) == false){
 				//  but, we must filter inconsistencies
 				if ($ListOfTags == ""){
 					// the very first one
@@ -1173,7 +1173,7 @@ function UpdateOpenCartOrderStatusInWeberp($OrderNo, $OpencartOrderStatus){
 	$SQL = "UPDATE salesorders
 			SET klocorderstatus = '" . $OpencartOrderStatus ."'
 			WHERE orderno = '" . $OrderNo . "'";
-	$ErrMsg =_('Could not update OpenCart Status order in webERP because');
+	$ErrMsg =__('Could not update OpenCart Status order in webERP because');
 	DB_query($SQL,$ErrMsg);
 }
 
@@ -1182,7 +1182,7 @@ function GetOpenCartStatusTextFromCode($StatusId){
 			FROM oc_order_status
 			WHERE language_id = '1'
 				AND order_status_id = '" . $StatusId . "'";
-	$ErrMsg =_('Could not get the Status name in OpenCart because');
+	$ErrMsg =__('Could not get the Status name in OpenCart because');
 	$Result = DB_query_oc($SQL,$ErrMsg);
 	if(DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -1224,21 +1224,21 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 				FROM oc_product_image
 				WHERE product_id = '" . $ProductId . "'
 					AND sort_order = '" . OPENCART_PACKAGING_SET_IMAGE_SORT_ORDER . "'";
-		$ErrMsg =_('Could not get the packaging image in Opencart because');
+		$ErrMsg =__('Could not get the packaging image in Opencart because');
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if(DB_num_rows($Result) != 0){
 			// if we have it, we update it
 			$MyRow = DB_fetch_array($Result);
 			$ProductImageId = $MyRow['product_image_id'];
 			
-			$ErrMsg = _('The MaintainPackagingImage function failed');
+			$ErrMsg = __('The MaintainPackagingImage function failed');
 			$SQLUpdate = "UPDATE oc_product_image SET
 							image ='" . $KLPackagingImage . "'
 						WHERE product_image_id = '" . $ProductImageId . "'";
 			DB_query_oc($SQLUpdate,$ErrMsg,'',true);
 		}else{
 			// otherwise we insert it
-			$ErrMsg = _('The MaintainPackagingImage function failed');
+			$ErrMsg = __('The MaintainPackagingImage function failed');
 			$SQLInsert = "INSERT INTO oc_product_image
 							(product_id,
 							image,
@@ -1261,7 +1261,7 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_i
 			$SQL =	"DELETE FROM salescatprod 
 						WHERE salescatid = '" . $WebsiteCategory . "' 
 							AND stockid ='" .  $StockID . "'";
-			$ErrMsg =_('Could not delete the previous website category for the item because');
+			$ErrMsg =__('Could not delete the previous website category for the item because');
 			$Result = DB_query($SQL,$ErrMsg);
 		}
 
@@ -1286,7 +1286,7 @@ function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_i
 						'" . $Featured . "',
 						NOW(),
 						NOW())";
-			$ErrMsg =_('Could not insert the website category for the item because');
+			$ErrMsg =__('Could not insert the website category for the item because');
 			$Result = DB_query($SQL,$ErrMsg);
 		}			
 	}
@@ -1296,7 +1296,7 @@ function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOn
 
 	if ($OnlyOneSalesCategory){
 		// Delete the current product_to_category, as we only accept 1 product_to_category in website
-		$DeleteErrMsg = _('The SQL to delete Product - Sales Categories in Opencart failed');
+		$DeleteErrMsg = __('The SQL to delete Product - Sales Categories in Opencart failed');
 		$SQLDelete = "DELETE FROM oc_product_to_category 
 					WHERE product_id = '" . $ProductId . "'";
 		DB_query_oc($SQLDelete,$DeleteErrMsg,'',true);
@@ -1304,7 +1304,7 @@ function AssignSalesCategoryToProductInOpenCart($ProductId, $SalesCatId, $OnlyOn
 
 	if (!DataExistsInOpenCart('oc_product_to_category', 'product_id', $ProductId, 'category_id', $SalesCatId)){
 		// If it is not already there... insert it.
-		$InsertErrMsg = _('The SQL to insert Product - Sales Categories in Opencart failed');
+		$InsertErrMsg = __('The SQL to insert Product - Sales Categories in Opencart failed');
 		$SQLInsert = "INSERT INTO oc_product_to_category
 						(product_id,
 						category_id)

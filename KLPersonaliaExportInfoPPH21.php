@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
-$Title = _('Export Info for PPH21 Deduction');
+$Title = __('Export Info for PPH21 Deduction');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
@@ -25,26 +25,26 @@ if (isset($_POST['submit'])) {
 function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export PPh21 Monthly Info for '). $PeriodMonth;
+		$PageTitle = __('Export PPh21 Monthly Info for '). $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export PPh21 THR Only Info for '). $PeriodMonth;
+		$PageTitle = __('Export PPh21 THR Only Info for '). $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PPh21 Monthly Salary Slips should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -52,7 +52,7 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PPh21 THR Only Salary Slips should be this current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 	
@@ -237,17 +237,17 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('PPH21 Export Parameters') . '</legend>';
+		<legend>' . __('PPH21 Export Parameters') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 
     echo FieldToSelectSpreadSheetFormat('Format', 
                                     isset($_POST['Format']) ? $_POST['Format'] : 'xlsx',
-                                    _('File Format'));
+                                    __('File Format'));
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export File for PPH21 Deduction'));
+	echo OneButtonCenteredForm('submit', __('Export File for PPH21 Deduction'));
 
 	echo '</div>
          </form>';

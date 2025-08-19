@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Location Types Maintenance');
+$Title = __('Location Types Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedCode'])){
@@ -16,7 +16,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -31,22 +31,22 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['code']) > 6) {
 		$InputError = 1;
-		prnMsg(_('The type code must be six characters or less long'),'error');
+		prnMsg(__('The type code must be six characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif ($_POST['code']=='') {
 		$InputError = 1;
-		prnMsg( _('The type code cannot be an empty string'),'error');
+		prnMsg( __('The type code cannot be an empty string'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif( trim($_POST['description'])==''){
 		$InputError = 1;
-		prnMsg (_('The type description cannot be empty'),'error');
+		prnMsg(__('The type description cannot be empty'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	} elseif (mb_strlen($_POST['description']) >50) {
 		$InputError = 1;
-		echo prnMsg(_('The type description must be fifty characters or less long'),'error');
+		echo prnMsg(__('The type description must be fifty characters or less long'),'error');
 		$Errors[$i] = 'LocationZone';
 		$i++;
 	}
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 			SET description = '" . $_POST['description'] . "'
 			WHERE code = '".$SelectedCode."'";
 
-		$Msg = _('The Location Type') . ' ' . $SelectedCode . ' ' .  _('has been updated');
+		$Msg = __('The Location Type') . ' ' . $SelectedCode . ' ' .  __('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The Location Type ') . $_POST['code'] . _(' already exist.'),'error');
+			prnMsg( __('The Location Type ') . $_POST['code'] . __(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
 							VALUES ('" . str_replace(' ', '', $_POST['code']) . "',
 									'" . $_POST['description'] . "')";
 
-			$Msg = _('Location Type') . ' ' . $_POST['description'] .  ' ' . _('has been created');
+			$Msg = __('Location Type') . ' ' . $_POST['description'] .  ' ' . __('has been created');
 			$CheckSQL = "SELECT count(code)
 						FROM locationtypes";
 			$Result = DB_query($CheckSQL);
@@ -110,19 +110,19 @@ if (isset($_POST['submit'])) {
 	       FROM locations
 	       WHERE locations.zone='".$SelectedCode."'";
 
-	$ErrMsg = _('The number of locations using this type could not be retrieved');
+	$ErrMsg = __('The number of locations using this type could not be retrieved');
 	$Result = DB_query($SQL,$ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this type because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this type code'),'error');
+		prnMsg(__('Cannot delete this type because locations have been created using this zone') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('locations using this type code'),'error');
 
 	} else {
 
 		$SQL="DELETE FROM locationtypes WHERE code='" . $SelectedCode . "'";
-		$ErrMsg = _('The Location Type record could not be deleted because');
+		$ErrMsg = __('The Location Type record could not be deleted because');
 		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Location Type') . ' ' . $SelectedCode  . ' ' . _('has been deleted') ,'success');
+		prnMsg(__('Location Type') . ' ' . $SelectedCode  . ' ' . __('has been deleted') ,'success');
 
 		unset ($SelectedCode);
 		unset($_GET['delete']);
@@ -149,8 +149,8 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
-				<th class="ascending">' . _('Type Code') . '</th>
-				<th class="ascending">' . _('Type Name') . '</th>
+				<th class="ascending">' . __('Type Code') . '</th>
+				<th class="ascending">' . __('Type Name') . '</th>
 		</tr>';
 
 $k=0; //row colour counter
@@ -166,8 +166,8 @@ while ($MyRow = DB_fetch_row($Result)) {
 
 	printf('<td>%s</td>
 		<td>%s</td>
-		<td><a href="%sSelectedCode=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this type?') . '\');">' . _('Delete') . '</a></td>
+		<td><a href="%sSelectedCode=%s">' . __('Edit') . '</a></td>
+		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this type?') . '\');">' . __('Delete') . '</a></td>
 		</tr>',
 		$MyRow[0],
 		$MyRow[1],
@@ -183,7 +183,7 @@ if (isset($SelectedCode)) {
 
 	echo '<br />
 			<div class="centre">
-				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show All Location Types Defined') . '</a>
+				<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . __('Show All Location Types Defined') . '</a>
 			</div>';
 }
 if (! isset($_GET['delete'])) {
@@ -212,10 +212,10 @@ if (! isset($_GET['delete'])) {
 			<input type="hidden" name="code" value="' . $_POST['code'] . '" />
 			<table class="selection">
 			<tr>
-				<th colspan="4"><b>' . _('Location Types Setup') . '</b></th>
+				<th colspan="4"><b>' . __('Location Types Setup') . '</b></th>
 			</tr>
 			<tr>
-				<td>' . _('Type Code') . ':</td>
+				<td>' . __('Type Code') . ':</td>
 				<td>' . $_POST['code'] . '</td>
 			</tr>';
 
@@ -225,10 +225,10 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan="4"><b>' . _('Location Type Setup') . '</b></th>
+					<th colspan="4"><b>' . __('Location Type Setup') . '</b></th>
 				</tr>
 				<tr>
-					<td>' . _('Type Code') . ':</td>
+					<td>' . __('Type Code') . ':</td>
 					<td><input type="text" ' . (in_array('LocationZone',$Errors) ? 'class="inputerror"' : '' ) .' size="7" maxlength="6" name="code" /></td>
 				</tr>';
 	}
@@ -237,12 +237,12 @@ if (! isset($_GET['delete'])) {
 		$_POST['description']='';
 	}
 	echo '<tr>
-			<td>' . _('Location Type Name') . ':</td>
+			<td>' . __('Location Type Name') . ':</td>
 			<td><input type="text" name="description" value="' . $_POST['description'] . '" /></td>
 		</tr>
 		</table>'; // close main table
 
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="reset" name="Cancel" value="' . _('Cancel') . '" /></div>
+	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . __('Accept') . '" /><input type="reset" name="Cancel" value="' . __('Cancel') . '" /></div>
 			</div>
           </form>';
 

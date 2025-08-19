@@ -4,11 +4,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	// allow dashboard applet to run standalone
 	$DirectoryLevelsDeep = 1;
 	$PathPrefix = __DIR__ . '/../';
-	require_once ($PathPrefix . 'includes/session.php');
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 }
 
-	$ScriptTitle = _('MRP dashboard');
+	$ScriptTitle = __('MRP dashboard');
 
 	$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 	$DashboardResult = DB_query($SQL);
@@ -18,7 +18,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<tr>
 				<th colspan="4">
 					<div class="CanvasTitle">', $ScriptTitle, '
-						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
 					</div>
 				</th>
 			</tr>';
@@ -42,10 +42,10 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SearchResult = DB_query($SQL);
 	echo '<tbody>
 		<tr>
-			<th>', _('Code'), '</th>
-			<th>', _('Description'), '</th>
-			<th>', _('Total QTY on Hand'), '</th>
-			<th>', _('Units'), '</th>
+			<th>', __('Code'), '</th>
+			<th>', __('Description'), '</th>
+			<th>', __('Total QTY on Hand'), '</th>
+			<th>', __('Units'), '</th>
 		</tr>';
 	$k = 0;
 	while ($Row = DB_fetch_array($SearchResult)) {

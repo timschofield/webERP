@@ -18,13 +18,13 @@ if (isset($_POST['AddBatches'])){
 				the first entered one - no warning given though ? */
 				if (filter_number_format($_POST['Qty' . $i]) > $ExistingBundleQty){
 					if ($LineItem->Serialised ==1){
-						echo '<br />' . $_POST['SerialNo' . $i] . " " . _('has already been sold');
+						echo '<br />' . $_POST['SerialNo' . $i] . " " . __('has already been sold');
 						$AddThisBundle = false;
 					} elseif ($ExistingBundleQty==0) { /* and its a batch */
-						echo '<br />' . _('There is none of') . ' ' . $_POST['SerialNo' . $i] . ' ' . _('left');
+						echo '<br />' . __('There is none of') . ' ' . $_POST['SerialNo' . $i] . ' ' . __('left');
 						$AddThisBundle = false;
 					} else {
-					 	echo '<br />' . _('There is only') . ' ' . $ExistingBundleQty . ' ' . _('of') . ' ' . $_POST['SerialNo' . $i] . ' ' . _('remaining') . '. ' . _('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
+					 	echo '<br />' . __('There is only') . ' ' . $ExistingBundleQty . ' ' . __('of') . ' ' . $_POST['SerialNo' . $i] . ' ' . __('remaining') . '. ' . __('The entered quantity will be reduced to the remaining amount left of this batch/bundle/roll');
 						$_POST['Qty' . $i] = $ExistingBundleQty;
 						$AddThisBundle = true;
 					}

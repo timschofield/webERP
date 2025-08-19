@@ -5,7 +5,7 @@
 */
 
 include('includes/session.php');
-$Title = _('Payment Allocations');
+$Title = __('Payment Allocations');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'PaymentAllocations';
 include('includes/header.php');
@@ -13,13 +13,13 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 
 if (!isset($_GET['SuppID'])){
-	prnMsg( _('Supplier ID Number is not Set, can not display result'),'warn');
+	prnMsg( __('Supplier ID Number is not Set, can not display result'),'warn');
 	include('includes/footer.php');
 	exit();
 }
 
 if (!isset($_GET['InvID'])){
-	prnMsg( _('Invoice Number is not Set, can not display result'),'warn');
+	prnMsg( __('Invoice Number is not Set, can not display result'),'warn');
 	include('includes/footer.php');
 	exit();
 }
@@ -27,10 +27,10 @@ $SuppID = $_GET['SuppID'];
 $InvID = $_GET['InvID'];
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payments') . '" alt="" />' . ' ' . _('Payment Allocation for Supplier') . ': ' . $SuppID . _(' and') . ' ' . _('Invoice') . ': ' . $InvID . '</p>';
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Payments') . '" alt="" />' . ' ' . __('Payment Allocation for Supplier') . ': ' . $SuppID . __(' and') . ' ' . __('Invoice') . ': ' . $InvID . '</p>';
 
 echo '<div class="page_help_text">' .
-		_('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . _('Back to supplier inquiry') . '</a>
+		__('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . __('Back to supplier inquiry') . '</a>
 	</div>';
 
 $SQL= "SELECT supptrans.supplierno,
@@ -51,18 +51,18 @@ $SQL= "SELECT supptrans.supplierno,
 
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) == 0){
-	prnMsg(_('There may be a problem retrieving the information. No data is returned'),'warn');
-	echo '<br /><a href="javascript:history.back()">' . _('Go back') . '</a>';
+	prnMsg(__('There may be a problem retrieving the information. No data is returned'),'warn');
+	echo '<br /><a href="javascript:history.back()">' . __('Go back') . '</a>';
 	include('includes/footer.php');
 	exit();
 }
 
 echo '<table cellpadding="2" width="80%" class="selection">';
 $TableHeader = '<tr>
-					<th>' . _('Supplier Number') . '<br />' . _('Reference') . '</th>
-					<th>' . _('Payment')  . '<br />' . _('Reference') . '</th>
-					<th>' . _('Payment') . '<br />' . _('Date') . '</th>
-					<th>' . _('Total Payment') . '<br />' . _('Amount') .	'</th>
+					<th>' . __('Supplier Number') . '<br />' . __('Reference') . '</th>
+					<th>' . __('Payment')  . '<br />' . __('Reference') . '</th>
+					<th>' . __('Payment') . '<br />' . __('Date') . '</th>
+					<th>' . __('Total Payment') . '<br />' . __('Amount') .	'</th>
 				</tr>';
 
 echo $TableHeader;

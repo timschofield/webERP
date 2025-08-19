@@ -181,7 +181,7 @@ if (isset($_POST['submit'])) {
 			}
 
 		}else{
-			$Title = _('Excel file for Petty Cash Expenses Analysis');
+			$Title = __('Excel file for Petty Cash Expenses Analysis');
 			include('includes/header.php');
 			prnMsg('There is no data to analyse');
 			include('includes/footer.php');
@@ -190,7 +190,7 @@ if (isset($_POST['submit'])) {
 } else {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Petty Cash Expenses Analysis');
+	$Title = __('Excel file for Petty Cash Expenses Analysis');
 	$ViewTopic = 'PettyCash';// Filename's id in ManualContents.php's TOC.
 	$BookMark = 'top';// Anchor's id in the manual's html document.
 
@@ -200,14 +200,14 @@ if (isset($_POST['submit'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Expenses Analysis') . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Expenses Analysis') . '
 		</p>';
 
 	echo '<fieldset>
-			<legend>', _('Petty Cash Tab To Analyse'), '</legend>';
+			<legend>', __('Petty Cash Tab To Analyse'), '</legend>';
 
 	echo '<field>
-			<label for="Tabs">' . _('For Petty Cash Tabs') . ':</label>
+			<label for="Tabs">' . __('For Petty Cash Tabs') . ':</label>
 			<select name="Tabs">';
 
 	$SQL = "SELECT tabcode
@@ -215,7 +215,7 @@ if (isset($_POST['submit'])) {
 			ORDER BY tabcode";
 	$CatResult = DB_query($SQL);
 
-	echo '<option value="All">' . _('All Tabs') . '</option>';
+	echo '<option value="All">' . __('All Tabs') . '</option>';
 
 	while ($MyRow = DB_fetch_array($CatResult)){
 		echo '<option value="' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
@@ -224,16 +224,16 @@ if (isset($_POST['submit'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Format">', _('Output Format'), '</label>
+			<label for="Format">', __('Output Format'), '</label>
 			<select name="Format">
-				<option value="xlsx">', _('Excel Format (.xlsx)'), '</option>
-				<option value="ods" selected="selected">', _('Open Document Format (.ods)'), '</option>
+				<option value="xlsx">', __('Excel Format (.xlsx)'), '</option>
+				<option value="ods" selected="selected">', __('Open Document Format (.ods)'), '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Create Petty Cash Expenses Excel File') . '" />
+			<input type="submit" name="submit" value="' . __('Create Petty Cash Expenses Excel File') . '" />
 		</div>';
 
 	echo '</form>';

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Service Fee Calculator');
+$Title = __('Service Fee Calculator');
 $ViewTopic= "Inventory";
 $BookMark = "Service Fee";
 include('includes/header.php');
@@ -30,18 +30,18 @@ if (isset($_GET['ServiceCode'])){
 $Result = DB_query("SELECT stockid
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
-					_('Could not retrieve the requested item'),
-					_('The SQL used to retrieve the items was'));
+					__('Could not retrieve the requested item'),
+					__('The SQL used to retrieve the items was'));
 $MyRow = DB_fetch_array($Result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset><legend>' .$Title . '</legend>';
-echo FieldToSelectOneText('StockID', $StockID, 21, 20, _('Stock Code'), '', '', '', true, false);
-echo FieldToSelectOneServiceFee('ServiceCode', $ServiceCode, _('Type of Service'), '', '', '', true, true);
+echo FieldToSelectOneText('StockID', $StockID, 21, 20, __('Stock Code'), '', '', '', true, false);
+echo FieldToSelectOneServiceFee('ServiceCode', $ServiceCode, __('Type of Service'), '', '', '', true, true);
 echo '</fieldset>';
-echo OneButtonCenteredForm('ShowStatus', _('Check Service Fee'));
+echo OneButtonCenteredForm('ShowStatus', __('Check Service Fee'));
 
 if (($StockID != '') AND ($ServiceCode != '')){
 	$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));

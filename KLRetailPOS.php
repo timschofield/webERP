@@ -40,7 +40,7 @@ v 1.00 2011-07-25: Kantor starts using it.
 include('includes/DefineCartClass.php');
 include('includes/session.php');
 
-$Title = _('POS ' . $_SESSION['locationname']);
+$Title = __('POS ' . $_SESSION['locationname']);
 
 include('includes/header.php');
 include('includes/GetPrice.php');
@@ -142,18 +142,18 @@ if (isset($_POST['CancelOrder'])) {
 	$_SESSION['Items' . $identifier] = new cart;
 
 	echo '<br /><br />';
-	prnMsg(_('This sale has been cancelled as requested'), 'success');
+	prnMsg(__('This sale has been cancelled as requested'), 'success');
 	echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
-		_('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a>';
+		__('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a>';
 	include('includes/footer.php');
 	exit();
 
 } else { /*Not cancelling the order */
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
-		_('Retail Sales') . '" alt="" />' . ' ';
-	echo _('Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . ' (' .
-		_('all amounts in') . ' ' . $_SESSION['Items' . $identifier]->DefaultCurrency . ')';
+		__('Retail Sales') . '" alt="" />' . ' ';
+	echo __('Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . ' (' .
+		__('all amounts in') . ' ' . $_SESSION['Items' . $identifier]->DefaultCurrency . ')';
 	echo '</p>';
 }
 
@@ -206,10 +206,10 @@ if (isset($_POST['OrderItems'])
 					FROM stockmaster
 					WHERE stockmaster.stockid='" . $NewItem . "'";
 
-			$ErrMsg = _('Could not determine if the part was shop packaging or not because');
+			$ErrMsg = __('Could not determine if the part was shop packaging or not because');
 			$PackagingResult = DB_query($SQL, $ErrMsg, '');
 			if (DB_num_rows($PackagingResult) == 0) {
-				prnMsg(_('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'), 'warn');
+				prnMsg(__('The item code') . ' ' . $NewItem . ' ' . __('could not be retrieved from the database'), 'warn');
 			} elseif ($MyRow = DB_fetch_array($PackagingResult)) {
 				if ($MyRow['categoryid'] == "SHPACK") {
 					// It's a packaging item
@@ -311,7 +311,7 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 				// Calculate Price based on new GP Percent
 				$Denominator = 1 - (($_POST['GPPercent_' . $OrderLine->LineNumber] + $_POST['Discount_' . $OrderLine->LineNumber]) / 100);
 				if (abs($Denominator) < 0.0001) { // Avoid division by zero
-					prnMsg(_('Cannot calculate price with GP Percent + Discount Percent equal to 100%'), 'error');
+					prnMsg(__('Cannot calculate price with GP Percent + Discount Percent equal to 100%'), 'error');
 					$Price = $OrderLine->Price; // Keep original price
 				} else {
 					$Price = ($OrderLine->StandardCost * $ExRate) / $Denominator;
@@ -328,7 +328,7 @@ if ((isset($_SESSION['Items' . $identifier])) OR isset($NewItem)) {
 			}
 
 			if ($Quantity < 0 or $Price < 0 or $DiscountPercentage > 100 or $DiscountPercentage < 0) {
-				prnMsg(_('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'), 'warn');
+				prnMsg(__('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'), 'warn');
 			} else if ($OrderLine->Quantity != $Quantity
 						or $OrderLine->Price != $Price
 						or abs($OrderLine->DiscountPercent - $DiscountPercentage / 100) > 0.001
@@ -435,8 +435,8 @@ if (count($_SESSION['Items' . $identifier]->LineItems) > 0 and !isset($_POST['Pr
 	// Buttons confirm / recalculate the sale
 	/////////////////////////////////////////////////
 	echo '<br /><div class="centre">
-				<input type="submit" name="Recalculate" value="' . _('Re-Calculate') . '" />
-				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
+				<input type="submit" name="Recalculate" value="' . __('Re-Calculate') . '" />
+				<input type="submit" name="ProcessSale" value="' . __('Process The Sale') . '" />
 				</div>
 				<hr />';
 
@@ -451,7 +451,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 	$InputError = false; //always assume the best
 	//but check for the worst
 	if ($_SESSION['Items' . $identifier]->LineCounter == 0) {
-		prnMsg(_('There are no lines on this sale. Please enter lines to invoice first'), 'error');
+		prnMsg(__('There are no lines on this sale. Please enter lines to invoice first'), 'error');
 		$InputError = true;
 	}
 
@@ -518,37 +518,37 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 	// payment received must be equal to total invoice
 	if (abs($TotalFromCustomer - ($_SESSION['Items' . $identifier]->total + $_POST['TaxTotal'])) >= 0.01) {
-		prnMsg(_('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'), 'error');
+		prnMsg(__('The amount entered as payment does not equal the amount of the invoice. Please ensure the customer has paid the correct amount and re-enter'), 'error');
 		$InputError = true;
 	}
 
 	// payment must be cash OR credit card, but not both (no splited payments)
 	if (($TotalReceivedCash != 0) && ($TotalReceivedCreditCard != 0)) {
-		prnMsg(_('Splitted Payments Cash - Credit Card are not allowed.'), 'error');
+		prnMsg(__('Splitted Payments Cash - Credit Card are not allowed.'), 'error');
 		$InputError = true;
 	}
 
 	// if CC is used, only 1 CC is allowed per invoice (no splitted payments)
 	if (($TotalReceivedCash == 0) && ($PaymentSystemsUsed > 1)) {
-		prnMsg(_('Splited payments by several credit Cards are not allowed.'), 'error');
+		prnMsg(__('Splited payments by several credit Cards are not allowed.'), 'error');
 		$InputError = true;
 	}
 
 	// if returned goods, then we also request invvoice number
 	if (($_POST['AmountReturnedGoods'] != 0) && ($_POST['ReturnedGoodsOldInvoice'] == '')) {
-		prnMsg(_('If customer returned items, invoice of returned items must be reported'), 'error');
+		prnMsg(__('If customer returned items, invoice of returned items must be reported'), 'error');
 		$InputError = true;
 	}
 
 	// if returned goods, then we also request item codes
 	if (($_POST['AmountReturnedGoods'] != 0) && ($_POST['ReturnedGoodsItems'] == '')) {
-		prnMsg(_('If customer returned items, the codes or returned items must be reported'), 'error');
+		prnMsg(__('If customer returned items, the codes or returned items must be reported'), 'error');
 		$InputError = true;
 	}
 
 	// if vouchers were presented, we need the code of the voucher
 	if (($_POST['AmountVouchers'] != 0) && ($_POST['VoucherCode'] == '')) {
-		prnMsg(_('If voucher or discount was used, the code of voucher or discount must be reported'), 'error');
+		prnMsg(__('If voucher or discount was used, the code of voucher or discount must be reported'), 'error');
 		$InputError = true;
 	}
 
@@ -592,7 +592,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 		if ($_SESSION['CompanyRecord'] == 0) {
 			/*The company data and preferences could not be retrieved for some reason */
-			prnMsg(_('The company information and preferences could not be retrieved. Please call the office inmediately'), 'error');
+			prnMsg(__('The company information and preferences could not be retrieved. Please call the office inmediately'), 'error');
 			include('includes/footer.php');
 			exit();
 		}
@@ -664,7 +664,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . $_SESSION['Items' . $identifier]->DefaultSalesType . "',
 						'" . $_SESSION['Items' . $identifier]->ShipVia . "',
 						'" . "" . "',
-						'" . _('POS') . "',
+						'" . __('POS') . "',
 						'" . "" . "',
 						'" . "" . "',
 						'" . $_SESSION['Items' . $identifier]->Location . "',
@@ -684,7 +684,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . $_POST['AmountReturnedGoods'] . "',
 						'" . $_POST['AmountVouchers'] . "',
 						'" . $Area . "')";
-		$ErrMsg = _('The order cannot be added because');
+		$ErrMsg = __('The order cannot be added because');
 		$InsertQryResult = DB_query($SQLHeader, $ErrMsg, '', true);
 
 		$LinesInOrder = 0;
@@ -715,7 +715,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								'" . $StockItem->Quantity . "',
 								1)";
 
-			$ErrMsg = _('Unable to add the sales order line');
+			$ErrMsg = __('Unable to add the sales order line');
 			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 		} /* end inserted line items into sales order details */
@@ -763,8 +763,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				'" . $_SESSION['Items' . $identifier]->ShipVia . "',
 				'" . ($_SESSION['Items' . $identifier]->total + $_POST['TaxTotal'] - $_POST['AmountReturnedGoods'] - $_POST['AmountVouchers']) . "')";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-			_('The debtor transaction record could not be inserted because');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+			__('The debtor transaction record could not be inserted because');
 	 	$Result = DB_query($SQL, $ErrMsg, '', true);
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans', 'id');
 
@@ -778,11 +778,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 												'" . $TaxAuthID . "',
 												'" . $TaxAmount / $ExRate . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-					_('The debtor transaction taxes records could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+					__('The debtor transaction taxes records could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} else {
-				prnMsg(_('Exchange rate is zero, cannot insert debtor transaction taxes.'), 'error');
+				prnMsg(__('Exchange rate is zero, cannot insert debtor transaction taxes.'), 'error');
 				$InputError = true; // Set error flag
 				DB_Txn_Rollback(); // Rollback transaction
 				break; // Exit loop
@@ -811,7 +811,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						FROM locstock
 						WHERE locstock.stockid='" . $OrderLine->StockID . "'
 						AND loccode= '" . $_SESSION['Items' . $identifier]->Location . "'";
-				$ErrMsg = _('WARNING') . ': ' . _('Could not retrieve current location stock');
+				$ErrMsg = __('WARNING') . ': ' . __('Could not retrieve current location stock');
 				$Result = DB_query($SQL, $ErrMsg);
 
 				if (DB_num_rows($Result) == 1) {
@@ -827,8 +827,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						WHERE locstock.stockid = '" . $OrderLine->StockID . "'
 						AND loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-					_('Location stock record could not be updated because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+					__('Location stock record could not be updated because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			}
@@ -837,7 +837,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 			if ($ExRate != 0) { // Avoid division by zero
 				$LocalCurrencyPrice = ($OrderLine->Price / $ExRate);
 			} else {
-				prnMsg(_('Exchange rate is zero, cannot calculate local currency price.'), 'error');
+				prnMsg(__('Exchange rate is zero, cannot calculate local currency price.'), 'error');
 				$LocalCurrencyPrice = $OrderLine->Price; // Or handle as appropriate
 				$InputError = true;
 				DB_Txn_Rollback();
@@ -883,8 +883,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 						'" . $OrderLine->StandardCost . "',
 						'" . ($QtyOnHandPrior - $OrderLine->Quantity) . "',
 						'" . DB_escape_string($OrderLine->Narrative) . "' )";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-				_('Stock movement records could not be inserted because');
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+				__('Stock movement records could not be inserted because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*Get the ID of the StockMove... */
@@ -904,8 +904,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							'" . $Tax->TaxRate . "',
 							'" . $Tax->TaxCalculationOrder . "',
 							'" . $Tax->TaxOnTax . "')";
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-					_('Taxes and rates applicable to this invoice line item could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+					__('Taxes and rates applicable to this invoice line item could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} //end for each tax for the line
 
@@ -1019,7 +1019,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 										);
 					} /*end of if discount !=0 */
 				} else {
-					prnMsg(_('Exchange rate is zero, cannot post sales GL transactions.'), 'error');
+					prnMsg(__('Exchange rate is zero, cannot post sales GL transactions.'), 'error');
 					$InputError = true;
 					DB_Txn_Rollback();
 					break;
@@ -1032,7 +1032,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 				if ($ExRate != 0) { // Avoid division by zero
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $ExRate, 0);
 				} else {
-					prnMsg(_('Exchange rate is zero, cannot calculate retail price for consignment.'), 'error');
+					prnMsg(__('Exchange rate is zero, cannot calculate retail price for consignment.'), 'error');
 					$InputError = true;
 					DB_Txn_Rollback();
 					break;
@@ -1073,8 +1073,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 							'" . ($StandardCost - $Compensation) . "',
 							'1000-01-01')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-					_('The Consignment Sales Details could not be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+					__('The Consignment Sales Details could not be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} /* End of clustering */
 		} /*end of OrderLine loop */
@@ -1101,7 +1101,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								'ERROR-POS-00010'
 								);
 			} else {
-				prnMsg(_('Exchange rate is zero, cannot post debtor GL transaction.'), 'error');
+				prnMsg(__('Exchange rate is zero, cannot post debtor GL transaction.'), 'error');
 				$InputError = true;
 				DB_Txn_Rollback();
 				include('includes/footer.php');
@@ -1136,7 +1136,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								'1',
 								1)";
 
-			$ErrMsg = _('Unable to add the Voucher Discount order line');
+			$ErrMsg = __('Unable to add the Voucher Discount order line');
 			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 
@@ -1187,7 +1187,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 								'1',
 								1)";
 
-			$ErrMsg = _('Unable to add the Returned Goods Value order line');
+			$ErrMsg = __('Unable to add the Returned Goods Value order line');
 			$Ins_LineItemResult = DB_query($SQLLineItems, $ErrMsg, '', true);
 			$LinesInOrder++;
 
@@ -1226,7 +1226,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 									'ERROR-POS-00011'
 									);
 				} else {
-					prnMsg(_('Exchange rate is zero, cannot post tax GL transactions.'), 'error');
+					prnMsg(__('Exchange rate is zero, cannot post tax GL transactions.'), 'error');
 					$InputError = true;
 					DB_Txn_Rollback();
 					break; // Exit loop
@@ -1580,47 +1580,47 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 		echo '<table class="selection">
 				<tr>
-					<th colspan=2>' . _('Retail Sale Reported to DataBase') . '
+					<th colspan=2>' . __('Retail Sale Reported to DataBase') . '
 					</th>
 				</tr>';
 
-		echo '<tr><td>' . _('Invoice Number') . ':</td> <td>' . $_SESSION['Items' . $identifier]->CustRef . '</td></tr>';
-		echo '<tr><td>' . _('Order Number') . ':</td> <td>' . $OrderNo . '</td></tr>';
+		echo '<tr><td>' . __('Invoice Number') . ':</td> <td>' . $_SESSION['Items' . $identifier]->CustRef . '</td></tr>';
+		echo '<tr><td>' . __('Order Number') . ':</td> <td>' . $OrderNo . '</td></tr>';
 		if ($_POST['AmountPaidCash'] > 0) {
-			echo '<tr><td>' . _('Payment Cash') . ':</td> <td>' . number_format($_POST['AmountPaidCash'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment Cash') . ':</td> <td>' . number_format($_POST['AmountPaidCash'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidCCDanamon'] > 0) {
-			echo '<tr><td>' . _('Payment CC EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidCCDanamon'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment CC EDC Danamon') . ':</td> <td>' . number_format($_POST['AmountPaidCCDanamon'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidCCBNI'] > 0) {
-			echo '<tr><td>' . _('Payment CC EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidCCBNI'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment CC EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidCCBNI'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidCCMandiri'] > 0) {
-			echo '<tr><td>' . _('Payment CC EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidCCMandiri'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment CC EDC Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidCCMandiri'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidCCBCA'] > 0) {
-			echo '<tr><td>' . _('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment CC EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidCCBCA'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidAmexBNI'] > 0) {
-			echo '<tr><td>' . _('Payment AMEX EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBNI'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment AMEX EDC BNI') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBNI'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidAmexBCA'] > 0) {
-			echo '<tr><td>' . _('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment AMEX EDC BCA') . ':</td> <td>' . number_format($_POST['AmountPaidAmexBCA'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidWeChat'] > 0) {
-			echo '<tr><td>' . _('Payment Alipay/WeChat') . ':</td> <td>' . number_format($_POST['AmountPaidWeChat'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment Alipay/WeChat') . ':</td> <td>' . number_format($_POST['AmountPaidWeChat'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountPaidQRIS'] > 0) {
-			echo '<tr><td>' . _('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRIS'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Payment QRIS Mandiri') . ':</td> <td>' . number_format($_POST['AmountPaidQRIS'], 0) . '</td></tr>';
 		}
 		if ($_POST['AmountReturnedGoods'] > 0) {
-			echo '<tr><td>' . _('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'], 0) . '</td></tr>';
-			echo '<tr><td>' . _('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
-			echo '<tr><td>' . _('Returned Goods Old Invoice') . ':</td> <td>' . $_POST['ReturnedGoodsOldInvoice'] . '</td></tr>';
-			echo '<tr><td>' . _('Returned Goods Old Invoice Date') . ':</td> <td>' . $_POST['ReturnDate'] . '</td></tr>';
+			echo '<tr><td>' . __('Returned Goods Value') . ':</td> <td>' . number_format($_POST['AmountReturnedGoods'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Returned Goods Codes') . ':</td> <td>' . $_POST['ReturnedGoodsItems'] . '</td></tr>';
+			echo '<tr><td>' . __('Returned Goods Old Invoice') . ':</td> <td>' . $_POST['ReturnedGoodsOldInvoice'] . '</td></tr>';
+			echo '<tr><td>' . __('Returned Goods Old Invoice Date') . ':</td> <td>' . $_POST['ReturnDate'] . '</td></tr>';
 		}
 		if ($_POST['AmountVouchers'] > 0) {
-			echo '<tr><td>' . _('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'], 0) . '</td></tr>';
+			echo '<tr><td>' . __('Voucher/Discounts') . ':</td> <td>' . number_format($_POST['AmountVouchers'], 0) . '</td></tr>';
 		}
 		echo '</table>';	//end of table of final show of order
 
@@ -1682,8 +1682,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 									CURRENT_DATE,
 									'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
 									'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
-							_('The returned goods record could not be inserted because');
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' .
+							__('The returned goods record could not be inserted because');
 						$Result = DB_query($SQL, $ErrMsg, '', true);
 					}
 				}
@@ -1749,7 +1749,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 					WHERE stockmaster.stockid='" . $OrderLine->StockID . "'
 					AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'";
 
-			$ErrMsg = _('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
+			$ErrMsg = __('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL, $ErrMsg);
 			$CheckNegRow = DB_fetch_array($Result);
 			if ($CheckNegRow['quantity'] < 0) {
@@ -1789,7 +1789,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 
 //		Removed these lines to prevent SPG "salah" when they try to print the receipt		
 //		echo '<br /><br /><a href="' . $_SERVER['PHP_SELF'] . '">' .
-//			_('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a></div>';
+//			__('Start a new Retail Sale in ') . $_SESSION['Items' . $identifier]->LocationName . '</a></div>';
 
 	} else {
 		// There were input errors so don't process anything
@@ -1805,12 +1805,12 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != "") {
 /* Now show the stock item selection search stuff below */
 if (!isset($_POST['ProcessSale'])) {
 
-	echo '<div class="page_help_text"><b>' . _('Scan the price tag of the items purchased and packaging used') . '</b></div><br />
+	echo '<div class="page_help_text"><b>' . __('Scan the price tag of the items purchased and packaging used') . '</b></div><br />
 				<table border="1">
 				<tr>';
 		/*do not display colum unless customer requires po line number by sales order line*/
-	echo '<th>' . _('Item Code') . '</th>
-				  <th>' . _('Quantity') . '</th>
+	echo '<th>' . __('Item Code') . '</th>
+				  <th>' . __('Quantity') . '</th>
 				  </tr>';
 	$DefaultDeliveryDate = date($_SESSION['DefaultDateFormat']);
 	if (count($_SESSION['Items' . $identifier]->LineItems) == 0) {
@@ -1827,12 +1827,12 @@ if (!isset($_POST['ProcessSale'])) {
 
 				echo '<script  type="text/javascript">if (document.SelectParts) {defaultControl(document.SelectParts.part_1);}</script>';
 
-	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . _('Entry Codes') . '" />
+	echo '</table><br /><div class="centre"><input type="submit" name="QuickEntry" value="' . __('Entry Codes') . '" />
 				 </div>';
 	echo '</font>';
 
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >= 1) {
-  		echo '<br /><div class="centre"><input type="reset" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
+  		echo '<br /><div class="centre"><input type="reset" name="CancelOrder" value="' . __('Cancel Sale') . '" onclick="return confirm(\'' . __('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}
 }
 echo '</form>';

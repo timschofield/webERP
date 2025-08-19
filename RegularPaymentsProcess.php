@@ -4,7 +4,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
-$Title = _('Process regular payments');
+$Title = __('Process regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 
@@ -100,8 +100,8 @@ if (isset($_POST['Add'])) {
 									'" . ($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";
-		$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was'), true);
+		$ErrMsg = __('Cannot insert a GL entry for the payment using the SQL');
+		$Result = DB_query($SQL, $ErrMsg,'', true);
 		InsertGLTags($PaymentItem['Tags']);
 
 		$SQL = "INSERT INTO gltrans (type,
@@ -122,8 +122,8 @@ if (isset($_POST['Add'])) {
 									'" . -($PaymentItem['Amount'] / $PaymentItem['ExchangeRate'] / $PaymentItem['FunctionalExRate']) . "',
 									'" . $ID . "'
 								)";
-		$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
-		$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was'), true);
+		$ErrMsg = __('Cannot insert a GL entry for the payment using the SQL');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO banktrans (transno,
 									type,
@@ -150,7 +150,7 @@ if (isset($_POST['Add'])) {
 									'" . $PaymentItem['Currency'] . "'
 								)";
 
-		$ErrMsg = _('Cannot insert a bank transaction because');
+		$ErrMsg = __('Cannot insert a bank transaction because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "UPDATE regularpayments SET nextpayment='" . FormatDateForSQL($NextPaymentDate) . "',
@@ -159,7 +159,7 @@ if (isset($_POST['Add'])) {
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		DB_Txn_Commit();
 
-		prnMsg(_('The regular payment has been processed'), 'success');
+		prnMsg(__('The regular payment has been processed'), 'success');
 	} //$_SESSION['PaymentDetail' . $Identifier]->GLItems as $PaymentItem
 
 }
@@ -192,15 +192,15 @@ $Result = DB_query($SQL);
 if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	echo '<table>
 			<tr>
-				<th>', _('Bank Account'), '</th>
-				<th>', _('GL Account'), '</th>
-				<th>', _('GL Tags'), '</th>
-				<th>', _('Amount'), '</th>
-				<th>', _('Functional'), '<br />', _('Rate'), '</th>
-				<th>', _('Exchange'), '<br />', _('Rate'), '</th>
-				<th>', _('Currency'), '</th>
-				<th>', _('Description'), '</th>
-				<th>', _('Next payment Date'), '</th>
+				<th>', __('Bank Account'), '</th>
+				<th>', __('GL Account'), '</th>
+				<th>', __('GL Tags'), '</th>
+				<th>', __('Amount'), '</th>
+				<th>', __('Functional'), '<br />', __('Rate'), '</th>
+				<th>', __('Exchange'), '<br />', __('Rate'), '</th>
+				<th>', __('Currency'), '</th>
+				<th>', __('Description'), '</th>
+				<th>', __('Next payment Date'), '</th>
 				<th></th>
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -233,16 +233,16 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 				<td>', $MyRow['currabrev'], '</td>
 				<td>', $MyRow['narrative'], '</td>
 				<td>', ConvertSQLDate($MyRow['nextpayment']), '</td>
-				<td><input type="checkbox" name="Payment', $MyRow['id'], '" />', _('Process'), '</td>
+				<td><input type="checkbox" name="Payment', $MyRow['id'], '" />', __('Process'), '</td>
 			</tr>';
 	}
 	echo '</table>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Add" value="', _('Process Selected payments'), '" />
+			<input type="submit" name="Add" value="', __('Process Selected payments'), '" />
 		</div>';
 } else {
-	prnMsg(_('There are no regular payments due'), 'info');
+	prnMsg(__('There are no regular payments due'), 'info');
 }
 
 echo '</form>';

@@ -6,7 +6,7 @@ include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = _('Export CSV File for Transfer to Danamon Accounts');
+$Title = __('Export CSV File for Transfer to Danamon Accounts');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
@@ -18,7 +18,7 @@ if (isset($_POST['submit'])) {
 function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
-	$InputError = FALSE;
+	$InputError = false;
 
 	//first off validate inputs sensible
 	$Today = date('Y-m-d');
@@ -26,19 +26,19 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 	
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = __('Export CSV Danamon (between Danamon Payroll Accounts) THR Only for '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
-		$InputError = TRUE;
+		$InputError = true;
 	}
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer between Danamon Payroll Accounts should be last month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 		
@@ -46,7 +46,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "THRONLY"){
 		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer between Danamon Payroll Accounts should be current month";
-			$InputError = TRUE;
+			$InputError = true;
 		}
 	}
 
@@ -161,7 +161,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		</p>';
 
 	echo '<fieldset>
-		<legend>' . _('Selection Parameters') . '</legend>';
+		<legend>' . __('Selection Parameters') . '</legend>';
 
 	include('includes/KLPersonaliaParameterSelection.php');
 

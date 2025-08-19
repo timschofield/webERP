@@ -1,12 +1,12 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Search Work Orders');
+$Title = __('Search Work Orders');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -36,19 +36,19 @@ if (isset($_POST['ResetPart'])){
 if (isset($SelectedWO) AND $SelectedWO!='') {
 	$SelectedWO = trim($SelectedWO);
 	if (!is_numeric($SelectedWO)){
-		  prnMsg(_('The work order number entered MUST be numeric'),'warn');
+		  prnMsg(__('The work order number entered MUST be numeric'),'warn');
 		  unset ($SelectedWO);
 		  include('includes/footer.php');
 		  exit();
 	} else {
-		echo _('Work Order Number') . ' - ' . $SelectedWO;
+		echo __('Work Order Number') . ' - ' . $SelectedWO;
 	}
 }
 
 if (isset($_POST['SearchParts'])){
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
+		echo __('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 	if ($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -107,7 +107,7 @@ if (isset($_POST['SearchParts'])){
 					ORDER BY stockmaster.stockid";
 	 }
 
-	$ErrMsg = _('No items were returned by the SQL because');
+	$ErrMsg = __('No items were returned by the SQL because');
 	$StockItemsResult = DB_query($SQL, $ErrMsg);
 }
 
@@ -126,20 +126,20 @@ if (!isset($StockID)) {
 
 	if (!isset($SelectedWO) or ($SelectedWO=='')){
 		echo '<fieldset>
-				<legend class="search">', _('Search Criteria'), '</legend>';
+				<legend class="search">', __('Search Criteria'), '</legend>';
 		if (isset($SelectedStockItem)) {
 			echo '<field>
-					<label for="SelectedStockItem">', _('For the item') . ':</label>
+					<label for="SelectedStockItem">', __('For the item') . ':</label>
 					<fieldtext>' . $SelectedStockItem . '</fieldtext>
 					<input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />
 				</field>';
 		}
 		echo '<field>
-				<label for="WO">', _('Work Order number') . ':</label>
+				<label for="WO">', __('Work Order number') . ':</label>
 				<input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />
 			</field>
 			<field>
-				<label for ="StockLocation">' . _('Processing at') . ':</label>
+				<label for ="StockLocation">' . __('Processing at') . ':</label>
 				<select name="StockLocation"> ';
 
 		$SQL = "SELECT locations.loccode, locationname FROM locations
@@ -168,7 +168,7 @@ if (!isset($StockID)) {
 		echo '</select>';
 
 		echo '<field>
-				<label for="ClosedOrOpen">', _('Order Status'), '</label>
+				<label for="ClosedOrOpen">', __('Order Status'), '</label>
 				<select name="ClosedOrOpen">';
 
 		if (isset($_GET['ClosedOrOpen']) AND $_GET['ClosedOrOpen']=='Closed_Only'){
@@ -176,11 +176,11 @@ if (!isset($StockID)) {
 		}
 
 		if (isset($_POST['ClosedOrOpen']) AND $_POST['ClosedOrOpen']=='Closed_Only'){
-			echo '<option selected="selected" value="Closed_Only">' . _('Closed Work Orders Only') . '</option>';
-			echo '<option value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
+			echo '<option selected="selected" value="Closed_Only">' . __('Closed Work Orders Only') . '</option>';
+			echo '<option value="Open_Only">' . __('Open Work Orders Only')  . '</option>';
 		} else {
-			echo '<option value="Closed_Only">' . _('Closed Work Orders Only')  . '</option>';
-			echo '<option selected="selected" value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
+			echo '<option value="Closed_Only">' . __('Closed Work Orders Only')  . '</option>';
+			echo '<option selected="selected" value="Open_Only">' . __('Open Work Orders Only')  . '</option>';
 		}
 
 		echo '</select>
@@ -188,8 +188,8 @@ if (!isset($StockID)) {
 		</fieldset>';
 
 		echo '<div class="centre">
-				<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
-				<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a>
+				<input type="submit" name="SearchOrders" value="' . __('Search') . '" />
+				<a href="' . $RootPath . '/WorkOrderEntry.php">' . __('New Work Order') . '</a>
 			</div>';
 	}
 
@@ -201,9 +201,9 @@ if (!isset($StockID)) {
 	$Result1 = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend class="search">' . _('To search for work orders for a specific item use the item selection facilities below') . '</legend>
+			<legend class="search">' . __('To search for work orders for a specific item use the item selection facilities below') . '</legend>
 			<field>
-				<label for="StockCat">' . _('Select a stock category') . ':</label>
+				<label for="StockCat">' . __('Select a stock category') . ':</label>
 	  			<select name="StockCat">';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -214,18 +214,18 @@ if (!isset($StockID)) {
 		</field>';
 
 	echo '<field>
-			<label for="Keywords">' . _('Enter text extract(s) in the description') . ':</label>
+			<label for="Keywords">' . __('Enter text extract(s) in the description') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>';
 
 	echo '<field>
-			<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
+			<label for="StockCode">' . '<b>' . __('OR') . ' </b>' . __('Enter extract of the Stock Code') . ':</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" />
 		</field>
 	</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
-			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+			<input type="submit" name="SearchParts" value="' . __('Search Items Now') . '" />
+			<input type="submit" name="ResetPart" value="' . __('Show All') . '" />
 		</div>';
 
 	if (isset($StockItemsResult)) {
@@ -233,10 +233,10 @@ if (!isset($StockID)) {
 		echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Code') . '</th>
-				<th class="SortedColumn">' . _('Description') . '</th>
-				<th class="SortedColumn">' . _('On Hand') . '</th>
-				<th>' . _('Units') . '</th>
+				<th class="SortedColumn">' . __('Code') . '</th>
+				<th class="SortedColumn">' . __('Description') . '</th>
+				<th class="SortedColumn">' . __('On Hand') . '</th>
+				<th>' . __('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -330,7 +330,7 @@ if (!isset($StockID)) {
 				}
 		} //end not order number selected
 
-		$ErrMsg = _('No works orders were returned by the SQL because');
+		$ErrMsg = __('No works orders were returned by the SQL because');
 		$WorkOrdersResult = DB_query($SQL, $ErrMsg);
 
 		/*show a table of the orders returned by the SQL */
@@ -339,19 +339,19 @@ if (!isset($StockID)) {
 				<table cellpadding="2" width="95%" class="selection">
 				<thead>
 				<tr>
-					<th>' . _('Modify') . '</th>
-					<th class="SortedColumn">' . _('Status') . '</th>
-					<th>' . _('Issue To') . '</th>
-					<th>' . _('Receive') . '</th>
-					<th>' . _('Costing') . '</th>
-					<th>' . _('Paperwork') . '</th>
-					<th>' . _('Location') . '</th>
-					<th class="SortedColumn">' . _('Item') . '</th>
-					<th class="SortedColumn">' . _('Quantity Required') . '</th>
-					<th class="SortedColumn">' . _('Quantity Received') . '</th>
-					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
-					<th class="SortedColumn">' . _('Start Date')  . '</th>
-					<th class="SortedColumn">' . _('Required Date') . '</th>
+					<th>' . __('Modify') . '</th>
+					<th class="SortedColumn">' . __('Status') . '</th>
+					<th>' . __('Issue To') . '</th>
+					<th>' . __('Receive') . '</th>
+					<th>' . __('Costing') . '</th>
+					<th>' . __('Paperwork') . '</th>
+					<th>' . __('Location') . '</th>
+					<th class="SortedColumn">' . __('Item') . '</th>
+					<th class="SortedColumn">' . __('Quantity Required') . '</th>
+					<th class="SortedColumn">' . __('Quantity Received') . '</th>
+					<th class="SortedColumn">' . __('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . __('Start Date')  . '</th>
+					<th class="SortedColumn">' . __('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -371,11 +371,11 @@ if (!isset($StockID)) {
 
 			echo '<tr class="striped_row">
 					<td><a href="', $ModifyPage, '">', $MyRow['wo'].'['.$MyRow['reference'] . ']', '</a></td>
-					<td><a href="', $Status_WO, '">' . _('Status') . '</a></td>
-					<td><a href="', $Issue_WO, '">' . _('Issue To') . '</a></td>
-					<td><a href="', $Receive_WO, '">' . _('Receive') . '</a></td>
-					<td><a href="', $Costing_WO, '">' . _('Costing') . '</a></td>
-					<td><a href="', $Printing_WO, '">' . _('Print W/O') . '</a></td>
+					<td><a href="', $Status_WO, '">' . __('Status') . '</a></td>
+					<td><a href="', $Issue_WO, '">' . __('Issue To') . '</a></td>
+					<td><a href="', $Receive_WO, '">' . __('Receive') . '</a></td>
+					<td><a href="', $Costing_WO, '">' . __('Costing') . '</a></td>
+					<td><a href="', $Printing_WO, '">' . __('Print W/O') . '</a></td>
 					<td>', $MyRow['loccode'], '</td>
 					<td>', urlencode($MyRow['stockid']), ' - ', $MyRow['description'], '</td>
 					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>

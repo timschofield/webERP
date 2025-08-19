@@ -107,16 +107,16 @@ if (isset($_GET['LabelLot'])) {
 
 
 if (!isset($_GET['WO']) AND !isset($_POST['WO'])) {
-	$Title = _('Select a Work Order');
+	$Title = __('Select a Work Order');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
-	prnMsg(_('Select a Work Order Number to Print before calling this page'), 'error');
+	prnMsg(__('Select a Work Order Number to Print before calling this page'), 'error');
 	echo '<br />
 				<br />
 				<br />
 				<table class="table_index">
 					<tr><td class="menu_group_item">
-						<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select Work Order') . '</a></li>
+						<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
 						</td>
 					</tr></table>
 				</div>
@@ -126,8 +126,8 @@ if (!isset($_GET['WO']) AND !isset($_POST['WO'])) {
 	include('includes/footer.php');
 	exit();
 
-	echo '<div class="centre"><br /><br /><br />' . _('This page must be called with a Work order number to print');
-	echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a></div>';
+	echo '<div class="centre"><br /><br /><br />' . __('This page must be called with a Work order number to print');
+	echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a></div>';
 	exit();
 }
 if (isset($_GET['WO'])) {
@@ -136,11 +136,11 @@ if (isset($_GET['WO'])) {
 elseif (isset($_POST['WO'])) {
 	$SelectedWO = $_POST['WO'];
 }
-$Title = _('Print Work Order Number') . ' ' . $SelectedWO;
+$Title = __('Print Work Order Number') . ' ' . $SelectedWO;
 if (isset($_POST['PrintOrEmail']) AND isset($_POST['EmailTo'])) {
 	if ($_POST['PrintOrEmail'] == 'Email' AND !IsEmailAddress($_POST['EmailTo'])) {
 		include('includes/header.php');
-		prnMsg(_('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
+		prnMsg(__('The email address entered does not appear to be valid. No emails have been sent.'), 'warn');
 		include('includes/footer.php');
 		exit();
 	}
@@ -162,7 +162,7 @@ if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly
 
 if (isset($SelectedWO) AND $SelectedWO != '' AND $SelectedWO > 0 AND $SelectedWO != 'Preview') {
 	/*retrieve the order details from the database to print */
-	$ErrMsg = _('There was a problem retrieving the Work order header details for Order Number') . ' ' . $SelectedWO . ' ' . _('from the database');
+	$ErrMsg = __('There was a problem retrieving the Work order header details for Order Number') . ' ' . $SelectedWO . ' ' . __('from the database');
 	$SQL = "SELECT workorders.wo,
 							 workorders.loccode,
 							 locations.locationname,
@@ -200,16 +200,16 @@ if (isset($SelectedWO) AND $SelectedWO != '' AND $SelectedWO > 0 AND $SelectedWO
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) == 0) {
 		/*There is no order header returned */
-		$Title = _('Print Work Order Error');
+		$Title = __('Print Work Order Error');
 		include('includes/header.php');
 		echo '<div class="centre"><br /><br /><br />';
-		prnMsg(_('Unable to Locate Work Order Number') . ' : ' . $SelectedWO . ' ', 'error');
+		prnMsg(__('Unable to Locate Work Order Number') . ' : ' . $SelectedWO . ' ', 'error');
 		echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 				<tr><td class="menu_group_item">
-				<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select Work Order') . '</a></li>
+				<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select Work Order') . '</a></li>
 				</td>
 				</tr>
 			</table>
@@ -286,14 +286,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	// Set the paper size/orintation
 	$PaperSize = $FormDesign->PaperSize;
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Work Order'));
-	$pdf->addInfo('Subject', _('Work Order Number') . ' ' . $SelectedWO);
+	$pdf->addInfo('Title', __('Work Order'));
+	$pdf->addInfo('Subject', __('Work Order Number') . ' ' . $SelectedWO);
 	$LineHeight = $FormDesign->LineHeight;
 	$PageNumber = 1;
 	$FooterPrintedInPage = 0;
 	if ($SelectedWO != 'Preview') { // It is a real order
 		$IssuedAlreadyRow = array();
-		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $SelectedWO . ' ' . _('from the database');
+		$ErrMsg = __('There was a problem retrieving the line details for order number') . ' ' . $SelectedWO . ' ' . __('from the database');
 		$RequirmentsResult = DB_query("SELECT worequirements.stockid,
 										stockmaster.description,
 										stockmaster.decimalplaces,
@@ -490,8 +490,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$pdf->write2DBarcode($BaseURL.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,'QRCODE,H',60,650,100,100,[''],'N');
 			$pdf->write2DBarcode($StockID,'QRCODE,H',260,650,100,100,[''],'N');
 			$pdf->write2DBarcode($BaseURL.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,'QRCODE,H',440,650,100,100,[''],'N');
-			$LeftOvers = $pdf->addText($FormDesign->SignedDate->x,$Page_Height-$FormDesign->SignedDate->y,$FormDesign->SignedDate->FontSize, _('Date') . ' : ______________');
-			$LeftOvers = $pdf->addText($FormDesign->SignedBy->x,$Page_Height-$FormDesign->SignedBy->y,$FormDesign->SignedBy->FontSize, _('Signed for') . ': ____________________________________');
+			$LeftOvers = $pdf->addText($FormDesign->SignedDate->x,$Page_Height-$FormDesign->SignedDate->y,$FormDesign->SignedDate->FontSize, __('Date') . ' : ______________');
+			$LeftOvers = $pdf->addText($FormDesign->SignedBy->x,$Page_Height-$FormDesign->SignedBy->y,$FormDesign->SignedBy->FontSize, __('Signed for') . ': ____________________________________');
 
 			$FooterPrintedInPage= 1;
 	}
@@ -520,19 +520,19 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
-								_('Work Order Number') . ' ' . $SelectedWO,
+								__('Work Order Number') . ' ' . $SelectedWO,
 								('Please Process this Work order number') . ' ' . $SelectedWO,
 								$_SESSION['reports_dir'] . '/' . $PdfFileName);
 
 		if ($Success == 1) {
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
-			prnMsg(_('Work Order') . ' ' . $SelectedWO . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
+			prnMsg(__('Work Order') . ' ' . $SelectedWO . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 
 		} else { //email failed
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
-			prnMsg(_('Emailing Work order') . ' ' . $SelectedWO . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
+			prnMsg(__('Emailing Work order') . ' ' . $SelectedWO . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 	}
 	include('includes/footer.php');
@@ -601,7 +601,7 @@ else {
 			}
 		} //controlled
 	} //not set yet
-	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly == 1) {
@@ -610,43 +610,43 @@ else {
 	echo '<input type="hidden" name="WO" value="' . $SelectedWO . '" />';
 	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 	echo '<Fieldset>
-			<legend>', _('Order Printiing Options'), '</legend>
+			<legend>', __('Order Printiing Options'), '</legend>
 			<field>
-				<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+				<label for="PrintOrEmail">' . __('Print or Email the Order') . '</label>
 				<select name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
 	}
 	if ($ViewingOnly != 0) {
-		echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
+		echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
 	}
 	else {
 		if ($_POST['PrintOrEmail'] == 'Print') {
-			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
-			echo '<option value="Email">' . _('Email') . '</option>';
+			echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
+			echo '<option value="Email">' . __('Email') . '</option>';
 		} else {
-			echo '<option value="Print">' . _('Print') . '</option>';
-			echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
+			echo '<option value="Print">' . __('Print') . '</option>';
+			echo '<option selected="selected" value="Email">' . __('Email') . '</option>';
 		}
 	}
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="PrintLabels">' . _('Print Labels') . ':</label>
+			<label for="PrintLabels">' . __('Print Labels') . ':</label>
 			<select name="PrintLabels" >';
 	if ($PrintLabels=="Yes") {
-		echo '<option value="Yes" selected>' . _('Yes') . '</option>';
-		echo '<option value="No">' . _('No') . '</option>';
+		echo '<option value="Yes" selected>' . __('Yes') . '</option>';
+		echo '<option value="No">' . __('No') . '</option>';
 	}
 	else {
-		echo '<option value="Yes" >' . _('Yes') . '</option>';
-		echo '<option value="No" selected>' . _('No') . '</option>';
+		echo '<option value="Yes" >' . __('Yes') . '</option>';
+		echo '<option value="No" selected>' . __('No') . '</option>';
 	}
 	echo '</select>';
 
 	if ($_POST['PrintOrEmail'] == 'Email') {
-		$ErrMsg = _('There was a problem retrieving the contact details for the location');
+		$ErrMsg = __('There was a problem retrieving the contact details for the location');
 
 		$SQL = "SELECT workorders.wo,
 						workorders.loccode,
@@ -659,7 +659,7 @@ else {
 						AND woitems.wo ='" . $SelectedWO . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<field><td>' . _('Email to') . ':</td><td><input name="EmailTo" value="';
+			echo '<field><td>' . __('Email to') . ':</td><td><input name="EmailTo" value="';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
 					echo $ContactDetails['email'];
@@ -672,7 +672,7 @@ else {
 		echo '</fieldset>';
 	}
 	echo '<div class="centre">
-			<input type="submit" name="DoIt" value="' . _('Paperwork') . '" />
+			<input type="submit" name="DoIt" value="' . __('Paperwork') . '" />
 		</div>';
 
 	if ($PrintLabels=="Yes") {
@@ -686,52 +686,52 @@ else {
 		echo '<input type="hidden" name="EmailTo" value="' . $EmailTo . '" />';
 		echo '<input type="hidden" name="PrintOrEmail" value="' . $_POST['PrintOrEmail'] . '" />';
 		echo '<fieldset>
-				<legend>', _('Label Print Options'), '</legend>
+				<legend>', __('Label Print Options'), '</legend>
 				<field>
-					<label for="LabelItem">' . _('Label Item') . ':</label>
+					<label for="LabelItem">' . __('Label Item') . ':</label>
 					<input name="LabelItem" value="' .$LabelItem.'"/>
 				</field>
 				<field>
-					<label for="LabelDesc">' . _('Label Description') . ':</label>
+					<label for="LabelDesc">' . __('Label Description') . ':</label>
 					<input name="LabelDesc" value="' .$LabelDesc.'"/>
 				</field>
 				<field>
-					<label for="LabelLot">' . _('Label Lot') . ':</label>
+					<label for="LabelLot">' . __('Label Lot') . ':</label>
 					<input name="LabelLot" value="' .$LabelLot.'"/>
 				</field>
 				<field>
-					<label for="NoOfBoxes">' . _('No of Full Packages') . ':</label>
+					<label for="NoOfBoxes">' . __('No of Full Packages') . ':</label>
 					<input name="NoOfBoxes" class="integer" value="' .$NoOfBoxes.'"/>
 				</field>
 				<field>
-					<label for="LabelsPerBox">' . _('Labels/Package') . ':</label>
+					<label for="LabelsPerBox">' . __('Labels/Package') . ':</label>
 					<input name="LabelsPerBox" class="integer" value="' .$LabelsPerBox.'"/>
 				</field>
 				<field>
-					<label for="QtyPerBox">' . _('Weight/Package') . ':</label>
+					<label for="QtyPerBox">' . __('Weight/Package') . ':</label>
 					<input name="QtyPerBox" class="number" value="' .$QtyPerBox. '"/>
 				</field>
 				<field>
-					<label for="LeftOverQty">' . _('LeftOver Qty') . ':</label>
+					<label for="LeftOverQty">' . __('LeftOver Qty') . ':</label>
 					<input name="LeftOverQty" class="number" value="' .$LeftOverQty.'"/>
 				</field>
 				<field>
-					<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+					<label for="PrintOrEmail">' . __('Print or Email the Order') . '</label>
 					<select name="PrintOrEmail">';
 
 		if (!isset($_POST['PrintOrEmail'])) {
 			$_POST['PrintOrEmail'] = 'Print';
 		}
 		if ($ViewingOnly != 0) {
-			echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
+			echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
 		}
 		else {
 			if ($_POST['PrintOrEmail'] == 'Print') {
-				echo '<option selected="selected" value="Print">' . _('Print') . '</option>';
-				echo '<option value="Email">' . _('Email') . '</option>';
+				echo '<option selected="selected" value="Print">' . __('Print') . '</option>';
+				echo '<option value="Email">' . __('Email') . '</option>';
 			} else {
-				echo '<option value="Print">' . _('Print') . '</option>';
-				echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
+				echo '<option value="Print">' . __('Print') . '</option>';
+				echo '<option selected="selected" value="Email">' . __('Email') . '</option>';
 			}
 		}
 		echo '</select>
@@ -747,7 +747,7 @@ else {
 						AND woitems.wo ='" . $SelectedWO . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<field><label for="EmailTo">' . _('Email to') . ':</label><input name="EmailTo" value="';
+			echo '<field><label for="EmailTo">' . __('Email to') . ':</label><input name="EmailTo" value="';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
 					echo $ContactDetails['email'];
@@ -759,7 +759,7 @@ else {
 			echo '</fieldset>';
 		}
 		echo '<div class="centre">
-				<input type="submit" name="DoIt" value="' . _('Labels') . '" />
+				<input type="submit" name="DoIt" value="' . __('Labels') . '" />
 			</div>
 			</form>';
 	}

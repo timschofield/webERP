@@ -1,7 +1,7 @@
 <?php
 
 if (!file_exists('KLConfig.php')){
-	echo '<P>' . _("webERP - Opencart connector can't access the KLConfig.php file");
+	echo '<P>' . __("webERP - Opencart connector can't access the KLConfig.php file");
 	include('includes/footer.php');
 } else {
 	include('KLConfig.php');
@@ -17,7 +17,7 @@ $db_oc = mysqli_connect($OpenCartDBHost , $OpenCartDBUser, $OpenCartDBPassword, 
 mysqli_set_charset($db_oc, 'utf8');
 
 if ( !$db_oc ) {
-	prnMsg(_('The configuration in the file KLConfig.php for the OpenCart database user name, password and host do not provide the information required to connect to the OpenCart database server'),'error');
+	prnMsg(__('The configuration in the file KLConfig.php for the OpenCart database user name, password and host do not provide the information required to connect to the OpenCart database server'),'error');
 	exit();
 }
 
@@ -37,25 +37,23 @@ function DB_query_oc($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=fal
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
-				$ErrorMessage = _('An error occurred in retrieving the information');
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
-		if ($Debug==1) {
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', __('Database Error'). ' ' . DB_error_no());
+		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
-				$DebugMessage = _('The SQL that failed was');
+				$DebugMessage = __('The SQL that failed was');
 			}
-			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-			prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $trace[0]['file'] . _('on line') . ' ' . $trace[0]['line'],
-				'error', _('Database SQL Failure'));
+			ShowDebugBackTrace($DebugMessage, $SQL);	
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query_oc($SQL);
 			if (DB_error_no() != 0) {
-				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error') . ' ' . DB_error_no());
+				prnMsg(__('Error Rolling Back Transaction'), 'error', __('Database Rollback Error') . ' ' . DB_error_no());
 			} else {
-				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');

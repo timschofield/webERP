@@ -7,7 +7,7 @@ Function returns the relavent GL Code to post COGS entries to*/
 
 function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 
-	$ErrMsg = _('Can not retrieve the cost of sales GL code because');
+	$ErrMsg = __('Can not retrieve the cost of sales GL code because');
 
 	/*Get the StockCategory for this item */
 
@@ -119,7 +119,7 @@ function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */
 		/*Check GL account 1 exists */
-		prnMsg(_('Could not determine the correct general ledger account to use for posting the cost of this sale. Go to the setup menu and define appropriate COGS (Cost Of Goods Sold) accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1'),'warn');
+		prnMsg(__('Could not determine the correct general ledger account to use for posting the cost of this sale. Go to the setup menu and define appropriate COGS (Cost Of Goods Sold) accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1'),'warn');
 		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode=1";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result)==0){ /*It doesn't exist so  create it */
@@ -148,7 +148,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 
 /*Gets the  Sales GL Code for a specific area, sales type and stock category */
 
-	$ErrMsg = _('There was a problem retrieving the sales general ledger code because');
+	$ErrMsg = __('There was a problem retrieving the sales general ledger code because');
 
 		/*Get the StockCategory for this item */
 	$SQL = "SELECT categoryid FROM stockmaster WHERE stockid='" . $StockID . "'";
@@ -265,7 +265,7 @@ function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 	}
 	if (DB_num_rows($Result)==0){ /*STILL!*/
 		/*The default if all else fails */
-		prnMsg(_('Could not determine the correct general ledger account to use for posting this sale to. Go to the setup menu and define appropriate Sale GL Posting accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1'),'warn');
+		prnMsg(__('Could not determine the correct general ledger account to use for posting this sale to. Go to the setup menu and define appropriate Sale GL Posting accounts. To enable this invoice to be posted it has been posted to default sales and COGS - account number 1'),'warn');
 		/*Check GL account 1 exists */
 		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode=1";
 		$Result = DB_query($SQL);

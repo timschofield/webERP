@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('OpenCart to webERP Syncrhonizer');
+$Title = __('OpenCart to webERP Syncrhonizer');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 
@@ -13,6 +13,6 @@ include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/OCOpenCartToWeberpSync.php');
 include('includes/OCOpenCartConnectDB.php');
 
-OpenCartToWeberpSync(TRUE , '');
+OpenCartToWeberpSync(true , '');
 
 include('includes/footer.php');

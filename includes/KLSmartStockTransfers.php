@@ -118,7 +118,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	$TableResult = array();
 
 	// from location
-	$ErrMsg = _('Could not retrieve location name from the database');
+	$ErrMsg = __('Could not retrieve location name from the database');
 	$SQLfrom = "SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
 	$Result = DB_query($SQLfrom, $ErrMsg);
 	$Row = DB_fetch_row($Result);
@@ -161,7 +161,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$ToDecimalPlaces = $RowPrices['2'];
 	}
 	
-	$CategoryDescription = _('All');
+	$CategoryDescription = __('All');
 	$WhereCategory = " AND stockmaster.categoryid != 'SHCONS'
 						   AND stockmaster.categoryid != 'SHPACK' ";
 
@@ -210,7 +210,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				"Max Models to be included: " . $MaxModelsPerDispatch . "\n";
 
 	if (DB_error_no() != 0) {
-		$EmailText .= "Smart Stock Dispatch ERROR " . _('The Stock Dispatch report could not be retrieved by the SQL because') . ' ' . DB_error_msg() . "\n";
+		$EmailText .= "Smart Stock Dispatch ERROR " . __('The Stock Dispatch report could not be retrieved by the SQL because') . ' ' . DB_error_msg() . "\n";
 		$EmailText .= "SQL = " . $SQL . "\n";
 	}else{
 		// Let's do the calculation for the available items for transfer and load them into TableResult array
@@ -328,8 +328,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 				// Enough models available for transfer
 				// OK, let's create the PDF and the transfer records
 				include('includes/PDFStarter.php');
-				$pdf->addInfo('Title', _('KL Stock Dispatch Report'));
-				$pdf->addInfo('Subject', _('Items to dispatch to another location to cover reorder level'));
+				$pdf->addInfo('Title', __('KL Stock Dispatch Report'));
+				$pdf->addInfo('Subject', __('Items to dispatch to another location to cover reorder level'));
 				$FontSize = 9;
 				$PageNumber = 1;
 				$LineHeight = 19;
@@ -371,7 +371,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 					$pdf->addTextWrap(510, $YPos, 50, $FontSize, '___________', 'right', 0, $Fill);
 
 					if ($TableResult[$ModelInTransfer]['discountcategory'] != ""){
-						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $TableResult[$ModelInTransfer]['discountcategory'];
+						$DiscountLine = ' -> ' . __('Discount Category') . ':' . $TableResult[$ModelInTransfer]['discountcategory'];
 					}else{
 						$DiscountLine = '';
 					}
@@ -402,8 +402,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 															'" . $Now . "',
 															'" . $FromLocCode . "',
 															'" . $ToLocCode . "')";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . 
-								_('Unable to enter Location Transfer record for') . ' ' . 
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . 
+								__('Unable to enter Location Transfer record for') . ' ' . 
 								$TableResult[$ModelInTransfer]['stockid'];
 						DB_query($SQL2, $ErrMsg);
 					}
@@ -430,36 +430,36 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 								locale_number_format($NumPcsInThisStockDispatch, 0), 'left');
 				
 				//add prepared by
-				$pdf->addTextWrap(50, $YPos - 50, 100, 9, _('Prepared By :'), 'left');
-				$pdf->addTextWrap(50, $YPos - 70, 100, $FontSize, _('Name'), 'left');
+				$pdf->addTextWrap(50, $YPos - 50, 100, 9, __('Prepared By :'), 'left');
+				$pdf->addTextWrap(50, $YPos - 70, 100, $FontSize, __('Name'), 'left');
 				$pdf->addTextWrap(90, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(50, $YPos - 90, 100, $FontSize, _('Date'), 'left');
+				$pdf->addTextWrap(50, $YPos - 90, 100, $FontSize, __('Date'), 'left');
 				$pdf->addTextWrap(90, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(50, $YPos - 110, 100, $FontSize, _('Hour'), 'left');
+				$pdf->addTextWrap(50, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
 				$pdf->addTextWrap(90, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(50, $YPos - 150, 100, $FontSize, _('Signature'), 'left');
+				$pdf->addTextWrap(50, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
 				$pdf->addTextWrap(90, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
 
 				//add shipped by
-				$pdf->addTextWrap(240, $YPos - 50, 100, 9, _('Shipped By :'), 'left');
-				$pdf->addTextWrap(240, $YPos - 70, 100, $FontSize, _('Name'), 'left');
+				$pdf->addTextWrap(240, $YPos - 50, 100, 9, __('Shipped By :'), 'left');
+				$pdf->addTextWrap(240, $YPos - 70, 100, $FontSize, __('Name'), 'left');
 				$pdf->addTextWrap(280, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(240, $YPos - 90, 100, $FontSize, _('Date'), 'left');
+				$pdf->addTextWrap(240, $YPos - 90, 100, $FontSize, __('Date'), 'left');
 				$pdf->addTextWrap(280, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(240, $YPos - 110, 100, $FontSize, _('Hour'), 'left');
+				$pdf->addTextWrap(240, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
 				$pdf->addTextWrap(280, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(240, $YPos - 150, 100, $FontSize, _('Signature'), 'left');
+				$pdf->addTextWrap(240, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
 				$pdf->addTextWrap(280, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
 
 				//add received by
-				$pdf->addTextWrap(440, $YPos - 50, 100, 9, _('Received By :'), 'left');
-				$pdf->addTextWrap(440, $YPos - 70, 100, $FontSize, _('Name'), 'left');
+				$pdf->addTextWrap(440, $YPos - 50, 100, 9, __('Received By :'), 'left');
+				$pdf->addTextWrap(440, $YPos - 70, 100, $FontSize, __('Name'), 'left');
 				$pdf->addTextWrap(480, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(440, $YPos - 90, 100, $FontSize, _('Date'), 'left');
+				$pdf->addTextWrap(440, $YPos - 90, 100, $FontSize, __('Date'), 'left');
 				$pdf->addTextWrap(480, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(440, $YPos - 110, 100, $FontSize, _('Hour'), 'left');
+				$pdf->addTextWrap(440, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
 				$pdf->addTextWrap(480, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-				$pdf->addTextWrap(440, $YPos - 150, 100, $FontSize, _('Signature'), 'left');
+				$pdf->addTextWrap(440, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
 				$pdf->addTextWrap(480, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
 
 				if ($YPos < $Bottom_Margin + $LineHeight){
@@ -556,19 +556,19 @@ function PrintHeaderSmartStockDispatch(&$pdf, &$YPos, &$PageNumber, $Page_Height
 	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 	$YPos -= $LineHeight;
 
-	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Shop Transfer'));
+	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Shop Transfer'));
 	$pdf->setFont('', 'B');
-	$pdf->addTextWrap(200, $YPos, 30, $FontSize, _('From :'));
+	$pdf->addTextWrap(200, $YPos, 30, $FontSize, __('From :'));
 	$pdf->addTextWrap(230, $YPos, 200, $FontSize, $FromLocation);
 	$pdf->setFont('', '');
 
-	$pdf->addTextWrap($Page_Width - $Right_Margin - 150, $YPos, 160, $FontSize, _('Printed') . ': ' .
-		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber, 'left');
+	$pdf->addTextWrap($Page_Width - $Right_Margin - 150, $YPos, 160, $FontSize, __('Printed') . ': ' .
+		 Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
 	$YPos -= $LineHeight;
-	$pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, _('Transfer'));
+	$pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, __('Transfer'));
 	$pdf->addTextWrap(95, $YPos, 50, $FontSize, $Trf_ID);
 	$pdf->setFont('', 'B');
-	$pdf->addTextWrap(200, $YPos, 30, $FontSize, _('To :'));
+	$pdf->addTextWrap(200, $YPos, 30, $FontSize, __('To :'));
 	$pdf->addTextWrap(230, $YPos, 200, $FontSize, $ToLocation);
 	$pdf->setFont('', '');
 	$YPos -= $LineHeight;
@@ -578,21 +578,21 @@ function PrintHeaderSmartStockDispatch(&$pdf, &$YPos, &$PageNumber, $Page_Height
 	$pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, '');
 	$pdf->addTextWrap(95, $YPos, 50, $FontSize, '');
 	if ($Strategy == 'OverFrom') {
-		$pdf->addTextWrap(200, $YPos, 200, $FontSize, _('Overstock items at ') . $FromLocation);
+		$pdf->addTextWrap(200, $YPos, 200, $FontSize, __('Overstock items at ') . $FromLocation);
 	}else{
-		$pdf->addTextWrap(200, $YPos, 200, $FontSize, _('Items needed at ') . $ToLocation);
+		$pdf->addTextWrap(200, $YPos, 200, $FontSize, __('Items needed at ') . $ToLocation);
 	}
 	$YPos -= (2 * $LineHeight);
 	/*set up the headings */
 
 	$FontSize = 8;
 
-	$pdf->addTextWrap(50, $YPos, 100, $FontSize, _('Item Code'), 'left');
-	$pdf->addTextWrap(135, $YPos, 170, $FontSize, _('Image/Description'), 'left');
-	$pdf->addTextWrap(362, $YPos, 40, $FontSize, _('Qty@'), 'right');
-	$pdf->addTextWrap(413, $YPos, 40, $FontSize, _('Qty@'), 'right');
-	$pdf->addTextWrap(460, $YPos, 40, $FontSize, _('Shipped'), 'right');
-	$pdf->addTextWrap(510, $YPos, 40, $FontSize, _('Received'), 'right');
+	$pdf->addTextWrap(50, $YPos, 100, $FontSize, __('Item Code'), 'left');
+	$pdf->addTextWrap(135, $YPos, 170, $FontSize, __('Image/Description'), 'left');
+	$pdf->addTextWrap(362, $YPos, 40, $FontSize, __('Qty@'), 'right');
+	$pdf->addTextWrap(413, $YPos, 40, $FontSize, __('Qty@'), 'right');
+	$pdf->addTextWrap(460, $YPos, 40, $FontSize, __('Shipped'), 'right');
+	$pdf->addTextWrap(510, $YPos, 40, $FontSize, __('Received'), 'right');
 	$YPos -= $LineHeight;
 	$pdf->addTextWrap(365, $YPos, 40, $FontSize, $FromLocCode, 'right');
 	$pdf->addTextWrap(415, $YPos, 40, $FontSize, $ToLocCode, 'right');
