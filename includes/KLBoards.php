@@ -2636,7 +2636,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				ON  purchorders.supplierno = suppliers.supplierid
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
-			WHERE purchorderdetails.completed=0 "
+			WHERE purchorderdetails.completed = 0 "
 				. $SQLFilterKLStatus .
 				$SQLFilterProduct .
 				" AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
