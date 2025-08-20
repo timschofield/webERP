@@ -4209,3 +4209,15 @@ echo '</tfooter>
 	</div>';
 }	
 
+function TimeNeededForExecution($FunctionName, $StartTime, $AuthorizedRole) {
+	if ($AuthorizedRole) {
+		$EndTime = microtime(true);
+		$ExecutionTime = $EndTime - $StartTime;
+		if ($ExecutionTime > 2) {
+			prnMsg(__('Execution time for script') . ' ' . $FunctionName . ': ' . round($ExecutionTime, 5) . ' seconds');
+		}
+		return $EndTime;
+	} else {
+		return $StartTime;
+	}
+}

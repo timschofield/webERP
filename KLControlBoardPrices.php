@@ -67,68 +67,118 @@ if ($ProcessSection01){
 	/***************************************************************************************
 	* RETAIL PRICE         
 	***************************************************************************************/
+	$StartTime = microtime(true);
 	ShowTotalItemsMoving();
+	TimeNeededForExecution("ShowTotalItemsMoving", $StartTime, $KL_SystemAdmin);
 	
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 		
+		$StartTime = microtime(true);
 		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("STABKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("STABBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		TimeNeededForExecution("ItemsWithoutRetailPrice", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("TESTKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("STABKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("NOPOKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("STABBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceBelowStandard("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		TimeNeededForExecution("PriceBelowStandard", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -145,41 +195,69 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooCheap("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooCheap", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("TESTKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("STABKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += ItemsTooExpensive("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
+		TimeNeededForExecution("ItemsTooExpensive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath);
+		TimeNeededForExecution("PricesTooOld", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		$IssuesFound += PriceWrongRounding($RootPath);
+		TimeNeededForExecution("PriceWrongRounding", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 }
