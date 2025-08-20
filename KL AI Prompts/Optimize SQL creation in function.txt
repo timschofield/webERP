@@ -1,0 +1,3 @@
+Improve the $SQL creation in function FinishedStockDistribution($Kind, $ByReport) starting in line 1006, considering the DB schema. 
+Besides optimizing the query via $SQL creation, consider creation, or modification of indexes
+

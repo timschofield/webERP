@@ -1557,25 +1557,27 @@ function TotalModels($Brand){
 }
  
 function TotalItems($Brand){
+	/* SQL optimized by Gemini on 20/08/2025 */
 
 	if ($Brand == "SHOPKL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
 	}elseif ($Brand == "SHOPBL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
 	}elseif ($Brand == "SHOPOK"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
 	}elseif ($Brand == "SHOPOB"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
 	}elseif ($Brand == "SHOPOG"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
 	}else{
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$Operator1 = " stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
 	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
-			FROM locstock, stockmaster
-			WHERE stockmaster.stockid = locstock.stockid " . 
-				$Operator1 ."";
+			FROM locstock
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = locstock.stockid
+			WHERE " . $Operator1 . "";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
@@ -1585,6 +1587,7 @@ function TotalItems($Brand){
 }
 
 function TotalDisplayItems($Brand){
+	/* SQL optimized by Gemini on 20/08/2025 */
 	$ErrMsg = 'Error in TotalDisplayItems()';
 
 	if ($Brand == "SHOPKL"){
@@ -1596,11 +1599,12 @@ function TotalDisplayItems($Brand){
 	} 
 
 	$SQL =	"SELECT COUNT(locstock.quantity) AS displayitems
-			FROM locstock, stockmaster
-			WHERE stockmaster.stockid = locstock.stockid 
-				AND locstock.quantity >= 1" . 
-				$Operator1 ."";
-	$Result = DB_query($SQL);
+			FROM locstock
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = locstock.stockid
+			WHERE locstock.quantity >= 1
+			" . $Operator1 . "";
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow['0'];
@@ -1609,6 +1613,7 @@ function TotalDisplayItems($Brand){
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
+	/* SQL optimized by Gemini on 20/08/2025 */
 	if ($Brand == "SHOPKL"){
 		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
 	}elseif ($Brand == "SHOPBL"){
@@ -1624,11 +1629,12 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 	} 
 
 	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
-			FROM salesorderdetails, stockmaster
-			WHERE stockmaster.stockid = salesorderdetails.stkcode 
-				AND salesorderdetails.itemdue >= '" . $FromDate . "'
-				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
-				$Operator1 ."";
+			FROM salesorderdetails
+			INNER JOIN stockmaster
+				ON salesorderdetails.stkcode = stockmaster.stockid
+			WHERE salesorderdetails.itemdue >= '" . $FromDate . "'
+				AND salesorderdetails.itemdue <= '" . $ToDate . "'
+			" . $Operator1 . "";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
