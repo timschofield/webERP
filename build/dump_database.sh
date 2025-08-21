@@ -19,7 +19,7 @@ Action: either default, demo or all
 Options:
   -c        adds 'create schema' to the sql scripts it creates
   -t        adds 'create tables' to the sql scripts it creates
-  -d \$DIR   use a custom directory for saving the files to
+  -o \$DIR   use a custom directory for saving the files to
 
 Uses env vars: MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PASSWORD, MYSQL_DATABASE
 
@@ -32,20 +32,25 @@ NB: truncates table audittrail on the live db in use.
 
 ADD_CREATE_SCHEMA_STATEMENTS=false
 ADD_CREATE_TABLES_STATEMENTS=false
+ADD_DROP_TABLES_STATEMENTS=false
+DUMP_OPTIONS=""
 
 # parse cli options and arguments
-while getopts ":cd:ht" opt
+while getopts ":cdho:t" opt
 do
 	case $opt in
 		c)
 			ADD_CREATE_SCHEMA_STATEMENTS=true
 		;;
-        d)
-        	TARGET_DIR="$OPTARG"
+		d)
+			ADD_DROP_TABLES_STATEMENTS=true
 		;;
 		h)
 			help
 			exit 0
+		;;
+		o)
+			TARGET_DIR="$OPTARG"
 		;;
 		t)
 			ADD_CREATE_TABLES_STATEMENTS=true
