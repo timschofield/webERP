@@ -25,10 +25,25 @@
 
 use PGettext\T;
 
-// LC_MESSAGES is not available if php has not been compiled with libintl,
-// while the other constants are always available.
+// LC_MESSAGES is not available if php has not been compiled with libintl, while the other constants are always available.
+// On Linux and Solaris, the values are: LC_CTYPE=0, LC_NUMERIC=1, LC_TIME=2, LC_COLLATE=3, LC_MONETARY=4, LC_MESSAGES=5, LC_ALL=6
+// On Windows, the values are: LC_CTYPE=2, LC_NUMERIC=4, LC_TIME=5, LC_COLLATE=1, LC_MONETARY=3, LC_MESSAGES=undefined, LC_ALL=0
+// On FreeBSD (14), the values are: LC_CTYPE=2, LC_NUMERIC=4, LC_TIME=5, LC_COLLATE=1, LC_MONETARY=3, LC_MESSAGES=6, LC_ALL=0
 if (!defined('LC_MESSAGES')) {
-  define('LC_MESSAGES',	5);
+  $lc_constants_values_in_use = array();
+  foreach(array('LC_CTYPE', 'LC_NUMERIC', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_ALL') as $constant) {
+    $lc_constants_values_in_use[] = constant($constant);
+  }
+  if (in_array(5, $lc_constants_values_in_use)) {
+    if (in_array(6, $lc_constants_values_in_use)) {
+      define('LC_MESSAGES',	max($lc_constants_values_in_use) + 1);
+    } else {
+      define('LC_MESSAGES',	6);
+    }
+  } else {
+    define('LC_MESSAGES',	5);
+  }
+  unset($lc_constants_values_in_use);
 }
 
 // *** Wrappers used as a drop in replacement for the standard gettext functions ***
