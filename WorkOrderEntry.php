@@ -527,8 +527,8 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($SearchResult);
-	DB_free_result($SearchResult);
 	$ListCount = DB_num_rows($SearchResult);
+	DB_free_result($SearchResult);
 	unset($SearchResult);
 
 	if ($ListCount > 0) {
