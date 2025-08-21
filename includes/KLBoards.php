@@ -1625,10 +1625,10 @@ function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumSto
 /* EXPLAIN SQL	2014-05-20
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
-4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kurakura_kl_erp.stockmaster.stockid	2	Using where
-4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kurakura_kl_erp.purchorderdetails.orderno	1	Using where
-3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kurakura_kl_erp.stockmaster.stockid	81	Using where
-2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kurakura_kl_erp.stockmaster.stockid	14
+4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kl_erp.stockmaster.stockid	2	Using where
+4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kl_erp.purchorderdetails.orderno	1	Using where
+3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kl_erp.stockmaster.stockid	81	Using where
+2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kl_erp.stockmaster.stockid	14
 
 */
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysUsage-1));

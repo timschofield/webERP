@@ -2,7 +2,7 @@
 # KL settings 
 *.ini
 companies\test_erp\part_pics\*
-companies\kurakura_kl_erp\part_pics\*
+companies\kl_erp\part_pics\*
 # KL settings END
 
 # Ignore NetBeans project metadata

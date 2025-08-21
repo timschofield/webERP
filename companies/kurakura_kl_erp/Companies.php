@@ -1,3 +1,3 @@
 <?php
 
-$CompanyName['kurakura_kl_erp'] = 'Kapal-Laut / Blink';
+$CompanyName['kl_erp'] = 'Kapal-Laut / Blink';

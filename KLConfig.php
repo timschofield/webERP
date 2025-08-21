@@ -69,10 +69,10 @@ if ($webERPType == 'PRODUCTION') {
 	// use the production DB
 	$DBUser = 'kurakura_kl_0001';
 	$DBPassword = 'KXGrwKrlKduQTSdqnLZc';
-	$DefaultDatabase = 'kurakura_kl_erp';
+	$DefaultDatabase = 'kl_erp';
 
 	// use the production company folder
-	$DefaultCompany = 'kurakura_kl_erp';
+	$DefaultCompany = 'kl_erp';
 	
 	// use the production Opencart DB
 	$OpenCartDBUser = 'DBU_kl_shop';
