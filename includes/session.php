@@ -1,12 +1,14 @@
 <?php
-/* webERP Session handling
- * This file is included at the start of every script in webERP
+
+/* webERP Session handling and general bootstrapping.
+ *
+ * This file is included at the start of every script in webERP.
  * It sets up the session and includes the necessary files for:
  * - database connection
  * - language setup
  * - password checking
  * - security authorisation level check
- * - config.php is included in session.php
+ * NB: config.php is included in session.php
  */
 
 if (!isset($PathPrefix)) {
@@ -30,9 +32,16 @@ if (!file_exists($PathPrefix . 'config.php')) {
 include($PathPrefix . 'config.php');
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
+	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;
+}
+
+// another upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
+if ($DBType === 'mysql' && !extension_loaded('mysql')) {
+	/// @todo we should attempt to update the config.php file...
+	$DBType = 'mysqli';
 }
 
 if (isset($SessionSavePath)) {

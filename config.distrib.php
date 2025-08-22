@@ -41,8 +41,7 @@ date_default_timezone_set('Pacific/Auckland');
 $Host = 'localhost';
 $MySQLPort = 3306;
 // The type of db server being used
-//$DBType = 'mysql'; // DEPRECATED
-//$DBType = 'mysqli';
+//$DBType = 'mysqli'; // use for mysql server
 //$DBType = 'mariadb';
 //$DBType = 'postgres'; // UNSUPPORTED
 $DBType = 'mysqli';
