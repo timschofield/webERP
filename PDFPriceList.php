@@ -209,7 +209,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Category = '';
 	$CatTot_Val=0;
 
-	require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 	while ($PriceList = DB_fetch_array($PricesResult)) {
 

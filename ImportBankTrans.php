@@ -16,7 +16,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
-include('includes/CurrenciesArray.php');
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 /*
 Read in the flat file one line at a time

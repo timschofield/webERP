@@ -102,7 +102,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$PeriodFromName = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
 	$PeriodToName = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
 	echo __('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName), ' ', __('to'), ' ', MonthAndYearFromSQLDate($PeriodToName), '<br />'; // Page title, reporting period.
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 	echo __('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:

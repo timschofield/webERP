@@ -848,7 +848,7 @@ if (DB_num_rows($Result)==0){
 	prnMsg(__('No currencies are defined yet') . '. ' . __('Receipts cannot be entered until a currency is defined'),'warn');
 
 } else {
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 	while ($MyRow=DB_fetch_array($Result)){
 		if ($_SESSION['ReceiptBatch' . $identifier]->Currency==$MyRow['currabrev']){
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';

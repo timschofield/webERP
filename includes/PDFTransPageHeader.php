@@ -155,7 +155,7 @@ $XPos = $Page_Width/2;
 $XPos = $Left_Margin;
 $YPos -= ($LineHeight*2);
 
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 $pdf->addText($Left_Margin, $YPos-8, $FontSize, __('All amounts stated in') . ': ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']]);
 
 if ($InvOrCredit=='Invoice') {

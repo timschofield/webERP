@@ -163,7 +163,7 @@ if (isset($_GET['Edit'])){
 }
 $SQL = "SELECT currabrev FROM currencies";
 $Result = DB_query($SQL);
-require_once('includes/CurrenciesArray.php');
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 echo '<fieldset>
 		<legend>', __('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>

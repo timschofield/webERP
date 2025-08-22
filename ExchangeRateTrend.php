@@ -30,7 +30,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 
 	$SQL = "SELECT currabrev FROM currencies";
 	$Result = DB_query($SQL);
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 	// CurrencyToShow Currency Picker
 	echo '<tr>

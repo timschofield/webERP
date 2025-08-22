@@ -1008,7 +1008,7 @@ if (DB_num_rows($Result) == 0) {
 		</field>';
 }
 else {
-	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 	if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 		echo '<select name="Currency" onchange="ReloadForm(UpdateHeader)" required="required">';
 		while ($MyRow = DB_fetch_array($Result)) {

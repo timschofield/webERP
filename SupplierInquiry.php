@@ -110,7 +110,7 @@ if($NIL_BALANCE == True) {
 	$SupplierRecord['overdue1'] = 0;
 	$SupplierRecord['overdue2'] = 0;
 }
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="', // Icon image.

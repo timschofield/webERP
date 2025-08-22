@@ -125,7 +125,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	$BalanceDate = ConvertSQLDate($EndDateSQL);
 
 	// Page title as IAS 1, numerals 10 and 51:
-	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+	$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 	echo '<div id="Report">', // Division to identify the report block.
 		'<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/gl.png" title="', // Icon image.

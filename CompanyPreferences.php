@@ -251,7 +251,7 @@ echo '<field>
 
 
 $Result = DB_query("SELECT currabrev, currency FROM currencies");
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 echo '<field>
 		<label for="CurrencyDefault">', __('Home Currency'), ':</label>

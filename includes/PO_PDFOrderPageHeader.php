@@ -66,7 +66,7 @@ if (mb_strlen($LeftOvers)>0){
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Comments->x, $Page_Height - $FormDesign->Comments->y-$LineHeight,$FormDesign->Comments->Length,$FormDesign->Comments->FontSize,$LeftOvers, 'left');
 }
 /*Now the currency the order is in */
-include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 $pdf->addText($FormDesign->Currency->x,$Page_Height - $FormDesign->Currency->y,$FormDesign->Currency->FontSize, __('All amounts stated in').' - ' . $POHeader['currcode'] . ' ' . $CurrencyName[$POHeader['currcode']]);
 /*draw a square grid for entering line headings */
 $pdf->Rectangle($FormDesign->HeaderRectangle->x, $Page_Height - $FormDesign->HeaderRectangle->y, $FormDesign->HeaderRectangle->width,$FormDesign->HeaderRectangle->height);

@@ -104,7 +104,7 @@ $pdf->addTextWrap(150,$YPos-($LineHeight*6),300,$FontSize, htmlspecialchars_deco
 $YPos=$YPos-($LineHeight*8);
 
 $pdf->addTextWrap(50,$YPos,300,$FontSize, __('The Sum Of').' :');
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 $pdf->addTextWrap(150,$YPos,300,$FontSize, locale_number_format(-$Amount,$DecimalPlaces).' '. $CurrencyCode . '-' . $CurrencyName[$CurrencyCode]);
 
 $YPos=$YPos-($LineHeight*2);

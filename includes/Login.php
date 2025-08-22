@@ -1,8 +1,8 @@
 <?php
 
-/// @todo should we include these two here? This file is included from session.php, which already includes them...
+/// @todo should we include this here? This file is included from session.php, which already includes it...
 include($PathPrefix . 'includes/LanguageSetup.php');
-include('LanguagesArray.php');
+//$LanguagesArray = \webERP\LanguageManager::getLanguagesArray();
 
 // Display demo user name and password within login form if $AllowDemoMode is true
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))) {

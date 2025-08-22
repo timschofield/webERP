@@ -30,7 +30,7 @@ $BookMark = 'BalanceSheet';
 
 include_once('includes/SQL_CommonFunctions.php');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
-include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 
 // Merges GETs into POSTs:
 if(isset($_GET['PeriodTo'])) {

@@ -78,8 +78,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 					'<th>', __('Purchase Invoice'), '</th>',
 					'<th>', __('Reference'), '</th>',
 					$CommonHead;
-		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
-		include('includes/CurrenciesArray.php');
+		$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 		$SupplierId = '';
 		$SupplierOvAmount = 0;
 		$SupplierOvTax = 0;

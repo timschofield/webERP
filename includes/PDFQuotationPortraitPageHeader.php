@@ -81,7 +81,7 @@ $pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontS
 $FontSize=10;
 
 // Prints the currency name:
-require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 $pdf->addText($Page_Width/2+$Left_Margin, $YPos+5, $FontSize,
 	__('All amounts stated in') . ' ' . $MyRow['currcode'] . ' - ' . $CurrencyName[$MyRow['currcode']]);
 

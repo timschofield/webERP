@@ -82,8 +82,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<th>' . __('Sales Invoice') . '</th>
 				<th>' . __('Reference') . '</th>' .
 					$CommonHead;
-		// Includes $CurrencyName array with currency three-letter alphabetic code and name based on ISO 4217:
-		include('includes/CurrenciesArray.php');
+		$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 		$CustomerId = '';
 		$CustomerOvAmount = 0;
 		$CustomerOvTax = 0;

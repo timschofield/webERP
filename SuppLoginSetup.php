@@ -1,13 +1,14 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Supplier Login Configuration');
-include('includes/header.php');
 $ViewTopic = 'Setup';
 $BookMark = '';
-include('includes/SQL_CommonFunctions.php');
-include('includes/LanguagesArray.php');
+include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+//$LanguagesArray = \webERP\LanguageManager::getLanguagesArray();
 
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
