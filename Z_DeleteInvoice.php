@@ -12,7 +12,7 @@ This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????
 include('includes/session.php');
 $Title = __('Delete Invoice');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 if (!isset($_GET['InvoiceNo'])){

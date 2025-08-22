@@ -1,6 +1,6 @@
 # Installing webERP
 
-This document describes how to perform a new webERP installation. See [UPGRADING.md](upgrading.md) if you
+This document describes how to perform a new webERP installation. See [UPGRADING.md](UPGRADING.md) if you
 are upgrading an existing installation.
 
 ## Pre-requisites

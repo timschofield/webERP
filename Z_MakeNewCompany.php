@@ -14,7 +14,7 @@ if (isset($_POST['EnterCompanyDetails'])) {
 }
 $Title = __('Make New Company Database Utility');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 
 include('includes/header.php');
 

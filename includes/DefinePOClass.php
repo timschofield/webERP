@@ -140,7 +140,7 @@ Class PurchOrder {
 			$this->LineItems[$LineNo]->Suppliers_PartNo = $Suppliers_PartNo;
 	}
 
-	function remove_from_order(&$LineNo){
+	function remove_from_order($LineNo){
 		 $this->LineItems[$LineNo]->Deleted = True;
 	}
 

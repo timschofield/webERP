@@ -4,7 +4,7 @@
 include('includes/session.php');
 $Title = __('Import Fixed Assets');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .

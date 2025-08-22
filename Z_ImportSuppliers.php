@@ -4,7 +4,7 @@
 include('includes/session.php');
 $Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 if(isset($_POST['FormID'])) {
