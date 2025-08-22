@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = __('Import Debtors And branches');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 

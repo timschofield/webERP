@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = __('Create Chart Details Records');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 /*Script to insert ChartDetails records where one should already exist

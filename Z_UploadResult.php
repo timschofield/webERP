@@ -7,7 +7,7 @@ include('includes/session.php');
 $Title=__('File Upload Result');
 
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 

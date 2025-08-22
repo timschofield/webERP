@@ -1,10 +1,14 @@
 <?php
+
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
-	global  $PathPrefix;		// For included files
-	include('../config.php');
+	global $PathPrefix, $SysAdminEmail;
+
+	//include($PathPrefix . 'config.php');
+
 	// Include now for the error code values.
-	include  '../includes/UserLogin.php';	/* Login checking and setup */
+	include($PathPrefix . 'includes/UserLogin.php');	/* Login checking and setup */
+
 	$RetCode = array();		// Return result.
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
 		// Establish the database connection for this session.
@@ -46,7 +50,6 @@ function  LoginAPI($databasename, $user, $password) {
 
 
 //  Logout function destroys the session data, and that's about it.
-
 function  LogoutAPI() {
 
     //  Is this user logged in?
@@ -68,7 +71,6 @@ function  LogoutAPI() {
  *  but since it does NOT require being logged in, this seems like a
  *  reasonable place to put it.
  */
-
 function GetAPIErrorMessages( $errcodes )
 {
     global  $ErrorDescription;
@@ -93,12 +95,10 @@ function GetAPIErrorMessages( $errcodes )
     return  $retmsg;
 }
 
-
 /*
  *  Some initialisation cannot be done until the user is logged in.  This
  *  function should be called when a successful login occurs.
  */
-
 function DoSetup()
 {
     global  $PathPrefix;
@@ -119,7 +119,7 @@ function DoSetup()
 				     $SQL = "DELETE FROM audittrail
 						    WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 					$ErrMsg = __('There was a problem deleting expired audit-trail history');
-				    $Result = DB_query($SQL);
+				    $Result = DB_query($SQL, $ErrMsg);
 				}
 			    $_SESSION['DB_Maintenance_LastRun'] = Date('Y-m-d');
 			}

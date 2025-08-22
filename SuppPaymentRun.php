@@ -132,7 +132,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				$LeftOvers = $PDF->addTextWrap($Left_Margin,
+				$PDF->addTextWrap($Left_Margin,
 												$YPos,
 												450-$Left_Margin,
 												$FontSize,
@@ -144,7 +144,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $PDF->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
+			$PDF->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
 			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
@@ -172,8 +172,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 			}
 
-			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
-			$LeftOvers = $PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+			$PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
+			$PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 			$YPos -=$LineHeight;
 			if ($YPos < $Bottom_Margin + $LineHeight){
@@ -199,9 +199,9 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			exit();
 		}
 
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,__('Grand Total Payments Due'), 'left');
-		$LeftOvers = $PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
-		$LeftOvers = $PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,__('Grand Total Payments Due'), 'left');
+		$PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
+		$PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 	}
 

@@ -41,8 +41,7 @@ date_default_timezone_set('Pacific/Auckland');
 $Host = 'localhost';
 $MySQLPort = 3306;
 // The type of db server being used
-//$DBType = 'mysql'; // DEPRECATED
-//$DBType = 'mysqli';
+//$DBType = 'mysqli'; // use for mysql server
 //$DBType = 'mariadb';
 //$DBType = 'postgres'; // UNSUPPORTED
 $DBType = 'mysqli';
@@ -120,7 +119,7 @@ error_reporting(E_ALL && ~E_NOTICE);
 // For Development, use:
 //error_reporting(-1);
 
-// Debug information 
+// Debug information
 $Debug = 0; // No debug information will be shown. Recommended for production environments
 // $Debug = 1; // Simple debug information will be shown. Recommended for development environments
 // $Debug = 2; // Detailed debug information will be shown. Recommended for development environments

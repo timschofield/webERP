@@ -356,7 +356,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 } /*end of else not PrintPDF */
 
-function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+function PrintHeader($PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$Consolidation,$ReportDate) {
 
 	/*PDF page header for MRP Planned Purchase Orders report */

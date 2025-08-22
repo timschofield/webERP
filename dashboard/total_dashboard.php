@@ -2,7 +2,7 @@
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	// allow dashboard applet to run standalone
-	require_once ($PathPrefix . 'includes/session.php');
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 	$DirectoryLevelsDeep = 1;
 	$PathPrefix = __DIR__ . '/../';

@@ -261,7 +261,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				if ($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().
 					PageHeader();
 				}
-				$LeftOvers = $pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
+				$pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
 				$YPosImage = $YPos-36;// Stores the $YPos of the image bottom (see bottom).
 			}
 			// Prints stockmaster.longdescription:

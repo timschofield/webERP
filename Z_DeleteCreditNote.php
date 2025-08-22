@@ -13,7 +13,7 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 include('includes/session.php');
 $Title = __('Delete Credit Note');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 

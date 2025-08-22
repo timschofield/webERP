@@ -135,12 +135,6 @@ function ContainsIllegalCharacters($CheckVariable) {
 	}
 }
 
-function pre_var_dump(&$var) {
-	echo '<div align=left><pre>';
-	var_dump($var);
-	echo '</pre></div>';
-}
-
 class XmlElement {
 	var $name;
 	var $attributes;
@@ -727,7 +721,6 @@ function fShowFieldHelp($HelpText) {
 	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
 		echo '<span class="field_help_text">', $HelpText, '</span>';
 	}
-	return;
 }
 
 function fShowPageHelp($HelpText) {
@@ -735,7 +728,6 @@ function fShowPageHelp($HelpText) {
 	if ($_SESSION['ShowPageHelp'] || !isset($_SESSION['ShowPageHelp'])) {
 		echo '<div class="page_help_text">', $HelpText, '</div><br />';
 	}
-	return;
 }
 
 /*

@@ -1,6 +1,5 @@
 <?php
 
-// PO_Items.php
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
 include('includes/DefinePOClass.php');

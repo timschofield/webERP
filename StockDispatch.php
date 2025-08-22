@@ -435,7 +435,7 @@ if (isset($_POST['PrintPDF'])) {
 } /*end of else not PrintPDF */
 
 
-function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+function PrintHeader($pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$Template,$CategoryDescription) {
 
 

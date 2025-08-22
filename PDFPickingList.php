@@ -322,11 +322,11 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 			}
 			$ListCount ++;
 
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column1->x,$Page_Height - $YPos,$FormDesign->Headings->Column1->Length,$FormDesign->Headings->Column1->FontSize,$MyRow2['stkcode'],'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x,$Page_Height - $YPos,$FormDesign->Headings->Column2->Length,$FormDesign->Headings->Column2->FontSize,$ItemDesc);
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x,$Page_Height - $YPos,$FormDesign->Headings->Column3->Length,$FormDesign->Headings->Column3->FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x,$Page_Height - $YPos,$FormDesign->Headings->Column4->Length,$FormDesign->Headings->Column4->FontSize,$DisplayQtySupplied,'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x,$Page_Height - $YPos,$FormDesign->Headings->Column5->Length,$FormDesign->Headings->Column5->FontSize,$DisplayPrevDel,'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column1->x,$Page_Height - $YPos,$FormDesign->Headings->Column1->Length,$FormDesign->Headings->Column1->FontSize,$MyRow2['stkcode'],'left');
+			$pdf->addTextWrap($FormDesign->Headings->Column2->x,$Page_Height - $YPos,$FormDesign->Headings->Column2->Length,$FormDesign->Headings->Column2->FontSize,$ItemDesc);
+			$pdf->addTextWrap($FormDesign->Headings->Column3->x,$Page_Height - $YPos,$FormDesign->Headings->Column3->Length,$FormDesign->Headings->Column3->FontSize,$DisplayQty,'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column4->x,$Page_Height - $YPos,$FormDesign->Headings->Column4->Length,$FormDesign->Headings->Column4->FontSize,$DisplayQtySupplied,'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column5->x,$Page_Height - $YPos,$FormDesign->Headings->Column5->Length,$FormDesign->Headings->Column5->FontSize,$DisplayPrevDel,'right');
 
 			if ($Page_Height-$YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a new */

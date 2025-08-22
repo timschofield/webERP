@@ -801,7 +801,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 }
 /* end display list if there is more than one record */
 
-function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+function PrintHeader($pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin) {
 
 	$LineHeight=12;

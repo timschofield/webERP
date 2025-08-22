@@ -7,7 +7,7 @@ if (isset($Messages) and count($Messages) > 0) {
 	$LogFile = false;
 
 	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) { // add these 3 lines
-		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp - ' . $_SESSION['DatabaseName'] . '.log', 'a');
 	}
 
 	echo '<div id="MessageContainerFoot">';

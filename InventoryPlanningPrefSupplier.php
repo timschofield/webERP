@@ -1,6 +1,6 @@
 <?php
 
-function standard_deviation($Data){
+function standard_deviation($Data) {
 	$Total = 0;
 	$Counter = 0;
 	foreach ($Data as $Element){
@@ -38,7 +38,7 @@ function NewPageHeader () {
 	$FontSize=10;
 	$YPos= $Page_Height-$Top_Margin;
 
-	$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$LineHeight;
 
@@ -47,13 +47,13 @@ function NewPageHeader () {
 	$ReportTitle = __('Preferred Supplier Inventory Plan');
 
 	if ($_POST['Location']=='All'){
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for all stock locations'));
+		$PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for all stock locations'));
 	} else {
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for stock at') . ' ' . $_POST['Location']);
+		$PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for stock at') . ' ' . $_POST['Location']);
 	}
 
 	$FontSize=8;
-	$LeftOvers = $PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
+	$PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 	$YPos -=(2*$LineHeight);
 
@@ -67,34 +67,35 @@ function NewPageHeader () {
 	/*set up the headings */
 	$XPos = $Left_Margin+1;
 
-	$LeftOvers = $PDF->addTextWrap($XPos,$YPos,180,$FontSize,__('Item'),'centre');
+	$PDF->addTextWrap($XPos,$YPos,180,$FontSize,__('Item'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(270,$YPos,50,$FontSize, __('Avg Qty'),'centre');
-	$LeftOvers = $PDF->addTextWrap(270,$YPos-10,50,$FontSize, __('4 mths'),'centre');
+	$PDF->addTextWrap(270,$YPos,50,$FontSize, __('Avg Qty'),'centre');
+	$PDF->addTextWrap(270,$YPos-10,50,$FontSize, __('4 mths'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(327,$YPos,50,$FontSize, __('Max Mnth'),'centre');
-	$LeftOvers = $PDF->addTextWrap(327,$YPos-10,50,$FontSize, __('Quantity'),'centre');
+	$PDF->addTextWrap(327,$YPos,50,$FontSize, __('Max Mnth'),'centre');
+	$PDF->addTextWrap(327,$YPos-10,50,$FontSize, __('Quantity'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(378,$YPos,50,$FontSize, __('Standard'),'centre');
-	$LeftOvers = $PDF->addTextWrap(378,$YPos-10,50,$FontSize, __('Deviation'),'centre');
+	$PDF->addTextWrap(378,$YPos,50,$FontSize, __('Standard'),'centre');
+	$PDF->addTextWrap(378,$YPos-10,50,$FontSize, __('Deviation'),'centre');
 
 
-	$LeftOvers = $PDF->addTextWrap(429,$YPos,50,$FontSize, __('Lead Time'),'centre');
-	$LeftOvers = $PDF->addTextWrap(429,$YPos-10,50,$FontSize, __('in months'),'centre');
+	$PDF->addTextWrap(429,$YPos,50,$FontSize, __('Lead Time'),'centre');
+	$PDF->addTextWrap(429,$YPos-10,50,$FontSize, __('in months'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(475,$YPos,60,$FontSize, __('Qty Required'),'centre');
-	$LeftOvers = $PDF->addTextWrap(475,$YPos-10,60,$FontSize, __('in Supply Chain'),'centre');
+	$PDF->addTextWrap(475,$YPos,60,$FontSize, __('Qty Required'),'centre');
+	$PDF->addTextWrap(475,$YPos-10,60,$FontSize, __('in Supply Chain'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(617,$YPos,40,$FontSize,__('QOH'),'centre');
-	$LeftOvers = $PDF->addTextWrap(648,$YPos,40,$FontSize,__('Cust Ords'),'centre');
-	$LeftOvers = $PDF->addTextWrap(694,$YPos,40,$FontSize,__('Splr Ords'),'centre');
-	$LeftOvers = $PDF->addTextWrap(735,$YPos,40,$FontSize,__('Sugg Ord'),'centre');
+	$PDF->addTextWrap(617,$YPos,40,$FontSize,__('QOH'),'centre');
+	$PDF->addTextWrap(648,$YPos,40,$FontSize,__('Cust Ords'),'centre');
+	$PDF->addTextWrap(694,$YPos,40,$FontSize,__('Splr Ords'),'centre');
+	$PDF->addTextWrap(735,$YPos,40,$FontSize,__('Sugg Ord'),'centre');
 
 	$YPos =$YPos - (2*$LineHeight);
 	$FontSize=8;
 }
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
@@ -199,7 +200,7 @@ if (isset($_POST['PrintPDF'])){
 		   		$PDF->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
 				$YPos -=(2*$LineHeight);
 			}
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'],'left');
+			$PDF->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'],'left');
 			$SupplierID = $InventoryPlan['supplierno'];
 			$FontSize=8;
 		}
@@ -239,35 +240,35 @@ if (isset($_POST['PrintPDF'])){
 		// Get the QOO
 		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
-		$LeftOvers = $PDF->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
+		$PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
+		$PDF->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
 		$AverageOfLast4Months = $SalesRow['4mthtotal']/4;
-		$LeftOvers = $PDF->addTextWrap(251, $YPos, 50,$FontSize,locale_number_format($AverageOfLast4Months,1),'right');
+		$PDF->addTextWrap(251, $YPos, 50,$FontSize,locale_number_format($AverageOfLast4Months,1),'right');
 
 		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
-		$LeftOvers = $PDF->addTextWrap(309, $YPos, 50,$FontSize,locale_number_format($MaxMthSales,0),'right');
+		$PDF->addTextWrap(309, $YPos, 50,$FontSize,locale_number_format($MaxMthSales,0),'right');
 
 		$Quantities = array($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$StandardDeviation = standard_deviation($Quantities);
-		$LeftOvers = $PDF->addTextWrap(359, $YPos, 50,$FontSize,locale_number_format($StandardDeviation,2),'right');
+		$PDF->addTextWrap(359, $YPos, 50,$FontSize,locale_number_format($StandardDeviation,2),'right');
 
-		$LeftOvers = $PDF->addTextWrap(409, $YPos, 50,$FontSize,locale_number_format($InventoryPlan['monthsleadtime'],1),'right');
+		$PDF->addTextWrap(409, $YPos, 50,$FontSize,locale_number_format($InventoryPlan['monthsleadtime'],1),'right');
 
 		$RequiredStockInSupplyChain = $AverageOfLast4Months * ($_POST['NumberMonthsHolding']+$InventoryPlan['monthsleadtime']);
 
-		$LeftOvers = $PDF->addTextWrap(456, $YPos, 50,$FontSize,locale_number_format($RequiredStockInSupplyChain,0),'right');
-		$LeftOvers = $PDF->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
-		$LeftOvers = $PDF->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
+		$PDF->addTextWrap(456, $YPos, 50,$FontSize,locale_number_format($RequiredStockInSupplyChain,0),'right');
+		$PDF->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
+		$PDF->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
 
-		$LeftOvers = $PDF->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
+		$PDF->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
 
 		$SuggestedTopUpOrder = $RequiredStockInSupplyChain - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $PDF->addTextWrap(730, $YPos, 40,$FontSize,__('Nil'),'center');
+			$PDF->addTextWrap(730, $YPos, 40,$FontSize,__('Nil'),'center');
 
 		} else {
 
-			$LeftOvers = $PDF->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
+			$PDF->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
 		}
 
 		if ($YPos < $Bottom_Margin + $LineHeight){
