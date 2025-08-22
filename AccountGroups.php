@@ -3,7 +3,7 @@
 Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
-$Title = _('Account Groups');
+$Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';
 include('includes/header.php');
@@ -16,7 +16,7 @@ function CheckForRecursiveGroup($ParentGroupName, $GroupName) {
 /* returns true ie 1 if the group contains the parent group as a child group
 ie the parent group results in a recursive group structure otherwise false ie 0 */
 
-	$ErrMsg = _('An error occurred in retrieving the account groups of the parent account group during the check for recursion');
+	$ErrMsg = __('An error occurred in retrieving the account groups of the parent account group during the check for recursion');
 	do {
 		$SQL = "SELECT parentgroupname
 				FROM accountgroups
@@ -41,10 +41,10 @@ $Errors = array();
 
 if(isset($_POST['MoveGroup'])) {
 	$SQL="UPDATE chartmaster SET group_='" . $_POST['DestinyAccountGroup'] . "' WHERE group_='" . $_POST['OriginalAccountGroup'] . "'";
-	$ErrMsg = _('An error occurred in moving the account group');
+	$ErrMsg = __('An error occurred in moving the account group');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
-	prnMsg( _('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . _('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'],'success');
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a></div>';
+	prnMsg( __('All accounts in the account group:') . ' ' . $_POST['OriginalAccountGroup'] . ' ' . __('have been changed to the account group:') . ' ' . $_POST['DestinyAccountGroup'],'success');
 }
 
 if(isset($_POST['submit'])) {
@@ -63,33 +63,33 @@ if(isset($_POST['submit'])) {
 			FROM accountgroups
 			WHERE groupname='" . $_POST['GroupName'] . "'";
 
-	$ErrMsg = _('Could not check whether the group exists because');
+	$ErrMsg = __('Could not check whether the group exists because');
 
 	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow=DB_fetch_row($Result);
 
 	if($MyRow[0] != 0 AND $_POST['SelectedAccountGroup'] == '') {
 		$InputError = 1;
-		prnMsg( _('The account group name already exists in the database'),'error');
+		prnMsg( __('The account group name already exists in the database'),'error');
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
 	if(ContainsIllegalCharacters($_POST['GroupName'])) {
 		$InputError = 1;
-		prnMsg( _('The account group name cannot contain the character') . " '&' " . _('or the character') ."' '",'error');
+		prnMsg( __('The account group name cannot contain the character') . " '&' " . __('or the character') ."' '",'error');
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
 	if(mb_strlen($_POST['GroupName'])==0) {
 		$InputError = 1;
-		prnMsg( _('The account group name must be at least one character long'),'error');
+		prnMsg( __('The account group name must be at least one character long'),'error');
 		$Errors[$i] = 'GroupName';
 		$i++;
 	}
 	if($_POST['ParentGroupName'] !='') {
 		if(CheckForRecursiveGroup($_POST['GroupName'],$_POST['ParentGroupName'])) {
 			$InputError =1;
-			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'),'error');
+			prnMsg(__('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'),'error');
 			$Errors[$i] = 'ParentGroupName';
 			$i++;
 		} else {
@@ -99,7 +99,7 @@ if(isset($_POST['submit'])) {
 					FROM accountgroups
 					WHERE groupname='" . $_POST['ParentGroupName'] . "'";
 
-			$ErrMsg = _('Could not check whether the group is recursive because');
+			$ErrMsg = __('Could not check whether the group is recursive because');
 
 			$Result = DB_query($SQL, $ErrMsg);
 
@@ -107,24 +107,24 @@ if(isset($_POST['submit'])) {
 			$_POST['SequenceInTB'] = $ParentGroupRow['sequenceintb'];
 			$_POST['PandL'] = $ParentGroupRow['pandl'];
 			$_POST['SectionInAccounts']= $ParentGroupRow['sectioninaccounts'];
-			prnMsg(_('Since this account group is a child group, the sequence in the trial balance, the section in the accounts and whether or not the account group appears in the balance sheet or profit and loss account are all properties inherited from the parent account group. Any changes made to these fields will have no effect.'),'warn');
+			prnMsg(__('Since this account group is a child group, the sequence in the trial balance, the section in the accounts and whether or not the account group appears in the balance sheet or profit and loss account are all properties inherited from the parent account group. Any changes made to these fields will have no effect.'),'warn');
 		}
 	}
 	if(!ctype_digit($_POST['SectionInAccounts'])) {
 		$InputError = 1;
-		prnMsg( _('The section in accounts must be an integer'),'error');
+		prnMsg( __('The section in accounts must be an integer'),'error');
 		$Errors[$i] = 'SectionInAccounts';
 		$i++;
 	}
 	if(!ctype_digit($_POST['SequenceInTB'])) {
 		$InputError = 1;
-		prnMsg( _('The sequence in the trial balance must be an integer'),'error');
+		prnMsg( __('The sequence in the trial balance must be an integer'),'error');
 		$Errors[$i] = 'SequenceInTB';
 		$i++;
 	}
 	if(!ctype_digit($_POST['SequenceInTB']) OR $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
-		prnMsg( _('The sequence in the TB must be numeric and less than') . ' 10,000','error');
+		prnMsg( __('The sequence in the TB must be numeric and less than') . ' 10,000','error');
 		$Errors[$i] = 'SequenceInTB';
 		$i++;
 	}
@@ -140,7 +140,7 @@ if(isset($_POST['submit'])) {
 			$SQL = "UPDATE chartmaster
 					SET group_='" . $_POST['GroupName'] . "'
 					WHERE group_='" . $_POST['SelectedAccountGroup'] . "'";
-			$ErrMsg = _('An error occurred in renaming the account group');
+			$ErrMsg = __('An error occurred in renaming the account group');
 
 			$Result = DB_query($SQL, $ErrMsg);
 
@@ -159,9 +159,9 @@ if(isset($_POST['submit'])) {
 										sequenceintb='" . $_POST['SequenceInTB'] . "',
 										parentgroupname='" . $_POST['ParentGroupName'] . "'
 									WHERE groupname = '" . $_POST['SelectedAccountGroup'] . "'";
-		$ErrMsg = _('An error occurred in updating the account group');
+		$ErrMsg = __('An error occurred in updating the account group');
 
-		$Msg = _('Record Updated');
+		$Msg = __('Record Updated');
 	} elseif($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account group form */
@@ -177,8 +177,8 @@ if(isset($_POST['submit'])) {
 											'" . $_POST['SequenceInTB'] . "',
 											'" . $_POST['PandL'] . "',
 											'" . $_POST['ParentGroupName'] . "')";
-		$ErrMsg = _('An error occurred in inserting the account group');
-		$Msg = _('Record inserted');
+		$ErrMsg = __('An error occurred in inserting the account group');
+		$Msg = __('Record inserted');
 	}
 
 	if($InputError!=1) {
@@ -196,19 +196,19 @@ if(isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartMaster'
 
 	$SQL= "SELECT COUNT(group_) AS total_groups FROM chartmaster WHERE chartmaster.group_='" . $_GET['SelectedAccountGroup'] . "'";
-	$ErrMsg = _('An error occurred in retrieving the group information from chartmaster');
+	$ErrMsg = __('An error occurred in retrieving the group information from chartmaster');
 	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	if($MyRow['total_groups']>0) {
-		prnMsg( _('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
-		echo '<br />' . _('There are') . ' ' . $MyRow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
+		prnMsg( __('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
+		echo '<br />' . __('There are') . ' ' . $MyRow['groups'] . ' ' . __('general ledger accounts that refer to this account group');
 		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
 		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
-				<td>' . _('Parent Group') . ':' . '</td>
+				<td>' . __('Parent Group') . ':' . '</td>
 				<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="DestinyAccountGroup">';
 
 		$SQL = "SELECT groupname FROM accountgroups";
@@ -224,24 +224,24 @@ if(isset($_POST['submit'])) {
 		echo '</select>';
 		echo '</td></tr>';
 		echo '<tr>
-				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . _('Move Group') . '" /></div></td>
+				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . __('Move Group') . '" /></div></td>
 		  </tr>
 		  </table>';
 
 	} else {
 		$SQL = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
-		$ErrMsg = _('An error occurred in retrieving the parent group information');
+		$ErrMsg = __('An error occurred in retrieving the parent group information');
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_array($Result);
 		if($MyRow['groupnames']>0) {
-			prnMsg( _('Cannot delete this account group because it is a parent account group of other account group(s)'),'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow['groupnames'] . ' ' . _('account groups that have this group as its/there parent account group');
+			prnMsg( __('Cannot delete this account group because it is a parent account group of other account group(s)'),'warn');
+			echo '<br />' . __('There are') . ' ' . $MyRow['groupnames'] . ' ' . __('account groups that have this group as its/there parent account group');
 
 		} else {
 			$SQL="DELETE FROM accountgroups WHERE groupname='" . $_GET['SelectedAccountGroup'] . "'";
-			$ErrMsg = _('An error occurred in deleting the account group');
+			$ErrMsg = __('An error occurred in deleting the account group');
 			$Result = DB_query($SQL, $ErrMsg);
-			prnMsg( $_GET['SelectedAccountGroup'] . ' ' . _('group has been deleted') . '!','success');
+			prnMsg( $_GET['SelectedAccountGroup'] . ' ' . __('group has been deleted') . '!','success');
 		}
 
 	} //end if account group used in GL accounts
@@ -265,18 +265,18 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			LEFT JOIN accountsection ON sectionid = sectioninaccounts
 			ORDER BY sequenceintb";
 
-	$ErrMsg = _('Could not get account groups because');
+	$ErrMsg = __('Could not get account groups because');
 	$Result = DB_query($SQL, $ErrMsg);
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Group Name') . '</th>
-				<th class="SortedColumn">' . _('Section') . '</th>
-				<th class="SortedColumn">' . _('Sequence In TB') . '</th>
-				<th class="SortedColumn">' . _('Profit and Loss') . '</th>
-				<th class="SortedColumn">' . _('Parent Group') . '</th>
+				<th class="SortedColumn">' . __('Group Name') . '</th>
+				<th class="SortedColumn">' . __('Section') . '</th>
+				<th class="SortedColumn">' . __('Sequence In TB') . '</th>
+				<th class="SortedColumn">' . __('Profit and Loss') . '</th>
+				<th class="SortedColumn">' . __('Parent Group') . '</th>
 				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
@@ -286,13 +286,13 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 
 		switch ($MyRow['pandl']) {
 		case -1:
-			$PandLText=_('Yes');
+			$PandLText=__('Yes');
 			break;
 		case 1:
-			$PandLText=_('Yes');
+			$PandLText=__('Yes');
 			break;
 		case 0:
-			$PandLText=_('No');
+			$PandLText=__('No');
 			break;
 		} //end of switch statement
 
@@ -302,8 +302,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			<td class="number">' . $MyRow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $MyRow['parentgroupname'] . '</td>';
-		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . __('Edit') . '</a></td>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this account group?') . '\');">' . __('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody>
@@ -312,7 +312,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 
 
 if(isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Review Account Groups') . '</a>';
 }
 
 if(!isset($_GET['delete'])) {
@@ -333,7 +333,7 @@ if(!isset($_GET['delete'])) {
 
 		$Result = DB_query($SQL, $ErrMsg);
 		if(DB_num_rows($Result) == 0) {
-			prnMsg( _('The account group name does not exist in the database'),'error');
+			prnMsg( __('The account group name does not exist in the database'),'error');
 			include('includes/footer.php');
 			exit();
 		}
@@ -346,7 +346,7 @@ if(!isset($_GET['delete'])) {
 		$_POST['ParentGroupName'] = $MyRow['parentgroupname'];
 
 		echo '<fieldset>
-				<legend>', _('Edit Account Group Details'), '</legend>
+				<legend>', __('Edit Account Group Details'), '</legend>
 				<input name="SelectedAccountGroup" type="hidden" value="', $_GET['SelectedAccountGroup'], '" />';
 
 	} elseif(!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
@@ -368,22 +368,22 @@ if(!isset($_GET['delete'])) {
 		}
 
 		echo '<fieldset>
-				<legend>', _('New Account Group Details'), '</legend>
+				<legend>', __('New Account Group Details'), '</legend>
 				<input name="SelectedAccountGroup" type="hidden" value="', $_POST['SelectedAccountGroup'], '" />';
 	}
 	echo '<field>
-			<label for="GroupName">', _('Account Group Name'), ':</label>
-			<input autofocus="autofocus" data-type="no-illegal-chars" maxlength="30" minlength="3" name="GroupName" required="required" size="30" tabindex="1" type="text" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" />
-			<fieldhelp>' . _('Enter the account group name') . '</fieldhelp>
+			<label for="GroupName">', __('Account Group Name'), ':</label>
+			<input autofocus="autofocus" data-type="no-illegal-chars" maxlength="30" minlength="3" name="GroupName" required="required" size="30" tabindex="1" type="text" value="' . $_POST['GroupName'] . '" title="' . __('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" />
+			<fieldhelp>' . __('Enter the account group name') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="ParentGroupName">', _('Parent Group'), ':</label>
+			<label for="ParentGroupName">', __('Parent Group'), ':</label>
 			<select ',
 				( in_array('ParentGroupName',$Errors) ? 'class="selecterror" ' : '' ),
 				'name="ParentGroupName" tabindex="2">';
 	echo '<option ',
 		( !isset($_POST['ParentGroupName']) ? 'selected="selected" ' : '' ),
-		'value="">', _('Top Level Group'), '</option>';
+		'value="">', __('Top Level Group'), '</option>';
 
 	$SQL = "SELECT groupname FROM accountgroups";
 	$GroupResult = DB_query($SQL, $ErrMsg);
@@ -395,11 +395,11 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>' . _('Select the name of the parent group, or select Top level group if it has no parent') . '</fieldhelp>
+		<fieldhelp>' . __('Select the name of the parent group, or select Top level group if it has no parent') . '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="SectionInAccounts">', _('Section In Accounts'), ':</label>
+			<label for="SectionInAccounts">', __('Section In Accounts'), ':</label>
 			<select ',
 				( in_array('SectionInAccounts',$Errors) ? 'class="selecterror" ' : '' ),
 				'name="SectionInAccounts" tabindex="3">';
@@ -414,39 +414,39 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>' . _('The account section to which this group belongs') . '</fieldhelp>
+		<fieldhelp>' . __('The account section to which this group belongs') . '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="PandL">', _('Profit and Loss'), ':</label>
+			<label for="PandL">', __('Profit and Loss'), ':</label>
 			<select name="PandL" tabindex="4" title="">';
 	if($_POST['PandL']!=0 ) {
-		echo '<option value="0">', _('No'), '</option>',
-			 '<option selected="selected" value="1">', _('Yes'), '</option>';
+		echo '<option value="0">', __('No'), '</option>',
+			 '<option selected="selected" value="1">', __('Yes'), '</option>';
 	} else {
-		echo '<option selected="selected" value="0">', _('No'), '</option>',
-			 '<option value="1">', _('Yes'), '</option>';
+		echo '<option selected="selected" value="0">', __('No'), '</option>',
+			 '<option value="1">', __('Yes'), '</option>';
 	}
 	echo '</select>
-		<fieldhelp', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>
+		<fieldhelp', __('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="SequenceInTB">', _('Sequence In TB'), ':</label>
+			<label for="SequenceInTB">', __('Sequence In TB'), ':</label>
 			<input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="" />
-			<fieldhelp>', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
+			<fieldhelp>', __('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 	if(isset($_GET['SelectedAccountGroup'])) {
 		echo '<div class="centre">
-				<input type="submit" name="submit" value="', _('Update'), '" />
-				<input type="reset" name="reset" value="', _('Return'), '" />
+				<input type="submit" name="submit" value="', __('Update'), '" />
+				<input type="reset" name="reset" value="', __('Return'), '" />
 			</div>';
 	} else {
 		echo '<div class="centre">
-				<input type="submit" name="submit" value="', _('Insert'), '" />
-				<input type="reset" name="reset" value="', _('Return'), '" />
+				<input type="submit" name="submit" value="', __('Insert'), '" />
+				<input type="reset" name="reset" value="', __('Return'), '" />
 			</div>';
 	}
 	echo '</form>';

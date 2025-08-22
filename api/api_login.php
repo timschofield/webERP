@@ -7,7 +7,7 @@ function  LoginAPI($databasename, $user, $password) {
 	//include($PathPrefix . 'config.php');
 
 	// Include now for the error code values.
-	include  $PathPrefix . 'includes/UserLogin.php';	/* Login checking and setup */
+	include($PathPrefix . 'includes/UserLogin.php');	/* Login checking and setup */
 
 	$RetCode = array();		// Return result.
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
@@ -86,7 +86,7 @@ function GetAPIErrorMessages( $errcodes )
 	    else
 		$rm[] = $ErrorDescription[$errnum];
 	} else {
-		$rm[] = _('** Error Code Not Defined **');
+		$rm[] = __('** Error Code Not Defined **');
 	}
 	// Add this array to returned array.
 	$retmsg[] = $rm;
@@ -144,7 +144,7 @@ function DoSetup()
 					}
 			    }
 				$_SESSION['UpdateCurrencyRatesDaily'] = Date('Y-m-d');
-			    $UpdateConfigResult = DB_query("UPDATE config SET confvalue = '" . Date('Y-m-d') . "' WHERE confname='UpdateCurrencyRatesDaily'");
+			    $UpdateConfigResult = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='UpdateCurrencyRatesDaily'");
 			}
 	    }
     }

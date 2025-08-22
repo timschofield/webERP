@@ -9,7 +9,7 @@ include('includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-$Title = _('Copy a BOM to New Item Code');
+$Title = __('Copy a BOM to New Item Code');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 
@@ -26,7 +26,7 @@ if (isset($_POST['Submit'])) {
 		$NewStockID = $_POST['ToStockID'];
 		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
 			$InputError = 1;
-			prnMsg(_('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
+			prnMsg(__('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
 		}
 	} else {
 		$NewStockID = $_POST['ExStockID'];
@@ -163,7 +163,7 @@ if (isset($_POST['Submit'])) {
 } else {
 	ob_end_flush();
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -176,10 +176,10 @@ if (isset($_POST['Submit'])) {
 	$Result = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend>', _('Copy Criteria'), '</legend>';
+			<legend>', __('Copy Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="StockID">', _('From Stock ID'), '</label>
+			<label for="StockID">', __('From Stock ID'), '</label>
 			<select name="StockID">';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
@@ -192,7 +192,7 @@ if (isset($_POST['Submit'])) {
 		</field>';
 
 	echo '<field>
-			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', _(' To New Stock ID'), '</label>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', __(' To New Stock ID'), '</label>
 			<input type="text" required="required" maxlength="20" name="ToStockID" />
 		</field>';
 
@@ -205,7 +205,7 @@ if (isset($_POST['Submit'])) {
 	if (DB_num_rows($Result) > 0) {
 
 		echo '<field>
-				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', '<b>' , _('OR') , ' </b>' , _('To Existing Stock ID'), '</label>';
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', '<b>' , __('OR') , ' </b>' , __('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
 		while ($MyRow = DB_fetch_row($Result)) {
 			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';

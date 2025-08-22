@@ -13,11 +13,11 @@ include('includes/SQL_CommonFunctions.php');
 $InputError = 0;
 
 if (isset($_POST['FromDate']) and !Is_Date($_POST['FromDate'])) {
-	$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = __('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError = 1;
 }
 if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])) {
-	$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = __('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError = 1;
 }
 
@@ -133,26 +133,15 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$Result = DB_query($SQL, '', '', false, false); //dont error check - see below
-	if (DB_error_no() != 0) {
-		$Title = _('Delivery Differences Log Report Error');
+	$ErrMsg = __('An error occurred getting the variances between deliveries and orders');
+	$Result = DB_query($SQL, $ErrMsg);
+
+	if (DB_num_rows($Result) == 0) {
+		$Title = __('Delivery Differences Log Report Error');
 		include('includes/header.php');
-		prnMsg(_('An error occurred getting the variances between deliveries and orders'), 'error');
-		if ($Debug == 1) {
-			prnMsg(_('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL, 'error');
-		}
-		include('includes/footer.php');
-		exit();
-	}
-	elseif (DB_num_rows($Result) == 0) {
-		$Title = _('Delivery Differences Log Report Error');
-		include('includes/header.php');
-		prnMsg(_('There were no variances between deliveries and orders found in the database within the period from') . ' ' .
-			$_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' .
-			_('Please try again selecting a different date range'), 'info');
-		if ($Debug == 1) {
-			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL, 'error');
-		}
+		prnMsg(__('There were no variances between deliveries and orders found in the database within the period from') . ' ' .
+			$_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '. ' .
+			__('Please try again selecting a different date range'), 'info');
 		include('includes/footer.php');
 		exit();
 	}
@@ -177,31 +166,31 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	if ($_POST['CategoryID'] != 'All') {
-		$Heading = _('For Inventory Category') . ' ' . $_POST['CategoryID'] . ' ' . _('From') . ' ' .
-			$_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'];
+		$Heading = __('For Inventory Category') . ' ' . $_POST['CategoryID'] . ' ' . __('From') . ' ' .
+			$_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'];
 	} else {
-		$Heading = _('From') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'];
+		$Heading = __('From') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'];
 	}
 	if ($_POST['Location'] != 'All'){
-		$Heading = _('Deliveries ex') . ' ' . $_POST['Location'] . ' ' . _('only');
+		$Heading = __('Deliveries ex') . ' ' . $_POST['Location'] . ' ' . __('only');
 	}
 
 	$HTML .= '<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Variances Between Orders and Deliveries Listing') . '<br />
+					' . __('Variances Between Orders and Deliveries Listing') . '<br />
 					' . $Heading . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
 						<tr>
-							<th>' . _('Invoice') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Item and Description') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Branch') . '</th>
-							<th>' . _('Inv Date') . '</th>
+							<th>' . __('Invoice') . '</th>
+							<th>' . __('Order') . '</th>
+							<th>' . __('Item and Description') . '</th>
+							<th>' . __('Quantity') . '</th>
+							<th>' . __('Customer') . '</th>
+							<th>' . __('Branch') . '</th>
+							<th>' . __('Inv Date') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -224,7 +213,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} /* end of while there are delivery differences to print */
 
 	$HTML .= '<tr class="total_row">
-				<th colspan="3" style="text-align:left">' . _('Total number of differences') . ' ' . locale_number_format($TotalDiffs) . '</th>
+				<th colspan="3" style="text-align:left">' . __('Total number of differences') . ' ' . locale_number_format($TotalDiffs) . '</th>
 				<th colspan="4"></th>
 			<tr>';
 
@@ -303,12 +292,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	$ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
+	$ErrMsg = __('Could not retrieve the count of sales order lines in the period under review');
 	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	$HTML .= '<tr class="total_row">
-				<th colspan="3" style="text-align:left">' . _('Total number of order lines') . ' ' .
+				<th colspan="3" style="text-align:left">' . __('Total number of order lines') . ' ' .
 					locale_number_format($MyRow[0]) . '</th>
 				<th colspan="4"></th>
 			<tr>';
@@ -321,7 +310,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<tr class="total_row">
-				<th colspan="3" style="text-align:left">' . _('DIFOT') . ' ' .
+				<th colspan="3" style="text-align:left">' . __('DIFOT') . ' ' .
 					locale_number_format($DifotPercentage, 2) . '%' . '</th>
 				<th colspan="4"></th>
 			<tr>';
@@ -338,7 +327,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -359,9 +348,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Delivery Differences Report');
+		$Title = __('Delivery Differences Report');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . __('Receipts') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
@@ -374,8 +363,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 		$To = $_SESSION['FactoryManagerEmail'];
-		$Subject = _('Delivery Differences Report');
-		$Body = _('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'];
+		$Subject = __('Delivery Differences Report');
+		$Body = __('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'];
 		$Attachment = $_SESSION['reports_dir'] . '/' . $ReportFileName;
 		SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachment);
 	}
@@ -383,27 +372,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 }
 else {
 
-	$Title = _('Delivery Differences Report');
+	$Title = __('Delivery Differences Report');
 	$ViewTopic = 'Sales';
 	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Delivery Differences Report') . '</p></div>';
+	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . __('Delivery Differences Report') . '</p></div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Report Criteria') , '</legend>
+			<legend>', __('Report Criteria') , '</legend>
 			<field>
-				<label for="FromDate">' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
+				<label for="FromDate">' . __('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
 				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" />
 			</field>';
 	echo '<field>
-			<label for="ToDate">' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
+			<label for="ToDate">' . __('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
 			<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
 		</field>';
 	echo '<field>
-			<label for="CategoryID">' . _('Inventory Category') . '</label>';
+			<label for="CategoryID">' . __('Inventory Category') . '</label>';
 
 	$SQL = "SELECT categorydescription,
 					categoryid
@@ -414,7 +403,7 @@ else {
 	$Result = DB_query($SQL);
 
 	echo '<select name="CategoryID">
-			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
+			<option selected="selected" value="All">' . __('Over All Categories') . '</option>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
@@ -423,9 +412,9 @@ else {
 	echo '</select>
 		</field>
 		<field>
-			<label for="Location">' . _('Inventory Location') . ':</label>
+			<label for="Location">' . __('Inventory Location') . ':</label>
 			<select name="Location">
-				<option selected="selected" value="All">' . _('All Locations') . '</option>';
+				<option selected="selected" value="All">' . __('All Locations') . '</option>';
 
 	$Result = DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -435,16 +424,16 @@ else {
 		</field>';
 
 	echo '<field>
-				<label for="Email">' . _('Email the report off') . ':</label>
+				<label for="Email">' . __('Email the report off') . ':</label>
 				<select name="Email">
-					<option selected="selected" value="No">' . _('No') . '</option>
-					<option value="Yes">' . _('Yes') . '</option>
+					<option selected="selected" value="No">' . __('No') . '</option>
+					<option value="Yes">' . __('Yes') . '</option>
 				</select>
 			</field>
 			</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>
 		</form>';
 

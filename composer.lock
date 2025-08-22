@@ -296,12 +296,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/polyfill-gettext.git",
-                "reference": "6223f610324582c11a4e1e3b3084a0f3fe1e8863"
+                "reference": "b4150ffea9f9a1122daf1d0301cd734a42af7173"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/6223f610324582c11a4e1e3b3084a0f3fe1e8863",
-                "reference": "6223f610324582c11a4e1e3b3084a0f3fe1e8863",
+                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/b4150ffea9f9a1122daf1d0301cd734a42af7173",
+                "reference": "b4150ffea9f9a1122daf1d0301cd734a42af7173",
                 "shasum": ""
             },
             "require": {
@@ -360,7 +360,7 @@
                 "issues": "https://github.com/gggeek/polyfill-gettext/issues",
                 "source": "https://github.com/gggeek/polyfill-gettext/tree/main"
             },
-            "time": "2025-07-29T09:58:25+00:00"
+            "time": "2025-08-21T15:38:06+00:00"
         },
         {
             "name": "maennchen/zipstream-php",

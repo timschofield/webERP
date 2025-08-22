@@ -1,14 +1,14 @@
 <?php
 include('includes/session.php');
 
-$Title = _('Sales Commission Reports');
+$Title = __('Sales Commission Reports');
 /* Manual links before header.php */
 $ViewTopic = 'SalesCommission';
 $BookMark = 'Reports';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/reports.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Submit'])) {
@@ -62,27 +62,27 @@ if (isset($_POST['Submit'])) {
 		echo '<table>
 				<thead>
 					<tr>
-						<th class="SortedColumn">', _('Commission ID'), '</th>
-						<th class="SortedColumn">', _('Sales Person'), '</th>
-						<th class="SortedColumn">', _('Period'), '</th>
-						<th class="SortedColumn">', _('Customer'), '</th>
-						<th class="SortedColumn">', _('Invoice/Credit'), '</th>
-						<th class="SortedColumn">', _('Amount'), '</th>
-						<th class="SortedColumn">', _('Paid?'), '</th>
+						<th class="SortedColumn">', __('Commission ID'), '</th>
+						<th class="SortedColumn">', __('Sales Person'), '</th>
+						<th class="SortedColumn">', __('Period'), '</th>
+						<th class="SortedColumn">', __('Customer'), '</th>
+						<th class="SortedColumn">', __('Invoice/Credit'), '</th>
+						<th class="SortedColumn">', __('Amount'), '</th>
+						<th class="SortedColumn">', __('Paid?'), '</th>
 					</tr>
 				</thead>';
 		echo '<tbody>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['invcredit'] == 10) {
-				$Type = _('Invoice');
+				$Type = __('Invoice');
 			} else {
-				$Type = _('Credit');
+				$Type = __('Credit');
 			}
 			if ($MyRow['paid'] == 0) {
-				$Paid = _('No');
+				$Paid = __('No');
 			} else {
-				$Paid = _('Yes');
+				$Paid = __('Yes');
 			}
 			echo '<tr class="striped_row">
 					<td>', $MyRow['commissionno'], '</td>
@@ -98,9 +98,9 @@ if (isset($_POST['Submit'])) {
 		echo '</tbody>
 			</table>';
 	} else {
-		prnMsg(_('There are no commissions meeting this criteria. Please select different criteria and run the report again.'), 'info');
+		prnMsg(__('There are no commissions meeting this criteria. Please select different criteria and run the report again.'), 'info');
 	}
-	echo '<a class="noPrint" href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select different report criteria'), '</a><br />';
+	echo '<a class="noPrint" href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', __('Select different report criteria'), '</a><br />';
 	include('includes/footer.php');
 	exit();
 
@@ -130,29 +130,29 @@ if (isset($_POST['Submit'])) {
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="SalesPerson">', _('Sales Person'), '</label>
+				<label for="SalesPerson">', __('Sales Person'), '</label>
 				<select name="SalesPerson" autofocus="autofocus">';
 
 	$SQL = "SELECT salesmancode,
 					salesmanname
 				FROM salesman";
 	$Result = DB_query($SQL);
-	echo '<option value="%%">', _('All Sales People'), '</option>';
+	echo '<option value="%%">', __('All Sales People'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="', $MyRow['salesmancode'], '">', $MyRow['salesmanname'], '</option>';
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the sales person to report on.'), '</fieldhelp>
+		<fieldhelp>', __('Select the sales person to report on.'), '</fieldhelp>
 	</field>';
 
 	$SQL = "SELECT currabrev, currency FROM currencies";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="Currency">', _('Currency'), '</label>
+			<label for="Currency">', __('Currency'), '</label>
 			<select name="Currency" required="required">';
-	echo '<option value="%%">', _('All Currencies'), '</option>';
+	echo '<option value="%%">', __('All Currencies'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev'] == $_POST['Currency']) {
 			echo '<option selected="selected" value="', $MyRow['currabrev'], '">', $MyRow['currency'], ' (', $MyRow['currabrev'], ')</option>';
@@ -161,21 +161,21 @@ if (isset($_POST['Submit'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the currency of the transactions to report on.'), '</fieldhelp>
+		<fieldhelp>', __('Select the currency of the transactions to report on.'), '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="PaidUnpaid">', _('Show Paid or Unpaid Commissions'), '</label>
+			<label for="PaidUnpaid">', __('Show Paid or Unpaid Commissions'), '</label>
 			<select name="PaidUnpaid">
-				<option value="%%">', _('All Commissions'), '</option>
-				<option value="0">', _('Only Unpaid Commissions'), '</option>
-				<option value="1">', _('Only Paid Commissions'), '</option>
+				<option value="%%">', __('All Commissions'), '</option>
+				<option value="0">', __('Only Unpaid Commissions'), '</option>
+				<option value="1">', __('Only Paid Commissions'), '</option>
 			</select>
-			<fieldhelp>', _('Filter commissions by whether they are paid or unpaid'), '</fieldhelp>
+			<fieldhelp>', __('Filter commissions by whether they are paid or unpaid'), '</fieldhelp>
 		</field>';
 
 	echo '			<field>
-				<label for="FromPeriod">', _('Select Period From'), ':</label>
+				<label for="FromPeriod">', __('Select Period From'), ':</label>
 				<select name="FromPeriod" autofocus="autofocus">';
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
 	$SQL = "SELECT periodno,
@@ -201,7 +201,7 @@ if (isset($_POST['Submit'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the starting period for this report'), '</fieldhelp>
+		<fieldhelp>', __('Select the starting period for this report'), '</fieldhelp>
 	</field>';
 
 	if (!isset($_POST['ToPeriod']) or $_POST['ToPeriod'] == '') {
@@ -211,7 +211,7 @@ if (isset($_POST['Submit'])) {
 	}
 
 	echo '<field>
-			<label for="ToPeriod">', _('Select Period To'), ':</label>
+			<label for="ToPeriod">', __('Select Period To'), ':</label>
 			<select name="ToPeriod">';
 
 	DB_data_seek($Periods, 0);
@@ -225,7 +225,7 @@ if (isset($_POST['Submit'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the end period for this report'), '</fieldhelp>
+		<fieldhelp>', __('Select the end period for this report'), '</fieldhelp>
 	</field>';
 
 	if (!isset($_POST['Period'])) {
@@ -233,15 +233,15 @@ if (isset($_POST['Submit'])) {
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period'), ':</label>
+			<label for="Period">', '<b>' . __('OR') . ' </b>' . __('Select Period'), ':</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
-			<fieldhelp>', _('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
+			<fieldhelp>', __('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', _('View Report'), '" />
+			<input type="submit" name="Submit" value="', __('View Report'), '" />
 		</div>';
 
 	echo '</form>';

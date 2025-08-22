@@ -21,7 +21,7 @@ $PathPrefix = __DIR__ . '/../../';
 
 $PageSecurity = 2; // set security level for webERP
 // Fetch necessary include files for webERP
-require ($PathPrefix . 'includes/session.php');
+require($PathPrefix . 'includes/session.php');
 
 // Initialize some constants
 $ReportLanguage = 'en_US';				// default language file

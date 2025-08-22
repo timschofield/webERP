@@ -3,7 +3,7 @@
 $UpdateSecurity =10;
 
 include('includes/session.php');
-$Title = _('Stock Cost Update');
+$Title = __('Stock Cost Update');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
@@ -15,10 +15,10 @@ if (isset($_GET['StockID'])){
 	$StockID =trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a><br />';
 
 echo '<p class="page_title_text">
-	 <img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />
+	 <img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Inventory Adjustment') . '" alt="" />
 	 ' . ' ' . $Title . '</p>';
 
 if (isset($_POST['UpdateData'])){
@@ -39,7 +39,7 @@ if (isset($_POST['UpdateData'])){
 					labourcost,
 					overheadcost,
 					mbflag";
-	$ErrMsg = _('The entered item code does not exist');
+	$ErrMsg = __('The entered item code does not exist');
 	$OldResult = DB_query($SQL, $ErrMsg);
 	$OldRow = DB_fetch_array($OldResult);
 	$_POST['QOH'] = $OldRow['totalqoh'];
@@ -61,7 +61,7 @@ if (isset($_POST['UpdateData'])){
 	$Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$MyRow = DB_fetch_row($Result);
 	if (DB_num_rows($Result)==0) {
-		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
+		prnMsg(__('The entered item code does not exist'),'error',__('Non-existent Item'));
 	} elseif (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
 		DB_Txn_Begin();
@@ -75,7 +75,7 @@ if (isset($_POST['UpdateData'])){
 					lastcostupdate = CURRENT_DATE
 				WHERE stockid='" . $StockID . "'";
 
-		$ErrMsg = _('The cost details for the stock item could not be updated because');
+		$ErrMsg = __('The cost details for the stock item could not be updated because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
@@ -84,7 +84,7 @@ if (isset($_POST['UpdateData'])){
 	}
 }
 
-$ErrMsg = _('The cost details for the stock item could not be retrieved because');
+$ErrMsg = __('The cost details for the stock item could not be retrieved because');
 
 $Result = DB_query("SELECT description,
 							units,
@@ -121,16 +121,16 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<fieldset>
 		<legend>' . $StockID . ' - ' . $MyRow['description'] . '</legend>
 		<field>
-			<label for="StockID">' . _('Item Code') . ':</label>
+			<label for="StockID">' . __('Item Code') . ':</label>
 			<input type="text" name="StockID" value="' . $StockID . '"  maxlength="20" />
-			<input type="submit" name="Show" value="' . _('Show Cost Details') . '" />
+			<input type="submit" name="Show" value="' . __('Show Cost Details') . '" />
 		</field>
 		<field>
-			<label>' .  _('Total Quantity On Hand') . ':</label>
+			<label>' .  __('Total Quantity On Hand') . ':</label>
 			<fieldtext>' . $MyRow['totalqoh'] . ' ' . $MyRow['units']  . '</fieldtext>
 		</field>
 		<field>
-			<label>' .  _('Last Cost update on') . ':</label>
+			<label>' .  __('Last Cost update on') . ':</label>
 			<fieldtext>' . ConvertSQLDate($MyRow['lastcostupdate'])  . '</fieldtext>
 		</field>';
 
@@ -140,13 +140,13 @@ if (($MyRow['mbflag']=='D' AND $MyRow['stocktype'] != 'L')
 	echo '</div>
 		  </form>'; // Close the form
    if ($MyRow['mbflag']=='D'){
-		echo '<br />' . $StockID .' ' . _('is a service item');
+		echo '<br />' . $StockID .' ' . __('is a service item');
    } else if ($MyRow['mbflag']=='A'){
-		echo '<br />' . $StockID  .' '  . _('is an assembly part');
+		echo '<br />' . $StockID  .' '  . __('is an assembly part');
    } else if ($MyRow['mbflag']=='K'){
-		echo '<br />' . $StockID . ' ' . _('is a kit set part');
+		echo '<br />' . $StockID . ' ' . __('is a kit set part');
    }
-   prnMsg(_('Cost information cannot be modified for kits assemblies or service items') . '. ' . _('Please select a different part'),'warn');
+   prnMsg(__('Cost information cannot be modified for kits assemblies or service items') . '. ' . __('Please select a different part'),'warn');
    include('includes/footer.php');
    exit();
 }
@@ -157,12 +157,12 @@ echo '<input type="hidden" name="OldLabourCost" value="' . $MyRow['labourcost'] 
 echo '<input type="hidden" name="OldOverheadCost" value="' . $MyRow['overheadcost'] .'" />';
 echo '<input type="hidden" name="QOH" value="' . $MyRow['totalqoh'] .'" />';
 
-echo '<label>', _('Last Cost') .':</label>
+echo '<label>', __('Last Cost') .':</label>
 		<fieldtext>' . locale_number_format($MyRow['lastcost'],$_SESSION['StandardCostDecimalPlaces']) . '</fieldtext>
 	</field>';
 if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPageSecurityTokens'])){
 	echo '<field>
-			<td>' . _('Cost') . ':</td>
+			<td>' . __('Cost') . ':</td>
 			<td class="number">' . locale_number_format($MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '</td>
 		</field>
 		</table>';
@@ -170,20 +170,20 @@ if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPa
 
 	if ($MyRow['mbflag']=='M'){
 		echo '<field>
-				<label for="MaterialCost">' . _('Standard Material Cost Per Unit') .':</label>
+				<label for="MaterialCost">' . __('Standard Material Cost Per Unit') .':</label>
 				<input type="text" class="number" name="MaterialCost" value="' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>
 			<field>
-				<label for="LabourCost">' . _('Standard Labour Cost Per Unit') . ':</label>
+				<label for="LabourCost">' . __('Standard Labour Cost Per Unit') . ':</label>
 				<input type="text" class="number" name="LabourCost" value="' . locale_number_format($MyRow['labourcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>
 			<field>
-				<label for="OverheadCost">' . _('Standard Overhead Cost Per Unit') . ':</label>
+				<label for="OverheadCost">' . __('Standard Overhead Cost Per Unit') . ':</label>
 				<input type="text" class="number" name="OverheadCost" value="' . locale_number_format($MyRow['overheadcost'],$_SESSION['StandardCostDecimalPlaces']) . '" />
 			</field>';
 	} elseif ($MyRow['mbflag']=='B' OR  $MyRow['mbflag']=='D') {
 		echo '<field>
-				<td>' . _('Standard Cost') .':</td>
+				<td>' . __('Standard Cost') .':</td>
 				<td class="number"><input type="text" class="number" name="MaterialCost" value="' . locale_number_format($MyRow['materialcost'],$_SESSION['StandardCostDecimalPlaces']) . '" /></td>
 			</field>';
 	} else 	{
@@ -192,15 +192,15 @@ if (! in_array($_SESSION['PageSecurityArray']['CostUpdate'],$_SESSION['AllowedPa
 	}
 	echo '</fieldset>
    		  <div class="centre">
-				  <input type="submit" name="UpdateData" value="' . _('Update') . '" />
+				  <input type="submit" name="UpdateData" value="' . __('Update') . '" />
 			 </div>';
 }
 if ($MyRow['mbflag']!='D'){
-	echo '<div class="centre"><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage')   . '</a>';
-	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
-	echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a></div>';
+	echo '<div class="centre"><a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . __('Show Stock Status') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . __('Show Stock Movements') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Stock Usage')   . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a></div>';
 }
 echo '</div>
 	  </form>';

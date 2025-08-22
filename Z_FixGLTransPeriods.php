@@ -1,13 +1,13 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Fix General Ledger Transaction Periods');
+$Title = __('Fix General Ledger Transaction Periods');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Fix GL Trans Periods') . '" /></p>';
+		__('Fix GL Trans Periods') . '" /></p>';
 
 
 $GLTrans = DB_query("SELECT counterindex,trandate,periodno FROM gltrans");

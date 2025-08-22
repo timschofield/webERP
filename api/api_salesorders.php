@@ -870,8 +870,8 @@ $SOH_DateFields = array ('orddate',
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLineRow['stkcode'] . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 				$AssResult = api_DB_query($SQL);
 
@@ -917,7 +917,7 @@ $SOH_DateFields = array ('orddate',
 												 '" . $OrderHeader['debtorno'] . "',
 												 '" . $OrderHeader['branchcode'] . "',
 												 '" . $PeriodNo . "',
-												 '" . _('Assembly') . ': ' . $OrderLineRow['stkcode'] . ' ' . _('Order') . ': ' . $OrderNo . "',
+												 '" . __('Assembly') . ': ' . $OrderLineRow['stkcode'] . ' ' . __('Order') . ': ' . $OrderNo . "',
 												 '" . -$AssParts['quantity'] * $OrderLineRow['quantity'] . "',
 												 '" . $AssParts['standard'] . "',
 												 0,
@@ -1023,7 +1023,7 @@ $SOH_DateFields = array ('orddate',
 						salesanalysis.typeabbrev,
 						salesanalysis.salesperson";
 
-			$ErrMsg = _('The count of existing Sales analysis records could not run because');
+			$ErrMsg = __('The count of existing Sales analysis records could not run because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$MyRow = DB_fetch_row($Result);
@@ -1363,7 +1363,7 @@ $SOH_DateFields = array ('orddate',
 						WHERE lastdate_in_period < '" . Date('Y-m-d', $MonthAfterTransDate) . "'
 						AND lastdate_in_period >= '" . Date('Y-m-d', $TransDate) . "'";
 
-		$ErrMsg = _('An error occurred in retrieving the period number');
+		$ErrMsg = __('An error occurred in retrieving the period number');
 		$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
 		$MyRow = DB_fetch_row($GetPrdResult);
 

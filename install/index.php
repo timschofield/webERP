@@ -1,6 +1,6 @@
 <?php
 
-require __DIR__.'/../vendor/autoload.php';
+require(__DIR__.'/../vendor/autoload.php');
 
 ini_set('max_execution_time', "6000");
 session_name('weberp_installation');
@@ -67,7 +67,7 @@ echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.or
 
 echo '<html xmlns="http://www.w3.org/1999/xhtml">';
 
-$Title = _('WebERP Installation Wizard');
+$Title = __('WebERP Installation Wizard');
 
 echo '<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -89,41 +89,41 @@ echo '<footer>';
 if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer']['License_Agreed'] and $_SESSION['Installer']['CurrentPage'] == 1) {
 	echo '<div class="nav_button">
 			<a id="next" class="is_disabled" href="">
-				', _('Next'), '
+				', __('Next'), '
 			</a>
 				<img src="images/right.png" style="float:right" />
 		</div>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 3 and ($Result != 'valid')) {
 	echo '<div class="nav_button">
 			<a id="next" class="is_disabled" href="">
-				', _('Next'), '
+				', __('Next'), '
 			</a>
 				<img src="images/right.png" style="float:right" />
 		</div>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 4 and ($DataSaved != 'yes')) {
 	echo '<div class="nav_button">
 			<a id="next" class="is_disabled" href="">
-				', _('Next'), '
+				', __('Next'), '
 			</a>
 				<img src="images/right.png" style="float:right" />
 		</div>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 5) {
-	echo '<input type="submit" class="install nav_button" name="install" value="', _('Install'), '" />';
+	echo '<input type="submit" class="install nav_button" name="install" value="', __('Install'), '" />';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 6) {
 	echo '<div class="nav_button">
-			<a href="../Logout.php?Installed=Yes">', _('Restart webERP'), '</a>
+			<a href="../Logout.php?Installed=Yes">', __('Restart webERP'), '</a>
 				<img src="images/restart.png"  style="float:right; width:24px;">
 		</div>';
 } else {
 	echo '<div class="nav_button">
-			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] + 1), '">', _('Next'), '</a>
+			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] + 1), '">', __('Next'), '</a>
 				<img src="images/right.png"  style="float:right">
 		</div>';
 }
 
 if ($_SESSION['Installer']['CurrentPage'] != 0 and $_SESSION['Installer']['CurrentPage'] != 6) {
 	echo '<div class="nav_button">
-			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] - 1), '">', _('Previous'), '</a>
+			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] - 1), '">', __('Previous'), '</a>
 				<img src="images/left.png" style="float:left">
 		</div>';
 }

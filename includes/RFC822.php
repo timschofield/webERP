@@ -13,7 +13,7 @@
 * How do I use it?
 *
 * $Address_string = 'My Group: "Richard Heyes" <richard@localhost> (A comment), ted@example.com (Ted Bloggs), Barney;';
-* $structure = Mail_RFC822::parseAddressList($Address_string, 'example.com', TRUE)
+* $structure = Mail_RFC822::parseAddressList($Address_string, 'example.com', true)
 * print_r($structure);
 *
 * @author  Richard Heyes <richard@phpguru.org>

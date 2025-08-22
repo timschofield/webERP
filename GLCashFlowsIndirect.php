@@ -1,5 +1,5 @@
 <?php
-// GLCashFlowsIndirect.php
+
 // Shows a statement of cash flows for the period using the indirect method.
 // This program is under the GNU General Public License, last version. 2016-10-08.
 // This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
@@ -21,15 +21,16 @@ Parameters:
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
-		case -1: return _('Not set up');
-		case 0: return _('No effect on cash flow');
-		case 1: return _('Operating activities');
-		case 2: return _('Investing activities');
-		case 3: return _('Financing activities');
-		case 4: return _('Cash or cash equivalent');
-		default: return _('Unknown');
+		case -1: return __('Not set up');
+		case 0: return __('No effect on cash flow');
+		case 1: return __('Operating activities');
+		case 2: return __('Investing activities');
+		case 3: return __('Financing activities');
+		case 4: return __('Cash or cash equivalent');
+		default: return __('Unknown');
 	}
 }
+
 function colDebitCredit($Amount) {
 	// Function to display in debit or Credit columns in a HTML table.
 	if($Amount < 0) {
@@ -44,7 +45,7 @@ function colDebitCredit($Amount) {
 if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/session.php');
 }
-$Title = _('Statement of Cash Flows, Indirect Method');
+$Title = __('Statement of Cash Flows, Indirect Method');
 if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLCashFlowsIndirect';
@@ -75,12 +76,12 @@ if(isset($_POST['Period']) and $_POST['Period'] != '') {
 if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
-	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
+	prnMsg(__('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
 if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
-	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
+	prnMsg(__('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
 }
 
 // Main code:
@@ -94,31 +95,31 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />'; // Page title, reporting entity.
 	if (!is_numeric($_POST['PeriodFrom']) OR !is_numeric($_POST['PeriodTo'])) {
-		prnMsg(_('The period to and period from must both be entered as numbers'),'error');
+		prnMsg(__('The period to and period from must both be entered as numbers'),'error');
 		include('includes/footer.php');
 		exit();
 	}
 	$PeriodFromName = EndDateSQLFromPeriodNo($_POST['PeriodFrom']);
 	$PeriodToName = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
-	echo _('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName), ' ', _('to'), ' ', MonthAndYearFromSQLDate($PeriodToName), '<br />'; // Page title, reporting period.
+	echo __('From'), ' ', MonthAndYearFromSQLDate($PeriodFromName), ' ', __('to'), ' ', MonthAndYearFromSQLDate($PeriodToName), '<br />'; // Page title, reporting period.
 	include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
-	echo _('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+	echo __('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="selection">',
 		// Content of the header and footer of the output table:
 		'<thead>
 			<tr>
-				<th>', _('Account'), '</th>
-				<th>', _('Account Name'), '</th>
-				<th colspan="2">', _('Period Actual'), '</th>
-				<th colspan="2">', _('Last Year'), '</th>
+				<th>', __('Account'), '</th>
+				<th>', __('Account Name'), '</th>
+				<th colspan="2">', __('Period Actual'), '</th>
+				<th colspan="2">', __('Last Year'), '</th>
 			</tr>
 		</thead><tfoot>
 			<tr>
 				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
-					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
+					'<br /><b>', __('Notes'), ':</b><br />',
+					__('Cash flows signs: a negative number indicates a cash flow used in activities; a positive number indicates a cash flow provided by activities.'), '<br />';
 	if($_POST['ShowCash']) {
-		echo		_('Cash and cash equivalents signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
+		echo		__('Cash and cash equivalents signs: a negative number indicates a cash outflow; a positive number indicates a cash inflow.'), '<br />';
 	}
 	echo		'</td>
 			</tr>
@@ -149,11 +150,11 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	// Outputs the table:
 	// Net profit − dividends = Retained earnings:
 	echo '<tr>
-			<td class="text" colspan="6"><br /><h2>', _('Net profit and dividends'), '</h2></td>
+			<td class="text" colspan="6"><br /><h2>', __('Net profit and dividends'), '</h2></td>
 		</tr>
 		<tr class="striped_row">
 			<td>&nbsp;</td>
-			<td class="text">', _('Net profit for the period'), '</td>';
+			<td class="text">', __('Net profit for the period'), '</td>';
 	// Net profit for the period:
 	$Sql = "SELECT
 				Sum(CASE WHEN (gltotals.period >= '" . $_POST['PeriodFrom'] . "' AND gltotals.period <= '" . $_POST['PeriodTo'] . "') THEN -gltotals.amount ELSE 0 END) AS ActualProfit,
@@ -169,7 +170,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'</tr>
 		<tr class="striped_row">
 			<td>&nbsp;</td>
-			<td class="text">', _('Dividends'), '</td>';
+			<td class="text">', __('Dividends'), '</td>';
 	// Dividends:
 	$Sql = "SELECT
 				Sum(CASE WHEN (gltotals.period >= '" . $_POST['PeriodFrom'] . "' AND gltotals.period <= '" . $_POST['PeriodTo'] . "') THEN gltotals.amount ELSE 0 END) AS ActualRetained,
@@ -185,7 +186,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo	colDebitCredit($MyRow2['ActualRetained'] - $MyRow1['ActualProfit']),
 			colDebitCredit($MyRow2['LastRetained'] - $MyRow1['LastProfit']),
 		'</tr><tr>',
-			'<td class="text" colspan="2">', _('Retained earnings'), '</td>',
+			'<td class="text" colspan="2">', __('Retained earnings'), '</td>',
 	// Retained earnings changes:
 				colDebitCredit($MyRow2['ActualRetained']),
 				colDebitCredit($MyRow2['LastRetained']),
@@ -213,10 +214,10 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	$Result = DB_query($Sql);
 	$IdSection = -1;
 	// Looks for an account without setting up:
-	$NeedSetup = FALSE;
+	$NeedSetup = false;
 	while($MyRow = DB_fetch_array($Result)) {
 		if($MyRow['cashflowsactivity'] == -1) {
-			$NeedSetup = TRUE;
+			$NeedSetup = true;
 			echo '<tr><td colspan="6">&nbsp;</td></tr>';
 			break;
 		}
@@ -263,7 +264,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		<tr><td colspan="6">&nbsp;</td></tr>',
 	// Prints Net increase in cash and cash equivalents:
 		'<tr>
-			<td class="text" colspan="2"><b>', _('Net increase in cash and cash equivalents'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Net increase in cash and cash equivalents'), '</b></td>',
 			colDebitCredit($ActualTotal),
 			colDebitCredit($LastTotal),
 		'</tr>';
@@ -316,7 +317,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		$LastBeginning = $MyRow['LastAmount'];
 	}
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Cash and cash equivalents at beginning of period'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Cash and cash equivalents at beginning of period'), '</b></td>',
 			colDebitCredit($ActualBeginning),
 			colDebitCredit($LastBeginning),
 		'</tr>';
@@ -352,7 +353,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 	// Prints Cash and cash equivalents at end of period total:
 	echo '<tr>
-			<td class="text" colspan="2"><b>', _('Cash and cash equivalents at end of period'), '</b></td>',
+			<td class="text" colspan="2"><b>', __('Cash and cash equivalents at end of period'), '</b></td>',
 			colDebitCredit($ActualTotal+$ActualBeginning),
 			colDebitCredit($LastTotal+$LastBeginning),
 		'</tr>';
@@ -413,22 +414,22 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
 			'<div class="centre noPrint">'; // Form buttons:
 		if($NeedSetup) {
-			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
+			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', __('Run Setup'), '</button>'; // "Run Setup" button.
 		}
-		echo	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
-				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
-				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		echo	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
+				'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 			'</div>';
 	}
 } else {// If one or more parameters are NOT set or NOT valid, shows a parameters input form:
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.') . '<br />' .
-		_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.') . '<br />' .
-		_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.') . '<br />' .
-		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
+		__('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.') . '<br />' .
+		__('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.') . '<br />' .
+		__('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.') . '<br />' .
+		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />'; // Input table:
@@ -440,14 +441,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>'; // Content of the header and footer of the input table:
+			<legend>', __('Report Criteria'), '</legend>'; // Content of the header and footer of the input table:
 
 	echo '<field>
-			<label for="PeriodFrom">', _('Select period from'), '</label>
+			<label for="PeriodFrom">', __('Select period from'), '</label>
 		 	<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	// Select period from:
 			'<field>
-				<label for="PeriodFrom">' . _('Select period from') . '</label>
+				<label for="PeriodFrom">' . __('Select period from') . '</label>
 		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC');
 
@@ -479,7 +480,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 
 	echo '</select>
-		<fieldhelp>' . _('Select the beginning of the reporting period') . '</fieldhelp>
+		<fieldhelp>' . __('Select the beginning of the reporting period') . '</fieldhelp>
 	</field>';
 
 	// Select period to:
@@ -493,14 +494,14 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		$_POST['PeriodTo'] = $PeriodRow['periodno'];
 	}
 	echo '<field>
-			<label for="PeriodTo">' . _('Select period to') . '</label>
+			<label for="PeriodTo">' . __('Select period to') . '</label>
 		 	<select id="PeriodTo" name="PeriodTo" required="required">';
 	DB_data_seek($Periods, 0);
 	while($MyRow = DB_fetch_array($Periods)) {
 		echo '<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ) . ' value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 	}
 	echo  '</select>
-		<fieldhelp>' . _('Select the end of the reporting period') . '</fieldhelp>
+		<fieldhelp>' . __('Select the end of the reporting period') . '</fieldhelp>
 	</field>';
 
 	// OR Select period:
@@ -509,27 +510,27 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period'), '</label>
+			<label for="Period">', '<b>' . __('OR') . ' </b>' . __('Select Period'), '</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')),
-			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
+			'<fieldhelp>', __('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
 		</field>',
 	// Show accounts with zero balance:
 			'<field>
-			 	<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+			 	<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
 			 	<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
-			 	<fieldhelp>', _('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
+			 	<fieldhelp>', __('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
 			</field>',
 	// Show cash and cash equivalents accounts:
 			'<field>
-				<label for="ShowCash">', _('Show cash and cash equivalents accounts'), '</label>
+				<label for="ShowCash">', __('Show cash and cash equivalents accounts'), '</label>
 			 	<input',($_POST['ShowCash'] ? ' checked="checked"' : ''), ' id="ShowCash" name="ShowCash" type="checkbox">
-			 	<fieldhelp>', _('Check this box to show cash and cash equivalents accounts'), '</fieldhelp>
+			 	<fieldhelp>', __('Check this box to show cash and cash equivalents accounts'), '</fieldhelp>
 			</field>
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF Cash Flow Statement').'" />
-			<input type="submit" name="View" title="View" value="' . _('Show Cash Flow Statement') .'" />
+			<input type="submit" name="PrintPDF" title="PDF" value="'.__('PDF Cash Flow Statement').'" />
+			<input type="submit" name="View" title="View" value="' . __('Show Cash Flow Statement') .'" />
 		</div>',
 		'</form>';
 }

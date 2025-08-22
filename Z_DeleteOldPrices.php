@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('UTILITY PAGE To Delete All Old Prices');
+$Title = __('UTILITY PAGE To Delete All Old Prices');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -11,7 +11,7 @@ $Result = DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='1000-0
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
 
-	$Result = DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'", '', '', true);
+	$Result = DB_query("DELETE FROM prices WHERE enddate<CURRENT_DATE", '', '', true);
 	$Result = DB_query("SELECT stockid,
 							typeabbrev,
 							currabrev,
@@ -19,7 +19,7 @@ if (isset($_POST['DeleteOldPrices'])){
 							branchcode,
 							MAX(startdate) as lateststart
 					FROM prices
-					WHERE startdate<'" . Date('Y-m-d') . "'
+					WHERE startdate<CURRENT_DATE
 					GROUP BY stockid,
 							typeabbrev,
 							currabrev,
@@ -35,7 +35,7 @@ if (isset($_POST['DeleteOldPrices'])){
 													AND enddate='9999-12-31'
 													AND startdate<'" . $MyRow['lateststart'] . "'",'','',true);
 	}
-	prnMsg(_('All old prices have been deleted'),'success');
+	prnMsg(__('All old prices have been deleted'),'success');
 	DB_Txn_Commit();
 }
 
@@ -43,7 +43,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<div class="centre">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<br />
-	<input type="submit" name="DeleteOldPrices" value="' . _('Purge Old Prices') . '" onclick="return confirm(\'' . _('Are You Sure you wish to delete all old prices?') . '\');" />
+	<input type="submit" name="DeleteOldPrices" value="' . __('Purge Old Prices') . '" onclick="return confirm(\'' . __('Are You Sure you wish to delete all old prices?') . '\');" />
 	</div>
       </form>';
 

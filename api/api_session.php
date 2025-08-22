@@ -4,7 +4,7 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = __DIR__ . '/../';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 /// @todo error out if config.php does not yet exist
 include($PathPrefix . 'config.php');
@@ -46,7 +46,7 @@ if (!isset($_SESSION['AttemptsCounter'])){
 
 if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
 		exit();
 	}
 }

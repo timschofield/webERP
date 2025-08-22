@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 
-$Title = _('Fulfill Stock Requests');
+$Title = __('Fulfill Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'FulfilRequest';
 
@@ -10,7 +10,7 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Contract') . '" alt="" />' . __('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $Value) {
@@ -38,7 +38,7 @@ if (isset($_POST['UpdateAll'])) {
 			$StandardCost = $MyRow['actualcost'];
 			$DecimalPlaces = $MyRow['decimalplaces'];
 
-			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' ' . $StockID . ' ' . _('to department') . ' ' . $Department . ' ' . _('from') . ' ' . $Location;
+			$Narrative = __('Issue') . ' ' . $Quantity . ' ' . __('of') . ' ' . $StockID . ' ' . __('to department') . ' ' . $Department . ' ' . __('from') . ' ' . $Location;
 
 			$AdjustmentNumber = GetNextTransNo(17);
 			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -87,7 +87,7 @@ if (isset($_POST['UpdateAll'])) {
 									'" . ($QtyOnHandPrior - $Quantity) . "'
 								)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock movement record cannot be inserted because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/*Get the ID of the StockMove... */
@@ -101,7 +101,7 @@ if (isset($_POST['UpdateAll'])) {
 							AND loccode='" . $Location . "'
 							AND serialno='" . $SerialNo . "'";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be updated because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock item record could not be updated because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 					/* now insert the serial stock movement */
@@ -115,7 +115,7 @@ if (isset($_POST['UpdateAll'])) {
 											'" . $SerialNo . "',
 											'" . -$Quantity . "')";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				} /*end if the orderline is a controlled item */
 
@@ -124,14 +124,14 @@ if (isset($_POST['UpdateAll'])) {
 						WHERE dispatchid='" . $RequestID . "'
 							AND dispatchitemsid='" . $LineID . "'";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				$SQL = "UPDATE locstock SET quantity = quantity - '" . $Quantity . "'
 									WHERE stockid='" . $StockID . "'
 										AND loccode='" . $Location . "'";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
 
 				$Result = DB_query($SQL, $ErrMsg, '', true);
 
@@ -155,7 +155,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 					InsertGLTags($Tags);
 
@@ -175,7 +175,7 @@ if (isset($_POST['UpdateAll'])) {
 												'" . mb_substr($Narrative, 0, 200) . "'
 											)";
 
-					$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
+					$Errmsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The general ledger transaction entries could not be added because');
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
@@ -189,12 +189,12 @@ if (isset($_POST['UpdateAll'])) {
 
 				DB_Txn_Commit();
 
-				$ConfirmationText = _('An internal stock request for') . ' ' . $StockID . ' ' . _('has been fulfilled from location') . ' ' . $Location . ' ' . _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces);
+				$ConfirmationText = __('An internal stock request for') . ' ' . $StockID . ' ' . __('has been fulfilled from location') . ' ' . $Location . ' ' . __('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces);
 				prnMsg($ConfirmationText, 'success');
 
 				if ($_SESSION['InventoryManagerEmail'] != '') {
-					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
-					$EmailSubject = _('Internal Stock Request Fulfillment for') . ' ' . $StockID;
+					$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . Date('Y-m-d H:i:s');
+					$EmailSubject = __('Internal Stock Request Fulfillment for') . ' ' . $StockID;
 					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['InventoryManagerEmail'],
 										$EmailSubject,
@@ -204,7 +204,7 @@ if (isset($_POST['UpdateAll'])) {
 				}
 			}
 			else {
-				$ConfirmationText = _('An internal stock request for') . ' ' . $StockID . ' ' . _('has been fulfilled from location') . ' ' . $Location . ' ' . _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
+				$ConfirmationText = __('An internal stock request for') . ' ' . $StockID . ' ' . __('has been fulfilled from location') . ' ' . $Location . ' ' . __('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . __('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg($ConfirmationText, 'warn');
 			}
 
@@ -232,7 +232,7 @@ if (!isset($_POST['Location'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<td>' . _('Choose a location to issue requests from') . '</td>
+				<td>' . __('Choose a location to issue requests from') . '</td>
 				<td><select name="Location">';
 	$SQL = "SELECT locations.loccode, locationname
 			FROM locations
@@ -259,7 +259,7 @@ if (!isset($_POST['Location'])) {
 	}
 	echo '</select></td></tr>';
 	echo '</table><br />';
-	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . _('Show Requests') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="EnterAdjustment" value="' . __('Show Requests') . '" /></div>';
 	echo '</div>
 		  </form>';
 	include('includes/footer.php');
@@ -289,9 +289,9 @@ if (isset($_POST['Location'])) {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no outstanding authorised requests for this location') , 'info');
+		prnMsg(__('There are no outstanding authorised requests for this location') , 'info');
 		echo '<br />';
-		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select another location') . '</a></div>';
+		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . __('Select another location') . '</a></div>';
 		include('includes/footer.php');
 		exit();
 	}
@@ -301,11 +301,11 @@ if (isset($_POST['Location'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Request Number') . '</th>
-				<th>' . _('Department') . '</th>
-				<th>' . _('Location Of Stock') . '</th>
-				<th>' . _('Requested Date') . '</th>
-				<th>' . _('Narrative') . '</th>
+				<th>' . __('Request Number') . '</th>
+				<th>' . __('Department') . '</th>
+				<th>' . __('Location Of Stock') . '</th>
+				<th>' . __('Requested Date') . '</th>
+				<th>' . __('Narrative') . '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -338,13 +338,13 @@ if (isset($_POST['Location'])) {
 				<td colspan="5" align="left">
 					<table class="selection" align="left">
 					<tr>
-						<th>' . _('Product') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Required') . '</th>
-						<th>' . _('Quantity') . '<br />' . _('Delivered') . '</th>
-						<th>' . _('Units') . '</th>
-						<th>' . _('Lot/Batch/Serial') . '</th>
-						<th>' . _('Completed') . '</th>
-						<th>' . _('Tag') . '</th>
+						<th>' . __('Product') . '</th>
+						<th>' . __('Quantity') . '<br />' . __('Required') . '</th>
+						<th>' . __('Quantity') . '<br />' . __('Delivered') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Lot/Batch/Serial') . '</th>
+						<th>' . __('Completed') . '</th>
+						<th>' . __('Tag') . '</th>
 					</tr>';
 
 		while ($LineRow = DB_fetch_array($LineResult)) {
@@ -357,7 +357,7 @@ if (isset($_POST['Location'])) {
 				echo '<td class="number"><input type="text" name="' . $LineRow['dispatchid'] . 'Ser' . $LineRow['dispatchitemsid'] . '" size="21" maxlength="30" /></td>';
 			}
 			else {
-				echo '<td>' . _('Stock item is not controlled') . '</td>';
+				echo '<td>' . __('Stock item is not controlled') . '</td>';
 			}
 			echo '<td class="centre"><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
 
@@ -388,7 +388,7 @@ if (isset($_POST['Location'])) {
 		echo '</table></td></tr>';
 	} //end while header loop
 	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="UpdateAll" value="' . _('Update') . '" /></div>
+	echo '<div class="centre"><input type="submit" name="UpdateAll" value="' . __('Update') . '" /></div>
 		</div>
 	</form>';
 }

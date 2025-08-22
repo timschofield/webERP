@@ -1,6 +1,6 @@
 <?php
 
-function standard_deviation($Data){
+function standard_deviation($Data) {
 	$Total = 0;
 	$Counter = 0;
 	foreach ($Data as $Element){
@@ -44,16 +44,16 @@ function NewPageHeader () {
 
 	$FontSize=10;
 
-	$ReportTitle = _('Preferred Supplier Inventory Plan');
+	$ReportTitle = __('Preferred Supplier Inventory Plan');
 
 	if ($_POST['Location']=='All'){
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for all stock locations'));
 	} else {
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . __('for stock at') . ' ' . $_POST['Location']);
 	}
 
 	$FontSize=8;
-	$LeftOvers = $PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
+	$LeftOvers = $PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 	$YPos -=(2*$LineHeight);
 
@@ -67,34 +67,35 @@ function NewPageHeader () {
 	/*set up the headings */
 	$XPos = $Left_Margin+1;
 
-	$LeftOvers = $PDF->addTextWrap($XPos,$YPos,180,$FontSize,_('Item'),'centre');
+	$LeftOvers = $PDF->addTextWrap($XPos,$YPos,180,$FontSize,__('Item'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(270,$YPos,50,$FontSize, _('Avg Qty'),'centre');
-	$LeftOvers = $PDF->addTextWrap(270,$YPos-10,50,$FontSize, _('4 mths'),'centre');
+	$LeftOvers = $PDF->addTextWrap(270,$YPos,50,$FontSize, __('Avg Qty'),'centre');
+	$LeftOvers = $PDF->addTextWrap(270,$YPos-10,50,$FontSize, __('4 mths'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(327,$YPos,50,$FontSize, _('Max Mnth'),'centre');
-	$LeftOvers = $PDF->addTextWrap(327,$YPos-10,50,$FontSize, _('Quantity'),'centre');
+	$LeftOvers = $PDF->addTextWrap(327,$YPos,50,$FontSize, __('Max Mnth'),'centre');
+	$LeftOvers = $PDF->addTextWrap(327,$YPos-10,50,$FontSize, __('Quantity'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(378,$YPos,50,$FontSize, _('Standard'),'centre');
-	$LeftOvers = $PDF->addTextWrap(378,$YPos-10,50,$FontSize, _('Deviation'),'centre');
+	$LeftOvers = $PDF->addTextWrap(378,$YPos,50,$FontSize, __('Standard'),'centre');
+	$LeftOvers = $PDF->addTextWrap(378,$YPos-10,50,$FontSize, __('Deviation'),'centre');
 
 
-	$LeftOvers = $PDF->addTextWrap(429,$YPos,50,$FontSize, _('Lead Time'),'centre');
-	$LeftOvers = $PDF->addTextWrap(429,$YPos-10,50,$FontSize, _('in months'),'centre');
+	$LeftOvers = $PDF->addTextWrap(429,$YPos,50,$FontSize, __('Lead Time'),'centre');
+	$LeftOvers = $PDF->addTextWrap(429,$YPos-10,50,$FontSize, __('in months'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(475,$YPos,60,$FontSize, _('Qty Required'),'centre');
-	$LeftOvers = $PDF->addTextWrap(475,$YPos-10,60,$FontSize, _('in Supply Chain'),'centre');
+	$LeftOvers = $PDF->addTextWrap(475,$YPos,60,$FontSize, __('Qty Required'),'centre');
+	$LeftOvers = $PDF->addTextWrap(475,$YPos-10,60,$FontSize, __('in Supply Chain'),'centre');
 
-	$LeftOvers = $PDF->addTextWrap(617,$YPos,40,$FontSize,_('QOH'),'centre');
-	$LeftOvers = $PDF->addTextWrap(648,$YPos,40,$FontSize,_('Cust Ords'),'centre');
-	$LeftOvers = $PDF->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
-	$LeftOvers = $PDF->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
+	$LeftOvers = $PDF->addTextWrap(617,$YPos,40,$FontSize,__('QOH'),'centre');
+	$LeftOvers = $PDF->addTextWrap(648,$YPos,40,$FontSize,__('Cust Ords'),'centre');
+	$LeftOvers = $PDF->addTextWrap(694,$YPos,40,$FontSize,__('Splr Ords'),'centre');
+	$LeftOvers = $PDF->addTextWrap(735,$YPos,40,$FontSize,__('Sugg Ord'),'centre');
 
 	$YPos =$YPos - (2*$LineHeight);
 	$FontSize=8;
 }
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
@@ -122,9 +123,9 @@ if (isset($_POST['PrintPDF'])){
 
 	$PDF->addInfo('Author','webERP ' . $Version);
 	$PDF->addInfo('Creator','webERP https://www.weberp.org');
-	$PDF->addInfo('Title',_('Inventory Planning Based On Lead Time Of Preferred Supplier') . ' ' . Date($_SESSION['DefaultDateFormat']));
+	$PDF->addInfo('Title',__('Inventory Planning Based On Lead Time Of Preferred Supplier') . ' ' . Date($_SESSION['DefaultDateFormat']));
 //	$PageNumber = 0;
-	$PDF->addInfo('Subject',_('Inventory Planning Based On Lead Time Of Preferred Supplier'));
+	$PDF->addInfo('Subject',__('Inventory Planning Based On Lead Time Of Preferred Supplier'));
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
@@ -175,20 +176,9 @@ if (isset($_POST['PrintPDF'])){
 				ORDER BY purchdata.supplierno,
 				stockmaster.stockid";
 	}
-	$InventoryResult = DB_query($SQL, '', '', false, false);
+	$ErrMsg = __('The inventory quantities could not be retrieved');
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 	$ListCount = DB_num_rows($InventoryResult);
-
-	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.php');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-	      echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit();
-	}
 
 	NewPageHeader();
 
@@ -234,19 +224,8 @@ if (isset($_POST['PrintPDF'])){
    		   $SQL .= "	AND stockmoves.loccode ='" . $_POST['Location'] . "'";
 		}
 
-		$SalesResult = DB_query($SQL,'','',FALSE,FALSE);
-
-		if (DB_error_no() !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' .  $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit();
-		}
+		$ErrMsg = __('The sales quantities could not be retrieved');
+		$SalesResult = DB_query($SQL, $ErrMsg);
 
 		$SalesRow = DB_fetch_array($SalesResult);
 
@@ -285,7 +264,7 @@ if (isset($_POST['PrintPDF'])){
 
 		$SuggestedTopUpOrder = $RequiredStockInSupplyChain - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $PDF->addTextWrap(730, $YPos, 40,$FontSize,_('Nil'),'center');
+			$LeftOvers = $PDF->addTextWrap(730, $YPos, 40,$FontSize,__('Nil'),'center');
 
 		} else {
 
@@ -304,10 +283,10 @@ if (isset($_POST['PrintPDF'])){
 	$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	if ($ListCount == 0) {
-		$Title = _('Print Inventory Planning Report Empty');
+		$Title = __('Print Inventory Planning Report Empty');
 		include('includes/header.php');
-		prnMsg( _('There were no items in the range and location specified'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg( __('There were no items in the range and location specified'),'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	} else {
@@ -318,26 +297,26 @@ if (isset($_POST['PrintPDF'])){
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Preferred Supplier Inventory Planning');
+	$Title=__('Preferred Supplier Inventory Planning');
 	$ViewTopic = 'Inventory';
 	$BookMark = 'PlanningReport';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
+			<legend>', __('Report Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<label for="Location">' . __('For Inventory in Location') . ':</label>
 			<select name="Location">';
 	$SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult = DB_query($SQL);
 
-	echo '<option value="All">' . _('All Locations') . '</option>';
+	echo '<option value="All">' . __('All Locations') . '</option>';
 
 	while ($MyRow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
@@ -346,38 +325,38 @@ if (isset($_POST['PrintPDF'])){
 		</field>';
 
 	echo '<field>
-			<label for="NumberMonthsHolding">' . _('Months Buffer Stock to Hold') . ':</label>
+			<label for="NumberMonthsHolding">' . __('Months Buffer Stock to Hold') . ':</label>
 			<select name="NumberMonthsHolding">';
 
 	if (!isset($_POST['NumberMonthsHolding'])){
 		$_POST['NumberMonthsHolding']=1;
 	}
 	if ($_POST['NumberMonthsHolding']==0.5){
-		echo '<option selected="selected" value="0.5">' . _('Two Weeks')  . '</option>';
+		echo '<option selected="selected" value="0.5">' . __('Two Weeks')  . '</option>';
 	} else {
-		echo '<option value="0.5">' . _('Two Weeks')  . '</option>';
+		echo '<option value="0.5">' . __('Two Weeks')  . '</option>';
 	}
 	/*if ($_POST['NumberMonthsHolding']==1){
-		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 	} else*/ {
-		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+		echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==1.5){
-		echo '<option selected="selected" value="1.5">' . _('Six Weeks') . '</option>';
+		echo '<option selected="selected" value="1.5">' . __('Six Weeks') . '</option>';
 	} else {
-		echo '<option value="1.5">' . _('Six Weeks') . '</option>';
+		echo '<option value="1.5">' . __('Six Weeks') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==2){
-		echo '<option selected="selected" value="2">' . _('Two Months') . '</option>';
+		echo '<option selected="selected" value="2">' . __('Two Months') . '</option>';
 	} else {
-		echo '<option value="2">' . _('Two Months') . '</option>';
+		echo '<option value="2">' . __('Two Months') . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
 			</div>';
     echo '</form>';
 

@@ -6,13 +6,13 @@ include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
-	$Title = _('Select Acknowledgement To Print');
+	$Title = __('Select Acknowledgement To Print');
 	include('includes/header.php');
-	prnMsg(_('Select a Acknowledgement to Print before calling this page'), 'error');
+	prnMsg(__('Select a Acknowledgement to Print before calling this page'), 'error');
 	echo '<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
-						<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . _('Acknowledgements') . '</a></li>
+						<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Acknowledgements') . '</a></li>
 						</ul>
 					</td>
 				</tr>
@@ -22,7 +22,7 @@ if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the Acknowledgement header details for Order Number') . ' ' . $_GET['AcknowledgementNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the Acknowledgement header details for Order Number') . ' ' . $_GET['AcknowledgementNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorders.customerref,
 				salesorders.comments,
@@ -66,13 +66,13 @@ $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result) == 0) {
-	$Title = _('Print Acknowledgement Error');
+	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
-	prnMsg(_('Unable to Locate Acknowledgement Number') . ' : ' . $_GET['AcknowledgementNo'] . ' ', 'error');
+	prnMsg(__('Unable to Locate Acknowledgement Number') . ' : ' . $_GET['AcknowledgementNo'] . ' ', 'error');
 	echo '<table class="table_index">
 			<tr>
 				<td class="menu_group_item">
-					<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . _('Outstanding Acknowledgements') . '</a></li></ul>
+					<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Outstanding Acknowledgements') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>';
@@ -93,15 +93,15 @@ $Terms = $_SESSION['TermsAndConditions'];
 $PaperSize = 'Letter';
 
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Customer Acknowledgement'));
-$pdf->addInfo('Subject', _('Acknowledgement') . ' ' . $_GET['AcknowledgementNo']);
+$pdf->addInfo('Title', __('Customer Acknowledgement'));
+$pdf->addInfo('Subject', __('Acknowledgement') . ' ' . $_GET['AcknowledgementNo']);
 $FontSize = 12;
 $PageNumber = 1;
 $LineHeight = $FontSize * 1.25;
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
-$ErrMsg = _('There was a problem retrieving the Acknowledgement line details for Acknowledgement Number') . ' ' . $_GET['AcknowledgementNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the Acknowledgement line details for Acknowledgement Number') . ' ' . $_GET['AcknowledgementNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorderdetails.stkcode,
 		stockmaster.description,
@@ -195,7 +195,7 @@ if (DB_num_rows($Result) > 0) {
 
 		if ($MyRow2['cust_part'] > '') {
 			$YPos -= $LineHeight;
-			$LeftOvers = $pdf->addTextWrap($XPos + 10, $YPos, 300, $FontSize, _('Customer Part') . ': ' . $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
+			$LeftOvers = $pdf->addTextWrap($XPos + 10, $YPos, 300, $FontSize, __('Customer Part') . ': ' . $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
 			//$LeftOvers = $pdf->addTextWrap(190,$YPos,186,$FontSize,$MyRow2['cust_description']);
 		}
 
@@ -225,7 +225,7 @@ if (DB_num_rows($Result) > 0) {
 		include('includes/PDFAckPageHeader.php');
 	} //end if need a new page headed up
 
-	$LeftOvers = $pdf->addTextWrap($XPos, $YPos - 80, 30, 10, _('Notes:'));
+	$LeftOvers = $pdf->addTextWrap($XPos, $YPos - 80, 30, 10, __('Notes:'));
 	$LeftOvers = $pdf->addText($XPos, $YPos - 95, 10, $MyRow['comments']);
 
 	if (mb_strlen($LeftOvers) > 1) {
@@ -245,16 +245,16 @@ if (DB_num_rows($Result) > 0) {
 		}
 	}
 	$YPos -= ($LineHeight);
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Total Excluding Tax'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, __('Total Excluding Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Tax'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, __('Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($TaxTotal, $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Freight'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, __('Freight'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
-	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Total Including Tax and Freight'), 'right');
+	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, __('Total Including Tax and Freight'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']), 'right');
 
 	//now print T&C
@@ -273,9 +273,9 @@ if (DB_num_rows($Result) > 0) {
 
 
 if ($ListCount == 0) {
-	$Title = _('Print Acknowledgement Error');
+	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
-	echo '<p>' . _('There were no items on the Acknowledgement') . '. ' . _('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">' . _('Print Another Acknowledgement') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">' . __('Print Another Acknowledgement') . '</a>' . '<br />' . '<a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
 } else {

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Work Order Status Inquiry');
+$Title = __('Work Order Status Inquiry');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
@@ -22,7 +22,7 @@ if (isset($_GET['StockID'])) {
 }
 
 
-$ErrMsg = _('Could not retrieve the details of the selected work order item');
+$ErrMsg = __('Could not retrieve the details of the selected work order item');
 $WOResult = DB_query("SELECT workorders.loccode,
 							 locations.locationname,
 							 workorders.requiredby,
@@ -45,45 +45,45 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						$ErrMsg);
 
 if (DB_num_rows($WOResult)==0){
-	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
+	prnMsg(__('The selected work order item cannot be retrieved from the database'),'info');
 	include('includes/footer.php');
 	exit();
 }
 $WORow = DB_fetch_array($WOResult);
 
-echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . _('Back to Work Orders'). '</a>';
-echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . _('Back to Costing'). '</a>';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . __('Back to Work Orders'). '</a>';
+echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . __('Back to Costing'). '</a>';
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .
-	_('Search') . '" alt="" />' . ' ' . $Title.'
+	__('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 
 echo '<table cellpadding="2" class="selection">
 	<tr>
-		<td class="label">' . _('Work order Number') . ':</td>
+		<td class="label">' . __('Work order Number') . ':</td>
 		<td>' . $SelectedWO  . '</td>
-		<td class="label">' . _('Item') . ':</td>
+		<td class="label">' . __('Item') . ':</td>
 		<td>' . $StockID . ' - ' . $WORow['description'] . '</td>
 	</tr>
  	<tr>
-		<td class="label">' . _('Manufactured at') . ':</td>
+		<td class="label">' . __('Manufactured at') . ':</td>
 		<td>' . $WORow['locationname'] . '</td>
-		<td class="label">' . _('Required By') . ':</td>
+		<td class="label">' . __('Required By') . ':</td>
 		<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
 	</tr>
  	<tr>
-		<td class="label">' . _('Quantity Ordered') . ':</td>
+		<td class="label">' . __('Quantity Ordered') . ':</td>
 		<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 		<td colspan="2">' . $WORow['units'] . '</td>
 	</tr>
  	<tr>
-		<td class="label">' . _('Already Received') . ':</td>
+		<td class="label">' . __('Already Received') . ':</td>
 		<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 		<td colspan="2">' . $WORow['units'] . '</td>
 	</tr>
 	<tr>
-		<td class="label">' . _('Start Date') . ':</td>
+		<td class="label">' . __('Start Date') . ':</td>
 		<td>' . ConvertSQLDate($WORow['startdate']) . '</td>
 	</tr>
 	</table>
@@ -92,12 +92,12 @@ echo '<table cellpadding="2" class="selection">
 	//set up options for selection of the item to be issued to the WO
 	echo '<table class="selection">
 			<tr>
-				<th colspan="5"><h3>' . _('Material Requirements For this Work Order') . '</h3></th>
+				<th colspan="5"><h3>' . __('Material Requirements For this Work Order') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th colspan="2">' . _('Item') . '</th>
-			<th>' . _('Qty Required') . '</th>
-			<th>' . _('Qty Issued') . '</th>
+			<th colspan="2">' . __('Item') . '</th>
+			<th>' . __('Qty Required') . '</th>
+			<th>' . __('Qty Issued') . '</th>
 		</tr>';
 
 	$RequirmentsResult = DB_query("SELECT worequirements.stockid,
@@ -122,11 +122,11 @@ echo '<table cellpadding="2" class="selection">
 	while ($RequirementsRow = DB_fetch_array($RequirmentsResult)){
 		if ($RequirementsRow['autoissue']==0){
 			echo '<tr>
-					<td>' . _('Manual Issue') . '</td>
+					<td>' . __('Manual Issue') . '</td>
 					<td>' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
 		} else {
 			echo '<tr>
-					<td class="notavailable">' . _('Auto Issue') . '</td>
+					<td class="notavailable">' . __('Auto Issue') . '</td>
 					<td class="notavailable">' .$RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description']  . '</td>';
 		}
 		if (isset($IssuedAlreadyRow[$RequirementsRow['stockid']])){
@@ -153,7 +153,7 @@ echo '<table cellpadding="2" class="selection">
 			}
 			foreach ($IssuedAlreadyRow as $StockID=>$Issued) {
 			echo '<tr>
-				<td>'._('Additional Issue').'</td>
+				<td>'.__('Additional Issue').'</td>
 				<td>'.$StockID . ' - '.$AdditionalStocks[$StockID]['description'].'</td>';
 				echo '<td class="number">0</td>
 					<td class="number">'.locale_number_format($Issued,$AdditionalStocks[$StockID]['decimalplaces']).'</td>

@@ -4,11 +4,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	// allow dashboard applet to run standalone
 	$DirectoryLevelsDeep = 1;
 	$PathPrefix = __DIR__ . '/../';
-	require_once ($PathPrefix . 'includes/session.php');
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 }
 
-	$ScriptTitle = _('Latest Customer Orders');
+	$ScriptTitle = __('Latest Customer Orders');
 
 	$SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 	$DashboardResult = DB_query($SQL);
@@ -18,7 +18,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		<tr>
 			<th colspan="6">
 				', $ScriptTitle, '
-				<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton">X</a>
+				<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton">X</a>
 			</th>
 		</tr>';
 
@@ -52,12 +52,12 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 
 	$TotalSalesOrders = 0;
 	echo '<tr>
-		<th>', _('Order number'), '</th>
-		<th>', _('Customer'), '</th>
-		<th>', _('Order Date'), '</th>
-		<th>', _('Delivery Date'), '</th>
-		<th class="number">', _('Order Amount'), '</th>
-		<th>', _('Currency'), '</th>
+		<th>', __('Order number'), '</th>
+		<th>', __('Customer'), '</th>
+		<th>', __('Order Date'), '</th>
+		<th>', __('Delivery Date'), '</th>
+		<th class="number">', __('Order Amount'), '</th>
+		<th>', __('Currency'), '</th>
 	</tr> ';
 	$k = 0;
 
@@ -79,7 +79,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 
 	if (DB_num_rows($SalesOrdersResult) > 0) {
 		echo '<tr class="total_row">
-			<td colspan=3>', _('Total'), '</td>
+			<td colspan=3>', __('Total'), '</td>
 			<td colspan=2 class="number">', locale_number_format($TotalSalesOrders, $DecimalPlaces), '</td>
 			<td></td>
 		</tr>';

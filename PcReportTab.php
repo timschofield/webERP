@@ -9,7 +9,7 @@ if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromD
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
-$Title = _('Petty Cash Management Report');
+$Title = __('Petty Cash Management Report');
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -39,8 +39,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			WHERE tabcode = '" . $SelectedTabs . "'";
 
 	$TabResult = DB_query($SQLTabs,
-						 _('No Petty Cash Tabs were returned by the SQL because'),
-						 _('The SQL that failed was:'));
+						 __('No Petty Cash Tabs were returned by the SQL because'),
+						 __('The SQL that failed was:'));
 
 	$Tabs = DB_fetch_array($TabResult);
 
@@ -87,13 +87,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Tab Code') . ': ' . $SelectedTabs . '<br />
-					' . _('User') . ': ' . $Tabs['usercode'] . ' - ' . $UserRow['realname'] . '<br />
-					' . _('Currency') . ': ' . $Tabs['currency'] . ' - ' . $CurrencyRow['currency'] . '<br />
-					' . _('Cash Assigner') . ': ' . $Tabs['assigner'] . ' - ' . $AssignerRow['realname'] . '<br />
-					' . _('Authoriser - Cash') . ': ' . $Tabs['authorizer'] . ' - ' . $AuthoriserRow['realname'] . '<br />
-					' . _('Authoriser - Expenses') . ': ' . $Tabs['authorizerexpenses'] . ' - ' . $AuthExpRow['realname'] . '<br />
-					' . _('Date Range') . ': ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '<br />
+					' . __('Tab Code') . ': ' . $SelectedTabs . '<br />
+					' . __('User') . ': ' . $Tabs['usercode'] . ' - ' . $UserRow['realname'] . '<br />
+					' . __('Currency') . ': ' . $Tabs['currency'] . ' - ' . $CurrencyRow['currency'] . '<br />
+					' . __('Cash Assigner') . ': ' . $Tabs['assigner'] . ' - ' . $AssignerRow['realname'] . '<br />
+					' . __('Authoriser - Cash') . ': ' . $Tabs['authorizer'] . ' - ' . $AuthoriserRow['realname'] . '<br />
+					' . __('Authoriser - Expenses') . ': ' . $Tabs['authorizerexpenses'] . ' - ' . $AuthExpRow['realname'] . '<br />
+					' . __('Date Range') . ': ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '<br />
 				</div>
 				<table>';
 
@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Balance['0'] = 0;
 	}
 
-	$HTML .= '<tr><td>' . _('Balance before ') . '' . $_POST['FromDate'] . ':</td>
+	$HTML .= '<tr><td>' . __('Balance before ') . '' . $_POST['FromDate'] . ':</td>
 				<td></td>
 				<td>' . locale_number_format($Balance['0'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td>
 			</tr>';
@@ -129,7 +129,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$BalanceNotAut['0'] = 0;
 	}
 
-	$HTML .= '<tr><td>' . _('Total not authorised before ') . '' . $_POST['FromDate'] . ':</td>
+	$HTML .= '<tr><td>' . __('Total not authorised before ') . '' . $_POST['FromDate'] . ':</td>
 			  <td></td>
 			  <td>' . '' . locale_number_format($BalanceNotAut['0'],$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $Tabs['currency'] . '</td>
 		  </tr>';
@@ -156,21 +156,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ORDER BY date, counterindex Asc";
 
 	$TabDetail = DB_query($SQL,
-						_('No Petty Cash movements for this tab were returned by the SQL because'),
-						_('The SQL that failed was:'));
+						__('No Petty Cash movements for this tab were returned by the SQL because'),
+						__('The SQL that failed was:'));
 
 	$HTML .=  '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Date of Expense') . '</th>
-					<th class="SortedColumn">' . _('Expense Code') . '</th>
-					<th class="SortedColumn">' . _('Gross Amount') . '</th>
-					<th>' . _('Tax') . '</th>
-					<th>' . _('Tax Group') . '</th>
-					<th>' . _('Business Purpose') . '</th>
-					<th>' . _('Notes') . '</th>
-					<th>' . _('Receipt Attachment') . '</th>
-					<th>' . _('Date Authorised') . '</th>
+					<th class="SortedColumn">' . __('Date of Expense') . '</th>
+					<th class="SortedColumn">' . __('Expense Code') . '</th>
+					<th class="SortedColumn">' . __('Gross Amount') . '</th>
+					<th>' . __('Tax') . '</th>
+					<th>' . __('Tax Group') . '</th>
+					<th>' . __('Business Purpose') . '</th>
+					<th>' . __('Notes') . '</th>
+					<th>' . __('Receipt Attachment') . '</th>
+					<th>' . __('Date Authorised') . '</th>
 				</tr>
 			</thead>
 			</tbody>';
@@ -211,13 +211,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$ReceiptExt = $ReceiptRow['extension'];
 			$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 			$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 		} else {
-			$ReceiptText = _('No attachment');
+			$ReceiptText = __('No attachment');
 		}
 
 		if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
-					$AuthorisedDate = _('Unauthorised');
+					$AuthorisedDate = __('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
@@ -262,7 +262,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '</tbody>
 		<tfoot>
 			<tr class="total_row">
-				<td colspan="2" class="number">' . _('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
+				<td colspan="2" class="number">' . __('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
 				<td class="number">' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td>
 				<td>' . $Tabs['currency'] . '</td>
 				<td colspan="6"></td>
@@ -282,7 +282,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -303,10 +303,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Petty Cash Management Report');
+		$Title = __('Petty Cash Management Report');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Payment Entry'). '" alt="" />' . ' ' . $Title . '
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry'). '" alt="" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -314,9 +314,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
     echo '</form>';
 } else {
-	include  ('includes/header.php');
+	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('Payment Entry')
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry')
 	. '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">
@@ -332,9 +332,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	/*Show a form to allow input of criteria for Tabs to show */
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="SelectedTabs">' . _('Petty Cash Tab') . ':</label>
+				<label for="SelectedTabs">' . __('Petty Cash Tab') . ':</label>
 				<select name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
@@ -359,17 +359,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="FromDate">', _('From Date'), ':</label>
+			<label for="FromDate">', __('From Date'), ':</label>
 			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
-			<label for="FromDate">', _('To Date'), ':</label>
+			<label for="FromDate">', __('To Date'), ':</label>
 			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="View" title="View" value="' . _('Show HTML') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View" value="' . __('Show HTML') . '" />
 		</div>
 	</form>';
 	include('includes/footer.php');

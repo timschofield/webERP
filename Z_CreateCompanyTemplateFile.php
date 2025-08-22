@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Create Database Template File');
+$Title = __('Create Database Template File');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -9,7 +9,7 @@ include('includes/header.php');
 if (isset($_POST['CreateTemplate'])){
       $InputError = false; //assume the best - but check for the worst
       if (mb_strlen($_POST['TemplateName'])<=1){
-         prnMsg(_('The name of the template has not been entered or is just 1 character - an informative name is required e.g. Deutsche-distribution in the case of a german distribution company'),'error');
+         prnMsg(__('The name of the template has not been entered or is just 1 character - an informative name is required e.g. Deutsche-distribution in the case of a german distribution company'),'error');
          $InputError = true;
       }
 
@@ -202,13 +202,13 @@ if (isset($_POST['CreateTemplate'])){
            fwrite ($FileHandle, $SQLScript);
            fclose ($FileHandle);
 
-           echo '<p><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . _('Show the sql template file produced') . '</a></p>';
+           echo '<p><a href="' . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql">' . __('Show the sql template file produced') . '</a></p>';
 
            /* Send email with the template file */
            $To = array('"Submissions" <submissions@weberp.org>');
            $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
-           $Subject = _('Company Template Submission');
-           $Body = _('Please find company template') . ' ' . $_POST['TemplateName'];
+           $Subject = __('Company Template Submission');
+           $Body = __('Please find company template') . ' ' . $_POST['TemplateName'];
            $Attachments = array('CompanyTemplate.sql' => $FilePath);
 
            $Result = SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments, false);
@@ -220,19 +220,19 @@ if (isset($_POST['CreateTemplate'])){
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-prnMsg(_('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project'),'info');
+prnMsg(__('Running the create a new company template script will export all account groups, account codes and tax set up tables including tax groups, tax authorities, tax rates etc. However, no transactions or private data will be exported. There is opportunity to prevent specific general ledger accounts from being exported where these are considered private - again no transactional or balance data is exported and you can inspect the contents of the sql file. The template file will be emailed automatically to the webERP project'),'info');
 
-echo _('Enter the name of the template to be created') . ':<input type="text" name="TemplateName" />';
+echo __('Enter the name of the template to be created') . ':<input type="text" name="TemplateName" />';
 
-prnMsg(_('Warning: All selected accounts will be exported - please de-select the accounts you do not wish to export to the new template file'),'warn');
+prnMsg(__('Warning: All selected accounts will be exported - please de-select the accounts you do not wish to export to the new template file'),'warn');
 
 echo '<table>';
  /*Show the chart of accounts to be exported for deslection of company specific ones */
 
 $ChartResult = DB_query("SELECT accountcode, accountname, group_ FROM chartmaster");
 
-$TableHeadings = '<tr><th>' . _('Account Code') . '</th>
-					<th>' . _('Account Name') . '</th></tr>';
+$TableHeadings = '<tr><th>' . __('Account Code') . '</th>
+					<th>' . __('Account Name') . '</th></tr>';
 $i = 0;
 while ($ChartRow = DB_fetch_array($ChartResult)){
      echo '<tr><td>' . $ChartRow['accountcode'] . '</td>
@@ -244,7 +244,7 @@ while ($ChartRow = DB_fetch_array($ChartResult)){
 
 echo '</table>';
 echo '<hr />';
-echo '<div class="centre"><input type="submit" name="CreateTemplate" value="' . _('Create Template and Email') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="CreateTemplate" value="' . __('Create Template and Email') . '" /></div>';
 
 echo '</div>
       </form>';

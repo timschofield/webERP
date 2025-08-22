@@ -4,7 +4,7 @@ include('includes/session.php');
 use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-$Title = _('Petty Cash Expense Management Report');
+$Title = __('Petty Cash Expense Management Report');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
@@ -35,8 +35,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Expense Code') . ': ' . _('Expense Code') . '<br />
-					' . _('Date Range') . ': ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '<br />
+					' . __('Expense Code') . ': ' . __('Expense Code') . '<br />
+					' . __('Date Range') . ': ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '<br />
 				</div>
 				<table>';
 
@@ -63,22 +63,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
 	$Result = DB_query($SQL,
-						_('No Petty Cash movements for this expense code were returned by the SQL because'),
-						_('The SQL that failed was:'));
+						__('No Petty Cash movements for this expense code were returned by the SQL because'),
+						__('The SQL that failed was:'));
 
 	$HTML .= '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . _('Date of Expense') . '</th>
-					<th class="SortedColumn">' . _('Tab') . '</th>
-					<th>' . _('Currency') . '</th>
-					<th class="SortedColumn">' . _('Gross Amount') . '</th>
-					<th>' . _('Tax') . '</th>
-					<th>' . _('Tax Group') . '</th>
-					<th>' . _('Business Purpose') . '</th>
-					<th>' . _('Notes') . '</th>
-					<th>' . _('Receipt Attachment') . '</th>
-					<th>' . _('Date Authorised') . '</th>
+					<th class="SortedColumn">' . __('Date of Expense') . '</th>
+					<th class="SortedColumn">' . __('Tab') . '</th>
+					<th>' . __('Currency') . '</th>
+					<th class="SortedColumn">' . __('Gross Amount') . '</th>
+					<th>' . __('Tax') . '</th>
+					<th>' . __('Tax Group') . '</th>
+					<th>' . __('Business Purpose') . '</th>
+					<th>' . __('Notes') . '</th>
+					<th>' . __('Receipt Attachment') . '</th>
+					<th>' . __('Date Authorised') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -118,13 +118,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$ReceiptExt = $ReceiptRow['extension'];
 			$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 			$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 		} else {
-			$ReceiptText = _('No attachment');
+			$ReceiptText = __('No attachment');
 		}
 
 		if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
-			$AuthorisedDate = _('Unauthorised');
+			$AuthorisedDate = __('Unauthorised');
 		} else {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -177,19 +177,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Petty Cash Expense Management Report');
+		$Title = __('Petty Cash Expense Management Report');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
 	}
 } else {
-	include  ('includes/header.php');
+	include('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">';
@@ -205,9 +205,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	/*Show a form to allow input of criteria for Expenses to show */
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="SelectedExpense">' . _('Expense Code') . ':</label>
+			<label for="SelectedExpense">' . __('Expense Code') . ':</label>
 			<select name="SelectedExpense">';
 
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
@@ -236,17 +236,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="FromDate">' . _('From Date') . ':</label>
+			<label for="FromDate">' . __('From Date') . ':</label>
 			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
-			<label for="ToDate">' . _('To Date') . ':' . '</label>
+			<label for="ToDate">' . __('To Date') . ':' . '</label>
 			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="View" title="View" value="' . _('Show HTML') . '" />
+			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View" value="' . __('Show HTML') . '" />
 		</div>
 	</form>';
 

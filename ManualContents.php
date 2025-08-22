@@ -29,7 +29,7 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 */
 include('includes/session.php');
 
-$Title = _('webERP Manual');
+$Title = __('webERP Manual');
 
 // Set the Cascading Style Sheet for the manual:
 $ManualStyle = 'locale/' . $Language . '/Manual/css/manual.css';
@@ -59,8 +59,8 @@ if (file_exists($ManualHeader)) { // Use locale ManualHeader.html if exists. Eac
 	<body>
 		<div id="pagetitle">', $Title, '</div>
 		<div class="right">
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a><br />
-			<a class="minitext" href="#bottom">⬇ ', _('Go to Bottom'), '</a>
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
+			<a class="minitext" href="#bottom">⬇ ', __('Go to Bottom'), '</a>
 		</div>';
 }
 
@@ -74,10 +74,10 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
 	if(!isset($_POST['Submit'])) {
-		echo '<p>', _('Click on a link to view a page'), '</p>';
+		echo '<p>', __('Click on a link to view a page'), '</p>';
 	}
 	echo '<h1>';
-	echo _('Table of Contents'), '</h1>';
+	echo __('Table of Contents'), '</h1>';
 	$j = 0;
 	foreach($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 		$Name = 'Select' . $Title;
@@ -104,7 +104,7 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 		++$j;
 	}
 	echo '</ul>',
-		'<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>',
+		'<p><input type="submit" name="Submit" value="', __('Display Checked'), '" /></p>',
 		'</form>';
 }
 
@@ -136,8 +136,8 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 	include($ManualFooter);
 } else {// Default page footer:
 	echo '<div class="right">
-			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', _('Go to Top'), '</a><br />
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a>
+			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', __('Go to Top'), '</a><br />
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
 		</div>
 	</body>
 	</html>';

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Create Chart Details Records');
+$Title = __('Create Chart Details Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
@@ -29,7 +29,7 @@ $SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 		AND chartdetails.accountcode IS NULL
 		GROUP BY chartmaster.accountcode";
 
-$ChartDetailsNotSetUpResult = DB_query($SQL,_('Could not test to see that all chart detail records properly initiated'));
+$ChartDetailsNotSetUpResult = DB_query($SQL,__('Could not test to see that all chart detail records properly initiated'));
 
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
@@ -42,7 +42,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		WHERE (periods.periodno BETWEEN '"  . $CreateFrom . "' AND '" . $CreateTo . "')
 		AND chartdetails.accountcode IS NULL";
 
-	$ErrMsg = _('Inserting new chart details records required failed because');
+	$ErrMsg = __('Inserting new chart details records required failed because');
 	$InsChartDetailsRecords = DB_query($SQL, $ErrMsg);
 
 
@@ -78,7 +78,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 					WHERE accountcode = '" . $AccountRow['accountcode'] . "'
 					AND period ='" . ($MyRow['period']+1) . "'";
 
-				$UpdChartDetails = DB_query($SQL, '', '', '', false);
+				$UpdChartDetails = DB_query($SQL, '', '', false, false);
 			}
 		}
 
@@ -87,11 +87,11 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 		DB_free_result($ChartDetailsCFwd);
 	}
 
-	prnMsg(_('Chart Details Created successfully'),'success');
+	prnMsg(__('Chart Details Created successfully'),'success');
 
 } else {
 
-	prnMsg(_('No additional chart details were required to be added'),'success');
+	prnMsg(__('No additional chart details were required to be added'),'success');
 }
 
 include('includes/footer.php');

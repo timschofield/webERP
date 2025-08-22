@@ -18,12 +18,12 @@ if (mysqli_connect_errno()) {
 	printf("Connect failed: %s\n", mysqli_connect_error());
 	session_unset();
 	session_destroy();
-	echo '<p>' . _('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . _('here') . '</a>' . ' ' ._('to try logging in again') . '</p>';
+	echo '<p>' . __('Click') . ' ' . '<a href="' . $RootPath . '/index.php">' . __('here') . '</a>' . ' ' .__('to try logging in again') . '</p>';
 	exit(1);
 }
 
 if (!$db) {
-	echo '<br />' . _('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
+	echo '<br />' . __('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
 	exit(1);
 }
 
@@ -34,15 +34,15 @@ mysqli_set_charset($db, 'utf8');
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 if (isset($DatabaseName)) {
 	if (!mysqli_select_db($db, $DatabaseName)) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
+		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 		unset ($DatabaseName);
 		exit();
 	}
 } else {
 	if (!mysqli_select_db($db, $_SESSION['DatabaseName'])) {
-		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to login page') . '</a>';
+		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 		unset ($_SESSION['DatabaseName']);
 		exit();
 	}
@@ -66,25 +66,23 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		if ($ErrorMessage == '') {
 			/// @todo add default error messages for insert/update/delete queries
 			if ($SQLArray[0] == 'SELECT') {
-				$ErrorMessage = _('An error occurred in retrieving the information');
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : ''). DB_error_msg(), 'error', _('Database Error'));
-		if ($Debug==1) {
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : ''). DB_error_msg(), 'error', __('Database Error'));
+		if ($Debug >= 1) {
 			if ($DebugMessage == '') {
-				$DebugMessage = _('The SQL that failed was');
+				$DebugMessage = __('The SQL that failed was');
 			}
-			$trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-			prnMsg($DebugMessage. '<br />' . $SQL . '<br />' . _('in file') . ' ' . $trace[0]['file'] . _('on line') . ' ' . $trace[0]['line'],
-				'error', _('Database SQL Failure'));
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
 		if ($Transaction) {
 			$SQL = 'rollback';
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
-				prnMsg(_('Error Rolling Back Transaction'), 'error', _('Database Rollback Error') . ' ' . DB_error_no());
+				prnMsg(__('Error Rolling Back Transaction'), 'error', __('Database Rollback Error') . ' ' . DB_error_no());
 			} else {
-				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
 			}
 		}
 		include($PathPrefix . 'includes/footer.php');
@@ -132,9 +130,7 @@ function DB_data_seek(&$ResultIndex,$Record) {
 }
 
 function DB_free_result($ResultIndex) {
-	if (is_resource($ResultIndex)) {
-		mysqli_free_result($ResultIndex);
-	}
+	mysqli_free_result($ResultIndex);
 }
 
 function DB_num_rows($ResultIndex) {
@@ -185,7 +181,7 @@ function interval( $val, $Inter ) {
 }
 
 function DB_Maintenance() {
-	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
+	prnMsg(__('The system has just run the regular database administration and optimisation routine.'),'info');
 
 	$TablesResult = DB_show_tables();
 	while ($MyRow = DB_fetch_row($TablesResult)) {

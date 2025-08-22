@@ -4,6 +4,27 @@ namespace PGettext;
 
 use PGettext\Streams\StreamReaderInterface;
 
+// LC_MESSAGES is not available if php has not been compiled with libintl, while the other constants are always available.
+// On Linux and Solaris, the values are: LC_CTYPE=0, LC_NUMERIC=1, LC_TIME=2, LC_COLLATE=3, LC_MONETARY=4, LC_MESSAGES=5, LC_ALL=6
+// On Windows, the values are: LC_CTYPE=2, LC_NUMERIC=4, LC_TIME=5, LC_COLLATE=1, LC_MONETARY=3, LC_MESSAGES=undefined, LC_ALL=0
+// On FreeBSD (14), the values are: LC_CTYPE=2, LC_NUMERIC=4, LC_TIME=5, LC_COLLATE=1, LC_MONETARY=3, LC_MESSAGES=6, LC_ALL=0
+if (!defined('LC_MESSAGES')) {
+  $lc_constants_values_in_use = array();
+  foreach(array('LC_CTYPE', 'LC_NUMERIC', 'LC_TIME', 'LC_COLLATE', 'LC_MONETARY', 'LC_ALL') as $constant) {
+    $lc_constants_values_in_use[] = constant($constant);
+  }
+  if (in_array(5, $lc_constants_values_in_use)) {
+    if (in_array(6, $lc_constants_values_in_use)) {
+      define('LC_MESSAGES',	max($lc_constants_values_in_use) + 1);
+    } else {
+      define('LC_MESSAGES',	6);
+    }
+  } else {
+    define('LC_MESSAGES',	5);
+  }
+  unset($lc_constants_values_in_use);
+}
+
 class T
 {
   protected static $text_domains = array();
@@ -420,19 +441,14 @@ class T
 
   /**
    * Sets a requested locale (or queries the currently set locale), if needed emulating it.
-   * @param int $category only LC_MESSAGES and LC_ALL are supported
-   *        LC_CTYPE        0
-   *        LC_NUMERIC      1
-   *        LC_TIME         2
-   *        LC_COLLATE      3
-   *        LC_MONETARY     4
-   *        LC_MESSAGES     5
-   *        LC_ALL          6
+   * @param int $category only LC_MESSAGES and LC_ALL are supported.
+   *        On Linux, the values are: LC_CTYPE=0, LC_NUMERIC=1, LC_TIME=2, LC_COLLATE=3, LC_MONETARY=4, LC_MESSAGES=5, LC_ALL=6
+   *        BUT the values are different on other OS! Eg. on FreeBSD 14, LC_MESSAGES=6
    * @param string $locale
    * @return string|false
    */
   public static function setlocale($category, $locale) {
-    if ($category != 6 && $category != 5) {
+    if ($category != LC_ALL && $category != LC_MESSAGES) {
       trigger_error("Function T::setlocale only accepts LC_MESSAGES and LC_ALL", E_USER_WARNING);
       return false;
     }
@@ -441,7 +457,7 @@ class T
 
     if ($locale === 0 || $locale === '0') {
       $locale = static::get_current_locale(true);
-      return $category == 6 ? "LC_MESSAGES=" . $locale : $locale;
+      return $category == LC_ALL ? "LC_MESSAGES=" . $locale : $locale;
     } else {
       // we make sure the `setlocale` function is not the polyfill one, to avoid loops!
       if (function_exists('setlocale') && !isset(static::$emulated_functions['setlocale'])) {
@@ -454,7 +470,7 @@ class T
           static::$emulate_locales[static::$current_locale] = false;
         } else {
           // Failed setting it. Enable emulation for the current locale
-          if ($category != 5) {
+          if ($category != LC_MESSAGES) {
             trigger_error("Function T::setlocale called with LC_ALL category, but in emulated mode only messages will be translated. Use LC_MESSAGES instead", E_USER_WARNING);
           }
           array_shift($args);
@@ -549,18 +565,18 @@ class T
         if ($modifier) {
           if ($country) {
             if ($charset)
-              array_push($locale_names, "${lang}_$country.$charset@$modifier");
-            array_push($locale_names, "${lang}_$country@$modifier");
+              array_push($locale_names, "{$lang}_$country.$charset@$modifier");
+            array_push($locale_names, "{$lang}_$country@$modifier");
           } elseif ($charset)
-            array_push($locale_names, "${lang}.$charset@$modifier");
+            array_push($locale_names, "$lang.$charset@$modifier");
           array_push($locale_names, "$lang@$modifier");
         }
         if ($country) {
           if ($charset)
-            array_push($locale_names, "${lang}_$country.$charset");
-          array_push($locale_names, "${lang}_$country");
+            array_push($locale_names, "{$lang}_$country.$charset");
+          array_push($locale_names, "{$lang}_$country");
         } elseif ($charset)
-          array_push($locale_names, "${lang}.$charset");
+          array_push($locale_names, "$lang.$charset");
         array_push($locale_names, $lang);
       }
 
@@ -574,11 +590,11 @@ class T
   /**
    * Utility function to get a StreamReader for the given text domain.
    * @param string|null $domain
-   * @param int $category see the LC_ constants. 5 = LC_MESSAGES
+   * @param int $category see the LC_ constants.
    * @param bool|null $enable_cache when null, static::$enable_cache decides whether to cache translation strings or not
    * @return ReaderInterface
    */
-  protected static function get_reader($domain=null, $category=5, $enable_cache=null) {
+  protected static function get_reader($domain=null, $category=LC_MESSAGES, $enable_cache=null) {
     if (!isset($domain)) $domain = static::$current_domain;
 
     $initialized = static::initialize_domain_if_needed($domain);
@@ -587,8 +603,8 @@ class T
     }
 
     if (!isset(static::$text_domains[$domain]->l10n)) {
-      // get the current locale (LC_MESSAGES is 5, but we do not presume it to be defined)
-      $locale = static::setlocale(5, 0);
+      // get the current locale
+      $locale = static::setlocale(LC_MESSAGES, 0);
       /// @todo is it correct to use the current directory as default?
       $bound_path = isset(static::$text_domains[$domain]->path) ? static::$text_domains[$domain]->path : '.';
       $subpath = static::$LC_CATEGORIES[$category] ."/$domain.mo";
@@ -705,7 +721,7 @@ class T
 
 
   /**
-   * NB: end-user code should not call this but T::setlocale(5/6, 0) instead.
+   * NB: end-user code should not call this but T::setlocale(LC_MESSAGES/LC_ALL, 0) instead.
    * @param bool $set_current_if_unset
    * @return string|false
    */
@@ -716,7 +732,7 @@ class T
 
     // we use a setlocale(LC_MESSAGES, 0) call, followed by analysis of env vars, to determine the current locale
     if (function_exists('setlocale') && !isset(static::$emulated_functions['setlocale'])) {
-      $locale = setlocale(5, 0);
+      $locale = setlocale(LC_MESSAGES, 0);
       if ($locale !== false) {
         if ($set_current_if_unset) {
           static::$current_locale = $locale;
@@ -736,12 +752,12 @@ class T
       return true;
     }
 
-    $currentLocale = setlocale(5, 0);
+    $currentLocale = setlocale(LC_MESSAGES, 0);
     if ($locale == $currentLocale) {
       return false;
     }
-    $ok = (setlocale(5, $locale) !== false);
-    setlocale(5, $currentLocale);
+    $ok = (setlocale(LC_MESSAGES, $locale) !== false);
+    setlocale(LC_MESSAGES, $currentLocale);
     return $ok;
   }
 

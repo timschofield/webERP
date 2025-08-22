@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Sales People Maintenance');
+$Title = __('Sales People Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';
 if(isset($_GET['SelectedSalesPerson'])) {
@@ -24,12 +24,12 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-$CommissionPeriods[0] = _('No Commission');
-$CommissionPeriods[1] = _('Monthly');
-$CommissionPeriods[2] = _('Quarterly');
-$CommissionPeriods[3] = _('Annually');
+$CommissionPeriods[0] = __('No Commission');
+$CommissionPeriods[1] = __('Monthly');
+$CommissionPeriods[2] = __('Quarterly');
+$CommissionPeriods[3] = __('Annually');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -44,26 +44,26 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['SalesmanCode']) > 3) {
 		$InputError = 1;
-		prnMsg(_('The salesperson code must be three characters or less long'),'error');
+		prnMsg(__('The salesperson code must be three characters or less long'),'error');
 		$Errors[$i] = 'SalesmanCode';
 		$i++;
 	} elseif (mb_strlen($_POST['SalesmanCode'])==0 OR $_POST['SalesmanCode']=='') {
 		$InputError = 1;
-		prnMsg(_('The salesperson code cannot be empty'),'error');
+		prnMsg(__('The salesperson code cannot be empty'),'error');
 		$Errors[$i] = 'SalesmanCode';
 		$i++;
 	} elseif (mb_strlen($_POST['SalesmanName']) > 30) {
 		$InputError = 1;
-		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
+		prnMsg(__('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
 	} elseif (mb_strlen($_POST['SManTel']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
+		prnMsg(__('The salesperson telephone number must be twenty characters or less long'),'error');
 
 	} elseif (mb_strlen($_POST['SManFax']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The salesperson telephone number must be twenty characters or less long'),'error');
+		prnMsg(__('The salesperson telephone number must be twenty characters or less long'),'error');
 
 	}
 	if (!isset($_POST['SManTel'])){
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 									glaccount='" . $_POST['GLAccount'] . "'
 								WHERE salesmancode = '" . stripslashes($SelectedSalesPerson) . "'";
 
-		$Msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
+		$Msg = __('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . __('has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
@@ -121,11 +121,11 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['GLAccount'] . "'
 					)";
 
-		$Msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
+		$Msg = __('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
-		$ErrMsg = _('The insert or update of the salesperson failed because');
+		$ErrMsg = __('The insert or update of the salesperson failed because');
 		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg , 'success');
@@ -151,27 +151,27 @@ $BookMark = 'SalespeopleDelete';
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('branches that refer to this salesperson'),'error');
+		prnMsg(__('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . __('first alter the branches concerned') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('branches that refer to this salesperson'),'error');
 
 	} else {
 		$SQL= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSalesPerson."'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
+			prnMsg(__('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('sales analysis records that refer to this salesperson'),'error');
 		} else {
 			$SQL= "SELECT COUNT(*) FROM www_users WHERE salesman='".$SelectedSalesPerson."'";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_row($Result);
 			if ($MyRow[0]>0) {
-				prnMsg(_('Cannot delete this salesperson because') , '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('user records that refer to this salesperson') . '.' ._('First delete any users that refer to this sales person'),'error');
+				prnMsg(__('Cannot delete this salesperson because') , '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('user records that refer to this salesperson') . '.' .__('First delete any users that refer to this sales person'),'error');
 			} else {
 
 				$SQL="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
-				$ErrMsg = _('The salesperson could not be deleted because');
+				$ErrMsg = __('The salesperson could not be deleted because');
 				$Result = DB_query($SQL, $ErrMsg);
 
-				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
+				prnMsg(__('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . __('has been deleted from the database'),'success');
 				unset ($SelectedSalesPerson);
 				unset($Delete);
 			}
@@ -199,27 +199,27 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Name') . '</th>
-			<th>' . _('Telephone') . '</th>
-			<th>' . _('Facsimile') . '</th>
-			<th class="SortedColumn">', _('Current'), '</th>
-			<th class="SortedColumn">', _('Commission Period'), '</th>
-			<th class="SortedColumn">', _('Commission Calculation Method'), '</th>
-			<th class="SortedColumn">', _('GL Account'), '</th>
+			<th>' . __('Code') . '</th>
+			<th>' . __('Name') . '</th>
+			<th>' . __('Telephone') . '</th>
+			<th>' . __('Facsimile') . '</th>
+			<th class="SortedColumn">', __('Current'), '</th>
+			<th class="SortedColumn">', __('Commission Period'), '</th>
+			<th class="SortedColumn">', __('Commission Calculation Method'), '</th>
+			<th class="SortedColumn">', __('GL Account'), '</th>
 			<th colspan="3"></th>
 		</tr>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
 		if ($MyRow['current'] == 1) {
-			$ActiveText = _('Yes');
+			$ActiveText = __('Yes');
 		} else {
-			$ActiveText = _('No');
+			$ActiveText = __('No');
 		}
 
 		if ($MyRow['commissiontypeid'] == 0) {
-			$TypeRow['commissiontypename'] = _('No Commission');
+			$TypeRow['commissiontypename'] = __('No Commission');
 		} else {
 			$SQL = "SELECT commissiontypename FROM salescommissiontypes WHERE commissiontypeid='" . $MyRow['commissiontypeid'] . "'";
 			$TypeResult = DB_query($SQL);
@@ -241,9 +241,9 @@ or deletion of the records*/
 				<td>', $CommissionPeriods[$MyRow['commissionperiod']], '</td>
 				<td>', $MyRow['commissiontypeid'], ' - ', $TypeRow['commissiontypename'], '</td>
 				<td>', $MyRow['glaccount'], ' - ', $GLRow['accountname'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', _('Edit'), '</a></td>
-				<td><a href="', $RootPath, '/SalesCommissionRates.php?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', _('Edit Commission Rates'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', __('Edit'), '</a></td>
+				<td><a href="', $RootPath, '/SalesCommissionRates.php?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', __('Edit Commission Rates'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', __('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', __('Delete'), '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -251,7 +251,7 @@ or deletion of the records*/
 } //end of ifs and buts!
 
 if (isset($SelectedSalesPerson)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Sales People') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Sales People') . '</a></div>';
 }
 
 if (! isset($_GET['delete'])) {
@@ -289,20 +289,20 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';
 		echo '<input type="hidden" name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
 		echo '<fieldset>
-				<legend>', _('Edit the details for'), ' ', $_POST['SalesmanCode'], ' - ', $_POST['SalesmanName'], '</legend>
+				<legend>', __('Edit the details for'), ' ', $_POST['SalesmanCode'], ' - ', $_POST['SalesmanName'], '</legend>
 				<field>
-					<label for="SalesmanCode">', _('Salesperson code'), ':</label>
+					<label for="SalesmanCode">', __('Salesperson code'), ':</label>
 					<div class="fieldtext">', $_POST['SalesmanCode'], '</div>
 				</field>';
 
 	} else { //end of if $SelectedSalesPerson only do the else when a new record is being entered
 
 		echo '<fieldset>
-				<legend>', _('Create a new sales person record'), '</legend>
+				<legend>', __('Create a new sales person record'), '</legend>
 				<field>
-					<label for="SalesmanCode">', _('Salesperson code'), ':</label>
+					<label for="SalesmanCode">', __('Salesperson code'), ':</label>
 					<input type="text" name="SalesmanCode" size="3" autofocus="autofocus" required="required" maxlength="3" />
-					<fieldhelp>', _('Enter a three character code for this sales person.'), '</fieldhelp>
+					<fieldhelp>', __('Enter a three character code for this sales person.'), '</fieldhelp>
 				</field>';
 	}
 	if (!isset($_POST['SalesmanName'])){
@@ -328,23 +328,23 @@ if (! isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<label for="SalesmanName">' . _('Salesperson Name') . ':</label>
+			<label for="SalesmanName">' . __('Salesperson Name') . ':</label>
 			<input type="text" '. (in_array('SalesmanName',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanName"  size="30" maxlength="30" value="' . $_POST['SalesmanName'] . '" />
-			<fieldhelp>', _('Enter the name by which this sales person will be known.'), '</fieldhelp>
+			<fieldhelp>', __('Enter the name by which this sales person will be known.'), '</fieldhelp>
 		</field>';
 	echo '<field>
-			<label for="SManTel">' . _('Telephone No') . ':</label>
+			<label for="SManTel">' . __('Telephone No') . ':</label>
 			<input type="text" name="SManTel" size="20" maxlength="20" value="' . $_POST['SManTel'] . '" />
-			<fieldhelp>', _('Contact telephone number for this sales person.'), '</fieldhelp>
+			<fieldhelp>', __('Contact telephone number for this sales person.'), '</fieldhelp>
 		</field>';
 	echo '<field>
-			<label for="SManFax">' . _('Facsimile No') . ':</label>
+			<label for="SManFax">' . __('Facsimile No') . ':</label>
 			<input type="text" name="SManFax" size="20" maxlength="20" value="' . $_POST['SManFax'] . '" />
-			<fieldhelp>', _('Contact fax number for this sales person.'), '</fieldhelp>
+			<fieldhelp>', __('Contact fax number for this sales person.'), '</fieldhelp>
 		</field>';
 
 	echo '<field>
-			<label for="CommissionPeriod">', _('Commission Period'), ':</label>
+			<label for="CommissionPeriod">', __('Commission Period'), ':</label>
 			<select required="required" name="CommissionPeriod">';
 	foreach ($CommissionPeriods as $Index => $PeriodName) {
 		if ($Index == $_POST['CommissionPeriod']) {
@@ -354,19 +354,19 @@ if (! isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the period over which this sales person has there commission calculated.'), '</fieldhelp>
+		<fieldhelp>', __('Select the period over which this sales person has there commission calculated.'), '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="CommissionTypeID">', _('Commission Calculation Method'), ':</label>
+			<label for="CommissionTypeID">', __('Commission Calculation Method'), ':</label>
 			<select name="CommissionTypeID">';
 	$SQL = "SELECT commissiontypeid, commissiontypename FROM salescommissiontypes ORDER BY commissiontypename";
-	$ErrMsg = _('An error occurred in retrieving the sales commission types from the database');
+	$ErrMsg = __('An error occurred in retrieving the sales commission types from the database');
 	$CommissionTypeResult = DB_query($SQL, $ErrMsg);
 	if (!isset($_POST['CommissionTypeID']) or $_POST['CommissionTypeID'] == 0) {
-		echo '<option selected="selected" value="0">', _('No Commission'), '</option>';
+		echo '<option selected="selected" value="0">', __('No Commission'), '</option>';
 	} else {
-		echo '<option value="0">', _('No Commission'), '</option>';
+		echo '<option value="0">', __('No Commission'), '</option>';
 	}
 	while ($CommissionTypeRow = DB_fetch_array($CommissionTypeResult)) {
 		if ($_POST['CommissionTypeID'] == $CommissionTypeRow['commissiontypeid']) {
@@ -376,7 +376,7 @@ if (! isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the calculation method used to calculate commission for this sales person. This is only used if a commission period is selected.'), '</fieldhelp>
+		<fieldhelp>', __('Select the calculation method used to calculate commission for this sales person. This is only used if a commission period is selected.'), '</fieldhelp>
 	</field>';
 
 	$Result = DB_query("SELECT accountcode,
@@ -387,7 +387,7 @@ if (! isset($_GET['delete'])) {
 						WHERE accountgroups.pandl=1
 						ORDER BY chartmaster.accountcode");
 	echo '<field>
-			<label for="GLAccount">', _('GL Commission Account'), ':</label>
+			<label for="GLAccount">', __('GL Commission Account'), ':</label>
 			<select name="GLAccount">';
 
 	while ($MyRow = DB_fetch_row($Result)) {
@@ -398,30 +398,30 @@ if (! isset($_GET['delete'])) {
 		}
 	} //end while loop
 	echo '</select>
-		<fieldhelp>', _('Select the general ledger account to post the sales commission for this sales person to.'), '</fieldhelp>
+		<fieldhelp>', __('Select the general ledger account to post the sales commission for this sales person to.'), '</fieldhelp>
 	</field>';
 
 	echo '<field>
-			<label for="Current">', _('Current?'), ':</label>
+			<label for="Current">', __('Current?'), ':</label>
 			<select required="required" name="Current">';
 	if ($_POST['Current'] == 1) {
-		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+		echo '<option selected="selected" value="1">', __('Yes'), '</option>';
 	} else {
-		echo '<option value="1">', _('Yes'), '</option>';
+		echo '<option value="1">', __('Yes'), '</option>';
 	}
 	if ($_POST['Current'] == 0) {
-		echo '<option selected="selected" value="0">', _('No'), '</option>';
+		echo '<option selected="selected" value="0">', __('No'), '</option>';
 	} else {
-		echo '<option value="0">', _('No'), '</option>';
+		echo '<option value="0">', __('No'), '</option>';
 	}
 	echo '</select>
-		<fieldhelp>', _('If this sales person is currently employed, select Yes, otherwise select No.'), '</fieldhelp>
+		<fieldhelp>', __('If this sales person is currently employed, select Yes, otherwise select No.'), '</fieldhelp>
 	</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="' . __('Enter Information') . '" />
         </div>
 	</form>';
 

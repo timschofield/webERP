@@ -2,14 +2,14 @@
 
 include('includes/session.php');
 
-$Title = _('Change Asset Location');
+$Title = __('Change Asset Location');
 
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
 
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
 
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
@@ -21,7 +21,7 @@ foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 						WHERE assetid='". $AssetID . "'";
 
 			$Result = DB_query($SQL);
-			prnMsg(_('The Fixed Asset has been moved successfully'), 'success');
+			prnMsg(__('The Fixed Asset has been moved successfully'), 'success');
 			echo '<br />';
 		}
 	}
@@ -38,10 +38,10 @@ if (isset($_GET['AssetID'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Asset Transfer Details'), '</legend>';
+			<legend>', __('Asset Transfer Details'), '</legend>';
 
 	echo '<field>
-			<label for="AssetCat">' .  _('In Asset Category') . ': </label>
+			<label for="AssetCat">' .  __('In Asset Category') . ': </label>
 			<select name="AssetCat">';
 
 	if (!isset($_POST['AssetCat'])) {
@@ -60,26 +60,26 @@ if (isset($_GET['AssetID'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Keywords">' .  _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
+			<label for="Keywords">' .  __('Enter partial') . '<b> ' . __('Description') . '</b>:</label>';
 
 	if (isset($_POST['Keywords'])) {
-		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" title="' . __('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
 	} else {
-		echo '<input type="text" name="Keywords" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
+		echo '<input type="text" name="Keywords" title="' . __('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
 	}
 
 	echo '</field>';
 
 	echo '<field>
-			<label for="AssetLocation">' . _('Asset Location') . ':</label>
+			<label for="AssetLocation">' . __('Asset Location') . ':</label>
 			<select name="AssetLocation">';
 			if (!isset($_POST['AssetLocation'])) {
 				$_POST['AssetLocation'] = 'ALL';
 			}
 			if ($_POST['AssetLocation']=='ALL'){
-				echo '<option selected="selected" value="ALL">' . _('Any asset location') . '</option>';
+				echo '<option selected="selected" value="ALL">' . __('Any asset location') . '</option>';
 			} else {
-				echo '<option value="ALL">' . _('Any asset location') . '</option>';
+				echo '<option value="ALL">' . __('Any asset location') . '</option>';
 			}
 			$Result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations");
 
@@ -95,12 +95,12 @@ if (isset($_GET['AssetID'])) {
 
 
 	echo '<field>
-			<label><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>' .  _('Asset Code') . '</b>:</label>';
+			<label><b>' . __('OR').' ' . '</b>' . __('Enter partial') .' <b>' .  __('Asset Code') . '</b>:</label>';
 
 	if (isset($_POST['AssetID'])) {
-		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
+		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" title="' . __('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
 	} else {
-		echo '<input type="text" name="AssetID" title="' . _('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
+		echo '<input type="text" name="AssetID" title="' . __('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
 	}
 
 	echo '</td>
@@ -108,7 +108,7 @@ if (isset($_GET['AssetID'])) {
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Search" value="'. _('Search Now') . '" />
+			<input type="submit" name="Search" value="'. __('Search Now') . '" />
 		</div>
 	</form>';
 }
@@ -161,13 +161,13 @@ if (isset($_POST['Search'])) {
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Asset ID') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Serial number') . '</th>
-			<th>' . _('Purchase Cost') . '</th>
-			<th>' . _('Total Depreciation') . '</th>
-			<th>' . _('Current Location') . '</th>
-			<th colspan="2">' . _('Move To') . '</th>
+			<th>' . __('Asset ID') . '</th>
+			<th>' . __('Description') . '</th>
+			<th>' . __('Serial number') . '</th>
+			<th>' . __('Purchase Cost') . '</th>
+			<th>' . __('Total Depreciation') . '</th>
+			<th>' . __('Current Location') . '</th>
+			<th colspan="2">' . __('Move To') . '</th>
 		</tr>';
 
 	$LocationSQL="SELECT locationid, locationdescription from fixedassetlocations";
