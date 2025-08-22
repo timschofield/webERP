@@ -70,10 +70,10 @@ if (isset($_POST['PrintPDF'])
 
 			$TotBal += $Balance;
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'],'left');
-			$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
-			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
+			$pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'],'left');
+			$pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
+			$pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
+			$pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
 
 			$YPos -=$LineHeight;
 			if ($YPos < $Bottom_Margin + $LineHeight){
@@ -90,7 +90,7 @@ if (isset($_POST['PrintPDF'])
 
 	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
 
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
+	$pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();

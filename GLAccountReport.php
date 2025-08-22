@@ -89,7 +89,7 @@ if (isset($_POST['RunReport'])) {
 		}
 
 		$YPos -= $LineHeight;
-		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $SelectedAccount . ' - ' . $AccountName . ' ' . ': ' . __('Listing for Period') . ' ' . $FirstPeriodSelected . ' ' . __('to') . ' ' . $LastPeriodSelected);
+		$PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $SelectedAccount . ' - ' . $AccountName . ' ' . ': ' . __('Listing for Period') . ' ' . $FirstPeriodSelected . ' ' . __('to') . ' ' . $LastPeriodSelected);
 
 		if ($PandLAccount == True) {
 			$RunningTotal = 0;
@@ -107,13 +107,13 @@ if (isset($_POST['RunReport'])) {
 			$RunningTotal = $BfwdRow['bfwd'];
 
 			$YPos -= $LineHeight;
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Brought Forward Balance'));
+			$PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Brought Forward Balance'));
 
 			if ($RunningTotal < 0) { //its a credit balance b/fwd
-				$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 			else { //its a debit balance b/fwd
-				$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 		}
 		$PeriodTotal = 0;
@@ -124,12 +124,12 @@ if (isset($_POST['RunReport'])) {
 			if ($MyRow['periodno'] != $PeriodNo) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
 					$YPos -= $LineHeight;
-					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Period Total'));
+					$PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Period Total'));
 					if ($PeriodTotal < 0) { //its a credit balance b/fwd
-						$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+						$PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					}
 					else { //its a debit balance b/fwd
-						$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+						$PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					}
 				}
 				$PeriodNo = $MyRow['periodno'];
@@ -158,33 +158,33 @@ if (isset($_POST['RunReport'])) {
 			$YPos -= $LineHeight;
 			$FontSize = 8;
 
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 30, $FontSize, $MyRow['typename']);
-			$LeftOvers = $PDF->addTextWrap(80, $YPos, 30, $FontSize, $MyRow['typeno'], 'right');
-			$LeftOvers = $PDF->addTextWrap(110, $YPos, 50, $FontSize, $FormatedTranDate);
-			$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, $DebitAmount, 'right');
-			$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, $CreditAmount, 'right');
-			$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, $MyRow['narrative']);
-			$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, $TagRow['tagdescription']);
+			$PDF->addTextWrap($Left_Margin, $YPos, 30, $FontSize, $MyRow['typename']);
+			$PDF->addTextWrap(80, $YPos, 30, $FontSize, $MyRow['typeno'], 'right');
+			$PDF->addTextWrap(110, $YPos, 50, $FontSize, $FormatedTranDate);
+			$PDF->addTextWrap(160, $YPos, 50, $FontSize, $DebitAmount, 'right');
+			$PDF->addTextWrap(210, $YPos, 50, $FontSize, $CreditAmount, 'right');
+			$PDF->addTextWrap(320, $YPos, 150, $FontSize, $MyRow['narrative']);
+			$PDF->addTextWrap(470, $YPos, 80, $FontSize, $TagRow['tagdescription']);
 
 			if ($YPos < ($Bottom_Margin + (5 * $LineHeight))) {
 				$PageNumber++;
 				NewPageHeader();
-				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, $SelectedAccount . ' - ' . $AccountName);
+				$PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, $SelectedAccount . ' - ' . $AccountName);
 			}
 
 		}
 		$YPos -= $LineHeight;
 		if ($PandLAccount == True) {
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, __('Total Period Movement'));
+			$PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, __('Total Period Movement'));
 		}
 		else { /*its a balance sheet account*/
-			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Balance C/Fwd'));
+			$PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Balance C/Fwd'));
 		}
 		if ($RunningTotal < 0) {
-			$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			$PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		}
 		else { //its a debit balance b/fwd
-			$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			$PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		}
 		$YPos -= $LineHeight;
 		//draw a line under each account printed
@@ -310,11 +310,11 @@ function NewPageHeader() {
 
 	$FontSize = 10;
 	$YPos = $Page_Height - $Top_Margin;
-	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
+	$PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 	$YPos -= $LineHeight;
-	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('GL Account Report'));
+	$PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('GL Account Report'));
 	$FontSize = 8;
-	$LeftOvers = $PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
+	$PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
 	$YPos -= (2 * $LineHeight);
 
@@ -328,13 +328,13 @@ function NewPageHeader() {
 	/*set up the headings */
 	$XPos = $Left_Margin + 1;
 
-	$LeftOvers = $PDF->addTextWrap($XPos, $YPos, 30, $FontSize, __('Type') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(80, $YPos, 30, $FontSize, __('Reference') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(110, $YPos, 50, $FontSize, __('Date') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, __('Debit') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, __('Credit') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, __('Narrative') , 'centre');
-	$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, __('Tag') , 'centre');
+	$PDF->addTextWrap($XPos, $YPos, 30, $FontSize, __('Type') , 'centre');
+	$PDF->addTextWrap(80, $YPos, 30, $FontSize, __('Reference') , 'centre');
+	$PDF->addTextWrap(110, $YPos, 50, $FontSize, __('Date') , 'centre');
+	$PDF->addTextWrap(160, $YPos, 50, $FontSize, __('Debit') , 'centre');
+	$PDF->addTextWrap(210, $YPos, 50, $FontSize, __('Credit') , 'centre');
+	$PDF->addTextWrap(320, $YPos, 150, $FontSize, __('Narrative') , 'centre');
+	$PDF->addTextWrap(470, $YPos, 80, $FontSize, __('Tag') , 'centre');
 
 	$YPos = $YPos - (2 * $LineHeight);
 }

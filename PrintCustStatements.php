@@ -237,20 +237,20 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 							$FontSize=9;
 
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, __($MyRow['typename']), 'left');
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$MyRow['transno'], 'left');
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
+							$pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, __($MyRow['typename']), 'left');
+							$pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$MyRow['transno'], 'left');
+							$pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
 
 							$FontSize=10;
 							if ($MyRow['total']>0){
 								$DisplayTotal = locale_number_format($MyRow['total'],$StmtHeader['currdecimalplaces']);
-								$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,$DisplayTotal, 'right');
+								$pdf->addTextWrap($Left_Margin+300,$YPos,60,$FontSize,$DisplayTotal, 'right');
 							} else {
 								$DisplayTotal = locale_number_format(-$MyRow['total'],$StmtHeader['currdecimalplaces']);
-								$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,60,$FontSize,$DisplayTotal, 'right');
+								$pdf->addTextWrap($Left_Margin+382,$YPos,60,$FontSize,$DisplayTotal, 'right');
 							}
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+459,$YPos,60,$FontSize,$DisplayAlloc, 'right');
-							$LeftOvers = $pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+							$pdf->addTextWrap($Left_Margin+459,$YPos,60,$FontSize,$DisplayAlloc, 'right');
+							$pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 							if ($YPos-$LineHeight <= $Bottom_Margin){
 			/* head up a new statement page */
@@ -287,27 +287,27 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 					$DisplayOutstanding = locale_number_format($MyRow['ostdg'],$StmtHeader['currdecimalplaces']);
 
 					$FontSize=9;
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, __($MyRow['typename']), 'left');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$MyRow['transno'], 'left');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
+					$pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize, __($MyRow['typename']), 'left');
+					$pdf->addTextWrap($Left_Margin+110,$YPos,50,$FontSize,$MyRow['transno'], 'left');
+					$pdf->addTextWrap($Left_Margin+211,$YPos,55,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
 
 					$FontSize=10;
 					if ($MyRow['total']>0){
 						$DisplayTotal = locale_number_format($MyRow['total'],$StmtHeader['currdecimalplaces']);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+300,$YPos,55,$FontSize,$DisplayTotal, 'right');
+						$pdf->addTextWrap($Left_Margin+300,$YPos,55,$FontSize,$DisplayTotal, 'right');
 					} else {
 						$DisplayTotal = locale_number_format(-$MyRow['total'],$StmtHeader['currdecimalplaces']);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,55,$FontSize,$DisplayTotal, 'right');
+						$pdf->addTextWrap($Left_Margin+382,$YPos,55,$FontSize,$DisplayTotal, 'right');
 					}
 
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+459,$YPos,59,$FontSize,$DisplayAlloc, 'right');
-					$LeftOvers = $pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+					$pdf->addTextWrap($Left_Margin+459,$YPos,59,$FontSize,$DisplayAlloc, 'right');
+					$pdf->addTextWrap($Left_Margin+536,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 					/*Now show also in the remittance advice sectin */
 					$FontSize=8;
-					$LeftOvers = $pdf->addTextWrap($Perforation+10,$YPos,30,$FontSize, __($MyRow['typename']), 'left');
-					$LeftOvers = $pdf->addTextWrap($Perforation+75,$YPos,30,$FontSize,$MyRow['transno'], 'left');
-					$LeftOvers = $pdf->addTextWrap($Perforation+90,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
+					$pdf->addTextWrap($Perforation+10,$YPos,30,$FontSize, __($MyRow['typename']), 'left');
+					$pdf->addTextWrap($Perforation+75,$YPos,30,$FontSize,$MyRow['transno'], 'left');
+					$pdf->addTextWrap($Perforation+90,$YPos,60,$FontSize,$DisplayOutstanding, 'right');
 
 					if ($YPos-$LineHeight <= $Bottom_Margin){
 			/* head up a new statement page */
@@ -429,13 +429,13 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				$pdf->addText($Left_Margin+315, ($Bottom_Margin+10)+(3*$LineHeight)+4, $FontSize, __('Over').' ' . $_SESSION['PastDueDays2'] . ' '. __('days'));
 				$pdf->addText($Left_Margin+442, ($Bottom_Margin+10)+(3*$LineHeight)+4, $FontSize, __('Total Balance') );
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+37, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayCurrent, 'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+130, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayDue, 'right');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+222, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayOverdue1, 'right');
+				$pdf->addTextWrap($Left_Margin+37, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayCurrent, 'right');
+				$pdf->addTextWrap($Left_Margin+130, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayDue, 'right');
+				$pdf->addTextWrap($Left_Margin+222, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayOverdue1, 'right');
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+305, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayOverdue2, 'right');
+				$pdf->addTextWrap($Left_Margin+305, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayOverdue2, 'right');
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+432, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayBalance, 'right');
+				$pdf->addTextWrap($Left_Margin+432, $Bottom_Margin+(2*$LineHeight)+8,70,$FontSize,$DisplayBalance, 'right');
 
 
 				/*draw a line under the balance info */
@@ -456,8 +456,8 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				/*also show the total due in the remittance section */
 				if ($AgedAnalysis['balance']>0){ /*No point showing a negative balance for payment! */
 						$FontSize=8;
-						$LeftOvers = $pdf->addTextWrap($Perforation+2, $Bottom_Margin+(2*$LineHeight)+8,40,$FontSize, __('Payment'), 'left');
-						$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $Bottom_Margin+(2*$LineHeight)+8,88,$FontSize,$DisplayBalance, 'right');
+						$pdf->addTextWrap($Perforation+2, $Bottom_Margin+(2*$LineHeight)+8,40,$FontSize, __('Payment'), 'left');
+						$pdf->addTextWrap($Page_Width-$Right_Margin-90, $Bottom_Margin+(2*$LineHeight)+8,88,$FontSize,$DisplayBalance, 'right');
 
 				}
 
