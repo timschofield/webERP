@@ -9,7 +9,7 @@ ALTER TABLE `taxauthlevels` CHANGE `dispatchtaxauthority` `dispatchtaxprovince` 
 ALTER TABLE `taxauthlevels` CHANGE `level` `taxcatid` TINYINT( 4 ) DEFAULT '0' NOT NULL;
 
 ALTER TABLE `taxauthlevels` DROP INDEX `dispatchtaxauthority` , ADD INDEX `dispatchtaxprovince` ( `dispatchtaxprovince` );
-ALTER TABLE `taxauthlevels` ADD INDEX ( `taxcatid` ); 
+ALTER TABLE `taxauthlevels` ADD INDEX ( `taxcatid` );
 INSERT INTO `taxcategories` ( `taxcatid` , `taxcatname` ) VALUES ('1', 'Taxable supply');
 INSERT INTO `taxcategories` ( `taxcatid` , `taxcatname` ) VALUES ('2', 'Luxury Items');
 INSERT INTO `taxcategories` ( `taxcatid` , `taxcatname` ) VALUES ('0', 'Exempt');
@@ -65,11 +65,11 @@ CREATE TABLE stockmovestaxes (
 ALTER TABLE stockmovestaxes ADD FOREIGN KEY (taxauthid) REFERENCES taxauthorities (taxid);
 
 INSERT INTO stockmovestaxes (stkmoveno, taxauthid, taxrate)
-	SELECT stockmoves.stkmoveno, 
-		custbranch.taxauthority, 
-		stockmoves.taxrate 
-	FROM stockmoves INNER JOIN custbranch 
-		ON stockmoves.debtorno=custbranch.debtorno 
+	SELECT stockmoves.stkmoveno,
+		custbranch.taxauthority,
+		stockmoves.taxrate
+	FROM stockmoves INNER JOIN custbranch
+		ON stockmoves.debtorno=custbranch.debtorno
 		AND stockmoves.branchcode=custbranch.branchcode;
 
 ALTER TABLE stockmoves DROP COLUMN taxrate;
@@ -90,7 +90,7 @@ INSERT INTO debtortranstaxes (debtortransid, taxauthid, taxamount)
 	SELECT debtortrans.id, custbranch.taxauthority, debtortrans.ovgst
 		FROM debtortrans INNER JOIN custbranch ON debtortrans.debtorno=custbranch.debtorno AND debtortrans.branchcode=custbranch.branchcode
 		WHERE debtortrans.type=10 or debtortrans.type=11;
-		
+
 ALTER TABLE custbranch DROP FOREIGN KEY custbranch_ibfk_5;
 ALTER TABLE `custbranch` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT '1' NOT NULL;
 ALTER TABLE `custbranch` DROP INDEX `area_2` ;
@@ -129,13 +129,13 @@ ALTER TABLE `supptranstaxes`
 
   INSERT INTO supptranstaxes (supptransid, taxauthid, taxamount)
 	SELECT supptrans.id, suppliers.taxauthority, supptrans.ovgst
-		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid 
+		FROM supptrans INNER JOIN suppliers ON supptrans.supplierno=suppliers.supplierid
 		WHERE supptrans.type=20 or supptrans.type=21;
 
 ALTER TABLE suppliers DROP FOREIGN KEY `suppliers_ibfk_3`;
 ALTER TABLE `suppliers` CHANGE `taxauthority` `taxgroupid` TINYINT( 4 ) DEFAULT '1' NOT NULL;
 ALTER TABLE `suppliers` DROP INDEX `taxauthority` , ADD INDEX `taxgroupid` ( `taxgroupid` );
 UPDATE suppliers SET taxgroupid=1;
-ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);  
+ALTER TABLE suppliers ADD FOREIGN KEY (taxgroupid) REFERENCES taxgroups (taxgroupid);
 
 ALTER TABLE locations ADD COLUMN managed tinyint NOT NULL default '0';
