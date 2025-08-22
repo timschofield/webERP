@@ -81,11 +81,11 @@ If ((isset($_POST['PrintPDF']))
 
 			$DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+5, $YPos, 80,$FontSize,$DetailTrans['typename'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+95, $YPos, 80,$FontSize,$DisplayTranDate, 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+175, $YPos, 80,$FontSize,$DetailTrans['suppreference'], 'left');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+255, $YPos, 80,$FontSize,locale_number_format($DetailTrans['trantotal'],$SuppliersPaid['currdecimalplaces']), 'right');
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+355, $YPos,80,$FontSize,locale_number_format($DetailTrans['amt'],$SuppliersPaid['currdecimalplaces']), 'right');
+			$pdf->addTextWrap($Left_Margin+5, $YPos, 80,$FontSize,$DetailTrans['typename'], 'left');
+			$pdf->addTextWrap($Left_Margin+95, $YPos, 80,$FontSize,$DisplayTranDate, 'left');
+			$pdf->addTextWrap($Left_Margin+175, $YPos, 80,$FontSize,$DetailTrans['suppreference'], 'left');
+			$pdf->addTextWrap($Left_Margin+255, $YPos, 80,$FontSize,locale_number_format($DetailTrans['trantotal'],$SuppliersPaid['currdecimalplaces']), 'right');
+			$pdf->addTextWrap($Left_Margin+355, $YPos,80,$FontSize,locale_number_format($DetailTrans['amt'],$SuppliersPaid['currdecimalplaces']), 'right');
 			$AccumBalance += $DetailTrans['amt'];
 
 			$YPos -=$LineHeight;
@@ -97,11 +97,11 @@ If ((isset($_POST['PrintPDF']))
 		$YPos -= (0.5*$LineHeight);
     	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
-	    $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,75,$FontSize,__('Total Payment:'), 'right');
+	    $pdf->addTextWrap($Left_Margin+280,$YPos,75,$FontSize,__('Total Payment:'), 'right');
 
         $TotalPayments += $AccumBalance;
 
-	    $LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
+	    $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
 
 	    $YPos -= (1.5*$LineHeight);
 	    $pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);

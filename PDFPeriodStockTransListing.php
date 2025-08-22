@@ -188,12 +188,12 @@ include('includes/PDFPeriodStockTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$MyRow['description'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$MyRow['transno'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($MyRow['qty'],$MyRow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,$MyRow['locationname'], 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,$MyRow['reference'], 'right');
+	$pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$MyRow['description'], 'left');
+	$pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$MyRow['transno'], 'left');
+	$pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
+	$pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($MyRow['qty'],$MyRow['decimalplaces']), 'right');
+	$pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,$MyRow['locationname'], 'right');
+	$pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,$MyRow['reference'], 'right');
 
 	$YPos -= ($LineHeight);
 

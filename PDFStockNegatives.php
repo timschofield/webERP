@@ -47,9 +47,9 @@ $FontSize=10;
 
 do {
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,130,$FontSize, $NegativesRow['loccode'] . ' - ' . $NegativesRow['locationname'], 'left');
-	$LeftOvers = $pdf->addTextWrap(170,$YPos,350,$FontSize,$NegativesRow['stockid'] . ' - ' .$NegativesRow['description'], 'left');
-	$LeftOvers = $pdf->addTextWrap(520,$YPos,30,$FontSize,locale_number_format($NegativesRow['quantity'],$NegativesRow['decimalplaces']), 'right');
+	$pdf->addTextWrap($Left_Margin,$YPos,130,$FontSize, $NegativesRow['loccode'] . ' - ' . $NegativesRow['locationname'], 'left');
+	$pdf->addTextWrap(170,$YPos,350,$FontSize,$NegativesRow['stockid'] . ' - ' .$NegativesRow['description'], 'left');
+	$pdf->addTextWrap(520,$YPos,30,$FontSize,locale_number_format($NegativesRow['quantity'],$NegativesRow['decimalplaces']), 'right');
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 

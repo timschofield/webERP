@@ -220,13 +220,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$MyRow2['stkcode'],'left');
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$MyRow2['description'],'left');
-			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap(487,$YPos,85,$FontSize,$MyRow2['units'],'left');
-			$LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize,$MyRow2['bin'],'left');
-			$LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
-			$LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
+			$pdf->addTextWrap($XPos,$YPos,127,$FontSize,$MyRow2['stkcode'],'left');
+			$pdf->addTextWrap(147,$YPos,255,$FontSize,$MyRow2['description'],'left');
+			$pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
+			$pdf->addTextWrap(487,$YPos,85,$FontSize,$MyRow2['units'],'left');
+			$pdf->addTextWrap(527,$YPos,70,$FontSize,$MyRow2['bin'],'left');
+			$pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+			$pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 				// Prints salesorderdetails.narrative:
@@ -248,8 +248,8 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			}
 
 			if ($MyRow2['cust_part'] > '') {
-				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $MyRow2['cust_part'], 'right');
-				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MyRow2['cust_description']);
+				$pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $MyRow2['cust_part'], 'right');
+				$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MyRow2['cust_description']);
 				if ($YPos - $LineHeight <= 50) {
 					/* We reached the end of the page so finish off the page and start a newy */
 					$PageNumber++;
@@ -275,14 +275,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 							AND bom.effectiveto > CURRENT_DATE";
 				$ErrMsg = __('Could not retrieve the components of the ordered assembly item');
 				$AssemblyResult = DB_query($SQL, $ErrMsg);
-				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, __('Assembly Components:-'));
+				$pdf->addTextWrap($XPos,$YPos,150,$FontSize, __('Assembly Components:-'));
 				$YPos -= ($LineHeight);
 				/*Loop around all the components of the assembly and list the quantity supplied */
 				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
 					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity']*($MyRow2['quantity'] - $MyRow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
-					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
-					$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
-					$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+					$pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
+					$pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
+					$pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 					if ($YPos-$LineHeight <= 50){
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
@@ -306,9 +306,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 							WHERE pickserialdetails.detailno='" . $MyRow2['detailno'] . "'";
 				$SerResult = DB_query($SerSQL, $ErrMsg);
 				while ($MySer = DB_fetch_array($SerResult)) {
-					$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
+					$pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
+					$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
+					$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
 					if ($YPos - $LineHeight <= 50) {
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
@@ -325,14 +325,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 	} /*end if there are order details to show on the order*/
 
 	if ( $Copy != 'Customer' ) {
-		$LeftOvers = $pdf->addTextWrap(375,20,150,$FontSize,'Accepted/Received By:','left');
+		$pdf->addTextWrap(375,20,150,$FontSize,'Accepted/Received By:','left');
 		$pdf->line(500,20,650,20);
-		$LeftOvers = $pdf->addTextWrap(675,20,50,$FontSize,'Date:','left');
+		$pdf->addTextWrap(675,20,50,$FontSize,'Date:','left');
 		$pdf->line(710,20,785,20);
 	}
 
-	$LeftOvers = $pdf->addTextWrap(17,20,100,$FontSize,'Volume: ' . round($Volume) . ' GA','left');
-	$LeftOvers = $pdf->addTextWrap(147,20,200,$FontSize,'Weight: ' . round($Weight) . ' LB (approximate)','left');
+	$pdf->addTextWrap(17,20,100,$FontSize,'Volume: ' . round($Volume) . ' GA','left');
+	$pdf->addTextWrap(147,20,200,$FontSize,'Weight: ' . round($Weight) . ' LB (approximate)','left');
 
 	$Copy='Customer';
 	$Volume = 0;
