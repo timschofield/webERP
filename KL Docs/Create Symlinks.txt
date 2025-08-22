@@ -8,3 +8,7 @@ What is the command?
 
 cd /var/www/vhosts/kapal-laut.com/ptadu.com/weberp-new/companies/kl_erp
 ln -s /var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics part_pics
+
+
+cd /var/www/vhosts/kapal-laut.com/ptadu-development.com/weberp/companies
+ln -s /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies/kurakura_kl_erp kurakura_kl_erp
