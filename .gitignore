@@ -1,8 +1,14 @@
 
 # KL settings 
 *.ini
-companies\test_erp\part_pics\*
-companies\kl_erp\part_pics\*
+# ignore the part_pics folders
+companies/test_erp/part_pics/*
+companies/kl_erp/part_pics/*
+
+# ignore the cache files and the log
+includes/WebClientPrint/wcpcahe/
+companies/test_erp/logs/weberp.log
+
 # KL settings END
 
 # Ignore NetBeans project metadata
@@ -19,14 +25,13 @@ Thumbs.db
 
 # Ignore everything in the companies directory...
 /companies/*
-# ...except for weberpdemo, but KL do not want weberpdemo anyway...
-/companies/weberpdemo
+# ...except for weberpdemo, but KL do not want weberpdemo anyway, we just want the kl_erp...
+#!/companies/weberpdemo
+!/companies/kl_erp
 
 # And the eventual .git dir from composer-installed projects which are downloaded as git clones
 /vendor/phplot/phplot/.git/
 
 # KL settings
-# ignore the cache files and the log
-includes/WebClientPrint/wcpcahe/
-companies/test_erp/logs/weberp.log
+
 # KL settings END
