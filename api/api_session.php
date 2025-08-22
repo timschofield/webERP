@@ -11,8 +11,8 @@ include($PathPrefix . 'config.php');
 
 global $DBType, $SessionLifeTime, $MaximumExecutionTime;
 
-// an upgrade issue - mysql php extension is not available anymore
-if ($DBType === 'mysql') {
+// an upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
+if ($DBType === 'mysql' && !extension_loaded('mysql')) {
 	/// @todo we should attempt to update the config.php file...
 	$DBType = 'mysqli';
 }
