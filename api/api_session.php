@@ -9,8 +9,6 @@ require($PathPrefix.'vendor/autoload.php');
 /// @todo error out if config.php does not yet exist
 include($PathPrefix . 'config.php');
 
-global $DBType, $SessionLifeTime, $MaximumExecutionTime;
-
 // an upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
 if ($DBType === 'mysql' && !extension_loaded('mysql')) {
 	/// @todo we should attempt to update the config.php file...
