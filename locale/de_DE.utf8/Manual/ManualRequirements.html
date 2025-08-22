@@ -7,26 +7,26 @@
 <font size="+2"><b>Hardware-Anforderungen</b></font>
 
 <br /><br />
-Es gibt viele mï¿½gliche Konfigurationen, auf denen diese Anwendung laufen kann.
-Die Grï¿½ï¿½e des Unternehmens wird wahrscheinlich einen entscheidenden Einfluss
-auf die endgï¿½ltige Konfiguration haben.
+Es gibt viele mögliche Konfigurationen, auf denen diese Anwendung laufen kann.
+Die Größe des Unternehmens wird wahrscheinlich einen entscheidenden Einfluss 
+auf die endgültige Konfiguration haben.
 <br /><br />
-Das Betriebssystem und das gewï¿½hlte Datenbanksystem wird den grï¿½ï¿½ten Einfluss
+Das Betriebssystem und das gewählte Datenbanksystem wird den größten Einfluss
 auf die Systemanforderungen haben. Jede Benutzeranmeldung am Webserver und die
-Datenbank verbraucht RAM, und je mehr Verbindungen, desto mehr RAM wird benï¿½tigt.
-ï¿½hnlich ist der Festplattenplatz eine Funktion von Kunden, Lieferanten und
-Buchungen. Es reicht zu sagen, dass wegen der leistungsfï¿½higkeit der Systemkomponenten
-die Hardware-Anforderungen durch die Client-Server-Anwendung ungewï¿½hnlich gering sind.
+Datenbank verbraucht RAM, und je mehr Verbindungen, desto mehr RAM wird benötigt.
+Ähnlich ist der Festplattenplatz eine Funktion von Kunden, Lieferanten und
+Buchungen. Es reicht zu sagen, dass wegen der leistungsfähigkeit der Systemkomponenten
+die Hardware-Anforderungen durch die Client-Server-Anwendung ungewöhnlich gering sind.
 <br /><br />
-Als Richtlinie: bei einer Minimalinstallation fï¿½r bis zu 50 gleichzeitige Benutzer
+Als Richtlinie: bei einer Minimalinstallation für bis zu 50 gleichzeitige Benutzer
 mit Linux-Betriebssystem und einem Apache-Webserver reicht schon ein Server der
-Einstiegsgrï¿½ï¿½e mit 512 MB RAM an einem 10 MBit Netzwerk. 100 MBit sind heute schon
-gï¿½ngig. Unter kritischen Einsatzbedingungen mit starkem Plattenzugriff sind
+Einstiegsgröße mit 512 MB RAM an einem 10 MBit Netzwerk. 100 MBit sind heute schon
+gängig. Unter kritischen Einsatzbedingungen mit starkem Plattenzugriff sind
 SCSI-RAID-Arrays vorzuziehen.
 <br /><br />
 Bei mehreren Servern mit Multiprozessorarchitektur und Lastverteilung,
 mt einem separaten Datenbankserver und reichlich RAM sollte die Begrenzung
-in der Datenbankgrï¿½ï¿½e und der Zahl der Benutzer auch noch fï¿½r die meisten
+in der Datenbankgröße und der Zahl der Benutzer auch noch für die meisten
 Unternehmen reichlich bemessen sein.
 <br /><br />
 
@@ -36,20 +36,20 @@ Unternehmen reichlich bemessen sein.
 
 <ul>
 	<li><a href="http://www.php.net/">PHP</a>
-	grï¿½ï¿½er als 4.2. Weil PHP als CGI-Modul fï¿½r dem MS Internet Information Server
-	oder als Modul fï¿½r Apache sowohl unter Windows als auch Unix/Linux zur Verfï¿½gung
-	steht, kann man das System als betriebssystemunabhï¿½ngig bezeichnen. Fï¿½r die
-	ï¿½bermittlung von Auftrï¿½gen und Rechnungen ï¿½ber EDI wird  weiter eine ftp-Erweiterung benï¿½tigt.</li>
-	<li><a href="http://www.mysql.com/">MySQL</a>grï¿½ï¿½er als Version 4, mit der Transaktionsunterstï¿½tzung von InnoDB, auï¿½erdem werden Fremdschlï¿½ssel-Beschrï¿½nkungen gefordert, die seit 2003 zu InnoDB hinzugekommen sind. InnoDB wurde 2001 fï¿½r MySQL eingefï¿½hrt und bietet eine ï¿½hnliche Funktionalitï¿½t wie ORACLE - Sperren auf Datensatzebene und Datenbanktransaktionen bei vergleichbarer Geschwindigkeit. (Das System kï¿½nnte auch mit ORACLE oder anderen Datenbanksystemen eingesetzt werden, bei relativ geringfï¿½gigen Konfigurationen.) Eine Beispielkonfigurationsdatei my.cnf (normalerweise unter /usr/local/mysql/var) ist in der MySQL-Dokumentation enthalten, um die typischen Einstellungen fï¿½r die InnoDB-Konfiguration zu zeigen. Die erwartete Grï¿½ï¿½e fï¿½r die Datendatei ist nï¿½tzlich, wobei InnoDB eine selbsterweiternde Datendatei anlegen kann und dies seit MySQL 4 auch standardmï¿½ï¿½ig tut. Seit Version 2.8 sind alle Tabellen als InnoDB-Tabellen angelegt.</li>
+	größer als 4.2. Weil PHP als CGI-Modul für dem MS Internet Information Server
+	oder als Modul für Apache sowohl unter Windows als auch Unix/Linux zur Verfügung
+	steht, kann man das System als betriebssystemunabhängig bezeichnen. Für die
+	Übermittlung von Aufträgen und Rechnungen über EDI wird  weiter eine ftp-Erweiterung benötigt.</li>
+	<li><a href="http://www.mysql.com/">MySQL</a>größer als Version 4, mit der Transaktionsunterstützung von InnoDB, außerdem werden Fremdschlüssel-Beschränkungen gefordert, die seit 2003 zu InnoDB hinzugekommen sind. InnoDB wurde 2001 für MySQL eingeführt und bietet eine ähnliche Funktionalität wie ORACLE - Sperren auf Datensatzebene und Datenbanktransaktionen bei vergleichbarer Geschwindigkeit. (Das System könnte auch mit ORACLE oder anderen Datenbanksystemen eingesetzt werden, bei relativ geringfügigen Konfigurationen.) Eine Beispielkonfigurationsdatei my.cnf (normalerweise unter /usr/local/mysql/var) ist in der MySQL-Dokumentation enthalten, um die typischen Einstellungen für die InnoDB-Konfiguration zu zeigen. Die erwartete Größe für die Datendatei ist nützlich, wobei InnoDB eine selbsterweiternde Datendatei anlegen kann und dies seit MySQL 4 auch standardmäßig tut. Seit Version 2.8 sind alle Tabellen als InnoDB-Tabellen angelegt.</li>
 	<li>Ein Webserver. <a href="http://www.apache.org/">Apache</a> ist
 	dabei am sinnvollsten, aber von den meisten Webservern wird PHP
-	irgendwie unterstï¿½tzt.</li>
-	<li>Wenn der Webserver im Internet erreichbar ist und nicht ausschlieï¿½lich
-	im internen Firmennetzwerk, werden verschlï¿½sselte Verbindungen notwendig.
-	Am einfachsten kï¿½nnen die Module openssl und mod-ssl fï¿½r Apache verwendet
-	werden, um die Daten in verschlï¿½sselter Form zu ï¿½bertragen.</li>
+	irgendwie unterstützt.</li>
+	<li>Wenn der Webserver im Internet erreichbar ist und nicht ausschließlich
+	im internen Firmennetzwerk, werden verschlüsselte Verbindungen notwendig.
+	Am einfachsten können die Module openssl und mod-ssl für Apache verwendet
+	werden, um die Daten in verschlüsselter Form zu übertragen.</li>
 </ul>
-Es gibt eine Reihe von Quellen fï¿½r Informationen ï¿½ber die Installation von MySQL und PHP.
+Es gibt eine Reihe von Quellen für Informationen über die Installation von MySQL und PHP.
 Vergleichen Sie auch die folgenden Links:
 <br /><br />
 
@@ -60,12 +60,12 @@ Vergleichen Sie auch die folgenden Links:
 <a href="http://www.linux-sottises.net/en_apache_install.php">http://www.linux-sottises.net/en_apache_install.php</a>
 
 <br /><br />
-Das System kï¿½nnte auch mit vielen anderen Datenbankservern verwendet werden,
-ist aber auf MySQL entwickelt und getestet worden. Unabhï¿½ngige Benchmarks
-zeigen, dass MySQL fï¿½r die allgemeinsten Datenbankaufgaben eines der schnellsten
-Systeme ist, insbesondere beim Aufbau der Verbindungen - weil das fï¿½r jede Seite
-benï¿½tigt wird, ist MySQL fï¿½r die Web-Umgebung ideal geeignet.
-Die ftp-Erweiterung benï¿½tigen Sie nur, wenn Sie EDI-Dokumente Ihren Geschï¿½ftspartnern
-per ftp-Upload zustellen mï¿½ssen. Die Nutzung des Apache mit <a href="http://www.mod_ssl.org/">mod_ssl</a>
+Das System könnte auch mit vielen anderen Datenbankservern verwendet werden,
+ist aber auf MySQL entwickelt und getestet worden. Unabhängige Benchmarks
+zeigen, dass MySQL für die allgemeinsten Datenbankaufgaben eines der schnellsten
+Systeme ist, insbesondere beim Aufbau der Verbindungen - weil das für jede Seite
+benötigt wird, ist MySQL für die Web-Umgebung ideal geeignet.
+Die ftp-Erweiterung benötigen Sie nur, wenn Sie EDI-Dokumente Ihren Geschäftspartnern
+per ftp-Upload zustellen müssen. Die Nutzung des Apache mit <a href="http://www.mod_ssl.org/">mod_ssl</a>
 und <a href="http://www.openssl.org/">openssl</a> Secure-Socket-Layer ist sinnvoll, wenn die
-Daten ï¿½ber das Internet ï¿½bertragen werden und nicht nur im internen Firmen-LAN.
+Daten über das Internet übertragen werden und nicht nur im internen Firmen-LAN.
