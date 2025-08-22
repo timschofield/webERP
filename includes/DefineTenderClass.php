@@ -202,12 +202,12 @@ Class Tender {
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_item_from_tender(&$LineNo){
+	function remove_item_from_tender($LineNo){
 		unset($this->LineItems[$LineNo]);
 		$this->LinesOnTender--;
 	}
 
-	function remove_supplier_from_tender(&$SupplierCode){
+	function remove_supplier_from_tender($SupplierCode){
 		unset($this->Suppliers[$SupplierCode]);
 		$this->SuppliersOnTender--;
 	}

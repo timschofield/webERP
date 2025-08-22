@@ -6,7 +6,7 @@ include('includes/session.php');
 
 $Title = __('UTILITY PAGE That sets up a new blank company record if not already existing');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 
 include('includes/header.php');
 

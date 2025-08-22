@@ -163,7 +163,7 @@ Class Offer {
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_from_offer(&$LineNo){
+	function remove_from_offer($LineNo){
 		$this->LineItems[$LineNo]->Deleted = True;
 	}
 

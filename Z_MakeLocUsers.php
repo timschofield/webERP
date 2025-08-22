@@ -4,7 +4,7 @@
 include('includes/session.php');
 $Title = __('Make locationusers Records');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 echo '<br /><br />' . __('This script makes stock location records for parts where they do not already exist');

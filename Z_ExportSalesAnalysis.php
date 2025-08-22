@@ -15,7 +15,7 @@ $_POST['CompanyNameField']= 'yourdatabase';
 include('includes/session.php');
 $Title = __('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';

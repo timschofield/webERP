@@ -230,15 +230,16 @@ if (!class_exists('Cpdf', false)) {
 		}
 
 		/**
-		* draw an ellipse
-		* note that the part and filled ellipse are just special cases of this function
-		*
-		* draws an ellipse in the current line style
-		* centered at $x0,$y0, radii $r1,$r2
-		* if $r2 is not set, then a circle is drawn
-		* nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a
-		* pretty crappy shape at 2, as we are approximating with bezier curves.
-		*/
+		 * draw an ellipse
+		 * note that the part and filled ellipse are just special cases of this function
+		 *
+		 * draws an ellipse in the current line style
+		 * centered at $x0,$y0, radii $r1,$r2
+		 * if $r2 is not set, then a circle is drawn
+		 * nSeg is not allowed to be less than 2, as this will simply draw a line (and will even draw a
+		 * pretty crappy shape at 2, as we are approximating with bezier curves.
+		 * @todo rename args, to be the same as in the parent's method
+		 */
 		function ellipse($x0,$y0,$r1,$r2=0,$angle=0,$nSeg=8,$astart=0,$afinish=360,$close=1,$fill=0,$fill_color=array(),$nc=8) {
 
 			if ($r1==0){

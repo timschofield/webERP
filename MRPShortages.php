@@ -276,7 +276,7 @@ if (isset($_POST['PrintPDF'])) {
 
 } /*end of else not PrintPDF */
 
-function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
+function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
 
 	$LineHeight = 12;
 	/*PDF page header for MRP Shortages report */

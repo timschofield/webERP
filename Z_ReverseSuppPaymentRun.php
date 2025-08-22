@@ -6,7 +6,7 @@
 include('includes/session.php');
 $Title = __('Reverse and Delete Supplier Payments');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 
