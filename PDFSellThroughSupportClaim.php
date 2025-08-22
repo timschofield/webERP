@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Supplier = $SellThroRow['suppname'];
 		$CurrCode = $SellThroRow['currcode'];
 		if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
+			$pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			if ($SupplierClaimTotal > 0) {
 				$HTML .= '<tr>
 							<td colspan="3"></td>
