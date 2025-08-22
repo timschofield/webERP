@@ -62,4 +62,4 @@ ALTER TABLE `bom` ADD `autoissue` TINYINT DEFAULT '0' NOT NULL ;
 INSERT INTO `config` ( `confname` , `confvalue` ) VALUES ('AutoIssue', '1');
 ALTER TABLE `stockmoves` DROP INDEX `StockID`;
 ALTER TABLE `stockmoves` ADD INDEX ( `reference` );
-ALTER TABLE `recurrsalesorderdetails` DROP PRIMARY KEY; 
+ALTER TABLE `recurrsalesorderdetails` DROP PRIMARY KEY;
