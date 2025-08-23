@@ -1,5 +1,9 @@
 <?php
-/* Database abstraction for mysql */
+/*
+ * Database abstraction for mysql
+ *
+ * @deprecated !!! left in only for BC for users who are running webERP on unsupported php versions
+ */
 
 define('LIKE', 'LIKE');
 
