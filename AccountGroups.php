@@ -331,13 +331,13 @@ if(!isset($_GET['delete'])) {
 				FROM accountgroups
 				WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
+		$ErrMsg = __('The account group details to be edited could not be retrieved');
 		$Result = DB_query($SQL, $ErrMsg);
 		if(DB_num_rows($Result) == 0) {
 			prnMsg( __('The account group name does not exist in the database'),'error');
 			include('includes/footer.php');
 			exit();
 		}
-		$MyRow = DB_fetch_array($Result);
 
 		$_POST['GroupName'] = $MyRow['groupname'];
 		$_POST['SectionInAccounts']  = $MyRow['sectioninaccounts'];
