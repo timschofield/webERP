@@ -1,4 +1,10 @@
 <?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 echo '<h1>', __('Welcome to the webERP installer'), '</h1>';
 
 echo '<section class="installer_about">';
