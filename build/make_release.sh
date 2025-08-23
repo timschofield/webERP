@@ -38,8 +38,8 @@ echo "Updating translation files..."
 
 echo "Cleaning up and dumping the database..."
 
-"$BASE_DIR/build/dump_database.sh" -d ./install/sql demo
-
+# @todo review the options used - should we not add -t -d ?
+"$BASE_DIR/build/dump_database.sh" -o ./install/sql demo
 
 echo "Creating the final tarball..."
 

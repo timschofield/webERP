@@ -2,11 +2,6 @@
 
 set -e
 
-# @todo allow to optionally add drop-table statements just before create-table ones using --skip-add-drop-table/--add-drop-table
-# @todo review the options used for the mysqldump command. Can we do better than using --skip-opt?
-#       nb: --skip-opt disables --add-drop-table, --add-locks, --create-options, --quick, --extended-insert,
-#       --lock-tables, --set-charset, and --disable-keys
-
 help() {
 	printf "Usage: dump_database.sh [OPIONS] ACTION
 
@@ -18,6 +13,7 @@ Action: either default, demo or all
 
 Options:
   -c        adds 'create schema' to the sql scripts it creates
+  -d        adds 'drop table if exists' to the sql scripts it creates
   -t        adds 'create tables' to the sql scripts it creates
   -o \$DIR   use a custom directory for saving the files to
 
@@ -32,18 +28,19 @@ NB: truncates table audittrail on the live db in use.
 
 ADD_CREATE_SCHEMA_STATEMENTS=false
 ADD_CREATE_TABLES_STATEMENTS=false
-ADD_DROP_TABLES_STATEMENTS=false
-DUMP_OPTIONS=""
+ADD_DROP_TABLES_OPTION='--skip-add-drop-table'
+SORT_ROWS_OPTION=
+MYSQL_DUMP_OPTIONS="--skip-set-charset --skip-create-options --no-create-info  --skip-extended-insert --single-transaction"
 
 # parse cli options and arguments
-while getopts ":cdho:t" opt
+while getopts ":cdho:st" opt
 do
 	case $opt in
 		c)
 			ADD_CREATE_SCHEMA_STATEMENTS=true
 		;;
 		d)
-			ADD_DROP_TABLES_STATEMENTS=true
+			ADD_DROP_TABLES_OPTION='--add-drop-table'
 		;;
 		h)
 			help
@@ -51,6 +48,9 @@ do
 		;;
 		o)
 			TARGET_DIR="$OPTARG"
+		;;
+		s)
+			SORT_ROWS_OPTION='--order-by-primary'
 		;;
 		t)
 			ADD_CREATE_TABLES_STATEMENTS=true
@@ -78,6 +78,11 @@ fi
 ACTION="$1"
 if [ "$ACTION" != all ] && [ "$ACTION" != default ] && [ "$ACTION" != demo ]; then
 	echo "ERROR: please provide an argument. It must be either 'all', 'default' or 'demo'" >&2
+	exit 1
+fi
+
+if [ "$ADD_CREATE_TABLES_STATEMENTS" != 'true' ] && [ "$ADD_DROP_TABLES_OPTION" = '--add-drop-table' ]; then
+	echo "ERROR: the option to add drop-tables statements only works when also adding create-table statements" >&2
 	exit 1
 fi
 
@@ -113,14 +118,18 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 	fi
 
 	# @todo review the list of excluded tables
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --skip-opt --create-options --skip-set-charset --no-data  \
+	echo mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+		--skip-set-charset --no-data $ADD_DROP_TABLES_OPTION
+
+	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+	    --skip-set-charset --no-data $ADD_DROP_TABLES_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.buckets" \
 		--ignore-table="${MYSQL_DATABASE}.levels" \
 		--ignore-table="${MYSQL_DATABASE}.mrpparameters" \
 		--ignore-table="${MYSQL_DATABASE}.mrpplanedorders" \
 		--ignore-table="${MYSQL_DATABASE}.mrprequirements" \
 		--ignore-table="${MYSQL_DATABASE}.mrpsupplies" \
-		"$MYSQL_DATABASE" | sed 's/ AUTO_INCREMENT=[0-9]*//g' >> "$TARGET_DIR/$TARGET_FILE"
+		"$MYSQL_DATABASE" | sed -r 's/ AUTO_INCREMENT=[0-9]*//g' | sed -r 's/ DEFAULT CHARSET=[^;]+;/;/g' >> "$TARGET_DIR/$TARGET_FILE"
 
 	# disable foreign keys checking - not needed, as it is part of the mysqldump output
 	#echo "" > "$TARGET_DIR/default.sql"
@@ -133,7 +142,8 @@ fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 	# @todo review the list of included tables
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --skip-opt --skip-set-charset --quick --no-create-info "$MYSQL_DATABASE" \
+	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION "$MYSQL_DATABASE" \
 		accountgroups \
 		accountsection \
 		bankaccounts \
@@ -170,11 +180,14 @@ if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 	echo "INSERT INTO shippers VALUES (1,'Default Shipper',0);" >> "$TARGET_DIR/default.sql"
 	echo "UPDATE config SET confvalue='1' WHERE confname='Default_Shipper';" >> "$TARGET_DIR/default.sql"
 	#echo "SET FOREIGN_KEY_CHECKS = 1;" >> "$TARGET_DIR/default.sql"
+
+	echo "Created file: $TARGET_DIR/default.sql"
 fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = demo ]; then
 	# @todo review the list of excluded tables
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" --skip-opt --skip-set-charset --quick --no-create-info \
+	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.mrpsupplies" \
 		--ignore-table="${MYSQL_DATABASE}.mrpplanedorders" \
 		--ignore-table="${MYSQL_DATABASE}.mrpparameters" \
@@ -184,4 +197,6 @@ if [ "$ACTION" = all ] || [ "$ACTION" = demo ]; then
 
 	#echo "" >> "$TARGET_DIR/demo.sql"
 	#echo "SET FOREIGN_KEY_CHECKS = 1;" >> "$TARGET_DIR/demo.sql"
+
+	echo "Created file: $TARGET_DIR/demo.sql"
 fi
