@@ -17,8 +17,6 @@ if (!isset($PathPrefix)) {
 
 require($PathPrefix.'vendor/autoload.php');
 
-$DefaultDatabase = 'weberp';
-
 if (!file_exists($PathPrefix . 'config.php')) {
 	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
 	$RootPath = dirname($_SERVER['PHP_SELF']);
@@ -28,6 +26,8 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	header('Location:' . $RootPath . '/install/index.php');
 	exit();
 }
+
+$DefaultDatabase = 'weberp';
 
 include($PathPrefix . 'config.php');
 
@@ -65,6 +65,8 @@ if (!isset($SessionName)) {
 }
 session_name($SessionName);
 session_start();
+
+include($PathPrefix . 'includes/LanguageSetup.php');
 
 include($PathPrefix . 'includes/ConnectDB.php');
 include($PathPrefix . 'includes/DateFunctions.php');
@@ -104,8 +106,6 @@ if (isset($_SESSION['DatabaseName'])) {
 } else { //set SESSION['FormID'] before a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
-
-include($PathPrefix . 'includes/LanguageSetup.php');
 
 $FirstLogin = False;
 
