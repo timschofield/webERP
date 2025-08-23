@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "039";
+$KLCodeVersion = "040";
 
 // let's setup all the variables depending on the environment
 if (URLWithoutScriptNameContains(".LOCAL")) {
@@ -67,38 +67,38 @@ if (URLWithoutScriptNameContains(".LOCAL")) {
  */
 if ($webERPType == 'PRODUCTION') {
 	// use the production DB
-	$DBUser = 'kurakura_kl_0001';
+	$DBUser = 'DBU_kl_erp';
 	$DBPassword = 'KXGrwKrlKduQTSdqnLZc';
-	$DefaultDatabase = 'kurakura_kl_erp';
+	$DefaultDatabase = 'kl_erp';
 
 	// use the production company folder
-	$DefaultCompany = 'kurakura_kl_erp';
+	$DefaultCompany = 'kl_erp';
 	
 	// use the production Opencart DB
-	$OpenCartDBUser = 'DBU_kl_shop';
+	$OpenCartDBUser = 'DBU_kl_online_shop';
 	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
 	$OpenCartDBName = 'kl_online_shop';
 	
 	// Use the production archive DB
-	$ArchiveDBUser = 'kurakura_kl_0002';
+	$ArchiveDBUser = 'DBU_kl_erp_archive';
 	$ArchiveDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
 	$ArchiveDBName = 'kl_erp_archive';
 } else {
 	// use the TEST DB
-	$DBUser = 'DBU_ptadu_test';
-	$DBPassword = 'LTq%w@.KkJcZ$@!^HBz';
+	$DBUser = 'DBU_test_erp';
+	$DBPassword = 'JKhxyAfJvkrr2nm0xrXJ';
 	$DefaultDatabase = 'test_erp';
 	
 	// use the TEST company folder
 	$DefaultCompany  = 'test_erp';
 	
 	// use the TEST Opencart DB
-	$OpenCartDBUser = 'DBU_ptadu_test';
-	$OpenCartDBPassword = 'LTq%w@.KkJcZ$@!^HBz';
+	$OpenCartDBUser = 'DBU_test_online_shop';
+	$OpenCartDBPassword = 'V@3,hlAhPTF.yr\o=iz?xF5Q:';
 	$OpenCartDBName = 'test_online_shop';
 	
 	//Use the TEST archive DB
-	$ArchiveDBUser = 'kurakura_kl_0006';
+	$ArchiveDBUser = 'DBU_test_erp_archive';
 	$ArchiveDBPassword = '7187cd531a6f94ad56b0aad';
 	$ArchiveDBName = 'test_erp_archive';
 }

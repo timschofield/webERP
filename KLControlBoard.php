@@ -105,31 +105,51 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		SuppliersWithoutBasicData($RootPath);
+		TimeNeededForExecution("SuppliersWithoutBasicData", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithoutStandardCost($RootPath);
+		TimeNeededForExecution("ItemsWithoutStandardCost", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
 		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_Indonesia", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_Thailand", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_China", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_HongKong", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
+		$StartTime = microtime(true);
 		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWONLY", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_Indonesia_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_Thailand_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_China_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+		TimeNeededForExecution("WrongStandardCost_HongKong_SHOWONLY", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -140,7 +160,9 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = MinimumOutletStockAvailable(20, 80, 20, $NumberOfTestExecuted);
+		TimeNeededForExecution("MinimumOutletStockAvailable", $StartTime, $KL_SystemAdmin);
 	}
 
 	if ($KL_SystemAdmin
@@ -148,27 +170,45 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportTeam){
 		
+		$StartTime = microtime(true);
 		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath);
+		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		over_or_below_limit("Items changing price", "OVER", MAX_ITEMS_CHANGING_PRICE, $RootPath);
+		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		over_or_below_limit("Items moving to 20% discount", "OVER", MAX_ITEMS_MOVING_DISC20, $RootPath);
+		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		over_or_below_limit("Items moving to 50% discount", "OVER", MAX_ITEMS_MOVING_DISC50, $RootPath);
+		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		over_or_below_limit("Items moving to 80% discount", "OVER", MAX_ITEMS_MOVING_DISC80, $RootPath);
+		TimeNeededForExecution("over_or_below_limit", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam){
 
+		$StartTime = microtime(true);
 		ItemsChangingPriceDelayed(4, $RootPath);
+		TimeNeededForExecution("ItemsChangingPriceDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(20, 4, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(50, 4, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(80, 4, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -176,13 +216,21 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
+		$StartTime = microtime(true);
 		ItemsChangingPriceDelayed(5, $RootPath);
+		TimeNeededForExecution("ItemsChangingPriceDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(20, 5, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(50, 5, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsMovingToDiscountDelayed(80, 5, $RootPath);
+		TimeNeededForExecution("ItemsMovingToDiscountDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -191,13 +239,21 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader){
 		
+		$StartTime = microtime(true);
 		ItemsInWrongShops("SHOPKL", $RootPath);
+		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInWrongShops("SHOPBL", $RootPath);
+		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInWrongShops("SHOPOU", $RootPath);
+		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInWrongShops("DEFECTIVE", $RootPath);
+		TimeNeededForExecution("ItemsInWrongShops", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
 	}
@@ -206,15 +262,25 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){	
 
+		$StartTime = microtime(true);
 		ItemsInLocationForMoreThan('SERVI', 10, $RootPath);
+		TimeNeededForExecution("ItemsInLocationForMoreThan", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInLocationForMoreThan('SERSV', 10, $RootPath);
+		TimeNeededForExecution("ItemsInLocationForMoreThan", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInLocationForMoreThan('SERSU', 15, $RootPath);
+		TimeNeededForExecution("ItemsInLocationForMoreThan", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInLocationForMoreThan('SERSW', 15, $RootPath);
+		TimeNeededForExecution("ItemsInLocationForMoreThan", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInLocationForMoreThan('SERDE', 90, $RootPath);
+		TimeNeededForExecution("ItemsInLocationForMoreThan", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -223,36 +289,64 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC2B", "20", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC2G", "20", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC5B", "50", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC5G", "50", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC8A", "80", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC8B", "80", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		DiscountedItemsWithWrongDiscount("DISC8G", "80", $RootPath);
+		TimeNeededForExecution("DiscountedItemsWithWrongDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		NotDiscountedItemsWithDiscount($RootPath);
+		TimeNeededForExecution("NotDiscountedItemsWithDiscount", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportLeader){
+		$StartTime = microtime(true);
 		ActiveTransfersByLocation($RootPath);
+		TimeNeededForExecution("ActiveTransfersByLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ActiveTransferStatus($RootPath);
+		TimeNeededForExecution("ActiveTransferStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		RecentlyClosedTransferStatus(1, $RootPath);
+		TimeNeededForExecution("RecentlyClosedTransferStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ErrorsInTransfers( 15, $RootPath);
+		TimeNeededForExecution("ErrorsInTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -260,34 +354,53 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
 		GLTransDateControl();
+		TimeNeededForExecution("GLTransDateControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsReceivedNotInvoicedControl(1000000, $PeriodNow);
+		TimeNeededForExecution("GoodsReceivedNotInvoicedControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		CustomersDebtControl(10000, $PeriodNow);
+		TimeNeededForExecution("CustomersDebtControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashBalanceControl("IDR", "('111111209',
 												'111111309')", 1, $PeriodNow);
+		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashBalanceControl("USD", "('111205010')", 1, $PeriodNow);
+		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashBalanceControl("EUR", "('111205020')", 1, $PeriodNow);
+		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashBalanceControl("THB", "('111205030',
 												'111204030AD')", 1, $PeriodNow);
+		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashBalanceControl("HKD", "('111205040')", 1, $PeriodNow);
+		TimeNeededForExecution("PettyCashBalanceControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_AdministrationTeam){
 		// cash at retail shops
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $PeriodNow);
+		TimeNeededForExecution("CashAtShops", $StartTime, $KL_SystemAdmin);
 	}
 	
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationLeader
 		OR $KL_AdministrationTeam){
+		$StartTime = microtime(true);
 		InternalBankTransfers("PTADU", 
 					"111121105AD", 1000000000, 2000000000,
 					"111121101AD",   25000000,   75000000,
@@ -299,8 +412,10 @@ if ($ProcessSection01){
 					25000000,
 					 1000000,
 					$PeriodNow);	
+		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		InternalBankTransfers("PTSMH", 
 					"111121105SM", 1000000000, 1500000000,
 					"111121100SM",   25000000,   75000000,
@@ -310,8 +425,10 @@ if ($ProcessSection01){
 					25000000,
 					0,
 					$PeriodNow);	
+		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		InternalBankTransfers("PTBB", 
 					"111121105BB", 1000000000, 1500000000,
 					"111121101BB",   25000000,   75000000,
@@ -321,21 +438,29 @@ if ($ProcessSection01){
 					25000000,
 					0,
 					$PeriodNow);	
+		TimeNeededForExecution("InternalBankTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_PurchasingTeam
 		OR $KL_AdministrationLeader){
+		$StartTime = microtime(true);
 		BalanceAccountControl("111111100",          -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111202030",          -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111204030AD",           0,  500000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121101AD',
 									'111121105AD',
 									'111121107AD',
@@ -350,25 +475,33 @@ if ($ProcessSection01){
 									'111259010AD', 
 									'111259020AD', 
 									'111259050AD')", "Total Banks PT ADU", 2000000000, 5000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121121AD', 
 									'111121122AD', 
 									'111121125AD')", "Total Marketplaces PT ADU", -1, 75000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
 									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
 									'111121110SM',
 									'111121115SM',
 									'111121117SM')", "Total Banks PT SMH", 1500000000, 4000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111121100BB', 
 									'111121101BB', 
 									'111121105BB', 
@@ -387,58 +520,99 @@ if ($ProcessSection01){
 									'111259010BB', 
 									'111259020BB', 
 									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111131100', 
 									'111208010', 
 									'111208020', 
 									'111208030', 
 									'111208040')", "Total Brankas Shareholders",      0,2000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111513000', 
 									'111513000AD')", "Total WIP",  -5000000,   5000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceAccountControl("111111200",   50000000,  400000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111202010",         -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111111209",          0,   25000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111131100",         -1, 2000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111208010",         -1, 1000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111208020",         -1, 1000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111208030",         -1, 1000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111208040",         -1, 1000000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111520000",         -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
+		TimeNeededForExecution("BalanceListAccountControl", $StartTime, $KL_SystemAdmin);
 
+		$StartTime = microtime(true);
 		BalanceAccountControl("111800000AD",  15000000 * $NumberOfOpenShopsTotal,  22500000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111900000AD",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111311100AD",  -50000000,   20000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("211021400AD", -200000000,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("211021500AD",  500000000, 1500000000, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("612012015",         -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		BalanceAccountControl("612012016",         -1,          1, $PeriodNow);
+		TimeNeededForExecution("BalanceAccountControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -449,32 +623,54 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("ReadyToTest", "SETBLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("NeedDescription", "SETKLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("NeedDescription", "SETBLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("NeedDescription", "SETGEA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("NeedPrice", "", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath);
+		TimeNeededForExecution("ItemsInSetup", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ObsoleteComponentsInActiveBOM($RootPath);
+		TimeNeededForExecution("ObsoleteComponentsInActiveBOM", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -482,82 +678,164 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
+		$StartTime = microtime(true);
 		ItemsInmediateShortage("COMPOA", $RootPath);
+		TimeNeededForExecution("ItemsInmediateShortage", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
+		$StartTime = microtime(true);
 		GoodsJustArrived("PO", "KANTO", 3, $RootPath);
+		TimeNeededForExecution("GoodsJustArrived", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustArrived("WO", "KANTO", 3, $RootPath);
+		TimeNeededForExecution("GoodsJustArrived", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustArrived("WO", "SUPBA", 3, $RootPath);
+		TimeNeededForExecution("GoodsJustArrived", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SAMPR", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SASPG", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SERSU", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SERSV", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SERSW", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SERDE", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsJustTransferred("SERVI", "KANTO", 2, 30, $RootPath);
+		TimeNeededForExecution("GoodsJustTransferred", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT20", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT50", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT80", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
 
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT20", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT50", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT80", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
 
+		$StartTime = microtime(true);
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath);
+		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
+		$StartTime = microtime(true);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
 	}
 }
 
@@ -574,7 +852,9 @@ if ($ProcessSection02){
 		OR $KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
+		$StartTime = microtime(true);
 		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath);
+		TimeNeededForExecution("ConsumablesGoodsNotEnoughStock", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -582,25 +862,45 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
+		$StartTime = microtime(true);
 		ValueStockLocation("SERVI",    0,  150, 0, 0);
+		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ValueStockLocation("SERDE",    0,  150, 0, 0);
+		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ValueStockLocation("SERSU",    0,  150, 0, 0);
+		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ValueStockLocation("SERSV",    0,  150, 0, 0);
+		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ValueStockLocation("SERSW",    0,  150, 0, 0);
+		TimeNeededForExecution("ValueStockLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		OvestockAtSamples(1, $RootPath);
+		TimeNeededForExecution("OvestockAtSamples", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		SamplesNotLongerNeeded($RootPath);
+		TimeNeededForExecution("SamplesNotLongerNeeded", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath);
+		TimeNeededForExecution("GoodsToBeProduced", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath);
+		TimeNeededForExecution("GoodsToBeProduced", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		GoodsToBeProduced("COMPOA", "ALL", $RootPath);
+		TimeNeededForExecution("GoodsToBeProduced", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -609,18 +909,26 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
+		$StartTime = microtime(true);
 		ItemsWithoutPurchasingData($RootPath);
+		TimeNeededForExecution("ItemsWithoutPurchasingData", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsWithWrongNumberOfPreferredSuppliers($RootPath);
+		TimeNeededForExecution("ItemsWithWrongNumberOfPreferredSuppliers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		ComponentsToObsolete(false, 0, $RootPath);
+		TimeNeededForExecution("ComponentsToObsolete", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		FlaggedAsObsoleteButStockAvailable($RootPath);
+		TimeNeededForExecution("FlaggedAsObsoleteButStockAvailable", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -628,7 +936,9 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
+		$StartTime = microtime(true);
 		ItemsInKLProcessAndRLNotZero($RootPath);
+		TimeNeededForExecution("ItemsInKLProcessAndRLNotZero", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -636,7 +946,9 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
+		$StartTime = microtime(true);
 		ItemsOnSpecialRequest($RootPath);
+		TimeNeededForExecution("ItemsOnSpecialRequest", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -645,18 +957,24 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
+		$StartTime = microtime(true);
 		PackagingItemsOnWrongLocation($RootPath); 
+		TimeNeededForExecution("PackagingItemsOnWrongLocation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager){
+		$StartTime = microtime(true);
 		CheckPackagingToBeRefilled(false, false, $RootPath);
+		TimeNeededForExecution("CheckPackagingToBeRefilled", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportLeader){
+		$StartTime = microtime(true);
 		CheckPackagingToBeRefilled(false, true, $RootPath);
+		TimeNeededForExecution("CheckPackagingToBeRefilled", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -667,7 +985,9 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportTeam){
 		
+		$StartTime = microtime(true);
 		CheckNegativeStock($RootPath);
+		TimeNeededForExecution("CheckNegativeStock", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -678,9 +998,13 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
+		$StartTime = microtime(true);
 		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath); // Works for both regular and outlet shop packaging
+		TimeNeededForExecution("InsuficientStockForShopPackaging", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -727,48 +1051,82 @@ if ($ProcessSection02){
 		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 30, "NOPOGA", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 30, "DISC2A", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 30, "DISC2B", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 90, "DISC2B", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 30, "DISC2G", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 90, "DISC2G", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 50, "DISC5A", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 50, "DISC5B", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 120, "DISC5B", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 50, "DISC5G", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsInCategoryForMoreThanDays( 120, "DISC5G", $RootPath);
+		TimeNeededForExecution("ItemsInCategoryForMoreThanDays", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 60, "DISC8A", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 60, "DISC8B", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 		
+		$StartTime = microtime(true);
 		ActiveItemsNoSales( 60, "DISC8G", $RootPath);
+		TimeNeededForExecution("ActiveItemsNoSales", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -779,80 +1137,128 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		OldPOStillActive(90, $RootPath);
+		TimeNeededForExecution("OldPOStillActive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		OldWOStillActive(60, $RootPath);
+		TimeNeededForExecution("OldWOStillActive", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongItemsOnPurchaseOrders($RootPath);
+		TimeNeededForExecution("WrongItemsOnPurchaseOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		WrongItemsOnWorkOrders($RootPath);
+		TimeNeededForExecution("WrongItemsOnWorkOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		PurchaseOrdersWrongPlannedDates($RootPath);
+		TimeNeededForExecution("PurchaseOrdersWrongPlannedDates", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("FORSALE","ON PRODUCTION", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("OTHERS","ON PRODUCTION", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","FINISHED BUT NOT PAID", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$PeriodNow,  $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$PeriodNow,  $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 //		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 //		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
+		$StartTime = microtime(true);
 		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
+		TimeNeededForExecution("POStatusControl", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_AdministrationTeam){
+		$StartTime = microtime(true);
 		OutstandingOrders("Retail", "Order", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin ){
+		$StartTime = microtime(true);
 		OutstandingOrders("Retail", "Quotation", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -864,7 +1270,9 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
+		$StartTime = microtime(true);
 		OutstandingOrders("Wholesale", "Order", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -873,7 +1281,9 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_CustomerService
 		OR $KL_OperationalManager){
+		$StartTime = microtime(true);
 		OutstandingOrders("Wholesale", "Quotation", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -888,7 +1298,9 @@ if ($ProcessSection02){
 
 	if ($KL_AdministrationTeam
 		OR $KL_CustomerService){ 
+		$StartTime = microtime(true);
 		OnlineMarketPlacePaymentPending(0, $RootPath);
+		TimeNeededForExecution("OnlineMarketPlacePaymentPending", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -898,7 +1310,9 @@ if ($ProcessSection02){
 		OR $KL_CustomerService
 		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){ 
+		$StartTime = microtime(true);
 		OnlineMarketPlacePaymentPending(10, $RootPath);
+		TimeNeededForExecution("OnlineMarketPlacePaymentPending", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -908,26 +1322,36 @@ if ($ProcessSection02){
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
+		$StartTime = microtime(true);
 		OutstandingOrders("MarketPlace", "Order", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_CustomerService){
+		$StartTime = microtime(true);
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
+		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_CustomerService){
+		$StartTime = microtime(true);
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
+		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_CustomerService){
+		$StartTime = microtime(true);
 		OnlineQuotationsFollowUp($RootPath );
+		TimeNeededForExecution("OnlineQuotationsFollowUp", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		OldOnlineQuotations(1, $RootPath);
+		TimeNeededForExecution("OldOnlineQuotations", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 //		OutstandingOrders("Online", "Quotation", $RootPath);
 //		$NumberOfTestExecuted++;
@@ -935,7 +1359,9 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_CustomerService){ 
+		$StartTime = microtime(true);
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
+		TimeNeededForExecution("OpenCartOrdersByStatus", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -943,7 +1369,9 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_CustomerService){
+		$StartTime = microtime(true);
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath);
+		TimeNeededForExecution("OnlineOrdersFollowUp", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -953,7 +1381,9 @@ if ($ProcessSection02){
 		OR $KL_AdministrationTeam
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
+		$StartTime = microtime(true);
 		OutstandingOrders("Online", "Order", $RootPath);
+		TimeNeededForExecution("OutstandingOrders", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -962,13 +1392,17 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
+		$StartTime = microtime(true);
 		OnlineItemsOnProcess($RootPath);
+		TimeNeededForExecution("OnlineItemsOnProcess", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_SystemAdmin
 		OR $KL_ShopSupportLeader){ 
+		$StartTime = microtime(true);
 		ItemsNotNeededInOnlineOrderButRequested($RootPath);
+		TimeNeededForExecution("ItemsNotNeededInOnlineOrderButRequested", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -980,7 +1414,9 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
+		$StartTime = microtime(true);
 		ActiveItemsWithoutPicture($RootPath);
+		TimeNeededForExecution("ActiveItemsWithoutPicture", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -988,9 +1424,13 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_CustomerService
 		OR $KL_ITSupport){
+		$StartTime = microtime(true);
 		ImagesWithoutProduct($RootPath);
+		TimeNeededForExecution("ImagesWithoutProduct", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		OpenCartItemsWithoutPicture($RootPath );
+		TimeNeededForExecution("OpenCartItemsWithoutPicture", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -999,17 +1439,25 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_CustomerService){
+		$StartTime = microtime(true);
 		ItemsWithoutWeightOrVolume($RootPath);
+		TimeNeededForExecution("ItemsWithoutWeightOrVolume", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsShouldBeInWebsite();
+		TimeNeededForExecution("ItemsShouldBeInWebsite", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_ITSupport){
+		$StartTime = microtime(true);
 		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $RootPath);
+		TimeNeededForExecution("UsersNotLoggingIn", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $RootPath);
+		TimeNeededForExecution("UsersNotLoggingIn", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -1019,19 +1467,27 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader 
 		OR $KL_ShopManager){
+		$StartTime = microtime(true);
 		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath);
+		TimeNeededForExecution("RegularTransfersToShopNotReceived", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
+		$StartTime = microtime(true);
 		TransferWithWrongInformation(15, $RootPath);
+		TimeNeededForExecution("TransferWithWrongInformation", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam){ 
+		$StartTime = microtime(true);
 		TransfersDelayed(3, $RootPath);
+		TimeNeededForExecution("TransfersDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		ItemsCancelledInTransfers(3, $RootPath);
+		TimeNeededForExecution("ItemsCancelledInTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1039,17 +1495,23 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_OperationalManager){
+		$StartTime = microtime(true);
 		TransfersDelayed(4, $RootPath);
+		TimeNeededForExecution("TransfersDelayed", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_OperationalManager){
+		$StartTime = microtime(true);
 		ItemsCancelledInTransfers(3, $RootPath);
+		TimeNeededForExecution("ItemsCancelledInTransfers", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
 	if (!$KL_SystemAdmin){
+		$StartTime = microtime(true);
 		PettyCashBalance('User');
+		TimeNeededForExecution("PettyCashBalance", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1058,11 +1520,17 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_OperationalManager
 		OR $KL_AdministrationLeader){
+		$StartTime = microtime(true);
 		PettyCashBalance('Authorizer');
+		TimeNeededForExecution("PettyCashBalance", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashToBeAuthorized('Cash');
+		TimeNeededForExecution("PettyCashToBeAuthorized", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
+		$StartTime = microtime(true);
 		PettyCashToBeAuthorized('Expenses');
+		TimeNeededForExecution("PettyCashToBeAuthorized", $StartTime, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 

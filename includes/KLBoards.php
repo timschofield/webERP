@@ -1007,63 +1007,44 @@ function FinishedStockDistribution($Kind, $ByReport){
 
 	if ($Kind == "FORSALE"){
 		$Operator1 = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE ."";
-		$Operator2 = " AND m2.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE ."";
 	}elseif ($Kind == "DISPLAYS"){
 		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
-		$Operator2 = "	AND m2.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . " ";
 	}elseif ($Kind == "PACKAGING"){
 		$Operator1 =  "	AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
-		$Operator2 = "	AND m2.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . " ";
 	}else{
 		$Operator1 =  "	";
-		$Operator2 =  "	";
 	}
-	if ($ByReport == "LOCATION"){
-		$SQL =	"SELECT locstock.loccode,
-					locations.locationname,
+if ($ByReport == "LOCATION") {
+    $SQL = "SELECT locstock.loccode,
+            	locations.locationname,
+                SUM(locstock.reorderlevel) AS optimalstock,
+                SUM(locstock.quantity) AS realstock,
+                SUM(CASE WHEN locstock.reorderlevel != 0 THEN 1 ELSE 0 END) AS optimalmodels,
+                SUM(CASE WHEN locstock.quantity != 0 THEN 1 ELSE 0 END) AS realmodels
+            FROM locstock
+			INNER JOIN locations
+				ON locstock.loccode = locations.loccode
+            INNER JOIN stockmaster
+				ON locstock.stockid = stockmaster.stockid
+            INNER JOIN stockcategory
+				ON stockmaster.categoryid = stockcategory.categoryid
+            WHERE stockcategory.stocktype = 'F'" .
+            	$Operator1 . "
+            GROUP BY locstock.loccode
+            ORDER BY locations.locationname";
+	}elseif ($ByReport == "STOCKCATEGORY") {
+		$SQL = "SELECT stockmaster.categoryid,
+					stockcategory.categorydescription,
 					SUM(locstock.reorderlevel) AS optimalstock,
 					SUM(locstock.quantity) AS realstock,
-					(SELECT COUNT(l2.reorderlevel)
-						FROM locstock AS l2,
-							stockmaster as m2
-						WHERE l2.loccode = locations.loccode
-							AND m2.stockid = l2.stockid " .
-							$Operator2 ."
-							AND l2.reorderlevel != 0) AS optimalmodels,
-					(SELECT COUNT(l2.quantity)
-						FROM locstock AS l2,
-							stockmaster as m2
-						WHERE l2.loccode = locations.loccode
-							AND m2.stockid = l2.stockid " .
-							$Operator2 ."
-						AND l2.quantity != 0) AS realmodels
-				FROM locstock, locations, stockmaster, stockcategory
-				WHERE locstock.loccode = locations.loccode
-					AND stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = stockcategory.categoryid
-					AND stockcategory.stocktype = 'F'" .
-				$Operator1 . "
-				GROUP BY locstock.loccode
-				ORDER BY locations.locationname";
-	}elseif ($ByReport == "STOCKCATEGORY"){
-		$SQL =	"SELECT stockmaster.categoryid,
-						stockcategory.categorydescription,
-					SUM(locstock.reorderlevel) AS optimalstock,
-					SUM(locstock.quantity) AS realstock,
-					0 AS optimalmodels,
-					(SELECT COUNT(DISTINCT(l2.stockid))
-						FROM locstock AS l2,
-							stockmaster as m2
-						WHERE m2.stockid = l2.stockid
-							AND m2.categoryid = stockcategory.categoryid" .
-							$Operator2 ."
-						AND l2.quantity != 0) AS realmodels
-				FROM locstock, locations, stockmaster, stockcategory
-				WHERE locstock.loccode = locations.loccode
-					AND stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = stockcategory.categoryid
-					AND stockcategory.stocktype = 'F'" .
-				$Operator1 . "
+					COUNT(DISTINCT CASE WHEN locstock.quantity != 0 THEN locstock.stockid ELSE NULL END) AS realmodels
+				FROM locstock
+				INNER JOIN stockmaster
+					ON locstock.stockid = stockmaster.stockid
+				INNER JOIN stockcategory
+					ON stockmaster.categoryid = stockcategory.categoryid
+				WHERE stockcategory.stocktype = 'F'" .
+					$Operator1 . "
 				GROUP BY stockmaster.categoryid
 				ORDER BY stockcategory.categorydescription";
 	}else{
@@ -1168,15 +1149,15 @@ function FinishedStockDistribution($Kind, $ByReport){
 		echo'</tbody>
 			<tfooter>';
 		if ($ByReport == "STOCKCATEGORY"){
-			$SQL =	"SELECT COUNT(DISTINCT(l2.stockid)) AS realmodels
-						FROM locstock AS l2,
-							stockmaster as m2,
+			$SQL =	"SELECT COUNT(DISTINCT(locstock.stockid)) AS realmodels
+						FROM locstock,
+							stockmaster,
 							stockcategory
-						WHERE m2.stockid = l2.stockid" .
-							$Operator2 ."
-						AND stockcategory.categoryid = m2.categoryid
+						WHERE stockmaster.stockid = locstock.stockid" .
+							$Operator1 ."
+						AND stockcategory.categoryid = stockmaster.categoryid
 						AND stockcategory.stocktype = 'F'
-						AND l2.quantity != 0";
+						AND locstock.quantity != 0";
 			$Result1 = DB_query($SQL);
 			if (DB_num_rows($Result1) != 0){
 				while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -1644,10 +1625,10 @@ function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumSto
 /* EXPLAIN SQL	2014-05-20
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
-4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kurakura_kl_erp.stockmaster.stockid	2	Using where
-4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kurakura_kl_erp.purchorderdetails.orderno	1	Using where
-3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kurakura_kl_erp.stockmaster.stockid	81	Using where
-2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kurakura_kl_erp.stockmaster.stockid	14
+4	DEPENDENT SUBQUERY	purchorderdetails	ref		ItemCode,OrderNo,Completed	ItemCode			62	kl_erp.stockmaster.stockid	2	Using where
+4	DEPENDENT SUBQUERY	purchorders			eq_ref	PRIMARY						PRIMARY				4	kl_erp.purchorderdetails.orderno	1	Using where
+3	DEPENDENT SUBQUERY	packagingused		ref		StockID+Date				StockID+Date		62	kl_erp.stockmaster.stockid	81	Using where
+2	DEPENDENT SUBQUERY	locstock			ref		StockID	StockID									62	kl_erp.stockmaster.stockid	14
 
 */
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysUsage-1));
@@ -2655,7 +2636,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 				ON  purchorders.supplierno = suppliers.supplierid
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
-			WHERE purchorderdetails.completed=0 "
+			WHERE purchorderdetails.completed = 0 "
 				. $SQLFilterKLStatus .
 				$SQLFilterProduct .
 				" AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
@@ -4209,3 +4190,15 @@ echo '</tfooter>
 	</div>';
 }	
 
+function TimeNeededForExecution($FunctionName, $StartTime, $AuthorizedRole) {
+	if ($AuthorizedRole) {
+		$EndTime = microtime(true);
+		$ExecutionTime = $EndTime - $StartTime;
+		if ($ExecutionTime > 2) {
+			prnMsg(__('Execution time for script') . ' ' . $FunctionName . ': ' . round($ExecutionTime, 5) . ' seconds');
+		}
+		return $EndTime;
+	} else {
+		return $StartTime;
+	}
+}
