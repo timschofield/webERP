@@ -1,19 +1,21 @@
 <?php
 
+/*
+ * This file is included in session.php or PDFStarter.php or a report script that does not use PDFStarter.php, to check
+ *  for the existence of gettext functions and setting up the necessary environment to allow for automatic translation.
+ */
+
 use PGettext\T;
 use webERP\LanguageManager;
 
 /* Set internal character encoding to UTF-8 */
 mb_internal_encoding('UTF-8');
 
-/* This file is included in session.php or PDFStarter.php or a report script that does not use PDFStarter.php, to check
-   for the existence of gettext functions and setting up the necessary environment to allow for automatic translation.
-
-   Set language - defined in config.php or user variable when logging in (session.php)
-   NB: this language must also exist in the locale on the web-server
-   Normally the lower case 2 character language code underscore uppercase 2 character country code does the trick,
-   except for en !! */
-
+/*
+ * Set language - defined in config.php or user variable when logging in (session.php)
+ * Normally the lower case 2 character language code underscore uppercase 2 character country code does the trick,
+ * except for en !!
+ */
 /*
  * Improve language check to avoid potential LFI issue.
  * Reported by: https://lyhinslab.org

@@ -56,7 +56,7 @@
 			</td></tr>';
 		}
 	} else {
-		echo '<tr><td align="center" colspan="8">'.RPT_NOROWS.'</td></tr>';;
+		echo '<tr><td align="center" colspan="8">'.RPT_NOROWS.'</td></tr>';
 	}?>
   </table>
   <table align="center" border="2" cellspacing="1" cellpadding="1">

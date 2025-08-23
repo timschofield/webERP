@@ -79,7 +79,7 @@ if (isset($_GET['NewOrder'])){
 	}
 
 	$_SESSION['ExistingOrder' .$identifier]=0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 
 	if ($CustomerLogin==1){ //its a customer logon
 		$_SESSION['Items'.$identifier]->DebtorNo=$_SESSION['CustomerID'];
@@ -106,7 +106,7 @@ if (isset($_GET['ModifyOrderNumber'])
 	}
 	$_SESSION['ExistingOrder'.$identifier]=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 
 /*read in all the guff from the selected order into the Items cart  */
 
@@ -317,7 +317,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	inserted depending on the value of ExistingOrder */
 
 	$_SESSION['ExistingOrder'.$identifier]=0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course cos the order aint even started !!*/
 
 	if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])
@@ -692,7 +692,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			unset($_SESSION['Items'.$identifier]->LineItems);
 			$_SESSION['Items'.$identifier]->ItemsOrdered=0;
 			unset($_SESSION['Items'.$identifier]);
-			$_SESSION['Items'.$identifier] = new cart;
+			$_SESSION['Items'.$identifier] = new Cart;
 
 			if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){
 				$_SESSION['RequireCustomerSelection'] = 1;
