@@ -89,8 +89,8 @@ if __name__ == "__main__":
 
     print("\nPRODUCTION SERVER.")
     db_host = "202.157.184.151"
-    db_name = "kurakura_kl_erp"
-    db_user = "kurakura_kl_0001"
+    db_name = "kl_erp"
+    db_user = "DBU_kl_erp"
     db_password = "KXGrwKrlKduQTSdqnLZc"
 
     check_mariadb_for_migration_issues(db_host, db_name, db_user, db_password)
@@ -98,9 +98,9 @@ if __name__ == "__main__":
 
     print("\nTEST SERVER.")
     db_host = "103.229.75.83"
-    db_name = "kurakura_kl_erp"
-    db_user = "kurakura_kl_0001"
-    db_password = "KXGrwKrlKduQTSdqnLZc"
+    db_name = "kl_erp"
+    db_user = "DBU_kl_erp"
+    db_password = "KXGDBU_kl_erprwKrlKduQTSdqnLZc"
 
     check_mariadb_for_migration_issues(db_host, db_name, db_user, db_password)
 
