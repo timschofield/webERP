@@ -338,6 +338,7 @@ if(!isset($_GET['delete'])) {
 			include('includes/footer.php');
 			exit();
 		}
+		$MyRow = DB_fetch_array($Result);
 
 		$_POST['GroupName'] = $MyRow['groupname'];
 		$_POST['SectionInAccounts']  = $MyRow['sectioninaccounts'];
