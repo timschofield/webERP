@@ -39,7 +39,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 
 	$_SESSION['ProcessingOrder'] = (int)$_GET['OrderNumber'];
 	$_GET['OrderNumber'] = (int)$_GET['OrderNumber'];
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	/*read in all the guff from the selected order into the Items cart */
 

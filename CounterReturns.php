@@ -63,7 +63,7 @@ if (!isset($_SESSION['Items' . $identifier])) {
 	set to 1. */
 
 	$_SESSION['ExistingOrder'. $identifier] = 0;
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	/*Get the default customer-branch combo from the user's default location record */
 	$SQL = "SELECT cashsalecustomer,
@@ -177,7 +177,7 @@ if (isset($_POST['CancelReturn'])) {
 	unset($_SESSION['Items' . $identifier]->LineItems);
 	$_SESSION['Items' . $identifier]->ItemsOrdered = 0;
 	unset($_SESSION['Items' . $identifier]);
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	echo '<br /><br />';
 	prnMsg(__('This return has been cancelled as requested'),'success');

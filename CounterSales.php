@@ -69,7 +69,7 @@ if (!isset($_SESSION['Items'.$identifier])) {
 	inserted depending on the value of ExistingOrder */
 
 	$_SESSION['ExistingOrder'. $identifier] = 0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course 'cos the order ain't even started !!*/
 	/*Get the default customer-branch combo from the user's default location record */
 	$SQL = "SELECT cashsalecustomer,
@@ -208,7 +208,7 @@ if (isset($_POST['CancelOrder'])) {
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	$_SESSION['Items'.$identifier]->ItemsOrdered = 0;
 	unset($_SESSION['Items'.$identifier]);
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 
 	echo '<br /><br />';
 	prnMsg(__('This sale has been cancelled as requested'),'success');

@@ -38,7 +38,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 
 	$_SESSION['ProcessingPick'] = (int) $_GET['Prid'];
 	$_GET['Prid'] = (int) $_GET['Prid'];
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	/*read in all the guff from the selected order into the Items cart  */
 
