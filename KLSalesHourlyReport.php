@@ -35,75 +35,37 @@ function HourlyPerformance($numDays, $RootPath){
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
-	$SQL = "SELECT name,
-				(SELECT MIN(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS firstsalefull,
-				(SELECT MAX(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS lastsalefull,
-				(SELECT COUNT(*)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS totalsalesfull,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') AS valuesalesfull,
-				(SELECT MIN(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime <= '". $Now ."') AS firstsale,
-				(SELECT MAX(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime <= '". $Now ."') AS lastsale,
-				(SELECT COUNT(*)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime <= '". $Now ."') AS totalsales,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."'
-					AND salesorders.ordtime <= '". $Now ."') AS valuesales,
-				(SELECT MIN(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = CURRENT_DATE) AS firstsaletoday,
-				(SELECT MAX(salesorders.ordtime)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = CURRENT_DATE) AS lastsaletoday,
-				(SELECT COUNT(*)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = CURRENT_DATE) AS totalsalestoday,
-				(SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = CURRENT_DATE) AS valuesalestoday
-			FROM debtorsmaster
-			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
-			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard)
-				FROM salesorders
-				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate >= '". $InitialDate ."'
-					AND salesorders.orddate <= '". $Yesterday ."') DESC,
-				debtorsmaster.debtorno";
+	/* SQL optimized by Claude Sonnet 4.0 23/08/2025 from around 4,25 secs to 1,5 secs*/
+	$SQL = "SELECT dm.name,
+				MIN(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					THEN so.ordtime END) AS firstsalefull,
+				MAX(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					THEN so.ordtime END) AS lastsalefull,
+				COUNT(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					THEN 1 END) AS totalsalesfull,
+				SUM(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					THEN so.klpaidcash + so.klpaidcreditcard END) AS valuesalesfull,
+				MIN(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					AND so.ordtime <= '" . $Now . "' THEN so.ordtime END) AS firstsale,
+				MAX(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					AND so.ordtime <= '" . $Now . "' THEN so.ordtime END) AS lastsale,
+				COUNT(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					AND so.ordtime <= '" . $Now . "' THEN 1 END) AS totalsales,
+				SUM(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+					AND so.ordtime <= '" . $Now . "' THEN so.klpaidcash + so.klpaidcreditcard END) AS valuesales,
+				MIN(CASE WHEN so.orddate = CURRENT_DATE THEN so.ordtime END) AS firstsaletoday,
+				MAX(CASE WHEN so.orddate = CURRENT_DATE THEN so.ordtime END) AS lastsaletoday,
+				COUNT(CASE WHEN so.orddate = CURRENT_DATE THEN 1 END) AS totalsalestoday,
+				SUM(CASE WHEN so.orddate = CURRENT_DATE THEN so.klpaidcash + so.klpaidcreditcard END) AS valuesalestoday
+			FROM debtorsmaster dm
+			LEFT JOIN salesorders so 
+				ON dm.debtorno = so.debtorno 
+					AND (so.orddate >= '" . $InitialDate . "' OR so.orddate = CURRENT_DATE)
+			WHERE dm.typeid IN (" . CUSTOMER_TYPE_RETAIL . ")
+			GROUP BY dm.debtorno,
+				dm.name
+			ORDER BY SUM(CASE WHEN so.orddate >= '" . $InitialDate . "' AND so.orddate <= '" . $Yesterday . "' 
+				THEN so.klpaidcash + so.klpaidcreditcard END) DESC, dm.debtorno";
 
 	$Result = DB_query($SQL);
 	$ShowHeader = true;

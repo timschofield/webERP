@@ -1292,7 +1292,8 @@ function PettyCashStatus($Currency){
 * @return void - Outputs HTML table and may insert KPI values
 **************************************************************************************************************/
 function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
-	
+
+	/* SQL optimized by Claude Sonnet 4.0 23/08/2025 */
 	if ($NumDaysA == "YTD"){
 		// we need to translate YTD to a number of days
 		// As suggested by OpenAI ChatGPT ;-)
@@ -1301,6 +1302,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		// Extract the year of yesterday
 		$Current_year = date('Y', strtotime("-1 days"));
 		// Create a timestamp for the first day of the year
+	
 		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $Current_year);
 		// Calculate the number of seconds between the two timestamps
 		$seconds_diff = $Current_timestamp - $first_day_timestamp;
@@ -1352,92 +1354,62 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	$TotalOldRent = 0;
 
 	if (($Typereport == "Shop") OR ($Typereport == "Online")) {
-		// Define common sales subquery parts
-		$SalesSubqueryA = "(SELECT SUM(linenetprice)/currencies.rate
-							FROM salesorderdetails, salesorders, currencies
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND debtorsmaster.currcode = currencies.currabrev
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA";
-
-		$SalesSubqueryB = "(SELECT SUM(linenetprice)/currencies.rate
-							FROM salesorderdetails, salesorders, currencies
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND debtorsmaster.currcode = currencies.currabrev
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateB . "'
-								AND salesorders.orddate <= '" . $YesterdayB . "'
-								AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB";
-
 		if ($Typereport == "Shop") {
-			$YearlyRentSubquery = "(SELECT locations.klyearlyrent 
-									FROM locations
-									WHERE locations.cashsalecustomer = debtorsmaster.debtorno
-									LIMIT 1) AS yearlyrent";
-
-			$OrderBySubquery = "(SELECT SUM(linenetprice)
-								FROM salesorderdetails, salesorders
-								WHERE salesorderdetails.orderno = salesorders.orderno
-									AND salesorderdetails.completed = 1
-									AND salesorders.orddate >= '" . $StartDateA . "'
-									AND salesorders.orddate <= '" . $YesterdayA . "'
-									AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
-
-			$SQL = "SELECT debtorno,
-						name,
-						{$YearlyRentSubquery},
-						{$SalesSubqueryA},
-						{$SalesSubqueryB}
-					FROM debtorsmaster
-					WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)
-					ORDER BY {$OrderBySubquery}";
+			$SQL = "SELECT dm.debtorno,
+						dm.name,
+						loc.klyearlyrent AS yearlyrent,
+						SUM(CASE WHEN so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "' 
+							THEN sod.linenetprice / curr.rate END) AS salesA,
+						SUM(CASE WHEN so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "' 
+							THEN sod.linenetprice / curr.rate END) AS salesB
+					FROM debtorsmaster dm
+					LEFT JOIN locations loc ON loc.cashsalecustomer = dm.debtorno
+					LEFT JOIN salesorders so ON so.debtorno = dm.debtorno 
+						AND ((so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "') 
+							OR (so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'))
+					LEFT JOIN salesorderdetails sod ON sod.orderno = so.orderno AND sod.completed = 1
+					LEFT JOIN currencies curr ON curr.currabrev = dm.currcode
+					WHERE (dm.typeid = 2 OR dm.typeid = 11)
+					GROUP BY dm.debtorno, dm.name, loc.klyearlyrent
+					ORDER BY SUM(CASE WHEN so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "' 
+						THEN sod.linenetprice END) DESC";
 		} else {
 			// Online type
-			$SQL = "SELECT debtorno,
-						name,
+			$SQL = "SELECT dm.debtorno,
+						dm.name,
 						0 AS yearlyrent,
-						{$SalesSubqueryA},
-						{$SalesSubqueryB}
-					FROM debtorsmaster
-					WHERE (debtorsmaster.typeid = 9 OR debtorsmaster.typeid = 10)
-						AND debtorsmaster.debtorno NOT IN ('WEB-WH-IDR', 'WEB-WH-USD', 'WEB-WH-EUR', 'WEB-WH-AUD')
-					ORDER BY debtorsmaster.debtorno";
+						SUM(CASE WHEN so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "' 
+							THEN sod.linenetprice / curr.rate END) AS salesA,
+						SUM(CASE WHEN so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "' 
+							THEN sod.linenetprice / curr.rate END) AS salesB
+					FROM debtorsmaster dm
+					LEFT JOIN salesorders so ON so.debtorno = dm.debtorno 
+						AND ((so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "') 
+							OR (so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'))
+					LEFT JOIN salesorderdetails sod ON sod.orderno = so.orderno AND sod.completed = 1
+					LEFT JOIN currencies curr ON curr.currabrev = dm.currcode
+					WHERE (dm.typeid = 9 OR dm.typeid = 10)
+						AND dm.debtorno NOT IN ('WEB-WH-IDR', 'WEB-WH-USD', 'WEB-WH-EUR', 'WEB-WH-AUD')
+					GROUP BY dm.debtorno, dm.name
+					ORDER BY dm.debtorno";
 		}
 	} else {
 		// Salesman report
-		$SalesSubqueryA = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.salesperson = salesman.salesmancode) AS salesA";
-
-		$SalesSubqueryB = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateB . "'
-								AND salesorders.orddate <= '" . $YesterdayB . "'
-								AND salesorders.salesperson = salesman.salesmancode) AS salesB";
-
-		$OrderBySubquery = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.salesperson = salesman.salesmancode) DESC";
-
-		$SQL = "SELECT salesmancode,
-					salesmanname,
-					{$SalesSubqueryA},
-					{$SalesSubqueryB}
-				FROM salesman
-				WHERE salesman.current = 1
-				ORDER BY {$OrderBySubquery}";
+		$SQL = "SELECT sm.salesmancode,
+					sm.salesmanname,
+					SUM(CASE WHEN so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "' 
+						THEN sod.linenetprice END) AS salesA,
+					SUM(CASE WHEN so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "' 
+						THEN sod.linenetprice END) AS salesB
+				FROM salesman sm
+				LEFT JOIN salesorders so ON so.salesperson = sm.salesmancode 
+					AND ((so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "') 
+						OR (so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'))
+				LEFT JOIN salesorderdetails sod ON sod.orderno = so.orderno AND sod.completed = 1
+				WHERE sm.current = 1
+				GROUP BY sm.salesmancode, sm.salesmanname
+				ORDER BY SUM(CASE WHEN so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "' 
+					THEN sod.linenetprice END) DESC";
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
