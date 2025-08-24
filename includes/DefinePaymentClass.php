@@ -43,6 +43,7 @@ Class Payment {
 		$this->Address4 ="";
 		$this->Address5 ="";
 		$this->Address6 ="";
+		$this->Narrative ="";
 
 	}
 
