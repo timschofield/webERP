@@ -3,9 +3,11 @@
 $PageSecurity = 15;
 
 include('includes/session.php');
+
 $ViewTopic = 'EDI';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 
 // Important: Default value for EDIsent in debtortrans should probably be 1 for non EDI customers

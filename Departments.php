@@ -3,11 +3,11 @@
 include('includes/session.php');
 
 $Title = __('Departments');
-
 $ViewTopic = 'Setup';
 $BookMark = 'Departments';
 
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		__('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 

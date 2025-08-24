@@ -1,12 +1,12 @@
 <?php
 
 include('includes/session.php');
-$Title = __('Fixed Assets');
 
+$Title = __('Fixed Assets');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 

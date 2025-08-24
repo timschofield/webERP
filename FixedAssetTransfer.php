@@ -3,10 +3,8 @@
 include('includes/session.php');
 
 $Title = __('Change Asset Location');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetTransfer';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') .

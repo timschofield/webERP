@@ -1,16 +1,15 @@
 <?php
-// DailyBankTransactions.php
+
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
 include('includes/session.php');
-
-if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
-if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 
 $Title = __('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
-
 include('includes/header.php');
+
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 
 if (isset($_GET['BankAccount'])) {
 	$_POST['BankAccount'] = $_GET['BankAccount'];

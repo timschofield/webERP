@@ -1,7 +1,9 @@
 <?php
 
 // Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
+
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['FromDate'])) {
