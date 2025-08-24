@@ -5,7 +5,7 @@ include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-$Title=__('Customer Activity and Balances');
+$Title = __('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.*/
 $ViewTopic = 'ARInquiries';
 $BookMark = '';

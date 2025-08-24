@@ -1,7 +1,9 @@
 <?php
+
 /* Defines the sections in the general ledger reports */
 
 include('includes/session.php');
+
 $Title = __('Account Sections');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountSections';

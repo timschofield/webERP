@@ -1,15 +1,15 @@
 <?php
-/* AccountGroups.php
-Defines the groupings of general ledger accounts */
+
+/* Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
+
 $Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
-
 
 function CheckForRecursiveGroup($ParentGroupName, $GroupName) {
 

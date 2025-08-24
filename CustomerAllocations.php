@@ -1,13 +1,16 @@
 <?php
+
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCustAllocsClass.php');// Before includes/session.php *******
 
 include('includes/session.php');
+
 $Title = __('Customer Receipt') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';

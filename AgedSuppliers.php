@@ -1,7 +1,9 @@
 <?php
 
 include('includes/session.php');
+
 use Dompdf\Dompdf;
+
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'AgedCreditors';
 

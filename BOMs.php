@@ -2,15 +2,15 @@
 
 include('includes/session.php');
 
-if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
-
 $Title = __('Multi-Level Bill Of Materials Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'BOMMaintenance';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 function display_children($Parent, $Level, &$BOMTree) {
 	global $i;
