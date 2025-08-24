@@ -25,14 +25,12 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 	if (extension_loaded('gd')) {
 		// generate an image, based on company name
 
-		// same size as logo_server.jpg
-		/// @todo grab the size from the file via gd calls
-		$width = 200;
-		$height = 51;
 		$Font = 3;
 
-		$im = imagecreate($width, $height);
-		$BackgroundColour = imagecolorallocate($im, 119, 119, 119); // #777777, same as default color theme
+		$im = imagecreatefrompng($Path_To_Root . '/images/logo_background.png');
+		imagealphablending($im, false);
+
+		//$BackgroundColour = imagecolorallocate($im, 119, 119, 119); // #777777, same as default color theme
 		$TextColour = imagecolorallocate($im, 255, 255, 255);
 
 		$fw = imagefontwidth($Font);
@@ -40,18 +38,17 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		$TextWidth = $fw * mb_strlen($CompanyName);
 		$px = (imagesx($im) - $TextWidth) / 2;
 		$py = (imagesy($im) - ($fh)) / 2;
-		imagefill($im, 0, 0, $BackgroundColour);
+		//imagefill($im, 0, 0, $BackgroundColour);
 		imagestring($im, $Font, $px, $py, $CompanyName, $TextColour);
 
-		/// @todo add white bevel, rounded border with transparent background
-
+		imagesavealpha($im, true);
 		if (!imagepng($im, $CompanyDir . '/logo.png')) {
-			copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+			copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 		}
 		imagedestroy($im);
 
 	} else {
-		copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+		copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 	}
 }
 
