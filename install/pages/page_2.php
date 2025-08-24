@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 echo '<h1>', __('System Checks'), '</h1>';
 
 //set the default time zone

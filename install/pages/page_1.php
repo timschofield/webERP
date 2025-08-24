@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 $GPLV2 = file_get_contents(__DIR__ . '/../../doc/LICENSE.txt');
 
 if ($_SESSION['Installer']['License_Agreed'] == True) {

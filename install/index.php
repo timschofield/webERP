@@ -80,7 +80,7 @@ echo '<div class="wizard">
 		<header>', $Title, '</header>
 		<img id="main_icon" src="images/installer.png" />';
 
-include('pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+include($PathPrefix . 'install/pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
 
 echo '<footer>';
 
