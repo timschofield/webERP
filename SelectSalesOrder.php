@@ -956,9 +956,9 @@ if (isset($StockItemsResult)
 				if ($_SESSION['RequirePickingNote'] == 1) {
 					$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
 					} else {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . __('Pick') . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . __('Pick') . '</a></td>';
 					}
 					$PrintDummyFlag = '';
 				}
