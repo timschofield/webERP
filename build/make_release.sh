@@ -32,6 +32,10 @@ echo "Checking syntax of php files..."
 
 "$BASE_DIR/build/check_syntax.sh" || exit 1
 
+echo "Checking and updating composer configuration..."
+
+"$BASE_DIR/build/run_composer.sh" || exit 1
+
 echo "Updating translation files..."
 
 "$BASE_DIR/build/update_translations.sh" all
