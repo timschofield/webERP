@@ -1,11 +1,12 @@
 <?php
-//	Currencies.php
+
 //	Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
 /*
 	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
 */
 
 include('includes/session.php');
+
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
 $Title = __('Currencies Maintenance');

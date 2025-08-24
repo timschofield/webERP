@@ -3,11 +3,10 @@
 include('includes/session.php');
 
 $Title = __('Bill Of Materials Maintenance');
-
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {

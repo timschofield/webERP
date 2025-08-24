@@ -1,10 +1,13 @@
 <?php
+
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
 include('includes/session.php');
+
 $Title = __('Confirm Dispatches and Invoice An Order');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
