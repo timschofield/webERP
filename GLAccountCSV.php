@@ -1,13 +1,10 @@
 <?php
-// GLAccountCSV.php
-
 
 include('includes/session.php');
-$Title = __('General Ledger Account Report');
 
+$Title = __('General Ledger Account Report');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
-
 include('includes/header.php');
 
 if (isset($_POST['Period'])) {

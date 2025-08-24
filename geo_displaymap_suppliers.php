@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 /// @todo do we need these functions?
 include('includes/SQL_CommonFunctions.php');
 

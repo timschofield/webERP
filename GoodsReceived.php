@@ -1,16 +1,18 @@
 <?php
-/* GoodsReceived.php */
+
 /* Entry of items received against purchase orders */
 
-/* Session started in header.php for password checking and authorisation level check */
+/// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
+
 include('includes/session.php');
-if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
-/*The identifier makes this goods received session unique so cannot get confused
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
+
+/* The identifier makes this goods received session unique so cannot get confused
  * with other sessions of goods received on the same machine/browser
  * The identifier only needs to be unique for this php session, so a
  * unix timestamp will be sufficient.

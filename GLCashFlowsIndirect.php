@@ -42,11 +42,12 @@ function colDebitCredit($Amount) {
 // END: Functions division =====================================================
 
 // BEGIN: Procedure division ===================================================
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/session.php');
 }
+
 $Title = __('Statement of Cash Flows, Indirect Method');
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLCashFlowsIndirect';
 	include('includes/header.php');

@@ -3,10 +3,10 @@
 include('includes/session.php');
 
 $Title = __('Discount Categories Maintenance');
-/* webERP manual links before header.php */
 $ViewTopic = "SalesOrders";
 $BookMark = "DiscountMatrix";
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_POST['stockID'])) {

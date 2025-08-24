@@ -1,5 +1,5 @@
 <?php
-// GLProfit_Loss.php
+
 // Shows the profit and loss of the company for the range of periods entered.
 /*
 Info about financial statements: IAS 1 - Presentation of Financial Statements.
@@ -19,6 +19,7 @@ Parameters:
 // END: Functions division =====================================================
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 $Title = __('Profit and Loss');
