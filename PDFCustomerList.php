@@ -10,8 +10,6 @@ $BookMark = 'CustomerListing';
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-	include('includes/PDFStarter.php');
-
 	if($_POST['Activity']!='All') {
 		if(!is_numeric($_POST['ActivityAmount'])) {
 			$Title = __('Customer List') . ' - ' . __('Problem Report') . '....';
