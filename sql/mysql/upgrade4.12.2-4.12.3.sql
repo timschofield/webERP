@@ -1,4 +1,4 @@
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) VALUES
 	('CustomerAccount.php', '1', 'Shows customer account/statement on screen rather than PDF'),
 	('PcAnalysis.php', '15', 'Creates an Excel with details of PC expense for 24 months'),
 	('StockCategorySalesInquiry.php', '2', 'Sales inquiry by stock category showing top items');
