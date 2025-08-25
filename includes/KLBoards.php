@@ -2931,16 +2931,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			InsertKPI("STOCK-COGS-NEXT-". $maxdays . "D-IDR", round($MyRow['cogs'],-6));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$MyRow['cogs'],-6);
 			InsertKPI("STOCK-DIFF-NEXT-". $maxdays . "D-IDR", $ExpectedDifferenceValueStock);
-			$ExpectedDifferenceQtyStock = 0;
-			if ($AverageItemCost != 0) {
-				$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost, -2);
-			}
 			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("STOCK-FUTURE-NEXT-". $maxdays . "D-IDR", $ExpectedFutureValueStock);
-			$ExpectedFutureQtyStock = 0;
-			if ($AverageItemCost != 0) {
-				$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
-			}
 		}
 		echo '</tfooter>
 				</table>
@@ -3217,7 +3209,6 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 						</thead>
 						<tbody>';
 		echo $TableHeader;
-		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $MyRow['orderno'] . '">' . $MyRow['orderno'] . '</a>';
 			$OrderDate = ConvertSQLDate(substr($MyRow['orddate'],0,10));
@@ -3264,7 +3255,6 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 					<td>' . $MyRow['customsdate'] . '</td>
 					<td>' . $MyRow['arrivaldate'] . '</td>
 					</tr>';
-			$i++;
 		}
 		echo '</tbody>
 			  </table>
@@ -4129,65 +4119,65 @@ function QualityIssuesByReason($Days, $RootPath){
 * Returns: None
 **************************************************************************************************************/
 function StockAdjustmentsByReason($Days){
-$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
-$SQL = "SELECT stockadjustmentreasons.reasonid,
-			stockadjustmentreasons.reasonname,
-			SUM(qty) AS totaladjusted
-		FROM stockmoves
-		INNER JOIN stockadjustments
-			ON stockmoves.transno = stockadjustments.transno
-			AND stockmoves.type = 17
-		INNER JOIN stockadjustmentreasons
-			ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
-		WHERE stockmoves.trandate >= '" . $StartDate . "'
-		GROUP BY stockadjustmentreasons.reasonid,
-			stockadjustmentreasons.reasonname
-		ORDER BY ABS(SUM(qty)) DESC";
+	$SQL = "SELECT stockadjustmentreasons.reasonid,
+				stockadjustmentreasons.reasonname,
+				SUM(qty) AS totaladjusted
+			FROM stockmoves
+			INNER JOIN stockadjustments
+				ON stockmoves.transno = stockadjustments.transno
+				AND stockmoves.type = 17
+			INNER JOIN stockadjustmentreasons
+				ON stockadjustments.reasonid = stockadjustmentreasons.reasonid
+			WHERE stockmoves.trandate >= '" . $StartDate . "'
+			GROUP BY stockadjustmentreasons.reasonid,
+				stockadjustmentreasons.reasonname
+			ORDER BY ABS(SUM(qty)) DESC";
 
-$TotalAdjusted = 0;
-$Result = DB_query($SQL);
-if (DB_num_rows($Result) != 0){
-	$TableTitleText = __('# stock adjustments by Reason during the last ') . $Days . ' days';
-	ShowTableTitle($TableTitleText);
-	echo '<div>';
-	echo '<table class="selection">
-			<thead>
-				<tr>
-					<th class="SortedColumn">' . __('Reason') . '</th>
-					<th class="SortedColumn">' . __('Qty adjusted') . '</th>
-					<th class="SortedColumn">' . __('Daily Average') . '</th>
-				</tr>
-			</thead>
-			<tbody>';
-	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">
-				<td>' . $MyRow['reasonname'] . '</td>
-				<td class="number">' . locale_number_format($MyRow['totaladjusted'],0) . '</td>
-				<td class="number">' . locale_number_format($MyRow['totaladjusted'] / $Days, 1) . '</td>
-			</tr>';
+	$TotalAdjusted = 0;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$TableTitleText = __('# stock adjustments by Reason during the last ') . $Days . ' days';
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . __('Reason') . '</th>
+						<th class="SortedColumn">' . __('Qty adjusted') . '</th>
+						<th class="SortedColumn">' . __('Daily Average') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['reasonname'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaladjusted'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['totaladjusted'] / $Days, 1) . '</td>
+				</tr>';
 
-		$TotalAdjusted += $MyRow['totaladjusted'];
-		if ($Days == 30) {
-			InsertKPI('STADJ-' . $MyRow['reasonid'] . '-3D-PCS', $MyRow['totaladjusted']);
+			$TotalAdjusted += $MyRow['totaladjusted'];
+			if ($Days == 30) {
+				InsertKPI('STADJ-' . $MyRow['reasonid'] . '-3D-PCS', $MyRow['totaladjusted']);
+			}
 		}
 	}
-}
 
-if ($Days == 30) {
-	InsertKPI('STADJ-TOTAL-30D-PCS', $TotalAdjusted);
-}
+	if ($Days == 30) {
+		InsertKPI('STADJ-TOTAL-30D-PCS', $TotalAdjusted);
+	}
 
-echo '</tbody>
-	<tfooter>';
-echo '<tr class="striped_row">
-		<td>Total</td>
-		<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
-		<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
-	</tr>';
-echo '</tfooter>
-	</table>
-	</div>';
+	echo '</tbody>
+		<tfooter>';
+	echo '<tr class="striped_row">
+			<td>Total</td>
+			<td class="number">' . locale_number_format($TotalAdjusted, 0) . '</td>
+			<td class="number">' . locale_number_format($TotalAdjusted / $Days, 1) . '</td>
+		</tr>';
+	echo '</tfooter>
+		</table>
+		</div>';
 }	
 
 function TimeNeededForExecution($FunctionName, $StartTime, $AuthorizedRole) {

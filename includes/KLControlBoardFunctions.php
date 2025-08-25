@@ -16,7 +16,6 @@
 * CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
 * ComponentsToObsolete - Lists components that could be obsoleted
 * ConsumablesGoodsNotEnoughStock - Lists consumable goods with insufficient stock
-* CustomerDebtByCurrency - Gets customer debt by currency
 * CustomersDebtControl - Controls customer debt balances
 * DiscountedItemsWithWrongDiscount - Lists discounted items with wrong discount percentage
 * ErrorsInTransfers - Lists errors in transfers
@@ -621,37 +620,26 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 	}
 }
 
-function CustomerDebtByCurrency($Currency){
-	$SQL = "SELECT SUM(
-					debtortrans.balance
-				)/currencies.rate AS balance
-			FROM debtorsmaster,
-				currencies,
-				debtortrans
-			WHERE debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND debtorsmaster.currcode = '".$Currency."' ";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow[0];
-}
-
 function CustomersDebtControl($AcceptedDifference, $Period){
-	$SQL = "SELECT SUM(amount) as saldo
-			FROM gltotals
-			WHERE gltotals.account = '111311100AD'
-				AND gltotals.period <= ". $Period . "";
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	
-	$ValueAtBalance = $MyRow['saldo'];
-	
-	$DebtValueIDR = CustomerDebtByCurrency("IDR");
-	$DebtValueUSD = CustomerDebtByCurrency("USD");
-	$DebtValueAUD = CustomerDebtByCurrency("AUD");
-	$DebtValueEUR = CustomerDebtByCurrency("EUR");
-	
-	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
+
+	$ValueAtBalance = GetGLAccountBalance('111311100AD', $Period);
+
+	/* Now get the Customer debt by currency, converted to functional currency IDR */
+	/* 2025-08-25 SQL optimized by Gemini */
+    $SQL = "SELECT
+                SUM(CASE WHEN debtorsmaster.currcode = 'IDR' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueIDR,
+                SUM(CASE WHEN debtorsmaster.currcode = 'USD' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueUSD,
+                SUM(CASE WHEN debtorsmaster.currcode = 'AUD' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueAUD,
+                SUM(CASE WHEN debtorsmaster.currcode = 'EUR' THEN debtortrans.balance / currencies.rate ELSE 0 END) AS DebtValueEUR
+            FROM debtorsmaster
+            INNER JOIN debtortrans ON debtorsmaster.debtorno = debtortrans.debtorno
+            INNER JOIN currencies ON debtorsmaster.currcode = currencies.currabrev
+            WHERE debtorsmaster.currcode IN ('IDR', 'USD', 'AUD', 'EUR')";
+
+    $Result = DB_query($SQL);
+    $MyRow = DB_fetch_array($Result);
+
+    $DebtValue = $MyRow['DebtValueIDR'] + $MyRow['DebtValueUSD'] + $MyRow['DebtValueAUD'] + $MyRow['DebtValueEUR'];
 	
 	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
 		$WarningTitleText = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
@@ -1016,17 +1004,9 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 }
 
 function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
-	$SQL = "SELECT SUM(amount) as saldo
-			FROM gltotals
-			WHERE gltotals.account = '211021400AD'
-				AND gltotals.period <= ". $Period . "";
-// EXPLAIN SQL 2014-05-31 OK!
-//prnMsg($SQL);
-	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	
-	$ValueAtBalance = -$MyRow['saldo'];
-	
+
+	$ValueAtBalance = -GetGLAccountBalance('211021400AD', $Period);
+
 	$SQL = "SELECT SUM((grns.qtyrecd - grns.quantityinv) * (stockmaster.actualcost))
 			FROM grns, stockmaster
 			WHERE stockmaster.stockid = grns.itemcode
