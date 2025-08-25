@@ -518,7 +518,13 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-INSERT INTO test_erp.salesorderdetails SELECT * FROM kl_erp.salesorderdetails WHERE orderno >= 600000; 
+INSERT INTO test_erp.salesorderdetails (
+  orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
+)
+SELECT
+  orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
+FROM kl_erp.salesorderdetails
+WHERE orderno >= 600000;
 
 TRUNCATE test_erp.`salesorders`;
 INSERT INTO test_erp.salesorders SELECT * FROM kl_erp.salesorders WHERE orderno >= 600000; 
@@ -584,7 +590,12 @@ TRUNCATE test_erp.`stockitemproperties`;
 INSERT INTO test_erp.stockitemproperties SELECT * FROM kl_erp.stockitemproperties;
 
 TRUNCATE test_erp.`stockmaster`;
-INSERT INTO test_erp.stockmaster SELECT * FROM kl_erp.stockmaster;
+INSERT INTO test_erp.stockmaster (
+  stockid, categoryid, lastcategoryupdate, description, longdescription, units, mbflag, lastcostupdate, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, grossweight, barcode, discountcategory, taxcatid, serialised, perishable, decimalplaces, pansize, shrinkfactor, nextserialno, netweight, length, width, height, unitsdimension, klpackaging, klchangingprice, klmovingdiscount20, klmovingdiscount50, klmovingdiscount80, klsynctoopencart, klservicebyreplacement, date_created, date_updated
+)
+SELECT
+  stockid, categoryid, lastcategoryupdate, description, longdescription, units, mbflag, lastcostupdate, lastcost, materialcost, labourcost, overheadcost, lowestlevel, discontinued, controlled, eoq, volume, grossweight, barcode, discountcategory, taxcatid, serialised, perishable, decimalplaces, pansize, shrinkfactor, nextserialno, netweight, length, width, height, unitsdimension, klpackaging, klchangingprice, klmovingdiscount20, klmovingdiscount50, klmovingdiscount80, klsynctoopencart, klservicebyreplacement, date_created, date_updated
+FROM kl_erp.stockmaster;
 
 TRUNCATE test_erp.`stockmoves`;
 /*INSERT INTO test_erp.stockmoves SELECT * FROM kl_erp.stockmoves WHERE stkmoveno > 8000000;*/
