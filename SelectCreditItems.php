@@ -44,7 +44,7 @@ if (isset($_GET['NewCredit'])){
 if (!isset($_SESSION['CreditItems'.$identifier])){
 	 /* It must be a new credit note being created $_SESSION['CreditItems'.$identifier] would be set up from a previous call*/
 
-	$_SESSION['CreditItems'.$identifier] = new cart;
+	$_SESSION['CreditItems'.$identifier] = new Cart;
 
 	$_SESSION['RequireCustomerSelection'] = 1;
 }
@@ -60,7 +60,7 @@ if (isset($_POST['Quick'])){
 if (isset($_POST['CancelCredit'])) {
 	unset($_SESSION['CreditItems'.$identifier]->LineItems);
 	unset($_SESSION['CreditItems'.$identifier]);
-	$_SESSION['CreditItems'.$identifier] = new cart;
+	$_SESSION['CreditItems'.$identifier] = new Cart;
 	$_SESSION['RequireCustomerSelection'] = 1;
 }
 

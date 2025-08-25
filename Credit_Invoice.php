@@ -33,7 +33,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 	unset($_SESSION['CreditItems' . $identifier]);
 
 	$_SESSION['ProcessingCredit'] = intval($_GET['InvoiceNumber']);
-	$_SESSION['CreditItems' . $identifier] = new cart;
+	$_SESSION['CreditItems' . $identifier] = new Cart;
 
 	/*read in all the guff from the selected invoice into the Items cart	*/
 

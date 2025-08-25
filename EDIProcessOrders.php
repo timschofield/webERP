@@ -139,7 +139,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 	$CreateOrder = True; /*Assume that we are to create a sales order in the system for the message read */
     $LinCount = 0; // LIN segments
     $ErrorCount=0;
-	$Order = new cart;
+	$Order = new Cart;
 
 	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
 

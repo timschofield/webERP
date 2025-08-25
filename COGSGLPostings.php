@@ -133,13 +133,13 @@ if (!isset($SelectedCOGSPostingID)) {
 												sectioninaccounts,
 												pandl,
 												sequenceintb,
-												accountgroups
-										       			)
-										VALUES ('Sales',
+												parentgroupname
+											) VALUES ('Sales',
 												'1',
 												'1',
 												'10',
-												' ')";
+												' '
+											)";
 
 			$Result = DB_query($SQL);
 		}

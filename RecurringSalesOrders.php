@@ -38,7 +38,7 @@ if (isset($_GET['NewRecurringOrder'])){
 
 		/*Need to read in the existing recurring order template */
 
-		$_SESSION['Items'.$identifier] = new cart;
+		$_SESSION['Items'.$identifier] = new Cart;
 
 		/*read in all the guff from the selected order into the Items cart  */
 
