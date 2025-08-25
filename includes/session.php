@@ -251,7 +251,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 
 	unset($rc);
-	
 
 	// KL RICARD Check if the user is allowed to access the page
 	if (KLwebERPScriptCalledFromTEST()){
