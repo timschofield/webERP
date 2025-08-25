@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 $DataSaved = '';
 
 if (isset($_POST['test'])) {

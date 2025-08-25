@@ -1,7 +1,9 @@
 <?php
 
-include('includes/SQL_CommonFunctions.php');
 include('includes/session.php');
+
+include('includes/SQL_CommonFunctions.php');
+
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;
@@ -52,8 +54,8 @@ if (!isset($_POST['Date'])){
 	 include('includes/footer.php');
 	 exit();
 } else {
-
-	include('includes/ConnectDB.php');
+	// gg: ConnectDB.php is already included by session.php...
+	//include('includes/ConnectDB.php');
 }
 
 $SQL= "SELECT type,
