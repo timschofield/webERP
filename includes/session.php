@@ -56,6 +56,7 @@ if (isset($dbuser)) { //this gets past an upgrade issue where old versions used 
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;
+	unset($dbuser, $dbpassword, $dbType);
 }
 
 // another upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
@@ -128,11 +129,13 @@ if (isset($_SESSION['DatabaseName'])) {
 }
 
 include($PathPrefix . 'includes/LanguageSetup.php');
+
 $FirstLogin = False;
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
-		//retrieve the sql data;
+		// Remove from the db the user favorites which are not in the session
+		/// @todo this could be done in a single query using WHERE NOT IN ...
 		$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 		$ErrMsg = __('Failed to retrieve favorites');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -152,12 +155,12 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 } elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
 	if (!isset($_SESSION['DatabaseName'])) {
-
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 	}
 	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	include($PathPrefix . 'includes/GetConfig.php');
+
 } else {
 	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
 
@@ -177,7 +180,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
 	$Theme = KLThemeSelection();
 	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
-	
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 			setcookie('Login', $_SESSION['DatabaseName']);
@@ -217,9 +219,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 							WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
-				unset($Result);
+				unset($CheckSQL, $CheckResult, $Result, $SQL);
 			}
-		break;
+			break;
 
 		case UL_SHOWLOGIN:
 			include($PathPrefix . 'includes/Login.php');
@@ -248,6 +250,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit();
 	}
 
+	unset($rc);
+	
+
 	// KL RICARD Check if the user is allowed to access the page
 	if (KLwebERPScriptCalledFromTEST()){
 		/* If script is from TEST weberp or from localhost */
@@ -257,7 +262,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(__('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit();
 		}
 	}else{
 		/* The script is not from TEST*/
@@ -380,10 +384,10 @@ function HighestFileName($PathPrefix) {
 	return $LastFile ? basename($LastFile, ".php") : '';
 }
 
-function quote_smart($Value) {
+/*function quote_smart($Value) {
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
 	}
 	return $Value;
-}
+}*/

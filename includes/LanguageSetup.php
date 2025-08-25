@@ -74,6 +74,8 @@ if (!function_exists('gettext')) {
 		/* NB: LC_MESSAGES is always defined now, because of polyfill-gettext */
 		$LocaleSetOk = T::setlocale(LC_MESSAGES, $_SESSION['Language']);
 	}
+	// avoid polluting the global namespace
+	unset($LocaleSetOk);
 	// number formatting localization is not carried out using php functions, but using $DecimalPoint and $ThousandsSeparator
 	setlocale(LC_NUMERIC, 'C', 'en_GB.utf8', 'en_GB', 'en_US', 'english-us');
 	// Turkish seems to be a special case
