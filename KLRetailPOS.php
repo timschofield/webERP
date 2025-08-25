@@ -106,7 +106,7 @@ if (!isset($_SESSION['Items' . $identifier])) {
 
 	$_SESSION['ExistingOrder' . $identifier] = 0;
 
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 	$_SESSION['Items' . $identifier]->DeliverTo = '';
 	$_SESSION['Items' . $identifier]->ShipVia = 1; // Hand Carried
 	/* The following variables have been set in session.php,
@@ -139,7 +139,7 @@ if (isset($_POST['CancelOrder'])) {
 	unset($_SESSION['Items' . $identifier]->LineItems);
 	$_SESSION['Items' . $identifier]->ItemsOrdered = 0;
 	unset($_SESSION['Items' . $identifier]);
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	echo '<br /><br />';
 	prnMsg(__('This sale has been cancelled as requested'), 'success');
