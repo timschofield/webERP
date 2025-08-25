@@ -2,14 +2,16 @@
 
 // Allows sales to be entered against a cash sale customer account defined in the users location record.
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 
 include('includes/session.php');
+
 $Title = __('Counter Sales');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderCounterSales';
-
 include('includes/header.php');
+
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

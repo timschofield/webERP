@@ -47,4 +47,4 @@ echo "Cleaning up and dumping the database..."
 
 echo "Creating the final tarball..."
 
-"$BASE_DIR/build/make_tarball.sh"
+"$BASE_DIR/build/create_tarball.sh"

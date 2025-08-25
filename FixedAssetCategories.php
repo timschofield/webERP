@@ -3,10 +3,8 @@
 include('includes/session.php');
 
 $Title = __('Fixed Asset Category Maintenance');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetCategories';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">

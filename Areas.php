@@ -13,9 +13,6 @@ if (isset($_GET['SelectedArea'])){
 	$SelectedArea = mb_strtoupper($_POST['SelectedArea']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 
 if (isset($_POST['submit'])) {

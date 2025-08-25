@@ -3,6 +3,7 @@
 include('includes/session.php');
 
 use Dompdf\Dompdf;
+
 $Title = __('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = '';

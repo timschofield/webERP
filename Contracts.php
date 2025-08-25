@@ -1,7 +1,10 @@
 <?php
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineContractClass.php');
+
 include('includes/session.php');
+
 if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);}
 
 if (isset($_GET['ModifyContractNo'])) {
@@ -21,10 +24,11 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 		$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 	}
 }
+
 $ViewTopic = 'Contracts';
 $BookMark = 'CreateContract';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then

@@ -3,10 +3,8 @@
 include('includes/session.php');
 
 $Title = __('GL Codes Inquiry');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">

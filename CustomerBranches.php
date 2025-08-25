@@ -2,10 +2,12 @@
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.php');
+
 $Title = __('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 include('includes/CountriesArray.php');
 
 if (isset($_GET['DebtorNo'])) {

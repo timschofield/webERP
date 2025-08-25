@@ -2,9 +2,11 @@
 
 // This script allows credits and refunds from the default Counter Sale account for an inventory location.
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 
 include('includes/session.php');
+
 $Title = __('Counter Returns');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'CounterReturns';

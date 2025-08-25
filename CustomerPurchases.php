@@ -1,10 +1,12 @@
 <?php
+
 /* This script is to view the items purchased by a customer. */
 
 include('includes/session.php');
+
 $Title = __('Customer Purchases');// Screen identificator.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
-/* This help needs to be writing...
+/* This help needs to be written...
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.php');
 

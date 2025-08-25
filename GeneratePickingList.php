@@ -1,13 +1,16 @@
 <?php
-// GeneratePickingList.php
+
 // Generate a picking list.
 
 include('includes/session.php');
-if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
+
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
 $BookMark = 'GeneratePickingList';
+
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
 
 /* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {

@@ -1,15 +1,16 @@
 <?php
-// BankMatching.php
+
 // Allows payments and receipts to be matched off against bank statements.
 
 include('includes/session.php');
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
+
 $Title = __('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
-
 include('includes/header.php');
+
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 
 if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 		OR (isset($_POST['Type']) AND $_POST['Type']=='Receipts')) {

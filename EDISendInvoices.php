@@ -1,9 +1,11 @@
 <?php
 
 include('includes/session.php');
+
 $ViewTopic = 'EDI';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php'); //need for EDITransNo
 
 /*Get the Customers who are enabled for EDI invoicing */

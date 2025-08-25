@@ -3,8 +3,10 @@
 /*Variables required to configure this script must be set in config.php */
 
 include('includes/session.php');
+
 $Title=__('FTP order to Radio Beacon');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">

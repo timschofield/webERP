@@ -1,14 +1,17 @@
 <?php
+
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
 - Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
-customers. It needs to take shipment into account as well (currently it doesn't.
+  customers. It needs to take shipment into account as well (currently it doesn't.
 ***************************************************************************************/
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineReceiptClass.php');
+
 include('includes/session.php');
 
 if (isset($_POST['DateBanked'])) {
@@ -28,6 +31,7 @@ if ($_GET['Type']=='GL') {
 }
 
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 

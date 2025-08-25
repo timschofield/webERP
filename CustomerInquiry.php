@@ -1,12 +1,15 @@
 <?php
+
 /* Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes. */
 
 include('includes/session.php');
-if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
+
 $Title = __('Customer Inquiry');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'CustomerInquiry';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
 // always figure out the SQL required from the inputs available
 

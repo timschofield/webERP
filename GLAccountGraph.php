@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GLAccountGraph.php
  * By Paul Becker
@@ -38,13 +39,13 @@
  */
 
 include('includes/session.php');
-include('includes/phplot/phplot.php');
+
 $Title = __('GL Account Graph');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
+include('includes/header.php');
 
 include('includes/GLFunctions.php');
-include('includes/header.php');
 
 $NewReport = '';
 $SelectedAccount = '';

@@ -1,5 +1,5 @@
 <?php
-/*	GLStatements.php
+/*
 	Shows a set of financial statements.
 	This program is under the GNU General Public License, last version. 2016-10-08.
 	This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
@@ -28,10 +28,10 @@ Parameters:
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
+
 $Title = __('Financial Statements');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLStatements';
-
 include('includes/header.php');
 
 // Merges gets into posts:

@@ -7,7 +7,7 @@
  * 
  ****************************************************************************************/
 
-/* AnalysisHorizontalIncome.php
+/*
 Shows the horizontal analysis of the statement of comprehensive income.
 
 Parameters:

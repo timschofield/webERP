@@ -3,10 +3,8 @@
 include('includes/session.php');
 
 $Title = __('Factor Company Maintenance');
-
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (isset($_GET['FactorID'])){

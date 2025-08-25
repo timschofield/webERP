@@ -1,4 +1,5 @@
 <?php
+
 $Sections = array();
 $SQL = 'SELECT sectionid, sectionname FROM accountsection ORDER by sectionid';
 $SectionResult = DB_query($SQL);

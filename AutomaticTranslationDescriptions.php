@@ -2,12 +2,13 @@
 /* $Id: AutomaticTranslationDescriptions.php 7037 2014-12-22 14:45:20Z tehonu $ */
 
 include('includes/session.php');
+
 $Title = __('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
 include('includes/header.php');
 
-if (!function_exists("curl_init")){
+if (!function_exists("curl_init")) {
 	prnMsg("This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available","error");
 	include('includes/footer.php');
 	exit();

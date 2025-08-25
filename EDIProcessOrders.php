@@ -5,8 +5,8 @@ include('includes/session.php');
 $Title = __('Process EDI Orders');
 $ViewTopic = 'EDI';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php'); // need for EDITransNo
 include('includes/DefineCartClass.php');
 require_once('includes/MiscFunctions.php');
