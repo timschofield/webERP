@@ -88,6 +88,6 @@ $dompdf->setPaper($_SESSION['PageSize'], 'portrait');
 $dompdf->render();
 
 // Output the generated PDF to Browser
-$dompdf->stream($_SESSION['DatabaseName'] . '_InventoryPlanning_' . date('Y-m-d') . '.pdf', array(
+$dompdf->stream($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf', array(
 	"Attachment" => false
 ));

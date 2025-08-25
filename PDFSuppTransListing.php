@@ -153,12 +153,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_InventoryPlanning_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+		$dompdf->stream($_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	}
 	else {
 		$Title = __('Inventory Planning Report');
 		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Supplier Transaction Listing') . '" alt="" />' . ' ' . __('Supplier Transaction Listing') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
