@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$BankActName = $MyRow['bankaccountname'];
 	$BankActNumber = $MyRow['bankaccountnumber'];
 	$BankingReference = $MyRow['ref'];
-    $BankCurrDecimalPlaces = $MyRow['currdecimalplaces'];
+	$BankCurrDecimalPlaces = $MyRow['currdecimalplaces'];
 
 	$SQL = "SELECT debtorsmaster.name,
 			ovamount,
@@ -109,7 +109,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					</thead>
 					<tbody>';
 
-	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
+	$TotalBanked = 0;
 
 	while ($MyRow=DB_fetch_array($CustRecs)) {
 
@@ -204,7 +204,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$Result = DB_query($SQL);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<legend>', __('Report Criteria'), '</legend>
 		<field>
