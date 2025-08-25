@@ -1,7 +1,9 @@
 <?php
 include('includes/session.php');
+
 $Title = __('KL Sales Hourly Report');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');

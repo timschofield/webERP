@@ -1,11 +1,13 @@
 <?php
 
 include('includes/session.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
 
 $Title=__('Update of PPH21 Deduction');
 include('includes/header.php');
+
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 

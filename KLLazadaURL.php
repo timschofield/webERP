@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 
+$Title = __('Import Excel with Lazada URL information');
+include('includes/header.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -16,9 +18,6 @@ include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = __('Import Excel with Lazada URL information');
-
-include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>

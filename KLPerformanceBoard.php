@@ -1,7 +1,21 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('KL General Performance Board');
+include('includes/header.php');
+
+include('includes/GLFunctions.php');
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
+include('includes/KLPerformanceBoardFunctions.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLPrices.php');
+include('includes/KLUIGeneralFunctions.php');
+include('includes/KLGLFunctions.php');
+
+$begintime = time_start();
+$NumberOfTestExecuted = 0;
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = false;
@@ -24,19 +38,6 @@ if (!isset($_GET['Section'])){
 		$ProcessSection03 = true;
 	}
 }
-
-include('includes/header.php');
-include('includes/GLFunctions.php');
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLPerformanceBoardFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLUIGeneralFunctions.php');
-include('includes/KLGLFunctions.php');
-
-$begintime = time_start();
-$NumberOfTestExecuted = 0;
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 $yesterday_year = date('Y', strtotime("-1 days"));

@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Change To Discount');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');

@@ -1,6 +1,9 @@
 <?php
 
 include('includes/session.php');
+
+$Title = __('Print PTADU Consignment Invoices');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -8,8 +11,6 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
 use Dompdf\Dompdf;
-
-$Title = __('Print PTADU Consignment Invoices');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {

@@ -6,10 +6,10 @@ KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts
 include('includes/session.php');
 
 $Title = __('KL SPG User Maintenance');
-
 $ViewTopic= 'GettingStarted';
 $BookMark = 'UserMaintenance';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -19,7 +19,6 @@ include('includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
-
 	
 // HARDCODED FOR KL SPG
 $ModulesAllowed = "1,0,0,0,1,0,0,1,0,0,0,0,";

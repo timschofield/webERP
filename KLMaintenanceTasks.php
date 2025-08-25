@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Open Location Maintenance Tasks');
 include('includes/header.php');
+
 include('includes/KLGeneralFunctions.php');
 
 if (isset($_GET['SelectedIndex'])){

@@ -1,7 +1,5 @@
 <?php
 
-
-
 include('includes/session.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;

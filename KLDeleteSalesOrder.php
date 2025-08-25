@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 $Title = __('KL Delete Sales Order');
+
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/OCOpenCartGeneralFunctions.php');

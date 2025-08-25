@@ -20,6 +20,9 @@ UpdateArchiveTablePeriod - Updates the archived period for a specific table in t
 **************************************************************************************************************/
 
 include('includes/session.php');
+
+$Title = __('KL Archive Data from Production DB into Archive DB');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -27,7 +30,6 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/ArchiveConnectDB.php');
 
-$Title = __('KL Archive Data from Production DB into Archive DB');
 
 if (!isset($_POST['ArchiveGltransPeriod'])) {
 	$_POST['ArchiveGltransPeriod'] = -13;

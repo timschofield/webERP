@@ -1,6 +1,8 @@
 <?php
+
 include('includes/session.php');
 $Title = __('List of Items Sold in Shop');
+
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');

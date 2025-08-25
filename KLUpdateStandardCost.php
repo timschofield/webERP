@@ -1,9 +1,11 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+
 $Title = __('KL Update Standard Cost for an item');
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLBoards.php');
 
 //Get Out if we have no StockId or NewCost

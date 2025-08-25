@@ -38,11 +38,12 @@ v 1.00 2011-07-25: Kantor starts using it.
 *********************************************************************/
 
 include('includes/DefineCartClass.php');
+
 include('includes/session.php');
 
 $Title = __('POS ' . $_SESSION['locationname']);
-
 include('includes/header.php');
+
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetSalesTransGLCodes.php');

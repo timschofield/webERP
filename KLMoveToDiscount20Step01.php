@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Move Item To 20% Discount -> Step 01');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');

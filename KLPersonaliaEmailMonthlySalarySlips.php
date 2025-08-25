@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
+
+$Title = __('Email Salary Slips To Employees');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-
-$Title = __('Email Salary Slips To Employees');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);

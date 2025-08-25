@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
+
 $NumDays = 30;
 $Title = __('Items Returned by Customers for the last ') . $NumDays . ' days';
 include('includes/header.php');
+
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-
 
 if (isset($_POST['SelectedReturnedItemsId'])) {
 	$SelectedReturnedItemsId = mb_strtoupper($_POST['SelectedReturnedItemsId']);

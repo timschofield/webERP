@@ -7,6 +7,7 @@
  ******************************************************************************************************/
 
 include('includes/session.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');

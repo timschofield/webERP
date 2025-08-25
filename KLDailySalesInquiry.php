@@ -11,8 +11,10 @@
  ************************************************************************************************************************ */
 
 include('includes/session.php');
+
 $Title = __('KL Daily Sales Inquiry');
 include('includes/header.php');
+
 include_once('includes/DateFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');

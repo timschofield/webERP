@@ -4,6 +4,7 @@
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.php');
+
 $Title = __('KL Sales Inquiry');
 include('includes/header.php');
 

@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('KL Start Process Change Retail Price');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');

@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('SPG End Of Shift Report');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');

@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Inventory Distribution by Type');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');

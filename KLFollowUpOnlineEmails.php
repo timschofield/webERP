@@ -1,9 +1,11 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+
 $Title = __('KL Follow Up Email System');
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){

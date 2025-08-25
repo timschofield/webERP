@@ -4,13 +4,13 @@
 KL RICARD Clean up of StockLocTransfer so SPG can create transfers from their shop to KANTO
 ***************************************************************************************/
 
-/* Inventory Transfer - Bulk Dispatch */
-
 include('includes/session.php');
+
 $Title = __('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

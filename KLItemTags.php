@@ -1,11 +1,12 @@
 <?php
-/* $Id: ItemTags.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
-include('includes/UIGeneralFunctions.php');
-include('includes/KUIGeneralFunctions.php');
+
 $Title = __('Item Tags') . ' / ' . __('Maintenance');
 include('includes/header.php');
+
+include('includes/UIGeneralFunctions.php');
+include('includes/KUIGeneralFunctions.php');
 
 if (isset($_POST['SelectedTag'])){
 	$SelectedTag = mb_strtoupper($_POST['SelectedTag']);

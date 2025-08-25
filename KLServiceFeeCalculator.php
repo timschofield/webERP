@@ -1,10 +1,12 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Service Fee Calculator');
 $ViewTopic= "Inventory";
 $BookMark = "Service Fee";
 include('includes/header.php');
+
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLDefines.php');

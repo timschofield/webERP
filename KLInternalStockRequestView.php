@@ -10,8 +10,8 @@ include('includes/session.php');
 $Title = __('View Unfulfilled Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'ViewRequest';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Contract') . '" alt="" />' . __('View Unfulfilled Stock Requests') . '</p>';

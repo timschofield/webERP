@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('KL SPG Control Board');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLRetailCustomer.php');

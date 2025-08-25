@@ -1,13 +1,14 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Send email to team to prepare a Packaging Transfer');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
- 
 if (!isset($_GET['From'])){
 	prnMsg( __('This page must be given the gudang location code.'), 'error');
 	include('includes/footer.php');

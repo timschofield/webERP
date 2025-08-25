@@ -40,7 +40,6 @@ if (isset($_POST['submit'])) {
 	display($RootPath, $Theme);
 }
 
-
 /**
  * Processes the form submission, generates the spreadsheet, and sends it to the browser.
  *

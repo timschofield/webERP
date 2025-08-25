@@ -1,9 +1,11 @@
 <?php
 
 include('includes/session.php');
-include('includes/UIGeneralFunctions.php');
+
 $Title = __('Reasons for Item Return Maintenance');
 include('includes/header.php');
+
+include('includes/UIGeneralFunctions.php');
 
 if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_POST['SelectedType']);

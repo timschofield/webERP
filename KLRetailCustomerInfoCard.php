@@ -1,14 +1,15 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Customer Info Card Maintenance');
+include('includes/header.php');
 
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
-include('includes/header.php');
 
 if (isset($_GET['SelectedOrder'])){
 	$SelectedOrder =mb_strtoupper($_GET['SelectedOrder']);

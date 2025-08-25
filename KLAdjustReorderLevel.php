@@ -3,8 +3,10 @@
 define("NUMBER_OF_TESTS", 7); 
 
 include('includes/session.php');
+
 $Title = __('KL Reorder Level Adjustments');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');

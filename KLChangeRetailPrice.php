@@ -1,14 +1,15 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Set Retail Price');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
-
  
 if (!isset($_GET['Item']) or !isset($_GET['NewPrice']) or !isset($_GET['Action'])){
 	echo '<br />';

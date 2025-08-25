@@ -1,12 +1,13 @@
 <?php
 
 include('includes/session.php');
+
+$Title = __('Export PDF Salary Slips');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-
-$Title = __('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
 	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);

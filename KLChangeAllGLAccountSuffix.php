@@ -1,20 +1,19 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('UTILITY PAGE Change ALL GL Account Code SUFFIX');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
 $BookMark = ''; // Anchor's id in the manual's html document.
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+include('includes/KLGeneralFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
 	__('Change ALL GL Account Code SUFFIX'), '" /> ',// Icon title.
 	__('Change ALL GL Account Code SUFFIX'), '</p>';// Page title.
-
-include('includes/SQL_CommonFunctions.php');
-
-// RICARD KL: Use the function ChangeGLAcoountCode
-include('includes/KLGeneralFunctions.php');
-// RICARD KL END: Use the function ChangeGLAcoountCode
 
 if(isset($_POST['ProcessGLAccountCode'])) {
 	$InputError =0;
