@@ -94,18 +94,18 @@ while ($Counter<=$LineCount) {
 	}
 	$pdf->SetTextColor(0,0,0);
 	if((mb_strlen($Narrative,'GB2312')+ substr_count($Narrative," "))>40){
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x+3,$Page_Height-$YPos-5,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $Narrative);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x+3,$Page_Height-$YPos+3,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $AccountCode);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x+3,$Page_Height-$YPos+3,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Description);
+	$pdf->addTextWrap($FormDesign->Data->Column1->x+3,$Page_Height-$YPos-5,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $Narrative);
+	$pdf->addTextWrap($FormDesign->Data->Column2->x+3,$Page_Height-$YPos+3,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $AccountCode);
+	$pdf->addTextWrap($FormDesign->Data->Column3->x+3,$Page_Height-$YPos+3,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Description);
 	}else{
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x+3,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $Narrative);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x+3,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $AccountCode);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column3->x+3,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Description);
+	$pdf->addTextWrap($FormDesign->Data->Column1->x+3,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $Narrative);
+	$pdf->addTextWrap($FormDesign->Data->Column2->x+3,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $AccountCode);
+	$pdf->addTextWrap($FormDesign->Data->Column3->x+3,$Page_Height-$YPos,$FormDesign->Data->Column3->Length,$FormDesign->Data->Column3->FontSize, $Description);
 	}
 	$pdf->SetFont('helvetica', '', 10);
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x+3,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$DebitAmount , 'right');
+	$pdf->addTextWrap($FormDesign->Data->Column4->x+3,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize,$DebitAmount , 'right');
 
-	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x+3,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $CreditAmount, 'right');
+	$pdf->addTextWrap($FormDesign->Data->Column5->x+3,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $CreditAmount, 'right');
 
 
 	$YPos += $LineHeight;
@@ -135,8 +135,8 @@ $pdf->SetTextColor(0,0,255);
 $pdf->addText($FormDesign->Headings->Column7->x+3,$Page_Height-$FormDesign->Headings->Column7->y,$FormDesign->Headings->Column7->FontSize, __('合 计 金 额'));//$FormDesign->Headings->Column7->name
 $pdf->SetTextColor(0,0,0);
 $pdf->SetFont('helvetica', '', 10);
-$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column8->x+3,$Page_Height - $FormDesign->Headings->Column8->y, $FormDesign->Headings->Column8->Length,$FormDesign->Headings->Column8->FontSize, $DebitTotal1, 'right');
-$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column9->x+3,$Page_Height - $FormDesign->Headings->Column9->y, $FormDesign->Headings->Column9->Length,$FormDesign->Headings->Column9->FontSize, $CreditTotal1, 'right');
+$pdf->addTextWrap($FormDesign->Headings->Column8->x+3,$Page_Height - $FormDesign->Headings->Column8->y, $FormDesign->Headings->Column8->Length,$FormDesign->Headings->Column8->FontSize, $DebitTotal1, 'right');
+$pdf->addTextWrap($FormDesign->Headings->Column9->x+3,$Page_Height - $FormDesign->Headings->Column9->y, $FormDesign->Headings->Column9->Length,$FormDesign->Headings->Column9->FontSize, $CreditTotal1, 'right');
 $pdf->SetFont('javiergb', '', 10);
 
 if ($LineCount == 0) {   //UldisN

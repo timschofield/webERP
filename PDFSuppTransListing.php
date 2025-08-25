@@ -99,12 +99,12 @@ include('includes/PDFSuppTransListingPageHeader.php');
 
 while ($MyRow=DB_fetch_array($Result)){
     $CurrDecimalPlaces = $MyRow['currdecimalplaces'];
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$MyRow['suppname'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$MyRow['suppreference'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount'],$CurrDecimalPlaces), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_number_format($MyRow['ovgst'],$CurrDecimalPlaces), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount']+$MyRow['ovgst'],$CurrDecimalPlaces), 'right');
+	$pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$MyRow['suppname'], 'left');
+	$pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$MyRow['suppreference'], 'left');
+	$pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
+	$pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount'],$CurrDecimalPlaces), 'right');
+	$pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_number_format($MyRow['ovgst'],$CurrDecimalPlaces), 'right');
+	$pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount']+$MyRow['ovgst'],$CurrDecimalPlaces), 'right');
 
 	  $YPos -= ($LineHeight);
 	  $TotalCheques = $TotalCheques - $MyRow['ovamount'];
@@ -118,8 +118,8 @@ while ($MyRow=DB_fetch_array($Result)){
 
 
 $YPos-=$LineHeight;
-$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format(-$TotalCheques,$CurrDecimalPlaces), 'right');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,__('Total') . '  ' . __('Transactions'), 'left');
+$pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format(-$TotalCheques,$CurrDecimalPlaces), 'right');
+$pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,__('Total') . '  ' . __('Transactions'), 'left');
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_SuppTransListing_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);

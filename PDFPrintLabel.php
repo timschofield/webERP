@@ -197,7 +197,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$Value = $_POST['Barcode' . $i];
 					}
 					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
-						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
+						$pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
 					}elseif ($Field['FieldValue'] == 'logo'){
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
@@ -215,7 +215,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					} else {
-						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
+						$pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
 					}
 				} // end loop through label fields
 				$LabelsPrinted++;

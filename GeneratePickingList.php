@@ -401,12 +401,12 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			}
 			++$ListCount;
 
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column1->x, $Page_Height - $YPos, $FormDesign->Headings->Column1->Length, $FormDesign->Headings->Column1->FontSize, $MyRow2['stkcode'], 'left');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['description']);
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $MyRow2['bin'], 'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $DisplayQtySupplied, 'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayQtyAvail, 'right');
-			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $DisplayPicked, 'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column1->x, $Page_Height - $YPos, $FormDesign->Headings->Column1->Length, $FormDesign->Headings->Column1->FontSize, $MyRow2['stkcode'], 'left');
+			$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['description']);
+			$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $MyRow2['bin'], 'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $DisplayQtySupplied, 'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayQtyAvail, 'right');
+			$pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $DisplayPicked, 'right');
 
 			if ($Page_Height - $YPos - $LineHeight <= 60) {
 				/* We reached the end of the page so finish off the page and start a new */
@@ -419,7 +419,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			}
 
 			if ($MyRow2['cust_part'] > '') {
-				$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
+				$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
 
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
@@ -433,7 +433,7 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			}
 
 			if ($MyRow2['narrative'] > '') {
-				$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['narrative']);
+				$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['narrative']);
 				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
@@ -487,10 +487,10 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 						$MyBundles['qtypickedthisorder'] = '____________';
 					}
 
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $BundleLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $MyBundles['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $MyBundles['quantity'] - $MyBundles['qtypickedtotal'], 'right');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $MyBundles['qtypickedthisorder'], 'right');
+					$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $BundleLabel, 'right');
+					$pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $MyBundles['serialno'], 'left');
+					$pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $MyBundles['quantity'] - $MyBundles['qtypickedtotal'], 'right');
+					$pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $MyBundles['qtypickedthisorder'], 'right');
 
 					if ($Page_Height - $YPos - $LineHeight <= 60) {
 						/* We reached the end of the page so finish off the page and start a new */
@@ -510,8 +510,8 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 
 		$YPos = $Page_Height - 45;
 		$pdf->setFont('', 'B');
-		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, __('Signed for') . ': ______________________________');
-		$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, __('Date') . ' : __________');
+		$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, __('Signed for') . ': ______________________________');
+		$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, __('Date') . ' : __________');
 		$pdf->setFont('', '');
 	} /*end if there are order details to show on the order*/
 } /*end for loop to print the whole lot twice */

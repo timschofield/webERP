@@ -233,7 +233,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					</tr>';
 
 			if (isset($PackingSlipPrinted)) {
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
+				$pdf->addTextWrap($Left_Margin+400,$YPos,100,$FontSize,$PackingSlipPrinted, 'left');
 			}
 
 		}

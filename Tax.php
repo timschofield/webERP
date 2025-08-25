@@ -55,7 +55,7 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 			$pdf->addText(82, $YPos, $FontSize, __($DebtorTransRow['typename']));
 			$pdf->addTextWrap(140, $YPos - $FontSize, 40, $FontSize, $DebtorTransRow['transno'], 'right');
 			$pdf->addText(180, $YPos, $FontSize, $DebtorTransRow['name']);
-			$LeftOvers = $pdf->addTextWrap(380, $YPos - $FontSize, 60, $FontSize, $DebtorTransRow['branchcode'], 'left'); // RChacon: This data or debtor.reference ?
+			$pdf->addTextWrap(380, $YPos - $FontSize, 60, $FontSize, $DebtorTransRow['branchcode'], 'left'); // RChacon: This data or debtor.reference ?
 			$pdf->addTextWrap(450, $YPos - $FontSize, 60, $FontSize, locale_number_format($DebtorTransRow['netamount'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 			$pdf->addTextWrap($Page_Width - $Right_Margin - 60, $YPos - $FontSize, 60, $FontSize, locale_number_format($DebtorTransRow['tax'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 			$YPos -= $FontSize; // End-of-line line-feed.
@@ -301,9 +301,9 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	$YPos -= $FontSize * 4; // Jumps additional lines.
 	$pdf->addText($Left_Margin, $YPos, $FontSize, __('Adjustments for Tax paid to Customs, FBT, entertainments etc must also be entered'));
 	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos - $FontSize, $Page_Width - $Left_Margin - $Right_Margin, $FontSize, __('This information excludes tax on journal entries/payments/receipts. All tax should be entered through AR/AP.'));
+	$pdf->addTextWrap($Left_Margin, $YPos - $FontSize, $Page_Width - $Left_Margin - $Right_Margin, $FontSize, __('This information excludes tax on journal entries/payments/receipts. All tax should be entered through AR/AP.'));
 	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos - $FontSize, $Page_Width - $Left_Margin - $Right_Margin, $FontSize, $LeftOvers);
+	$pdf->addTextWrap($Left_Margin, $YPos - $FontSize, $Page_Width - $Left_Margin - $Right_Margin, $FontSize, $LeftOvers);
 	if ($SalesCount + $PurchasesCount + $PettyCashCount == 0) {
 		$Title = __('Taxation Reporting Error');
 		include('includes/header.php');
