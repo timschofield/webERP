@@ -7,7 +7,7 @@ include('api/glsections.php');
 
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 //$webERPUser = $_SESSION['UserID'];

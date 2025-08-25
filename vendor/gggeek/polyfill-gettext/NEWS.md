@@ -1,3 +1,7 @@
+### Release 2.0.0-beta4 unreleased
+
+* fixed usage on FreeBSD, Windows and other OS where the value of the locale constants is different from Linux
+
 ### Release 2.0.0-beta3 2025-8-18
 
 * fixed warning due to usage of deprecated `${` syntax
