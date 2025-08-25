@@ -1,6 +1,6 @@
 <?php
 
-// MRPReport.php - Shows supply and demand for a part as determined by MRP
+// Shows supply and demand for a part as determined by MRP
 
 include('includes/session.php');
 
