@@ -1,12 +1,14 @@
 <?php
-// MRPPlannedPurchaseOrders.php - Report of purchase parts that MRP has determined should have
+
+// Report of purchase parts that MRP has determined should have
 // purchase orders created for them
 
 include('includes/session.php');
+
 if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {
-	$Title=__('MRP error');
+	$Title = __('MRP error');
 	include('includes/header.php');
 	echo '<br />';
 	prnMsg( __('The MRP calculation must be run before you can run this report') . '<br />' .

@@ -1,8 +1,10 @@
 <?php
-// MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
+
+// Report of manufactured parts that MRP has determined should have
 // work orders created for them
 
 include('includes/session.php');
+
 if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {

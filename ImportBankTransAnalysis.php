@@ -1,19 +1,18 @@
 <?php
 
-/*The ImportBankTransClass contains the structure ofinformation about the transactions
+/* The ImportBankTransClass contains the structure of information about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of
 GLEntries objects to hold the GL analysis for each transaction */
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineImportBankTransClass.php');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
 
 $Title = __('Imported Bank Transaction General Ledger Analysis');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (!isset($_SESSION['Trans'])){
@@ -21,8 +20,8 @@ if (!isset($_SESSION['Trans'])){
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Import Bank Transactions') . '</a>';
 	include('includes/footer.php');
 	exit();
-	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
-	 * */
+	/*It all stops here if there ain't no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
+	 */
 }
 
 if (isset($_GET['TransID'])){
