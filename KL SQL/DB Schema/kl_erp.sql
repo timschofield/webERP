@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2025 at 02:55 PM
+-- Generation Time: Aug 26, 2025 at 03:33 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -4769,7 +4769,8 @@ ALTER TABLE `loctransfers`
   ADD KEY `idx_loctransfers_stockid` (`stockid`),
   ADD KEY `idx_loctransfers_shiploc_stockid` (`shiploc`,`stockid`),
   ADD KEY `idx_loctransfers_recloc_stockid` (`recloc`,`stockid`),
-  ADD KEY `idx_loctransfers_pending_stockid_shiploc` (`pendingqty`,`stockid`,`shiploc`);
+  ADD KEY `idx_loctransfers_pending_stockid_shiploc` (`pendingqty`,`stockid`,`shiploc`),
+  ADD KEY `idx_loctransfers_recdate_reference` (`recdate`,`reference`);
 
 --
 -- Indexes for table `mailgroupdetails`
