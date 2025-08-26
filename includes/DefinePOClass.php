@@ -3,7 +3,7 @@
 */
 
 
-Class PurchOrder {
+class PurchOrder {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $CurrCode;
@@ -208,35 +208,35 @@ Class PurchOrder {
 
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
-	Var $LineNo;
-	Var $PODetailRec;
-	Var $StockID;
-	Var $ItemDescription;
-	Var $DecimalPlaces;
-	Var $GLCode;
-	Var $GLActName;
-	Var $Quantity;
-	Var $Price;
-	Var $Units;
-	Var $ReqDelDate;
-	Var $QtyInv;
-	Var $QtyReceived;
-	Var $StandardCost;
+	var $LineNo;
+	var $PODetailRec;
+	var $StockID;
+	var $ItemDescription;
+	var $DecimalPlaces;
+	var $GLCode;
+	var $GLActName;
+	var $Quantity;
+	var $Price;
+	var $Units;
+	var $ReqDelDate;
+	var $QtyInv;
+	var $QtyReceived;
+	var $StandardCost;
 	var $ShiptRef;
 	var $Completed;
-	Var $JobRef;
+	var $JobRef;
 	var $ConversionFactor;
 	var $SuppliersUnit;
-	Var $Suppliers_PartNo;
-	Var $LeadTime;
-	Var $ReceiveQty; //this receipt of stock
-	Var $Deleted;
-	Var $Controlled;
-	Var $Serialised;
-	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
-	Var $AssetID;
+	var $Suppliers_PartNo;
+	var $LeadTime;
+	var $ReceiveQty; //this receipt of stock
+	var $Deleted;
+	var $Controlled;
+	var $Serialised;
+	var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
+	var $AssetID;
 	var $SerialItemsValid;
 
 	function __construct (	$LineNo,

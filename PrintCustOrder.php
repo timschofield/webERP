@@ -178,7 +178,7 @@ if (DB_num_rows($Result)>0){
 // Javier: better to not use references
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
 	//	$pdf = & new Cpdf($PageSize);
-	Class Cpdf1 extends Cpdf {
+	class Cpdf1 extends Cpdf {
 
 		Public function Footer() {
 			// Position at 15 mm from bottom

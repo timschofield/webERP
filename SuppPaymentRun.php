@@ -1,8 +1,8 @@
 <?php
 
-Class Allocation {
-	Var $TransID;
-	Var $Amount;
+class Allocation {
+	var $TransID;
+	var $Amount;
 
 	function __construct ($TransID, $Amount){
 		$this->TransID = $TransID;
