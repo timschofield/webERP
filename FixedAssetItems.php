@@ -63,9 +63,6 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
  /* EOR Add Image upload for New Item  - by Ori */
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 

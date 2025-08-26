@@ -1,7 +1,8 @@
 <?php
-/* Definition of the Works Order class to hold all the information for a purchase order and delivery
-*/
 
+/**
+ * Class to hold all the information for a purchase order and delivery
+ */
 class WorkOrder {
 
 	var $OrderNumber;
@@ -133,7 +134,6 @@ class WorkOrder {
 			$this->NumberOfItems = $i;
 		}
 	}
-
 }
 
 class WOItem {
@@ -339,5 +339,4 @@ class WORequirement {
 		}
 		$UpdateRequirements = DB_query($SQL);
 	}
-
 }

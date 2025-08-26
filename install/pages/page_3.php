@@ -26,7 +26,7 @@ if (isset($_POST['test'])) {
 	}
 
 	if (mysqli_connect_error()) {
-		$DBConnectionError = True;
+		$DBConnectionError = true;
 	}
 }
 

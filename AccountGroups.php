@@ -32,11 +32,6 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	return false;
 }// END of function CheckForRecursiveGroupName
 
-// If $Errors is set, then unset it.
-if(isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 if(isset($_POST['MoveGroup'])) {

@@ -1,6 +1,6 @@
 <?php
 
-function ValidBundleRef ($StockID, $LocCode, $BundleRef){
+function ValidBundleRef ($StockID, $LocCode, $BundleRef) {
 	$SQL = "SELECT quantity
 				FROM stockserialitems
 				WHERE stockid='" . $StockID . "'
@@ -14,7 +14,8 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 		return $MyRow[0]; /*The quantity in the bundle */
 	}
 }
-function GetExpiryDate ($StockID, $LocCode, $BundleRef){
+
+function GetExpiryDate ($StockID, $LocCode, $BundleRef) {
 	$SQL = "SELECT expirationdate
 				FROM stockserialitems
 				WHERE stockid = '" . $StockID . "'
@@ -28,15 +29,14 @@ function GetExpiryDate ($StockID, $LocCode, $BundleRef){
 		return ConvertSQLDate($MyRow[0]);
 	}
 }
+
 class SerialItem {
 
 	var $BundleRef;
 	var $BundleQty;
 	var $ExpiryDate;
 
-	//Constructor
-	function __construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01'){
-
+  function __construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01') {
 		$this->BundleRef = $BundleRef;
 		$this->BundleQty = $BundleQty;
 		$this->ExpiryDate = $ExpiryDate;
@@ -45,6 +45,4 @@ class SerialItem {
 	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='1000-01-01'){
 		self::__construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01');
 	}
-
-
-}//class SerialItem
+}

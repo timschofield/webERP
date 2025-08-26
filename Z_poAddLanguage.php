@@ -1,4 +1,5 @@
 <?php
+
 /* Allows a new language po file to be created */
 
 /* Steve Kitchen/Kaill */
@@ -8,18 +9,16 @@
 include('includes/session.php');
 
 /* Was the Cancel button pressed the last time through ? */
-
 if (isset($_POST['cancel'])) {
-
 	header ('Location:' . $RootPath . '/Z_poAdmin.php');
 	exit();
-
 }
 
 $Title = __('New Language');// __('Add a New Language to the System')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poAddLanguage";// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Add a New Language to the System') . '" />' . ' ' .

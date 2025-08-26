@@ -1,11 +1,12 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Clone Item');
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'CloneItem';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
@@ -120,9 +121,7 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		}
 	}
 }
-if (isset($Errors)) {
-	unset($Errors);
-}
+
 $Errors = array();
 $InputError = 0;
 if (isset($_POST['submit'])) {

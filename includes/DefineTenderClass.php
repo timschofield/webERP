@@ -2,7 +2,7 @@
 // DefineTenderClass.php
 // Definition of the tender class to hold all the information for a supplier tender.
 
-Class Tender {
+class Tender {
 
 	var $TenderId;
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -146,12 +146,12 @@ Class Tender {
 			}
 		}
 		DB_Txn_Begin();
-		$Result = DB_query($HeaderSQL, '', '', True);
+		$Result = DB_query($HeaderSQL, '', '', true);
 		foreach ($SuppliersSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		foreach ($ItemsSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		DB_Txn_Commit();
 	}
@@ -221,7 +221,7 @@ Class Tender {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
@@ -233,7 +233,7 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function __construct ($LineNo,
+	function __construct($LineNo,
 							$StockItem,
 							$Qty,
 							$ItemDescr,
@@ -249,7 +249,7 @@ Class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 
 	function LineDetails($LineNo,
@@ -270,14 +270,14 @@ Class LineDetails {
 
 }
 
-Class Supplier {
+class Supplier {
 
 	var $SupplierCode;
 	var $SupplierName;
 	var $EmailAddress;
 	var $Responded;
 
-	function __construct ($SupplierCode,
+	function __construct($SupplierCode,
 						$SupplierName,
 						$EmailAddress) {
 		$this->SupplierCode = $SupplierCode;

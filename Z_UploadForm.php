@@ -5,7 +5,6 @@
 include('includes/session.php');
 
 $Title=__('File Upload');
-
 include('includes/header.php');
 
 echo '<form ENCtype="multipart/form-data" action="Z_UploadResult.php" method="post">';

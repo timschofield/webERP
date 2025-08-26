@@ -1,28 +1,32 @@
 <?php
 
-/* Creates the csv files necessary for Phocas sales analysis and sends to an ftp server*/
+/* Creates the csv files necessary for Phocas sales analysis and sends to an ftp server */
 
-/*Config */
-
-$FTP_Server = 'someftpserver.com';
-$FTP_User = 'someuser';
-$FTP_Password = '';
-
-$AllowAnyone=true;
-$PageSecurity=15;
-$_POST['CompanyNameField']= 'yourdatabase';
+$AllowAnyone = true;
+$PageSecurity = 15;
 
 include('includes/session.php');
+
 $Title = __('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
+/* Config */
+
+$FTP_Server = 'someftpserver.com';
+$FTP_User = 'someuser';
+$FTP_Password = '';
+
+$_POST['CompanyNameField']= 'yourdatabase';
+
+/* End config */
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Export Sales Analysis Files') .'" alt="" /><b>' . $Title. '</b></p>';
 
 echo '<div class="centre">' . __('Making a comma separated values file of the stock items') . '</div>';
 

@@ -1,5 +1,6 @@
 <?php
-/* PurchasesReport.php
+
+/*
 Shows a report of purchases from suppliers for the range of selected dates.
 This program is under the GNU General Public License, last version. 2016-12-18.
 This creative work is under the CC BY-NC-SA, last version. 2016-12-18.
@@ -12,13 +13,14 @@ This script is "mirror-symmetric" to script SalesReport.php.
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
-if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);}
-if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
+
 $Title = __('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
-
 include('includes/header.php');
+
+if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);}
+if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);}
 
 // Merges gets into posts:
 if(isset($_GET['PeriodFrom'])) {

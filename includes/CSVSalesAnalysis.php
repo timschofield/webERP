@@ -9,15 +9,15 @@ $fp = fopen( $_SESSION['reports_dir'] . "/SalesAnalysis.csv", "w");
 while ($MyRow = DB_fetch_row($Result)){
 
 /*First off check that at least one of the columns of data has some none zero amounts */
-	$ThisLineHasOutput=False;   /*assume no output to start with */
+	$ThisLineHasOutput=false;   /*assume no output to start with */
 	$NumberOfFields = DB_num_rows($ColsResult);
 
 	for ($i=3; $i<=$NumberOfFields+7; $i++) {
 		if (abs($MyRow[$i])>0.009){
-			$ThisLineHasOutput = True;
+			$ThisLineHasOutput = true;
 		}
 	}
-	if ($ThisLineHasOutput==True){
+	if ($ThisLineHasOutput==true){
 		$Line='';
 		for ($i=0;$i<=$NumberOfFields+7;$i++){
 			if (isset($MyRow[$i])){

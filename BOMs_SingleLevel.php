@@ -213,10 +213,6 @@ if (isset($_GET['Select'])){
 
 $Msg='';
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 $InputError = 0;
 

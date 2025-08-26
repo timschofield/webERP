@@ -6,6 +6,7 @@ $Title = __('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .

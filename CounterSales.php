@@ -1351,7 +1351,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 			$MyRow = DB_fetch_row($Result);
 			$MBFlag = $MyRow[0];
 			if ($MBFlag=='B' OR $MBFlag=='M') {
-				$Assembly = False;
+				$Assembly = false;
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
@@ -1381,7 +1381,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 			} else if ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
-				$Assembly=True;
+				$Assembly=true;
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
