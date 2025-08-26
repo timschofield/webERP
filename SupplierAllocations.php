@@ -14,20 +14,20 @@
 	allocated
 */
 
-include('includes/session.php');
+include('includes/DefineSuppAllocsClass.php');
 
+include('includes/session.php');
 $Title = __('Supplier Payment') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';
 include('includes/header.php');
 
-include('includes/DefineSuppAllocsClass.php');
-include('includes/SQL_CommonFunctions.php');
-
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/transactions.png" title="', // Icon image.
 	__('Supplier Allocations'), '" /> ', // Icon title.
 	__('Supplier Allocations'), '</p>';// Page title.
+
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 
@@ -62,7 +62,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 			$_POST['Amt' . $AllocCounter] = 0;
 		 }
 
-		if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == True){
+		if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == true){
 			/* $_POST['YetToAlloc...] is a hidden item on the form not locale_number_formatted */
 			$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 

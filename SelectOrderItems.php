@@ -38,7 +38,7 @@ if (isset($_POST['UploadFile'])) {
 		$FileHandle = fopen($TempName, 'r');
 		$Row = 0;
 		$InsertNum = 0;
-		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 			/* Check the stock code exists */
 			++$Row;
 			$SQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $FileRow[0] . "'";

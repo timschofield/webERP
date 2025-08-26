@@ -192,7 +192,7 @@ if (isset($_POST['PrintPDF'])) {
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
-			$Fill = False;
+			$Fill = false;
 
 			if($Template=='simple'){
 				//for simple template

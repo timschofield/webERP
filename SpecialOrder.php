@@ -190,40 +190,40 @@ if (isset($_POST['EnterLine'])){
 		prnMsg( __('The person entering this order must be specified in the initiator field') . ' - ' . __('a blank initiator is not allowed'),'warn');
 	}
 
-	$AllowAdd = True; /*always assume the best */
+	$AllowAdd = true; /*always assume the best */
 
 	/*THEN CHECK FOR THE WORST */
 
 	if (!is_numeric(filter_number_format($_POST['Qty']))){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The quantity of the order item must be numeric'),'warn');
 	}
 
 	if (filter_number_format($_POST['Qty'])<0){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The quantity of the ordered item entered must be a positive amount'),'warn');
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Price']))){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The price entered must be numeric'),'warn');
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Cost']))){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The cost entered must be numeric'),'warn');
 	}
 
 	if (((filter_number_format($_POST['Price'])/$_SESSION['SPL'.$identifier]->CustCurrExRate)-(filter_number_format($_POST['Cost'])/$_SESSION['SPL'.$identifier]->SuppCurrExRate))<0){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The sale is at a lower price than the cost'),'warn');
 	}
 
 	if (!Is_Date($_POST['ReqDelDate'])){
-		$AllowAdd = False;
+		$AllowAdd = false;
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
-	if ($AllowAdd == True){
+	if ($AllowAdd == true){
 
 		$_SESSION['SPL'.$identifier]->add_to_order ($_POST['LineNo'],
 										filter_number_format($_POST['Qty']),
@@ -386,21 +386,21 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$PartCode = "*" . $_SESSION['SPL'.$identifier]->PurchOrderNo . "_" . $SPLLine->LineNo;
 
-			$PartAlreadyExists =True; /*assume the worst */
+			$PartAlreadyExists =true; /*assume the worst */
 			$Counter = 0;
-			while ($PartAlreadyExists==True) {
+			while ($PartAlreadyExists==true) {
 				$SQL = "SELECT COUNT(*) FROM stockmaster WHERE stockid = '" . $PartCode . "'";
 				$PartCountResult = DB_query($SQL);
 				$PartCount = DB_fetch_row($PartCountResult);
 				if ($PartCount[0]!=0){
-					$PartAlreadyExists =True;
+					$PartAlreadyExists =true;
 					if (mb_strlen($PartCode)==20){
 						$PartCode = '*' . mb_strtoupper(mb_substr($_SESSION['SPL'.$identifier]->PurchOrderNo,0,13)) . '_' . $SPLLine->LineNo;
 					}
 					$PartCode = $PartCode . $Counter;
 					$Counter++;
 				} else {
-					$PartAlreadyExists =False;
+					$PartAlreadyExists =false;
 				}
 			}
 

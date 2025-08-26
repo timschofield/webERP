@@ -32,7 +32,7 @@ if (!isset($_SESSION['DBVersion'])) {
 	//include('includes/header.php');
 
 
-	function executeSQL($SQL, $TrapErrors = False) {
+	function executeSQL($SQL, $TrapErrors = false) {
 		global $SQLFile;
 		/* Run an sql statement and return an error code */
 		if (!isset($SQLFile)) {
@@ -150,7 +150,7 @@ if (!isset($_SESSION['DBVersion'])) {
 			}
 		}
 		echo '</table><br />';
-		$ForceConfigReload = True;
+		$ForceConfigReload = true;
 
 		echo '<div class="centre">
 			<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">

@@ -739,7 +739,7 @@ customer record returned by the search - this record is then auto selected */
 
 		/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
-		$NIL_BALANCE = True;
+		$NIL_BALANCE = true;
 
 		$SQL = "SELECT debtorsmaster.name,
 						debtorsmaster.pymtdiscount,
@@ -763,12 +763,12 @@ customer record returned by the search - this record is then auto selected */
 		$CustomerResult = DB_query($SQL, $ErrMsg);
 
 	} else {
-		$NIL_BALANCE = False;
+		$NIL_BALANCE = false;
 	}
 
 	$_SESSION['CustomerRecord' . $identifier] = DB_fetch_array($CustomerResult);
 
-	if ($NIL_BALANCE==True){
+	if ($NIL_BALANCE==true){
 		$_SESSION['CustomerRecord' . $identifier]['balance']=0;
 		$_SESSION['CustomerRecord' . $identifier]['due']=0;
 		$_SESSION['CustomerRecord' . $identifier]['overdue1']=0;

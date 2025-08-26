@@ -201,7 +201,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		     /*Insert the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
-				if ($POLine->Deleted==False) {
+				if ($POLine->Deleted==false) {
 					$SQL = "INSERT INTO purchorderdetails
 									(orderno,
 									itemcode,
@@ -423,7 +423,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The price entered must be numeric'),'error');
 	}
 	if (!Is_Date($_POST['ReqDelDate'])){
-		$AllowUpdate = False;
+		$AllowUpdate = false;
 		prnMsg( __('Cannot Enter this order line') . '</b><br />' . __('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	}
 
@@ -683,7 +683,7 @@ if (isset($_POST['UploadFile'])) {
 		$Row = 0;
 		$InsertNum = 0;
 
-		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 			++$Row;
 			if (filter_number_format($FileRow[1])!=0) { //if the form variable represents a Qty to add to the order
 
@@ -870,7 +870,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 
-		if ($POLine->Deleted==False) {
+		if ($POLine->Deleted==false) {
 			$LineTotal = $POLine->Quantity * $POLine->Price;
 			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
