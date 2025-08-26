@@ -10,6 +10,8 @@ if (isset($_GET['ModifyOrderNumber'])) {
 } else {
 	$Title = __('Purchase Order Entry');
 }
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = 'PurchaseOrdering';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
