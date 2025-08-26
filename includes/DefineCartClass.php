@@ -1,15 +1,12 @@
 <?php
 
-/* Definition of the cart class
-this class can hold all the information for:
-
-i)   a sales order
-ii)  an invoice
-iii) a credit note
-
+/**
+ * This class can hold all the information for:
+ *
+ * i)   a sales order
+ * ii)  an invoice
+ * iii) a credit note
 */
-
-
 Class Cart {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */

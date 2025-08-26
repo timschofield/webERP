@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Sales Types') . ' / ' . __('Price List Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';
