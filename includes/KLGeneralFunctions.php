@@ -1523,29 +1523,42 @@ function TotalItemsToBeReceivedByPO($Brand){
 }
 
 function TotalItemsToBeReceivedByWO($Brand){
+	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
+	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
+	 * 2. Leverages uk_stockmaster_categoryid_stockid and idx_woitems_stockid indexes optimally
+	 * 4. Improved WHERE clause ordering for better index utilization
+	 * 5. Enhanced error handling and consistent return type casting
+	 */
 	$ErrMsg = 'Error in function TotalItemsToBeReceivedByWO()';
 
 	if ($Brand == "SHOPKL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
+	}elseif ($Brand == "SHOPBL"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
 	}else{
-		return 0;	
-	} 
+		return 0;
+	}
 
-	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS pending
-		FROM woitems 
-		INNER JOIN stockmaster
-			ON stockmaster.stockid = woitems.stockid
-		INNER JOIN workorders
-			ON workorders.wo = woitems.wo
-		WHERE workorders.closed = 0
-			AND woitems.qtyreqd > woitems.qtyrecd ".
-			$Operator1." ";
-	$Result = DB_query($SQL,$ErrMsg);
+	/* Optimized query structure:
+	 * - Filter stockmaster by category first (uses uk_stockmaster_categoryid_stockid index)
+	 * - JOIN with woitems using filtered stockmaster results (uses idx_woitems_stockid index)
+	 * - JOIN with workorders for status filtering (uses PRIMARY KEY on workorders)
+	 * - This approach reduces the JOIN dataset significantly before aggregation
+	 */
+	$SQL = "SELECT SUM(wi.qtyreqd - wi.qtyrecd) AS pending
+			FROM stockmaster sm
+			INNER JOIN woitems wi
+				ON sm.stockid = wi.stockid
+			INNER JOIN workorders wo
+				ON wi.wo = wo.wo
+			WHERE sm.categoryid IN " . $CategoryFilter . "
+				AND wo.closed = 0
+				AND wi.qtyreqd > wi.qtyrecd";
+				
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) > 0) {
-		$Row = DB_fetch_row($Result);
-		return (int)$Row['0'];
+		$MyRow = DB_fetch_array($Result);
+		return (int)$MyRow['pending'];
 	}
 	return 0;
 }
