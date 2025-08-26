@@ -1,8 +1,11 @@
 <?php
 
 include('includes/session.php');
+
 use Dompdf\Dompdf;
+
 $Title = __('Top Items Searching');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
