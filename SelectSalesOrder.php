@@ -996,7 +996,7 @@ if (isset($StockItemsResult)
 				if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
 					echo '<tr class="striped_row">
 								<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-								<td><a href="', $PrintAck, '">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
+								<td><a href="', $PrintAck, '" target="_blank">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 								', $PrintPickLabel, '
 								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
 								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
