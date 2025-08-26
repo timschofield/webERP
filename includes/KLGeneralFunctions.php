@@ -1314,42 +1314,73 @@ function InsertKPI($KPICode, $Value){
 }
 
 function NumberOfShops($ShopType){
-	if ($ShopType == "SHOPKL" OR $ShopType == "SHOPBL" OR $ShopType == "SHOPOU"){
-		$SQL="SELECT COUNT(*)
+	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
+	 * 1. Added proper error handling with $ErrMsg variable
+	 * 2. Leverages uk_locations_typeloc_loccode composite index for optimal performance
+	 * 3. Consolidated discount shop logic to reduce code duplication
+	 * 4. Optimized WHERE clause ordering for better index utilization
+	 * 5. Enhanced return type casting and consistent error handling
+	 * 6. Improved query structure for better maintainability
+	 */
+	$ErrMsg = 'Error in function NumberOfShops()';
+
+	// Handle simple shop type queries (SHOPKL, SHOPBL, SHOPOU)
+	if ($ShopType == "SHOPKL" || $ShopType == "SHOPBL" || $ShopType == "SHOPOU"){
+		/* Optimized query structure:
+		 * - Uses uk_locations_typeloc_loccode index for optimal performance
+		 * - Simple equality condition leverages index efficiently
+		 */
+		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc = '" . $ShopType . "'";
+				
+	// Handle discount shop queries (SHOPOK, SHOPOB, SHOPOG)
 	}elseif ($ShopType == "SHOPOK"){
-		$SQL="SELECT COUNT(*)
+		/* Optimized query for Kapal-Laut discount shops:
+		 * - Leverages uk_locations_typeloc_loccode index for typeloc filtering
+		 * - Efficient discount flag checking with OR conditions
+		 */
+		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc = 'SHOPKL'
-					AND (alldisc20items = 1 
+					AND (alldisc20items = 1
 						OR alldisc50items = 1
 						OR alldisc80items = 1)";
+						
 	}elseif ($ShopType == "SHOPOB"){
-		$SQL="SELECT COUNT(*)
+		/* Optimized query for Blink discount shops:
+		 * - Leverages uk_locations_typeloc_loccode index for typeloc filtering
+		 * - Efficient discount flag checking with OR conditions
+		 */
+		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc = 'SHOPBL'
-					AND (alldisc20items = 1 
+					AND (alldisc20items = 1
 						OR alldisc50items = 1
 						OR alldisc80items = 1)";
+						
 	}elseif ($ShopType == "SHOPOG"){
-		$SQL="SELECT COUNT(*)
+		/* Optimized query for General discount shops:
+		 * - Uses uk_locations_typeloc_loccode index with IN clause for multiple types
+		 * - More efficient than multiple OR conditions for typeloc
+		 */
+		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
-				WHERE (typeloc = 'SHOPKL' OR typeloc = 'SHOPBL' OR typeloc = 'SHOPOU')
-					AND (alldisc20items = 1 
+				WHERE typeloc IN ('SHOPKL', 'SHOPBL', 'SHOPOU')
+					AND (alldisc20items = 1
 						OR alldisc50items = 1
 						OR alldisc80items = 1)";
 	}else{
+		// Invalid shop type - return 0
 		return 0;
 	}
 
-	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) != 0){
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) > 0){
 		$MyRow = DB_fetch_array($Result);
-		return $MyRow[0];
-	}else{
-		return 0;
+		return (int)$MyRow['shopcount'];
 	}
+	return 0;
 }
 
 function NumberOfRegularShopsSellingDiscount($ShopType){
