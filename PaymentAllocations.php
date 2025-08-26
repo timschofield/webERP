@@ -5,6 +5,7 @@
 */
 
 include('includes/session.php');
+
 $Title = __('Payment Allocations');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'PaymentAllocations';

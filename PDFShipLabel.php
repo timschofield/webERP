@@ -1,4 +1,5 @@
 <?php
+
 /* Prints a ship label */
 
 include('includes/session.php');
@@ -18,7 +19,6 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockId);
 }
-
 
 if (isset($_GET['LabelItem'])) {
 	$LabelItem = $_GET['LabelItem'];
