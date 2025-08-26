@@ -2,7 +2,7 @@
 
 /* definition of the Supplier Payment/Credit Note allocation class */
 
-Class Allocation {
+class Allocation {
 
 	var $Allocs; /*array of transactions allocated to */
 	var $AllocTrans; /*The ID of the transaction being allocated */
@@ -18,12 +18,7 @@ Class Allocation {
 	var $CurrDecimalPlaces; /*The number of decimal places to display for the currency being allocated */
 
 	function __construct(){
-	/*Constructor function initialises a new supplier allocation*/
 		$this->Allocs = array();
-	}
-
-	function Allocation(){
-		self::__construct();
 	}
 
 	function add_to_AllocsAllocn ($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
@@ -37,14 +32,12 @@ Class Allocation {
 	}
 
 	function remove_alloc_item($ID){
-
 		unset($this->Allocs[$ID]);
-
 	}
 
-} /* end of class defintion */
+}
 
-Class Allocn {
+class Allocn {
 	Var $ID;
 	Var $TransType;
 	Var $TypeNo;
@@ -64,7 +57,6 @@ Class Allocn {
 
 	function __construct ($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
 
-/* Constructor function to add a new Allocn object with passed params */
 		$this->ID = $ID;
 		$this->TransType = $TransType;
 		$this->TypeNo = $TypeNo;
@@ -78,11 +70,5 @@ Class Allocn {
 		$this->PrevDiffOnExch = $PrevDiffOnExch;
 		$this->PrevAlloc = $PrevAlloc;
 		$this->PrevAllocRecordID= $PrevAllocRecordID;
-	}
-
-	function Allocn($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
-
-		self::__construct($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID);
-
 	}
 }
