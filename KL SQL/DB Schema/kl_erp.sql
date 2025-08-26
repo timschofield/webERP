@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2025 at 02:33 PM
+-- Generation Time: Aug 26, 2025 at 02:55 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -5445,7 +5445,8 @@ ALTER TABLE `stockmaster`
   ADD UNIQUE KEY `uk_stockmaster_mbflag_stockid` (`mbflag`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_controlled_stockid` (`controlled`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_discountcategory_stockid` (`discountcategory`,`stockid`),
-  ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`);
+  ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`),
+  ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`);
 
 --
 -- Indexes for table `stockmoves`
