@@ -59,7 +59,7 @@ Class Allocn {
 				   THERE CAN BE ONLY ONE ... allocation record for each
 				   receipt/inovice combination  */
 
-	function __construct ($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
+	function __construct($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
 
 /* Constructor function to add a new Allocn object with passed params */
 		$this->ID =$ID;

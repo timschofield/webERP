@@ -17,7 +17,7 @@ class BankStatement {
 	var $ExchangeRate;
 	var $Trans;
 
-	function __construct () {
+	function __construct() {
 		$this->ReportCreated = '';
 		$this->AccountNumber = '';
 		$this->AccountName = '';
@@ -48,7 +48,7 @@ class BankTrans {
 	var $GLItemID;
 	var $GLTotal;
 
-	function __construct ($ValueDate, $Amount) {
+	function __construct($ValueDate, $Amount) {
 		$this->ValueDate = $ValueDate;
 		$this->Amount = $Amount;
 		$this->GLEntries = array();
@@ -80,7 +80,6 @@ class BankTrans {
 	}
 }
 
-
 Class GLAnalysis {
 
 	Var $Amount;
@@ -90,17 +89,12 @@ Class GLAnalysis {
 	Var $ID;
 	var $Tag;
 
-	function __construct ($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag){
-
-/* Constructor function to add a new JournalGLAnalysis object with passed params */
+	function __construct($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag) {
 		$this->Amount =$Amount;
 		$this->Narrative = $Narrative;
 		$this->GLCode = $GLCode;
 		$this->GLAccountName = $GLAccountName;
 		$this->ID = $ID;
 		$this->Tag = $Tag;
-	}
-	function GLAnalysis($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag){
-		self::__construct($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag);
 	}
 }

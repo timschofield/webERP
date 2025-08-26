@@ -1,6 +1,7 @@
 <?php
 
 /*PDF page header for inventory check report */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }

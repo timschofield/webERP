@@ -1,9 +1,9 @@
 <?php
 
-/*Functions to get the GL codes for customer transactions based on
+/* Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)
 
-Function returns the relavent GL Code to post COGS entries to*/
+Function returns the relevant GL Code to post COGS entries to*/
 
 function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 

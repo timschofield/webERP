@@ -1,7 +1,7 @@
 <?php
-/*Function to calculate the freight cost.
-Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
+/* Function to calculate the freight cost.
+Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
 function CalcFreightCost ($TotalValue,
 							$BrAdd2,

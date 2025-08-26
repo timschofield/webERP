@@ -2,7 +2,7 @@
 /* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
 */
 
-Class SuppTrans {
+class SuppTrans {
 
 	var $GRNs; /*array of objects of class GRNs using the GRN No as the pointer */
 	var $GLCodes; /*array of objects of class GLCode using a counter as the pointer */
@@ -307,7 +307,7 @@ Class SuppTrans {
 	}
 } /* end of class defintion */
 
-Class GRNs {
+class GRNs {
 
 /* Contains relavent information from the PurchOrderDetails as well to provide in cached form,
 all the info to do the necessary entries without looking up ie additional queries of the database again */
@@ -333,7 +333,7 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function __construct ($GRNNo,
+	function __construct($GRNNo,
 					$PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -454,15 +454,15 @@ all the info to do the necessary entries without looking up ie additional querie
 	}
 }
 
-Class GLCodes {
+class GLCodes {
 
-	Var $Counter;
-	Var $GLCode;
-	Var $GLActName;
-	Var $Amount;
-	Var $Narrative;
-	Var $Tag;
-	Var $TagName;
+	var $Counter;
+	var $GLCode;
+	var $GLActName;
+	var $Amount;
+	var $Narrative;
+	var $Tag;
+	var $TagName;
 
 	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
 	/* Constructor function to add a new GLCodes object with passed params */
@@ -482,11 +482,11 @@ Class GLCodes {
 
 }
 
-Class Shipment {
+class Shipment {
 
-	Var $Counter;
-	Var $ShiptRef;
-	Var $Amount;
+	var $Counter;
+	var $ShiptRef;
+	var $Amount;
 
 	function __construct($Counter, $ShiptRef, $Amount){
 		$this->Counter = $Counter;
@@ -499,13 +499,13 @@ Class Shipment {
 	}
 }
 
-Class Asset {
+class Asset {
 
-	Var $Counter;
-	Var $AssetID;
-	Var $Description;
-	Var $CostAct;
-	Var $Amount;
+	var $Counter;
+	var $AssetID;
+	var $Description;
+	var $CostAct;
+	var $Amount;
 
 	function __construct($Counter, $AssetID, $Amount){
 		$this->Counter = $Counter;
@@ -527,13 +527,13 @@ Class Asset {
 	}
 }
 
-Class Contract {
+class Contract {
 
-	Var $Counter;
-	Var $ContractRef;
-	Var $Amount;
-	Var $Narrative;
-	Var $AniticipatedCost;
+	var $Counter;
+	var $ContractRef;
+	var $Amount;
+	var $Narrative;
+	var $AniticipatedCost;
 
 	function __construct($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
 		$this->Counter = $Counter;
@@ -549,16 +549,16 @@ Class Contract {
 }
 
 
-Class Tax {
-	Var $TaxCalculationOrder;  /*the index for the array */
-	Var $TaxAuthID;
-	Var $TaxAuthDescription;
-	Var $TaxRate;
-	Var $TaxOnTax;
-	Var $TaxGLCode;
-	Var $TaxOvAmount;
+class Tax {
+	var $TaxCalculationOrder;  /*the index for the array */
+	var $TaxAuthID;
+	var $TaxAuthDescription;
+	var $TaxRate;
+	var $TaxOnTax;
+	var $TaxGLCode;
+	var $TaxOvAmount;
 
-	function __construct ($TaxCalculationOrder,
+	function __construct($TaxCalculationOrder,
 					$TaxAuthID,
 					$TaxAuthDescription,
 					$TaxRate,

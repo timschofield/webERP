@@ -252,7 +252,6 @@ function Convert_CRLF($string, $Line_break=PHP_EOL)
     return $string;
 }
 
-
 //NPFunc - New Page Function, can be a direct function call or an anonymous function for more complex behavior
 //         Null if not used
 //NPINC  - New Page Include, where a PHP script is included again to facilitate a new page

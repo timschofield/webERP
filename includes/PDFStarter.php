@@ -8,7 +8,6 @@
 	Javier de Lorenzo-Cáceres <info@civicom.eu>
 	------------------------------------------------------------------------------------- */
 
-
 require_once(dirname(__FILE__).'/class.cpdf.php');
 
 /*

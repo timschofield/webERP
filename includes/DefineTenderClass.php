@@ -2,7 +2,7 @@
 // DefineTenderClass.php
 // Definition of the tender class to hold all the information for a supplier tender.
 
-Class Tender {
+class Tender {
 
 	var $TenderId;
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -221,7 +221,7 @@ Class Tender {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
@@ -233,7 +233,7 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function __construct ($LineNo,
+	function __construct($LineNo,
 							$StockItem,
 							$Qty,
 							$ItemDescr,
@@ -270,14 +270,14 @@ Class LineDetails {
 
 }
 
-Class Supplier {
+class Supplier {
 
 	var $SupplierCode;
 	var $SupplierName;
 	var $EmailAddress;
 	var $Responded;
 
-	function __construct ($SupplierCode,
+	function __construct($SupplierCode,
 						$SupplierName,
 						$EmailAddress) {
 		$this->SupplierCode = $SupplierCode;

@@ -1,4 +1,5 @@
 <?php
+
 echo '<div id="mask">
 		<div id="dialog"></div>
 	</div>';

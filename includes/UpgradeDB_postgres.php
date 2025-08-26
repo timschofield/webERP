@@ -1,6 +1,6 @@
 <?php
-/* postgres specific functions for the database upgrade script
-*/
+
+/* postgres specific functions for the database upgrade script */
 
 function CharacterSet($Table) {
 	$SQL = "SELECT TABLE_COLLATION

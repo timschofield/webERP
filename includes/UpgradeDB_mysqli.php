@@ -1,6 +1,6 @@
 <?php
-/* mysqli specific functions for the database upgrade script
-*/
+
+/* mysql specific functions for the database upgrade script */
 
 function CharacterSet($Table) {
 	$SQL = "SELECT TABLE_COLLATION
