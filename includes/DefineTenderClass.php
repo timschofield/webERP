@@ -1,8 +1,9 @@
 <?php
-// DefineTenderClass.php
-// Definition of the tender class to hold all the information for a supplier tender.
 
-Class Tender {
+/**
+ * hold all the information for a supplier tender.
+*/
+class Tender {
 
 	var $TenderId;
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -31,15 +32,10 @@ Class Tender {
 	var $Contact;
 
 	function __construct(){
-	/*Constructor function initialises a new purchase tender object */
 		$this->LineItems = array();
 		$this->Suppliers = array();
 		$this->LinesOnTender=0;
 		$this->SuppliersOnTender=0;
-	}
-
-	function Tender(){
-		self::__construct();
 	}
 
 	function EmailSuppliers() {
@@ -156,7 +152,7 @@ Class Tender {
 		DB_Txn_Commit();
 	}
 
-	function add_item_to_tender(	$LineNo,
+	function add_item_to_tender($LineNo,
 								$StockID,
 								$Qty,
 								$ItemDescr,
@@ -179,7 +175,7 @@ Class Tender {
 		Return 0;
 	}
 
-	function add_supplier_to_tender(	$SupplierCode,
+	function add_supplier_to_tender($SupplierCode,
 									$SupplierName,
 									$Emailaddress){
 
@@ -202,12 +198,12 @@ Class Tender {
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_item_from_tender($LineNo){
+	function remove_item_from_tender($LineNo) {
 		unset($this->LineItems[$LineNo]);
 		$this->LinesOnTender--;
 	}
 
-	function remove_supplier_from_tender($SupplierCode){
+	function remove_supplier_from_tender($SupplierCode) {
 		unset($this->Suppliers[$SupplierCode]);
 		$this->SuppliersOnTender--;
 	}
@@ -219,10 +215,10 @@ Class Tender {
 		}
 		return $TotalValue;
 	}
-} /* end of class defintion */
+}
 
-Class LineDetails {
-/* PurchOrderDetails */
+class LineDetails {
+
 	var $LineNo;
 	var $StockID;
 	var $ItemDescription;
@@ -241,7 +237,6 @@ Class LineDetails {
 							$DecimalPlaces,
 							$ExpiryDate) {
 
-	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
 		$this->ItemDescription = $ItemDescr;
@@ -251,26 +246,9 @@ Class LineDetails {
 		$this->ExpiryDate = $ExpiryDate;
 		$this->Deleted = False;
 	}
-
-	function LineDetails($LineNo,
-							$StockItem,
-							$Qty,
-							$ItemDescr,
-							$UOM,
-							$DecimalPlaces,
-							$ExpiryDate) {
-		self::__construct($LineNo,
-							$StockItem,
-							$Qty,
-							$ItemDescr,
-							$UOM,
-							$DecimalPlaces,
-							$ExpiryDate);
-	}
-
 }
 
-Class Supplier {
+class Supplier {
 
 	var $SupplierCode;
 	var $SupplierName;
@@ -285,14 +263,4 @@ Class Supplier {
 		$this->EmailAddress = $EmailAddress;
 		$this->Responded = 0;
 	}
-
-	function Supplier ($SupplierCode,
-						$SupplierName,
-						$EmailAddress) {
-		self::__construct($SupplierCode,
-						$SupplierName,
-						$EmailAddress);
-	}
-
-
 }
