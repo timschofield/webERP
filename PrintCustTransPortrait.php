@@ -1,8 +1,9 @@
 <?php
-/*	PrintCustTransPortrait.php */
+
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
 include('includes/session.php');
+
 $Title = __('Print Invoices or Credit Notes (Portrait Mode)');
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';

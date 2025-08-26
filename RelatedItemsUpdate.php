@@ -1,7 +1,9 @@
 <?php
+
 /* Quality Test Maintenance */
 
 include('includes/session.php');
+
 $Title = __('Update Related Items');
 $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
