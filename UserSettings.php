@@ -1,13 +1,14 @@
 <?php
-// UserSettings.php
-// Allows the user to change system wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
+
+// Allows the user to change system-wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
 
 include('includes/session.php');
+
 $Title = __('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
-
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
