@@ -1,4 +1,5 @@
 <?php
+
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -6,14 +7,14 @@ for controlled items - used in:
 - StockAdjustments.php
 - StockTransfers.php
 - CreditItemsControlled.php
-
 */
 
-//we start with a batch or serial no header and need to display something for verification...
+// we start with a batch or serial no header and need to display something for verification...
 
 include('includes/Add_SerialItemsOut.php');
 
 global $Tableheader;
+
 /* Link to clear the list and start from scratch */
 $EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?EditControlled=true&StockID=' . $LineItem->StockID .
 	'&LineNo=' . $LineNo .'">' .  __('Edit'). '</a> | ';
@@ -196,7 +197,7 @@ echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. __('Enter'). '" /></div>';
 echo '</form>
 		</td><td valign="top">';
-$ShowExisting=True;
+$ShowExisting=true;
 $_POST['EntryType']='Sequential';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');

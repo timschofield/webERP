@@ -26,10 +26,10 @@ if (isset($_POST['UpdateAll'])) {
 			$Controlled = $_POST[$RequestID . 'Controlled' . $LineID];
 			$SerialNo = $_POST[$RequestID . 'Ser' . $LineID];
 			if (isset($_POST[$RequestID . 'Completed' . $LineID])) {
-				$Completed = True;
+				$Completed = true;
 			}
 			else {
-				$Completed = False;
+				$Completed = false;
 			}
 
 			$SQL = "SELECT actualcost, decimalplaces FROM stockmaster WHERE stockid='" . $StockID . "'";
@@ -179,7 +179,7 @@ if (isset($_POST['UpdateAll'])) {
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
-				if (($Quantity >= $RequestedQuantity) OR $Completed == True) {
+				if (($Quantity >= $RequestedQuantity) OR $Completed == true) {
 					$SQL = "UPDATE stockrequestitems
 								SET completed=1
 							WHERE dispatchid='" . $RequestID . "'

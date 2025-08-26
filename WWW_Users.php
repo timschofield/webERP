@@ -3,15 +3,12 @@
 // Entry of users and security settings of users.
 
 include('includes/session.php');
-
 $Title = __('Users Maintenance');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 
-include('includes/header.php');
-
-if (isset($_POST['UserID']) AND isset($_POST['ID'])) {
-	if ($_POST['UserID'] == $_POST['ID']) {
+if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
+	if($_POST['UserID'] == $_POST['ID']) {
 		if (isset($_POST['UserLanguage']) && !checkLanguageChoice($_POST['UserLanguage'])) {
 			$_POST['UserLanguage'] = $DefaultLanguage;
 		}
@@ -20,17 +17,18 @@ if (isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
+include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-if ($AllowDemoMode) {
+if($AllowDemoMode) {
 	prnMsg(__('Demo mode is currently active, which disables the security model administration'), 'warn');
 	include('includes/footer.php');
 	exit();
 }
-
 $ModuleList = array(
 	__('Sales'),
 	__('Receivables'),
@@ -106,7 +104,7 @@ if(isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'), 'error');
 		}
-	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= False) {
+	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= false) {
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'), 'error');
 	} elseif((mb_strlen($_POST['Cust'] ?? '')>0)

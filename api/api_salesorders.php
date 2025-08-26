@@ -804,7 +804,7 @@ $SOH_DateFields = array ('orddate',
 
 
 			if ($OrderLineRow['mbflag']=='B' OR $OrderLineRow['mbflag']=='M') {
-				$Assembly = False;
+				$Assembly = false;
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
@@ -862,7 +862,7 @@ $SOH_DateFields = array ('orddate',
 			} else if ($OrderLineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
-				$Assembly=True;
+				$Assembly=true;
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,

@@ -240,7 +240,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 
 	//First update the session['Contract'.$identifier] variable with all inputs from the form
 
-	$InputError = False; //assume no errors on input then test for errors
+	$InputError = false; //assume no errors on input then test for errors
 	if (mb_strlen($_POST['ContractRef']) < 2){
 		prnMsg(__('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;

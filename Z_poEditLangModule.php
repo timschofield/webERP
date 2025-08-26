@@ -159,7 +159,7 @@ if (isset($_POST['module'])) {
 
 			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
-			if ($b === False) {
+			if ($b === false) {
 /* skip it */
 
 			} else {

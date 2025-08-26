@@ -1,8 +1,8 @@
 <?php
+/* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
+*/
 
-/**
- * class to hold all the information for a purchase order and delivery
- */
+
 class PurchOrder {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -51,9 +51,14 @@ class PurchOrder {
 	var $DefaultReceivedDate;
 
 	function __construct(){
+	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
 		$this->Total=0;
 		$this->LinesOnOrder=0;
+	}
+
+	function PurchOrder() {
+		self::__construct();
 	}
 
 	function add_to_order($LineNo,
@@ -136,8 +141,9 @@ class PurchOrder {
 	}
 
 	function remove_from_order($LineNo){
-		 $this->LineItems[$LineNo]->Deleted = True;
+		 $this->LineItems[$LineNo]->Deleted = true;
 	}
+
 
 	function Any_Already_Received(){
 		/* Checks if there have been deliveries or invoiced entered against any of the line items */
@@ -162,7 +168,6 @@ class PurchOrder {
 		}
 		return 0;
 	}
-
 	function Some_Already_Received($LineNo){
 		/* Checks if there have been deliveries or amounts invoiced against a specific line item */
 		if (count($this->LineItems)>0 and isset($this->LineItems[$LineNo])){
@@ -176,7 +181,7 @@ class PurchOrder {
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {
-			if ($OrderedItems->Deleted == False){
+			if ($OrderedItems->Deleted == false){
 				$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
 			}
 		}
@@ -201,39 +206,40 @@ class PurchOrder {
 		return 0; //nowt received
 	}
 
-}
+} /* end of class defintion */
 
 class LineDetails {
-	Var $LineNo;
-	Var $PODetailRec;
-	Var $StockID;
-	Var $ItemDescription;
-	Var $DecimalPlaces;
-	Var $GLCode;
-	Var $GLActName;
-	Var $Quantity;
-	Var $Price;
-	Var $Units;
-	Var $ReqDelDate;
-	Var $QtyInv;
-	Var $QtyReceived;
-	Var $StandardCost;
+/* PurchOrderDetails */
+	var $LineNo;
+	var $PODetailRec;
+	var $StockID;
+	var $ItemDescription;
+	var $DecimalPlaces;
+	var $GLCode;
+	var $GLActName;
+	var $Quantity;
+	var $Price;
+	var $Units;
+	var $ReqDelDate;
+	var $QtyInv;
+	var $QtyReceived;
+	var $StandardCost;
 	var $ShiptRef;
 	var $Completed;
-	Var $JobRef;
+	var $JobRef;
 	var $ConversionFactor;
 	var $SuppliersUnit;
-	Var $Suppliers_PartNo;
-	Var $LeadTime;
-	Var $ReceiveQty; //this receipt of stock
-	Var $Deleted;
-	Var $Controlled;
-	Var $Serialised;
-	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
-	Var $AssetID;
+	var $Suppliers_PartNo;
+	var $LeadTime;
+	var $ReceiveQty; //this receipt of stock
+	var $Deleted;
+	var $Controlled;
+	var $Serialised;
+	var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
+	var $AssetID;
 	var $SerialItemsValid;
 
-	function __construct (	$LineNo,
+	function __construct(	$LineNo,
 						$StockItem,
 						$Serialised,
 						$Controlled,
@@ -256,6 +262,7 @@ class LineDetails {
 						$Suppliers_PartNo,
 						$AssetID)	{
 
+	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
 		$this->Controlled = $Controlled;
@@ -288,5 +295,50 @@ class LineDetails {
 		$this->SerialItemsValid=false;
 		$this->AssetID = $AssetID;
 
+	}
+	function LineDetails($LineNo,
+						$StockItem,
+						$Serialised,
+						$Controlled,
+						$Qty,
+						$ItemDescr,
+						$Price,
+						$UOM,
+						$GLCode,
+						$ReqDelDate,
+						$ShiptRef,
+						$Completed,
+						$JobRef,
+						$QtyInv,
+						$QtyRecd,
+						$GLActName,
+						$DecimalPlaces,
+						$SuppliersUnit,
+						$ConversionFactor,
+						$LeadTime,
+						$Suppliers_PartNo,
+						$AssetID) {
+		self::__construct($LineNo,
+						$StockItem,
+						$Serialised,
+						$Controlled,
+						$Qty,
+						$ItemDescr,
+						$Price,
+						$UOM,
+						$GLCode,
+						$ReqDelDate,
+						$ShiptRef,
+						$Completed,
+						$JobRef,
+						$QtyInv,
+						$QtyRecd,
+						$GLActName,
+						$DecimalPlaces,
+						$SuppliersUnit,
+						$ConversionFactor,
+						$LeadTime,
+						$Suppliers_PartNo,
+						$AssetID);
 	}
 }

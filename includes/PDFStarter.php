@@ -8,7 +8,6 @@
 	Javier de Lorenzo-Cáceres <info@civicom.eu>
 	------------------------------------------------------------------------------------- */
 
-
 require_once(dirname(__FILE__).'/class.cpdf.php');
 
 /*
@@ -18,7 +17,7 @@ require_once(dirname(__FILE__).'/class.cpdf.php');
 /* Initializing the $PageNumber variable. */
 $PageNumber = 0; // Each page header function pre-increments variable $PageNumber before printing it.
 
-if (!isset($PaperSize)){				// Javier: Results True, it's not set.
+if (!isset($PaperSize)){				// Javier: Results true, it's not set.
 	$PaperSize = $_SESSION['PageSize'];	// Javier: DefaultPageSize is taken from DB, www_users, pagesize = A4
 }
 

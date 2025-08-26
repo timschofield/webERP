@@ -107,7 +107,7 @@ if (isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-$FirstLogin = False;
+$FirstLogin = false;
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {

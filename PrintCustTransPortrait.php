@@ -302,7 +302,7 @@ if(isset($PrintPDF)
 			$PageNumber = 1;
 
 			include('includes/PDFTransPageHeaderPortrait.php');
-			$FirstPage = False;
+			$FirstPage = false;
 
 			while($MyRow2=DB_fetch_array($Result)) {
 				if($MyRow2['discountpercent'] == 0) {
