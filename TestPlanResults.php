@@ -1,5 +1,5 @@
 <?php
-/
+
 // Test Plan Results Entry.
 
 include('includes/session.php');
