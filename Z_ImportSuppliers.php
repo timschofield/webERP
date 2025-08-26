@@ -1,8 +1,10 @@
 <?php
+
 /* Import suppliers by csv file */
 
 include('includes/session.php');
 $Title = __('Import Items');
+
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');

@@ -52,7 +52,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				prnMsg(__('Amount entered was negative') . '. ' . __('Only positive amounts are allowed') . '.','warn');
 				$_POST['Amt' . $AllocCounter] = 0;
 			}
-			if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == True) {
+			if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == true) {
 				$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 			}
 			if (filter_number_format($_POST['Amt' . $AllocCounter]) > $_POST['YetToAlloc' . $AllocCounter]) {

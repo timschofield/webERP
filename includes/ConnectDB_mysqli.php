@@ -228,8 +228,8 @@ function DB_table_exists($TableName) {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) > 0) {
-		return True;
+		return true;
 	} else {
-		return False;
+		return false;
 	}
 }

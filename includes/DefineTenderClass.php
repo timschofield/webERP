@@ -146,12 +146,12 @@ class Tender {
 			}
 		}
 		DB_Txn_Begin();
-		$Result = DB_query($HeaderSQL, '', '', True);
+		$Result = DB_query($HeaderSQL, '', '', true);
 		foreach ($SuppliersSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		foreach ($ItemsSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		DB_Txn_Commit();
 	}
@@ -249,7 +249,7 @@ class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 
 	function LineDetails($LineNo,

@@ -197,7 +197,7 @@ echo '</table>';
 echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. __('Enter'). '" /></div>';
 echo '</form>
 		</td><td valign="top">';
-$ShowExisting=True;
+$ShowExisting=true;
 $_POST['EntryType']='Sequential';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');

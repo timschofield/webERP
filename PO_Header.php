@@ -774,9 +774,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) and mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
-		$Printed = True;
+		$Printed = true;
 	} else {
-		$Printed = False;
+		$Printed = false;
 		echo '<fieldtext>', __('Not yet printed') . '</fieldtext>
 			</field>';
 	}
