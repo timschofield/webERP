@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 23, 2025 at 03:58 PM
+-- Generation Time: Aug 26, 2025 at 02:33 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -5256,7 +5256,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_actualdispatchdate_stkcode` (`actualdispatchdate`,`stkcode`),
   ADD KEY `idx_salesorderdetails_stkcode_actualdispatchdate` (`stkcode`,`actualdispatchdate`),
   ADD KEY `idx_salesorderdetails_completed_orderno` (`completed`,`orderno`),
-  ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`);
+  ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`),
+  ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`);
 
 --
 -- Indexes for table `salesorders`

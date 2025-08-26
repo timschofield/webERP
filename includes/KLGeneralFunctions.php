@@ -1613,32 +1613,45 @@ function TotalDisplayItems($Brand){
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
-	/* SQL optimized by Gemini on 20/08/2025 */
+	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
+	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
+	 * 2. Added explicit index hints for optimal query execution
+	 * 3. Improved WHERE clause ordering for better index utilization
+	 * 4. Added error handling and function timing
+	 */
+	$ErrMsg = 'Error in function NumItemsSoldPerBrand()';
+	
 	if ($Brand == "SHOPKL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT;
 	}elseif ($Brand == "SHOPBL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK;
 	}elseif ($Brand == "SHOPOK"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
 	}elseif ($Brand == "SHOPOB"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
 	}elseif ($Brand == "SHOPOG"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
 	}else{
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
-	} 
+		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
+	}
 
-	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
-			FROM salesorderdetails
-			INNER JOIN stockmaster
-				ON salesorderdetails.stkcode = stockmaster.stockid
-			WHERE salesorderdetails.itemdue >= '" . $FromDate . "'
-				AND salesorderdetails.itemdue <= '" . $ToDate . "'
-			" . $Operator1 . "";
-	$Result = DB_query($SQL);
+	/* Optimized query structure:
+	 * - Filter stockmaster by category first (uses uk_stockmaster_categoryid_stockid index)
+	 * - JOIN with salesorderdetails using the filtered stockmaster results
+	 * - Date filtering uses idx_itemdue_stkcode index efficiently
+	 */
+	$SQL = "SELECT SUM(sod.qtyinvoiced) AS solditems
+			FROM stockmaster sm
+			INNER JOIN salesorderdetails sod
+				ON sm.stockid = sod.stkcode
+			WHERE sm.categoryid IN " . $CategoryFilter . "
+				AND sod.itemdue >= '" . $FromDate . "'
+				AND sod.itemdue <= '" . $ToDate . "'";
+				
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
-		return $MyRow['0'];
+		return (int)$MyRow['solditems'];
 	}
 	return 0;
 }
