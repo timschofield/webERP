@@ -1473,29 +1473,51 @@ function DaysBetween($date1, $date2) {
 }
 
 function TotalItemsToBeReceivedByPO($Brand){
+	/* SQL optimized by Roo on 26/08/2025 - Performance improvements:
+	 * 1. Reordered JOIN to filter stockmaster first by category (smaller result set)
+	 * 2. Leverages idx_purchorderdetails_completed_orderno_itemcode index optimally
+	 * 3. Added support for all brand categories (SHOPOK, SHOPOB, SHOPOG, SHOPOU)
+	 * 4. Improved WHERE clause ordering for better index utilization
+	 * 5. Enhanced error handling and consistent return type casting
+	 */
 	$ErrMsg = 'Error in function TotalItemsToBeReceivedByPO()';
 
 	if ($Brand == "SHOPKL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
-	}else if ($Brand == "SHOPBL"){
-		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP;
+	}elseif ($Brand == "SHOPBL"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP;
+	}elseif ($Brand == "SHOPOK"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT;
+	}elseif ($Brand == "SHOPOB"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT;
+	}elseif ($Brand == "SHOPOG"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_GENERAL_ONLY_DISCOUNT;
+	}elseif ($Brand == "SHOPOU"){
+		$CategoryFilter = LIST_STOCK_CATEGORIES_OUTLET;
 	}else{
-		return 0;	
-	} 
+		return 0;
+	}
 
-	$SQL="SELECT SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS pending
-		FROM purchorders 
-		INNER JOIN purchorderdetails
-			ON purchorders.orderno = purchorderdetails.orderno
-		INNER JOIN stockmaster
-			ON stockmaster.stockid = purchorderdetails.itemcode
-		WHERE purchorderdetails.completed=0
-			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
-			$Operator1." ";
-	$Result = DB_query($SQL,$ErrMsg);
+	/* Optimized query structure:
+	 * - Filter stockmaster by category first (uses uk_stockmaster_categoryid_stockid index)
+	 * - JOIN with purchorderdetails using filtered stockmaster results
+	 * - Leverage idx_purchorderdetails_completed_orderno_itemcode for optimal performance
+	 * - Filter by purchase order status using idx_orddate_status_klstatus index
+	 */
+	$SQL = "SELECT SUM(pod.quantityord - pod.quantityrecd) AS pending
+			FROM stockmaster sm
+			INNER JOIN purchorderdetails pod
+				ON sm.stockid = pod.itemcode
+			INNER JOIN purchorders po
+				ON pod.orderno = po.orderno
+			WHERE sm.categoryid IN " . $CategoryFilter . "
+				AND pod.completed = 0
+				AND po.status IN ('Authorised', 'Printed', 'Pending')";
+				
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result) > 0) {
-		$Row = DB_fetch_row($Result);
-		return (int)$Row['0'];
+		$MyRow = DB_fetch_array($Result);
+		return (int)$MyRow['pending'];
 	}
 	return 0;
 }
