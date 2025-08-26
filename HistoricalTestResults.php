@@ -36,9 +36,6 @@ if (!Is_Date($_POST['ToDate'])) {
 }
 $FromDate = FormatDateForSQL($_POST['FromDate']);
 $ToDate = FormatDateForSQL($_POST['ToDate']);
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 
