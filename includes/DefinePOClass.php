@@ -141,7 +141,7 @@ class PurchOrder {
 	}
 
 	function remove_from_order($LineNo){
-		 $this->LineItems[$LineNo]->Deleted = True;
+		 $this->LineItems[$LineNo]->Deleted = true;
 	}
 
 
@@ -181,7 +181,7 @@ class PurchOrder {
 	function Order_Value() {
 		$TotalValue=0;
 		foreach ($this->LineItems as $OrderedItems) {
-			if ($OrderedItems->Deleted == False){
+			if ($OrderedItems->Deleted == false){
 				$TotalValue += ($OrderedItems->Price)*($OrderedItems->Quantity);
 			}
 		}
@@ -239,7 +239,7 @@ class LineDetails {
 	var $AssetID;
 	var $SerialItemsValid;
 
-	function __construct (	$LineNo,
+	function __construct(	$LineNo,
 						$StockItem,
 						$Serialised,
 						$Controlled,

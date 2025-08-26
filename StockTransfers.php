@@ -242,7 +242,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		$InputError = true;
 	}
 
-	if($InputError==False) {
+	if($InputError==false) {
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$TransferNumber = GetNextTransNo(16);

@@ -14,7 +14,7 @@ if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST[
 if (isset($_GET['BankAccount'])) {
 	$_POST['BankAccount'] = $_GET['BankAccount'];
 	$_POST['ShowType'] = 'All';
-	$_POST['Show'] = True;
+	$_POST['Show'] = true;
 }
 
 if (isset($_GET['FromTransDate'])) {

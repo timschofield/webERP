@@ -32,10 +32,10 @@ echo '<p class="page_title_text">
 
 if (isset($_POST['AddAssetToInvoice'])){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['AssetID'] == ''){
 		if ($_POST['AssetSelection']==''){
-			$InputError = True;
+			$InputError = true;
 			prnMsg(__('A valid asset must be either selected from the list or entered'),'error');
 		} else {
 			$_POST['AssetID'] = $_POST['AssetSelection'];
@@ -44,18 +44,18 @@ if (isset($_POST['AddAssetToInvoice'])){
 		$Result = DB_query("SELECT assetid FROM fixedassets WHERE assetid='" . $_POST['AssetID'] . "'");
 		if (DB_num_rows($Result)==0) {
 			prnMsg(__('The asset ID entered manually is not a valid fixed asset. If you do not know the asset reference, select it from the list'),'error');
-			$InputError = True;
+			$InputError = true;
 			unset($_POST['AssetID']);
 		}
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(__('The amount entered is not numeric. This fixed asset cannot be added to the invoice'),'error');
-		$InputError = True;
+		$InputError = true;
 		unset($_POST['Amount']);
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'],
 													filter_number_format($_POST['Amount']));
 		unset($_POST['AssetID']);

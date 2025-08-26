@@ -73,7 +73,7 @@ class Offer {
 	function Save($Update = '') {
 		if ($Update == '') {
 			foreach ($this->LineItems as $LineItems) {
-				if ($LineItems->Deleted == False) {
+				if ($LineItems->Deleted == false) {
 					$SQL = "INSERT INTO offers (	supplierid,
 												tenderid,
 												stockid,
@@ -164,7 +164,7 @@ class Offer {
 	}
 
 	function remove_from_offer($LineNo){
-		$this->LineItems[$LineNo]->Deleted = True;
+		$this->LineItems[$LineNo]->Deleted = true;
 	}
 
 
@@ -207,7 +207,7 @@ class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 	function LineDetails($LineNo,
 							$StockItem,

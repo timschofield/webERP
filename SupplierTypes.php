@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Supplier Types') . ' / ' . __('Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = '';

@@ -13,7 +13,7 @@ include('includes/SQL_CommonFunctions.php');
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
 
-	$InputError = False; /*Start off hoping for the best */
+	$InputError = false; /*Start off hoping for the best */
 	$TotalItems = 0;
 	//Make sure this Transfer has not already been entered... aka one way around the refresh & insert new records problem
 	$Result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'");
@@ -54,14 +54,14 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$Result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $StockID . "'");
 						$StockIDCheck = DB_fetch_row($Result);
 						if ($StockIDCheck[0]==0){
-							$InputError = True;
+							$InputError = true;
 							$ErrorMessage .= __('The part code entered of'). ' ' . $StockID . ' '. __('is not set up in the database') . '. ' . __('Only valid parts can be entered for transfers'). '<br />';
 						}
 						break;
 					case 1:
 						$Quantity = filter_number_format($MyRow[$i]);
 						if (!is_numeric($Quantity)){
-						   $InputError = True;
+						   $InputError = true;
 						   $ErrorMessage .= __('The quantity entered for'). ' ' . $StockID . ' ' . __('of') . $Quantity . ' '. __('is not numeric.') . __('The quantity entered for transfers is expected to be numeric');
 						}
 						break;
@@ -82,7 +82,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 										AND loccode='".$_POST['FromStockLocation']."'");
 					$CheckStockRow = DB_fetch_array($Result);
 					if (($CheckStockRow['quantity']-$InTransitQuantity) < $Quantity){
-						$InputError = True;
+						$InputError = true;
 						$ErrorMessage .= __('The item'). ' ' . $StockID . ' ' . __('does not have enough stock available (') . ' ' . $CheckStockRow['quantity'] . ')' . ' ' . __('The quantity required to transfer was') .  ' ' . $Quantity . '.<br />';
 					}
 				}
@@ -118,18 +118,18 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					$Result = DB_query("SELECT COUNT(stockid) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'");
 					$MyRow = DB_fetch_row($Result);
 					if ($MyRow[0]==0){
-						$InputError = True;
+						$InputError = true;
 						$ErrorMessage .= __('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. __('is not set up in the database') . '. ' . __('Only valid parts can be entered for transfers'). '<br />';
 						$_POST['LinesCounter'] -= 10;
 					}
 					DB_free_result( $Result );
 					if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
-						$InputError = True;
+						$InputError = true;
 						$ErrorMessage .= __('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. __('for part code'). ' ' . $_POST['StockID' . $i] . ' '. __('is not numeric') . '. ' . __('The quantity entered for transfers is expected to be numeric') . '<br />';
 						$_POST['LinesCounter'] -= 10;
 					}
 					if (filter_number_format($_POST['StockQTY' . $i]) <= 0){
-						$InputError = True;
+						$InputError = true;
 						$ErrorMessage .= __('The quantity entered for').' '. $_POST['StockID' . $i] . ' ' . __('is less than or equal to 0') . '. ' . __('Please correct this or remove the item') . '<br />';
 						$_POST['LinesCounter'] -= 10;
 					}
@@ -150,7 +150,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 
 						$MyRow = DB_fetch_array($Result);
 						if (($MyRow['quantity']-$InTransitQuantity) < filter_number_format($_POST['StockQTY' . $i])){
-							$InputError = True;
+							$InputError = true;
 							$ErrorMessage .= __('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. __('does not have enough stock available for transfer.') . '.<br />';
 							$_POST['LinesCounter'] -= 10;
 						}
@@ -159,7 +159,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					if(isset($StockIDAccQty[$_POST['StockID'.$i]])){
 						$StockIDAccQty[$_POST['StockID'.$i]] += filter_number_format($_POST['StockQTY' . $i]);
 						if($MyRow[0] < $StockIDAccQty[$_POST['StockID'.$i]]){
-							$InputError = True;
+							$InputError = true;
 							$ErrorMessage .=__('The part code entered of'). ' ' . $_POST['StockID'.$i] . ' '.__('does not have enough stock available for transter due to accumulated quantity is over quantity on hand.') . '<br />';
 							$_POST['LinesCounter'] -= 10;
 						}
@@ -174,19 +174,19 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 		}
 
 		if ($TotalItems == 0){
-			$InputError = True;
+			$InputError = true;
 			$ErrorMessage .= __('You must enter at least 1 Stock Item to transfer') . '<br />';
 		}
 
 	/*Ship location and Receive location are different */
 		if ($_POST['FromStockLocation']==$_POST['ToStockLocation']){
-			$InputError=True;
+			$InputError=true;
 			$ErrorMessage .= __('The transfer must have a different location to receive into and location sent from');
 		}
 	 } //end if the transfer is not a duplicated
 }
 
-if(isset($_POST['Submit']) AND $InputError==False){
+if(isset($_POST['Submit']) AND $InputError==false){
 
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('Unable to BEGIN Location Transfer transaction');
 

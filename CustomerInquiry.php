@@ -123,7 +123,7 @@ if (DB_num_rows($CustomerResult) == 0) {
 
 	/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
-	$NIL_BALANCE = True;
+	$NIL_BALANCE = true;
 
 	$SQL = "SELECT debtorsmaster.name,
 					debtorsmaster.currcode,
@@ -145,12 +145,12 @@ if (DB_num_rows($CustomerResult) == 0) {
 	$CustomerResult = DB_query($SQL, $ErrMsg);
 
 } else {
-	$NIL_BALANCE = False;
+	$NIL_BALANCE = false;
 }
 
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-if ($NIL_BALANCE == True) {
+if ($NIL_BALANCE == true) {
 	$CustomerRecord['balance'] = 0;
 	$CustomerRecord['due'] = 0;
 	$CustomerRecord['overdue1'] = 0;

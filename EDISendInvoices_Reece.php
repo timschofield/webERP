@@ -307,7 +307,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 					"EDI_INV_" . $TransNo . ".txt",
 					false);
 
-				if ($MessageSent == True) {
+				if ($MessageSent == true) {
 					echo '<BR><BR>';
 					prnMsg(__('EDI Message') . ' ' . $TransNo . ' ' . __('was sucessfully emailed'), 'success');
 				} else {
@@ -345,7 +345,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				*/
 			}
 
-			if ($MessageSent == True) { /*the email was sent sucessfully */
+			if ($MessageSent == true) { /*the email was sent sucessfully */
 				/* move the sent file to sent directory */
 				$Source = 'EDI_INV_' . $TransNo . '.txt';
 				$destination = 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';

@@ -231,7 +231,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 		if (DB_num_rows($StockItemsResult)==1){
 		  	$MyRow = DB_fetch_row($StockItemsResult);
 		  	$SelectedStockItem = $MyRow[0];
-			$_POST['SearchOrders']='True';
+			$_POST['SearchOrders']='true';
 		  	unset($StockItemsResult);
 		  	echo '<br />' . __('For the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}

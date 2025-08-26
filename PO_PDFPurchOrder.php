@@ -61,15 +61,15 @@ if ($OrderNo == 'Preview') { //OrderNo is set to 'Preview' when just looking at 
 	/*These are required to kid the system - I hate this */
 	$_POST['ShowAmounts'] = 'Yes';
 	$OrderStatus = __('Printed');
-	$MakePDFThenDisplayIt = True;
+	$MakePDFThenDisplayIt = true;
 } //$OrderNo == 'Preview'
 
 if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly == 1)) {
-	$MakePDFThenDisplayIt = True;
-	$MakePDFThenEmailIt = False;
+	$MakePDFThenDisplayIt = true;
+	$MakePDFThenEmailIt = false;
 } elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail'] == 'Email' AND isset($_POST['EmailTo'])) {
-	$MakePDFThenEmailIt = True;
-	$MakePDFThenDisplayIt = False;
+	$MakePDFThenEmailIt = true;
+	$MakePDFThenDisplayIt = false;
 }
 
 if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview') {

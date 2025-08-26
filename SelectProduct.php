@@ -124,24 +124,24 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	switch ($MyRow['mbflag']) {
 		case 'A':
 			echo __('Assembly Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
 		break;
         case 'G':
             echo __('Phantom Assembly Item');
-            $Its_A_Kitset_Assembly_Or_Dummy = True;
-            $Its_A_Kitset = True;
+            $Its_A_Kitset_Assembly_Or_Dummy = true;
+            $Its_A_Kitset = true;
         break;
 		case 'K':
 			echo __('Kitset Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
-			$Its_A_Kitset = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
+			$Its_A_Kitset = true;
 		break;
 		case 'D':
 			echo __('Service/Labour Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
-			$Its_A_Dummy = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
+			$Its_A_Dummy = true;
 			if ($MyRow['stocktype'] == 'L') {
-				$Its_A_Labour_Item = True;
+				$Its_A_Labour_Item = true;
 			}
 		break;
 		case 'B':
@@ -359,13 +359,13 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				<td valign="top" class="select">';
 	/*Stock Inquiry Options */
 	echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Movements') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Status') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Usage') . '</a><br />';
 	}
 	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Sales Orders') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Completed Sales Orders') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Purchase Orders') . '</a><br />';
 		echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search All Purchase Orders') . '</a><br />';
 
@@ -377,11 +377,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		}
 		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . __('Show Part Picture (if available)') . '</a><br />';
 	}
-	if ($Its_A_Dummy == False) {
+	if ($Its_A_Dummy == false) {
 		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Material') . '</a><br />';
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Item Is Used') . '</a><br />';
 	}
-	if ($Its_A_Labour_Item == True) {
+	if ($Its_A_Labour_Item == true) {
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Labour Item Is Used') . '</a><br />';
 	}
 	wikiLink('Product', $StockID);
@@ -424,18 +424,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				/**/
 			} /* end of while */
 		} /* end of $MyRow['mbflag'] == 'B' */
-	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == False) */
+	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == false) */
 	echo '</td><td valign="top" class="select">';
 	/* Stock Maintenance Options */
 	echo '<a href="' . $RootPath . '/Stocks.php?">' . __('Insert New Item') . '</a><br />';
 	echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . __('Modify Item Details') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Reorder Levels') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
 		echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Purchasing Data') . '</a><br />';
 		echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Customer Item Data') . '</a><br />';
 	}
-	if ($Its_A_Labour_Item == True) {
+	if ($Its_A_Labour_Item == true) {
 		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
 	}
 	if (!$Its_A_Kitset) {
