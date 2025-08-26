@@ -120,9 +120,7 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		}
 	}
 }
-if (isset($Errors)) {
-	unset($Errors);
-}
+
 $Errors = array();
 $InputError = 0;
 if (isset($_POST['submit'])) {

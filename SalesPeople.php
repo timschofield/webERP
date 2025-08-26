@@ -18,10 +18,6 @@ if (isset($_GET['SelectedSalesPerson'])){
 	$SelectedSalesPerson =mb_strtoupper($_POST['SelectedSalesPerson']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 $CommissionPeriods[0] = __('No Commission');
