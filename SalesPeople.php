@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Sales People Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';

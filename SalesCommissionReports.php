@@ -1,8 +1,8 @@
 <?php
+
 include('includes/session.php');
 
 $Title = __('Sales Commission Reports');
-/* Manual links before header.php */
 $ViewTopic = 'SalesCommission';
 $BookMark = 'Reports';
 include('includes/header.php');

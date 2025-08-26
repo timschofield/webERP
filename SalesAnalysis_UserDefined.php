@@ -9,7 +9,7 @@ if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
 
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 
-if (isset($_GET['ProducePDF'])){
+if (isset($_GET['ProducePDF'])) {
 
 	include('includes/PDFSalesAnalysis.php');
 
@@ -28,7 +28,7 @@ if (isset($_GET['ProducePDF'])){
 	}
 } /* end if we wanted a PDF file */
 
-if ($_GET['ProduceCVSFile']==True){
+if ($_GET['ProduceCVSFile']==True) {
 
 	include('includes/CSVSalesAnalysis.php');
 

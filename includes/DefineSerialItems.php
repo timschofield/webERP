@@ -36,10 +36,13 @@ class SerialItem {
 	var $BundleQty;
 	var $ExpiryDate;
 
-	function __construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01') {
-
+  function __construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01') {
 		$this->BundleRef = $BundleRef;
 		$this->BundleQty = $BundleQty;
 		$this->ExpiryDate = $ExpiryDate;
+	}
+
+	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='1000-01-01'){
+		self::__construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01');
 	}
 }
