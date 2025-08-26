@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2025 at 04:31 PM
+-- Generation Time: Aug 26, 2025 at 04:58 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -5053,7 +5053,8 @@ ALTER TABLE `purchorderdetails`
   ADD KEY `idx_purchorderdetails_completed_orderno_itemcode` (`completed`,`orderno`,`itemcode`),
   ADD KEY `idx_purchorderdetails_orderno_itemcode` (`orderno`,`itemcode`),
   ADD KEY `idx_purchorderdetails_itemcode_orderno` (`itemcode`,`orderno`),
-  ADD KEY `idx_purchorderdetails_completed_itemcode_orderno` (`completed`,`itemcode`,`orderno`);
+  ADD KEY `idx_purchorderdetails_completed_itemcode_orderno` (`completed`,`itemcode`,`orderno`),
+  ADD KEY `idx_purchorderdetails_orderno_completed_itemcode` (`orderno`,`completed`,`itemcode`);
 
 --
 -- Indexes for table `purchorders`
@@ -5068,7 +5069,8 @@ ALTER TABLE `purchorders`
   ADD KEY `idx_purchorders_orddate` (`orddate`),
   ADD KEY `idx_purchorders_supplierno` (`supplierno`),
   ADD KEY `idx_purchorders_intostocklocation` (`intostocklocation`),
-  ADD KEY `idx_purchorders_allowprint` (`allowprint`);
+  ADD KEY `idx_purchorders_allowprint` (`allowprint`),
+  ADD KEY `idx_purchorders_klstatus_dates` (`klstatus`,`orddate`,`deliverydate`,`paymentdate`,`shipmentdate`,`customsdate`,`arrivaldate`);
 
 --
 -- Indexes for table `qasamples`
