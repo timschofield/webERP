@@ -81,6 +81,7 @@ Class Cart {
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
 		$this->DefaultSalesType='';
+		$this->Comments='';
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 		$this->CurrDecimalPlaces=2; //default
