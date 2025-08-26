@@ -1,15 +1,17 @@
 <?php
-/*The supplier transaction uses the SuppTrans class to hold the information about the invoice
+
+/* The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
-include('includes/DefineSuppTransClass.php');
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+
 $Title = __('Enter Supplier Invoice Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') .
