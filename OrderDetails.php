@@ -6,10 +6,9 @@
  * 
  **************************************************************************************************************************************************/
 
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
 
-$_GET['OrderNumber']=(int)$_GET['OrderNumber'];
+$_GET['OrderNumber'] = (int)$_GET['OrderNumber'];
 
 if (isset($_GET['OrderNumber'])) {
 	$Title = __('Reviewing Sales Order');

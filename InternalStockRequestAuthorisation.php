@@ -5,7 +5,6 @@ include('includes/session.php');
 $Title = __('Authorise Internal Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'AuthoriseRequest';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';

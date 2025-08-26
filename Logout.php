@@ -9,6 +9,7 @@ KL RICARD MODIFICATIONS:
 $AllowCronJobToBeRun=True; /* Allow all users to log off  */
 
 include('includes/session.php');
+
 $SQL = "DELETE FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
 $Result = DB_query($SQL);
 $SQL ="INSERT INTO session_data VALUES('" . $_SESSION['UserID'] . "', 'module', '" . $_SESSION['Module'] . "')";

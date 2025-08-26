@@ -3,11 +3,10 @@
 include('includes/session.php');
 
 $Title = __('Brands Maintenance');
-
 $ViewTopic = 'Inventory';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedManufacturer'])){

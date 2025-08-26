@@ -22,6 +22,7 @@ if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from th
 		$_SESSION['DatabaseName'] = $DatabaseName;
 		include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	}
+	/// @todo handle this situation - error out?
 } else {
 	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 }

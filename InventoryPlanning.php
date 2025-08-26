@@ -1,11 +1,11 @@
 <?php
 
 include('includes/session.php');
-/* webERP manual links before header.php */
-$ViewTopic = "Inventory";
-$BookMark = "PlanningReport";
 
 use Dompdf\Dompdf;
+
+$ViewTopic = "Inventory";
+$BookMark = "PlanningReport";
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

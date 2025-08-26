@@ -1,10 +1,5 @@
 <?php
-/**
-* Class and Function List:
-* Function list:
-* - standard_deviation()
-* Classes list:
-*/
+
 function standard_deviation($Data) {
 	$Total = 0;
 	$Counter = 0;
@@ -22,11 +17,12 @@ function standard_deviation($Data) {
 }
 
 include ('includes/session.php');
-/* webERP manual links before header.php */
+
+use Dompdf\Dompdf;
+
 $ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
 
-use Dompdf\Dompdf;
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/StockFunctions.php');
 
@@ -290,4 +286,3 @@ else { /*The option to print PDF was not hit */
 
 	include ('includes/footer.php');
 }
-

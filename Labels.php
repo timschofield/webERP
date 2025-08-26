@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Label Templates');
 $ViewTopic = 'Setup';
 $BookMark = 'Labels.php';
@@ -31,7 +32,6 @@ $LabelPaper['DPS01 *']['PageWidth'] = 210;
 $LabelPaper['DPS01 *']['PageHeight']= 297;
 
 /*
-
 'DPS01 *',210,297,210,297,0,0,0,0);
 'DPS02 *',210,297,210,149,0,0,0,0);
 'DPS08 *',210,297,105,71,7,7,0,0);
@@ -108,7 +108,6 @@ $LabelPaper['DPS01 *']['PageHeight']= 297;
 'SLSQ25',210,297,25,25,0,0,0,0);
 
 */
-
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Label Template Maintenance')

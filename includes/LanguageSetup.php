@@ -1,8 +1,8 @@
 <?php
 
 /*
- * This file is included in session.php or PDFStarter.php, or a report script that does not use PDFStarter.php, to check
- * for the existence of gettext functions and setting up the necessary environment to allow for automatic translation.
+ * This file is included in session.php to check for the existence of gettext functions and
+ * setting up the necessary environment to allow for automatic translation.
  */
 
 use PGettext\T;

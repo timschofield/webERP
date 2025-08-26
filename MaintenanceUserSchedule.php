@@ -2,24 +2,19 @@
 
 include('includes/session.php');
 
-$Title = __('My Maintenance Jobs');
-
+//$Title = __('My Maintenance Jobs');
 $Title = __('Fixed Assets Maintenance Schedule');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-
 
 if (isset($_GET['Complete'])) {
 	$Result = DB_query("UPDATE fixedassettasks
 						SET lastcompleted = CURRENT_DATE
 						WHERE taskid='" . $_GET['TaskID'] . "'");
 }
-
 
 $SQL="SELECT taskid,
 				fixedassettasks.assetid,

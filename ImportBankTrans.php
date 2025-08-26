@@ -1,10 +1,12 @@
 <?php
-// ImportBankTrans.php
+
 // Imports bank transactions.
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineImportBankTransClass.php');
 
 include('includes/session.php');
+
 $Title = __('Import Bank Transactions');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'ImportBankTrans';
