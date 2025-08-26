@@ -1,10 +1,12 @@
 <?php
+
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
 include('includes/session.php');
+
 $Title = __('Inventory Transfer') . ' - ' . __('Receiving');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.

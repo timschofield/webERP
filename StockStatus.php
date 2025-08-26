@@ -1,14 +1,15 @@
 <?php
 
-$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.php');
 
-$Title = __('Stock Status');
+$PricesSecurity = 12; // don't show pricing info unless security token 12 available to user
 
+$Title = __('Stock Status');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 

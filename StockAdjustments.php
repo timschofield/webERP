@@ -1,16 +1,15 @@
 <?php
 
-include('includes/DefineStockAdjustment.php');
-include('includes/DefineSerialItems.php');
 include('includes/session.php');
 
 $Title = __('Stock Adjustments');
-
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');
+
+include('includes/DefineStockAdjustment.php');
+include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 

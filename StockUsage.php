@@ -22,7 +22,6 @@ if (isset($_POST['ShowGraphUsage'])) {
 
 $ViewTopic = 'Inventory';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">

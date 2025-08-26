@@ -1,11 +1,12 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Clone Item');
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'CloneItem';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['OldStockID']) || isset($_POST['OldStockID']) ){ //we are cloning
