@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 
+$Title = __('Negative Stock Listing Error');
+
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', __('Inventory Negatives Listing') );
 $pdf->addInfo('Subject', __('Inventory Negatives Listing'));
@@ -9,7 +11,6 @@ $FontSize=9;
 $PageNumber=1;
 $LineHeight=15;
 
-$Title = __('Negative Stock Listing Error');
 $ErrMsg = __('An error occurred retrieving the negative quantities.');
 
 $SQL = "SELECT stockmaster.stockid,

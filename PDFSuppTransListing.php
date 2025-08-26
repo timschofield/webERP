@@ -1,8 +1,10 @@
 <?php
+
 include ('includes/session.php');
-include ('includes/SQL_CommonFunctions.php');
 
 use Dompdf\Dompdf;
+
+include ('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Date'])) {
 	$_POST['Date'] = ConvertSQLDate($_POST['Date']);
@@ -206,4 +208,3 @@ else { /*The option to print PDF was not hit */
 	include ('includes/footer.php');
 
 }
-

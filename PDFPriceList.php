@@ -1,5 +1,5 @@
 <?php
-//	PDFPriceList.php
+
 //	Script to print a price list by inventory category.
 
 /*
@@ -15,8 +15,10 @@ Please note that addTextWrap() YPos is a font-size-height further down than addT
 All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
 */
 include('includes/session.php');
-if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
+
 use Dompdf\Dompdf;
+
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 
 // Merges gets into posts:
 if (isset($_GET['ShowObsolete'])) {// Option to show obsolete items.

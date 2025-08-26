@@ -1,7 +1,8 @@
 <?php
-/* Prints an acknowledgement */
 
+/* Prints an acknowledgement */
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with

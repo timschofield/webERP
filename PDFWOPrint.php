@@ -1,9 +1,9 @@
 <?php
-// PDFWOPrint.php
-
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
 } elseif (isset($_POST['WO'])){

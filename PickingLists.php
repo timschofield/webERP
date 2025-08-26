@@ -1,18 +1,21 @@
 <?php
+
 /* Picking List Maintenance */
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
 include('includes/session.php');
+
 $Title = __('Picking List Maintenance');
 $ViewTopic = '';
 $BookMark = 'PickingLists';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 $ARSecurity = 3;
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
