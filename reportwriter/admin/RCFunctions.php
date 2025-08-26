@@ -503,7 +503,7 @@ function ReadImages($Default) {
 		$pinfo = pathinfo(DefRptPath.$DefRpt);
 		$Ext = mb_strtoupper($pinfo['extension']);
 		if ($Ext=='JPG' OR $Ext=='JPEG' OR $Ext=='PNG') {
-			if ($Default==$pinfo['basename']) $checked=' selected'; else $checked = '';
+			if ($Default==$pinfo['basename']) $checked =' selected'; else $checked = '';
 			$OptionList .= '<option value="'.$pinfo['basename'].'"'.$checked.'> '.$pinfo['basename'].'</option>';
 		}
 	}

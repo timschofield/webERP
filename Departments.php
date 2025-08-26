@@ -240,7 +240,7 @@ if (! isset($_GET['delete'])) {
 	$Userresult=DB_query($UserSQL);
 	while ($MyRow=DB_fetch_array($Userresult)) {
 		if ($MyRow['userid']==$AuthoriserID) {
-			echo '<option selected="True" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
+			echo '<option selected="selected" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {
 			echo '<option value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		}
