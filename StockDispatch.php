@@ -1,12 +1,14 @@
 <?php
 
-// StockDispatch.php - Report of parts with overstock at one location that can be transferred
+// Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetPrice.php');
+
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');

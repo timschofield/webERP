@@ -1,17 +1,19 @@
 <?php
-// Stocks.php
+
 // Defines an item - maintenance and addition of new parts.
+
 include('includes/session.php');
+
 $Title = __('Item Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/ImageFunctions.php');
 
-/*If this form is called with the StockID then it is assumed that the stock item is to be modified */
+/* If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));

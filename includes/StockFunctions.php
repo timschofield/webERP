@@ -120,7 +120,7 @@ function GetQuantityOnOrder($StockID, $Location) {
 	return $TotalOnOrder;
 }
 
-/****************************************************************************************************
+/**
 ## GetQuantityOnOrderDueToPurchaseOrders Function
 Calculates the total quantity of a stock item that is currently on order through active purchase orders for specified locations.
 
