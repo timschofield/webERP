@@ -1,14 +1,16 @@
 <?php
+
 include('includes/session.php');
-if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
+
 $Title = __('Supplier Maintenance');
-/* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'NewSupplier';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/CountriesArray.php');
+
+if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
 
 function Is_ValidAccount($ActNo) {
 

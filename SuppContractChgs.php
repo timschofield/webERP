@@ -1,21 +1,18 @@
 <?php
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the invoice
-the SuppTrans class contains an array of Contract objects - containing details of all contract charges
+/* The supplier transaction uses the SuppTrans class to hold the information about the invoice
+the SuppTrans class contains an array of Contract objects - containing details of all contract charges.
 Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
-include('includes/DefineSuppTransClass.php');
-
-/* Session started here for password checking and authorisation level check */
 include('includes/session.php');
 
 $Title = __('Contract Charges or Credits');
-
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');

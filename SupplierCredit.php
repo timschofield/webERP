@@ -1,7 +1,7 @@
 <?php
 
-/*This page is very largely the same as the SupplierInvoice.php script
-the same result could have been acheived by using if statements in that script and just having the one
+/* This page is very largely the same as the SupplierInvoice.php script
+the same result could have been achieved by using if statements in that script and just having the one
 SupplierTransaction.php script. However, to aid readability - variable names have been changed  -
 and reduce clutter (in the form of a heap of if statements) two separate scripts have been used,
 both with very similar code.
@@ -10,27 +10,26 @@ This does mean that if the logic is to be changed for supplier transactions then
 in both scripts.
 
 This is widely considered poor programming but in my view, much easier to read for the uninitiated
-
 */
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the credit note
+/* The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
-include('includes/DefineSuppTransClass.php');
-
-/* Session started in header.php for password checking and authorisation level check */
-
 include('includes/session.php');
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
+
 $Title = __('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/GLFunctions.php');
+
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
+
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
