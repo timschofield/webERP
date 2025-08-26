@@ -1,7 +1,5 @@
 <?php
 
-include('includes/DefineCartClass.php');
-
 include('includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
@@ -9,11 +7,11 @@ if (isset($_GET['ModifyOrderNumber'])) {
 } else {
 	$Title = __('Select Order Items');
 }
-/* webERP manual links before header.php */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
-
 include('includes/header.php');
+
+include('includes/DefineCartClass.php');
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

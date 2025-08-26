@@ -1,14 +1,13 @@
 <?php
 
 include('includes/session.php');
-if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
 $Title = __('Search All Sales Orders');
-
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
-
 include('includes/header.php');
+
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />
      ' . ' ' . __('Search Sales Orders') . '</p>';

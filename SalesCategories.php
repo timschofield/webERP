@@ -1,12 +1,12 @@
 <?php
+
 include('includes/session.php');
 
 $Title = __('Sales Category Maintenance');
-
 $ViewTopic = 'Setup';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {

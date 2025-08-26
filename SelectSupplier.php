@@ -3,6 +3,7 @@
 /* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['SupplierID'])) {

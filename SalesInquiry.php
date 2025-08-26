@@ -1,18 +1,19 @@
 <?php
-/*  */
-// SalesInquiry.php
+
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
 $Title = __('Sales Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 # Sets default date range for current month
 if(!isset($_POST['FromDate'])) {
