@@ -2,13 +2,13 @@
 
 include('includes/session.php');
 
-include('api/api_errorcodes.php');
-include('api/glsections.php');
-
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
+include('api/api_errorcodes.php');
+include('api/api_glsections.php');
 
 //$webERPUser = $_SESSION['UserID'];
 //$SQL="SELECT password FROM www_users WHERE userid='" . $webERPUser ."'";

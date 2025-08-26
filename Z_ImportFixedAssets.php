@@ -1,12 +1,16 @@
 <?php
+
 /* Script to import fixed assets into a specified period*/
 
 include('includes/session.php');
+
 $Title = __('Import Fixed Assets');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/descending.png" title="' .
 		__('Import Fixed Assets from .csv file') . '" />' . ' ' .

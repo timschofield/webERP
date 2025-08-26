@@ -1,8 +1,10 @@
 <?php
-// Z_RebuildSalesAnalysis.php
+
 // Script to rebuild sales analysis records from stock movements
 $PageSecurity = 15;
+
 include('includes/session.php');
+
 $Title = __('Rebuild sales analysis Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
