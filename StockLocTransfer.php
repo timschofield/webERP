@@ -8,10 +8,12 @@ KL RICARD MODIFICATIONS:
 /* Inventory Transfer - Bulk Dispatch */
 
 include('includes/session.php');
+
 $Title = __('Inventory Location Transfer Shipment');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 // KL RICARD

@@ -7,6 +7,7 @@ KL RICARD MODIFICATIONS:
 ***************************************************************************************/
 
 include('includes/session.php');
+
 $Title = __('Shipping Company Maintenance');
 $ViewTopic = 'Shipments';
 $BookMark = '';

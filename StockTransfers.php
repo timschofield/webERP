@@ -1,4 +1,5 @@
 <?php
+
 /* Entry of point to point stock location transfers of a single part. */
 
 /**************************************************************************************
@@ -7,22 +8,20 @@ KL RICARD MODIFICATIONS:
 - Added $_POST['Reason']
 ***************************************************************************************/
 
-/* Inventory Transfer - Item Dispatch */
+include('includes/session.php');
+
+
+$Title = __('Stock Transfers');
+$ViewTopic = "Inventory";
+$BookMark = "LocationTransfers";
+include('includes/header.php');
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
-
-include('includes/session.php');
+include('includes/SQL_CommonFunctions.php');
 
 //KL RICARD
 include('includes/KLEmails.php');
-
-$Title = __('Stock Transfers');// Screen identification.
-$ViewTopic = "Inventory";// Filename's id in ManualContents.php's TOC.
-$BookMark = "LocationTransfers";// Anchor's id in the manual's html document.
-include('includes/header.php');
-
-include('includes/SQL_CommonFunctions.php');
 
 if(isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);

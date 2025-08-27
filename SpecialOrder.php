@@ -1,11 +1,8 @@
 <?php
-// SpecialOrder.php
+
 // Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
-include('includes/DefineSpecialOrderClass.php');
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -13,6 +10,10 @@ $ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';
 $Title = __('Special Order Entry');
 include('includes/header.php');
+
+include('includes/DefineSpecialOrderClass.php');
+
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */

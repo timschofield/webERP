@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Serial Item Research');
 $ViewTopic = 'Inventory';
 $BookMark = '';
