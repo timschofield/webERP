@@ -1,11 +1,12 @@
 <?php
+
 include('includes/session.php');
 
 $Title = __('Sales Commission Calculation Methods');
 $ViewTopic = 'SalesCommission';
 $BookMark = 'SalesCommission';
-
 include('includes/header.php');
+
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
 	</p>';

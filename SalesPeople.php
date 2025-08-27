@@ -6,6 +6,7 @@ KL RICARD MODIFICATIONS:
 *****************************************************************************************/
 
 include('includes/session.php');
+
 $Title = __('SPG Maintenance');
 $ViewTopic = 'SalesPeople';
 $BookMark = 'SalesPeople';

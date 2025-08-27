@@ -5,16 +5,13 @@ KL RICARD MODIFICATIONS:
 - allow use of promotional vouchers in online shop
 ***************************************************************************************/
 
-/* Definition of the cart class
-this class can hold all the information for:
-
-i)   a sales order
-ii)  an invoice
-iii) a credit note
-
+/**
+ * This class can hold all the information for:
+ *
+ * i)   a sales order
+ * ii)  an invoice
+ * iii) a credit note
 */
-
-
 Class Cart {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -190,7 +187,7 @@ Class Cart {
 														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$Result = DB_query($SQL,
-							__('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' .__('could not be inserted'). ' ' . $SQL);
+							__('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' .__('could not be inserted'));
 			}
 
 			$this->LineCounter = $LineNumber + 1;

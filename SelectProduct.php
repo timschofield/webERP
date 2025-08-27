@@ -2,16 +2,17 @@
 /***************************************************************************
 *
 * KL RICARD Add Top Sales
-* 			Limit supplier data to last 10 rows
+* 	    Limit supplier data to last 10 rows
 *
 ****************************************************************************/
 /* Selection of items. All item maintenance, transactions and inquiries start with this script. */
 
-$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
+$PricesSecurity = 12; //don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
 include('includes/session.php');
+
 $Title = __('Search Inventory Items');
 $ViewTopic = 'Inventory';
 $BookMark = 'SelectingInventory';
@@ -23,7 +24,6 @@ include('includes/ImageFunctions.php');
 // KL RICARD
 include('includes/KLDefines.php');
 // KL RICARD END
-
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
 	$_GET['StockID'] = trim(mb_strtoupper($_GET['StockID']));

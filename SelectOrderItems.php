@@ -6,21 +6,19 @@ KL RICARD MODIFICATIONS:
 - Change the title
 ***************************************************************************************/
 
-include('includes/DefineCartClass.php');
-
 include('includes/session.php');
 
-// KL RICARD: CHange the Title
+// KL RICARD: Change the Title
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modify Sales Order');
 } else {
 	$Title = __('Select Sales Order Items');
 }
-/* webERP manual links before header.php */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
-
 include('includes/header.php');
+
+include('includes/DefineCartClass.php');
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

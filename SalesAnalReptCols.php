@@ -5,13 +5,11 @@ include('includes/session.php');
 $Title = __('Sales Analysis Report Columns');
 $ViewTopic = 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
-
 include('includes/header.php');
 
+function DataOptions ($DataX) {
 
-function DataOptions ($DataX){
-
-/*Sales analysis headers group by data options */
+/* Sales analysis headers group by data options */
  if ($DataX == 'Quantity'){
      echo '<option selected="selected" value="Quantity">' . __('Quantity') . '</option>';
  } else {
@@ -42,7 +40,6 @@ function DataOptions ($DataX){
  } else {
     echo '<option value="Discount">' . __('Discount') . '</option>';
  }
-
 }
 /* end of functions
 

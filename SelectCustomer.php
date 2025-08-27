@@ -1,17 +1,19 @@
 <?php
+
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
 include('includes/session.php');
+
 $Title = __('Search Customers');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
 include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text">
 		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', __('Customer'), '" /> ', __('Customers'), '
 	</p>';
-
-include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Select'])) {
 	$_SESSION['CustomerID'] = $_GET['Select'];

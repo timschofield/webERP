@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SalesGLPostings';

@@ -1,11 +1,10 @@
 <?php
 
 include('includes/session.php');
-$Title = __('Select an Asset');
 
+$Title = __('Select an Asset');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetSelection';
-
 include('includes/header.php');
 
 if (isset($_GET['AssetID'])) {

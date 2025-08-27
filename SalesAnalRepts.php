@@ -3,10 +3,8 @@
 include('includes/session.php');
 
 $Title = __('Sales Analysis Reports Maintenance');
-/* webERP manual links before header.php */
 $ViewTopic = 'SalesAnalysis';
 $BookMark = 'SalesAnalysis';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -65,7 +63,6 @@ if (isset($_GET['SelectedReport'])) {
 } elseif (isset($_POST['SelectedReport'])) {
 	$SelectedReport = $_POST['SelectedReport'];
 }
-
 
 if (isset($_POST['submit'])) {
 

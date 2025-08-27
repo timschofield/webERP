@@ -5,7 +5,6 @@ include('includes/session.php');
 $Title=__('Sales Report Graph');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'SalesGraph';
-
 include('includes/header.php');
 
 $SelectADifferentPeriod ='';
