@@ -14,10 +14,6 @@ if (isset($_POST['SelectedTag'])){
 	$SelectedTag = mb_strtoupper($_GET['SelectedTag']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Item Tags') .

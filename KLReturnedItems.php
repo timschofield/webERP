@@ -15,10 +15,6 @@ if (isset($_POST['SelectedReturnedItemsId'])) {
 	$SelectedReturnedItemsId = mb_strtoupper($_GET['SelectedReturnedItemsId']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' 

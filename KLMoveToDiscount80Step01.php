@@ -26,9 +26,6 @@ if (!isset($_POST['DiscountCategory'])){
 	$_POST['DiscountCategory']='80';
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 

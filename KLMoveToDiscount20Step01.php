@@ -26,10 +26,6 @@ if (!isset($_POST['DiscountCategory'])){
 	$_POST['DiscountCategory']='20';
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title . '" alt="" />' . ' ' . $Title. '</p>';

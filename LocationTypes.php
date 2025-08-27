@@ -10,10 +10,6 @@ if (isset($_POST['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_GET['SelectedCode']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';

@@ -18,10 +18,6 @@ if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_POST['SelectedPriceChange']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('KL Retail Price Change') . '" alt="" />' . ' ' . $Title.'</p>';

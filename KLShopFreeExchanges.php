@@ -15,10 +15,6 @@ if (isset($_GET['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_POST['SelectedExchange']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('My Last 10 Shop Tali Exchanges') . '" alt="" />' . ' ' . $Title.'</p>';

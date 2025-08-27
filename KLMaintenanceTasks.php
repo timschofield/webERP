@@ -13,10 +13,8 @@ if (isset($_GET['SelectedIndex'])){
 	$SelectedIndex = $_POST['SelectedIndex'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
+
 $InputError = false;
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
