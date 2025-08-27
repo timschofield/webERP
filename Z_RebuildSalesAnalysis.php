@@ -1,6 +1,7 @@
 <?php
 
 // Script to rebuild sales analysis records from stock movements
+
 $PageSecurity = 15;
 
 include('includes/session.php');
