@@ -87,7 +87,7 @@ if (DB_num_rows($Result) == 0){
 	$Title = __('Print Stock Transfer - Error');
 	include('includes/header.php');
 	prnMsg(__('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="PDFStockTransfer.php">' . __('Try Again')  . '</a>';
+	echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again')  . '</a>';
 	include('includes/footer.php');
 	exit();
 }

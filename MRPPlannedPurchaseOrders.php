@@ -252,7 +252,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
-		echo '<form action="MRPConvertWorkOrders.php" method="post">
+		echo '<form action="' . $RootPath . '/MRPConvertWorkOrders.php" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>

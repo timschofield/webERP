@@ -9,7 +9,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
 include('includes/header.php');
 
-echo '<a class="toplink" href="BankAccountUsers.php">', __('Select another bank account'), '</a>';
+echo '<a class="toplink" href="' . $RootPath . '/BankAccountUsers.php">', __('Select another bank account'), '</a>';
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .

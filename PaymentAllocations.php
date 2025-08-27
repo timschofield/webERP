@@ -31,7 +31,7 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Payments') . '" alt="" />' . ' ' . __('Payment Allocation for Supplier') . ': ' . $SuppID . __(' and') . ' ' . __('Invoice') . ': ' . $InvID . '</p>';
 
 echo '<div class="page_help_text">' .
-		__('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . __('Back to supplier inquiry') . '</a>
+		__('This shows how the payment to the supplier was allocated') . '<a href="' . $RootPath . '/SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . __('Back to supplier inquiry') . '</a>
 	</div>';
 
 $SQL= "SELECT supptrans.supplierno,
