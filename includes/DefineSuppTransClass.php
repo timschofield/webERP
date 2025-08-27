@@ -492,6 +492,7 @@ class Contract {
 
 
 class Tax {
+
 	var $TaxCalculationOrder;  /*the index for the array */
 	var $TaxAuthID;
 	var $TaxAuthDescription;

@@ -1,7 +1,7 @@
 <?php
 /* definition of the Contract class */
 
-Class Contract {
+class Contract {
 
 	var $ContractNo; /*auto generated contract no - but there for existing contracts */
     var $ContractRef; /*the contract short description used for stockid when contract submitted for quotation */
@@ -94,7 +94,7 @@ function Add_To_ContractRequirements($Requirement,
 
 } /* end of class defintion */
 
-Class ContractComponent {
+class ContractComponent {
 	var $ComponentID;
 	var $StockID;
 	var $ItemDescription;
@@ -143,7 +143,7 @@ Class ContractComponent {
 	}
 }
 
-Class ContractRequirement {
+class ContractRequirement {
 
 	var $ContractReqID; /*Used to hold the database ID of the contractreqtID  - if an existing contract*/
 	var $Requirement; /*The description of the requirement for the contract */

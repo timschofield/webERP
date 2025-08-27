@@ -80,13 +80,14 @@ class BankTrans {
 	}
 }
 
-Class GLAnalysis {
 
-	Var $Amount;
-	Var $Narrative;
-	Var $GLCode;
+class GLAnalysis {
+
+	var $Amount;
+	var $Narrative;
+	var $GLCode;
 	var $GLAccountName;
-	Var $ID;
+	var $ID;
 	var $Tag;
 
 	function __construct($Amount, $Narrative, $ID, $GLCode, $GLAccountName, $Tag) {
