@@ -227,7 +227,7 @@ document.onmousedown = mouseSelect;
         <input type="text" name="TblColWidth" value="<?php echo $Params['TblColWidth']; ?>" size="3" maxlength="4">
       </div></td>
       <td><div align="center">
-	  	<?php if ($Params['TblShow']=='1' OR $Params['TblShow']=='') $checked=' checked'; else $checked = ''; ?>
+	  	<?php if ($Params['TblShow']=='1' OR $Params['TblShow']=='') $checked = ' checked'; else $checked = ''; ?>
         <input type="checkbox" name="TblShow" value="1"<?php echo $checked; ?>>
       </div></td>
     </tr>

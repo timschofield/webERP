@@ -617,7 +617,7 @@ if (isset($SelectedCategory)) {
 				<td><input type="text" name="PropMaximum' . $PropertyCounter . '" value="' . $MyRow['maximumvalue'] . '" /></td>';
 
 		if ($MyRow['reqatsalesorder']==1){
-			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" checked="True" /></td>';
+			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" checked="checked" /></td>';
 		} else {
 			echo '<td align="center"><input type="checkbox" name="PropReqSO' . $PropertyCounter .'" /></td>';
 		}

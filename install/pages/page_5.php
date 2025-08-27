@@ -26,7 +26,7 @@ $COAs = glob('sql/coa/*.sql');
 
 foreach ($COAs as $Value) {
 	if ($Value == 'sql/coa/' . $_SESSION['Installer']['CoA'] . '.sql') {
-		echo '<option value="' . $Value . '" selected="true">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
+		echo '<option value="' . $Value . '" selected="selected">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	} else {
 		echo '<option value="' . $Value . '">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	}
