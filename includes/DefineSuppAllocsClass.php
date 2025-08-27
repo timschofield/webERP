@@ -56,7 +56,7 @@ class Allocn {
 				   THERE CAN BE ONLY ONE ... allocation record for each
 				   payment/inovice combination  */
 
-	function __construct ($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
+	function __construct($ID, $TransType, $TypeNo, $TransDate, $SuppRef, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){
 
 		$this->ID = $ID;
 		$this->TransType = $TransType;

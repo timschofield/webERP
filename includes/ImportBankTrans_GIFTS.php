@@ -1,4 +1,5 @@
 <?php
+
 /* GIFTS format Bank of New Zealand */
 $LineText = mb_substr($LineText,0,-1);
 $LineArray = explode(',',$LineText);

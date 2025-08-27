@@ -89,15 +89,14 @@ class PaymentGLAnalysis {
 	var $Tag;
 	var $Cheque;
 
-	function __construct ($Amt,
+	function __construct($Amt,
 								$Narr,
 								$id,
 								$GLCode,
 								$GLActName,
 								$Tag,
-								$Cheque){
+								$Cheque) {
 
-/* Constructor function to add a new PaymentGLAnalysis object with passed params */
 		$this->Amount =$Amt;
 		$this->Narrative = $Narr;
 		$this->GLCode = $GLCode;
@@ -105,20 +104,5 @@ class PaymentGLAnalysis {
 		$this->ID = $id;
 		$this->Tag = $Tag;
 		$this->Cheque = $Cheque;
-	}
-	function PaymentGLAnalysis($Amt,
-								$Narr,
-								$id,
-								$GLCode,
-								$GLActName,
-								$Tag,
-								$Cheque){
-		self::__construct($Amt,
-								$Narr,
-								$id,
-								$GLCode,
-								$GLActName,
-								$Tag,
-								$Cheque);
 	}
 }

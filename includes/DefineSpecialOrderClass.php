@@ -75,7 +75,7 @@ class LineDetails {
 	var $ReqDelDate;
 	var $PartCode;
 
-	function __construct ($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
+	function __construct($LineNo, $Qty, $ItemDescr, $Price, $Cost, $StkCat, $ReqDelDate){
 
 	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;

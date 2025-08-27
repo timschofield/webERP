@@ -447,7 +447,7 @@ class LineDetails {
 	var $NextSerialNo;
 	var $GPPercent;
 
-	function __construct ($LineNumber,
+	function __construct($LineNumber,
 							$StockItem,
 							$Descr,
 							$LongDescr,
@@ -584,7 +584,7 @@ class Tax {
 	var $TaxOnTax;
 	var $TaxGLCode;
 
-	function __construct ($TaxCalculationOrder,
+	function __construct($TaxCalculationOrder,
 			$TaxAuthID,
 			$TaxAuthDescription,
 			$TaxRate,

@@ -1,4 +1,5 @@
 <?php
+
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -6,10 +7,9 @@ for controlled items - used in:
 - StockAdjustments.php
 - StockTransfers.php
 - CreditItemsControlled.php
-
 */
 
-//we start with a batch or serial no header and need to display something for verification...
+// we start with a batch or serial no header and need to display something for verification...
 global $TableHeader;
 
 if (isset($_GET['LineNo'])){

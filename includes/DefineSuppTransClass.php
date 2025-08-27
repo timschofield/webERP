@@ -335,7 +335,7 @@ class GRNs {
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function __construct ($GRNNo,
+	function __construct($GRNNo,
 					$PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -501,7 +501,8 @@ class Tax {
 	var $TaxGLCode;
 	var $TaxOvAmount;
 
-	function __construct ($TaxCalculationOrder,
+
+	function __construct($TaxCalculationOrder,
 					$TaxAuthID,
 					$TaxAuthDescription,
 					$TaxRate,

@@ -1,5 +1,4 @@
 <?php
-/* definition of the Journal class */
 
 class Journal {
 
@@ -54,7 +53,7 @@ class JournalGLAnalysis {
 	var $Tag;
 	var $AssetID;
 
-	function __construct ($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID){
+	function __construct($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID){
 
 /* Constructor function to add a new JournalGLAnalysis object with passed params */
 		$this->Amount =$Amt;
