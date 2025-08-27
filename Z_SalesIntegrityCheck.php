@@ -3,7 +3,7 @@
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Sales Integrity');
 $ViewTopic = 'SpecialUtilities';

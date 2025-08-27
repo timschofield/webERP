@@ -5,7 +5,7 @@
 	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
 */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';

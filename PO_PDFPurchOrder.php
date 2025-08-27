@@ -5,7 +5,7 @@ KL RICARD MODIFICATIONS:
 - Print webERP code and supplier code if possible
 *****************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/DefinePOClass.php');

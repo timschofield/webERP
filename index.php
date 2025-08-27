@@ -9,7 +9,7 @@
 
 $PageSecurity = 0;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/MainMenuLinksArray.php');

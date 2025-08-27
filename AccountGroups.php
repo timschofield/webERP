@@ -2,7 +2,7 @@
 
 /* Defines the groupings of general ledger accounts */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';

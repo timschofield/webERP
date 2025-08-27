@@ -6,7 +6,7 @@
 *
 ****************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('WO items can be produced with available stock');
 $ViewTopic = 'Manufacturing';

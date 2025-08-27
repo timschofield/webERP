@@ -1,5 +1,7 @@
 <?php
 
+// Entry of users and security settings of users.
+
 /**************************************************************************************
 *
 * KL RICARD: Send emails to admin, allow usage of group os scripts Personalia
@@ -8,19 +10,17 @@
 *
 ***************************************************************************************/
 
-// Entry of users and security settings of users.
-
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Users Maintenance (except SPG)');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
 
-
 // KL RICARD : Include KL scripts needed 
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 // KL RICARD END
+
 if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	if($_POST['UserID'] == $_POST['ID']) {
 		if (isset($_POST['UserLanguage']) && !checkLanguageChoice($_POST['UserLanguage'])) {

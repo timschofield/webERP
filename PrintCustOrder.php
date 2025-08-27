@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/class.cpdf.php');
 include('includes/SQL_CommonFunctions.php');

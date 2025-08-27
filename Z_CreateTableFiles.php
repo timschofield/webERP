@@ -4,7 +4,7 @@
 
 $PageSecurity = 0;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $SQL = 'SHOW TABLES';
 $Result = DB_query($SQL);

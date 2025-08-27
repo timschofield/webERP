@@ -97,7 +97,7 @@ $_GET['ReportID'] = $reportnumber;
 $Recipients = explode(";",$emailaddresses);
 
 //$AllowCronJobToBeRun = true;
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/PDFSalesAnalysis.php');

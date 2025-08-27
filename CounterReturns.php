@@ -5,7 +5,7 @@
 /// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Counter Returns');
 $ViewTopic = 'SalesOrders';

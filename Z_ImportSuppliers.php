@@ -2,7 +2,7 @@
 
 /* Import suppliers by csv file */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';

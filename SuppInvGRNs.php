@@ -4,8 +4,9 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Enter Supplier Invoice Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';

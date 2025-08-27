@@ -2,7 +2,7 @@
 
 /* Creates a pdf comparing the quantities entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 

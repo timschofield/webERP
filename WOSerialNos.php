@@ -9,7 +9,7 @@
  * Need to allow adding serial numbers/batches and deleting batches/serial numbers
  */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['StockID'])){ //the page was called for the first time - get variables into $_POST array
 	$StockID = $_GET['StockID'];

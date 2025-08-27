@@ -7,8 +7,7 @@ GLEntries objects to hold the GL analysis for each transaction */
 /// @todo move to after session.php if no side effects
 include('includes/DefineImportBankTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Imported Bank Transaction General Ledger Analysis');
 $ViewTopic = 'GeneralLedger';

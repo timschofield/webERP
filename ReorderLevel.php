@@ -3,7 +3,7 @@
 // Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

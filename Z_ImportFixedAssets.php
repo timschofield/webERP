@@ -2,7 +2,7 @@
 
 /* Script to import fixed assets into a specified period */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Fixed Assets');
 $ViewTopic = 'SpecialUtilities';

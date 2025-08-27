@@ -2,7 +2,7 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP 3.06 - 3.07');
 include('includes/header.php');

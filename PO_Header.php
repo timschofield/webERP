@@ -9,9 +9,13 @@
 
 /// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-
+if (isset($_GET['ModifyOrderNumber'])) {
+	$Title = __('Modify Purchase Order');
+} else {
+	$Title = __('Purchase Order Entry');
+}
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchaseOrdering';
 include('includes/header.php');
@@ -29,11 +33,7 @@ if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_P
 if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);}
 if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);}
 if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);}
-if (isset($_GET['ModifyOrderNumber'])) {
-	$Title = __('Modify Purchase Order');
-} else {
-	$Title = __('Purchase Order Entry');
-}
+
 
 
 /*If the page is called without an identifier being set then

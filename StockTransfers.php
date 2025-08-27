@@ -8,7 +8,7 @@ KL RICARD MODIFICATIONS:
 - Added $_POST['Reason']
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 
 $Title = __('Stock Transfers');

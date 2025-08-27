@@ -2,7 +2,7 @@
 
 /* Select a picking list */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Pick Lists');
 $ViewTopic = 'Sales';

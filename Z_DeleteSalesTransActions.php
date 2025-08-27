@@ -2,7 +2,7 @@
 
 /*Script to Delete all sales transactions*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Delete Sales Transactions');
 $ViewTopic = 'SpecialUtilities';

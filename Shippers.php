@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 - Added Opencart powertrack fields to shippers DB 
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipping Company Maintenance');
 $ViewTopic = 'Shipments';

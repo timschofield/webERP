@@ -2,7 +2,7 @@
 
 // Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 

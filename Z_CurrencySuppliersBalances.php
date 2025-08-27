@@ -2,7 +2,8 @@
 
 /* This script is an utility to show suppliers balances in total by currency. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Currency Supplier Balances');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_CurrencySuppliersBalances';

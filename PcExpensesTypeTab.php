@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Maintenance Of Petty Cash Expenses For a Type Tab');
 /* webERP manual links before header.php */

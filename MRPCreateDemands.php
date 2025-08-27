@@ -2,7 +2,7 @@
 
 // Create mrpdemands based on sales order history
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('MRP Create Demands');
 $ViewTopic = 'MRP';

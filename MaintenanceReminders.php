@@ -9,7 +9,7 @@ KL RICARD MODIFICATIONS:
 
 $AllowCronJobToBeRun = true;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('Send maintenance reminders');
 
 $SQL = "SELECT description,

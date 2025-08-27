@@ -9,7 +9,7 @@ KL RICARD MODIFICATIONS:
 - change the stock code also in KL tables using this field in webERP and OpenCart (function ChangeFieldInOpenCartTable at bottom of this script)
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE Change A Stock Code');
 $ViewTopic = 'SpecialUtilities';

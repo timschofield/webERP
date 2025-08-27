@@ -2,7 +2,7 @@
 
 // The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Price break matrix Maintenance');
 $ViewTopic = 'Sales';

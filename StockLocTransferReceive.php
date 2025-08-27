@@ -11,7 +11,7 @@ KL RICARD MODIFICATIONS:
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Inventory Transfer') . ' - ' . __('Receiving');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.

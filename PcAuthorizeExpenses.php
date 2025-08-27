@@ -9,7 +9,7 @@
 *
 *********************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Authorisation of Petty Cash Expenses');
 $ViewTopic = 'PettyCash';
@@ -22,6 +22,7 @@ include('includes/GLFunctions.php');
 // KL RICARD
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])) {

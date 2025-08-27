@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 //$Title = __('My Maintenance Jobs');
 $Title = __('Fixed Assets Maintenance Schedule');

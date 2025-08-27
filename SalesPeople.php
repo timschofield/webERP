@@ -5,7 +5,7 @@ KL RICARD MODIFICATIONS:
 - Simplified fields not used in KL (or anyway in webERP)
 *****************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('SPG Maintenance');
 $ViewTopic = 'SalesPeople';
@@ -17,6 +17,7 @@ if(isset($_GET['delete'])) {
 	$BookMark = 'SalespeopleDelete';
 }// For Delete's ERROR Message Report.
 include('includes/header.php');
+
 include('includes/KLEmails.php');
 
 if (isset($_GET['SelectedSalesPerson'])){

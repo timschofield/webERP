@@ -5,7 +5,7 @@
 // This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Cash Flows Activities Maintenance');
 $ViewTopic = 'GeneralLedger';

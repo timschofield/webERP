@@ -2,7 +2,7 @@
 
 /* Import debtors by csv file */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Debtors And branches');
 $ViewTopic = 'SpecialUtilities';

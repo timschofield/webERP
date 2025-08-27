@@ -2,7 +2,7 @@
 
 /* Maintain Supplier Price Lists */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';

@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-global $RootPath;
+//global $RootPath;
 
 /*
 http://127.0.0.1/~brink/webERP/GetStockImage.php

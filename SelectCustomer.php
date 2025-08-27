@@ -2,7 +2,7 @@
 
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Customers');
 $ViewTopic = 'AccountsReceivable';

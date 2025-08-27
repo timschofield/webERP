@@ -2,7 +2,7 @@
 
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.

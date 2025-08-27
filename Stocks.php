@@ -7,7 +7,7 @@ KL RICARD MODIFICATIONS:
 - For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Item Maintenance');
 $ViewTopic = 'Inventory';

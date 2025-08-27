@@ -5,7 +5,7 @@
 * KL RICARD: do not show auditscripts table results
 *
 ************************************************************************************************/
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Audit Trail');
 $ViewTopic = 'Setup';

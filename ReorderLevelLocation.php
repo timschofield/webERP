@@ -5,7 +5,7 @@ KL RICARD MODIFICATIONS:
 - Added 4 fields. 3 KL fields from stockmaster to calculate and show notes (KL status of the item)
 *****************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';

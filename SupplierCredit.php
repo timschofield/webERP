@@ -19,18 +19,18 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 $Title = __('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/GLFunctions.php');
+
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);

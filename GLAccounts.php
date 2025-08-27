@@ -26,7 +26,7 @@ function CashFlowsActivityName($Activity) {
 // END: Functions division -----------------------------------------------------
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';

@@ -2,7 +2,7 @@
 
 /* Lists customer account balances in detail or summary in selected currency */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

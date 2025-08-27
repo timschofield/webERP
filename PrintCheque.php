@@ -2,7 +2,7 @@
 
 /* Hard coded for currencies with 2 decimal places */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/DefinePaymentClass.php');
 

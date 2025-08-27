@@ -2,7 +2,7 @@
 
 // Shows bank accounts authorised for with balances
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('List of bank account balances');
 $ViewTopic = 'GeneralLedger';

@@ -4,7 +4,7 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Receive Controlled Items');
 include('includes/header.php');

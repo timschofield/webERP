@@ -2,7 +2,7 @@
 
 // Maintains the calendar of valid manufacturing dates for MRP
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('MRP Calendar');
 $ViewTopic = 'MRP';

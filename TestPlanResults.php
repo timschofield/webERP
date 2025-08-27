@@ -2,7 +2,7 @@
 
 // Test Plan Results Entry.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'QualityAssurance'; /* ?????????? */
 $BookMark = 'TestPlanResults';

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Users currently logged in');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.

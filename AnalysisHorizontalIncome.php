@@ -26,12 +26,13 @@ Parameters:
 */
 
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Horizontal Analysis of Statement of Comprehensive Income');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalIncome';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 // KL RICARD: prepare the data for each company

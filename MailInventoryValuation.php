@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 
 $AllowCronJobToBeRun = true;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

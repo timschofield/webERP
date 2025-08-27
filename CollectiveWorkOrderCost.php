@@ -2,7 +2,7 @@
 
 /* Multiple work orders cost review */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Work Orders');
 $ViewTopic = 'Manufacturing';

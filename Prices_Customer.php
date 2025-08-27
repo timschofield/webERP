@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,

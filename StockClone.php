@@ -5,7 +5,7 @@ KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Clone Item');
 $ViewTopic = 'Inventory';

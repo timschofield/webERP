@@ -9,7 +9,7 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 
 !! */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Delete Credit Note');
 $ViewTopic = 'SpecialUtilities';

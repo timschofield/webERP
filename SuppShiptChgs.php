@@ -9,7 +9,7 @@ purchase price variance calculated when the shipment is closed */
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipment Charges or Credits');
 $ViewTopic = 'AccountsPayable';

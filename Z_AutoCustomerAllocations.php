@@ -5,7 +5,7 @@ Call this page with:
 	1. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Automatic Customer Receipt') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';

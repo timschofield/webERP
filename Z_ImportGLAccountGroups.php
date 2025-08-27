@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('api/api_errorcodes.php');
 include('api/api_glgroups.php');

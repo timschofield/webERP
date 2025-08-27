@@ -2,7 +2,7 @@
 
 // Displays the bank reconciliation for a selected bank account.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Bank Reconciliation');
 $ViewTopic = 'GeneralLedger';

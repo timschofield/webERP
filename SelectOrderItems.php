@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 - Change the title
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 // KL RICARD: Change the Title
 if (isset($_GET['ModifyOrderNumber'])) {

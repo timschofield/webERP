@@ -6,13 +6,14 @@
  * 
  ****************************************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Copy Authority of Bank Accounts from one user to another');
 include('includes/header.php');
-include('includes/KLEmails.php');
 
 include('includes/SQL_CommonFunctions.php');
+
+include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.

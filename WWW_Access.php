@@ -2,7 +2,7 @@
 
 /* This script is to maintain access permissions. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Access Permissions Maintenance');
 $ViewTopic = 'SecuritySchema';

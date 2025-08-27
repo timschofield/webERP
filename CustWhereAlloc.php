@@ -2,7 +2,7 @@
 
 /* Shows to which invoices a receipt was allocated to */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer How Paid Inquiry');
 $ViewTopic = 'ARInquiries';

@@ -2,7 +2,7 @@
 
 // Assign cash from one tab to another.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';

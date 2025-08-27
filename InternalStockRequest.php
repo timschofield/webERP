@@ -10,7 +10,7 @@
 
 include('includes/DefineStockRequestClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';

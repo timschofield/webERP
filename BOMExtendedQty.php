@@ -2,7 +2,7 @@
 
 // Quantity Extended Bill of Materials
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

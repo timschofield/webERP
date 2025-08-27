@@ -8,7 +8,7 @@
 
 $PageSecurity = 1;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 //use PhpOffice\PhpSpreadsheet\Helper\Sample;

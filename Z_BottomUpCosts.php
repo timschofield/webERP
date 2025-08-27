@@ -2,7 +2,7 @@
 
 /* Script to update costs for all BOM items, from the bottom up */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Recalculate BOM costs');
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
