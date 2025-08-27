@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Database abstraction for mysql
  *
@@ -7,12 +8,12 @@
 
 define('LIKE', 'LIKE');
 
-if (!isset($MySQLPort)) {
-	$MySQLPort = 3306;
+if (!isset($DBPort)) {
+	$DBPort = 3306;
 }
 global $db;// Make sure it IS global, regardless of our context
 
-$db = mysql_connect($Host . ':' . $MySQLPort, $DBUser, $DBPassword);
+$db = mysql_connect($Host . ':' . $DBPort, $DBUser, $DBPassword);
 
 if (!$db) {
 	echo '<br />' . __('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');

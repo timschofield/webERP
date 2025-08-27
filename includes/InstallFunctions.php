@@ -38,10 +38,10 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
  * @todo we miss the PORT setting!
  * @return string[] error messages
  */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
+function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort) {
 	$Errors = [];
 
-	$DB = @mysqli_connect($HostName, $UserName, $Password, null, $MySQLPort);
+	$DB = @mysqli_connect($HostName, $UserName, $Password, null, $DBPort);
 
 	if (!$DB) {
 		$Errors[] = __('Failed to connect the database management system');
