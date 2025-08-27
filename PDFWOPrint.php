@@ -2,11 +2,7 @@
 
 // Converted to use DomPDF for PDF generation
 
-<<<<<<< HEAD
 require(__DIR__ . '/includes/session.php');
-=======
-include('includes/session.php');
->>>>>>> master
 
 use Dompdf\Dompdf;
 
