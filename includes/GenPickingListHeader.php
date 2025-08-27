@@ -1,4 +1,5 @@
 <?php
+
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber > 1) {
 	$pdf->newPage();

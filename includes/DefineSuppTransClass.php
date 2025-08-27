@@ -335,7 +335,7 @@ class GRNs {
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function __construct ($GRNNo,
+	function __construct($GRNNo,
 					$PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -416,13 +416,13 @@ class GRNs {
 
 class GLCodes {
 
-	Var $Counter;
-	Var $GLCode;
-	Var $GLActName;
-	Var $Amount;
-	Var $Narrative;
-	Var $Tag;
-	Var $TagName;
+	var $Counter;
+	var $GLCode;
+	var $GLActName;
+	var $Amount;
+	var $Narrative;
+	var $Tag;
+	var $TagName;
 
 	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
 	/* Constructor function to add a new GLCodes object with passed params */
@@ -438,9 +438,9 @@ class GLCodes {
 
 class Shipment {
 
-	Var $Counter;
-	Var $ShiptRef;
-	Var $Amount;
+	var $Counter;
+	var $ShiptRef;
+	var $Amount;
 
 	function __construct($Counter, $ShiptRef, $Amount){
 		$this->Counter = $Counter;
@@ -451,11 +451,11 @@ class Shipment {
 
 class Asset {
 
-	Var $Counter;
-	Var $AssetID;
-	Var $Description;
-	Var $CostAct;
-	Var $Amount;
+	var $Counter;
+	var $AssetID;
+	var $Description;
+	var $CostAct;
+	var $Amount;
 
 	function __construct($Counter, $AssetID, $Amount){
 		$this->Counter = $Counter;
@@ -475,11 +475,11 @@ class Asset {
 
 class Contract {
 
-	Var $Counter;
-	Var $ContractRef;
-	Var $Amount;
-	Var $Narrative;
-	Var $AniticipatedCost;
+	var $Counter;
+	var $ContractRef;
+	var $Amount;
+	var $Narrative;
+	var $AniticipatedCost;
 
 	function __construct($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
 		$this->Counter = $Counter;
@@ -492,15 +492,17 @@ class Contract {
 
 
 class Tax {
-	Var $TaxCalculationOrder;  /*the index for the array */
-	Var $TaxAuthID;
-	Var $TaxAuthDescription;
-	Var $TaxRate;
-	Var $TaxOnTax;
-	Var $TaxGLCode;
-	Var $TaxOvAmount;
 
-	function __construct ($TaxCalculationOrder,
+	var $TaxCalculationOrder;  /*the index for the array */
+	var $TaxAuthID;
+	var $TaxAuthDescription;
+	var $TaxRate;
+	var $TaxOnTax;
+	var $TaxGLCode;
+	var $TaxOvAmount;
+
+
+	function __construct($TaxCalculationOrder,
 					$TaxAuthID,
 					$TaxAuthDescription,
 					$TaxRate,

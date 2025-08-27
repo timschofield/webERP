@@ -66,7 +66,6 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$TotalPayments = 0;
 	$TotalAccumDiffOnExch = 0;
 
-
 	if (isset($_POST['PrintPDFAndProcess'])){
 		DB_Txn_Begin();
 	}

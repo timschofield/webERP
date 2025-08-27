@@ -1,6 +1,6 @@
 <?php
 
-Class StockRequest {
+class StockRequest {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $DispatchDate;
@@ -39,7 +39,7 @@ Class StockRequest {
 	}
 }
 
-Class LineDetails {
+class LineDetails {
 	var $StockID;
 	var $ItemDescription;
 	var $Quantity;

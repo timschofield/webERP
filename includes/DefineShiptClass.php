@@ -86,7 +86,7 @@ class LineDetails {
 	var $StdCostUnit;
 	var $DecimalPlaces;
 
-	function __construct ($PODetailItem,
+	function __construct($PODetailItem,
 							$OrderNo,
 							$StockID,
 							$ItemDescr,
