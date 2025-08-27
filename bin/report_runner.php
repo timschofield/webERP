@@ -16,6 +16,8 @@
 // see here http://www.gnu.org/licenses/gpl.txt
 //--------------------------------------------------------------------
 
+/// @todo should we exit if php_sapi_name() != "cli" ?
+
 // The script where your main installation is located
 // Remember this is different for each location
 $weberp_home = realpath(__DIR__ . '/..');
