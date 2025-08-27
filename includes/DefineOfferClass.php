@@ -1,9 +1,9 @@
 <?php
-/* Definition of the Offer class to hold all the information for a supplier offer
-*/
 
-
-Class Offer {
+/**
+ * hold all the information for a supplier offer
+ */
+class Offer {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $TenderID;
@@ -16,8 +16,7 @@ Class Offer {
 	var $Version;
 	var $OfferMailText;
 
-	function __construct($Supplier){
-	/*Constructor function initialises a new purchase offer object */
+	function __construct($Supplier) {
 		$this->LineItems = array();
 		$this->total = 0;
 		$this->LinesOnOffer = 0;
@@ -33,9 +32,6 @@ Class Offer {
 		$this->EmailAddress = $MyRow['email'];
 		$this->CurrCode = $MyRow['currcode'];
 	}
-	function Offer($Supplier) {
-		self::__construct($Supplier);
-	}
 
 	function add_to_offer($LineNo,
 							$StockID,
@@ -44,7 +40,7 @@ Class Offer {
 							$Price,
 							$UOM,
 							$DecimalPlaces,
-							$ExpiryDate){
+							$ExpiryDate) {
 
 		if (isset($Qty) and $Qty != 0){
 
@@ -156,17 +152,16 @@ Class Offer {
 	function update_offer_item($LineNo,
 								$Qty,
 								$Price,
-								$ExpiryDate){
+								$ExpiryDate) {
 
 			$this->LineItems[$LineNo]->Quantity = $Qty;
 			$this->LineItems[$LineNo]->Price = $Price;
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_from_offer($LineNo){
+	function remove_from_offer($LineNo) {
 		$this->LineItems[$LineNo]->Deleted = True;
 	}
-
 
 	function Offer_Value() {
 		$TotalValue = 0;
@@ -175,10 +170,9 @@ Class Offer {
 		}
 		return $TotalValue;
 	}
-} /* end of class defintion */
+}
 
-Class LineDetails {
-/* PurchOrderDetails */
+class LineDetails {
 	var $LineNo;
 	var $StockID;
 	var $ItemDescription;
@@ -198,7 +192,6 @@ Class LineDetails {
 							$DecimalPlaces,
 							$ExpiryDate) {
 
-	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID = $StockItem;
 		$this->ItemDescription = $ItemDescr;
@@ -208,22 +201,5 @@ Class LineDetails {
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
 		$this->Deleted = False;
-	}
-	function LineDetails($LineNo,
-							$StockItem,
-							$Qty,
-							$ItemDescr,
-							$Price,
-							$UOM,
-							$DecimalPlaces,
-							$ExpiryDate) {
-		self::__construct($LineNo,
-							$StockItem,
-							$Qty,
-							$ItemDescr,
-							$Price,
-							$UOM,
-							$DecimalPlaces,
-							$ExpiryDate);
 	}
 }

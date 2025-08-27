@@ -5,11 +5,10 @@
 *
 ***********************************************************************************************/
 
-/* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
-*/
-
-
-Class PurchOrder {
+/**
+ * class to hold all the information for a purchase order and delivery
+ */
+class PurchOrder {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $CurrCode;
@@ -67,14 +66,9 @@ Class PurchOrder {
 // KL RICARD end
 
 	function __construct(){
-	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
 		$this->Total=0;
 		$this->LinesOnOrder=0;
-	}
-
-	function PurchOrder() {
-		self::__construct();
 	}
 
 	function add_to_order($LineNo,
@@ -160,7 +154,6 @@ Class PurchOrder {
 		 $this->LineItems[$LineNo]->Deleted = True;
 	}
 
-
 	function Any_Already_Received(){
 		/* Checks if there have been deliveries or invoiced entered against any of the line items */
 		if (count($this->LineItems)>0){
@@ -184,6 +177,7 @@ Class PurchOrder {
 		}
 		return 0;
 	}
+
 	function Some_Already_Received($LineNo){
 		/* Checks if there have been deliveries or amounts invoiced against a specific line item */
 		if (count($this->LineItems)>0 and isset($this->LineItems[$LineNo])){
@@ -222,10 +216,9 @@ Class PurchOrder {
 		return 0; //nowt received
 	}
 
-} /* end of class defintion */
+}
 
-Class LineDetails {
-/* PurchOrderDetails */
+class LineDetails {
 	Var $LineNo;
 	Var $PODetailRec;
 	Var $StockID;
@@ -278,7 +271,6 @@ Class LineDetails {
 						$Suppliers_PartNo,
 						$AssetID)	{
 
-	/* Constructor function to add a new LineDetail object with passed params */
 		$this->LineNo = $LineNo;
 		$this->StockID =$StockItem;
 		$this->Controlled = $Controlled;
@@ -311,50 +303,5 @@ Class LineDetails {
 		$this->SerialItemsValid=false;
 		$this->AssetID = $AssetID;
 
-	}
-	function LineDetails($LineNo,
-						$StockItem,
-						$Serialised,
-						$Controlled,
-						$Qty,
-						$ItemDescr,
-						$Price,
-						$UOM,
-						$GLCode,
-						$ReqDelDate,
-						$ShiptRef,
-						$Completed,
-						$JobRef,
-						$QtyInv,
-						$QtyRecd,
-						$GLActName,
-						$DecimalPlaces,
-						$SuppliersUnit,
-						$ConversionFactor,
-						$LeadTime,
-						$Suppliers_PartNo,
-						$AssetID) {
-		self::__construct($LineNo,
-						$StockItem,
-						$Serialised,
-						$Controlled,
-						$Qty,
-						$ItemDescr,
-						$Price,
-						$UOM,
-						$GLCode,
-						$ReqDelDate,
-						$ShiptRef,
-						$Completed,
-						$JobRef,
-						$QtyInv,
-						$QtyRecd,
-						$GLActName,
-						$DecimalPlaces,
-						$SuppliersUnit,
-						$ConversionFactor,
-						$LeadTime,
-						$Suppliers_PartNo,
-						$AssetID);
 	}
 }
