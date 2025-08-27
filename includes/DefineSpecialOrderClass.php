@@ -2,7 +2,7 @@
 /* Definition of the SpecialOrder class to hold all the information for a special quote/order and delivery
 */
 
-Class SpecialOrder {
+class SpecialOrder {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $Initiator;
@@ -64,7 +64,7 @@ Class SpecialOrder {
 
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 
 	var $LineNo;
 	var $ItemDescription;

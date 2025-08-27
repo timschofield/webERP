@@ -1,7 +1,7 @@
 <?php
 /* definition of the Payment class */
 
-Class Payment {
+class Payment {
 
 	var $GLItems; /*array of objects of Payment class - id is the pointer */
 	var $Account; /*Bank account GL Code Paid from */
@@ -79,7 +79,7 @@ Class Payment {
 
 } /* end of class defintion */
 
-Class PaymentGLAnalysis {
+class PaymentGLAnalysis {
 
 	var $Amount;	/* in currency of the payment*/
 	var $Narrative;
