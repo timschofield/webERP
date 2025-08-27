@@ -1,12 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Create Chart Details Records');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-/*Script to insert ChartDetails records where one should already exist
+/* Script to insert ChartDetails records where one should already exist
 only necessary where manual entry of chartdetails has stuffed the system */
 
 $FirstPeriodResult = DB_query("SELECT MIN(periodno) FROM periods");
@@ -18,8 +19,7 @@ $LastPeriodRow = DB_fetch_row($LastPeriodResult);
 $CreateFrom = $FirstPeriodRow[0];
 $CreateTo = $LastPeriodRow[0];
 
-
-/*First off see if there are any chartdetails missing create recordset of */
+/* First off see if there are any chartdetails missing create recordset of */
 
 $SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 		FROM chartmaster CROSS JOIN periods

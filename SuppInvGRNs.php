@@ -4,8 +4,9 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Enter Supplier Invoice Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
@@ -45,7 +46,7 @@ if (isset($_POST['AddGRNToTrans'])){ /*adding a GRN to the invoice */
 			$_POST['GRNNo_' . $GRNTmp->GRNNo] = false;
 		}
 		$Selected = $_POST['GRNNo_' . $GRNTmp->GRNNo];
-		if ($Selected==True) {
+		if ($Selected==true) {
 			$_SESSION['SuppTrans']->Copy_GRN_To_Trans($GRNTmp);
 			$_SESSION['SuppTransTmp']->Remove_GRN_From_Trans($GRNTmp->GRNNo);
 		}
@@ -56,30 +57,30 @@ if (isset($_POST['ModifyGRN'])){
 
 	for ($i=0;isset($_POST['GRNNo'.$i]);$i++) { //loop through all the possible form variables where a GRNNo is in the POST variable name
 
-		$InputError=False;
-		$Hold=False;
+		$InputError=false;
+		$Hold=false;
 		if (filter_number_format($_POST['This_QuantityInv'. $i]) >= ($_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->QtyRecd - $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->Prev_QuantityInv )){
-			$Complete = True;
+			$Complete = true;
 		} else {
-			$Complete = False;
+			$Complete = false;
 		}
 
 		if (filter_number_format($_POST['This_QuantityInv'.$i])+$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->Prev_QuantityInv-$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->QtyRecd > 0){
 			prnMsg(__('The quantity being invoiced is more than the outstanding quantity that was delivered. It is not possible to enter an invoice for a quantity more than was received into stock'),'warn');
-			$InputError = True;
+			$InputError = true;
 		}
 		if (!is_numeric(filter_number_format($_POST['ChgPrice' . $i])) AND filter_number_format($_POST['ChgPrice' . $i])<0){
-			$InputError = True;
+			$InputError = true;
 			prnMsg(__('The price charged in the suppliers currency is either not numeric or negative') . '. ' . __('The goods received cannot be invoiced at this price'),'error');
-		} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == True AND $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice != 0) {
+		} elseif ($_SESSION['Check_Price_Charged_vs_Order_Price'] == true AND $_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice != 0) {
 			if (filter_number_format($_POST['ChgPrice' . $i])/$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->OrderPrice > (1+ ($_SESSION['OverChargeProportion'] / 100))){
 				prnMsg(__('The price being invoiced is more than the purchase order price by more than') . ' ' . $_SESSION['OverChargeProportion'] . '%. ' .
 				__('The system is set up to prohibit this so will put this invoice on hold until it is authorised'),'warn');
-				$Hold=True;
+				$Hold=true;
 			}
 		}
 
-		if ($InputError==False){
+		if ($InputError==false){
 			$_SESSION['SuppTrans']->Modify_GRN_To_Trans($_POST['GRNNo'.$i],
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->PODetailItem,
 														$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->ItemCode,
@@ -211,17 +212,17 @@ if (!isset( $_SESSION['SuppTransTmp'])){
 	$_SESSION['SuppTransTmp'] = new SuppTrans;
 	while ($MyRow=DB_fetch_array($GRNResults)){
 
-		$GRNAlreadyOnInvoice = False;
+		$GRNAlreadyOnInvoice = false;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
-				$GRNAlreadyOnInvoice = True;
+				$GRNAlreadyOnInvoice = true;
 			}
 		}
 		if ($MyRow['decimalplaces']==''){
 			$MyRow['decimalplaces']=2;
 		}
-		if ($GRNAlreadyOnInvoice == False){
+		if ($GRNAlreadyOnInvoice == false){
 			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($MyRow['grnno'],
 														$MyRow['podetailitem'],
 														$MyRow['itemcode'],

@@ -1,12 +1,16 @@
 <?php
-/* Script to import fixed assets into a specified period*/
 
-include('includes/session.php');
+/* Script to import fixed assets into a specified period */
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Import Fixed Assets');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/descending.png" title="' .
 		__('Import Fixed Assets from .csv file') . '" />' . ' ' .
@@ -288,7 +292,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 } else { //show file upload form
 
-	echo '<a href="Z_ImportFixedAssets.php?gettemplate=1">' . __('Get Import Template') . '</a>';
+	echo '<a href="' . $RootPath . '/Z_ImportFixedAssets.php?gettemplate=1">' . __('Get Import Template') . '</a>';
 	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

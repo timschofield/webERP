@@ -1,10 +1,12 @@
  <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/inventory.png" title="' .
 		__('Import Stock Items from .csv') . '" />' . ' ' .
@@ -15,7 +17,6 @@ echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $The
 // Otherwise, a file upload form is displayed
 
 // The CSV file must be saved in a format like the template in the import module I.E. "RECVALUE","RECVALUE2". The CSV file needs ANSI encoding for the import to work properly.
-
 
 $FieldHeadings = array(
 	'StockID',         	//  0 'STOCKID',
@@ -287,7 +288,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	echo '
 		<br />
-		<a href="Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
+		<a href="' . $RootPath . '/Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';

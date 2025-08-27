@@ -1,5 +1,9 @@
 <?php
-/* Database abstraction for mysql */
+/*
+ * Database abstraction for mysql
+ *
+ * @deprecated !!! left in only for BC for users who are running webERP on unsupported php versions
+ */
 
 define('LIKE', 'LIKE');
 
@@ -218,8 +222,8 @@ function DB_table_exists($TableName) {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) > 0) {
-		return True;
+		return true;
 	} else {
-		return False;
+		return false;
 	}
 }

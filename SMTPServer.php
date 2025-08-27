@@ -1,19 +1,20 @@
 <?php
-/* This script is <create a description for script table>. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 use PHPMailer\PHPMailer\PHPMailer;
 
-$Title = __('SMTP Server details');// Screen identification.
-$ViewTopic = 'CreatingNewSystem';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'SMTPServer';// Anchor's id in the manual's html document.
+$Title = __('SMTP Server details');
+$ViewTopic = 'CreatingNewSystem';
+$BookMark = 'SMTPServer';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/email.png" title="' .// Icon image.
 	__('SMTP Server') . '" /> ' .// Icon title.
 	__('SMTP Server Settings') . '</p>';// Page title.
-// First check if there are smtp server data or not
 
+// First check if there are smtp server data or not
 
 if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are already data setup, Update the table
 

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Purchase Order Authorisation Maintenance');
 $ViewTopic = '';
@@ -12,12 +12,10 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-
 /*Note: If CanCreate==0 then this means the user can create orders
  *     Also if OffHold==0 then the user can release purchase invocies
  *     This logic confused me a bit to start with
  */
-
 
 if (isset($_POST['Submit'])) {
 	if (isset($_POST['CanCreate']) AND $_POST['CanCreate']=='on') {

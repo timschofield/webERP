@@ -1,32 +1,35 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF'])
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1){
+	or isset($_POST['View'])
+	and isset($_POST['FromCriteria'])
+	and mb_strlen($_POST['FromCriteria']) >= 1
+	and isset($_POST['ToCriteria'])
+	and mb_strlen($_POST['ToCriteria']) >= 1) {
 
-	include('includes/PDFStarter.php');
+	$Title = __('Supplier Balance Listing');
+	$Subject = __('Supplier Balances');
 
-	$pdf->addInfo('Title',__('Supplier Balance Listing'));
-	$pdf->addInfo('Subject',__('Supplier Balances'));
-
-	$FontSize=12;
-	$PageNumber=0;
-	$LineHeight=12;
-
-	  /*Now figure out the aged analysis for the Supplier range under review */
+	// Start building HTML
+	$HTML = '';
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
 
 	$SQL = "SELECT suppliers.supplierid,
 					suppliers.suppname,
-		  			currencies.currency,
-		  			currencies.decimalplaces AS currdecimalplaces,
+					currencies.currency,
+					currencies.decimalplaces AS currdecimalplaces,
 					SUM((supptrans.ovamount + supptrans.ovgst - supptrans.alloc)/supptrans.rate) AS balance,
 					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS fxbalance,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "' THEN
-			(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
+						(supptrans.ovamount + supptrans.ovgst)/supptrans.rate ELSE 0 END) AS afterdatetrans,
 					SUM(CASE WHEN supptrans.trandate > '" . $_POST['PeriodEnd'] . "'
 						AND (supptrans.type=22 OR supptrans.type=21) THEN
 						supptrans.diffonexch ELSE 0 END) AS afterdatediffonexch,
@@ -46,63 +49,115 @@ if (isset($_POST['PrintPDF'])
 	$ErrMsg = __('The Supplier details could not be retrieved');
 	$SupplierResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($SupplierResult) ==0) {
+	if (DB_num_rows($SupplierResult) == 0) {
 		$Title = __('Supplier Balances - Problem Report');
 		include('includes/header.php');
-		prnMsg(__('There are no supplier balances to list'),'error');
+		prnMsg(__('There are no supplier balances to list'), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit();
 	}
 
-	include('includes/PDFSupplierBalsPageHeader.php');
+	// Table header
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . __('Supplier Balance Listing') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div><table>
+		<thead>
+			<tr>
+				<th>' . __('Supplier Code & Name') . '</th>
+				<th>' . __('Balance') . '</th>
+				<th>' . __('FX Balance') . '</th>
+				<th>' . __('Currency') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 
-	$TotBal=0;
+	$TotBal = 0;
 
-	while ($SupplierBalances = DB_fetch_array($SupplierResult)){
+	while ($SupplierBalances = DB_fetch_array($SupplierResult)) {
 
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
 
-		if (ABS($Balance)>0.009 OR ABS($FXBalance)>0.009) {
-			$DisplayBalance = locale_number_format($SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'],$_SESSION['CompanyRecord']['decimalplaces']);
-			$DisplayFXBalance = locale_number_format($SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'],$SupplierBalances['currdecimalplaces']);
+		if (ABS($Balance) > 0.009 || ABS($FXBalance) > 0.009) {
+			$DisplayBalance = locale_number_format($Balance, $_SESSION['CompanyRecord']['decimalplaces']);
+			$DisplayFXBalance = locale_number_format($FXBalance, $SupplierBalances['currdecimalplaces']);
 
 			$TotBal += $Balance;
 
-			$pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'],'left');
-			$pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-			$pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
-			$pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
-
-			$YPos -=$LineHeight;
-			if ($YPos < $Bottom_Margin + $LineHeight){
-			include('includes/PDFSupplierBalsPageHeader.php');
-			}
+			$HTML .= '<tr class="striped_row">
+				<td class="left">' . $SupplierBalances['supplierid'] . ' - ' . $SupplierBalances['suppname'] . '</td>
+				<td class="number">' . $DisplayBalance . '</td>
+				<td class="number">' . $DisplayFXBalance . '</td>
+				<td class="left">' . $SupplierBalances['currency'] . '</td>
+			</tr>';
 		}
-	} /*end Supplier aged analysis while loop */
+	} // end while
 
-	$YPos -=$LineHeight;
-	if ($YPos < $Bottom_Margin + (2*$LineHeight)){
-		$PageNumber++;
-		include('includes/PDFSupplierBalsPageHeader.php');
+	$DisplayTotBalance = locale_number_format($TotBal, $_SESSION['CompanyRecord']['decimalplaces']);
+
+	// Total row
+	$HTML .= '<tr class="total_row">
+		<td class="left"><strong>' . __('Total') . '</strong></td>
+		<td class="number"><strong>' . $DisplayTotBalance . '</strong></td>
+		<td></td>
+		<td></td>
+	</tr>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_Supplier_Balances_At_Prior_Month_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	}
+	else {
+		$Title = __('Supplier Balances At A Period End');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Suppliers') . '" alt="" />' . ' ' . __('Supplier Balances At A Period End') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
 	}
 
-	$DisplayTotBalance = locale_number_format($TotBal,$_SESSION['CompanyRecord']['decimalplaces']);
+} else { // Not printing PDF, show input form
 
-	$pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Supplier_Balances_at_Period_End_' . Date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
-
-} else { /*The option to print PDF was not hit */
-
-	$Title=__('Supplier Balances At A Period End');
-$ViewTopic = 'AccountsPayable';
-$BookMark = '';
+	$Title = __('Supplier Balances At A Period End');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = '';
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' .
 		__('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria'])) {
 		$_POST['FromCriteria'] = '1';
@@ -110,20 +165,19 @@ $BookMark = '';
 	if (!isset($_POST['ToCriteria'])) {
 		$_POST['ToCriteria'] = 'zzzzzz';
 	}
-	/*if $FromCriteria is not set then show a form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>';
 	echo '<field>
 			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
-			<input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" />
+			<input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $_POST['FromCriteria'] . '" />
 		</field>
 		<field>
 			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
-			<input type="text" maxlength="6" size="7" name="ToCriteria" value="'.$_POST['ToCriteria'].'" />
+			<input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $_POST['ToCriteria'] . '" />
 		</field>
 		<field>
 			<label for="PeriodEnd">' . __('Balances As At') . ':</label>
@@ -137,8 +191,8 @@ $BookMark = '';
 	$ErrMsg = __('Could not retrieve period data because');
 	$Periods = DB_query($SQL, $ErrMsg);
 
-	while ($MyRow = DB_fetch_array($Periods)){
-		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'],'M',-1) . '</option>';
+	while ($MyRow = DB_fetch_array($Periods)) {
+		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'], 'M', -1) . '</option>';
 	}
 	echo '</select>
 		</field>';
@@ -146,7 +200,8 @@ $BookMark = '';
 	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 			</div>';
 	echo '</form>';
 	include('includes/footer.php');
-}/*end of else not PrintPDF */
+}

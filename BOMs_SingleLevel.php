@@ -1,13 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Bill Of Materials Maintenance');
-
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 function display_children($Parent, $Level, &$BOMTree) {
@@ -213,10 +212,6 @@ if (isset($_GET['Select'])){
 
 
 $Msg='';
-
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 $InputError = 0;

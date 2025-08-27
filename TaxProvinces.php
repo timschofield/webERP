@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Dispatch Tax Provinces');
-$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
-$BookMark = 'TaxProvinces';// Anchor's id in the manual's html document.
+$ViewTopic = 'Tax';
+$BookMark = 'TaxProvinces';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Dispatch Tax Province Maintenance') . '" />' . ' ' .

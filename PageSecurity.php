@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Page Security Levels');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'PageSecurity';

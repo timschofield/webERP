@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Edit Module');// __('Edit a Language File Module')
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Edit Module');
 $ViewTopic = "SpecialUtilities";
-$BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.
+$BookMark = "Z_poEditLangModule";
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Edit a Language File Module') . '" />' . ' ' .
@@ -24,6 +26,7 @@ $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/message
 if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */
+	/// @bug we have to check that msgmerge is a cli command, not a php function!!!
 	if (!function_exists('msgmerge')) {
 		prnMsg(__('The gettext utilities must be present on your server for these language utilities to work'),'error');
 		exit();
@@ -31,7 +34,11 @@ if (isset($_POST['ReMergePO'])){
 /*first rebuild the en_GB default with xgettext */
 
 		$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+		/// @todo review this list
 		$FilesToInclude	= '*php includes/*.php includes/*.php';
+
+		/// @todo add proper escaping to prevent shell injection
+
 		$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 		system($xgettextCmd);
@@ -60,7 +67,7 @@ if (isset($_POST['module'])) {
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -152,7 +159,7 @@ if (isset($_POST['module'])) {
 
 			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
-			if ($b === False) {
+			if ($b === false) {
 /* skip it */
 
 			} else {

@@ -1,6 +1,12 @@
 <?php
 
-include('../includes/CountriesArray.php');
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
+include($PathPrefix . 'includes/CountriesArray.php');
+
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=6" method="post" enctype="multipart/form-data">';
 echo '<fieldset>
 			<legend>' . __('Company Settings') . '</legend>
@@ -20,7 +26,7 @@ $COAs = glob('sql/coa/*.sql');
 
 foreach ($COAs as $Value) {
 	if ($Value == 'sql/coa/' . $_SESSION['Installer']['CoA'] . '.sql') {
-		echo '<option value="' . $Value . '" selected="true">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
+		echo '<option value="' . $Value . '" selected="selected">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	} else {
 		echo '<option value="' . $Value . '">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	}
@@ -32,7 +38,7 @@ echo '</select>
 echo '<field>
 			<label for="TimeZone">' . __('Time Zone') . ': </label>
 			<select name="TimeZone">';
-include('timezone.php');
+include($PathPrefix . 'install/timezone.php');
 echo '</select>
 	</field>';
 

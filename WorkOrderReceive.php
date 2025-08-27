@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Receive Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['WO'])) {

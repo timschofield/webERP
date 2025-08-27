@@ -1,17 +1,19 @@
 <?php
+
 /* Selection of customer - from where all customer related maintenance, transactions and inquiries start */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Search Customers');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'SelectCustomer';
 include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text">
 		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" title="', __('Customer'), '" /> ', __('Customers'), '
 	</p>';
-
-include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Select'])) {
 	$_SESSION['CustomerID'] = $_GET['Select'];
@@ -278,7 +280,7 @@ if(isset($_POST['CustType'])) {
 	// Error if no customer types setup
 	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
-		echo '<a href="CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
+		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
 		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// If OK show select box with option selected
@@ -302,7 +304,7 @@ if(isset($_POST['CustType'])) {
 	// Error if no customer types setup
 	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
-		echo '<a href="CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
+		echo '<a href="' . $RootPath . '/CustomerTypes.php" target="_parent">' . __('Setup Types') . '</a>';
 		echo '<field><td colspan="2">' . prnMsg(__('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// if OK show select box with available options to choose
@@ -324,7 +326,7 @@ $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
 if(DB_num_rows($Result2) == 0) {
 	$DataError = 1;
-	echo '<a href="Areas.php" target="_parent">' . __('Setup Areas') . '</a>';
+	echo '<a href="' . $RootPath . '/Areas.php" target="_parent">' . __('Setup Areas') . '</a>';
 	echo '<field><td colspan="2">' . prnMsg(__('No Sales Areas defined'), 'error','',true) . '</td></field>';
 } else {
 	// if OK show select box with available options to choose
@@ -724,7 +726,7 @@ function initMap() {
 							<th>', __('Notes'), '</th>
 							<th>', __('Edit'), '</th>
 							<th>', __('Delete'), '</th>
-							<th> <a href="AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', __('Add New Contact'), '</a></th>
+							<th> <a href="' . $RootPath . '/AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', __('Add New Contact'), '</a></th>
 						</tr>
 					</thead>';
 
@@ -737,8 +739,8 @@ function initMap() {
 						<td><a href="mailto:', $MyRow[6], '">', $MyRow[6], '</a></td>
 						<td>', ($MyRow[7] == 0) ? __('No') : __('Yes'), '</td>
 						<td>', $MyRow[5], '</td>
-						<td><a href="AddCustomerContacts.php?Id=', urlencode($MyRow[0]), '&DebtorNo=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
-						<td><a href="AddCustomerContacts.php?Id=', urlencode($MyRow[0]), '&DebtorNo=', urlencode($MyRow[1]), '&delete=1">', __('Delete'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerContacts.php?Id=', urlencode($MyRow[0]), '&DebtorNo=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerContacts.php?Id=', urlencode($MyRow[0]), '&DebtorNo=', urlencode($MyRow[1]), '&delete=1">', __('Delete'), '</a></td>
 						<td></td>
 					</tr>';
 			} // END WHILE LIST LOOP
@@ -771,7 +773,7 @@ function initMap() {
 			if ($_SESSION['CustomerID'] != '') {
 				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/group_add.png" title="', __('Customer Contacts'), '" alt="" />
-						<a href="AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Contact'), '</a>
+						<a href="' . $RootPath . '/AddCustomerContacts.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Contact'), '</a>
 					</p>';
 			} // $_SESSION['CustomerID'] != ''
 
@@ -801,7 +803,7 @@ function initMap() {
 							<th class="SortedColumn">', __('priority'), '</th>
 							<th>', __('Edit'), '</th>
 							<th>', __('Delete'), '</th>
-							<th> <a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Note'), '</a> </th>
+							<th> <a href="' . $RootPath . '/AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Note'), '</a> </th>
 						</tr>
 					</thead>';
 			$k = 0; // row colour counter
@@ -812,8 +814,8 @@ function initMap() {
 						<td>', $MyRow['note'], '</td>
 						<td><a href="', $MyRow['href'], '">', $MyRow['href'], '</a></td>
 						<td>', $MyRow['priority'], '</td>
-						<td><a href="AddCustomerNotes.php?Id=', urlencode($MyRow['noteid']), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '">', __('Edit'), '</a></td>
-						<td><a href="AddCustomerNotes.php?Id=', urlencode($MyRow['noteid']), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;delete=1">', __('Delete'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerNotes.php?Id=', urlencode($MyRow['noteid']), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '">', __('Edit'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerNotes.php?Id=', urlencode($MyRow['noteid']), '&amp;DebtorNo=', urlencode($MyRow['debtorno']), '&amp;delete=1">', __('Delete'), '</a></td>
 						<td></td>
 					</tr>';
 			} // END WHILE LIST LOOP
@@ -824,7 +826,7 @@ function initMap() {
 			if ($_SESSION['CustomerID'] != '') {
 				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/note_add.png" title="', __('Customer Notes'), '" alt="" />
-						<a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Note for this Customer'), '</a>
+						<a href="' . $RootPath . '/AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">', ' ', __('Add New Note for this Customer'), '</a>
 					</p>';
 			} // $_SESSION['CustomerID'] != ''
 
@@ -847,7 +849,7 @@ function initMap() {
 							<th class="SortedColumn">', __('Priority'), '</th>
 							<th>', __('Edit'), '</th>
 							<th>', __('Delete'), '</th>
-							<th><a href="AddCustomerTypeNotes.php?DebtorType=', $CustomerType, '">', __('Add New Group Note'), '</a></th>
+							<th><a href="' . $RootPath . '/AddCustomerTypeNotes.php?DebtorType=', $CustomerType, '">', __('Add New Group Note'), '</a></th>
 						</tr>
 					</thead>';
 			$k = 0; // row colour counter
@@ -858,8 +860,8 @@ function initMap() {
 						<td>', $MyRow[3], '</td>
 						<td>', $MyRow[2], '</td>
 						<td>', $MyRow[5], '</td>
-						<td><a href="AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
-						<td><a href="AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '&amp;delete=1">', __('Delete'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '">', __('Edit'), '</a></td>
+						<td><a href="' . $RootPath . '/AddCustomerTypeNotes.php?Id=', urlencode($MyRow[0]), '&amp;DebtorType=', urlencode($MyRow[1]), '&amp;delete=1">', __('Delete'), '</a></td>
 					</tr>';
 			} // END WHILE LIST LOOP
 			echo '</tbody>';
@@ -869,7 +871,7 @@ function initMap() {
 			if ($_SESSION['CustomerID'] != '') {
 				echo '<p class="page_title_text">
 						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/folder_add.png" title="', __('Customer Group Notes'), '" alt="" />
-						<a href="AddCustomerTypeNotes.php?DebtorType=', urlencode($CustomerType), '">', ' ', __('Add New Group Note'), '</a>
+						<a href="' . $RootPath . '/AddCustomerTypeNotes.php?DebtorType=', urlencode($CustomerType), '">', ' ', __('Add New Group Note'), '</a>
 					</p>';
 			} // $_SESSION['CustomerID'] != ''
 

@@ -9,13 +9,12 @@ must be called directly with path/DeleteCreditnote.php?CreditNoteNo=???????
 
 !! */
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('Delete Credit Note');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
-
 
 if (!isset($_GET['CreditNoteNo'])){
         prnMsg(__('This page must be called with the credit note number') . ' - ' . __('it is not intended for use by non-system administrators'),'info');

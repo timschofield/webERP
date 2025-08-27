@@ -1,12 +1,16 @@
 <?php
-include('includes/session.php');
-if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);}
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Issue Materials To Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
+
+if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);}
 
 if (isset($_GET['WO'])) {
 	$_POST['WO'] = $_GET['WO'];

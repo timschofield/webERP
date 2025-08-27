@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['OrderNo'])) {
 	$Title = __('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];
@@ -94,9 +94,9 @@ echo '<table class="selection" cellpadding="2">
 		</tr>
 		<tr class="striped_row">
 			<td>' . __('Supplier Code'). '</td>
-			<td><a href="SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['supplierid'] . '</a></td>
+			<td><a href="' . $RootPath . '/SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['supplierid'] . '</a></td>
 			<td>' . __('Supplier Name'). '</td>
-			<td><a href="SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['suppname'] . '</a></td>
+			<td><a href="' . $RootPath . '/SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['suppname'] . '</a></td>
 		</tr>
 		<tr class="striped_row">
 			<td>' . __('Ordered On'). '</td>
@@ -140,10 +140,10 @@ echo '<table class="selection" cellpadding="2">
 
 if ($MyRow['dateprinted'] == ''){
 	echo '<i>' .  __('Not yet printed') . '</i> &nbsp; &nbsp; ';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  __('Print')  . '</a>]';
+	echo '[<a href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  __('Print')  . '</a>]';
 } else {
 	echo __('Printed on').' '. ConvertSQLDate($MyRow['dateprinted']). '&nbsp; &nbsp;';
-	echo '[<a href="PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  __('Print a Copy')  . '</a>]';
+	echo '[<a href="'.$RootPath.'/PO_PDFPurchOrder.php?OrderNo='. $_GET['OrderNo'] .'">' .  __('Print a Copy')  . '</a>]';
 }
 
 echo  '</td>

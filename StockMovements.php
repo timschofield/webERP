@@ -1,13 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Stock Movements');
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryMovement';
 include('includes/header.php');
+
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));

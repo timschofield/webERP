@@ -2,10 +2,7 @@
 
 $PricesSecurity = 12;
 
-include('includes/session.php');
-
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Outstanding Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
@@ -13,6 +10,9 @@ $BookMark = '';
 include('includes/header.php');
 
 include('includes/DefinePOClass.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (isset($_GET['SelectedStockItem'])) {
 	$SelectedStockItem = trim($_GET['SelectedStockItem']);

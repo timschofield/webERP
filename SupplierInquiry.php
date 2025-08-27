@@ -1,14 +1,17 @@
 <?php
+
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
-include('includes/session.php');
-if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
 // always figure out the SQL required from the inputs available
 
@@ -81,7 +84,7 @@ if(DB_num_rows($SupplierResult) == 0) {
 
 	/*Because there is no balance - so just retrieve the header information about the Supplier - the choice is do one query to get the balance and transactions for those Suppliers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
-	$NIL_BALANCE = True;
+	$NIL_BALANCE = true;
 
 	$SQL = "SELECT suppliers.suppname,
 					suppliers.currcode,
@@ -99,12 +102,12 @@ if(DB_num_rows($SupplierResult) == 0) {
 	$SupplierResult = DB_query($SQL, $ErrMsg);
 
 } else {
-	$NIL_BALANCE = False;
+	$NIL_BALANCE = false;
 }
 
 $SupplierRecord = DB_fetch_array($SupplierResult);
 
-if($NIL_BALANCE == True) {
+if($NIL_BALANCE == true) {
 	$SupplierRecord['balance'] = 0;
 	$SupplierRecord['due'] = 0;
 	$SupplierRecord['overdue1'] = 0;
@@ -253,7 +256,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 	// Now prints columns 9 and 10:
 	if($MyRow['type'] == 20) {// It is a Purchase Invoice (systype = 20).
-		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
+		if($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
 /*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
 			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
 				echo '<td class="noPrint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', __('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', __('Payments'), '</a></td>';// Payment column (column 9).
@@ -285,7 +288,7 @@ while($MyRow = DB_fetch_array($TransResult)) {
 
 	} else {// It is NOT a Purchase Invoice (a credit note or a payment).
 		echo '<td class="noPrint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', __('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', __('Allocation'), '</a></td>';// Allocation column (column 9).
-		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
+		if($_SESSION['CompanyRecord']['gllink_creditors'] == true) {// Show a link to GL transactions inquiry:
 			echo $GLEntriesTD1;// Column 10.
 		} else {// Do NOT show a link to GL transactions inquiry:
 			echo '<td class="noPrint">&nbsp;</td>';// Column 10.

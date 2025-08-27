@@ -1,12 +1,13 @@
 <?php
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineContractClass.php');
-include('includes/session.php');
-$Title = __('Contract Costing');
 
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Contract Costing');
 $ViewTopic = 'Contracts';
 $BookMark = 'ContractCosting';
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
 
 if (empty($_GET['identifier'])) {

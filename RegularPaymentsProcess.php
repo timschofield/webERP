@@ -1,14 +1,14 @@
 <?php
-include('includes/session.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GLFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Process regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
-
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+include('includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '

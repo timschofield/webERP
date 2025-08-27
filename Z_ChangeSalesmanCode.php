@@ -1,12 +1,12 @@
 <?php
+
 /* This script is an utility to change a salesman code. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-$Title = __('UTILITY PAGE To Change A Salesman Code In All Tables');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeSalesmanCode'; // Anchor's id in the manual's html document.
-
+$Title = __('UTILITY PAGE To Change A Salesman Code In All Tables');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_ChangeSalesmanCode';
 include('includes/header.php');
 
 echo '<p class="page_title_text">

@@ -1,14 +1,15 @@
 <?php
 
-$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$PricesSecurity = 12; // don't show pricing info unless security token 12 available to user
 
 $Title = __('Stock Status');
-
 $ViewTopic = 'Inventory';
 $BookMark = '';
 
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
@@ -59,15 +60,15 @@ if (DB_num_rows($Result) > 0) {
 }
 
 
-$Its_A_KitSet_Assembly_Or_Dummy =False;
+$Its_A_KitSet_Assembly_Or_Dummy =false;
 if ($KitSet=='K'){
-	$Its_A_KitSet_Assembly_Or_Dummy =True;
+	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg( __('This is a kitset part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($KitSet=='A'){
-	$Its_A_KitSet_Assembly_Or_Dummy =True;
+	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg(__('This is an assembly part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 } elseif ($KitSet=='D'){
-	$Its_A_KitSet_Assembly_Or_Dummy =True;
+	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	prnMsg( __('This is an dummy part and cannot have a stock holding') . ', ' . __('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
@@ -105,7 +106,7 @@ $LocStockResult = DB_query($SQL, $ErrMsg);
 echo '<table class="selection">';
 	echo '<thead>';
 
-if ($Its_A_KitSet_Assembly_Or_Dummy == True){
+if ($Its_A_KitSet_Assembly_Or_Dummy == true){
 	echo '<tr>
 						<th class="SortedColumn">' . __('Location') . '</th>
 						<th class="SortedColumn">' . __('Demand') . '</th>
@@ -130,7 +131,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
-	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
+	if ($Its_A_KitSet_Assembly_Or_Dummy == false){
 		// Get the QOO
 		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
@@ -304,7 +305,7 @@ echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' 
 	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . __('Show Usage') . '</a>
 	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Sales Orders') . '</a>
 	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Completed Sales Orders') . '</a>';
-if ($Its_A_KitSet_Assembly_Or_Dummy ==False){
+if ($Its_A_KitSet_Assembly_Or_Dummy ==false){
 	echo '<br /><a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . __('Search Outstanding Purchase Orders') . '</a>';
 }
 

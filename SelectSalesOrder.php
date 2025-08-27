@@ -1,18 +1,20 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
+
 $PricesSecurity = 12;
 
-include('includes/session.php');
+$Title = __('Search Outstanding Sales Orders');
+$ViewTopic = 'SalesOrders';
+$BookMark = 'SelectSalesOrder';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);}
 if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);}
 if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);}
 if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);}
-$Title = __('Search Outstanding Sales Orders');
-$ViewTopic = 'SalesOrders';
-$BookMark = 'SelectSalesOrder';
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['Reset'])) {
 	unset($_POST);
@@ -956,9 +958,9 @@ if (isset($StockItemsResult)
 				if ($_SESSION['RequirePickingNote'] == 1) {
 					$PrintPickList = $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 					if (isset($MyRow['prid']) and $MyRow['prid'] > '') {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . str_pad($MyRow['prid'], 10, '0', STR_PAD_LEFT) . '</a></td>';
 					} else {
-						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '">' . __('Pick') . '</a></td>';
+						$PrintPickLabel = '<td><a href="' . $RootPath . '/GeneratePickingList.php?TransNo=' . urlencode((string) $MyRow['orderno']) . '" target="_blank">' . __('Pick') . '</a></td>';
 					}
 					$PrintDummyFlag = '';
 				}
@@ -996,7 +998,7 @@ if (isset($StockItemsResult)
 				if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
 					echo '<tr class="striped_row">
 								<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
-								<td><a href="', $PrintAck, '">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
+								<td><a href="', $PrintAck, '" target="_blank">', __('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 								', $PrintPickLabel, '
 								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
 								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>

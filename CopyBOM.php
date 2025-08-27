@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Author: Ashish Shukla <gmail.com!wahjava>
  *
  * Script to duplicate BoMs.
  */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 

@@ -1,14 +1,16 @@
 <?php
 
-$DatabaseName='weberp';
+/// @todo this should probably not be hardcoded here. What about using $DefaultDatabase from config.php?
+$DatabaseName = 'weberp';
 $AllowAnyone = true;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/class.cpdf.php');
+
 $_POST['FromDate']=date('Y-m-01');
 $_POST['ToDate']= FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 $WeekStartDate = Date(($_SESSION['DefaultDateFormat']), strtotime($WeekStartDate . ' - 7 days'));

@@ -1,12 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
-if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title=__('Update Pricing');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);}
+if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);}
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Search') . '" alt="" />' . $Title . '</p>';
 

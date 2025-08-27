@@ -1,15 +1,16 @@
 <?php
+
 /* Entry of point to point stock location transfers of a single part. */
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Stock Transfers');
+$ViewTopic = "Inventory";
+$BookMark = "LocationTransfers";
+include('includes/header.php');
 
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
-
-include('includes/session.php');
-$Title = __('Stock Transfers');// Screen identification.
-$ViewTopic = "Inventory";// Filename's id in ManualContents.php's TOC.
-$BookMark = "LocationTransfers";// Anchor's id in the manual's html document.
-include('includes/header.php');
-
 include('includes/SQL_CommonFunctions.php');
 
 if(isset($_GET['New'])) {
@@ -241,7 +242,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		$InputError = true;
 	}
 
-	if($InputError==False) {
+	if($InputError==false) {
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$TransferNumber = GetNextTransNo(16);
@@ -570,7 +571,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		DB_Txn_Commit();
 
 		prnMsg(__('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. __('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. __('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '.__('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
-		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
 		include('includes/footer.php');
 		exit();

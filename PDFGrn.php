@@ -1,20 +1,20 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
-	$GRNNo=$_GET['GRNNo'];
+	$GRNNo = $_GET['GRNNo'];
 } else {
-	$GRNNo='';
+	$GRNNo = '';
 }
 
 $FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/GoodsReceived.xml');
 
 // Set the paper size/orintation
 $PaperSize = $FormDesign->PaperSize;
-$LineHeight=$FormDesign->LineHeight;
+$LineHeight = $FormDesign->LineHeight;
 include('includes/PDFStarter.php');
-$PageNumber=1;
+$PageNumber = 1;
 $pdf->addInfo('Title', __('Goods Received Note') );
 
 if ($GRNNo == 'Preview'){

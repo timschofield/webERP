@@ -5,10 +5,11 @@ the SuppTrans class contains an array of Contract objects - containing details o
 Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Contract Charges or Credits');
 
@@ -39,7 +40,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 if (isset($_POST['AddContractChgToInvoice'])){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['ContractRef'] == ''){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
 	} else{
@@ -53,10 +54,10 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	}//end if a contract ref was entered manually
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(__('The amount entered is not numeric. This contract charge cannot be added to the invoice'),'error');
-		$InputError = True;
+		$InputError = true;
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 		$_SESSION['SuppTrans']->Add_Contract_To_Trans($_POST['ContractRef'],
 														filter_number_format($_POST['Amount']),
 														$_POST['Narrative'],

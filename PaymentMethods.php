@@ -1,11 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Payment Methods');
-/* Manual links before header.php */
-/* RChacon: This is a topic to create.*/
-$ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC.
-$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.
+$ViewTopic = 'ARTransactions';
+$BookMark = 'PaymentMethods';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Payments') .
@@ -15,10 +14,6 @@ if ( isset($_GET['SelectedPaymentID']) )
 	$SelectedPaymentID = $_GET['SelectedPaymentID'];
 elseif (isset($_POST['SelectedPaymentID']))
 	$SelectedPaymentID = $_POST['SelectedPaymentID'];
-
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 

@@ -1,11 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Import General Ledger Transactions');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
@@ -19,7 +22,6 @@ $FieldHeadings = array(
 	'Narrative',	//  4 'Narrative'
 	'Tag'			//  5 'Tag reference'
 );
-
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 	//check file info

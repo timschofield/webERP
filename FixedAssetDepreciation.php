@@ -1,18 +1,18 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Depreciation Journal Entry');
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetDepreciation';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
 	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
 }
-$Title = __('Depreciation Journal Entry');
-
-$ViewTopic = 'FixedAssets';
-$BookMark = 'AssetDepreciation';
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
-
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 $Result = DB_query("SELECT periods.lastdate_in_period,

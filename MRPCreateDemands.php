@@ -1,15 +1,17 @@
 <?php
-// MRPCreateDemands.php - Create mrpdemands based on sales order history
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);}
+// Create mrpdemands based on sales order history
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('MRP Create Demands');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);}
 
 if (isset($_POST['submit'])) {
    // Create mrpdemands based on sales order history

@@ -1,5 +1,5 @@
 <?php
-/*	GLStatements.php
+/*
 	Shows a set of financial statements.
 	This program is under the GNU General Public License, last version. 2016-10-08.
 	This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
@@ -27,11 +27,11 @@ Parameters:
 // END: Functions division =====================================================
 
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Financial Statements');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLStatements';
-
 include('includes/header.php');
 
 // Merges gets into posts:
@@ -116,30 +116,34 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		(($_POST['ShowNotes']) ? '<br />* ' . __('Notes') . '.' : ''),
 		'<p>';
 	echo '</div>';// div id="Report".
+
 	$IsIncluded = true;
 	$PageBreak = '<hr class="PageBreak"/>' . chr(12);// Marker to indicate that the content that follows is part of a new page.
 	// Displays the statements using the corresponding scripts:
 	$_POST['ShowDetail'] = 'Detailed';
-	if($_POST['ShowFinancialPosition']) {
+	if ($_POST['ShowFinancialPosition']) {
 		echo $PageBreak;
 		include('GLBalanceSheet.php');
 	}
-	if($_POST['ShowComprehensiveIncome']) {
+	if ($_POST['ShowComprehensiveIncome']) {
 		echo $PageBreak;
 		include('GLProfit_Loss.php');
 	}
-	if($_POST['ShowChangesInEquity']) {
+	if ($_POST['ShowChangesInEquity']) {
 		echo $PageBreak;
+		/// @bug this file does not exist
 		include('GLChangesInEquity.php');
 	}
-	if($_POST['ShowCashFlows']) {
+	if ($_POST['ShowCashFlows']) {
 		echo $PageBreak;
 		include('GLCashFlowsIndirect.php');
 	}
-	if($_POST['ShowNotes']) {
+	if ($_POST['ShowNotes']) {
 		echo $PageBreak;
+		/// @bug this file does not exist
 		include('GLNotes.php');
 	}
+
 	echo // Shows a form to select an action after the report was shown:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',

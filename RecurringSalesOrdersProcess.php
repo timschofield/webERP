@@ -1,10 +1,11 @@
 <?php
 
-/*need to allow this script to run from Cron or windows scheduler */
+/* need to allow this script to run from Cron or windows scheduler */
 //$AllowAnyone = true;
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {
+	/// @todo we make this safer, by eg. defining a whitelist of accessible databases...
 	$_SESSION['DatabaseName'] = $_GET['Database'];
 	$DatabaseName = $_GET['Database'];
 	$_POST['CompanyNameField'] = $_GET['Database'];
@@ -17,13 +18,14 @@ if (isset($argc)) {
 		$_POST['CompanyNameField'] = $argv[1];
 	}
 }
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Recurring Orders Process');
-/* webERP manual links before header.php */
 $ViewTopic = "SalesOrders";
 $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetSalesTransGLCodes.php');
 

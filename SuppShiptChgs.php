@@ -9,7 +9,7 @@ purchase price variance calculated when the shipment is closed */
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipment Charges or Credits');
 $ViewTopic = 'AccountsPayable';
@@ -38,11 +38,11 @@ if (!isset($_SESSION['SuppTrans'])){
 
 if (isset($_POST['AddShiptChgToInvoice'])){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['ShiptRef'] == ''){
 		if ($_POST['ShiptSelection']==''){
 			prnMsg(__('Shipment charges must reference a shipment. It appears that no shipment has been entered'),'error');
-			$InputError = True;
+			$InputError = true;
 		} else {
 			$_POST['ShiptRef'] = $_POST['ShiptSelection'];
 		}
@@ -50,16 +50,16 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 		$Result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='". $_POST['ShiptRef'] . "'");
 		if (DB_num_rows($Result)==0) {
 			prnMsg(__('The shipment entered manually is not a valid shipment reference. If you do not know the shipment reference, select it from the list'),'error');
-			$InputError = True;
+			$InputError = true;
 		}
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(__('The amount entered is not numeric') . '. ' . __('This shipment charge cannot be added to the invoice'),'error');
-		$InputError = True;
+		$InputError = true;
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 		$_SESSION['SuppTrans']->Add_Shipt_To_Trans($_POST['ShiptRef'],
 													filter_number_format($_POST['Amount']));
 		unset($_POST['ShiptRef']);

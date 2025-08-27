@@ -4,15 +4,15 @@
 
 class StockTransfer {
 
-	Var $TrfID;
-	Var $StockLocationFrom;
-	Var $StockLocationFromName;
-	Var $StockLocationFromAccount;
-	Var $StockLocationTo;
-	Var $StockLocationToName;
-	Var $StockLocationToAccount;
-	Var $TranDate;
-	Var $TransferItem; /*Array of LineItems */
+	var $TrfID;
+	var $StockLocationFrom;
+	var $StockLocationFromName;
+	var $StockLocationFromAccount;
+	var $StockLocationTo;
+	var $StockLocationToName;
+	var $StockLocationToAccount;
+	var $TranDate;
+	var $TransferItem; /*Array of LineItems */
 
 	function __construct($TrfID,
 				$StockLocationFrom,

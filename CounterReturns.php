@@ -2,9 +2,11 @@
 
 // This script allows credits and refunds from the default Counter Sale account for an inventory location.
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Counter Returns');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'CounterReturns';
@@ -970,7 +972,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 			$MyRow = DB_fetch_row($Result);
 			$MBFlag = $MyRow[0];
 			if ($MBFlag=='B' OR $MBFlag=='M') {
-				$Assembly = False;
+				$Assembly = false;
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
@@ -1000,7 +1002,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 			} else if ($MBFlag=='A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
-				$Assembly=True;
+				$Assembly=true;
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,

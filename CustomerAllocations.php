@@ -1,13 +1,16 @@
 <?php
+
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCustAllocsClass.php');// Before includes/session.php *******
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Receipt') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
@@ -49,7 +52,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 				prnMsg(__('Amount entered was negative') . '. ' . __('Only positive amounts are allowed') . '.','warn');
 				$_POST['Amt' . $AllocCounter] = 0;
 			}
-			if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == True) {
+			if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == true) {
 				$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 			}
 			if (filter_number_format($_POST['Amt' . $AllocCounter]) > $_POST['YetToAlloc' . $AllocCounter]) {

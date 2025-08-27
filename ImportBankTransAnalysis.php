@@ -1,19 +1,17 @@
 <?php
 
-/*The ImportBankTransClass contains the structure ofinformation about the transactions
+/* The ImportBankTransClass contains the structure of information about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of
 GLEntries objects to hold the GL analysis for each transaction */
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineImportBankTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Imported Bank Transaction General Ledger Analysis');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (!isset($_SESSION['Trans'])){
@@ -21,8 +19,8 @@ if (!isset($_SESSION['Trans'])){
 	echo '<br /><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Import Bank Transactions') . '</a>';
 	include('includes/footer.php');
 	exit();
-	/*It all stops here if there aint no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
-	 * */
+	/*It all stops here if there ain't no bank transactions being imported i.e. $_SESSION['Trans'] has not been initiated
+	 */
 }
 
 if (isset($_GET['TransID'])){
@@ -53,14 +51,14 @@ if (isset($_POST['SupplierID'])){
 
 if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == __('Enter GL Line')){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['GLCode'] == ''){
 		$_POST['GLCode'] = $_POST['AcctSelection'];
 	}
 
 	if ($_POST['GLCode'] == ''){
 		prnMsg( __('You must select a general ledger code from the list below') ,'warn');
-		$InputError = True;
+		$InputError = true;
 	}
 
 	$SQL = "SELECT accountcode,
@@ -70,17 +68,17 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == __('Ente
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0 AND $_POST['GLCode'] != ''){
 		prnMsg(__('The account code entered is not a valid code') . '. ' . __('This line cannot be added to the transaction') . '.<br />' . __('You can use the selection box to select the account you want'),'error');
-		$InputError = True;
+		$InputError = true;
 	} else if ($_POST['GLCode'] != '') {
 		$MyRow = DB_fetch_row($Result);
 		$GLActName = $MyRow[1];
 		if (!is_numeric($_POST['Amount'])){
 			prnMsg( __('The amount entered is not numeric') . '. ' . __('This line cannot be added to the transaction'),'error');
-			$InputError = True;
+			$InputError = true;
 		}
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 
 		$_SESSION['Trans'][$TransID]->Add_To_GLAnalysis($_POST['Amount'],
 														$_POST['Narrative'],

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Login Configuration');
 $ViewTopic = 'Setup';
@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strlen($_POST['Password'])<5){
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= False){
+	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'),'error');
 	}

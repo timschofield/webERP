@@ -1,5 +1,5 @@
 <?php
-// Z_poEditLangRemaining.php
+
 // Edit Remaining Strings For This Language.
 
 /* Steve Kitchen */
@@ -8,11 +8,13 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangRemaining";
 $Title = __('Edit Remaining Strings For This Language');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -39,7 +41,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -95,7 +97,6 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 			}
 		}
 		$TotalLines = $j - 1;
-
 
 /* stick it on the screen */
 

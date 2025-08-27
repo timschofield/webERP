@@ -1,17 +1,19 @@
 <?php
-// Stocks.php
+
 // Defines an item - maintenance and addition of new parts.
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Item Maintenance');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAddingItems';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/ImageFunctions.php');
 
-/*If this form is called with the StockID then it is assumed that the stock item is to be modified */
+/* If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -125,9 +127,6 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 	}
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 
@@ -703,8 +702,8 @@ if (isset($_POST['submit'])) {
 					$InsResult = DB_query($SQL, $ErrMsg, '', true);
 					DB_Txn_Commit();
 					if (DB_error_no() == 0) {
-						prnMsg(__('New Item') . ' ' . '<a href="SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> ' . __('has been added to the database') . '<br />' . __('NB: The item cost and pricing must also be setup') . '<br />' . '<a target="_blank" href="StockCostUpdate.php?StockID=' . $StockID . '">' . __('Enter Item Cost') . '</a>
-							<br />' . '<a target="_blank" href="Prices.php?Item=' . $StockID . '">' . __('Enter Item Prices') . '</a> ', 'success');
+						prnMsg(__('New Item') . ' ' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $StockID . '">' . $StockID . '</a> ' . __('has been added to the database') . '<br />' . __('NB: The item cost and pricing must also be setup') . '<br />' . '<a target="_blank" href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $StockID . '">' . __('Enter Item Cost') . '</a>
+							<br />' . '<a target="_blank" href="' . $RootPath . '/Prices.php?Item=' . $StockID . '">' . __('Enter Item Prices') . '</a> ', 'success');
 						echo '<br />';
 						unset($_POST['Description']);
 						unset($_POST['LongDescription']);

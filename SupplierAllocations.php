@@ -16,7 +16,7 @@
 
 include('includes/DefineSuppAllocsClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Payment') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';
@@ -62,7 +62,7 @@ if (isset($_POST['UpdateDatabase']) OR isset($_POST['RefreshAllocTotal'])) {
 			$_POST['Amt' . $AllocCounter] = 0;
 		 }
 
-		if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == True){
+		if (isset($_POST['All' . $AllocCounter]) AND $_POST['All' . $AllocCounter] == true){
 			/* $_POST['YetToAlloc...] is a hidden item on the form not locale_number_formatted */
 			$_POST['Amt' . $AllocCounter] = $_POST['YetToAlloc' . $AllocCounter];
 

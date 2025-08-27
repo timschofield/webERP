@@ -1,13 +1,15 @@
 <?php
+
 /* Shows customer account/statement on screen rather than PDF. */
 
-include('includes/session.php');
-if (isset($_POST['TransAfterDate'])) {$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Account');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.
 $BookMark = 'CustomerAccount';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
+if (isset($_POST['TransAfterDate'])) {$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 
 // always figure out the SQL required from the inputs available
 

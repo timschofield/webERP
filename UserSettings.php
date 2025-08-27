@@ -2,7 +2,7 @@
 
 // Allows the user to change system-wide defaults for the theme - appearance, the number of records to show in searches and the language to display messages in.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('User Settings');
 $ViewTopic = 'GettingStarted';
@@ -46,7 +46,7 @@ if(isset($_POST['Modify'])) {
 		if(mb_strlen($_POST['Password']) < 5) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'),'error');
-		} elseif(mb_strstr($_POST['Password'],$_SESSION['UserID'])!= False) {
+		} elseif(mb_strstr($_POST['Password'],$_SESSION['UserID'])!= false) {
 			$InputError = 1;
 			prnMsg(__('The password cannot contain the user id'), 'error');
 		}

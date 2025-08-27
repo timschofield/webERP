@@ -1,19 +1,22 @@
 <?php
-/*	This script is an utility to change an inventory item code. */
-/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
+
+/*	This script is an utility to change an inventory item code.
+	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue) from .../includes/MiscFunctions.php.*/
 
-include('includes/session.php');
-$Title = __('UTILITY PAGE Change A Stock Code');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('UTILITY PAGE Change A Stock Code');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_ChangeStockCode';
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/inventory.png" title="' .
 	__('Change An Inventory Item Code') . '" /> ' .// Icon title.
 	__('Change An Inventory Item Code') . '</p>';// Page title.
-
-include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['ProcessStockChange'])){
 

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
@@ -301,7 +301,7 @@ if (isset($PrintPDF)
 				$PageNumber = 1;
 
 				include('includes/PDFTransPageHeader.php');
-				$FirstPage = False;
+				$FirstPage = false;
 
 
 				while ($MyRow2=DB_fetch_array($Result)) {

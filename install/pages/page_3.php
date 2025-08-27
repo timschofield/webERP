@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 $Result = '';
 
 if (isset($_POST['test'])) {
@@ -21,7 +26,7 @@ if (isset($_POST['test'])) {
 	}
 
 	if (mysqli_connect_error()) {
-		$DBConnectionError = True;
+		$DBConnectionError = true;
 	}
 }
 

@@ -1,9 +1,11 @@
 <?php
+
 /*
 	R & OS PHP-PDF class code to set up a new page
 	a new page is implicit on the establishment of a new pdf object so
 	only for subsequent pages
 */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }

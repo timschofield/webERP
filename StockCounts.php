@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 ob_start();
 
@@ -69,7 +69,7 @@ if ($_GET['Action'] == 'Enter') {
 		$Added=0;
 		$Counter = isset($_POST['RowCount'])?$_POST['RowCount'] : 10; // Arbitrary number of 10 hard coded as default as originally used - should there be a setting?
 			for ($i=1;$i<=$Counter;$i++){
-			$InputError =False; //always assume the best to start with
+			$InputError =false; //always assume the best to start with
 
 			$Quantity = 'Qty_' . $i;
 			$BarCode = 'BarCode_' . $i;
@@ -90,16 +90,16 @@ if ($_GET['Action'] == 'Enter') {
 
 			if (mb_strlen($_POST[$StockID])>0){
 				if (!is_numeric($_POST[$Quantity])){
-					$InputError=True;
+					$InputError=true;
 				}
 			$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
 				$Result = DB_query($SQL);
 				if (DB_num_rows($Result)==0){
 					prnMsg( __('The stock code entered on line') . ' ' . $i . ' ' . __('is not a part code that has been added to the stock check file') . ' - ' . __('the code entered was') . ' ' . $_POST[$StockID] . '. ' . __('This line will have to be re-entered'),'warn');
-					$InputError = True;
+					$InputError = true;
 				}
 
-				if ($InputError==False){
+				if ($InputError==false){
 					$Added++;
 					$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
@@ -285,7 +285,7 @@ if ($_GET['Action'] == 'Enter') {
 					' . __('Upload file') . ': <input name="userfile" type="file" />
 					<input type="submit" value="' . __('Send File') . '" />
 				</th>
-				<td><a href="StockCounts.php?gettemplate=1">Get Import Template</a></td>
+				<td><a href="' . $RootPath . '/StockCounts.php?gettemplate=1">Get Import Template</a></td>
 			</tr>
 			<tr><td></td></tr>';
 

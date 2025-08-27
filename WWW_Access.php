@@ -1,11 +1,14 @@
 <?php
-/* This script is to maintaining access permissions. */
 
-include('includes/session.php');
-$Title = __('Access Permissions Maintenance');// Screen identificator.
-$ViewTopic = 'SecuritySchema';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'WWW_Access';// Anchor's id in the manual's html document.
+/* This script is to maintain access permissions. */
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Access Permissions Maintenance');
+$ViewTopic = 'SecuritySchema';
+$BookMark = 'WWW_Access';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/group_add.png" title="' .
 	__('Access Permissions Maintenance') . '" /> ' .// Icon title.

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
@@ -15,9 +15,9 @@ if (isset($_POST['JournalNo'])) {
 }
 
 if (isset($_GET['PDF'])) {
-	$_POST['PrintPDF'] = True;
+	$_POST['PrintPDF'] = true;
 } else if (isset($_GET['View'])) {
-	$_POST['View'] = True;
+	$_POST['View'] = true;
 }
 
 if (!isset($JournalNo) OR !isset($Type)) {

@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title=__('Fully allocate Customer transactions where < 1 c unallocated');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');

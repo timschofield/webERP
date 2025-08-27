@@ -1,20 +1,21 @@
 <?php
 
-Class Allocation {
-	Var $TransID;
-	Var $Amount;
+require(__DIR__ . '/includes/session.php');
 
-	function __construct ($TransID, $Amount){
+include('includes/SQL_CommonFunctions.php');
+include('includes/GetPaymentMethods.php');
+
+class Allocation {
+	var $TransID;
+	var $Amount;
+
+	function __construct ($TransID, $Amount) {
 		$this->TransID = $TransID;
 		$this->Amount = $Amount;
 	}
 }
 
-include('includes/session.php');
 if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);}
-include('includes/SQL_CommonFunctions.php');
-include('includes/GetPaymentMethods.php');
-
 
 if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	AND isset($_POST['FromCriteria'])
@@ -64,7 +65,6 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$SupplierID ='';
 	$TotalPayments = 0;
 	$TotalAccumDiffOnExch = 0;
-
 
 	if (isset($_POST['PrintPDFAndProcess'])){
 		DB_Txn_Begin();

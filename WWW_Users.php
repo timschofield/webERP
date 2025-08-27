@@ -2,7 +2,7 @@
 
 // Entry of users and security settings of users.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Users Maintenance');
 $ViewTopic = 'GettingStarted';
@@ -105,7 +105,7 @@ if(isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'), 'error');
 		}
-	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= False) {
+	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= false) {
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'), 'error');
 	} elseif((mb_strlen($_POST['Cust'] ?? '')>0)

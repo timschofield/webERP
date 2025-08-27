@@ -1,13 +1,14 @@
 <?php
-// GLJournalInquiry.php
-include('includes/session.php');
-if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
-if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
-
 include('includes/header.php');
+
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);}
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);}
 
 echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/money_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -163,10 +164,10 @@ else {
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
 					</td>';
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
 					</td></tr>';
 			}
 

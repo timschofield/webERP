@@ -1,12 +1,12 @@
 <?php
 
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockAdjustment.php');
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Adjusting Controlled Items');
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
+
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockAdjustment.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other stock adjustment sessions on the same machine  */

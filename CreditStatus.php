@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Credit Status Code Maintenance');
 $ViewTopic = 'CreditStatus';
 $BookMark = 'CreditStatus';
@@ -12,9 +13,6 @@ if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_POST['SelectedReason'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 echo '<p class="page_title_text">

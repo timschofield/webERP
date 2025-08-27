@@ -1,15 +1,18 @@
 <?php
-include('includes/DefineWOClass.php');
-include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
+
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
-
 $Title = __('Work Order Entry');
 include('includes/header.php');
+
+include('includes/DefineWOClass.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
+
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);}
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', __('Search'), '" alt="" />', ' ', $Title, '
@@ -382,7 +385,7 @@ $LocResult = DB_query("SELECT locations.loccode,locationname
 						WHERE locations.usedforwo = 1");
 while ($LocRow = DB_fetch_array($LocResult)) {
 	if ($_SESSION['WorkOrder' . $Identifier]->LocationCode == $LocRow['loccode']) {
-		echo '<option selected="True" value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
+		echo '<option selected="selected" value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
 	} else {
 		echo '<option value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
 	}
@@ -578,7 +581,7 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 			<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
-		echo '<option selected="True" value="All">', __('All'), '</option>';
+		echo '<option selected="selected" value="All">', __('All'), '</option>';
 		$_POST['StockCat'] = 'All';
 	} else {
 		echo '<option value="All">', __('All'), '</option>';
@@ -587,7 +590,7 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 
 		if ($_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected="True" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
+			echo '<option selected="selected" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		} else {
 			echo '<option value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		}

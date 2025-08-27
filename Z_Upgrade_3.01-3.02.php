@@ -1,7 +1,9 @@
 <?php
 
 //$PageSecurity = 15;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Upgrade webERP 3.01 - 3.02');
 include('includes/header.php');
 
@@ -13,7 +15,6 @@ if (DB_num_rows($TestAlreadyDoneResult)>0){
 	include('includes/footer.php');
 	exit();
 }
-
 
 $Lineno = 1;
 $Orderno = 0;

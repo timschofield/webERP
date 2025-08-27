@@ -1,13 +1,10 @@
 <?php
-// GLAccountCSV.php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('General Ledger Account Report');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountCSV';
-
 include('includes/header.php');
 
 if (isset($_POST['Period'])) {
@@ -141,10 +138,10 @@ if (isset($_POST['MakeCSV'])) {
 		$AccountDetailRow = DB_fetch_row($Result);
 		$AccountName = $AccountDetailRow[1];
 		if ($AccountDetailRow[1] == 1) {
-			$PandLAccount = True;
+			$PandLAccount = true;
 		}
 		else {
-			$PandLAccount = False; /*its a balance sheet account */
+			$PandLAccount = false; /*its a balance sheet account */
 		}
 
 		$FirstPeriodSelected = min($SelectedPeriod);
@@ -181,7 +178,7 @@ if (isset($_POST['MakeCSV'])) {
 		$TransResult = DB_query($SQL, $ErrMsg);
 
 		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . __('for period') . ' ' . $FirstPeriodSelected . ' ' . __('to') . ' ' . $LastPeriodSelected . "\n");
-		if ($PandLAccount == True) {
+		if ($PandLAccount == true) {
 			$RunningTotal = 0;
 		}
 		else {
@@ -248,7 +245,7 @@ if (isset($_POST['MakeCSV'])) {
 				fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . __('Period Total') . ',,,' . $PeriodTotal . "\n");
 			}
 		}
-		if ($PandLAccount == True) {
+		if ($PandLAccount == true) {
 			if ($RunningTotal < 0) {
 				fwrite($fp, $SelectedAccount . ',' . $LastPeriodSelected . ', ' . __('Total Period Movement') . ',,,,' . -$RunningTotal . "\n");
 			}

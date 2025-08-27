@@ -1,12 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Top Sales Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Sales Inquiry') . '" alt="" />' . ' ' . __('Top Sales Items Inquiry') . '</p>';
 echo '<div class="page_help_text">' . __('Select the parameters for the report') . '</div>';

@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 if (isset($_POST['PaymentDate'])){$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);}
 
 If ((isset($_POST['PrintPDF']))

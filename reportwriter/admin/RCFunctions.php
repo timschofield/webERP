@@ -233,7 +233,7 @@ function UpdateDBFields($ReportID) {
     for ($i=0;$i<6;$i++) {
 	  	if (isset($_POST['Table'.$i]) and $_POST['Table'.$i]) {
 			$sql = "SHOW TABLES WHERE Tables_in_".$_SESSION['DatabaseName']."='".$_POST['Table'.$i]."'";
-			$Result = DB_query($SQL, '', '', false, false);
+			$Result = DB_query($sql, '', '', false, false);
 			if (DB_num_rows($Result)==0) return false;
 		}
 		// if we have a row, sql was valid
@@ -448,7 +448,7 @@ function ValidateField($ReportID, $FieldName, $Description) {
 	if ($Prefs['table5']) $strTable .= ' INNER JOIN '.$Prefs['table5']. ' ON '.$Prefs['table5criteria'];
 	if ($Prefs['table6']) $strTable .= ' INNER JOIN '.$Prefs['table6']. ' ON '.$Prefs['table6criteria'];
 	$sql = "SELECT ".$FieldName." FROM ".$strTable." LIMIT 1";
-	$Result = DB_query($SQL, '', '', false, false);
+	$Result = DB_query($sql, '', '', false, false);
 	// Try to fetch one row, if we have a row, sql was valid
 	if (DB_num_rows($Result)<1) return false; else return true;
 }
@@ -503,7 +503,7 @@ function ReadImages($Default) {
 		$pinfo = pathinfo(DefRptPath.$DefRpt);
 		$Ext = mb_strtoupper($pinfo['extension']);
 		if ($Ext=='JPG' OR $Ext=='JPEG' OR $Ext=='PNG') {
-			if ($Default==$pinfo['basename']) $checked=' selected'; else $checked = '';
+			if ($Default==$pinfo['basename']) $checked =' selected'; else $checked = '';
 			$OptionList .= '<option value="'.$pinfo['basename'].'"'.$checked.'> '.$pinfo['basename'].'</option>';
 		}
 	}

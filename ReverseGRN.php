@@ -1,19 +1,20 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
+
 include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.php');
-include('includes/session.php');
-if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
 
 $Title = __('Reverse Goods Received');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
+if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);}
+
 if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') or (!isset($_POST['SupplierID']) or $_POST['SupplierID']) == '') {
 
 	$_POST['SupplierID'] = $_SESSION['SupplierID'];
-
 }
 
 if (!isset($_POST['SupplierID']) or $_POST['SupplierID'] == "") {

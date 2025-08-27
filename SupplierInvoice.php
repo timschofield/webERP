@@ -1,20 +1,21 @@
 <?php
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the invoice
+/* The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
 Also an array of GLCodes objects - only used if the AP - GL link is effective
 Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
 include('includes/DefineSuppTransClass.php');
 include('includes/DefinePOClass.php'); //needed for auto receiving code
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Enter Supplier Invoice');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/GLFunctions.php');
@@ -999,10 +1000,10 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 			->TaxCalculationOrder]->TaxOvAmount;
 	}
 
-	$InputError = False;
+	$InputError = false;
 	if ($TaxTotal + $_SESSION['SuppTrans']->OvAmount < 0) {
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the total amount of the invoice is less than  0') . '. ' . __('Invoices are expected to have a positive charge') , 'error');
 		echo '<p>' . __('The tax total is') . ' : ' . locale_number_format($TaxTotal, $_SESSION['SuppTrans']->CurrDecimalPlaces);
 		echo '<p>' . __('The ovamount is') . ' : ' . locale_number_format($_SESSION['SuppTrans']->OvAmount, $_SESSION['SuppTrans']->CurrDecimalPlaces);
@@ -1015,32 +1016,32 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 	}
 	elseif (mb_strlen($_SESSION['SuppTrans']->SuppReference) < 1) {
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the there is no suppliers invoice number or reference entered') . '. ' . __('The supplier invoice number must be entered') , 'error');
 
 	}
 	elseif (!Is_date($_SESSION['SuppTrans']->TranDate)) {
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 
 	}
 	elseif (DateDiff(Date($_SESSION['DefaultDateFormat']) , $_SESSION['SuppTrans']->TranDate, 'd') < 0) {
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . __('Purchase invoices are expected to have a date prior to or today') , 'error');
 
 	}
 	elseif ($_SESSION['SuppTrans']->ExRate <= 0) {
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the exchange rate for the invoice has been entered as a negative or zero number') . '. ' . __('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency') , 'error');
 
 	}
 	elseif ($_SESSION['SuppTrans']->OvAmount < round($_SESSION['SuppTrans']->Total_Shipts_Value() + $_SESSION['SuppTrans']->Total_GL_Value() + $_SESSION['SuppTrans']->Total_Contracts_Value() + $_SESSION['SuppTrans']->Total_Assets_Value() + $_SESSION['SuppTrans']->Total_GRN_Value() , $_SESSION['SuppTrans']->CurrDecimalPlaces)) {
 
 		prnMsg(__('The invoice total as entered is less than the sum of the shipment charges, the general ledger entries (if any), the charges for goods received, contract charges and fixed asset charges. There must be a mistake somewhere, the invoice as entered will not be processed') , 'error');
-		$InputError = True;
+		$InputError = true;
 
 	}
 	else {
@@ -1056,11 +1057,11 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] == 1) { /*Transaction reference already entered */
 			prnMsg(__('The invoice number') . ' : ' . $_POST['SuppReference'] . ' ' . __('has already been entered') . '. ' . __('It cannot be entered again') , 'error');
-			$InputError = True;
+			$InputError = true;
 		}
 	}
 
-	if ($InputError == False) {
+	if ($InputError == false) {
 
 		/* SQL to process the postings for purchase invoice */
 		/*Start an SQL transaction */
@@ -1630,7 +1631,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 																			AND area='" . $SalesAnalRow['area'] . "'
 																			AND salesperson='" . $SalesAnalRow['salesperson'] . "'
 																			AND stkcategory='" . $SalesAnalRow['stkcategory'] . "'
-																			AND budgetoractual=1", $ErrMsg, '', True);
+																			AND budgetoractual=1", $ErrMsg, '', true);
 										}
 									} //end if there were sales in that period
 									$PeriodAllocated--; //decrement the period
@@ -1662,7 +1663,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 										if ($StkMoveRow['type'] == 10) { //its a sales invoice
 											$Result = DB_query("UPDATE stockmoves
 																SET standardcost = '" . $ActualCost . "'
-																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'", $ErrMsg, '', True);
+																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'", $ErrMsg, '', true);
 										}
 									}
 									else { //Only $QuantityVarianceAllocated left to allocate so need need to apportion cost using weighted average
@@ -1671,7 +1672,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 
 											$UpdStkMovesResult = DB_query("UPDATE stockmoves
 																SET standardcost = '" . $WACost . "'
-																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'", $ErrMsg, '', True);
+																WHERE stkmoveno = '" . $StkMoveRow['stkmoveno'] . "'", $ErrMsg, '', true);
 										}
 									}
 									$QuantityVarianceAllocated += $StkMoveRow['qty'];

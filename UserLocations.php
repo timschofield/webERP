@@ -1,9 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('User Authorised Inventory Locations Maintenance');
-$ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
-$BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
+$ViewTopic = 'Inventory';
+$BookMark = 'LocationUsers';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . __('User Authorised Locations') . '" alt="" />' . ' ' . $Title . '</p>';

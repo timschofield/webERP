@@ -1,7 +1,9 @@
 <?php
+
 /* Import suppliers by csv file */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
@@ -354,7 +356,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 	echo '
 		<br />
-		<a href="Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
+		<a href="' . $RootPath . '/Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';

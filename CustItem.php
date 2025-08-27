@@ -1,12 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'AccountsReceivable';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-
 $Title = __('Customer Item Data');
-
 include('includes/header.php');
 
 if (isset($_GET['DebtorNo'])) {

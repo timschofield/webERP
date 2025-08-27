@@ -1,19 +1,16 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('QA Tests Maintenance');
-$ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
-$BookMark = 'QA_Tests';// Anchor's id in the manual's html document.
+$ViewTopic = 'QualityAssurance';
+$BookMark = 'QA_Tests';
 include('includes/header.php');
 
 if (isset($_GET['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_GET['SelectedQATest']);
 } elseif(isset($_POST['SelectedQATest'])){
 	$SelectedQATest =mb_strtoupper($_POST['SelectedQATest']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

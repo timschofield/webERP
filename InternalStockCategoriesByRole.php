@@ -1,13 +1,12 @@
 <?php
 
-/* Functionas as described in https://www.weberp.org/forum/showthread.php?tid=171 */
+/* Functions as described in https://www.weberp.org/forum/showthread.php?tid=171 */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Internal Stock Categories Requests By Security Role Maintenance ');
-
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Payment Entry')

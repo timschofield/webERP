@@ -4,12 +4,14 @@
 // Have separate functions for each routine. Use pass-by-reference - (&$StockID) -
 // to pass value of $StockID to functions.
 
-include('includes/session.php');
-if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('MRP Demands');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
+
+if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);}
 
 if (isset($_POST['DemandID'])){
 	$DemandID =$_POST['DemandID'];

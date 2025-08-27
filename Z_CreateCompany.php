@@ -1,13 +1,13 @@
 <?php
-/*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
+
+/* Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE That sets up a new blank company record if not already existing');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-
 include('includes/header.php');
 
 $SQL = "SELECT COUNT(coycode) FROM companies";

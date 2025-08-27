@@ -1,15 +1,15 @@
 <?php
-/* AccountGroups.php
-Defines the groupings of general ledger accounts */
 
-include('includes/session.php');
+/* Defines the groupings of general ledger accounts */
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountGroups';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
-
 
 function CheckForRecursiveGroup($ParentGroupName, $GroupName) {
 
@@ -31,11 +31,6 @@ ie the parent group results in a recursive group structure otherwise false ie 0 
 	} while($MyRow[0] != '');
 	return false;
 }// END of function CheckForRecursiveGroupName
-
-// If $Errors is set, then unset it.
-if(isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 
@@ -267,7 +262,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 
 	$ErrMsg = __('Could not get account groups because');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" alt="" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<thead>
@@ -331,6 +326,7 @@ if(!isset($_GET['delete'])) {
 				FROM accountgroups
 				WHERE groupname='" . $_GET['SelectedAccountGroup'] ."'";
 
+		$ErrMsg = __('The account group details to be edited could not be retrieved');
 		$Result = DB_query($SQL, $ErrMsg);
 		if(DB_num_rows($Result) == 0) {
 			prnMsg( __('The account group name does not exist in the database'),'error');

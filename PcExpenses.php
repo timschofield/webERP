@@ -1,8 +1,7 @@
 <?php
-// PcExpenses.php
-// .
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
 $Title = __('Maintenance Of Petty Cash Of Expenses');
@@ -24,9 +23,10 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['Description']);
 	unset($_POST['GLAccount']);
 }
-if (isset($Errors)) {
-	unset($Errors);
-}
+// gg: seems unused
+//if (isset($Errors)) {
+//	unset($Errors);
+//}
 if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;

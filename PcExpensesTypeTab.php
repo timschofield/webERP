@@ -1,14 +1,17 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Maintenance Of Petty Cash Expenses For a Type Tab');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabTypes';
 include('includes/header.php');
+
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
 	</p>';
+
 if (isset($_POST['SelectedCode'])) {
 	$SelectedCode = mb_strtoupper($_POST['SelectedCode']);
 } elseif (isset($_GET['SelectedCode'])) {

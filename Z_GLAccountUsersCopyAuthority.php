@@ -1,19 +1,19 @@
 <?php
-// Z_GLAccountUsersCopyAuthority.php
+
 // Utility to copy authority of GL accounts from one user to another.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_GLAccountUsersCopyAuthority';
-
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="',// Icon image.
 	__('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.
 	__('Copy Authority of GL Accounts from one user to another'), '</p>';// Page title.
-
-include('includes/SQL_CommonFunctions.php');
 
 if(isset($_POST['ProcessCopyAuthority'])) {
 

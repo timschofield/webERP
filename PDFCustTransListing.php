@@ -1,8 +1,11 @@
 <?php
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
+
+include('includes/SQL_CommonFunctions.php');
+
 if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 $InputError=0;

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Payment Terms Maintenance');
 $ViewTopic = 'PaymentTerms';
@@ -15,10 +15,6 @@ if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_GET['SelectedTerms'];
 } elseif (isset($_POST['SelectedTerms'])){
 	$SelectedTerms = $_POST['SelectedTerms'];
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

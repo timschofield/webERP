@@ -1,8 +1,10 @@
 <?php
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineContractClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/ImageFunctions.php');
 
 $identifier = $_GET['identifier'];
@@ -10,7 +12,6 @@ $identifier = $_GET['identifier'];
 /* If a contract header doesn't exist, then go to
  * Contracts.php to create one
  */
-
 if (!isset($_SESSION['Contract'.$identifier])){
 	header('Location:' . htmlspecialchars_decode($RootPath) . '/Contracts.php');
 	exit();
@@ -19,7 +20,6 @@ if (!isset($_SESSION['Contract'.$identifier])){
 $Title = __('Contract Bill of Materials');
 $ViewTopic = 'Contracts';
 $BookMark = 'AddToContract';
-
 include('includes/header.php');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {

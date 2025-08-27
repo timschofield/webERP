@@ -1,8 +1,10 @@
 <?php
 
+/// @todo lock behind admin access
+
 $PageSecurity = 0;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $SQL = 'SHOW TABLES';
 $Result = DB_query($SQL);
@@ -13,5 +15,5 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$CreateResult = DB_query($CreateSQL);
 	$CreateRow = DB_fetch_array($CreateResult);
 
-	file_put_contents('install/tables/' . $CreateRow[0] . '.sql', $CreateRow[1]);
+	file_put_contents('install/sql/tables/' . $CreateRow[0] . '.sql', $CreateRow[1]);
 }

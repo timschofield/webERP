@@ -1,14 +1,15 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Fix General Ledger Transaction Periods');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Fix GL Trans Periods') . '" /></p>';
-
 
 $GLTrans = DB_query("SELECT counterindex,trandate,periodno FROM gltrans");
 if (DB_num_rows($GLTrans)>0){

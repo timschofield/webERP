@@ -1,5 +1,10 @@
 <?php
+
 $AllowAnyone = true;
+
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
 
 $FromCriteria = '1'; /*Category From */
 $ToCriteria = 'zzzzzzzz'; /*Category To */
@@ -10,9 +15,6 @@ $_POST['DetailedReport'] = $DetailedReport; /* so PDFInventoryValnPageHeader.php
 $_POST['FromCriteria'] = $FromCriteria; /* so PDFInventoryValnPageHeader.php works too */
 $_POST['ToCriteria'] = $ToCriteria; /* so PDFInventoryValnPageHeader.php works too */
 $_POST['Location'] = $Location; /* so PDFInventoryValnPageHeader.php works too */
-
-include('includes/session.php');
-use Dompdf\Dompdf;
 
 $Recipients = GetMailList('InventoryValuationRecipients');
 

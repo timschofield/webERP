@@ -1,11 +1,12 @@
 <?php
-// GLCashFlowsSetup.php
+
 // Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity.
 // This program is under the GNU General Public License, last version. 2016-10-08.
 // This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
 // BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Cash Flows Activities Maintenance');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsSetup';

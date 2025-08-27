@@ -1,8 +1,9 @@
 <?php
 
-// BOMExtendedQty.php - Quantity Extended Bill of Materials
+// Quantity Extended Bill of Materials
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

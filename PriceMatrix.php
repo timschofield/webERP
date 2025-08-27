@@ -1,18 +1,16 @@
 <?php
 
-//The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
+// The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
-include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Price break matrix Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
-if (isset($Errors)) {
-	unset($Errors);
-}
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
 
 $Errors = array();
 $i=1;

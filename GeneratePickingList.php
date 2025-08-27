@@ -1,25 +1,29 @@
 <?php
-// GeneratePickingList.php
-// Generate a picking list.
 
-include('includes/session.php');
-if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
+// Generate a picking list using DomPDF.
+
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
+
+include('includes/SQL_CommonFunctions.php');
+
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
 $BookMark = 'GeneratePickingList';
-include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
 
 /* Check that the config variable is set for picking notes and get out if not. */
 if ($_SESSION['RequirePickingNote'] == 0) {
 	$Title = __('Picking Lists Not Enabled');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/error.png" title="', // Icon image.
-		$Title, '" /> ', // Icon title.
-		$Title, '</p>';// Page title.
+		'/images/error.png" title="',
+		$Title, '" /> ',
+		$Title, '</p>';
 	echo '<br />';
 	prnMsg(__('The system is not configured for picking lists. A configuration parameter is required where picking slips are required. Please consult your system administrator.'), 'info');
-	/*prnMsg(__('The system is configured to NOT use picking lists. In order for a picking note to occur before an order can be delivered, a configuration parameter must be activated. Please, consult your system administrator.'), 'info');*/
 	include('includes/footer.php');
 	exit();
 }
@@ -29,9 +33,9 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 	$Title = __('Select Picking Lists');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-		'/images/sales.png" title="', // Icon image.
-		__('Search'), '" /> ', // Icon title.
-		$Title, '</p>';// Page title.
+		'/images/sales.png" title="',
+		__('Search'), '" /> ',
+		$Title, '</p>';
 	$SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
@@ -42,7 +46,6 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 
 	echo '<fieldset>
 			<legend>', __('Picking List Criteria'), '</legend>';
-
 	echo '<field>
 			<label for="TransDate">' . __('Create picking lists for all deliveries to be made on') . ' : ' . '</label>
 			<input required="required" autofocus="autofocus" type="date" name="TransDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(date('m'), date('Y'), date('d') + 1)) . '" />
@@ -68,7 +71,6 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo'] == '') and !isset($_POST['Tran
 $ErrMsg = __('There was a problem retrieving the order header details from the database');
 
 if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
-	/* If there is no transaction date set, then it must be for a single order */
 	$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
 					salesorders.customerref,
@@ -106,7 +108,6 @@ if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
 					AND salesorderdetails.completed=0
 				GROUP BY salesorders.orderno";
 } else if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-	/* We are printing picking lists for all orders on a day */
 	$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
 					salesorders.customerref,
@@ -154,7 +155,6 @@ if ($_SESSION['SalesmanLogin'] != '') {
 if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
 	$Result = DB_query($SQL, $ErrMsg);
 
-	/*if there are no rows, there's a problem. */
 	if (DB_num_rows($Result) == 0) {
 		$Title = __('Print Picking List Error');
 		include('includes/header.php');
@@ -171,7 +171,6 @@ if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] 
 		exit();
 	}
 
-	/*retrieve the order details from the database and place them in an array */
 	while ($MyRow = DB_fetch_array($Result)) {
 		$OrdersToPick[] = $MyRow;
 	}
@@ -203,327 +202,128 @@ else {
 	$OrdersToPick[0]['datepackingslipprinted'] = '1000-01-01';
 	$OrdersToPick[0]['locationname'] = str_pad('', 15, 'x');
 }
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;)
-LETS GO */
 
-if ($OrdersToPick[0]['orderno'] == 'Preview') {
-	$FormDesign = simplexml_load_file(sys_get_temp_dir() . '/PickingList.xml');
-} else {
-	$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/PickingList.xml');
-}
+// Prepare HTML for DomPDF
+$HTML = '<html><head>
+<style>
+body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 12px; }
+.table { width: 100%; border-collapse: collapse; }
+.table th, .table td { border: 1px solid #000; padding: 4px; }
+.header { font-weight: bold; font-size: 16px; margin-bottom: 10px; }
+</style>
+</head><body>';
 
-$PaperSize = $FormDesign->PaperSize;
-include('includes/PDFStarter.php');
-$pdf->addInfo('Title', __('Picking List'));
-$pdf->addInfo('Subject', __('Laser Picking List'));
-$FontSize = 12;
-$ListCount = 0;
-$Copy = '';
-
-$LineHeight = $FormDesign->LineHeight;
 $TotalOrderCount = sizeof($OrdersToPick);
 
 for ( $i = 0; $i < $TotalOrderCount; $i++ ){
-	/*Cycle through each of the orders to pick */
-	if ($i > 0) {
-		$pdf->newPage();
+	$HTML .= '<div class="header">'.__('Picking List').'</div>';
+	$HTML .= '<table class="table">';
+	$HTML .= '<tr>
+		<th>' . __('Stock Code') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('Bin') . '</th>
+		<th>' . __('Qty To Pick') . '</th>
+		<th>' . __('Qty Available') . '</th>
+		<th>' . __('Qty Picked') . '</th>
+	</tr>';
+
+	// Build SQL for lines
+	$Order = $OrdersToPick[$i];
+
+	$SQL = "SELECT salesorderdetails.stkcode,
+					stockmaster.description,
+					stockmaster.controlled,
+					stockmaster.serialised,
+					salesorderdetails.orderlineno,
+					(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) as qtyexpected,
+					salesorderdetails.quantity,
+					salesorderdetails.qtyinvoiced,
+					salesorderdetails.narrative,
+					stockmaster.decimalplaces,
+					custitem.cust_part,
+					custitem.cust_description,
+					locstock.quantity qtyavail,
+					bin
+				FROM salesorderdetails
+				INNER JOIN locstock
+					ON locstock.loccode='" . $Order['loccode'] . "'
+					AND locstock.stockid=salesorderdetails.stkcode
+				INNER JOIN stockmaster
+					ON salesorderdetails.stkcode=stockmaster.stockid
+				LEFT OUTER JOIN custitem
+					ON custitem.debtorno='" . $Order['debtorno'] . "'
+					AND custitem.stockid=stockmaster.stockid
+				WHERE salesorderdetails.orderno='" . $Order['orderno'] . "'
+				AND salesorderdetails.completed=0";
+	$LineResult = DB_query($SQL);
+
+	while ($MyRow2 = DB_fetch_array($LineResult)) {
+		$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
+		$DisplayQtyAvail = locale_number_format($MyRow2['qtyavail'], $MyRow2['decimalplaces']);
+		$DisplayPicked = '____________'; // Picking input or previously picked qty
+
+		$HTML .= '<tr>
+			<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
+			<td>' . htmlspecialchars($MyRow2['description']) . '</td>
+			<td>' . htmlspecialchars($MyRow2['bin']) . '</td>
+			<td style="text-align:right">' . $DisplayQtySupplied . '</td>
+			<td style="text-align:right">' . $DisplayQtyAvail . '</td>
+			<td style="text-align:right">' . $DisplayPicked . '</td>
+		</tr>';
+
+		if ($MyRow2['cust_part'] > '') {
+			$HTML .= '<tr>
+				<td></td>
+				<td colspan="5">' . htmlspecialchars($MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']) . '</td>
+			</tr>';
+		}
+		if ($MyRow2['narrative'] > '') {
+			$HTML .= '<tr>
+				<td></td>
+				<td colspan="5">' . htmlspecialchars($MyRow2['narrative']) . '</td>
+			</tr>';
+		}
+
+		// Serial/batch details if controlled
+		if ($MyRow2['controlled'] == 1) {
+			$label = $MyRow2['serialised'] == 1 ? __('Serial number') : __('Lot Number');
+			$SQLBundles = "SELECT serialno, quantity
+				FROM stockserialitems
+				WHERE stockid='" . $MyRow2['stkcode'] . "'
+				AND stockserialitems.loccode ='" . $Order['loccode'] . "'
+				AND quantity > 0
+				ORDER BY createdate, quantity";
+			$Bundles = DB_query($SQLBundles);
+			while ($MyBundles = DB_fetch_array($Bundles)) {
+				$HTML .= '<tr>
+					<td></td>
+					<td colspan="2">' . $label . ': ' . htmlspecialchars($MyBundles['serialno']) . '</td>
+					<td colspan="3">' . locale_number_format($MyBundles['quantity'], $MyRow2['decimalplaces']) . '</td>
+				</tr>';
+			}
+		}
 	}
+	$HTML .= '</table>';
+	$HTML .= '<br><strong>'.__('Signed for').': ______________________  '. __('Date').': __________</strong>';
 
-	/* Now ... Has the order got any line items still outstanding to be picked */
-
-	$PageNumber = 1;
-
-	if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-		$ErrMsg = __('There was a problem retrieving the order line details for Order Number') . ' ' . $OrdersToPick[$i]['orderno'] . ' ' . __('from the database');
-
-		/* Are there any picking lists for this order already */
-		$SQL = "SELECT COUNT(orderno),
-						prid,
-						comments
-				FROM pickreq
-				WHERE orderno='" . $OrdersToPick[$i]['orderno'] . "'
-					AND closed='0'
-				GROUP BY prid";
-
-		$CountResult = DB_query($SQL);
-		$Count = DB_fetch_row($CountResult);
-
-		if (!isset($Count[2]) or $Count[2] == '') { /* No comment was found in the query */
-			$Count[2]='Please pick order. Generate packing slip. Apply shipment labels and ship in system.';
-		}
-
-		if ($Count[0] == 0) {
-			$SQL = "SELECT salesorderdetails.stkcode,
-							stockmaster.description,
-							stockmaster.controlled,
-							stockmaster.serialised,
-							salesorderdetails.orderlineno,
-							(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) as qtyexpected,
-							salesorderdetails.quantity,
-							salesorderdetails.qtyinvoiced,
-							salesorderdetails.narrative,
-							stockmaster.decimalplaces,
-							custitem.cust_part,
-							custitem.cust_description,
-							locstock.quantity qtyavail,
-							bin
-						FROM salesorderdetails
-						INNER JOIN locstock
-							ON locstock.loccode='" . $OrdersToPick[$i]['loccode'] . "'
-							AND locstock.stockid=salesorderdetails.stkcode
-						INNER JOIN stockmaster
-							ON salesorderdetails.stkcode=stockmaster.stockid
-						LEFT OUTER JOIN custitem
-							ON custitem.debtorno='" . $OrdersToPick[$i]['debtorno'] . "'
-							AND custitem.stockid=stockmaster.stockid
-						WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] . "'
-						AND salesorderdetails.completed=0";
-		} else {
-			$SQL = "SELECT salesorderdetails.stkcode,
-							stockmaster.description,
-							stockmaster.controlled,
-							stockmaster.serialised,
-							salesorderdetails.orderlineno,
-							(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) as qtyexpected,
-							salesorderdetails.quantity,
-							salesorderdetails.qtyinvoiced,
-							pickreqdetails.qtypicked,
-							pickreqdetails.shipqty,
-							salesorderdetails.narrative,
-							stockmaster.decimalplaces,
-							custitem.cust_part,
-							custitem.cust_description,
-							locstock.quantity qtyavail,
-							bin
-						FROM salesorderdetails
-						INNER JOIN locstock
-							ON locstock.loccode='" . $OrdersToPick[$i]['loccode'] . "'
-							AND locstock.stockid=salesorderdetails.stkcode
-						INNER JOIN stockmaster
-							ON salesorderdetails.stkcode=stockmaster.stockid
-						LEFT OUTER JOIN pickreq
-							ON pickreq.orderno=salesorderdetails.orderno
-							AND pickreq.closed=0
-						LEFT OUTER JOIN pickreqdetails
-							ON pickreqdetails.stockid=salesorderdetails.stkcode
-							AND pickreqdetails.orderlineno=salesorderdetails.orderlineno
-							AND pickreqdetails.prid=pickreq.prid
-						LEFT OUTER JOIN custitem
-							ON custitem.debtorno='" . $OrdersToPick[$i]['debtorno'] . "'
-							AND custitem.stockid=stockmaster.stockid
-						WHERE salesorderdetails.orderno='" . $OrdersToPick[$i]['orderno'] . "'
-						AND salesorderdetails.completed=0";
-		}
-		$LineResult = DB_query($SQL, $ErrMsg);
+	// Add page break for DomPDF for next order
+	if ($i < $TotalOrderCount-1) {
+		$HTML .= '<div style="page-break-after:always"></div>';
 	}
-	if ((isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') or (isset($LineResult) and DB_num_rows($LineResult) > 0)) {
-		/*Yes there are line items to start the ball rolling with a page header */
-		DB_Txn_Begin();
-
-		if (isset($_POST['TransDate']) or (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
-			$LinesToShow = DB_num_rows($LineResult);
-			if ($Count[0] == 0) {
-				/*create picklist we have open lines and no pickreq yet*/
-
-				$SQL = "INSERT INTO pickreq
-							(prid,
-							initiator,
-							initdate,
-							requestdate,
-							status,
-							comments,
-							loccode,
-							orderno)
-						VALUES (
-							'NULL',
-							'" . $_SESSION['UserID'] . "',
-							CURRENT_DATE,
-							'" . $OrdersToPick[$i]['deliverydate'] . "',
-							'New',
-							'Please pick order. Generate packing slip. Apply shipment labels and ship in system.  Return all Paperwork to MemberSupport@resmart.com',
-							'" . $OrdersToPick[$i]['loccode'] . "',
-							'" . $OrdersToPick[$i]['orderno'] . "');";
-				$HeaderResult = DB_query($SQL);
-				$PickReqID = DB_Last_Insert_ID('pickreq', 'prid');
-				$Count[1]=$PickReqID;
-			} //create pickreq
-		}
-		else {
-			$LinesToShow = 1;
-		}
-
-		include('includes/GenPickingListHeader.php');
-		$YPos = $FormDesign->Data->y;
-		$Lines = 0;
-
-		while ($Lines < $LinesToShow) {
-			if (isset($_GET['TransNo']) and $_GET['TransNo'] == 'Preview') {
-				$MyRow2['stkcode'] = str_pad('', 10, 'x');
-				$MyRow2['decimalplaces'] = 2;
-				$DisplayQty = 'XXXX.XX';
-				$DisplayPrevDel = 'XXXX.XX';
-				$DisplayQtySupplied = 'XXXX.XX';
-				$MyRow2['description'] = str_pad('', 18, 'x');
-				$MyRow2['narrative'] = str_pad('', 18, 'x');
-			}
-			else {
-				$MyRow2 = DB_fetch_array($LineResult);
-
-				if ($Count[0] == 0) {
-					$SQL = "INSERT INTO pickreqdetails
-								(detailno,
-								prid,
-								orderlineno,
-								stockid,
-								qtyexpected)
-							VALUES (
-								'NULL',
-								'" . $PickReqID . "',
-								'" . $MyRow2['orderlineno'] . "',
-								'" . $MyRow2['stkcode'] . "',
-								'" . $MyRow2['qtyexpected'] . "');";
-
-					$InsLineResult = DB_query($SQL);
-					$MyRow2['qtyexpected'] = 0;
-					$MyRow2['qtypicked'] = 0;
-				} //create pickreqdetail
-
-				$DisplayQty = locale_number_format($MyRow2['quantity'], $MyRow2['decimalplaces']);
-				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
-				$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'], $MyRow2['decimalplaces']);
-				$DisplayQtyAvail = locale_number_format($MyRow2['qtyavail'], $MyRow2['decimalplaces']);
-
-				if ($MyRow2['qtypicked'] > 0) {
-					$DisplayPicked = locale_number_format($MyRow2['qtypicked'], $MyRow2['decimalplaces']);
-				} else {
-					$DisplayPicked = '____________';
-				}
-			}
-			++$ListCount;
-
-			$pdf->addTextWrap($FormDesign->Headings->Column1->x, $Page_Height - $YPos, $FormDesign->Headings->Column1->Length, $FormDesign->Headings->Column1->FontSize, $MyRow2['stkcode'], 'left');
-			$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['description']);
-			$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $MyRow2['bin'], 'right');
-			$pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $DisplayQtySupplied, 'right');
-			$pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayQtyAvail, 'right');
-			$pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $DisplayPicked, 'right');
-
-			if ($Page_Height - $YPos - $LineHeight <= 60) {
-				/* We reached the end of the page so finish off the page and start a new */
-				$PageNumber++;
-				include('includes/GenPickingListHeader.php');
-			} //end if need a new page headed up
-			else {
-				/*increment a line down for the next line item */
-				$YPos += ($LineHeight);
-			}
-
-			if ($MyRow2['cust_part'] > '') {
-				$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
-
-				if ($Page_Height - $YPos - $LineHeight <= 60) {
-					/* We reached the end of the page so finish off the page and start a new */
-					$PageNumber++;
-					include('includes/GenPickingListHeader.php');
-				} //end if need a new page headed up
-				else {
-					/*increment a line down for the next line item */
-					$YPos += ($LineHeight);
-				}
-			}
-
-			if ($MyRow2['narrative'] > '') {
-				$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['narrative']);
-				if ($Page_Height - $YPos - $LineHeight <= 60) {
-					/* We reached the end of the page so finish off the page and start a new */
-					$PageNumber++;
-					include('includes/GenPickingListHeader.php');
-				} //end if need a new page headed up
-				else {
-					/*increment a line down for the next line item */
-					$YPos += ($LineHeight);
-				}
-			}
-
-			if ($MyRow2['controlled'] == 1) {
-				if ($MyRow2['serialised'] == 1) {
-/*					$BundleLabel = __('Serial#:');*/
-					$BundleLabel = __('Serial number') . ':';
-				}
-				else {
-/*					$BundleLabel = __('Lot#:');*/
-					$BundleLabel = __('Lot Number') . ':';
-/*					$BundleLabel = __('Lot number') . ':';*/
-				}
-				$SQL = "SELECT serialno,
-								quantity,
-								(SELECT SUM(moveqty)
-									FROM pickserialdetails
-									INNER JOIN pickreqdetails on pickreqdetails.detailno=pickserialdetails.detailno
-									INNER JOIN pickreq on pickreq.prid=pickreqdetails.prid
-									AND pickreq.closed=0
-									WHERE pickserialdetails.serialno=stockserialitems.serialno
-									AND pickserialdetails.stockid=stockserialitems.stockid) as qtypickedtotal,
-								(SELECT SUM(moveqty)
-									FROM pickserialdetails
-									INNER JOIN pickreqdetails on pickreqdetails.detailno=pickserialdetails.detailno
-									INNER JOIN pickreq on pickreq.prid=pickreqdetails.prid
-									AND pickreq.orderno='" . $OrdersToPick[$i]['orderno'] . "'
-									AND pickreq.closed=0
-									WHERE pickserialdetails.serialno=stockserialitems.serialno
-									AND pickserialdetails.stockid=stockserialitems.stockid) as qtypickedthisorder
-						FROM stockserialitems
-						WHERE stockid='" . $MyRow2['stkcode'] . "'
-						AND stockserialitems.loccode ='" . $OrdersToPick[$i]['loccode'] . "'
-						AND quantity > 0
-						ORDER BY createdate, quantity";
-
-				$ErrMsg = '<br />' . __('Could not retrieve the items for') . ' ' . $MyRow2['stkcode'];
-				$Bundles = DB_query($SQL, $ErrMsg);
-				$YPos += ($LineHeight);
-
-				while ($MyBundles = DB_fetch_array($Bundles)) {
-					if ($MyBundles['qtypickedthisorder'] == 0 or is_null($MyBundles['qtypickedthisorder'])) {
-						$MyBundles['qtypickedthisorder'] = '____________';
-					}
-
-					$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $BundleLabel, 'right');
-					$pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $MyBundles['serialno'], 'left');
-					$pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $MyBundles['quantity'] - $MyBundles['qtypickedtotal'], 'right');
-					$pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $MyBundles['qtypickedthisorder'], 'right');
-
-					if ($Page_Height - $YPos - $LineHeight <= 60) {
-						/* We reached the end of the page so finish off the page and start a new */
-						$PageNumber++;
-						include('includes/GenPickingListHeader.php');
-					} //end if need a new page headed up
-					else {
-						/*increment a line down for the next line item */
-						$YPos += ($LineHeight);
-					}
-				} //while
-			} //controlled
-
-			++$Lines;
-			$YPos += ($LineHeight);
-		} //end while there are line items to print out
-
-		$YPos = $Page_Height - 45;
-		$pdf->setFont('', 'B');
-		$pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, __('Signed for') . ': ______________________________');
-		$pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, __('Date') . ' : __________');
-		$pdf->setFont('', '');
-	} /*end if there are order details to show on the order*/
-} /*end for loop to print the whole lot twice */
-
-if ($ListCount == 0) {
-	$Title = __('Print Picking List Error');
-	include('includes/header.php');
-	prnMsg( __('There are no picking lists to print'), 'error');
-	include('includes/footer.php');
-	exit();
-} else {
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
-	DB_Txn_Commit();
 }
+
+$HTML .= '</body></html>';
+
+// Output PDF
+$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf->loadHtml($HTML);
+
+// (Optional) Setup the paper size and orientation
+$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Output the generated PDF to Browser
+$dompdf->stream($_SESSION['DatabaseName'] . '_PickingLists_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+exit();

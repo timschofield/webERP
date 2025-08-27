@@ -1,9 +1,10 @@
 <?php
 
-include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['submit'])) {
 	//initialise no input errors

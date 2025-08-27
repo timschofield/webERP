@@ -1,14 +1,14 @@
 <?php
 
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('Transfer Controlled Items');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-
 include('includes/header.php');
+
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockTransfers.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b></p>';
 

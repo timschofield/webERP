@@ -1,15 +1,15 @@
 <?php
 
 /* Script to delete an invoice expects and invoice number to delete
-not included on any menu for obvious reasons
-*
-* STRONGLY RECOMMEND NOT USING THIS - CREDIT THE INVOICE AND RE INVOICE
-* *
-*
-This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !! */
+ * not included on any menu for obvious reasons
+ *
+ * STRONGLY RECOMMEND NOT USING THIS - CREDIT THE INVOICE AND RE INVOICE
+ *
+ * This page must be called directly using path/Z_DeleteInvoice.php?InvoiceNo=?????    !!
+ */
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('Delete Invoice');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');

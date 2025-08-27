@@ -2,11 +2,11 @@
 
 /* Defines the employees that require timesheets */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Employee Maintenance');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Employees';// Anchor's id in the manual's html document.
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,

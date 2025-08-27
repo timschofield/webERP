@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Stock Location Transfer Docket Error');
 
 include('includes/PDFStarter.php');

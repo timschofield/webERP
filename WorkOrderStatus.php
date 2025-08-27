@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Work Order Status Inquiry');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
@@ -20,7 +21,6 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockID);
 }
-
 
 $ErrMsg = __('Could not retrieve the details of the selected work order item');
 $WOResult = DB_query("SELECT workorders.loccode,

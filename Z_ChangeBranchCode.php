@@ -1,11 +1,14 @@
 <?php
+
 /* This script is an utility to change a customer branch code. */
 
-include('includes/session.php');
-$Title = __('UTILITY PAGE To Changes A Customer Branch Code In All Tables');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeBranchCode'; // Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('UTILITY PAGE To Changes A Customer Branch Code In All Tables');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_ChangeBranchCode';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title="' .
 	__('Change A Customer Branch Code') . '" /> ' .// Icon title.

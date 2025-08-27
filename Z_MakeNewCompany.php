@@ -1,22 +1,21 @@
 <?php
 
-include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
-global $DBType;
+//global $DBType;
 
 /* Was the Cancel button pressed the last time through ? */
-
 if (isset($_POST['EnterCompanyDetails'])) {
-
 	header ('Location:' . $RootPath . '/CompanyPreferences.php');
 	exit();
 }
+
 $Title = __('Make New Company Database Utility');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
-
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 /* Your webserver user MUST have read/write access to here,
 	otherwise you'll be wasting your time */

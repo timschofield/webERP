@@ -1,5 +1,5 @@
 <?php
-// ManualContents.php
+
 /* Shows the local manual content if available, else shows the manual content in en-GB. */
 /* This program is under the GNU General Public License, last version. */
 /* This creative work is under the CC BY-NC-SA, later version. */
@@ -27,7 +27,7 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('webERP Manual');
 

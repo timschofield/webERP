@@ -1,11 +1,11 @@
 <?php
-// MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
-// rescheduled.
 
-include('includes/session.php');
+// Report of purchase orders and work orders that MRP determines should be rescheduled.
+
+require(__DIR__ . '/includes/session.php');
 
 if ( !DB_table_exists('mrprequirements') ) {
-	$Title='MRP error';
+	$Title = 'MRP error';
 	include('includes/header.php');
 	echo '<br />';
 	prnMsg( __('The MRP calculation must be run before you can run this report') . '<br />' .
@@ -13,6 +13,7 @@ if ( !DB_table_exists('mrprequirements') ) {
 	include('includes/footer.php');
 	exit();
 }
+
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');

@@ -1,9 +1,9 @@
 <?php
+
 /* Shows the bill of material indented for each level */
 
-// BOMIndented.php - Indented Bill of Materials
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

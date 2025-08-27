@@ -1,16 +1,14 @@
 <?php
 
-include('includes/DefineStockAdjustment.php');
-include('includes/DefineSerialItems.php');
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Adjustments');
-
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
-
 include('includes/header.php');
+
+include('includes/DefineStockAdjustment.php');
+include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
@@ -144,7 +142,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>' . $MyRow[0] . '</td>
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
+				<td><a href="' . $RootPath . '/StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
 			</tr>';
 	}
 	echo '</table>';

@@ -1,9 +1,9 @@
 <?php
-// Z_ClearPOBackOrders.php
-//
 
-$PageSecurity =15;
-include('includes/session.php');
+$PageSecurity = 15;
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('UTILITY PAGE To Clear purchase orders with quantity on back order');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');

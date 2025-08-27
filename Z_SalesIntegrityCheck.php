@@ -3,13 +3,12 @@
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('Sales Integrity');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
-
 
 echo '<div class="centre"><h3>' . __('Sales Integrity Check') . '</h3></div>';
 

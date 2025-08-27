@@ -1,12 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Historical Test Results');
+$ViewTopic = 'QualityAssurance';
+$BookMark = 'QA_HistoricalResults';
+include('includes/header.php');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-$Title = __('Historical Test Results');
-$ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.
-$BookMark = 'QA_HistoricalResults';// Anchor's id in the manual's html document.
-include('includes/header.php');
 
 if (isset($_GET['KeyValue'])){
 	$KeyValue =mb_strtoupper($_GET['KeyValue']);
@@ -34,9 +36,6 @@ if (!Is_Date($_POST['ToDate'])) {
 }
 $FromDate = FormatDateForSQL($_POST['FromDate']);
 $ToDate = FormatDateForSQL($_POST['ToDate']);
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 

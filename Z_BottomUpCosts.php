@@ -1,11 +1,14 @@
 <?php
+
 /* Script to update costs for all BOM items, from the bottom up */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Recalculate BOM costs');
 $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_BottomUpCosts'; // Anchor's id in the manual's html document.
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['Run'])){
@@ -13,7 +16,6 @@ if (isset($_GET['Run'])){
 } elseif (isset($_POST['Run'])){
 	$Run = $_POST['Run'];
 }
-
 
 if (isset($Run)) { //start bom processing
 

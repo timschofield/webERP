@@ -1,7 +1,8 @@
 <?php
+
 /* Prints a ship label */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ORD'])) {
 	$SelectedORD = $_GET['ORD'];
@@ -18,7 +19,6 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockId);
 }
-
 
 if (isset($_GET['LabelItem'])) {
 	$LabelItem = $_GET['LabelItem'];
@@ -87,18 +87,18 @@ if (isset($_GET['Type'])) {
 /* If we are previewing the order then we dont want to email it */
 if ($SelectedORD == 'Preview') { //ORD is set to 'Preview' when just looking at the format of the printed order
 	$_POST['PrintOrEmail'] = 'Print';
-	$MakePDFThenDisplayIt = True;
+	$MakePDFThenDisplayIt = true;
 } //$SelectedORD == 'Preview'
 
 if (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Print') {
-	$MakePDFThenDisplayIt = True;
-	$MakePDFThenEmailIt = False;
+	$MakePDFThenDisplayIt = true;
+	$MakePDFThenEmailIt = false;
 } elseif (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Email' and isset($_POST['EmailTo'])) {
-	$MakePDFThenEmailIt = True;
-	$MakePDFThenDisplayIt = False;
+	$MakePDFThenEmailIt = true;
+	$MakePDFThenDisplayIt = false;
 } else {
-	$MakePDFThenEmailIt = False;
-	$MakePDFThenDisplayIt = True;
+	$MakePDFThenEmailIt = false;
+	$MakePDFThenDisplayIt = true;
 }
 
 $FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/ShippingLabel.xml');

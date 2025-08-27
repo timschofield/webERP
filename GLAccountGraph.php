@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GLAccountGraph.php
  * By Paul Becker
@@ -37,14 +38,14 @@
  * 5. Includes the footer file.
  */
 
-include('includes/session.php');
-include('includes/phplot/phplot.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('GL Account Graph');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountGraph';
+include('includes/header.php');
 
 include('includes/GLFunctions.php');
-include('includes/header.php');
 
 $NewReport = '';
 $SelectedAccount = '';

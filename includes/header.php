@@ -91,7 +91,7 @@ echo "\n</head>\n";
 echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">' . "\n";
 
 echo '<div class="help-bubble" id="help-bubble">
-		<link rel="stylesheet" type="text/css" href="doc/Manual/css/manual.css" />
+		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
 			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
 		</div>

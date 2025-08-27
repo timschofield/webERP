@@ -1,13 +1,12 @@
 #!/usr/bin/php
 <?php
 //--------------------------------------------------------------------
-// report_runner.php
 // This program is designed to run reports in batch command mode for
 // weberp. Much thanks to Phil Daintree as the major author of WEBERP.
 //
 // --------------------------------------------------------------------
 // Written by Alan B Jones (mor3ton@yahoo.com)
-// based on code orgiginally from weberp
+// based on code originally from weberp
 // (c) alan jones 2006.
 // (c) 2006 logic works Ltd and others
 // licenced under the terms of the GPL V(2)
@@ -15,9 +14,14 @@
 // and how you are licenced to use it under the terms of the
 // see here http://www.gnu.org/licenses/gpl.txt
 //--------------------------------------------------------------------
-//you must tell the script where you main installation is located
-//Rememeber this is different for each location
+
+
+// you must tell the script where you main installation is located
+// Remember this is different for each location
 //$weberp_home=/srv/www/htdocs/weberp
+
+/// @todo use __DIR__ and co when $weberp_home is not set
+/// @todo move to a dedicated folder, eg. `bin/`
 
 $usage="USAGE\n".$argv[0].":\n".
        "     -r reportnumber (the number of the weberp report)\n".
@@ -64,7 +68,7 @@ for ($i=1;$i<$argc;$i++){
              break;
 	}
 }
-// test the existance
+// test the existence
 if (( $reportname=="") ||
     ( $reportnumber=="") ||
     ( $emailaddresses=="")) {
@@ -88,7 +92,7 @@ $_GET['ReportID'] = $reportnumber;
 $Recipients = explode(";",$emailaddresses);
 
 $AllowAnyone = true;
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/PDFSalesAnalysis.php');

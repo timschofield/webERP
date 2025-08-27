@@ -1,16 +1,13 @@
 <?php
 
-/* Definition of the cart class
-this class can hold all the information for:
-
-i)   a sales order
-ii)  an invoice
-iii) a credit note
-
+/**
+ * This class can hold all the information for:
+ *
+ * i)   a sales order
+ * ii)  an invoice
+ * iii) a credit note
 */
-
-
-Class Cart {
+class Cart {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $Total; /*total cost of the items ordered */
@@ -55,16 +52,16 @@ Class Cart {
 	var $InternalComments;
 	var $FreightCost;
 	var $FreightTaxes;
-	Var $OrderNo;
-	Var $Consignment;
-	Var $Quotation;
+	var $OrderNo;
+	var $Consignment;
+	var $Quotation;
 	var $QuoteDate;
-	Var $DeliverBlind;
-	Var $CreditAvailable; //in customer currency
-	Var $TaxGroup;
-	Var $DispatchTaxProvince;
-	Var $DefaultPOLine;
-	Var $DeliveryDays;
+	var $DeliverBlind;
+	var $CreditAvailable; //in customer currency
+	var $TaxGroup;
+	var $DispatchTaxProvince;
+	var $DefaultPOLine;
+	var $DeliveryDays;
 	var $TaxTotals;
 	var $TaxGLCodes;
 	var $BuyerName;
@@ -81,6 +78,7 @@ Class Cart {
 		$this->ItemsOrdered=0;
 		$this->LineCounter=0;
 		$this->DefaultSalesType='';
+		$this->Comments='';
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 		$this->CurrDecimalPlaces=2; //default
@@ -417,39 +415,39 @@ Class Cart {
 
 } /* end of cart class defintion */
 
-Class LineDetails {
-	Var $LineNumber;
-	Var $StockID;
-	Var $ItemDescription;
-	Var $LongDescription;
-	Var $Quantity;
-	Var $Price;
-	Var $DiscountPercent;
-	Var $Units;
-	Var $Volume;
-	Var $Weight;
-	Var $ActDispDate;
-	Var $QtyInv;
-	Var $QtyDispatched;
-	Var $StandardCost;
-	Var $QOHatLoc;
-	Var $MBflag;	/*Make Buy Dummy, Assembly or Kitset */
-	Var $DiscCat; /* Discount Category of the item if any */
-	Var $Controlled;
-	Var $Serialised;
-	Var $DecimalPlaces;
-	Var $SerialItems;
-	Var $Narrative;
-	Var $TaxCategory;
-	Var $Taxes;
-	Var $WorkOrderNo;
-	Var $ItemDue;
-	Var $POLine;
-	Var $EOQ;
-	Var $NextSerialNo;
-	Var $GPPercent;
+class LineDetails {
+	var $LineNumber;
+	var $StockID;
+	var $ItemDescription;
+	var $LongDescription;
+	var $Quantity;
+	var $Price;
+	var $DiscountPercent;
+	var $Units;
+	var $Volume;
+	var $Weight;
+	var $ActDispDate;
+	var $QtyInv;
+	var $QtyDispatched;
+	var $StandardCost;
+	var $QOHatLoc;
+	var $MBflag;	/*Make Buy Dummy, Assembly or Kitset */
+	var $DiscCat; /* Discount Category of the item if any */
+	var $Controlled;
+	var $Serialised;
+	var $DecimalPlaces;
+	var $SerialItems;
+	var $Narrative;
+	var $TaxCategory;
+	var $Taxes;
+	var $WorkOrderNo;
+	var $ItemDue;
+	var $POLine;
+	var $EOQ;
+	var $NextSerialNo;
+	var $GPPercent;
 
-	function __construct ($LineNumber,
+	function __construct($LineNumber,
 							$StockItem,
 							$Descr,
 							$LongDescr,
@@ -578,15 +576,15 @@ Class LineDetails {
 
 }
 
-Class Tax {
-	Var $TaxCalculationOrder;  /*the index for the array */
-	Var $TaxAuthID;
-	Var $TaxAuthDescription;
-	Var $TaxRate;
-	Var $TaxOnTax;
+class Tax {
+	var $TaxCalculationOrder;  /*the index for the array */
+	var $TaxAuthID;
+	var $TaxAuthDescription;
+	var $TaxRate;
+	var $TaxOnTax;
 	var $TaxGLCode;
 
-	function __construct ($TaxCalculationOrder,
+	function __construct($TaxCalculationOrder,
 			$TaxAuthID,
 			$TaxAuthDescription,
 			$TaxRate,

@@ -19,18 +19,18 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 $Title = __('Supplier Credit Note');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/GLFunctions.php');
+
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);}
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
@@ -641,25 +641,25 @@ then do the updates and inserts to process the credit note entered */
 		$TaxTotal += $_SESSION['SuppTrans']->Taxes[$Tax->TaxCalculationOrder]->TaxOvAmount;
 	}
 
-	$InputError = False;
+	$InputError = false;
 	if ( $TaxTotal + $_SESSION['SuppTrans']->OvAmount <= 0){
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the total amount of the credit note is less than or equal to 0') . '. ' . 	__('Credit notes are expected to be entered as positive amounts to credit'),'warn');
 	} elseif (mb_strlen($_SESSION['SuppTrans']->SuppReference) < 1){
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the there is no suppliers credit note number or reference entered') . '. ' . __('The supplier credit note number must be entered'),'error');
 	} elseif (!Is_Date($_SESSION['SuppTrans']->TranDate)){
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	} elseif (DateDiff(Date($_SESSION['DefaultDateFormat']), $_SESSION['SuppTrans']->TranDate, 'd') < 0){
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the date is after today') . '. ' . __('Purchase credit notes are expected to have a date prior to or today'),'error');
 	}elseif ($_SESSION['SuppTrans']->ExRate <= 0){
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit note as entered cannot be processed because the exchange rate for the credit note has been entered as a negative or zero number') . '. ' . __('The exchange rate is expected to show how many of the suppliers currency there are in 1 of the local currency'),'warn');
 	}elseif ($_SESSION['SuppTrans']->OvAmount < round($TotalShiptValue + $TotalGLValue + $TotalAssetValue + $TotalGRNValue,$_SESSION['SuppTrans']->CurrDecimalPlaces)){
 		prnMsg(__('The credit note total as entered is less than the sum of the shipment charges') . ', ' . __('the general ledger entries (if any) and the charges for goods received') . '. ' . __('There must be a mistake somewhere') . ', ' . __('the credit note as entered will not be processed'),'error');
-		$InputError = True;
+		$InputError = true;
 	} else {
 
 	/* SQL to process the postings for purchase credit note */

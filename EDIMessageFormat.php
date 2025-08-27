@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('EDI Message Format');
 $ViewTopic = 'EDI';
 $BookMark = '';
@@ -23,7 +24,6 @@ if (isset($_GET['SelectedMessageLine'])){
 }elseif (isset($_POST['SelectedMessageLine'])){
 	$SelectedMessageLine = $_POST['SelectedMessageLine'];
 }
-
 
 if (isset($_POST['NewEDIInvMsg'])){
 	$SQL = "INSERT INTO edimessageformat (partnercode,

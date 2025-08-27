@@ -1,12 +1,14 @@
 <?php
-// BankAccounts.php
+
 // This script defines the general ledger code for bank accounts and specifies that bank transactions be created for these accounts for the purposes of reconciliation.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Bank Accounts');// Screen identificator.
 $ViewTopic = 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'BankAccounts';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .
 	__('Bank') . '" /> ' .// Icon title.
@@ -18,10 +20,6 @@ if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_GET['SelectedBankAccount'];
 } elseif (isset($_POST['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_POST['SelectedBankAccount'];
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

@@ -1,5 +1,5 @@
 <?php
-// GLProfit_Loss.php
+
 // Shows the profit and loss of the company for the range of periods entered.
 /*
 Info about financial statements: IAS 1 - Presentation of Financial Statements.
@@ -15,10 +15,11 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Functions division ===================================================
-// END: Functions division =====================================================
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	require(__DIR__ . '/includes/session.php');
+}
+
 use Dompdf\Dompdf;
 
 $Title = __('Profit and Loss');
@@ -29,6 +30,7 @@ $BookMark = 'ProfitAndLoss';
 include_once('includes/SQL_CommonFunctions.php');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 $CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
+
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Initialize SelectedBudget if not set
 	if (!isset($_POST['SelectedBudget'])) {
@@ -681,5 +683,4 @@ else {
 		</div>', '</form>';
 
 	include('includes/footer.php');
-
 }

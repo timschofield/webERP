@@ -1,8 +1,8 @@
 <?php
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Maintain journal templates');
-
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
 include('includes/header.php');

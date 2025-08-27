@@ -10,7 +10,7 @@
 		<td><div align="center"><?php echo RPT_MYRPT; ?></div></td>
 	</tr>
 	<tr>
-		<?PHP if ($DefReportList <> '') { ?>
+		<?php if ($DefReportList <> '') { ?>
 		<td><select name="ReportID" size="20" style="padding:5px;" onChange="submit()"><?php echo $DefReportList; ?></select></td>
 		<?php } else { echo '<td>'.RPT_NOSHOW.'</td>'; } ?>
 

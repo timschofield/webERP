@@ -1,21 +1,18 @@
 <?php
-// CompanyPreferences.php
+
 // Defines the settings applicable for the company, including name, address, tax authority reference, whether GL integration used etc.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'CompanyParameters';
 $Title = __('Company Preferences');
 include('includes/header.php');
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
-//initialise no input errors assumed initially before we test
+// initialise no input errors assumed initially before we test
 $InputError = 0;
 $Errors = array();
-$i=1;
+$i = 1;
 
 if (isset($_POST['submit'])) {
 
@@ -100,9 +97,9 @@ if (isset($_POST['submit'])) {
 
 			/* End of update currencies */
 
-			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
+			$ForceConfigReload = true; // Required to force a load even if stored in the session vars
 			include('includes/GetConfig.php');
-			$ForceConfigReload = False;
+			$ForceConfigReload = false;
 
 	} else {
 		prnMsg( __('Validation failed') . ', ' . __('no updates or deletes took place'),'warn');

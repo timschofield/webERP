@@ -1,7 +1,9 @@
 <?php
+
 $PageSecurity = 0;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';

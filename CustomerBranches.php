@@ -1,11 +1,14 @@
 <?php
+
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 include('includes/CountriesArray.php');
 
 if (isset($_GET['DebtorNo'])) {
@@ -29,11 +32,7 @@ if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = mb_strtoupper($_POST['SelectedBranch']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
-	//initialise no input errors assumed initially before we test
+// initialise no input errors assumed initially before we test
 $Errors = array();
 $InputError = 0;
 
@@ -236,7 +235,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['DeliverBlind'] . "')";
 	}
 	echo '<br />';
-	$Msg = __('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . __('has been added, add another branch, or return to the') . ' <a href="index.php">' . __('Main Menu') . '</a>';
+	$Msg = __('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . __('has been added, add another branch, or return to the') . ' <a href="' . $RootPath . '/index.php">' . __('Main Menu') . '</a>';
 
 	//run the SQL from either of the above possibilites
 

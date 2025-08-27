@@ -1,11 +1,14 @@
 <?php
+
 /* This script is an utility to show suppliers balances in total by currency. */
 
-include('includes/session.php');
-$Title = __('Currency Supplier Balances');// Screen identificator.
-$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_CurrencySuppliersBalances';// Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Currency Supplier Balances');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_CurrencySuppliersBalances';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/supplier.png" title="' .
 	__('Show Local Currency Total Suppliers Balances') . '" /> ' .// Icon title.

@@ -1,7 +1,9 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerStatements';
 $Title = __('Print Customer Statements');
@@ -101,7 +103,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 				<th class="text">', __('Recipients'), '</th>
 			</tr>';
 	}
-	$FirstStatement = True;
+	$FirstStatement = true;
 	// check if the user has set a default bank account for invoices, if not leave it blank
 	$SQL = "SELECT bankaccounts.invoice,
 				bankaccounts.bankaccountnumber,
@@ -209,8 +211,8 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 		      		$PageNumber =1;
 
-				if ($FirstStatement==True){
-					$FirstStatement=False;
+				if ($FirstStatement==true){
+					$FirstStatement=false;
 		      		} else {
 					$pdf->newPage();
 		      		}

@@ -1,17 +1,15 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Factor Company Maintenance');
-
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (isset($_GET['FactorID'])){
 	$FactorID = mb_strtoupper($_GET['FactorID']);
-	$_POST['Amend']=True;
+	$_POST['Amend']=true;
 } elseif (isset($_POST['FactorID'])){
 	$FactorID = mb_strtoupper($_POST['FactorID']);
 } else {

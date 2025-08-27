@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Tax Categories');
-$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
-$BookMark = 'TaxCategories';// Anchor's id in the manual's html document.
+$ViewTopic = 'Tax';
+$BookMark = 'TaxCategories';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Tax Category Maintenance') . '" />' . ' ' .

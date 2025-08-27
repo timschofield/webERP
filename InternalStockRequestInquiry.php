@@ -1,12 +1,16 @@
 <?php
-//Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
+// Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Internal Stock Request Inquiry');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';
 

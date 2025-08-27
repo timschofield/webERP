@@ -1,12 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Fixed Assets');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Fixed Assets');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetItems';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
@@ -63,9 +63,6 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
  /* EOR Add Image upload for New Item  - by Ori */
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 

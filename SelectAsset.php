@@ -1,11 +1,10 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Select an Asset');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Select an Asset');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetSelection';
-
 include('includes/header.php');
 
 if (isset($_GET['AssetID'])) {
@@ -280,7 +279,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		echo '</form>';
 
-		echo '<form action="FixedAssetItems.php" method="post">';
+		echo '<form action="' . $RootPath . '/FixedAssetItems.php" method="post">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

@@ -2,12 +2,12 @@
 
 //$PageSecurity = 3;
 
-include('includes/session.php');
-
-//include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Geocode Generate');
 include('includes/header.php');
+
+//include('includes/SQL_CommonFunctions.php');
 
 $SQL = "SELECT * FROM geocode_param";
 $Resultgeo = DB_query($SQL);

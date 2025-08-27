@@ -1,6 +1,9 @@
 <?php
+
 include('includes/DefineTenderClass.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
@@ -428,7 +431,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 		<tbody>';
 
 	foreach ($_SESSION['tender' . $identifier]->LineItems as $LineItems) {
-		if ($LineItems->Deleted == False) {
+		if ($LineItems->Deleted == false) {
 			echo '<tr class="striped_row">
 					<td>' . $LineItems->StockID . '</td>
 					<td>' . $LineItems->ItemDescription . '</td>

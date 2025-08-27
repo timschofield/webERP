@@ -13,13 +13,13 @@ if (!extension_loaded('mbstring')) {
 
 $PathPrefix = __DIR__ . '/../';
 
-if (isset($_GET['Page'])) {
+if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
-	$_SESSION['Installer']['CurrentPage'] = $_GET['Page'];
+	$_SESSION['Installer']['CurrentPage'] = (int)$_GET['Page'];
 } else {
 	unset($_SESSION['Installer']);
 	$_SESSION['Installer']['CurrentPage'] = 0;
-	$_SESSION['Installer']['License_Agreed'] = False;
+	$_SESSION['Installer']['License_Agreed'] = false;
 	$_SESSION['Installer']['Port'] = 3306;
 	$_SESSION['Installer']['HostName'] = '';
 	$_SESSION['Installer']['Database'] = '';
@@ -29,21 +29,19 @@ if (isset($_GET['Page'])) {
 	$_SESSION['Installer']['AdminUser'] = 'admin';
 	$_SESSION['Installer']['AdminPassword'] = 'weberp';
 	$_SESSION['Installer']['AdminEmail'] = '';
-	$_SESSION['Installer']['AdminUser'] = 'admin';
-	$_SESSION['Installer']['AdminEmail'] = '';
-	$_SESSION['Installer']['AdminPassword'] = 'weberp';
 	$_SESSION['Installer']['Language'] = 'en_GB.utf8';
 	$_SESSION['Installer']['CoA'] = 'en_GB.utf8';
 	$_SESSION['CompanyRecord']['coyname'] = '';
 	$_SESSION['Installer']['TimeZone'] = 'Europe/London';
 	$_SESSION['Installer']['Email'] = 'info@example.com';
-	$_SESSION['Installer']['AdminAccount'] = 'admin';
-	$_SESSION['Installer']['AdminPassword'] = 'weberp';
 	$_SESSION['Installer']['Demo'] = 'No';
 }
 
-if (isset($_GET['Agreed'])) {
-	$_SESSION['Installer']['License_Agreed'] = True;
+if (isset($_GET['Agreed']) && $_SESSION['Installer']['CurrentPage'] == 2) {
+	$_SESSION['Installer']['License_Agreed'] = true;
+}
+if (!$_SESSION['Installer']['License_Agreed'] && $_SESSION['Installer']['CurrentPage'] >=2) {
+	$_SESSION['Installer']['CurrentPage'] = 1;
 }
 
 include($PathPrefix . 'includes/MiscFunctions.php');
@@ -82,7 +80,7 @@ echo '<div class="wizard">
 		<header>', $Title, '</header>
 		<img id="main_icon" src="images/installer.png" />';
 
-include('pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+include($PathPrefix . 'install/pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
 
 echo '<footer>';
 

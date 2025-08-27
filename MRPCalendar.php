@@ -1,18 +1,17 @@
 <?php
 
-// MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-if (isset($_POST['ChangeDate'])){$_POST['ChangeDate'] = ConvertSQLDate($_POST['ChangeDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('MRP Calendar');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_Calendar';
 include('includes/header.php');
 
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+if (isset($_POST['ChangeDate'])){$_POST['ChangeDate'] = ConvertSQLDate($_POST['ChangeDate']);}
 
 if (isset($_POST['ChangeDate'])){
 	$ChangeDate =trim(mb_strtoupper($_POST['ChangeDate']));

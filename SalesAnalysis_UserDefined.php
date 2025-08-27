@@ -1,15 +1,15 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
+if (!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><head></head><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . __('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
 	exit();
 }
 
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 
-if (isset($_GET['ProducePDF'])){
+if (isset($_GET['ProducePDF'])) {
 
 	include('includes/PDFSalesAnalysis.php');
 
@@ -28,7 +28,7 @@ if (isset($_GET['ProducePDF'])){
 	}
 } /* end if we wanted a PDF file */
 
-if ($_GET['ProduceCVSFile']==True){
+if ($_GET['ProduceCVSFile']==true) {
 
 	include('includes/CSVSalesAnalysis.php');
 

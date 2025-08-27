@@ -1,13 +1,15 @@
 <?php
+
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Allocations != DebtorTrans.Alloc');
 $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
-/*First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */
+/* First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */
 $SQL = "SELECT debtortrans.id,
 		debtortrans.debtorno,
 		debtortrans.transno,

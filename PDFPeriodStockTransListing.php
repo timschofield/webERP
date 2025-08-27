@@ -1,7 +1,9 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
-include('includes/session.php');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
@@ -86,10 +88,9 @@ if (!isset($_POST['FromDate'])){
 	 include('includes/footer.php');
 	 exit();
 } else {
-
-	include('includes/ConnectDB.php');
+	// gg: ConnectDB.php is already included by session.php...
+	//include('includes/ConnectDB.php');
 }
-
 
 if ($_POST['StockLocation']=='All') {
 	$SQL= "SELECT stockmoves.type,
@@ -158,7 +159,6 @@ $pdf->addInfo('Title',__('Stock Transaction Listing'));
 $pdf->addInfo('Subject',__('Stock transaction listing from') . '  ' . $_POST['FromDate'] . ' ' . $_POST['ToDate']);
 $LineHeight=12;
 $PageNumber = 1;
-
 
 switch ($_POST['TransType']) {
 	case 10:

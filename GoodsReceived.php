@@ -1,16 +1,18 @@
 <?php
-/* GoodsReceived.php */
+
 /* Entry of items received against purchase orders */
 
-/* Session started in header.php for password checking and authorisation level check */
+/// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
-if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
+
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-/*The identifier makes this goods received session unique so cannot get confused
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);}
+
+/* The identifier makes this goods received session unique so cannot get confused
  * with other sessions of goods received on the same machine/browser
  * The identifier only needs to be unique for this php session, so a
  * unix timestamp will be sufficient.
@@ -205,7 +207,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" autofocus="autofocus" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
+			echo '<input type="hidden" name="RecvQty_' . $LnItm->LineNo . '" autofocus="autofocus" value="' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '" /><a href="' . $RootPath . '/GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' . locale_number_format($LnItm->ReceiveQty,$LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 			echo '<input type="text" class="number" name="RecvQty_' . $LnItm->LineNo . '" pattern="(?:^\d{1,3}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^\d{1,3}(?:,?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:\.\d{1,})?$)|(?:^\d{1,3}(?:\s?\d{3})*(?:,\d{1,})?$)|(?:^(\d{1,2},)?(\d{2},)*(\d{3})(\.\d+)?|(\d{1,3})(\.\d+)?$)" title="' . __('Enter the quantity to receive against this order line as a number') . '"
@@ -225,10 +227,10 @@ maxlength="10" size="10" value="' . locale_number_format(round($LnItm->ReceiveQt
 
 		if ($LnItm->Controlled == 1) {
 			if ($LnItm->Serialised==1) {
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
+				echo '<td><a href="' . $RootPath . '/GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
 					__('Enter Serial Nos'). '</a></td>';
 			} else {
-				echo '<td><a href="GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
+				echo '<td><a href="' . $RootPath . '/GoodsReceivedControlled.php?identifier=' . $identifier . '&amp;LineNo=' . $LnItm->LineNo . '">' .
 					__('Enter Batches'). '</a></td>';
 			}
 		}
@@ -739,10 +741,10 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			'. prnMsg(__('GRN number'). ' '. $GRN .' '. __('has been processed'),'success','',true) . '
 			<br />
 			<br />
-			<a href="PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print this Goods Received Note (GRN)') . '</a>
+			<a href="' . $RootPath . '/PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print this Goods Received Note (GRN)') . '</a>
 			<br />
 			<br />
-			<a href="PDFQALabel.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print QA Labels for this Receipt') . '</a>
+			<a href="' . $RootPath . '/PDFQALabel.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print QA Labels for this Receipt') . '</a>
 			<br />
 			<br />
 			<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php">' . __('Select a different purchase order for receiving goods against'). '</a>

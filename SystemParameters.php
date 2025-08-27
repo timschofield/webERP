@@ -2,7 +2,7 @@
 
 /* This script is for maintenance of the system parameters. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
@@ -412,9 +412,9 @@ if (isset($_POST['submit'])) {
 
 		prnMsg( __('System configuration updated'),'success');
 
-		$ForceConfigReload = True; // Required to force a load even if stored in the session vars
+		$ForceConfigReload = true; // Required to force a load even if stored in the session vars
 		include('includes/GetConfig.php');
-		$ForceConfigReload = False;
+		$ForceConfigReload = false;
 	} else {
 		prnMsg( __('Validation failed') . ', ' . __('no updates or deletes took place'),'warn');
 	}

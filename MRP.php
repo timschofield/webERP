@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Run MRP Calculation');
 $ViewTopic = 'MRP';
 $BookMark = 'MRP_Overview';
 include('includes/header.php');
+
 if (isset($_POST['submit'])) {
 
 	if (!isset($_POST['Leeway']) OR !is_numeric(filter_number_format($_POST['Leeway']))) {

@@ -1,16 +1,15 @@
 <?php
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
-$Title = __('Specify Dispatched Controlled Items');
 
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Specify Dispatched Controlled Items');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
-
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
-
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */

@@ -1,9 +1,10 @@
 <?php
 
-// InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
+// Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['GRNNo'])) {
 	$GRNNo=$_GET['GRNNo'];
@@ -10,7 +10,7 @@ if (isset($_GET['GRNNo'])) {
 
 $FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/QALabel.xml');
 
-// Set the paper size/orintation
+// Set the paper size/orientation
 $PaperSize = $FormDesign->PaperSize;
 $LineHeight=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');

@@ -1,15 +1,19 @@
 <?php
 
+/// @todo move to after session.php if no side effects
 include('includes/DefineStockRequestClass.php');
 
-include('includes/session.php');
-if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
+
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);

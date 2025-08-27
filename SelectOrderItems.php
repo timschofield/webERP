@@ -1,19 +1,17 @@
 <?php
 
-include('includes/DefineCartClass.php');
-
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
 } else {
 	$Title = __('Select Order Items');
 }
-/* webERP manual links before header.php */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
-
 include('includes/header.php');
+
+include('includes/DefineCartClass.php');
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
@@ -40,7 +38,7 @@ if (isset($_POST['UploadFile'])) {
 		$FileHandle = fopen($TempName, 'r');
 		$Row = 0;
 		$InsertNum = 0;
-		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 			/* Check the stock code exists */
 			++$Row;
 			$SQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $FileRow[0] . "'";

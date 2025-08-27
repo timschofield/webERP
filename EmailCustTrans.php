@@ -1,11 +1,12 @@
 <?php
 
-include('includes/session.php');
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'Sales';
 $BookMark = '';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = __('Invoice');

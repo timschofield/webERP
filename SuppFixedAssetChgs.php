@@ -6,8 +6,8 @@ Asset additions are posted to the debit of fixed asset category cost account if 
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started here for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Fixed Asset Charges or Credits');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetInvoices';
@@ -32,10 +32,10 @@ echo '<p class="page_title_text">
 
 if (isset($_POST['AddAssetToInvoice'])){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['AssetID'] == ''){
 		if ($_POST['AssetSelection']==''){
-			$InputError = True;
+			$InputError = true;
 			prnMsg(__('A valid asset must be either selected from the list or entered'),'error');
 		} else {
 			$_POST['AssetID'] = $_POST['AssetSelection'];
@@ -44,18 +44,18 @@ if (isset($_POST['AddAssetToInvoice'])){
 		$Result = DB_query("SELECT assetid FROM fixedassets WHERE assetid='" . $_POST['AssetID'] . "'");
 		if (DB_num_rows($Result)==0) {
 			prnMsg(__('The asset ID entered manually is not a valid fixed asset. If you do not know the asset reference, select it from the list'),'error');
-			$InputError = True;
+			$InputError = true;
 			unset($_POST['AssetID']);
 		}
 	}
 
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(__('The amount entered is not numeric. This fixed asset cannot be added to the invoice'),'error');
-		$InputError = True;
+		$InputError = true;
 		unset($_POST['Amount']);
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 		$_SESSION['SuppTrans']->Add_Asset_To_Trans($_POST['AssetID'],
 													filter_number_format($_POST['Amount']));
 		unset($_POST['AssetID']);
@@ -124,7 +124,7 @@ echo '<field>
 		<label for="AssetID">', __('Enter Asset ID'), ':</label>
 		<input class="integer" maxlength="6" name="AssetID" pattern="[^-]{1,5}" placeholder="', __('Positive integer'), '" size="7" title="" type="text" value="',  $_POST['AssetID'], '" />
 		<fieldhelp>', __('The Asset ID should be positive integer'), '</fieldhelp>
-		<a href="FixedAssetItems.php" target="_blank">', __('New Fixed Asset'), '</a>
+		<a href="' . $RootPath . '/FixedAssetItems.php" target="_blank">', __('New Fixed Asset'), '</a>
 	</field>
 	<field>
 		<label for="AssetSelection">', '<b>' . __('OR') . ' </b>' . __('Select from list'), ':</label>

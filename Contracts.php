@@ -1,7 +1,10 @@
 <?php
 
+/// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineContractClass.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);}
 
 if (isset($_GET['ModifyContractNo'])) {
@@ -21,10 +24,11 @@ foreach ($_POST as $FormVariableName=>$FormVariableValue) {
 		$_POST['SelectedBranch']=$_POST['SelectedBranch'.$Index];
 	}
 }
+
 $ViewTopic = 'Contracts';
 $BookMark = 'CreateContract';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 /*If the page is called is called without an identifier being set then
@@ -236,7 +240,7 @@ if (isset($_POST['CommitContract']) OR isset($_POST['CreateQuotation'])){
 
 	//First update the session['Contract'.$identifier] variable with all inputs from the form
 
-	$InputError = False; //assume no errors on input then test for errors
+	$InputError = false; //assume no errors on input then test for errors
 	if (mb_strlen($_POST['ContractRef']) < 2){
 		prnMsg(__('The contract reference is expected to be more than 2 characters long. Please alter the contract reference before proceeding.'),'error');
 		$InputError = true;

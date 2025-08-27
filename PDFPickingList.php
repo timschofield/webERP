@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 
 /* Check that the config variable is set for
  * picking notes and get out if not.

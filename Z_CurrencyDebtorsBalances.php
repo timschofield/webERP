@@ -1,11 +1,14 @@
 <?php
+
 /* This script is an utility to show debtors balances in total by currency. */
 
-include('includes/session.php');
-$Title = __('Currency Debtor Balances');// Screen identificator.
-$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_CurrencyDebtorsBalances';// Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Currency Debtor Balances');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_CurrencyDebtorsBalances';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/ar.png" title="' .
 	__('Show Local Currency Total Debtors Balances') . '" /> ' .// Icon title.
@@ -22,7 +25,6 @@ $SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 	WHERE (ovamount+ovgst+ovdiscount+ovfreight-alloc)<>0 GROUP BY currcode";
 
 $Result = DB_query($SQL);
-
 
 $LocalTotal =0;
 

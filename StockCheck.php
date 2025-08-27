@@ -1,8 +1,8 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-if (isset($_POST['PrintPDF'])){
+if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',__('Stock Count Sheets'));

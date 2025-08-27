@@ -6,15 +6,14 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
-if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Enter Supplier Credit Note Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '
@@ -33,25 +32,25 @@ if (!isset($_SESSION['SuppTrans'])){
 
 if (isset($_POST['AddGRNToTrans'])){
 
-	$InputError=False;
+	$InputError=false;
 
-	$Complete = False;
+	$Complete = false;
         // Validate Credit Quantity to prevent from credit quantity more than quantity invoiced
 	if (!is_numeric(filter_number_format($_POST['This_QuantityCredited']))
 		or ($_POST['Prev_QuantityInv'] - filter_number_format($_POST['This_QuantityCredited']))<0){
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The credit quantity is not numeric or the quantity to credit is more that quantity invoiced') . '. ' . __('The goods received cannot be credited by this quantity'),'error');
 		}
 
 	if (!is_numeric(filter_number_format($_POST['ChgPrice']))
 		or filter_number_format($_POST['ChgPrice'])<0){
 
-		$InputError = True;
+		$InputError = true;
 		prnMsg(__('The price charged in the suppliers currency is either not numeric or negative') . '. ' . __('The goods received cannot be credited at this price'),'error');
 	}
 
-	if ($InputError==False){
+	if ($InputError==false){
 
 		$_SESSION['SuppTrans']->Add_GRN_To_Trans($_POST['GRNNumber'],
 												$_POST['PODetailItem'],
@@ -206,14 +205,14 @@ if (DB_num_rows($GRNResults)>0){
 
 	while ($MyRow=DB_fetch_array($GRNResults)){
 
-		$GRNAlreadyOnCredit = False;
+		$GRNAlreadyOnCredit = false;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
 			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
-				$GRNAlreadyOnCredit = True;
+				$GRNAlreadyOnCredit = true;
 			}
 		}
-		if ($GRNAlreadyOnCredit == False){
+		if ($GRNAlreadyOnCredit == false){
 
 			if ($MyRow['actprice']<>0){
 				$Price = $MyRow['actprice'];

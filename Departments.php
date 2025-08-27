@@ -1,13 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Departments');
-
 $ViewTopic = 'Setup';
 $BookMark = 'Departments';
 
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		__('Departments') . '" alt="" />' . ' ' . $Title . '</p>';
 
@@ -240,7 +240,7 @@ if (! isset($_GET['delete'])) {
 	$Userresult=DB_query($UserSQL);
 	while ($MyRow=DB_fetch_array($Userresult)) {
 		if ($MyRow['userid']==$AuthoriserID) {
-			echo '<option selected="True" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
+			echo '<option selected="selected" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {
 			echo '<option value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		}

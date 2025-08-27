@@ -1,24 +1,24 @@
 <?php
+
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
 
+/// @todo move to after session.php, if no side effects
 include('includes/DefineCartClass.php');
 
-/* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
-
-include('includes/session.php');
-
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
-if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);}
-if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
+if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);}
+if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);}
 
 include('includes/FreightCalculation.php');
 include('includes/SQL_CommonFunctions.php');
@@ -125,7 +125,7 @@ if(isset($_POST['Update'])
 
 	if($InputErrors==0) {
 
-		if($_SESSION['DoFreightCalc']==True) {
+		if($_SESSION['DoFreightCalc']==true) {
 			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total,
 																		$_POST['BrAdd2'],
 																		$_POST['BrAdd3'],
@@ -292,7 +292,7 @@ if(isset($_POST['ProcessOrder'])) {
 	if($InputErrors ==0) {
 		$OK_to_PROCESS = 1;
 	}
-	if($_POST['FreightCost'] != $OldFreightCost AND $_SESSION['DoFreightCalc']==True) {
+	if($_POST['FreightCost'] != $OldFreightCost AND $_SESSION['DoFreightCalc']==true) {
 		$OK_to_PROCESS = 0;
 		prnMsg(__('The freight charge has been updated') . '. ' . __('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br /> '. __('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . __('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
 	} else {

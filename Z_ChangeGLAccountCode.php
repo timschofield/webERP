@@ -1,11 +1,14 @@
 <?php
+
 /* Utility to change a GL account code in all webERP. */
 
-include('includes/session.php');
-$Title = __('UTILITY PAGE Change A GL Account Code');// Screen identificator.
-$ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeGLAccountCode';// Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('UTILITY PAGE Change A GL Account Code');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_ChangeGLAccountCode';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.
 	__('Change A GL Account Code'), '" /> ',// Icon title.

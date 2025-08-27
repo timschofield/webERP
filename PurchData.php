@@ -1,12 +1,13 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
 
 if (isset($_GET['SupplierID'])) {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));

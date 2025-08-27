@@ -1,15 +1,16 @@
 <?php
+
 /* Multiple work orders cost review */
 
-include('includes/session.php');
-
-if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);}
-if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Work Orders');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);}
+if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);}
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="', // Icon image.

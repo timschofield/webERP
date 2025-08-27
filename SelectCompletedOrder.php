@@ -1,14 +1,13 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search All Sales Orders');
-
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
-
 include('includes/header.php');
+
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />
      ' . ' ' . __('Search Sales Orders') . '</p>';
@@ -232,7 +231,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 		if (DB_num_rows($StockItemsResult)==1){
 		  	$MyRow = DB_fetch_row($StockItemsResult);
 		  	$SelectedStockItem = $MyRow[0];
-			$_POST['SearchOrders']='True';
+			$_POST['SearchOrders']='true';
 		  	unset($StockItemsResult);
 		  	echo '<br />' . __('For the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}

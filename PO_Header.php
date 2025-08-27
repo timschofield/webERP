@@ -1,28 +1,28 @@
 <?php
 
+/// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
-include('includes/session.php');
 
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
 } else {
 	$Title = __('Purchase Order Entry');
 }
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = 'PurchaseOrdering';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 
 if (isset($_GET['SupplierID'])) {
 	$_POST['Select'] = $_GET['SupplierID'];
 }
 
-/* webERP manual links before header.php */
-$ViewTopic = 'PurchaseOrdering';
-$BookMark = 'PurchaseOrdering';
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
-
-/*If the page is called is called without an identifier being set then
+/*If the page is called without an identifier being set then
  * it must be either a new order, or the start of a modification of an
  * order, and so we must create a new identifier.
  *
@@ -455,7 +455,7 @@ if (isset($_POST['Select'])) {
 
 	} else {
 
-		prnMsg(__('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . __('Please Consult your system administrator for more information.') . '<br />' . __('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . __('here') . '</a>', 'warn');
+		prnMsg(__('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . __('Please Consult your system administrator for more information.') . '<br />' . __('You can setup authorisations') . ' ' . '<a href="' . $RootPath . '/PO_AuthorisationLevels.php">' . __('here') . '</a>', 'warn');
 		include('includes/footer.php');
 		exit();
 	}
@@ -774,9 +774,9 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) and mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
-		$Printed = True;
+		$Printed = true;
 	} else {
-		$Printed = False;
+		$Printed = false;
 		echo '<fieldtext>', __('Not yet printed') . '</fieldtext>
 			</field>';
 	}

@@ -3,7 +3,7 @@
 */
 
 
-Class Offer {
+class Offer {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $TenderID;
@@ -73,7 +73,7 @@ Class Offer {
 	function Save($Update = '') {
 		if ($Update == '') {
 			foreach ($this->LineItems as $LineItems) {
-				if ($LineItems->Deleted == False) {
+				if ($LineItems->Deleted == false) {
 					$SQL = "INSERT INTO offers (	supplierid,
 												tenderid,
 												stockid,
@@ -164,7 +164,7 @@ Class Offer {
 	}
 
 	function remove_from_offer($LineNo){
-		$this->LineItems[$LineNo]->Deleted = True;
+		$this->LineItems[$LineNo]->Deleted = true;
 	}
 
 
@@ -177,7 +177,7 @@ Class Offer {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
@@ -207,7 +207,7 @@ Class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 	function LineDetails($LineNo,
 							$StockItem,

@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Inventory Location Authorised Users Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.

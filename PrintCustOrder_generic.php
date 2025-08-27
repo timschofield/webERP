@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with

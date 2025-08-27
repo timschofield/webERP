@@ -1,10 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
+
+$Title = __('Orders Invoiced Report');
+
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-use Dompdf\Dompdf;
-$Title = __('Orders Invoiced Report');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 

@@ -1,9 +1,10 @@
 <?php
-//this script can be set to run from cron
-$AllowAnyone = true;
-include('includes/session.php');
-$Title = __('Send maintenance reminders');
 
+// this script can be set to run from cron
+$AllowAnyone = true;
+
+require(__DIR__ . '/includes/session.php');
+$Title = __('Send maintenance reminders');
 
 $SQL = "SELECT description,
 			taskdescription,

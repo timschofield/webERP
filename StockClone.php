@@ -1,9 +1,9 @@
 <?php
 
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Clone Item');
-/* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
 $BookMark = 'CloneItem';
 include('includes/header.php');
@@ -122,9 +122,7 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		}
 	}
 }
-if (isset($Errors)) {
-	unset($Errors);
-}
+
 $Errors = array();
 $InputError = 0;
 if (isset($_POST['submit'])) {
@@ -519,7 +517,7 @@ if (isset($_POST['submit'])) {
 
 					//finish up
 					if (DB_error_no() ==0) {
-						prnMsg( __('New cloned Item') .' ' . '<a href="SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. __('has been added to the database') .
+						prnMsg( __('New cloned Item') .' ' . '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $_POST['StockID'] . '">' . $_POST['StockID'] . '</a> '. __('has been added to the database') .
 							'<br />' . __('We also attempted to setup item purchase data and pricing.'));
 
 							if (isset($NoPricingData))
@@ -527,15 +525,15 @@ if (isset($_POST['submit'])) {
 								prnMsg(__('There is no pricing data to clone. Use the following link to add pricing.'));
 							}
 
-							prnMsg('<br />' . '<a target="_blank" href="Prices.php?Item=' . $_POST['StockID'] . '">' . __('Review Item Prices') . '</a> ','success');
+							prnMsg('<br />' . '<a target="_blank" href="' . $RootPath . '/Prices.php?Item=' . $_POST['StockID'] . '">' . __('Review Item Prices') . '</a> ','success');
 
 							if ($NoPurchasingData==1)
 							{
 								 prnMsg(__('There is no purchasing data to clone .Use the following link to add purchasing data.'));
 							}
-							prnMsg('<br />' . '<a target="_blank" href="PurchData.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Purchase Data.') . '</a> ','success') .
+							prnMsg('<br />' . '<a target="_blank" href="' . $RootPath . '/PurchData.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Purchase Data.') . '</a> ','success') .
 							prnMsg(__('Costing was updated for this cloned item.').
-							'<br />' . '<a target="_blank" href="StockCostUpdate.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Cost') . '</a>', 'success');
+							'<br />' . '<a target="_blank" href="' . $RootPath . '/StockCostUpdate.php?StockID=' . $_POST['StockID'] . '">' . __('Review Item Cost') . '</a>', 'success');
 
 						echo '<br />';
 						unset($_POST['Description']);

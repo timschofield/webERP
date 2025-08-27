@@ -1,12 +1,11 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Users currently logged in');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-
 include('includes/header.php');
-
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' . __('Logged In Users') . '" alt="" />' . ' ' . $Title .
