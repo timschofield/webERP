@@ -1492,7 +1492,7 @@ function GetLastKPIValue($KPICode){
 		$MyRow = DB_fetch_array($Result);
 		return $MyRow['value'];
 	}
-	return '';
+	return 0;
 	
 }
 
