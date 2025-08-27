@@ -1,10 +1,8 @@
 <?php
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
+/* The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
-
-include('includes/DefineSuppTransClass.php');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
@@ -12,6 +10,8 @@ $Title = __('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
 include('includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
@@ -22,7 +22,7 @@ if (!isset($_SESSION['SuppTrans'])) {
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
-/*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
+/* If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
 if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == __('Enter GL Line')) {
 

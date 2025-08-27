@@ -1,17 +1,17 @@
 <?php
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the invoice
+/* The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Asset objects called Assets - containing details of all asset additions on a supplier invoice
 Asset additions are posted to the debit of fixed asset category cost account if the creditors GL link is on */
 
-include('includes/DefineSuppTransClass.php');
-
-/* Session started here for password checking and authorisation level check */
 include('includes/session.php');
+
 $Title = __('Fixed Asset Charges or Credits');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetInvoices';
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Fixed asset additions or credits are entered against supplier invoices or credit notes respectively') . '. ' . __('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . __('then the link to enter a supplier invoice or credit note must be clicked on'),'info');

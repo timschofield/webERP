@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 if (isset($_GET['SelectedSupplier'])) {

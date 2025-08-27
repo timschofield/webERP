@@ -1,20 +1,19 @@
 <?php
 
-/*The supplier transaction uses the SuppTrans class to hold the information about the credit note
+/* The supplier transaction uses the SuppTrans class to hold the information about the credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
-include('includes/DefineSuppTransClass.php');
-
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
-if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
 $Title = __('Enter Supplier Credit Note Against Goods Received');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-
 include('includes/header.php');
+
+include('includes/DefineSuppTransClass.php');
+
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);}
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Dispatch') . '" alt="" />' . ' ' . $Title . '

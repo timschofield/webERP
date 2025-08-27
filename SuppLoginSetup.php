@@ -1,15 +1,16 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Supplier Login Configuration');
 $ViewTopic = 'Setup';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/LanguagesArray.php');
 
-
-if (!isset($_SESSION['SupplierID'])){
+if (!isset($_SESSION['SupplierID'])) {
 	echo '<br />
 		<br />';
 	prnMsg(__('A supplier must first be selected before logins can be defined for it') . '<br /><br /><a href="' . $RootPath . '/SelectSupplier.php">' . __('Select a supplier') . '</a>','info');

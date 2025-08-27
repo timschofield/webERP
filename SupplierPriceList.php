@@ -1,4 +1,5 @@
 <?php
+
 /* Maintain Supplier Price Lists */
 
 include('includes/session.php');
