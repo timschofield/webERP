@@ -385,7 +385,7 @@ $LocResult = DB_query("SELECT locations.loccode,locationname
 						WHERE locations.usedforwo = 1");
 while ($LocRow = DB_fetch_array($LocResult)) {
 	if ($_SESSION['WorkOrder' . $Identifier]->LocationCode == $LocRow['loccode']) {
-		echo '<option selected="True" value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
+		echo '<option selected="selected" value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
 	} else {
 		echo '<option value="', $LocRow['loccode'], '">', $LocRow['locationname'], '</option>';
 	}
@@ -581,7 +581,7 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 			<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
-		echo '<option selected="True" value="All">', __('All'), '</option>';
+		echo '<option selected="selected" value="All">', __('All'), '</option>';
 		$_POST['StockCat'] = 'All';
 	} else {
 		echo '<option value="All">', __('All'), '</option>';
@@ -590,7 +590,7 @@ if ($_SESSION['WorkOrder' . $Identifier]->OrderNumber != 0) {
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 
 		if ($_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected="True" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
+			echo '<option selected="selected" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		} else {
 			echo '<option value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		}
