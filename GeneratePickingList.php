@@ -4,15 +4,13 @@
 
 include('includes/session.php');
 
-/* $Title is set in several parts of this script. */
-$ViewTopic = 'Sales';
-$BookMark = 'GeneratePickingList';
+use Dompdf\Dompdf;
 
 include('includes/SQL_CommonFunctions.php');
 
-// Load DomPDF
-require_once('vendor/autoload.php');
-use Dompdf\Dompdf;
+/* $Title is set in several parts of this script. */
+$ViewTopic = 'Sales';
+$BookMark = 'GeneratePickingList';
 
 if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
 
