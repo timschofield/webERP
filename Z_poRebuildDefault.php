@@ -29,6 +29,7 @@ echo '<br /><br />&nbsp;' . __('Utility page to rebuild the system default langu
 $PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.pot';
 /// @todo this list should be updated
 $FilesToInclude = '*.php api/*.php includes/*.php includes/*.php install/*.php reportwriter/languages/en_US/reports.php';
+/// @todo escape args
 $xgettextCmd = 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 if (isset($_POST['submit'])) {
@@ -37,7 +38,8 @@ if (isset($_POST['submit'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	prnMsg(__('Rebuilding the default language file ') . '.....<br />', 'info', ' ');
 	$Result = rename($PathToDefault, $PathToDefault . '.old');// Renames pot file to bak.
-	system($xgettextCmd);// Runs xgettext to recreate the default message.po language file.
+	/// @todo check for failures
+	exec($xgettextCmd, $output, $result);// Runs xgettext to recreate the default message.po language file.
 	prnMsg(__('Done') .  '. ' . __('You should now edit the default language file header') . '<br />', 'info', ' ');
 	echo "<div class='centre'><a href='" . $RootPath . "/Z_poAdmin.php'>" . __('Back to the menu') . "</a></div>";
 	echo '</form>';
