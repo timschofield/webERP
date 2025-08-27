@@ -3,7 +3,7 @@
 
 define ('LIKE','ILIKE');
 
-/// @todo add support for global var $DatabaseName
+/// @todo add support for global var $DatabaseName overriding $_SESSION['DatabaseName']
 /* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
