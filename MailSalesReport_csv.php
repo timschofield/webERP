@@ -15,13 +15,14 @@ $AllowAnyone = true;
 
 require(__DIR__ . '/includes/session.php');
 
-/*The Sales report to send */
+/* The Sales report to send */
 $ReportID = 4;
 
-/*The company database to use */
+/* The company database to use */
+/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 $DatabaseName = $_SESSION['DatabaseName'];
 
-/*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
+/* The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
 	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');

@@ -19,6 +19,7 @@ require(__DIR__ . '/includes/session.php');
 $_GET['ReportID'] = 2;
 
 /*The company database to use */
+/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 $DatabaseName = $_SESSION['DatabaseName'];
 
 /*The people to receive the emailed report */

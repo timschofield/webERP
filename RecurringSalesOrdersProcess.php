@@ -5,15 +5,18 @@
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {
-	/// @todo we make this safer, by eg. defining a whitelist of accessible databases...
+	/// @todo make this safer, by eg. defining a whitelist of accessible databases...
 	$_SESSION['DatabaseName'] = $_GET['Database'];
+	/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 	$DatabaseName = $_GET['Database'];
 	$_POST['CompanyNameField'] = $_GET['Database'];
 }
 
 if (isset($argc)) {
 	if (isset($argv[1])) {
+		/// @todo make this safer, by eg. defining a whitelist of accessible databases...
 		$_SESSION['DatabaseName'] = $argv[1];
+		/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 		$DatabaseName = $argv[1];
 		$_POST['CompanyNameField'] = $argv[1];
 	}

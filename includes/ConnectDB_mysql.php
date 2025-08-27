@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Database abstraction for mysql
  *
@@ -7,12 +8,12 @@
 
 define('LIKE', 'LIKE');
 
-if (!isset($MySQLPort)) {
-	$MySQLPort = 3306;
+if (!isset($DBPort)) {
+	$DBPort = 3306;
 }
 global $db;// Make sure it IS global, regardless of our context
 
-$db = mysql_connect($Host . ':' . $MySQLPort, $DBUser, $DBPassword);
+$db = mysql_connect($Host . ':' . $DBPort, $DBUser, $DBPassword);
 
 if (!$db) {
 	echo '<br />' . __('The configuration in the file config.php for the database user name and password do not provide the information required to connect to the database server');
@@ -28,18 +29,19 @@ if (!$db) {
 mysql_set_charset('utf8', $db);
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
+/// @todo test if this is in fact necessary, as RecurringSalesOrdersProcess.php also sets $_SESSION['DatabaseName']
 if (isset($DatabaseName)) {
-	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
+	if (! mysql_select_db($DatabaseName,$db)) {
 		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
-		unset($_SESSION['DatabaseName']);
+		//unset($DatabaseName);
 		exit();
 	}
 } else {
 	if (! mysql_select_db($_SESSION['DatabaseName'],$db)) {
 		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
-		unset($_SESSION['DatabaseName']);
+		//unset($_SESSION['DatabaseName']);
 		exit();
 	}
 }

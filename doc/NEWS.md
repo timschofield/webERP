@@ -34,6 +34,8 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
   have been removed
 * the `report_runner.php` script has been moved to the `/bin` directory. It also does not use anymore the option
   to set the installation directory (it gets it automatically)
+* changed the following variable in config.php:
+  `$MySQLPort` -> `$DBPort`
 * introduced usage of Composer to manage dependencies
 * improved support for installing webERP in a directory below the webserver root
 * update dependencies to their latest version (barcodepack, polyfill-gettext, phplot, phpmailer, phpspreadsheet, phpxmlrpc)
