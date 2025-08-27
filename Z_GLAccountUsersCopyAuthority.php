@@ -2,7 +2,7 @@
 
 // Utility to copy authority of GL accounts from one user to another.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('GLAccount - Users Authority Copy Authority');
 $ViewTopic = 'SpecialUtilities';

@@ -4,7 +4,7 @@
 $DatabaseName = 'weberp';
 $AllowAnyone = true;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use PHPMailer\PHPMailer\PHPMailer;
 

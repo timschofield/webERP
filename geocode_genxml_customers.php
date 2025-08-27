@@ -2,7 +2,7 @@
 
 //$PageSecurity = 3;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 

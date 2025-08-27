@@ -1,13 +1,13 @@
 <?php
-// PDFWOPrint.php
+
 // Converted to use DomPDF for PDF generation
 
-require_once 'vendor/autoload.php'; // Make sure DomPDF is installed via Composer
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 
-include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
+
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
 } elseif (isset($_POST['WO'])){
@@ -514,7 +514,7 @@ else {
 		</div>';
 
 	if ($PrintLabels=="Yes") {
-		echo '<form action="PDFFGLabel.php" method="post" target="_blank">';
+		echo '<form action="' . $RootPath . '/PDFFGLabel.php" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		if ($ViewingOnly == 1) {
 			echo '<input type="hidden" name="ViewingOnly" value="1" />';

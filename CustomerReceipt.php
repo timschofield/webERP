@@ -5,7 +5,7 @@
 /// @todo move to after session.php inclusion, unless there are side effects
 include('includes/DefineReceiptClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_POST['DateBanked'])) {
 	$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);
@@ -1083,7 +1083,7 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord' . $identifier]['due']-$_SESSION['CustomerRecord' . $identifier]['overdue1']),$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord' . $identifier]['overdue1']-$_SESSION['CustomerRecord' . $identifier]['overdue2']) ,$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($_SESSION['CustomerRecord' . $identifier]['overdue2'],$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
-		<td><a href="CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . __('Inquiry') . '</td>
+		<td><a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . __('Inquiry') . '</td>
 		</tr>
 		</table>';
 

@@ -2,7 +2,7 @@
 
 /* Script to make user locations for all users that do not have user location records set up*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Make locationusers Records');
 $ViewTopic = 'SpecialUtilities';

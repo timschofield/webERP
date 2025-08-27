@@ -2,17 +2,15 @@
 
 // Generate a picking list using DomPDF.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
+
+include('includes/SQL_CommonFunctions.php');
 
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';
 $BookMark = 'GeneratePickingList';
-
-include('includes/SQL_CommonFunctions.php');
-
-// Load DomPDF
-require_once('vendor/autoload.php');
-use Dompdf\Dompdf;
 
 if (isset($_POST['TransDate'])){$_POST['TransDate'] = ConvertSQLDate($_POST['TransDate']);}
 

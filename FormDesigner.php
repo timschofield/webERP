@@ -17,7 +17,7 @@
 /* RCHACON: To Do: standardize the name of the parameters x, y, width, height, font-size, alignment and radius inside the xml files. Non-standard attribute "Length" should be replace with "width". */
 /* RCHACON: Question: The use or not of <label for="KeyId">KeyCaption</label> <input id="KeyId" name="KeyName" type="..." value="KeyValue"> for usability ? */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Form Designer');
 $ViewTopic = 'Setup';

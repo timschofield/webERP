@@ -2,7 +2,7 @@
 
 /* Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

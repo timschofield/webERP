@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);}
@@ -504,7 +504,7 @@ if (!isset($DebtorNo)) {
 	if (DB_num_rows($Result)==0){
 		$DataError =1;
 		echo '<field>
-				<td colspan="2">' . prnMsg(__('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . __('Setup Types') . '</a></td>
+				<td colspan="2">' . prnMsg(__('No sales types/price lists defined'),'error') . '<br /><a href="' . $RootPath . '/SalesTypes.php?" target="_parent">' . __('Setup Types') . '</a></td>
 			</field>';
 	} else {
 		echo '<field>
@@ -523,7 +523,7 @@ if (!isset($DebtorNo)) {
 	$Result = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	if (DB_num_rows($Result)==0){
 		$DataError =1;
-		echo '<a href="SalesTypes.php?" target="_parent">' . __('Setup Types') . '</a>';
+		echo '<a href="' . $RootPath . '/SalesTypes.php?" target="_parent">' . __('Setup Types') . '</a>';
 		echo '<field>
 				<td colspan="2">' . prnMsg(__('No Customer types/price lists defined'),'error') . '</td>
 			</field>';
@@ -1145,7 +1145,7 @@ if (!isset($DebtorNo)) {
 					<td>', $MyRow['phoneno'], '</td>
 					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
 					<td>', $MyRow['notes'], '</td>
-					<td><a href="AddCustomerContacts.php?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '">' .  __('Edit'). '</a></td>
+					<td><a href="' . $RootPath . '/AddCustomerContacts.php?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '">' .  __('Edit'). '</a></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ID=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this customer contact?') . '\');">' .  __('Delete'). '</a></td>
 				</tr>';
 		}

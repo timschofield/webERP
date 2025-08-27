@@ -1,10 +1,11 @@
 <?php
+
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
 include('includes/DefinePaymentClass.php');
 
-include('includes/session.php');
-if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -17,6 +18,8 @@ else {
 	$PageTitleText = __('Bank Account Payments Entry');
 }
 include('includes/header.php');
+
+if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 $PageTitleText, '" /> ', // Icon title.

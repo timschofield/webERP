@@ -4,7 +4,7 @@
 // Have separate functions for each routine. Use pass-by-reference - (&$StockID) -
 // to pass value of $StockID to functions.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('MRP Demands');
 $ViewTopic = 'MRP';

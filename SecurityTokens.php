@@ -2,7 +2,7 @@
 
 /* Administration of security tokens */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Maintain Security Tokens');
 $ViewTopic = 'SecuritySchema';

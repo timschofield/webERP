@@ -2,7 +2,7 @@
 
 /* Defines the groupings of general ledger accounts */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Account Groups');
 $ViewTopic = 'GeneralLedger';
@@ -262,7 +262,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 
 	$ErrMsg = __('Could not get account groups because');
 	$Result = DB_query($SQL, $ErrMsg);
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" alt="" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<thead>

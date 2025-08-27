@@ -5,7 +5,7 @@
 	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
 */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'Setup';
 $BookMark = 'Currencies';
@@ -384,7 +384,7 @@ or deletion of the records*/
 					<td class="number">', locale_number_format(1, 2), '</td>
 					<td class="number">', locale_number_format(1, 8), '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($MyRow['currabrev']) . '">' . __('Edit') . '</a></td>
-					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . __('Functional Currency') . '</a></td>
+					<td colspan="2"><a href="' . $RootPath . '/CompanyPreferences.php#CurrencyDefault">' . __('Functional Currency') . '</a></td>
 				</tr>';
 		}
 	} //END WHILE LIST LOOP

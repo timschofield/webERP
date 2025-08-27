@@ -16,7 +16,7 @@
 
 include('includes/DefineSuppAllocsClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('Supplier Payment') . '/' . __('Credit Note Allocations');
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC./* RChacon: To do ManualAPInquiries.html from ManualARInquiries.html */
 $BookMark = 'SupplierAllocations';

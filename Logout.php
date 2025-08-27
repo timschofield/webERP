@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $SQL = "DELETE FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
 $Result = DB_query($SQL);

@@ -12,7 +12,7 @@ This script is "mirror-symmetric" to script PurchasesReport.php.
 // END: Functions division =====================================================
 
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

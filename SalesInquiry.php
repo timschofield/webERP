@@ -3,7 +3,7 @@
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
 // If Date Type is Invoice, stockmoves is the main table
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Sales Inquiry');
 $ViewTopic = 'Sales';

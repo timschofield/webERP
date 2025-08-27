@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.

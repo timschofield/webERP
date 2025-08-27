@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 ob_start();
 
@@ -285,7 +285,7 @@ if ($_GET['Action'] == 'Enter') {
 					' . __('Upload file') . ': <input name="userfile" type="file" />
 					<input type="submit" value="' . __('Send File') . '" />
 				</th>
-				<td><a href="StockCounts.php?gettemplate=1">Get Import Template</a></td>
+				<td><a href="' . $RootPath . '/StockCounts.php?gettemplate=1">Get Import Template</a></td>
 			</tr>
 			<tr><td></td></tr>';
 

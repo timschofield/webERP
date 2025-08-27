@@ -2,7 +2,7 @@
 
 /* Entry of point to point stock location transfers of a single part. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Transfers');
 $ViewTopic = "Inventory";
@@ -571,7 +571,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		DB_Txn_Commit();
 
 		prnMsg(__('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. __('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. __('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '.__('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
-		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . __('Print Transfer Note') . '</a>';
 		unset($_SESSION['Transfer']);
 		include('includes/footer.php');
 		exit();

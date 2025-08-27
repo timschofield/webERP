@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Product Specifications Maintenance');
 $ViewTopic = 'QualityAssurance';// Filename in ManualContents.php's TOC.

@@ -1,7 +1,8 @@
 <?php
+
 /* Inventory Transfer - Bulk Dispatch */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Inventory Location Transfer Shipment');
 $BookMark = "LocationTransfers";

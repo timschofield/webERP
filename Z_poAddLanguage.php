@@ -6,7 +6,7 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 /* Was the Cancel button pressed the last time through ? */
 if (isset($_POST['cancel'])) {

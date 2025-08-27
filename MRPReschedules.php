@@ -2,7 +2,7 @@
 
 // Report of purchase orders and work orders that MRP determines should be rescheduled.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if ( !DB_table_exists('mrprequirements') ) {
 	$Title = 'MRP error';

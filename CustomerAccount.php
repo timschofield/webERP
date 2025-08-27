@@ -2,7 +2,7 @@
 
 /* Shows customer account/statement on screen rather than PDF. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Account');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.

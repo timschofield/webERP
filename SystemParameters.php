@@ -1,7 +1,9 @@
 <?php
+
 /* This script is for maintenance of the system parameters. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SystemParameters';

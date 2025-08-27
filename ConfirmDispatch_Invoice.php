@@ -6,7 +6,7 @@
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Confirm Dispatches and Invoice An Order');
 $ViewTopic = 'ARTransactions';

@@ -2,7 +2,7 @@
 
 /* Shows the bill of material indented for each level */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

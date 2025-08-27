@@ -2,7 +2,7 @@
 
 /* This script is an utility to change a stock category code. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE Change A Stock Category');
 $ViewTopic = 'SpecialUtilities';

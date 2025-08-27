@@ -2,7 +2,7 @@
 
 /* This script is to review the item description translations. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Review Translated Descriptions');// Screen identificator.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.

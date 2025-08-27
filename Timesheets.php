@@ -2,7 +2,7 @@
 
 /* Timesheet Entry */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Timesheet Entry');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
@@ -547,7 +547,7 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
 				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
 				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Select') . '</a></td>
-				<td class="noPrint"><a href="Employees.php?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td class="noPrint"><a href="' . $RootPath . '/Employees.php?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
 			</tr>';
 		}
 		//END WHILE LIST LOOP

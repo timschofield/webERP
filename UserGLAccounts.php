@@ -2,7 +2,7 @@
 
 /* Maintenance of GL Accounts allowed for a user. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('User Authorised GL Accounts');
 $ViewTopic = 'GeneralLedger';

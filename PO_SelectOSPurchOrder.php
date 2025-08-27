@@ -2,7 +2,7 @@
 
 $PricesSecurity = 12;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Outstanding Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';

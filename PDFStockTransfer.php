@@ -2,7 +2,7 @@
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (!isset($_GET['TransferNo'])){
 	if (isset($_POST['TransferNo'])){
@@ -87,7 +87,7 @@ if (DB_num_rows($Result) == 0){
 	$Title = __('Print Stock Transfer - Error');
 	include('includes/header.php');
 	prnMsg(__('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="PDFStockTransfer.php">' . __('Try Again')  . '</a>';
+	echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again')  . '</a>';
 	include('includes/footer.php');
 	exit();
 }

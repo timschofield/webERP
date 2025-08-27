@@ -5,7 +5,7 @@
 $AllowAnyone = true;
 $PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create and send sales analysis files');
 $ViewTopic = 'SpecialUtilities';

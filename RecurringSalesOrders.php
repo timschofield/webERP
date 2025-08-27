@@ -2,7 +2,7 @@
 
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Recurring Orders');
 $ViewTopic = 'SalesOrders';

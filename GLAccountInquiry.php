@@ -2,7 +2,7 @@
 
 // Shows the general ledger transactions for a specified account over a specified range of periods.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('General Ledger Account Inquiry');
 $ViewTopic = 'GeneralLedger';

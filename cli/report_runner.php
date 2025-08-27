@@ -73,6 +73,7 @@ if (($reportname == "") || ($reportnumber == "") || ($emailaddresses == "")) {
 chdir($weberp_home);
 
 $AllowAnyone = true;
+
 require(__DIR__ . '/../includes/session.php');
 
 // get me the report name from the command line

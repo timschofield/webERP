@@ -6,10 +6,12 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_poAdmin';
 $Title = __('Maintain Language Files');
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
     $str = trim($str);

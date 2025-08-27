@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Sales Area Maintenance');
 $ViewTopic = 'CreatingNewSystem';
@@ -148,7 +148,7 @@ if (!isset($SelectedArea)) {
 				<td>' . $MyRow['areadescription'] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '">' . __('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedArea=' . $MyRow['areacode'] . '&amp;delete=yes">' . __('Delete') . '</a></td>
-				<td><a href="SelectCustomer.php?Area=' . $MyRow['areacode'] . '">' . __('View Customers from this Area') . '</a></td>
+				<td><a href="' . $RootPath . '/SelectCustomer.php?Area=' . $MyRow['areacode'] . '">' . __('View Customers from this Area') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
