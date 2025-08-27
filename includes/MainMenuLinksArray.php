@@ -1,4 +1,5 @@
 <?php
+
 unset($_SESSION['ModuleLink']);
 unset($_SESSION['ReportList']);
 unset($_SESSION['ModuleList']);
@@ -15,7 +16,7 @@ $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	$ModuleLink[] = $MyRow['modulelink'];
 	$ReportList[$MyRow['modulelink']] = $MyRow['reportlink'];
-	$ModuleList[] = _($MyRow['modulename']);
+	$ModuleList[] = __($MyRow['modulename']);
 }
 $SQL = "SELECT `modulelink`,
 				`menusection` ,
@@ -27,8 +28,6 @@ $SQL = "SELECT `modulelink`,
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
-	$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = _($MyRow['caption']);
+	$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['Caption'][] = __($MyRow['caption']);
 	$MenuItems[$MyRow['modulelink']][$MyRow['menusection']]['URL'][] = $MyRow['url'];
 }
-
-?>

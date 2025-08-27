@@ -1,4 +1,5 @@
 <?php
+
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -13,15 +14,15 @@ $FontSize=15;
 $XPos = $Page_Width/2 - 80;
 
 $YPos -= 40;
-$pdf->addText($XPos, $YPos,$FontSize, _('Banking Summary'));
+$pdf->addText($XPos, $YPos,$FontSize, __('Banking Summary'));
 $FontSize=12;
-$pdf->addText($XPos-50, $YPos-20,$FontSize, _('for Receipt Batch') . ' # ' . $_POST['BatchNo'] . ' ' . _('of') . ' ' . $BankTransType);
+$pdf->addText($XPos-50, $YPos-20,$FontSize, __('for Receipt Batch') . ' # ' . $_POST['BatchNo'] . ' ' . __('of') . ' ' . $BankTransType);
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
-$pdf->addText($XPos, $YPos,$FontSize, _('Page') .': ' . $PageNumber);
+$pdf->addText($XPos, $YPos,$FontSize, __('Page') .': ' . $PageNumber);
 
-/*Now print out the company name and address */
+/* Now print out the company name and address */
 $XPos = $Left_Margin;
 $YPos -= $LineHeight;
 
@@ -32,13 +33,13 @@ $YPos -=$LineHeight;
 $XPos = $Left_Margin;
 
 
-$pdf->addText($XPos, $YPos,$FontSize, _('Date of Banking') .': ' . ConvertSQLDate($MyRow['transdate']));
+$pdf->addText($XPos, $YPos,$FontSize, __('Date of Banking') .': ' . ConvertSQLDate($MyRow['transdate']));
 $YPos -= $LineHeight;
-$pdf->addText($XPos, $YPos,$FontSize, _('Banked into') . ': ' . $BankActName . ' - ' . _('Account Number') . ': ' . $BankActNumber);
+$pdf->addText($XPos, $YPos,$FontSize, __('Banked into') . ': ' . $BankActName . ' - ' . __('Account Number') . ': ' . $BankActNumber);
 $YPos -= $LineHeight;
-$pdf->addText($XPos, $YPos,$FontSize, _('Reference') . ': ' . $BankingReference);
+$pdf->addText($XPos, $YPos,$FontSize, __('Reference') . ': ' . $BankingReference);
 $YPos -= $LineHeight;
-$pdf->addText($XPos, $YPos,$FontSize, _('Currency') . ': ' . $Currency);
+$pdf->addText($XPos, $YPos,$FontSize, __('Currency') . ': ' . $Currency);
 $YPos -= $LineHeight;
 
 /*draw a square grid for entering line items */
@@ -51,14 +52,13 @@ $YPos -= $LineHeight;
 /*Set up headings */
 $FontSize=8;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Amount'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,150,$FontSize,_('Customer'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+212,$YPos,100,$FontSize,_('Bank Details'), 'centre');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,100,$FontSize,_('Narrative'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,__('Amount'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,150,$FontSize,__('Customer'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+212,$YPos,100,$FontSize,__('Bank Details'), 'centre');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,100,$FontSize,__('Narrative'), 'centre');
 $YPos-=$LineHeight;
 
 /*draw a line */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
 $YPos -= ($LineHeight);
-?>

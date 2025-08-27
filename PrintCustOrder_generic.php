@@ -1,29 +1,28 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-
-include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
-If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
-	$Title = _('Select Order To Print');
+if (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
+	$Title = __('Select Order To Print');
 	include('includes/header.php');
 	echo '<div class="centre">
-         <br />
-         <br />
-         <br />';
-	prnMsg( _('Select an Order Number to Print before calling this page') , 'error');
+		 <br />
+		 <br />
+		 <br />';
+	prnMsg( __('Select an Order Number to Print before calling this page') , 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-            <ul>
-			    <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			    <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-            </ul>
+			<ul>
+				<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+			</ul>
 			</td>
 			</tr>
 			</table>
@@ -32,14 +31,14 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*retrieve the order details from the database to print */
-$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . __('from the database');
 
 $SQL = "SELECT salesorders.debtorno,
-    		salesorders.customerref,
+			salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
 			salesorders.deliverto,
@@ -79,22 +78,22 @@ if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-	$Title = _('Print Packing Slip Error');
+	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
-	prnMsg( _('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
+	prnMsg( __('Unable to Locate Order Number') . ' : ' . $_GET['TransNo'] . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 			<tr>
 			<td class="menu_group_item">
-			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+			<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
 			</td>
 			</tr>
 			</table>
@@ -106,39 +105,40 @@ if (DB_num_rows($Result)==0){
 	exit();
 } elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
-        $MyRow = DB_fetch_array($Result);
-        /* Place the deliver blind variable into a hold variable to used when
-        producing the packlist */
-        $DeliverBlind = $MyRow['deliverblind'];
-        if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
-                $Title = _('Print Packing Slip Error');
-                include('includes/header.php');
-                echo '<p>';
-                prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) .
-                        '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
-              echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
-                . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
-                '<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  _('Do a Re-Print') . ' (' . _('Plain paper') . ' - ' . _('A4') . ' ' . _('landscape') . ') ' . _('Even Though Previously Printed'). '</a>';
+		$MyRow = DB_fetch_array($Result);
+		/* Place the deliver blind variable into a hold variable to used when
+		producing the packlist */
+		$DeliverBlind = $MyRow['deliverblind'];
+		if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+				$Title = __('Print Packing Slip');
+				$DatePrinted = $MyRow['datepackingslipprinted'];
+				include('includes/header.php');
+				echo '<p>';
+				prnMsg( __('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
+						__('has previously been printed') . '. ' . __('It was printed on'). ' ' . ConvertSQLDate($DatePrinted) .
+						'<br />' . __('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
+			  echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
+				. __('Do a Re-Print') . ' (' . __('On Pre-Printed Stationery') . ') ' . __('Even Though Previously Printed') . '</a><p>' .
+				'<a href="' . $RootPath. '/PrintCustOrder_generic.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">' .  __('Do a Re-Print') . ' (' . __('Plain paper') . ' - ' . __('A4') . ' ' . __('landscape') . ') ' . __('Even Though Previously Printed'). '</a>';
 
-                echo '<br /><br /><br />';
-                echo  _('Or select another Order Number to Print');
-                echo '<table class="table_index">
+				echo '<br /><br /><br />';
+				echo  __('Or select another Order Number to Print');
+				echo '<table class="table_index">
 						<tr>
 						<td class="menu_group_item">
-                        <li><a href="'. $RootPath . '/SelectSalesOrder.php">' . _('Outstanding Sales Orders') . '</a></li>
-                        <li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . _('Completed Sales Orders') . '</a></li>
-                        </td>
-                        </tr>
-                        </table>
-                        </div>
-                        <br />
-                        <br />
-                        <br />';
+						<li><a href="'. $RootPath . '/SelectSalesOrder.php">' . __('Outstanding Sales Orders') . '</a></li>
+						<li><a href="'. $RootPath . '/SelectCompletedOrder.php">' . __('Completed Sales Orders') . '</a></li>
+						</td>
+						</tr>
+						</table>
+						</div>
+						<br />
+						<br />
+						<br />';
 
-                include('includes/footer.php');
-                exit;
-        }//packing slip has been printed.
+				include('includes/footer.php');
+				exit();
+		}//packing slip has been printed.
 }
 
 /*retrieve the order details from the database to print */
@@ -149,8 +149,8 @@ LETS GO */
 $PaperSize = 'A4_Landscape';
 include('includes/PDFStarter.php');
 
-$pdf->addInfo('Title', _('Customer Laser Packing Slip') );
-$pdf->addInfo('Subject', _('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
+$pdf->addInfo('Title', __('Customer Laser Packing Slip') );
+$pdf->addInfo('Subject', __('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
 $FontSize=12;
 $LineHeight=24;
 $PageNumber = 1;
@@ -164,7 +164,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 		$pdf->newPage();
 	}
 	/* Now ... Has the order got any line items still outstanding to be invoiced */
-	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
+	$ErrMsg = __('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . __('from the database');
 
 	$SQL = "SELECT salesorderdetails.stkcode,
 					stockmaster.description,
@@ -200,7 +200,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					AND custitem.stockid=salesorderdetails.stkcode
 				WHERE locstock.loccode = '" . $MyRow['fromstkloc'] . "'
 					AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-	$Result=DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling with a page header */
@@ -208,7 +208,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 
 		while ($MyRow2=DB_fetch_array($Result)){
 
-            $ListCount ++;
+			$ListCount ++;
 			$Volume += $MyRow2['quantity'] * $MyRow2['volume'];
 			$Weight += $MyRow2['quantity'] * $MyRow2['grossweight'];
 
@@ -221,13 +221,13 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$MyRow2['stkcode'],'left');
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$MyRow2['description'],'left');
-			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap(487,$YPos,85,$FontSize,$MyRow2['units'],'left');
-			$LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize,$MyRow2['bin'],'left');
-			$LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
-			$LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
+			$pdf->addTextWrap($XPos,$YPos,127,$FontSize,$MyRow2['stkcode'],'left');
+			$pdf->addTextWrap(147,$YPos,255,$FontSize,$MyRow2['description'],'left');
+			$pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
+			$pdf->addTextWrap(487,$YPos,85,$FontSize,$MyRow2['units'],'left');
+			$pdf->addTextWrap(527,$YPos,70,$FontSize,$MyRow2['bin'],'left');
+			$pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+			$pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1) {
 				// Prints salesorderdetails.narrative:
@@ -241,7 +241,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			if ($YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a newy */
 				$PageNumber++;
-				include ('includes/PDFOrderPageHeader_generic.php');
+				include('includes/PDFOrderPageHeader_generic.php');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
@@ -249,8 +249,8 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			}
 
 			if ($MyRow2['cust_part'] > '') {
-				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $MyRow2['cust_part'], 'right');
-				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MyRow2['cust_description']);
+				$pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $MyRow2['cust_part'], 'right');
+				$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MyRow2['cust_description']);
 				if ($YPos - $LineHeight <= 50) {
 					/* We reached the end of the page so finish off the page and start a newy */
 					$PageNumber++;
@@ -274,20 +274,20 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 						WHERE bom.parent='" . $MyRow2['stkcode'] . "'
 							AND bom.effectiveafter <= CURRENT_DATE
 							AND bom.effectiveto > CURRENT_DATE";
-				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
-				$AssemblyResult = DB_query($SQL,$ErrMsg);
-				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
+				$ErrMsg = __('Could not retrieve the components of the ordered assembly item');
+				$AssemblyResult = DB_query($SQL, $ErrMsg);
+				$pdf->addTextWrap($XPos,$YPos,150,$FontSize, __('Assembly Components:-'));
 				$YPos -= ($LineHeight);
 				/*Loop around all the components of the assembly and list the quantity supplied */
 				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
 					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity']*($MyRow2['quantity'] - $MyRow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
-					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
-					$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
-					$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
+					$pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
+					$pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
+					$pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 					if ($YPos-$LineHeight <= 50){
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
-						include ('includes/PDFOrderPageHeader_generic.php');
+						include('includes/PDFOrderPageHeader_generic.php');
 					} //end if need a new page headed up
 					 else{
 						/*increment a line down for the next line item */
@@ -297,9 +297,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 			}
 
 			if ($MyRow2['controlled'] == '1') {
-				$ControlLabel = _('Lot') . ':';
+				$ControlLabel = __('Lot') . ':';
 				if ($MyRow2['serialised'] == 1) {
-					$ControlLabel = _('Serial') . ':';
+					$ControlLabel = __('Serial') . ':';
 				}
 				$SerSQL = "SELECT serialno,
 									moveqty
@@ -307,9 +307,9 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 							WHERE pickserialdetails.detailno='" . $MyRow2['detailno'] . "'";
 				$SerResult = DB_query($SerSQL, $ErrMsg);
 				while ($MySer = DB_fetch_array($SerResult)) {
-					$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
+					$pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
+					$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
+					$pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
 					if ($YPos - $LineHeight <= 50) {
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
@@ -326,14 +326,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 	} /*end if there are order details to show on the order*/
 
 	if ( $Copy != 'Customer' ) {
-		$LeftOvers = $pdf->addTextWrap(375,20,150,$FontSize,'Accepted/Received By:','left');
+		$pdf->addTextWrap(375,20,150,$FontSize,'Accepted/Received By:','left');
 		$pdf->line(500,20,650,20);
-		$LeftOvers = $pdf->addTextWrap(675,20,50,$FontSize,'Date:','left');
+		$pdf->addTextWrap(675,20,50,$FontSize,'Date:','left');
 		$pdf->line(710,20,785,20);
 	}
 
-	$LeftOvers = $pdf->addTextWrap(17,20,100,$FontSize,'Volume: ' . round($Volume) . ' GA','left');
-	$LeftOvers = $pdf->addTextWrap(147,20,200,$FontSize,'Weight: ' . round($Weight) . ' LB (approximate)','left');
+	$pdf->addTextWrap(17,20,100,$FontSize,'Volume: ' . round($Volume) . ' GA','left');
+	$pdf->addTextWrap(147,20,200,$FontSize,'Weight: ' . round($Weight) . ' LB (approximate)','left');
 
 	$Copy='Customer';
 	$Volume = 0;
@@ -342,14 +342,14 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 } /*end for loop to print the whole lot twice */
 
 if ($ListCount == 0) {
-	$Title = _('Print Packing Slip Error');
+	$Title = __('Print Packing Slip Error');
 	include('includes/header.php');
-	echo '<p>' .  _('There were no outstanding items on the order to deliver') . '. ' . _('A packing slip cannot be printed').
-			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  _('Print Another Packing Slip/Order').
+	echo '<p>' .  __('There were no outstanding items on the order to deliver') . '. ' . __('A packing slip cannot be printed').
+			'<br /><a href="' . $RootPath . '/SelectSalesOrder.php">' .  __('Print Another Packing Slip/Order').
 			'</a>
-			<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
@@ -359,5 +359,3 @@ if ($ListCount == 0) {
 			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
 }
-
-?>

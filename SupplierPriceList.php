@@ -1,9 +1,10 @@
 <?php
+
 /* Maintain Supplier Price Lists */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-$Title = _('Supplier Purchasing Data');
+$Title = __('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'SupplierPriceList';
 include('includes/header.php');
@@ -11,24 +12,24 @@ include('includes/header.php');
 if(isset($_POST['StockSearch'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/magnifier.png" title="', // Icon image.
-		_('Search'), '" /> ', // Icon title.
-		_('Search for Inventory Items'), '</p>';// Page title.
+		__('Search'), '" /> ', // Icon title.
+		__('Search for Inventory Items'), '</p>';// Page title.
 
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
 		<input name="SupplierID" type="hidden" value="', $_POST['SupplierID'], '" />
 		<fieldset>
-			<legend class="search">', _('Search for Item'), '</legend>
+			<legend class="search">', __('Search for Item'), '</legend>
 			<field>
-				<label for="StockCat">' . _('In Stock Category') . ':</label>
+				<label for="StockCat">' . __('In Stock Category') . ':</label>
 				<select name="StockCat">';
 	if(!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
 	if($_POST['StockCat'] == 'All') {
-		echo '<option selected="True" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 	$SQL = "SELECT categoryid,
 				categorydescription
@@ -37,7 +38,7 @@ if(isset($_POST['StockSearch'])) {
 	$Result1 = DB_query($SQL);
 	while($MyRow1 = DB_fetch_array($Result1)) {
 		if($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="True" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
 			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
@@ -45,7 +46,7 @@ if(isset($_POST['StockSearch'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="Keywords">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
+			<label for="Keywords">' . __('Enter partial') . '<b> ' . __('Description') . '</b>:</label>';
 	if(isset($_POST['Keywords'])) {
 		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" autofocus="autofocus" size="34" maxlength="25" />';
 	} else {
@@ -54,7 +55,7 @@ if(isset($_POST['StockSearch'])) {
 	echo '</field>';
 
 	echo '<field>
-			<label for="StockCode">'.'<b>' . _('OR') . ' </b>' .  _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+			<label for="StockCode">'.'<b>' . __('OR') . ' </b>' .  __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
 	if(isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -63,11 +64,11 @@ if(isset($_POST['StockSearch'])) {
 	echo '</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+			<input type="submit" name="Search" value="' . __('Search Now') . '" />
 		</div>
 	</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
@@ -76,7 +77,7 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 		$_POST['PageOffset'] = 1;
 	}
 	if($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg (_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
 	if($_POST['Keywords']) {
 		//insert wildcard characters in spaces
@@ -213,18 +214,17 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 				ORDER BY stockmaster.stockid";
 		}
 	}
-	$ErrMsg = _('No stock items were returned by the SQL because');
-	$DbgMsg = _('The SQL that returned an error was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('No stock items were returned by the SQL because');
+	$SearchResult = DB_query($SQL, $ErrMsg);
 	if(DB_num_rows($SearchResult) == 0) {
-		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
+		prnMsg(__('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
 /* end query for list of records */
 /* display list if there is more than one record */
 if(isset($SearchResult) AND !isset($_POST['Select'])) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Inventory Items'). '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -247,7 +247,7 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 			$_POST['PageOffset'] = $ListPageMax;
 		}
 		if($ListPageMax > 1) {
-			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . _('of') . ' ' . $ListPageMax . ' ' . _('pages') . '. ' . _('Go to Page') . ': ';
+			echo '<div class="centre"><br />&nbsp;&nbsp;' . $_POST['PageOffset'] . ' ' . __('of') . ' ' . $ListPageMax . ' ' . __('pages') . '. ' . __('Go to Page') . ': ';
 			echo '<select name="PageOffset">';
 			$ListPage = 1;
 			while($ListPage <= $ListPageMax) {
@@ -259,9 +259,9 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 				$ListPage++;
 			}
 			echo '</select>
-				<input type="submit" name="Go" value="' . _('Go') . '" />
-				<input type="submit" name="Previous" value="' . _('Previous') . '" />
-				<input type="submit" name="Next" value="' . _('Next') . '" />';
+				<input type="submit" name="Go" value="' . __('Go') . '" />
+				<input type="submit" name="Previous" value="' . __('Previous') . '" />
+				<input type="submit" name="Next" value="' . __('Next') . '" />';
 			echo '<input type="hidden" name=Keywords value="'.$_POST['Keywords'].'" />';
 			echo '<input type="hidden" name=StockCat value="'.$_POST['StockCat'].'" />';
 			echo '<input type="hidden" name=StockCode value="'.$_POST['StockCode'].'" />';
@@ -271,9 +271,9 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-				<th class="SortedColumn">' . _('Code') . '</th>
-				<th class="SortedColumn">' . _('Description') . '</th>
-				<th>' . _('Units') . '</th>
+				<th class="SortedColumn">' . __('Code') . '</th>
+				<th class="SortedColumn">' . __('Description') . '</th>
+				<th>' . __('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -299,7 +299,7 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
               </div>
               </form>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 }
 
@@ -316,7 +316,7 @@ foreach ($_POST as $key=>$Value) {
 			$Preferred = 1;
 			$PreferredSQL = "UPDATE purchdata SET preferred=0
 									WHERE stockid='" . $StockID . "'";
-			$PreferredResult=DB_query($PreferredSQL);
+			$PreferredResult = DB_query($PreferredSQL);
 		} else {
 			$Preferred = 0;
 		}
@@ -334,7 +334,7 @@ foreach ($_POST as $key=>$Value) {
 									minorderqty='" . $MinOrderQty . "'
 								WHERE supplierno='" . $_POST['SupplierID'] . "'
 								AND stockid='" . $StockID . "'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 	}
 	if(mb_substr($key,0,6)=='Insert') {
 		if(isset($_POST['Preferred0'])) {
@@ -366,7 +366,7 @@ foreach ($_POST as $key=>$Value) {
 									'" . $_POST['SupplierPartNo0'] . "',
 									'" . $_POST['MinOrderQty0'] . "'
 								)";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 	}
 }
 
@@ -378,48 +378,47 @@ if(isset($_GET['SupplierID'])) {
 
 if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
 	$SQL = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
-	$ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
-	$SuppSelResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('The supplier details for the selected supplier could not be retrieved because');
+	$SuppSelResult = DB_query($SQL, $ErrMsg);
 	if(DB_num_rows($SuppSelResult) == 1) {
 		$MyRow = DB_fetch_array($SuppSelResult);
 		$SuppName = $MyRow['suppname'];
 		$CurrCode = $MyRow['currcode'];
 	} else {
-		prnMsg(_('The supplier code') . ' ' . $SupplierID . ' ' . _('is not an existing supplier in the database') . '. ' . _('You must enter an alternative supplier code or select a supplier using the search facility below'), 'error');
+		prnMsg(__('The supplier code') . ' ' . $SupplierID . ' ' . __('is not an existing supplier in the database') . '. ' . __('You must enter an alternative supplier code or select a supplier using the search facility below'), 'error');
 		unset($SupplierID);
 	}
 } else {
 	if($NoPurchasingData=0) {
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' .
-			$Title . ' ' . _('For Stock Code') . ' - ' . $StockID . '</p><br />';
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' .
+			$Title . ' ' . __('For Stock Code') . ' - ' . $StockID . '</p><br />';
 	}
 	if(!isset($_POST['SearchSupplier'])) {
 		echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 			'/images/supplier.png" title="', // Icon image.
-			_('Search for a supplier'), '" /> ', // Icon title.
-			_('Search for a supplier'), '</p>';// Page title.
+			__('Search for a supplier'), '" /> ', // Icon title.
+			__('Search for a supplier'), '</p>';// Page title.
 
 		echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
 		echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
 		echo '<fieldset>
-				<legend class="search">', _('Select Supplier'), '</legend>';
+				<legend class="search">', __('Select Supplier'), '</legend>';
 		echo '<field>
-				<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</label>
+				<label for="Keywords">' . __('Text in the Supplier') . ' <b>' . __('NAME') . '</label>
 				<input maxlength="25" name="Keywords" size="20" type="text" />
 			</field>';
 		echo '<field>
-				<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</label>
+				<label for="SupplierCode">' . '<b>' . __('OR') . ' </b>' . __('Text in Supplier') . ' <b>' . __('CODE') . '</label>
 				<input maxlength="18" name="SupplierCode" size="15" type="text" />
 			</field>
 		</fieldset>';
 		echo '<div class="centre">
-				<input name="SearchSupplier" type="submit" value="' . _('Find Suppliers Now') . '" />
+				<input name="SearchSupplier" type="submit" value="' . __('Find Suppliers Now') . '" />
 			</div>';
         echo '</form>';
-		include ('includes/footer.php');
-		exit;
+		include('includes/footer.php');
+		exit();
 	}
 }
 
@@ -448,28 +447,27 @@ if(isset($_POST['SearchSupplier'])) {
 			FROM suppliers
 			WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
 	} //one of keywords or SupplierCode was more than a zero length string
-	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
-	$SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('The suppliers matching the criteria entered could not be retrieved because');
+	$SuppliersResult = DB_query($SQL, $ErrMsg);
 } //end of if search
 
 if(isset($SuppliersResult)) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
-		_('Search'), '" /> ', // Icon title.
-		_('Select a supplier'), '</p>';// Page title.
+		__('Search'), '" /> ', // Icon title.
+		__('Select a supplier'), '</p>';// Page title.
 	echo '<br />
 		<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 		<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table cellpadding="2" class="selection">
 			<tr>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Supplier Name') . '</th>
-				<th>' . _('Currency') . '</th>
-				<th>' . _('Address 1') . '</th>
-				<th>' . _('Address 2') . '</th>
-				<th>' . _('Address 3') . '</th>
+				<th>' . __('Code') . '</th>
+				<th>' . __('Supplier Name') . '</th>
+				<th>' . __('Currency') . '</th>
+				<th>' . __('Address 1') . '</th>
+				<th>' . __('Address 2') . '</th>
+				<th>' . __('Address 3') . '</th>
 			</tr>';
 
 	while($MyRow = DB_fetch_array($SuppliersResult)) {
@@ -486,7 +484,7 @@ if(isset($SuppliersResult)) {
           </form>
           <br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }// END if(isset($SuppliersResult)).
 
 if(isset($_POST['SupplierID'])) {
@@ -494,8 +492,8 @@ if(isset($_POST['SupplierID'])) {
 	$SuppName = $MyRow['suppname'];
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/supplier.png" title="', // Icon image.
-		_('Search'), '" /> ', // Icon title.
-		_('Supplier Purchasing Data'), '<br />',
+		__('Search'), '" /> ', // Icon title.
+		__('Supplier Purchasing Data'), '<br />',
 			$_POST['SupplierID'], ' - ', $SuppName, '</p>';// Page title.
 
 	$SQL="SELECT purchdata.stockid,
@@ -514,7 +512,7 @@ if(isset($_POST['SupplierID'])) {
 			ON purchdata.stockid=stockmaster.stockid
 			WHERE supplierno='".$_POST['SupplierID']."'
 			ORDER BY purchdata.stockid, effectivefrom DESC";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 
 	$UOMSQL = "SELECT unitid,
 						unitname
@@ -528,22 +526,22 @@ if(isset($_POST['SupplierID'])) {
 
 	echo '<table class="selection">
 			<tr>
-				<th colspan="12" class="number">' . _('Find new Item Code') .
+				<th colspan="12" class="number">' . __('Find new Item Code') .
 					'<button type="submit" name="StockSearch"><img width="15" src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" alt="" /></button></th>
 			</tr>';
 	echo '<tr>
-			<th>' . _('StockID') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Price') . '</th>
-			<th>' . _('Suppliers UOM') . '</th>
-			<th>' . _('Conversion Factor') . '</th>
-			<th>' . _('Suppliers Description') . '</th>
-			<th>' . _('Lead Time') . '</th>
-			<th>' . _('Preferred') . '</th>
-			<th>' . _('Effective From') . '</th>
-			<th>' . _('Suppliers Item Code') . '</th>
-			<th>' . _('Min Order Qty') . '</th>
-			<th>', _('Save'), '</th>
+			<th>' . __('StockID') . '</th>
+			<th>' . __('Description') . '</th>
+			<th>' . __('Price') . '</th>
+			<th>' . __('Suppliers UOM') . '</th>
+			<th>' . __('Conversion Factor') . '</th>
+			<th>' . __('Suppliers Description') . '</th>
+			<th>' . __('Lead Time') . '</th>
+			<th>' . __('Preferred') . '</th>
+			<th>' . __('Effective From') . '</th>
+			<th>' . __('Suppliers Item Code') . '</th>
+			<th>' . __('Min Order Qty') . '</th>
+			<th>', __('Save'), '</th>
 		</tr>';// RChacon: Sortable by StockID, Description, Suppliers_Description, Suppliers_Description ?
 
 	if(isset($_POST['Select'])) {
@@ -611,7 +609,5 @@ if(isset($_POST['SupplierID'])) {
 	echo '</table>';
 	echo '</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
-
-?>

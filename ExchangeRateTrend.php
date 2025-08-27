@@ -1,9 +1,10 @@
 <?php
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
-include('includes/session.php');
-$Title = _('View Currency Trend');
-$ViewTopic= 'Currencies';
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('View Currency Trend');
+$ViewTopic = 'Currencies';
 $BookMark = 'ExchangeRateTrend';
 include('includes/header.php');
 
@@ -24,12 +25,12 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 		'/images/currency.png" title="', // Icon image.
-		_('View Currency Trend'), '" /> ', // Icon title.
-		_('View Currency Trend'), '</p>';// Page title.
+		__('View Currency Trend'), '" /> ', // Icon title.
+		__('View Currency Trend'), '</p>';// Page title.
 	echo '<table>'; // First column
 
 	$SQL = "SELECT currabrev FROM currencies";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker
@@ -51,7 +52,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 		</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Accept') . '" />
+			<input type="submit" name="submit" value="' . __('Accept') . '" />
 		</div>
 	</div>
 	</form>';
@@ -71,9 +72,8 @@ if ( isset($_GET['CurrencyToShow']) ){
 			</th>
 		</tr>
 		<tr>
-			<td><img src="' . $Image . '" alt="' ._('Trend Currently Unavailable') . '" /></td>
+			<td><img src="' . $Image . '" alt="' .__('Trend Currently Unavailable') . '" /></td>
 		</tr>
 		</table>';
 
 include('includes/footer.php');
-?>

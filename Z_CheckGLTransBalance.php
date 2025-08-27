@@ -1,19 +1,20 @@
 <?php
 
-include('includes/session.php');
-$Title=_('Check Period Sales Ledger Control Account');
+require(__DIR__ . '/includes/session.php');
+
+$Title=__('Check Period Sales Ledger Control Account');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 echo '<table>';
 
 $Header = '<tr>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Type') . '</th>
-			<th>' . _('Number') . '</th>
-			<th>' . _('Period') . '</th>
-			<th>' . _('Difference') . '</th>
+			<th>' . __('Date') . '</th>
+			<th>' . __('Type') . '</th>
+			<th>' . __('Number') . '</th>
+			<th>' . __('Period') . '</th>
+			<th>' . __('Difference') . '</th>
 		</tr>';
 
 echo $Header;
@@ -60,4 +61,3 @@ while ($OutOfWackRow = DB_fetch_array($OutOfWackResult)){
 echo '</table>';
 
 include('includes/footer.php');
-?>

@@ -150,9 +150,9 @@
 /* Validate email addresses */
 	function  checkEmail($email) {
 		if (!preg_match("/^( [a-zA-Z0-9] )+( [a-zA-Z0-9\._-] )*@( [a-zA-Z0-9_-] )+( [a-zA-Z0-9\._-] +)+$/" , $email)) {
-  			return false;
- 		}
- 		return true;
+			return false;
+		}
+		return true;
 	}
 
 /* Check that the email address is in a valid format and only has 55 or fewer characters */
@@ -500,7 +500,7 @@
 		if (DB_error_no() != 0)
 			$Errors[0] = DatabaseUpdateFailed;
 		else {
-			$Errors[0] = 0;	    // Signal data may follow.
+			$Errors[0] = 0; // Signal data may follow.
 			while ($MyRow = DB_fetch_row($Result)) {
 				$Errors[] = $MyRow[0];
 			}
@@ -536,4 +536,3 @@
 		}
 		return  $Errors;
 	}
-?>

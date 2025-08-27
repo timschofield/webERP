@@ -1,16 +1,18 @@
 <?php
-// GLTagProfit_Loss.php
-//
-include ('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
-$Title = _('Income and Expenditure by Tag');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+
+$Title = __('Income and Expenditure by Tag');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';
 
+include('includes/SQL_CommonFunctions.php');
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
+
 if (isset($_POST['PeriodFrom']) AND ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
-	prnMsg(_('The selected period from is actually after the period to') . '! ' . _('Please reselect the reporting period') , 'error');
+	prnMsg(__('The selected period from is actually after the period to') . '! ' . __('Please reselect the reporting period') , 'error');
 	$_POST['NewReport'] = 'Select A Different Period';
 }
 
@@ -25,9 +27,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if ($NumberOfMonths > 12) {
 		echo '<br />';
-		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range') , 'error');
-		include ('includes/footer.php');
-		exit;
+		prnMsg(__('A period up to 12 months in duration can be specified') . ' - ' . __('the system automatically shows a comparative for the same period from the previous year') . ' - ' . __('it cannot do this if a period of more than 12 months is specified') . '. ' . __('Please select an alternative period range') , 'error');
+		include('includes/footer.php');
+		exit();
 	}
 
 	$PeriodToDate = MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($_POST['PeriodTo']));
@@ -55,7 +57,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					accountgroups.groupname,
 					gltrans.account";
 
-	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because') , _('The SQL that failed was'));
+	$AccountsResult = DB_query($SQL, __('No general ledger accounts were returned by the SQL because') , __('The SQL that failed was'));
 	$SQL = "SELECT tagdescription FROM tags WHERE tagref='" . $_POST['tag'] . "'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
@@ -75,22 +77,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<tr>
 			<th colspan="9">
 				<div class="centre">
-					<h2><b>' . _('Statement of Income and Expenditure for Tag') . ' ' . $MyRow[0] . ' ' . _('during the') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '</b></h2>
+					<h2><b>' . __('Statement of Income and Expenditure for Tag') . ' ' . $MyRow[0] . ' ' . __('during the') . ' ' . $NumberOfMonths . ' ' . __('months to') . ' ' . $PeriodToDate . '</b></h2>
 				</div>
 			</th>
 		</tr>';
 
 	if ($_POST['Detail'] == 'Detailed') {
 		$TableHeader = '<tr>
-							<th>' . _('Account') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th colspan="2">' . _('Period Actual') . '</th>
+							<th>' . __('Account') . '</th>
+							<th>' . __('Account Name') . '</th>
+							<th colspan="2">' . __('Period Actual') . '</th>
 						</tr>';
 	}
 	else { /*summary */
 		$TableHeader = '<tr>
 							<th colspan="2"></th>
-							<th colspan="2">' . _('Period Actual') . '</th>
+							<th colspan="2">' . __('Period Actual') . '</th>
 						</tr>';
 	}
 
@@ -128,7 +130,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 									<td colspan="2"></td>
 									<td colspan="6"><hr /></td>
 								</tr>';
-						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 					}
 					else {
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -160,7 +162,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								<td colspan="2"></td>
 								<td colspan="6"><hr /></td>
 							</tr>';
-					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 				}
 				else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -225,7 +227,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								<td colspan="5"><hr /></td>
 							</tr>';
 					$HTML .= '<tr>
-								<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
+								<td colspan="2"><h2>' . __('Gross Profit') . '</h2></td>
 								<td></td>
 								<td class="number">' . locale_number_format($TotalIncome + $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							</tr>';
@@ -241,7 +243,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td colspan="6"><hr /></td>
 						</tr>';
 					$HTML .= '<tr>
-							<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
+							<td colspan="2"><h4><i>' . __('Gross Profit Percent') . '</i></h4></td>
 							<td></td>
 							<td class="number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
 						</tr>
@@ -297,7 +299,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		}
 		$SectionPrdActual -= $AccountPeriodActual;
 
-		if ($_POST['Detail'] == _('Detailed')) {
+		if ($_POST['Detail'] == __('Detailed')) {
 
 			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['account']) . '&amp;Show=Yes">' . $MyRow['account'] . '</a>';
 
@@ -329,7 +331,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								<td colspan="2"></td>
 								<td colspan="4"><hr /></td>
 							</tr>';
-					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 				}
 				else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -357,7 +359,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							<td colspan="2"></td>
 							<td colspan="4"><hr /></td>
 						</tr>';
-				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 			}
 			else {
 				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
@@ -414,7 +416,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td colspan="2"><hr /></td>
 					</tr>
 					<tr>
-						<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
+						<td colspan="2"><h2>' . __('Gross Profit') . '</h2></td>
 						<td></td>
 						<td class="number">' . locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
@@ -429,7 +431,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						<td colspan="2"><hr /></td>
 					</tr>
 					<tr>
-						<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
+						<td colspan="2"><h4><i>' . __('Gross Profit Percent') . '</i></h4></td>
 						<td></td>
 						<td class="number"><i>' . locale_number_format($PrdGPPercent, 1) . '%</i></td>
 						<td></td>
@@ -452,7 +454,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<td colspan="2"><hr /></td>
 			</tr>
 			<tr style="background-color:#ffffff">
-				<td colspan="2"><h2><b>' . _('Surplus') . ' - ' . _('Deficit') . '</b></h2></td>
+				<td colspan="2"><h2><b>' . __('Surplus') . ' - ' . __('Deficit') . '</b></h2></td>
 				<td>&nbsp;</td>
 				<td class="number">' . locale_number_format($PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
@@ -475,7 +477,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -496,21 +498,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Income and Expenditure by Tag');
-		include ('includes/header.php');
+		$Title = __('Income and Expenditure by Tag');
+		include('includes/header.php');
 
-		echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 } else {
 
 	// If PeriodFrom or PeriodTo are NOT set or it is a NewReport, shows a parameters input form:
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath, '/css/', $Theme, '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
@@ -526,9 +528,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<fieldset>
-			<legend>', _('Report Criteria') , '</legend>
+			<legend>', __('Report Criteria') , '</legend>
 			<field>
-				<label for="PeriodFrom">' . _('Select Period From') . ':</label>
+				<label for="PeriodFrom">' . __('Select Period From') . ':</label>
 				<select name="PeriodFrom">';
 
 	$SQL = "SELECT periodno,
@@ -571,7 +573,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	echo '<field>
-			<label for="PeriodTo">' . _('Select Period To') . ':</label>
+			<label for="PeriodTo">' . __('Select Period To') . ':</label>
 			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
@@ -593,7 +595,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	echo '<field>
-			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period') , '</label>
+			<label for="Period">', '<b>' . __('OR') . ' </b>' . __('Select Period') , '</label>
 			', ReportPeriodList($_POST['Period'], array(
 		'l',
 		't'
@@ -602,7 +604,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	//Select the tag
 	echo '<field>
-			<label for="tag">' . _('Select tag') . '</label>
+			<label for="tag">' . __('Select tag') . '</label>
 			<select name="tag">';
 
 	$SQL = "SELECT tagref,
@@ -623,22 +625,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 	// End select tag
 	echo '<field>
-			<label for="ShowDetail">', _('Detail or summary') , '</label>
+			<label for="ShowDetail">', __('Detail or summary') , '</label>
 			<select name="Detail">
-				<option selected="selected" value="Summary">' . _('Summary') . '</option>
-				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
+				<option selected="selected" value="Summary">' . __('Summary') . '</option>
+				<option selected="selected" value="Detailed">' . __('All Accounts') . '</option>
 			</select>
 		</field>
 	</fieldset>';
 
 	echo '<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View') . '" />
 			</div>
 		</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 
 }
-
-?>

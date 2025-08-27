@@ -174,7 +174,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 		unlink($PathPrefix . $ReportDir . '/POS.sql.zip');
 	}
 	$ZipFile = new ZipArchive();
-	if ($ZipFile->open($PathPrefix . $ReportDir . '/POS.sql.zip', ZIPARCHIVE::CREATE)!==TRUE) {
+	if ($ZipFile->open($PathPrefix . $ReportDir . '/POS.sql.zip', ZIPARCHIVE::CREATE)!==true) {
 		return 'couldnt open zip file ' . $PathPrefix . $ReportDir . '/POS.sql.zip';
 	}
 	$ZipFile->addFile($PathPrefix . $ReportDir . '/POS.sql','POS.sql');
@@ -214,5 +214,3 @@ function Delete_POS_Data($PathPrefix){
 		return 0;
 	}
 }
-
-?>

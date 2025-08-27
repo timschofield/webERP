@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]>0) {
 			$Errors[$i] = GLAccountCodeAlreadyExists;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT count(accountcode)
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = GLAccountCodeDoesntExists;
@@ -39,7 +39,7 @@
 		$Searchsql = "SELECT count(groupname)
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = AccountGroupDoesntExist;
@@ -70,7 +70,7 @@
 		}
 		if (sizeof($Errors)==0) {
 			$SQL = 'INSERT INTO chartmaster ('.mb_substr($FieldNames,0,-2).') '.
-		  		"VALUES ('".mb_substr($FieldValues,0,-2)."') ";
+				"VALUES ('".mb_substr($FieldValues,0,-2)."') ";
 			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -126,5 +126,3 @@
 		$Result = DB_query($SQL);
 		return DB_fetch_array($Result);
 	}
-
-?>

@@ -9,7 +9,7 @@
 		$Searchsql = "SELECT count(debtorno)
   				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] != 0) {
 			$Errors[$i] = DebtorNoAlreadyExists;
@@ -22,7 +22,7 @@
 		$Searchsql = "SELECT count(debtorno)
 				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
@@ -51,7 +51,7 @@
 		$Searchsql = "SELECT COUNT(currabrev)
 					  FROM currencies
 					  WHERE currabrev='".$CurrCode."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = CurrencyCodeNotSetup;
@@ -64,7 +64,7 @@
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
 					  WHERE typeabbrev='".$SalesType."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
@@ -85,7 +85,7 @@
 		$Searchsql = "SELECT COUNT(reasoncode)
 					 FROM holdreasons
 					  WHERE reasoncode='".$HoldReason."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = HoldReasonNotSetup;
@@ -98,7 +98,7 @@
 		$Searchsql = "SELECT COUNT(termsindicator)
 					 FROM paymentterms
 					  WHERE termsindicator='".$PaymentTerms."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = PaymentTermsNotSetup;
@@ -232,7 +232,7 @@
 		$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
 					  WHERE typeid='".$DebtorType."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = CustomerTypeNotSetup;
@@ -539,5 +539,3 @@
 		}
 		return $DebtorList;
 	}
-
-?>

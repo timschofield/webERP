@@ -1,5 +1,6 @@
 <?php
-/* AnalysisHorizontalIncome.php
+
+/*
 Shows the horizontal analysis of the statement of comprehensive income.
 
 Parameters:
@@ -18,12 +19,13 @@ Parameters:
 */
 
 // BEGIN: Procedure division ===================================================
-include('includes/session.php');
-$Title = _('Horizontal Analysis of Statement of Comprehensive Income');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Horizontal Analysis of Statement of Comprehensive Income');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalIncome';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 // Merges gets into posts:
@@ -50,8 +52,8 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/AccountSectionsDef.php');// This loads the $Sections variable.
 
 if (isset($_POST['PeriodFrom']) and ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
-	prnMsg(_('The selected period from is actually after the period to') . '! ' .
-		_('Please reselect the reporting period'), 'error');
+	prnMsg(__('The selected period from is actually after the period to') . '! ' .
+		__('Please reselect the reporting period'), 'error');
 	$_POST['NewReport'] = 'on';
 }
 
@@ -64,22 +66,22 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title, '" /> ', // Icon title.
 		$Title, '</p>';// Page title.
-	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('Shows the horizontal analysis of the statement of comprehensive income.') . '<br />' .
-		_('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'). '<br />' .
-		_('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).') . '<br />' .
-		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is true or is not set
+		__('Shows the horizontal analysis of the statement of comprehensive income.') . '<br />' .
+		__('Horizontal analysis (also known as trend analysis) is a financial statement analysis technique that shows changes in the amounts of corresponding financial statement items over a period of time. It is a useful tool to evaluate trend situations.'). '<br />' .
+		__('The statements for two periods are used in horizontal analysis. The earliest period is used as the base period. The items on the later statement are compared with items on the statement of the base period. The changes are shown both in currency (actual change) and percentage (relative change).') . '<br />' .
+		__('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	// BEGIN ReportParametersFormStart:
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
 		'<fieldset>', // Content of the header and footer of the input table:
-		'<legend>', _('Report Parameters'), '</legend>';
+		'<legend>', __('Report Parameters'), '</legend>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
 
 	echo	'<field>
-				<label for="PeriodFrom">', _('Select period from'), ':</label>
+				<label for="PeriodFrom">', __('Select period from'), ':</label>
 				<select name="PeriodFrom" required="required">';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
@@ -120,7 +122,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		</field>',
 	// Select period to:
 			'<field>
-				<label for="PeriodTo">', _('Select period to'), '</label>
+				<label for="PeriodTo">', __('Select period to'), '</label>
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	if (!isset($_POST['PeriodTo']) OR $_POST['PeriodTo'] == '') {
@@ -151,37 +153,37 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	}
 
 	echo	'<field>
-				<label for="Period">', '<b>' , _('OR') , ' </b>' , _('Select Period'), '</label>
+				<label for="Period">', '<b>' , __('OR') , ' </b>' , __('Select Period'), '</label>
 				', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			</field>',
 	// Show all accounts instead a summary:
 			'<field>
-				<label for="ShowDetail">', _('Detail or summary'), '</label>
+				<label for="ShowDetail">', __('Detail or summary'), '</label>
 				<select name="ShowDetail" required="required">
-					<option value="Summary">', _('Summary'), '</option>
-					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
+					<option value="Summary">', __('Summary'), '</option>
+					<option selected="selected" value="Detailed">', __('All Accounts'), '</option>
 					</select>
-					<fieldhelp>', _('Selecting Summary will show on the totals at the account group level'), '</fieldhelp
+					<fieldhelp>', __('Selecting Summary will show on the totals at the account group level'), '</fieldhelp
 			</field>',
 	// Show accounts with zero balance:
 			'<field>
-				<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+				<label for="ShowZeroBalance">', __('Show accounts with zero balance'), '</label>
 				<input';
 	if (isset($_POST['ShowZeroBalance'])) {
 		echo ' checked="checked"';
 	} else {
 		echo '';
 	}
-	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-					'<fieldhelp>', _('Check this box to show accounts with zero balance'), '</fieldhelp>
+	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is true.
+					'<fieldhelp>', __('Check this box to show accounts with zero balance'), '</fieldhelp>
 			</field>';
 	// BEGIN ReportParametersFormEnd:
 	echo '</fieldset>',
 			'<div class="centre">',
 				'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+					'/images/tick.svg" /> ', __('Submit'), '</button>', // "Submit" button.
 				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath,
-					'/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+					'/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 			'</div>',
 		'</form>';
 	// END ReportParametersFormEnd.
@@ -190,12 +192,12 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 	if ($NumberOfMonths > 12) {
 		echo '<br />';
-		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' .
-			_('the system automatically shows a comparative for the same period from the previous year') . ' - ' .
-			_('it cannot do this if a period of more than 12 months is specified') . '. ' .
-			_('Please select an alternative period range'), 'error');
+		prnMsg(__('A period up to 12 months in duration can be specified') . ' - ' .
+			__('the system automatically shows a comparative for the same period from the previous year') . ' - ' .
+			__('it cannot do this if a period of more than 12 months is specified') . '. ' .
+			__('Please select an alternative period range'), 'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['PeriodTo']);
@@ -208,29 +210,29 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		$Title, '" /> ', // Icon title.
 		$Title, '<br />', // Page title, reporting statement.
 		stripslashes($_SESSION['CompanyRecord']['coyname']), '<br />', // Page title, reporting entity.
-		_('For'), ' ', $NumberOfMonths, ' ', _('months to'), ' ', $PeriodToDate, '<br />', // Page title, reporting period.
-		_('All amounts stated in'), ': ', _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
+		__('For'), ' ', $NumberOfMonths, ' ', __('months to'), ' ', $PeriodToDate, '<br />', // Page title, reporting period.
+		__('All amounts stated in'), ': ', __($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]), '</p>';// Page title, reporting presentation currency and level of rounding used.
 	echo '<table class="scrollable">
 		<thead>
 		<tr>';
 	if ($_POST['ShowDetail'] == 'Detailed') {// Detailed report:
-		echo '<th class="text">', _('Account'), '</th>
-			<th class="text">', _('Account Name'), '</th>';
+		echo '<th class="text">', __('Account'), '</th>
+			<th class="text">', __('Account Name'), '</th>';
 	} else {// Summary report:
-		echo '<th class="text" colspan="2">', _('Summary'), '</th>';
+		echo '<th class="text" colspan="2">', __('Summary'), '</th>';
 	}
-	echo	'<th class="number">', _('Current period'), '</th>
-			<th class="number">', _('Last period'), '</th>
-			<th class="number">', _('Actual change'), '</th>
-			<th class="number">', _('Relative change'), '</th>
+	echo	'<th class="number">', __('Current period'), '</th>
+			<th class="number">', __('Last period'), '</th>
+			<th class="number">', __('Actual change'), '</th>
+			<th class="number">', __('Relative change'), '</th>
 		</tr>
 		</thead>
 		<tfoot>
 			<tr>
 				<td class="text" colspan="6">',// Prints an explanation of signs in actual and relative changes:
-					'<br /><b>', _('Notes'), ':</b><br />',
-					_('Actual change signs: a positive number indicates a variation that increases the net profit; a negative number indicates a variation that decreases the net profit.'), '<br />',
-					_('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
+					'<br /><b>', __('Notes'), ':</b><br />',
+					__('Actual change signs: a positive number indicates a variation that increases the net profit; a negative number indicates a variation that decreases the net profit.'), '<br />',
+					__('Relative change signs: a positive number indicates an increase in the amount of that account; a negative number indicates a decrease in the amount of that account.'), '<br />',
 				'</td>
 			</tr>
 		</tfoot>
@@ -262,7 +264,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
 					chartmaster.accountcode";
-	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because'), _('The SQL that failed was'));
+	$AccountsResult = DB_query($SQL, __('No general ledger accounts were returned by the SQL because'), __('The SQL that failed was'));
 
 	$PeriodTotal = 0;
 	$PeriodTotalLY = 0;
@@ -292,7 +294,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 				while ($MyRow['groupname'] != $ParentGroups[$Level] AND $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
 						echo $DrawTotalLine;
-						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' *' . _('total');
+						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' *' . __('total');
 					} else {
 						$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 					}
@@ -313,7 +315,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					echo $DrawTotalLine;
-					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 				} else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 				}
@@ -369,7 +371,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 				if ($Section == 2) {// Cost of Sales - need sub total for Gross Profit.
 					echo $DrawTotalLine;
 					echo '<tr>
-							<td class="text" colspan="2"><h2>', _('Gross Profit'), '</h2></td>
+							<td class="text" colspan="2"><h2>', __('Gross Profit'), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-($GPIncome + $SectionTotal), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-($GPIncomeLY + $SectionTotalLY), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-($GPIncome + $SectionTotal) + ($GPIncomeLY + $SectionTotalLY), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -380,7 +382,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 				if (($Section != 1) AND ($Section != 2)) {
 					echo $DrawTotalLine;
 					echo '<tr>
-							<td class="text" colspan="2"><h2>', _('Earnings after'), ' ', $Sections[$Section], '</h2></td>
+							<td class="text" colspan="2"><h2>', __('Earnings after'), ' ', $Sections[$Section], '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$PeriodTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 							<td class="number"><h2>', locale_number_format(-$PeriodTotal + $PeriodTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -461,7 +463,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 			while ($MyRow['groupname'] != $ParentGroups[$Level] AND $Level > 0) {
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					echo $DrawTotalLine;
-					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 				} else {
 					$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 				}
@@ -490,7 +492,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 			//still need to print out the old group totals
 			if ($_POST['ShowDetail'] == 'Detailed') {
 				echo $DrawTotalLine;
-				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . _('total');
+				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level] . ' ' . __('total');
 			} else {
 				$ActGrpLabel = str_repeat('___', $Level) . $ParentGroups[$Level];
 			}
@@ -533,7 +535,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		if ($Section == 2) {// Cost of Sales - need sub total for Gross Profit.
 			echo $DrawTotalLine,
 				'<tr>
-					<td colspan="2"><h2>', _('Gross Profit'), '</h2></td>
+					<td colspan="2"><h2>', __('Gross Profit'), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-($GPIncome + $SectionTotal), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-($GPIncomeLY + $SectionTotalLY), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 					<td class="number"><h2>', locale_number_format(-($GPIncome + $SectionTotal) + ($GPIncomeLY + $SectionTotalLY), $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -553,7 +555,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 
 	echo $DrawTotalLine;
 	echo '<tr>
-			<td colspan="2"><h2>', _('Net Profit'), '</h2></td>
+			<td colspan="2"><h2>', __('Net Profit'), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
 			<td class="number"><h2>', locale_number_format(-$PeriodTotal + $PeriodTotalLY, $_SESSION['CompanyRecord']['decimalplaces']), '</h2></td>
@@ -572,15 +574,14 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 		'<input name="ShowZeroBalance" type="hidden" value="', ($_POST['ShowZeroBalance'] ?? 0), '" />',
 		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
+				'/images/printer.png" /> ', __('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme,
-				'/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
+				'/images/reports.png" /> ', __('New Report'), '</button>', // "New Report" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath,
-				'/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+				'/css/', $Theme, '/images/return.svg" /> ', __('Return'), '</button>', // "Return" button.
 		'</div>',
 		'</form>';
 	// END ReportDocEndButtons.
 }
 
 include('includes/footer.php');
-?>

@@ -2,6 +2,8 @@
 /* Database abstraction for postgres */
 
 define ('LIKE','ILIKE');
+
+/// @todo add support for global var $DatabaseName
 /* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
@@ -9,10 +11,10 @@ if( isset($Host) && ($Host != "")) {
 	$PgConnStr = 'host='.$Host.' '.$PgConnStr;
 }
 
-if( isset( $DBUser ) && ($DBUser != "") ) {
+if ( isset( $DBUser ) && ($DBUser != "") ) {
 	// if we have a user we need to use password if supplied
 	$PgConnStr .= " user=".$DBUser;
-	if( isset( $DBPassword ) && ($DBPassword != "") ) {
+	if ( isset( $DBPassword ) && ($DBPassword != "") ) {
 		$PgConnStr .= " password=".$DBPassword;
 	}
 }
@@ -20,65 +22,69 @@ if( isset( $DBUser ) && ($DBUser != "") ) {
 global $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
-if( !$db ) {
-	if($Debug==1) {
+if ( !$db ) {
+	if ($Debug >= 1) {
 		echo '<br>' . $PgConnStr . '<br>';
 	}
-	echo '<br>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . _(' Try logging in with an alternative company name.');
-	echo '<br><a href="index.php">' . _('Back to login page') . '</a>';
+	echo '<br>' . __('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . __(' Try logging in with an alternative company name.');
+	echo '<br><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 	unset($_SESSION['DatabaseName']);
-	exit;
+	exit();
 }
 
-require_once ($PathPrefix .'includes/MiscFunctions.php');
+require_once($PathPrefix .'includes/MiscFunctions.php');
 
-//DB wrapper functions to change only once for whole application
+// DB wrapper functions to change only once for whole application
 
-function DB_query ($SQL,
-				$ErrorMessage='',
-				$DebugMessage= '',
-				$Transaction=false,
-				$TrapErrors=true) {
+function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
 	global $Debug;
 	global $PathPrefix;
+	global $db;
 
 	$Result = pg_query($db, $SQL);
-	if($DebugMessage == '') {
-		$DebugMessage = _('The SQL that failed was:');
-	}
+	$SQLArray = explode(' ', strtoupper(ltrim($SQL)));
 
-	if( !$Result AND $TrapErrors) {
-		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.php');
-		}
-		prnMsg($ErrorMessage . '<BR>' . DB_error_msg(),'error', _('DB ERROR:'));
-		if($Debug==1) {
-			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
-		}
-		if($Transaction) {
-			$SQL = 'rollback';
-			$Result = DB_query($SQL);
-			if(DB_error_no() !=0) {
-				prnMsg('<br />' . _('Error Rolling Back Transaction!!'), '', _('DB DEBUG:') );
+	if (!$Result AND $TrapErrors) {
+		require_once($PathPrefix . 'includes/header.php');
+		if ($ErrorMessage == '') {
+			/// @todo add default error messages for insert/update/delete queries
+			if ($SQLArray[0] == 'SELECT') {
+				$ErrorMessage = __('An error occurred in retrieving the information');
 			}
 		}
-		if($TrapErrors) {
-			include($PathPrefix . 'includes/footer.php');
-			exit;
+		prnMsg(($ErrorMessage != '' ? $ErrorMessage . '<br />' : '') . DB_error_msg(), 'error', __('DB ERROR:'));
+		if ($Debug >= 1) {
+			if ($DebugMessage == '') {
+				$DebugMessage = __('The SQL that failed was');
+			}
+			ShowDebugBackTrace($DebugMessage, $SQL);
 		}
+		if ($Transaction) {
+			$SQL = 'rollback';
+			$Result = DB_query($SQL);
+			if (DB_error_no() !=0) {
+				prnMsg('<br />' . __('Error Rolling Back Transaction!!'), 'error', __('DB Database Rollback Error') . ' ' . DB_error_no());
+			} else {
+				prnMsg(__('Rolling Back Transaction OK'), 'error', __('Database Rollback Due to Error Above'));
+			}
+		}
+		include($PathPrefix . 'includes/footer.php');
+		exit();
 	}
-	return $Result;
 
+	/// @todo if query was OK, log it into table `audittrail`
+
+	return $Result;
 }
 
 function DB_fetch_row($ResultIndex) {
-	$RowPointer=pg_fetch_row($ResultIndex);
+	$RowPointer = pg_fetch_row($ResultIndex);
 	return $RowPointer;
 }
 
 function DB_fetch_assoc($ResultIndex) {
-	$RowPointer=pg_fetch_assoc($ResultIndex);
+	$RowPointer = pg_fetch_assoc($ResultIndex);
 	return $RowPointer;
 }
 
@@ -98,13 +104,14 @@ function DB_free_result($ResultIndex) {
 function DB_num_rows($ResultIndex) {
 	return pg_num_rows($ResultIndex);
 }
+
 // Added by MGT
 function DB_affected_rows($ResultIndex) {
 	return pg_affected_rows($ResultIndex);
 }
 
 function DB_error_no() {
-	return DB_error_msg() == ""?0:-1;
+	return DB_error_msg() == "" ? 0 : -1;
 }
 
 function DB_error_msg() {
@@ -113,7 +120,7 @@ function DB_error_msg() {
 }
 
 function DB_Last_Insert_ID($Table, $FieldName) {
-	$tempres = DB_query ("SELECT currval('".$Table."_".$FieldName."_seq') FROM ".$Table);
+	$tempres = DB_query("SELECT currval('".$Table."_".$FieldName."_seq') FROM ".$Table);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
 	return $Res;
@@ -123,23 +130,26 @@ function DB_escape_string($String) {
 	return pg_escape_string(htmlspecialchars($String, ENT_COMPAT, 'ISO-8859-1'));
 }
 
-function INTERVAL( $val, $Inter ) {
-	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
-}
 function DB_show_tables() {
-	$Result =DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
+	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'");
 	return $Result;
 }
+
 function DB_show_fields($TableName) {
 	$Result = DB_query("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name='" . $TableName . "'");
-	if(DB_num_rows($Result)==1) {
+	if (DB_num_rows($Result)==1) {
 		$Result = DB_query("SELECT column_name FROM information_schema.columns WHERE table_name ='$TableName'");
 		return $Result;
 	}
 }
+
+function interval( $val, $Inter ) {
+	return "\n(CAST( (" . $val . ") as text ) || ' ". $Inter ."')::interval\n";
+}
+
 function DB_Maintenance() {
 
-	prnMsg(_('The system has just run the regular database administration and optimisation routine'),'info');
+	prnMsg(__('The system has just run the regular database administration and optimisation routine'),'info');
 
 	$Result = DB_query('VACUUM ANALYZE');
 
@@ -148,6 +158,8 @@ function DB_Maintenance() {
 				WHERE confname = 'DB_Maintenance_LastRun'");
 }
 
+/// @todo add functions DB_Txn_Begin, DB_Txn_Commit, DB_Txn_Rollback, DB_IgnoreForeignKeys, DB_ReinstateForeignKeys
+
 function DB_table_exists($TableName) {
 	global $db;
 
@@ -155,9 +167,8 @@ function DB_table_exists($TableName) {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) > 0) {
-		return True;
+		return true;
 	} else {
-		return False;
+		return false;
 	}
 }
-?>

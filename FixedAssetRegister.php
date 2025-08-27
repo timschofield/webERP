@@ -1,11 +1,10 @@
 <?php
-// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
-include ('includes/session.php');
-use Dompdf\Dompdf;
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
+
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
 
 if (isset($_POST['FromDate'])) {
 	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
@@ -78,8 +77,8 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('From') . ':' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -89,20 +88,20 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 							<th></th>
 						</tr>
 						<tr>
-							<th>' . _('Asset ID') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('Serial Number') . '</th>
-							<th>' . _('Location') . '</th>
-							<th>' . _('Date Acquired') . '</th>
-							<th>' . _('Cost B/fwd') . '</th>
-							<th>' . _('Depn B/fwd') . '</th>
-							<th>' . _('Additions') . '</th>
-							<th>' . _('Depn') . '</th>
-							<th>' . _('Cost C/fwd') . '</th>
-							<th>' . _('Depn C/fwd') . '</th>
-							<th>' . _('NBV') . '</th>
-							<th>' . _('Disposal Value') . '</th>
-							<th>' . _('Disposal Date') . '</th>
+							<th>' . __('Asset ID') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . __('Serial Number') . '</th>
+							<th>' . __('Location') . '</th>
+							<th>' . __('Date Acquired') . '</th>
+							<th>' . __('Cost B/fwd') . '</th>
+							<th>' . __('Depn B/fwd') . '</th>
+							<th>' . __('Additions') . '</th>
+							<th>' . __('Depn') . '</th>
+							<th>' . __('Cost C/fwd') . '</th>
+							<th>' . __('Depn C/fwd') . '</th>
+							<th>' . __('NBV') . '</th>
+							<th>' . __('Disposal Value') . '</th>
+							<th>' . __('Disposal Date') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -173,7 +172,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 
 	//Total Values
 	$HTML .= '<tr class="total_row">
-				<th style="vertical-align:top" colspan="5">' . _('TOTAL') . '</th>
+				<th style="vertical-align:top" colspan="5">' . __('TOTAL') . '</th>
 				<th style="text-align:right">' . locale_number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 				<th style="text-align:right">' . locale_number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 				<th style="text-align:right">' . locale_number_format($TotalAdditions, $_SESSION['CompanyRecord']['decimalplaces']) . '</th>
@@ -205,7 +204,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -240,31 +239,31 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 		$writer->save('php://output');
 	}
 	else {
-		$Title = _('Fixed Asset Register');
-		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		$Title = __('Fixed Asset Register');
+		include('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 }
 else {
-	$Title = _('Fixed Asset Register');
+	$Title = __('Fixed Asset Register');
 
 	$ViewTopic = 'FixedAssets';
 	$BookMark = 'AssetRegister';
 
-	include ('includes/header.php');
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+	include('includes/header.php');
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	$Result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
 	echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Report Criteria') , '</legend>';
+			<legend>', __('Report Criteria') , '</legend>';
 	echo '<field>
-			<label for="AssetCategory">' . _('Asset Category') . '</label>
+			<label for="AssetCategory">' . __('Asset Category') . '</label>
 			<select name="AssetCategory">
-				<option value="%">' . _('ALL') . '</option>';
+				<option value="%">' . __('ALL') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['AssetCategory']) and $MyRow['categoryid'] == $_POST['AssetCategory']) {
 			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
@@ -278,9 +277,9 @@ else {
 	$SQL = "SELECT  locationid, locationdescription FROM fixedassetlocations";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="AssetLocation">' . _('Asset Location') . '</label>
+			<label for="AssetLocation">' . __('Asset Location') . '</label>
 			<select name="AssetLocation">
-				<option value="%">' . _('ALL') . '</option>';
+				<option value="%">' . __('ALL') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['AssetLocation']) and $MyRow['locationid'] == $_POST['AssetLocation']) {
 			echo '<option selected="selected" value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
@@ -294,9 +293,9 @@ else {
 	$SQL = "SELECT assetid, description FROM fixedassets";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="AssetID">' . _('Asset') . '</label>
+			<label for="AssetID">' . __('Asset') . '</label>
 			<select name="AssetID">
-				<option value="%">' . _('ALL') . '</option>';
+				<option value="%">' . __('ALL') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['AssetID']) and $MyRow['assetid'] == $_POST['AssetID']) {
 			echo '<option selected="selected" value="' . $MyRow['assetid'] . '">' . $MyRow['assetid'] . ' - ' . $MyRow['description'] . '</option>';
@@ -313,23 +312,23 @@ else {
 	}
 
 	echo '<field>
-			<label for="DisposalStatus">' . _('Asset Disposal Status') . '</label>
+			<label for="DisposalStatus">' . __('Asset Disposal Status') . '</label>
 			<select name="DisposalStatus">';
 
 	if ($_POST['DisposalStatus'] == 'ALL') {
-		echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
-				<option value="ACTIVE">' . _('Active') . '</option>
-				<option value="DISPOSED">' . _('Disposed') . '</option>';
+		echo '	<option selected="selected" value="ALL">' . __('All') . '</option>
+				<option value="ACTIVE">' . __('Active') . '</option>
+				<option value="DISPOSED">' . __('Disposed') . '</option>';
 	}
 	elseif ($_POST['DisposalStatus'] == 'ACTIVE') {
-		echo '	<option value="ALL">' . _('All') . '</option>
-				<option selected="selected" value="ACTIVE">' . _('Active') . '</option>
-				<option value="DISPOSED">' . _('Disposed') . '</option>';
+		echo '	<option value="ALL">' . __('All') . '</option>
+				<option selected="selected" value="ACTIVE">' . __('Active') . '</option>
+				<option value="DISPOSED">' . __('Disposed') . '</option>';
 	}
 	else {
-		echo '	<option value="ALL">' . _('All') . '</option>
-				<option value="ACTIVE">' . _('Active') . '</option>
-				<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
+		echo '	<option value="ALL">' . __('All') . '</option>
+				<option value="ACTIVE">' . __('Active') . '</option>
+				<option selected="selected" value="DISPOSED">' . __('Disposed') . '</option>';
 	}
 
 	echo '	</select>
@@ -343,24 +342,22 @@ else {
 	}
 
 	echo '<field>
-			<label for="FromDate">', _('From Date') , '</label>
+			<label for="FromDate">', __('From Date') , '</label>
 			<input type="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
-			<fieldhelp>' . _('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="ToDate">', _('To Date') , '</label>
+			<label for="ToDate">', __('To Date') , '</label>
 			<input type="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
-			<fieldhelp>' . _('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" title="View" value="' . _('Show Assets') . '" />&nbsp;
-		<input type="submit" name="PrintPDF" value="' . _('Print as a PDF') . '" />&nbsp;
-		<input type="submit" name = "Spreadsheet" title="Spreadsheet" value="' . _('Spreadsheet') . '" />
+		<input type="submit" name="submit" title="View" value="' . __('Show Assets') . '" />&nbsp;
+		<input type="submit" name="PrintPDF" value="' . __('Print as a PDF') . '" />&nbsp;
+		<input type="submit" name = "Spreadsheet" title="Spreadsheet" value="' . __('Spreadsheet') . '" />
 	</div>
 	</form>';
 
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }
-
-?>

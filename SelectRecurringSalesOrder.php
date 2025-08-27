@@ -1,22 +1,21 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Search Recurring Sales Orders');
-/* webERP manual links before header.php */
-$ViewTopic= 'SalesOrders';
-$BookMark = 'RecurringSalesOrders';
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Search Recurring Sales Orders');
+$ViewTopic = 'SalesOrders';
+$BookMark = 'RecurringSalesOrders';
 include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
-	_('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
+	__('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<fieldset>
-		<legend class="search">', _('Search Recurring Orders'), '</legend>
+		<legend class="search">', __('Search Recurring Orders'), '</legend>
 		<field>
-			<label for="StockLocation">' . _('Select recurring order templates for delivery from:') . ' </label>
+			<label for="StockLocation">' . __('Select recurring order templates for delivery from:') . ' </label>
 			<select name="StockLocation">';
 
 $SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
@@ -41,7 +40,7 @@ echo '</select>
 	</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . __('Search Recurring Orders') . '" /></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 
@@ -77,21 +76,21 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 				recurringsalesorders.stopdate,
 				recurringsalesorders.frequency";
 
-	$ErrMsg = _('No recurring orders were returned by the SQL because');
-	$SalesOrdersResult = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('No recurring orders were returned by the SQL because');
+	$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 	/*show a table of the orders returned by the SQL */
 
 	echo '<table cellpadding="2" width="90%" class="selection">
 			<tr>
-				<th>' . _('Modify') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Cust Order') . ' #</th>
-				<th>' . _('Last Recurrence') . '</th>
-				<th>' . _('End Date') . '</th>
-				<th>' . _('Times p.a.') . '</th>
-				<th>' . _('Order Total') . '</th>
+				<th>' . __('Modify') . '</th>
+				<th>' . __('Customer') . '</th>
+				<th>' . __('Branch') . '</th>
+				<th>' . __('Cust Order') . ' #</th>
+				<th>' . __('Last Recurrence') . '</th>
+				<th>' . __('End Date') . '</th>
+				<th>' . __('Times p.a.') . '</th>
+				<th>' . __('Order Total') . '</th>
 			</tr>';
 
 	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
@@ -121,4 +120,3 @@ echo '</div>
       </form>';
 
 include('includes/footer.php');
-?>

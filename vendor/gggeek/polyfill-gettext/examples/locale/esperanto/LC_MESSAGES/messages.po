@@ -1,0 +1,30 @@
+# Sample translation for Polyfill-Gettext
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pigs\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-07-15 22:27+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Gaetano Giunta\n"
+"Language-Team: Gaetano Giunta\n"
+"Language: esperanto\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+#"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: pigs_dropin.php:95
+msgid ""
+"This is how the story goes.\n"
+"\n"
+msgstr ""
+"Jen kiel la rakonto iras.\n"
+"\n"
+
+#: pigs_dropin.php:97
+#, php-format
+msgid "%d pig went to the market\n"
+msgid_plural "%d pigs went to the market\n"
+msgstr[0] "%d porko iris al la merkato\n"
+msgstr[1] "%d porkoj iris al la merkato\n"

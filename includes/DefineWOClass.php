@@ -1,7 +1,8 @@
 <?php
-/* Definition of the Works Order class to hold all the information for a purchase order and delivery
-*/
 
+/**
+ * Class to hold all the information for a purchase order and delivery
+ */
 class WorkOrder {
 
 	var $OrderNumber;
@@ -49,7 +50,7 @@ class WorkOrder {
 			$SQL = "DELETE FROM worequirements WHERE wo='" . $this->OrderNumber . "' AND parentstockid='" . $this->Items[$LineNumber]->StockId . "'";
 			$DeleteResult = DB_query($SQL);
 			$SQL = "DELETE FROM woitems WHERE wo='" . $this->OrderNumber . "' AND stockid='" . $this->Items[$LineNumber]->StockId . "'";
-			$DeleteResult = DB_query($SQL, _('Error deleting the item'));
+			$DeleteResult = DB_query($SQL, __('Error deleting the item'));
 		}
 		unset($this->Items[$LineNumber]);
 		$this->NumberOfItems--;
@@ -114,7 +115,7 @@ class WorkOrder {
 			$this->LocationCode = $MyRow['loccode'];
 			$this->OrderNumber = $WONumber;
 
-			$ErrMsg = _('Could not get the work order items');
+			$ErrMsg = __('Could not get the work order items');
 			$WOItemsResult = DB_query("SELECT   stockid,
 												qtyreqd,
 												qtyrecd,
@@ -133,7 +134,6 @@ class WorkOrder {
 			$this->NumberOfItems = $i;
 		}
 	}
-
 }
 
 class WOItem {
@@ -339,7 +339,4 @@ class WORequirement {
 		}
 		$UpdateRequirements = DB_query($SQL);
 	}
-
 }
-
-?>

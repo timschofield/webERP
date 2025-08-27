@@ -1,7 +1,8 @@
 <?php
+
 /* MT940 per SCB - Siam Comercial Bank Thailand */
 
-if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
+if (substr($LineText,0,4)==':20:') { //Timestamp of report MT940 generation
 		$_SESSION['Statement']->ReportCreated = substr($LineText,4); //in format DDDHHMM where DDD is the number of day in year and HHMM is the time
 		$TransactionLine = false;
 	  }
@@ -26,10 +27,10 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 		 $_SESSION['Statement']->OpeningDate = ConvertSQLDate('20' . substr($LineText,6,2) . '-' . substr($LineText,8,2) . '-' . substr($LineText,10,2));
 		 $_SESSION['Statement']->CurrCode = substr($LineText,12,3);
 		 if (!array_key_exists($_SESSION['Statement']->CurrCode,$CurrencyName)){
-			prnMsg(_('The bank statement currency is a currency not defined in the system. Please see you system administrator'),'warn');
-			prnMsg(_('The MT940 bank statement file cannot be imported and processed'),'error');
+			prnMsg(__('The bank statement currency is a currency not defined in the system. Please see you system administrator'),'warn');
+			prnMsg(__('The MT940 bank statement file cannot be imported and processed'),'error');
 	        include('includes/footer.php');
-	        exit;
+	        exit();
 			$ReadTheFile ='No';
 		}
 		 if ($DebitOrCredit =='D'){
@@ -99,4 +100,3 @@ if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
 		 }
 		 $TransactionLine = false;
 	  }
-?>

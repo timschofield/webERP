@@ -1,19 +1,19 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $MyRow = DB_fetch_row($Result);
 
-include('includes/phplot/phplot.php');
-$graph = new PHPlot(1000, 500);
-$graph->SetTitle($MyRow[0] . ' ' . _('Usage'));
-$graph->SetXTitle(_('Month'));
-$graph->SetYTitle(_('Quantity'));
+$graph = new Phplot\Phplot\phplot(1000, 500);
+$graph->SetTitle($MyRow[0] . ' ' . __('Usage'));
+$graph->SetXTitle(__('Month'));
+$graph->SetYTitle(__('Quantity'));
 $graph->SetBackgroundColor("wheat");
 $graph->SetTitleColor("blue");
 $graph->SetPlotType('bars');
 $graph->SetShading(5);
-$graph->SetDrawYGrid(TRUE);
+$graph->SetDrawYGrid(true);
 $graph->SetMarginsPixels(60, 40, 40, 40);
 $graph->SetDataType('text-data');
 
@@ -95,25 +95,15 @@ if($_GET['StockLocation'] == 'All') {
     }
 }
 
-$MovtsResult = DB_query($SQL);
-
-if (DB_error_no() != 0) {
-    $Title = _('Stock Usage Graph Problem');
-    include ('includes/header.php');
-    echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
-    if ($Debug == 1) {
-        echo '<br />' . _('The SQL that failed was') . $SQL;
-    }
-    include('includes/footer.php');
-    exit;
-}
+$ErrMsg = __('The stock usage for the selected criteria could not be retrieved');
+$MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) == 0) {
-    $Title = _('Stock Usage Graph Problem');
-    include ('includes/header.php');
-    prnMsg(_('There are no movements of this item from the selected location to graph'),'info');
+    $Title = __('Stock Usage Graph Problem');
+    include('includes/header.php');
+    prnMsg(__('There are no movements of this item from the selected location to graph'),'info');
     include('includes/footer.php');
-    exit;
+    exit();
 }
 
 $UsageArray = array();
@@ -156,7 +146,7 @@ if ($NumberOfPeriodsUsage != 24) {
         $UsageArray[$i][2] = $UsageRow['qtyused'];
     }
 }
-//$graph->SetDrawXGrid(TRUE);
+//$graph->SetDrawXGrid(true);
 $graph->SetDataValues($UsageArray);
 $graph->SetDataColors(
     array("blue","red"),  //Data Colors

@@ -1,11 +1,13 @@
 <?php
+
 $PageSecurity = 0;
 
-include ('includes/session.php');
-$Title = _('Dashboard');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Dashboard');
 $ViewTopic = 'Dashboard';
 $BookMark = 'MainScreen';
-include ('includes/header.php');
+include('includes/header.php');
 
 $DashBoardURL = $_SERVER['REQUEST_URI'];
 
@@ -40,7 +42,7 @@ if (isset($_GET['Reports']) and count($ScriptArray) < 7) {
 	$UpdateResult = DB_query($UpdateSQL);
 }
 else if (isset($_POST['Reports']) and count($ScriptArray) == 7) {
-	prnMsg(_('A maximum of 6 reports is allowd on each users dashboard') , 'warn');
+	prnMsg(__('A maximum of 6 reports is allowd on each users dashboard') , 'warn');
 }
 $SQL = "SELECT id,
 				scripts,
@@ -55,7 +57,7 @@ echo '<div class="container" style="--cols:3; --rows:2">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (in_array($MyRow['id'], $ScriptArray) and in_array($MyRow['pagesecurity'], $_SESSION['AllowedPageSecurityTokens'])) {
 		echo '<div draggable="true" class="dashboard_cell" name="', $MyRow['scripts'], '" id="dashboard_cell', $i, '" title="', $MyRow['description'], '" onload="">';
-		include ('dashboard/' . $MyRow['scripts']);
+		include('dashboard/' . $MyRow['scripts']);
 		echo '</div>';
 		++$i;
 	}
@@ -67,7 +69,7 @@ if ($i < 6) {
 	echo '<form>
 				<fieldset style="margin:auto">
 					<field>
-						<label for="Reports">', _('Add reports to your dashboard') , '</label>
+						<label for="Reports">', __('Add reports to your dashboard') , '</label>
 						<select name="Reports"  onchange="ReloadForm(submit)">
 						<option value=""></option>';
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -82,6 +84,5 @@ if ($i < 6) {
 	</form>';
 }
 
-include ('includes/footer.php');
-echo '<script async type="text/javascript" src = "', $RootPath, '/dashboard/javascript/dashboard.js"></script>';
-?>
+include('includes/footer.php');
+echo '<script async src="', $RootPath, '/dashboard/javascript/dashboard.js"></script>';

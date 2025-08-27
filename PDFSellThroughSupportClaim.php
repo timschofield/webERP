@@ -1,9 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
 
-$Title = _('Sell Through Support Claims Report');
+$Title = __('Sell Through Support Claims Report');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -19,23 +20,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
-				<meta name="Creator" content="webERP http://www.weberp.org">
+				<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Reorder Level Report') . '<br />
-					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-					' . _('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' ' . $_POST['ToDate'] . '<br />
+					' . __('Reorder Level Report') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . __('and') . ' ' . $_POST['ToDate'] . '<br />
 				</div>';
 
-	$Title = _('Sell Through Support Claim') . ' - ' . _('Problem Report');
+	$Title = __('Sell Through Support Claim') . ' - ' . __('Problem Report');
 
 	if (! Is_Date($_POST['FromDate']) OR ! Is_Date($_POST['ToDate'])){
 		include('includes/header.php');
-		prnMsg(_('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
+		prnMsg(__('The dates entered must be in the format') . ' '  . $_SESSION['DefaultDateFormat'],'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	  /*Now figure out the data to report for the category range under review */
@@ -80,38 +81,27 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				ORDER BY sellthroughsupport.supplierno,
 					stockmaster.stockid";
 
-	$ClaimsResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-
-	  include('includes/header.php');
-		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-		  echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The sell through support items to claim could not be retrieved');
+	$ClaimsResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ClaimsResult) == 0) {
 
 		include('includes/header.php');
-		prnMsg(_('No sell through support items retrieved'), 'warn');
-		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		prnMsg(__('No sell through support items retrieved'), 'warn');
+		echo '<br /><a href="'  . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	$HTML .= '<table>';
 
 	$HTML .= '<tr>
-				<th>' . _('Transaction') . '</th>
-				<th>' . _('Item') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Sell Price') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Claim') . '</th>
+				<th>' . __('Transaction') . '</th>
+				<th>' . __('Item') . '</th>
+				<th>' . __('Customer') . '</th>
+				<th>' . __('Sell Price') . '</th>
+				<th>' . __('Quantity') . '</th>
+				<th>' . __('Claim') . '</th>
 			</tr>';
 
 	$SupplierClaimTotal = 0;
@@ -121,11 +111,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Supplier = $SellThroRow['suppname'];
 		$CurrCode = $SellThroRow['currcode'];
 		if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
+			$pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			if ($SupplierClaimTotal > 0) {
 				$HTML .= '<tr>
 							<td colspan="3"></td>
-							<td colspan="2">' . $Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+							<td colspan="2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
 							<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
 						</tr>';
 			}
@@ -148,7 +138,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$HTML .= '<tr>
 					<td colspan="3"></td>
-					<td colspan="2">' . $Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+					<td colspan="2">' . $Supplier . ' ' . __('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
 					<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
 				</tr>';
 
@@ -161,7 +151,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -182,13 +172,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Sales With Low GP');
-		include ('includes/header.php');
+		$Title = __('Sales With Low GP');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales With Low G') . '" alt="" />' . ' ' . _('Sales With Low G') . '
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('Sales With Low G') . '" alt="" />' . ' ' . __('Sales With Low G') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {
@@ -199,7 +189,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
-		. _('Sell Through Support Claims Report') . '</p>';
+		. __('Sell Through Support Claims Report') . '</p>';
 
 	if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])) {
 
@@ -211,24 +201,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
-				<legend>', _('Report Criteria'), '</legend>
+				<legend>', __('Report Criteria'), '</legend>
 				<field>
-					<label for="FromDate">' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+					<label for="FromDate">' . __('Sales Made From') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
 					<input type="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
 				</field>
 				<field>
-					<label for="ToDate">' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+					<label for="ToDate">' . __('Sales Made To') . ' (' . __('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
 					<input type="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
 				</field>
 			</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print Low GP PDF') . '" />
-				<input type="submit" name="View" title="View" value="' . _('View Low GP Report') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print Low GP PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . __('View Low GP Report') . '" />
 			</div>';
 		echo '</form>';
 	}
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

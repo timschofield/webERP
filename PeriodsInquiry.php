@@ -1,9 +1,8 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include ('includes/session.php');
-
-$Title = _('Periods Inquiry');
+$Title = __('Periods Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
 include('includes/header.php');
@@ -13,8 +12,8 @@ $SQL = "SELECT periodno ,
 		FROM periods
 		ORDER BY periodno";
 
-$ErrMsg =  _('No periods were returned by the SQL because');
-$PeriodsResult = DB_query($SQL,$ErrMsg);
+$ErrMsg =  __('No periods were returned by the SQL because');
+$PeriodsResult = DB_query($SQL, $ErrMsg);
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
 		. $Title . '</p>';
@@ -24,8 +23,8 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/t
 $NumberOfPeriods = DB_num_rows($PeriodsResult);
 $PeriodsInTable = round($NumberOfPeriods/3,0);
 
-$TableHeader = '<tr><th>' . _('Period Number') . '</th>
-					<th>' . _('Date of Last Day') . '</th>
+$TableHeader = '<tr><th>' . __('Period Number') . '</th>
+					<th>' . __('Date of Last Day') . '</th>
 				</tr>';
 
 echo '<table><tr>';
@@ -54,4 +53,3 @@ echo '</tr></table>';
 //end of while loop
 
 include('includes/footer.php');
-?>

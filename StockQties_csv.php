@@ -1,20 +1,21 @@
 <?php
 
-include ('includes/session.php');
-$Title = _('Produce Stock Quantities CSV');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Produce Stock Quantities CSV');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include ('includes/header.php');
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
+include('includes/header.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<div class="centre">' . _('Making a comma separated values file of the current stock quantities') . '</div>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
 
-$ErrMsg = _('The SQL to get the stock quantities failed with the message');
+echo '<div class="centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
+
+$ErrMsg = __('The SQL to get the stock quantities failed with the message');
 
 $SQL = "SELECT stockid, SUM(quantity) FROM locstock
 			INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -29,22 +30,22 @@ $FileName = $_SESSION['reports_dir'] . '/StockQties.csv';
 
 $fp = fopen($FileName,'w');
 
-if ($fp==FALSE){
+if ($fp==false){
 
-	prnMsg(_('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
+	prnMsg(__('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
-While ($MyRow = DB_fetch_row($Result)){
+// the BOM is not used much anymore in 2025...
+//fputs($fp, "\xEF\xBB\xBF"); // UTF-8 BOM
+while ($MyRow = DB_fetch_row($Result)){
 	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]);
-	fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
+	fputs($fp, $Line . "\n");
 }
 
 fclose($fp);
 
-echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . _('click here') . '</a> ' . _('to view the file') . '</div>';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
 
 include('includes/footer.php');
-
-?>

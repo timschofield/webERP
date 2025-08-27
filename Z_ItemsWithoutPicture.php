@@ -1,10 +1,11 @@
 <?php
 
-include ('includes/session.php');
-$Title = _('List of Items without picture');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('List of Items without picture');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
-include ('includes/header.php');
+$BookMark = basename(__FILE__, '.php');
+include('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
@@ -15,10 +16,10 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockcategory.stocktype != 'D'
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
 $Result = DB_query($SQL);
-$PrintHeader = TRUE;
+$PrintHeader = true;
 
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text"><strong>' . _('Current Items without picture in webERP') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . __('Current Items without picture in webERP') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$i = 1;
@@ -30,12 +31,12 @@ if (DB_num_rows($Result) != 0){
 			if($PrintHeader){
 				$TableHeader = '<tr>
 								<th>' . '#' . '</th>
-								<th>' . _('Category') . '</th>
-								<th>' . _('Item Code') . '</th>
-								<th>' . _('Description') . '</th>
+								<th>' . __('Category') . '</th>
+								<th>' . __('Item Code') . '</th>
+								<th>' . __('Description') . '</th>
 								</tr>';
 				echo $TableHeader;
-				$PrintHeader = FALSE;
+				$PrintHeader = false;
 			}
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
@@ -53,6 +54,4 @@ if (DB_num_rows($Result) != 0){
 			</form>';
 }
 
-include ('includes/footer.php');
-
-?>
+include('includes/footer.php');

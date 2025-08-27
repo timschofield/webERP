@@ -1,6 +1,7 @@
 <?php
 
 /*PDF page header for inventory check report */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -14,37 +15,37 @@ $LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-550,
 								$Page_Height-$Top_Margin-$FontSize*1,
 								550,
 								$FontSize,
-								_('Transfer No').': ' . $_GET['TransferNo'],
+								__('Transfer No').': ' . $_GET['TransferNo'],
 								'right'); // Prints inventory location transfer reference number.
 
 $LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-120,
 								$Page_Height-$Top_Margin-$FontSize*2,
 								120,
 								$FontSize,
-								_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']),
+								__('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']),
 								'right'); // Prints current date.
 
 $LeftOvers = $pdf->addTextWrap(	$Page_Width-$Right_Margin-120,
 								$Page_Height-$Top_Margin-$FontSize*3,
 								120,
 								$FontSize,
-								_('Page'). ' ' . $PageNumber,
+								__('Page'). ' ' . $PageNumber,
 								'right'); // Prints current page number.
 
 $YPos -=15;
 $FontSize=12;
 $LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
-_('Shipped'). ' ' . ConvertSQLDateTime($TransferRow['shipdate']));
+__('Shipped'). ' ' . ConvertSQLDateTime($TransferRow['shipdate']));
 
 $YPos -=15;
 $FontSize=12;
 $LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
-_('From').' ' . $TransferRow['shiplocname']);
+__('From').' ' . $TransferRow['shiplocname']);
 
 $YPos -=15;
 $FontSize=12;
 $LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
-_('to').' ' . $TransferRow['reclocname']);
+__('to').' ' . $TransferRow['reclocname']);
 
 /*Draw a rectangle to put the headings in     */
 $BoxHeight =20;
@@ -60,12 +61,10 @@ $YPos +=5;
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
-$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 100, $FontSize, _('Item Code'), 'left');
-$LeftOvers = $pdf->addTextWrap($Left_Margin+100, $YPos, 250, $FontSize, _('Description'), 'left');
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100-100, $YPos, 100, $FontSize, _('Qty Shipped'), 'right');
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100, $YPos, 100, $FontSize, _('Qty Received'), 'right');
+$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 100, $FontSize, __('Item Code'), 'left');
+$LeftOvers = $pdf->addTextWrap($Left_Margin+100, $YPos, 250, $FontSize, __('Description'), 'left');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100-100, $YPos, 100, $FontSize, __('Qty Shipped'), 'right');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-100, $YPos, 100, $FontSize, __('Qty Received'), 'right');
 
 $FontSize=10;
 $YPos -= 30;
-
-?>

@@ -1,7 +1,6 @@
 <?php
 
-
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -72,15 +71,15 @@ if (isset($_GET['LeftOverQty'])) {
 /* If we are previewing the order then we dont want to email it */
 if ($SelectedWO == 'Preview') { //WO is set to 'Preview' when just looking at the format of the printed order
 	$_POST['PrintOrEmail'] = 'Print';
-	$MakePDFThenDisplayIt = True;
+	$MakePDFThenDisplayIt = true;
 } //$SelectedWO == 'Preview'
 
 if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly == 1)) {
-	$MakePDFThenDisplayIt = True;
-	$MakePDFThenEmailIt = False;
+	$MakePDFThenDisplayIt = true;
+	$MakePDFThenEmailIt = false;
 } elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail'] == 'Email' AND isset($_POST['EmailTo'])) {
-	$MakePDFThenEmailIt = True;
-	$MakePDFThenDisplayIt = False;
+	$MakePDFThenEmailIt = true;
+	$MakePDFThenDisplayIt = false;
 }
 
 $FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/FGLabel.xml');
@@ -90,7 +89,7 @@ $PaperSize = $FormDesign->PaperSize;
 $LineHeight=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $PageNumber=1;
-$pdf->addInfo('Title', _('FG Label') );
+$pdf->addInfo('Title', __('FG Label') );
 
 if ($SelectedWO == 'Preview'){
 	$MyRow['itemcode'] = str_pad('', 15,'x');
@@ -142,7 +141,7 @@ if ($NoOfLabels >0){
 				stockmaster.units
 			    FROM stockmaster WHERE stockid ='" . $MyRow['itemcode'] . "'";
 			//echo $SQL;
-			$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
+			$CheckControlledResult = DB_query($SQL,'<br />' . __('Could not determine if the item was controlled or not because') . ' ');
 			$ControlledRow = DB_fetch_row($CheckControlledResult);
 			//var_dump($ControlledRow);
 		}
@@ -154,7 +153,7 @@ if ($NoOfLabels >0){
 		$pdf->addText($FormDesign->CompanyAddress->Line1->x,$Page_Height - $FormDesign->CompanyAddress->Line1->y, $FormDesign->CompanyAddress->Line1->FontSize,  $_SESSION['CompanyRecord']['regoffice1']);
 		$pdf->addText($FormDesign->CompanyAddress->Line2->x,$Page_Height - $FormDesign->CompanyAddress->Line2->y, $FormDesign->CompanyAddress->Line2->FontSize,  $_SESSION['CompanyRecord']['regoffice2']);
 		$pdf->addText($FormDesign->CompanyAddress->Line3->x,$Page_Height - $FormDesign->CompanyAddress->Line3->y, $FormDesign->CompanyAddress->Line3->FontSize,  $_SESSION['CompanyRecord']['regoffice3']);
-		$pdf->addText($FormDesign->CompanyAddress->phone->x,$Page_Height - $FormDesign->CompanyAddress->phone->y, $FormDesign->CompanyAddress->phone->FontSize, _('Tel'). ': ' . $_SESSION['CompanyRecord']['telephone']);
+		$pdf->addText($FormDesign->CompanyAddress->phone->x,$Page_Height - $FormDesign->CompanyAddress->phone->y, $FormDesign->CompanyAddress->phone->FontSize, __('Tel'). ': ' . $_SESSION['CompanyRecord']['telephone']);
 		$pdf->addText($FormDesign->CompanyAddress->www->x,$Page_Height - $FormDesign->CompanyAddress->www->y, $FormDesign->CompanyAddress->www->FontSize,  $_SESSION['CompanyRecord']['regoffice4']);
 		$pdf->Line($FormDesign->LabelLine->startx, $Page_Height - $FormDesign->LabelLine->starty, $FormDesign->LabelLine->endx,$Page_Height - $FormDesign->LabelLine->endy);
 		$pdf->addText($FormDesign->ItemNbr->x,$Page_Height-$FormDesign->ItemNbr->y,$FormDesign->ItemNbr->FontSize,'Item: ' . $MyRow['itemcode']);
@@ -175,34 +174,33 @@ if ($NoOfLabels >0){
 		$PdfFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
 		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
 		$pdf->__destruct();
-		
+
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
-								_('Work Order Number') . ' ' . $SelectedWO,
-								_('Please Process this Work order number') . ' ' . $SelectedWO,
+								__('Work Order Number') . ' ' . $SelectedWO,
+								__('Please Process this Work order number') . ' ' . $SelectedWO,
 								$_SESSION['reports_dir'] . '/' . $PdfFileName
 								);
 
 		if ($Success == 1) {
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
-			prnMsg(_('Work Order') . ' ' . $SelectedWO . ' ' . _('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . _('as directed'), 'success');
+			prnMsg(__('Work Order') . ' ' . $SelectedWO . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
 
 		} else { //email failed
-			$Title = _('Email a Work Order');
+			$Title = __('Email a Work Order');
 			include('includes/header.php');
 			echo '<div class="centre"><br /><br /><br />';
-			prnMsg(_('Emailing Work order') . ' ' . $SelectedWO . ' ' . _('to') . ' ' . $_POST['EmailTo'] . ' ' . _('failed'), 'error');
+			prnMsg(__('Emailing Work order') . ' ' . $SelectedWO . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 	}
 	include('includes/footer.php');
 
 } else { //there were not labels to print
-	$Title = _('Label Error');
+	$Title = __('Label Error');
 	include('includes/header.php');
-	prnMsg(_('There were no labels to print'),'warn');
-	echo '<br /><a href="'.$RootPath.'/index.php">' .  _('Back to the menu') . '</a>';
+	prnMsg(__('There were no labels to print'),'warn');
+	echo '<br /><a href="'.$RootPath.'/index.php">' .  __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 }
-?>

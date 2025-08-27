@@ -1,25 +1,20 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-
-$Title = _('Payment Terms Maintenance');
+$Title = __('Payment Terms Maintenance');
 $ViewTopic = 'PaymentTerms';
 $BookMark = 'PaymentTerms';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Terms') . '" alt="" />' . ' ' . $Title .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Payment Terms') . '" alt="" />' . ' ' . $Title .
 	'</p>';
 
 if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_GET['SelectedTerms'];
 } elseif (isset($_POST['SelectedTerms'])){
 	$SelectedTerms = $_POST['SelectedTerms'];
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();
@@ -37,38 +32,38 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['TermsIndicator']) < 1) {
 		$InputError = 1;
-		prnMsg(_('The payment terms name must exist'),'error');
+		prnMsg(__('The payment terms name must exist'),'error');
 		$Errors[$i] = 'TermsIndicator';
 		$i++;
 	}
 	if (mb_strlen($_POST['TermsIndicator']) > 2) {
 		$InputError = 1;
-		prnMsg(_('The payment terms name must be two characters or less long'),'error');
+		prnMsg(__('The payment terms name must be two characters or less long'),'error');
 		$Errors[$i] = 'TermsIndicator';
 		$i++;
 	}
 	if (empty($_POST['DayNumber']) OR !is_numeric(filter_number_format($_POST['DayNumber'])) OR filter_number_format($_POST['DayNumber']) <= 0){
 		$InputError = 1;
-		prnMsg( _('The number of days or the day in the following month must be numeric') ,'error');
+		prnMsg( __('The number of days or the day in the following month must be numeric') ,'error');
 		$Errors[$i] = 'DayNumber';
 		$i++;
 	}
 	if (empty($_POST['Terms']) OR mb_strlen($_POST['Terms']) > 40) {
 		$InputError = 1;
-		prnMsg( _('The terms description must be forty characters or less long') ,'error');
+		prnMsg( __('The terms description must be forty characters or less long') ,'error');
 		$Errors[$i] = 'Terms';
 		$i++;
 	}
 	/*
 	if ($_POST['DayNumber'] > 30 AND empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
-		prnMsg( _('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . _('the due date cannot be a day after the 30th') . '. ' . _('A number between 1 and 30 is expected') ,'error');
+		prnMsg( __('When the check box is not checked to indicate a day in the following month is the due date') . ', ' . __('the due date cannot be a day after the 30th') . '. ' . __('A number between 1 and 30 is expected') ,'error');
 		$Errors[$i] = 'DayNumber';
 		$i++;
 	} */
 	if ($_POST['DayNumber']>360 AND !empty($_POST['DaysOrFoll'])) {
 		$InputError = 1;
-		prnMsg( _('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . _('the number entered should be less than 361 days') ,'error');
+		prnMsg( __('When the check box is checked to indicate that the term expects a number of days after which accounts are due') . ', ' . __('the number entered should be less than 361 days') ,'error');
 		$Errors[$i] = 'DayNumber';
 		$i++;
 	}
@@ -91,7 +86,7 @@ if (isset($_POST['submit'])) {
 						WHERE termsindicator = '" . $SelectedTerms . "'";
 		}
 
-		$Msg = _('The payment terms definition record has been updated') . '.';
+		$Msg = __('The payment terms definition record has been updated') . '.';
 	} else if ($InputError !=1) {
 
 	/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
@@ -120,7 +115,7 @@ if (isset($_POST['submit'])) {
 							)";
 		}
 
-		$Msg = _('The payment terms definition record has been added') . '.';
+		$Msg = __('The payment terms definition record has been added') . '.';
 	}
 	if ($InputError !=1){
 		//run the SQL from either of the above possibilites
@@ -142,21 +137,21 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0] > 0) {
-		prnMsg( _('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
-		echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this payment term');
+		prnMsg( __('Cannot delete this payment term because customer accounts have been created referring to this term'),'warn');
+		echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customer accounts that refer to this payment term');
 	} else {
 		$SQL= "SELECT COUNT(*) FROM suppliers WHERE suppliers.paymentterms = '" . $SelectedTerms . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] > 0) {
-			prnMsg( _('Cannot delete this payment term because supplier accounts have been created referring to this term'),'warn');
-			echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('supplier accounts that refer to this payment term');
+			prnMsg( __('Cannot delete this payment term because supplier accounts have been created referring to this term'),'warn');
+			echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('supplier accounts that refer to this payment term');
 		} else {
 			//only delete if used in neither customer or supplier accounts
 
 			$SQL="DELETE FROM paymentterms WHERE termsindicator='" . $SelectedTerms . "'";
 			$Result = DB_query($SQL);
-			prnMsg( _('The payment term definition record has been deleted') . '!','success');
+			prnMsg( __('The payment term definition record has been deleted') . '!','success');
 		}
 	}
 	//end if payment terms used in customer or supplier accounts
@@ -176,28 +171,28 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th colspan="6"><h3>' . _('Payment Terms.') . '</h3></th>
+				<th colspan="6"><h3>' . __('Payment Terms.') . '</h3></th>
 			</tr>';
 	echo '<tr>
-			<th class="SortedColumn">' . _('Term Code') . '</th>
-			<th class="SortedColumn">' . _('Description') . '</th>
-			<th class="SortedColumn">' . _('Following Month On') . '</th>
-			<th class="SortedColumn">' . _('Due After (Days)') . '</th>
+			<th class="SortedColumn">' . __('Term Code') . '</th>
+			<th class="SortedColumn">' . __('Description') . '</th>
+			<th class="SortedColumn">' . __('Following Month On') . '</th>
+			<th class="SortedColumn">' . __('Due After (Days)') . '</th>
 		</tr>
 	</thead>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
 		if ($MyRow['dayinfollowingmonth']==0) {
-			$FollMthText = _('N/A');
+			$FollMthText = __('N/A');
 		} else {
-			$FollMthText = $MyRow['dayinfollowingmonth'] . _('th');
+			$FollMthText = $MyRow['dayinfollowingmonth'] . __('th');
 		}
 
 		if ($MyRow['daysbeforedue']==0) {
-			$DueAfterText = _('N/A');
+			$DueAfterText = __('N/A');
 		} else {
-			$DueAfterText = $MyRow['daysbeforedue'] . ' ' . _('days');
+			$DueAfterText = $MyRow['daysbeforedue'] . ' ' . __('days');
 		}
 
 	echo '<tr class="striped_row">
@@ -205,8 +200,8 @@ or deletion of the records*/
 			<td>', $MyRow['terms'], '</td>
 			<td>', $FollMthText, '</td>
 			<td>', $DueAfterText, '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '">' . _('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '">' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this payment term?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 
 	} //END WHILE LIST LOOP
@@ -215,7 +210,7 @@ or deletion of the records*/
 
 if (isset($SelectedTerms)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Payment Terms Definitions') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show all Payment Terms Definitions') . '</a>
 		</div>';
 }
 
@@ -245,9 +240,9 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedTerms" value="' . $SelectedTerms . '" />';
 		echo '<input type="hidden" name="TermsIndicator" value="' . $_POST['TermsIndicator'] . '" />';
 		echo '<fieldset>';
-		echo '<legend>' . _('Update Payment Terms.') . '</legend>';
+		echo '<legend>' . __('Update Payment Terms.') . '</legend>';
 		echo '<field>
-				<label for="TermsIndicator">' . _('Term Code') . ':</label>
+				<label for="TermsIndicator">' . __('Term Code') . ':</label>
 				<fieldtext>' . $_POST['TermsIndicator'] . '</fieldtext>
 			</field>';
 
@@ -264,22 +259,22 @@ if (!isset($_GET['delete'])) {
 		}
 
 		echo '<fieldset>';
-		echo '<legend>' . _('New Payment Terms.') . '</legend>';
+		echo '<legend>' . __('New Payment Terms.') . '</legend>';
 		echo '<field>
-				<label for="TermsIndicator">' . _('Term Code') . ':</label>
+				<label for="TermsIndicator">' . __('Term Code') . ':</label>
 				<input type="text" name="TermsIndicator"' . (in_array('TermsIndicator',$Errors) ? 'class="inputerror"' : '' ) .' autofocus="autofocus" required="required" pattern="[0-9a-ZA-Z_]*" title="" value="' . $_POST['TermsIndicator'] . '" size="3" maxlength="2" />
-				<fieldhelp>' . _('A 2 character code to identify this payment term. Any alpha-numeric characters can be used') . '</fieldhelp>
+				<fieldhelp>' . __('A 2 character code to identify this payment term. Any alpha-numeric characters can be used') . '</fieldhelp>
 			</field>';
 	}
 
 	echo '<field>
-			<label for="Terms">' .  _('Terms Description'). ':</label>
+			<label for="Terms">' .  __('Terms Description'). ':</label>
 			<input type="text"' . (in_array('Terms',$Errors) ? 'class="inputerror"' : '' ) .' name="Terms" ' . (isset($SelectedTerms)? 'autofocus="autofocus"': '') . ' required="required" value="'.$_POST['Terms']. '" title="" size="35" maxlength="40" />
-			<fieldhelp>' . _('A description of the payment terms is required') . '</fieldhelp>
+			<fieldhelp>' . __('A description of the payment terms is required') . '</fieldhelp>
 		</field>';
 
 	echo '<field>
-			<label for="DaysOrFoll">' . _('Due After A Given No. Of Days').':</label>
+			<label for="DaysOrFoll">' . __('Due After A Given No. Of Days').':</label>
 			<input type="checkbox" name="DaysOrFoll" ';
 	if (isset($DayInFollowingMonth) AND !$DayInFollowingMonth) {
 		echo 'checked';
@@ -288,7 +283,7 @@ if (!isset($_GET['delete'])) {
 		</field>';
 
 	echo '<field>
-			<label for="DayNumber">' . _('Days (Or Day In Following Month)').':</label>
+			<label for="DayNumber">' . __('Days (Or Day In Following Month)').':</label>
 			<input type="text" ' . (in_array('DayNumber',$Errors) ? 'class="inputerror"' : '' ) .' name="DayNumber" required="required" class="integer"  size="4" maxlength="3" value="';
 	if ($DaysBeforeDue !=0) {
 		echo locale_number_format($DaysBeforeDue,0);
@@ -302,10 +297,9 @@ if (!isset($_GET['delete'])) {
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="'._('Enter Information').'" />
+			<input type="submit" name="submit" value="'.__('Enter Information').'" />
 		</div>';
 	echo '</form>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

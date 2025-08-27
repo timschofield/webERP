@@ -1,15 +1,18 @@
 <?php
+
 /* Defines the inventory stocking locations or warehouses */
 
-include('includes/session.php');
-$Title = _('Location Maintenance');// Screen identification.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Location Maintenance');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Locations';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="',// Icon image.
-	_('Inventory'), '" /> ',// Icon title.
-	_('Location Maintenance'), '</p>';// Page title.
+	__('Inventory'), '" /> ',// Icon title.
+	__('Location Maintenance'), '</p>';// Page title.
 
 include('includes/CountriesArray.php');
 
@@ -30,12 +33,12 @@ if(isset($_POST['submit'])) {
 	$_POST['LocCode']=mb_strtoupper($_POST['LocCode']);
 	if(trim($_POST['LocCode']) == '') {
 		$InputError = 1;
-		prnMsg(_('The location code may not be empty'), 'error');
+		prnMsg(__('The location code may not be empty'), 'error');
 	}
 	if($_POST['CashSaleCustomer']!='') {
 
 		if($_POST['CashSaleBranch']=='') {
-			prnMsg(_('A cash sale customer and branch are necessary to fully setup the counter sales functionality'),'error');
+			prnMsg(__('A cash sale customer and branch are necessary to fully setup the counter sales functionality'),'error');
 			$InputError =1;
 		} else {//customer branch is set too ... check it ties up with a valid customer
 			$SQL = "SELECT * FROM custbranch
@@ -45,7 +48,7 @@ if(isset($_POST['submit'])) {
 			$Result = DB_query($SQL);
 			if(DB_num_rows($Result)==0) {
 				$InputError = 1;
-				prnMsg(_('The cash sale customer for this location must be defined with both a valid customer code and a valid branch code for this customer'),'error');
+				prnMsg(__('The cash sale customer for this location must be defined with both a valid customer code and a valid branch code for this customer'),'error');
 			}
 		}
 	}//end of checking the customer - branch code entered
@@ -81,12 +84,11 @@ if(isset($_POST['submit'])) {
 									allowinvoicing = '" . $_POST['AllowInvoicing'] . "'
 						WHERE loccode = '" . $SelectedLocation . "'";
 
-		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . _('location record because');
-		$DbgMsg = _('The SQL used to update the location record was');
+		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedLocation . ' ' . __('location record because');
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The location record has been updated'),'success');
+		prnMsg(__('The location record has been updated'),'success');
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -162,11 +164,10 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['GLAccountCode'] . "',
 								'" . $_POST['AllowInvoicing'] . "')";
 
-		$ErrMsg = _('An error occurred inserting the new location record because');
-		$DbgMsg = _('The SQL used to insert the location record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$ErrMsg = __('An error occurred inserting the new location record because');
+		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The new location record has been added'),'success');
+		prnMsg(__('The new location record has been added'),'success');
 
 	/* Also need to add LocStock records for all existing stock items */
 
@@ -181,10 +182,9 @@ if(isset($_POST['submit'])) {
 				0
 			FROM stockmaster";
 
-		$ErrMsg = _('An error occurred inserting the new location stock records for all pre-existing parts because');
-		$DbgMsg = _('The SQL used to insert the new stock location records was');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg('........ ' . _('and new stock locations inserted for all existing stock items for the new location'), 'success');
+		$ErrMsg = __('An error occurred inserting the new location stock records for all pre-existing parts because');
+		$Result = DB_query($SQL, $ErrMsg);
+		prnMsg('........ ' . __('and new stock locations inserted for all existing stock items for the new location'), 'success');
 
 	/* Also need to add locationuser records for all existing users*/
 		$SQL = "INSERT INTO locationusers (userid, loccode, canview, canupd)
@@ -199,9 +199,9 @@ if(isset($_POST['submit'])) {
 				WHERE locationusers.userid IS NULL
 				AND locations.loccode='". $_POST['LocCode'] . "';";
 
-		$ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
-		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Existing users have been authorized for this location'),'success');
+		$ErrMsg = __('The users/locations that need user location records created cannot be retrieved because');
+		$Result = DB_query($SQL, $ErrMsg);
+		prnMsg(__('Existing users have been authorized for this location'),'success');
 
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
@@ -274,16 +274,16 @@ if(isset($_POST['submit'])) {
 	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0]>0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this location because sales orders have been created delivering from this location'),'warn');
-		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('sales orders with this Location code');
+		prnMsg(__('Cannot delete this location because sales orders have been created delivering from this location'),'warn');
+		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('sales orders with this Location code');
 	} else {
 		$SQL= "SELECT COUNT(*) FROM stockmoves WHERE stockmoves.loccode='" . $SelectedLocation . "'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if($MyRow[0]>0) {
 			$CancelDelete = 1;
-			prnMsg(_('Cannot delete this location because stock movements have been created using this location'),'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('stock movements with this Location code');
+			prnMsg(__('Cannot delete this location because stock movements have been created using this location'),'warn');
+			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('stock movements with this Location code');
 
 		} else {
 			$SQL= "SELECT COUNT(*) FROM locstock
@@ -293,8 +293,8 @@ if(isset($_POST['submit'])) {
 			$MyRow = DB_fetch_row($Result);
 			if($MyRow[0]>0) {
 				$CancelDelete = 1;
-				prnMsg(_('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
-				echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('stock items with stock on hand at this location code');
+				prnMsg(__('Cannot delete this location because location stock records exist that use this location and have a quantity on hand not equal to 0'),'warn');
+				echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('stock items with stock on hand at this location code');
 			} else {
 				$SQL= "SELECT COUNT(*) FROM www_users
 						WHERE www_users.defaultlocation='" . $SelectedLocation . "'";
@@ -302,8 +302,8 @@ if(isset($_POST['submit'])) {
 				$MyRow = DB_fetch_row($Result);
 				if($MyRow[0]>0) {
 					$CancelDelete = 1;
-					prnMsg(_('Cannot delete this location because it is the default location for a user') . '. ' . _('The user record must be modified first'),'warn');
-					echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('users using this location as their default location');
+					prnMsg(__('Cannot delete this location because it is the default location for a user') . '. ' . __('The user record must be modified first'),'warn');
+					echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('users using this location as their default location');
 				} else {
 					$SQL= "SELECT COUNT(*) FROM bom
 							WHERE bom.loccode='" . $SelectedLocation . "'";
@@ -311,8 +311,8 @@ if(isset($_POST['submit'])) {
 					$MyRow = DB_fetch_row($Result);
 					if($MyRow[0]>0) {
 						$CancelDelete = 1;
-						prnMsg(_('Cannot delete this location because it is the default location for a bill of material') . '. ' . _('The bill of materials must be modified first'),'warn');
-						echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bom components using this location');
+						prnMsg(__('Cannot delete this location because it is the default location for a bill of material') . '. ' . __('The bill of materials must be modified first'),'warn');
+						echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('bom components using this location');
 					} else {
 						$SQL= "SELECT COUNT(*) FROM workcentres
 								WHERE workcentres.location='" . $SelectedLocation . "'";
@@ -320,8 +320,8 @@ if(isset($_POST['submit'])) {
 						$MyRow = DB_fetch_row($Result);
 						if($MyRow[0]>0) {
 							$CancelDelete = 1;
-							prnMsg(_('Cannot delete this location because it is used by some work centre records'),'warn');
-							echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('works centres using this location');
+							prnMsg(__('Cannot delete this location because it is used by some work centre records'),'warn');
+							echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('works centres using this location');
 						} else {
 							$SQL= "SELECT COUNT(*) FROM workorders
 									WHERE workorders.loccode='" . $SelectedLocation . "'";
@@ -329,8 +329,8 @@ if(isset($_POST['submit'])) {
 							$MyRow = DB_fetch_row($Result);
 							if($MyRow[0]>0) {
 								$CancelDelete = 1;
-								prnMsg(_('Cannot delete this location because it is used by some work order records'),'warn');
-								echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('work orders using this location');
+								prnMsg(__('Cannot delete this location because it is used by some work order records'),'warn');
+								echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('work orders using this location');
 							} else {
 								$SQL= "SELECT COUNT(*) FROM custbranch
 										WHERE custbranch.defaultlocation='" . $SelectedLocation . "'";
@@ -338,16 +338,16 @@ if(isset($_POST['submit'])) {
 								$MyRow = DB_fetch_row($Result);
 								if($MyRow[0]>0) {
 									$CancelDelete = 1;
-									prnMsg(_('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
-									echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('branches set up to use this location by default');
+									prnMsg(__('Cannot delete this location because it is used by some branch records as the default location to deliver from'),'warn');
+									echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('branches set up to use this location by default');
 								} else {
 									$SQL= "SELECT COUNT(*) FROM purchorders WHERE intostocklocation='" . $SelectedLocation . "'";
 									$Result = DB_query($SQL);
 									$MyRow = DB_fetch_row($Result);
 									if($MyRow[0]>0) {
 										$CancelDelete = 1;
-										prnMsg(_('Cannot delete this location because it is used by some purchase order records as the location to receive stock into'),'warn');
-										echo '<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('purchase orders set up to use this location as the receiving location');
+										prnMsg(__('Cannot delete this location because it is used by some purchase order records as the location to receive stock into'),'warn');
+										echo '<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('purchase orders set up to use this location as the receiving location');
 									}
 								}
 							}
@@ -372,11 +372,11 @@ if(isset($_POST['submit'])) {
 								WHERE dispatchtaxprovince='" . $TaxProvinceRow[0] . "'");
 		}
 
-		$Result= DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
+		$Result = DB_query("DELETE FROM locstock WHERE loccode ='" . $SelectedLocation . "'");
 		$Result = DB_query("DELETE FROM locationusers WHERE loccode='" . $SelectedLocation . "'");
 		$Result = DB_query("DELETE FROM locations WHERE loccode='" . $SelectedLocation . "'");
 
-		prnMsg(_('Location') . ' ' . $SelectedLocation . ' ' . _('has been deleted') . '!', 'success');
+		prnMsg(__('Location') . ' ' . $SelectedLocation . ' ' . __('has been deleted') . '!', 'success');
 		unset ($SelectedLocation);
 	}//end if Delete Location
 	unset($SelectedLocation);
@@ -401,17 +401,17 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	if(DB_num_rows($Result)==0) {
-		prnMsg(_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
+		prnMsg(__('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
 
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">', _('Location Code'), '</th>
-					<th class="SortedColumn">', _('Location Name'), '</th>
-					<th class="SortedColumn">', _('Tax Province'), '</th>
-					<th class="SortedColumn">', _('GL Account Code'), '</th>
-					<th class="SortedColumn">', _('Allow Invoicing'), '</th>
+					<th class="SortedColumn">', __('Location Code'), '</th>
+					<th class="SortedColumn">', __('Location Name'), '</th>
+					<th class="SortedColumn">', __('Tax Province'), '</th>
+					<th class="SortedColumn">', __('GL Account Code'), '</th>
+					<th class="SortedColumn">', __('Allow Invoicing'), '</th>
 					<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
@@ -420,9 +420,9 @@ or deletion of the records*/
 while ($MyRow = DB_fetch_array($Result)) {
 /* warehouse management not implemented ... yet
 	if($MyRow['managed'] == 1) {
-		$MyRow['managed'] = _('Yes');
+		$MyRow['managed'] = __('Yes');
 	} else {
-		$MyRow['managed'] = _('No');
+		$MyRow['managed'] = __('No');
 	}
 */
 	echo '<tr class="striped_row">
@@ -430,9 +430,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>', $MyRow['locationname'], '</td>
 			<td>', $MyRow['description'], '</td>
 			<td class="number">', ($MyRow['glaccountcode']!='' ? $MyRow['glaccountcode'] : '&nbsp;'), '</td>
-			<td class="centre">', ($MyRow['allowinvoicing']==1 ? _('Yes') : _('No')), '</td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '">' . _('Edit') . '</a></td>
-			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
+			<td class="centre">', ($MyRow['allowinvoicing']==1 ? __('Yes') : __('No')), '</td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '">' . __('Edit') . '</a></td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this inventory location?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -442,7 +442,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 //end of ifs and buts!
 
 if(isset($SelectedLocation)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Records') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Records') . '</a>';
 }
 
 if(!isset($_GET['delete'])) {
@@ -503,9 +503,9 @@ if(!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
 		echo '<input type="hidden" name="LocCode" value="' . $_POST['LocCode'] . '" />';
 		echo '<fieldset>';
-		echo '<legend>' . _('Amend Location details') . '</legend>';
+		echo '<legend>' . __('Amend Location details') . '</legend>';
 		echo '<field>
-				<label for="LocCode">' . _('Location Code') . ':</label>
+				<label for="LocCode">' . __('Location Code') . ':</label>
 				<fieldtext>' . $_POST['LocCode'] . '</fieldtext>
 			</field>';
 	} else {//end of if $SelectedLocation only do the else when a new record is being entered
@@ -513,11 +513,11 @@ if(!isset($_GET['delete'])) {
 			$_POST['LocCode'] = '';
 		}
 		echo '<fieldset>
-				<legend>' . _('New Location details') . '</legend>';
+				<legend>' . __('New Location details') . '</legend>';
 		echo '<field>
-				<label for="LocCode">' . _('Location Code') . ':</label>
+				<label for="LocCode">' . __('Location Code') . ':</label>
 				<input type="text" autofocus="autofocus" required="required" title="" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['LocCode'] . '" size="5" maxlength="5" /></td>
-				<fieldhelp>' . _('Enter up to five characters for the inventory location code') . '</fieldhelp
+				<fieldhelp>' . __('Enter up to five characters for the inventory location code') . '</fieldhelp
 			</field>';
 	}
 	if(!isset($_POST['LocationName'])) {
@@ -570,37 +570,37 @@ if(!isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<label for="LocationName">' . _('Location Name') . ':' . '</label>
+			<label for="LocationName">' . __('Location Name') . ':' . '</label>
 			<input type="text" name="LocationName" required="required" value="'. $_POST['LocationName'] . '" title="" namesize="51" maxlength="50" />
-			<fieldhelp>' . _('Enter the inventory location name, this could be either a warehouse or a factory') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the inventory location name, this could be either a warehouse or a factory') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Contact">' . _('Contact for deliveries') . ':' . '</label>
+			<label for="Contact">' . __('Contact for deliveries') . ':' . '</label>
 			<input type="text" name="Contact" required="required" value="' . $_POST['Contact'] . '" title="" size="31" maxlength="30" />
-			<fieldhelp>' . _('Enter the name of the responsible person to contact for this inventory location') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the name of the responsible person to contact for this inventory location') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Delivery Address 1 (Building)') . ':' . '</label>
+			<label for="DelAdd1">' . __('Delivery Address 1 (Building)') . ':' . '</label>
 			<input type="text" name="DelAdd1" value="' . $_POST['DelAdd1'] . '" size="41" maxlength="40" />
 		</field>
 		<field>
-			<label for="DelAdd2">' . _('Delivery Address 2 (Street)') . ':' . '</label>
+			<label for="DelAdd2">' . __('Delivery Address 2 (Street)') . ':' . '</label>
 			<input type="text" name="DelAdd2" value="' . $_POST['DelAdd2'] . '" size="41" maxlength="40" />
 		</field>
 		<field>
-			<label for="DelAdd3">' . _('Delivery Address 3 (Suburb)') . ':' . '</label>
+			<label for="DelAdd3">' . __('Delivery Address 3 (Suburb)') . ':' . '</label>
 			<input type="text" name="DelAdd3" value="' . $_POST['DelAdd3'] . '" size="41" maxlength="40" />
 		</field>
 		<field>
-			<label for="DelAdd4">' . _('Delivery Address 4 (City)') . ':' . '</label>
+			<label for="DelAdd4">' . __('Delivery Address 4 (City)') . ':' . '</label>
 			<input type="text" name="DelAdd4" value="' . $_POST['DelAdd4'] . '" size="41" maxlength="40" />
 		</field>
 		<field>
-			<label for="DelAdd5">' . _('Delivery Address 5 (Zip Code)') . ':' . '</label>
+			<label for="DelAdd5">' . __('Delivery Address 5 (Zip Code)') . ':' . '</label>
 			<input type="text" name="DelAdd5" value="' . $_POST['DelAdd5'] . '" size="21" maxlength="20" />
 		</field>
 		<field>
-			<label for="DelAdd6">' . _('Country') . ':</label>
+			<label for="DelAdd6">' . __('Country') . ':</label>
 			<select name="DelAdd6">';
 		foreach ($CountriesArray as $CountryEntry => $CountryName) {
 			if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
@@ -614,22 +614,22 @@ if(!isset($_GET['delete'])) {
 		echo '</select>
 		</field>
 		<field>
-			<label for="Tel">' . _('Telephone No') . ':' . '</label>
+			<label for="Tel">' . __('Telephone No') . ':' . '</label>
 			<input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="" />
-			<fieldhelp>' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '</fieldhelp>
+			<fieldhelp>' . __('The phone number should consist of numbers, spaces, parentheses, or the + character') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Fax">' . _('Facsimile No') . ':' . '</label>
+			<label for="Fax">' . __('Facsimile No') . ':' . '</label>
 			<input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title=""/>
-			<fieldhelp>' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '</fieldhelp>
+			<fieldhelp>' . __('The fax number should consist of numbers, parentheses, spaces or the + character') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Email">', _('Email'), ':</label>
+			<label for="Email">', __('Email'), ':</label>
 			<input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" />
-			<fieldhelp>', _('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
+			<fieldhelp>', __('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
 		</field>
 		<field>
-			<label for="TaxProvince">' . _('Tax Province') . ':' . '</label>
+			<label for="TaxProvince">' . __('Tax Province') . ':' . '</label>
 			<select name="TaxProvince">';
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
@@ -644,69 +644,68 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="CashSaleCustomer">' . _('Default Counter Sales Customer Code') . ':' . '</label>
+			<label for="CashSaleCustomer">' . __('Default Counter Sales Customer Code') . ':' . '</label>
 			<input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" />
-			<fieldhelp>' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '</fieldhelp>
+			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="CashSaleBranch">' . _('Counter Sales Branch Code') . ':' . '</label>
+			<label for="CashSaleBranch">' . __('Counter Sales Branch Code') . ':' . '</label>
 			<input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" />
-			<fieldhelp>' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '</fieldhelp>
+			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '</fieldhelp>
 		</field>';
 	echo '<field>
-			<label for="InternalRequest">' . _('Allow internal requests?') . ':</label>
+			<label for="InternalRequest">' . __('Allow internal requests?') . ':</label>
 			<select name="InternalRequest">';
 	if($_POST['InternalRequest']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['InternalRequest']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="UsedForWO">' . _('Use for Work Order Productions?') . ':</label>
+			<label for="UsedForWO">' . __('Use for Work Order Productions?') . ':</label>
 			<select name="UsedForWO">';
 	if($_POST['UsedForWO']==1) {
-		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
+		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
 	} else {
-		echo '<option value="1">' . _('Yes') . '</option>';
+		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	if($_POST['UsedForWO']==0) {
-		echo '<option selected="selected" value="0">' . _('No') . '</option>';
+		echo '<option selected="selected" value="0">' . __('No') . '</option>';
 	} else {
-		echo '<option value="0">' . _('No') . '</option>';
+		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select>
 		</field>';
 	// Location's ledger account:
 	echo '<field title="">
-			<label for="GLAccountCode">', _('GL Account Code'), ':</label>
+			<label for="GLAccountCode">', __('GL Account Code'), ':</label>
 			<input data-type="no-illegal-chars" id="GLAccountCode" maxlength="20" name="GLAccountCode" size="20" type="text" value="', $_POST['GLAccountCode'], '" />
-			<fieldhelp>', _('Enter the GL account for this location, or leave it blank if not needed'), '</fieldhelp>
+			<fieldhelp>', __('Enter the GL account for this location, or leave it blank if not needed'), '</fieldhelp>
 		</field>';
 	// Allow or deny the invoicing of items in this location:
 	echo '<field>
-			<label for="AllowInvoicing">', _('Allow Invoicing'), ':</label>
+			<label for="AllowInvoicing">', __('Allow Invoicing'), ':</label>
 			<select name="AllowInvoicing">
-				<option', ($_POST['AllowInvoicing']==1 ? ' selected="selected"' : ''), ' value="1">', _('Yes'), '</option>
-				<option', ($_POST['AllowInvoicing']==0 ? ' selected="selected"' : ''), ' value="0">', _('No'), '</option>
+				<option', ($_POST['AllowInvoicing']==1 ? ' selected="selected"' : ''), ' value="1">', __('Yes'), '</option>
+				<option', ($_POST['AllowInvoicing']==0 ? ' selected="selected"' : ''), ' value="0">', __('No'), '</option>
 			</select>
-			<fieldhelp>', _('Use this parameter to indicate whether these inventory location allows or denies the invoicing of its items.'), '</fieldhelp>
+			<fieldhelp>', __('Use this parameter to indicate whether these inventory location allows or denies the invoicing of its items.'), '</fieldhelp>
 		</field>';
 
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 		</div>
 		</form>';
 
 }//end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

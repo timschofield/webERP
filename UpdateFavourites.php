@@ -1,6 +1,8 @@
 <?php
-$PageSecurity=1;
-include('includes/session.php');
+
+$PageSecurity = 1;
+
+require(__DIR__ . '/includes/session.php');
 
 $SQL = "SELECT caption
 			FROM favourites
@@ -29,5 +31,3 @@ $Result = DB_query($SQL);
 while ($MyRow = DB_fetch_array($Result)) {
 	$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
 }
-
-?>

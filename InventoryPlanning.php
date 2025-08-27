@@ -1,53 +1,16 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-/* webERP manual links before header.php */
-$ViewTopic= "Inventory";
+use Dompdf\Dompdf;
+
+$ViewTopic = "Inventory";
 $BookMark = "PlanningReport";
 
-include ('includes/SQL_CommonFunctions.php');
+include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 
-if (isset($_POST['PrintPDF'])) {
-
-	include ('includes/class.pdf.php');
-
-	/* A4_Landscape */
-
-	$Page_Width=842;
-	$Page_Height=595;
-	$Top_Margin=20;
-	$Bottom_Margin=20;
-	$Left_Margin=25;
-	$Right_Margin=22;
-
-// Javier: now I use the native constructor
-//	$PageSize = array(0,0,$Page_Width,$Page_Height);
-
-/* Standard PDF file creation header stuff */
-
-// Javier: better to not use references
-//	$pdf = & new Cpdf($PageSize);
-	$pdf = new Cpdf('L', 'pt', 'A4');
-	$pdf->addInfo('Creator','webERP http://www.weberp.org');
-	$pdf->addInfo('Author','webERP ' . $Version);
-	$pdf->addInfo('Title',_('Inventory Planning Report') . ' ' . Date($_SESSION['DefaultDateFormat']));
-	$pdf->addInfo('Subject',_('Inventory Planning'));
-
-/* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
-	I corrected it to match TCPDF, but it still needs some check, after which,
-	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
-	$pdf->setAutoPageBreak(0);	// Javier: needs check.
-	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
-	$pdf->AddPage();
-//	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
-	$pdf->cMargin = 0;		// Javier: needs check.
-/* END Brought from class.pdf.php constructor */
-
-// Javier:
-	$PageNumber = 1;
-	$LineHeight = 12;
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])){
 
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
@@ -93,18 +56,22 @@ if (isset($_POST['PrintPDF'])) {
 					stockmaster.stockid";
 
 	}
-	$InventoryResult = DB_query($SQL, '', '', false, false);
+	$ErrMsg = __('The inventory quantities could not be retrieved');
+	$InventoryResult = DB_query($SQL, $ErrMsg);
 
-	if (DB_error_no() !=0) {
-	  $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  include('includes/header.php');
-	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($Debug==1){
-	      echo '<br />' . $SQL;
-	   }
-	   include('includes/footer.php');
-	   exit;
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	if ($_POST['NumberMonthsHolding']>10){
+		$NumberMonthsHolding=$_POST['NumberMonthsHolding']-10;
+	}
+	else{
+		$NumberMonthsHolding=$_POST['NumberMonthsHolding'];
 	}
 
 	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,Date('m'),Date('d'),Date('Y'))));
@@ -114,7 +81,34 @@ if (isset($_POST['PrintPDF'])) {
 	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-4,Date('d'),Date('Y'))));
 	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-5,Date('d'),Date('Y'))));
 
-	include ('includes/PDFInventoryPlanPageHeader.php');
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP https://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . __('Inventory Planning Report') . '<br />
+					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>' . __('Item') . '</th>
+							<th>' . __('Description') . '</th>
+							<th>' . $Period_5_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_4_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_3_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_2_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_1_Name . ' ' . __('Qty') . '</th>
+							<th>' . $Period_0_Name . ' ' . __('MTD') . '</th>
+							<th>' . $NumberMonthsHolding . ' ' . __('ms stk') . '</th>
+							<th>' . __('QOH') . '</th>
+							<th>' . __('Cust Ords') . '</th>
+							<th>' . __('Splr Ords') . '</th>
+							<th>' . __('Sugg Ord') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
 	$Category = '';
 
@@ -128,24 +122,15 @@ if (isset($_POST['PrintPDF'])) {
 	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		if ($Category!=$InventoryPlan['categoryid']){
-			$FontSize=10;
-			if ($Category!=''){ /*Then it's NOT the first time round */
-				/*draw a line under the CATEGORY TOTAL*/
-				$YPos -=$LineHeight;
-		   		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
-				$YPos -=(2*$LineHeight);
-			}
-
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'],'left');
+			$HTML .= '<tr>
+						<th>' . $InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'] . '</th>
+						<th colspan="12"></th>
+					</tr>';
 			$Category = $InventoryPlan['categoryid'];
-			$FontSize=8;
 		}
 
-		$YPos -=$LineHeight;
-
-
 		if ($_POST['Location']=='All'){
-   		   $SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
+			$SQL = "SELECT SUM(CASE WHEN prd='" . $CurrentPeriod . "' THEN -qty ELSE 0 END) AS prd0,
 				   		SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
 						SUM(CASE WHEN prd='" . $Period_2 . "' THEN -qty ELSE 0 END) AS prd2,
 						SUM(CASE WHEN prd='" . $Period_3 . "' THEN -qty ELSE 0 END) AS prd3,
@@ -171,21 +156,8 @@ if (isset($_POST['PrintPDF'])) {
 					AND stockmoves.hidemovt=0";
 		}
 
-		$SalesResult = DB_query($SQL,'','', false, false);
-
-		if (DB_error_no() !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      		echo '<br />' .$SQL;
-	   		}
-
-	   		include('includes/footer.php');
-	   		exit;
-		}
-
+		$ErrMsg = __('The sales quantities could not be retrieved');
+		$SalesResult = DB_query($SQL, $ErrMsg);
 		$ListCount = DB_num_rows($SalesResult);
 		$SalesRow = DB_fetch_array($SalesResult);
 
@@ -197,18 +169,9 @@ if (isset($_POST['PrintPDF'])) {
 
 		// get the demand of the item
 		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
-		
+
 		// Get the QOO of the item
 		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
-
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 110, $FontSize, $InventoryPlan['stockid'], 'left');
-		$LeftOvers = $pdf->addTextWrap(130, $YPos, 120,6,$InventoryPlan['description'],'left');
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd5'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(292, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd4'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(333, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd3'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(374, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd2'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(415, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd1'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(456, $YPos, 40,$FontSize,locale_number_format($SalesRow['prd0'],0),'right');
 
 		if ($_POST['NumberMonthsHolding']>10){
 			$NumberMonths=$_POST['NumberMonthsHolding']-10;
@@ -218,55 +181,75 @@ if (isset($_POST['PrintPDF'])) {
 			$NumberMonths=$_POST['NumberMonthsHolding'];
 			$MaxMthSales = max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4'], $SalesRow['prd5']);
 		}
-
-
-
 		$IdealStockHolding = ceil($MaxMthSales * $NumberMonths);
-		$LeftOvers = $pdf->addTextWrap(497, $YPos, 40,$FontSize,locale_number_format($IdealStockHolding,0),'right');
-		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
-
-		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
 
 		$SuggestedTopUpOrder = $IdealStockHolding - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,'   ','right');
-
+			$TopUpOrder = '   ';
 		} else {
-
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
+			$TopUpOrder = locale_number_format($SuggestedTopUpOrder,0);
 		}
 
-
-
-		if ($YPos < $Bottom_Margin + $LineHeight){
-		   $PageNumber++;
-		   include('includes/PDFInventoryPlanPageHeader.php');
-		}
+		$HTML .= '<tr class="striped_row">
+					<td>' . $InventoryPlan['stockid'] . '</td>
+					<td>' . $InventoryPlan['description'] . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd5'],0) . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd4'],0) . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd3'],0) . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd2'],0) . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd1'],0) . '</td>
+					<td class="number">' . locale_number_format($SalesRow['prd0'],0) . '</td>
+					<td class="number">' . locale_number_format($IdealStockHolding,0) . '</td>
+					<td class="number">' . locale_number_format($InventoryPlan['qoh'],0) . '</td>
+					<td class="number">' . locale_number_format($TotalDemand,0) . '</td>
+					<td class="number">' . locale_number_format($QOO,0) . '</td>
+					<td class="number">' . $TopUpOrder . '</td>
+				</tr>';
 
 	} /*end inventory valn while loop */
 
-	$YPos -= (2*$LineHeight);
-
-	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
-
-	if ($ListCount == 0){
-		$Title = _('Print Inventory Planning Report Empty');
-		include('includes/header.php');
-		prnMsg( _('There were no items in the range and location specified'), 'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit;
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_' . Date('Y-m-d') . '.pdf');
-		$pdf-> __destruct();
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_InventoryPlanning_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = __('Inventory Planning Report');
+		include('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . __('Inventory Planning Report') . '</p>';
+		echo $HTML;
+		include('includes/footer.php');
 	}
 
-} elseif (isset($_POST['ExportToCSV'])){ //send the data to a CSV
+} elseif  (isset($_POST['Spreadsheet'])) { //send the data to a CSV
 
-	function stripcomma($str) { //because we're using comma as a delimiter
-		return str_replace(',', '', str_replace(';','', $str));
-	}
  /*Now figure out the inventory data to report for the category range under review
    need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
 	if ($_POST['Location']=='All'){
@@ -332,54 +315,74 @@ if (isset($_POST['PrintPDF'])) {
 		$SQLStarter .= " AND stockmoves.loccode ='" . $_POST['Location'] . "'";
 	}
 
-
-	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .',' . _('QOH') . ',';
+	$HTML = '';
+	$HTML .= '<tr>
+				<th>' . __('Category ID') . '</th>
+				<th>' . __('Category Description') .'</th>
+				<th>' . __('Stock ID') .'</th>
+				<th>' . __('Description') .'</th>
+				<th>' . __('QOH') . '</th>';
 	for ($i=0;$i<24;$i++) {
-		$CSVListing .= $Periods[$i]['Month'] . ',';
+		$HTML .= '<th>' . $Periods[$i]['Month'] . '</th>';
 	}
-	$CSVListing .= "\r\n";
+	$HTML .= '</tr>';
 
 	$Category ='';
 
 	while ($InventoryPlan = DB_fetch_array($InventoryResult)){
 
 		$SQL = $SQLStarter . " AND stockid='" . $InventoryPlan['stockid'] . "' GROUP BY stockmoves.stockid";
-		$SalesResult = DB_query($SQL,_('The stock usage of this item could not be retrieved because'));
+		$SalesResult = DB_query($SQL,__('The stock usage of this item could not be retrieved because'));
 
 		if (DB_num_rows($SalesResult)==0) {
-			$CSVListing .= stripcomma($InventoryPlan['categoryid']) . ',' . stripcomma($InventoryPlan['categorydescription']) . ',' .stripcomma($InventoryPlan['stockid']) . ',' . stripcomma($InventoryPlan['description']) . ',' . stripcomma($InventoryPlan['qoh']) . "\r\n";
+			$HTML .= '<tr>
+						<td>' . $InventoryPlan['categoryid'] . '</td>
+						<td>' . $InventoryPlan['categorydescription'] . '</td>
+						<td>' . $InventoryPlan['stockid'] . '</td>
+						<td>' . $InventoryPlan['description'] . '</td>
+						<td>' . $InventoryPlan['qoh'] . '</td>
+					</tr>';
 		} else {
 			$SalesRow = DB_fetch_array($SalesResult);
-			$CSVListing .= stripcomma($InventoryPlan['categoryid']) . ',' . stripcomma($InventoryPlan['categorydescription']) . ',' .stripcomma($InventoryPlan['stockid']) . ',' . stripcomma($InventoryPlan['description']) . ',' . stripcomma($InventoryPlan['qoh']);
+			$HTML .= '<tr>
+						<td>' . $InventoryPlan['categoryid'] . '</td>
+						<td>' . $InventoryPlan['categorydescription'] . '</td>
+						<td>' . $InventoryPlan['stockid'] . '</td>
+						<td>' . $InventoryPlan['description'] . '</td>
+						<td>' . $InventoryPlan['qoh'] . '</td>';
 			for ($i=0;$i<24;$i++) {
-				$CSVListing .= ',' . $SalesRow['prd' .$i];
+				$HTML .= '<td>' . $SalesRow['prd' .$i] . '</td>';
 			}
-			$CSVListing .= "\r\n";
+			$CSVListing .= '</tr>';
 		}
 
 	}
-	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=InventoryPlanning_" .  Date('Y-m-d:h:m:s')  .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8
-	echo $CSVListing;
-	exit;
+	header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+	$File = 'InventoryPlanning-' . Date('Y-m-d'). '.' . 'ods';
+
+	header('Content-Disposition: attachment;filename="' . $File . '"');
+	header('Cache-Control: max-age=0');
+	$reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+	$spreadsheet = $reader->loadFromString($HTML);
+
+	$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Ods');
+	$writer->save('php://output');
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=_('Inventory Planning Reporting');
+	$Title=__('Inventory Planning Reporting');
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+				<label for="Categories">' . __('Select Inventory Categories') . ':</label>
 				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
@@ -396,13 +399,13 @@ if (isset($_POST['PrintPDF'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<label for="Location">' . __('For Inventory in Location') . ':</label>
 			<select name="Location">';
 
 	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult=DB_query($SQL);
 
-	echo '<option value="All">' . _('All Locations') . '</option>';
+	echo '<option value="All">' . __('All Locations') . '</option>';
 
 	while ($MyRow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
@@ -411,31 +414,30 @@ if (isset($_POST['PrintPDF'])) {
 		</field>';
 
 	echo '<field>
-			<label for="NumberMonthsHolding">' . _('Stock Planning') . ':</label>
+			<label for="NumberMonthsHolding">' . __('Stock Planning') . ':</label>
 			<select name="NumberMonthsHolding">
-				<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
-				<option value="1.5">' . _('One Month and a half MAX')  . '</option>
-				<option value="2">' . _('Two Months MAX')  . '</option>
-				<option value="2.5">' . _('Two Month and a half MAX')  . '</option>
-				<option value="3">' . _('Three Months MAX')  . '</option>
-				<option value="4">' . _('Four Months MAX')  . '</option>
-				<option value="11">' . _('One Month AVG')  . '</option>
-				<option value="11.5">' . _('One Month and a half AVG')  . '</option>
-				<option value="12">' . _('Two Months AVG')  . '</option>
-				<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
-				<option value="13">' . _('Three Months AVG')  . '</option>
-				<option value="14">' . _('Four Months AVG')  . '</option>
+				<option selected="selected" value="1">' . __('One Month MAX')  . '</option>
+				<option value="1.5">' . __('One Month and a half MAX')  . '</option>
+				<option value="2">' . __('Two Months MAX')  . '</option>
+				<option value="2.5">' . __('Two Month and a half MAX')  . '</option>
+				<option value="3">' . __('Three Months MAX')  . '</option>
+				<option value="4">' . __('Four Months MAX')  . '</option>
+				<option value="11">' . __('One Month AVG')  . '</option>
+				<option value="11.5">' . __('One Month and a half AVG')  . '</option>
+				<option value="12">' . __('Two Months AVG')  . '</option>
+				<option value="12.5">' . __('Two Month and a half AVG')  . '</option>
+				<option value="13">' . __('Three Months AVG')  . '</option>
+				<option value="14">' . __('Four Months AVG')  . '</option>
 			</select>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		<input type="submit" name="ExportToCSV" value="' . _('Export 24 months to CSV') . '" />
+		<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+		<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+		<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . __('Spreadsheet') . '" />
 	</div>
 	</form>';
 
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
-
-?>

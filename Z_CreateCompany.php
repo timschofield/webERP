@@ -1,13 +1,13 @@
 <?php
-/*Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
+
+/* Script to insert a dummy sales order if one is not already set up - at least one order is needed for the sales order pages to work.
 Also inserts a blank company record if one is not already set up */
 
-include ('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-$Title = _('UTILITY PAGE That sets up a new blank company record if not already existing');
+$Title = __('UTILITY PAGE That sets up a new blank company record if not already existing');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
-
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 $SQL = "SELECT COUNT(coycode) FROM companies";
@@ -18,9 +18,9 @@ if ($MyRow[0]==0){
 	$SQL = "INSERT INTO companies (coycode, coyname) VALUES (1,'Enter company name')";
 	$Result = DB_query($SQL);
 } else {
-	prnMsg(_('An existing company record is set up already. No alterations have been made'),'error');
+	prnMsg(__('An existing company record is set up already. No alterations have been made'),'error');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 /*Need to have a sales order record set up */
@@ -95,7 +95,6 @@ if ($MyRow[0]==0){
 	$Result = DB_query($SQL);
 }
 
-prnMsg(_('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . _('this link') . '</a>','success');
+prnMsg(__('Company record is now available for modification by clicking') . '<br /><br /><a href="' . $RootPath . '/CompanyPreferences.php">' . __('this link') . '</a>','success');
 
 include('includes/footer.php');
-?>

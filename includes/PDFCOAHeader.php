@@ -1,6 +1,6 @@
 <?php
 
-if ($PageNumber>1){
+if ($PageNumber>1) {
 	$pdf->newPage();
 }
 $SectionHeading=0;
@@ -24,7 +24,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos,$YPos,0,70);
 $FontSize=14;
 $LineHeight=$FontSize*1.50;
 $YPos += $LineHeight;
-$LeftOvers = $pdf->addTextWrap($XPos+330,$YPos,140,$FontSize,_('Certificate of Analysis'));
+$LeftOvers = $pdf->addTextWrap($XPos+330,$YPos,140,$FontSize,__('Certificate of Analysis'));
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
 $pdf->setFont('','B');
@@ -37,4 +37,3 @@ $FontSize=12;
 $LineHeight=$FontSize*1.25;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
-?>

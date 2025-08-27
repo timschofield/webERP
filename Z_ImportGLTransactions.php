@@ -1,16 +1,18 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title = _('Import General Ledger Transactions');
+$Title = __('Import General Ledger Transactions');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
-		_('Import GL Payments Receipts Or Journals From CSV') . '</p>';
+		__('Import GL Payments Receipts Or Journals From CSV') . '" />' . ' ' .
+		__('Import GL Payments Receipts Or Journals From CSV') . '</p>';
 
 $FieldHeadings = array(
 	'Date',			//  0 'Transaction Date',
@@ -20,7 +22,6 @@ $FieldHeadings = array(
 	'Narrative',	//  4 'Narrative'
 	'Tag'			//  5 'Tag reference'
 );
-
 
 if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file processing
 	//check file info
@@ -35,23 +36,27 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ",");
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if (count($HeadRow) != count($FieldHeadings)) {
-		prnMsg (_('File contains') . ' '. count($HeadRow) . ' ' . _('columns, expected') . ' ' . count($FieldHeadings) . '. ' . _('Try downloading a new template'),'error');
+		prnMsg(__('File contains') . ' '. count($HeadRow) . ' ' . __('columns, expected') . ' ' . count($FieldHeadings) . '. ' . __('Try downloading a new template'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
 	$i = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$i]))) {
-			prnMsg (_('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . _('Try downloading a new template'),'error');
+			prnMsg(__('File contains incorrect headers') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$i]). '. ' . __('Try downloading a new template'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$i++;
 	}
@@ -73,15 +78,15 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//loop through file rows
 	$Row = 1;
-	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
-			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -96,13 +101,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$TestRow = DB_fetch_row($Result);
 		if ($TestRow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
+			prnMsg(__('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
 		}
 
 		//Then check that the date is in a correct format
 		if (!Is_date($MyRow[0])) {
 			$InputError = 1;
-			prnMsg (_('The date') . ' ' . $MyRow[0]. ' ' . _('is not in the correct format'),'error');
+			prnMsg(__('The date') . ' ' . $MyRow[0]. ' ' . __('is not in the correct format'),'error');
 		}
 
 		//Find the period number from the date
@@ -111,7 +116,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//All transactions must be in the same period
 		if (isset($PreviousPeriod) and $PreviousPeriod != $Period) {
 			$InputError = 1;
-			prnMsg (_('All transactions must be in the same period'),'error');
+			prnMsg(__('All transactions must be in the same period'),'error');
 		}
 
 		//Finally force the amount to be a double
@@ -172,7 +177,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 												'" . ($ExRate/$FuncExRate) . "',
 												'" . $FuncExRate . "',
 												'" . FormatDateForSQL($MyRow[0]) . "',
-												'" . _('Cheque') . "',
+												'" . __('Cheque') . "',
 												'" . round($MyRow[3], 2) . "',
 												'" . $_POST['Currency'] . "'
 											)";
@@ -191,53 +196,53 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	if ($InputError != 1 and round($TransactionTotal, 2) != 0) {
 		$InputError = 1;
-		prnMsg (_('The total of the transactions must balance back to zero'),'error');
+		prnMsg(__('The total of the transactions must balance back to zero'),'error');
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row') . ' ' . $Row. '. ' . _('Batch import has been rolled back'),'error');
+		prnMsg(__('Failed on row') . ' ' . $Row. '. ' . __('Batch import has been rolled back'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
-		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database'),'success');
+		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed. All transactions committed to the database'),'success');
 	}
 
 	fclose($FileHandle);
-	include ('includes/GLPostings.php');
+	include('includes/GLPostings.php');
 
 } else { //show file upload form
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
-			_('This function loads a set of general ledger transactions from a comma separated variable (csv) file.') . '<br />' .
-			_('The file must contain six columns, and the first row should be the following headers:') . '<br />' .
+			__('This function loads a set of general ledger transactions from a comma separated variable (csv) file.') . '<br />' .
+			__('The file must contain six columns, and the first row should be the following headers:') . '<br />' .
 			$FieldHeadings[0] . ', ' . $FieldHeadings[1] . ', ' . $FieldHeadings[2] . ', ' . $FieldHeadings[3] . ', ' . $FieldHeadings[4] . ', ' . $FieldHeadings[5] . '<br />' .
-			_('followed by rows containing these six fields for each price to be uploaded.') .  '<br />' .
-			_('The total of the transactions must come back to zero. Debits are positive, credits are negative.') .  '<br />' .
-			_('All the transactions must be within the same accounting period.') .  '<br />' .
-			_('The Account field must have a corresponding entry in the chartmaster table.') . '</div>';
+			__('followed by rows containing these six fields for each price to be uploaded.') .  '<br />' .
+			__('The total of the transactions must come back to zero. Debits are positive, credits are negative.') .  '<br />' .
+			__('All the transactions must be within the same accounting period.') .  '<br />' .
+			__('The Account field must have a corresponding entry in the chartmaster table.') . '</div>';
 
 	echo '<fieldset>
-			<legend>', _('Import Details'), '</legend>
+			<legend>', __('Import Details'), '</legend>
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
 	echo '<field>
-			<label>', _('Select Transaction Type') . ':&nbsp;</label>
+			<label>', __('Select Transaction Type') . ':&nbsp;</label>
 			<select name="TransactionType">
-				<option value=0>' . _('GL Journal') . '</option>
-				<option value=1>' . _('GL Payment') . '</option>
-				<option value=2>' . _('GL Receipt') . '</option>
+				<option value=0>' . __('GL Journal') . '</option>
+				<option value=1>' . __('GL Payment') . '</option>
+				<option value=2>' . __('GL Receipt') . '</option>
 			</select>
 		</field>';
 
 	echo '<field>
-			<label>', _('Select Currency') . ':&nbsp;</label>
+			<label>', __('Select Currency') . ':&nbsp;</label>
 			<select name="Currency">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
 		echo '</select>';
-		prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'), 'warn');
+		prnMsg(__('No currencies are defined yet') . '. ' . __('Receipts cannot be entered until a currency is defined'), 'warn');
 
 	} else {
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -251,12 +256,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			</field>';
 	}
 	echo '<field>
-			<label>', _('Upload file') . ':</label>
+			<label>', __('Upload file') . ':</label>
 			<input name="userfile" type="file" />
 		</field>';
 	echo '</fieldset>';
 	echo '<div class="centre">';
-	echo '<input type="submit" name="submit" value="' . _('Send File') . '" />
+	echo '<input type="submit" name="submit" value="' . __('Send File') . '" />
 		</div>
 		</form>';
 
@@ -273,5 +278,3 @@ function IsBankAccount($Account) {
 		return true;
 	}
 }
-
-?>

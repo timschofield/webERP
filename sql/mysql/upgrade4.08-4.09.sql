@@ -26,7 +26,7 @@ ALTER TABLE `debtorsmaster` CHANGE `address6` `address6` VARCHAR( 40 ) NOT NULL 
 
 ALTER TABLE `stockcatproperties` ADD FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`);
 ALTER TABLE `stockitemproperties` ADD FOREIGN KEY (`stockid`) REFERENCES `stockmaster` (`stockid`);
-ALTER TABLE `stockitemproperties` ADD FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`); 
+ALTER TABLE `stockitemproperties` ADD FOREIGN KEY (`stkcatpropid`) REFERENCES `stockcatproperties` (`stkcatpropid`);
 ALTER TABLE `stockmovestaxes` ADD FOREIGN KEY (`stkmoveno`) REFERENCES `stockmoves` (`stkmoveno`);
 ALTER TABLE `stockrequest` ADD INDEX (`loccode`);
 ALTER TABLE `stockrequest` ADD FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`);
@@ -40,8 +40,7 @@ ALTER TABLE `stockrequestitems` ADD FOREIGN KEY ( `stockid` ) REFERENCES `stockm
 ALTER TABLE `internalstockcatrole` ADD PRIMARY KEY ( `categoryid` , `secroleid` );
 ALTER TABLE `internalstockcatrole` ADD FOREIGN KEY ( `categoryid` ) REFERENCES `stockcategory` (`categoryid`);
 ALTER TABLE `internalstockcatrole` ADD FOREIGN KEY ( `secroleid` ) REFERENCES `securityroles` (`secroleid`);
- 
+
 INSERT INTO scripts VALUES ('PDFQuotationPortrait.php','2','Portrait quotation');
 
 UPDATE config SET confvalue='4.09' WHERE confname='VersionNumber';
-

@@ -1,7 +1,7 @@
 <?php
 
 /* Note api_php.php includes api */
-include 'api_php.php';
+include('api_php.php');
 
 PhpXmlRpc\PhpXmlRpc::$xmlrpc_internalencoding = 'UTF-8';
 
@@ -22,31 +22,31 @@ function ob_file_callback($buffer)
  */
 function apiBuildDocHTML($description, $parameters, $Return)
 {
-	$doc = '<tr><td><b><u>' . _('Description') . '</u></b></td><td colspan=2>' . $description . '</td></tr>
-			<tr><td valign="top"><b><u>' . _('Parameters') . '</u></b></td>';
+	$doc = '<tr><td><b><u>' . __('Description') . '</u></b></td><td colspan=2>' . $description . '</td></tr>
+			<tr><td valign="top"><b><u>' . __('Parameters') . '</u></b></td>';
 	for ($ii = 0; $ii < sizeof($parameters); $ii++) {
 		$doc .= '<tr><td valign="top">' . $parameters[$ii]['name'] . '</td><td>' .
 			$parameters[$ii]['description'] . '</td></tr>';
 	}
-	$doc .= '<tr><td valign="top"><b><u>' . _('Return Value');
+	$doc .= '<tr><td valign="top"><b><u>' . __('Return Value');
 	$doc .= '<td valign="top">' . $Return . '</td></tr>';
 	$doc .= '</table>';
 
 	return $doc;
 }
 
-$Description = _('This function is used to login into the API methods for the specified the database.')
-	. '<p>' . _('NOTE: using this function means that the User Name and Password fields in the following functions are not required.  When calling those functions, leave the last two parameters off, and send along a session cookie.') . '</p>';
-$Parameter[0]['name'] = _('Database Name');
-$Parameter[0]['description'] = _('The name of the database to use for the requests to come. ');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an integer. ') .
-	_('Zero means the function was successful. ') .
-	_('Otherwise an error code is returned. ') .
-	_('When the login is successful, a session cookie is also returned in the HTTP headers');
+$Description = __('This function is used to login into the API methods for the specified the database.')
+	. '<p>' . __('NOTE: using this function means that the User Name and Password fields in the following functions are not required.  When calling those functions, leave the last two parameters off, and send along a session cookie.') . '</p>';
+$Parameter[0]['name'] = __('Database Name');
+$Parameter[0]['description'] = __('The name of the database to use for the requests to come. ');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an integer. ') .
+	__('Zero means the function was successful. ') .
+	__('Otherwise an error code is returned. ') .
+	__('When the login is successful, a session cookie is also returned in the HTTP headers');
 
 $Login_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
 $Login_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
@@ -73,12 +73,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to logout from the API methods. ')
-	. _('It terminates the user\'s session thus freeing the server resources.');
+$Description = __('This function is used to logout from the API methods. ')
+	. __('It terminates the user\'s session thus freeing the server resources.');
 $Parameter = array();
-$ReturnValue = _('This function returns an integer. ')
-	. _('Zero means the function was successful. ')
-	. _('Otherwise an error code is returned. ');
+$ReturnValue = __('This function returns an integer. ')
+	. __('Zero means the function was successful. ')
+	. __('Otherwise an error code is returned. ');
 $Logout_sig = array(array(Value::$xmlrpcInt));
 $Logout_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
@@ -95,20 +95,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert a new customer into the webERP database.');
-$Parameter[0]['name'] = _('Customer Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
-	. '<p>' . _('If the Create Debtor Codes Automatically flag is set, then anything sent in the debtorno field will be ignored, and the debtorno field will be set automatically.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert a new customer into the webERP database.');
+$Parameter[0]['name'] = __('Customer Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+	. '<p>' . __('If the Create Debtor Codes Automatically flag is set, then anything sent in the debtorno field will be ignored, and the debtorno field will be set automatically.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertCustomer_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -136,19 +136,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert a new customer branch into the webERP database.');
-$Parameter[0]['name'] = _('Branch Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=custbranch">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert a new customer branch into the webERP database.');
+$Parameter[0]['name'] = __('Branch Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=custbranch">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertBranch_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -175,20 +175,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to modify a customer which is already setup in the webERP database.');
-$Parameter[0]['name'] = _('Customer Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
-	. '<p>' . _('The debtorno must already exist in the weberp database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no modification takes place. ');
+$Description = __('This function is used to modify a customer which is already setup in the webERP database.');
+$Parameter[0]['name'] = __('Customer Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+	. '<p>' . __('The debtorno must already exist in the weberp database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no modification takes place. ');
 
 $ModifyCustomer_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -215,20 +215,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to modify a customer branch which is already setup in the webERP database.');
-$Parameter[0]['name'] = _('Branch Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=custbranch">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
-	. '<p>' . _('The branchcode/debtorno combination must already exist in the weberp database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to modify a customer branch which is already setup in the webERP database.');
+$Parameter[0]['name'] = __('Branch Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=custbranch">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+	. '<p>' . __('The branchcode/debtorno combination must already exist in the weberp database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $ModifyBranch_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -255,16 +255,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve a list of the branch codes for the Debtor Number supplied.');
-$Parameter[0]['name'] = _('Debtor number');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns an array of branch codes, which may be strings or integers. ')
-	. _('If the first element is zero then the function was successful.') . '<p>'
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve a list of the branch codes for the Debtor Number supplied.');
+$Parameter[0]['name'] = __('Debtor number');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns an array of branch codes, which may be strings or integers. ')
+	. __('If the first element is zero then the function was successful.') . '<p>'
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetCustomerBranchCodes_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -291,20 +291,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a customer branch from the webERP database.');
-$Parameter[0]['name'] = _('Debtor number');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
-$Parameter[1]['name'] = _('Branch Code');
-$Parameter[1]['description'] = _('This is a string value. It must be a valid branch code that is already in the webERP database, and associated with the debtorno in Parameter[0]');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this branch. ')
-	. _('The key will be identical with field name from the ')
-	. '<a href="../../Z_DescribeTable.php?table=custbranch">' . _('custbranch table. ') . '</a>'
-	. _('All fields will be in the set regardless of whether the value was set.') . '<p>'
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve the details of a customer branch from the webERP database.');
+$Parameter[0]['name'] = __('Debtor number');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+$Parameter[1]['name'] = __('Branch Code');
+$Parameter[1]['description'] = __('This is a string value. It must be a valid branch code that is already in the webERP database, and associated with the debtorno in Parameter[0]');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this branch. ')
+	. __('The key will be identical with field name from the ')
+	. '<a href="../../Z_DescribeTable.php?table=custbranch">' . __('custbranch table. ') . '</a>'
+	. __('All fields will be in the set regardless of whether the value was set.') . '<p>'
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetCustomerBranch_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -333,16 +333,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
-$Parameter[0]['name'] = _('Debtor number');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid debtor number that is already in the webERP database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this customer. ')
-	. _('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve the details of a customer from the webERP database.');
+$Parameter[0]['name'] = __('Debtor number');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid debtor number that is already in the webERP database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this customer. ')
+	. __('The key will be identical with field name from the debtorsmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetCustomer_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
@@ -369,20 +369,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a customer from the webERP database.');
-$Parameter[0]['name'] = _('Field Name');
-$Parameter[0]['description'] = _('The name of a database field to search on. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . _('here ') . '</a>'
-	. _('and are case sensitive. ');
-$Parameter[1]['name'] = _('Search Criteria');
-$Parameter[1]['description'] = _('A (partial) string to match in the above Field Name.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of customer IDs, which may be integers or strings. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to retrieve the details of a customer from the webERP database.');
+$Parameter[0]['name'] = __('Field Name');
+$Parameter[0]['description'] = __('The name of a database field to search on. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtorsmaster">' . __('here ') . '</a>'
+	. __('and are case sensitive. ');
+$Parameter[1]['name'] = __('Search Criteria');
+$Parameter[1]['description'] = __('A (partial) string to match in the above Field Name.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of customer IDs, which may be integers or strings. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $SearchCustomers_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -411,14 +411,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of currency abbreviations.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of currency abbreviations. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function returns a list of currency abbreviations.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of currency abbreviations. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $GetCurrencyList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -443,14 +443,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a currency abbreviation and returns details of that currency.');
-$Parameter[0]['name'] = _('Currency abbreviation');
-$Parameter[0]['description'] = _('A currency abbreviation as returned by the GetCurrencyList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of currency details.');
+$Description = __('This function takes a currency abbreviation and returns details of that currency.');
+$Parameter[0]['name'] = __('Currency abbreviation');
+$Parameter[0]['description'] = __('A currency abbreviation as returned by the GetCurrencyList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of currency details.');
 
 $GetCurrencyDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -477,14 +477,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of sales type abbreviations.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of sales type abbreviations. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function returns a list of sales type abbreviations.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of sales type abbreviations. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $GetSalesTypeList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -510,14 +510,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a sales type abbreviation and returns details of that sales type.');
-$Parameter[0]['name'] = _('Sales type abbreviation');
-$Parameter[0]['description'] = _('A sales type abbreviation as returned by the GetSalesTypeList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of sales type details.');
+$Description = __('This function takes a sales type abbreviation and returns details of that sales type.');
+$Parameter[0]['name'] = __('Sales type abbreviation');
+$Parameter[0]['description'] = __('A sales type abbreviation as returned by the GetSalesTypeList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of sales type details.');
 
 $GetSalesTypeDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -544,19 +544,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert sales type details into the webERP database.');
-$Parameter[0]['name'] = _('Sales Type Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salestypes">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert sales type details into the webERP database.');
+$Parameter[0]['name'] = __('Sales Type Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salestypes">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertSalesType_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -583,12 +583,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of hold reason codes.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of hold reason codes.');
+$Description = __('This function returns a list of hold reason codes.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of hold reason codes.');
 
 $GetHoldReasonList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -613,14 +613,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a hold reason code and returns details of that hold reason.');
-$Parameter[0]['name'] = _('Hold reason code');
-$Parameter[0]['description'] = _('A hold reason abbreviation as returned by the GetHoldReasonList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of hold reason details.');
+$Description = __('This function takes a hold reason code and returns details of that hold reason.');
+$Parameter[0]['name'] = __('Hold reason code');
+$Parameter[0]['description'] = __('A hold reason abbreviation as returned by the GetHoldReasonList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of hold reason details.');
 
 $GetHoldReasonDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -645,12 +645,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of payment terms abbreviations.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of payment terms abbreviations.');
+$Description = __('This function returns a list of payment terms abbreviations.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of payment terms abbreviations.');
 
 $GetPaymentTermsList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -676,14 +676,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a payment terms abbreviation and returns details of that payment terms type.');
-$Parameter[0]['name'] = _('Hold reason code');
-$Parameter[0]['description'] = _('A payment terms abbreviation as returned by the GetPaymentTermsList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of payment terms details.');
+$Description = __('This function takes a payment terms abbreviation and returns details of that payment terms type.');
+$Parameter[0]['name'] = __('Hold reason code');
+$Parameter[0]['description'] = __('A payment terms abbreviation as returned by the GetPaymentTermsList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of payment terms details.');
 
 $GetPaymentTermsDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -710,12 +710,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of payment method codes.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of payment method codes.');
+$Description = __('This function returns a list of payment method codes.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of payment method codes.');
 
 $GetPaymentMethodsList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -740,14 +740,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a payment method code and returns details of that payment method.');
-$Parameter[0]['name'] = _('Payment method code');
-$Parameter[0]['description'] = _('A payment method code as returned by the GetPaymentMethodsList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of payment terms details.');
+$Description = __('This function takes a payment method code and returns details of that payment method.');
+$Parameter[0]['name'] = __('Payment method code');
+$Parameter[0]['description'] = __('A payment method code as returned by the GetPaymentMethodsList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of payment terms details.');
 
 $GetPaymentMethodDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -774,16 +774,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function inserts a new stock item into webERP, including updating the locstock table.');
-$Parameter[0]['name'] = _('Stock Item Details');
-$Parameter[0]['description'] = _('Key/value pairs of data to insert. The key must be identical with the database field name.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function inserts a new stock item into webERP, including updating the locstock table.');
+$Parameter[0]['name'] = __('Stock Item Details');
+$Parameter[0]['description'] = __('Key/value pairs of data to insert. The key must be identical with the database field name.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertStockItem_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -810,16 +810,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function modifies a stock item that already exists in webERP.');
-$Parameter[0]['name'] = _('Stock Item Details');
-$Parameter[0]['description'] = _('Key/value pairs of data to modify.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no modification takes place. ');
+$Description = __('This function modifies a stock item that already exists in webERP.');
+$Parameter[0]['name'] = __('Stock Item Details');
+$Parameter[0]['description'] = __('Key/value pairs of data to modify.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no modification takes place. ');
 
 $ModifyStockItem_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -846,17 +846,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock item code and returns an array of key/value pairs.') .
-	_('The keys represent the database field names, and the values are the value of that field.');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
-	. _('The key will be identical with field name from the stockmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function takes a stock item code and returns an array of key/value pairs.') .
+	__('The keys represent the database field names, and the values are the value of that field.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('The StockID code to identify the item in the database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this stock item. ')
+	. __('The key will be identical with field name from the stockmaster table. All fields will be in the set regardless of whether the value was set.') . '<p>'
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetStockItem_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
@@ -883,16 +883,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function searches the stockmaster table and returns an array of stock items matching that criteria.');
-$Parameter[0]['name'] = _('Field Name');
-$Parameter[0]['description'] = _('The field name to search on.');
-$Parameter[1]['name'] = _('Match Criteria');
-$Parameter[1]['description'] = _('The SQL search pattern to select items in the database.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('Returns an array of stock codes matching the criteria send, or an array of error codes');
+$Description = __('This function searches the stockmaster table and returns an array of stock items matching that criteria.');
+$Parameter[0]['name'] = __('Field Name');
+$Parameter[0]['description'] = __('The field name to search on.');
+$Parameter[1]['name'] = __('Match Criteria');
+$Parameter[1]['description'] = __('The SQL search pattern to select items in the database.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('Returns an array of stock codes matching the criteria send, or an array of error codes');
 
 $SearchStockItems_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -922,13 +922,13 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function returns the stock balance for the given stockid.';
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock quantities by location for this stock item. ');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock quantities by location for this stock item. ');
 
 $GetStockBalance_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -956,13 +956,13 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function returns the reorder levels by location.';
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock reorder levels by location for this stock item.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock reorder levels by location for this stock item.');
 
 $GetStockReorderLevel_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -990,17 +990,17 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function sets the reorder level for the given stockid in the given location.';
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('Location Code');
-$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-$Parameter[2]['name'] = _('Reorder level');
-$Parameter[2]['description'] = _('A numeric field containing the reorder level for this stockid/location combination.');
-$Parameter[3]['name'] = _('User name');
-$Parameter[3]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[4]['name'] = _('User password');
-$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns zero if the transaction was successful or an array of error codes if not. ');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('Location Code');
+$Parameter[1]['description'] = __('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+$Parameter[2]['name'] = __('Reorder level');
+$Parameter[2]['description'] = __('A numeric field containing the reorder level for this stockid/location combination.');
+$Parameter[3]['name'] = __('User name');
+$Parameter[3]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[4]['name'] = __('User password');
+$Parameter[4]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns zero if the transaction was successful or an array of error codes if not. ');
 
 $SetStockReorderLevel_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -1031,14 +1031,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns the quantity allocated of the stock item id sent as a parameter.');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('The StockID code to identify items ordered but not yet shipped.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an integer value of the quantity allocated or an array of error codes if not. ');
+$Description = __('This function returns the quantity allocated of the stock item id sent as a parameter.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('The StockID code to identify items ordered but not yet shipped.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an integer value of the quantity allocated or an array of error codes if not. ');
 
 $GetAllocatedStock_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString),
@@ -1065,14 +1065,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock ID and returns the quantity of this stock that is currently on outstanding purchase orders.');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('The StockID code to identify items in the database on order, but not yet received.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an integer value of the quantity on order or an array of error codes if not.');
+$Description = __('This function takes a stock ID and returns the quantity of this stock that is currently on outstanding purchase orders.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('The StockID code to identify items in the database on order, but not yet received.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an integer value of the quantity on order or an array of error codes if not.');
 
 $GetOrderedStock_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString),
@@ -1099,20 +1099,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function sets the sales price for a stock ID in the sales type and currency passed to the function');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
-$Parameter[1]['name'] = _('Currency Code');
-$Parameter[1]['description'] = _('The currency involved.');
-$Parameter[2]['name'] = _('Sales Type');
-$Parameter[2]['description'] = _('The sales type to identify the item in the database.');
-$Parameter[3]['name'] = _('Price');
-$Parameter[3]['description'] = _('The price to apply to this item.');
-$Parameter[4]['name'] = _('User name');
-$Parameter[4]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[5]['name'] = _('User password');
-$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('Returns a zero if successful or else an array of error codes');
+$Description = __('This function sets the sales price for a stock ID in the sales type and currency passed to the function');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('The StockID code to identify the item in the database.');
+$Parameter[1]['name'] = __('Currency Code');
+$Parameter[1]['description'] = __('The currency involved.');
+$Parameter[2]['name'] = __('Sales Type');
+$Parameter[2]['description'] = __('The sales type to identify the item in the database.');
+$Parameter[3]['name'] = __('Price');
+$Parameter[3]['description'] = __('The price to apply to this item.');
+$Parameter[4]['name'] = __('User name');
+$Parameter[4]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[5]['name'] = __('User password');
+$Parameter[5]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('Returns a zero if successful or else an array of error codes');
 
 $SetStockPrice_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -1146,18 +1146,18 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function gets the sales price for a stock ID in the sales type and currency passed to the function');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('The StockID code to identify the item in the database.');
-$Parameter[1]['name'] = _('Currency Code');
-$Parameter[1]['description'] = _('The currency involved.');
-$Parameter[2]['name'] = _('Sales Type');
-$Parameter[2]['description'] = _('The sales type of the item in the database.');
-$Parameter[3]['name'] = _('User name');
-$Parameter[3]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[4]['name'] = _('User password');
-$Parameter[4]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('Returns the sales price for the stock item whose ID is passed in the function');
+$Description = __('This function gets the sales price for a stock ID in the sales type and currency passed to the function');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('The StockID code to identify the item in the database.');
+$Parameter[1]['name'] = __('Currency Code');
+$Parameter[1]['description'] = __('The currency involved.');
+$Parameter[2]['name'] = __('Sales Type');
+$Parameter[2]['description'] = __('The sales type of the item in the database.');
+$Parameter[3]['name'] = __('User name');
+$Parameter[3]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[4]['name'] = __('User password');
+$Parameter[4]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('Returns the sales price for the stock item whose ID is passed in the function');
 
 $GetStockPrice_sig = array(
 	array(Value::$xmlrpcDouble, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -1188,16 +1188,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Creates a customer receipt from the details passed to the method as an associative array');
-$Parameter[0]['name'] = _('Receipt Details');
-$Parameter[0]['description'] = _('An associative array describing the customer receipt with the following fields: debtorno - the customer code; trandate - the date of the receipt in Y-m-d format; amountfx - the amount in FX; paymentmethod - the payment method of the receipt e.g. cash/EFTPOS/credit card; bankaccount - the webERP bank account to use for the transaction, reference - the reference to record against the webERP receipt transaction');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful, and the second element is the receipt number. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('Creates a customer receipt from the details passed to the method as an associative array');
+$Parameter[0]['name'] = __('Receipt Details');
+$Parameter[0]['description'] = __('An associative array describing the customer receipt with the following fields: debtorno - the customer code; trandate - the date of the receipt in Y-m-d format; amountfx - the amount in FX; paymentmethod - the payment method of the receipt e.g. cash/EFTPOS/credit card; bankaccount - the webERP bank account to use for the transaction, reference - the reference to record against the webERP receipt transaction');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful, and the second element is the receipt number. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertDebtorReceipt_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1224,16 +1224,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Allocates a debtor receipt or credit to a debtor invoice. Using the customerref field to match up which invoice to allocate to');
-$Parameter[0]['name'] = _('Allocation Details');
-$Parameter[0]['description'] = _('An associative array describing the customer, the transaction being allocated from, it\'s transaction type 12 for a receipt or 11 for a credit note, the webERP transaction number, the customer ref that is to be searched for in invoices to match to. The fields are: debtorno, type, transno, customerref');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful.')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('Allocates a debtor receipt or credit to a debtor invoice. Using the customerref field to match up which invoice to allocate to');
+$Parameter[0]['name'] = __('Allocation Details');
+$Parameter[0]['description'] = __('An associative array describing the customer, the transaction being allocated from, it\'s transaction type 12 for a receipt or 11 for a credit note, the webERP transaction number, the customer ref that is to be searched for in invoices to match to. The fields are: debtorno, type, transno, customerref');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful.')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $AllocateTrans_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1260,18 +1260,18 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Creates a credit note from header details associative array and line items. This function implements most of a webERP credit note with the exception that it cannot handle serialised or lot/batch controlled items. All the necessary updates and inserts are handled for stock quantities returned, taxes, sales analysis, stock movements, sales and cost of sales journals');
-$Parameter[0]['name'] = _('Credit Note Header Details');
-$Parameter[0]['description'] = _('An associative array describing the credit note header with the fields debtorno, branchcode, trandate, tpe, fromstkloc, customerref, shipvia');
-$Parameter[1]['name'] = _('Credit note line items');
-$Parameter[1]['description'] = _('The lines of stock being returned on this credit note. Only stock returns can be dealt with using this API method. This is an array of associative arrays containing the fields, stockid, price, qty, discountpercent for the items returned');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful, and the second element is the credit note number. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('Creates a credit note from header details associative array and line items. This function implements most of a webERP credit note with the exception that it cannot handle serialised or lot/batch controlled items. All the necessary updates and inserts are handled for stock quantities returned, taxes, sales analysis, stock movements, sales and cost of sales journals');
+$Parameter[0]['name'] = __('Credit Note Header Details');
+$Parameter[0]['description'] = __('An associative array describing the credit note header with the fields debtorno, branchcode, trandate, tpe, fromstkloc, customerref, shipvia');
+$Parameter[1]['name'] = __('Credit note line items');
+$Parameter[1]['description'] = __('The lines of stock being returned on this credit note. Only stock returns can be dealt with using this API method. This is an array of associative arrays containing the fields, stockid, price, qty, discountpercent for the items returned');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful, and the second element is the credit note number. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $CreateCreditNote_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1300,22 +1300,22 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Inserts a sales invoice into the debtortrans table and does the relevant GL entries. Note that this function does not do the tax entries, insert stock movements, update the stock quanties, sales analysis data or do any cost of sales gl journals. Caution is advised in using this function. To create a full webERP invoice with all tables updated use the InvoiceSalesOrder function.');
-$Parameter[0]['name'] = _('Invoice Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the invoice.')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtortrans">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('The transno key is generated by this call, and if a value is supplied, it will be ignored. ')
-	. _('Two additional fields are required. partcode needs to be a genuine part number, though it appears to serve no real purpose. ')
-	. _('salesarea also is required, though again it appears to serve no useful purpose. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful, and the second element is the invoice number. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('Inserts a sales invoice into the debtortrans table and does the relevant GL entries. Note that this function does not do the tax entries, insert stock movements, update the stock quanties, sales analysis data or do any cost of sales gl journals. Caution is advised in using this function. To create a full webERP invoice with all tables updated use the InvoiceSalesOrder function.');
+$Parameter[0]['name'] = __('Invoice Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the invoice.')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=debtortrans">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('The transno key is generated by this call, and if a value is supplied, it will be ignored. ')
+	. __('Two additional fields are required. partcode needs to be a genuine part number, though it appears to serve no real purpose. ')
+	. __('salesarea also is required, though again it appears to serve no useful purpose. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful, and the second element is the invoice number. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertSalesInvoice_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1341,14 +1341,14 @@ function xmlrpc_InsertSalesInvoice($request)
 unset($Description);
 unset($Parameter);
 unset($ReturnValue);
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('This function is used to insert a new Sales Credit to the webERP database. Note that this function does not implement a webERP credit note in full and caution is advised in using this function. It does not handle tax at all, it does not add stockmovements, it does not update stock for any quantity returned or update sales analysis. To create a credit note using webERP logic use the CreateCreditNote function');
-$Parameter[0]['name'] = _('Credit Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the credit.  All values must be negative.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('This function is used to insert a new Sales Credit to the webERP database. Note that this function does not implement a webERP credit note in full and caution is advised in using this function. It does not handle tax at all, it does not add stockmovements, it does not update stock for any quantity returned or update sales analysis. To create a credit note using webERP logic use the CreateCreditNote function');
+$Parameter[0]['name'] = __('Credit Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the credit.  All values must be negative.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertSalesCredit_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -1376,17 +1376,17 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function is used to start a new sales order.';
-$Parameter[0]['name'] = _('Insert Sales Order Header');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('The orderno key is generated by this call, and if a value is supplied, it will be ignored. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
+$Parameter[0]['name'] = __('Insert Sales Order Header');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('The orderno key is generated by this call, and if a value is supplied, it will be ignored. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the order number.');
 
 $InsertSalesOrderHeader_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1414,13 +1414,13 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function is used to invoice a sales order for the full quantity on the order assuming it is all dispatched. NB It does not deal with serialised/controlled items.';
-$Parameter[0]['name'] = _('Sales Order to invoice');
-$Parameter[0]['description'] = _('An integer representing the webERP sales order number');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
+$Parameter[0]['name'] = __('Sales Order to invoice');
+$Parameter[0]['description'] = __('An integer representing the webERP sales order number');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a two element array; the first element is 0 for success or an error code, while the second element is the invoice number.');
 
 $InvoiceSalesOrder_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1448,16 +1448,16 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function is used to modify the header details of a sales order';
-$Parameter[0]['name'] = _('Modify Sales Order Header Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
+$Parameter[0]['name'] = __('Modify Sales Order Header Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorders">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a single element array with the value 0; otherwise, it contains all error codes encountered during the update.');
 
 $ModifySalesOrderHeader_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1485,17 +1485,17 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function is used to add line items to a sales order.';
-$Parameter[0]['name'] = _('Insert Sales Order Line');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorderdetails">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('The orderno key must be one of these values. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
+$Parameter[0]['name'] = __('Insert Sales Order Line');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorderdetails">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('The orderno key must be one of these values. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 
 $InsertSalesOrderLine_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1523,17 +1523,17 @@ unset($Parameter);
 unset($ReturnValue);
 
 $Description = 'This function is used to modify line items on a sales order.';
-$Parameter[0]['name'] = _('Modify Sales Order Line');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorderdetails">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('The orderno and stkcode keys must be one of these values. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
+$Parameter[0]['name'] = __('Modify Sales Order Line');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=salesorderdetails">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('The orderno and stkcode keys must be one of these values. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array; the first element is 0 for success; otherwise the array contains a list of all errors encountered.');
 
 $ModifySalesOrderLine_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -1559,14 +1559,14 @@ function xmlrpc_ModifySalesOrderLine($request)
 unset($Description);
 unset($Parameter);
 unset($ReturnValue);
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
-$Parameter[0]['name'] = _('Account Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the GL Account and fields to set.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
+$Parameter[0]['name'] = __('Account Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the GL Account and fields to set.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertGLAccount_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -1593,15 +1593,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Account Section Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the account section to insert.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Account Section Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the account section to insert.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertGLAccountSection_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -1628,15 +1628,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Account Group Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the account group to insert.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Account Group Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the account group to insert.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertGLAccountGroup_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -1663,12 +1663,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of stock location ids.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock location ids.');
+$Description = __('This function returns a list of stock location ids.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock location ids.');
 
 $GetLocationList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -1694,14 +1694,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock location id and returns details of that stock location.');
-$Parameter[0]['name'] = _('Stock Location Code');
-$Parameter[0]['description'] = _('A stock location code as returned by the GetLocationList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock location details.');
+$Description = __('This function takes a stock location id and returns details of that stock location.');
+$Parameter[0]['name'] = __('Stock Location Code');
+$Parameter[0]['description'] = __('A stock location code as returned by the GetLocationList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock location details.');
 
 $GetLocationDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -1728,12 +1728,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of stock shipper ids.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock shipper ids.');
+$Description = __('This function returns a list of stock shipper ids.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock shipper ids.');
 
 $GetShipperList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -1759,14 +1759,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock shipper id and returns details of that shipper.');
-$Parameter[0]['name'] = _('Stock Shipper ID');
-$Parameter[0]['description'] = _('A stock shipper ID as returned by the GetShippersList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock shipper details.');
+$Description = __('This function takes a stock shipper id and returns details of that shipper.');
+$Parameter[0]['name'] = __('Stock Shipper ID');
+$Parameter[0]['description'] = __('A stock shipper ID as returned by the GetShippersList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock shipper details.');
 
 $GetShipperDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -1793,12 +1793,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of sales area codes.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of sales area codes.');
+$Description = __('This function returns a list of sales area codes.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of sales area codes.');
 
 $GetSalesAreasList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -1824,14 +1824,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a sales area code and returns details of that sales area.');
-$Parameter[0]['name'] = _('Sales Area Code');
-$Parameter[0]['description'] = _('A sales area code as returned by the GetSalesAreasList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of sales area details.');
+$Description = __('This function takes a sales area code and returns details of that sales area.');
+$Parameter[0]['name'] = __('Sales Area Code');
+$Parameter[0]['description'] = __('A sales area code as returned by the GetSalesAreasList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of sales area details.');
 
 $GetSalesAreaDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -1858,14 +1858,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a sales area description and returns details of that sales area.');
-$Parameter[0]['name'] = _('Sales Area Description');
-$Parameter[0]['description'] = _('A sales area description of the sales area of interest.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of sales area details.');
+$Description = __('This function takes a sales area description and returns details of that sales area.');
+$Parameter[0]['name'] = __('Sales Area Description');
+$Parameter[0]['description'] = __('A sales area description of the sales area of interest.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of sales area details.');
 
 $GetSalesAreaDetailsFromName_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -1892,15 +1892,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Sales Area Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the sales area to insert.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Sales Area Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the sales area to insert.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertSalesArea_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -1927,12 +1927,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of salesman codes.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of salesman codes.');
+$Description = __('This function returns a list of salesman codes.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of salesman codes.');
 
 $GetSalesmanList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -1958,14 +1958,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a salesman code and returns details of that salesman.');
-$Parameter[0]['name'] = _('Sales Area Code');
-$Parameter[0]['description'] = _('A salesman code as returned by the GetSalesmanList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of salesman details.');
+$Description = __('This function takes a salesman code and returns details of that salesman.');
+$Parameter[0]['name'] = __('Sales Area Code');
+$Parameter[0]['description'] = __('A salesman code as returned by the GetSalesmanList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of salesman details.');
 
 $GetSalesmanDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -1992,14 +1992,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a salesman\'s name and returns details of that salesman.');
-$Parameter[0]['name'] = _('Salesman Name');
-$Parameter[0]['description'] = _('The name of the salesman of interest.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of salesman details.');
+$Description = __('This function takes a salesman\'s name and returns details of that salesman.');
+$Parameter[0]['name'] = __('Salesman Name');
+$Parameter[0]['description'] = __('The name of the salesman of interest.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of salesman details.');
 
 $GetSalesmanDetailsFromName_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2026,15 +2026,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Salesman Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the salesman to insert.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Salesman Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the salesman to insert.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertSalesman_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -2061,12 +2061,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of tax group IDs.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of tax group IDs.');
+$Description = __('This function returns a list of tax group IDs.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of tax group IDs.');
 
 $GetTaxGroupList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -2092,14 +2092,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a tax group ID and returns details of that tax group.');
-$Parameter[0]['name'] = _('Tax Group ID');
-$Parameter[0]['description'] = _('A tax group ID as returned by the GetTaxgroupList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of tax group details.');
+$Description = __('This function takes a tax group ID and returns details of that tax group.');
+$Parameter[0]['name'] = __('Tax Group ID');
+$Parameter[0]['description'] = __('A tax group ID as returned by the GetTaxgroupList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of tax group details.');
 
 $GetTaxGroupDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2122,12 +2122,12 @@ function xmlrpc_GetTaxGroupDetails($request)
 	return $rtn;
 }
 
-$Description = _('This function returns a list of tax authority IDs.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of tax group IDs.');
+$Description = __('This function returns a list of tax authority IDs.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of tax group IDs.');
 
 $GetTaxAuthorityList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -2153,14 +2153,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a tax authority ID and returns details of that tax authority.');
-$Parameter[0]['name'] = _('Tax Authority ID');
-$Parameter[0]['description'] = _('A tax Authority ID as returned by the GetTaxAuthorityList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of tax authority details.');
+$Description = __('This function takes a tax authority ID and returns details of that tax authority.');
+$Parameter[0]['name'] = __('Tax Authority ID');
+$Parameter[0]['description'] = __('A tax Authority ID as returned by the GetTaxAuthorityList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of tax authority details.');
 
 $GetTaxAuthorityDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2187,14 +2187,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a tax authority ID and returns the rates of tax for the authority.');
-$Parameter[0]['name'] = _('Tax Authority ID');
-$Parameter[0]['description'] = _('A tax Authority ID as returned by the GetTaxAuthorityList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns the tax rates for the authority.');
+$Description = __('This function takes a tax authority ID and returns the rates of tax for the authority.');
+$Parameter[0]['name'] = __('Tax Authority ID');
+$Parameter[0]['description'] = __('A tax Authority ID as returned by the GetTaxAuthorityList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns the tax rates for the authority.');
 
 $GetTaxAuthorityRates_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
@@ -2221,14 +2221,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a tax group ID and returns the taxes that belong to that tax group.');
-$Parameter[0]['name'] = _('Tax Group ID');
-$Parameter[0]['description'] = _('A tax group ID as returned by the GetTaxgroupList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of tax group details.');
+$Description = __('This function takes a tax group ID and returns the taxes that belong to that tax group.');
+$Parameter[0]['name'] = __('Tax Group ID');
+$Parameter[0]['description'] = __('A tax group ID as returned by the GetTaxgroupList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of tax group details.');
 
 $GetTaxGroupTaxes_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2255,12 +2255,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of customer types.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of customer types');
+$Description = __('This function returns a list of customer types.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of customer types');
 
 $GetCustomerTypeList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -2286,14 +2286,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a customer type ID and returns details of that customer type.');
-$Parameter[0]['name'] = _('Customer Type ID');
-$Parameter[0]['description'] = _('A customer type ID as returned by the GetCustomerTypeList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of customer type details.');
+$Description = __('This function takes a customer type ID and returns details of that customer type.');
+$Parameter[0]['name'] = __('Customer Type ID');
+$Parameter[0]['description'] = __('A customer type ID as returned by the GetCustomerTypeList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of customer type details.');
 
 $GetCustomerTypeDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2320,15 +2320,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Category Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the stock category to insert.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Category Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the stock category to insert.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $InsertStockCategory_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -2355,15 +2355,15 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Category Details');
-$Parameter[0]['description'] = _('An array of index/value items describing the stock category to modify.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Category Details');
+$Parameter[0]['description'] = __('An array of index/value items describing the stock category to modify.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
 
 $ModifyStockCategory_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcStruct),
@@ -2390,13 +2390,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of stock category abbreviations.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful, this function returns an array of stock category ids. ')
-	. _('Otherwise an array of error codes is returned and no stock categories are returned. ');
+$Description = __('This function returns a list of stock category abbreviations.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful, this function returns an array of stock category ids. ')
+	. __('Otherwise an array of error codes is returned and no stock categories are returned. ');
 
 $GetStockCategoryList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -2422,14 +2422,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock category ID and returns details of that stock category type.');
-$Parameter[0]['name'] = _('Stock Category ID');
-$Parameter[0]['description'] = _('A Stock Category ID as returned by the *WHAT* function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of stock category details.');
+$Description = __('This function takes a stock category ID and returns details of that stock category type.');
+$Parameter[0]['name'] = __('Stock Category ID');
+$Parameter[0]['description'] = __('A Stock Category ID as returned by the *WHAT* function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of stock category details.');
 
 $GetStockCategory_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2456,17 +2456,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Field Name');
-$Parameter[0]['description'] = _('The field name to search on.');
-$Parameter[1]['name'] = _('Match Criteria');
-$Parameter[1]['description'] = _('The SQL search pattern to select items in the database.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Field Name');
+$Parameter[0]['description'] = __('The field name to search on.');
+$Parameter[1]['name'] = __('Match Criteria');
+$Parameter[1]['description'] = __('The SQL search pattern to select items in the database.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
 
 $SearchStockCategories_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2495,17 +2495,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$ReturnValue = _('Return Value Descriptions go here');
-$Description = _('Function Description go here');
+$ReturnValue = __('Return Value Descriptions go here');
+$Description = __('Function Description go here');
 
-$Parameter[0]['name'] = _('Label Name');
-$Parameter[0]['description'] = _('The category label to search on.');
-$Parameter[1]['name'] = _('Match Criteria');
-$Parameter[1]['description'] = _('The SQL search pattern to select items in the database.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
+$Parameter[0]['name'] = __('Label Name');
+$Parameter[0]['description'] = __('The category label to search on.');
+$Parameter[1]['name'] = __('Match Criteria');
+$Parameter[1]['description'] = __('The SQL search pattern to select items in the database.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
 
 $StockCatPropertyList_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2534,12 +2534,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function returns a list of general ledger account codes.');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of general ledger account codes.');
+$Description = __('This function returns a list of general ledger account codes.');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of general ledger account codes.');
 
 $GetGLAccountList_sig = array(
 	array(Value::$xmlrpcArray),
@@ -2565,14 +2565,14 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a general ledger account code and returns details of that account.');
-$Parameter[0]['name'] = _('General Ledger Account Code');
-$Parameter[0]['description'] = _('A general ledger account code as returned by the GetGLAccountList function.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of general ledger account details.');
+$Description = __('This function takes a general ledger account code and returns details of that account.');
+$Parameter[0]['name'] = __('General Ledger Account Code');
+$Parameter[0]['description'] = __('A general ledger account code as returned by the GetGLAccountList function.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of general ledger account details.');
 
 $GetGLAccountDetails_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString),
@@ -2599,16 +2599,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function takes a stock code ID and a tax authority code and returns the relevant tax rate.');
-$Parameter[0]['name'] = _('StockID');
-$Parameter[0]['description'] = _('The stock ID of the item whose tax rate is desired.');
-$Parameter[1]['name'] = _('Tax Authority Code');
-$Parameter[1]['description'] = _('The code identifying the tax authority of interest.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of general ledger account details.');
+$Description = __('This function takes a stock code ID and a tax authority code and returns the relevant tax rate.');
+$Parameter[0]['name'] = __('StockID');
+$Parameter[0]['description'] = __('The stock ID of the item whose tax rate is desired.');
+$Parameter[1]['name'] = __('Tax Authority Code');
+$Parameter[1]['description'] = __('The code identifying the tax authority of interest.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of general ledger account details.');
 
 $GetStockTaxRate_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2638,19 +2638,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert a new supplier into the webERP database.');
-$Parameter[0]['name'] = _('Supplier Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=suppliers">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert a new supplier into the webERP database.');
+$Parameter[0]['name'] = __('Supplier Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=suppliers">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertSupplier_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -2677,20 +2677,20 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to modify a supplier which is already setup in the webERP database.');
-$Parameter[0]['name'] = _('Supplier Details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=suppliers">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
-	. '<p>' . _('The supplierid must already exist in the weberp database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no modification takes place. ');
+$Description = __('This function is used to modify a supplier which is already setup in the webERP database.');
+$Parameter[0]['name'] = __('Supplier Details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=suppliers">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.')
+	. '<p>' . __('The supplierid must already exist in the weberp database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no modification takes place. ');
 
 $ModifySupplier_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -2717,16 +2717,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
-$Parameter[0]['name'] = _('Supplier ID');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid supplier id that is already in the webERP database.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a set of key/value pairs containing the details of this supplier. ')
-	. _('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.') . '<p>'
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve the details of a supplier from the webERP database.');
+$Parameter[0]['name'] = __('Supplier ID');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid supplier id that is already in the webERP database.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a set of key/value pairs containing the details of this supplier. ')
+	. __('The key will be identical with field name from the suppliers table. All fields will be in the set regardless of whether the value was set.') . '<p>'
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetSupplier_sig = array(
 	array(Value::$xmlrpcStruct, Value::$xmlrpcString),
@@ -2753,17 +2753,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a supplier from the webERP database.');
-$Parameter[0]['name'] = _('Field name');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the suppliers table. This is case sensitive');
-$Parameter[1]['name'] = _('Criteria');
-$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns an array of supplier ids. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve the details of a supplier from the webERP database.');
+$Parameter[0]['name'] = __('Field name');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid field in the suppliers table. This is case sensitive');
+$Parameter[1]['name'] = __('Criteria');
+$Parameter[1]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns an array of supplier ids. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $SearchSuppliers_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2793,17 +2793,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of stock batches.');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('Criteria');
-$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('Returns a two dimensional array of stock batch details. ')
-	. _('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
+$Description = __('This function is used to retrieve the details of stock batches.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('Criteria');
+$Parameter[1]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('Returns a two dimensional array of stock batch details. ')
+	. __('The fields returned are stockid, loccode, batchno, quantity, itemcost. ');
 
 $GetBatches_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2833,21 +2833,21 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Adjust the stock balance for the given stock code at the given location by the amount given.');
-$Parameter[0]['name'] = _('Stock ID');
-$Parameter[0]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('Location');
-$Parameter[1]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-$Parameter[2]['name'] = _('Quantity');
-$Parameter[2]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
-$Parameter[3]['name'] = _('Transaction Date');
-$Parameter[3]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[4]['name'] = _('User name');
-$Parameter[4]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[5]['name'] = _('User password');
-$Parameter[5]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns 0. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Adjust the stock balance for the given stock code at the given location by the amount given.');
+$Parameter[0]['name'] = __('Stock ID');
+$Parameter[0]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('Location');
+$Parameter[1]['description'] = __('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+$Parameter[2]['name'] = __('Quantity');
+$Parameter[2]['description'] = __('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
+$Parameter[3]['name'] = __('Transaction Date');
+$Parameter[3]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[4]['name'] = __('User name');
+$Parameter[4]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[5]['name'] = __('User password');
+$Parameter[5]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns 0. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $StockAdjustment_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcDouble, Value::$xmlrpcString),
@@ -2881,25 +2881,25 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Issues stock to a given work order from the given location');
-$Parameter[0]['name'] = _('Work Order Number');
-$Parameter[0]['description'] = _('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('Stock ID');
-$Parameter[1]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[2]['name'] = _('Location');
-$Parameter[2]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-$Parameter[3]['name'] = _('Quantity');
-$Parameter[3]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
-$Parameter[4]['name'] = _('Transaction Date');
-$Parameter[4]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[4]['name'] = _('Batch number');
-$Parameter[4]['description'] = _('This is a string value. It holds the reference to the batch number for the product being issued. If the stockid is not batch controlled this is ignored.');
-$Parameter[5]['name'] = _('User name');
-$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[6]['name'] = _('User password');
-$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns 0. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Issues stock to a given work order from the given location');
+$Parameter[0]['name'] = __('Work Order Number');
+$Parameter[0]['description'] = __('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('Stock ID');
+$Parameter[1]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[2]['name'] = __('Location');
+$Parameter[2]['description'] = __('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+$Parameter[3]['name'] = __('Quantity');
+$Parameter[3]['description'] = __('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
+$Parameter[4]['name'] = __('Transaction Date');
+$Parameter[4]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[4]['name'] = __('Batch number');
+$Parameter[4]['description'] = __('This is a string value. It holds the reference to the batch number for the product being issued. If the stockid is not batch controlled this is ignored.');
+$Parameter[5]['name'] = __('User name');
+$Parameter[5]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[6]['name'] = __('User password');
+$Parameter[6]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns 0. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $WorkOrderIssue_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2937,17 +2937,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to retrieve the details of a work order from the webERP database.');
-$Parameter[0]['name'] = _('Field name');
-$Parameter[0]['description'] = _('This is a string value. It must be a valid field in the workorders table. This is case sensitive');
-$Parameter[1]['name'] = _('Criteria');
-$Parameter[1]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns an array of work order numbers. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('This function is used to retrieve the details of a work order from the webERP database.');
+$Parameter[0]['name'] = __('Field name');
+$Parameter[0]['description'] = __('This is a string value. It must be a valid field in the workorders table. This is case sensitive');
+$Parameter[1]['name'] = __('Criteria');
+$Parameter[1]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns an array of work order numbers. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $SearchWorkOrders_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -2977,19 +2977,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert new purchasing data into the webERP database.');
-$Parameter[0]['name'] = _('Purchasing data');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=purchdata">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert new purchasing data into the webERP database.');
+$Parameter[0]['name'] = __('Purchasing data');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=purchdata">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertPurchData_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -3016,19 +3016,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to modify purchasing data into the webERP database.');
-$Parameter[0]['name'] = _('Purchasing data');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=purchdata">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to modify purchasing data into the webERP database.');
+$Parameter[0]['name'] = __('Purchasing data');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=purchdata">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $ModifyPurchData_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -3055,19 +3055,19 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function is used to insert a new work order into the webERP database. Currently this works only for single line orders.');
-$Parameter[0]['name'] = _('Work order details');
-$Parameter[0]['description'] = _('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
-	. _('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=workorders">' . _('here ') . '</a>'
-	. _('and are case sensitive. ') . _('The values should be of the correct type, and the api will check them before updating the database. ')
-	. _('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User password');
-$Parameter[2]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('This function returns an array of integers. ')
-	. _('If the first element is zero then the function was successful. ')
-	. _('Otherwise an array of error codes is returned and no insertion takes place. ');
+$Description = __('This function is used to insert a new work order into the webERP database. Currently this works only for single line orders.');
+$Parameter[0]['name'] = __('Work order details');
+$Parameter[0]['description'] = __('A set of key/value pairs where the key must be identical to the name of the field to be updated. ')
+	. __('The field names can be found ') . '<a href="../../Z_DescribeTable.php?table=workorders">' . __('here ') . '</a>'
+	. __('and are case sensitive. ') . __('The values should be of the correct type, and the api will check them before updating the database. ')
+	. __('It is not necessary to include all the fields in this parameter, the database default value will be used if the field is not given.');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User password');
+$Parameter[2]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('This function returns an array of integers. ')
+	. __('If the first element is zero then the function was successful. ')
+	. __('Otherwise an array of error codes is returned and no insertion takes place. ');
 
 $InsertWorkOrder_sig = array(
 	array(Value::$xmlrpcArray, Value::$xmlrpcStruct),
@@ -3094,23 +3094,23 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Receives stock from a given work order from the given location');
-$Parameter[0]['name'] = _('Work Order Number');
-$Parameter[0]['description'] = _('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
-$Parameter[1]['name'] = _('Stock ID');
-$Parameter[1]['description'] = _('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
-$Parameter[2]['name'] = _('Location');
-$Parameter[2]['description'] = _('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
-$Parameter[3]['name'] = _('Quantity');
-$Parameter[3]['description'] = _('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
-$Parameter[4]['name'] = _('Transaction Date');
-$Parameter[4]['description'] = _('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
-$Parameter[5]['name'] = _('User name');
-$Parameter[5]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[6]['name'] = _('User password');
-$Parameter[6]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns 0. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Receives stock from a given work order from the given location');
+$Parameter[0]['name'] = __('Work Order Number');
+$Parameter[0]['description'] = __('A string field containing a valid work order number that has already been created. The api will check this before making the enquiry.');
+$Parameter[1]['name'] = __('Stock ID');
+$Parameter[1]['description'] = __('A string field containing a valid stockid that must already be setup in the stockmaster table. The api will check this before making the enquiry.');
+$Parameter[2]['name'] = __('Location');
+$Parameter[2]['description'] = __('A string field containing a valid location code that must already be setup in the locations table. The api will check this before making the enquiry.');
+$Parameter[3]['name'] = __('Quantity');
+$Parameter[3]['description'] = __('This is an integer value. It holds the amount of stock to be adjusted. Should be negative if is stock is to be reduced');
+$Parameter[4]['name'] = __('Transaction Date');
+$Parameter[4]['description'] = __('This is a string value. It holds the string that is searched for in the given field. It will search for all or part of the field.');
+$Parameter[5]['name'] = __('User name');
+$Parameter[5]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[6]['name'] = __('User password');
+$Parameter[6]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns 0. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $WorkOrderReceive_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -3145,13 +3145,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the webERP default date format');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a string contain the default date format. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP default date format');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a string contain the default date format. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetDefaultDateFormat_sig = array(
 	array(Value::$xmlrpcValue),
@@ -3177,13 +3177,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the webERP default shipper');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative array containing the key of confvalue the value of which is the Default_Shipper.')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP default shipper');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns an array of two elements the first should contain an integer of zero for successful and the second an associative array containing the key of confvalue the value of which is the Default_Shipper.')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetDefaultShipper_sig = array(
 	array(Value::$xmlrpcArray),
@@ -3209,13 +3209,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the webERP default location');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a string contain the default location. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP default location');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a string contain the default location. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetDefaultCurrency_sig = array(
 	array(Value::$xmlrpcValue),
@@ -3241,13 +3241,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the webERP default price list');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a string contain the default price list code. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP default price list');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a string contain the default price list code. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetDefaultPriceList_sig = array(
 	array(Value::$xmlrpcValue),
@@ -3273,13 +3273,13 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the webERP default inventory location');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a string contain the default inventory location. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP default inventory location');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a string contain the default inventory location. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetDefaultLocation_sig = array(
 	array(Value::$xmlrpcValue),
@@ -3301,12 +3301,12 @@ function xmlrpc_GetDefaultLocation($request)
 	return $rtn;
 }
 
-$Description = _('Returns the webERP reports directory for the company selected');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns a string containing the path to the company reports directory') . ' ' . _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the webERP reports directory for the company selected');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns a string containing the path to the company reports directory') . ' ' . __('Otherwise an array of error codes is returned. ');
 
 $GetReportsDirectory_sig = array(
 	array(Value::$xmlrpcString),
@@ -3332,16 +3332,16 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function creates a POS data file on the webERP server for download by the POS');
-$Parameter[0]['name'] = _('POS Customer Code - a valid webERP customer that sales from the POS are made against.');
-$Parameter[0]['description'] = _('POS Customer Branch Code - a valid branch code of the webERP customer that the POS sales are made against');
-$Parameter[1]['name'] = _('User name');
-$Parameter[1]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns 0 for success and 1 for error. ');
+$Description = __('This function creates a POS data file on the webERP server for download by the POS');
+$Parameter[0]['name'] = __('POS Customer Code - a valid webERP customer that sales from the POS are made against.');
+$Parameter[0]['description'] = __('POS Customer Branch Code - a valid branch code of the webERP customer that the POS sales are made against');
+$Parameter[1]['name'] = __('User name');
+$Parameter[1]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns 0 for success and 1 for error. ');
 
 $CreatePOSDataFull_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
 $CreatePOSDataFull_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
@@ -3370,12 +3370,12 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('This function deletes a POS data file on the webERP server');
-$Parameter[0]['name'] = _('User name');
-$Parameter[0]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[1]['name'] = _('User password');
-$Parameter[1]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('Returns 0 if the delete POS Data was successful');
+$Description = __('This function deletes a POS data file on the webERP server');
+$Parameter[0]['name'] = __('User name');
+$Parameter[0]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[1]['name'] = __('User password');
+$Parameter[1]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('Returns 0 if the delete POS Data was successful');
 
 $DeletePOSData_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString));
 $DeletePOSData_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
@@ -3399,17 +3399,17 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns the value of the specified stock category property for the specified stock item category');
-$Parameter[0]['name'] = _('Property');
-$Parameter[0]['description'] = _('The name of the specific property to be returned.');
-$Parameter[1]['name'] = _('Stock ID');
-$Parameter[1]['description'] = _('The ID of the stock item for which the value of the above property is required. ');
-$Parameter[2]['name'] = _('User name');
-$Parameter[2]['description'] = _('A valid weberp username. This user should have security access  to this data.');
-$Parameter[3]['name'] = _('User password');
-$Parameter[3]['description'] = _('The weberp password associated with this user name. ');
-$ReturnValue = _('If successful this function returns zero, and the value of the requested property. ')
-	. _('Otherwise an array of error codes is returned. ');
+$Description = __('Returns the value of the specified stock category property for the specified stock item category');
+$Parameter[0]['name'] = __('Property');
+$Parameter[0]['description'] = __('The name of the specific property to be returned.');
+$Parameter[1]['name'] = __('Stock ID');
+$Parameter[1]['description'] = __('The ID of the stock item for which the value of the above property is required. ');
+$Parameter[2]['name'] = __('User name');
+$Parameter[2]['description'] = __('A valid weberp username. This user should have security access  to this data.');
+$Parameter[3]['name'] = __('User password');
+$Parameter[3]['description'] = __('The weberp password associated with this user name. ');
+$ReturnValue = __('If successful this function returns zero, and the value of the requested property. ')
+	. __('Otherwise an array of error codes is returned. ');
 
 $GetStockCatProperty_sig = array(
 	array(Value::$xmlrpcValue, Value::$xmlrpcString, Value::$xmlrpcString),
@@ -3439,10 +3439,10 @@ unset($Description);
 unset($Parameter);
 unset($ReturnValue);
 
-$Description = _('Returns (possibly translated) error text from error codes');
-$Parameter[0]['name'] = _('Error codes');
-$Parameter[0]['description'] = _('An array of error codes to change into text messages. ');
-$ReturnValue = _('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
+$Description = __('Returns (possibly translated) error text from error codes');
+$Parameter[0]['name'] = __('Error codes');
+$Parameter[0]['description'] = __('An array of error codes to change into text messages. ');
+$ReturnValue = __('An array of two element arrays, one per error code. The second array has the error code in element 0 and the error string in element 1. ');
 $GetErrorMessages_sig = array(array(Value::$xmlrpcArray, Value::$xmlrpcArray));
 $GetErrorMessages_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
@@ -3841,5 +3841,3 @@ return array(
 		"signature" => $GetErrorMessages_sig,
 		"docstring" => $GetErrorMessages_doc),
 );
-
-?>

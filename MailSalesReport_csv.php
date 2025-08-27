@@ -1,41 +1,41 @@
 <?php
 
-/*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
+/* Now this is not secure so a malicious user could send multiple emails of the report to the intended recipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
 
 /usr/bin/wget http://localhost/web-erp/MailSalesReport.php
 
 The configuration of this script requires the id of the sales analysis report to send
-and an array of the receipients and the company database to use*/
-
-/*The Sales report to send */
-$ReportID = 4;
-
+and an array of the recipients and the company database to use*/
 
 /* ----------------------------------------------------------------------------------------------*/
 
 $AllowAnyone = true;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
+/*The Sales report to send */
+$ReportID = 4;
+
 /*The company database to use */
 $DatabaseName = $_SESSION['DatabaseName'];
-/*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
 
+/*The people to receive the emailed report, This mail list now can be maintained in Mailing List Maintenance of Set Up */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
-	$Title = _('Inventory Valuation') . ' - ' . _('Problem Report');
+	$Title = __('Inventory Valuation') . ' - ' . __('Problem Report');
 	include('includes/header.php');
-	prnMsg(_('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
+	prnMsg(__('There are no members of the Sales Analysis Report Recipients email group'), 'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 include('includes/ConstructSQLForUserDefinedSalesReport.php');
 include('includes/CSVSalesAnalysis.php');
 
 $From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
-$Subject = _('Sales Analysis') . ' - ' . _('CSV Format');
-$Body = _('Please find herewith the comma separated values sales report');
+$Subject = __('Sales Analysis') . ' - ' . __('CSV Format');
+$Body = __('Please find herewith the comma separated values sales report');
 $Attachment = $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
 
 $Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, $Attachment, true);
-?>

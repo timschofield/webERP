@@ -1,26 +1,20 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-
-$Title = _('My Maintenance Jobs');
-
-$Title = _('Fixed Assets Maintenance Schedule');
-
+//$Title = __('My Maintenance Jobs');
+$Title = __('Fixed Assets Maintenance Schedule');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
-
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 
 if (isset($_GET['Complete'])) {
-	$Result = DB_query("UPDATE fixedassettasks 
-						SET lastcompleted = CURRENT_DATE 
+	$Result = DB_query("UPDATE fixedassettasks
+						SET lastcompleted = CURRENT_DATE
 						WHERE taskid='" . $_GET['TaskID'] . "'");
 }
-
 
 $SQL="SELECT taskid,
 				fixedassettasks.assetid,
@@ -41,19 +35,19 @@ $SQL="SELECT taskid,
 		OR manager = '" . $_SESSION['UserID'] . "'
 		ORDER BY ADDDATE(lastcompleted,frequencydays) DESC";
 
-$ErrMsg = _('The maintenance schedule cannot be retrieved because');
-$Result=DB_query($SQL,$ErrMsg);
+$ErrMsg = __('The maintenance schedule cannot be retrieved because');
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">
      <tr>
-		<th>' . _('Task ID') . '</th>
-		<th>' . _('Asset') . '</th>
-		<th>' . _('Description') . '</th>
-		<th>' . _('Last Completed') . '</th>
-		<th>' . _('Due By') . '</th>
-		<th>' . _('Person') . '</th>
-		<th>' . _('Manager') . '</th>
-		<th>' . _('Now Complete') . '</th>
+		<th>' . __('Task ID') . '</th>
+		<th>' . __('Asset') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('Last Completed') . '</th>
+		<th>' . __('Due By') . '</th>
+		<th>' . __('Person') . '</th>
+		<th>' . __('Manager') . '</th>
+		<th>' . __('Now Complete') . '</th>
     </tr>';
 
 while ($MyRow=DB_fetch_array($Result)) {
@@ -63,7 +57,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		$ManagerRow = DB_fetch_array($ManagerResult);
 		$ManagerName = $ManagerRow['realname'];
 	} else {
-		$ManagerName = _('No Manager Set');
+		$ManagerName = __('No Manager Set');
 	}
 
 	echo '<tr>
@@ -74,11 +68,10 @@ while ($MyRow=DB_fetch_array($Result)) {
 			<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>
 			<td>' . $MyRow['realname'] . '</td>
 			<td>' . $ManagerName . '</td>
-			<td><a href="'.$RootPath.'/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $MyRow['taskid'] .'" onclick="return confirm(\'' . _('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . _('Mark Completed') . '</a></td>
+			<td><a href="'.$RootPath.'/MaintenanceUserSchedule.php?Complete=Yes&amp;TaskID=' . $MyRow['taskid'] .'" onclick="return confirm(\'' . __('Are you sure you wish to mark this maintenance task as completed?') . '\');">' . __('Mark Completed') . '</a></td>
 		</tr>';
 }
 
 echo '</table><br /><br />';
 
 include('includes/footer.php');
-?>

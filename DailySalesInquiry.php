@@ -1,9 +1,10 @@
 <?php
 
-include('includes/session.php');
-include('includes/DateFunctions.php');
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
-$Title = _('Daily Sales Inquiry');
+
+$Title = __('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = '';
 
@@ -47,8 +48,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$SQL .= " GROUP BY stockmoves.trandate ORDER BY stockmoves.trandate";
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 	$HTML = '';
 
@@ -59,7 +60,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
-				<meta name="Creator" content="webERP http://www.weberp.org">
+				<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>';
 
@@ -69,24 +70,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-				' . _('Daily Sales Inquiry') . '<br />
-				' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-				' . _('For The Month Of') . ' ' . MonthAndYearFromSQLDate($EndDateSQL) . '<br />
+				' . __('Daily Sales Inquiry') . '<br />
+				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('For The Month Of') . ' ' . MonthAndYearFromSQLDate($EndDateSQL) . '<br />
 			</div>';
 
 
 	$HTML .= '<table class="selection">
 		<tr>
-			<th colspan="7">' . _('Sales For The Month Of') . ' ' . MonthAndYearFromSQLDate($EndDateSQL) . '</th>
+			<th colspan="7">' . __('Sales For The Month Of') . ' ' . MonthAndYearFromSQLDate($EndDateSQL) . '</th>
 		</tr>
 		<tr>
-			<th style="width: 14%">' . _('Sunday') . '</th>
-			<th style="width: 14%">' . _('Monday') . '</th>
-			<th style="width: 14%">' . _('Tuesday') . '</th>
-			<th style="width: 14%">' . _('Wednesday') . '</th>
-			<th style="width: 14%">' . _('Thursday') . '</th>
-			<th style="width: 14%">' . _('Friday') . '</th>
-			<th style="width: 14%">' . _('Saturday') . '</th>
+			<th style="width: 14%">' . __('Sunday') . '</th>
+			<th style="width: 14%">' . __('Monday') . '</th>
+			<th style="width: 14%">' . __('Tuesday') . '</th>
+			<th style="width: 14%">' . __('Wednesday') . '</th>
+			<th style="width: 14%">' . __('Thursday') . '</th>
+			<th style="width: 14%">' . __('Friday') . '</th>
+			<th style="width: 14%">' . __('Saturday') . '</th>
 		</tr>';
 
 	$CumulativeTotalSales = 0;
@@ -119,7 +120,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<th>' . $DayNumber . '</th>';
 		$DayNumber++;
 	}
-	$HTML .= '</tr><tr>';
+	$HTML .= '</tr><tr class="striped_row">';
     $HTML .= str_repeat('<td></td>', $ColumnCounter);
 
 	$LastDayOfMonth = DayOfMonthFromSQLDate($EndDateSQL);
@@ -131,7 +132,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$HTML .= '<td class="number" style="outline: 1px solid gray;">' . locale_number_format(0,0) . '<br />' .  locale_number_format(0,1) . '%</td>';
 		}
 		if ($ColumnCounter==7){
-			$HTML .= '</tr><tr>';
+			$HTML .= '</tr><tr class="striped_row">';
 						for ($j=1;$j<=7;$j++){
 								   $HTML .= '<th>' . $DayNumber. '</th>';
 							$DayNumber++;
@@ -139,7 +140,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 								   break;
 							}
 						}
-						$HTML .= '</tr><tr>';
+						$HTML .= '</tr><tr class="striped_row">';
 			$ColumnCounter=0;
 		}
 	}
@@ -155,7 +156,7 @@ if ($CumulativeTotalSales !=0){
 	$AverageDailySales = 0;
 }
 
-$HTML .= '<th colspan="7">' . _('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . _('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . _('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
+$HTML .= '<th colspan="7">' . __('Total Sales for month') . ': ' . locale_number_format($CumulativeTotalSales,0) . ' ' . __('GP%') . ': ' . locale_number_format($AverageGPPercent,1) . '% ' . __('Avg Daily Sales') . ': ' . locale_number_format($AverageDailySales,0) . '</th></tr>';
 
 $HTML .= '</table>';
 
@@ -171,7 +172,7 @@ $HTML .= '</table>';
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -193,9 +194,9 @@ $HTML .= '</table>';
 		include('includes/header.php');
 
 		echo '<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '
+				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
 			</p>';
-		$Title = _('Daily Sales Report');
+		$Title = __('Daily Sales Report');
 		echo $HTML;
 	}
 
@@ -203,7 +204,7 @@ $HTML .= '</table>';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Daily Sales') . '" alt="" />' . ' ' . __('Daily Sales') . '
 		</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
@@ -212,9 +213,9 @@ $HTML .= '</table>';
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	echo '<fieldset>
-			<legend>', _('Select a Month'), '</legend>
+			<legend>', __('Select a Month'), '</legend>
 			<field>
-				<label for="MonthToShow">' . _('Month to Show') . ':</label>
+				<label for="MonthToShow">' . __('Month to Show') . ':</label>
 				<select tabindex="1" name="MonthToShow">';
 
 	$PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods");
@@ -231,7 +232,7 @@ $HTML .= '</table>';
 		<field>';
 
 	echo '<field>
-			<label for="Salesperson">' . _('Salesperson') . ':</label>';
+			<label for="Salesperson">' . __('Salesperson') . ':</label>';
 
 	if($_SESSION['SalesmanLogin'] != '') {
 		echo '<td>';
@@ -243,9 +244,9 @@ $HTML .= '</table>';
 		$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman");
 		if (!isset($_POST['Salesperson'])){
 			$_POST['Salesperson'] = 'All';
-			echo '<option selected="selected" value="All">' . _('All') . '</option>';
+			echo '<option selected="selected" value="All">' . __('All') . '</option>';
 		} else {
-			echo '<option value="All">' . _('All') . '</option>';
+			echo '<option value="All">' . __('All') . '</option>';
 		}
 		while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 
@@ -261,10 +262,9 @@ $HTML .= '</table>';
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
-			<input type="submit" name="View" title="View" value="' . _('View') . '" />
+			<input type="submit" name="PrintPDF" title="PDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View" value="' . __('View') . '" />
 		</div>
 	</form>';
 }
 include('includes/footer.php');
-?>

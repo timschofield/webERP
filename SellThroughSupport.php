@@ -1,15 +1,14 @@
 <?php
 
-include ('includes/session.php');
-if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
+require(__DIR__ . '/includes/session.php');
 
-$Title = _('Sell Through Support');
-
+$Title = __('Sell Through Support');
 $ViewTopic = 'Sales';
 $BookMark = '';
+include('includes/header.php');
 
-include ('includes/header.php');
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));
@@ -29,7 +28,7 @@ if (isset($_GET['Edit'])) {
 /*Deleting a supplier sell through support record */
 if (isset($_GET['Delete'])){
 	$Result = DB_query("DELETE FROM sellthroughsupport WHERE id='" . intval($_GET['SellSupportID']) . "'");
-	prnMsg(_('Deleted the supplier sell through support record'),'success');
+	prnMsg(__('Deleted the supplier sell through support record'),'success');
 }
 
 
@@ -38,25 +37,25 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 	if (is_numeric(filter_number_format($_POST['RebateAmount']))==false) {
 		$InputError = 1;
-		prnMsg(_('The rebate amount entered was not numeric and a number is required.'), 'error');
+		prnMsg(__('The rebate amount entered was not numeric and a number is required.'), 'error');
 		unset($_POST['RebateAmount']);
 	} elseif (filter_number_format($_POST['RebateAmount']) == 0 AND filter_number_format($_POST['RebatePercent'])==0) {
-		prnMsg(_('Both the rebate amount and the rebate percent is zero. One or the other must be a positive number?'), 'error');
+		prnMsg(__('Both the rebate amount and the rebate percent is zero. One or the other must be a positive number?'), 'error');
 		$InputError = 1;
 
 /*
 	} elseif (mb_strlen($_POST['Narrative'])==0 OR $_POST['Narrative']==''){
-		prnMsg(_('The narrative cannot be empty.'),'error');
+		prnMsg(__('The narrative cannot be empty.'),'error');
 		$InputError = 1;
 */
 	} elseif (filter_number_format($_POST['RebatePercent'])>100 OR  filter_number_format($_POST['RebatePercent']) < 0) {
-		prnMsg(_('The rebate percent must be greater than zero but less than 100 percent. No changes will be made to this record'),'error');
+		prnMsg(__('The rebate percent must be greater than zero but less than 100 percent. No changes will be made to this record'),'error');
 		$InputError = 1;
 	} elseif (filter_number_format($_POST['RebateAmount']) !=0 AND filter_number_format($_POST['RebatePercent'])!=0) {
-		prnMsg(_('Both the rebate percent and rebate amount are non-zero. Only one or the other can be used.'),'error');
+		prnMsg(__('Both the rebate percent and rebate amount are non-zero. Only one or the other can be used.'),'error');
 		$InputError = 1;
 	} elseif (Date1GreaterThanDate2($_POST['EffectiveFrom'], $_POST['EffectiveTo'])) {
-		prnMsg(_('The effective to date is prior to the effective from date.'),'error');
+		prnMsg(__('The effective to date is prior to the effective from date.'),'error');
 		$InputError = 1;
 	}
 
@@ -80,10 +79,9 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 							'" . FormatDateForSQL($_POST['EffectiveTo']) . "')";
 
-		$ErrMsg = _('The sell through support record could not be added to the database because');
-		$DbgMsg = _('The SQL that failed was');
-		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
-		prnMsg(_('This sell through support has been added to the database'), 'success');
+		$ErrMsg = __('The sell through support record could not be added to the database because');
+		$AddResult = DB_query($SQL, $ErrMsg);
+		prnMsg(__('This sell through support has been added to the database'), 'success');
 	}
 	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
 		$SQL = "UPDATE sellthroughsupport SET debtorno='" . $_POST['DebtorNo'] . "',
@@ -96,10 +94,9 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 											effectiveto='" . FormatDateForSQL($_POST['EffectiveTo']) . "'
 							WHERE id='" . $_POST['SellSupportID'] . "'";
 
-		$ErrMsg = _('The sell through support record could not be updated because');
-		$DbgMsg = _('The SQL that failed was');
-		$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
-		prnMsg(_('Sell Through Support record has been updated'), 'success');
+		$ErrMsg = __('The sell through support record could not be updated because');
+		$UpdResult = DB_query($SQL, $ErrMsg);
+		prnMsg(__('Sell Through Support record has been updated'), 'success');
 		$Edit = false;
 
 	}
@@ -120,7 +117,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 if (isset($_POST['SearchSupplier'])) {
 	if (isset($_POST['Keywords']) AND isset($_POST['SupplierCode'])) {
-		prnMsg( _('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
+		prnMsg( __('Supplier Name keywords have been used in preference to the Supplier Code extract entered') . '.', 'info' );
 		echo '<br />';
 	}
 	if ($_POST['Keywords'] == '' AND $_POST['SupplierCode'] == '') {
@@ -150,9 +147,8 @@ if (isset($_POST['SearchSupplier'])) {
 				WHERE suppliers.supplierid " . LIKE . " '%" . $_POST['SupplierCode'] . "%'";
 
 	} //one of keywords or SupplierCode was more than a zero length string
-	$ErrMsg = _('The suppliers matching the criteria entered could not be retrieved because');
-	$DbgMsg = _('The SQL to retrieve supplier details that failed was');
-	$SuppliersResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('The suppliers matching the criteria entered could not be retrieved because');
+	$SuppliersResult = DB_query($SQL, $ErrMsg);
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p> ';
 
@@ -161,12 +157,12 @@ if (isset($_POST['SearchSupplier'])) {
 			<table cellpadding="2" colspan="7" class="selection">';
 
 	$TableHeader = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('Currency') . '</th>
-						<th>' . _('Address 1') . '</th>
-						<th>' . _('Address 2') . '</th>
-						<th>' . _('Address 3') . '</th>
+						<th>' . __('Code') . '</th>
+						<th>' . __('Supplier Name') . '</th>
+						<th>' . __('Currency') . '</th>
+						<th>' . __('Address 1') . '</th>
+						<th>' . __('Address 2') . '</th>
+						<th>' . __('Address 3') . '</th>
 					</tr>';
 	echo $TableHeader;
 
@@ -191,22 +187,22 @@ if (isset($_POST['SearchSupplier'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend class="search">', _('Search Criteria'), '</legend>
+			<legend class="search">', __('Search Criteria'), '</legend>
 			<field>
-				<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</label>
+				<label for="Keywords">' . __('Text in the Supplier') . ' <b>' . __('NAME') . '</label>
 				<input type="text" name="Keywords" size="20" maxlength="25" />
 			</field>
 			<field>
-				<label for="SupplierCode">' .'<b>' . _('OR') . ' </b>' .  _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</label>
+				<label for="SupplierCode">' .'<b>' . __('OR') . ' </b>' .  __('Text in Supplier') . ' <b>' . __('CODE') . '</b>:</label>
 				<input type="text" name="SupplierCode" size="20" maxlength="50" />
 			</field>
 			</fieldset>
 			<div class="centre">
-				<input type="submit" name="SearchSupplier" value="' . _('Find Suppliers Now') . '" />
+				<input type="submit" name="SearchSupplier" value="' . __('Find Suppliers Now') . '" />
 			</div>
 		</form>';
-	include ('includes/footer.php');
-	exit;
+	include('includes/footer.php');
+	exit();
 }
 
 if (isset($SupplierID)) { /* Then display all the sell through support for the supplier */
@@ -220,7 +216,7 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 							WHERE supplierid='" . $SupplierID . "'");
 	$SuppRow = DB_fetch_array($SuppResult);
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Supplier') . ' - ' . $SupplierID . ' - ' . $SuppRow['suppname'] . '</p><br />';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . ' ' . __('For Supplier') . ' - ' . $SupplierID . ' - ' . $SuppRow['suppname'] . '</p><br />';
 }
 
 if (isset($SupplierID) AND $Edit == false) {
@@ -245,20 +241,20 @@ if (isset($SupplierID) AND $Edit == false) {
 			ON sellthroughsupport.debtorno=debtorsmaster.debtorno
 			WHERE supplierno = '" . $SupplierID . "'
 			ORDER BY sellthroughsupport.effectivefrom DESC";
-	$ErrMsg = _('The supplier sell through support deals could not be retrieved because');
+	$ErrMsg = __('The supplier sell through support deals could not be retrieved because');
 	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)==0) {
-		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
+		prnMsg(__('There are no sell through support deals entered for this supplier'), 'info');
 	} else {
 		echo '<table cellpadding="2" class="selection">
 				<tr>
-					<th>' . _('Item or Category') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Rebate') . '<br />' .  _('Value') . ' ' . $SuppRow['currcode'] . '</th>
-					<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
-					<th>' . _('Narrative') . '</th>
-					<th>' . _('Effective From') . '</th>
-					<th>' . _('Effective To') . '</th>
+					<th>' . __('Item or Category') . '</th>
+					<th>' . __('Customer') . '</th>
+					<th>' . __('Rebate') . '<br />' .  __('Value') . ' ' . $SuppRow['currcode'] . '</th>
+					<th>' . __('Rebate') . '<br />' . __('Percent') . '</th>
+					<th>' . __('Narrative') . '</th>
+					<th>' . __('Effective From') . '</th>
+					<th>' . __('Effective To') . '</th>
 					<th colspan="2"></th>
 				</tr>';
 
@@ -266,10 +262,10 @@ if (isset($SupplierID) AND $Edit == false) {
 			if ($MyRow['categoryid']=='') {
 				$ItemDescription = $MyRow['stockid'] . ' - ' . $MyRow['description'];
 			} else {
-				$ItemDescription = _('Any') . ' ' . $MyRow['categorydescription'];
+				$ItemDescription = __('Any') . ' ' . $MyRow['categorydescription'];
 			}
 			if ($MyRow['debtorno']==''){
-				$Customer = _('All Customers');
+				$Customer = __('All Customers');
 			} else {
 				$Customer = $MyRow['debtorno'] . ' - ' . $MyRow['name'];
 			}
@@ -282,8 +278,8 @@ if (isset($SupplierID) AND $Edit == false) {
 					<td>', $MyRow['narrative'], '</td>
 					<td>', ConvertSQLDate($MyRow['effectivefrom']), '</td>
 					<td>', ConvertSQLDate($MyRow['effectiveto']), '</td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;SupplierID=', $SupplierID, '&amp;Edit=1">' . _('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;Delete=1&amp;SupplierID=', $SupplierID, '" onclick=\'return confirm("' . _('Are you sure you wish to delete this sell through support record?') . '");\'>' . _('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;SupplierID=', $SupplierID, '&amp;Edit=1">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;Delete=1&amp;SupplierID=', $SupplierID, '" onclick=\'return confirm("' . __('Are you sure you wish to delete this sell through support record?') . '");\'>' . __('Delete') . '</a></td>
 				</tr>';
 		} //end of while loop
 		echo '</table>';
@@ -308,7 +304,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 				ON sellthroughsupport.supplierno=suppliers.supplierid
 				WHERE id='" . floatval($_GET['SellSupportID']) . "'";
 
-		$ErrMsg = _('The supplier sell through support could not be retrieved because');
+		$ErrMsg = __('The supplier sell through support could not be retrieved because');
 		$EditResult = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_array($EditResult);
 	} else {
@@ -336,9 +332,9 @@ if (isset($SupplierID)) { //not selecting a supplier
 		$_POST['EffectiveTo'] = ConvertSQLDate($MyRow['effectiveto']);
 
 		echo '<input type="hidden" name="SellSupportID" value="' . $MyRow['id'] . '" />';
-		echo '<legend>', _('Edit Sell Through Support Deal'), '</legend>';
+		echo '<legend>', __('Edit Sell Through Support Deal'), '</legend>';
 	} else {
-		echo '<legend>', _('Create Sell Through Support Deal'), '</legend>';
+		echo '<legend>', __('Create Sell Through Support Deal'), '</legend>';
 	}
 
 	if (!isset($_POST['RebateAmount'])) {
@@ -363,12 +359,12 @@ if (isset($SupplierID)) { //not selecting a supplier
 
 
 	echo '<field>
-			<label for="DebtorNo">'. _('Support for Customer') . ':</label>
+			<label for="DebtorNo">'. __('Support for Customer') . ':</label>
 			<select name="DebtorNo">';
 	if ($_POST['DebtorNo']=='') {
-		echo '<option selected="selected" value="">' . _('All Customers') . '</option>';
+		echo '<option selected="selected" value="">' . __('All Customers') . '</option>';
 	} else {
-		echo '<option value="">' . _('All Customers') . '</option>';
+		echo '<option value="">' . __('All Customers') . '</option>';
 	}
 
 	$CustomerResult = DB_query("SELECT debtorno, name FROM debtorsmaster");
@@ -384,12 +380,12 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</field>';
 
 	echo '<field>
-			<label for="CategoryID">' . _('Support Whole Category') . ':</label>
+			<label for="CategoryID">' . __('Support Whole Category') . ':</label>
 			<select name="CategoryID">';
 	if ($_POST['CategoryID']=='') {
-		echo '<option selected="selected" value="">' . _('Specific Item Only') . '</option>';
+		echo '<option selected="selected" value="">' . __('Specific Item Only') . '</option>';
 	} else {
-		echo '<option value="">' . _('Specific Item Only') . '</option>';
+		echo '<option value="">' . __('Specific Item Only') . '</option>';
 	}
 
 	$CategoriesResult = DB_query("SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype='F'");
@@ -405,12 +401,12 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</field>';
 
 	echo '<field>
-			<label for="StockID">' . _('Support Specific Item') . ':</label>
+			<label for="StockID">' . __('Support Specific Item') . ':</label>
 			<select name="StockID">';
 	if ($_POST['StockID']=='') {
-		echo '<option selected="selected" value="">' . _('Support An Entire Category') . '</option>';
+		echo '<option selected="selected" value="">' . __('Support An Entire Category') . '</option>';
 	} else {
-		echo '<option value="">' . _('Support An Entire Category') . '</option>';
+		echo '<option value="">' . __('Support An Entire Category') . '</option>';
 	}
 
 
@@ -420,9 +416,8 @@ if (isset($SupplierID)) { //not selecting a supplier
 			ON purchdata.stockid=stockmaster.stockid
 			WHERE supplierno ='" . $SupplierID . "'
 			AND preferred=1";
-	$ErrMsg = _('Could not retrieve the items that the supplier provides');
-	$DbgMsg = _('The SQL that was used to get the supplier items and failed was');
-	$ItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$ErrMsg = __('Could not retrieve the items that the supplier provides');
+	$ItemsResult = DB_query($SQL, $ErrMsg);
 
 	while ($ItemsRow = DB_fetch_array($ItemsResult)){
 		if ($ItemsRow['stockid'] == $_POST['StockID']){
@@ -435,39 +430,38 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</field>';
 
 	echo '<field>
-			<label for="Narrative">' . _('Narrative') . ':</label>
+			<label for="Narrative">' . __('Narrative') . ':</label>
 			<input type="text" name="Narrative" maxlength="20" size="21" value="' . $_POST['Narrative'] . '" />
 		</field>
 		 <field>
-			<label for="RebateAmount">' . _('Rebate value per unit') . ' (' . $SuppRow['currcode'] . '):</label>
+			<label for="RebateAmount">' . __('Rebate value per unit') . ' (' . $SuppRow['currcode'] . '):</label>
 			<input type="text" class="number" name="RebateAmount" maxlength="12" size="12" value="' . $_POST['RebateAmount'] . '" />
 		</field>
 		<field>
-			<label for="RebatePercent">' . _('Rebate Percent') . ':</label>
+			<label for="RebatePercent">' . __('Rebate Percent') . ':</label>
 			<input type="text" class="number" name="RebatePercent" maxlength="5" size="6" value="' . $_POST['RebatePercent'] . '" />%
 		</field>
 		<field>
-			<label for="EffectiveFrom">' . _('Support Start Date') . ':</label>
+			<label for="EffectiveFrom">' . __('Support Start Date') . ':</label>
 			<input type="date" name="EffectiveFrom" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['EffectiveFrom']) . '" />
 		</field>
 		<field>
-			<label for="EffectiveTo">' . _('Support End Date') . ':</label>
+			<label for="EffectiveTo">' . __('Support End Date') . ':</label>
 			<input type="date" name="EffectiveTo" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['EffectiveTo']) . '" />
 		</field>
 		</fieldset>
 		<div class="centre">';
 	if ($Edit == true) {
-		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
+		echo '<input type="submit" name="UpdateRecord" value="' . __('Update') . '" />';
 		echo '<input type="hidden" name="Edit" value="1" />';
 
 		/*end if there is a supplier sell through support record being updated */
 	} else {
-		echo '<input type="submit" name="AddRecord" value="' . _('Add') . '" />';
+		echo '<input type="submit" name="AddRecord" value="' . __('Add') . '" />';
 	}
 
 	echo '</div>
 		</form>';
 }
 
-include ('includes/footer.php');
-?>
+include('includes/footer.php');

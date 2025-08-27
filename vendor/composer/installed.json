@@ -247,6 +247,134 @@
             "install-path": "../dompdf/php-svg-lib"
         },
         {
+            "name": "gggeek/barcodepack",
+            "version": "1.0.2",
+            "version_normalized": "1.0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/barcodepack.git",
+                "reference": "65c36d2ee39064b1d979a2f693ea06d7322cef8c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/barcodepack/zipball/65c36d2ee39064b1d979a2f693ea06d7322cef8c",
+                "reference": "65c36d2ee39064b1d979a2f693ea06d7322cef8c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "time": "2025-08-05T16:10:39+00:00",
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "psr-4": {
+                    "BarcodePack\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "CC-BY-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Tomáš Horáček"
+                },
+                {
+                    "name": "Gaetano Giunta"
+                }
+            ],
+            "description": "BarcodePack is PHP library which allows you to generate the most common types of barcodes",
+            "keywords": [
+                "barcode"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/barcodepack/issues",
+                "source": "https://github.com/gggeek/barcodepack/tree/1.0.2"
+            },
+            "install-path": "../gggeek/barcodepack"
+        },
+        {
+            "name": "gggeek/polyfill-gettext",
+            "version": "dev-main",
+            "version_normalized": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/polyfill-gettext.git",
+                "reference": "b4150ffea9f9a1122daf1d0301cd734a42af7173"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/polyfill-gettext/zipball/b4150ffea9f9a1122daf1d0301cd734a42af7173",
+                "reference": "b4150ffea9f9a1122daf1d0301cd734a42af7173",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "provide": {
+                "ext-gettext": "*"
+            },
+            "require-dev": {
+                "ext-gettext": "*",
+                "ext-mbstring": "*",
+                "phpunit/phpunit": "^4.8.28 || ^5.6.3 || ^8.5.42",
+                "yoast/phpunit-polyfills": "*"
+            },
+            "suggest": {
+                "ext-mbstring": "Necessary when using specific character encodings (charsets) for translated messages"
+            },
+            "time": "2025-08-21T15:38:06+00:00",
+            "default-branch": true,
+            "type": "library",
+            "installation-source": "dist",
+            "autoload": {
+                "files": [
+                    "src/polyfill.php"
+                ],
+                "psr-4": {
+                    "PGettext\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Danilo Segan",
+                    "email": "danilo@kvota.net"
+                },
+                {
+                    "name": "Nico Kaiser",
+                    "email": "nico@siriux.net"
+                },
+                {
+                    "name": "Steven Armstrong",
+                    "email": "sa@c-area.ch"
+                },
+                {
+                    "name": "Gaetano Giunta"
+                }
+            ],
+            "description": "A replacement for the php gettext extension. Based on php-gettext by Danilo Segan.",
+            "keywords": [
+                "gettext",
+                "l10n",
+                "translation"
+            ],
+            "support": {
+                "issues": "https://github.com/gggeek/polyfill-gettext/issues",
+                "source": "https://github.com/gggeek/polyfill-gettext/tree/main"
+            },
+            "install-path": "../gggeek/polyfill-gettext"
+        },
+        {
             "name": "maennchen/zipstream-php",
             "version": "3.1.1",
             "version_normalized": "3.1.1.0",
@@ -508,6 +636,39 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.9.0"
             },
             "install-path": "../masterminds/html5"
+        },
+        {
+            "name": "phplot/phplot",
+            "version": "dev-release-candidate-for-8.0.1",
+            "version_normalized": "dev-release-candidate-for-8.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/gggeek/phplot",
+                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+            },
+            "require": {
+                "ext-gd": "*",
+                "php": ">=7.1"
+            },
+            "time": "2025-08-06T10:02:49+00:00",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "psr-4": {
+                    "Phplot\\Phplot\\": "src/"
+                }
+            },
+            "license": [
+                "LGPL-2.1-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "AJRepo",
+                    "email": "AJRepo@users.noreply.github.com"
+                }
+            ],
+            "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+            "install-path": "../phplot/phplot"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -1059,23 +1220,24 @@
         },
         {
             "name": "tecnickcom/tcpdf",
-            "version": "6.7.5",
-            "version_normalized": "6.7.5.0",
+            "version": "6.8.0",
+            "version_normalized": "6.8.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tecnickcom/TCPDF.git",
-                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36"
+                "reference": "14ffa0e308f5634aa2489568b4b90b24073b6731"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
-                "reference": "951eabf0338ec2522bd0d5d9c79b08a3a3d36b36",
+                "url": "https://api.github.com/repos/tecnickcom/TCPDF/zipball/14ffa0e308f5634aa2489568b4b90b24073b6731",
+                "reference": "14ffa0e308f5634aa2489568b4b90b24073b6731",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.5.0"
+                "ext-curl": "*",
+                "php": ">=7.1.0"
             },
-            "time": "2024-04-20T17:25:10+00:00",
+            "time": "2024-12-23T13:34:57+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -1122,7 +1284,7 @@
             ],
             "support": {
                 "issues": "https://github.com/tecnickcom/TCPDF/issues",
-                "source": "https://github.com/tecnickcom/TCPDF/tree/6.7.5"
+                "source": "https://github.com/tecnickcom/TCPDF/tree/6.8.0"
             },
             "funding": [
                 {

@@ -1,38 +1,67 @@
 /* Miscellaneous JavaScript functions. */
 
+var LangGroup = null;
+
 function defaultControl(c) {
-c.select();
-c.focus();
+	c.select();
+	c.focus();
 }
 
 function ReloadForm(fB) {
-fB.click();
+	fB.click();
 }
 
 function rTN(event) {
-	if(window.event) k = window.event.keyCode;
+	if (window.event) k = window.event.keyCode;
 	else if (event) k = event.which;
 	else return true;
 	kC = String.fromCharCode(k);
-	if(k==13) return false;
-	if((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if((("0123456789.,- ").indexOf(kC)>-1)) return true;
+	if (k==13) return false;
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
+	else if ((("0123456789.,- ").indexOf(kC)>-1)) return true;
 	else return false;
 }
 
 function rTI(event) {
-	if(window.event) k = window.event.keyCode;
-	else if(event) k = event.which;
-	else return true;
+	if (window.event)
+		k = window.event.keyCode;
+	else if (event)
+		k = event.which;
+	else
+		return true;
 	kC = String.fromCharCode(k);
-	if((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27)) return true;
-	else if((("0123456789-").indexOf(kC)>-1)) return true;
-	else return false;
+	if ((k==null) || (k==0) || (k==8) || (k==9) || (k==13) || (k==27))
+		return true;
+	else if ((("0123456789-").indexOf(kC)>-1))
+		return true;
+	else
+		return false;
 }
 
 function rLocaleNumber() {
-	var Lang = document.getElementById('Lang').value;
-	switch(Lang) {
+
+	if (LangGroup == null) {
+		// Check users' locale format via their language
+		const Collect = {
+			"US": ['en-US', 'en-GB', 'ja-JP', 'hi-IN', 'mr-IN', 'sw-KE', 'tr-TR', 'vi-VN', 'zh-CN', 'zh-HK', 'zh-TW'],
+			"IN": ['en-IN', 'hi-IN', 'mr-IN'],
+			/// @todo EE and FR have identical data, even though they are treated differently below...
+			"EE": ['ar-EG', 'cz-CZ', 'fr-CA', 'fr-FR', 'hr-HR', 'pl-PL', 'ru-RU', 'sq-AL', 'sv-SE'],
+			"FR": ['ar-EG', 'cz-CZ', 'fr-CA', 'fr-FR', 'hr-HR', 'pl-PL', 'ru-RU', 'sq-AL', 'sv-SE'],
+			"GM": ['de-DE', 'el-GR', 'es-ES', 'fa-IR', 'id-ID', 'it-IT', 'ro-RO', 'lv-LV', 'nl-NL', 'pt-BR', 'pt-PT']
+		};
+		let Lang = document.getElementsByTagName('html').item(0).lang;
+		console.log('Lang is: ' + Lang);
+		for (const [Key, Value] of Object.entries(Collect)) {
+			if (Value.includes(Lang)) {
+				LangGroup = Key;
+				console.log('LangG is: ' + LangGroup);
+				break;
+			}
+		}
+	}
+
+	switch(LangGroup) {
 		case 'US':
 			var patt = /(?:^(-)?([1-9]{1}\d{0,2}(?:,?\d{3})*(?:\.\d{1,})?)$)|(?:^(-)?(0?\.\d{1,})$)|(?:^0$)/;
 			break;
@@ -49,12 +78,14 @@ function rLocaleNumber() {
 			var patt = /(?:^(-)?[1-9]{1}\d{0,2}(?:\.?\d{3})*(?:,\d{1,})?$)|(?:^(-)?(0?,\d{1,})$)|(?:^0$)/;
 			break;
 		default:
-			alert('something is wrong with your language setting');
+			/// @todo move this to a simple console log?
+			alert('Something is wrong with your language setting');
 	}
-	if(patt.test(this.value)) {
+
+	/// @todo avoid testing if patt is not set
+	if (patt.test(this.value)) {
 		this.setCustomValidity('');
 		return true;
-
 	} else {
 		this.setCustomValidity('The number format is wrong');
 		return false;
@@ -66,8 +97,8 @@ function assignComboToInput(c, i) {
 }
 
 function inArray(v, tA, m) {
-	for(i=0;i<tA.length;i++) {
-		if(v.value==tA[i].value) {
+	for (i=0; i<tA.length; i++) {
+		if (v.value==tA[i].value) {
 			return true;
 		}
 	}
@@ -76,8 +107,8 @@ function inArray(v, tA, m) {
 }
 
 function eitherOr(o, t) {
-	if(o.value!='') t.value='';
-	else if(o.value=='NaN') o.value='';
+	if (o.value!='') t.value='';
+	else if (o.value=='NaN') o.value='';
 }
 
 function SortSelect() {
@@ -160,8 +191,8 @@ function SortSelect() {
 			}
 		}
 	}
-	return
 }
+
 function SetSortingEvent() {
 	var n = document.getElementsByTagName("th");
 	for (i = 0; i < n.length; i++) {
@@ -211,49 +242,49 @@ function convertDate(dS, dF) {
 			alert("Unknown date format " + dF);
 			return false;
 	}
-return new Date(y, m, d);
+	return new Date(y, m, d);
 }
 
 function initial() {
-	if(document.getElementsByTagName) {
-		var as=document.getElementsByTagName("a");
-		for(i=0;i<as.length;i++) {
-			var a=as[i];
-			if(a.getAttribute("href") &&
-				a.getAttribute("rel")=="external")
-				a.target="_blank";
-		}
+	var as = document.getElementsByTagName("a");
+	for (i=0; i<as.length; i++) {
+		var a = as[i];
+		if (a.getAttribute("href") &&
+			a.getAttribute("rel")=="external")
+			a.target="_blank";
 	}
-	var ds=document.getElementsByTagName("input");
-	for(i=0;i<ds.length;i++) {
-		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\u0022+.&\\\\><]*";
-		if(ds[i].className=="number") ds[i].onkeypress=rTN;
-		if(ds[i].className=="integer") ds[i].onkeypress=rTI;
-		if(ds[i].className=="number") {
-			ds[i].origonchange=ds[i].onchange;
-			ds[i].newonchange=rLocaleNumber;
-			ds[i].onchange=function() {
-				if(this.origonchange)
+	var ds = document.getElementsByTagName("input");
+	for (i=0; i<ds.length; i++) {
+		if (ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\u0022+.&\\\\><]*";
+		if (ds[i].className=="number") ds[i].onkeypress=rTN;
+		if (ds[i].className=="integer") ds[i].onkeypress=rTI;
+		if (ds[i].className=="number") {
+			ds[i].origonchange = ds[i].onchange;
+			ds[i].newonchange = rLocaleNumber;
+			ds[i].onchange = function() {
+				if (this.origonchange)
 					this.origonchange();
 				this.newonchange();
 			};
 		}
 	}
-	var ds=document.getElementsByTagName("th");
-	for(i=0;i<ds.length;i++) {
-		if(ds[i].className=="SortedColumn") ds[i].onclick=SortSelect;
+	var ds = document.getElementsByTagName("th");
+	for (i=0; i<ds.length; i++) {
+		if (ds[i].className=="SortedColumn") ds[i].onclick=SortSelect;
 	}
 
 	/* Notification messages */
 	SetSortingEvent();
 
 	/* Move messages from footer div into header div */
-	document.getElementById('MessageContainerHead').appendChild(
-    document.getElementById('MessageContainerFoot')
-	);
+	if (document.getElementById('MessageContainerFoot') != null) {
+		document.getElementById('MessageContainerHead').appendChild(
+			document.getElementById('MessageContainerFoot')
+		);
 
-	/* Show footer div after it has been moved to header div */
-	document.getElementById('MessageContainerFoot').style["display"] = "block";
+		/* Show footer div after it has been moved to header div */
+		document.getElementById('MessageContainerFoot').style["display"] = "block";
+	}
 
 	/* Close button dynamic styling*/
 	var close = document.getElementsByClassName("MessageCloseButton");
@@ -268,25 +299,27 @@ function initial() {
 }
 
 function AddAmount(t, Target, d) {
-	if(t.checked) {
+	if (t.checked) {
 		document.getElementById(Target).value=Number(t.value);
-		if(d) document.getElementById(d).required="required";
+		if (d) document.getElementById(d).required="required";
 	} else {
 		document.getElementById(Target).value=Number(document.getElementById(Target).value)-Number(t.value);
-		if(d) document.getElementById(d).required="";
+		if (d) document.getElementById(d).required="";
 	}
 }
+
 function update1(s) {
-	var ss=s.split(';');
-	var sss=ss.map((a)=>document.getElementById(a).value);
+	var ss = s.split(';');
+	var sss = ss.map((a)=>document.getElementById(a).value);
 	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b));
 	document.getElementById('ttl').value = ttl;
 }
+
 function payVerify(b,a) {
-	var s=document.getElementById('update');
-	var s=s.getAttribute('data-ids');
+	var s = document.getElementById('update');
+	var s = s.getAttribute('data-ids');
 	update1(s);
-	var cs=document.getElementById('Amount').getAttribute('class');
+	var cs = document.getElementById('Amount').getAttribute('class');
 	if ((parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))) && (parseFloat(document.getElementById(b).value) >= 0)){
 		if (cs.indexOf('error') == -1) {
 			document.getElementById('Amount').className="error" + ' ' + cs;
@@ -346,10 +379,10 @@ function ping() {
 	}
 	xmlhttp.open("GET", Target, true);
 	xmlhttp.send();
-	return false}
+	return false
+}
 
 function unload() {
-//	alert(localStorage.Theme);
 	console.log('hello');
 /*	Target = "Logout.php";
 	if (window.XMLHttpRequest) {
@@ -362,6 +395,4 @@ function unload() {
 	return false*/
 }
 
-//setInterval(ping, 10000);
-
-window.onload=initial;
+window.onload = initial;

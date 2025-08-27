@@ -1,9 +1,9 @@
 <?php
 
 //$PageSecurity = 3;
-$Title = _('Geocode Generate XML');
 
-include ('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 function parseToXML($htmlStr)
@@ -16,14 +16,15 @@ function parseToXML($htmlStr)
     return $xmlStr;
 }
 
-$SQL = "SELECT * FROM custbranch WHERE 1";
-$ErrMsg = _('An error occurred in retrieving the information');;
-$Result = DB_query($SQL, $ErrMsg);
+$Title = __('Geocode Generate XML');
+
+$SQL = "SELECT * FROM custbranch";
+$Result = DB_query($SQL);
 
 header("Content-type: text/xml");
 
 // Iterate through the rows, printing XML nodes for each
-echo '<markers>';
+"<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . "\n<markers>\n";
 
 while ($MyRow = DB_fetch_array($Result)){
     // ADD TO XML DOCUMENT NODE
@@ -33,9 +34,8 @@ while ($MyRow = DB_fetch_array($Result)){
     echo 'lat="' . $MyRow['lat'] . '" ';
     echo 'lng="' . $MyRow['lng'] . '" ';
     echo 'type="' . $MyRow['area'] . '" ';
-    echo '/>';
+    echo "/>\n";
 }
 
 // End XML file
 echo '</markers>';
-?>

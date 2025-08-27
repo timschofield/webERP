@@ -1,16 +1,17 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-$Title = _('Supplier Transactions Inquiry');
+$Title = __('Supplier Transactions Inquiry');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 include('includes/header.php');
 
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Search') .
 	'" alt="" />' . ' ' . $Title . '
 	</p>';
 
@@ -18,9 +19,9 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>', _('Inquiry Criteria'), '</legend>
+		<legend>', __('Inquiry Criteria'), '</legend>
 		<field>
-			<label for="TransType">' . _('Type') . ':</label>
+			<label for="TransType">' . __('Type') . ':</label>
 			<select name="TransType">';
 
 $SQL = "SELECT typeid,
@@ -31,7 +32,7 @@ $SQL = "SELECT typeid,
 
 $ResultTypes = DB_query($SQL);
 
-echo '<option value="All">' ._('All') . '</option>';
+echo '<option value="All">' .__('All') . '</option>';
 while ($MyRow=DB_fetch_array($ResultTypes)){
 	if (isset($_POST['TransType'])){
 		if ($MyRow['typeid'] == $_POST['TransType']){
@@ -56,20 +57,20 @@ if (!isset($_POST['SupplierNo'])) {
 	$_POST['SupplierNo'] = '';
 }
 echo '<field>
-		<label for="FromDate">' . _('From Date') . ':</label>
+		<label for="FromDate">' . __('From Date') . ':</label>
 		<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
-		<label for="ToDate">' . _('To Date') . ':</label>
+		<label for="ToDate">' . __('To Date') . ':</label>
 		<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	<field>
-		<label for="SupplierNo">' . _('Supplier No') . ':</label>
+		<label for="SupplierNo">' . __('Supplier No') . ':</label>
 		<input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="ShowResults" value="' . _('Show transactions') . '" />
+		<input type="submit" name="ShowResults" value="' . __('Show transactions') . '" />
 	</div>
 	</form>';
 
@@ -108,22 +109,21 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	$SQL .=  " ORDER BY id";
 
    $TransResult = DB_query($SQL);
-   $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
-   $DbgMsg =  _('The SQL that failed was');
+   $ErrMsg = __('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 
    echo '<table class="selection">';
 
 	echo '<tr>
-			<th>' . _('Type') . '</th>
-			<th>' . _('Number') . '</th>
-			<th>' . _('Supp Ref') . '</th>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Supplier') . '</th>
-			<th>' . _('Comments') . '</th>
-			<th>' . _('Due Date') . '</th>
-			<th>' . _('Ex Rate') . '</th>
-			<th>' . _('Amount') . '</th>
-			<th>' . _('Currency') . '</th>
+			<th>' . __('Type') . '</th>
+			<th>' . __('Number') . '</th>
+			<th>' . __('Supp Ref') . '</th>
+			<th>' . __('Date') . '</th>
+			<th>' . __('Supplier') . '</th>
+			<th>' . __('Comments') . '</th>
+			<th>' . __('Due Date') . '</th>
+			<th>' . __('Ex Rate') . '</th>
+			<th>' . __('Amount') . '</th>
+			<th>' . __('Currency') . '</th>
 		</tr>';
 
 	$RowCounter = 1;
@@ -152,11 +152,11 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 									ON gltrans.account=chartmaster.accountcode
 									WHERE type='" . $MyRow['type'] . "'
 									AND typeno='" . $MyRow['transno'] . "'",
-									_('Could not retrieve the GL transactions for this AP transaction'));
+									__('Could not retrieve the GL transactions for this AP transaction'));
 
 		if (DB_num_rows($GLTransResult)==0){
 			echo '<tr>
-					<td colspan="10">' . _('There are no GL transactions created for the above AP transaction') . '</td>
+					<td colspan="10">' . __('There are no GL transactions created for the above AP transaction') . '</td>
 				</tr>';
 		} else {
 			echo '<tr>
@@ -164,9 +164,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					<td colspan="8">
 						<table style="float:left" width="100%">';
 			echo '<tr>
-					<th colspan="2"><b>' . _('GL Account') . '</b></th>
-					<th><b>' . _('Local Amount') . '</b></th>
-					<th><b>' . _('Narrative') . '</b></th>
+					<th colspan="2"><b>' . __('GL Account') . '</b></th>
+					<th><b>' . __('Local Amount') . '</b></th>
+					<th><b>' . __('Narrative') . '</b></th>
 				</tr>';
 			$CheckGLTransBalance =0;
 			while ($GLTransRow = DB_fetch_array($GLTransResult)){
@@ -182,14 +182,14 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			}
 			if (round($CheckGLTransBalance,5)!= 0){
 				echo '<tr>
-						<td colspan="4" style="background-color:red"><b>' . _('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td>
+						<td colspan="4" style="background-color:red"><b>' . __('The GL transactions for this AP transaction are out of balance by') .  ' ' . $CheckGLTransBalance . '</b></td>
 					</tr>';
 			}
 			echo '</table></td></tr>';
 		}
 
 		$RowCounter++;
-		If ($RowCounter == 12){
+		if ($RowCounter == 12){
 			$RowCounter=1;
 			echo $Tableheader;
 		}
@@ -200,4 +200,3 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
  echo '</table>';
 }
 include('includes/footer.php');
-?>

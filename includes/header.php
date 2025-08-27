@@ -1,20 +1,33 @@
 <?php
-// Titles and screen header
-// $Title - should be defined in the page this file is included with, before the include to this header.php
 
-Global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
-Global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
+// echo the html header and page title
 
-if (!isset($RootPath)) {
-	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
-	if ($RootPath == '/' or $RootPath == "\\") {
-		$RootPath = '';
-	}
-}
+// Variables which should be defined in the page this file is included with, before the inclusion of this header.php:
+// $Language
+// $Title
+// various $_SESSION items: Theme, DefaultDateFormat, Timeout, ShowPageHelp, ShowFieldHelp, FontSize, UsersRealName, etc...
 
-if (!isset($ViewTopic)) {$ViewTopic = 'Contents';};
-if (!isset($BookMark)) {$BookMark = '';};
+/// @todo there are any more global variables use in this script than those 3... are we sure it would work if
 
+///       called within a function?
+global $Language;
+global $Title;
+global $LanguagesArray;
+global $RootPath;
+
+//if (!isset($RootPath)) {
+//	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
+//	if ($RootPath == '/' or $RootPath == "\\") {
+//		$RootPath = '';
+//	}
+//}
+
+$ScriptName = basename($_SERVER['SCRIPT_NAME']);
+
+if (!isset($ViewTopic)) {$ViewTopic = 'Contents';}
+if (!isset($BookMark)) {$BookMark = '';}
+
+/// @todo should we move this to session.php?
 if (isset($_GET['Theme'])) {
 	$_SESSION['Theme'] = $_GET['Theme'];
 	$SQL = "UPDATE www_users SET theme='" . $_GET['Theme'] . "' WHERE userid='" . $_SESSION['UserID'] . "'";
@@ -25,52 +38,67 @@ if ($LanguagesArray[$_SESSION['Language']]['Direction'] == 'rtl' and mb_substr($
 	$_SESSION['Theme'] = $_SESSION['Theme'] . '-rtl';
 }
 
-if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the cannot modify heaer information in CopyBOM.php scritps
-	ob_start();
+if (!headers_sent()) {
+	header('cache-control: no-cache, no-store, must-revalidate');
+	header('Pragma: no-cache');
+} else {
+	trigger_error('Page output started before header file was included, this should not happen');
 }
 
 echo '<!DOCTYPE html>';
 
-echo '<html>
-		<head>
-			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
-			<title>', _('webERP'), ' - ', $Title, '</title>
-			<link rel="icon" href="', $PathPrefix, $RootPath, '/favicon.ico?v=2" />
-			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
-			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
-			<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>';
-echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/manual.js"></script>';
-echo '<script>
+/// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
+echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
+<head>
+	<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
+	<title>', __('webERP'), ' - ', $Title, '</title>
+	<link rel="icon" href="', $RootPath, '/favicon.ico" type="image/x-icon" />
+	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
+	<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">';
+echo '	<script async src="', $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>' , "\n";
+echo '	<script async src="', $RootPath, '/javascripts/manual.js"></script>' , "\n";
+echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
-	</script>';
-echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
+	</script>' , "\n";
+echo '	<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />' , "\n";
 
 if ($_SESSION['ShowPageHelp'] == 0) {
-	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 } else {
-	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/page_help_on.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/page_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
 if ($_SESSION['ShowFieldHelp'] == 0) {
-	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/field_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_off.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 } else {
-	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />';
+	echo '	<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/field_help_on.css" rel="stylesheet" type="text/css" media="screen" />' , "\n";
 }
 
-echo '</head>';
-echo '<body onload="initial(); load()">';
+echo '	<style>
+		body {
+			font-size: ', $_SESSION['FontSize'], ';
+		}
+	</style>';
 
-$ScriptName = basename($_SERVER['SCRIPT_NAME']);
+if (isset($ExtraHeadContent)) {
+	echo "\n" . $ExtraHeadContent;
+}
+
+echo "\n</head>\n";
+
+echo '<body onload="initial();' . (isset($BodyOnLoad) ? $BodyOnLoad : '') . '">' . "\n";
+
 echo '<div class="help-bubble" id="help-bubble">
-		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />
+		<link rel="stylesheet" type="text/css" href="'. $RootPath . '/doc/Manual/css/manual.css" />
 		<div class="help-header" id="help-header">
-			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', __('Close this window'), '">X</div>
 		</div>
 		<div class="help-content" id="help-content"></div>
 	</div>';
 
+/// @todo should we move this to index.php?
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
 				SET fontsize='" . $_GET['FontSize'] . "'
@@ -94,44 +122,42 @@ if (isset($_GET['FontSize'])) {
 			$_SESSION['FontSize'] = '0.833rem';
 	}
 }
-echo '<style>
-			body {
-					font-size: ', $_SESSION['FontSize'], ';
-				}
-			</style>';
 
 echo '<header class="noPrint">';
 
+$CompanyLogo = '';
+/// @todo move the scanning for a logo file to a dedicated function
 if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
-	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
+	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
 } else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
-	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
+	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
 } else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
-	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
+	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
 } else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
-	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
+	$CompanyLogo = $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
 }
 
-echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-		<img src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
-	</div>';
+echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">';
+if ($CompanyLogo != '')
+	echo '	<img src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>';
+echo '</div>';
 
 echo '<div id="Info">
-		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $PathPrefix, $RootPath, '/UserSettings.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', stripslashes($_SESSION['UsersRealName']), '" />', $_SESSION['UsersRealName'], '
+		<a class="FontSize" data-title="', __('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $RootPath, '/UserSettings.php">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', stripslashes($_SESSION['UsersRealName']), '" />', $_SESSION['UsersRealName'], '
 		</a>
 	</div>';
 
 echo '<div id="ExitIcon">
-		<a data-title="', _('Logout'), '" href="', $PathPrefix, $RootPath, '/Logout.php" onclick="return confirm(\'', _('Are you sure you wish to logout?'), '\');">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', _('Logout'), '" />
+		<a data-title="', __('Logout'), '" href="', $RootPath, '/Logout.php" onclick="return confirm(\'', __('Are you sure you wish to logout?'), '\');">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/quit.png" alt="', __('Logout'), '" />
 		</a>
 	</div>';
 
 // Fix: Ensure AllowedPageSecurityTokens is an array before counting
 if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['AllowedPageSecurityTokens']) && count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
-	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . __('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . __('Help') . '" /></a></div>';
 
 	if ($ScriptName != 'index.php') {
 		if (strstr($_SESSION['Language'], 'en')) {
@@ -139,8 +165,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		} else {
 			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
 				echo '<div id="ActionIcon">
-						<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
-							<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+						<a data-title="', __('Read the manual'), '" href="', $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
+							<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 						</a>
 					</div>';
 			} else {
@@ -149,8 +175,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 		}
 	} else {
 		echo '<div id="ActionIcon">
-				<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
-					<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+				<a data-title="', __('Read the manual'), '" href="', $RootPath, '/ManualContents.php" target="_blank">
+					<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', __('Help'), '" alt="', __('Help'), '" />
 				</a>
 			</div>';
 	}
@@ -166,23 +192,23 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 	echo '<div id="ActionIcon">
 			<select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)">';
-	echo '<option value=""><i>', _('Commonly used scripts'), '</i></option>';
+	echo '<option value=""><i>', __('Commonly used scripts'), '</i></option>';
 	foreach ($_SESSION['Favourites'] as $Url => $Caption) {
-		echo '<option value="', $Url, '">', _($Caption), '</option>';
+		echo '<option value="', $Url, '">', __($Caption), '</option>';
 	}
 	echo '</select>
 		</div>';
 	if ($ScriptName != 'index.php') {
 		if (!isset($_SESSION['Favourites'][$ScriptName]) or $_SESSION['Favourites'][$ScriptName] == '') {
 			echo '<div id="ActionIcon">
-					<a data-title="', _('Add this script to your list of commonly used'), '">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', _('Add to commonly used'), '" />
+					<a data-title="', __('Add this script to your list of commonly used'), '">
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/add.png" id="PlusMinus" onclick="AddScript(\'', $ScriptName, '\',\'', $Title, '\')"', ' alt="', __('Add to commonly used'), '" />
 					</a>
 				</div>';
 		} else {
 			echo '<div id="ActionIcon">
-					<a data-title="', _('Remove this script from your list of commonly used'), '">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', _('Remove from commonly used'), '" />
+					<a data-title="', __('Remove this script from your list of commonly used'), '">
+						<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/subtract.png" id="PlusMinus" onclick="RemoveScript(\'', $ScriptName, '\')"', ' alt="', __('Remove from commonly used'), '" />
 					</a>
 				</div>';
 		}
@@ -191,8 +217,8 @@ if (isset($_SESSION['AllowedPageSecurityTokens']) && is_array($_SESSION['Allowed
 
 if ($ScriptName != 'Dashboard.php') {
 	echo '<div id="ActionIcon">
-			<a data-title="', _('Show Dashboard'), '" href="', $PathPrefix, $RootPath, '/Dashboard.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/dashboard-icon.png" alt="', _('Show Dashboard'), '" />
+			<a data-title="', __('Show Dashboard'), '" href="', $RootPath, '/Dashboard.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/dashboard-icon.png" alt="', __('Show Dashboard'), '" />
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
@@ -200,8 +226,8 @@ if ($ScriptName != 'Dashboard.php') {
 
 if ($ScriptName != 'index.php') {
 	echo '<div id="ActionIcon">
-			<a data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />
+			<a data-title="', __('Return to the main menu'), '" href="', $RootPath, '/index.php">
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', __('Main Menu'), '" />
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
@@ -211,22 +237,22 @@ echo '<br /><div class="ScriptTitle">', $Title, '</div>';
 if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	if ($_SESSION['ScreenFontSize'] == 0) {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', _('Small text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', _('Small text size'), '">A</a>';
+		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=0" data-title="', __('Small text size'), '">A</a>';
 	}
 	if ($_SESSION['ScreenFontSize'] == 1) {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', _('Medium text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=1" data-title="', _('Medium text size'), '">A</a>';
+		echo '<a style="font-size:0.833rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=1" data-title="', __('Medium text size'), '">A</a>';
 	}
 	if ($_SESSION['ScreenFontSize'] == 2) {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '"><u>A</u></a>';
+		echo '<a style="font-size:1rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '"><u>A</u></a>';
 	} else {
-		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
+		echo '<a style="font-size:1rem;" class="FontSize" href="', $RootPath, '/index.php?FontSize=2" data-title="', __('Large text size'), '">A</a>';
 	}
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
-	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';
+	echo '<div class="ScriptTitle">', __('Theme'), ':</div>';
 
 	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
 
@@ -251,5 +277,3 @@ if ($ScriptName != 'index.php') {
 }
 
 echo '<div id="MessageContainerHead"></div>';
-
-?>

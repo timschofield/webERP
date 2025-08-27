@@ -1,21 +1,25 @@
 <?php
-/*Through deviousness and cunning, this system allows trial balances for
- * any date range that recalcuates the p & l balances and shows the balance
+
+/* Through deviousness and cunning, this system allows trial balances for
+ * any date range that recalculates the p & l balances and shows the balance
  * sheets as at the end of the period selected - so first off need to show
- * the input of criteria screen 
-*/
+ * the input of criteria screen
+ */
+
 $PageSecurity = 1;
-include ('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
+//use PhpOffice\PhpSpreadsheet\Helper\Sample;
+//use PhpOffice\PhpSpreadsheet\IOFactory;
+//use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+$Title = __('Trial Balance');
 
-$Title = _('Trial Balance');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
+include('includes/SQL_CommonFunctions.php');
+include('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
+
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];
@@ -29,8 +33,8 @@ if (isset($_GET['Period'])) {
 
 if (isset($_POST['PeriodFrom']) and isset($_POST['PeriodTo']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 
-	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'), 'error');
-	$_POST['NewReport'] = _('Select A Different Period');
+	prnMsg(__('The selected period from is actually after the period to! Please re-select the reporting period'), 'error');
+	$_POST['NewReport'] = __('Select A Different Period');
 }
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsheet'])) {
@@ -52,23 +56,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	$HTML .= '<input type="hidden" name="PeriodTo" value="' . $_POST['PeriodTo'] . '" />';
 
 	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP http://www.weberp.org">
+					<meta name="Creator" content="webERP https://www.weberp.org">
 				</head>
 				<body>
 				<table>
 					<thead>
 						<tr>
 							<th colspan="6">
-								<b>' . _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate . '</b>
+								<b>' . __('Trial Balance for the month of ') . $PeriodToDate . __(' and for the ') . $NumberOfMonths . __(' months to ') . $PeriodToDate . '</b>
 							</th>
 						</tr>
 						<tr>
-							<th>' . _('Account') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th>' . _('Month Actual') . '</th>
-							<th>' . _('Month Budget') . '</th>
-							<th>' . _('Period Actual') . '</th>
-							<th>' . _('Period Budget') . '</th>
+							<th>' . __('Account') . '</th>
+							<th>' . __('Account Name') . '</th>
+							<th>' . __('Month Actual') . '</th>
+							<th>' . __('Month Budget') . '</th>
+							<th>' . __('Period Actual') . '</th>
+							<th>' . __('Period Budget') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -238,7 +242,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 						<td></td>
 					</tr>';
 			$HTML .= '<tr class="total_row">
-						<td>' . _('Total') . '</td>
+						<td>' . __('Total') . '</td>
 						<td>' . $LastGroupName . '</td>
 						<td class="number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td class="number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -310,7 +314,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 				<td></td>
 			</tr>';
 	$HTML .= '<tr class="total_row">
-				<td>' . _('Total') . '</td>
+				<td>' . __('Total') . '</td>
 				<td>' . $LastGroupName . '</td>
 				<td class="number">' . locale_number_format($MonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($MonthBudgetGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -328,7 +332,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 				<td></td>
 			</tr>';
 	$HTML .= '<tr class="total_row">
-				<td>' . _('Check Totals') . '</td>
+				<td>' . __('Check Totals') . '</td>
 				<td></td>
 				<td class="number">' . locale_number_format($CumulativeMonthActualGroupTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number"></td>
@@ -354,7 +358,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$HTML .= '</tbody>
 				</table>
 				<div class="centre">
-					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -388,23 +392,23 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		$writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Ods');
 		$writer->save('php://output');
 	} else {
-		$Title = _('General Ledger Trial Balance');
-		include ('includes/header.php');
+		$Title = __('General Ledger Trial Balance');
+		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . _('Trial Balance Report') . '" alt="" />
-				' . _('Trial Balance Report') . '
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . __('Trial Balance Report') . '" alt="" />
+				' . __('Trial Balance Report') . '
 			</p>';
 		echo $HTML;
-		include ('includes/footer.php');
+		include('includes/footer.php');
 	}
 
 } else {
 
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'TrialBalance';
-	include ('includes/header.php');
+	include('includes/header.php');
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', _('Trial Balance'), '" alt="', _('Print'), '" />', ' ', _('Trial Balance Report'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/gl.png" title="', __('Trial Balance'), '" alt="', __('Print'), '" />', ' ', __('Trial Balance Report'), '
 		</p>';
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -422,9 +426,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 
 	/*Show a form to allow input of criteria for TB to show */
 	echo '<fieldset>
-			<legend>', _('Input criteria for Trial Balance'), '</legend>
+			<legend>', __('Input criteria for Trial Balance'), '</legend>
 			<field>
-				<label for="PeriodFrom">', _('Select Period From'), ':</label>
+				<label for="PeriodFrom">', __('Select Period From'), ':</label>
 				<select name="PeriodFrom" autofocus="autofocus">';
 	$NextYear = date('Y-m-d', strtotime('+1 Year'));
 	$SQL = "SELECT periodno,
@@ -450,7 +454,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the starting period for this report'), '</fieldhelp>
+		<fieldhelp>', __('Select the starting period for this report'), '</fieldhelp>
 	</field>';
 
 	if (!isset($_POST['PeriodTo']) or $_POST['PeriodTo'] == '') {
@@ -460,7 +464,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	}
 
 	echo '<field>
-			<label for="PeriodTo">', _('Select Period To'), ':</label>
+			<label for="PeriodTo">', __('Select Period To'), ':</label>
 			<select name="PeriodTo">';
 
 	DB_data_seek($Periods, 0);
@@ -474,19 +478,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 		}
 	}
 	echo '</select>
-		<fieldhelp>', _('Select the end period for this report'), '</fieldhelp>
+		<fieldhelp>', __('Select the end period for this report'), '</fieldhelp>
 	</field>';
 
-	echo '<h3>', _('OR'), '</h3>';
+	echo '<h3>', __('OR'), '</h3>';
 
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo '<field>
-			<label for="Period">', _('Select Period'), ':</label>
+			<label for="Period">', __('Select Period'), ':</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
-			<fieldhelp>', _('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
+			<fieldhelp>', __('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
 		</field>';
 
 	$SQL = "SELECT `id`,
@@ -495,7 +499,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 				FROM glbudgetheaders";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="SelectedBudget">', _('Budget To Show Comparisons With'), '</label>
+			<label for="SelectedBudget">', __('Budget To Show Comparisons With'), '</label>
 			<select name="SelectedBudget">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (!isset($_POST['SelectedBudget']) and $MyRow['current'] == 1) {
@@ -507,20 +511,18 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 			echo '<option value="', $MyRow['id'], '">', $MyRow['name'], '</option>';
 		}
 	}
-	echo '<fieldhelp>', _('Select the budget to make comparisons with.'), '</fieldhelp>
+	echo '<fieldhelp>', __('Select the budget to make comparisons with.'), '</fieldhelp>
 		</select>
 	</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . _('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . _('View') . '" />
-				<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . _('Spreadsheet') . '" />
+				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+				<input type="submit" name="Spreadsheet" title="Spreadsheet" value="' . __('Spreadsheet') . '" />
 		</div>';
 
 	echo '</form>';
-	include ('includes/footer.php');
+	include('includes/footer.php');
 }
-
-?>

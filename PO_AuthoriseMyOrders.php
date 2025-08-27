@@ -1,34 +1,31 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-
-$Title = _('Authorise Purchase Orders');
-
+$Title = __('Authorise Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
-$EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
-$EmailResult=DB_query($EmailSQL);
-$EmailRow=DB_fetch_array($EmailResult);
+$EmailSQL = "SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
+$EmailResult = DB_query($EmailSQL);
+$EmailRow = DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key,0,6)=='Status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['Status'.$OrderNo];
-			$Comment=date($_SESSION['DefaultDateFormat']).' - '._('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
+			$Comment=date($_SESSION['DefaultDateFormat']).' - '.__('Authorised by').' <a href="mailto:' . $EmailRow['email'].'">' . $_SESSION['UserID'] . '</a><br />' . html_entity_decode($_POST['comment'],ENT_QUOTES,'UTF-8');
 			$SQL="UPDATE purchorders
 					SET status='".$Status."',
 						stat_comment='".$Comment."',
 						allowprint=1
 					WHERE orderno='". $OrderNo."'";
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 		}
 	}
 }
@@ -48,7 +45,7 @@ $SQL="SELECT purchorders.*,
 		INNER JOIN www_users
 			ON www_users.userid=purchorders.initiator
 	WHERE status='Pending'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -57,12 +54,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 /* Create the table for the purchase order header */
 echo '<thead>
 		<tr>
-		<th class="SortedColumn">' . _('Order Number') . '</th>
-		<th class="SortedColumn">' . _('Supplier') . '</th>
-		<th class="SortedColumn">' . _('Date Ordered') . '</th>
-		<th class="SortedColumn">' . _('Initiator') . '</th>
-		<th class="SortedColumn">' . _('Delivery Date') . '</th>
-		<th class="SortedColumn">' . _('Status') . '</th>
+		<th class="SortedColumn">' . __('Order Number') . '</th>
+		<th class="SortedColumn">' . __('Supplier') . '</th>
+		<th class="SortedColumn">' . __('Date Ordered') . '</th>
+		<th class="SortedColumn">' . __('Initiator') . '</th>
+		<th class="SortedColumn">' . __('Delivery Date') . '</th>
+		<th class="SortedColumn">' . __('Status') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -73,7 +70,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 				WHERE userid='".$_SESSION['UserID']."'
 				AND currabrev='".$MyRow['currcode']."'";
 
-	$AuthResult=DB_query($AuthSQL);
+	$AuthResult = DB_query($AuthSQL);
 	$MyAuthRow=DB_fetch_array($AuthResult);
 	$AuthLevel=$MyAuthRow['authlevel'];
 
@@ -81,7 +78,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		           	FROM purchorderdetails
 			        WHERE orderno='".$MyRow['orderno'] . "'";
 
-	$OrderValueResult=DB_query($OrderValueSQL);
+	$OrderValueResult = DB_query($OrderValueSQL);
 	$MyOrderValueRow=DB_fetch_array($OrderValueResult);
 	$OrderValue=$MyOrderValueRow['ordervalue'];
 
@@ -93,10 +90,10 @@ while ($MyRow=DB_fetch_array($Result)) {
 				<td><a href="mailto:'.$MyRow['email'].'">' . $MyRow['realname'] . '</td>
 				<td class="date">' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 				<td><select name="Status'.$MyRow['orderno'].'">
-					<option selected="selected" value="Pending">' . _('Pending') . '</option>
-					<option value="Authorised">' . _('Authorised') . '</option>
-					<option value="Rejected">' . _('Rejected') . '</option>
-					<option value="Cancelled">' . _('Cancelled') . '</option>
+					<option selected="selected" value="Pending">' . __('Pending') . '</option>
+					<option value="Authorised">' . __('Authorised') . '</option>
+					<option value="Rejected">' . __('Rejected') . '</option>
+					<option value="Cancelled">' . __('Cancelled') . '</option>
 					</select></td>
 			</tr>';
 		echo '<input type="hidden" name="comment" value="' . htmlspecialchars($MyRow['stat_comment'], ENT_QUOTES,'UTF-8') . '" />';
@@ -107,7 +104,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 				LEFT JOIN stockmaster
 				ON stockmaster.stockid=purchorderdetails.itemcode
 			WHERE orderno='".$MyRow['orderno'] . "'";
-		$LineResult=DB_query($LineSQL);
+		$LineResult = DB_query($LineSQL);
 
 		echo '<tr>
 				<td></td>
@@ -115,11 +112,11 @@ while ($MyRow=DB_fetch_array($Result)) {
 					<table class="selection" align="left">
 					<thead>
 					<tr>
-						<th class="SortedColumn">' . _('Product') . '</th>
-						<th class="SortedColumn">' . _('Quantity Ordered') . '</th>
-						<th class="SortedColumn">' . _('Currency') . '</th>
-						<th class="SortedColumn">' . _('Price') . '</th>
-						<th class="SortedColumn">' . _('Line Total') . '</th>
+						<th class="SortedColumn">' . __('Product') . '</th>
+						<th class="SortedColumn">' . __('Quantity Ordered') . '</th>
+						<th class="SortedColumn">' . __('Currency') . '</th>
+						<th class="SortedColumn">' . __('Price') . '</th>
+						<th class="SortedColumn">' . __('Line Total') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -146,8 +143,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 echo '</tbody>
 	</table>
 		<div class="centre">
-			<input type="submit" name="UpdateAll" value="' . _('Update'). '" />
+			<input type="submit" name="UpdateAll" value="' . __('Update'). '" />
 		</div>
 		</form>';
 include('includes/footer.php');
-?>

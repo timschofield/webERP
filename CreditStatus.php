@@ -1,8 +1,8 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title = _('Credit Status Code Maintenance');
+$Title = __('Credit Status Code Maintenance');
 $ViewTopic = 'CreditStatus';
 $BookMark = 'CreditStatus';
 include('includes/header.php');
@@ -13,13 +13,10 @@ if (isset($_GET['SelectedReason'])){
 	$SelectedReason = $_POST['SelectedReason'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>
 	<br />';
 
@@ -35,28 +32,28 @@ if (isset($_POST['submit'])) {
 
 	$SQL="SELECT count(reasoncode)
 			FROM holdreasons WHERE reasoncode='".$_POST['ReasonCode']."'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 and !isset($SelectedReason)) {
 		$InputError = 1;
-		prnMsg( _('The credit status code already exists in the database'),'error');
+		prnMsg( __('The credit status code already exists in the database'),'error');
 		$Errors[$i] = 'ReasonCode';
 		$i++;
 	}
 	if (!is_numeric($_POST['ReasonCode'])) {
 		$InputError = 1;
-		prnMsg(_('The status code name must be an integer'),'error');
+		prnMsg(__('The status code name must be an integer'),'error');
 		$Errors[$i] = 'ReasonCode';
 		$i++;
 	}
 	if (mb_strlen($_POST['ReasonDescription']) > 30) {
 		$InputError = 1;
-		prnMsg(_('The credit status description must be thirty characters or less long'),'error');
+		prnMsg(__('The credit status description must be thirty characters or less long'),'error');
 	}
 	if (mb_strlen($_POST['ReasonDescription']) == 0) {
 		$InputError = 1;
-		prnMsg(_('The credit status description must be entered'),'error');
+		prnMsg(__('The credit status description must be entered'),'error');
 		$Errors[$i] = 'ReasonDescription';
 		$i++;
 	}
@@ -78,7 +75,7 @@ if (isset($_POST['submit'])) {
 							dissallowinvoices=0
 							WHERE reasoncode = '".$SelectedReason."'";
 		}
-		$Msg = _('The credit status record has been updated');
+		$Msg = __('The credit status record has been updated');
 
 	} else if ($InputError !=1) {
 
@@ -101,7 +98,7 @@ if (isset($_POST['submit'])) {
 											0)";
 		}
 
-		$Msg = _('A new credit status record has been inserted');
+		$Msg = __('A new credit status record has been inserted');
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
@@ -124,14 +121,14 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0] > 0) {
-		prnMsg( _('Cannot delete this credit status code because customer accounts have been created referring to it'),'warn');
-		echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this credit status code');
+		prnMsg( __('Cannot delete this credit status code because customer accounts have been created referring to it'),'warn');
+		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customer accounts that refer to this credit status code');
 	}  else {
 		//only delete if used in neither customer or supplier accounts
 
 		$SQL="DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
 		$Result = DB_query($SQL);
-		prnMsg(_('This credit status code has been deleted'),'success');
+		prnMsg(__('This credit status code has been deleted'),'success');
 	}
 	//end if status code used in customer or supplier accounts
 	unset ($_GET['delete']);
@@ -151,26 +148,26 @@ or deletion of the records*/
 
 	echo '<table class="selection">
 		<tr>
-			<th>' .  _('Status Code')  . '</th>
-			<th>' .  _('Description')  . '</th>
-			<th>' .  _('Disallow Invoices')  . '</th>
+			<th>' .  __('Status Code')  . '</th>
+			<th>' .  __('Description')  . '</th>
+			<th>' .  __('Disallow Invoices')  . '</th>
 			<th colspan="2"></th>
         </tr>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
 		if ($MyRow['dissallowinvoices']==0) {
-			$DissallowText = _('Invoice OK');
+			$DissallowText = __('Invoice OK');
 		} else {
-			$DissallowText = '<b>' .  _('NO INVOICING')  . '</b>';
+			$DissallowText = '<b>' .  __('NO INVOICING')  . '</b>';
 		}
 
 		echo '<tr class="striped_row">
 				<td>', $MyRow['reasoncode'], '</td>
 				<td>', $MyRow['reasondescription'], '</td>
 				<td>', $DissallowText, '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">' .  _('Delete')  . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this credit status record?') . '\');">' .  __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -180,7 +177,7 @@ or deletion of the records*/
 
 if (isset($SelectedReason)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show Defined Credit Status Codes') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show Defined Credit Status Codes') . '</a>
 		</div>';
 }
 
@@ -208,9 +205,9 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '" />';
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';
 		echo '<fieldset>
-				<legend>', _('Edit Credit Status'), '</legend>
+				<legend>', __('Edit Credit Status'), '</legend>
 				<field>
-					<label for="ReasonCode">' .  _('Status Code') .':</label>
+					<label for="ReasonCode">' .  __('Status Code') .':</label>
 					<fieldtext>' . $_POST['ReasonCode'] . '</fieldtext>
 				</field>';
 
@@ -219,9 +216,9 @@ if (!isset($_GET['delete'])) {
 			$_POST['ReasonCode'] = '';
 		}
 		echo '<fieldset>
-				<legend>', _('Create Credit Status'), '</legend>
+				<legend>', __('Create Credit Status'), '</legend>
 				<field>
-					<label for="ReasonCode">' .  _('Status Code') .':</label>
+					<label for="ReasonCode">' .  __('Status Code') .':</label>
 					<input ' . (in_array('ReasonCode',$Errors) ? 'class="integer inputerror"' : 'class="integer"' ) . ' tabindex="1" type="text" name="ReasonCode" required="required" value="'. $_POST['ReasonCode'] .'" size="3" maxlength="2" />
 				</field>';
 	}
@@ -230,12 +227,12 @@ if (!isset($_GET['delete'])) {
 		$_POST['ReasonDescription'] = '';
 	}
 	echo '<field>
-			<label for="ReasonDescription">' .  _('Description') .':</label>
+			<label for="ReasonDescription">' .  __('Description') .':</label>
 			<input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
 			 ' tabindex="2" type="text" name="ReasonDescription" required="required" value="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30" />
 		</field>
 		<field>
-			<label for="DisallowInvoices">' .  _('Disallow Invoices') . '</label>';
+			<label for="DisallowInvoices">' .  __('Disallow Invoices') . '</label>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
 		echo '<input tabindex="3" type="checkbox" checked="checked" name="DisallowInvoices" />
 			</field>';
@@ -245,9 +242,8 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '</fieldset>
 			<div class="centre">
-				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
+				<input tabindex="4" type="submit" name="submit" value="' . __('Enter Information') . '" />
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record
 include('includes/footer.php');
-?>

@@ -1,0 +1,240 @@
+# PHPlot class member variable listing
+
+# This is a manually maintained list of PHPlot class variables.
+# It is processed by a script 'gen.vardoc.php' to generate Docbook-xml format
+# text for the reference manual.
+# The first non-comment line is the header, and each additional line documents
+# one variable. Each field on each line is separated by a tab.
+# NOTE: The processing script does no escaping. The text must be valid XML.
+# This means < > and & must be written as character entities, but it also
+# means the description can have inline Docbook-XML markup.
+#
+VARNAME	DEFAULT	REFERENCE	DESCRIPTION
+actual_bar_width		CalcBarWidths	Calculated width of bars for bar charts
+bar_adjust_gap		CalcBarWidths	Calculated bar gap
+bar_extra_space	0.5	CalcBarWidths	Extra space between groups of bars <link linkend="adv-tuning-bars">(See Tuning Parameters for more)</link>
+bar_width_adjust	1	CalcBarWidths	Width of bar relative to space for one bar <link linkend="adv-tuning-bars">(See Tuning Parameters for more)</link>
+bg_color		SetBackgroundColor	Color (R,G,B,A) for image background
+bgimg		SetBgImage	Background image filename
+bgmode		SetBgImage	Background image tiling mode
+boxes_frac_width	0.3	DrawBoxes	Scale factor for box widths in box plots. Default is 0.3, meaning within min and max limits the boxes will use 30% of the available space for half their width. <link linkend="adv-tuning-boxes">(See Tuning Parameters for more)</link> (Added in PHPlot-6.1.0)
+boxes_max_width	8	DrawBoxes	Maximum half-width for boxes in box plots. Default is 8 pixels. <link linkend="adv-tuning-boxes">(See Tuning Parameters for more)</link> (Added in PHPlot-6.1.0)
+boxes_min_width	2	DrawBoxes	Minimum half-width for boxes in box plots. Default is 2 pixels. <link linkend="adv-tuning-boxes">(See Tuning Parameters for more)</link> (Added in PHPlot-6.1.0)
+boxes_t_width	0.6	DrawBoxes	Ratio of the width of the 'T' ends of box plot whiskers to the width of the boxes. Default is 0.6. <link linkend="adv-tuning-boxes">(See Tuning Parameters for more)</link> (Added in PHPlot-6.1.0)
+browser_cache	FALSE	SetBrowserCache	Flag: Don't send cache suppression headers
+bubbles_max_size		DrawBubbles	Max bubble size for bubbles plots <link linkend="adv-tuning-bubbles">(See Tuning Parameters for more)</link> (Added in PHPlot-5.4.0)
+bubbles_min_size	6	DrawBubbles	Min bubbles size for bubble plots <link linkend="adv-tuning-bubbles">(See Tuning Parameters for more)</link> (Added in PHPlot-5.4.0)
+callbacks	array(...)	SetCallback	Callback (hook) function information. Indexed by callback reason; value is an array of function name and pass-through argument if the callback is in use, else NULL.
+dashed_grid	TRUE	SetDrawDashedGrid	Flag: Draw dashed or solid grid lines?
+dashed_style	'2-4'	SetDefaultStyles	Initial dashed pattern code
+data		SetDataValues	The data array
+data_border_colors		SetDataBorderColors	Array of colors (R,G,B,A) for data borders available with some plot types.
+data_colors		SetDataColors	Array of colors (R,G,B,A) for data lines/marks/bars/etc. See default_colors for initial value.
+data_columns		CheckDataArray	Maximum number of dependent variable values (usually Y values, or pie segments) in the data array rows. (Added in PHPlot-5.1.3)
+data_max		FindDataLimits	Array: Per row maximum Y value. (Before PHPlot-5.1.2 this was named data_maxy.)
+data_min		FindDataLimits	Array: Per row minimum Y value. (Before PHPlot-5.1.2 this was named data_miny.)
+data_type	'text-data'	SetDataType	Format of the data array
+data_units_text	''	FormatLabel	Obsolete - suffix for 'data'-formatted labels
+data_value_label_angle	90	CheckDataValueLabels	Angle (in degrees) for data value labels <link linkend="adv-tuning-labels">(See Tuning Parameters for more)</link>
+data_value_label_distance	5	CheckDataValueLabels	Distance (in pixels) for data value labels <link linkend="adv-tuning-labels">(See Tuning Parameters for more)</link>
+datalabel_color		SetDataLabelColor	Color (R,G,B,A) to use for axis data labels (Added in PHPlot-5.7.0)
+datatype_error_bars		DecodeDataType	Flag: data type has error bars. (Added in PHPlot-5.1.3)
+datatype_implied		DecodeDataType	Flag: data type has implied X or Y. (Added in PHPlot-5.1.3)
+datatype_pie_single		DecodeDataType	Flag: data type is one-column, for a pie chart with one segment per row. (Added in PHPlot-5.1.3)
+datatype_swapped_xy		DecodeDataType	Flag: data type has swapped X and Y values. (Added in PHPlot-5.1.3)
+datatype_yz		DecodeDataType	Flag: data type includes Y and Z value pairs (Added in PHPlot-5.5.0)
+datatypes	array(...)	DecodeDataType SetDataType	Static array of data type information (Added in PHPlot-6.1.0) <link linkend="var-datatypes">(See notes for more)</link>
+datatypes_map	array(...)	SetDataType	Static array of data type aliases (keys) and the corresponding primary name (values) (Added in PHPlot-6.1.0)
+decimal_point		SetNumberFormat	Character to use for decimal point in formatted numbers
+default_colors	array(...)	SetDataColors SetErrorBarColors	The default color array, used to initialize data_colors and error_bar_colors. (Added in PHPlot-5.1.0)
+default_dashed_style		SetDefaultDashedStyle	Template string for the dashed line pattern. (In PHPlot-6.1.0 and earlier, this was a PHP code string.)
+default_ttfont		SetDefaultTTFont GetDefaultTTFont	Default TrueType font file. (Through PHPlot-5.1.2, there was a static default 'benjamingothic.ttf'. After PHPlot-5.1.2, the default is dynamic.)
+done	array()	DrawBackground DrawImageBorder DrawTitle	Array of flags for elements that must be drawn at most once. Flag is set TRUE when drawn. Indexes are: background, border, title. (Replaced separate variables in PHPlot-5.3.1.)
+draw_broken_lines	FALSE	SetDrawBrokenLines	Flag: How to handle missing Y values
+draw_data_borders		SetDrawDataBorders	Flag: Draw data borders, available with some plot types (Added in PHPlot-6.0.0)
+draw_legend_border	TRUE	SetDrawLegendBorder	Flag: Draw legend outline border (Added in PHPlot-6.2.1)
+draw_pie_borders		SetDrawPieBorders	Flag: Draw borders on pie chart segments (Added in PHPlot-6.0.0)
+draw_plot_area_background	FALSE	SetDrawPlotAreaBackground	Flag: Draw the background of the plot area
+draw_x_data_label_lines	FALSE	SetDrawXDataLabelLines	Flag: Draw X data label lines
+draw_x_grid		SetDrawXGrid	Flag: Draw X grid lines? (True, False, or NULL meaning the default behavior)
+draw_y_data_label_lines	FALSE	SetDrawYDataLabelLines	Flag: Draw Y data label lines (Added in PHPlot-6.0.0)
+draw_y_grid		SetDrawYGrid	Flag: Draw Y grid lines? (True, False, or NULL meaning the default behavior)
+dvlabel_color		SetDataValueLabelColor	Color (R,G,B,A) to use for data value labels (Added in PHPlot-5.7.0)
+error_bar_colors		SetErrorBarColors	Array of colors (R,G,B,A) for error bars. See default_colors for initial value.
+error_bar_line_width	1	SetErrorBarLineWidth	Thickness of error bar lines
+error_bar_shape	'tee'	SetErrorBarShape	Shape (style) of error bars: line or tee
+error_bar_size	5	SetErrorBarSize	Size of error bars
+file_format	'png'	SetFileFormat	Image format: png, gif, jpg, wbmp
+fonts		SetFontGD SetFontTTF	Array of font information. <link linkend="var-fonts">(See notes for more)</link>
+grid_at_foreground	FALSE	DrawGraph	Flag: Draw grid on top of or behind the plot <link linkend="adv-tuning-misc">(See Tuning Parameters for more)</link>
+grid_color		SetGridColor	Color (R,G,B,A) to use for axes, plot area border, legend border, pie chart lines and text (not grid!)
+group_frac_width	0.7	CalcBarWidths	Controls fraction of bar group space used for bar <link linkend="adv-tuning-bars">(See Tuning Parameters for more)</link>
+i_border		SetImageBorderColor	Color (R,G,B,A) for image border, if drawn
+image_border_type	'none'	SetImageBorderType	Image border type
+image_border_width		SetImageBorderWidth	Width of image border in pixels. Default depends on image_border_type. (Added in PHPlot-5.1.2)
+image_height		PHPlot	Image height
+image_width		PHPlot	Image width
+img		PHPlot	Image resource
+in_error		PrintError	Prevent recursion in error message image production
+is_inline	FALSE	SetIsInline	Don't send headers
+label_format	array(...)	SetPieLabelType SetPrecisionX SetPrecisionY SetXDataLabelType SetXLabelType SetXTimeFormat SetYDataLabelType SetYLabelType SetYTimeFormat	Label format info. <link linkend="var-label-format">(See notes for more)</link>
+label_scale_position	0.5	SetLabelScalePosition	Pie chart label position factor
+legend		SetLegend	Legend text array. Each index is a legend text line.
+legend_border_color		SetLegendBorderColor	Color (R,G,B,A) for the legend border (Added in PHPlot-6.2.1)
+legend_bg_color		SetLegendBgColor	Color (R,G,B,A) for the legend background (Added in PHPlot-6.0.0)
+legend_colorbox_align	'right'	SetLegendStyle	Alignment of color boxes or shape markers in the legend: left, right, or none
+legend_colorbox_borders	'textcolor'	SetLegendColorboxBorders	Color control for colorbox borders in legend (Added in PHPlot-6.0.0)
+legend_colorbox_width	1.0	DrawLegend	Adjusts width of color boxes in the legend <link linkend="adv-tuning-legend">(See Tuning Parameters for more)</link> (Added in PHPlot-5.3.0)
+legend_pos		SetLegendPosition	Array holding legend position information (Added in PHPlot-5.4.0) <link linkend="var-legendpos">(See notes for more)</link>
+legend_reverse_order	FALSE	SetLegendReverse	Flag: reverse the order of lines in the legend box, bottom to top (Added in PHPlot-5.5.0)
+legend_text_align	'right'	SetLegendStyle	Legend style setting, left or right
+legend_text_color		SetLegendTextColor	Color (R,G,B,A) for the legend text (Added in PHPlot-6.0.0)
+legend_use_shapes	FALSE	SetLegendUseShapes	Draw color boxes (if false or unset) or shape markers (if true) in the legend (Added in PHPlot-5.4.0)
+light_grid_color		SetLightGridColor	Color (R,G,B,A) for grid lines and X data lines
+line_spacing	4	SetLineSpacing	Controls inter-line spacing of text
+line_styles	array(...)	SetLineStyles	Plot line style(s)
+line_widths	1	SetLineWidths	Plot line width(s)
+locale_override	FALSE	number_format	Flag to avoid importing locale info <link linkend="adv-tuning-misc">(See Tuning Parameters for more)</link>
+max_x		FindDataLimits	Overall max X value in the data array
+max_y		FindDataLimits	Overall max Y value in the data array
+max_z		FindDataLimits	Overall max Z value in the data array (for X/Y/Z data type only) (Added in PHPlot-5.5.0)
+min_x		FindDataLimits	Overall min X value in the data array
+min_y		FindDataLimits	Overall min Y value in the data array
+min_z		FindDataLimits	Overall min Z value in the data array (for X/Y/Z data type only) (Added in PHPlot-5.5.0)
+ndx_bg_color		SetColorIndexes	Color index of image background
+ndx_data_border_colors		SetColorIndexes	Color index array for data borders
+ndx_data_colors		SetColorIndexes	Color index array for plot data lines/marks/bars/etc.
+ndx_data_dark_colors		NeedDataDarkColors	Color index array for plot data, darker shade
+ndx_datalabel_color		SetColorIndexes	Color index for axis data labels (Added in PHPlot-5.7.0)
+ndx_dvlabel_color		SetColorIndexes	Color index for data value labels (Added in PHPlot-5.7.0)
+ndx_error_bar_colors		NeedErrorBarColors	Color index array for error bars
+ndx_grid_color		SetColorIndexes	Color index for axis lines and plot area border; default color for legend border, pie chart lines and text
+ndx_i_border		SetColorIndexes	Color index for image border lines
+ndx_i_border_dark		SetColorIndexes	Color index for image border lines, darker shade
+ndx_legend_border_color		SetColorIndexes	Color index for the legend border (Added in PHPlot-6.2.1)
+ndx_legend_bg_color		SetColorIndexes	Color index for the legend background (Added in PHPlot-6.0.0)
+ndx_legend_text_color		SetColorIndexes	Color index for the legend text (Added in PHPlot-6.0.0)
+ndx_light_grid_color		SetColorIndexes	Color index for grid lines and X data lines
+ndx_pieborder_color		SetColorIndexes	Color index for unshaded pie chart segment borders (Added in PHPlot-6.0.0)
+ndx_pielabel_color		SetColorIndexes	Color index for pie chart data labels (Added in PHPlot-5.7.0)
+ndx_plot_bg_color		SetColorIndexes	Color index of plot area background
+ndx_text_color		SetColorIndexes	Color index for labels and legend text
+ndx_tick_color		SetColorIndexes	Color index for tick marks
+ndx_ticklabel_color		SetColorIndexes	Color index for tick labels (Added in PHPlot-5.7.0)
+ndx_title_color		SetColorIndexes	Color index for main title
+ndx_x_title_color		SetColorIndexes	Color index for X title (Added in PHPlot-5.2.0)
+ndx_y_title_color		SetColorIndexes	Color index for Y title (Added in PHPlot-5.2.0)
+num_data_rows		SetDataValues	Number of rows in the data array (number of points along X, or number of bar groups, for example)
+num_recs		SetDataValues	Array with number of entries in each data row (including label and X if present)
+num_x_ticks	''	SetNumXTicks	Forced number of X tick marks
+num_y_ticks	''	SetNumYTicks	Forced number of Y tick marks
+ohlc_frac_width	0.3	DrawOHLC	Scale factor for element widths in OHLC plots. Default is 0.3, meaning within min and max limits the elements will use 30% of the available space for half their width. <link linkend="adv-tuning-ohlc">(See Tuning Parameters for more)</link> (Added in PHPlot-5.3.0)
+ohlc_max_width	8	DrawOHLC	Maximum half-width for elements in OHLC plots (candlestick bodies or tick pairs). Default is 8 pixels. <link linkend="adv-tuning-ohlc">(See Tuning Parameters for more)</link> (Added in PHPlot-5.3.0)
+ohlc_min_width	2	DrawOHLC	Minimum half-width for elements in OHLC plots (candlestick bodies or tick pairs). Default is 2 pixels. <link linkend="adv-tuning-ohlc">(See Tuning Parameters for more)</link> (Added in PHPlot-5.3.0)
+output_file		SetOutputFile	Redirect to output file
+pie_diam_factor	0.5	DrawPieChart	Aspect ratio for shaded pie charts. <link linkend="adv-tuning-pie">(See Tuning Parameters for more)</link> (Added in PHPlot-5.6.0)
+pie_direction_cw	FALSE	SetPieDirection	Flag: If true, pie chart segments are drawn in clockwise direction. If false or unset, they are counter-clockwise. (Added in PHPlot-6.0.0)
+pie_full_size	FALSE	SetPieAutoSize	Flag: If true, do not include label sizes when calculating pie size. (Added in PHPlot-5.6.0)
+pie_label_source		SetPieLabelType	Source of label text for pie charts (percent, value, label, or index) (Added in PHPlot-5.6.0)
+pie_min_size_factor	0.5	DrawPieChart	Minimum amount of the plot area that will be reserved for the pie <link linkend="adv-tuning-pie">(See Tuning Parameters for more)</link> (Added in PHPlot-5.6.0)
+pie_start_angle	0	SetPieStartAngle	Starting angle in degrees for the first segment in a pie chart. (Added in PHPlot-6.0.0)
+pieborder_color		SetPieBorderColor	Color (R,G,B,A) to use for unshaded pie chart segment borders (Added in PHPlot-6.0.0)
+pielabel_color		SetPieLabelColor	Color (R,G,B,A) to use for pie chart data labels (Added in PHPlot-5.7.0)
+plot_area		CalcPlotAreaPixels	Array defining the calculated plot area. ([0],[1]) is the top left corner, ([2],[3]) is the bottom right corner.
+plot_area_height		CalcPlotAreaPixels	Height of the plot area
+plot_area_width		CalcPlotAreaPixels	Width of the plot area
+plot_bg_color		SetPlotBgColor	Color (R,G,B,A) for plot area background
+plot_border_type		SetPlotBorderType	Where to draw plot borders. Can be scalar or array of choices.
+plot_max_x		SetPlotAreaWorld CalcPlotAreaWorld	Max X of the plot area in world coordinates
+plot_max_y		SetPlotAreaWorld CalcPlotAreaWorld	Max Y of the plot area in world coordinates
+plot_min_x		SetPlotAreaWorld CalcPlotAreaWorld	Min X of the plot area in world coordinates
+plot_min_y		SetPlotAreaWorld CalcPlotAreaWorld	Min Y of the plot area in world coordinates
+plot_origin_x		CalcTranslation	X device coordinate of the plot area origin
+plot_origin_y		CalcTranslation	Y device coordinate of the plot area origin
+plot_type	'linepoints'	SetPlotType	Selected plot type
+plotbgimg		SetPlotAreaBgImage	Plot area background image filename
+plotbgmode		SetPlotAreaBgImage	Plot area background image tiling mode
+plots	array(...)	DrawGraph SetPlotType FindDataLimits	Static array of plot type information (Added in PHPlot-5.3.0) <link linkend="var-plots">(See notes for more)</link>
+point_counts		CheckPointParams	Size of point_shapes and point_sizes arrays (added in PHPlot-5.1.0)
+point_shapes	array(...)	SetPointShapes	Marker shapes for point plots
+point_sizes	array(6)	SetPointSizes	Marker sizes for point plots
+print_image	TRUE	SetPrintImage	Flag: Automatic PrintImage after DrawGraph?
+rangectl	array(...)	TuneXAutoRange TuneYAutoRange TuneAutoRange	Tuning parameters for plot range calculation (Added in PHPlot-6.0.0) <link linkend="var-rangectl">(See notes for more)</link>
+record_bar_width		CalcBarWidths	Area for each bar in a bar chart
+records_per_group		SetDataValues	Maximum of num_recs[], max number of entries (including label and X if present) for all data rows
+rgb_array		SetRGBArray	Array mapping color names to array of R, G, B values
+safe_margin	5		Fixed extra margin used in multiple places <link linkend="adv-tuning-misc">(See Tuning Parameters for more)</link>
+saved_version		__sleep __wakeup	Stores PHPlot version when object was serialized
+shading	5	SetShading	Drop shadow size for pie and bar charts
+skip_bottom_tick	FALSE	SetSkipBottomTick	Skip bottom tick mark
+skip_left_tick	FALSE	SetSkipLeftTick	Skip left tick mark
+skip_right_tick	FALSE	SetSkipRightTick	Skip right tick mark
+skip_top_tick	FALSE	SetSkipTopTick	Skip top tick mark
+stream_boundary		StartStream	MIME boundary sequence used with streaming plots (added in PHPlot-5.8.0)
+stream_frame_header		StartStream	Boundary and MIME header, output before each frame in a plot stream (added in PHPlot-5.8.0)
+stream_output_f		StartStream	Name of the GD output function for this image type, used with streaming plots (added in PHPlot-5.8.0)
+suppress_error_image	FALSE	SetFailureImage	Flag: Don't produce an error image on fatal error. Unset is FALSE. (Note the flag value is the negation of the function argument). (Added in PHPlot-5.5.0)
+suppress_x_axis	FALSE	SetDrawXAxis	Flag: Don't draw the X axis line. Unset (by default) means FALSE. (Added in PHPlot-5.3.0)
+suppress_y_axis	FALSE	SetDrawYAxis	Flag: Don't draw the Y axis line. Unset (by default) means FALSE. (Added in PHPlot-5.3.0)
+text_color		SetTextColor	Color (R,G,B,A) for labels and legend text
+thousands_sep		SetNumberFormat	Character to use to group 1000s in formatted numbers
+tick_color		SetTickColor	Color (R,G,B,A) for tick marks
+tickctl	array(...)	TuneXAutoTicks TuneYAutoTicks TuneAutoTicks	Tuning parameters for tick increment calculation (Added in PHPlot-6.0.0) <link linkend="var-tickctl">(See notes for more)</link>
+ticklabel_color		SetTickLabelColor	Color (R,G,B,A) to use for tick labels (Added in PHPlot-5.7.0)
+title_color		SetTitleColor	Color (R,G,B,A) for main title (and default for X and Y titles)
+title_offset		CalcMargins	Y offset of main title position (Added in PHPlot-5.1.2)
+title_txt	''	SetTitle	Main title text
+total_records		SetDataValues	Total number of entries (rows times columns in each row) in the data array.
+transparent_color		SetTransparentColor	Color (R,G,B,A) designated as transparent (Added in PHPlot-5.2.0)
+truecolor		__sleep __wakeup	Flag: True if serialized object had a truecolor image
+ttf_path	'.'	SetTTFPath	TrueType font directory
+use_ttf	FALSE	SetUseTTF	Default font type, True for TrueType, False for GD
+x_axis_position		SetXAxisPosition	Position of X axis (in world coordinates)
+x_axis_y_pixels		CalcTranslation	Device coordinate for the X axis
+x_data_label_angle		CheckLabels	Effective X data label text angle (Added in PHPlot-5.1.0)
+x_data_label_angle_u	''	SetXDataLabelAngle	X data label text angle (see also x_data_label_angle) (Added in PHPlot-6.0.0)
+x_data_label_pos		SetXDataLabelPos CheckLabels	Position of X data labels. (Default was 'plotdown', but is now applied at graph drawing time.)
+x_label_angle	0	SetXLabelAngle	X tick label text angle (and default for x_data_label_angle)
+x_label_axis_offset		CalcMargins	Label offset relative to plot area
+x_label_bot_offset		CalcMargins	Label offset relative to plot area
+x_label_top_offset		CalcMargins	Label offset relative to plot area
+x_left_margin		CalcMargins	Calculated plot area margin - left side
+x_right_margin		CalcMargins	Calculated plot area margin - right side
+x_tick_anchor		SetXTickAnchor	X tick anchor point (Added in PHPlot-5.4.0)
+x_tick_cross	3	SetXTickCrossing	Length of X tick marks (inside plot area)
+x_tick_inc		CalcPlotAreaWorld	Effective step between X tick marks. This is equal to x_tick_inc_u if SetXTickIncrement was used, else a calculated value.
+x_tick_inc_u	''	SetXTickIncrement	Step between X tick marks (see also x_tick_inc) (Added in PHPlot-6.0.0)
+x_tick_label_pos		SetXTickLabelPos	Position of X tick labels. (Default was 'plotdown', but is now applied at graph drawing time.)
+x_tick_length	5	SetXTickLength	Length of X tick marks (outside plot area)
+x_tick_pos	'plotdown'	SetXTickPos	Position of X tick marks
+x_title_bot_offset		CalcMargins	Title offset relative to plot area
+x_title_color		SetXTitleColor	Color (R,G,B,A) for X title (Added in PHPlot-5.2.0)
+x_title_pos	'none'	SetXTitle	X Axis title position
+x_title_top_offset		CalcMargins	Title offset relative to plot area
+x_title_txt	''	SetXTitle	X Axis title text
+xscale		CalcTranslation	X scale factor for converting World to Device coordinates
+xscale_type	'linear'	SetXScaleType	Linear or log scale on X
+y_axis_position		SetYAxisPosition	Position of Y axis (in world coordinates)
+y_axis_x_pixels		CalcTranslation	Device coordinate for the Y axis
+y_bot_margin		CalcMargins	Calculated plot area margin - bottom
+y_data_label_angle	0	SetYDataLabelAngle	Y data label text angle (Added in PHPlot-5.1.0)
+y_data_label_pos		SetYDataLabelPos CheckLabels	Position of Y data labels
+y_label_angle	0	SetYLabelAngle	Y tick label text angle
+y_label_axis_offset		CalcMargins	Label offset relative to plot area
+y_label_left_offset		CalcMargins	Label offset relative to plot area
+y_label_right_offset		CalcMargins	Label offset relative to plot area
+y_tick_anchor		SetYTickAnchor	Y tick anchor point (Added in PHPlot-5.4.0)
+y_tick_cross	3	SetYTickCrossing	Length of Y tick marks (inside plot area)
+y_tick_inc		CalcPlotAreaWorld	Effective step between Y tick marks. This is equal to y_tick_inc_u if SetYTickIncrement was used, else a calculated value.
+y_tick_inc_u	''	SetYTickIncrement	Step between Y tick marks (see also y_tick_inc) (Added in PHPlot-6.0.0)
+y_tick_label_pos		SetYTickLabelPos CheckLabels	Position of Y tick labels
+y_tick_length	5	SetYTickLength	Length of Y tick marks (outside plot area)
+y_tick_pos	'plotleft'	SetYTickPos	Position of Y tick marks
+y_title_color		SetYTitleColor	Color (R,G,B,A) for Y title (Added in PHPlot-5.2.0)
+y_title_left_offset		CalcMargins	Title offset relative to plot area
+y_title_pos	'none'	SetYTitle	Y Axis title position
+y_title_right_offset		CalcMargins	Title offset relative to plot area
+y_title_txt	''	SetYTitle	Y Axis title text
+y_top_margin		CalcMargins	Calculated plot area margin - top
+yscale		CalcTranslation	Y scale factor for converting World to Device coordinates
+yscale_type	'linear'	SetYScaleType	Linear or log scale on Y

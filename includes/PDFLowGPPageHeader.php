@@ -1,4 +1,5 @@
 <?php
+
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -11,8 +12,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['Compa
 
 $YPos -=$LineHeight;
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' ' . $_POST['ToDate'] . ' ' . _('less than') . ' ' . $_POST['GPMin'] . '%');
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,__('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . __('and') . ' ' . $_POST['ToDate'] . ' ' . __('less than') . ' ' . $_POST['GPMin'] . '%');
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . __('Page') . ' ' . $PageNumber);
 
 $YPos -=(2*$LineHeight);
 
@@ -39,18 +40,16 @@ $pdf->line(503, $YPos+$LineHeight, 503, $Bottom_Margin);
 /*set up the headings */
 $Xpos = $Left_Margin+1;
 
-$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,100-$Left_Margin,$FontSize,_('Trans'), 'centre');
-$LeftOvers = $pdf->addTextWrap(100,$YPos,50,$FontSize,_('No'), 'centre');
-$LeftOvers = $pdf->addTextWrap(130,$YPos,50,$FontSize,_('Item'), 'centre');
-$LeftOvers = $pdf->addTextWrap(220,$YPos,130,$FontSize,_('Customer'), 'centre');
-$LeftOvers = $pdf->addTextWrap(340,$YPos,50,$FontSize,_('Sell Price'), 'right');
-$LeftOvers = $pdf->addTextWrap(380,$YPos,62,$FontSize,_('Cost'), 'right');
-$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,_('GP'), 'right');
-$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('GP') . ' %', 'right');
+$LeftOvers = $pdf->addTextWrap($Xpos,$YPos,100-$Left_Margin,$FontSize,__('Trans'), 'centre');
+$LeftOvers = $pdf->addTextWrap(100,$YPos,50,$FontSize,__('No'), 'centre');
+$LeftOvers = $pdf->addTextWrap(130,$YPos,50,$FontSize,__('Item'), 'centre');
+$LeftOvers = $pdf->addTextWrap(220,$YPos,130,$FontSize,__('Customer'), 'centre');
+$LeftOvers = $pdf->addTextWrap(340,$YPos,50,$FontSize,__('Sell Price'), 'right');
+$LeftOvers = $pdf->addTextWrap(380,$YPos,62,$FontSize,__('Cost'), 'right');
+$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,__('GP'), 'right');
+$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,__('GP') . ' %', 'right');
 
 $FontSize=8;
 $YPos =$YPos - (2*$LineHeight);
 
 $PageNumber++;
-
-?>

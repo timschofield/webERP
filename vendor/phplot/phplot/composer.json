@@ -1,0 +1,21 @@
+{
+    "name": "phplot/phplot",
+    "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+    "type": "library",
+    "require": {
+        "php": ">=7.1",
+        "ext-gd": "*"
+    },
+    "license": "LGPL-2.1-or-later",
+    "autoload": {
+        "psr-4": {
+            "Phplot\\Phplot\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "AJRepo",
+            "email": "AJRepo@users.noreply.github.com"
+        }
+    ]
+}

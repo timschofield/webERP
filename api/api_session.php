@@ -1,15 +1,21 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = '../';
+	$PathPrefix = __DIR__ . '/../';
 }
 
-require $PathPrefix.'vendor/autoload.php';
+require($PathPrefix.'vendor/autoload.php');
 
 /// @todo error out if config.php does not yet exist
 include($PathPrefix . 'config.php');
 
-if (isset($SessionSavePath)){
+// an upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
+if ($DBType === 'mysql' && !extension_loaded('mysql')) {
+	/// @todo we should attempt to update the config.php file...
+	$DBType = 'mysqli';
+}
+
+if (isset($SessionSavePath)) {
 	session_save_path($SessionSavePath);
 }
 
@@ -20,7 +26,7 @@ session_name('webERPapi');
 session_start();
 
 include($PathPrefix . 'includes/LanguageSetup.php');
-//  Establish a DB connection, if possible.   NOTE that this connection
+//  Establish a DB connection, if possible. NOTE that this connection
 //  may not have the same 'value' as any previous connection, so
 //  save the new one in the session variable.
 if (isset($_SESSION['DatabaseName']) AND $_SESSION['DatabaseName'] != '' ) {
@@ -38,8 +44,8 @@ if (!isset($_SESSION['AttemptsCounter'])){
 
 if (isset($_SESSION['HTTPS_Only']) AND $_SESSION['HTTPS_Only']==1){
 	if ($_SERVER['HTTPS']!='on'){
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
-		exit;
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....','error');
+		exit();
 	}
 }
 
@@ -79,4 +85,3 @@ function api_DB_query( $SQL, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=
 
     return  $Result;
 }
-?>

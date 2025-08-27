@@ -1,16 +1,17 @@
 <?php
 
 $DirectoryLevelsDeep = 1;
-$PathPrefix = '../';
+$PathPrefix = __DIR__ . '/../';
 
 require($PathPrefix . 'includes/session.php');
 
-// TBD The followiung line needs to be replace when more translations are available
-$ReportLanguage = 'en_US';					// default language file
-define('DBReports','reports');			// name of the databse holding the main report information (ReportID)
+// TBD The following line needs to be replaced when more translations are available
+$ReportLanguage = 'en_US';				// default language file
+define('DBReports','reports');			// name of the databsse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
+
 // Fetch necessary include files - Host application specific (webERP)
 require_once($PathPrefix . 'includes/DateFunctions.php');
 
@@ -19,7 +20,6 @@ require('languages/'.$ReportLanguage.'/reports.php'); // include translation bef
 require('admin/defaults.php'); // load default values
 
 $usrMsg = array(); // setup array for return messages
-$GoBackURL = $RootPath.'/index.php'; // set the return path to the index.php page
 
 if (isset($_GET['id'])) { // then entered with form group requested
 	$QueryString = '?'.$_SERVER['QUERY_STRING']; // save the passed parameters
@@ -29,13 +29,13 @@ if (isset($_GET['id'])) { // then entered with form group requested
 
 switch ($_POST['todo']) {
 	case RPT_BTN_CANCEL:
-		header("Location: ".$GoBackURL);
+		header('Location: ' . htmlspecialchars_decode($RootPath) .'/index.php');
 		exit();
 
 	default: // determine how we entered the script to show correct form list information
 		$OutputString = BuildFormList((int) $_GET['id']); // ['id'] will be null for generic entry
 		$Title=RPT_FORMSELECT;
-		$IncludePage = 'forms/FormsList.html';
+		$IncludePage = 'forms/FormsList.html.php';
 		break;
 
 	case RPT_BTN_CRIT:
@@ -44,7 +44,7 @@ switch ($_POST['todo']) {
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
 			$OutputString = BuildFormList((int) $_GET['id']);
 			$Title=RPT_FORMSELECT;
-			$IncludePage = 'forms/FormsList.html';
+			$IncludePage = 'forms/FormsList.html.php';
 		} else {
 			$Prefs = FetchReportDetails($ReportID);  //fetch the defaults
 			// Update with passed parameters if so
@@ -56,7 +56,7 @@ switch ($_POST['todo']) {
 				}
 			}
 			$Title=RPT_CRITERIA;
-			$IncludePage = 'forms/FormsFilter.html';
+			$IncludePage = 'forms/FormsFilter.html.php';
 		}
 		break;
 
@@ -66,7 +66,7 @@ switch ($_POST['todo']) {
 			$usrMsg[] = array('message'=>FRM_NORPT, 'level'=>'error');
 			$OutputString = BuildFormList((int) $_GET['id']);
 			$Title=RPT_FORMSELECT;
-			$IncludePage = 'forms/FormsList.html';
+			$IncludePage = 'forms/FormsList.html.php';
 			break;
 		}
 		$Prefs = FetchReportDetails($ReportID);  //fetch the defaults then overwrite with user preferences
@@ -97,7 +97,7 @@ switch ($_POST['todo']) {
 			}
 		} // else use default settings, i.e. no overrides
 		// All done with setup, build the form
-		require('WriteForm.inc');
+		require(__DIR__ . '/includes/WriteForm.php');
 		// build the pdf pages (this function exits the script if successful; otherwise returns with error)
 		$success = BuildPDF($ReportID, $Prefs); // build and output form, should not return from this function
 		// if we are here, there's been an error, report it
@@ -113,19 +113,19 @@ switch ($_POST['todo']) {
 				}
 			}
 			$Title=RPT_CRITERIA;
-			$IncludePage = 'forms/FormsFilter.html';
+			$IncludePage = 'forms/FormsFilter.html.php';
 		} else { // return to the form list page
 			$OutputString = BuildFormList((int) $_GET['id']);
 			$Title=RPT_FORMSELECT;
-			$IncludePage = 'forms/FormsList.html';
+			$IncludePage = 'forms/FormsList.html.php';
 		}
 		break;
 } // end switch 'todo'
 
-include ($PathPrefix . 'includes/header.php');
+include($PathPrefix . 'includes/header.php');
 if ($usrMsg) foreach ($usrMsg as $temp) prnmsg($temp['message'],$temp['level']);
-include ($IncludePage);
-include ( $PathPrefix . 'includes/footer.php');
+include($IncludePage);
+include( $PathPrefix . 'includes/footer.php');
 // End main body
 
 // Begin functions
@@ -145,7 +145,7 @@ function BuildFormList($GroupID) {
 					AND reporttype='frm'
 					ORDER BY groupname,
 												reportname";
-			$Result=DB_query($sql,'','',false,true);
+			$Result = DB_query($sql,'','',false,true);
 			$FormList = array();
 			while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 			foreach ($FormGroups as $index=>$value) {
@@ -168,7 +168,7 @@ function BuildFormList($GroupID) {
 				FROM ".DBReports."
 				WHERE defaultreport='1' AND groupname='".$GroupID."'
 				ORDER BY reportname";
-		$Result=DB_query($sql,'','',false,true);
+		$Result = DB_query($sql,'','',false,true);
 		$OutputString .= '<tr><td colspan="3" width="250" valign="top">';
 		while ($Forms = DB_fetch_array($Result)) {
 			$OutputString .= '<input type="radio" name="ReportID" value="'.$Forms['id'].'">'.$Forms['reportname'].'<br />';
@@ -201,7 +201,7 @@ function FetchReportDetails($ReportID) {
 					table6criteria
 			FROM " . DBReports . "
 			WHERE id = '".$ReportID."'";
-	$Result=DB_query($sql,'','',false,true);
+	$Result = DB_query($sql,'','',false,true);
 	$myrow=DB_fetch_assoc($Result);
 	foreach ($myrow as $key=>$value) {
 		$Prefs[$key]=$value;
@@ -220,7 +220,7 @@ function RetrieveFields($ReportID, $EntryType) {
 			WHERE reportid = '".$ReportID."'
 			AND entrytype = '".$EntryType."'
 			ORDER BY seqnum";
-	$Result=DB_query($sql,'','',false,true);
+	$Result = DB_query($sql,'','',false,true);
 	while ($FieldValues = DB_fetch_assoc($Result)) { $FieldListings[] = $FieldValues; }
 	return $FieldListings;
 }
@@ -264,5 +264,3 @@ function BuildCriteria($FieldListings) {
 	$CriteriaString .= $EndString.'</tr>';
 	return $CriteriaString;
 }
-
-?>

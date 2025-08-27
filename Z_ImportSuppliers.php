@@ -1,10 +1,12 @@
 <?php
+
 /* Import suppliers by csv file */
 
-include('includes/session.php');
-$Title = _('Import Items');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Import Items');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 if(isset($_POST['FormID'])) {
@@ -63,23 +65,27 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ",");
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
 	$Head = 0;
 	foreach($HeadRow as $HeadField) {
 		if( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
-			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
+			prnMsg(__('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$Head++;
 	}
@@ -91,14 +97,14 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 	$Row = 1;
 	$UpdatedNum=0;
 	$InsertNum=0;
-	while( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== false ) {
 		//check for correct number of fields
 		$FieldCount = count($Filerow);
 		if($FieldCount != $FieldTarget) {
-			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -140,55 +146,55 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 			OR trim($_POST['SuppName']) == '') {
 
 			$InputError = 1;
-			prnMsg(_('The supplier name must be entered and be forty characters or less long'),'error');
+			prnMsg(__('The supplier name must be entered and be forty characters or less long'),'error');
 			$Errors[$i]='Name';
 			$i++;
 		}
 		if(mb_strlen($SupplierID) == 0) {
 			$InputError = 1;
-			prnMsg(_('The Supplier Code cannot be empty'),'error');
+			prnMsg(__('The Supplier Code cannot be empty'),'error');
 			$Errors[$i]='ID';
 			$i++;
 		}
 		if(ContainsIllegalCharacters($SupplierID)) {
 			$InputError = 1;
-			prnMsg(_('The supplier code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
+			prnMsg(__('The supplier code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 			$Errors[$i]='ID';
 			$i++;
 		}
 		if(mb_strlen($_POST['Phone']) >25) {
 			$InputError = 1;
-			prnMsg(_('The telephone number must be 25 characters or less long'),'error');
+			prnMsg(__('The telephone number must be 25 characters or less long'),'error');
 			$Errors[$i] = 'Telephone';
 			$i++;
 		}
 		if(mb_strlen($_POST['Fax']) >25) {
 			$InputError = 1;
-			prnMsg(_('The fax number must be 25 characters or less long'),'error');
+			prnMsg(__('The fax number must be 25 characters or less long'),'error');
 			$Errors[$i] = 'Fax';
 			$i++;
 		}
 		if(mb_strlen($_POST['Email']) >55) {
 			$InputError = 1;
-			prnMsg(_('The email address must be 55 characters or less long'),'error');
+			prnMsg(__('The email address must be 55 characters or less long'),'error');
 			$Errors[$i] = 'Email';
 			$i++;
 		}
 		if(mb_strlen($_POST['Email'])>0 AND !IsEmailAddress($_POST['Email'])) {
 			$InputError = 1;
-			prnMsg(_('The email address is not correctly formed'),'error');
+			prnMsg(__('The email address is not correctly formed'),'error');
 			$Errors[$i] = 'Email';
 			$i++;
 		}
 		if(mb_strlen($_POST['BankRef']) > 12) {
 			$InputError = 1;
-			prnMsg(_('The bank reference text must be less than 12 characters long'),'error');
+			prnMsg(__('The bank reference text must be less than 12 characters long'),'error');
 			$Errors[$i]='BankRef';
 			$i++;
 		}
 		if(!Is_Date($_POST['SupplierSince'])) {
 			$InputError = 1;
-			prnMsg(_('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
+			prnMsg(__('The supplier since field must be a date in the format') . ' ' . $_SESSION['DefaultDateFormat'],'error');
 			$Errors[$i]='SupplierSince';
 			$i++;
 		}
@@ -199,7 +205,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 			//first off validate inputs sensible
 			$SQL="SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='".$SupplierID."'";
-			$Result=DB_query($SQL);
+			$Result = DB_query($SQL);
 			$MyRow=DB_fetch_row($Result);
 
 			$SuppExists = ($MyRow[0]>0);
@@ -246,13 +252,11 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 						WHERE supplierid = '".$SupplierID."'";
 
 				if($SuppCurrs[0] != $_POST['CurrCode']) {
-					prnMsg( _('Cannot change currency code as transactions already exist'), 'info');
+					prnMsg( __('Cannot change currency code as transactions already exist'), 'info');
 				}
 
-				$ErrMsg = _('The supplier could not be updated because');
-				$DbgMsg = _('The SQL that was used to update the supplier but failed was');
-				// echo $SQL;
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+				$ErrMsg = __('The supplier could not be updated because');
+				$Result = DB_query($SQL, $ErrMsg);
 
 			} else { //its a new supplier
 				$InsertNum++;
@@ -305,10 +309,9 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 										'" . $longitude ."',
 										'" . $_POST['TaxRef'] . "')";
 
-				$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
-				$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
+				$ErrMsg = __('The supplier') . ' ' . $_POST['SuppName'] . ' ' . __('could not be added because');
 
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
 			}
 			if(DB_error_no() ==0) {
@@ -328,15 +331,15 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 	}
 
 	if($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
+		prnMsg(__('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
-		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed. All transactions committed to the database.'),'success');
+		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed. All transactions committed to the database.'),'success');
 		if($_POST['UpdateIfExists']==1) {
-			prnMsg( _('Updated:') .' ' . $UpdatedNum .' '. _('Insert') . ':' . $InsertNum );
+			prnMsg( __('Updated:') .' ' . $UpdatedNum .' '. __('Insert') . ':' . $InsertNum );
 		} else {
-			prnMsg( _('Exist:') .' ' . $UpdatedNum .' '. _('Insert') . ':' . $InsertNum );
+			prnMsg( __('Exist:') .' ' . $UpdatedNum .' '. __('Insert') . ':' . $InsertNum );
 		}
 
 	}
@@ -349,11 +352,11 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 } else { //show file upload form
 
-	prnMsg(_('Please ensure that your csv file charset is UTF-8, otherwise the data will not store correctly in database'),'warn');
+	prnMsg(__('Please ensure that your csv file charset is UTF-8, otherwise the data will not store correctly in database'),'warn');
 
 	echo '
 		<br />
-		<a href="Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
+		<a href="' . $RootPath . '/Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
@@ -361,10 +364,10 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			_('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" value="' . _('Send File') . '" />';
+			__('Upload file') . ': <input name="userfile" type="file" />
+			<input type="submit" value="' . __('Send File') . '" />';
 
-	echo '<br/>',_('Update if SupplierNo exists'),':<input type="checkbox" name="UpdateIfExists">';
+	echo '<br/>',__('Update if SupplierNo exists'),':<input type="checkbox" name="UpdateIfExists">';
     echo '</div>
 		</form>';
 
@@ -372,4 +375,3 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 
 include('includes/footer.php');
-?>

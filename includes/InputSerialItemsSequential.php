@@ -1,4 +1,5 @@
 <?php
+
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -6,12 +7,11 @@ for controlled items - used in:
 - StockAdjustments.php
 - StockTransfers.php
 - CreditItemsControlled.php
-
 */
 
-//we start with a batch or serial no header and need to display something for verification...
+// we start with a batch or serial no header and need to display something for verification...
 if (!isset($_SESSION['DatabaseName'])){
-	die;
+	exit();
 }
 
 global $Tableheader;
@@ -44,16 +44,15 @@ if ( isset($_GET['EditControlled']) ) {
 	$EditControlled = isset($_POST['EditControlled'])?$_POST['EditControlled']:false;
 }
 echo '<tr>
-		<td valign="top">' .  _('Begin:') . '</td>
+		<td valign="top">' .  __('Begin:') . '</td>
 		<td> <input type="text" name="BeginNo" size="21"  maxlength="20" value="'. $_POST['BeginNo']. '" /></td>
 	</tr>';
 echo '<tr>
-		<td valign="top">' .  _('End:') . '</td>
+		<td valign="top">' .  __('End:') . '</td>
 		<td> <input type="text" name="EndNo" size="21"  maxlength="20"  value="'. $_POST['EndNo']. '" /></td>
 	</tr>';
 
 echo '</table>';
-echo '<br /><center><input type="submit" name="AddSequence" value="'. _('Enter'). '"></center><br />';
+echo '<br /><center><input type="submit" name="AddSequence" value="'. __('Enter'). '"></center><br />';
 echo '</form></td><td valign="top">';
 //echo '</td></tr></table>'; /*end of nested table */
-?>

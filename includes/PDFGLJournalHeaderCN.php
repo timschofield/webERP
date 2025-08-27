@@ -1,4 +1,5 @@
 <?php
+
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -11,7 +12,7 @@ $LeftOvers = $pdf->addText($FormDesign->GRNNumber2->x+3,$Page_Height-$FormDesign
 $JournalNo=str_pad($JournalNo, 9, '0', STR_PAD_LEFT);
 $LeftOvers = $pdf->addText($FormDesign->GRNNumber->x+3,$Page_Height-$FormDesign->GRNNumber->y,$FormDesign->GRNNumber->FontSize, '凭证编号：'.$JournalNo,'right' );
 $LeftOvers = $pdf->addText($FormDesign->OrderNumber->x+3,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize, '记 账 凭 证 ');
-$LeftOvers = $pdf->addText($FormDesign->PrintDate->x+3,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, _('Printed').'：' . Date($_SESSION['DefaultDateFormat']), 'right');
+$LeftOvers = $pdf->addText($FormDesign->PrintDate->x+3,$Page_Height-$FormDesign->PrintDate->y,$FormDesign->PrintDate->FontSize, __('Printed').'：' . Date($_SESSION['DefaultDateFormat']), 'right');
 $pdf->setlineStyle(array('width'=>1.2));
 $pdf->SetLineStyle(array('color'=>array(0,0,255)));
 /*Draw a rectangle to put the headings in     */
@@ -24,8 +25,6 @@ $LeftOvers = $pdf->addText($FormDesign->Headings->Column3->x+3,$Page_Height - $F
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x+3,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->Length,$FormDesign->Headings->Column4->FontSize, '借方金额            贷方金额', 'right');
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x+3,$Page_Height - $FormDesign->Headings->Column5->y, $FormDesign->Headings->Column5->Length,$FormDesign->Headings->Column5->FontSize,  '千百十万千.百十元角分', 'right');
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x+3,$Page_Height - $FormDesign->Headings->Column6->y, $FormDesign->Headings->Column6->Length,$FormDesign->Headings->Column6->FontSize,  '千百十万千.百十元角分', 'right');
-
-
 
 $LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x+3,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, '记账日期: '.ConvertSQLDate($JournalDate));
 
@@ -120,4 +119,3 @@ $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column10->x+3,$Page_Height
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column11->x+3,$Page_Height - $FormDesign->Headings->Column11->y, $FormDesign->Headings->Column11->Length,$FormDesign->Headings->Column11->FontSize,  '件', 'right');
 $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column12->x+3,$Page_Height - $FormDesign->Headings->Column12->y, $FormDesign->Headings->Column12->Length,$FormDesign->Headings->Column12->FontSize,  '张', 'right');
 $PageNumber++;
-?>

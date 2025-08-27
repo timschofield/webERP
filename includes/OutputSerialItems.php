@@ -1,4 +1,5 @@
 <?php
+
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -6,46 +7,46 @@ for controlled items - used in:
 - StockAdjustments.php
 - StockTransfers.php
 - CreditItemsControlled.php
-
 */
 
-//we start with a batch or serial no header and need to display something for verification...
+// we start with a batch or serial no header and need to display something for verification...
 
-include ('includes/Add_SerialItemsOut.php');
+include('includes/Add_SerialItemsOut.php');
 
 global $Tableheader;
+
 /* Link to clear the list and start from scratch */
 $EditLink =  '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?EditControlled=true&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">' .  _('Edit'). '</a> | ';
+	'&LineNo=' . $LineNo .'">' .  __('Edit'). '</a> | ';
 $RemoveLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?DELETEALL=YES&StockID=' . $LineItem->StockID .
-	'&LineNo=' . $LineNo .'">' .  _('Remove All'). '</a><br /></div>';
+	'&LineNo=' . $LineNo .'">' .  __('Remove All'). '</a><br /></div>';
 $SQL="SELECT perishable
 		FROM stockmaster
 		WHERE stockid='".$StockID."'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 $MyRow=DB_fetch_array($Result);
 $Perishable=$MyRow['perishable'];
 if ($LineItem->Serialised==1){
 	$Tableheader .= '<tr>
-						<th>' .  _('Serial No') . '</th>
+						<th>' .  __('Serial No') . '</th>
 					</tr>';
 	$ListTableHeader=$Tableheader;
 } else if ($LineItem->Serialised==0 and $Perishable==1){
 	$Tableheader = '<tr>
-						<th>' .  _('Batch/Roll/Bundle'). ' #</th>
-						<th>' .  _('Available'). '</th>
-						<th>' .  _('Quantity'). '</th>
-						<th>' .  _('Expiry Date'). '</th>
+						<th>' .  __('Batch/Roll/Bundle'). ' #</th>
+						<th>' .  __('Available'). '</th>
+						<th>' .  __('Quantity'). '</th>
+						<th>' .  __('Expiry Date'). '</th>
 					</tr>';
 	$ListTableHeader = '<tr>
-							<th>' .  _('Batch/Roll/Bundle'). ' #</th>
-							<th>' .  _('Quantity'). '</th>
-							<th>' .  _('Expiry Date'). '</th>
+							<th>' .  __('Batch/Roll/Bundle'). ' #</th>
+							<th>' .  __('Quantity'). '</th>
+							<th>' .  __('Expiry Date'). '</th>
 						</tr>';
 } else {
 	$Tableheader = '<tr>
-				<th>' .  _('Batch/Roll/Bundle'). ' #</th>
-				<th>' .  _('Quantity'). '</th>
+				<th>' .  __('Batch/Roll/Bundle'). ' #</th>
+				<th>' .  __('Quantity'). '</th>
 				</tr>';
 	$ListTableHeader=$Tableheader;
 }
@@ -87,7 +88,7 @@ foreach ($LineItem->SerialItems as $Bundle){
 		echo '<td class="number">' . $Bundle->ExpiryDate . '</td>';
 	}
 
-	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">' .  _('Delete'). '</a></td></tr>';
+	echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $Bundle->BundleRef . '&StockID=' . $LineItem->StockID . '&LineNo=' . $LineNo .'">' .  __('Delete'). '</a></td></tr>';
 
 	$TotalQuantity += $Bundle->BundleQty;
 }
@@ -95,10 +96,10 @@ foreach ($LineItem->SerialItems as $Bundle){
 
 /*Display the totals and rule off before allowing new entries */
 if ($LineItem->Serialised==1){
-	echo '<tr><td class="number"><b>' .  _('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
+	echo '<tr><td class="number"><b>' .  __('Total Quantity'). ': ' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td></tr>';
 } else {
 	echo '<tr>
-			<td class="number"><b>' .  _('Total Quantity'). ':</b></td>
+			<td class="number"><b>' .  __('Total Quantity'). ':</b></td>
 			<td class="number"><b>' . locale_number_format($TotalQuantity,$LineItem->DecimalPlaces) . '</b></td>
 		</tr>';
 }
@@ -165,7 +166,7 @@ $SQL="SELECT serialno,
 		FROM stockserialitems
 		WHERE stockid='".$StockID."'
 		AND loccode='" . $Location . "'";
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 
 $RowNumber=0;
 while ($MyRow=DB_fetch_array($Result)){
@@ -193,10 +194,10 @@ while ($MyRow=DB_fetch_array($Result)){
 }
 echo '<input type="hidden" name="TotalBundles" value="'.($RowNumber).'">';
 echo '</table>';
-echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. _('Enter'). '" /></div>';
+echo '<br /><div class="centre"><input type="submit" name="AddBatches" value="'. __('Enter'). '" /></div>';
 echo '</form>
 		</td><td valign="top">';
-$ShowExisting=True;
+$ShowExisting=true;
 $_POST['EntryType']='Sequential';
 if ($ShowExisting){
 	include('includes/InputSerialItemsExisting.php');
@@ -204,9 +205,8 @@ if ($ShowExisting){
 echo '</td>
 	</tr>
 	</table>
-	<script type="text/javascript">
+	<script>
 //<![CDATA[
 document.Ga6uF5Wa.SerialNo0.focus();
 //]]>
 </script>'; /*end of nested table */
-?>

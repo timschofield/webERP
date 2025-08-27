@@ -1,13 +1,14 @@
 <?php
 
-include ('includes/session.php');
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
-$Title = _('Stock Movements');
-/* webERP manual links before header.php */
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Stock Movements');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryMovement';
-include ('includes/header.php');
+include('includes/header.php');
+
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
 
 if (isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -22,11 +23,11 @@ if ('' != $StockID) {
 	$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" . $StockID . "'");
 	$MyRow = DB_fetch_row($Result);
 
-	$StockInfo = '<br /><b>' . $StockID . ' - ' . $MyRow['0'] . ' : ' . _('in units of') . ' : ' . $MyRow[1] . '</b>';
+	$StockInfo = '<br /><b>' . $StockID . ' - ' . $MyRow['0'] . ' : ' . __('in units of') . ' : ' . $MyRow[1] . '</b>';
 }
 
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" /> ', $Title, $StockInfo, '</p>';
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', __('Inventory'), '" alt="" /> ', $Title, $StockInfo, '</p>';
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
@@ -39,14 +40,14 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 }
 
 echo '<fieldset>
-		<legend>', _('Inquiry Criteria'), '</legend>
+		<legend>', __('Inquiry Criteria'), '</legend>
 		<field>
-			<label for="StockID">', _('Stock Code'), ':</label>
+			<label for="StockID">', __('Stock Code'), ':</label>
 			<input type="text" name="StockID" size="21" value="', $StockID, '" required="required" maxlength="20" />
 		</field>';
 
 echo '<field>
-		<label for="StockLocation">', _('From Stock Location'), ':</label>
+		<label for="StockLocation">', __('From Stock Location'), ':</label>
 		<select required="required" name="StockLocation"> ';
 
 $SQL = "SELECT locations.loccode,
@@ -79,13 +80,13 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label>', _('Show Movements between'), ':</label>
-		<input name="AfterDate" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['AfterDate']), '" /> ' . _('and') . ':
+		<label>', __('Show Movements between'), ':</label>
+		<input name="AfterDate" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['AfterDate']), '" /> ' . __('and') . ':
 		<input name="BeforeDate" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['BeforeDate']), '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
+		<input type="submit" name="ShowMoves" value="', __('Show Stock Movements'), '" />
 	</div>';
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
@@ -125,30 +126,29 @@ $SQL = "SELECT stockmoves.stockid,
 			AND hidemovt=0
 		ORDER BY stkmoveno DESC";
 
-$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
-$DbgMsg = _('The SQL that failed was') . ' ';
+$ErrMsg = __('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 
-$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+$MovtsResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($MovtsResult) > 0) {
 	$MyRow = DB_fetch_array($MovtsResult);
 
 	echo '<table>';
 	echo '<tr>
-			<th>', _('Type'), '</th>
-			<th>', _('Number'), '</th>
-			<th>', _('Date'), '</th>
-			<th>', _('User ID'), '</th>
-			<th>', _('Customer'), '</th>
-			<th>', _('Branch'), '</th>
-			<th>', _('Quantity'), '</th>
-			<th>', _('Reference'), '</th>
-			<th>', _('Price'), '</th>
-			<th>', _('Discount'), '</th>
-			<th>', _('New Qty'), '</th>
-			<th>', _('Narrative'), '</th>';
+			<th>', __('Type'), '</th>
+			<th>', __('Number'), '</th>
+			<th>', __('Date'), '</th>
+			<th>', __('User ID'), '</th>
+			<th>', __('Customer'), '</th>
+			<th>', __('Branch'), '</th>
+			<th>', __('Quantity'), '</th>
+			<th>', __('Reference'), '</th>
+			<th>', __('Price'), '</th>
+			<th>', __('Discount'), '</th>
+			<th>', __('New Qty'), '</th>
+			<th>', __('Narrative'), '</th>';
 	if ($MyRow['controlled'] == 1) {
-		echo '<th>', _('Serial No.'), '</th>';
+		echo '<th>', __('Serial No.'), '</th>';
 	}
 	echo '</tr>';
 
@@ -241,14 +241,12 @@ if (DB_num_rows($MovtsResult) > 0) {
 
 echo '</table>
 		<div class="centre">
-			<br /><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockID), '">', _('Show Stock Status'), '</a>
-			<br /><a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockID), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Show Stock Usage'), '</a>
-			<br /><a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockID), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', _('Search Outstanding Sales Orders'), '</a>
-			<br /><a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockID), '">', _('Search Completed Sales Orders'), '</a>
+			<br /><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockID), '">', __('Show Stock Status'), '</a>
+			<br /><a href="', $RootPath, '/StockUsage.php?StockID=', urlencode($StockID), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', __('Show Stock Usage'), '</a>
+			<br /><a href="', $RootPath, '/SelectSalesOrder.php?SelectedStockItem=', urlencode($StockID), '&amp;StockLocation=', urlencode($_POST['StockLocation']), '">', __('Search Outstanding Sales Orders'), '</a>
+			<br /><a href="', $RootPath, '/SelectCompletedOrder.php?SelectedStockItem=', urlencode($StockID), '">', __('Search Completed Sales Orders'), '</a>
 		</div>
 	</div>
 	</form>';
 
-include ('includes/footer.php');
-
-?>
+include('includes/footer.php');

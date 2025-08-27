@@ -1,8 +1,8 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title = _('Purchase Order Authorisation Maintenance');
+$Title = __('Purchase Order Authorisation Maintenance');
 $ViewTopic = '';
 $BookMark = 'PO_AuthorisationLevels';
 include('includes/header.php');
@@ -12,12 +12,10 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
-
 /*Note: If CanCreate==0 then this means the user can create orders
  *     Also if OffHold==0 then the user can release purchase invocies
  *     This logic confused me a bit to start with
  */
-
 
 if (isset($_POST['Submit'])) {
 	if (isset($_POST['CanCreate']) AND $_POST['CanCreate']=='on') {
@@ -37,7 +35,7 @@ if (isset($_POST['Submit'])) {
 		FROM purchorderauth
 		WHERE userid='" . $_POST['UserID'] . "'
 		AND currabrev='" . $_POST['CurrCode'] . "'";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_array($Result);
 	if ($MyRow[0]==0) {
 		$SQL="INSERT INTO purchorderauth ( userid,
@@ -50,10 +48,10 @@ if (isset($_POST['Submit'])) {
 						'".$CanCreate."',
 						'".$OffHold."',
 						'" . filter_number_format($_POST['AuthLevel'])."')";
-	$ErrMsg = _('The authentication details cannot be inserted because');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The authentication details cannot be inserted because');
+	$Result = DB_query($SQL, $ErrMsg);
 	} else {
-		prnMsg(_('There already exists an entry for this user/currency combination'), 'error');
+		prnMsg(__('There already exists an entry for this user/currency combination'), 'error');
 		echo '<br />';
 	}
 }
@@ -76,8 +74,8 @@ if (isset($_POST['Update'])) {
 			WHERE userid='".$_POST['UserID']."'
 			AND currabrev='".$_POST['CurrCode']."'";
 
-	$ErrMsg = _('The authentication details cannot be updated because');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The authentication details cannot be updated because');
+	$Result = DB_query($SQL, $ErrMsg);
 }
 
 if (isset($_GET['Delete'])) {
@@ -85,8 +83,8 @@ if (isset($_GET['Delete'])) {
 		WHERE userid='".$_GET['UserID']."'
 		AND currabrev='".$_GET['Currency']."'";
 
-	$ErrMsg = _('The authentication details cannot be deleted because');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The authentication details cannot be deleted because');
+	$Result = DB_query($SQL, $ErrMsg);
 }
 
 if (isset($_GET['Edit'])) {
@@ -96,8 +94,8 @@ if (isset($_GET['Edit'])) {
 			FROM purchorderauth
 			WHERE userid='".$_GET['UserID']."'
 			AND currabrev='".$_GET['Currency']."'";
-	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The authentication details cannot be retrieved because');
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow=DB_fetch_array($Result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
@@ -119,44 +117,44 @@ $SQL="SELECT purchorderauth.userid,
 	INNER JOIN currencies
 		ON purchorderauth.currabrev=currencies.currabrev";
 
-$ErrMsg = _('The authentication details cannot be retrieved because');
-$Result=DB_query($SQL,$ErrMsg);
+$ErrMsg = __('The authentication details cannot be retrieved because');
+$Result = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . _('User ID') . '</th>
-				<th class="SortedColumn">' . _('User Name') . '</th>
-				<th class="SortedColumn">' . _('Currency') . '</th>
-				<th class="SortedColumn">' . _('Create Order') . '</th>
-				<th class="SortedColumn">' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
-				<th class="SortedColumn">' . _('Authority Level') . '</th>
+				<th class="SortedColumn">' . __('User ID') . '</th>
+				<th class="SortedColumn">' . __('User Name') . '</th>
+				<th class="SortedColumn">' . __('Currency') . '</th>
+				<th class="SortedColumn">' . __('Create Order') . '</th>
+				<th class="SortedColumn">' . __('Can Release') . '<br />' .  __('Invoices') . '</th>
+				<th class="SortedColumn">' . __('Authority Level') . '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>';
 
 while ($MyRow=DB_fetch_array($Result)) {
 	if ($MyRow['cancreate']==0) {
-		$DisplayCanCreate=_('Yes');
+		$DisplayCanCreate=__('Yes');
 	} else {
-		$DisplayCanCreate=_('No');
+		$DisplayCanCreate=__('No');
 	}
 	if ($MyRow['offhold']==0) {
-		$DisplayOffHold=_('Yes');
+		$DisplayOffHold=__('Yes');
 	} else {
-		$DisplayOffHold=_('No');
+		$DisplayOffHold=__('No');
 	}
 	echo '<tr class="striped_row">
 			<td>' . $MyRow['userid'] . '</td>
 			<td>' . $MyRow['realname'] . '</td>
-			<td>', _($MyRow['currency']), '</td>
+			<td>', __($MyRow['currency']), '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
 			<td class="number">' . locale_number_format($MyRow['authlevel'],$MyRow['decimalplaces']) . '</td>
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $MyRow['userid'] .
-	'&amp;Currency='.$MyRow['currabrev'].'">' . _('Edit') . '</a></td>
+	'&amp;Currency='.$MyRow['currabrev'].'">' . __('Edit') . '</a></td>
 			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $MyRow['userid'] .
-	'&amp;Currency='.$MyRow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">' . _('Delete') . '</a></td>
+	'&amp;Currency='.$MyRow['currabrev'].'" onclick="return confirm(\'' . __('Are you sure you wish to delete this authorisation level?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 }
 
@@ -173,17 +171,17 @@ if (!isset($_GET['Edit'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
-		<legend>', _('Set Authorisation Levels'), '</legend>';
+		<legend>', __('Set Authorisation Levels'), '</legend>';
 
 if (isset($_GET['Edit'])) {
 	echo '<field>
-			<label for="UserID">' . _('User ID') . '</label>
+			<label for="UserID">' . __('User ID') . '</label>
 			<fieldtext>' . $_GET['UserID'] . '</fieldtext>
 		</field>';
 	echo '<input type="hidden" name="UserID" value="'.$_GET['UserID'].'" />';
 } else {
 	echo '<field>
-			<label for="UserID">' . _('User ID') . '</label>
+			<label for="UserID">' . __('User ID') . '</label>
 			<select name="UserID">';
 	$UserSQL="SELECT userid FROM www_users";
 	$Userresult=DB_query($UserSQL);
@@ -208,8 +206,8 @@ if (isset($_GET['Edit'])) {
 			ON purchorderauth.currabrev=currencies.currabrev
 			WHERE userid='".$_GET['UserID']."'
 			AND purchorderauth.currabrev='".$_GET['Currency']."'";
-	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The authentication details cannot be retrieved because');
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow=DB_fetch_array($Result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
@@ -219,13 +217,13 @@ if (isset($_GET['Edit'])) {
 	$CurrDecimalPlaces=$MyRow['decimalplaces'];
 
 	echo '<field>
-			<label for="CurrCode">' . _('Currency') . '</label>
+			<label for="CurrCode">' . __('Currency') . '</label>
 			<fieldtext>' . $MyRow['currency'] . '</fieldtext>
 		</field>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {
 	echo '<field>
-			<label for="CurrCode">' . _('Currency') . '</label>
+			<label for="CurrCode">' . __('Currency') . '</label>
 			<select name="CurrCode">';
 	$Currencysql="SELECT currabrev,currency,decimalplaces FROM currencies";
 	$Currencyresult=DB_query($Currencysql);
@@ -242,7 +240,7 @@ if (isset($_GET['Edit'])) {
 }
 
 echo '<field>
-		<label for="CanCreate">' . _('User can create orders') . '</label>';
+		<label for="CanCreate">' . __('User can create orders') . '</label>';
 if ($CanCreate==1) {
 	echo '<input type="checkbox" name="CanCreate" />
 		</field>';
@@ -252,7 +250,7 @@ if ($CanCreate==1) {
 }
 
 echo '<field>
-		<label for="OffHold">' . _('User can release invoices') . '</label>';
+		<label for="OffHold">' . __('User can release invoices') . '</label>';
 if ($OffHold==1) {
 	echo '<input type="checkbox" name="OffHold" />
 		</field>';
@@ -262,22 +260,21 @@ if ($OffHold==1) {
 }
 
 echo '<field>
-		<label for="AuthLevel">' . _('User can authorise orders up to :') . '</label>
+		<label for="AuthLevel">' . __('User can authorise orders up to :') . '</label>
 		<input type="text" name="AuthLevel" size="11" class="integer" title="" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" />
-		<fieldhelp>' . _('Enter the amount that this user is premitted to authorise purchase orders up to') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the amount that this user is premitted to authorise purchase orders up to') . '</fieldhelp>
 	</field>
 	</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="'._('Update Information').'" />
+			<input type="submit" name="Update" value="'.__('Update Information').'" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="'._('Enter Information').'" />
+			<input type="submit" name="Submit" value="'.__('Enter Information').'" />
 		</div>';
 }
 echo '</div>
         </form>';
 include('includes/footer.php');
-?>

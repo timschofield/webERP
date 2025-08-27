@@ -17,8 +17,6 @@ $YPos -= $LineHeight;
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$_SESSION['CompanyRecord']['regoffice1'].$_SESSION['CompanyRecord']['regoffice2'],'center');
 $pdf->SetLineWidth(.2);
 
-
-
 $YPos = 720;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
@@ -26,7 +24,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos,$YPos,0,70);
 $FontSize=14;
 $LineHeight=$FontSize*1.50;
 $YPos += $LineHeight;
-$LeftOvers = $pdf->addTextWrap($XPos+330,$YPos,140,$FontSize,_('Technical Data Sheet'));
+$LeftOvers = $pdf->addTextWrap($XPos+330,$YPos,140,$FontSize,__('Technical Data Sheet'));
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
 $pdf->setFont('','B');
@@ -42,4 +40,3 @@ $FontSize=12;
 $LineHeight=$FontSize*1.25;
 $YPos -= $LineHeight;
 $YPos -= $LineHeight;
-?>

@@ -1,15 +1,16 @@
 <?php
 
-
 /*Variables required to configure this script must be set in config.php */
 
-include('includes/session.php');
-$Title=_('FTP order to Radio Beacon');
+require(__DIR__ . '/includes/session.php');
+
+$Title=__('FTP order to Radio Beacon');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Freight Costs') . '" alt="" />' . ' ' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Freight Costs') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 
@@ -42,23 +43,23 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.orddate,
 				salesorders.deliverto";
 
-$ErrMsg = _('No orders were returned because');
-$SalesOrdersResult = DB_query($SQL,$ErrMsg);
+$ErrMsg = __('No orders were returned because');
+$SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
 echo '<table cellpadding="2" width="100%">';
 $TableHeader =	'<tr>
-				<th>' . _('Modify') . '</th>
-				<th>' . _('Send to') . '<br />' . _('Radio Beacon') . '</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Cust Order') . ' #</th>
-				<th>' . _('Order Date') . '</th>
-				<th>' . _('Req Del Date') . '</th>
-				<th>' . _('Delivery To') . '</th>
-				<th>' . _('Order Total') . '</th>
-				<th>' . _('Last Send') . '</th>
+				<th>' . __('Modify') . '</th>
+				<th>' . __('Send to') . '<br />' . __('Radio Beacon') . '</th>
+				<th>' . __('Customer') . '</th>
+				<th>' . __('Branch') . '</th>
+				<th>' . __('Cust Order') . ' #</th>
+				<th>' . __('Order Date') . '</th>
+				<th>' . __('Req Del Date') . '</th>
+				<th>' . __('Delivery To') . '</th>
+				<th>' . __('Order Total') . '</th>
+				<th>' . __('Last Send') . '</th>
 				</tr>';
 
 echo $TableHeader;
@@ -76,7 +77,7 @@ while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 	if ($MyRow['printedpackingslip'] ==1){
 		echo '<tr class="striped_row">
 				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
-				<td><font color=RED size="2">' . _('Already') . '<br />' . _('Sent') . '</font></td>
+				<td><font color=RED size="2">' . __('Already') . '<br />' . __('Sent') . '</font></td>
 				<td><font size="2">', $MyRow['name'], '</font></td>
 				<td><font size="2">', $MyRow['brname'], '</font></td>
 				<td><font size="2">', $MyRow['customerref'], '</font></td>
@@ -89,7 +90,7 @@ while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 	} else {
 		echo '<tr class="striped_row">
 				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
-				<td><font size="2"><a href="', $FTPDispatchNote, '">' . _('Send') . '</a></font></td>
+				<td><font size="2"><a href="', $FTPDispatchNote, '">' . __('Send') . '</a></font></td>
 				<td><font size="2">', $MyRow['name'], '</font></td>
 				<td><font size="2">', $MyRow['brname'], '</font></td>
 				<td><font size="2">', $MyRow['customerref'], '</font></td>
@@ -116,9 +117,9 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
 	if ($_SESSION['CompanyRecord']==0){
 		/*CompanyRecord will be 0 if the company information could not be retrieved */
-		prnMsg(_('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
+		prnMsg(__('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	/*Now get the order header info */
@@ -153,18 +154,18 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 				AND salesorders.orderno='" . $_GET['OrderNo'] . "'";
 
 
-	$ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database');
-	$Result=DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('from the database');
+	$Result = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($Result)==1){ /*There is ony one order header returned */
 
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow['printedpackingslip']==1){
-			prnMsg(_('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has previously been sent to Radio Beacon') . '. ' . _('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . _('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . _('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
-			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . _('Modify the order to allow a re-send or reprint') . ' (' . _('Select Delivery Details') . ')' . '</a>';
-			echo '<p><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			prnMsg(__('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has previously been sent to Radio Beacon') . '. ' . __('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . __('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
+			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
+			echo '<p><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			include('includes/footer.php');
-			exit;
+			exit();
 		 }
 
 		/*Now get the line items */
@@ -179,8 +180,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 					WHERE salesorderdetails.stkcode=stockmaster.stockid
 					AND salesorderdetails.orderno=" . $_GET['OrderNo'];
 
-		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . _('from the database because');
-		$Result=DB_query($SQL, $ErrMsg);
+		$ErrMsg = __('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . __('from the database because');
+		$Result = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling creating the Header record - the PHRecord*/
@@ -239,23 +240,23 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			}
 			fclose($fp);
 
-			echo '<p>' . _('FTP Connection progress') . ' .....';
+			echo '<p>' . __('FTP Connection progress') . ' .....';
 			// set up basic connection
 			$conn_id = ftp_connect($_SESSION['RadioBeaconFTP_server']); // login with username and password
 			$login_result = ftp_login($conn_id, $_SESSION['RadioBeaconFTP_user_name'], $_SESSION['RadioBeaconFTP_user_pass']); // check connection
 			if ((!$conn_id) || (!$login_result)) {
-				echo '<br />' . _('Ftp connection has failed');
-				echo '<br />' . _('Attempted to connect to') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . _('for user') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
-				die;
+				echo '<br />' . __('Ftp connection has failed');
+				echo '<br />' . __('Attempted to connect to') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('for user') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
+				exit();
 			} else {
-				echo '<br />' . _('Connected to Radio Beacon FTP server at') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . _('with user name') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
+				echo '<br />' . __('Connected to Radio Beacon FTP server at') . ' ' . $_SESSION['RadioBeaconFTP_server'] . ' ' . __('with user name') . ' ' . $_SESSION['RadioBeaconFTP_user_name'];
 			} // upload the file
 			$upload = ftp_put($conn_id, $FilePrefix .  $FileNumber . '.txt', $FileName, FTP_ASCII); // check upload status
 			if (!$upload) {
-				prnMsg(_('FTP upload has failed'),'success');
-				exit;
+				prnMsg(__('FTP upload has failed'),'success');
+				exit();
 			} else {
-				echo '<br />' . _('Uploaded') . ' ' . $FileName . ' ' . _('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];
+				echo '<br />' . __('Uploaded') . ' ' . $FileName . ' ' . __('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];
 			} // close the FTP stream
 			ftp_quit($conn_id);
 
@@ -266,11 +267,11 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 					WHERE salesorders.orderno=" . $_GET['OrderNo'];
 			$Result = DB_query($SQL);
 
-			echo '<p>' . _('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;
+			echo '<p>' . __('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;
 
 		} else { /*perhaps several order headers returned or none (more likely) */
 
-			echo '<p>' . _('The order') . ' ' . $_GET['OrderNo'] . ' ' . _('for dispatch via Radio Beacon could not be retrieved') . '. ' . _('Perhaps it is set to be dispatched from a different stock location');
+			echo '<p>' . __('The order') . ' ' . $_GET['OrderNo'] . ' ' . __('for dispatch via Radio Beacon could not be retrieved') . '. ' . __('Perhaps it is set to be dispatched from a different stock location');
 
 		}
 	} /*there are line items outstanding for dispatch */
@@ -278,4 +279,3 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 } /*end of if page called with a OrderNo - OrderNo*/
 
 include('includes/footer.php');
-?>

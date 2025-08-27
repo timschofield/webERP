@@ -1,13 +1,16 @@
 <?php
-include ('includes/session.php');
-if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);};
-$Title = _('Stock On Hand By Date');
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Stock On Hand By Date');
 $ViewTopic = 'Inventory';
 $BookMark = '';
-include ('includes/header.php');
+include('includes/header.php');
+
+if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 
 echo '<p class="page_title_text" >
-		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title . '</b>
+		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b>
 	</p>';
 
 echo '<form action="' . htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -17,11 +20,11 @@ $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 $ResultStkLocs = DB_query($SQL);
 
 echo '<fieldset>
-		<legend>', _('Report Criteria'), '</legend>
+		<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="StockCategory">' . _('For Stock Category') . ':</label>
+			<label for="StockCategory">' . __('For Stock Category') . ':</label>
 			<select required="required" name="StockCategory">
-				<option value="All">' . _('All') . '</option>';
+				<option value="All">' . __('All') . '</option>';
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockCategory']) and $_POST['StockCategory'] != 'All') {
@@ -48,7 +51,7 @@ $SQL = "SELECT locationname,
 $ResultStkLocs = DB_query($SQL);
 
 echo '<field>
-		<label for="StockLocation">' . _('For Stock Location') . ':</label>
+		<label for="StockLocation">' . __('For Stock Location') . ':</label>
 		<select required="required" name="StockLocation"> ';
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
@@ -73,7 +76,7 @@ if (!isset($_POST['OnHandDate'])) {
 }
 
 echo '<field>
-		<label for="OnHandDate">' . _('On-Hand On Date') . ':</label>
+		<label for="OnHandDate">' . __('On-Hand On Date') . ':</label>
 		<input type="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . FormatDateForSQL($_POST['OnHandDate']) . '" />
 	</field>';
 
@@ -90,7 +93,7 @@ echo '<field>
 </fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />
+		<input type="submit" name="ShowStatus" value="' . __('Show Stock Status') . '" />
 	</div>
 </form>';
 
@@ -114,19 +117,18 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 					 AND (mbflag='M' OR mbflag='B')";
 	}
 
-	$ErrMsg = _('The stock items in the category selected cannot be retrieved because');
-	$DbgMsg = _('The SQL that failed was');
+	$ErrMsg = __('The stock items in the category selected cannot be retrieved because');
 
-	$StockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$StockResult = DB_query($SQL, $ErrMsg);
 
 	$SQLOnHandDate = FormatDateForSQL($_POST['OnHandDate']);
 
 	echo '<table>
 			<tr>
-				<th>' . _('Item Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Quantity On Hand') . '</th>
-				<th>' . _('Controlled') . '</th>
+				<th>' . __('Item Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Quantity On Hand') . '</th>
+				<th>' . __('Controlled') . '</th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($StockResult)) {
@@ -150,7 +152,7 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 						ORDER BY stkmoveno DESC LIMIT 1";
 		}
 
-		$ErrMsg = _('The stock held as at') . ' ' . $_POST['OnHandDate'] . ' ' . _('could not be retrieved because');
+		$ErrMsg = __('The stock held as at') . ' ' . $_POST['OnHandDate'] . ' ' . __('could not be retrieved because');
 
 		$LocStockResult = DB_query($SQL, $ErrMsg);
 
@@ -159,9 +161,9 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		while ($LocQtyRow = DB_fetch_array($LocStockResult)) {
 
 			if ($MyRow['controlled'] == 1) {
-				$Controlled = _('Yes');
+				$Controlled = __('Yes');
 			} else {
-				$Controlled = _('No');
+				$Controlled = __('No');
 			}
 
 			if ($NumRows == 0) {
@@ -187,12 +189,11 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 	} //end of while loop
 	echo '<tr class="total_row">
 			<td></td>
-			<td>' . _('Total Quantity') . ':</td>
+			<td>' . __('Total Quantity') . ':</td>
 			<td class="number">' . $TotalQuantity . '</td>
 			<td></td>
 		</tr>
 		</table>';
 }
 
-include ('includes/footer.php');
-?>
+include('includes/footer.php');

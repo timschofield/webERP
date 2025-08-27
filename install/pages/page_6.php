@@ -1,9 +1,15 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 $Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
+$MySQLPort = $_SESSION['Installer']['Port'];
 $_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
 $DefaultDatabase = 'default';
 
@@ -20,142 +26,22 @@ if (isset($_POST['install'])) {
 	}
 }
 
-/**
- * @todo we miss the PORT setting!
- * @return string[] error messages
- */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName) {
-	$Errors = [];
-
-	$DB = @mysqli_connect($HostName, $UserName, $Password);
-
-	if (!$DB) {
-		$Errors[] = _('Failed to connect the database management system');
-		return;
-	} else {
-		// avoid exceptions being thrown on query errors
-		mysqli_report(MYSQLI_REPORT_ERROR);
-
-		mysqli_set_charset($DB, 'utf8');
-
-		$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
-		$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
-	}
-
-	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
-	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
-
-	$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
-	$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
-	$Rows = @mysqli_num_rows($DBExistsResult);
-	$Privileges = @mysqli_num_rows($PrivilegesResult);
-
-	if ($Rows == 0) { /* Then the database does not exist */
-		if ($Privileges == 0) {
-			$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
-		} else { /* Then we can create the database */
-			/// @todo add utf8-mb4 as default charset
-			$SQL = "CREATE DATABASE " . $DataBaseName;
-			if (!@mysqli_query($DB, $SQL)) {
-				$Errors[] = _('Failed creating the database');
-			}
-		}
-	} else { /* Need to make sure any data is removed from existing DB */
-		/// @todo this is incomplete - and dangerous!
-		$SQL = "SELECT 'TRUNCATE TABLE ' + table_name + ';' FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
-		$Result = @mysqli_query($DB, $SQL);
-	}
-
-	return $Errors;
-}
+include($PathPrefix . 'includes/InstallFunctions.php');
 
 $Errors = CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
 
 /// @todo exit if any errors
 
-include ('../includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
-include ('../includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
+include($PathPrefix . 'includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
+include($PathPrefix . 'includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
 
 // gg: unused variable?
 //$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
 
-include ('../includes/DateFunctions.php');
+include($PathPrefix . 'includes/DateFunctions.php');
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
-$Path_To_Root = '..';
+$Path_To_Root = rtrim($PathPrefix, '/');
 $Config_File = $Path_To_Root . '/config.php';
-
-function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
-	if (!file_exists($Path_To_Root . '/companies/' . $DatabaseName)) {
-		$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
-		$Result = mkdir($CompanyDir);
-		$Result = mkdir($CompanyDir . '/part_pics');
-		$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
-		$Result = mkdir($CompanyDir . '/reports');
-		$Result = mkdir($CompanyDir . '/EDI_Sent');
-		$Result = mkdir($CompanyDir . '/EDI_Pending');
-		$Result = mkdir($CompanyDir . '/reportwriter');
-		$Result = mkdir($CompanyDir . '/pdf_append');
-		$Result = mkdir($CompanyDir . '/FormDesigns');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
-		echo '<div class="success">' . _('The companies directory has been successfully created') . '</div>';
-		ob_flush();
-
-		/* Upload logo file */
-		$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
-		$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
-		$UploadOK = 1;
-		$ImageFileType = strtolower(pathinfo($TargetFile,PATHINFO_EXTENSION));
-
-		if ($_FILES["LogoFile"]["tmp_name"] != '') {
-			// Check if image file is a actual image or fake image
-			if(isset($_POST["install"])) {
-				$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
-				if($check !== false) {
-					$UploadOK = 1;
-				} else {
-					echo '<div class="error">' . _('Logo file is not an image.') . '</div>';
-					$UploadOK = 0;
-				}
-			}
-
-			// Check if file already exists
-			if (file_exists($TargetFile)) {
-				echo '<div class="error">' . _('Sorry, logo file already exists.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Check file size
-			if ($_FILES["LogoFile"]["size"] > 500000) {
-				echo '<div class="error">' . _('Sorry, your logo file is too large.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Allow certain file formats
-			if($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
-				echo '<div class="error">' . _('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Check if $UploadOK is set to 0 by an error
-			if ($UploadOK == 0) {
-				echo '<div class="error">' . _('Sorry, your logo file was not uploaded.') . '</div>';
-				// if everything is ok, try to upload file
-			} else {
-				if (move_uploaded_file($_FILES["LogoFile"]["tmp_name"], $TargetFile)) {
-					echo '<div class="success">' . _('Your logo has been successfully uploaded') . '</div>';
-				} else {
-					echo '<div class="warn">' . _('Your logo could not be uploaded. You must copy this to your companies directory later.') . '</div>';
-				}
-			}
-			ob_flush();
-		} else {
-			$Result = copy($Path_To_Root . '/logo_server.jpg', $CompanyDir . '/logo.jpg');
-		}
-	}
-}
 
 CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root);
 
@@ -163,7 +49,7 @@ CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root);
 /**
  * IMPORTANT!!
  * Must match the variables found inside config.distrib.php.
- *  */
+ */
 $configArray = $_SESSION['Installer'];
 $configArray += [
     'Host'            => $_SESSION['Installer']['HostName'],
@@ -181,7 +67,7 @@ $NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the ma
 
 // Read the content of the sample config file
 if (!file_exists($SampleConfigFile)) {
-	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
+	echo '<div class="error">' . __('The sample configuration file does not exist.') . '</div>';
 }
 
 // Open the sample file for reading and create the new config file for writing
@@ -216,299 +102,20 @@ if ($SampleHandle) {
 
     fclose($SampleHandle);
 } else {
-	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
+	echo '<div class="error">' . __('Unable to read the sample configuration file.') . '</div>';
 }
 
 // Write the updated content to the new config file
 $NewConfigContent = implode($NewLines);
 if (file_put_contents($NewConfigFile, $NewConfigContent)) {
-    echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
+    echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
 } else {
-	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';
-}
-
-function CreateTables($Path_To_Root) {
-	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
-		$SQLScriptFile = file_get_contents($FileName);
-		DB_IgnoreForeignKeys();
-		// avoid the standard error-handling kicking in
-		$Result = DB_query($SQLScriptFile, '', '', false, false);
-		$DBErrors += DB_error_no($Result);
-	}
-	if ($DBErrors > 0) {
-		echo '<div class="error">' . _("Database tables could not be created") . '</div>';
-	} else {
-		echo '<div class="success">' . _("All database tables have been created") . '</div>';
-	}
-	ob_flush();
+	echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
 }
 
 CreateTables($Path_To_Root);
 
-function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
-	if (isset($Demo) and $Demo != 'Yes') {
-		DB_IgnoreForeignKeys();
-		$SQL = "INSERT INTO www_users  (userid,
-										password,
-										realname,
-										customerid,
-										supplierid,
-										salesman,
-										phone,
-										email,
-										defaultlocation,
-										fullaccess,
-										cancreatetender,
-										lastvisitdate,
-										branchcode,
-										pagesize,
-										timeout,
-										modulesallowed,
-										showdashboard,
-										showpagehelp,
-										showfieldhelp,
-										blocked,
-										displayrecordsmax,
-										theme,
-										language,
-										pdflanguage,
-										fontsize,
-										department
-									) VALUES (
-										'" . $AdminUser . "',
-										'" . CryptPass($AdminPassword) . "',
-										'" . _('Administrator') . "',
-										'',
-										'',
-										'',
-										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
-										'',
-										8,
-										1,
-										'2024-10-24 18:38:24',
-										'',
-										'A4',
-										10,
-										'1,1,1,1,1,1,1,1,1,1,1,1,',
-										0,
-										1,
-										1,
-										0,
-										50,
-										'default',
-										'" . $Language . "',
-										0,
-										0,
-										0
-									)";
-		$Result = DB_query($SQL);
-
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
-		}
-		ob_flush();
-
-		$COAScriptFile = file($CoA);
-		$ScriptFileEntries = sizeof($COAScriptFile);
-		$SQL = '';
-		$InAFunction = false;
-		DB_IgnoreForeignKeys();
-		for ($i = 0;$i < $ScriptFileEntries;$i++) {
-
-			$COAScriptFile[$i] = trim($COAScriptFile[$i]);
-			//ignore lines that start with -- or USE or /*
-			if (mb_substr($COAScriptFile[$i], 0, 2) != '--' and mb_strstr($COAScriptFile[$i], '/*') == false and mb_strlen($COAScriptFile[$i]) > 1) {
-
-				$SQL.= ' ' . $COAScriptFile[$i];
-
-				//check if this line kicks off a function definition - pg chokes otherwise
-				if (mb_substr($COAScriptFile[$i], 0, 15) == 'CREATE FUNCTION') {
-					$InAFunction = true;
-				}
-				//check if this line completes a function definition - pg chokes otherwise
-				if (mb_substr($COAScriptFile[$i], 0, 8) == 'LANGUAGE') {
-					$InAFunction = false;
-				}
-				if (mb_strpos($COAScriptFile[$i], ';') > 0 and !$InAFunction) {
-					// Database created above with correct name.
-					if (strncasecmp($SQL, ' CREATE DATABASE ', 17) and strncasecmp($SQL, ' USE ', 5)) {
-						$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1);
-						DB_IgnoreForeignKeys();
-						$Result = DB_query($SQL);
-						if (DB_error_no($Result) != 0) {
-							echo '<div class="error">' . _('Your chosen chart of accounts could not be uploaded') . '</div>';
-						}
-					}
-					$SQL = '';
-				}
-
-			} //end if its a valid sql line not a comment
-
-		} //end of for loop around the lines of the sql script
-		echo '<div class="success">' . _('Your chosen chart of accounts has been uploaded') . '</div>';
-		ob_flush();
-
-		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
-		$Result = DB_query($SQL);
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been given permissions on all GL accounts.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
-		}
-
-		$SQL = "INSERT INTO tags VALUES(0, 'None')";
-		$Result = DB_query($SQL);
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The default GL tag has been inserted.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
-		}
-		ob_flush();
-
-		$DBErrors = 0;
-		foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
-			$SQLScriptFile = file_get_contents($FileName);
-			DB_IgnoreForeignKeys();
-			$Result = DB_query($SQLScriptFile);
-			$DBErrors += DB_error_no($Result);
-		}
-		if ($DBErrors > 0) {
-			echo '<div class="error">' . _("Database tables could not be created") . '</div>';
-		} else {
-			echo '<div class="success">' . _("All database tables have been created") . '</div>';
-		}
-		ob_flush();
-
-		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName('../') . ")";
-		$Result = DB_query($SQL);
-
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The database update revision has been inserted.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
-		}
-		ob_flush();
-
-		$SQL ="INSERT INTO `companies` VALUES (1,
-											'" . $CompanyName . "',
-											'not entered yet',
-											'',
-											'',
-											'',
-											'',
-											'',
-											'',
-											'',
-											'',
-											'',
-											'info@weberp.com',
-											'GBP',
-											'1100',
-											'4900',
-											'2100',
-											'2400',
-											'2150',
-											'2150',
-											'4200',
-											'5200',
-											'3500',
-											1,
-											1,
-											1,
-											'5600'
-										)";
-		$Result = DB_query($SQL);
-
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The company record has been inserted.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
-		}
-		ob_flush();
-
-	/* Create the admin user */
-	} else {
-		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
-		PopulateSQLDataBySQL('demo.sql');
-		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
-		$Result = DB_query($SQL);
-		$CompanyDir = $Path_To_Root . 'companies/' . $DataBaseName;
-		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
-			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
-		}
-//		copy("companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
-		DB_IgnoreForeignKeys();
-		$SQL = "INSERT INTO www_users  (userid,
-										password,
-										realname,
-										customerid,
-										supplierid,
-										salesman,
-										phone,
-										email,
-										defaultlocation,
-										fullaccess,
-										cancreatetender,
-										lastvisitdate,
-										branchcode,
-										pagesize,
-										timeout,
-										modulesallowed,
-										showdashboard,
-										showpagehelp,
-										showfieldhelp,
-										blocked,
-										displayrecordsmax,
-										theme,
-										language,
-										pdflanguage,
-										fontsize,
-										department
-									) VALUES (
-										'" . $AdminUser . "',
-										'" . CryptPass($AdminPassword) . "',
-										'" . _('Administrator') . "',
-										'',
-										'',
-										'',
-										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
-										'',
-										8,
-										1,
-										'2024-10-24 18:38:24',
-										'',
-										'A4',
-										10,
-										'1,1,1,1,1,1,1,1,1,1,1,1,',
-										0,
-										1,
-										1,
-										0,
-										50,
-										'default',
-										'" . $Language . "',
-										0,
-										0,
-										0
-									)";
-		$Result = DB_query($SQL);
-
-		if (DB_error_no() == 0) {
-			echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
-		} else {
-			echo '<div class="error">' . _('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
-		}
-		ob_flush();
-		echo '<div class="success">' . _('Database now contains the demo data.') . '</div>';
-	}
-}
-
-CreateGLTriggers();
+CreateGLTriggers($Path_To_Root);
 
 UploadData($_SESSION['Installer']['Demo'],
 			$_SESSION['Installer']['AdminPassword'],
@@ -526,95 +133,10 @@ $Result = DB_query($SQL);
 $CompanyFileHandler = fopen($Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
 $Contents = "<?php\n\n";
 $Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
-$Contents.= "?>";
 
 if (!fwrite($CompanyFileHandler, $Contents)) {
 	fclose($CompanyFileHandler);
-	echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+	echo '<div class="error">' . __('Cannot write to the Companies.php file') . '</div>';
 }
 //close file
 fclose($CompanyFileHandler);
-
-function HighestFileName($PathPrefix) {
-	$files = glob($PathPrefix . 'sql/updates/*.php');
-	natsort($files);
-	return basename(array_pop($files), ".php");
-}
-
-function CryptPass($Password) {
-	$Hash = password_hash($Password, PASSWORD_DEFAULT);
-	return $Hash;
-}
-
-function PopulateSQLDataBySQL($File) {
-	$SQLScriptFile = file($File);
-	$ScriptFileEntries = sizeof($SQLScriptFile);
-	$SQL = '';
-	$InAFunction = false;
-	for ($i = 1;$i <= $ScriptFileEntries;$i++) {
-
-		$SQLScriptFile[$i - 1] = trim($SQLScriptFile[$i - 1]);
-		//ignore lines that start with -- or USE or /*
-		$SQL.= ' ' . $SQLScriptFile[$i - 1];
-
-		//check if this line kicks off a function definition - pg chokes otherwise
-		if (mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
-			$InAFunction = true;
-		}
-		//check if this line completes a function definition - pg chokes otherwise
-		if (mb_substr($SQLScriptFile[$i - 1], 0, 8) == 'LANGUAGE') {
-			$InAFunction = false;
-		}
-		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
-			// Database created above with correct name.
-			$Result = DB_query($SQL);
-			$SQL = '';
-		}
-		flush();
-
-	} //end of for loop around the lines of the sql script
-
-}
-
-function CreateGLTriggers() {
-
-$SQL = "CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
-		BEGIN
-			INSERT INTO gltotals (account, period, amount)
-			VALUES (NEW.account, NEW.periodno, NEW.amount)
-			ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-		END";
-$Result = DB_query($SQL);
-
-$SQL = "CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans` FOR EACH ROW
-		BEGIN
-			IF NEW.account <> OLD.account OR NEW.periodno <> OLD.periodno THEN
-				-- Handle account or period changes.
-				-- Deduct the old amount from the old account/period.
-				UPDATE gltotals
-				SET amount = amount - OLD.amount
-				WHERE account = OLD.account AND period = OLD.periodno;
-
-				-- Add the new amount to the new account/period.
-				INSERT INTO gltotals (account, period, amount)
-				VALUES (NEW.account, NEW.periodno, NEW.amount)
-				ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-			ELSE
-				-- Just update the amount if account and period are the same.
-				UPDATE gltotals
-				SET amount = amount - OLD.amount + NEW.amount
-				WHERE account = NEW.account AND period = NEW.periodno;
-			END IF;
-		END";
-$Result = DB_query($SQL);
-
-$SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH ROW
-		BEGIN
-			UPDATE gltotals
-			SET amount = amount - OLD.amount
-			WHERE account = OLD.account AND period = OLD.periodno;
-		END";
-$Result = DB_query($SQL);
-}
-
-?>

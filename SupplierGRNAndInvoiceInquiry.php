@@ -1,18 +1,21 @@
 <?php
-include('includes/session.php');
-$Title = _('Supplier Invoice and GRN inquiry');
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Supplier Invoice and GRN inquiry');
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
 include('includes/header.php');
+
 if (isset($_GET['SelectedSupplier'])) {
 	$SupplierID= $_GET['SelectedSupplier'];
 } elseif (isset($_POST['SelectedSupplier'])){
 	$SupplierID = $_POST['SelectedSupplier'];
 } else {
-	prnMsg(_('The page must be called from suppliers selected interface, please click following link to select the supplier'),'error');
-	echo '<a href="' . $RootPath . '/SelectSupplier.php">'. _('Select Supplier') . '</a>';
+	prnMsg(__('The page must be called from suppliers selected interface, please click following link to select the supplier'),'error');
+	echo '<a href="' . $RootPath . '/SelectSupplier.php">'. __('Select Supplier') . '</a>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 if (isset($_GET['SupplierName'])) {
 	$SupplierName = $_GET['SupplierName'];
@@ -29,29 +32,29 @@ if (!isset($_POST['SupplierRef']) OR trim($_POST['SupplierRef'])=='') {
 	$_POST['GRNBatchNo'] = '';
 	$_POST['InvoiceNo'] = '';
 }
-echo '<p class="page_title_text">' . _('Supplier Invoice and Delivery Note Inquiry') . '<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" alt="" />' . _('Supplier') . ': ' . $SupplierName . '</p>';
-echo '<div class="page_help_text">' . _('The supplier\'s delivery note is prefer to GRN No, and GRN No is preferred to Invoice No').'</div>';
+echo '<p class="page_title_text">' . __('Supplier Invoice and Delivery Note Inquiry') . '<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" alt="" />' . __('Supplier') . ': ' . $SupplierName . '</p>';
+echo '<div class="page_help_text">' . __('The supplier\'s delivery note is prefer to GRN No, and GRN No is preferred to Invoice No').'</div>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="SelectedSupplier" value="' . $SupplierID . '" />';
 
 echo '<fieldset>
-		<legend>', _('Inquiry Criteria'), '</legend>
+		<legend>', __('Inquiry Criteria'), '</legend>
 		<field>
-			<label>' . _('Part of Supplier\'s Delivery Note') . ':</label>
+			<label>' . __('Part of Supplier\'s Delivery Note') . ':</label>
 			<input type="text" name="SupplierRef" value="' . $_POST['SupplierRef'] . '" size="20" maxlength="30" >
 		</field>
 		<field>
-			<label>' . _('GRN No') . ':</label>
+			<label>' . __('GRN No') . ':</label>
 			<input type="text" name="GRNBatchNo" value="' . $_POST['GRNBatchNo'] . '" size="6" maxlength="6" />
 		</field>
 		<field>
-			<label>' . _('Invoice No') . ':</label>
+			<label>' . __('Invoice No') . ':</label>
 			<input type="text" name="InvoiceNo" value="' . $_POST['InvoiceNo'] . '" size="11" maxlength="11" />
 		</field>
 	</fieldset>';
 echo '<div class="centre">
-		<input type="submit" name="Submit" value="' . _('Submit') . '" />
+		<input type="submit" name="Submit" value="' . __('Submit') . '" />
 	</div>';
 if (isset($_POST['Submit'])) {
 	$Where = '';
@@ -72,16 +75,16 @@ if (isset($_POST['Submit'])) {
 		FROM grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem
 		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 		WHERE supplierid='" . $SupplierID . "'" . $Where;
-	$ErrMsg = _('Failed to retrieve supplier invoice and grn data');
-	$Result = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('Failed to retrieve supplier invoice and grn data');
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)>0) {
 		echo '<table class="selection">
 			<thead>
 			<tr>
-					<th class="SortedColumn">' . _('Supplier Delivery Note') . '</th>
-					<th class="SortedColumn">' . _('GRN Batch No') . '</th>
-					<th class="SortedColumn">' . _('PO No') . '</th>
-					<th class="SortedColumn">' . _('Invoice No') . '</th>
+					<th class="SortedColumn">' . __('Supplier Delivery Note') . '</th>
+					<th class="SortedColumn">' . __('GRN Batch No') . '</th>
+					<th class="SortedColumn">' . __('PO No') . '</th>
+					<th class="SortedColumn">' . __('Invoice No') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -101,4 +104,3 @@ if (isset($_POST['Submit'])) {
 
 }
 include('includes/footer.php');
-?>

@@ -1,34 +1,48 @@
 <?php
-/* webERP Session handling
- * This file is included at the start of every script in webERP
+
+/* webERP Session handling and general bootstrapping.
+ *
+ * This file is included at the start of every script in webERP.
  * It sets up the session and includes the necessary files for:
  * - database connection
  * - language setup
  * - password checking
  * - security authorisation level check
- * - config.php is included in session.php
+ * NB: config.php is included in session.php
  */
 
 if (!isset($PathPrefix)) {
-	$PathPrefix = '';
+	$PathPrefix = __DIR__ . '/../';
 }
-require $PathPrefix.'vendor/autoload.php';
-$DefaultDatabase = 'weberp';
+
+require($PathPrefix.'vendor/autoload.php');
 
 if (!file_exists($PathPrefix . 'config.php')) {
-	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
+	$RootPath = dirname($_SERVER['PHP_SELF']);
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
 	header('Location:' . $RootPath . '/install/index.php');
-	exit;
+	exit();
 }
-include ($PathPrefix . 'config.php');
+
+$DefaultDatabase = 'weberp';
+
+include($PathPrefix . 'config.php');
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
+	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;
+	unset($dbuser, $dbpassword, $dbType);
+}
+
+// another upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
+if ($DBType === 'mysql' && !extension_loaded('mysql')) {
+	/// @todo we should attempt to update the config.php file...
+	$DBType = 'mysqli';
 }
 
 if (isset($SessionSavePath)) {
@@ -43,14 +57,6 @@ if (isset($_SESSION['Timeout'])) {
 	ini_set('session.gc_maxlifetime', (60 * $_SESSION['Timeout'] + 1));
 }
 
-//INI directive 'safe_mode' is deprecated since PHP 5.3 and removed since PHP 5.4
-/*
- * if (!ini_get('safe_mode')) {
- *	set_time_limit($MaximumExecutionTime);
- *	ini_set('max_execution_time', $MaximumExecutionTime);
- *}
-*/
-
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
 
@@ -60,125 +66,80 @@ if (!isset($SessionName)) {
 session_name($SessionName);
 session_start();
 
-include ($PathPrefix . 'includes/ConnectDB.php');
-include ($PathPrefix . 'includes/DateFunctions.php');
+include($PathPrefix . 'includes/LanguageSetup.php');
+
+include($PathPrefix . 'includes/ConnectDB.php');
+include($PathPrefix . 'includes/DateFunctions.php');
 
 if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
-/* iterate through all elements of the $_POST array and DB_escape_string them
-to limit possibility for SQL injection attacks and cross scripting attacks
-*/
-
 if (isset($_SESSION['DatabaseName'])) {
+
+	/* iterate through all elements of the $_GET and $_POST arrays and DB_escape_string plus htmlspecialchars them
+	to avoid both SQL injection attacks and cross scripting attacks
+	*/
 
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
-			/*    if(get_magic_quotes_gpc()) {
-						$_POST['name'] = stripslashes($_POST['name']);
-					}
-			*/
-			$_POST[$PostVariableName] = quote_smart($_POST[$PostVariableName]);
+			//$_POST[$PostVariableName] = quote_smart($PostVariableValue);
 			$_POST[$PostVariableName] = DB_escape_string(htmlspecialchars($PostVariableValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
-				/*
-				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
-					}
-				*/
-				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
+				//$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
 				$_POST[$PostVariableName][$PostArrayKey] = DB_escape_string(htmlspecialchars($PostArrayValue, ENT_QUOTES, 'UTF-8'));
-
 			}
 		}
 	}
 
-	/* iterate through all elements of the $_GET array and DB_escape_string them
-	to limit possibility for SQL injection attacks and cross scripting attacks
-	*/
 	foreach ($_GET as $GetKey => $GetValue) {
 		if (gettype($GetValue) != 'array') {
 			$_GET[$GetKey] = DB_escape_string(htmlspecialchars($GetValue, ENT_QUOTES, 'UTF-8'));
 		} else {
 			foreach ($GetValue as $GetArrayKey => $GetArrayValue) {
-				$_POST[$GetVariableName][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
-
+				$_GET[$GetKey][$GetArrayKey] = DB_escape_string(htmlspecialchars($GetArrayValue, ENT_QUOTES, 'UTF-8'));
 			}
 		}
 	}
 
-} else { //set SESSION['FormID'] before the a user has even logged in
+} else { //set SESSION['FormID'] before a user has even logged in
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-include ($PathPrefix . 'includes/LanguageSetup.php');
-$FirstLogin = False;
-
+$FirstLogin = false;
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
-		//retrieve the sql data;
+		// Remove from the db the user favorites which are not in the session
+		/// @todo this could be done in a single query using WHERE NOT IN ...
 		$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-		$ErrMsg = _('Failed to retrieve favorites');
+		$ErrMsg = __('Failed to retrieve favorites');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result) > 0) {
 			$SQL = array();
 			while ($MyRow = DB_fetch_array($Result)) {
 				if (!isset($_SESSION['Favourites'][$MyRow['href']])) { //The script is removed;
 					$SQL[] = "DELETE FROM favourites WHERE href='" . $MyRow['href'] . "' AND userid='" . $_SESSION['UserID'] . "'";
-
 				} else {
 					unset($_SESSION['Favourites'][$MyRow['href']]);
 				}
 			}
-			if (count($_SESSION['Favourites']) > 0) {
-				$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-				$k = 0;
-				foreach ($_SESSION['Favourites'] as $url => $ttl) {
-					if ($k) {
-						$SQLi.= ",";
-					}
-					$SQLi.= "('" . $url . "', '" . $ttl . "', '" . $_SESSION['UserID'] . "')";
-					$k++;
-				}
-			}
-			foreach ($SQL as $sq) {
-//				$Result = DB_query($sq);
-			}
-			if (isset($SQLi)) {
-//				$Result = DB_query($SQLi);
-			}
-		} else {
-
-			$SQLi = "INSERT INTO favourites(href,caption,userid) VALUES ";
-			$k = 0;
-			foreach ($_SESSION['Favourites'] as $url => $ttl) {
-				if ($k) {
-					$SQLi.= ",";
-				}
-				$SQLi.= "('" . $url . "', '" . $ttl . "','" . $_SESSION['UserID'] . "')";
-				$k++;
-			}
-			if ($k) {
-//				$Result = DB_query($SQLi);
-			}
 		}
 	}
 
-	header('Location: index.php'); //go back to the main index/login
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
-} elseif (isset($AllowAnyone)){ /* only do security checks if AllowAnyone is not true */
-	if (!isset($_SESSION['DatabaseName'])){
-
+} elseif (isset($AllowAnyone)) { /* only do security checks if AllowAnyone is not true */
+	if (!isset($_SESSION['DatabaseName'])) {
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 	}
-	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
-	include ($PathPrefix . 'includes/GetConfig.php');
+	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+	include($PathPrefix . 'includes/GetConfig.php');
+
 } else {
-	include $PathPrefix . 'includes/UserLogin.php'; /* Login checking and setup */
+	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
@@ -191,10 +152,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 	/*  Need to set the theme to make login screen nice */
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
+
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 			setcookie('Login', $_SESSION['DatabaseName']);
-			include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 			if ($_SESSION['DBUpdateNumber'] >= 11) {
 				$CheckSQL = "SELECT sessionid
 							FROM sessions
@@ -230,50 +192,51 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 							WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
-				unset($Result);
+				unset($CheckSQL, $CheckResult, $Result, $SQL);
 			}
-		break;
+			break;
 
 		case UL_SHOWLOGIN:
-			include ($PathPrefix . 'includes/Login.php');
-			exit;
+			include($PathPrefix . 'includes/Login.php');
+			exit();
 
 		case UL_BLOCKED:
-			die(include ($PathPrefix . 'includes/FailedLogin.php'));
+			include($PathPrefix . 'includes/FailedLogin.php');
+			exit();
 
 		case UL_CONFIGERR:
-			$Title = _('Account Error Report');
-			include ($PathPrefix . 'includes/header.php');
+			$Title = __('Account Error Report');
+			include($PathPrefix . 'includes/header.php');
 			echo '<br /><br /><br />';
-			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
-			include ($PathPrefix . 'includes/footer.php');
-			exit;
+			prnMsg(__('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
+			include($PathPrefix . 'includes/footer.php');
+			exit();
 
 		case UL_NOTVALID:
-			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
-			die(include ($PathPrefix . 'includes/Login.php'));
+			$DemoText = '<font size="3" color="red"><b>' . __('incorrect password') . '</b></font><br /><b>' . __('The user/password combination') . '<br />' . __('is not a valid user of the system') . '</b>';
+			include($PathPrefix . 'includes/Login.php');
+			exit();
 
 		case UL_MAINTENANCE:
-			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
-			die(include ($PathPrefix . 'includes/Login.php'));
-
+			$DemoText = '<font size="3" color="red"><b>' . __('system maintenance') . '</b></font><br /><b>' . __('webERP is not available right now') . '<br />' . __('during maintenance of the system') . '</b>';
+			include($PathPrefix . 'includes/Login.php');
+			exit();
 	}
+
+	unset($rc);
 }
 
-/*If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
-/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+/* If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
+/* If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
 if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])
 	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php')
 	and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
-	header('Location: Z_UpgradeDatabase.php');
-	exit;
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Z_UpgradeDatabase.php');
+	exit();
 }
-// else {
-//	unset($_SESSION['DBVersion']);
-//}
 
 if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
@@ -285,30 +248,29 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$_SESSION['Theme'] = $DefaultTheme;
 }
 
-
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
-		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
-		exit;
+		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
+		exit();
 	}
 }
 
 // Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
-
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
-	$Title = _('Account Error Report');
-	include ($PathPrefix . 'includes/header.php');
+	$Title = __('Account Error Report');
+	include($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
-	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
-	include ($PathPrefix . 'includes/footer.php');
-	exit;
+	prnMsg(__('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
+	include($PathPrefix . 'includes/footer.php');
+	exit();
 }
 
-/*The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
+/*
+ * The page security variable is now retrieved from the database in GetConfig.php and stored in the $SESSION['PageSecurityArray'] array
  * the key for the array is the script name - the script name is retrieved from the basename ($_SERVER['SCRIPT_NAME'])
-*/
+ */
 if (!isset($PageSecurity)) {
 	//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
 	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME']) ];
@@ -316,30 +278,30 @@ if (!isset($PageSecurity)) {
 
 if (!isset($AllowAnyone)) {
 	if ((!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($PageSecurity))) {
-		$Title = _('Security Permissions Problem');
-		include ($PathPrefix . 'includes/header.php');
+		$Title = __('Security Permissions Problem');
+		include($PathPrefix . 'includes/header.php');
 		echo '<tr>
 				<td class="menu_group_items">
 					<table width="100%" class="table_index">
 						<tr>
 							<td class="menu_group_item">
-								<b><font style="size:+1; text-align:center;">' . _('The security settings on your account do not permit you to access this function') . '</font></b>
+								<b><font style="size:+1; text-align:center;">' . __('The security settings on your account do not permit you to access this function') . '</font></b>
 							</td>
 						</tr>
 					</table>
 				</td>
 			</tr>';
 
-		include ($PathPrefix . 'includes/footer.php');
-		exit;
+		include($PathPrefix . 'includes/footer.php');
+		exit();
 	}
 }
 
-//$PageSecurity = 9 hard coded for supplier access Supplier access must have just 9 and 0 tokens
+// $PageSecurity = 9 hard coded for supplier access. Supplier access must have just 9 and 0 tokens
 if (in_array(9, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
 	$SupplierLogin = 1;
 } else {
-	$SupplierLogin = 0; //false
+	$SupplierLogin = 0; // false
 
 }
 if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['AllowedPageSecurityTokens']) == 2) {
@@ -347,26 +309,19 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 } else {
 	$CustomerLogin = 0;
 }
-if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$Debug = 1; //allow debug messages
-
-} else {
-	$Debug = 0; //don't allow debug messages
-
-}
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
-	header('Location: ' . $PathPrefix . 'Dashboard.php');
+	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
 }
 
 if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Error in form verification');
-		include ('includes/header.php');
-		prnMsg(_('This form was not submitted with a correct ID'), 'error');
-		include ('includes/footer.php');
-		exit;
+		$Title = __('Error in form verification');
+		include('includes/header.php');
+		prnMsg(__('This form was not submitted with a correct ID'), 'error');
+		include('includes/footer.php');
+		exit();
 	}
 }
 
@@ -382,15 +337,14 @@ function VerifyPass($Password, $Hash) {
 function HighestFileName($PathPrefix) {
 	$files = glob($PathPrefix.'sql/updates/*.php');
 	natsort($files);
-	return basename(array_pop($files), ".php");
+	$LastFile = array_pop($files);
+	return $LastFile ? basename($LastFile, ".php") : '';
 }
 
-function quote_smart($Value) {
+/*function quote_smart($Value) {
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
 	}
 	return $Value;
-}
-
-?>
+}*/

@@ -1,24 +1,24 @@
 <?php
-include ('includes/session.php');
 
-$Title = _('Create GL Budgets');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Create GL Budgets');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLBudgets';
-include ('includes/header.php');
+include('includes/header.php');
 
 echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post" id="createbudget">';
 echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Budgets'), '" alt="', _('Budgets'), '" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', __('Budgets'), '" alt="', __('Budgets'), '" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 	$InputError = 0;
 
 	if ($_POST['StartPeriod'] > $_POST['EndPeriod']) {
-		prnMsg(_('The end period cannot be before the start period'), 'error');
+		prnMsg(__('The end period cannot be before the start period'), 'error');
 		$InputError = 1;
 	}
 
@@ -85,9 +85,9 @@ if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 		}
 
 		if (DB_error_no() == 0) {
-			prnMsg(_('The budget header information has been successfully saved'), 'success');
+			prnMsg(__('The budget header information has been successfully saved'), 'success');
 		} else {
-			prnMsg(_('There was a problem saving the budget header information'), 'error');
+			prnMsg(__('There was a problem saving the budget header information'), 'error');
 		}
 	}
 
@@ -112,9 +112,9 @@ if (isset($_GET['Edit'])) {
 	$_POST['EndPeriod'] = $MyRow['endperiod'];
 	$_POST['Primary'] = $MyRow['current'];
 	echo '<fieldset>
-			<legend>', _('Edit Budget Details'), '</legend>
+			<legend>', __('Edit Budget Details'), '</legend>
 			<field>
-				<label for="ID">', _('ID'), '</label>
+				<label for="ID">', __('ID'), '</label>
 				<div class="fieldtext">', $_GET['Edit'], '</div>
 			</field>';
 	echo '<input type="hidden" name="ID" value="', $_GET['Edit'], '" />';
@@ -122,19 +122,19 @@ if (isset($_GET['Edit'])) {
 	$_POST['Owner'] = $_SESSION['UserID'];
 	$_POST['Name'] = '';
 	$_POST['Description'] = '';
-	$_POST['StartPeriod'] = ReportPeriod(_('This Financial Year'), 'From');
-	$_POST['EndPeriod'] = ReportPeriod(_('This Financial Year'), 'To');
+	$_POST['StartPeriod'] = ReportPeriod(__('This Financial Year'), 'From');
+	$_POST['EndPeriod'] = ReportPeriod(__('This Financial Year'), 'To');
 	$_POST['Primary'] = 0;
 
 	echo '<fieldset>
-			<legend>', _('Create New Budget'), '</legend>';
+			<legend>', __('Create New Budget'), '</legend>';
 }
 
 $SQL = "SELECT userid, realname FROM www_users";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for="Owner">', _('Budget Owner'), '</label>
+		<label for="Owner">', __('Budget Owner'), '</label>
 		<select name="Owner">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['userid'] == $_POST['Owner']) {
@@ -147,12 +147,12 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Name">', _('Name of budget'), '</label>
+		<label for="Name">', __('Name of budget'), '</label>
 		<input type="text" name="Name" size="100" value="', $_POST['Name'], '" />
 	</field>';
 
 echo '<field>
-		<label for="Description">', _('Budget Description'), '</label>
+		<label for="Description">', __('Budget Description'), '</label>
 		<textarea cols="100" rows="10" name="Description">', $_POST['Description'], '</textarea>
 	</field>';
 
@@ -160,7 +160,7 @@ $SQL = "SELECT periodno, lastdate_in_period FROM periods";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for="StartPeriod">', _('Start Period'), '</label>
+		<label for="StartPeriod">', __('Start Period'), '</label>
 		<select name="StartPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['StartPeriod']) {
@@ -176,7 +176,7 @@ $SQL = "SELECT periodno, lastdate_in_period FROM periods";
 $Result = DB_query($SQL);
 
 echo '<field>
-		<label for="EndPeriod">', _('End Period'), '</label>
+		<label for="EndPeriod">', __('End Period'), '</label>
 		<select name="EndPeriod">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if ($MyRow['periodno'] == $_POST['EndPeriod']) {
@@ -189,14 +189,14 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Primary">', _('Default Budget for reports'), '</label>
+		<label for="Primary">', __('Default Budget for reports'), '</label>
 		<select name="Primary">';
 if ($_POST['Primary'] == 1) {
-	echo '<option selected="selected" value="1">', _('Yes'), '</option>';
-	echo '<option value="0">', _('No'), '</option>';
+	echo '<option selected="selected" value="1">', __('Yes'), '</option>';
+	echo '<option value="0">', __('No'), '</option>';
 } else {
-	echo '<option value="1">', _('Yes'), '</option>';
-	echo '<option selected="selected" value="0">', _('No'), '</option>';
+	echo '<option value="1">', __('Yes'), '</option>';
+	echo '<option selected="selected" value="0">', __('No'), '</option>';
 }
 echo '</select>
 	</field>';
@@ -205,11 +205,11 @@ echo '</fieldset>';
 
 if (isset($_GET['Edit'])) {
 	echo '<div class="centre">
-			<input type="submit" name="Update" value="', _('Update Details'), '" />
+			<input type="submit" name="Update" value="', __('Update Details'), '" />
 		</div>';
 } else {
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', _('Save Details'), '" />
+			<input type="submit" name="Submit" value="', __('Save Details'), '" />
 		</div>';
 }
 
@@ -228,12 +228,12 @@ if (DB_num_rows($Result) > 0) {
 	echo '<table>
 			<thead>
 				<tr>
-					<th>', _('ID'), '</th>
-					<th>', _('Owner'), '</th>
-					<th>', _('Name'), '</th>
-					<th>', _('Start From Period'), '</th>
-					<th>', _('End In Period'), '</th>
-					<th>', _('Is Primary?'), '</th>
+					<th>', __('ID'), '</th>
+					<th>', __('Owner'), '</th>
+					<th>', __('Name'), '</th>
+					<th>', __('Start From Period'), '</th>
+					<th>', __('End In Period'), '</th>
+					<th>', __('Is Primary?'), '</th>
 					<th></th>
 				</tr>
 			</thead>';
@@ -241,9 +241,9 @@ if (DB_num_rows($Result) > 0) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['current'] == 0) {
-			$Current = _('No');
+			$Current = __('No');
 		} else {
-			$Current = _('Yes');
+			$Current = __('Yes');
 		}
 		echo '<tr class="striped_row">
 				<td>', $MyRow['id'], '</td>
@@ -252,13 +252,11 @@ if (DB_num_rows($Result) > 0) {
 				<td>', MonthAndYearFromPeriodNo($MyRow['startperiod']), '</td>
 				<td>', MonthAndYearFromPeriodNo($MyRow['endperiod']), '</td>
 				<td>', $Current, '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit=', $MyRow['id'], '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?Edit=', $MyRow['id'], '">', __('Edit'), '</a></td>
 			</tr>';
 	}
 	echo '</tbody>
 		</table>';
 }
 
-include ('includes/footer.php');
-
-?>
+include('includes/footer.php');

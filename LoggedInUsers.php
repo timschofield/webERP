@@ -1,15 +1,14 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Users currently logged in');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Users currently logged in');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
-
 include('includes/header.php');
 
-
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' . _('Logged In Users') . '" alt="" />' . ' ' . $Title .
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="' . __('Logged In Users') . '" alt="" />' . ' ' . $Title .
 	'</p>';
 
 $SQL = "SELECT sessionid,
@@ -28,14 +27,14 @@ $Result = DB_query($SQL);
 echo '<table>
 		<thead>
 			<tr>
-				<th class="SortedColumn">', _('Session'), '</th>
-				<th class="SortedColumn">', _('User'), '</th>
-				<th class="SortedColumn">', _('Name'), '</th>
-				<th class="SortedColumn">', _('Email'), '</th>
-				<th class="SortedColumn">', _('Phone'), '</th>
-				<th class="SortedColumn">', _('Logged in'), '</th>
-				<th class="SortedColumn">', _('Script name'), '</th>
-				<th class="SortedColumn">', _('Script time'), '</th>
+				<th class="SortedColumn">', __('Session'), '</th>
+				<th class="SortedColumn">', __('User'), '</th>
+				<th class="SortedColumn">', __('Name'), '</th>
+				<th class="SortedColumn">', __('Email'), '</th>
+				<th class="SortedColumn">', __('Phone'), '</th>
+				<th class="SortedColumn">', __('Logged in'), '</th>
+				<th class="SortedColumn">', __('Script name'), '</th>
+				<th class="SortedColumn">', __('Script time'), '</th>
 			</tr>
 		</thead>';
 
@@ -56,5 +55,3 @@ echo '</tbody>
 	</table>';
 
 include('includes/footer.php');
-
-?>

@@ -1,13 +1,14 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Serial Item Research');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Serial Item Research');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	  </p>';
 
 //validate the submission
@@ -23,19 +24,19 @@ echo '<form id="SerialNoResearch" method="post" action="' . htmlspecialchars($_S
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-		<legend>', _('Serial Number Lookup'), '</legend>';
+		<legend>', __('Serial Number Lookup'), '</legend>';
 
 echo  '<field>
-		<label for="serialno">', _('Serial Number') .':</label>
+		<label for="serialno">', __('Serial Number') .':</label>
 		<input id="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Search') . '" />
+		<input type="submit" name="submit" value="' . __('Search') . '" />
 	</div>
 </form>';
 
-echo '<script  type="text/javascript">
+echo '<script>
 		document.getElementById("serialno").focus();
 	</script>';
 
@@ -71,22 +72,22 @@ if ($SerialNo!='') {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) == 0){
-		prnMsg( _('No History found for Serial Number'). ': <b>' . $SerialNo . '</b>' , 'warn');
+		prnMsg( __('No History found for Serial Number'). ': <b>' . $SerialNo . '</b>' , 'warn');
 	} else {
-		echo '<h4>' .  _('Details for Serial Item').': <b>' . $SerialNo . '</b><br />' .  _('Length').'='.mb_strlen($SerialNo) . '</h4>';
+		echo '<h4>' .  __('Details for Serial Item').': <b>' . $SerialNo . '</b><br />' .  __('Length').'='.mb_strlen($SerialNo) . '</h4>';
 		echo '<table class="selection">';
 		echo '<tr>
-				<th>' . _('StockID') . '</th>
-				<th>' . _('CurInvQty') . '</th>
-				<th>' . _('Move Qty') . '</th>
-				<th>' . _('Move Type') . '</th>
-				<th>' . _('Trans #') . '</th>
-				<th>' . _('Location') . '</th>
-				<th>' . _('Date') . '</th>
-				<th>' . _('DebtorNo') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Move Ref') . '</th>
-				<th>' . _('Total Move Qty') . '</th>
+				<th>' . __('StockID') . '</th>
+				<th>' . __('CurInvQty') . '</th>
+				<th>' . __('Move Qty') . '</th>
+				<th>' . __('Move Type') . '</th>
+				<th>' . __('Trans #') . '</th>
+				<th>' . __('Location') . '</th>
+				<th>' . __('Date') . '</th>
+				<th>' . __('DebtorNo') . '</th>
+				<th>' . __('Branch') . '</th>
+				<th>' . __('Move Ref') . '</th>
+				<th>' . __('Total Move Qty') . '</th>
 			</tr>';
 		while ($MyRow=DB_fetch_row($Result)) {
 			echo '<tr>
@@ -109,4 +110,3 @@ if ($SerialNo!='') {
 echo '</div>';
 
 include('includes/footer.php');
-?>

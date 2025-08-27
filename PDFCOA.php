@@ -1,7 +1,7 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['LotKey']))  {
@@ -25,31 +25,31 @@ if (isset($_GET['QASampleID']))  {
 If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASampleID=='')){
 	$ViewTopic = 'QualityAssurance';
 	$BookMark = '';
-        $Title = _('Select Certificate of Analysis To Print');
+        $Title = __('Select Certificate of Analysis To Print');
         include('includes/header.php');
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
-		<legend>', _('Report Criteria'), '</legend>
+		<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="ProdSpec">' . _('Enter Item') .':</label>
+			<label for="ProdSpec">' . __('Enter Item') .':</label>
 			<input type="text" name="ProdSpec" size="25" maxlength="25" />
 		</field>
 		<field>
-			<label for="LotKey">' . _('Enter Lot') .':</label>
+			<label for="LotKey">' . __('Enter Lot') .':</label>
 			<input type="text" name="LotKey" size="25" maxlength="25" />
 		</field>
 		</fieldset>
 		<div>
-			<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+			<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 		<field>
-			<label for="QASampleID">' . _('Or Select Existing Lot') .':</label>';
+			<label for="QASampleID">' . __('Or Select Existing Lot') .':</label>';
 	$SQLSpecSelect="SELECT sampleid,
 							lotkey,
 							prodspeckey,
@@ -62,7 +62,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 
 	$ResultSelection=DB_query($SQLSpecSelect);
 	echo '<select name="QASampleID" style="font-family: monospace; white-space:pre;">';
-	echo '<option value="">' . str_pad(_('Lot/Serial'),15,'_'). str_pad(_('Item'),20, '_', STR_PAD_RIGHT). str_pad(_('Description'),20,'_') . '</option>';
+	echo '<option value="">' . str_pad(__('Lot/Serial'),15,'_'). str_pad(__('Item'),20, '_', STR_PAD_RIGHT). str_pad(__('Description'),20,'_') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
@@ -70,7 +70,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 	echo '</field>
 		</fieldset>
 		<div>
-		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+		<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 		</div>
 		</form>';
     include('includes/footer.php');
@@ -78,7 +78,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 }
 
 
-$ErrMsg = _('There was a problem retrieving the Lot Information') . ' ' .$SelectedCOA . ' ' . _('from the database');
+$ErrMsg = __('There was a problem retrieving the Lot Information') . ' ' .$SelectedCOA . ' ' . __('from the database');
 if (isset($SelectedCOA)) {
 	$SQL = "SELECT lotkey,
 					description,
@@ -121,24 +121,24 @@ if (isset($SelectedCOA)) {
 				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 }
-$Result=DB_query($SQL,$ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-	$Title = _('Print Certificate of Analysis Error');
+	$Title = __('Print Certificate of Analysis Error');
 	include('includes/header.php');
-	 echo '<div class="centre">
+	echo '<div class="centre">
 			<br />
 			<br />
 			<br />';
-	prnMsg( _('Unable to Locate Lot') . ' : ' . $SelectedCOA . ' ', 'error');
+	prnMsg( __('Unable to Locate Lot') . ' : ' . $SelectedCOA . ' ', 'error');
 	echo '<br />
 			<br />
 			<br />
 			<table class="table_index">
 			<tr>
 				<td class="menu_group_item">
-					<ul><li><a href="'. $RootPath . '/PDFCOA.php">' . _('Certificate of Analysis') . '</a></li></ul>
+					<ul><li><a href="'. $RootPath . '/PDFCOA.php">' . __('Certificate of Analysis') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>
@@ -147,7 +147,7 @@ if (DB_num_rows($Result)==0){
 			<br />
 			<br />';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 $PaperSize = 'Letter';
 if ($QASampleID>'') {
@@ -156,8 +156,8 @@ if ($QASampleID>'') {
 	DB_data_seek($Result,0);
 }
 include('includes/PDFStarter.php');
-$pdf->addInfo('Title', _('Certificate of Analysis') );
-$pdf->addInfo('Subject', _('Certificate of Analysis') . ' ' . $SelectedCOA);
+$pdf->addInfo('Title', __('Certificate of Analysis') );
+$pdf->addInfo('Subject', __('Certificate of Analysis') . ' ' . $SelectedCOA);
 $FontSize=12;
 $PageNumber = 1;
 $HeaderPrinted=0;
@@ -168,10 +168,10 @@ $CurSection='NULL';
 $SectionTitle='';
 $SectionTrailer='';
 
-$SectionsArray=array(array('PhysicalProperty',3, _('Physical Properties'), '', array(260,110,135),array(_('Physical Property'),_('Value'),_('Test Method')),array('left','center','center')),
-					 array('',3, _('Header'), _('* Trailer'), array(260,110,135), array(_('Physical Property'),_('Value'),_('Test Method')),array('left','center','center')),
-					 array('Processing',2, _('Injection Molding Processing Guidelines'), _('* Desicant type dryer required.'), array(240,265),array(_('Setting'),_('Value')),array('left','center')),
-					 array('RegulatoryCompliance',2, _('Regulatory Compliance'), '', array(240,265),array(_('Regulatory Compliance'),_('Value')),array('left','center')));
+$SectionsArray=array(array('PhysicalProperty',3, __('Physical Properties'), '', array(260,110,135),array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
+					 array('',3, __('Header'), __('* Trailer'), array(260,110,135), array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
+					 array('Processing',2, __('Injection Molding Processing Guidelines'), __('* Desicant type dryer required.'), array(240,265),array(__('Setting'),__('Value')),array('left','center')),
+					 array('RegulatoryCompliance',2, __('Regulatory Compliance'), '', array(240,265),array(__('Regulatory Compliance'),__('Value')),array('left','center')));
 
 while ($MyRow=DB_fetch_array($Result)){
 	if ($MyRow['description']=='') {
@@ -223,7 +223,7 @@ while ($MyRow=DB_fetch_array($Result)){
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
 			$PageNumber++;
-			include ('includes/PDFCOAHeader.php');
+			include('includes/PDFCOAHeader.php');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
 		$YPos -= $LineHeight;
@@ -279,7 +279,7 @@ while ($MyRow=DB_fetch_array($Result)){
 		$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		$PrintTrailer=0;
 		$PageNumber++;
-		include ('includes/PDFCOAHeader.php');
+		include('includes/PDFCOAHeader.php');
 	}
 	//echo 'PrintTrailer'.$PrintTrailer.' '.$PrevTrailer.'<br>' ;
 } //while loop
@@ -297,7 +297,7 @@ if ($SectionTrailer>'') {
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
-	include ('includes/PDFCOAHeader.php');
+	include('includes/PDFCOAHeader.php');
 }
 
 $FontSize=8;
@@ -308,7 +308,7 @@ $SQL = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityCOAText'";
 
-$Result=DB_query($SQL, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 $MyRow=DB_fetch_array($Result);
 $Disclaimer=$MyRow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
@@ -319,5 +319,3 @@ while (mb_strlen($LeftOvers) > 1) {
 
 $pdf->OutputI($_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
-
-?>

@@ -1,17 +1,14 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include ('includes/session.php');
-
-$Title = _('GL Codes Inquiry');
-
+$Title = __('GL Codes Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Portrait Mode)') . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . __('Print Invoices or Credit Notes (Portrait Mode)') . '
 	</p>';
 
 $SQL = "SELECT group_,
@@ -21,17 +18,17 @@ $SQL = "SELECT group_,
 		ORDER BY sequenceintb,
 				accountcode";
 
-$ErrMsg = _('No general ledger accounts were returned by the SQL because');
-$AccountsResult = DB_query($SQL,$ErrMsg);
+$ErrMsg = __('No general ledger accounts were returned by the SQL because');
+$AccountsResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
 echo '<table cellpadding="2">
 		<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
 			<tr>
-				<th>' . _('Group') . '</th>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Account Name') . '</th>
+				<th>' . __('Group') . '</th>
+				<th>' . __('Code') . '</th>
+				<th>' . __('Account Name') . '</th>
 			</tr>
 		</thead>';
 
@@ -59,4 +56,3 @@ while ($MyRow=DB_fetch_array($AccountsResult)) {
 
 echo '</table>';
 include('includes/footer.php');
-?>

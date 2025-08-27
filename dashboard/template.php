@@ -1,13 +1,14 @@
 <?php
-/**********************************************************/
-$PathPrefix = '../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
-	require_once ($PathPrefix . 'includes/session.php');
+	// allow dashboard applet to run standalone
+	$DirectoryLevelsDeep = 1;
+	$PathPrefix = __DIR__ . '/../';
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
 }
 
-$ScriptTitle = _('Enter the script title here');
+$ScriptTitle = __('Enter the script title here');
 
 $SQL = "SELECT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 $DashboardResult = DB_query($SQL);
@@ -18,7 +19,7 @@ echo '<table class="DashboardTable">
 			<tr>
 				<th colspan="5">
 					<div class="CanvasTitle">', $ScriptTitle, '
-					<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
+					<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
 					</div>
 				</th>
 			</tr>';
@@ -65,5 +66,3 @@ while ($MyRow = DB_fetch_array($DashboardResult)) {
 echo '</tbody>
 	</table>';
 /* Don't forget to close off the table */
-
-?>

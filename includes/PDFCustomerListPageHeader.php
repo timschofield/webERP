@@ -1,4 +1,5 @@
 <?php
+
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
@@ -14,20 +15,20 @@ $YPos -=$LineHeight;
 
 $FontSize =10;
 
-$Heading = _('Customers List for'). ' ';
+$Heading = __('Customers List for'). ' ';
 
 if (in_array('All', $_POST['Areas'])){
-	$Heading .= _('All Territories'). ' ';
+	$Heading .= __('All Territories'). ' ';
 } else {
 	if (count($_POST['Areas'])==1){
-		$Heading .= _('Territory') . ' ' . $_POST['Areas'][0];
+		$Heading .= __('Territory') . ' ' . $_POST['Areas'][0];
 	} else {
-		$Heading .= _('Territories'). ' ';
+		$Heading .= __('Territories'). ' ';
 		$NoOfAreas = count($_POST['Areas']);
 		$i=1;
 		foreach ($_POST['Areas'] as $Area){
 			if ($i==$NoOfAreas){
-				$Heading .= _('and') . ' ' . $Area . ' ';
+				$Heading .= __('and') . ' ' . $Area . ' ';
 			} elseif ($i==($NoOfAreas-1)) {
 				$Heading .= $Area . ' ';
 			} else {
@@ -37,19 +38,19 @@ if (in_array('All', $_POST['Areas'])){
 	}
 }
 
-$Heading .= ' '. _('and for').' ';
+$Heading .= ' '. __('and for').' ';
 if (in_array('All', $_POST['SalesPeople'])){
-	$Heading .= _('All Salespeople');
+	$Heading .= __('All Salespeople');
 } else {
 	if (count($_POST['SalesPeople'])==1){
-		$Heading .= _('only') .' ' . $_POST['SalesPeople'][0];
+		$Heading .= __('only') .' ' . $_POST['SalesPeople'][0];
 	} else {
-		$Heading .= _('Salespeople') .' ';
+		$Heading .= __('Salespeople') .' ';
 		$NoOfSalesfolk = count($_POST['SalesPeople']);
 		$i=1;
 		foreach ($_POST['SalesPeople'] as $Salesperson){
 			if ($i==$NoOfSalesfolk){
-				$Heading .= _('and') . ' ' . $Salesperson . " ";
+				$Heading .= __('and') . ' ' . $Salesperson . " ";
 			} elseif ($i==($NoOfSalesfolk-1)) {
 				$Heading .= $Salesperson . " ";
 			} else {
@@ -66,7 +67,7 @@ $pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 $pdf->setFont('','');
 
 $FontSize = 8;
-$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, __('Printed'). ': ' . Date($_SESSION['DefaultDateFormat']) . '   '. __('Page'). ' ' . $PageNumber);
 
 $YPos -=(3*$LineHeight);
 
@@ -78,11 +79,10 @@ $pdf->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos-5);
 
 /*set up the headings */
 
-$LeftOvers = $pdf->addTextWrap(40,$YPos,40,$FontSize, _('Act Code'),'left');
-$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize, _('Postal Address'),'left');
-$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,_('Branch Code'),'left');
-$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,_('Branch Contact Information'),'left');
-$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,_('Branch Delivery Address'),'left');
+$LeftOvers = $pdf->addTextWrap(40,$YPos,40,$FontSize, __('Act Code'),'left');
+$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize, __('Postal Address'),'left');
+$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,__('Branch Code'),'left');
+$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,__('Branch Contact Information'),'left');
+$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,__('Branch Delivery Address'),'left');
 
 $YPos =$YPos - (2*$LineHeight);
-?>

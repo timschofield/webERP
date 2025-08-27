@@ -1,10 +1,11 @@
 <?php
 
-/*need to allow this script to run from Cron or windows scheduler */
+/* need to allow this script to run from Cron or windows scheduler */
 //$AllowAnyone = true;
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {
+	/// @todo we make this safer, by eg. defining a whitelist of accessible databases...
 	$_SESSION['DatabaseName'] = $_GET['Database'];
 	$DatabaseName = $_GET['Database'];
 	$_POST['CompanyNameField'] = $_GET['Database'];
@@ -17,13 +18,14 @@ if (isset($argc)) {
 		$_POST['CompanyNameField'] = $argv[1];
 	}
 }
-include('includes/session.php');
 
-$Title = _('Recurring Orders Process');
-/* webERP manual links before header.php */
-$ViewTopic= "SalesOrders";
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Recurring Orders Process');
+$ViewTopic = "SalesOrders";
 $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetSalesTransGLCodes.php');
 
@@ -72,20 +74,20 @@ $SQL = "SELECT recurringsalesorders.recurrorderno,
 		AND (TO_DAYS(NOW()) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency)
 		AND DATE_ADD(recurringsalesorders.lastrecurrence, " . INTERVAL ('365/recurringsalesorders.frequency', 'DAY') . ") <= recurringsalesorders.stopdate";
 
-$RecurrOrdersDueResult = DB_query($SQL,_('There was a problem retrieving the recurring sales order templates. The database reported:'));
+$RecurrOrdersDueResult = DB_query($SQL,__('There was a problem retrieving the recurring sales order templates. The database reported:'));
 
 if (DB_num_rows($RecurrOrdersDueResult)==0){
-	prnMsg(_('There are no recurring order templates that are due to have another recurring order created'),'warn');
+	prnMsg(__('There are no recurring order templates that are due to have another recurring order created'),'warn');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
-prnMsg(_('The number of recurring orders to process is') .' : ' . DB_num_rows($RecurrOrdersDueResult),'info');
+prnMsg(__('The number of recurring orders to process is') .' : ' . DB_num_rows($RecurrOrdersDueResult),'info');
 
 while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$EmailText ='';
-	echo '<br />' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
+	echo '<br />' . __('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . __('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . __('is being processed');
 
 	DB_Txn_Begin();
 
@@ -95,7 +97,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']),'d',(365/$RecurrOrderRow['frequency'])));
 
-	echo '<br />' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
+	echo '<br />' . __('Date calculated for the next recurrence was') .': ' . $DelDate;
 	$OrderNo = GetNextTransNo(30);
 
 	$HeaderSQL = "INSERT INTO salesorders (
@@ -141,10 +143,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $RecurrOrderRow['fromstkloc'] ."',
 							'" . $DelDate . "')";
 
-	$ErrMsg = _('The order cannot be added because');
-	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,true);
+	$ErrMsg = __('The order cannot be added because');
+	$InsertQryResult = DB_query($HeaderSQL, $ErrMsg,true);
 
-	$EmailText = _('A new order has been created from a recurring order template for customer') .' ' .  $RecurrOrderRow['debtorno'] . ' ' . $RecurrOrderRow['branchcode'] . "\n" . _('The order number is:') . ' ' . $OrderNo;
+	$EmailText = __('A new order has been created from a recurring order template for customer') .' ' .  $RecurrOrderRow['debtorno'] . ' ' . $RecurrOrderRow['branchcode'] . "\n" . __('The order number is:') . ' ' . $OrderNo;
 
 	/*need to look up RecurringOrder from the template and populate the line RecurringOrder array with the sales order details records */
 	$LineItemsSQL = "SELECT recurrsalesorderdetails.stkcode,
@@ -157,8 +159,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							ON recurrsalesorderdetails.stkcode = stockmaster.stockid
 						WHERE recurrsalesorderdetails.recurrorderno ='" . $RecurrOrderRow['recurrorderno'] . "'";
 
-	$ErrMsg = _('The line items of the recurring order cannot be retrieved because');
-	$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
+	$ErrMsg = __('The line items of the recurring order cannot be retrieved because');
+	$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
 	$LineCounter = 0;
 
@@ -185,19 +187,19 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . floatval($RecurrOrderLineRow['discountpercent']) . "',
 							'" . $RecurrOrderLineRow['narrative'] . "')";
 
-			$Ins_LineItemResult = DB_query($LineItemsSQL,_('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
+			$Ins_LineItemResult = DB_query($LineItemsSQL,__('Could not insert the order lines from the recurring order template'),true);	/*Populating a new order line items*/
 			$LineCounter ++;
 		} /* line items from recurring sales order details */
 	} //end if there are line items on the recurring order
 
 	$SQL = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
 			WHERE recurrorderno='" . $RecurrOrderRow['recurrorderno'] ."'";
-	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
-	$Result = DB_query($SQL,$ErrMsg,true);
+	$ErrMsg = __('Could not update the last recurrence of the recurring order template. The database reported the error:');
+	$Result = DB_query($SQL, $ErrMsg, true);
 
 	DB_Txn_Commit();
 
-	prnMsg(_('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . _('with order Number') . ' ' . $OrderNo, 'success');
+	prnMsg(__('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . __('with order Number') . ' ' . $OrderNo, 'success');
 
 	if ($RecurrOrderRow['autoinvoice']==1){
 		/*Only dummy item orders can have autoinvoice =1
@@ -211,7 +213,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				WHERE custbranch.debtorno ='". $RecurrOrderRow['debtorno'] . "'
 				AND custbranch.branchcode = '" . $RecurrOrderRow['branchcode'] . "'";
 
-		$ErrMsg = _('Unable to determine the area where the sale is to, from the customer branches table, please select an area for this branch');
+		$ErrMsg = __('Unable to determine the area where the sale is to, from the customer branches table, please select an area for this branch');
 		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		$Area = $MyRow[0];
@@ -223,14 +225,14 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				FROM currencies INNER JOIN debtorsmaster
 				ON debtorsmaster.currcode=currencies.currabrev
 				WHERE debtorno='" . $RecurrOrderRow['debtorno'] . "'";
-		$ErrMsg = _('The exchange rate for the customer currency could not be retrieved from the currency table because:');
-		$Result = DB_query($SQL,$ErrMsg);
+		$ErrMsg = __('The exchange rate for the customer currency could not be retrieved from the currency table because:');
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		$CurrencyRate = $MyRow[0];
 
 		$SQL = "SELECT taxprovinceid FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
-		$ErrMsg = _('Could not retrieve the tax province of the location from where the order was fulfilled because:');
-		$Result = DB_query($SQL,$ErrMsg);
+		$ErrMsg = __('Could not retrieve the tax province of the location from where the order was fulfilled because:');
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow=DB_fetch_row($Result);
 		$DispTaxProvinceID = $MyRow[0];
 
@@ -270,8 +272,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			AND taxauthrates.taxcatid = '" . $RecurrOrderLineRow['taxcatid'] . "'
 			ORDER BY taxgrouptaxes.calculationorder";
 
-			$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
-			$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
+			$ErrMsg = __('The taxes and rates for this item could not be retrieved because');
+			$GetTaxRatesResult = DB_query($SQL, $ErrMsg);
 
 			$LineTaxAmount = 0;
 			$TaxTotals =array();
@@ -318,9 +320,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				WHERE orderno = '" . $OrderNo . "'
 				AND stkcode = '" . $RecurrOrderLineRow['stkcode'] . "'";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order detail record could not be updated because');
-			$DbgMsg = _('The following SQL to update the sales order detail record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The sales order detail record could not be updated because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			// Insert stock movements - with unit cost
 			$LocalCurrencyPrice= ($RecurrOrderLineRow['unitprice'] *(1- floatval($RecurrOrderLineRow['discountpercent'])))/ $CurrencyRate;
@@ -360,9 +361,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						'0',
 						'" . $RecurrOrderLineRow['narrative'] . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Stock movement records could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Stock movement records could not be inserted because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -381,9 +381,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $Tax['TaxCalculationOrder'] . "',
 							'" . $Tax['TaxOnTax'] . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Taxes and rates applicable to this invoice line item could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock movement tax detail records was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Taxes and rates applicable to this invoice line item could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 			/*Insert Sales Analysis records */
 
@@ -420,9 +419,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					salesanalysis.typeabbrev,
 					salesanalysis.salesperson";
 
-			$ErrMsg = _('The count of existing Sales analysis records could not run because');
-			$DbgMsg = _('SQL to count the no of sales analysis records');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = __('The count of existing Sales analysis records could not run because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			$MyRow = DB_fetch_row($Result);
 
@@ -479,9 +477,8 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 								AND custbranch.branchcode='" . $RecurrOrderRow['branchcode'] . "'";
 			}
 
-			$ErrMsg = _('Sales analysis record could not be added or updated because');
-			$DbgMsg = _('The following SQL to insert the sales analysis record was used');
-			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$ErrMsg = __('Sales analysis record could not be added or updated because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			if ($_SESSION['CompanyRecord']['gllink_debtors']==1 AND $RecurrOrderLineRow['unitprice'] !=0){
 
@@ -503,13 +500,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 						'" . $DelDate . "',
 						'" . $PeriodNo . "',
 						'" . $SalesGLAccounts['salesglcode'] . "',
-						'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'] . "',
+						'" . mb_substr($RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . " x " . $RecurrOrderLineRow['quantity'] . " @ " . $RecurrOrderLineRow['unitprice'], 0, 200) . "',
 						'" . filter_number_format(-$RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity']/$CurrencyRate) . "'
 					)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales GL posting could not be inserted because');
-				$DbgMsg = '<br />' ._('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The sales GL posting could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				/* Don't care about COGS because it can only be a dummy items being invoiced ... no cost of sales to mess with */
 
@@ -530,13 +526,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 							'" . $DelDate . "',
 							'" . $PeriodNo . "',
 							'" . $SalesGLAccounts['discountglcode'] . "',
-							'" . $RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . ' @ ' . ($RecurrOrderLineRow['discountpercent'] * 100) . "%',
+							'" . mb_substr($RecurrOrderRow['debtorno'] . " - " . $RecurrOrderLineRow['stkcode'] . ' @ ' . ($RecurrOrderLineRow['discountpercent'] * 100) . "%", 0, 200) . "',
 							'" . filter_number_format($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] * $RecurrOrderLineRow['discountpercent']/$CurrencyRate) . "'
 						)";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales discount GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The sales discount GL posting could not be inserted because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 
 				} /*end of if discount !=0 */
 
@@ -570,13 +565,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 											'" . $DelDate. "',
 											'" . $PeriodNo . "',
 											'" . $Tax['GLCode'] . "',
-											'" . $RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
+											'" . mb_substr($RecurrOrderRow['debtorno'] . "-" . $Tax['TaxAuthDescription'], 0, 200) . "',
 											'" . filter_number_format(-$Tax['FXAmount']/$CurrencyRate) . "'
 											)";
 
-					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The tax GL posting could not be inserted because');
-					$DbgMsg = _('The following SQL to insert the tax GLTrans record was used');
-					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The tax GL posting could not be inserted because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 			}
 
@@ -597,13 +591,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $DelDate . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
-										'" . $RecurrOrderRow['debtorno'] . "',
+										'" . mb_substr($RecurrOrderRow['debtorno'], 0, 200) . "',
 										'" . filter_number_format($TotalInvLocalCurr) . "'
 									)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The total debtor GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the total debtors control GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The total debtor GL posting could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 
 			/*Could do with setting up a more flexible freight posting schema that looks at the sales type and area of the customer branch to determine where to post the freight recovery */
@@ -623,22 +616,20 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $DelDate . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['freightact'] . "',
-										'" . $RecurrOrderRow['debtorno'] . "',
+										'" . mb_substr($RecurrOrderRow['debtorno'], 0, 200) . "',
 										'" . filter_number_format(-$RecurrOrderRow['freightcost']/$CurrencyRate) . "'
 									)";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The freight GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The freight GL posting could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			}
 		} /*end of if Sales and GL integrated */
 
 	/*Update order header for invoice charged on */
 		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,' Inv ','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo . "'";
 
-		$ErrMsg = _('CRITICAL ERROR') . ' ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales order header could not be updated with the invoice number');
-		$DbgMsg = _('The following SQL to update the sales order was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg = __('CRITICAL ERROR') . ' ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The sales order header could not be updated with the invoice number');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 	/*Now insert the DebtorTrans */
 
@@ -677,12 +668,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 										'" . $RecurrOrderRow['comments'] . "',
 										'" . $RecurrOrderRow['shipvia'] . "')";
 
-		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction record could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg =__('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The debtor transaction record could not be inserted because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
-
 
 		$SQL = "INSERT INTO debtortranstaxes (debtortransid,
 							taxauthid,
@@ -691,32 +680,30 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 					'" . $TaxAuthID . "',
 					'" . filter_number_format($Tax['FXAmount']/$CurrencyRate) . "')";
 
-		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The debtor transaction taxes records could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
- 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg =__('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The debtor transaction taxes records could not be inserted because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 
-		prnMsg(_('Invoice number'). ' '. $InvoiceNo .' '. _('processed'),'success');
+		prnMsg(__('Invoice number'). ' '. $InvoiceNo .' '. __('processed'),'success');
 
-		$EmailText .= "\n" . _('This recurring order was set to produce the invoice automatically on invoice number') . ' ' . $InvoiceNo;
+		$EmailText .= "\n" . __('This recurring order was set to produce the invoice automatically on invoice number') . ' ' . $InvoiceNo;
 	} /*end if the recurring order is set to auto invoice */
 
 	if (IsEmailAddress($RecurrOrderRow['email'])){
 		$From = $_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">";
 		$To = $RecurrOrderRow['email'];
-		$Subject = _('Recurring Order Created Advice');
+		$Subject = __('Recurring Order Created Advice');
 		$Body = $EmailText;
 
 		if (!SendEmailFromWebERP($From, $To, $Subject, $Body)) {
-			prnMsg(_('Failed to send email advice for this order to') . ' ' . $To, 'error');
+			prnMsg(__('Failed to send email advice for this order to') . ' ' . $To, 'error');
 		}
 
 	} else {
-		prnMsg(_('No email advice was sent for this order because the location has no email contact defined with a valid email address'),'warn');
+		prnMsg(__('No email advice was sent for this order because the location has no email contact defined with a valid email address'),'warn');
 	}
 
 }/*end while there are recurring orders due to have a new order created */
 
 include('includes/footer.php');
-?>

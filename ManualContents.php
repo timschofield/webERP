@@ -1,5 +1,5 @@
 <?php
-// ManualContents.php
+
 /* Shows the local manual content if available, else shows the manual content in en-GB. */
 /* This program is under the GNU General Public License, last version. */
 /* This creative work is under the CC BY-NC-SA, later version. */
@@ -18,7 +18,7 @@ What section is named after Help Begin: and there can be multiple sections separ
 
 // BEGIN: Procedure division ---------------------------------------------------
 $PageSecurity = 0;
-$Title = _('webERP Manual');
+
 // Set the language to show the manual:
 /*
 session_start();
@@ -27,16 +27,18 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('webERP Manual');
 
 // Set the Cascading Style Sheet for the manual:
-$ManualStyle = 'locale/' . $Language . '/Manual/style/manual.css';
-if(!file_exists($ManualStyle)) {// If locale ccs not exist, use doc/Manual/style/manual.css. Each language can have its own css.
-	$ManualStyle = 'doc/Manual/style/manual.css';
+$ManualStyle = 'locale/' . $Language . '/Manual/css/manual.css';
+if (!file_exists($ManualStyle)) { // If locale ccs not exist, use doc/Manual/css/manual.css. Each language can have its own css.
+	$ManualStyle = 'doc/Manual/css/manual.css';
 }
 // Set the the outline of the webERP manual:
 $ManualOutline = 'locale/' . $Language . '/Manual/ManualOutline.php';
-if(!file_exists($ManualOutline)) {// If locale outline not exist, use doc/Manual/ManualOutline.php. Each language can have its own outline.
+if (!file_exists($ManualOutline)) { // If locale outline not exist, use doc/Manual/ManualOutline.php. Each language can have its own outline.
 	$ManualOutline = 'doc/Manual/ManualOutline.php';
 }
 
@@ -44,21 +46,21 @@ ob_start();
 
 // Output the header part:
 $ManualHeader = 'locale/' . $Language . '/Manual/ManualHeader.html';
-if(file_exists($ManualHeader)) {// Use locale ManualHeader.html if exists. Each language can have its own page header.
+if (file_exists($ManualHeader)) { // Use locale ManualHeader.html if exists. Each language can have its own page header.
 	include($ManualHeader);
 } else {// Default page header:
 	echo '<!DOCTYPE html>
-	<html>
+	<html lang="', str_replace('_', '-', substr($Language, 0, 5)), '">
 	<head>
 	  <title>', $Title, '</title>
 	  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 	  <link rel="stylesheet" type="text/css" href="', $ManualStyle, '" />
 	</head>
-	<body lang="', str_replace('_', '-', substr($Language, 0, 5)), '">
+	<body>
 		<div id="pagetitle">', $Title, '</div>
 		<div class="right">
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a><br />
-			<a class="minitext" href="#bottom">⬇ ', _('Go to Bottom'), '</a>
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a><br />
+			<a class="minitext" href="#bottom">⬇ ', __('Go to Bottom'), '</a>
 		</div>';
 }
 
@@ -72,10 +74,10 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
 	if(!isset($_POST['Submit'])) {
-		echo '<p>', _('Click on a link to view a page'), '</p>';
+		echo '<p>', __('Click on a link to view a page'), '</p>';
 	}
 	echo '<h1>';
-	echo _('Table of Contents'), '</h1>';
+	echo __('Table of Contents'), '</h1>';
 	$j = 0;
 	foreach($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
 		$Name = 'Select' . $Title;
@@ -102,7 +104,7 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 		++$j;
 	}
 	echo '</ul>',
-		'<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>',
+		'<p><input type="submit" name="Submit" value="', __('Display Checked'), '" /></p>',
 		'</form>';
 }
 
@@ -134,8 +136,8 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 	include($ManualFooter);
 } else {// Default page footer:
 	echo '<div class="right">
-			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', _('Go to Top'), '</a><br />
-			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', _('Table of Contents'), '</a>
+			<a id="bottom">&#160;</a><a class="minitext" href="#top">⬆ ', __('Go to Top'), '</a><br />
+			<a id="top">&#160;</a><a class="minitext" href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '">☜ ', __('Table of Contents'), '</a>
 		</div>
 	</body>
 	</html>';
@@ -143,4 +145,3 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 
 ob_end_flush();
 // END: Procedure division -----------------------------------------------------
-?>

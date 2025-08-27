@@ -1,16 +1,18 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-$Title=_('Customer Activity and Balances');
+require(__DIR__ . '/includes/session.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
+$Title = __('Customer Activity and Balances');
 /*To do: Info in the manual. RChacon.*/
 $ViewTopic = 'ARInquiries';
 $BookMark = '';
 
-if(!isset($_POST['CreateCSV'])) {
+if (!isset($_POST['CreateCSV'])) {
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Customer Activity and Balances') . '" /> ' . _('Customer Activity and Balances') . '</p>';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Customer Activity and Balances') . '" /> ' . __('Customer Activity and Balances') . '</p>';
 }
 
 if (!isset($_POST['RunReport'])){
@@ -23,11 +25,11 @@ if (!isset($_POST['RunReport'])){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
+			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="Customer">' . _('Customer') . '</label>
+				<label for="Customer">' . __('Customer') . '</label>
 				<select name="Customer">
-					<option selected="selected" value="">' . _('All') . '</option>';
+					<option selected="selected" value="">' . __('All') . '</option>';
 	while ($CustomerRow = DB_fetch_array($CustomersResult)) {
 		echo 			'<option value="' . $CustomerRow['debtorno'] . '">' . $CustomerRow['name'] . '</option>';
 	}
@@ -35,9 +37,9 @@ if (!isset($_POST['RunReport'])){
 		</field>';
 
 	echo '<field>
-			<label for="SalesArea">' . _('Sales Area') . '</label>
+			<label for="SalesArea">' . __('Sales Area') . '</label>
 			<select name="SalesArea">
-				<option selected="selected" value="">' . _('All') . '</option>';
+				<option selected="selected" value="">' . __('All') . '</option>';
 	while ($AreaRow = DB_fetch_array($SalesAreasResult)) {
 		echo '<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . '</option>';
 	}
@@ -45,9 +47,9 @@ if (!isset($_POST['RunReport'])){
 		</field>';
 
 	echo '<field>
-			<label for="SalesPerson">' . _('Sales Person') . '</label>
+			<label for="SalesPerson">' . __('Sales Person') . '</label>
 			<select name="SalesPerson">
-				<option selected="selected" value="">' . _('All') . '</option>';
+				<option selected="selected" value="">' . __('All') . '</option>';
 	while ($SalesPersonRow = DB_fetch_array($SalesFolkResult)) {
 		echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 	}
@@ -55,27 +57,27 @@ if (!isset($_POST['RunReport'])){
 		</field>';
 
 	echo '<field>
-			<label for="FromDate">' . _('Date From') . ':</label>
+			<label for="FromDate">' . __('Date From') . ':</label>
 			<input type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" />
 		</field>';
 
 	echo '<field>
-			<label for="ToDate">' . _('Date To') . ':</label>
+			<label for="ToDate">' . __('Date To') . ':</label>
 			<input type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
 		</field>';
 
 	echo '<field>
-			<label for="CreateCSV">' . _('Create CSV') . ':</label>
+			<label for="CreateCSV">' . __('Create CSV') . ':</label>
 			<input type="checkbox" name="CreateCSV" value="">
 		</field>';
 
 	echo '</fieldset>';
 	echo '<div class="centre">
-			<input tabindex="4" type="submit" name="RunReport" value="' . _('Show Customer Balance Movements') . '" />
+			<input tabindex="4" type="submit" name="RunReport" value="' . __('Show Customer Balance Movements') . '" />
 		</div>
 	</form>';
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if ($_POST['Customer']!='') {
@@ -112,16 +114,16 @@ if (!isset($_POST['CreateCSV'])){
 	echo '<table>
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Customer') . ' </th>
-				<th class="SortedColumn">' . _('Opening Balance') . '</th>
-				<th class="SortedColumn">' . _('Debits') . '</th>
-				<th class="SortedColumn">' . _('Credits') . '</th>
-				<th class="SortedColumn">' . _('Balance') . '</th>
+				<th class="SortedColumn">' . __('Customer') . ' </th>
+				<th class="SortedColumn">' . __('Opening Balance') . '</th>
+				<th class="SortedColumn">' . __('Debits') . '</th>
+				<th class="SortedColumn">' . __('Credits') . '</th>
+				<th class="SortedColumn">' . __('Balance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 } else {
-	$CSVFile = '"' . _('Customer') . '","' . _('Opening Balance') . '","' . _('Debits') . '", "' . _('Credits') . '","' . _('Balance') . '"' . "\n";
+	$CSVFile = '"' . __('Customer') . '","' . __('Opening Balance') . '","' . __('Debits') . '", "' . __('Credits') . '","' . __('Balance') . '"' . "\n";
 }
 
 $OpeningBalances =0;
@@ -194,13 +196,13 @@ if ($_POST['Customer']==''){ //if there could be several customers being reporte
 		echo '<table>
 			<tr>
 				<th></th>
-				<th>' . _('Opening Balance') . '</th>
-				<th>' . _('Debits') . '</th>
-				<th>' . _('Credits') . '</th>
-				<th>' . _('Balance') . '</th>
+				<th>' . __('Opening Balance') . '</th>
+				<th>' . __('Debits') . '</th>
+				<th>' . __('Credits') . '</th>
+				<th>' . __('Balance') . '</th>
 			</tr>
 			<tr>
-				<td>' . _('TOTALS') . '</td>
+				<td>' . __('TOTALS') . '</td>
 				<td class="number">' . locale_number_format($OpeningBalances,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Debits,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($Credits,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -208,20 +210,22 @@ if ($_POST['Customer']==''){ //if there could be several customers being reporte
 			</tr>
 		</table>';
 	} else {
-		$CSVFile .=  '"' . _('TOTALS') . '","' . stripcomma($OpeningBalances) . '","' . stripcomma($Debits) . '","' . stripcomma($Credits) . '","' . stripcomma($ClosingBalances) . '"' . "\n";
+		$CSVFile .=  '"' . __('TOTALS') . '","' . stripcomma($OpeningBalances) . '","' . stripcomma($Debits) . '","' . stripcomma($Credits) . '","' . stripcomma($ClosingBalances) . '"' . "\n";
 	}
 }
 
 if (isset($_POST['CreateCSV'])){
 
 	header('Content-Encoding: UTF-8');
-    header('Content-type: text/csv; charset=UTF-8');
-    header("Content-disposition: attachment; filename=CustomerBalancesMovement_" . FormatDateForSQL($_POST['FromDate']) . '-' . FormatDateForSQL($_POST['ToDate']) .'.csv');
-    header("Pragma: public");
-    header("Expires: 0");
-    echo "\xEF\xBB\xBF"; // UTF-8 BOM
+	header('Content-type: text/csv; charset=UTF-8');
+	header("Content-disposition: attachment; filename=CustomerBalancesMovement_" . FormatDateForSQL($_POST['FromDate']) . '-' . FormatDateForSQL($_POST['ToDate']) .'.csv');
+	# @todo review these headers - should we not make this uncacheable instead?
+	header("Pragma: public");
+	header("Expires: 0");
+	// the BOM is not used much anymore in 2025...
+	//echo "\xEF\xBB\xBF"; // UTF-8 BOM
 	echo $CSVFile;
-	exit;
+	exit();
 }
 
 include('includes/footer.php');
@@ -229,4 +233,3 @@ include('includes/footer.php');
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
-?>

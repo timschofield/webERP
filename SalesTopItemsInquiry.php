@@ -1,16 +1,17 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-$Title = _('Top Sales Inquiry');
+$Title = __('Top Sales Inquiry');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Sales Items Inquiry') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div>';
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Sales Inquiry') . '" alt="" />' . ' ' . __('Top Sales Items Inquiry') . '</p>';
+echo '<div class="page_help_text">' . __('Select the parameters for the report') . '</div>';
 
 if (!isset($_POST['DateRange'])){
 	/* then assume report is for This Month - maybe wrong to do this but hey better than reporting an error?*/
@@ -22,10 +23,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<fieldset>';
 
-echo '<legend>' . _('Date Selection') . '</legend>';
+echo '<legend>' . __('Date Selection') . '</legend>';
 
 echo '<field>
-		<label for="DateRange">' . _('Custom Range') . ':</label>
+		<label for="DateRange">' . __('Custom Range') . ':</label>
 		<input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked="checked"';
@@ -34,7 +35,7 @@ echo ' onchange="ReloadForm(form1.ShowSales)" />
 	</field>';
 
 echo '<field>
-		<label for="DateRange">' . _('This Week') . ':</label>
+		<label for="DateRange">' . __('This Week') . ':</label>
 		<input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked="checked"';
@@ -43,7 +44,7 @@ echo ' onchange="ReloadForm(form1.ShowSales)" />
 	</field>';
 
 echo '<field>
-		<label for="DateRange">' . _('This Month') . ':</label>
+		<label for="DateRange">' . __('This Month') . ':</label>
 		<input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked="checked"';
@@ -52,7 +53,7 @@ echo ' onchange="ReloadForm(form1.ShowSales)" />
 	</field>';
 
 echo '<field>
-		<label for="DateRange">' . _('This Quarter') . ':</label>
+		<label for="DateRange">' . __('This Quarter') . ':</label>
 		<input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked="checked"';
@@ -67,12 +68,12 @@ if ($_POST['DateRange']=='Custom'){
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<field>
-			<label for="FromDate">' . _('Date From') . ':</label>
+			<label for="FromDate">' . __('Date From') . ':</label>
 			<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>';
 
 	echo '<field>
-			<label for="ToDate">' . _('Date To') . ':</label>
+			<label for="ToDate">' . __('Date To') . ':</label>
 			<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 }
@@ -84,10 +85,10 @@ echo '<fieldset>'; //new sub table to set parameters for order of display
 if (!isset($_POST['OrderBy'])){ //default to order by net sales
 	$_POST['OrderBy']='NetSales';
 }
-echo '<legend>' . _('Display') . '</legend>';
+echo '<legend>' . __('Display') . '</legend>';
 
 echo '<field>
-		<label for="OrderBy">' . _('Order By Net Sales') . ':</label>
+		<label for="OrderBy">' . __('Order By Net Sales') . ':</label>
 		<input type="radio" name="OrderBy" value="NetSales" ';
 if ($_POST['OrderBy']=='NetSales'){
 	echo 'checked="checked"';
@@ -96,7 +97,7 @@ echo ' />
 	</field>';
 
 echo '<field>
-		<label for="OrderBy">' . _('Order By Quantity') . ':</label>
+		<label for="OrderBy">' . __('Order By Quantity') . ':</label>
 		<input type="radio" name="OrderBy" value="Quantity" ';
 if ($_POST['OrderBy']=='Quantity'){
 	echo 'checked="checked"';
@@ -108,13 +109,13 @@ echo ' />
 	</field>';
 
 echo '<field>
-		<label for="NoToDisplay">' . _('Number to Display') . ':</label>
+		<label for="NoToDisplay">' . __('Number to Display') . ':</label>
 		<input type="text" class="number" name="NoToDisplay" size="4" maxlength="4" value="' . $_POST['NoToDisplay'] .'"  />
 	</field>
 </fieldset>';
 
 
-echo '<div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" /></div>';
+echo '<div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . __('Show Sales') . '" /></div>';
 echo '</form>';
 
 if (isset($_POST['ShowSales'])){
@@ -122,15 +123,15 @@ if (isset($_POST['ShowSales'])){
 	if ($_POST['DateRange']=='Custom'){
 		if (!Is_Date($_POST['FromDate'])){
 			$InputError = 1;
-			prnMsg(_('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			prnMsg(__('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
 		if (!Is_Date($_POST['ToDate'])){
 			$InputError = 1;
-			prnMsg(_('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			prnMsg(__('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
 		if (Date1GreaterThanDate2($_POST['FromDate'],$_POST['ToDate'])){
 			$InputError = 1;
-			prnMsg(_('The from date is expected to be a date prior to the to date. Please review the selected date range'),'error');
+			prnMsg(__('The from date is expected to be a date prior to the to date. Please review the selected date range'),'error');
 		}
 	}
 	switch ($_POST['DateRange']) {
@@ -210,20 +211,20 @@ if (isset($_POST['ShowSales'])){
 		}
 	}
 
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">';
 
 	echo'<tr>
-			<th>' . _('Rank') . '</th>
-			<th>' . _('Item') . '</th>
-			<th>' . _('Category') . '</th>
-			<th>' . _('Sales Value') . '</th>
-			<th>' . _('Refunds') . '</th>
-			<th>' . _('Net Sales') . '</th>
-			<th>' . _('Sales')  . '<br />' . _('Quantity') . '</th>
+			<th>' . __('Rank') . '</th>
+			<th>' . __('Item') . '</th>
+			<th>' . __('Category') . '</th>
+			<th>' . __('Sales Value') . '</th>
+			<th>' . __('Refunds') . '</th>
+			<th>' . __('Net Sales') . '</th>
+			<th>' . __('Sales')  . '<br />' . __('Quantity') . '</th>
 		</tr>';
 
 	$CumulativeTotalSales = 0;
@@ -256,7 +257,7 @@ if (isset($_POST['ShowSales'])){
 	echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
 	echo '<tr class="striped_row">';
 
-	echo '<td class="number" colspan="3">' . _('GRAND Total') . '</td>
+	echo '<td class="number" colspan="3">' . __('GRAND Total') . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalNetSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -267,4 +268,3 @@ if (isset($_POST['ShowSales'])){
 
 } //end of if user hit show sales
 include('includes/footer.php');
-?>

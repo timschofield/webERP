@@ -1,7 +1,8 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Customer Types') . ' / ' . _('Maintenance');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Customer Types') . ' / ' . __('Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'CustomerTypes';
 include('includes/header.php');
@@ -12,15 +13,11 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_GET['SelectedType']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Customer Types') .
-	'" alt="" />' . _('Customer Type Setup') . '</p>';
-echo '<div class="page_help_text">' . _('Add/edit/delete Customer Types') . '</div>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Customer Types') .
+	'" alt="" />' . __('Customer Type Setup') . '</p>';
+echo '<div class="page_help_text">' . __('Add/edit/delete Customer Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -34,7 +31,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
-		prnMsg(_('The customer type name description must be 100 characters or less long'),'error');
+		prnMsg(__('The customer type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
@@ -42,7 +39,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen($_POST['TypeName'])==0) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('The customer type name description must contain at least one character'),'error');
+		prnMsg(__('The customer type name description must contain at least one character'),'error');
 		$Errors[$i] = 'CustomerType';
 		$i++;
 	}
@@ -55,7 +52,7 @@ if (isset($_POST['submit'])) {
 	if ($CheckRow[0]>0 and !isset($SelectedType)) {
 		$InputError = 1;
 		echo '<br />';
-		prnMsg(_('You already have a customer type called').' '.$_POST['TypeName'],'error');
+		prnMsg(__('You already have a customer type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'CustomerName';
 		$i++;
 	}
@@ -66,7 +63,7 @@ if (isset($_POST['submit'])) {
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" .$SelectedType."'";
 
-		$Msg = _('The customer type') . ' ' . $SelectedType . ' ' .  _('has been updated');
+		$Msg = __('The customer type') . ' ' . $SelectedType . ' ' .  __('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
@@ -80,7 +77,7 @@ if (isset($_POST['submit'])) {
 
 		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The customer type') . ' ' . $_POST['typeid'] . _(' already exist.'),'error');
+			prnMsg( __('The customer type') . ' ' . $_POST['typeid'] . __(' already exist.'),'error');
 		} else {
 
 			// Add new record on submit
@@ -90,7 +87,7 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['TypeName'] . "')";
 
 
-			$Msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
+			$Msg = __('Customer type') . ' ' . $_POST["typename"] .  ' ' . __('has been created');
 			$CheckSQL = "SELECT count(typeid)
 			     FROM debtortype";
 			$Result = DB_query($CheckSQL);
@@ -139,22 +136,22 @@ if (isset($_POST['submit'])) {
 	       FROM debtortrans
 	       WHERE debtortrans.type='".$SelectedType."'";
 
-	$ErrMsg = _('The number of transactions using this customer type could not be retrieved');
-	$Result = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The number of transactions using this customer type could not be retrieved');
+	$Result = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this type because customer transactions have been created using this type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('transactions using this type'),'error');
+		prnMsg(__('Cannot delete this type because customer transactions have been created using this type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('transactions using this type'),'error');
 
 	} else {
 
 		$SQL = "SELECT COUNT(*) FROM debtorsmaster WHERE typeid='".$SelectedType."'";
 
-		$ErrMsg = _('The number of transactions using this Type record could not be retrieved because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$ErrMsg = __('The number of transactions using this Type record could not be retrieved because');
+		$Result = DB_query($SQL, $ErrMsg);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg (_('Cannot delete this type because customers are currently set up to use this type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customers with this type code'));
+			prnMsg(__('Cannot delete this type because customers are currently set up to use this type') . '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('customers with this type code'));
 		} else {
 			$Result = DB_query("SELECT typename FROM debtortype WHERE typeid='".$SelectedType."'");
 			if (DB_Num_Rows($Result)>0){
@@ -162,10 +159,10 @@ if (isset($_POST['submit'])) {
 				$TypeName = $TypeRow['typename'];
 
 				$SQL="DELETE FROM debtortype WHERE typeid='".$SelectedType."'";
-				$ErrMsg = _('The Type record could not be deleted because');
-				$Result = DB_query($SQL,$ErrMsg);
+				$ErrMsg = __('The Type record could not be deleted because');
+				$Result = DB_query($SQL, $ErrMsg);
 				echo '<br />';
-				prnMsg(_('Customer type') . ' ' . $TypeName  . ' ' . _('has been deleted') ,'success');
+				prnMsg(__('Customer type') . ' ' . $TypeName  . ' ' . __('has been deleted') ,'success');
 			}
 			unset ($SelectedType);
 			unset($_GET['delete']);
@@ -187,8 +184,8 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Type ID') . '</th>
-				<th class="SortedColumn">' . _('Type Name') . '</th>
+				<th class="SortedColumn">' . __('Type ID') . '</th>
+				<th class="SortedColumn">' . __('Type Name') . '</th>
 				<th colspan="2"></th>
 			</tr>
 		</thead>
@@ -199,8 +196,8 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . _('Edit') . '</a></td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Customer Type?') . '");\'>' . _('Delete') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . __('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick=\'return confirm("' . __('Are you sure you wish to delete this Customer Type?') . '");\'>' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -210,7 +207,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 //end of ifs and buts!
 if (isset($SelectedType)) {
 
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></div>';
+	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></div>';
 }
 if (! isset($_GET['delete'])) {
 
@@ -235,35 +232,34 @@ if (! isset($_GET['delete'])) {
 			<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
 
 		echo '<fieldset>
-				<legend>', _('Edit Customer Type'), '</legend>';
+				<legend>', __('Edit Customer Type'), '</legend>';
 
 		// We dont allow the user to change an existing type code
 
 		echo '<field>
-				<label for="typeid">' . _('Type ID') . ':</label>
+				<label for="typeid">' . __('Type ID') . ':</label>
 				<fieldtext>' . $_POST['typeid'] . '</fieldtext>
 			</field>';
 	} else 	{
 		// This is a new type so the user may volunteer a type code
 		echo '<fieldset>
-				<legend>', _('Create New Customer Type'), '</legend>';
+				<legend>', __('Create New Customer Type'), '</legend>';
 	}
 
 	if (!isset($_POST['TypeName'])) {
 		$_POST['TypeName']='';
 	}
 	echo '<field>
-			<label for="TypeName">' . _('Type Name') . ':</label>
+			<label for="TypeName">' . __('Type Name') . ':</label>
 			<input type="text" name="TypeName"  required="required" title="" value="' . $_POST['TypeName'] . '" />
-			<fieldhelp>' . _('The customer type name is required') . '</fieldhelp
+			<fieldhelp>' . __('The customer type name is required') . '</fieldhelp
 		</field>
 		</fieldset>
 		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Accept') . '" />
+			<input type="submit" name="submit" value="' . __('Accept') . '" />
 		</div>
 	</form>';
 
 } // end if user wish to delete
 
 include('includes/footer.php');
-?>

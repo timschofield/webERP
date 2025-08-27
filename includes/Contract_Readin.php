@@ -27,9 +27,8 @@ $ContractHeaderSQL = "SELECT contractdescription,
 						INNER JOIN locationusers ON locationusers.loccode=contracts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 						WHERE contractref= '" . $ContractRef . "'";
 
-$ErrMsg =  _('The contract cannot be retrieved because');
-$DbgMsg =  _('The SQL statement that was used and failed was');
-$ContractHdrResult = DB_query($ContractHeaderSQL,$ErrMsg,$DbgMsg);
+$ErrMsg =  __('The contract cannot be retrieved because');
+$ContractHdrResult = DB_query($ContractHeaderSQL, $ErrMsg);
 
 if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifier]->ContractRef )) {
 
@@ -67,9 +66,8 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 						ON contractbom.stockid=stockmaster.stockid
 						WHERE contractref ='" . $ContractRef . "'";
 
-	$ErrMsg =  _('The bill of material cannot be retrieved because');
-	$DbgMsg =  _('The SQL statement that was used to retrieve the contract bill of material was');
-	$ContractBOMResult = DB_query($ContractBOMsql,$ErrMsg,$DbgMsg);
+	$ErrMsg =  __('The bill of material cannot be retrieved because');
+	$ContractBOMResult = DB_query($ContractBOMsql, $ErrMsg);
 
 	if (DB_num_rows($ContractBOMResult) > 0) {
 		while ($MyRow=DB_fetch_array($ContractBOMResult)) {
@@ -91,9 +89,8 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 						WHERE contractref ='" . $ContractRef . "'
 						ORDER BY contractreqid";
 
-	$ErrMsg =  _('The other contract requirementscannot be retrieved because');
-	$DbgMsg =  _('The SQL statement that was used to retrieve the other contract requirments was');
-	$ContractReqtsResult = DB_query($ContractReqtsSQL,$ErrMsg,$DbgMsg);
+	$ErrMsg =  __('The other contract requirementscannot be retrieved because');
+	$ContractReqtsResult = DB_query($ContractReqtsSQL, $ErrMsg);
 
 	if (DB_num_rows($ContractReqtsResult) > 0) {
 		while ($MyRow=DB_fetch_array($ContractReqtsResult)) {
@@ -104,4 +101,3 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 		} /* add other contract requirments lines*/
 	} //end is there are contract other contract requirments to add
 } // end if there was a header for the contract
-?>

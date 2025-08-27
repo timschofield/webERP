@@ -1,22 +1,23 @@
 <?php
+
 /**
  * Author: Ashish Shukla <gmail.com!wahjava>
  *
  * Script to duplicate BoMs.
  */
 
-include('includes/session.php');
-
-$Title = _('Copy a BOM to New Item Code');
-
-$ViewTopic = 'Manufacturing';
-$BookMark = '';
-
-include('includes/header.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if(isset($_POST['Submit'])) {
+$Title = __('Copy a BOM to New Item Code');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
+
+ob_start();
+include('includes/header.php');
+
+if (isset($_POST['Submit'])) {
 	$StockID = $_POST['StockID'];
 	$NewOrExisting = $_POST['NewOrExisting'];
 	$NewStockID = '';
@@ -26,12 +27,12 @@ if(isset($_POST['Submit'])) {
 		$NewStockID = $_POST['ToStockID'];
 		if (mb_strlen($NewStockID)==0 OR $NewStockID==''){
 			$InputError = 1;
-			prnMsg(_('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
+			prnMsg(__('The new item code cannot be blank. Enter a new code for the item to copy the BOM to'),'error');
 		}
 	} else {
 		$NewStockID = $_POST['ExStockID'];
 	}
-	if ($InputError==0){
+	if ($InputError==0) {
 		DB_Txn_Begin();
 
 		if($NewOrExisting == 'N') {
@@ -154,12 +155,16 @@ if(isset($_POST['Submit'])) {
 
 		UpdateCost($NewStockID);
 
-		header('Location: BOMs.php?Select='.$NewStockID);
-		ob_end_flush();
+		header('Location: ' . htmlspecialchars_decode($RootPath) . '/BOMs.php?Select='.urlencode(htmlspecialchars_decode($NewStockID)));
+		//ob_end_flush();
+		exit();
 	} //end  if there is no input error
-} else {
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
+	/// @todo what to display if there is an input error?
+} else {
+	ob_end_flush();
+
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -172,10 +177,10 @@ if(isset($_POST['Submit'])) {
 	$Result = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend>', _('Copy Criteria'), '</legend>';
+			<legend>', __('Copy Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="StockID">', _('From Stock ID'), '</label>
+			<label for="StockID">', __('From Stock ID'), '</label>
 			<select name="StockID">';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
@@ -188,7 +193,7 @@ if(isset($_POST['Submit'])) {
 		</field>';
 
 	echo '<field>
-			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', _(' To New Stock ID'), '</label>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', __(' To New Stock ID'), '</label>
 			<input type="text" required="required" maxlength="20" name="ToStockID" />
 		</field>';
 
@@ -201,7 +206,7 @@ if(isset($_POST['Submit'])) {
 	if (DB_num_rows($Result) > 0) {
 
 		echo '<field>
-				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', '<b>' , _('OR') , ' </b>' , _('To Existing Stock ID'), '</label>';
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', '<b>' , __('OR') , ' </b>' , __('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
 		while ($MyRow = DB_fetch_row($Result)) {
 			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
@@ -217,4 +222,3 @@ if(isset($_POST['Submit'])) {
 
 	include('includes/footer.php');
 }
-?>

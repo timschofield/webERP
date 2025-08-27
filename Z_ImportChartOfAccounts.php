@@ -1,14 +1,16 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Import Chart Of Accounts');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Import Chart Of Accounts');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Import Chart of Accounts from CSV file') . '" />' . ' ' .
-		_('Import Chart of Accounts from CSV file') . '</p>';
+		__('Import Chart of Accounts from CSV file') . '" />' . ' ' .
+		__('Import Chart of Accounts from CSV file') . '</p>';
 
 $FieldHeadings = array(
 	'Account Code',			//  0 'Account Code
@@ -29,23 +31,27 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ',');
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
 
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings) ) {
-		prnMsg (_('File contains') . ' '. count($HeadRow). ' ' . _('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+		prnMsg(__('File contains') . ' '. count($HeadRow). ' ' . __('columns, expected') . ' '. count($FieldHeadings) . '<br/>' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 
 	//test header row field name and sequence
 	$HeadingColumnNumber = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( trim(mb_strtoupper($HeadField)) != trim(mb_strtoupper($FieldHeadings[$HeadingColumnNumber]))) {
-			prnMsg (_('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . _('There should be three column headings:') . ' Account Code, Description, Account Group','error');
+			prnMsg(__('The file to import the chart of accounts from contains incorrect column headings') . ' '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$HeadingColumnNumber]). '<br />' . __('There should be three column headings:') . ' Account Code, Description, Account Group','error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$HeadingColumnNumber++;
 	}
@@ -55,15 +61,15 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 	//loop through file rows
 	$LineNumber = 1;
-	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldHeadings)){
-			prnMsg (count($FieldHeadings) . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
+			prnMsg(count($FieldHeadings) . ' ' . __('fields required') . ', '. $FieldCount. ' ' . __('fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -79,7 +85,7 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Account Group') . ' "' . $MyRow[2]. '" ' . _('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
+			prnMsg(__('Account Group') . ' "' . $MyRow[2]. '" ' . __('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
 		}
 
 		if ($InputError !=1){
@@ -93,9 +99,8 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 										'" . $MyRow[1] . "',
 										'" . $MyRow[2] . "')";
 
-			$ErrMsg =  _('The general ledger account could not be added because');
-			$DbgMsg = _('The SQL that was used to add the general ledger account that failed was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+			$ErrMsg =  __('The general ledger account could not be added because');
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop
@@ -105,11 +110,11 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row') . ' '. $LineNumber. '. ' . _('Batch import of the chart of accounts has been rolled back.'),'error');
+		prnMsg(__('Failed on row') . ' '. $LineNumber. '. ' . __('Batch import of the chart of accounts has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
-		prnMsg( _('Batch Import of') .' ' . $FileName  . ' '. _('has been completed') . '. ' . _('All general ledger accounts have been added to the chart of accounts'),'success');
+		prnMsg( __('Batch Import of') .' ' . $FileName  . ' '. __('has been completed') . '. ' . __('All general ledger accounts have been added to the chart of accounts'),'success');
 	}
 
 	fclose($FileHandle);
@@ -122,19 +127,17 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
-			_('This function loads a chart of accounts from a comma separated variable (csv) file.') . '<br />' .
-			_('The file must contain three columns, and the first row should be the following headers:') . '<br />Account Code, Description, Account Group<br />' .
-			_('followed by rows containing these three fields for each general ledger account to be uploaded.') .  '<br />' .
-			_('The Account Group field must have a corresponding entry in the account groups table. So these need to be set up first.') . '</div>';
+			__('This function loads a chart of accounts from a comma separated variable (csv) file.') . '<br />' .
+			__('The file must contain three columns, and the first row should be the following headers:') . '<br />Account Code, Description, Account Group<br />' .
+			__('followed by rows containing these three fields for each general ledger account to be uploaded.') .  '<br />' .
+			__('The Account Group field must have a corresponding entry in the account groups table. So these need to be set up first.') . '</div>';
 
 	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			_('Upload file') . ': <input name="ChartFile" type="file" />
-			<input type="submit" name="submit" value="' . _('Send File') . '" />
+			__('Upload file') . ': <input name="ChartFile" type="file" />
+			<input type="submit" name="submit" value="' . __('Send File') . '" />
 		</div>
 		</form>';
 
 }
 
 include('includes/footer.php');
-
-?>

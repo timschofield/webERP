@@ -2,17 +2,17 @@
 
 /* Defines the employees that require timesheets */
 
-include('includes/session.php');
-$Title = _('Employee Maintenance');// Screen identification.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Employee Maintenance');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Employees';// Anchor's id in the manual's html document.
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="',// Icon image.
-	_('Employee'), '" /> ',// Icon title.
-	_('Employee Maintenance'), '</p>';// Page title.
+	__('Employee'), '" /> ',// Icon title.
+	__('Employee Maintenance'), '</p>';// Page title.
 
 if(isset($_GET['SelectedEmployee'])) {
 	$SelectedEmployee = $_GET['SelectedEmployee'];
@@ -29,11 +29,11 @@ if(isset($_POST['submit'])) {
 
 	if(trim($_POST['Surname']) == '') {
 		$InputError = 1;
-		prnMsg(_('The employee\'s surname must not be empty'), 'error');
+		prnMsg(__('The employee\'s surname must not be empty'), 'error');
 	}
 	if($_POST['FirstName'] =='') {
 		$InputError = 1;
-		prnMsg(_('The employee\'s first name must not be empty'), 'error');
+		prnMsg(__('The employee\'s first name must not be empty'), 'error');
 	}
 	//end of checking the input
 
@@ -49,12 +49,11 @@ if(isset($_POST['submit'])) {
 									email='" . $_POST['Email'] . "'
 						WHERE id = '" . $SelectedEmployee . "'";
 
-		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedEmployee . ' ' . _('employee record because');
-		$DbgMsg = _('The SQL used to update the employee record was');
+		$ErrMsg = __('An error occurred updating the') . ' ' . $SelectedEmployee . ' ' . __('employee record because');
 
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The employee record has been updated'),'success');
+		prnMsg(__('The employee record has been updated'),'success');
 
 	} elseif($InputError !=1) {
 
@@ -75,12 +74,10 @@ if(isset($_POST['submit'])) {
 								'" . $_POST['UserID'] . "',
 								'" . $_POST['Email'] . "')";
 
-		$ErrMsg = _('An error occurred inserting the new employee record because');
-		$DbgMsg = _('The SQL used to insert the employee record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$ErrMsg = __('An error occurred inserting the new employee record because');
+		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('The new employee record has been added'),'success');
-
+		prnMsg(__('The new employee record has been added'),'success');
 	}
 
 	unset($_POST['Surname']);
@@ -104,14 +101,14 @@ if(isset($_POST['submit'])) {
 	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0]>0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this employee because timesheets have been created for this person'),'warn');
-		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('timesheet records for this person');
+		prnMsg(__('Cannot delete this employee because timesheets have been created for this person'),'warn');
+		echo __('There are') . ' ' . $MyRow[0] . ' ' . __('timesheet records for this person');
 	}
 */
 	if(! $CancelDelete) {
 		$Result = DB_query("DELETE FROM employees WHERE id='" . $SelectedEmployee . "'");
 
-		prnMsg(_('Employee') . ' ' . $SelectedEmployee . ' ' . _('has been deleted') . '!', 'success');
+		prnMsg(__('Employee') . ' ' . $SelectedEmployee . ' ' . __('has been deleted') . '!', 'success');
 		unset ($SelectedEmployee);
 	}//end if Delete Location
 	unset($SelectedEmployee);
@@ -150,12 +147,12 @@ or deletion of the records*/
 		echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="SortedColumn">', _('ID'), '</th>
-				<th class="SortedColumn">', _('First name'), '</th>
-				<th class="SortedColumn">', _('Surname'), '</th>
-				<th class="SortedColumn">', _('Type'), '</th>
-				<th class="SortedColumn">', _('Manager'), '</th>
-				<th class="SortedColumn">', _('Email'), '</th>
+				<th class="SortedColumn">', __('ID'), '</th>
+				<th class="SortedColumn">', __('First name'), '</th>
+				<th class="SortedColumn">', __('Surname'), '</th>
+				<th class="SortedColumn">', __('Type'), '</th>
+				<th class="SortedColumn">', __('Manager'), '</th>
+				<th class="SortedColumn">', __('Email'), '</th>
 				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
@@ -170,14 +167,14 @@ or deletion of the records*/
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
 				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . _('Edit') . '</a></td>
-				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . __('Edit') . '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to remove this employee?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 		}
 		//END WHILE LIST LOOP
 		echo '</tbody></table>';
 	} else {
-		prnMsg(_('No employees have been set up yet'),'info');
+		prnMsg(__('No employees have been set up yet'),'info');
 	}
 }
 
@@ -185,11 +182,9 @@ or deletion of the records*/
 
 echo '<br />';
 if(isset($SelectedEmployee)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Employees') . '</a>';
+	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Employees') . '</a>';
 }
 echo '<br />';
-
-
 
 if(!isset($_GET['delete'])) {
 
@@ -224,9 +219,9 @@ if(!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 
 		echo '<fieldset>';
-		echo '<legend>' . _('Amend Employee details') . '</legend>';
+		echo '<legend>' . __('Amend Employee details') . '</legend>';
 		echo '<field>
-				<label for="SelectedEmployee">' . _('Employee Code') . ':</label>
+				<label for="SelectedEmployee">' . __('Employee Code') . ':</label>
 				<fieldtext>' . $SelectedEmployee . '</fieldtext>
 			</field>';
 	} else {//end of if $SelectedEmployee only do the else when a new record is being entered
@@ -234,7 +229,7 @@ if(!isset($_GET['delete'])) {
 			$_POST['SelectedEmployee'] = '';
 		}
 		echo '<fieldset>
-				<legend>' . _('New Employee details') . '</legend>';
+				<legend>' . __('New Employee details') . '</legend>';
 	}
 	if(!isset($_POST['Surname'])) {
 		$_POST['Surname'] = '';
@@ -259,18 +254,18 @@ if(!isset($_GET['delete'])) {
 	}
 
 	echo '<field>
-			<label for="FirstName">' . _('First Name') . ':' . '</label>
+			<label for="FirstName">' . __('First Name') . ':' . '</label>
 			<input type="text" name="FirstName" required="required" value="' . $_POST['FirstName'] . '" title="" size="21" maxlength="20" />
-			<fieldhelp>' . _('Enter the employee\'s first name') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the employee\'s first name') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="Surname">' . _('Surname') . ':' . '</label>
+			<label for="Surname">' . __('Surname') . ':' . '</label>
 			<input type="text" name="Surname" required="required" value="'. $_POST['Surname'] . '" title="" namesize="21" maxlength="20" />
-			<fieldhelp>' . _('Enter the employee\'s surname') . '</fieldhelp>
+			<fieldhelp>' . __('Enter the employee\'s surname') . '</fieldhelp>
 		</field>
 
 		<field>
-			<label for="StockID">' . _('Labour Type') . ':</label>
+			<label for="StockID">' . __('Labour Type') . ':</label>
 			<select name="StockID" />';
 
 	$LabourTypeItemsResult = DB_query("SELECT stockid, description FROM
@@ -289,17 +284,17 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="Email">', _('Email'), ':</label>
+			<label for="Email">', __('Email'), ':</label>
 			<input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" />
-			<fieldhelp>', _('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
+			<fieldhelp>', __('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
 		</field>
 		<field>
-			<label for="NormalHours">' . _('Normal Weekly Hours') . ':' . '</label>
+			<label for="NormalHours">' . __('Normal Weekly Hours') . ':' . '</label>
 			<input class="number" type="text" name="NormalHours" value="' , $_POST['NormalHours'] , '" title="" size="3" maxlength="2" />
-			<fieldhelp>' , _('Enter the employee\'s normal hours per week') , '</fieldhelp>
+			<fieldhelp>' , __('Enter the employee\'s normal hours per week') , '</fieldhelp>
 		</field>
 		<field>
-			<label for="Manager">' , _('Manager') , ':' , '</label>
+			<label for="Manager">' , __('Manager') , ':' , '</label>
 			<select name="Manager" />';
 
 	$ManagersResult = DB_query("SELECT id, CONCAT(firstname, ' ', surname) AS managername
@@ -307,9 +302,9 @@ if(!isset($_GET['delete'])) {
 								WHERE id != '" . $SelectedEmployee . "'
 								ORDER BY surname");
 	if($_POST['Manager']==''){
-		echo '<option selected="selected" value="0">' , _('Not Managed') , '</option>';
+		echo '<option selected="selected" value="0">' , __('Not Managed') , '</option>';
 	} else {
-		echo '<option value="0">' , _('Not Managed') , '</option>';
+		echo '<option value="0">' , __('Not Managed') , '</option>';
 	}
 	while ($MyRow=DB_fetch_array($ManagersResult)) {
 		if($_POST['Manager']==$MyRow['id']) {
@@ -323,12 +318,12 @@ if(!isset($_GET['delete'])) {
 		</field>';
 
 	echo '<field>
-			<label for="UserID">' , _('webERP User') , ':' , '</label>
+			<label for="UserID">' , __('webERP User') , ':' , '</label>
 			<select name="UserID" title=""/>';
 	if($_POST['UserID']==''){
-		echo '<option selected="selected" value="">' , _('Not a webERP User') , '</option>';
+		echo '<option selected="selected" value="">' , __('Not a webERP User') , '</option>';
 	} else {
-		echo '<option value="">' , _('Not a webERP User') , '</option>';
+		echo '<option value="">' , __('Not a webERP User') , '</option>';
 	}
 	$UsersResult = DB_query("SELECT userid, realname FROM www_users");
 	while ($MyRow=DB_fetch_array($UsersResult)) {
@@ -339,16 +334,15 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-		<fieldhelp>' , _('Select the employee\'s system user account so when the user logs in to enter a time sheet the system knows the employee record to use') , '</fieldhelp>
+		<fieldhelp>' , __('Select the employee\'s system user account so when the user logs in to enter a time sheet the system knows the employee record to use') , '</fieldhelp>
 	</field>';
 
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="submit" value="' , _('Enter Information') , '" />
+			<input type="submit" name="submit" value="' , __('Enter Information') , '" />
 		</div>
 		</form>';
 
 }//end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

@@ -1,8 +1,6 @@
 <?php
 
-
 /* Common SQL Functions */
-
 
 function GetNextTransNo($TransType) {
 
@@ -17,20 +15,16 @@ function GetNextTransNo($TransType) {
 	*/
 	DB_query("SELECT typeno FROM systypes WHERE typeid='" . $TransType . "' FOR UPDATE");
 	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
-		. _('The transaction number could not be incremented');
-	$DbgMsg = _('The following SQL to increment the transaction number was used');
-	DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
+		. __('The transaction number could not be incremented');
+	DB_query($SQL, $ErrMsg);
 	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>'
-		. _('The next transaction number could not be retrieved from the database because');
-	$DbgMsg = _('The following SQL to retrieve the transaction number was used');
-	$GetTransNoResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>'
+		. __('The next transaction number could not be retrieved from the database because');
+	$GetTransNoResult = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_row($GetTransNoResult);
 	return $MyRow[0];
-
 }
-
 
 function GetStockGLCode($StockID) {
 
@@ -46,7 +40,7 @@ function GetStockGLCode($StockID) {
 					ON stockmaster.categoryid=stockcategory.categoryid
 				WHERE stockmaster.stockid = '" . $StockID . "'";
 
-	$ErrMsg = _('The stock GL codes could not be retrieved because');
+	$ErrMsg = __('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($GetStkGLResult);
@@ -63,7 +57,7 @@ function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 				AND dispatchtaxprovince='" . $DispatchTaxProvince . "'
 				AND taxcatid = '" . $TaxCategory . "'";
 
-	$ErrMsg = _('The tax rate for this item could not be retrieved because');
+	$ErrMsg = __('The tax rate for this item could not be retrieved because');
 	$GetTaxRateResult = DB_query($QuerySQL, $ErrMsg);
 
 	if (DB_num_rows($GetTaxRateResult) == 1) {
@@ -73,7 +67,6 @@ function GetTaxRate($TaxAuthority, $DispatchTaxProvince, $TaxCategory) {
 		/*The tax rate is not defined for this Tax Authority and Dispatch Tax Authority */
 		return 0;
 	}
-
 }
 
 function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
@@ -94,8 +87,7 @@ function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 				AND taxauthrates.taxcatid = '" . $TaxCategory . "'
 			ORDER BY taxgrouptaxes.calculationorder";
 
-
-	$ErrMsg = _('The taxes and rate for this tax group could not be retrieved because');
+	$ErrMsg = __('The taxes and rate for this tax group could not be retrieved because');
 	$GetTaxesResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($GetTaxesResult) >= 1) {
@@ -109,7 +101,7 @@ function GetTaxes($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 function GetSalesGLCode($salesarea, $partnumber) {
     $SQL="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
-    $Result=DB_query($SQL);
+    $Result = DB_query($SQL);
     $MyRow=DB_fetch_array($Result);
     return $MyRow[0];
 }
@@ -126,7 +118,7 @@ function GetCreditAvailable($DebtorNo) {
 			GROUP BY debtorsmaster.debtorno,
 				debtorsmaster.creditlimit";
 
-	$ErrMsg = _('The current account balance of the customer could not be retrieved because');
+	$ErrMsg = __('The current account balance of the customer could not be retrieved because');
 	$GetAccountBalanceResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($GetAccountBalanceResult) == 1) {
@@ -152,7 +144,7 @@ function GetCreditAvailable($DebtorNo) {
 				AND salesorderdetails.completed = 0
 				AND salesorders.quotation = 0";
 
-	$ErrMsg = _('The value of outstanding orders for the customer could not be retrieved because');
+	$ErrMsg = __('The value of outstanding orders for the customer could not be retrieved because');
 	$GetOSOrdersResult = DB_query($SQL, $ErrMsg);
 
 	$MyRow = DB_fetch_array($GetOSOrdersResult);
@@ -182,17 +174,16 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 									amount)
 						VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
+							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . -$ValueOfChange . "')";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
-			. _('The GL credit for the stock cost adjustment posting could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
+			. __('The GL credit for the stock cost adjustment posting could not be inserted because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 						typeno,
@@ -203,21 +194,20 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						amount)
 					VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' '
-							. $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
+						'" . mb_substr($StockID . ' ' . __('cost was') . ' ' . $OldCost . ' ' . __('changed to') . ' '
+							. $NewCost . ' x ' . __('Quantity on hand of') . ' ' . $QOH, 0, 200) . "',
 						'" . $ValueOfChange . "')";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
-			. _('The GL debit for stock cost adjustment posting could not be inserted because');
-		$DbgMsg = _('The following SQL to insert the GLTrans record was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
+			. __('The GL debit for stock cost adjustment posting could not be inserted because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	}
 }
 
-/* Calculates the material cost of a bill of materials, given parent code*/
+/* Calculates the material cost of a bill of materials, given parent code */
 function BomMaterialCost($Parent) {
 	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$Result1 = DB_query($SQL);
@@ -243,7 +233,7 @@ function BomMaterialCost($Parent) {
 	return $MaterialCost;
 }
 
-/*Iterates through the levels of the bom, recalculating each bom it meets*/
+/* Iterates through the levels of the bom, recalculating each bom it meets */
 function UpdateCost($Item) {
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
@@ -349,7 +339,6 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
 	while ($MyRow = DB_fetch_array($Result)) {
 		WoRealRequirements($WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
-
 }
 
 /*Ensures general ledger entries balance for a given transaction */
@@ -363,7 +352,7 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 	$Difference = $MyRow[0];
 	if (abs($Difference) != 0) {
 		if (abs($Difference) > 0.1) {
-			prnMsg(_('The general ledger entries created do not balance. See your system administrator'), 'error');
+			prnMsg(__('The general ledger entries created do not balance. See your system administrator'), 'error');
 			DB_Txn_Rollback();
 		} else {
 			$Result = DB_query("SELECT counterindex,
@@ -374,14 +363,13 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 								GROUP BY counterindex");
 			$MyRow = DB_fetch_array($Result);
 			$TransToAmend = $MyRow['counterindex'];
-			$Result = DB_query("UPDATE gltrans 
+			$Result = DB_query("UPDATE gltrans
 								SET amount = amount - " . $Difference . "
 								WHERE counterindex = '" . $TransToAmend . "'");
 
 		}
 	}
 }
-
 
 /*Creates sample and testresults */
 function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
@@ -414,11 +402,10 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 										'" . $Comments . "',
 										'" . $Cert . "',
 										'" . $_SESSION['UserID'] . "',
-										'" . date('Y-m-d') . "')";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
-				. _('The create of the qasamples record failed');
-			$DbgMsg = _('The following SQL to create the qasamples was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+										CURRENT_DATE)";
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
+				. __('The create of the qasamples record failed');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			$SampleID = DB_Last_Insert_ID('qasamples', 'sampleid');
 			$SQL = "INSERT INTO sampleresults (sampleid,
 											testid,
@@ -438,10 +425,9 @@ function CreateQASample($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $D
 											showontestplan
 											FROM prodspecs WHERE keyval='" . $ProdSpecKey . "'
 											AND prodspecs.active='1'";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
-				. _('The create of the sampleresults record failed');
-			$DbgMsg = _('The following SQL to create the sampleresults was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': '
+				. __('The create of the sampleresults record failed');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} //$MyRow2[0]==0
 	} //$MyRow[0]>0
@@ -460,5 +446,3 @@ function PettyCashTabCurrentBalance($Tab) {
 	}
 	return $Balance;
 }
-
-?>

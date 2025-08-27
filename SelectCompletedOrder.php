@@ -1,18 +1,16 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);};
-
-$Title = _('Search All Sales Orders');
-
+$Title = __('Search All Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = '';
-
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
-     ' . ' ' . _('Search Sales Orders') . '</p>';
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);}
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . __('Search') . '" alt="" />
+     ' . ' ' . __('Search Sales Orders') . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -68,27 +66,27 @@ if (isset($_POST['ResetPart'])) {
 }
 
 if (isset($OrderNumber)) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Sales Order') . '" alt="" />
-         ' . ' ' . _('Order Number') . ' - ' . $OrderNumber . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Sales Order') . '" alt="" />
+         ' . ' ' . __('Order Number') . ' - ' . $OrderNumber . '</p>';
 	if (mb_strlen($_SESSION['UserBranch'])>1){
-   	   echo _('For customer') . ': ' . $SelectedCustomer;
+   	   echo __('For customer') . ': ' . $SelectedCustomer;
 	   echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer .'" />';
         }
 } elseif (isset($CustomerRef)) {
-	echo _('Customer Ref') . ' - ' . $CustomerRef;
+	echo __('Customer Ref') . ' - ' . $CustomerRef;
 	if (mb_strlen($_SESSION['UserBranch'])>1){
-   	   echo ' ' . _('and for customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
+   	   echo ' ' . __('and for customer') . ': ' . $SelectedCustomer .' ' . __('and') . ' ';
 	   echo '<input type="hidden" name="SelectedCustomer" value="' .$SelectedCustomer .'" />';
         }
 } else {
 	if (isset($SelectedCustomer)) {
-		echo _('For customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
+		echo __('For customer') . ': ' . $SelectedCustomer .' ' . __('and') . ' ';
 		echo '<input type="hidden" name="SelectedCustomer" value="'.$SelectedCustomer.'" />';
 	}
 
 	if (isset($SelectedStockItem)) {
 
-		$PartString = _('for the part') . ': <b>' . $SelectedStockItem . '</b> ' . _('and') . ' ' .
+		$PartString = __('for the part') . ': <b>' . $SelectedStockItem . '</b> ' . __('and') . ' ' .
 			'<input type="hidden" name="SelectedStockItem" value="'.$SelectedStockItem.'" />';
 
 	}
@@ -97,7 +95,7 @@ if (isset($OrderNumber)) {
 if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']!='') {
-		echo _('Stock description keywords have been used in preference to the Stock code extract entered');
+		echo __('Stock description keywords have been used in preference to the Stock code extract entered');
 	}
 	if ($_POST['Keywords']!='') {
 		//insert wildcard characters in spaces
@@ -224,19 +222,18 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 	}
 
 	if (mb_strlen($SQL)<2){
-		prnMsg(_('No selections have been made to search for parts') . ' - ' . _('choose a stock category or enter some characters of the code or description then try again'),'warn');
+		prnMsg(__('No selections have been made to search for parts') . ' - ' . __('choose a stock category or enter some characters of the code or description then try again'),'warn');
 	} else {
 
-		$ErrMsg = _('No stock items were returned by the SQL because');
-		$DbgMsg = _('The SQL used to retrieve the searched parts was');
-		$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+		$ErrMsg = __('No stock items were returned by the SQL because');
+		$StockItemsResult = DB_query($SQL, $ErrMsg);
 
 		if (DB_num_rows($StockItemsResult)==1){
 		  	$MyRow = DB_fetch_row($StockItemsResult);
 		  	$SelectedStockItem = $MyRow[0];
-			$_POST['SearchOrders']='True';
+			$_POST['SearchOrders']='true';
 		  	unset($StockItemsResult);
-		  	echo '<br />' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
+		  	echo '<br />' . __('For the part') . ': ' . $SelectedStockItem . ' ' . __('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
 	}
 } else if ((isset($_POST['SearchOrders']) AND Is_Date($_POST['OrdersAfterDate'])==1) OR (isset($CustomerGet))) {
@@ -431,7 +428,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 	$SalesOrdersResult = DB_query($SQL);
 
 	if (DB_error_no() !=0) {
-		prnMsg( _('No orders were returned by the SQL because') . ' ' . DB_error_msg(), 'info');
+		prnMsg( __('No orders were returned by the SQL because') . ' ' . DB_error_msg(), 'info');
 		echo '<br /> ' . $SQL;
 	}
 
@@ -441,7 +438,7 @@ if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is
 	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
 }
 echo '<fieldset>
-		<legend class="search">', _('Sales Order Search'), '</legend>';
+		<legend class="search">', __('Sales Order Search'), '</legend>';
 
 if (isset($PartString)) {
 	echo '<field><td>' . $PartString . '</td>';
@@ -452,19 +449,19 @@ if (!isset($_POST['OrderNumber'])){
 	$_POST['OrderNumber']='';
 }
 echo '<field>
-		<label for="OrderNumber">' . _('Order Number') . ':</label>
+		<label for="OrderNumber">' . __('Order Number') . ':</label>
 		<input type="text" name="OrderNumber" maxlength="8" size="9" value ="' . $_POST['OrderNumber'] . '" />
 	</field>
 	<field>
-		<label for="OrdersAfterDate">' . _('for all orders placed after') . ': </label>
+		<label for="OrdersAfterDate">' . __('for all orders placed after') . ': </label>
 		<input type="date" name="OrdersAfterDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['OrdersAfterDate']) . '" />
 	</field>';
 echo '<field>
-		<label for="CustomerRef">' . _('Customer Ref') . ':</label>
+		<label for="CustomerRef">' . __('Customer Ref') . ':</label>
 		<input type="text" name="CustomerRef" maxlength="8" size="9" />
 	</field>
 	<field>
-		<label for="completed">' . _('Show Completed orders only') . '</label>
+		<label for="completed">' . __('Show Completed orders only') . '</label>
 		<input type="checkbox" ' . $ShowChecked . ' name="completed" />
 	</field>';
 
@@ -477,13 +474,13 @@ if (!isset($SelectedStockItem)) {
 						ORDER BY categorydescription");
 
    echo '<div class="centre">
-			<input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" />
+			<input type="submit" name="SearchOrders" value="' . __('Search Orders') . '" />
 		</div>';
-   echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
+   echo '<div class="page_help_text">' . __('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
    echo '<fieldset>
-			<legend class="search">', _('Orders By Item Search'), '</legend>';
+			<legend class="search">', __('Orders By Item Search'), '</legend>';
    echo '<field>
-			<label for="StockCat">' . _('Select a stock category') . ':</label>
+			<label for="StockCat">' . __('Select a stock category') . ':</label>
 			<select name="StockCat">';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -498,21 +495,21 @@ if (!isset($SelectedStockItem)) {
 	</field>';
 
    echo '<field>
-			<label for="Keywords">' . _('Enter text extracts in the description') . ':</label>
+			<label for="Keywords">' . __('Enter text extracts in the description') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>';
 
 	echo '<field>
-			<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
+			<label for="StockCode">' . '<b>' . __('OR') . ' </b>' . __('Enter extract of the Stock Code') . ':</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" />
 		</field>
 	</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />';
+			<input type="submit" name="SearchParts" value="' . __('Search Parts Now') . '" />';
 
 	if (count($_SESSION['AllowedPageSecurityTokens'])>1){
-		echo '<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
+		echo '<input type="submit" name="ResetPart" value="' . __('Show All') . '" /></div>';
 	}
 	echo '</div>';
 }
@@ -521,12 +518,12 @@ if (isset($StockItemsResult)) {
 
 	echo '<table cellpadding="2" class="selection">
 			<tr>
-				<th>' . _('Code') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('On Hand') . '</th>
-				<th>' . _('Purchase Orders') . '</th>
-				<th>' . _('Sales Orders') . '</th>
-				<th>' . _('Units') . '</th>
+				<th>' . __('Code') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('On Hand') . '</th>
+				<th>' . __('Purchase Orders') . '</th>
+				<th>' . __('Sales Orders') . '</th>
+				<th>' . __('Units') . '</th>
 			</tr>';
 
 	while ($MyRow=DB_fetch_array($StockItemsResult)) {
@@ -549,28 +546,28 @@ if (isset($StockItemsResult)) {
 }
 //end if stock search results to show
 
-If (isset($SalesOrdersResult)) {
+if (isset($SalesOrdersResult)) {
 	if (DB_num_rows($SalesOrdersResult) == 1) {
 		if (!isset($OrderNumber)) {
 			$OrdRow = DB_fetch_array($SalesOrdersResult);
 			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
-		exit;
+		exit();
 	}
 
 /*show a table of the orders returned by the SQL */
 
 	echo '<table cellpadding="2" width="90%" class="selection">
 			<tr>
-				<th>' . _('Order') . ' #</th>
-				<th>' . _('Customer') . '</th>
-				<th>' . _('Branch') . '</th>
-				<th>' . _('Cust Order') . ' #</th>
-				<th>' . _('Order Date') . '</th>
-				<th>' . _('Req Del Date') . '</th>
-				<th>' . _('Delivery To') . '</th>
-				<th>' . _('Order Total') . '</th>
+				<th>' . __('Order') . ' #</th>
+				<th>' . __('Customer') . '</th>
+				<th>' . __('Branch') . '</th>
+				<th>' . __('Cust Order') . ' #</th>
+				<th>' . __('Order Date') . '</th>
+				<th>' . __('Req Del Date') . '</th>
+				<th>' . __('Delivery To') . '</th>
+				<th>' . __('Order Total') . '</th>
 			</tr>';
 
 	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
@@ -600,5 +597,3 @@ If (isset($SalesOrdersResult)) {
 
 echo '</form>';
 include('includes/footer.php');
-
-?>

@@ -1,8 +1,8 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title=_('Preferred Supplier Purchasing');
+$Title=__('Preferred Supplier Purchasing');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = '';
 include('includes/header.php');
@@ -27,9 +27,8 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						ON stockcategory.categoryid = stockmaster.categoryid
 						WHERE  stockmaster.stockid = '". $StockID . "'";
 
-				$ErrMsg = _('The item details for') . ' ' . $StockID . ' ' . _('could not be retrieved because');
-				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$ItemResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$ErrMsg = __('The item details for') . ' ' . $StockID . ' ' . __('could not be retrieved because');
+				$ItemResult = DB_query($SQL, $ErrMsg);
 				if (DB_num_rows($ItemResult)==1){
 					$ItemRow = DB_fetch_array($ItemResult);
 
@@ -52,9 +51,8 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 									purchdata.leadtime
 							ORDER BY latesteffectivefrom DESC";
 
-					$ErrMsg = _('The purchasing data for') . ' ' . $StockID . ' ' . _('could not be retrieved because');
-					$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
-					$PurchDataResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+					$ErrMsg = __('The purchasing data for') . ' ' . $StockID . ' ' . __('could not be retrieved because');
+					$PurchDataResult = DB_query($SQL, $ErrMsg);
 					if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
 
@@ -70,15 +68,14 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
-						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
-						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
-						$DiscountResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+						$ErrMsg = __('Could not retrieve the supplier discounts applicable to the item');
+						$DiscountResult = DB_query($SQL, $ErrMsg);
 						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 							$ItemDiscountPercent += $DiscountRow['discountpercent'];
 							$ItemDiscountAmount += $DiscountRow['discountamount'];
 						}
 						if ($ItemDiscountPercent != 0) {
-							prnMsg(_('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
+							prnMsg(__('Taken accumulated supplier percentage discounts of') .  ' ' . locale_number_format($ItemDiscountPercent*100,2) . '%','info');
 						}
 						$PurchItems[$StockID]['Price'] = ($PurchRow['price']*(1-$ItemDiscountPercent) - $ItemDiscountAmount)/$PurchRow['conversionfactor'];
 						$PurchItems[$StockID]['ConversionFactor'] = $PurchRow['conversionfactor'];
@@ -107,7 +104,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 					$OrderValue += $PurchItems[$StockID]['Quantity']*$PurchItems[$StockID]['Price'];
 				} else { //item could not be found
 					$InputError =1;
-					prnmsg(_('An item where a quantity was entered could not be retrieved from the database. The order cannot proceed. The item code was:') . ' ' . $StockID,'error');
+					prnmsg(__('An item where a quantity was entered could not be retrieved from the database. The order cannot proceed. The item code was:') . ' ' . $StockID,'error');
 				}
 			} //end if the quantity entered into the form is positive
 		} //end if the form variable name is OrderQtyXXX
@@ -147,7 +144,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 		if (DB_num_rows($LocnAddrResult) == 1) {
 			$LocnRow = DB_fetch_array($LocnAddrResult);
 		} else {
-			prnMsg(_('Your default inventory location is set to a non-existant inventory location. This purchase order cannot proceed'), 'error');
+			prnMsg(__('Your default inventory location is set to a non-existant inventory location. This purchase order cannot proceed'), 'error');
 			$InputError =1;
 		}
 		if (IsEmailAddress($_SESSION['UserEmail'])){
@@ -162,32 +159,32 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 						WHERE userid='" . $_SESSION['UserID'] . "'
 						AND currabrev='" . $SupplierRow['currcode'] ."'";
 
-			$AuthResult=DB_query($AuthSQL);
+			$AuthResult = DB_query($AuthSQL);
 			$AuthRow=DB_fetch_array($AuthResult);
 
 			if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $OrderValue) { //user has authority to authrorise as well as create the order
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created and Authorised by') . $UserDetails;
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . __('Order Created and Authorised by') . $UserDetails;
 				$AllowPrintPO=1;
 				$Status = 'Authorised';
 			} else { // no authority to authorise this order
 				if (DB_num_rows($AuthResult) ==0){
-					$AuthMessage = _('Your authority to approve purchase orders in') . ' ' . $SupplierRow['currcode'] . ' ' . _('has not yet been set up') . '<br />';
+					$AuthMessage = __('Your authority to approve purchase orders in') . ' ' . $SupplierRow['currcode'] . ' ' . __('has not yet been set up') . '<br />';
 				} else {
-					$AuthMessage = _('You can only authorise up to') . ' ' . $SupplierRow['currcode'] . ' '.$AuthRow['authlevel'] .'.<br />';
+					$AuthMessage = __('You can only authorise up to') . ' ' . $SupplierRow['currcode'] . ' '.$AuthRow['authlevel'] .'.<br />';
 				}
 
-				prnMsg( _('You do not have permission to authorise this purchase order').'.<br />' . _('This order is for') . ' ' . $SupplierRow['currcode'] . ' '. $OrderValue . ' ' .
+				prnMsg( __('You do not have permission to authorise this purchase order').'.<br />' . __('This order is for') . ' ' . $SupplierRow['currcode'] . ' '. $OrderValue . ' ' .
 					$AuthMessage .
-					_('If you think this is a mistake please contact the systems administrator') . '<br />'.
-					_('The order will be created with a status of pending and will require authorisation'), 'warn');
+					__('If you think this is a mistake please contact the systems administrator') . '<br />'.
+					__('The order will be created with a status of pending and will require authorisation'), 'warn');
 
 				$AllowPrintPO=0;
-				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails;
+				$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . __('Order Created by') . ' ' . $UserDetails;
 				$Status = 'Pending';
 			}
 		} else { //auto authorise is set to off
 			$AllowPrintPO=0;
-			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . _('Order Created by') . ' ' . $UserDetails;
+			$StatusComment=date($_SESSION['DefaultDateFormat']).' - ' . __('Order Created by') . ' ' . $UserDetails;
 			$Status = 'Pending';
 		}
 
@@ -225,7 +222,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 										allowprint)
 						VALUES(	'" . $OrderNo . "',
 								'" . $_POST['Supplier'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $SupplierRow['rate'] . "',
 								'" . $_SESSION['UserID'] . "',
 								'" . $_SESSION['UserStockLocation'] . "',
@@ -244,7 +241,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . $SupplierRow['address6'] . "',
 								'" . $SupplierRow['telephone']. "',
 								'" . $LocnRow['contact'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . Date('Y-m-d',mktime(0,0,0,Date('m'),Date('d')+1,Date('Y'))) . "',
 								'" . $Status . "',
 								'" . htmlspecialchars($StatusComment,ENT_QUOTES,'UTF-8') . "',
@@ -252,11 +249,10 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								'" . $SupplierRow['paymentterms'] . "',
 								'" . $AllowPrintPO . "' )";
 
-		$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
-		$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg =  __('The purchase order header record could not be inserted into the database because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
-	     /*Insert the purchase order detail records */
+	    /*Insert the purchase order detail records */
 		foreach ($PurchItems as $StockID=>$POLine) {
 
 			//print_r($POLine);
@@ -287,35 +283,34 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 							'" . $POLine['SuppliersPartNo'] . "',
 							'0',
 							'" . $POLine['ConversionFactor'] . "')";
-			$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
-			$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
+			$ErrMsg =__('One of the purchase order detail records could not be inserted into the database because');
 
-			$Result =DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		} /* end of the loop round the detail line items on the order */
 		echo '<p />';
-		prnMsg(_('Purchase Order') . ' ' . $OrderNo . ' ' .  _('has been created.') . ' ' . _('Total order value of') . ': ' . locale_number_format($OrderValue,$SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode']  ,'success');
-		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '">' . _('Print Order') . '</a>
-				<br /><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . _('Edit Order') . '</a>';
-		exit;
+		prnMsg(__('Purchase Order') . ' ' . $OrderNo . ' ' .  __('has been created.') . ' ' . __('Total order value of') . ': ' . locale_number_format($OrderValue,$SupplierRow['decimalplaces']) . ' ' . $SupplierRow['currcode']  ,'success');
+		echo '<br /><a href="' . $RootPath . '/PO_PDFPurchOrder.php?OrderNo=' . $OrderNo . '">' . __('Print Order') . '</a>
+				<br /><a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $OrderNo . '">' . __('Edit Order') . '</a>';
+		exit();
 	} else {
-		prnMsg(_('Unable to create the order'),'error');
+		prnMsg(__('Unable to create the order'),'error');
 	}
 }
 
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<form id="SupplierPurchasing" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<fieldset>
-	<legend>', _('Supplier Selection'), '</legend>
+	<legend>', __('Supplier Selection'), '</legend>
 	<field>
-		<label for="Supplier">' . _('For Supplier') . ':</label>
+		<label for="Supplier">' . __('For Supplier') . ':</label>
 		<select name="Supplier">';
 
 $SQL = "SELECT supplierid, suppname FROM suppliers WHERE supptype<>7 ORDER BY suppname";
-$SuppResult=DB_query($SQL);
+$SuppResult = DB_query($SQL);
 
-echo '<option value="">' . _('Not Yet Selected') . '</option>';
+echo '<option value="">' . __('Not Yet Selected') . '</option>';
 
 while ($MyRow=DB_fetch_array($SuppResult)){
 	if (isset($_POST['Supplier']) AND $_POST['Supplier']==$MyRow['supplierid']){
@@ -329,38 +324,38 @@ echo '</select>
 
 /*
 echo '<tr>
-		<td>' . _('Months Buffer Stock to Hold') . ':</td>
+		<td>' . __('Months Buffer Stock to Hold') . ':</td>
 		<td><select name="NumberMonthsHolding">';
 
 if (!isset($_POST['NumberMonthsHolding'])){
 	$_POST['NumberMonthsHolding']=1;
 }
 if ($_POST['NumberMonthsHolding']==0.5){
-	echo '<option selected="selected" value="0.5">' . _('Two Weeks')  . '</option>';
+	echo '<option selected="selected" value="0.5">' . __('Two Weeks')  . '</option>';
 } else {
-	echo '<option value="0.5">' . _('Two Weeks')  . '</option>';
+	echo '<option value="0.5">' . __('Two Weeks')  . '</option>';
 }
 if ($_POST['NumberMonthsHolding']==1){
-	echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+	echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 } else {
-	echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
+	echo '<option selected="selected" value="1">' . __('One Month') . '</option>';
 }
 if ($_POST['NumberMonthsHolding']==1.5){
-	echo '<option selected="selected" value="1.5">' . _('Six Weeks') . '</option>';
+	echo '<option selected="selected" value="1.5">' . __('Six Weeks') . '</option>';
 } else {
-	echo '<option value="1.5">' . _('Six Weeks') . '</option>';
+	echo '<option value="1.5">' . __('Six Weeks') . '</option>';
 }
 if ($_POST['NumberMonthsHolding']==2){
-	echo '<option selected="selected" value="2">' . _('Two Months') . '</option>';
+	echo '<option selected="selected" value="2">' . __('Two Months') . '</option>';
 } else {
-	echo '<option value="2">' . _('Two Months') . '</option>';
+	echo '<option value="2">' . __('Two Months') . '</option>';
 }
 echo '</select></td>
 	</tr>';
 */
 echo '</fieldset>
 	<div class="centre">
-		<input type="submit" name="ShowItems" value="' . _('Show Items') . '" />
+		<input type="submit" name="ShowItems" value="' . __('Show Items') . '" />
 	</div>';
 
 if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplier']!=''){
@@ -394,112 +389,87 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					ORDER BY purchdata.supplierno,
 						stockmaster.stockid";
 
-	$ItemsResult = DB_query($SQL, '', '', false, false);
+	$ErrMsg = __('The supplier inventory quantities could not be retrieved');
+	$ItemsResult = DB_query($SQL, $ErrMsg, '', false, false);
 	$ListCount = DB_num_rows($ItemsResult);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Supplier Ordering') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.php');
-		prnMsg(_('The supplier inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-		  echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	} else {
-		//head up a new table
-		echo '<table>
-			<thead>
-				<tr>
-					<th class="SortedColumn">' . _('Item Code') . '</th>
-					<th class="SortedColumn">' . _('Item Description') . '</th>
-					<th class="SortedColumn">' . _('Bin') . '</th>
-					<th class="SortedColumn">' . _('On Hand') . '</th>
-					<th class="SortedColumn">' . _('Demand') . '</th>
-					<th class="SortedColumn">' . _('Supp Ords') . '</th>
-					<th class="SortedColumn">' . _('Previous') . '<br />' ._('Month') . '</th>
-					<th class="SortedColumn">' . _('Last') . '<br />' ._('Month') . '</th>
-					<th class="SortedColumn">' . _('Week') . '<br />' ._('3') . '</th>
-					<th class="SortedColumn">' . _('Week') . '<br />' ._('2') . '</th>
-					<th class="SortedColumn">' . _('Last') . '<br />' ._('Week') . '</th>
-					<th>' . _('Order Qty') . '</th>
-				</tr>
-			</thead>
-			<tbody>';
-
-		$i=0;
-
-		while ($ItemRow = DB_fetch_array($ItemsResult)){
-
-
-			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
-								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
-						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
-								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
-					FROM stockmoves
-					WHERE stockid='" . $ItemRow['stockid'] . "'
-					AND (type=10 OR type=11)";
-			$SalesResult=DB_query($SQL,'','',FALSE,FALSE);
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'. $SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-
-			$SalesRow = DB_fetch_array($SalesResult);
-
-			// Get the demand
-			$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
-			// Get the QOO
-			$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
-
-			if (!isset($_POST['OrderQty' . $i])){
-				$_POST['OrderQty' . $i] =0;
-			}
-			echo '<tr>
-					<td>' . $ItemRow['stockid']  . '</td>
-					<td>' . $ItemRow['description'] . '</td>
-					<td>' . $ItemRow['bin'] . '</td>
-					<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk2'],$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($SalesRow['wk1'],$ItemRow['decimalplaces']) . '</td>
-					<td><input type="hidden" name="StockID' . $i . '" value="' . $ItemRow['stockid'] . '" /><input type="text" class="number" name="OrderQty' . $i  . '" value="' . $_POST['OrderQty' . $i] . '" title="' . _('Enter the quantity to purchase of this item') . '" size="6" maxlength="6" /></td>
-				</tr>';
-			$i++;
-		} /*end preferred supplier items while loop */
-
-		echo '</tbody>
-			<tfoot>
-				<tr>
-				<td colspan="7"><input type="submit" name="CreatePO" value="' . _('Create Purchase Order') . '" onclick="return confirm(\'' . _('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
+	//head up a new table
+	echo '<table>
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . __('Item Code') . '</th>
+				<th class="SortedColumn">' . __('Item Description') . '</th>
+				<th class="SortedColumn">' . __('Bin') . '</th>
+				<th class="SortedColumn">' . __('On Hand') . '</th>
+				<th class="SortedColumn">' . __('Demand') . '</th>
+				<th class="SortedColumn">' . __('Supp Ords') . '</th>
+				<th class="SortedColumn">' . __('Previous') . '<br />' .__('Month') . '</th>
+				<th class="SortedColumn">' . __('Last') . '<br />' .__('Month') . '</th>
+				<th class="SortedColumn">' . __('Week') . '<br />' .__('3') . '</th>
+				<th class="SortedColumn">' . __('Week') . '<br />' .__('2') . '</th>
+				<th class="SortedColumn">' . __('Last') . '<br />' .__('Week') . '</th>
+				<th>' . __('Order Qty') . '</th>
 			</tr>
-			</tfoot>
-			</table>';
-	}
+		</thead>
+		<tbody>';
+
+	$i=0;
+
+	while ($ItemRow = DB_fetch_array($ItemsResult)){
+
+		$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
+							trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
+					SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
+							trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
+				FROM stockmoves
+				WHERE stockid='" . $ItemRow['stockid'] . "'
+				AND (type=10 OR type=11)";
+
+		$ErrMsg = __('The sales quantities could not be retrieved');
+		$SalesResult = DB_query($SQL, $ErrMsg, '',false);
+		$SalesRow = DB_fetch_array($SalesResult);
+
+		// Get the demand
+		$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
+		// Get the QOO
+		$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
+
+		if (!isset($_POST['OrderQty' . $i])){
+			$_POST['OrderQty' . $i] =0;
+		}
+		echo '<tr>
+				<td>' . $ItemRow['stockid']  . '</td>
+				<td>' . $ItemRow['description'] . '</td>
+				<td>' . $ItemRow['bin'] . '</td>
+				<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk2'],$ItemRow['decimalplaces']) . '</td>
+				<td class="number">' . round($SalesRow['wk1'],$ItemRow['decimalplaces']) . '</td>
+				<td><input type="hidden" name="StockID' . $i . '" value="' . $ItemRow['stockid'] . '" /><input type="text" class="number" name="OrderQty' . $i  . '" value="' . $_POST['OrderQty' . $i] . '" title="' . __('Enter the quantity to purchase of this item') . '" size="6" maxlength="6" /></td>
+			</tr>';
+		$i++;
+	} /*end preferred supplier items while loop */
+
+	echo '</tbody>
+		<tfoot>
+			<tr>
+			<td colspan="7"><input type="submit" name="CreatePO" value="' . __('Create Purchase Order') . '" onclick="return confirm(\'' . __('Clicking this button will create a purchase order for all the quantities in the grid above for immediate delivery. Are you sure?') . '\');"/></td>
+		</tr>
+		</tfoot>
+		</table>';
 }
 
 echo '</div>
 	  </form>';
 
 include('includes/footer.php');
-
-?>

@@ -1,18 +1,18 @@
 <?php
 
-include('includes/session.php');
-$Title=_('Debtors Control Integrity');
-$ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
-include('includes/header.php');
+require(__DIR__ . '/includes/session.php');
 
+$Title=__('Debtors Control Integrity');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php');
+include('includes/header.php');
 
 //
 //========[ SHOW OUR FORM ]===========
 //
 
     // Context Navigation and Title
-    echo '<a href="'. $RootPath . '/index.php?&amp;Application=AR">' . _('Back to Customers') . '</a>';
+    echo '<a href="'. $RootPath . '/index.php?&amp;Application=AR">' . __('Back to Customers') . '</a>';
     echo '<div class="centre"><h3>' . $Title . '</h3></div>';
 
 	// Page Border
@@ -36,10 +36,10 @@ include('includes/header.php');
 	}
 
 	echo '<tr>
-			<td>' . _('Start Period:') . '</td>
+			<td>' . __('Start Period:') . '</td>
 			<td><select name="FromPeriod">';
 
-	$ToSelect = '<tr><td>' . _('End Period:')  . '</td>
+	$ToSelect = '<tr><td>' . __('End Period:')  . '</td>
 					<td><select name="ToPeriod">';
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
@@ -59,8 +59,8 @@ include('includes/header.php');
 
 	echo '</table>';
 
-	echo '<br /><input type="submit" name="Show" value="'._('Accept').'" />';
-	echo '<input type="submit" value="' . _('Cancel') .'" />';
+	echo '<br /><input type="submit" name="Show" value="'.__('Accept').'" />';
+	echo '<input type="submit" value="' . __('Cancel') .'" />';
 
 
 	if ( isset($_POST['Show']) )	{
@@ -69,13 +69,13 @@ include('includes/header.php');
 		//
 		echo '<br /><table border="1">';
 		echo '<tr>
-				<th>' . _('Period') . '</th>
-				<th>' . _('Bal B/F in GL') . '</th>
-				<th>' . _('Invoices') . '</th>
-				<th>' . _('Receipts') . '</th>
-				<th>' . _('Bal C/F in GL') . '</th>
-				<th>' . _('Calculated') . '</th>
-				<th>' . _('Difference') . '</th>
+				<th>' . __('Period') . '</th>
+				<th>' . __('Bal B/F in GL') . '</th>
+				<th>' . __('Invoices') . '</th>
+				<th>' . __('Receipts') . '</th>
+				<th>' . __('Bal C/F in GL') . '</th>
+				<th>' . __('Calculated') . '</th>
+				<th>' . __('Difference') . '</th>
 			</tr>';
 
 		$CurPeriod = $_POST['FromPeriod'];
@@ -140,7 +140,7 @@ include('includes/header.php');
 		$difColor = ( $DiffTotal == 0 ) ? 'green' : 'red';
 
 		echo '<tr style="bgcolor:white">
-				<td>' . _('Total') . '</td>
+				<td>' . __('Total') . '</td>
 				<td class="number">' . locale_number_format($GLOpening,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($invTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($RecTotal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -154,5 +154,3 @@ include('includes/header.php');
           </form>';
 
 include('includes/footer.php');
-
-?>

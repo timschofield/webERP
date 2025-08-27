@@ -1,14 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-$Title = _('Units Of Measure');
+$Title = __('Units Of Measure');
 $ViewTopic = 'Setup';
 $BookMark = '';
-
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+		__('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if ( isset($_GET['SelectedMeasureID']) )
 	$SelectedMeasureID = $_GET['SelectedMeasureID'];
@@ -28,11 +28,11 @@ if (isset($_POST['Submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['MeasureName'])) {
 		$InputError = 1;
-		prnMsg( _('The unit of measure cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
+		prnMsg( __('The unit of measure cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 	}
 	if (trim($_POST['MeasureName']) == '') {
 		$InputError = 1;
-		prnMsg( _('The unit of measure may not be empty'), 'error');
+		prnMsg( __('The unit of measure may not be empty'), 'error');
 	}
 
 	if (isset($_POST['SelectedMeasureID']) AND $_POST['SelectedMeasureID']!='' AND $InputError !=1) {
@@ -47,7 +47,7 @@ if (isset($_POST['Submit'])) {
 		$MyRow = DB_fetch_row($Result);
 		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The unit of measure can not be renamed because another with the same name already exist.'),'error');
+			prnMsg( __('The unit of measure can not be renamed because another with the same name already exist.'),'error');
 		} else {
 			// Get the old name and check that the record still exist neet to be very carefull here
 			// idealy this is one of those sets that should be in a stored procedure simce even the checks are
@@ -68,10 +68,10 @@ if (isset($_POST['Submit'])) {
 					WHERE units ".LIKE." '" . $OldMeasureName . "'";
 			} else {
 				$InputError = 1;
-				prnMsg( _('The unit of measure no longer exist.'),'error');
+				prnMsg( __('The unit of measure no longer exist.'),'error');
 			}
 		}
-		$Msg = _('Unit of measure changed');
+		$Msg = __('Unit of measure changed');
 	} elseif ($InputError !=1) {
 		/*SelectedMeasureID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM unitsofmeasure
@@ -80,20 +80,20 @@ if (isset($_POST['Submit'])) {
 		$MyRow = DB_fetch_row($Result);
 		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
-			prnMsg( _('The unit of measure can not be created because another with the same name already exists.'),'error');
+			prnMsg( __('The unit of measure can not be created because another with the same name already exists.'),'error');
 		} else {
 			$SQL = "INSERT INTO unitsofmeasure (unitname )
 					VALUES ('" . $_POST['MeasureName'] ."')";
 		}
-		$Msg = _('New unit of measure added');
+		$Msg = __('New unit of measure added');
 	}
 
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($SQL)) {
 			DB_Txn_Begin();
-			$TmpErr = _('Could not update unit of measure');
-			$tmpDbg = _('The sql that failed was') . ':';
+			$TmpErr = __('Could not update unit of measure');
+			$tmpDbg = __('The sql that failed was') . ':';
 			foreach ($SQL as $stmt ) {
 				$Result = DB_query($stmt, $TmpErr,$tmpDbg,true);
 				if(!$Result) {
@@ -124,7 +124,7 @@ if (isset($_POST['Submit'])) {
 	$Result = DB_query($SQL);
 	if ( DB_num_rows($Result) == 0 ) {
 		// This is probably the safest way there is
-		prnMsg( _('Cannot delete this unit of measure because it no longer exist'),'warn');
+		prnMsg( __('Cannot delete this unit of measure because it no longer exist'),'warn');
 	} else {
 		$MyRow = DB_fetch_row($Result);
 		$OldMeasureName = $MyRow[0];
@@ -132,12 +132,12 @@ if (isset($_POST['Submit'])) {
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]>0) {
-			prnMsg( _('Cannot delete this unit of measure because inventory items have been created using this unit of measure'),'warn');
-			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('inventory items that refer to this unit of measure') . '</font>';
+			prnMsg( __('Cannot delete this unit of measure because inventory items have been created using this unit of measure'),'warn');
+			echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('inventory items that refer to this unit of measure') . '</font>';
 		} else {
 			$SQL="DELETE FROM unitsofmeasure WHERE unitname ".LIKE."'" . $OldMeasureName . "'";
 			$Result = DB_query($SQL);
-			prnMsg( $OldMeasureName . ' ' . _('unit of measure has been deleted') . '!','success');
+			prnMsg( $OldMeasureName . ' ' . __('unit of measure has been deleted') . '!','success');
 		}
 	} //end if account group used in GL accounts
 	unset ($SelectedMeasureID);
@@ -163,13 +163,13 @@ if (isset($_POST['Submit'])) {
 			FROM unitsofmeasure
 			ORDER BY unitid";
 
-	$ErrMsg = _('Could not get unit of measures because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('Could not get unit of measures because');
+	$Result = DB_query($SQL, $ErrMsg);
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="SortedColumn">' . _('Units of Measure') . '</th>
+				<th class="SortedColumn">' . __('Units of Measure') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -178,8 +178,8 @@ if (isset($_POST['Submit'])) {
 
 		echo '<tr class="striped_row">
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete')  . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '">' . __('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $MyRow[0] . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this unit of measure?') . '\');">' . __('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -189,7 +189,7 @@ if (isset($_POST['Submit'])) {
 
 if (isset($SelectedMeasureID)) {
 	echo '<div class="centre">
-			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Units of Measure') . '</a>
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Units of Measure') . '</a>
 		</div>';
 }
 
@@ -208,7 +208,7 @@ if (! isset($_GET['delete'])) {
 
 		$Result = DB_query($SQL);
 		if ( DB_num_rows($Result) == 0 ) {
-			prnMsg( _('Could not retrieve the requested unit of measure, please try again.'),'warn');
+			prnMsg( __('Could not retrieve the requested unit of measure, please try again.'),'warn');
 			unset($SelectedMeasureID);
 		} else {
 			$MyRow = DB_fetch_array($Result);
@@ -218,22 +218,22 @@ if (! isset($_GET['delete'])) {
 
 			echo '<input type="hidden" name="SelectedMeasureID" value="' . $_POST['MeasureID'] . '" />';
 			echo '<fieldset>
-					<legend>', _('Edit Unit of Measure'), '</legend>';
+					<legend>', __('Edit Unit of Measure'), '</legend>';
 		}
 
 	}  else {
 		$_POST['MeasureName']='';
 		echo '<fieldset>
-				<legend>', _('Create Unit of Measure'), '</legend>';
+				<legend>', __('Create Unit of Measure'), '</legend>';
 	}
 	echo '<field>
-		<td>' . _('Unit of Measure') . ':' . '</td>
-		<td><input required="required" pattern="(?!^ *$)[^+<>-]{1,}" type="text" name="MeasureName" title="'._('Cannot be blank or contains illegal characters').'" placeholder="'._('More than one character').'" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
+		<td>' . __('Unit of Measure') . ':' . '</td>
+		<td><input required="required" pattern="(?!^ *$)[^+<>-]{1,}" type="text" name="MeasureName" title="'.__('Cannot be blank or contains illegal characters').'" placeholder="'.__('More than one character').'" size="30" maxlength="30" value="' . $_POST['MeasureName'] . '" /></td>
 		</field>';
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="Submit" value="' . __('Enter Information') . '" />
 		</div>';
 
 	echo '</form>';
@@ -241,4 +241,3 @@ if (! isset($_GET['delete'])) {
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

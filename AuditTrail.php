@@ -1,17 +1,16 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-
-$Title = _('Audit Trail');
+$Title = __('Audit Trail');
 $ViewTopic = 'Setup';
 $BookMark = 'AuditTrail';
-
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
@@ -21,7 +20,7 @@ if (!isset($_POST['ToDate'])){
 }
 
 if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
-	prnMsg( _('Incorrect date format used, please re-enter'), 'error');
+	prnMsg( __('Incorrect date format used, please re-enter'), 'error');
 	unset($_POST['View']);
 }
 $ContainingText = '';
@@ -40,22 +39,22 @@ $UserResult = DB_query("SELECT userid FROM www_users ORDER BY userid");
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
-		<legend>', _('Report Criteria'), '</legend>';
+		<legend>', __('Report Criteria'), '</legend>';
 
 echo '<field>
-		<label for="FromDate">' .  _('From Date') . '</label>
+		<label for="FromDate">' .  __('From Date') . '</label>
 		<input tabindex="1" type="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' . FormatDateForSQL($_POST['FromDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>
 	<field>
-		<label for="ToDate">' .  _('To Date') . '</label>
+		<label for="ToDate">' .  __('To Date') . '</label>
 		<input tabindex="2" type="date" name="ToDate" size="11" maxlength="10" required="required" value="' . FormatDateForSQL($_POST['ToDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>';
 
 // Show user selections
 echo '<field>
-		<label for="SelectedUser">' .  _('User ID'). '</label>
+		<label for="SelectedUser">' .  __('User ID'). '</label>
 		<select tabindex="3" name="SelectedUser">
-			<option value="ALL">' . _('All') . '</option>';
+			<option value="ALL">' . __('All') . '</option>';
 while ($Users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $Users[0]==$_POST['SelectedUser']) {
 		echo '<option selected="selected" value="' . $Users[0] . '">' . $Users[0] . '</option>';
@@ -68,9 +67,9 @@ echo '</select>
 
 // Show table selections
 echo '<field>
-		<label for="SelectedTable">' .  _('Table '). '</label>
+		<label for="SelectedTable">' .  __('Table '). '</label>
 		<select tabindex="4" name="SelectedTable">
-			<option value="ALL">' . _('All') . '</option>';
+			<option value="ALL">' . __('All') . '</option>';
 while ($Tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $Tables[0]==$_POST['SelectedTable']) {
 		echo '<option selected="selected" value="' . $Tables[0] . '">' . $Tables[0] . '</option>';
@@ -86,12 +85,12 @@ if(!isset($_POST['ContainingText'])){
 }
 // Show the text
 echo '<field>
-		<label for="ContainingText">' . _('Containing text') . ':</label>
+		<label for="ContainingText">' . __('Containing text') . ':</label>
 		<input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input tabindex="5" type="submit" name="View" value="' . _('View') . '" />
+		<input tabindex="5" type="submit" name="View" value="' . __('View') . '" />
 	</div>
 	</form>';
 
@@ -148,7 +147,7 @@ if (isset($_POST['View'])) {
 		$SQLString = trim(str_replace("WHERE", '', $SQLString));
 		$Assigment = explode('=', $SQLString);
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
-		if (isset($Assigment[1])) {$_SESSION['SQLString']['values'][0] = $Assigment[1];};
+		if (isset($Assigment[1])) {$_SESSION['SQLString']['values'][0] = $Assigment[1];}
 	}
 
 	if (mb_strlen($ContainingText) > 0) {
@@ -175,12 +174,12 @@ if (isset($_POST['View'])) {
 
 	echo '<table border="0" width="98%" class="selection">
 		<tr>
-			<th>' . _('Date/Time') . '</th>
-			<th>' . _('User') . '</th>
-			<th>' . _('Type') . '</th>
-			<th>' . _('Table') . '</th>
-			<th>' . _('Field Name') . '</th>
-			<th>' . _('Value') . '</th></tr>';
+			<th>' . __('Date/Time') . '</th>
+			<th>' . __('User') . '</th>
+			<th>' . __('Type') . '</th>
+			<th>' . __('Table') . '</th>
+			<th>' . __('Field Name') . '</th>
+			<th>' . __('Value') . '</th></tr>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if (Query_Type($MyRow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$MyRow[2]));
@@ -228,5 +227,3 @@ if (isset($_POST['View'])) {
 	echo '</table>';
 }
 include('includes/footer.php');
-
-?>

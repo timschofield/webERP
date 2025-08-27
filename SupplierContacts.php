@@ -1,10 +1,9 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-$Title = _('Supplier Contacts');
-/* webERP manual links before header.php */
-$ViewTopic= 'AccountsPayable';
+$Title = __('Supplier Contacts');
+$ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierContact';
 include('includes/header.php');
 
@@ -14,16 +13,16 @@ if (isset($_GET['SupplierID'])){
 	$SupplierID = $_POST['SupplierID'];
 }
 
-echo '<a href="' . $RootPath . '/SelectSupplier.php" class="toplink">' . _('Back to Suppliers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectSupplier.php" class="toplink">' . __('Back to Suppliers') . '</a><br />';
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .
-	_('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
+	__('Supplier Allocations') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($SupplierID)) {
-	prnMsg(_('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br />' . _('When the page is called from within the system this will always be the case') .
-	'<br />' . _('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
+	prnMsg(__('This page must be called with the supplier code of the supplier for whom you wish to edit the contacts') . '<br />' . __('When the page is called from within the system this will always be the case') .
+	'<br />' . __('Select a supplier first, then select the link to add/edit/delete contacts'),'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 if (isset($_GET['SelectedContact'])){
@@ -45,13 +44,13 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['Contact']) == 0) {
 		$InputError = 1;
-		prnMsg(_('The contact name must be at least one character long'),'error');
+		prnMsg(__('The contact name must be at least one character long'),'error');
 		echo '<br />';
 	}
 	if (mb_strlen($_POST['Email'])){
 		if (!IsEmailAddress($_POST['Email'])) {
 			$InputError = 1;
-			prnMsg(_('The email address entered does not appear to be a valid email address'),'error');
+			prnMsg(__('The email address entered does not appear to be a valid email address'),'error');
 			echo '<br />';
 		}
 	}
@@ -67,7 +66,7 @@ if (isset($_POST['submit'])) {
 				WHERE contact='".$SelectedContact."'
 				AND supplierid='".$SupplierID."'";
 
-		$Msg = _('The supplier contact information has been updated');
+		$Msg = __('The supplier contact information has been updated');
 
 	} elseif ($InputError != 1) {
 
@@ -88,14 +87,13 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Email'] . "',
 					'" . $_POST['Mobile'] . "')";
 
-		$Msg = _('The new supplier contact has been added to the database');
+		$Msg = __('The new supplier contact has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError != 1) {
-		$ErrMsg = _('The supplier contact could not be inserted or updated because');
-		$DbgMsg = _('The SQL that was used but failed was');
+		$ErrMsg = __('The supplier contact could not be inserted or updated because');
 
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg($Msg,'success');
 
@@ -113,12 +111,11 @@ if (isset($_POST['submit'])) {
 			WHERE contact='".$SelectedContact."'
 			AND supplierid = '".$SupplierID."'";
 
-	$ErrMsg = _('The supplier contact could not be deleted because');
-	$DbgMsg = _('The SQL that was used but failed was');
+	$ErrMsg = __('The supplier contact could not be deleted because');
 
-	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	echo '<br />' . _('Supplier contact has been deleted') . '<p />';
+	echo '<br />' . __('Supplier contact has been deleted') . '<p />';
 
 }
 
@@ -144,14 +141,14 @@ if (!isset($SelectedContact)){
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th colspan="7">' . _('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</th>
+						<th colspan="7">' . __('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</th>
 					</tr>
 					<tr>
-					<th class="SortedColumn">' . _('Name') . '</th>
-					<th class="SortedColumn">' . _('Position') . '</th>
-					<th class="SortedColumn">' . _('Phone No') . '</th>
-					<th class="SortedColumn">' . _('Fax No') . '</th>
-					<th class="SortedColumn">' . _('Email') . '</th>
+					<th class="SortedColumn">' . __('Name') . '</th>
+					<th class="SortedColumn">' . __('Position') . '</th>
+					<th class="SortedColumn">' . __('Phone No') . '</th>
+					<th class="SortedColumn">' . __('Fax No') . '</th>
+					<th class="SortedColumn">' . __('Email') . '</th>
 					<th colspan="2"></th>
 				</tr>
 			</thead>
@@ -164,13 +161,13 @@ if (!isset($SelectedContact)){
 					<td>', $MyRow['tel'], '</td>
 					<td>', $MyRow['fax'], '</td>
 					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '">' . _('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '&amp;delete=yes" onclick="return confirm(\''  . __('Are you sure you wish to delete this contact?') . '\');">' .  __('Delete') . '</a></td>
 				</tr>';
 		} while ($MyRow = DB_fetch_array($Result));
 		echo '</tbody></table><br />';
 	} else {
-		prnMsg(_('There are no contacts defined for this supplier'),'info');
+		prnMsg(__('There are no contacts defined for this supplier'),'info');
 	}
 	//END WHILE LIST LOOP
 }
@@ -181,7 +178,7 @@ if (!isset($SelectedContact)){
 if (isset($SelectedContact)) {
 	echo '<div class="centre">
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SupplierID=' . $SupplierID . '">' .
-		  _('Show all the supplier contacts for') . ' ' . $SupplierID . '</a>
+		  __('Show all the supplier contacts for') . ' ' . $SupplierID . '</a>
 		 </div>';
 }
 
@@ -215,9 +212,9 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedContact" value="' . $_POST['Contact'] . '" />';
 		echo '<input type="hidden" name="Contact" value="' . $_POST['Contact'] . '" />';
 		echo '<fieldset>
-				<legend>', _('Edit Supplier Contact'), '</legend>
+				<legend>', __('Edit Supplier Contact'), '</legend>
 				<field>
-					<label for="Contact">' . _('Contact') . ':</label>
+					<label for="Contact">' . __('Contact') . ':</label>
 					<fieldtext>' . $_POST['Contact'] . '</fieldtext>
 				</field>';
 
@@ -226,11 +223,11 @@ if (! isset($_GET['delete'])) {
 			$_POST['Contact']='';
 		}
 		echo '<fieldset>
-				<legend>', _('Create Supplier Contact'), '</legend>
+				<legend>', __('Create Supplier Contact'), '</legend>
 				<field>
-					<label for="Contact">' . _('Contact Name') . ':</label>
-					<input type="text" required="required" pattern="(?!^\s+$).{1,40}" title="" placeholder="'._('More than one characters long').'" name="Contact" size="41" maxlength="40" value="' . $_POST['Contact'] . '" />
-					<fieldhelp>'._('The contact name must be more than one characters long').'</fieldhelp>
+					<label for="Contact">' . __('Contact Name') . ':</label>
+					<input type="text" required="required" pattern="(?!^\s+$).{1,40}" title="" placeholder="'.__('More than one characters long').'" name="Contact" size="41" maxlength="40" value="' . $_POST['Contact'] . '" />
+					<fieldhelp>'.__('The contact name must be more than one characters long').'</fieldhelp>
 				</field>';
 	}
 	if (!isset($_POST['Position'])) {
@@ -251,37 +248,36 @@ if (! isset($_GET['delete'])) {
 
 	echo '<field>
 			<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
-			<label for="Position">' . _('Position') . ':</label>
+			<label for="Position">' . __('Position') . ':</label>
 			<input type="text" name="Position" size="31" maxlength="30" value="' . $_POST['Position'] . '" />
 		</field>
 		<field>
-			<label for="Tel">' . _('Telephone No') . ':</label>
-			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Tel" size="31" maxlength="30" value="' . $_POST['Tel'] . '" />
-			<fieldhelp>'._('The input should be phone number').'</fieldhelp>
+			<label for="Tel">' . __('Telephone No') . ':</label>
+			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'.__('Only digits,space,+,-,(,) allowed').'" name="Tel" size="31" maxlength="30" value="' . $_POST['Tel'] . '" />
+			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
-			<label for="Fax">' . _('Facsimile No') . ':</label>
-			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Fax" size="31" maxlength="30" value="' . $_POST['Fax'] . '" />
-			<fieldhelp>'._('The input should be phone number').'</fieldhelp>
+			<label for="Fax">' . __('Facsimile No') . ':</label>
+			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'.__('Only digits,space,+,-,(,) allowed').'" name="Fax" size="31" maxlength="30" value="' . $_POST['Fax'] . '" />
+			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
-			<label for="Mobile">' . _('Mobile No') . ':</label>
-			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'._('Only digits,space,+,-,(,) allowed').'" name="Mobile" size="31" maxlength="30" value="' . $_POST['Mobile'] . '" />
-			<fieldhelp>'._('The input should be phone number').'</fieldhelp>
+			<label for="Mobile">' . __('Mobile No') . ':</label>
+			<input type="tel" pattern="[\d\s+()-]{1,30}" title="" placeholder="'.__('Only digits,space,+,-,(,) allowed').'" name="Mobile" size="31" maxlength="30" value="' . $_POST['Mobile'] . '" />
+			<fieldhelp>'.__('The input should be phone number').'</fieldhelp>
 		</field>
 		<field>
-			<label for="Email"><a href="Mailto:' . $_POST['Email'] . '">' . _('Email') . ':</a></label>
-			<input type="email" name="Email" title="" placeholder="'._('should be email format such as adm@weberp.org').'" size="51" maxlength="50" value="' . $_POST['Email'] . '" />
-			<fieldhelp>'._('The input must be email format').'</fieldhelp>
+			<label for="Email"><a href="Mailto:' . $_POST['Email'] . '">' . __('Email') . ':</a></label>
+			<input type="email" name="Email" title="" placeholder="'.__('should be email format such as adm@weberp.org').'" size="51" maxlength="50" value="' . $_POST['Email'] . '" />
+			<fieldhelp>'.__('The input must be email format').'</fieldhelp>
 		</field>
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+			<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 		</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
-?>

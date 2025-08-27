@@ -1,18 +1,18 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Depreciation Journal Entry');
+$ViewTopic = 'FixedAssets';
+$BookMark = 'AssetDepreciation';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
 // Check if ProcessDate is set before converting it
 if (isset($_POST['ProcessDate'])){
 	$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);
-};
-$Title = _('Depreciation Journal Entry');
-
-$ViewTopic = 'FixedAssets';
-$BookMark = 'AssetDepreciation';
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
-
+}
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 $Result = DB_query("SELECT periods.lastdate_in_period,
@@ -33,7 +33,7 @@ if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 	} else { //ProcessDate is set - make sure it is on the last day of the month selected
 		if (!Is_Date($_POST['ProcessDate'])){
-			prnMsg(_('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			prnMsg(__('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 			$InputError =true;
 		}else {
 			$_POST['ProcessDate'] = LastDayOfMonth($_POST['ProcessDate']);
@@ -75,11 +75,11 @@ $SQL="SELECT fixedassets.assetid,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
 
-$AssetsResult=DB_query($SQL);
+$AssetsResult = DB_query($SQL);
 
 $InputError = false; //always hope for the best
 if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
-	prnMsg(_('No depreciation will be committed as the processing date is beyond the current date. The depreciation run can only be run for periods prior to today'),'warn');
+	prnMsg(__('No depreciation will be committed as the processing date is beyond the current date. The depreciation run can only be run for periods prior to today'),'warn');
 	$InputError =true;
 }
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
@@ -90,15 +90,15 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 
 echo '<br /><table>';
 $Heading = '<tr>
-				<th>' . _('Asset ID') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Date Purchased') . '</th>
-				<th>' . _('Cost') . '</th>
-				<th>' . _('Accum Depn') . '</th>
-				<th>' . _('B/fwd Book Value') . '</th>
-				<th>' .  _('Depn Type') . '</th>
-				<th>' .  _('Depn Rate') . '</th>
-				<th>' . _('New Depn') . '</th>
+				<th>' . __('Asset ID') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Date Purchased') . '</th>
+				<th>' . __('Cost') . '</th>
+				<th>' . __('Accum Depn') . '</th>
+				<th>' . __('B/fwd Book Value') . '</th>
+				<th>' .  __('Depn Type') . '</th>
+				<th>' .  __('Depn Rate') . '</th>
+				<th>' . __('New Depn') . '</th>
 			</tr>';
 echo $Heading;
 
@@ -116,7 +116,7 @@ $RowCounter = 0;
 while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
 		if ($AssetCategoryDescription !='0'){ //then print totals
-			echo '<tr><th colspan="3" align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
+			echo '<tr><th colspan="3" align="right">' . __('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
@@ -135,13 +135,13 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	}
 	$BookValueBfwd = $AssetRow['costtotal'] - $AssetRow['depnbfwd'];
 	if ($AssetRow['depntype']==0){ //striaght line depreciation
-		$DepreciationType = _('SL');
+		$DepreciationType = __('SL');
 		$NewDepreciation = $AssetRow['costtotal'] * $AssetRow['depnrate']/100/12;
 		if ($NewDepreciation > $BookValueBfwd){
 			$NewDepreciation = $BookValueBfwd;
 		}
 	} else { //Diminishing value depreciation
-		$DepreciationType = _('DV');
+		$DepreciationType = __('DV');
 		$NewDepreciation = $BookValueBfwd * $AssetRow['depnrate']/100/12;
 	}
 	if (Date1GreaterThanDate2(ConvertSQLDate($AssetRow['datepurchased']),$_POST['ProcessDate'])){
@@ -189,12 +189,11 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $AssetRow['depnact'] . "',
-								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
+								'" . mb_substr(__('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'], 0, 200) . "',
 								'" . $NewDepreciation ."')";
 
-		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
-		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg = __('Cannot insert a depreciation GL entry for the depreciation because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -208,9 +207,9 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $AssetRow['accumdepnact'] . "',
-								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
+								'" . mb_substr(__('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'], 0, 200) . "',
 								'" . -$NewDepreciation ."')";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
@@ -226,23 +225,21 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 											'" . $TransNo . "',
 											'" . FormatDateForSQL($_POST['ProcessDate']) . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'depn',
 											'" . $NewDepreciation . "')";
-		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
-		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$ErrMsg = __('Cannot insert a fixed asset transaction entry for the depreciation because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
 				WHERE assetid = '" . $AssetRow['assetid'] . "'";
-		$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
-		$DbgMsg = _('The following SQL was used to attempt the update the accumulated depreciation of the asset was:');
-		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
+		$ErrMsg = __('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE. The fixed asset accumulated depreciation could not be updated:');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 	} //end if Committing the depreciation to DB
 } //end loop around the assets to calculate depreciation for
 echo '<tr>
-		<th colspan="3" align="right">' . _('Total for') . ' ' . $AssetCategoryDescription . ' </th>
+		<th colspan="3" align="right">' . __('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 		<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th class="number">' . locale_number_format(($TotalCategoryCost-$TotalCategoryAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
@@ -250,7 +247,7 @@ echo '<tr>
 		<th class="number">' . locale_number_format($TotalCategoryDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 	</tr>
 	<tr>
-		<th colspan="3" align="right">' . _('GRAND Total') . ' </th>
+		<th colspan="3" align="right">' . __('GRAND Total') . ' </th>
 		<th class="number">' . locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th class="number">' . locale_number_format($TotalAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 		<th class="number">' . locale_number_format(($TotalCost-$TotalAccumDepn),$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
@@ -264,28 +261,27 @@ echo '</table>
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	DB_Txn_Commit();
-	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
+	prnMsg(__('Depreciation') . ' ' . $TransNo . ' ' . __('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
-	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';
+	echo '<br /><a href="' . $RootPath . '/index.php">' .__('Return to main menu') . '</a>';
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Select Criteria'), '</legend>';
+			<legend>', __('Select Criteria'), '</legend>';
 	if ($AllowUserEnteredProcessDate){
 		echo '<field>
-				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
+				<label for="ProcessDate">' . __('Date to Process Depreciation'). ':</label>
 				<input type="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ProcessDate']) . '" />';
 	} else {
 		echo '<field>
-				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
+				<label for="ProcessDate">' . __('Date to Process Depreciation'). ':</label>
 				<fieldtext>' . FormatDateForSQL($_POST['ProcessDate'])  . '</fieldtext>';
 	}
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'" />
+			<input type="submit" name="CommitDepreciation" value="'.__('Commit Depreciation').'" />
 		</div>
 	</form>';
 }
 include('includes/footer.php');
-?>

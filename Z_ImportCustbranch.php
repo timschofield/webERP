@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Import Debtors And branches');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Import Debtors And branches');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 if(!isset($_POST['UpdateIfExists'])) {
@@ -64,45 +66,50 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$FileHandle = fopen($TempName, 'r');
 	//get the header row
 	$HeadRow = fgetcsv($FileHandle, 10000, ",");
+	// Remove UTF-8 BOM if present
+	if (substr($HeadRow[0], 0, 3) === "\xef\xbb\xbf") {
+		$HeadRow[0] = substr($HeadRow[0], 3);
+	}
+
 	//check for correct number of fields
 	if ( count($HeadRow) != count($FieldHeadings)) {
-		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		prnMsg(__('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	$Salesmen=array();
 	$SQL = "SELECT salesmancode
 				     FROM salesman";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Salesmen[]=$MyRow['salesmancode'];
 	}
 	$Areas=array();
 	$SQL = "SELECT areacode
 				     FROM areas";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Areas[]=$MyRow['areacode'];
 	}
 	$Locations=array();
 	$SQL = "SELECT loccode
 				     FROM locations";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Locations[]=$MyRow['loccode'];
 	}
 	$Shippers=array();
 	$SQL = "SELECT shipper_id
 				     FROM shippers";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Shippers[]=$MyRow['shipper_id'];
 	}
 	$Taxgroups=array();
 	$SQL = "SELECT taxgroupid
 				     FROM taxgroups";
-	$Result=DB_query($SQL);
+	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Taxgroups[]=$MyRow['taxgroupid'];
 	}
@@ -111,10 +118,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$Head = 0;
 	foreach ($HeadRow as $HeadField) {
 		if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head])) {
-			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
+			prnMsg(__('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 		$Head++;
 	}
@@ -129,15 +136,15 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$ExistDebtorNos=array();
 	$NotExistDebtorNos=array();
 	$ExistedBranches = array();
-	while ( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while ( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== false ) {
 
 		//check for correct number of fields
 		$FieldCount = count($Filerow);
 		if ($FieldCount != $FieldTarget) {
-			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
+			prnMsg(__($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
-			exit;
+			exit();
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
@@ -180,19 +187,19 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 		if (ContainsIllegalCharacters($_POST['BranchCode']) OR mb_strstr($_POST['BranchCode'],' ') OR mb_strstr($_POST['BranchCode'],'-')) {
 			$InputError = 1;
-			prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
+			prnMsg(__('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;",'error');
 			$Errors[$i] = 'BranchCode';
 			$i++;
 		}
 		if (ContainsIllegalCharacters($_POST['DebtorNo'])) {
 			$InputError = 1;
-			prnMsg(_('The Debtor No cannot contain any of the following characters')." - &amp; \' &lt; &gt;",'error');
+			prnMsg(__('The Debtor No cannot contain any of the following characters')." - &amp; \' &lt; &gt;",'error');
 			$Errors[$i] = 'Debtor No';
 			$i++;
 		}
 		if (mb_strlen($_POST['BranchCode'])==0 OR mb_strlen($_POST['BranchCode'])>10) {
 			$InputError = 1;
-			prnMsg(_('The Branch code must be at least one character long and cannot be more than 10 characters'),'error');
+			prnMsg(__('The Branch code must be at least one character long and cannot be more than 10 characters'),'error');
 			$Errors[$i] = 'BranchCode';
 			$i++;
 		}
@@ -206,116 +213,116 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			}
 			if (isset($_POST['BrAddress'.$c]) AND mb_strlen($_POST['BrAddress'.$c])>$Lenth) {
 				$InputError = 1;
-				prnMsg(_('The Branch address1 must be no more than') . ' ' . $Lenth . ' '. _('characters'),'error');
+				prnMsg(__('The Branch address1 must be no more than') . ' ' . $Lenth . ' '. __('characters'),'error');
 				$Errors[$i] = 'BrAddress'.$c;
 				$i++;
 		} 		}
 		if($Latitude !== null AND !is_numeric($Latitude)) {
 			$InputError = 1;
-			prnMsg(_('The latitude is expected to be a numeric'),'error');
+			prnMsg(__('The latitude is expected to be a numeric'),'error');
 			$Errors[$i] = 'Latitude';
 			$i++;
 		}
 		if($Longitude !== null AND !is_numeric($Longitude)) {
 			$InputError = 1;
-			prnMsg(_('The longitude is expected to be a numeric'),'error');
+			prnMsg(__('The longitude is expected to be a numeric'),'error');
 		       	$Errors[$i] = 'Longitued';
 			$i++;
 		}
 		if (!is_numeric($_POST['FwdDate'])) {
 			$InputError = 1;
-			prnMsg(_('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
+			prnMsg(__('The date after which invoices are charged to the following month is expected to be a number and a recognised number has not been entered'),'error');
 			$Errors[$i] = 'FwdDate';
 			$i++;
 		}
 		if ($_POST['FwdDate'] >30) {
 			$InputError = 1;
-			prnMsg(_('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
+			prnMsg(__('The date (in the month) after which invoices are charged to the following month should be a number less than 31'),'error');
 			$Errors[$i] = 'FwdDate';
 			$i++;
 		}
 		if (!is_numeric(filter_number_format($_POST['EstDeliveryDays']))) {
 			$InputError = 1;
-			prnMsg(_('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
+			prnMsg(__('The estimated delivery days is expected to be a number and a recognised number has not been entered'),'error');
 			$Errors[$i] = 'EstDeliveryDays';
 			$i++;
 		}
 		if (filter_number_format($_POST['EstDeliveryDays']) >60) {
 			$InputError = 1;
-			prnMsg(_('The estimated delivery days should be a number of days less than 60') . '. ' . _('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
+			prnMsg(__('The estimated delivery days should be a number of days less than 60') . '. ' . __('A package can be delivered by seafreight anywhere in the world normally in less than 60 days'),'error');
 			$Errors[$i] = 'EstDeliveryDays';
 			$i++;
 		}
 		if(empty($_POST['Salesman']) OR !in_array($_POST['Salesman'],$Salesmen,true)) {
 			$InputError = 1;
-			prnMsg(_('The salesman not empty and must exist.'),'error');
+			prnMsg(__('The salesman not empty and must exist.'),'error');
 			$Errors[$i] = 'Salesman';
 			$i++;
 		}
 		if($_POST['PhoneNo'] !== null AND preg_match('/[^\d+()\s-]/',$_POST['PhoneNo'])) {
 			$InputError = 1;
-			prnMsg(_('The phone no should not contains characters other than digital,parenthese,space,minus and plus sign'),'error');
+			prnMsg(__('The phone no should not contains characters other than digital,parenthese,space,minus and plus sign'),'error');
 			$Errors[$i] = 'Phone No';
 			$i++;
 		}
 		if($_POST['FaxNo'] !== null AND preg_match('/[^\d+()\s-]/',$_POST['FaxNo'])) {
 			$InputError = 1;
-			prnMsg(_('The fax no should not contains characters other than digital,parenthese,space,minus and plus sign'),'error');
+			prnMsg(__('The fax no should not contains characters other than digital,parenthese,space,minus and plus sign'),'error');
 			$Errors[$i] = 'FaxNo';
 			$i++;
 		}
 		if($_POST['ContactName'] !== null AND mb_strlen($_POST['ContactName']) > 30) {
 			$InputError = 1;
-			prnMsg(_('The contact name must not be over 30 characters'),'error');
+			prnMsg(__('The contact name must not be over 30 characters'),'error');
 			$Errors[$i] = 'ContactName';
 			$i++;
 		}
 		if($_POST['Email'] !== null AND !filter_var($_POST['Email'],FILTER_VALIDATE_EMAIL)) {
 			$InputError = 1;
-			prnMsg(_('The email address is not valid'),'error');
+			prnMsg(__('The email address is not valid'),'error');
 			$Errors[$i] = 'Email';
 			$i++;
 		}
 
 		if(ContainsIllegalCharacters($_POST['BrName']) OR mb_strlen($_POST['BrName']) >40) {
 			$InputError = 1;
-			prnMsg(_('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;" .' ' . _('Or length is over 40'),'error');
+			prnMsg(__('The Branch code cannot contain any of the following characters')." -  &amp; \' &lt; &gt;" .' ' . __('Or length is over 40'),'error');
 			$Errors[$i] = 'BrName';
 			$i++;
 		}
 		if(empty($_POST['Area']) OR !in_array($_POST['Area'],$Areas,true)) {
 			$InputError = 1;
-			prnMsg(_('The sales area not empty and must exist.'),'error');
+			prnMsg(__('The sales area not empty and must exist.'),'error');
 			$Errors[$i] = 'Area';
 			$i++;
 		}
 		if(empty($_POST['DefaultLocation']) OR !in_array($_POST['DefaultLocation'],$Locations,true)) {
 			$InputError = 1;
-			prnMsg(_('The default location not empty and must exist.'),'error');
+			prnMsg(__('The default location not empty and must exist.'),'error');
 			$Errors[$i] = 'DefaultLocation';
 			$i++;
 		}
 		if(empty($_POST['DefaultShipVia']) OR !in_array($_POST['DefaultShipVia'],$Shippers,true)) {
 			$InputError = 1;
-			prnMsg(_('The default shipper not empty and must exist.'),'error');
+			prnMsg(__('The default shipper not empty and must exist.'),'error');
 			$Errors[$i] = 'DefaultShipVia';
 			$i++;
 		}
 		if(empty($_POST['TaxGroup']) OR !in_array($_POST['TaxGroup'],$Taxgroups,true)) {
 			$InputError = 1;
-			prnMsg(_('The taxgroup not empty and must exist.'),'error');
+			prnMsg(__('The taxgroup not empty and must exist.'),'error');
 			$Errors[$i] = 'TaxGroup';
 			$i++;
 		}
 		if(!isset($_POST['DeliverBlind']) OR ($_POST['DeliverBlind'] !=1 AND $_POST['DeliverBlind'] != 2)) {
 			$InputError = 1;
-			prnMsg(_('The Deliver Blind must be set as 2 or 1'),'error');
+			prnMsg(__('The Deliver Blind must be set as 2 or 1'),'error');
 			$Errors[$i] = 'DeliverBlind';
 			$i++;
 		}
 		if(!isset($_POST['DisableTrans']) OR ($_POST['DisableTrans'] != 0 AND $_POST['DisableTrans'] != 1)) {
 			$InputError = 1;
-			prnMsg(_('The Disable Trans status should be 0 or 1'),'error');
+			prnMsg(__('The Disable Trans status should be 0 or 1'),'error');
 			$Errors[$i] = 'DisableTrans';
 			$i++;
 		}
@@ -329,7 +336,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			}
 			if (isset($_POST['BrPostAddr'.$c]) AND mb_strlen($_POST['BrPostAddr'.$c])>$Lenth) {
 				$InputError = 1;
-				prnMsg(_('The Branch Post Address') . ' ' . $c . ' ' . _('must be no more than') . ' ' . $Lenth . ' '. _('characters'),'error');
+				prnMsg(__('The Branch Post Address') . ' ' . $c . ' ' . __('must be no more than') . ' ' . $Lenth . ' '. __('characters'),'error');
 				$Errors[$i] = 'BrPostAddr'.$c;
 				$i++;
 			}
@@ -337,7 +344,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 		if(isset($_POST['CustBranchCode']) AND mb_strlen($_POST['CustBranchCode']) > 30) {
 			$InputError = 1;
-			prnMsg(_('The Cust branch code for EDI must be less than 30 characters'),'error');
+			prnMsg(__('The Cust branch code for EDI must be less than 30 characters'),'error');
 			$Errors[$i] = 'CustBranchCode';
 			$i++;
 		}
@@ -351,22 +358,22 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					$SQL = "SELECT 1
 						 FROM debtorsmaster
 						 WHERE debtorno='".$_POST['DebtorNo']."' LIMIT 1";
-					$Result=DB_query($SQL);
+					$Result = DB_query($SQL);
 					$DebtorExists=(DB_num_rows($Result)>0);
 					if ($DebtorExists) {
 						$ExistDebtorNos[]=$_POST['DebtorNo'];
 					}else{
 						$NotExistDebtorNos[]=$_POST['DebtorNo'];
-						prnMsg(_('The Debtor No') . $_POST['DebtorNo'] . ' ' . _('has not existed, and its branches data cannot be imported'),'error');
+						prnMsg(__('The Debtor No') . $_POST['DebtorNo'] . ' ' . __('has not existed, and its branches data cannot be imported'),'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				}
 				$SQL = "SELECT 1
 				     FROM custbranch
            			 WHERE debtorno='".$_POST['DebtorNo']."' AND
 				           branchcode='".$_POST['BranchCode']."' LIMIT 1";
-				$Result=DB_query($SQL);
+				$Result = DB_query($SQL);
 				$BranchExists=(DB_num_rows($Result)>0);
 				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					$ExistedBranches[] = array('debtor'=>$_POST['DebtorNo'],
@@ -481,19 +488,19 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					}
 
 					//run the SQL from either of the above possibilites
-					$ErrMsg = _('The branch record could not be inserted or updated because');
+					$ErrMsg = __('The branch record could not be inserted or updated because');
 					$Result = DB_query($SQL, $ErrMsg);
 
 					if (DB_error_no() ==0) {
-						prnMsg( _('New branch of debtor') .' ' .$_POST['DebtorNo'] . ' ' ._('with branch code') .' ' . $_POST['BranchCode'] . ' ' . $_POST['BrName']  . ' '. _('has been passed validation'),'info');
+						prnMsg( __('New branch of debtor') .' ' .$_POST['DebtorNo'] . ' ' .__('with branch code') .' ' . $_POST['BranchCode'] . ' ' . $_POST['BrName']  . ' '. __('has been passed validation'),'info');
 					} else { //location insert failed so set some useful error info
 						$InputError = 1;
-						prnMsg(_($Result),'error');
+						prnMsg(__($Result),'error');
 					}
 				}
 			} else { //item insert failed so set some useful error info
 				$InputError = 1;
-				prnMsg(_($Result),'error');
+				prnMsg(__($Result),'error');
 			}
 
 		}
@@ -506,18 +513,18 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
+		prnMsg(__('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
 		if($_POST['UpdateIfExists']==1) {
-			prnMsg( _('Updated brances total:') .' ' . $UpdatedNum .' '._('Insert branches total:'). $InsertNum,'success' );
+			prnMsg( __('Updated brances total:') .' ' . $UpdatedNum .' '.__('Insert branches total:'). $InsertNum,'success' );
 		}else{
-			prnMsg( _('Exist branches total:') .' ' . $UpdatedNum .' '._('Inserted branches total:'). $InsertNum,'info');
+			prnMsg( __('Exist branches total:') .' ' . $UpdatedNum .' '.__('Inserted branches total:'). $InsertNum,'info');
 			if($UpdatedNum){
-				echo '	<p>' . _('Branches not updated').'</p>
+				echo '	<p>' . __('Branches not updated').'</p>
 					<table class="selection">
-					<tr><th>'._('Debtor No').'</th><th>' . _('Branch Code').'</th></tr>';
+					<tr><th>'.__('Debtor No').'</th><th>' . __('Branch Code').'</th></tr>';
 				foreach($ExistedBranches as $key=>$Value){
 					echo '<tr><td>'.$Value['debtor'].'</td><td>'.$Value['branch'].'</td></tr>';
 				}
@@ -534,11 +541,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 } else { //show file upload form
 
-	prnMsg(_('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'),'warn');
+	prnMsg(__('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'),'warn');
 
 	echo '
 		<br />
-		<a href="Z_ImportCustbranch.php?gettemplate=1">Get Import Template</a>
+		<a href="' . $RootPath . '/Z_ImportCustbranch.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
@@ -546,9 +553,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' .
-			_('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" value="' . _('Send File') . '" />';
-	echo '<br/>',_('Update if Customer Branch exists'),':<input type="checkbox" name="UpdateIfExists">';
+			__('Upload file') . ': <input name="userfile" type="file" />
+			<input type="submit" value="' . __('Send File') . '" />';
+	echo '<br/>',__('Update if Customer Branch exists'),':<input type="checkbox" name="UpdateIfExists">';
 	echo'</div>
 		</form>';
 
@@ -556,4 +563,3 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 
 include('includes/footer.php');
-?>

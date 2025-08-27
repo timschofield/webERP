@@ -1,22 +1,24 @@
 <?php
 
-include ('includes/session.php');
-$Title = _('Edit Module');// _('Edit a Language File Module')
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Edit Module');
 $ViewTopic = "SpecialUtilities";
-$BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.
+$BookMark = "Z_poEditLangModule";
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('Edit a Language File Module') . '" />' . ' ' .
-		_('Edit a Language File Module') . '</p>';
+		__('Edit a Language File Module') . '" />' . ' ' .
+		__('Edit a Language File Module') . '</p>';
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
-echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . _('Back to the translation menu') . '</a>';
-echo '<br /><br />&nbsp;' . _('Utility to edit a language file module');
-echo '<br />&nbsp;' . _('Current language is') . ' ' . $_SESSION['Language'];
-echo '<br /><br />&nbsp;' . _('To change language click on the user name at the top left, change to language desired and click Modify');
-echo '<br />&nbsp;' . _('Make sure you have selected the correct language to translate!');
+echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the translation menu') . '</a>';
+echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
+echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
+echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
+echo '<br />&nbsp;' . __('Make sure you have selected the correct language to translate!');
 
 $PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
 $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
@@ -24,14 +26,19 @@ $PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/message
 if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */
+	/// @bug we have to check that msgmerge is a cli command, not a php function!!!
 	if (!function_exists('msgmerge')) {
-		prnMsg(_('The gettext utilities must be present on your server for these language utilities to work'),'error');
-		exit;
+		prnMsg(__('The gettext utilities must be present on your server for these language utilities to work'),'error');
+		exit();
 	} else {
 /*first rebuild the en_GB default with xgettext */
 
 		$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+		/// @todo review this list
 		$FilesToInclude	= '*php includes/*.php includes/*.php';
+
+		/// @todo add proper escaping to prevent shell injection
+
 		$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
 		system($xgettextCmd);
@@ -41,7 +48,7 @@ if (isset($_POST['ReMergePO'])){
 
 		system($MsgMergeCmd);
 		//$Result = rename($PathToNewLanguage, $PathToLanguage);
-		exit;
+		exit();
 	}
 }
 
@@ -60,11 +67,11 @@ if (isset($_POST['module'])) {
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
-		prnMsg (_('Writing the language file') . '.....<br />', 'info', ' ');
+		prnMsg(__('Writing the language file') . '.....<br />', 'info', ' ');
 
 		for ($i=17; $i<=$LangFileEntries; $i++) {
 			if (isset($_POST['msgstr_'.$i])) {
@@ -93,7 +100,7 @@ if (isset($_POST['module'])) {
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		system($MsgfmtCommand);
 
-		prnMsg (_('Done') . '<br />', 'info', ' ');
+		prnMsg(__('Done') . '<br />', 'info', ' ');
 
 		echo '</form>';
 		echo '</td></tr></table>';
@@ -120,20 +127,20 @@ if (isset($_POST['module'])) {
 
 /* stick it on the screen */
 
-    echo '<br />&nbsp;' . _('When finished modifying you must click on Modify at the bottom in order to save changes');
+    echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
-		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
+		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				</div>
 				<table>
 					<tr>
-						<th align="center">' . _('Language File for') . ' "' . $_POST['language'] . '"</th>
+						<th align="center">' . __('Language File for') . ' "' . $_POST['language'] . '"</th>
 					</tr>
 					<tr>
-						<th align="center">' . _('Module') . ' "' . $_POST['module'] . '"</th>
+						<th align="center">' . __('Module') . ' "' . $_POST['module'] . '"</th>
 					</tr>
 					<tr>
 						<td></td>
@@ -143,16 +150,16 @@ if (isset($_POST['module'])) {
 
 		echo '<table width="100%">';
 		echo '<tr>';
-		echo '<th>' . _('Default text') . '</th>';
-		echo '<th>' . _('Translation') . '</th>';
-		echo '<th>' . _('Exists in') . '</th>';
+		echo '<th>' . __('Default text') . '</th>';
+		echo '<th>' . __('Translation') . '</th>';
+		echo '<th>' . __('Exists in') . '</th>';
 		echo '</tr>' . "\n";
 
 		for ($i=1; $i<=$TotalLines; $i++) {
 
 			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
-			if ($b === False) {
+			if ($b === false) {
 /* skip it */
 
 			} else {
@@ -171,7 +178,7 @@ if (isset($_POST['module'])) {
 		echo '</td></tr>';
 		echo '</table>';
 		echo '<br /><div class="centre">';
-		echo '<input type="submit" name="submit" value="' . _('Modify') . '" />&nbsp;&nbsp;';
+		echo '<input type="submit" name="submit" value="' . __('Modify') . '" />&nbsp;&nbsp;';
 		echo '<input type="hidden" name="module" value="' . $_POST['module'] . '" />';
 
 		echo '</form>';
@@ -185,10 +192,7 @@ if (isset($_POST['module'])) {
 /* This is a messy way of producing a directory listing of ./locale to fish out */
 /* the language directories that have been set up */
 /* The other option would be to define an array of the languages you want */
-/* and check for the existance of the directory */
-
-/* $ListDirCmd should probably be defined in config.php as a global value */
-/* You'll need to change it if you are running a Windows server - sorry !! */
+/* and check for the existence of the directory */
 
 	if ($Handle = opendir('.')) {
     	$i=0;
@@ -215,7 +219,7 @@ if (isset($_POST['module'])) {
 	$NumberOfModules = sizeof($AvailableModules) - 1;
 
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
-	prnMsg(_('You do not have write access to the required files please contact your system administrator'),'error');
+	prnMsg(__('You do not have write access to the required files please contact your system administrator'),'error');
 }
 else
 {
@@ -228,7 +232,7 @@ else
 
 	echo '<table>';
 
-	echo '<tr><td>' . _('Select the module to edit') . '</td>';
+	echo '<tr><td>' . __('Select the module to edit') . '</td>';
 	echo '<td><select name="module">';
 	for ($i=0; $i<$NumberOfModules; $i++) {
 			echo '<option>' . $AvailableModules[$i] . '</option>';
@@ -238,10 +242,10 @@ else
 	echo '</tr></table>';
 	echo '<br />';
 	echo '<div class="centre">
-			<input type="submit" name="proceed" value="' . _('Proceed') . '" />&nbsp;&nbsp;
+			<input type="submit" name="proceed" value="' . __('Proceed') . '" />&nbsp;&nbsp;
 			<br />
 			<br />
-			<input type="submit" name="ReMergePO" value="' . _('Refresh messages with latest strings') . '" />
+			<input type="submit" name="ReMergePO" value="' . __('Refresh messages with latest strings') . '" />
 		</div>
 		</form>';
 	echo '</td></tr></table>';
@@ -249,5 +253,3 @@ else
 }
 
 include('includes/footer.php');
-
-?>

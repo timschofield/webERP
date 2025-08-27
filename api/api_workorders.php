@@ -5,7 +5,7 @@
 		$Searchsql = "SELECT count(wo)
 				FROM workorders
 				WHERE wo='".$WorkOrder."'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]==0) {
 			$Errors[$i] = WorkOrderDoesntExist;
@@ -18,7 +18,7 @@
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
 					  WHERE loccode='" . $Location . "'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_row($SearchResult);
 		if ($Answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
@@ -44,7 +44,7 @@
 
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -77,7 +77,7 @@
 
 	function VerifyStartDate($StartDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -145,7 +145,7 @@
 
 	function VerifyBatch($batch, $stockid, $Location, $i, $Errors) {
 		$SQL="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_row($Result);
 		if ($MyRow[0]!=1) {
 			$Errors[$i] = ItemNotControlled;
@@ -158,7 +158,7 @@
               WHERE stockid='".$stockid. "'
               AND loccode='".$Location."'
               AND serialno='".$batch."'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		if (DB_num_rows($Result)==0) {
 			$Errors[$i] = BatchNumberDoesntExist;
 			return $Errors;
@@ -325,7 +325,7 @@
 						                                              '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                              '".$wipglact."',
 						                                              '".$cost*-$Quantity."',
-						                                              '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+						                                              '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$glupdatesql2="INSERT INTO gltrans (type,
 						                                                typeno,
 						                                                trandate,
@@ -339,7 +339,7 @@
 						                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
 						                                        '".$stockact."',
 						                                        '".$cost*$Quantity."',
-						                                        '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+						                                        '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=28";
 			$batchsql="UPDATE stockserialitems SET quantity=quantity-" . $Quantity.
 				              " WHERE stockid='".$StockID."'
@@ -433,7 +433,7 @@
                                                '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                '".$wipglact."',
                                                '".$cost*$Quantity. "',
-                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+                                               '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$glupdatesql2="INSERT INTO gltrans (type,
                                                 typeno,
                                                 trandate,
@@ -445,8 +445,9 @@
                                                '".$TransactionNo."',
                                                '".$TranDate."',
                                                '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
-                                               '".$stockact.','.$cost*-$Quantity. "',
-                                               '".$StockID.' x '.$Quantity.' @ '.$cost."')";
+                                               '".$stockact."',
+                                               '".$cost*-$Quantity."',
+                                               '".mb_substr($StockID.' x '.$Quantity.' @ '.$cost, 0, 200)."')";
 			$systypessql = "UPDATE systypes set typeno='".$TransactionNo."' where typeid=26";
 			DB_Txn_Begin();
 			DB_query($stockmovesql);
@@ -483,4 +484,3 @@
 		}
 		return $WOList;
 	}
-?>

@@ -1,41 +1,42 @@
 <?php
-// BankMatching.php
+
 // Allows payments and receipts to be matched off against bank statements.
 
-include('includes/session.php');
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
-$Title = _('Bank Matching');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
-
 include('includes/header.php');
+
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 
 if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 		OR (isset($_POST['Type']) AND $_POST['Type']=='Receipts')) {
 
 	$Type = 'Receipts';
-	$TypeName =_('Receipts');
+	$TypeName =__('Receipts');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/bank.png" title="' .
-		_('Bank Matching') . '" /> ' .// Icon title.
-		_('Bank Account Matching - Receipts') . '</p>';// Page title.
+		__('Bank Matching') . '" /> ' .// Icon title.
+		__('Bank Account Matching - Receipts') . '</p>';// Page title.
 
 } elseif ((isset($_GET['Type']) AND $_GET['Type']=='Payments')
 			OR (isset($_POST['Type']) AND $_POST['Type']=='Payments')) {
 
 	$Type = 'Payments';
-	$TypeName =_('Payments');
+	$TypeName =__('Payments');
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 		'/images/bank.png" title="' .
-		_('Bank Matching') . '" /> ' .// Icon title.
-		_('Bank Account Matching - Payments') . '</p>';// Page title.
+		__('Bank Matching') . '" /> ' .// Icon title.
+		__('Bank Account Matching - Payments') . '</p>';// Page title.
 
 } else {
 
-	prnMsg(_('This page must be called with a bank transaction type') . '. ' . _('It should not be called directly'),'error');
-	include ('includes/footer.php');
-	exit;
+	prnMsg(__('This page must be called with a bank transaction type') . '. ' . __('It should not be called directly'),'error');
+	include('includes/footer.php');
+	exit();
 }
 
 if (isset($_GET['Account'])) {
@@ -47,21 +48,21 @@ if (isset($_GET['Account'])) {
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++) {
-		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==True) {
+		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==true) {
 			/*Get amount to be cleared */
 			$SQL = "SELECT amount,
 							exrate
 						FROM banktrans
 						WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
-			$ErrMsg =  _('Could not retrieve transaction information');
-			$Result = DB_query($SQL,$ErrMsg);
+			$ErrMsg =  __('Could not retrieve transaction information');
+			$Result = DB_query($SQL, $ErrMsg);
 			$MyRow=DB_fetch_array($Result);
 			$AmountCleared = round($MyRow[0] / $MyRow[1],2);
 			/*Update the banktrans recoord to match it off */
 			$SQL = "UPDATE banktrans SET amountcleared= ". $AmountCleared . "
 									WHERE banktransid='" . $_POST['BankTrans_' . $Counter] . "'";
-			$ErrMsg =  _('Could not match off this payment because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$ErrMsg =  __('Could not match off this payment because');
+			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif ((isset($_POST['AmtClear_' . $Counter])
 					AND filter_number_format($_POST['AmtClear_' . $Counter])<0
@@ -74,23 +75,23 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 			$SQL = "UPDATE banktrans SET amountcleared=" .  filter_number_format($_POST['AmtClear_' . $Counter]) . "
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 
-			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$ErrMsg = __('Could not update the amount matched off this bank transaction because');
+			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter])
-					AND $_POST['Unclear_' . $Counter]==True) {
+					AND $_POST['Unclear_' . $Counter]==true) {
 
 			$SQL = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
-			$ErrMsg =  _('Could not unclear this bank transaction because');
-			$Result = DB_query($SQL,$ErrMsg);
+			$ErrMsg =  __('Could not unclear this bank transaction because');
+			$Result = DB_query($SQL, $ErrMsg);
 		}
 	}
 	/*Show the updated position with the same criteria as previously entered*/
-	$_POST['ShowTransactions'] = True;
+	$_POST['ShowTransactions'] = true;
 }
 
-echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';
+echo '<div class="page_help_text">' . __('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -98,9 +99,9 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<input type="hidden" name="Type" value="' . $Type . '" />';
 
 echo '<fieldset>
-		<legend>', _('Select Criteria'), '</legend>
+		<legend>', __('Select Criteria'), '</legend>
 		<field>
-			<label for="BankAccount">' . _('Bank Account') . ':</label>
+			<label for="BankAccount">' . __('Bank Account') . ':</label>
 			<select tabindex="1" autofocus="autofocus" name="BankAccount">';
 
 $SQL = "SELECT
@@ -130,37 +131,37 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])) {
 
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
 echo '<field>
-		<label for="AfterDate">' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</label>
+		<label for="AfterDate">' . __('Show') . ' ' . $TypeName . ' ' . __('from') . ':</label>
 		<input tabindex="3" name="AfterDate" type="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . FormatDateForSQL($_POST['AfterDate']) . '" />
 	</field>';
 
 echo '<field>
-        <label for="BeforeDate">' . _('to') . ':</label>
+        <label for="BeforeDate">' . __('to') . ':</label>
 		<input tabindex="2" name="BeforeDate" type="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . FormatDateForSQL($_POST['BeforeDate']) . '" />
 	</field>';
 echo '<field>
-		<label for="Ostg_or_All">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</label>
+		<label for="Ostg_or_All">' . __('Choose outstanding') . ' ' . $TypeName . ' ' . __('only or all') . ' ' . $TypeName . ' ' . __('in the date range') . ':</label>
 		<select tabindex="4" name="Ostg_or_All">';
 
 if ($_POST['Ostg_or_All']=='All') {
-	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
-	echo '<option value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only') . '</option>';
+	echo '<option selected="selected" value="All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
+	echo '<option value="Ostdg">' . __('Show unmatched') . ' ' . $TypeName . ' ' . __('only') . '</option>';
 } else {
-	echo '<option value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
-	echo '<option selected="selected" value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only') . '</option>';
+	echo '<option value="All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
+	echo '<option selected="selected" value="Ostdg">' . __('Show unmatched') . ' ' . $TypeName . ' ' . __('only') . '</option>';
 }
 echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="First20_or_All">' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</label>
+		<label for="First20_or_All">' . __('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . __('or all') . ' ' . $TypeName . ' ' . __('meeting the criteria') . ':</label>
 		<select tabindex="5" name="First20_or_All">';
 if ($_POST['First20_or_All']=='All') {
-	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
-	echo '<option value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';
+	echo '<option selected="selected" value="All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
+	echo '<option value="First20">' . __('Show only the first 20') . ' ' . $TypeName . '</option>';
 } else {
-	echo '<option value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
-	echo '<option selected="selected" value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';
+	echo '<option value="All">' . __('Show all') . ' ' . $TypeName . ' ' . __('in the date range') . '</option>';
+	echo '<option selected="selected" value="First20">' . __('Show only the first 20') . ' ' . $TypeName . '</option>';
 }
 
 echo '</select>
@@ -168,23 +169,23 @@ echo '</select>
 
 echo '</fieldset>
 	<div class="centre">
-		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />';
+		<input tabindex="6" type="submit" name="ShowTransactions" value="' . __('Show selected') . ' ' . $TypeName . '" />';
 
 if (isset($_POST['BankAccount'])) {
-   echo '<p><a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a></p>';
+   echo '<p><a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . __('Show reconciliation') . '</a></p>';
 }
 
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])) {
 	$InputError =1;
-	prnMsg(_('The date entered for the field to show') . ' ' . $TypeName . ' ' . _('before') . ', ' .
-		_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+	prnMsg(__('The date entered for the field to show') . ' ' . $TypeName . ' ' . __('before') . ', ' .
+		__('is not entered in a recognised date format') . '. ' . __('Entry is expected in the format') . ' ' .
 		$_SESSION['DefaultDateFormat'],'error');
 }
 if (!Is_Date($_POST['AfterDate'])) {
 	$InputError =1;
-	prnMsg( _('The date entered for the field to show') . ' ' . $Type . ' ' . _('after') . ', ' .
-		_('is not entered in a recognised date format') . '. ' . _('Entry is expected in the format') . ' ' .
+	prnMsg( __('The date entered for the field to show') . ' ' . $Type . ' ' . __('after') . ', ' .
+		__('is not entered in a recognised date format') . '. ' . __('Entry is expected in the format') . ' ' .
 		$_SESSION['DefaultDateFormat'],'error');
 }
 
@@ -269,19 +270,19 @@ if ($InputError !=1
 		$SQL = $SQL . " LIMIT 20";
 	}
 
-	$ErrMsg = _('The payments with the selected criteria could not be retrieved because');
+	$ErrMsg = __('The payments with the selected criteria could not be retrieved because');
 	$PaymentsResult = DB_query($SQL, $ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="SortedColumn">' .  _('Cheque No') . '</th>
-				<th class="SortedColumn">' . _('Ref') . '</th>
-				<th class="SortedColumn">' . _('Date') . '</th>
+				<th class="SortedColumn">' .  __('Cheque No') . '</th>
+				<th class="SortedColumn">' . __('Ref') . '</th>
+				<th class="SortedColumn">' . __('Date') . '</th>
 				<th class="SortedColumn">' . $TypeName . '</th>
-				<th class="SortedColumn">' . _('Amount') . '</th>
-				<th class="SortedColumn">' . _('Outstanding') . '</th>
-				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>
+				<th class="SortedColumn">' . __('Amount') . '</th>
+				<th class="SortedColumn">' . __('Outstanding') . '</th>
+				<th colspan="3">' . __('Clear') . ' / ' . __('Unclear') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -300,7 +301,7 @@ if ($InputError !=1
 						<td class="date">', $DisplayTranDate, '</td>
 						<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
 						<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
-						<td colspan="2">', _('Unclear'), '</td>
+						<td colspan="2">', __('Unclear'), '</td>
 						<td><input type="checkbox" name="Unclear_', $i, '" /><input type="hidden" name="BankTrans_', $i, '" value="', $MyRow['banktransid'], '" /></td>
 					</tr>';
 
@@ -322,9 +323,8 @@ if ($InputError !=1
 		</table>
 			<div class="centre">
 				<input type="hidden" name="RowCounter" value="' . $i . '" />
-				<input type="submit" name="Update" value="' . _('Update Matching') . '" />
+				<input type="submit" name="Update" value="' . __('Update Matching') . '" />
 			</div>';
 }
 echo '</form>';
 include('includes/footer.php');
-?>

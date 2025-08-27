@@ -1,8 +1,8 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title = _('Supplier Types') . ' / ' . _('Maintenance');
+$Title = __('Supplier Types') . ' / ' . __('Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = '';
 include('includes/header.php');
@@ -13,15 +13,11 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_GET['SelectedType']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
-	. '" alt="" />' . _('Supplier Type Setup') . '</p>
-	<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Supplier Types')
+	. '" alt="" />' . __('Supplier Type Setup') . '</p>
+	<div class="page_help_text">' . __('Add/edit/delete Supplier Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -35,14 +31,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
-		prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
+		prnMsg(__('The supplier type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['TypeName']))==0) {
 		$InputError = 1;
-		prnMsg(_('The supplier type name description must contain at least one character'),'error');
+		prnMsg(__('The supplier type name description must contain at least one character'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
@@ -50,11 +46,11 @@ if (isset($_POST['submit'])) {
 	$CheckSQL = "SELECT count(*)
 		     FROM suppliertype
 		     WHERE typename = '" . $_POST['TypeName'] . "'";
-	$CheckResult=DB_query($CheckSQL);
-	$CheckRow=DB_fetch_row($CheckResult);
+	$CheckResult = DB_query($CheckSQL);
+	$CheckRow = DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0 and !isset($_POST['Edit'])) {
 		$InputError = 1;
-		prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
+		prnMsg(__('You already have a supplier type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'SupplierName';
 		$i++;
 	}
@@ -65,7 +61,7 @@ if (isset($_POST['submit'])) {
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" . $SelectedType . "'";
 
-		prnMsg(_('The supplier type') . ' ' . $SelectedType . ' ' .  _('has been updated'),'success');
+		prnMsg(__('The supplier type') . ' ' . $SelectedType . ' ' .  __('has been updated'),'success');
 	} elseif ($InputError !=1){
 		// Add new record on submit
 
@@ -74,16 +70,15 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['TypeName'] . "')";
 
 
-		$Msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
+		$Msg = __('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . __('has been created');
 		$CheckSQL = "SELECT count(typeid) FROM suppliertype";
 		$Result = DB_query($CheckSQL);
 		$Row = DB_fetch_row($Result);
 	}
 
 	if ( $InputError !=1) {
-	//run the SQL from either of the above possibilites
+	//run the SQL from either of the above possibilities
 		$Result = DB_query($SQL);
-
 
 	// Fetch the default supplier type
 		$SQL = "SELECT confvalue
@@ -118,18 +113,18 @@ if (isset($_POST['submit'])) {
 
 	$SQL = "SELECT COUNT(*) FROM suppliers WHERE supptype='" . $SelectedType . "'";
 
-	$ErrMsg = _('The number of suppliers using this Type record could not be retrieved because');
-	$Result = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The number of suppliers using this Type record could not be retrieved because');
+	$Result = DB_query($SQL, $ErrMsg);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg (_('Cannot delete this type because suppliers are currently set up to use this type') . '<br />' .
-			_('There are') . ' ' . $MyRow[0] . ' ' . _('suppliers with this type code'));
+		prnMsg(__('Cannot delete this type because suppliers are currently set up to use this type') . '<br />' .
+			__('There are') . ' ' . $MyRow[0] . ' ' . __('suppliers with this type code'));
 	} else {
 
 		$SQL="DELETE FROM suppliertype WHERE typeid='" . $SelectedType . "'";
-		$ErrMsg = _('The Type record could not be deleted because');
-		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('Supplier type') . $SelectedType  . ' ' . _('has been deleted') ,'success');
+		$ErrMsg = __('The Type record could not be deleted because');
+		$Result = DB_query($SQL, $ErrMsg);
+		prnMsg(__('Supplier type') . $SelectedType  . ' ' . __('has been deleted') ,'success');
 
 		unset ($SelectedType);
 		unset($_GET['delete']);
@@ -151,8 +146,8 @@ if (!isset($SelectedType)){
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn" >' . _('Type ID') . '</th>
-					<th class="SortedColumn" >' . _('Type Name') . '</th>
+					<th class="SortedColumn" >' . __('Type ID') . '</th>
+					<th class="SortedColumn" >' . __('Type Name') . '</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -163,9 +158,9 @@ while ($MyRow = DB_fetch_row($Result)) {
 	echo '<tr class="striped_row">
 			<td>', $MyRow[0], '</td>
 			<td>', $MyRow[1], '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '>' . _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '>' . __('Edit') . '</a></td>
 			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' .
-				_('Are you sure you wish to delete this Supplier Type?') . '\');">' . _('Delete') . '</a></td>
+				__('Are you sure you wish to delete this Supplier Type?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -177,7 +172,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 if (isset($SelectedType)) {
 
 	echo '<div class="centre">
-			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show All Types Defined') . '</a></p>
+			<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Show All Types Defined') . '</a></p>
 		</div>';
 }
 if (! isset($_GET['delete'])) {
@@ -206,27 +201,27 @@ if (! isset($_GET['delete'])) {
 
 		// We dont allow the user to change an existing type code
 
-		echo '<legend>', _('Edit Supplier Type'), '</legend>
+		echo '<legend>', __('Edit Supplier Type'), '</legend>
 				<field>
-					<label for="TypeID">' ._('Type ID') . ': </label>
+					<label for="TypeID">' .__('Type ID') . ': </label>
 					<fieldtext>' . $_POST['TypeID'] . '</fieldtext>
 				</field>';
 	} else {
-		echo '<legend>', _('Create Supplier Type'), '</legend>';
+		echo '<legend>', __('Create Supplier Type'), '</legend>';
 	}
 	if (!isset($_POST['TypeName'])) {
 		$_POST['TypeName']='';
 	}
 	echo '<field>
-			<label for="TypeName">' . _('Type Name') . ':</label>
-			<input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" />
-			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
+			<label for="TypeName">' . __('Type Name') . ':</label>
+			<input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder="'.__('less than 100 characters').'" value="' . $_POST['TypeName'] . '" />
+			<fieldhelp>'.__('The input should not be over 100 characters and contains illegal characters') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Accept') . '" />
+			<input type="submit" name="submit" value="' . __('Accept') . '" />
 		</div>';
 
 	echo '</form>';
@@ -234,4 +229,3 @@ if (! isset($_GET['delete'])) {
 } // end if user wish to delete
 
 include('includes/footer.php');
-?>

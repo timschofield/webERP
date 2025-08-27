@@ -1,20 +1,19 @@
 <?php
 
-
-
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 function stripcomma($str) { //because we're using comma as a delimiter
     $str = trim($str);
     $str = str_replace('"', '""', $str);
     $str = str_replace("\r", "", $str);
     $str = str_replace("\n", '\n', $str);
-    if($str == "" )
+    if ($str == "" )
         return $str;
     else
         return '"'.$str.'"';
 }
 
+/*
 function NULLToZero( &$Field ) {
     if( is_null($Field) )
         return '0';
@@ -28,7 +27,7 @@ function NULLToPrice( &$Field ) {
     else
         return $Field;
 }
-
+*/
 
 // EXPORT FOR PRICE LIST
 if ( isset($_POST['pricelist']) ) {
@@ -61,19 +60,9 @@ if ( isset($_POST['pricelist']) ) {
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
 				stockmaster.stockid";
-	$PricesResult = DB_query($SQL,'','',false,false);
 
-	if (DB_error_no() !=0) {
-		$Title = _('Price List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Price List could not be retrieved');
+	$PricesResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('stockid') . ',' .
 			stripcomma('description') . ',' .
@@ -87,7 +76,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('categoryid') . ',' .
 			stripcomma('categorydescription') . "\n";
 
-	While ($PriceList = DB_fetch_array($PricesResult)){
+	while ($PriceList = DB_fetch_array($PricesResult)){
 		$Qty = 0;
 		$SQLQty = "SELECT newqoh
 			FROM stockmoves
@@ -125,7 +114,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 
 } elseif ( isset($_POST['custlist']) ) {
 	$SQL = "SELECT debtorsmaster.debtorno,
@@ -157,19 +146,8 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE debtorsmaster.debtorno=custbranch.debtorno
 		AND ((defaultlocation = '".$_POST['Location']."') OR (defaultlocation = '') OR (defaultlocation IS NULL))";
 
-	$CustResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Customer List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Customer List could not be retrieved by the SQL');
+	$CustResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('debtorno') . ',' .
 			stripcomma('branchcode') . ',' .
@@ -191,7 +169,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('disabletrans') . "\n";
 
 
-	While ($CustList = DB_fetch_array($CustResult)){
+	while ($CustList = DB_fetch_array($CustResult)){
 
 		$CreditLimit = $CustList['creditlimit'];
 		if ( mb_strlen($CustList['braddress1']) <= 3 ) {
@@ -236,7 +214,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 
 } elseif ( isset($_POST['salesmanlist']) ) {
 	$SQL = "SELECT salesmancode,
@@ -248,19 +226,8 @@ if ( isset($_POST['pricelist']) ) {
 			commissionrate2
 		FROM salesman";
 
-	$SalesManResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Salesman List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Salesman List could not be retrieved');
+	$SalesManResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('salesmancode') . ',' .
 			stripcomma('salesmanname') . ',' .
@@ -270,8 +237,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('breakpoint') . ',' .
 			stripcomma('commissionrate2') . "\n";
 
-
-	While ($SalesManList = DB_fetch_array($SalesManResult)){
+	while ($SalesManList = DB_fetch_array($SalesManResult)){
 
 		$CommissionRate1 = $SalesManList['commissionrate1'];
 		$BreakPoint 	 = $SalesManList['breakpoint'];
@@ -292,30 +258,19 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['imagelist']) ) {
 	$SQL = "SELECT stockid
 		FROM stockmaster
 		ORDER BY stockid";
-	$ImageResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Image List could not be retrieved');
+	$ImageResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('stockid') . ','.
 				  stripcomma('filename') . ','.
 				  stripcomma('url') . "\n";
 	$baseurl = '//'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
-	While ($ImageList = DB_fetch_array($ImageResult)){
+	while ($ImageList = DB_fetch_array($ImageResult)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (
 			stripcomma($ImageList['stockid']) . ',' .
@@ -330,31 +285,19 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['sectokenlist']) ) {
 	$SQL = "SELECT tokenid,
 			tokenname
 		FROM securitytokens";
 
-	$SecTokenResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Token List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Security Token List could not be retrieved');
+	$SecTokenResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('tokenid') . ',' .
 			stripcomma('tokenname') . "\n";
 
-
-	While ($SecTokenList = DB_fetch_array($SecTokenResult)){
+	while ($SecTokenList = DB_fetch_array($SecTokenResult)){
 
 		$CSVContent .= (stripcomma($SecTokenList['tokenid']) . ',' .
 			stripcomma($SecTokenList['tokenname']) . "\n");
@@ -366,31 +309,19 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secrolelist']) ) {
 	$SQL = "SELECT secroleid,
 			secrolename
 		FROM securityroles";
 
-	$SecRoleResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Role List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Security Role List could not be retrieved');
+	$SecRoleResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('secrolename') . "\n";
 
-
-	While ($SecRoleList = DB_fetch_array($SecRoleResult)){
+	while ($SecRoleList = DB_fetch_array($SecRoleResult)){
 
 		$CSVContent .= (stripcomma($SecRoleList['secroleid']) . ',' .
 			stripcomma($SecRoleList['secrolename']) . "\n");
@@ -402,31 +333,19 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secgrouplist']) ) {
 	$SQL = "SELECT secroleid,
 			tokenid
 		FROM securitygroups";
 
-	$SecGroupResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security Group List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Security Group List could not be retrieved');
+	$SecGroupResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('secroleid') . ',' .
 			stripcomma('tokenid') . "\n";
 
-
-	While ($SecGroupList = DB_fetch_array($SecGroupResult)){
+	while ($SecGroupList = DB_fetch_array($SecGroupResult)){
 
 		$CSVContent .= (stripcomma($SecGroupList['secroleid']) . ',' .
 			stripcomma($SecGroupList['tokenid']) . "\n");
@@ -438,7 +357,7 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } elseif ( isset($_POST['secuserlist']) ) {
 	$SQL = "SELECT userid,
 			password,
@@ -460,19 +379,8 @@ if ( isset($_POST['pricelist']) ) {
 		WHERE (customerid <> '') OR
 			(NOT customerid IS NULL)";
 
-	$SecUserResult = DB_query($SQL,'','',false,false);
-
-	if (DB_error_no() !=0) {
-		$Title = _('Security User List Export Problem ....');
-		include('includes/header.php');
-		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			echo '<br />' .  $SQL;
-		}
-		include('includes/footer.php');
-		exit;
-	}
+	$ErrMsg = __('The Security User List could not be retrieved');
+	$SecUserResult = DB_query($SQL, $ErrMsg);
 
 	$CSVContent = stripcomma('userid') . ',' .
 			stripcomma('password') . ','.
@@ -494,7 +402,7 @@ if ( isset($_POST['pricelist']) ) {
 			stripcomma('swipecard') . "\n";
 
 
-	While ($SecUserList = DB_fetch_array($SecUserResult)){
+	while ($SecUserList = DB_fetch_array($SecUserResult)){
 
 		$CSVContent .= (stripcomma($SecUserList['userid']) . ',' .
 			stripcomma($SecUserList['password']) . ',' .
@@ -522,11 +430,11 @@ if ( isset($_POST['pricelist']) ) {
 	header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 	header('Pragma: public');
 	echo $CSVContent;
-	exit;
+	exit();
 } else {
-	$Title = _('Data Exports');
+	$Title = __('Data Exports');
 	$ViewTopic = 'SpecialUtilities';
-	$BookMark = basename(__FILE__, '.php'); ;
+	$BookMark = basename(__FILE__, '.php');
 	include('includes/header.php');
 
 	// SELECT EXPORT FOR PRICE LIST
@@ -536,10 +444,10 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Price List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Price List Export') . '</th></tr>';
 	$SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
-	$SalesTypesResult=DB_query($SQL);
-	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
+	$SalesTypesResult = DB_query($SQL);
+	echo '<tr><td>' . __('For Sales Type/Price List') . ':</td>';
 	echo '<td><select name="SalesType">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){
 	          echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
@@ -547,15 +455,15 @@ if ( isset($_POST['pricelist']) ) {
 	echo '</select></td></tr>';
 
 	$SQL = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($SQL);
-	echo '<tr><td>' . _('For Location') . ':</td>';
+	$SalesTypesResult = DB_query($SQL);
+	echo '<tr><td>' . __('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){
 	          echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='pricelist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='pricelist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -568,18 +476,18 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Customer List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Customer List Export') . '</th></tr>';
 
 	$SQL = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($SQL);
-	echo '<tr><td>' . _('For Location') . ':</td>';
+	$SalesTypesResult = DB_query($SQL);
+	echo '<tr><td>' . __('For Location') . ':</td>';
 	echo '<td><select name="Location">';
 	while ($MyRow=DB_fetch_array($SalesTypesResult)){
 	          echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='custlist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='custlist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -591,9 +499,9 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Salesman List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Salesman List Export') . '</th></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='salesmanlist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='salesmanlist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -602,9 +510,9 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Image List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Image List Export') . '</th></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='imagelist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='imagelist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -613,9 +521,9 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Token List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Security Token List Export') . '</th></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='sectokenlist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='sectokenlist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -624,9 +532,9 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Role List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Security Role List Export') . '</th></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='secrolelist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='secrolelist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -635,9 +543,9 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security Group List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Security Group List Export') . '</th></tr>';
 	echo '</table>';
-	echo "<div class='centre'><input type='submit' name='secgrouplist' value='" . _('Export') . "' /></div>";
+	echo "<div class='centre'><input type='submit' name='secgrouplist' value='" . __('Export') . "' /></div>";
 	echo '</div>
           </form><br />';
 
@@ -646,13 +554,12 @@ if ( isset($_POST['pricelist']) ) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
-	echo '<tr><th colspan="2">' . _('Security User List Export') . '</th></tr>';
+	echo '<tr><th colspan="2">' . __('Security User List Export') . '</th></tr>';
 	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="secuserlist" value="' . _('Export') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="secuserlist" value="' . __('Export') . '" /></div>';
 	echo '</div>
           </form><br />';
 
 
 	include('includes/footer.php');
 }
-?>

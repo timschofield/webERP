@@ -1,19 +1,22 @@
 <?php
-/*	This script is an utility to change an inventory item code. */
-/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
+
+/*	This script is an utility to change an inventory item code.
+	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue) from .../includes/MiscFunctions.php.*/
 
-include ('includes/session.php');
-$Title = _('UTILITY PAGE Change A Stock Code');// Screen identificator.
-$ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
-$BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('UTILITY PAGE Change A Stock Code');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = 'Z_ChangeStockCode';
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title="' .
-	_('Change An Inventory Item Code') . '" /> ' .// Icon title.
-	_('Change An Inventory Item Code') . '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
+
+echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
+	'/images/inventory.png" title="' .
+	__('Change An Inventory Item Code') . '" /> ' .// Icon title.
+	__('Change An Inventory Item Code') . '</p>';// Page title.
 
 if (isset($_POST['ProcessStockChange'])){
 
@@ -22,28 +25,28 @@ if (isset($_POST['ProcessStockChange'])){
 	$_POST['NewStockID'] = mb_strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
-	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
 	if (DB_num_rows($Result)==0){
-		prnMsg(_('The stock code') . ': ' . $_POST['OldStockID'] . ' ' . _('does not currently exist as a stock code in the system'),'error');
+		prnMsg(__('The stock code') . ': ' . $_POST['OldStockID'] . ' ' . __('does not currently exist as a stock code in the system'),'error');
 		$InputError =1;
 	}
 
 	if (ContainsIllegalCharacters($_POST['NewStockID'])){
-		prnMsg(_('The new stock code to change the old code to contains illegal characters - no changes will be made'),'error');
+		prnMsg(__('The new stock code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
 	if ($_POST['NewStockID']==''){
-		prnMsg(_('The new stock code to change the old code to must be entered as well'),'error');
+		prnMsg(__('The new stock code to change the old code to must be entered as well'),'error');
 		$InputError =1;
 	}
 
 
 /*Now check that the new code doesn't already exist */
-	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
+	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
 	if (DB_num_rows($Result)!=0){
 		echo '<br /><br />';
-		prnMsg(_('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . _('already exists as a stock code in the system') . ' - ' . _('a unique stock code must be entered for the new code'),'error');
+		prnMsg(__('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . __('already exists as a stock code in the system') . ' - ' . __('a unique stock code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
@@ -52,7 +55,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_IgnoreForeignKeys();
         DB_Txn_Begin();
-		echo '<br />' . _('Adding the new stock master record');
+		echo '<br />' . __('Adding the new stock master record');
 		$SQL = "INSERT INTO stockmaster (stockid,
 										categoryid,
 										description,
@@ -112,10 +115,9 @@ if (isset($_POST['ProcessStockChange'])){
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
 
-		$DbgMsg = _('The SQL statement that failed was');
-		$ErrMsg =_('The SQL to insert the new stock master record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
+		$ErrMsg =__('The SQL to insert the new stock master record failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
 
 		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("stockmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -160,19 +162,19 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("pickreqdetails", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
-		echo '<br />' . _('Changing any image files');
+		echo '<br />' . __('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');
 		foreach ($SupportedImgExt as $Ext) {
 			$File = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $Ext;
 			if (file_exists ($File) ) {
 				if (rename($File,
 					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $Ext)) {
-					echo ' ... ' . _('completed');
+					echo ' ... ' . __('completed');
 				} else {
-					echo ' ... ' . _('failed');
+					echo ' ... ' . __('failed');
 				}
 			} else {
-				echo ' .... ' . _('no image to rename');
+				echo ' .... ' . __('no image to rename');
 			}
 		}
 
@@ -192,12 +194,12 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_Txn_Commit();
 
-		echo '<br />' . _('Deleting the old stock master record');
+		echo '<br />' . __('Deleting the old stock master record');
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
-		$ErrMsg = _('The SQL to delete the old stock master record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
-		echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockID'];
+		$ErrMsg = __('The SQL to delete the old stock master record failed');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
+		echo ' ... ' . __('completed');
+		echo '<p>' . __('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
 		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
@@ -211,22 +213,20 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
-	<legend>', _('Stock Item To Change'), '</legend>
+	<legend>', __('Stock Item To Change'), '</legend>
 	<field>
-		<label>' . _('Existing Inventory Code') . ':</label>
+		<label>' . __('Existing Inventory Code') . ':</label>
 		<input type="text" name="OldStockID" size="20" maxlength="20" />
 	</field>
 	<field>
-		<label>' . _('New Inventory Code') . ':</label>
+		<label>' . __('New Inventory Code') . ':</label>
 		<input type="text" name="NewStockID" size="20" maxlength="20" />
 	</field>
 	</fieldset>
 
 	<div class="centre">
-		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
+		<input type="submit" name="ProcessStockChange" value="' . __('Process') . '" />
 	</div>
 	</form>';
 
 include('includes/footer.php');
-
-?>

@@ -86,6 +86,4 @@ $SQL = "CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH
 		END";
 $Result = DB_query($SQL);
 
-UpdateDBNo(basename(__FILE__, '.php'), _('Create General Ledger totals from gltrans table'));
-
-?>
+UpdateDBNo(basename(__FILE__, '.php'), __('Create General Ledger totals from gltrans table'));

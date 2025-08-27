@@ -1,14 +1,16 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Maintenance Of Petty Cash Tabs');
-/* webERP manual links before header.php */
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Maintenance Of Petty Cash Tabs');
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabSetup';
 include('includes/header.php');
+
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Payment Entry'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', __('Payment Entry'), '" alt="" />', ' ', $Title, '
 	</p>';
+
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
 } elseif (isset($_GET['SelectedTab'])) {
@@ -35,31 +37,31 @@ if (isset($_POST['Submit'])) {
 	//first off validate inputs sensible
 	if ($_POST['TabCode'] == '' or $_POST['TabCode'] == ' ' or $_POST['TabCode'] == '  ') {
 		$InputError = 1;
-		prnMsg('<br />' . _('The Tab code cannot be an empty string or spaces'), 'error');
+		prnMsg('<br />' . __('The Tab code cannot be an empty string or spaces'), 'error');
 	} elseif (mb_strlen($_POST['TabCode']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The Tab code must be twenty characters or less long'), 'error');
+		prnMsg(__('The Tab code must be twenty characters or less long'), 'error');
 	} elseif (($_POST['SelectUser']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a User for this tab'), 'error');
+		prnMsg(__('You must select a User for this tab'), 'error');
 	} elseif (($_POST['SelectTabs']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a type of tab from the list'), 'error');
+		prnMsg(__('You must select a type of tab from the list'), 'error');
 	} elseif (($_POST['SelectAssigner']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a User to assign cash to this tab'), 'error');
+		prnMsg(__('You must select a User to assign cash to this tab'), 'error');
 	} elseif (($_POST['SelectAuthoriserCash']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a User to authorise this tab'), 'error');
+		prnMsg(__('You must select a User to authorise this tab'), 'error');
 	} elseif (($_POST['GLAccountCash']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a General ledger code for the cash to be assigned from'), 'error');
+		prnMsg(__('You must select a General ledger code for the cash to be assigned from'), 'error');
 	} elseif (($_POST['GLAccountPcashTab']) == '') {
 		$InputError = 1;
-		prnMsg(_('You must select a General ledger code for this petty cash tab'), 'error');
+		prnMsg(__('You must select a General ledger code for this petty cash tab'), 'error');
 	} elseif (($_POST['TaxGroup']) === '0') {
 		$InputError = 1;
-		prnMsg(_('You must select a tax group'), 'error');
+		prnMsg(__('You must select a tax group'), 'error');
 	}
 	if (isset($SelectedTab) and $InputError != 1) {
 		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
@@ -73,7 +75,7 @@ if (isset($_POST['Submit'])) {
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "',
 									taxgroupid='" . $_POST['TaxGroup'] . "'
 				WHERE tabcode = '" . $SelectedTab . "'";
-		$Msg = _('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been updated');
+		$Msg = __('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . __('has been updated');
 	} elseif ($InputError != 1) {
 		// First check the type is not being duplicated
 		$CheckSQL = "SELECT count(*)
@@ -83,7 +85,7 @@ if (isset($_POST['Submit'])) {
 		$CheckRow = DB_fetch_row($CheckResult);
 		if ($CheckRow[0] > 0) {
 			$InputError = 1;
-			prnMsg(_('The Tab ') . ' ' . $_POST['TabCode'] . ' ' . _(' already exists'), 'error');
+			prnMsg(__('The Tab ') . ' ' . $_POST['TabCode'] . ' ' . __(' already exists'), 'error');
 		} else {
 			// Add new record on submit
 			$SQL = "INSERT INTO pctabs	(tabcode,
@@ -109,7 +111,7 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['GLAccountPcashTab'] . "',
 									'" . $_POST['TaxGroup'] . "'
 								)";
-			$Msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] . ' ' . _('has been created');
+			$Msg = __('The Petty Cash Tab') . ' ' . $_POST['TabCode'] . ' ' . __('has been created');
 		}
 	}
 	if ($InputError != 1) {
@@ -130,9 +132,9 @@ if (isset($_POST['Submit'])) {
 	}
 } elseif (isset($_GET['delete'])) {
 	$SQL = "DELETE FROM pctabs WHERE tabcode='" . $SelectedTab . "'";
-	$ErrMsg = _('The Tab record could not be deleted because');
+	$ErrMsg = __('The Tab record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
-	prnMsg(_('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been deleted'), 'success');
+	prnMsg(__('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . __('has been deleted'), 'success');
 	unset($SelectedTab);
 	unset($_GET['delete']);
 }
@@ -171,17 +173,17 @@ if (!isset($SelectedTab)) {
 	if (DB_num_rows($Result) > 0) {
 		echo '<table class="selection">
 				<tr>
-					<th>', _('Tab Code'), '</th>
-					<th>', _('User Name'), '</th>
-					<th>', _('Type Of Tab'), '</th>
-					<th>', _('Currency'), '</th>
-					<th>', _('Limit'), '</th>
-					<th>', _('Cash Assigner'), '</th>
-					<th>', _('Authoriser - Cash'), '</th>
-					<th>', _('Authoriser - Expenses'), '</th>
-					<th>', _('GL Account For Cash Assignment'), '</th>
-					<th>', _('GL Account Petty Cash Tab'), '</th>
-					<th>', _('Tax Group'), '</th>
+					<th>', __('Tab Code'), '</th>
+					<th>', __('User Name'), '</th>
+					<th>', __('Type Of Tab'), '</th>
+					<th>', __('Currency'), '</th>
+					<th>', __('Limit'), '</th>
+					<th>', __('Cash Assigner'), '</th>
+					<th>', __('Authoriser - Cash'), '</th>
+					<th>', __('Authoriser - Expenses'), '</th>
+					<th>', __('GL Account For Cash Assignment'), '</th>
+					<th>', __('GL Account Petty Cash Tab'), '</th>
+					<th>', __('Tax Group'), '</th>
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -197,8 +199,8 @@ if (!isset($SelectedTab)) {
 					<td>', $MyRow['glaccountassignment'] . ' - ' . $MyRow['glactassigntname'], '</td>
 					<td>', $MyRow['glaccountpcash'] . ' - ' . $MyRow['glactpcashname'], '</td>
 					<td>', $MyRow['taxgroupdescription'], '</td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '">' . _('Edit') . '</a></td>
-					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '&amp;delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '">' . __('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '&amp;delete=yes" onclick=\' return confirm("' . __('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . __('Delete') . '</a></td>
 				</tr>';
 		}
 		//END WHILE LIST LOOP
@@ -208,7 +210,7 @@ if (!isset($SelectedTab)) {
 //end of ifs and buts!
 if (isset($SelectedTab)) {
 	echo '<div class="centre">
-			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Show All Tabs Defined'), '</a>
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', __('Show All Tabs Defined'), '</a>
 		</div>';
 }
 if (!isset($_GET['delete'])) {
@@ -244,17 +246,17 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />';
 		echo '<input type="hidden" name="TabCode" value="', $_POST['TabCode'], '" />';
 		echo '<fieldset>
-				<legend>', _('Amend Petty Cash Type'), '</legend>
+				<legend>', __('Amend Petty Cash Type'), '</legend>
 				<field>
-					<label for="TabCode">', _('Tab Code'), ':</label>
+					<label for="TabCode">', __('Tab Code'), ':</label>
 					<fieldtext>', $_POST['TabCode'], '</fieldtext>
 				</field>';
 	} else {
 		// This is a new type so the user may volunteer a type code
 		echo '<fieldset>
-				<legend>', _('Create Petty Cash Type'), '</legend>
+				<legend>', __('Create Petty Cash Type'), '</legend>
 				<field>
-					<label for="TabCode">', _('Tab Code'), ':</label>
+					<label for="TabCode">', __('Tab Code'), ':</label>
 					<input type="text" required="required" maxlength="20" name="TabCode" />
 				</field>';
 	}
@@ -262,7 +264,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['typetabdescription'] = '';
 	}
 	echo '<field>
-			<label for="SelectUser">', _('User Name'), ':</label>
+			<label for="SelectUser">', __('User Name'), ':</label>
 			<select required="required" name="SelectUser">';
 	$SQL = "SELECT userid,
 					realname
@@ -278,7 +280,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="SelectTabs">', _('Type Of Tab'), ':</label>
+			<label for="SelectTabs">', __('Type Of Tab'), ':</label>
 			<select required="required" name="SelectTabs">';
 	$SQL = "SELECT typetabcode,
 					typetabdescription
@@ -295,7 +297,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="SelectCurrency">', _('Currency'), ':</label>
+			<label for="SelectCurrency">', __('Currency'), ':</label>
 			<select required="required" name="SelectCurrency">';
 	$SQL = "SELECT currency, currabrev FROM currencies";
 	$Result = DB_query($SQL);
@@ -312,11 +314,11 @@ if (!isset($_GET['delete'])) {
 		$_POST['TabLimit'] = 0;
 	}
 	echo '<field>
-			<label for="TabLimit">', _('Limit Of Tab'), ':</label>
+			<label for="TabLimit">', __('Limit Of Tab'), ':</label>
 			<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
 		</field>';
 	echo '<field>
-			<label for="SelectAssigner">', _('Cash Assigner'), ':</label>
+			<label for="SelectAssigner">', __('Cash Assigner'), ':</label>
 			<select required="required" name="SelectAssigner">';
 	$SQL = "SELECT userid,
 					realname
@@ -333,7 +335,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="SelectAuthoriserCash">', _('Authoriser - Cash'), ':</label>
+			<label for="SelectAuthoriserCash">', __('Authoriser - Cash'), ':</label>
 			<select required="required" name="SelectAuthoriserCash">';
 	$SQL = "SELECT userid,
 					realname
@@ -350,7 +352,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="SelectAuthoriserExpenses">', _('Authoriser - Expenses'), ':</label>
+			<label for="SelectAuthoriserExpenses">', __('Authoriser - Expenses'), ':</label>
 			<select required="required" name="SelectAuthoriserExpenses">';
 	$SQL = "SELECT userid,
 					realname
@@ -367,7 +369,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="GLAccountCash">', _('GL Account Cash Assignment'), ':</label>
+			<label for="GLAccountCash">', __('GL Account Cash Assignment'), ':</label>
 			<select required="required" name="GLAccountCash">';
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
@@ -386,7 +388,7 @@ if (!isset($_GET['delete'])) {
 	echo '</select>
 		</field>';
 	echo '<field>
-			<label for="GLAccountPcashTab">', _('GL Account Petty Cash Tab'), ':</label>
+			<label for="GLAccountPcashTab">', __('GL Account Petty Cash Tab'), ':</label>
 			<select required="required" name="GLAccountPcashTab">';
 	$SQL = "SELECT accountcode,
 					accountname
@@ -410,7 +412,7 @@ if (!isset($_GET['delete'])) {
 			ORDER BY taxgroupdescription";
 	$Result = DB_query($SQL);
 	echo '<field>
-			<label for="TaxGroup">', _('Tax Group'), ':</label>
+			<label for="TaxGroup">', __('Tax Group'), ':</label>
 			<select name="TaxGroup">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
@@ -424,10 +426,9 @@ if (!isset($_GET['delete'])) {
 	// End select tax
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', _('Accept'), '" />
-			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
+			<input type="submit" name="Submit" value="', __('Accept'), '" />
+			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 } // end if user wish to delete
 include('includes/footer.php');
-?>

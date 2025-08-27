@@ -1,19 +1,23 @@
 <?php
-/* This script is to maintaining access permissions. */
 
-include ('includes/session.php');
-$Title = _('Access Permissions Maintenance');// Screen identificator.
-$ViewTopic = 'SecuritySchema';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'WWW_Access';// Anchor's id in the manual's html document.
+/* This script is to maintain access permissions. */
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Access Permissions Maintenance');
+$ViewTopic = 'SecuritySchema';
+$BookMark = 'WWW_Access';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/group_add.png" title="' .
-	_('Access Permissions Maintenance') . '" /> ' .// Icon title.
-	_('Access Permissions Maintenance') . '</p>';// Page title.
+	__('Access Permissions Maintenance') . '" /> ' .// Icon title.
+	__('Access Permissions Maintenance') . '</p>';// Page title.
 
 if($AllowDemoMode) {
-	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
-	exit;
+	prnMsg(__('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	include('includes/footer.php');
+	exit();
 }
 
 if(isset($_GET['SelectedRole'])) {
@@ -35,7 +39,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	//first off validate inputs sensible
 	if (isset($_POST['SecRoleName']) AND mb_strlen($_POST['SecRoleName'])<4){
 		$InputError = 1;
-		prnMsg(_('The role description entered must be at least 4 characters long'),'error');
+		prnMsg(__('The role description entered must be at least 4 characters long'),'error');
 	}
 
 	// if $_POST['SecRoleName'] then it is a modifications on a SecRole
@@ -45,12 +49,12 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 		if(isset($SelectedRole)) { // Update Security Heading
 			$SQL = "UPDATE securityroles SET secrolename = '" . $_POST['SecRoleName'] . "'
 					WHERE secroleid = '".$SelectedRole . "'";
-			$ErrMsg = _('The update of the security role description failed because');
-			$ResMsg = _('The Security role description was updated.');
+			$ErrMsg = __('The update of the security role description failed because');
+			$ResMsg = __('The Security role description was updated.');
 		} else { // Add Security Heading
 			$SQL = "INSERT INTO securityroles (secrolename) VALUES ('" . $_POST['SecRoleName'] ."')";
-			$ErrMsg = _('The update of the security role failed because');
-			$ResMsg = _('The Security role was created.');
+			$ErrMsg = __('The update of the security role failed because');
+			$ResMsg = __('The Security role was created.');
 		}
 		unset($_POST['SecRoleName']);
 		unset($SelectedRole);
@@ -61,14 +65,14 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 											tokenid)
 									VALUES ('".$SelectedRole."',
 											'".$PageTokenId."' )";
-			$ErrMsg = _('The addition of the page group access failed because');
-			$ResMsg = _('The page group access was added.');
+			$ErrMsg = __('The addition of the page group access failed because');
+			$ResMsg = __('The page group access was added.');
 		} elseif ( isset($_GET['remove']) ) { // updating Security Groups remove a page token
 			$SQL = "DELETE FROM securitygroups
 					WHERE secroleid = '".$SelectedRole."'
 					AND tokenid = '".$PageTokenId . "'";
-			$ErrMsg = _('The removal of this page-group access failed because');
-			$ResMsg = _('This page-group access was removed.');
+			$ErrMsg = __('The removal of this page-group access failed because');
+			$ResMsg = __('This page-group access was removed.');
 		}
 		unset($_GET['add']);
 		unset($_GET['remove']);
@@ -76,7 +80,7 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 	// Need to exec the query
 	if (isset($SQL) AND $InputError != 1 ) {
-		$Result = DB_query($SQL,$ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		if( $Result ) {
 			prnMsg( $ResMsg,'success');
 		}
@@ -88,14 +92,14 @@ if (isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg( _('Cannot delete this role because user accounts are setup using it'),'warn');
-		echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('user accounts that have this security role setting') . '</font>';
+		prnMsg( __('Cannot delete this role because user accounts are setup using it'),'warn');
+		echo '<br />' . __('There are') . ' ' . $MyRow[0] . ' ' . __('user accounts that have this security role setting') . '</font>';
 	} else {
 		$SQL="DELETE FROM securitygroups WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
 		$SQL="DELETE FROM securityroles WHERE secroleid='" . $_GET['SelectedRole'] . "'";
 		$Result = DB_query($SQL);
-		prnMsg( $_GET['SecRoleName'] . ' ' . _('security role has been deleted') . '!','success');
+		prnMsg( $_GET['SecRoleName'] . ' ' . __('security role has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
 	unset($SelectedRole);
@@ -114,7 +118,7 @@ if (!isset($SelectedRole)) {
 
 	echo '<table class="selection">
 		<tr>
-			<th>' . _('Role') . '</th>
+			<th>' . __('Role') . '</th>
 			<th>&nbsp;</th>
 			<th>&nbsp;</th>
 		</tr>';
@@ -125,8 +129,8 @@ if (!isset($SelectedRole)) {
 
 		echo '<tr class="striped_row">
 				<td>', $MyRow['secrolename'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedRole=', $MyRow['secroleid'], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole=', $MyRow['secroleid'], '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedRole=', $MyRow['secroleid'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole=', $MyRow['secroleid'], '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return confirm(\'' . __('Are you sure you wish to delete this role?') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -135,7 +139,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Roles') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -147,7 +151,7 @@ if (isset($SelectedRole)) {
 		WHERE secroleid='" . $SelectedRole . "'";
 	$Result = DB_query($SQL);
 	if ( DB_num_rows($Result) == 0 ) {
-		prnMsg( _('The selected role is no longer available.'),'warn');
+		prnMsg( __('The selected role is no longer available.'),'warn');
 	} else {
 		$MyRow = DB_fetch_array($Result);
 		$_POST['SelectedRole'] = $MyRow['secroleid'];
@@ -162,18 +166,18 @@ if( isset($_POST['SelectedRole'])) {
 echo '<fieldset>';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
-	echo '<legend>', _('Create Role'), '</legend>';
+	echo '<legend>', __('Create Role'), '</legend>';
 } else {
-	echo '<legend>', _('Amend Role'), '</legend>';
+	echo '<legend>', __('Amend Role'), '</legend>';
 }
 echo '<field>
-		<label for="SecRoleName">' . _('Role') . ':</label>
+		<label for="SecRoleName">' . __('Role') . ':</label>
 		<input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="" />
-		<fieldhelp>'._("The role description entered must be at least 4 characters long").'</fieldhelp>
+		<fieldhelp>'.__('The role description entered must be at least 4 characters long').'</fieldhelp>
 	</field>';
 echo '</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Role') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Role') . '" />
 	</div>
 	</form>';
 
@@ -197,8 +201,8 @@ if (isset($SelectedRole)) {
 	echo '<table class="selection"><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
-		echo '<th colspan="3"><div class="centre">' . _('Assigned Security Tokens') . '</div></th>';
-		echo '<th colspan="3"><div class="centre">' . _('Available Security Tokens') . '</div></th>';
+		echo '<th colspan="3"><div class="centre">' . __('Assigned Security Tokens') . '</div></th>';
+		echo '<th colspan="3"><div class="centre">' . __('Available Security Tokens') . '</div></th>';
 	}
 	echo '</tr>';
 
@@ -208,7 +212,7 @@ if (isset($SelectedRole)) {
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
+					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . __('Are you sure you wish to delete this security token from this role?') . '\');">' . __('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
@@ -225,7 +229,7 @@ if (isset($SelectedRole)) {
 					<td>&nbsp;</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . _('Add') . '</a></td>
+					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . __('Add') . '</a></td>
 					</tr>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
@@ -238,5 +242,3 @@ if (isset($SelectedRole)) {
 }
 
 include('includes/footer.php');
-
-?>

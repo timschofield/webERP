@@ -1,15 +1,17 @@
 <?php
-// MRPCreateDemands.php - Create mrpdemands based on sales order history
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);};
+// Create mrpdemands based on sales order history
 
-$Title = _('MRP Create Demands');
-$ViewTopic= 'MRP';
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('MRP Create Demands');
+$ViewTopic = 'MRP';
 $BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);}
 
 if (isset($_POST['submit'])) {
    // Create mrpdemands based on sales order history
@@ -17,33 +19,33 @@ if (isset($_POST['submit'])) {
 	$InputError=0;
 
 	if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-		$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$Msg = __('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['FromDate']);
 	}
 	if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
-		$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$Msg = __('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['ToDate']);
 	}
 	if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and
 		 Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])){
-			$Msg = _('The date to must be after the date from');
+			$Msg = __('The date to must be after the date from');
 			$InputError=1;
 			unset($_POST['ToDate']);
 			unset($_POST['FromoDate']);
 	}
 	if (isset($_POST['DistDate']) AND !Is_Date($_POST['DistDate'])){
-		$Msg = _('The distribution start date must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
+		$Msg = __('The distribution start date must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['DistDate']);
 	}
 	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))){
-		$Msg = _('The quantity below which no demand will be created must be numeric');
+		$Msg = __('The quantity below which no demand will be created must be numeric');
 		$InputError=1;
 	}
 	if (!is_numeric(filter_number_format($_POST['Multiplier']))){
-		$Msg = _('The multiplier is expected to be a positive number');
+		$Msg = __('The multiplier is expected to be a positive number');
 		$InputError=1;
 	}
 
@@ -192,17 +194,17 @@ if (isset($_POST['submit'])) {
 
 	} //end while loop
 
-	prnMsg( $TotalRecords . ' ' . _('records have been created'),'success');
+	prnMsg( $TotalRecords . ' ' . __('records have been created'),'success');
 
 } // end if submit has been pressed
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
-	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+	__('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>
 		<field>
-			<label for="MRPDemandtype">' . _('Demand Type') . ':</label>
+			<label for="MRPDemandtype">' . __('Demand Type') . ':</label>
 			<select name="MRPDemandtype">';
 $SQL = "SELECT mrpdemandtype,
 				description
@@ -215,7 +217,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-		<label for="Categories">' . _('Inventory Categories') . ':</label>
+		<label for="Categories">' . __('Inventory Categories') . ':</label>
 		<select autofocus="autofocus" required="required" minlength="1" name="Categories[] "multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
@@ -232,11 +234,11 @@ echo '<field>
 		</field>';
 
 echo '<field>
-		<label for="Location">' . _('Inventory Location') . ':</label>
+		<label for="Location">' . __('Inventory Location') . ':</label>
 		<select name="Location">';
-echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
+echo '<option selected="selected" value="All">' . __('All Locations') . '</option>';
 
-$Result= DB_query("SELECT locations.loccode,
+$Result = DB_query("SELECT locations.loccode,
 						   locationname
 					FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1");
 while ($MyRow=DB_fetch_array($Result)){
@@ -254,45 +256,44 @@ if (!isset($_POST['DistDate'])) {
 	$_POST['DistDate']=date($_SESSION['DefaultDateFormat']);
 }
 echo '<field>
-		<label for="FromDate">' . _('From Sales Date') . ':</label>
+		<label for="FromDate">' . __('From Sales Date') . ':</label>
 		<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
-		<label for="ToDate">'. _('To Sales Date') . ':</label>
+		<label for="ToDate">'. __('To Sales Date') . ':</label>
 		<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	<field>
-		<label for="DistDate">' . _('Start Date For Distribution') . ':</label>
+		<label for="DistDate">' . __('Start Date For Distribution') . ':</label>
 		<input type="date" name="DistDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['DistDate']) . '" />
 	</field>
 	<field>
-		<label for="Period">' . _('Distribution Period') . ':</label>
+		<label for="Period">' . __('Distribution Period') . ':</label>
 		<select name="Period">
-			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
-			<option value="monthly">' . _('Monthly')  . '</option>
+			<option selected="selected" value="weekly">' . __('Weekly') . '</option>
+			<option value="monthly">' . __('Monthly')  . '</option>
 		</select>
 	</field>
 	<field>
-		<label for="PeriodNumber">' . _('Number of Periods') .':</label>
+		<label for="PeriodNumber">' . __('Number of Periods') .':</label>
 		<input type ="text" class="number" name="PeriodNumber" size="4" value="1" />
 	</field>
 	<field>
-		<label for="ExcludeQuantity">' . _('Exclude Total Quantity Less Than') . ':</label>
+		<label for="ExcludeQuantity">' . __('Exclude Total Quantity Less Than') . ':</label>
 		<input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" />
     </field>
 	<field>
-		<label for="ExcludeAmount">' . _('Exclude Total Dollars Less Than') . ':</label>
+		<label for="ExcludeAmount">' . __('Exclude Total Dollars Less Than') . ':</label>
 		<input type ="text" class="number" name="ExcludeAmount" size="8" value="0" />
 	</field>
 	<field>
-		<label for="Multiplier">' . _('Multiplier') .':</label>
+		<label for="Multiplier">' . __('Multiplier') .':</label>
 		<input type="text" class="number" name="Multiplier" size="2" value="1" />
 	</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Submit') .  '" />
+		<input type="submit" name="submit" value="' . __('Submit') .  '" />
 	</div>';
 echo '</form>';
 
 include('includes/footer.php');
-?>

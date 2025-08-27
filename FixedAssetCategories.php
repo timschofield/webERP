@@ -1,17 +1,14 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-
-$Title = _('Fixed Asset Category Maintenance');
-
+$Title = __('Fixed Asset Category Maintenance');
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetCategories';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . __('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 
 if (isset($_GET['SelectedCategory'])){
@@ -34,13 +31,13 @@ if (isset($_POST['submit'])) {
 
 	if (mb_strlen($_POST['CategoryID']) > 6) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category code must be six characters or less long'),'error');
+		prnMsg(__('The Fixed Asset Category code must be six characters or less long'),'error');
 	} elseif (mb_strlen($_POST['CategoryID'])==0) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category code must be at least 1 character but less than six characters long'),'error');
+		prnMsg(__('The Fixed Asset Category code must be at least 1 character but less than six characters long'),'error');
 	} elseif (mb_strlen($_POST['CategoryDescription']) >20) {
 		$InputError = 1;
-		prnMsg(_('The Fixed Asset Category description must be twenty characters or less long'),'error');
+		prnMsg(__('The Fixed Asset Category description must be twenty characters or less long'),'error');
 	}
 
 	if ($_POST['CostAct'] == $_SESSION['CompanyRecord']['debtorsact']
@@ -50,7 +47,7 @@ if (isset($_POST['submit'])) {
 			OR $_POST['CostAct'] == $_SESSION['CompanyRecord']['grnact']
 			OR $_POST['AccumDepnAct'] == $_SESSION['CompanyRecord']['grnact']){
 
-		prnMsg(_('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
+		prnMsg(__('The accounts selected to post cost or accumulated depreciation to cannot be either of the debtors control account, creditors control account or GRN suspense accounts'),'error');
 		$InputError =1;
 	}
 	/*Make an array of the defined bank accounts */
@@ -66,11 +63,11 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 	if (in_array($_POST['CostAct'], $BankAccounts)) {
-		prnMsg(_('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
+		prnMsg(__('The asset cost account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset cost'),'error');
 		$InputError=1;
 	}
 	if (in_array($_POST['AccumDepnAct'], $BankAccounts)) {
-		prnMsg( _('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'),'error');
+		prnMsg( __('The accumulated depreciation account selected is a bank account - bank accounts are protected from having any other postings made to them. Select another balance sheet account for the asset accumulated depreciation'),'error');
 		$InputError=1;
 	}
 
@@ -88,10 +85,10 @@ if (isset($_POST['submit'])) {
 						accumdepnact = '" . $_POST['AccumDepnAct'] . "'
 				WHERE categoryid = '".$SelectedCategory . "'";
 
-		$ErrMsg = _('Could not update the fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
+		$ErrMsg = __('Could not update the fixed asset category') . $_POST['CategoryDescription'] . __('because');
+		$Result = DB_query($SQL, $ErrMsg);
 
-		prnMsg(_('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'],'success');
+		prnMsg(__('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'],'success');
 
 	} elseif ($InputError !=1) {
 
@@ -107,9 +104,9 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['DepnAct'] . "',
 										'" . $_POST['DisposalAct'] . "',
 										'" . $_POST['AccumDepnAct'] . "')";
-		$ErrMsg = _('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . _('because');
-		$Result = DB_query($SQL,$ErrMsg);
-		prnMsg(_('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
+		$ErrMsg = __('Could not insert the new fixed asset category') . $_POST['CategoryDescription'] . __('because');
+		$Result = DB_query($SQL, $ErrMsg);
+		prnMsg(__('A new fixed asset category record has been added for') . ' ' . $_POST['CategoryDescription'],'success');
 
 	}
 	//run the SQL from either of the above possibilites
@@ -130,13 +127,13 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]>0) {
-		prnMsg(_('Cannot delete this fixed asset category because fixed assets have been created using this category') .
-			'<br /> ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('fixed assets referring to this category code'),'warn');
+		prnMsg(__('Cannot delete this fixed asset category because fixed assets have been created using this category') .
+			'<br /> ' . __('There are') . ' ' . $MyRow[0] . ' ' . __('fixed assets referring to this category code'),'warn');
 
 	} else {
 		$SQL="DELETE FROM fixedassetcategories WHERE categoryid='" . $SelectedCategory . "'";
 		$Result = DB_query($SQL);
-		prnMsg(_('The fixed asset category') . ' ' . $SelectedCategory . ' ' . _('has been deleted'),'success');
+		prnMsg(__('The fixed asset category') . ' ' . $SelectedCategory . ' ' . __('has been deleted'),'success');
 		unset ($SelectedCategory);
 	} //end if stock category used in debtor transactions
 }
@@ -159,12 +156,12 @@ or deletion of the records*/
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th>' . _('Cat Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Cost GL') . '</th>
-			<th>' . _('P &amp; L Depn GL') . '</th>
-			<th>' . _('Disposal GL') . '</th>
-			<th>' . _('Accum Depn GL') . '</th>
+			<th>' . __('Cat Code') . '</th>
+			<th>' . __('Description') . '</th>
+			<th>' . __('Cost GL') . '</th>
+			<th>' . __('P &amp; L Depn GL') . '</th>
+			<th>' . __('Disposal GL') . '</th>
+			<th>' . __('Accum Depn GL') . '</th>
 			<th colspan="2"></th>
 		  </tr>';
 
@@ -176,8 +173,8 @@ or deletion of the records*/
 				<td class="number">', $MyRow['depnact'], '</td>
 				<td class="number">', $MyRow['disposalact'], '</td>
 				<td class="number">', $MyRow['accumdepnact'], '</td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '">' . _('Edit') . '</a></td>
-				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '">' . __('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '&amp;delete=yes" onclick="return confirm(\'' . __('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . __('Delete') . '</a></td>
 			</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -187,7 +184,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .__('Show All Fixed Asset Categories') . '</a></div>';
 }
 
 echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -217,9 +214,9 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
 	echo '<fieldset>
-			<legend>', _('Amend Category Details'), '</legend>
+			<legend>', __('Amend Category Details'), '</legend>
 			<field>
-				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<label for="CategoryID">' . __('Category Code') . ':</label>
 				<fieldtext>' . $_POST['CategoryID'] . '</fieldtext>
 			</field>';
 
@@ -228,11 +225,11 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 		$_POST['CategoryID'] = '';
 	}
 	echo '<fieldset>
-			<legend>', _('Create Category Details'), '</legend>
+			<legend>', __('Create Category Details'), '</legend>
 			<field>
-				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<label for="CategoryID">' . __('Category Code') . ':</label>
 				<input type="text" name="CategoryID" required="required" title="" data-type="no-illegal-chars" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" />
-				<fieldhelp>' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '</fieldhelp>
+				<fieldhelp>' . __('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '</fieldhelp>
 			</field>';
 }
 
@@ -260,12 +257,12 @@ if (!isset($_POST['CategoryDescription'])) {
 }
 
 echo '<field>
-		<label for="CategoryDescription">' . _('Category Description') . ':</label>
+		<label for="CategoryDescription">' . __('Category Description') . ':</label>
 		<input type="text" name="CategoryDescription" required="required" title="" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" />
-		<fieldhelp>' . _('Enter the asset category description up to 20 characters') . '</fieldhelp>
+		<fieldhelp>' . __('Enter the asset category description up to 20 characters') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="CostAct">' . _('Fixed Asset Cost GL Code') . ':</label>
+		<label for="CostAct">' . __('Fixed Asset Cost GL Code') . ':</label>
 		<select name="CostAct" required="required" title="" >';
 
 while ($MyRow = DB_fetch_array($BSAccountsResult)){
@@ -277,11 +274,11 @@ while ($MyRow = DB_fetch_array($BSAccountsResult)){
 	}
 } //end while loop
 echo '</select>
-	<fieldhelp>' . _('Select the general ledger account where the cost of assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
+	<fieldhelp>' . __('Select the general ledger account where the cost of assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
 </field>';
 
 echo '<field>
-		<label for="DepnAct">' . _('Profit and Loss Depreciation GL Code') . ':</label>
+		<label for="DepnAct">' . __('Profit and Loss Depreciation GL Code') . ':</label>
 		<select name="DepnAct" required="required" title="" >';
 
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
@@ -292,12 +289,12 @@ while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	}
 } //end while loop
 echo '</select>
-	<fieldhelp>' . _('Select the general ledger account where the depreciation of assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
+	<fieldhelp>' . __('Select the general ledger account where the depreciation of assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
 </field>';
 
 DB_data_seek($PnLAccountsResult,0);
 echo '<field>
-		<label for="DisposalAct">' .  _('Profit or Loss on Disposal GL Code') . ':</label>
+		<label for="DisposalAct">' .  __('Profit or Loss on Disposal GL Code') . ':</label>
 		<select name="DisposalAct" required="required" title="" >';
 while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $MyRow['accountcode']==$_POST['DisposalAct']) {
@@ -307,12 +304,12 @@ while ($MyRow = DB_fetch_array($PnLAccountsResult)) {
 	}
 } //end while loop
 echo '</select>
-	<fieldhelp>' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
+	<fieldhelp>' . __('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
 </field>';
 
 DB_data_seek($BSAccountsResult,0);
 echo '<field>
-		<label for="AccumDepnAct">' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</label>
+		<label for="AccumDepnAct">' . __('Balance Sheet Accumulated Depreciation GL Code') . ':</label>
 		<select name="AccumDepnAct" required="required" title="" >';
 
 while ($MyRow = DB_fetch_array($BSAccountsResult)) {
@@ -327,15 +324,14 @@ while ($MyRow = DB_fetch_array($BSAccountsResult)) {
 
 
 echo '</select>
-	<fieldhelp>' . _('Select the general ledger account where the accumulated depreciation on assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
+	<fieldhelp>' . __('Select the general ledger account where the accumulated depreciation on assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
 </field>';
 
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 	</div>
 </form>';
 
 include('includes/footer.php');
-?>

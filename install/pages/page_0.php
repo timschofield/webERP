@@ -1,10 +1,17 @@
 <?php
-echo '<h1>', _('Welcome to the webERP installer'), '</h1>';
+
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
+echo '<h1>', __('Welcome to the webERP installer'), '</h1>';
 
 echo '<section class="installer_about">';
+
 /* Get the php-gettext function.
  * When users have not select the language, we guess user's language via
- * the http header information. once the user has select their lanugage,
+ * the http header information. Once the user has selected their language,
  * use the language user selected
 */
 
@@ -101,17 +108,15 @@ if (!isset($_POST['Language']) and !isset($_SESSION['Installer']['Language'])) {
 		if (isset($_SESSION['Language'])) {
 			unset($_SESSION['Language']);
 		}
-
 	}
 } elseif (isset($_POST['Language'])) {
 	$_SESSION['Installer']['Language'] = $_POST['Language'];
 }
 
 echo '<form id="installation" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-		<label for="Language">' . _('Language:') . '&#160;</label>
+		<label for="Language">' . __('Language:') . '&#160;</label>
 		<select id="Language" name="Language" onchange="document.getElementById(\'installation\').submit()">';
 foreach ($LanguagesArray as $Key => $Language1) {
-echo $Key .'xxx'. $_SESSION['Installer']['Language'];
 	if (isset($_SESSION['Installer']['Language']) and $Key == $_SESSION['Installer']['Language']) {
 		echo '<option value="' . $Key . '" selected="selected">' . $Language1['LanguageName'] . '</option>';
 	} else {
@@ -122,20 +127,19 @@ echo $Key .'xxx'. $_SESSION['Installer']['Language'];
 echo '</select>
 	</form>';
 
-echo '<p>', _('For this installation to work, you need to be running PHP and mysql on your server'), '</p>';
+echo '<p>', __('For this installation to work, you need to be running PHP and mysql on your server'), '</p>';
 
-echo '<p>', _('You will also need the following PHP extensions to be installed'), '</p>';
+echo '<p>', __('You will also need the following PHP extensions to be installed'), '</p>';
 
 echo '<ol>
-		<li>php-gd - ', _('A graphics extension'), '</li>
-		<li>php-intl - ', _('For translations to work'), '</li>
-		<li>php-mbstring - ', _('An extension to provide multi-byte string functionality'), '</li>
-		<li>php-mysql - ', _('Extension to provide connectivity with the database'), '</li>
-		<li>php-xml - ', _('Used to decode xml files'), '</li>
-		<li>php-zip - ', _('For compression functionality'), '</li>
+		<li>php-gd - ', __('A graphics extension'), '</li>
+		<li>php-intl - ', __('For translations to work'), '</li>
+		<li>php-mbstring - ', __('An extension to provide multi-byte string functionality'), '</li>
+		<li>php-mysql - ', __('Extension to provide connectivity with the database'), '</li>
+		<li>php-xml - ', __('Used to decode xml files'), '</li>
+		<li>php-zip - ', __('For compression functionality'), '</li>
 	</ol>';
 
-echo '<p>', _('These are all standard extensions, but if you are using an external web hosting company then check with them that they have the correct extensions installed.'), '</p>';
+echo '<p>', __('These are all standard extensions, but if you are using an external web hosting company then check with them that they have the correct extensions installed.'), '</p>';
 
 echo '</section>';
-?>

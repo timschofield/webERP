@@ -1,18 +1,19 @@
 <?php
 
-include ('includes/session.php');
-$Title = _('Translate Item Descriptions');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Translate Item Descriptions');
 $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
-include ('includes/header.php');
+include('includes/header.php');
 
-if (!function_exists("curl_init")){
+if (!function_exists("curl_init")) {
 	prnMsg("This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available","error");
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
-include ('includes/GoogleTranslator.php');
+include('includes/GoogleTranslator.php');
 
 $SourceLanguage=mb_substr($_SESSION['Language'],0,2);
 
@@ -33,14 +34,14 @@ $SQL = "SELECT stockmaster.stockid,
 $Result = DB_query($SQL);
 
 if(DB_num_rows($Result) != 0) {
-	echo '<p class="page_title_text"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . __('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('To') . '</th>
-						<th>' . _('Translated') . '</th>
+						<th>' . __('#') . '</th>
+						<th>' . __('Code') . '</th>
+						<th>' . __('Description') . '</th>
+						<th>' . __('To') . '</th>
+						<th>' . __('Translated') . '</th>
 					</tr>';
 	echo $TableHeader;
 	$i = 0;
@@ -54,7 +55,7 @@ if(DB_num_rows($Result) != 0) {
 					"SET descriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
-			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
 			echo '<tr class="striped_row">
@@ -74,7 +75,7 @@ if(DB_num_rows($Result) != 0) {
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
 					echo $SQL;
-			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$Update = DB_query($SQL, $ErrMsg, '', true);
 
 			$i++;
 			echo '<tr class="striped_row">
@@ -87,17 +88,16 @@ if(DB_num_rows($Result) != 0) {
 		}
 	}
 	echo '</table>';
-	prnMsg(_('Number of translated descriptions via Google API') . ': ' . locale_number_format($i));
+	prnMsg(__('Number of translated descriptions via Google API') . ': ' . locale_number_format($i));
 } else {
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('No item descriptions were automatically translated') . '" />' . ' ' .
-		_('No item descriptions were automatically translated') . '</p>';
+		__('No item descriptions were automatically translated') . '" />' . ' ' .
+		__('No item descriptions were automatically translated') . '</p>';
 
 // Add error message for "Google Translator API Key" empty.
 
 }
 
-include ('includes/footer.php');
-?>
+include('includes/footer.php');

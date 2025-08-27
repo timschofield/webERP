@@ -1,7 +1,7 @@
 <?php
-/*Function to calculate the freight cost.
-Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
+/* Function to calculate the freight cost.
+Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
 function CalcFreightCost ($TotalValue,
 							$BrAdd2,
@@ -18,22 +18,22 @@ function CalcFreightCost ($TotalValue,
 	$CalcBestShipper ='';
 	global $CountriesArray;
 
-	$ParameterError = FALSE;
+	$ParameterError = false;
 	if ((!isset($BrAdd2)) AND (!isset($BrAdd3)) AND (!isset($BrAdd4)) AND (!isset($BrAdd5)) AND (!isset($BrAddCountry))){
 		// No address field to detect destination ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if ((!isset($TotalVolume)) AND (!isset($TotalWeight))){
 		// No weight AND no volume ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if (!isset($FromLocation)){
 		// No location FROM ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if (!isset($Currency)){
 		// No Currency ==> ERROR
-		$ParameterError = TRUE;
+		$ParameterError = true;
 	}
 	if($ParameterError){
 		return array ("NOT AVAILABLE", "NOT AVAILABLE");
@@ -68,7 +68,7 @@ function CalcFreightCost ($TotalValue,
 
 	$CalcFreightCostResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
-		echo _('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg() . ' - ' . $SQL;
+		echo __('The freight calculation for the destination city cannot be performed because') . ' - ' . DB_error_msg() . ' - ' . $SQL;
 	} elseif (DB_num_rows($CalcFreightCostResult)>0) {
 
 		while ($MyRow = DB_fetch_array($CalcFreightCostResult)) {
@@ -122,4 +122,3 @@ function CalcFreightCost ($TotalValue,
 
 	return array ($CalcFreightCost, $CalcBestShipper);
 }
-?>

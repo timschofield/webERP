@@ -6,7 +6,7 @@
 		$Searchsql = "SELECT count(transno)
 				FROM debtortrans
 				WHERE type='".$Type."' and transno='".$TransNo . "'";
-		$SearchResult=DB_query($Searchsql);
+		$SearchResult = DB_query($Searchsql);
 		$Answer = DB_fetch_array($SearchResult);
 		if ($Answer[0]>0) {
 			$Errors[$i] = TransactionNumberAlreadyExists;
@@ -49,7 +49,7 @@ function ConvertToSQLDate($DateEntry) {
  * target webERP company */
 	function VerifyTransactionDate($TranDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		$DateFormat=$MyRow[0];
 		if (mb_strpos($TranDate,'/')>0) {
@@ -85,7 +85,7 @@ function ConvertToSQLDate($DateEntry) {
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
 		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
@@ -116,7 +116,7 @@ function ConvertToSQLDate($DateEntry) {
 		$Year=$DateArray[0];
 		$Date=$Year.'-'.$Month.'-'.$Day;
 		$SQL="SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		return $MyRow[0];
 	}
@@ -250,7 +250,7 @@ function ConvertToSQLDate($DateEntry) {
 	function GetSalesGLCode($salesarea, $partnumber) {
 		$SQL="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		return $MyRow[0];
 	}
@@ -259,7 +259,7 @@ function ConvertToSQLDate($DateEntry) {
 /* Retrieves the default debtors code for webERP */
 	function GetDebtorsGLCode() {
 		$SQL="SELECT debtorsact FROM companies";
-		$Result=DB_query($SQL);
+		$Result = DB_query($SQL);
 		$MyRow=DB_fetch_array($Result);
 		return $MyRow[0];
 	}
@@ -368,7 +368,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . round($Receipt['amountfx'] / $ReceiptExRate,4) . "',
 						'" . $CustCurrRow['currcode'] . "')";
 
-		$Result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'', '', true);
 
 
 		if ($CompanyRecord['gllink_debtors']==1) {
@@ -385,10 +385,10 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['debtorsact'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) / $CustCurrRow['rate'],4) . "')";
 
-			$Result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'', '', true);
 
 			if($Receipt['discountfx']!=0){
 				$SQL="INSERT INTO gltrans ( type,
@@ -403,10 +403,10 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'". $CompanyRecord['pytdiscountact'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round($Receipt['discountfx'] / $CustCurrRow['rate'],4) . "')";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 			}
 		/*and debit bank account with the receipt */
 			$SQL="INSERT INTO gltrans ( type,
@@ -422,10 +422,10 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['trandate'] . "',
 						'" . $PeriodNo . "',
 						'" . $Receipt['bankaccount'] . "',
-						'" . $Receipt['reference'] . "',
+						'" . mb_substr($Receipt['reference'], 0, 200) . "',
 						'" . round($Receipt['amountfx'] / $CustCurrRow['rate'],4) . "')";
 
-			$Result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'', '', true);
 
 		} /* end if GL linked to debtors */
 
@@ -452,13 +452,13 @@ function ConvertToSQLDate($DateEntry) {
 							'" . -$Receipt['discountfx'] . "',
 							'" . $Receipt['paymentmethod'] . "')";
 
-		$Result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'', '', true);
 
 		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
 						lastpaid='" . $Receipt['amountfx'] ."'
 					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
 
-		$Result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'', '', true);
 
 
 		if (sizeof($Errors)==0) {
@@ -637,11 +637,11 @@ function ConvertToSQLDate($DateEntry) {
 
 
 			if ($LineRow['mbflag']=='B' OR $LineRow['mbflag']=='M') {
-				$Assembly = False;
+				$Assembly = false;
 
 				/* Need to get the current location quantity
 				will need it later for the stock movement */
-               	$SQL="SELECT locstock.quantity
+            	$SQL="SELECT locstock.quantity
 						FROM locstock
 						WHERE locstock.stockid='" . $CN_Line['stockid'] . "'
 						AND loccode= '" . $Header['fromstkloc'] . "'";
@@ -660,7 +660,7 @@ function ConvertToSQLDate($DateEntry) {
 						WHERE locstock.stockid = '" . $CN_Line['stockid'] . "'
 						AND loccode = '" . $Header['fromstkloc'] . "'";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -691,12 +691,12 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $StandardCost . "',
 								'" . ($QtyOnHandPrior - $CN_Line['qty']) . "' )";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 
 			} else if ($LineRow['mbflag']=='A'){ /* its an assembly */
 				/*Need to get the BOM for this part and make
 				stock moves for the components then update the Location stock balances */
-				$Assembly=True;
+				$Assembly=true;
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
@@ -704,8 +704,8 @@ function ConvertToSQLDate($DateEntry) {
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $CN_Line['stockid'] . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-							AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+							AND bom.effectiveto > CURRENT_DATE";
 
 				$AssResult = api_DB_query($SQL);
 
@@ -722,7 +722,7 @@ function ConvertToSQLDate($DateEntry) {
 					$Result = api_DB_query($SQL);
 					if (DB_num_rows($Result)==1){
 						$LocQtyRow = DB_fetch_row($Result);
-	                  	$QtyOnHandPrior = $LocQtyRow[0];
+	                	$QtyOnHandPrior = $LocQtyRow[0];
 					} else {
 						/*There must be some error this should never happen */
 						$QtyOnHandPrior = 0;
@@ -751,20 +751,20 @@ function ConvertToSQLDate($DateEntry) {
 												 '" . $Header['debtorno'] . "',
 												 '" . $Header['branchcode'] . "',
 												 '" . $PeriodNo . "',
-												 '" . _('Assembly') . ': ' . $CN_Line['stockid'] . ' ' . $Header['customerref'] . "',
+												 '" . __('Assembly') . ': ' . $CN_Line['stockid'] . ' ' . $Header['customerref'] . "',
 												 '" . (-$AssParts['quantity'] * $CN_Line['qty']) . "',
 												 '" . $AssParts['standard'] . "',
 												 0,
 												 '" . ($QtyOnHandPrior - ($AssParts['quantity'] * $CN_Line['qty'])) . "'	)";
 
-					$Result = DB_query($SQL,'','',true);
+					$Result = DB_query($SQL,'', '', true);
 
 					$SQL = "UPDATE locstock
 							SET quantity = locstock.quantity - " . ($AssParts['quantity'] * $CN_Line['qty']) . "
 							WHERE locstock.stockid = '" . $AssParts['component'] . "'
 							AND loccode = '" . $Header['fromlocstk'] . "'";
 
-					$Result = DB_query($SQL,'','',true);
+					$Result = DB_query($SQL,'', '', true);
 				} /* end of assembly explosion and updates */
 			} /* end of its an assembly */
 
@@ -801,7 +801,7 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $StandardCost . "',
 								'0' )";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 			}
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
@@ -819,7 +819,7 @@ function ConvertToSQLDate($DateEntry) {
 							'" . $Tax['TaxCalculationOrder'] . "',
 							'" . $Tax['TaxOnTax'] . "')";
 
-				$Result = DB_query($SQL,'','',true);
+				$Result = DB_query($SQL,'', '', true);
 			}
 
 			/*Insert Sales Analysis records */
@@ -857,7 +857,7 @@ function ConvertToSQLDate($DateEntry) {
 						salesanalysis.typeabbrev,
 						salesanalysis.salesperson";
 
-			$Result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'', '', true);
 
 			$MyRow = DB_fetch_row($Result);
 
@@ -912,7 +912,7 @@ function ConvertToSQLDate($DateEntry) {
 
 			}
 
-			$Result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'', '', true);
 
 			if ($CompanyRecord['gllink_stock']==1 AND $StandardCost !=0){
 
@@ -930,10 +930,10 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
 										'" . GetCOGSGLAccount($CN_Header['area'], $CN_Line['stockid'], $Header['tpe']) . "',
-										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
+										'" . mb_substr($Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . ($StandardCost * $CN_Line['qty']) . "')";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 
 /*now the stock entry - this is set to the cost act in the case of a fixed asset disposal */
 				$StockGLCode = GetStockGLCode($CN_Line['stockid']);
@@ -950,10 +950,10 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['trandate'] . "',
 										'" . $PeriodNo . "',
 										'" . $StockGLCode['stockact'] . "',
-										'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost . "',
+										'" . mb_substr($Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $StandardCost, 0, 200) . "',
 										'" . (-$StandardCost * $CN_Line['qty']) . "')";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 
 			} /* end of if GL and stock integrated and standard cost !=0  and not an asset */
 
@@ -977,7 +977,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " x " . $CN_Line['qty'] . " @ " . $CN_Line['price'] . "',
 						'" . (-$CN_Line['price'] * $CN_Line['qty']/$CN_Header['rate']) . "'
 					)";
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 
 				if ($CN_Line['discountpercent'] !=0){
 
@@ -996,7 +996,7 @@ function ConvertToSQLDate($DateEntry) {
 								'" . $Header['debtorno'] . " - " . $CN_Line['stockid'] . " @ " . ($CN_Line['discountpercent'] * 100) . "%',
 								'" . ($CN_Line['price'] * $CN_Line['qty'] * $CN_Line['discountpercent']/$CN_Header['rate']) . "')";
 
-					$Result = DB_query($SQL,'','',true);
+					$Result = DB_query($SQL,'', '', true);
 				} /*end of if discount !=0 */
 
 			} /*end of if sales integrated with gl */
@@ -1028,7 +1028,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $Header['debtorno'] . "-" . $Tax['TaxAuthDescription'] . "',
 											'" . -$Tax['FXAmount']/$CN_Header['rate'] . "' )";
 
-					$Result = api_DB_query($SQL,'','',true);
+					$Result = api_DB_query($SQL,'', '', true);
 				}
 			}
 
@@ -1049,7 +1049,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['debtorno'] . "',
 										'" . $TotalCreditLocalCurr . "')";
 
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 			}
 			EnsureGLEntriesBalance(11,$CreditNoteNo);
 
@@ -1087,7 +1087,7 @@ function ConvertToSQLDate($DateEntry) {
 										'" . $Header['shipvia'] . "',
 										'" . $CN_Header['salesman'] . "')";
 
-		$Result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'', '', true);
 
 		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
@@ -1100,7 +1100,7 @@ function ConvertToSQLDate($DateEntry) {
 								VALUES ('" . $DebtorTransID . "',
 										'" . $TaxAuthID . "',
 										'" . $Tax['FXAmount']/$CN_Header['rate'] . "')";
-			$Result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'', '', true);
 		}
 
 		#Now figure out if there was an invoice in the same POS transaction to allocate against?
@@ -1112,7 +1112,7 @@ function ConvertToSQLDate($DateEntry) {
 				WHERE customerref='" . $Header['customerref'] . "'
 				AND type=10
 				AND settled=0";
-		$Result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'', '', true);
 
 		$TotalCreditFX = $TotalFXNetCredit + $TotalFXTax; #Should be negative number
 		$Allocated = 0;
@@ -1131,11 +1131,11 @@ function ConvertToSQLDate($DateEntry) {
 													 amt,
 													 transid_allocfrom,
 													 transid_allocto)
-							VALUES ('" . date('Y-m-d') . "',
+							VALUES (CURRENT_DATE,
 									'" . $AllocateAmount . "',
 									'" . $DebtorTransID . "',
 									'" . $InvoiceRow['id'] . "')";
-					$InsertAllocResult = api_DB_query($SQL,'','',true);
+					$InsertAllocResult = api_DB_query($SQL,'', '', true);
 				}
 				if (abs($InvoiceRow['total'] - $InvoiceRow['alloc'] - $AllocateAmount)<0.005){
 					$Settled = 1;
@@ -1145,7 +1145,7 @@ function ConvertToSQLDate($DateEntry) {
 				$SQL = "UPDATE debtortrans SET alloc = alloc + " . $AllocateAmount . ",
 												settled = '" . $Settled . "'
 						WHERE id = '" . $InvoiceRow['id'] ."'";
-				$UpdateAllocResult = api_DB_query($SQL,'','',true);
+				$UpdateAllocResult = api_DB_query($SQL,'', '', true);
 
 				$Allocated -= $AllocateAmount;
 			}
@@ -1157,7 +1157,7 @@ function ConvertToSQLDate($DateEntry) {
 			$SQL = "UPDATE debtortrans SET alloc = alloc + " . $Allocated . ",
 												settled = '" . $Settled . "'
 					WHERE id = '" . $DebtorTransID  ."'";
-			$UpdateAllocResult = api_DB_query($SQL,'','',true);
+			$UpdateAllocResult = api_DB_query($SQL,'', '', true);
 		}
 
 		if (sizeof($Errors)==0) {
@@ -1269,7 +1269,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
 											'" . $DebtorsGLCode. "',
-											'". _('Invoice for') .' -' . $InvoiceDetails['debtorno'] .' ' . _('Total') . ' - '. $InvoiceDetails['ovamount'] . "',
+											'". __('Invoice for') .' -' . $InvoiceDetails['debtorno'] .' ' . __('Total') . ' - '. $InvoiceDetails['ovamount'] . "',
 											'" . $InvoiceDetails['ovamount'] . "',
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
@@ -1282,7 +1282,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $InvoiceDetails['trandate'] ."',
 											'" . $InvoiceDetails['prd'] . "',
 											'" . $SalesGLCode . "',
-											'" . _('Invoice for') . ' -' . $InvoiceDetails['debtorno'] . ' ' . _('Total') .' - '. $InvoiceDetails['ovamount'] ."',
+											'" . __('Invoice for') . ' -' . $InvoiceDetails['debtorno'] . ' ' . __('Total') .' - '. $InvoiceDetails['ovamount'] ."',
 											'" . (-intval($InvoiceDetails['ovamount'])) ."',
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
@@ -1377,17 +1377,17 @@ function ConvertToSQLDate($DateEntry) {
 												transid_allocfrom,
 												transid_allocto)
 									VALUE('" . $AllocateAmount . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . $LeftToAllocRow['id'] . "',
 										'" . $OSInvRow['id'] . "')";
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 				/*Now update the allocated amounts in the debtortrans for both transactions */
 				$SQL = "UPDATE debtortrans SET alloc=alloc-" . $AllocateAmount . "
 						WHERE id = '" . $LeftToAllocRow['id'] . "'";
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 				$SQL = "UPDATE debtortrans SET alloc=alloc+" . $AllocateAmount . "
 						WHERE id = '" . $OSInvRow['id'] . "'";
-				$Result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'', '', true);
 			} /*end if the exchange rates are the same so no diff on exchange */
          /*end if it is a normal allocation of receipt to invoice*/
 		} elseif ($LeftToAllocRow['lefttoalloc']>0) {
@@ -1442,17 +1442,17 @@ function ConvertToSQLDate($DateEntry) {
 													transid_allocfrom,
 													transid_allocto)
 										VALUE('" . $AllocateAmount . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'" . $OSCreditRow['id'] . "',
 											'" . $LeftToAllocRow['id'] . "')";
-					$Result = api_DB_query($SQL,'','',true);
+					$Result = api_DB_query($SQL,'', '', true);
 					/*Now update the allocated amounts in the debtortrans for both transactions */
 					$SQL = "UPDATE debtortrans SET alloc=alloc+" . $AllocateAmount . "
 							WHERE id = '" . $LeftToAllocRow['id'] . "'";
-					$Result = api_DB_query($SQL,'','',true);
+					$Result = api_DB_query($SQL,'', '', true);
 					$SQL = "UPDATE debtortrans SET alloc=alloc-" . $AllocateAmount . "
 							WHERE id = '" . $OSCreditRow['id'] . "'";
-					$Result = api_DB_query($SQL,'','',true);
+					$Result = api_DB_query($SQL,'', '', true);
 
 				}
 			} //end loop around potential positive receipts not fully allocated already
@@ -1567,7 +1567,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $CreditDetails['trandate'] . "',
 											'" . $CreditDetails['prd'] . "',
 											'" .$DebtorsGLCode . "',
-											'". _('Invoice for') .  ' - '.$CreditDetails['debtorno'].' ' . -('Total') .' - '.$CreditDetails['ovamount']. "',
+											'". __('Invoice for') .  ' - '.$CreditDetails['debtorno'].' ' . -('Total') .' - '.$CreditDetails['ovamount']. "',
 											'" . $CreditDetails['ovamount'] . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
@@ -1579,7 +1579,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $CreditDetails['trandate'] ."',
 											'" . $CreditDetails['prd'] . "',
 											'" . $SalesGLCode ."',
-											'". _('Invoice for') . ' - ' . $CreditDetails['debtorno'] .' ' . _('Total') . ' - '. $CreditDetails['ovamount'] ."',
+											'". __('Invoice for') . ' - ' . $CreditDetails['debtorno'] .' ' . __('Total') . ' - '. $CreditDetails['ovamount'] ."',
 											'" .(-intval($CreditDetails['ovamount'])) . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
@@ -1595,5 +1595,3 @@ function ConvertToSQLDate($DateEntry) {
 			return $Errors;
 		}
 	}
-
-?>

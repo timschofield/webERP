@@ -30,9 +30,9 @@ CHANGE `deladd4` `deladd4` VARCHAR( 40 ) DEFAULT NULL ;
 ALTER TABLE `suppliers` ADD `address5` VARCHAR( 20 ) NOT NULL default '' AFTER `address4` ,
 ADD `address6` VARCHAR( 15 ) NOT NULL default '' AFTER `address5` ;
 
-ALTER TABLE `companies` CHANGE `regoffice3` `regoffice4` VARCHAR( 40 ) NOT NULL ; 
+ALTER TABLE `companies` CHANGE `regoffice3` `regoffice4` VARCHAR( 40 ) NOT NULL ;
 ALTER TABLE `companies` CHANGE `regoffice2` `regoffice3` VARCHAR( 40 ) NOT NULL ;
 ALTER TABLE `companies` CHANGE `regoffice1` `regoffice2` VARCHAR( 40 ) NOT NULL ;
 ALTER TABLE `companies` CHANGE `postaladdress` `regoffice1` VARCHAR( 40 ) NOT NULL ;
-ALTER TABLE `companies` ADD `regoffice5` VARCHAR( 20 ) NOT NULL default '' AFTER `regoffice4` , 
+ALTER TABLE `companies` ADD `regoffice5` VARCHAR( 20 ) NOT NULL default '' AFTER `regoffice4` ,
 ADD `regoffice6` VARCHAR( 15 ) NOT NULL default '' AFTER `regoffice5` ;

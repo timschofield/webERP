@@ -1,7 +1,8 @@
 <?php
 
-include('includes/session.php');
-$Title = _('Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier');
 include('includes/header.php');
 
 if (isset($_POST['submit'])) {
@@ -24,7 +25,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 		$WhereCurrency = ' ';
 	}
 
-	/* look for suppliers with active PO's */ 
+	/* look for suppliers with active PO's */
 	$SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
 				suppliers.currcode,
@@ -33,22 +34,22 @@ function submit($Country, $Currency, $RootPath, $Title) {
 				(SELECT SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc)
 					FROM supptrans
 					WHERE suppliers.supplierid = supptrans.supplierno) AS balance
-			FROM suppliers 
-			INNER JOIN purchorders 
-				ON  purchorders.supplierno = suppliers.supplierid 
+			FROM suppliers
+			INNER JOIN purchorders
+				ON  purchorders.supplierno = suppliers.supplierid
 			INNER JOIN purchorderdetails
 				ON purchorders.orderno = purchorderdetails.orderno
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			WHERE purchorderdetails.completed=0
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" .
-				$WhereCountry . 	
-				$WhereCurrency . "	
+				$WhereCountry .
+				$WhereCurrency . "
 			GROUP BY suppliers.supplierid
 			ORDER BY suppliers.supplierid ASC";
 
-	$ErrMsg = _('The SQL to find the suppliers with active Purchase Orders');
-	$ResultSuppliers = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The SQL to find the suppliers with active Purchase Orders');
+	$ResultSuppliers = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($ResultSuppliers) != 0){
 
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
@@ -56,26 +57,26 @@ function submit($Country, $Currency, $RootPath, $Title) {
 			<table class="selection">';
 		$TableHeader = '<thead>
 						<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Supplier Name') . '</th>
-							<th>' . _('PO#') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Delivery Date') . '</th>
-							<th>' . _('Order Value') . '</th>
-							<th>' . _('Order Value in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-							<th>' . _('Supplier Balance') . '</th>
-							<th>' . _('Pending') . '</th>
-							<th>' . _('Pending in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+							<th>' . __('Code') . '</th>
+							<th>' . __('Supplier Name') . '</th>
+							<th>' . __('PO#') . '</th>
+							<th>' . __('Order Date') . '</th>
+							<th>' . __('Delivery Date') . '</th>
+							<th>' . __('Order Value') . '</th>
+							<th>' . __('Order Value in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+							<th>' . __('Supplier Balance') . '</th>
+							<th>' . __('Pending') . '</th>
+							<th>' . __('Pending in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 						</tr>
 						</thead>
 						<tbody>';
 
 		$TotalValueOrders = 0;
 		$TotalValuePending = 0;
-		
+
 		while ($mySupplier = DB_fetch_array($ResultSuppliers)) {
 			echo $TableHeader;
-			
+
 			echo '<tr class="striped_row">
 					<td>' . $mySupplier['supplierid'] . '</td>
 					<td>' . $mySupplier['suppname'] . '</td>
@@ -98,24 +99,24 @@ function submit($Country, $Currency, $RootPath, $Title) {
 							FROM purchorders INNER JOIN purchorderdetails
 								ON purchorders.orderno = purchorderdetails.orderno
 							WHERE purchorderdetails.completed=0
-								AND purchorders.status IN ('Authorised', 'Printed', 'Pending')		
+								AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
 								AND purchorders.supplierno = '" . $mySupplier['supplierid'] . "'
 							GROUP BY purchorders.orderno
 							ORDER BY purchorders.orderno ASC";
-					 
-			$ErrMsg = _('The bill of material could not be retrieved because');
-			$SupplierResult = DB_query ($SQLSupplier,$ErrMsg);
-			
+
+			$ErrMsg = __('The bill of material could not be retrieved because');
+			$SupplierResult = DB_query($SQLSupplier, $ErrMsg);
+
 			$TotalSupplierOwnCurrency = 0;
 			$TotalSupplierFunctionalCurrency = 0;
-			
+
 			while ($myPOs = DB_fetch_array($SupplierResult)) {
-				
+
 				$TotalSupplierOwnCurrency += $myPOs['ordervalue'];
 				$OrderValueFuntionalCurrency = $myPOs['ordervalue'] / $mySupplier['rate'];
 				$TotalSupplierFunctionalCurrency += $OrderValueFuntionalCurrency;
 				$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myPOs['orderno'] . '">' . $myPOs['orderno'] . '</a>';
-				
+
 				echo '<tr class="striped_row">
 						<td></td>
 						<td></td>
@@ -138,7 +139,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 					<td></td>
 					<td class="number"></td>
 					<td></td>
-					<td>' . _('Total Supplier') . '</td>
+					<td>' . __('Total Supplier') . '</td>
 					<td class="number">' . locale_number_format($TotalSupplierOwnCurrency,$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
 					<td class="number">' . locale_number_format($TotalSupplierFunctionalCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($mySupplier['balance'],$mySupplier['decimalplaces']) . ' ' . $mySupplier['currcode'] . '</td>
@@ -154,11 +155,11 @@ function submit($Country, $Currency, $RootPath, $Title) {
 					<th></th>
 					<th></th>
 					<th></th>
-					<th>' . _('TOTAL') . '</th>
-					<th>' . _('Order Value in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
-					<th>' . _('Balance') . '</th>
+					<th>' . __('TOTAL') . '</th>
+					<th>' . __('Order Value in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th>' . __('Balance') . '</th>
 					<th></th>
-					<th>' . _('Pending in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+					<th>' . __('Pending in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 				</tr>';
 		echo '<tr>
 				<td></td>
@@ -166,7 +167,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 				<td class="number"></td>
 				<td></td>
 				<td></td>
-				<td class="number">' . _('Total All Suppliers') . '</td>
+				<td class="number">' . __('Total All Suppliers') . '</td>
 				<td class="number">' . locale_number_format($TotalValueOrders,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($TotalValueOrders-$TotalValuePending,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
 				<td class="number"></td>
@@ -181,7 +182,7 @@ function submit($Country, $Currency, $RootPath, $Title) {
 	}
 }
 
-function display($Title) 
+function display($Title)
 {
 	// Display form fields. This function is called the first time the page is called.
 
@@ -197,13 +198,13 @@ function display($Title)
           <legend>' . "Financial Planning Options" . '</legend>';
 
 	echo '<field>
-			<label for="Country">' .  _('For Suppliers in Country')  . ':</label>
+			<label for="Country">' .  __('For Suppliers in Country')  . ':</label>
 			<select name="Country">';
 	$SQL = "SELECT DISTINCT(address6) AS country
 			FROM suppliers
 			ORDER BY address6";
-	$CountryResult=DB_query($SQL);
-	echo '<option value="All">' . _('All Countries') . '</option>';
+	$CountryResult = DB_query($SQL);
+	echo '<option value="All">' . __('All Countries') . '</option>';
 	while ($MyRow=DB_fetch_array($CountryResult)){
 		echo '<option value="' . $MyRow['country'] . '">' . $MyRow['country'] . '</option>';
 	}
@@ -211,25 +212,24 @@ function display($Title)
 		</field>';
 
 	echo '<field>
-			<label for="Currency">' .  _('Using Currency')  . ':</label>
+			<label for="Currency">' .  __('Using Currency')  . ':</label>
 			<select name="Currency">';
 	$SQL = "SELECT currabrev,
 				currency
 			FROM currencies
 			ORDER BY currency";
-	$CurrencyResult=DB_query($SQL);
-	echo '<option value="All">' . _('All Currencies') . '</option>';
+	$CurrencyResult = DB_query($SQL);
+	echo '<option value="All">' . __('All Currencies') . '</option>';
 	while ($MyRow=DB_fetch_array($CurrencyResult)){
 		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 	}
 	echo '</select>
 		</field>
 		</fieldset>';
-	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Show POs financial status') . '" />
+	echo '<div class="centre"><input type="submit" name="submit" value="' . __('Show POs financial status') . '" />
 		</div>
 		</form>';
 
 } // End of function display()
 
 include('includes/footer.php');
-?>

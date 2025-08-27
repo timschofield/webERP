@@ -1,14 +1,13 @@
 <?php
 
-require_once 'vendor/autoload.php';
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-include('includes/SQL_CommonFunctions.php');
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (isset($_POST['submit'])) {
 
@@ -179,16 +178,16 @@ if (isset($_POST['submit'])) {
 					$ReceiptExt = $ReceiptRow['extension'];
 					$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 					$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-					$ReceiptText = _('Open Attachment');
+					$ReceiptText = __('Open Attachment');
 					$ReceiptURL = htmlspecialchars($_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . '/' . $ReceiptPath, ENT_QUOTES, 'UTF-8');
 				} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
 				$ReceiptText = '';
 				} else {
-				$ReceiptText = _('No attachment');
+				$ReceiptText = __('No attachment');
 				}
 
 				if ($MyRow['authorized'] == '1000-01-01') {
-					$AuthorisedDate = _('Unauthorised');
+					$AuthorisedDate = __('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
@@ -225,14 +224,12 @@ if (isset($_POST['submit'])) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$SpreadSheet->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientâ€™s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'ExpensesList-' . $TabToShow. '.' . $_POST['Format'];
 			header('Content-Disposition: attachment;filename="' . $File . '"');
+			/// @todo review caching headers
 			header('Cache-Control: max-age=0');
-			// If you're serving to IE 9, then the following may be needed
-			header('Cache-Control: max-age=1');
-
 			// If you're serving to IE over SSL, then the following may be needed
 			header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 			header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
@@ -249,14 +246,14 @@ if (isset($_POST['submit'])) {
 			}
 
 		} else {
-			$Title = _('Excel file for Petty Cash Tab Expenses List');
+			$Title = __('Excel file for Petty Cash Tab Expenses List');
 			include('includes/header.php');
 			prnMsg('There is no data to analyse');
 			include('includes/footer.php');
 		}
 	}
 } else {
-	$Title = _('Excel file for Petty Cash Tab Expenses List');
+	$Title = __('Excel file for Petty Cash Tab Expenses List');
 	$ViewTopic = 'PettyCash';// Filename's id in ManualContents.php's TOC.
 	$BookMark = 'top';// Anchor's id in the manual's html document.
 	include('includes/header.php');
@@ -265,7 +262,7 @@ if (isset($_POST['submit'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Tab Expenses List') . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . __('Excel file for Petty Cash Tab Expenses List') . '" alt="" />' . ' ' . __('Excel file for Petty Cash Tab Expenses List') . '
 		</p>';
 
 	# Sets default date range for current month
@@ -277,10 +274,10 @@ if (isset($_POST['submit'])) {
 	}
 
 	echo '<fieldset>
-			<legend>', _('Select Criteria'), '</legend>';
+			<legend>', __('Select Criteria'), '</legend>';
 
 	echo '<field>
-			<label for="Tabs">' . _('For Petty Cash Tab') . ':</label>
+			<label for="Tabs">' . __('For Petty Cash Tab') . ':</label>
 			<select name="Tabs">';
 
 	$SQL = "SELECT tabcode
@@ -295,23 +292,23 @@ if (isset($_POST['submit'])) {
 		</field>';
 
 	echo '<field>
-			<label>' . _('Date Range') . ':</label>
+			<label>' . __('Date Range') . ':</label>
 			<input type="date" name="FromDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
-				' . _('To') . ':<input type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
+				' . __('To') . ':<input type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 
 	echo '<field>
-			<label for="Format">', _('Output Format'), '</label>
+			<label for="Format">', __('Output Format'), '</label>
 			<select name="Format">
-				<option value="xlsx">', _('Excel Format (.xlsx)'), '</option>
-				<option value="ods" selected="selected">', _('Open Document Format (.ods)'), '</option>
+				<option value="xlsx">', __('Excel Format (.xlsx)'), '</option>
+				<option value="ods" selected="selected">', __('Open Document Format (.ods)'), '</option>
 			</select>
 		</field>';
 
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Create Petty Cash Tab Expenses List Excel File') . '" />
+			<input type="submit" name="submit" value="' . __('Create Petty Cash Tab Expenses List Excel File') . '" />
 		</div>';
 
 	echo '</form>';
@@ -332,5 +329,3 @@ function beginning_of_month($Date){
 	$FirstOfMonth = $Y . '-' . $M . '-01';
 	return $FirstOfMonth;
 }
-
-?>

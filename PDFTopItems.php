@@ -1,14 +1,15 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include ('includes/session.php');
-include ('includes/StockFunctions.php');
-include ('includes/PDFStarter.php');
+include('includes/StockFunctions.php');
+
+include('includes/PDFStarter.php');
 $FontSize = 10;
-$pdf->addInfo('Title', _('Top Items Search Result'));
+$pdf->addInfo('Title', __('Top Items Search Result'));
 $PageNumber = 1;
 $LineHeight = 12;
-include ('includes/PDFTopItemsHeader.php');
+include('includes/PDFTopItemsHeader.php');
 $FontSize = 10;
 $FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_GET['NumberOfDays']));
 
@@ -106,7 +107,7 @@ if (DB_num_rows($Result)>0){
 		if ($YPos - $LineHeight <= $Bottom_Margin) {
 			/* We reached the end of the page so finish off the page and start a newy */
 			$PageNumber++;
-			include ('includes/PDFTopItemsHeader.php');
+			include('includes/PDFTopItemsHeader.php');
 			$FontSize = 10;
 		} //end if need a new page headed up
 		/*increment a line down for the next line item */
@@ -117,4 +118,3 @@ if (DB_num_rows($Result)>0){
 	$pdf->__destruct();
 }
 /*end of else not PrintPDF */
-?>

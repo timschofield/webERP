@@ -1,12 +1,14 @@
 <?php
-$PathPrefix = '../';
 
 if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
-	require_once ($PathPrefix . 'includes/session.php');
+	// allow dashboard applet to run standalone
+	$DirectoryLevelsDeep = 1;
+	$PathPrefix = __DIR__ . '/../';
+	require_once($PathPrefix . 'includes/session.php');
 	$DashBoardURL = $RootPath . '/index.php';
-	}
+}
 
-	$ScriptTitle = _('Order Summary');
+	$ScriptTitle = __('Order Summary');
 
 	$SQL = "SELECT DISTINCT id FROM dashboard_scripts WHERE scripts='" . basename(basename(__FILE__)) . "'";
 	$DashboardResult = DB_query($SQL);
@@ -17,7 +19,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<tr>
 				<th colspan="2">
 					<div class="CanvasTitle">', $ScriptTitle, '
-						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', _('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
+						<a class="CloseButton" href="', $DashBoardURL, '?Remove=', urlencode($DashboardRow['id']), '" target="_parent" title="', __('Remove this applet from dashboard'), '" id="CloseButton" href="#">X</a>
 					</div>
 				</th>
 			</tr>';
@@ -56,7 +58,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		$DecimalPlaces = $Row['currdecimalplaces'];
 	}
 	echo '<tr class="striped_row">
-		<th>', _('Total Sales Orders'), '</th>
+		<th>', __('Total Sales Orders'), '</th>
 		<td class="number">', locale_number_format($TotalSalesOrders, $DecimalPlaces), '</td>
 	</tr>';
 
@@ -95,7 +97,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		$TotalPurchaseOrders+= $Row['ordervalue'];
 	}
 	echo '<tr class="striped_row">
-		<th>', _('Total Purchase orders'), '</th>
+		<th>', __('Total Purchase orders'), '</th>
 		<td class="number">', locale_number_format($TotalPurchaseOrders, $DecimalPlaces), '</td>
 	</tr>';
 
@@ -138,9 +140,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	}
 
 	echo '<tr class="striped_row">
-		<th>', _('Total Outstanding to receive'), '</th>
+		<th>', __('Total Outstanding to receive'), '</th>
 		<td class="number">', locale_number_format($TotalOutstanding, $DecimalPlaces), '</td>
 	</tr>
 </table>';
-
-?>

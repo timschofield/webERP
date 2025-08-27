@@ -3,7 +3,7 @@
 */
 
 
-Class Offer {
+class Offer {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $TenderID;
@@ -73,7 +73,7 @@ Class Offer {
 	function Save($Update = '') {
 		if ($Update == '') {
 			foreach ($this->LineItems as $LineItems) {
-				if ($LineItems->Deleted == False) {
+				if ($LineItems->Deleted == false) {
 					$SQL = "INSERT INTO offers (	supplierid,
 												tenderid,
 												stockid,
@@ -90,18 +90,17 @@ Class Offer {
 								'" . $LineItems->Price . "',
 								'" . FormatDateForSQL($LineItems->ExpiryDate) . "',
 								'" . $this->CurrCode . "')";
-					$ErrMsg = _('The suppliers offer could not be inserted into the database because');
-					$DbgMsg = _('The SQL statement used to insert the suppliers offer record and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$ErrMsg = __('The suppliers offer could not be inserted into the database because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
-						prnMsg(_('The offer for') . ' ' . $LineItems->StockID . ' ' . _('has been inserted into the database'), 'success');
-						$this->OfferMailText .= $LineItems->Quantity . ' ' . $LineItems->Units . ' ' . _('of') . ' ' . 
-							$LineItems->StockID . ' ' . _('at a price of') . ' ' . $this->CurrCode . 
+						prnMsg(__('The offer for') . ' ' . $LineItems->StockID . ' ' . __('has been inserted into the database'), 'success');
+						$this->OfferMailText .= $LineItems->Quantity . ' ' . $LineItems->Units . ' ' . __('of') . ' ' .
+							$LineItems->StockID . ' ' . __('at a price of') . ' ' . $this->CurrCode .
 							number_format($LineItems->Price, 2) . "\n";
 					} else {
-						prnMsg(_('The offer for') . ' ' . $LineItems->StockID . ' ' . _('could not be inserted into the database'), 'error');
+						prnMsg(__('The offer for') . ' ' . $LineItems->StockID . ' ' . __('could not be inserted into the database'), 'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				}
 			}
@@ -113,28 +112,26 @@ Class Offer {
 							price='" . $LineItem->Price . "',
 							expirydate='" . FormatDateForSQL($LineItem->ExpiryDate) . "'
 						WHERE offerid='" . $LineItem->LineNo . "'";
-					$ErrMsg = _('The suppliers offer could not be updated on the database because');
-					$DbgMsg = _('The SQL statement used to update the suppliers offer record and failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$ErrMsg = __('The suppliers offer could not be updated on the database because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
-						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('has been updated in the database'), 'success');
-						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . _('of') . ' ' . 
-							$LineItem->StockID . ' ' . _('at a price of') . ' ' . $this->CurrCode . $LineItem->Price . "\n";
+						prnMsg(__('The offer for') . ' ' . $LineItem->StockID . ' ' . __('has been updated in the database'), 'success');
+						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . __('of') . ' ' .
+							$LineItem->StockID . ' ' . __('at a price of') . ' ' . $this->CurrCode . $LineItem->Price . "\n";
 					} else {
-						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('could not be updated in the database'), 'error');
+						prnMsg(__('The offer for') . ' ' . $LineItem->StockID . ' ' . __('could not be updated in the database'), 'error');
 						include('includes/footer.php');
-						exit;
+						exit();
 					}
 				} else { // the LineItem is Deleted flag is true so delete it
 					$SQL = "DELETE from offers WHERE offerid='" . $LineItem->LineNo . "'";
-					$ErrMsg = _('The supplier offer could not be deleted on the database because');
-					$DbgMsg = _('The SQL statement used to delete the suppliers offer record are failed was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					$ErrMsg = __('The supplier offer could not be deleted on the database because');
+					$Result = DB_query($SQL, $ErrMsg, '', true);
 					if (DB_error_no() == 0) {
-						prnMsg(_('The offer for') . ' ' . $LineItem->StockID . ' ' . _('has been deleted in the database'), 'info');
-						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . _('of') . ' ' . 
-							$LineItem->StockID . ' ' . _('at a price of') . ' ' . $this->CurrCode . 
-							$LineItem->Price . ' ' . _('has been deleted') . "\n";
+						prnMsg(__('The offer for') . ' ' . $LineItem->StockID . ' ' . __('has been deleted in the database'), 'info');
+						$this->OfferMailText .= $LineItem->Quantity . ' ' . $LineItem->Units . ' ' . __('of') . ' ' .
+							$LineItem->StockID . ' ' . __('at a price of') . ' ' . $this->CurrCode .
+							$LineItem->Price . ' ' . __('has been deleted') . "\n";
 					}
 				}
 			}
@@ -142,17 +139,17 @@ Class Offer {
 	}
 
 	function EmailOffer() {
-		$Subject = (_('Offer received from') . ' ' . $this->GetSupplierName());
-		$Message = (_('This email is automatically generated by webERP') . "\n" .
-			_('You have received the following offer from') . ' ' . $this->GetSupplierName() . "\n\n" . $this->OfferMailText);
-		
-		$Result = SendEmailFromWebERP($this->GetSupplierEmail(), 
+		$Subject = (__('Offer received from') . ' ' . $this->GetSupplierName());
+		$Message = (__('This email is automatically generated by webERP') . "\n" .
+			__('You have received the following offer from') . ' ' . $this->GetSupplierName() . "\n\n" . $this->OfferMailText);
+
+		$Result = SendEmailFromWebERP($this->GetSupplierEmail(),
 									array($this->EmailAddress, $_SESSION['PurchasingManagerEmail']),
 									$Subject,
 									$Message,
 									'',
 									false);
-		
+
 		return $Result;
 	}
 
@@ -166,8 +163,8 @@ Class Offer {
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_from_offer(&$LineNo){
-		$this->LineItems[$LineNo]->Deleted = True;
+	function remove_from_offer($LineNo){
+		$this->LineItems[$LineNo]->Deleted = true;
 	}
 
 
@@ -180,7 +177,7 @@ Class Offer {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
@@ -210,7 +207,7 @@ Class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 	function LineDetails($LineNo,
 							$StockItem,
@@ -230,5 +227,3 @@ Class LineDetails {
 							$ExpiryDate);
 	}
 }
-
-?>

@@ -1,10 +1,12 @@
 <?php
+
 /* This script is to view the items purchased by a customer. */
 
-include('includes/session.php');
-$Title = _('Customer Purchases');// Screen identificator.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Customer Purchases');// Screen identificator.
 $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
-/* This help needs to be writing...
+/* This help needs to be written...
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.php');
 
@@ -13,9 +15,9 @@ if(isset($_GET['DebtorNo'])) {
 } elseif(isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
 } else {
-	prnMsg(_('This script must be called with a customer code.'), 'info');
+	prnMsg(__('This script must be called with a customer code.'), 'info');
 	include('includes/footer.php');
-	exit;
+	exit();
 }
 
 $SQL = "SELECT debtorsmaster.name,
@@ -25,14 +27,14 @@ $SQL = "SELECT debtorsmaster.name,
 			ON debtorsmaster.debtorno=custbranch.debtorno
 		WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
-$ErrMsg = _('The customer details could not be retrieved by the SQL because');
+$ErrMsg = __('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/customer.png" title="' .
-	_('Customer') . '" /> ' .// Icon title.
-	_('Items Purchased by Customer') . '<br />' . $DebtorNo . " - " . $CustomerRecord['name'] . '</p>';// Page title.
+	__('Customer') . '" /> ' .// Icon title.
+	__('Items Purchased by Customer') . '<br />' . $DebtorNo . " - " . $CustomerRecord['name'] . '</p>';// Page title.
 
 $SQL = "SELECT stockmoves.stockid,
 			stockmaster.description,
@@ -66,31 +68,31 @@ if ($_SESSION['SalesmanLogin'] != '') {
 
 $SQL .= $SQLWhere . " ORDER BY trandate DESC";
 
-$ErrMsg = _('The stock movement details could not be retrieved by the SQL because');
+$ErrMsg = __('The stock movement details could not be retrieved by the SQL because');
 $StockMovesResult = DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($StockMovesResult) == 0) {
 	echo '<br />';
-	prnMsg(_('There are no items for this customer'), 'notice');
+	prnMsg(__('There are no items for this customer'), 'notice');
 	echo '<br />';
 } //DB_num_rows($StockMovesResult) == 0
 else {
 	echo '<table class="selection">
 			<tr>
-				<th>' . _('Transaction Date') . '</th>
-				<th>' . _('Stock ID') . '</th>
-				<th>' . _('Description') . '</th>
-				<th>' . _('Type') . '</th>
-				<th>' . _('Transaction No.') . '</th>
-				<th>' . _('From Location') . '</th>
-				<th>' . _('Branch Code') . '</th>
-				<th>' . _('Quantity') . '</th>
-				<th>' . _('Unit') . '</th>
-				<th>' . _('Price') . '</th>
-				<th>' . _('Discount') . '</th>
-				<th>' . _('Total') . '</th>
-				<th>' . _('Reference') . '</th>
-				<th>' . _('Narrative') . '</th>
+				<th>' . __('Transaction Date') . '</th>
+				<th>' . __('Stock ID') . '</th>
+				<th>' . __('Description') . '</th>
+				<th>' . __('Type') . '</th>
+				<th>' . __('Transaction No.') . '</th>
+				<th>' . __('From Location') . '</th>
+				<th>' . __('Branch Code') . '</th>
+				<th>' . __('Quantity') . '</th>
+				<th>' . __('Unit') . '</th>
+				<th>' . __('Price') . '</th>
+				<th>' . __('Discount') . '</th>
+				<th>' . __('Total') . '</th>
+				<th>' . __('Reference') . '</th>
+				<th>' . __('Narrative') . '</th>
 			</tr>';
 
 	while ($StockMovesRow = DB_fetch_array($StockMovesResult)) {
@@ -98,7 +100,7 @@ else {
 				<td>' . ConvertSQLDate($StockMovesRow['trandate']) . '</td>
 				<td>' . $StockMovesRow['stockid'] . '</td>
 				<td>' . $StockMovesRow['description'] . '</td>
-				<td>' . _($StockMovesRow['typename']) . '</td>
+				<td>' . __($StockMovesRow['typename']) . '</td>
 				<td class="number">' . $StockMovesRow['transno'] . '</td>
 				<td>' . $StockMovesRow['locationname'] . '</td>
 				<td>' . $StockMovesRow['branchcode'] . '</td>
@@ -116,7 +118,6 @@ else {
 	echo '</table>';
 }
 
-echo '<br /><div class="centre"><a href="SelectCustomer.php">' . _('Return to customer selection screen') . '</a></div><br />';
+echo '<br /><div class="centre"><a href="' . $RootPath . '/SelectCustomer.php">' . __('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.php');
-?>

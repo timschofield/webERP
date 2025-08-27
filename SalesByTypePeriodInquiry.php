@@ -1,17 +1,17 @@
 <?php
 
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
-$Title = _('Sales Report');
+$Title = __('Sales Report');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Report') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Sales Report') . '" alt="" />' . ' ' . __('Sales Report') . '</p>';
+echo '<div class="page_help_text">' . __('Select the parameters for the report') . '</div><br />';
 
 if (!isset($_POST['DisplayData'])){
 	/* then assume to display daily - maybe wrong to do this but hey better than reporting an error?*/
@@ -27,10 +27,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 echo '<fieldset>';
 
-echo '<legend>' . _('Date Selection') . '</legend>';
+echo '<legend>' . __('Date Selection') . '</legend>';
 
 echo '<field>
-		<label for="DateRange">' . _('Custom Range') . ':</label>
+		<label for="DateRange">' . __('Custom Range') . ':</label>
 		<input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked="checked"';
@@ -39,7 +39,7 @@ echo	' onchange="ReloadForm(Form1.ShowSales)"/>
 		</field>';
 
 echo '<field>
-		<label for="DateRange">' . _('This Week') . ':</label>
+		<label for="DateRange">' . __('This Week') . ':</label>
 		<input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked="checked"';
@@ -48,7 +48,7 @@ echo	' onchange="ReloadForm(Form1.ShowSales)" />
 		</field>';
 
 echo '<field>
-		<label for="DateRange">' . _('This Month') . ':</label>
+		<label for="DateRange">' . __('This Month') . ':</label>
 		<input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked="checked"';
@@ -57,7 +57,7 @@ echo ' onchange="ReloadForm(Form1.ShowSales)" />
 		</field>';
 
 echo '<field>
-		<label for="ThisQuarter">' . _('This Quarter') . ':</label>
+		<label for="ThisQuarter">' . __('This Quarter') . ':</label>
 		<input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked="checked"';
@@ -71,21 +71,21 @@ if ($_POST['DateRange']=='Custom'){
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<field>
-			<label for="FromDate">' . _('Date From') . ':</label>
+			<label for="FromDate">' . __('Date From') . ':</label>
 			<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>';
 	echo '<field>
-			<label for="ToDate">' . _('Date To') . ':</label>
+			<label for="ToDate">' . __('Date To') . ':</label>
 			<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 }
 echo '</fieldset>';
 
 echo '<fieldset>
-		<legend>' . _('Display Data') . '</legend>';
+		<legend>' . __('Display Data') . '</legend>';
 
 echo '<field>
-		<label for="DisplayData">' . _('Daily') . ':</label>
+		<label for="DisplayData">' . __('Daily') . ':</label>
 		<input type="radio" name="DisplayData" value="Daily" ';
 if ($_POST['DisplayData']=='Daily'){
 	echo 'checked="checked"';
@@ -94,7 +94,7 @@ echo ' onchange="ReloadForm(Form1.ShowSales)" />
 		</field>';
 
 echo '<field>
-		<label for="DisplayData">' . _('Weekly') . ':</label>
+		<label for="DisplayData">' . __('Weekly') . ':</label>
 		<input type="radio" name="DisplayData" value="Weekly" ';
 if ($_POST['DisplayData']=='Weekly'){
 	echo 'checked="checked"';
@@ -103,7 +103,7 @@ echo ' onchange="ReloadForm(Form1.ShowSales)" />
 	</field>';
 
 echo '<field>
-		<label for="DisplayData">' . _('Monthly') . ':</label>
+		<label for="DisplayData">' . __('Monthly') . ':</label>
 		<input type="radio" name="DisplayData" value="Monthly" ';
 if ($_POST['DisplayData']=='Monthly'){
 	echo 'checked="checked"';
@@ -112,7 +112,7 @@ echo ' onchange="ReloadForm(Form1.ShowSales)" />
 	</field>';
 
 echo '<field>
-		<label for="DisplayData">' . _('Quarterly') . ':</label>
+		<label for="DisplayData">' . __('Quarterly') . ':</label>
 		<input type="radio" name="DisplayData" value="Quarterly" ';
 if ($_POST['DisplayData']=='Quarterly'){
 	echo 'checked="checked"';
@@ -122,7 +122,7 @@ echo	' onchange="ReloadForm(Form1.ShowSales)" />
 echo '</fieldset>';
 
 echo '<div class="centre">
-		<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
+		<input tabindex="4" type="submit" name="ShowSales" value="' . __('Show Sales') . '" />
 	</div>
 </form>';
 
@@ -136,15 +136,15 @@ if (isset($_POST['ShowSales'])){
 	if ($_POST['DateRange']=='Custom'){
 		if (!Is_Date($_POST['FromDate'])){
 			$InputError = 1;
-			prnMsg(_('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			prnMsg(__('The date entered for the from date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
 		if (!Is_Date($_POST['ToDate'])){
 			$InputError = 1;
-			prnMsg(_('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
+			prnMsg(__('The date entered for the to date is not in the appropriate format. Dates must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 		}
 		if (Date1GreaterThanDate2($_POST['FromDate'],$_POST['ToDate'])){
 			$InputError = 1;
-			prnMsg(_('The from date is expected to be a date prior to the to date. Please review the selected date range'),'error');
+			prnMsg(__('The from date is expected to be a date prior to the to date. Please review the selected date range'),'error');
 		}
 	}
 	switch ($_POST['DateRange']) {
@@ -345,21 +345,21 @@ if (isset($_POST['ShowSales'])){
 			break;
 		}
 
-	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($SQL,$ErrMsg);
+	$ErrMsg = __('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
+	$SalesResult = DB_query($SQL, $ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">';
 
 	echo'<tr>
-		<th>' . _('Period') . '</th>
-		<th>' . _('Sales') . '<br />' . _('Type') . '</th>
-		<th>' . _('No Orders') . '</th>
-		<th>' . _('Total Sales') . '</th>
-		<th>' . _('Refunds') . '</th>
-		<th>' . _('Net Sales') . '</th>
-		<th>' . _('Cost of Sales') . '</th>
-		<th>' . _('Gross Profit') . '</th>
+		<th>' . __('Period') . '</th>
+		<th>' . __('Sales') . '<br />' . __('Type') . '</th>
+		<th>' . __('No Orders') . '</th>
+		<th>' . __('Total Sales') . '</th>
+		<th>' . __('Refunds') . '</th>
+		<th>' . __('Net Sales') . '</th>
+		<th>' . __('Cost of Sales') . '</th>
+		<th>' . __('Gross Profit') . '</th>
 		</tr>';
 
 	$CumulativeTotalSales = 0;
@@ -387,7 +387,7 @@ if (isset($_POST['ShowSales'])){
 				if ($LastPeriodHeading != ConvertSQLDate($SalesRow['trandate'])) {
 					$PeriodHeadingDone=false;
 					if ($LastPeriodHeading != 'First Run Through'){ //print the footer for the period
-						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
+						echo '<td colspan="2" class="number">' . __('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
 							<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -416,10 +416,10 @@ if (isset($_POST['ShowSales'])){
 				}
 				break;
 			case 'Weekly':
-				if ($LastPeriodHeading != _('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear']) {
+				if ($LastPeriodHeading != __('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone=false;
 					if ($LastPeriodHeading != 'First Run Through'){
-						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
+						echo '<td colspan="2" class="number">' . __('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
 							<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -440,8 +440,8 @@ if (isset($_POST['ShowSales'])){
 					}
 				}
 				if (! $PeriodHeadingDone){
-					echo '<td>' . _('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear'] . '</td>';
-					$LastPeriodHeading = _('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear'];
+					echo '<td>' . __('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear'] . '</td>';
+					$LastPeriodHeading = __('wk'). '-' . $SalesRow['week_no'] . ' ' . $SalesRow['transyear'];
 					$PeriodHeadingDone = true;
 				} else {
 					echo '<td></td>';
@@ -451,7 +451,7 @@ if (isset($_POST['ShowSales'])){
 				if ($LastPeriodHeading != $SalesRow['month_name'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone=false;
 					if ($LastPeriodHeading != 'First Run Through'){
-						echo '<td colspan="2" class="number">' . _('Total') . '-' . $LastPeriodHeading . '</td>
+						echo '<td colspan="2" class="number">' . __('Total') . '-' . $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
 							<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -480,10 +480,10 @@ if (isset($_POST['ShowSales'])){
 				}
 				break;
 			case 'Quarterly':
-				if ($LastPeriodHeading != _('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear']) {
+				if ($LastPeriodHeading != __('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear']) {
 					$PeriodHeadingDone=false;
 					if ($LastPeriodHeading != 'First Run Through'){
-						echo '<td colspan="2" class="number">' . _('Total') . '-'. $LastPeriodHeading . '</td>
+						echo '<td colspan="2" class="number">' . __('Total') . '-'. $LastPeriodHeading . '</td>
 							<td class="number">' . $PrdTotalOrders . '</td>
 							<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 							<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -504,8 +504,8 @@ if (isset($_POST['ShowSales'])){
 					}
 				}
 				if (! $PeriodHeadingDone){
-					echo '<td>' . _('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear'] . '</td>';
-					$LastPeriodHeading = _('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear'];
+					echo '<td>' . __('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear'] . '</td>';
+					$LastPeriodHeading = __('Qtr'). '-' . $SalesRow['quarter_no'] . ' ' . $SalesRow['transyear'];
 					$PeriodHeadingDone = true;
 				} else {
 					echo '<td></td>';
@@ -541,7 +541,7 @@ if (isset($_POST['ShowSales'])){
 	} // end loop
 
 	echo '<tr class="striped_row">
-		<td colspan="2" class="number">' . _('Total') . ' ' . $LastPeriodHeading . '</td>
+		<td colspan="2" class="number">' . __('Total') . ' ' . $LastPeriodHeading . '</td>
 		<td class="number">' . $PrdTotalOrders . '</td>
 		<td class="number">' . locale_number_format($PrdTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($PrdTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -553,7 +553,7 @@ if (isset($_POST['ShowSales'])){
 	echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
 	echo '<tr class="striped_row">';
 
-	echo '<td colspan="2" class="number">' . _('GRAND Total') . '</td>
+	echo '<td colspan="2" class="number">' . __('GRAND Total') . '</td>
 		<td class="number">' . $CumulativeTotalOrders . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -566,4 +566,3 @@ if (isset($_POST['ShowSales'])){
 
 } //end of if user hit show sales
 include('includes/footer.php');
-?>

@@ -1,12 +1,16 @@
 <?php
-include ('includes/session.php');
-if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);};
-$Title = _('Issue Materials To Work Order');
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Issue Materials To Work Order');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-include ('includes/header.php');
-include ('includes/SQL_CommonFunctions.php');
-include ('includes/ImageFunctions.php');
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+include('includes/ImageFunctions.php');
+
+if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);}
 
 if (isset($_GET['WO'])) {
 	$_POST['WO'] = $_GET['WO'];
@@ -15,11 +19,11 @@ if (isset($_GET['StockID'])) {
 	$_POST['StockID'] = $_GET['StockID'];
 }
 
-echo '<a href="' . $RootPath . '/SelectWorkOrder.php" class="toplink">' . _('Back to Work Orders') . '</a>';
-echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $_POST['WO'] . '" class="toplink">' . _('Back to Costing') . '</a>
+echo '<a href="' . $RootPath . '/SelectWorkOrder.php" class="toplink">' . __('Back to Work Orders') . '</a>';
+echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $_POST['WO'] . '" class="toplink">' . __('Back to Costing') . '</a>
 	<br />';
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<div>';
@@ -27,10 +31,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['WO']) or !isset($_POST['StockID'])) {
 	/* This page can only be called with a work order number for issuing stock to*/
-	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a work order to issue materials to') . '</a></div>';
-	prnMsg(_('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'), 'info');
-	include ('includes/footer.php');
-	exit;
+	echo '<div class="centre"><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select a work order to issue materials to') . '</a></div>';
+	prnMsg(__('This page can only be opened if a work order has been selected. Please select a work order to issue materials to first'), 'info');
+	include('includes/footer.php');
+	exit();
 } else {
 	echo '<input type="hidden" name="WO" value="' . $_POST['WO'] . '" />';
 	echo '<input type="hidden" name="StockID" value="' . $_POST['StockID'] . '" />';
@@ -44,7 +48,7 @@ if (isset($_GET['FromLocation'])) {
 
 if (isset($_POST['Process'])) { //user hit the process the work order issues entered.
 	$InputError = false; //ie assume no problems for a start - ever the optomist
-	$ErrMsg = _('Could not retrieve the details of the selected work order item');
+	$ErrMsg = __('Could not retrieve the details of the selected work order item');
 	$WOResult = DB_query("SELECT workorders.loccode,
 								 locations.locationname,
 								 workorders.closed,
@@ -62,14 +66,14 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 							AND woitems.wo='" . $_POST['WO'] . "'", $ErrMsg);
 
 	if (DB_num_rows($WOResult) == 0) {
-		prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
-		include ('includes/footer.php');
-		exit;
+		prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
+		include('includes/footer.php');
+		exit();
 	}
 	$WORow = DB_fetch_array($WOResult);
 
 	if ($WORow['closed'] == 1) {
-		prnMsg(_('The work order is closed - no more materials or components can be issued to it.'), 'error');
+		prnMsg(__('The work order is closed - no more materials or components can be issued to it.'), 'error');
 		$InputError = true;
 	}
 	//Need to get the current standard cost for the item being issued
@@ -98,9 +102,9 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 	} else { //it must be a batch/lot controlled item
 		if (!isset($_POST['LotCounter']) or !is_numeric($_POST['LotCounter'])) {
 			$InputError = true;
-			prnMsg(_('The line counter is not set up or not numeric, please ask administrator for help'), 'error');
-			include ('include/footer.php');
-			exit;
+			prnMsg(__('The line counter is not set up or not numeric, please ask administrator for help'), 'error');
+			include('include/footer.php');
+			exit();
 		}
 		for ($i = 0;$i < $_POST['LotCounter'];$i++) {
 			if (mb_strlen($_POST['Qty' . $i]) > 0 and $_POST['Qty' . $i] != 0) {
@@ -117,12 +121,12 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						//$CheckLot = DB_fetch_array($Result);
 						if (DB_num_rows($Result) == 0) {
 							$InputError = true;
-							prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this batch does not exist'), 'error');
+							prnMsg(__('This issue cannot be processed because the system parameter is set to prohibit negative stock and this batch does not exist'), 'error');
 						} else {
 							$CheckLotRow = DB_fetch_row($Result);
 							if (($_POST['Qty' . $i] - $CheckLotRow[0]) > $VarianceAllowed) {
 								$InputError = true;
-								prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in this batch going into negative. Please correct the stock first before attempting another issue'), 'error');
+								prnMsg(__('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in this batch going into negative. Please correct the stock first before attempting another issue'), 'error');
 							}
 						}
 					}
@@ -137,7 +141,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 
 	if ($IssueItemRow['cost'] == 0) {
-		prnMsg(_('The item being issued has a zero cost. The issue will still be processed '), 'warn');
+		prnMsg(__('The item being issued has a zero cost. The issue will still be processed '), 'warn');
 	}
 
 	if ($_SESSION['ProhibitNegativeStock'] == 1 and ($IssueItemRow['mbflag'] == 'M' or $IssueItemRow['mbflag'] == 'B')) {
@@ -149,7 +153,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		$CheckNegRow = DB_fetch_row($CheckNegResult);
 		if (($QuantityIssued - $CheckNegRow[0]) > $VarianceAllowed) {
 			$InputError = true;
-			prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'), 'error');
+			prnMsg(__('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'), 'error');
 		}
 	}
 
@@ -189,9 +193,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 					WHERE locstock.stockid = '" . $_POST['IssueItem'] . "'
 					AND loccode = '" . $_POST['FromLocation'] . "'";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-			$DbgMsg = _('The following SQL to update the location stock record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 		} else {
 			$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
 
@@ -223,9 +226,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 							'" . $IssueItemRow['cost'] . "',
 							'" . $NewQtyOnHand . "')";
 
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order issue because');
-		$DbgMsg = _('The following SQL to insert the stock movement records was used');
-		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('stock movement records could not be inserted when processing the work order issue because');
+		$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
@@ -245,9 +247,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 										WHERE (stockid= '" . $_POST['IssueItem'] . "')
 										AND (loccode = '" . $_POST['FromLocation'] . "')
 										AND (serialno = '" . $SerialNo . "')";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock item records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock item record could not be inserted because');
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 						/** end of handle stockserialitems records */
 
@@ -260,9 +261,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 											'" . $_POST['IssueItem'] . "',
 											'" . $SerialNo . "',
 											-1)";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 					} //non blank SerialNo
 
 				} //end for all of the potential serialised entries in the multi select box
@@ -279,9 +279,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 								WHERE stockid='" . $_POST['IssueItem'] . "'
 								AND loccode = '" . $_POST['FromLocation'] . "'
 								AND serialno = '" . $_POST['BatchRef' . $i] . "'";
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not check if a batch/lot reference for the item already exists because');
-						$DbgMsg = _('The following SQL to test for an already existing controlled item was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Could not check if a batch/lot reference for the item already exists because');
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 						$AlreadyExistsRow = DB_fetch_row($Result);
 
 						if ($AlreadyExistsRow[0] > 0 and $_POST['Qty' . $i] != 0) {
@@ -306,9 +305,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 												'" . -(filter_number_format($_POST['Qty' . $i])) . "')";
 						}
 
-						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The batch/lot item record could not be inserted because');
-						$DbgMsg = _('The following SQL to insert the batch/lot item records was used');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The batch/lot item record could not be inserted because');
+						$Result = DB_query($SQL, $ErrMsg, '', true);
 
 						/** end of handle stockserialitems records */
 
@@ -322,9 +320,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 											'" . $_POST['IssueItem'] . "',
 											'" . $_POST['BatchRef' . $i] . "',
 											'" . filter_number_format($_POST['Qty' . $i]) * -1 . "')";
-							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock movement record could not be inserted because');
-							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+							$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The serial stock movement record could not be inserted because');
+							$Result = DB_query($SQL, $ErrMsg, '', true);
 						}
 					} //non blank BundleRef
 
@@ -354,12 +351,11 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $WORow['wipact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+						'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 						'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The issue of the item to the work order GL posting could not be inserted because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			/*now the credit Stock entry*/
 			$SQL = "INSERT INTO gltrans (type,
@@ -374,27 +370,25 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
-						'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+						'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 						'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
-			$DbgMsg = _('The following SQL to insert the stock GLTrans record was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 
 		} /* end of if GL and stock integrated and standard cost !=0 */
 
 		//update the wo with the new qtyrecd
-		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not update the work order cost issued to the work order because');
-		$DbgMsg = _('The following SQL was used to update the work order');
+		$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Could not update the work order cost issued to the work order because');
 		$UpdateWOResult = DB_query("UPDATE workorders
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
-									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
+									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, '', true);
 
 		DB_Txn_Commit();
 
-		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
-		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
-		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against') . '</a></li></ul>';
+		prnMsg(__('The issue of') . ' ' . $QuantityIssued . ' ' . __('of') . ' ' . $_POST['IssueItem'] . ' ' . __('against work order') . ' ' . $_POST['WO'] . ' ' . __('has been processed'), 'info');
+		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . __('Issue more components to this work order') . '</a></li>';
+		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select a different work order for issuing materials and components against') . '</a></li></ul>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['IssueItem']);
@@ -407,8 +401,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		}
 		unset($_POST['Qty']);
 		/*end of process work order issues entry */
-		include ('includes/footer.php');
-		exit;
+		include('includes/footer.php');
+		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 
 } //end of if the user hit the process button
@@ -418,7 +412,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 		if (strpos($key, 'IssueQty') !== false and abs(filter_number_format($Value)) > 0) {
 			$No = substr($key, 8);
 			$InputError = false; //ie assume no problems for a start - ever the optomist
-			$ErrMsg = _('Could not retrieve the details of the selected work order item');
+			$ErrMsg = __('Could not retrieve the details of the selected work order item');
 			$WOResult = DB_query("SELECT workorders.loccode,
 								 locations.locationname,
 								 workorders.closed,
@@ -436,16 +430,16 @@ elseif (isset($_POST['ProcessMultiple'])) {
 							AND woitems.wo='" . $_POST['WO'] . "'", $ErrMsg);
 
 			if (DB_num_rows($WOResult) == 0) {
-				prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
-				include ('includes/footer.php');
-				exit;
+				prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
+				include('includes/footer.php');
+				exit();
 			}
 			$WORow = DB_fetch_array($WOResult);
 			if ($WORow['closed'] == 1) {
-				prnMsg(_('The work order is closed - no more materials or components can be issued to it.'), 'error');
+				prnMsg(__('The work order is closed - no more materials or components can be issued to it.'), 'error');
 				$InputError = true;
 			}
-			$QuantityIssued = filter_number_format($Value);;
+			$QuantityIssued = filter_number_format($Value);
 			//Need to get the current standard cost for the item being issued
 			$SQL = "SELECT actualcost AS cost,
 									controlled,
@@ -457,7 +451,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 			$IssueItemRow = DB_fetch_array($Result);
 
 			if ($IssueItemRow['cost'] == 0) {
-				prnMsg(_('The item being issued has a zero cost. The issue will still be processed '), 'warn');
+				prnMsg(__('The item being issued has a zero cost. The issue will still be processed '), 'warn');
 			}
 
 			if ($_SESSION['ProhibitNegativeStock'] == 1 and ($IssueItemRow['mbflag'] == 'M' or $IssueItemRow['mbflag'] == 'B')) {
@@ -468,7 +462,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 				$CheckNegRow = DB_fetch_row($CheckNegResult);
 				if ($CheckNegRow[0] < $QuantityIssued) {
 					$InputError = true;
-					prnMsg(_('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'), 'error');
+					prnMsg(__('This issue cannot be processed because the system parameter is set to prohibit negative stock and this issue would result in stock going into negative. Please correct the stock first before attempting another issue'), 'error');
 				}
 			} //end of negative inventory check
 			$IssueItems[] = array('item' => $_POST['Item' . $No], 'qty' => $QuantityIssued, 'mbflag' => $IssueItemRow['mbflag'], 'cost' => $IssueItemRow['cost']);
@@ -508,9 +502,8 @@ elseif (isset($_POST['ProcessMultiple'])) {
 							WHERE locstock.stockid = '" . $_POST['IssueItem'] . "'
 							AND loccode = '" . $_POST['FromLocation'] . "'";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The location stock record could not be updated because');
-				$DbgMsg = _('The following SQL to update the location stock record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The location stock record could not be updated because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 			} else {
 				$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
 
@@ -540,9 +533,8 @@ elseif (isset($_POST['ProcessMultiple'])) {
 									'" . -$QuantityIssued . "',
 									'" . $IssueItemRow['cost'] . "',
 									'" . $NewQtyOnHand . "')";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('stock movement records could not be inserted when processing the work order issue because');
-			$DbgMsg = _('The following SQL to insert the stock movement records was used');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('stock movement records could not be inserted when processing the work order issue because');
+			$Result = DB_query($SQL, $ErrMsg, '', true);
 			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1) {
 				/*GL integration with stock is activated so need the GL journals to make it so */
 				/*first the debit the WIP of the item being manufactured from the WO
@@ -560,12 +552,11 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $WORow['wipact'] . "',
-								'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . ($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The issue of the item to the work order GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the work order issue GLTrans record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The issue of the item to the work order GL posting could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 				/*now the credit Stock entry*/
 				$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -579,36 +570,34 @@ elseif (isset($_POST['ProcessMultiple'])) {
 								'" . FormatDateForSQL($_POST['IssuedDate']) . "',
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
-								'" . $_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']) . "',
+								'" . mb_substr($_POST['WO'] . " " . $_POST['IssueItem'] . ' x ' . $QuantityIssued . " @ " . locale_number_format($IssueItemRow['cost'], $_SESSION['CompanyRecord']['decimalplaces']), 0, 200) . "',
 								'" . -($IssueItemRow['cost'] * $QuantityIssued) . "')";
 
-				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
-				$DbgMsg = _('The following SQL to insert the stock GLTrans record was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The stock account credit on the issue of items to a work order GL posting could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
 
 			} /* end of if GL and stock integrated and standard cost !=0 */
 
 			//update the wo with the new qtyrecd
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not update the work order cost issued to the work order because');
-			$DbgMsg = _('The following SQL was used to update the work order');
+			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('Could not update the work order cost issued to the work order because');
 			$UpdateWOResult = DB_query("UPDATE workorders
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
-									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
+									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, '', true);
 
-			prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
+			prnMsg(__('The issue of') . ' ' . $QuantityIssued . ' ' . __('of') . ' ' . $_POST['IssueItem'] . ' ' . __('against work order') . ' ' . $_POST['WO'] . ' ' . __('has been processed'), 'info');
 		} //end of foreach loop;
 		DB_Txn_Commit();
 
-		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
-		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against') . '</a></li></ul>';
+		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . __('Issue more components to this work order') . '</a></li>';
+		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . __('Select a different work order for issuing materials and components against') . '</a></li></ul>';
 		unset($_POST['WO']);
 		unset($_POST['StockID']);
 		unset($_POST['FromLocation']);
 		unset($_POST['Process']);
 		unset($_POST['SerialNos']);
 		/*end of process work order issues entry */
-		include ('includes/footer.php');
-		exit;
+		include('includes/footer.php');
+		exit();
 	} //end if there were not input errors reported - so the processing was allowed to continue
 
 } //end of multiple items input
@@ -618,7 +607,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 if (isset($_POST['Search'])) {
 
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
-		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'warn');
+		prnMsg(__('Stock description keywords have been used in preference to the Stock code extract entered'), 'warn');
 	}
 	if (mb_strlen($_POST['Keywords']) > 0) {
 		//insert wildcard characters in spaces
@@ -705,16 +694,11 @@ if (isset($_POST['Search'])) {
 		}
 	}
 
-	$ErrMsg = _('There is a problem selecting the part records to display because');
-	$DbgMsg = _('The SQL used to get the part selection was');
-	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$ErrMsg = __('There is a problem selecting the part records to display because');
+	$SearchResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($SearchResult) == 0) {
-		prnMsg(_('There are no products available meeting the criteria specified'), 'info');
-
-		if ($Debug == 1) {
-			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL, 'info');
-		}
+		prnMsg(__('There are no products available meeting the criteria specified'), 'info');
 	}
 	if (DB_num_rows($SearchResult) == 1) {
 		$MyRow = DB_fetch_array($SearchResult);
@@ -727,7 +711,7 @@ if (isset($_POST['Search'])) {
 
 /* Always display quantities received and recalc balance for all items on the order */
 
-$ErrMsg = _('Could not retrieve the details of the selected work order item');
+$ErrMsg = __('Could not retrieve the details of the selected work order item');
 $WOResult = DB_query("SELECT workorders.loccode,
 						 locations.locationname,
 						 workorders.requiredby,
@@ -748,9 +732,9 @@ $WOResult = DB_query("SELECT workorders.loccode,
 						WHERE woitems.wo ='" . $_POST['WO'] . "'", $ErrMsg);
 
 if (DB_num_rows($WOResult) == 0) {
-	prnMsg(_('The selected work order item cannot be retrieved from the database'), 'info');
-	include ('includes/footer.php');
-	exit;
+	prnMsg(__('The selected work order item cannot be retrieved from the database'), 'info');
+	include('includes/footer.php');
+	exit();
 }
 
 if (!isset($_POST['IssuedDate'])) {
@@ -760,26 +744,26 @@ $WORow = DB_fetch_array($WOResult);
 
 echo '<table class="selection">
 		<tr>
-			<td class="label">' . _('Issue to work order') . ':</td>
+			<td class="label">' . __('Issue to work order') . ':</td>
 			<td>' . $_POST['WO'] . '</td>
 		</tr>
 		<tr>
-			<td class="label">' . _('Manufactured at') . ':</td>
+			<td class="label">' . __('Manufactured at') . ':</td>
 			<td>' . $WORow['locationname'] . '</td>
-			<td class="label">' . _('Required By') . ':</td>
+			<td class="label">' . __('Required By') . ':</td>
 			<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
 		</tr>
 		<tr>
-			<td class="label">' . _('Item') . '</td>
-			<td class="label">' . _('Quantity Ordered') . ':</td>
-			<td class="label">' . _('Already Received') . ':</td>
-			<td class="label">' . _('Unit') . ':</td>
+			<td class="label">' . __('Item') . '</td>
+			<td class="label">' . __('Quantity Ordered') . ':</td>
+			<td class="label">' . __('Already Received') . ':</td>
+			<td class="label">' . __('Unit') . ':</td>
 		</tr>';
 
 if ($WORow['closed'] == 1) {
-	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'), 'info');
-	include ('includes/footer.php');
-	exit;
+	prnMsg(__('The selected work order has been closed and variances calculated and posted. No more issues of materials and components can be made against this work order.'), 'info');
+	include('includes/footer.php');
+	exit();
 }
 DB_data_seek($WOResult, 0);
 
@@ -798,9 +782,9 @@ while ($WORow = DB_fetch_array($WOResult)) {
 }
 
 echo '<tr>
-		<td class="label">' . _('Date Material Issued') . ':</td>
+		<td class="label">' . __('Date Material Issued') . ':</td>
 		<td><input name="IssuedDate" value="' . Date('Y-m-d') . '" type="date" maxlength="10" size="11" /></td>
-		<td class="label">' . _('Issued From') . ':</td>
+		<td class="label">' . __('Issued From') . ':</td>
 		<td>';
 
 if (!isset($_POST['IssueItem'])) {
@@ -838,14 +822,14 @@ echo '</td>
 if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	//set up options for selection of the item to be issued to the WO
 	echo '<tr>
-			<th colspan="7">' . _('Material Requirements For this Work Order') . '</th>
+			<th colspan="7">' . __('Material Requirements For this Work Order') . '</th>
 		</tr>';
 	echo '<tr>
-			<th>' . _('Parent Item') . '</th>
-			<th colspan="2">' . _('Item') . '</th>
-			<th>' . _('Qty Required') . '</th>
-			<th>' . _('Qty Issued') . '</th>
-			<th>' . _('Qty Issue') . '</th>
+			<th>' . __('Parent Item') . '</th>
+			<th colspan="2">' . __('Item') . '</th>
+			<th>' . __('Qty Required') . '</th>
+			<th>' . __('Qty Issued') . '</th>
+			<th>' . __('Qty Issue') . '</th>
 		</tr>';
 
 	$RequirmentsResult = DB_query("SELECT worequirements.stockid,
@@ -878,7 +862,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 		} else {
 			echo '<tr>
 					<td>' . $RequirementsRow['parentstockid'] . '</td>
-					<td class="notavailable">' . _('Auto Issue') . '</td>
+					<td class="notavailable">' . __('Auto Issue') . '</td>
 					<td class="notavailable">' . $RequirementsRow['stockid'] . ' - ' . $RequirementsRow['description'] . '</td>';
 		}
 		if (isset($IssuedMaterials[$RequirementsRow['stockid']])) {
@@ -908,7 +892,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 				controlled
 			FROM stockmaster
 			WHERE stockid in ('" . $IssuedStocks . "')";
-		$ErrMsg = _('Failed to retrieve the item data');
+		$ErrMsg = __('Failed to retrieve the item data');
 		$Result = DB_query($SQL, $ErrMsg);
 		while ($MyRow = DB_fetch_array($Result)) {
 			echo '<tr>
@@ -931,7 +915,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '</table>
 		<br />
 		<div class="centre">
-			<input type="submit" name="ProcessMultiple" value="' . _('Process Items Issued') . '" />
+			<input type="submit" name="ProcessMultiple" value="' . __('Process Items Issued') . '" />
 		</div><br/>';
 
 	$SQL = "SELECT categoryid,
@@ -942,16 +926,16 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	$Result1 = DB_query($SQL);
 
 	echo '<fieldset>
-			<legend>', _('Stock Search'), '</legend>
+			<legend>', __('Stock Search'), '</legend>
 			<field>
-				<label for="StockCat">' . _('Select a stock category') . ':</label>
+				<label for="StockCat">' . __('Select a stock category') . ':</label>
 				<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+		echo '<option selected="selected" value="All">' . __('All') . '</option>';
 		$_POST['StockCat'] = 'All';
 	} else {
-		echo '<option value="All">' . _('All') . '</option>';
+		echo '<option value="All">' . __('All') . '</option>';
 	}
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -967,14 +951,14 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 		</field>';
 
 	echo '<field>
-			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
+			<label for="Keywords">' . __('Enter text extracts in the') . ' <b>' . __('description') . '</b>:</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" value="';
 	if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
 	echo '" /></td>
 		</field>';
 
 	echo '<field>
-			<label>', '<b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
+			<label>', '<b>' . __('OR') . ' </b>' . __('Enter extract of the') . ' <b>' . __('Stock Code') . '</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" value="';
 	if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
 	echo '" />
@@ -983,9 +967,9 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="Search" value="' . _('Search Now') . '" />';
+			<input type="submit" name="Search" value="' . __('Search Now') . '" />';
 
-	echo '<script type="text/javascript">
+	echo '<script>
 		document.forms[0].StockCode.select();
 		document.forms[0].StockCode.focus();
 	</script>';
@@ -998,9 +982,9 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 			echo '<table cellpadding="2" class="selection">';
 			$TableHeader = '<tr>
-								<th>' . _('Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Units') . '</th>
+								<th>' . __('Code') . '</th>
+								<th>' . __('Description') . '</th>
+								<th>' . __('Units') . '</th>
 							</tr>';
 			echo $TableHeader;
 			$j = 1;
@@ -1020,7 +1004,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 							<td>', $MyRow['description'], '</td>
 							<td>', $MyRow['units'], '</td>
 							<td>', $ImageSource, '</td>
-							<td><a href="', $IssueLink, '">' . _('Add to Work Order') . '</a></td>
+							<td><a href="', $IssueLink, '">' . __('Add to Work Order') . '</a></td>
 						</tr>';
 
 					$j++;
@@ -1046,7 +1030,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 				serialised
 			FROM stockmaster
 			WHERE stockid='" . $_POST['IssueItem'] . "'";
-	$ErrMsg = _('Could not get the detail of the item being issued because');
+	$ErrMsg = __('Could not get the detail of the item being issued because');
 	$IssueItemResult = DB_query($SQL, $ErrMsg);
 	$IssueItemRow = DB_fetch_array($IssueItemResult);
 	if ($IssueItemRow['decimalplaces'] <= 3) {
@@ -1057,9 +1041,9 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 	echo '<table class="selection">
 		<tr>
-			<td class="label">' . _('Issuing') . ':</td>
+			<td class="label">' . __('Issuing') . ':</td>
 			<td>' . $_POST['IssueItem'] . ' - ' . $IssueItemRow['description'] . '</td>
-			<td class="label">' . _('Units') . ':</td>
+			<td class="label">' . __('Units') . ':</td>
 			<td>' . $IssueItemRow['units'] . '</td>
 		</tr>
 		</table>';
@@ -1071,20 +1055,20 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	if ($IssueItemRow['controlled'] == 1) { //controlled
 		if ($IssueItemRow['serialised'] == 1) { //serialised
 			echo '<tr>
-					<th>' . _('Serial Numbers Issued') . '</th>
+					<th>' . __('Serial Numbers Issued') . '</th>
 				</tr>';
 
 			$SerialNoResult = DB_query("SELECT serialno
 										FROM stockserialitems
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode='" . $_POST['FromLocation'] . "'
-										AND quantity > " . $VarianceAllowed, _('Could not retrieve the serial numbers available at the location specified because'));
+										AND quantity > " . $VarianceAllowed, __('Could not retrieve the serial numbers available at the location specified because'));
 			if (DB_num_rows($SerialNoResult) == 0) {
 				echo '<tr>
-						<td>' . _('There are no serial numbers at this location to issue') . '</td>
+						<td>' . __('There are no serial numbers at this location to issue') . '</td>
 					</tr>';
 				echo '<tr>
-						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . _('Reselect Location or Issued Item') . '" /></td>
+						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . __('Reselect Location or Issued Item') . '" /></td>
 					</tr>';
 			} else {
 				echo '<tr>
@@ -1099,60 +1083,60 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 				echo '</select></td></tr>';
 				echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 				echo '<tr>
-						<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+						<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . __('Process Items Issued') . '" /></div></td>
 					</tr>';
 			}
 		} else { //controlled but not serialised - just lot/batch control
 			echo '<tr>
-					<th colspan="2">' . _('Batch/Lots Issued') . '</th>
+					<th colspan="2">' . __('Batch/Lots Issued') . '</th>
 				</tr>';
 			$LotNoSQL = "SELECT serialno,quantity
 										FROM stockserialitems
 										WHERE stockid='" . $_POST['IssueItem'] . "'
 										AND loccode='" . $_POST['FromLocation'] . "'
 										AND quantity > " . $VarianceAllowed;
-			$ErrMsg = _('Failed to retrieve lot No');
+			$ErrMsg = __('Failed to retrieve lot No');
 			$LotResult = DB_query($LotNoSQL, $ErrMsg);
 			if (DB_num_rows($LotResult) > 0) {
 				$i = 0;
 				while ($LotRow = DB_fetch_array($LotResult)) {
 					echo '<tr>
-						<td><input type="text" name="BatchRef' . $i . '" title="' . _('Enter a batch/roll reference being used with this work order') . '" value="' . $LotRow['serialno'] . '"  /></td>
-						<td><input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i . '"  placeholder="' . $LotRow['quantity'] . '" /></td>
+						<td><input type="text" name="BatchRef' . $i . '" title="' . __('Enter a batch/roll reference being used with this work order') . '" value="' . $LotRow['serialno'] . '"  /></td>
+						<td><input class="number" title="' . __('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i . '"  placeholder="' . $LotRow['quantity'] . '" /></td>
 						</tr>';
 					$i++;
 				}
 				echo '<input type="hidden" name="LotCounter" value="' . $i . '" />';
 			} else {
 				echo '<tr>
-						<td>' . _('There are no serial numbers at this location to issue') . '</td>
+						<td>' . __('There are no serial numbers at this location to issue') . '</td>
 					</tr>';
 				echo '<tr>
-						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . _('Reselect Location or Issued Item') . '" /></td>
+						<td colspan="2"><div class="centre"><input type="submit" name="Retry" value="' . __('Reselect Location or Issued Item') . '" /></td>
 					</tr>';
 				$i = 0;
 				echo '<tr>
-						<td colspan="4">' . _('You may need to receive (input negative quantity) some items whose serial no has never existed by following') . '</td>
+						<td colspan="4">' . __('You may need to receive (input negative quantity) some items whose serial no has never existed by following') . '</td>
 					</tr>';
 				echo '<tr>
-						<td colspan="2">' . _('Lot No') . ': <input type="text" name="BatchRef' . $i . '" title="' . _('Enter a batch/roll reference being used with this work order') . '" value=""  />
-						<td colspan="2">' . _('Quantity') . ': <input class="number" title="' . _('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i . '" /></td>
+						<td colspan="2">' . __('Lot No') . ': <input type="text" name="BatchRef' . $i . '" title="' . __('Enter a batch/roll reference being used with this work order') . '" value=""  />
+						<td colspan="2">' . __('Quantity') . ': <input class="number" title="' . __('Enter the quantity of this batch/roll to issue to the work order') . '" name="Qty' . $i . '" /></td>
 						</tr>';
 				$i++;
 				echo '<input type="hidden" name="LotCounter" value="' . $i . '" />';
 			}
 			echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 			echo '<tr>
-					<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+					<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . __('Process Items Issued') . '" /></div></td>
 				</tr>';
 		} //end of lot/batch control
 
 	} else { //not controlled - an easy one!
 		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
-		echo '<tr><td>' . _('Quantity Issued') . ':</td>
-			  <td><input class="number" type="text" size="10" maxlength="10" title="' . _('Enter the quantity of this item to issue to the work order') . '" name="Qty" required="required" value="0"/></tr>';
+		echo '<tr><td>' . __('Quantity Issued') . ':</td>
+			  <td><input class="number" type="text" size="10" maxlength="10" title="' . __('Enter the quantity of this item to issue to the work order') . '" name="Qty" required="required" value="0"/></tr>';
 		echo '<tr>
-				<td colspan="2"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
+				<td colspan="2"><input type="submit" name="Process" value="' . __('Process Items Issued') . '" /></div></td>
 			</tr>';
 	}
 	echo '</table>';
@@ -1160,5 +1144,4 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 echo '</div>
 	  </form>';
 
-include ('includes/footer.php');
-?>
+include('includes/footer.php');

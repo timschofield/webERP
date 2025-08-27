@@ -1,12 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
-$Title = _('Historical Test Results');
-$ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
-$BookMark = 'QA_HistoricalResults';// Anchor's id in the manual's html document.
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Historical Test Results');
+$ViewTopic = 'QualityAssurance';
+$BookMark = 'QA_HistoricalResults';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (isset($_GET['KeyValue'])){
 	$KeyValue =mb_strtoupper($_GET['KeyValue']);
@@ -24,32 +26,29 @@ if (!isset($_POST['ToDate'])){
 }
 if (!Is_Date($_POST['FromDate'])) {
 	$InputError = 1;
-	prnMsg(_('Invalid From Date'),'error');
+	prnMsg(__('Invalid From Date'),'error');
 	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), Mktime(0, 0, 0, Date('m'), Date('d')-180, Date('Y')));
 }
 if (!Is_Date($_POST['ToDate'])) {
 	$InputError = 1;
-	prnMsg(_('Invalid To Date'),'error');
+	prnMsg(__('Invalid To Date'),'error');
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 $FromDate = FormatDateForSQL($_POST['FromDate']);
 $ToDate = FormatDateForSQL($_POST['ToDate']);
-if (isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 
 //prompt user for Key Value
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<fieldset>
-		<legend>', _('Report Criteria'), '</legend>
+		<legend>', __('Report Criteria'), '</legend>
 		<field>
-			<label for="KeyValue">' . _('Show Test Results For') .':</label>';
+			<label for="KeyValue">' . __('Show Test Results For') .':</label>';
 $SQLSpecSelect="SELECT DISTINCT(prodspeckey),
 						description
 					FROM qasamples LEFT OUTER JOIN stockmaster
@@ -71,16 +70,16 @@ echo '</select>';
 echo '</field>';
 
 echo '<field>
-		<label for="FromDate">' . _('From Sample Date') . ': </label>
+		<label for="FromDate">' . __('From Sample Date') . ': </label>
 		<input name="FromDate" maxlength="10" size="11" type="date" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
-		<label for="ToDate"> ' . _('To Sample Date') . ':</label>
+		<label for="ToDate"> ' . __('To Sample Date') . ':</label>
 		<input name="ToDate" maxlength="10" size="11" type="date" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	</fieldset>
 	<div>
-	<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+	<input type="submit" name="PickSpec" value="' . __('Submit') . '" />
 	</div>
 	</form>';
 
@@ -110,7 +109,7 @@ $SQLTests="SELECT sampleresults.testid,
 				AND sampledate <='" . $ToDate . "'";
 
 
-$TestResult=DB_query($SQLTests);
+$TestResult = DB_query($SQLTests);
 $TestsArray=array();
 $SamplesArray=array();
 $AllResultsArray=array();
@@ -131,13 +130,13 @@ while ($MyTestRow=DB_fetch_array($TestResult)) {
 }
 
 if ($TotResults>0) {
-	echo '<br/>' . _('Historical Test Results for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/>';
+	echo '<br/>' . __('Historical Test Results for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/>';
 
 	echo '<div>
 		<div style="overflow:auto; width:98%; padding:10px; ">
 			<table width="90%" style="overflow: scroll;">
 			<tr>
-				<th style="white-space:nowrap;" class="number">' . _('Sample ID:') . '<br>' . _('Lot/Serial:') . '<br>' . _('Identifier:') . '<br>' . _('Sample Date:') .'</th>';
+				<th style="white-space:nowrap;" class="number">' . __('Sample ID:') . '<br>' . __('Lot/Serial:') . '<br>' . __('Identifier:') . '<br>' . __('Sample Date:') .'</th>';
 	foreach ($SamplesArray as $SampleKey => $SampleValue) {
 		echo '<th>'. $SampleKey . '<br>' . $SampleValue['lotkey'] . '<br>' . $SampleValue['identifier'] . '<br>' . ConvertSQLDate($SampleValue['sampledate']).'</th>';
 	}
@@ -157,4 +156,3 @@ if ($TotResults>0) {
 }
 
 include('includes/footer.php');
-?>

@@ -1,19 +1,18 @@
 <?php
 
-
 /*
 Call this page with:
 	1. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 */
 
-include('includes/DefineCustAllocsClass.php');
-include('includes/session.php');
-$Title = _('Automatic Customer Receipt') . '/' . _('Credit Note Allocations');
+require(__DIR__ . '/includes/session.php');
 
-$ViewTopic= 'ARTransactions';
+$Title = __('Automatic Customer Receipt') . '/' . __('Credit Note Allocations');
+$ViewTopic = 'ARTransactions';
 $BookMark = 'CustomerAllocations';
-
 include('includes/header.php');
+
+include('includes/DefineCustAllocsClass.php');
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['DebtorNo'])) {
@@ -46,9 +45,9 @@ if (isset($_GET['DebtorNo'])) {
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result)==0) {
-		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
+		prnMsg(__('No outstanding receipts or credits to be allocated for this customer'),'info');
 		include('includes/footer.php');
-		exit;
+		exit();
 	}
 	 echo '<table class="selection">';
 	echo $TableHeader;
@@ -133,13 +132,13 @@ function ProcessAllocation() {
 							transid_allocfrom,
 							transid_allocto
 						) VALUES (
-							'" . date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $AllocnItem->AllocAmt . "',
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'
 						)";
 				if( !$Result = DB_query($SQL) ) {
-					$Error = _('Could not insert allocation record');
+					$Error = __('Could not insert allocation record');
 				}
 			}
 			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
@@ -153,7 +152,7 @@ function ProcessAllocation() {
 					settled = '" . $Settled . "'
 					WHERE id = '" . $AllocnItem->ID."'";
 			if( !$Result = DB_query($SQL) ) {
-				$Error = _('Could not update difference on exchange');
+				$Error = __('Could not update difference on exchange');
 			}
 		}
 		if (abs($TotalAllocated + $_SESSION['Alloc']->TransAmt) < 0.01) {
@@ -169,7 +168,7 @@ function ProcessAllocation() {
 				WHERE id = '" . $_SESSION['Alloc']->AllocTrans . "'";
 
 		if( !$Result = DB_query($SQL) ) {
-			$Error = _('Could not update receipt or credit note');
+			$Error = __('Could not update receipt or credit note');
 		}
 
 		// If GLLink to debtors active post diff on exchange to GL
@@ -198,7 +197,7 @@ function ProcessAllocation() {
 								'" . $MovtInDiffOnExch . "'
 							)";
 				if( !$Result = DB_query($SQL) ) {
-					$Error = _('Could not update exchange difference in General Ledger');
+					$Error = __('Could not update exchange difference in General Ledger');
 				}
 
 		  		$SQL = "INSERT INTO gltrans (
@@ -218,7 +217,7 @@ function ProcessAllocation() {
 									'" . -$MovtInDiffOnExch . "')";
 
 				if( !$Result = DB_query($SQL) ) {
-					$Error = _('Could not update debtors control in General Ledger');
+					$Error = __('Could not update debtors control in General Ledger');
 				}
 			}
 
@@ -237,5 +236,3 @@ function ProcessAllocation() {
 		unset($_POST['AllocTrans']);
 	}
 }
-
-?>
