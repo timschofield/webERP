@@ -311,9 +311,6 @@ if (isset($SupplierID)) {
 }
 $InputError = 0;
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = Array();
 if (isset($_POST['submit'])) {
 

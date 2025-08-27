@@ -91,10 +91,10 @@ if(isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	if(isset($InputError) and $InputError !=1) {
-		unset( $_POST['TaxGLCode']);
-		unset( $_POST['PurchTaxGLCode']);
-		unset( $_POST['Description']);
-		unset( $SelectedTaxID );
+		unset($_POST['TaxGLCode']);
+		unset($_POST['PurchTaxGLCode']);
+		unset($_POST['Description']);
+		unset($SelectedTaxID);
 	}
 
 	prnMsg($Msg);

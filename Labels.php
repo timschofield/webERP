@@ -239,14 +239,14 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (isset($InputError) AND $InputError !=1) {
-		unset( $_POST['PaperSize']);
-		unset( $_POST['Description']);
-		unset( $_POST['Width']);
-		unset( $_POST['Height']);
-		unset( $_POST['TopMargin']);
-		unset( $_POST['LeftMargin']);
-		unset( $_POST['ColumnWidth']);
-		unset( $_POST['RowHeight']);
+		unset($_POST['PaperSize']);
+		unset($_POST['Description']);
+		unset($_POST['Width']);
+		unset($_POST['Height']);
+		unset($_POST['TopMargin']);
+		unset($_POST['LeftMargin']);
+		unset($_POST['ColumnWidth']);
+		unset($_POST['RowHeight']);
 		unset($_POST['PageWidth']);
 		unset($_POST['PageHeight']);
 	}

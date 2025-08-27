@@ -31,11 +31,7 @@ if (isset($_GET['SelectedBranch'])){
 	$SelectedBranch = mb_strtoupper($_POST['SelectedBranch']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
-	//initialise no input errors assumed initially before we test
+// initialise no input errors assumed initially before we test
 $Errors = array();
 $InputError = 0;
 

@@ -27,9 +27,6 @@ echo '<p class="page_title_text">
 	'" alt="" />' . ' ' . __('Customer Maintenance') . '
 	</p>';
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 
 if (isset($_POST['submit'])) {

@@ -22,10 +22,6 @@ if (isset($_GET['SelectedBankAccount'])) {
 	$SelectedBankAccount=$_POST['SelectedBankAccount'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 if (isset($_POST['submit'])) {

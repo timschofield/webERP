@@ -28,10 +28,6 @@ $ForceConfigReload = false;
 
 $FunctionalCurrency = $_SESSION['CompanyRecord']['currencydefault'];
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
