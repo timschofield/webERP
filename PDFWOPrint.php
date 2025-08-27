@@ -142,11 +142,11 @@ if (isset($_POST['PrintOrEmail']) and isset($_POST['EmailTo'])) {
 }
 
 if (isset($_POST['DoIt']) and ($_POST['PrintOrEmail'] == 'Print' or $ViewingOnly == 1)) {
-	$MakePDFThenDisplayIt = True;
-	$MakePDFThenEmailIt = False;
+	$MakePDFThenDisplayIt = true;
+	$MakePDFThenEmailIt = false;
 } elseif (isset($_POST['DoIt']) and $_POST['PrintOrEmail'] == 'Email' and isset($_POST['EmailTo'])) {
-	$MakePDFThenEmailIt = True;
-	$MakePDFThenDisplayIt = False;
+	$MakePDFThenEmailIt = true;
+	$MakePDFThenDisplayIt = false;
 }
 
 if (isset($SelectedWO) and $SelectedWO != '' and $SelectedWO > 0) {

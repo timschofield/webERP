@@ -153,10 +153,10 @@ if (isset($_POST['Show'])) {
 				WHERE chartmaster.accountcode='" . $SelectedAccount . "'");
 	$PandLRow = DB_fetch_row($Result);
 	if ($PandLRow[0] == 1) {
-		$PandLAccount = True;
+		$PandLAccount = true;
 	}
 	else {
-		$PandLAccount = False; /*its a balance sheet account */
+		$PandLAccount = false; /*its a balance sheet account */
 	}
 
 	$FirstPeriodSelected = min($SelectedPeriod);
@@ -218,7 +218,7 @@ if (isset($_POST['Show'])) {
 			</tr>
 		</thead><tbody>';
 
-	if ($PandLAccount == True) {
+	if ($PandLAccount == true) {
 		$RunningTotal = 0;
 	}
 	else {
@@ -248,7 +248,7 @@ if (isset($_POST['Show'])) {
 	}
 	$PeriodTotal = 0;
 	$PeriodNo = - 9999;
-	$ShowIntegrityReport = False;
+	$ShowIntegrityReport = false;
 	$j = 1;
 	$IntegrityReport = '';
 	while ($MyRow = DB_fetch_array($TransResult)) {
@@ -273,7 +273,7 @@ if (isset($_POST['Show'])) {
 
 				echo '<tr>
 					<td colspan="4"><b>' . __('Total for period') . ' ' . $PeriodNo . '</b></td>';
-				if ($PandLAccount == True) {
+				if ($PandLAccount == true) {
 					$RunningTotal = 0;
 				}
 				if ($PeriodTotal < 0) { // It is a credit balance b/fwd
@@ -289,7 +289,7 @@ if (isset($_POST['Show'])) {
 				$IntegrityReport .= '<br />' . __('Period') . ': ' . $PeriodNo . __('Account movement per transaction') . ': ' . locale_number_format($PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('Movement per GL Totals record') . ': ' . locale_number_format($PeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . __('Period difference') . ': ' . locale_number_format($PeriodTotal - $PeriodActual, 3);
 
 				if (ABS($PeriodTotal - $PeriodActual) > 0.01) {
-					$ShowIntegrityReport = True;
+					$ShowIntegrityReport = true;
 				}
 			}
 			$PeriodNo = $MyRow['periodno'];
@@ -372,7 +372,7 @@ if (isset($_POST['Show'])) {
 
 	echo '<tr>
 			<td colspan="4"><b>';
-	if ($PandLAccount == True) {
+	if ($PandLAccount == true) {
 		echo __('Total Period Movement'); /* RChacon: "Total for period XX"? */
 	}
 	else { /*its a balance sheet account*/
@@ -392,7 +392,7 @@ if (isset($_POST['Show'])) {
 		</tbody></table>';
 } /* end of if Show button hit */
 
-if (isset($ShowIntegrityReport) AND $ShowIntegrityReport == True AND $_POST['tag'] == '0') {
+if (isset($ShowIntegrityReport) AND $ShowIntegrityReport == true AND $_POST['tag'] == '0') {
 	if (!isset($IntegrityReport)) {
 		$IntegrityReport = '';
 	}

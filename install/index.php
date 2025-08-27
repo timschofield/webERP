@@ -19,7 +19,7 @@ if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 } else {
 	unset($_SESSION['Installer']);
 	$_SESSION['Installer']['CurrentPage'] = 0;
-	$_SESSION['Installer']['License_Agreed'] = False;
+	$_SESSION['Installer']['License_Agreed'] = false;
 	$_SESSION['Installer']['Port'] = 3306;
 	$_SESSION['Installer']['HostName'] = '';
 	$_SESSION['Installer']['Database'] = '';
@@ -38,7 +38,7 @@ if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 }
 
 if (isset($_GET['Agreed']) && $_SESSION['Installer']['CurrentPage'] == 2) {
-	$_SESSION['Installer']['License_Agreed'] = True;
+	$_SESSION['Installer']['License_Agreed'] = true;
 }
 if (!$_SESSION['Installer']['License_Agreed'] && $_SESSION['Installer']['CurrentPage'] >=2) {
 	$_SESSION['Installer']['CurrentPage'] = 1;

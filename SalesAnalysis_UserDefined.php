@@ -28,7 +28,7 @@ if (isset($_GET['ProducePDF'])) {
 	}
 } /* end if we wanted a PDF file */
 
-if ($_GET['ProduceCVSFile']==True) {
+if ($_GET['ProduceCVSFile']==true) {
 
 	include('includes/CSVSalesAnalysis.php');
 

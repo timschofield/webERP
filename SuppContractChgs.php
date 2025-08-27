@@ -1,18 +1,21 @@
 <?php
 
-/* The supplier transaction uses the SuppTrans class to hold the information about the invoice
-the SuppTrans class contains an array of Contract objects - containing details of all contract charges.
+/*The supplier transaction uses the SuppTrans class to hold the information about the invoice
+the SuppTrans class contains an array of Contract objects - containing details of all contract charges
 Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
+include('includes/DefineSuppTransClass.php');
+
+/* Session started here for password checking and authorisation level check */
 include('includes/session.php');
 
 $Title = __('Contract Charges or Credits');
+
 $ViewTopic = 'AccountsPayable';
 $BookMark = '';
-include('includes/header.php');
 
-include('includes/DefineSuppTransClass.php');
+include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(__('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
@@ -36,7 +39,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 if (isset($_POST['AddContractChgToInvoice'])){
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['ContractRef'] == ''){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
 	} else{
@@ -50,10 +53,10 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	}//end if a contract ref was entered manually
 	if (!is_numeric(filter_number_format($_POST['Amount']))){
 		prnMsg(__('The amount entered is not numeric. This contract charge cannot be added to the invoice'),'error');
-		$InputError = True;
+		$InputError = true;
 	}
 
-	if ($InputError == False){
+	if ($InputError == false){
 		$_SESSION['SuppTrans']->Add_Contract_To_Trans($_POST['ContractRef'],
 														filter_number_format($_POST['Amount']),
 														$_POST['Narrative'],

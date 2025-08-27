@@ -113,7 +113,7 @@ $DirHandle = opendir($ediordersdir);
 
 while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the incoming orders dir */
 
-	$TryNextFile = False;
+	$TryNextFile = false;
 
     if ($OrderFile == "." || $OrderFile == "..") {
 		continue;
@@ -136,12 +136,12 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 	$LastSeg = 0;
 	$FirstSegInGroup = 0;
 	$EmailText =''; /*Text of email to send to customer service person */
-	$CreateOrder = True; /*Assume that we are to create a sales order in the system for the message read */
+	$CreateOrder = true; /*Assume that we are to create a sales order in the system for the message read */
     $LinCount = 0; // LIN segments
     $ErrorCount=0;
 	$Order = new Cart;
 
-	while ($LineText = fgets($fp) AND $TryNextFile != True){ /* get each line of the order file */
+	while ($LineText = fgets($fp) AND $TryNextFile != true){ /* get each line of the order file */
 
 		$LineText = StripTrailingComma($LineText);
 		echo '<br />' . $LineText;
@@ -181,7 +181,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 
 			$EmailText .= "\n" . __('ERROR') . ': ' . __('Unable to identify segment tag') . ' ' . $SegTag . ' ' . __('from the message line') . '<br />' . $LineText . '<br /><font color=RED><b>' . __('This message processing has been aborted and separate advice will be required from the customer to obtain details of the order') . '<b></font>';
 
-			$TryNextFile = True;
+			$TryNextFile = true;
 		}
 
 		echo '<br />' . __('The segment tag') . ' ' . $SegTag . ' ' . __('is being processed');
@@ -191,7 +191,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				$UNB = explode ('+',mb_substr($LineText,4));
 				if (mb_substr($UNB[6],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an edi order');
-					$TryNextFile = True;
+					$TryNextFile = true;
 				}
 
 			break;
@@ -205,7 +205,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 				$EmailText .= "\n" . __('EDI Message Ref') . ': ' . $UNH_elements[0];
 				if (mb_substr($UNH_elements[1],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an EDI order');
-					$TryNextFile = True;
+					$TryNextFile = true;
 				}
 				break;
 			case 'BGM':
@@ -279,19 +279,19 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 							$EmailText .= "\n\n" . __('DUPLICATE order DELETE ORIGINAL ORDER MANUALLY');
 							break;
 						case '16':
-							$CreateOrder = False; /*Dont create order in system */
+							$CreateOrder = false; /*Dont create order in system */
 							$EmailText .= "\n\n" . __('Proposed order only no order created in web-ERP');
 							break;
 						case '31':
-							$CreateOrder = False; /*Dont create order in system */
+							$CreateOrder = false; /*Dont create order in system */
 							$EmailText .= "\n" . __('COPY order only no order will be created in web-ERP');
 							break;
 						case '42':
-							$CreateOrder = False; /*Dont create order in system */
+							$CreateOrder = false; /*Dont create order in system */
 							$EmailText .= "\n" . __('Confirmation of order') . ' - ' . __('not created in web-ERP');
 							break;
 						case '46':
-							$CreateOrder = False; /*Dont create order in system */
+							$CreateOrder = false; /*Dont create order in system */
 							$EmailText .= "\n" . __('Provisional order only') . ' - ' . __('not created in web-ERP');
 							break;
 					}
@@ -518,8 +518,8 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 							$InvoiceeResult = DB_query("SELECT debtorno FROM debtorsmaster WHERE edireference='" . $NAD_C082[0] . "' AND ediorders=1");
 							if (DB_num_rows($InvoiceeResult)!=1){
 								$EmailText .= "\n" . __('The Buyer reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the field EDIReference of any of the customers currently set up to receive EDI orders does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('So that is the end of the road for this message');
-								$TryNextFile = True; /* Look for other EDI msgs */
-								$CreateOrder = False; /*Dont create order in system */
+								$TryNextFile = true; /* Look for other EDI msgs */
+								$CreateOrder = false; /*Dont create order in system */
 							} else {
 								$CustRow = DB_fetch_array($InvoiceeResult);
 								$Order->DebtorNo = $CustRow['debtorno'];
@@ -536,8 +536,8 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 						if ($NAD_C082[0]!= $_SESSION['EDIReference']){
 							/* $_SESSION['EDIReference'] is set in config.php as our EDIReference it should be our EAN International Article Numbering Association code */
 							$EmailText .= "\n" . __('The supplier reference was specified as an EAN International Article Numbering Association code') . '. ' . __('Unfortunately the company EDIReference') . ' - ' . $_SESSION['EDIReference']  . ' ' . __('does not match with the code') . ' ' . $NAD_C082[0] . ' ' . __('used in this message') . '. ' . __('This implies that the EDI message is for some other supplier') . '. ' . __('No further processing will be done');
-							$TryNextFile = True; /* Look for other EDI msgs */
-							$CreateOrder = False; /* Don't create order in system */						}
+							$TryNextFile = true; /* Look for other EDI msgs */
+							$CreateOrder = false; /* Don't create order in system */						}
 						break;
 					case 'DP':
 						/*Delivery Party - get the address and name etc */
@@ -571,8 +571,8 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 												FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno = custbranch.debtorno WHERE custbranchcode='" . $NAD_C082[0] . "' AND custbranch.debtorno='" . $Order->DebtorNo . "' AND debtorsmaster.ediorders=1");
 						if (DB_num_rows($BranchResult)!=1){
 							$EmailText .= "\n" . __('The Store number was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . $Order->DebtorNo . ' ' .__('or several that match this store number') . '. ' . __('This order could not be processed further');
-							$TryNextFile = True; /* Look for other EDI msgs */
-							$CreateOrder = False; /*Dont create order in system */
+							$TryNextFile = true; /* Look for other EDI msgs */
+							$CreateOrder = false; /*Dont create order in system */
 						} else {
 							$BranchRow = DB_fetch_array($BranchResult);
 							$Order->BranchCode = $BranchRow['branchcode'];
@@ -614,8 +614,8 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 
 					 if (DB_num_rows($ByResult)!=1){
 							$EmailText .= "\n" . __('The buyer ediref code was specified as') . ' ' . $NAD_C082[0] . ' ' . __('Unfortunately there are either no branches of customer code') . ' ' . __('or several that match this ediref code. This order could not be processed further');
-							$TryNextFile = True; /* Look for other EDI msgs */
-							$CreateOrder = False; /* Dont create order in system */
+							$TryNextFile = true; /* Look for other EDI msgs */
+							$CreateOrder = false; /* Dont create order in system */
 					} else {
 							$ByRow = DB_fetch_array($ByResult);
 							$Order->BranchCode = $ByRow['branchcode'];
@@ -1027,7 +1027,7 @@ echo '</pre>';
 	if (mb_strlen($EmailText)>10){
 		/*Now send the email off to the appropriate person */
 
-		if ($TryNextFile==True){ /*had to abort this message */
+		if ($TryNextFile==true){ /*had to abort this message */
 			/* send the email to the sysadmin  - get email address from users*/
 
 			$Result = DB_query("SELECT realname, email FROM www_users WHERE fullaccess=7 AND email <>''");
@@ -1043,7 +1043,7 @@ echo '</pre>';
 					$i++;
 				}
 			}
-			$TryNextFile = False; /*reset the abort to false before hit next file*/
+			$TryNextFile = false; /*reset the abort to false before hit next file*/
 			$MailSubject = __('EDI Order Message Error');
 		} else {
 			$MailSubject = __('EDI Order Message') . ' ' . $Order->CustRef;

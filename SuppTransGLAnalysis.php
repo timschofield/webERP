@@ -1,8 +1,10 @@
 <?php
 
-/* The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
+/*The supplier transaction uses the SuppTrans class to hold the information about the invoice or credit note
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing/crediting and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
+
+include('includes/DefineSuppTransClass.php');
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
@@ -10,8 +12,6 @@ $Title = __('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
 include('includes/header.php');
-
-include('includes/DefineSuppTransClass.php');
 include('includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
@@ -22,18 +22,18 @@ if (!isset($_SESSION['SuppTrans'])) {
 	/*It all stops here if there aint no supplier selected and transaction initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
-/* If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
+/*If the user hit the Add to transaction button then process this first before showing  all GL codes on the transaction otherwise it wouldnt show the latest addition*/
 
 if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == __('Enter GL Line')) {
 
-	$InputError = False;
+	$InputError = false;
 	if ($_POST['GLCode'] == '') {
 		$_POST['GLCode'] = $_POST['AcctSelection'];
 	}
 
 	if ($_POST['GLCode'] == '') {
 		prnMsg(__('You must select a general ledger code from the list below'), 'warn');
-		$InputError = True;
+		$InputError = true;
 	}
 
 	$SQL = "SELECT accountcode,
@@ -43,24 +43,24 @@ if (isset($_POST['AddGLCodeToTrans']) and $_POST['AddGLCodeToTrans'] == __('Ente
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0 and $_POST['GLCode'] != '') {
 		prnMsg(__('The account code entered is not a valid code') . '. ' . __('This line cannot be added to the transaction') . '.<br />' . __('You can use the selection box to select the account you want'), 'error');
-		$InputError = True;
+		$InputError = true;
 	} else if ($_POST['GLCode'] != '') {
 		$MyRow = DB_fetch_row($Result);
 		$GLActName = $MyRow[1];
 		if (!is_numeric(filter_number_format($_POST['Amount']))) {
 			prnMsg(__('The amount entered is not numeric') . '. ' . __('This line cannot be added to the transaction'), 'error');
-			$InputError = True;
+			$InputError = true;
 		} elseif ($_POST['JobRef'] != '') {
 			$SQL = "SELECT contractref FROM contracts WHERE contractref='" . $_POST['JobRef'] . "'";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 0) {
 				prnMsg(__('The contract reference entered is not a valid contract, this line cannot be added to the transaction'), 'error');
-				$InputError = True;
+				$InputError = true;
 			}
 		}
 	}
 
-	if ($InputError == False) {
+	if ($InputError == false) {
 
 		$_SESSION['SuppTrans']->Add_GLCodes_To_Trans($_POST['GLCode'], $GLActName, filter_number_format($_POST['Amount']), $_POST['Narrative'], $_POST['tag']);
 		unset($_POST['GLCode']);

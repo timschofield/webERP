@@ -4,7 +4,7 @@
 	$PositionPointer = 0;
 	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (mb_strpos ($MsgLineText,'[',$PositionPointer)!=False){
+	while (mb_strpos ($MsgLineText,'[',$PositionPointer)!=false){
 		$LastPositionPointer = $PositionPointer;
 		$PositionPointer = mb_strpos ($MsgLineText,'[',$PositionPointer);
 

@@ -219,7 +219,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 												$_SESSION['EDI_MsgPending'] . "/EDI_INV_" . $EDITransNo,
 												false);
 
-				if ($MessageSent==True){
+				if ($MessageSent==true){
 					echo '<br /><br />';
 					prnMsg(__('EDI Message') . ' ' . $EDITransNo . ' ' . __('was successfully emailed'),'success');
 				} else {
@@ -248,7 +248,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			}
 
 
-			if ($MessageSent==True){ /*the email was sent successfully */
+			if ($MessageSent==true){ /*the email was sent successfully */
 				/* move the sent file to sent directory */
 				copy ($_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo, $_SESSION['EDI_MsgSent'] . '/EDI_INV_' . $EDITransNo);
 				unlink($_SESSION['EDI_MsgPending'] . '/EDI_INV_' . $EDITransNo);

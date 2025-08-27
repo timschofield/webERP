@@ -906,9 +906,9 @@ KL RICARD COMMENTED OUT END */
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) and mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
-		$Printed = True;
+		$Printed = true;
 	} else {
-		$Printed = False;
+		$Printed = false;
 		echo '<fieldtext>', __('Not yet printed') . '</fieldtext>
 			</field>';
 	}
