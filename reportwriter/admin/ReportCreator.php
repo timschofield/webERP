@@ -7,7 +7,7 @@ information and filter/criteria information. The Report builder process is as fo
 
 Step 1: (or script entry): displays the current listing of reports. Uses form ReportsHome.html as a UI.
 Step 2: (action=step2): After the user has selected an option, this step is followed to enter a report
-	name and the type of report it is for grouping purposes.
+		name and the type of report it is for grouping purposes.
 Step 3: Handles the page setup information.
 Step 4: Handles the database setup and link information.
 Step 5: Handles the database field selection.
@@ -29,7 +29,6 @@ define('DBReports','reports');		// name of the databse holding the main report i
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 define ('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
 define ('MyDocPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to user saved documents
-
 
 // Fetch necessary include files for report creator
 require_once('../languages/' . $ReportLanguage . '/reports.php');

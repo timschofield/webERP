@@ -6,11 +6,12 @@ $PathPrefix = __DIR__ . '/../';
 require($PathPrefix . 'includes/session.php');
 
 // TBD The following line needs to be replaced when more translations are available
-$ReportLanguage = 'en_US';					// default language file
+$ReportLanguage = 'en_US';				// default language file
 define('DBReports','reports');			// name of the databsse holding the main report information (ReportID)
 define('DBRptFields','reportfields');	// name of the database holding the report fields
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 define('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to default reports
+
 // Fetch necessary include files - Host application specific (webERP)
 require_once($PathPrefix . 'includes/DateFunctions.php');
 
