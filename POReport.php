@@ -5,7 +5,7 @@
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'PurchaseOrdering'; /* ?????????? */
 $BookMark = 'POReport';

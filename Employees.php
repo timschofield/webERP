@@ -2,7 +2,7 @@
 
 /* Defines the employees that require timesheets */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Employee Maintenance');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.

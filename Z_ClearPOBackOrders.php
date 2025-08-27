@@ -2,7 +2,7 @@
 
 $PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE To Clear purchase orders with quantity on back order');
 $ViewTopic = 'SpecialUtilities';

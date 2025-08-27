@@ -1,11 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Adjustments');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
-
 include('includes/header.php');
 
 include('includes/DefineStockAdjustment.php');

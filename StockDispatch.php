@@ -1,11 +1,13 @@
 <?php
-use Dompdf\Dompdf;
 
 // StockDispatch.php - Report of parts with overstock at one location that can be transferred
 // to another location to cover shortage based on reorder level. Creates loctransfer records
 // that can be processed using Bulk Inventory Transfer - Receive.
-require 'vendor/autoload.php'; // Make sure DomPDF is loaded
-include ('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
+
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
 
@@ -516,4 +518,3 @@ else { /*The option to print PDF was not hit so display form */
 	include ('includes/footer.php');
 
 } /*end of else not PrintPDF */
-

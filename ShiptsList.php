@@ -4,7 +4,7 @@
 
 //$PageSecurity = 2;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';

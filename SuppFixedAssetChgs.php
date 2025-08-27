@@ -6,7 +6,7 @@ Asset additions are posted to the debit of fixed asset category cost account if 
 
 include('includes/DefineSuppTransClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Fixed Asset Charges or Credits');
 $ViewTopic = 'FixedAssets';

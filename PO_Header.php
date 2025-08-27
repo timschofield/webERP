@@ -3,7 +3,7 @@
 /// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];

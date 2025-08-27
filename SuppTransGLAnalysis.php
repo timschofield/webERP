@@ -6,12 +6,13 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 include('includes/DefineSuppTransClass.php');
 
-/* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {

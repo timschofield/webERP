@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $PricesSecurity = 12; // don't show pricing info unless security token 12 available to user
 

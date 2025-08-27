@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP 3.09 - 3.10');
 include('includes/header.php');

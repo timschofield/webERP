@@ -2,7 +2,7 @@
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Reverse and Delete Supplier Payments');
 $ViewTopic = 'SpecialUtilities';

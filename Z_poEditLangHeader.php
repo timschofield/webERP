@@ -4,7 +4,7 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Edit Header');// __('Edit a Language File Header')
 $ViewTopic = "SpecialUtilities";

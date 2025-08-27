@@ -2,7 +2,7 @@
 
 /* Prints a ship label */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ORD'])) {
 	$SelectedORD = $_GET['ORD'];

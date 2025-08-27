@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['OrderNo'])) {
 	$Title = __('Reviewing Purchase Order Number').' ' . $_GET['OrderNo'];

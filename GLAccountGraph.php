@@ -38,7 +38,7 @@
  * 5. Includes the footer file.
  */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('GL Account Graph');
 $ViewTopic = 'GeneralLedger';

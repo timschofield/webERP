@@ -9,7 +9,7 @@ This is where the delivery details are confirmed/entered/modified and the order 
 /// @todo move to after session.php, if no side effects
 include('includes/DefineCartClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.

@@ -4,7 +4,7 @@
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Payment Allocations');
 $ViewTopic = 'AccountsPayable';

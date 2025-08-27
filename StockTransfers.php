@@ -2,7 +2,7 @@
 
 /* Entry of point to point stock location transfers of a single part. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Transfers');
 $ViewTopic = "Inventory";

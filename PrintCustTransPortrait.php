@@ -2,7 +2,7 @@
 
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Print Invoices or Credit Notes (Portrait Mode)');
 $ViewTopic = 'ARReports';
