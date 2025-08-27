@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 27, 2025 at 12:08 PM
+-- Generation Time: Aug 27, 2025 at 03:37 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -4284,7 +4284,8 @@ ALTER TABLE `debtorsmaster`
   ADD KEY `idx_debtorsmaster_paymentterms` (`paymentterms`),
   ADD KEY `idx_debtorsmaster_salestype` (`salestype`),
   ADD KEY `idx_debtorsmaster_ediinvoices` (`ediinvoices`),
-  ADD KEY `idx_debtorsmaster_ediorders` (`ediorders`);
+  ADD KEY `idx_debtorsmaster_ediorders` (`ediorders`),
+  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`);
 
 --
 -- Indexes for table `debtortrans`
@@ -4314,7 +4315,8 @@ ALTER TABLE `debtortranstaxes`
 -- Indexes for table `debtortype`
 --
 ALTER TABLE `debtortype`
-  ADD PRIMARY KEY (`typeid`);
+  ADD PRIMARY KEY (`typeid`),
+  ADD KEY `idx_debtortype_typeid_typename` (`typeid`,`typename`);
 
 --
 -- Indexes for table `debtortypenotes`
@@ -4722,7 +4724,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_taxprovinceid` (`taxprovinceid`),
   ADD KEY `idx_locations_klemaillastpackacgingtransfer_loccode` (`klemaillastpackacgingtransfer`,`loccode`),
   ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
-  ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`);
+  ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`),
+  ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`);
 
 --
 -- Indexes for table `locationtypes`
@@ -5249,7 +5252,8 @@ ALTER TABLE `salesglpostings`
 --
 ALTER TABLE `salesman`
   ADD PRIMARY KEY (`salesmancode`),
-  ADD UNIQUE KEY `Current+Code` (`current`,`salesmancode`);
+  ADD UNIQUE KEY `Current+Code` (`current`,`salesmancode`),
+  ADD KEY `idx_salesman_salesmancode_current` (`salesmancode`,`current`);
 
 --
 -- Indexes for table `salesorderdetails`
@@ -5263,7 +5267,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_stkcode_actualdispatchdate` (`stkcode`,`actualdispatchdate`),
   ADD KEY `idx_salesorderdetails_completed_orderno` (`completed`,`orderno`),
   ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`),
-  ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`);
+  ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
+  ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`);
 
 --
 -- Indexes for table `salesorders`
@@ -5284,7 +5289,9 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_quotation` (`quotation`),
   ADD KEY `idx_salesorders_debtorno_orddate` (`debtorno`,`orddate`),
   ADD KEY `idx_salesorders_fromstkloc_orddate_salesperson` (`fromstkloc`,`orddate`,`salesperson`),
-  ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`);
+  ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`),
+  ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
+  ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`);
 
 --
 -- Indexes for table `salestypes`
@@ -5454,7 +5461,8 @@ ALTER TABLE `stockmaster`
   ADD UNIQUE KEY `uk_stockmaster_discountcategory_stockid` (`discountcategory`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`),
   ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`),
-  ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`);
+  ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`),
+  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`);
 
 --
 -- Indexes for table `stockmoves`
