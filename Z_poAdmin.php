@@ -1,5 +1,5 @@
 <?php
-//	Z_poAdmin.php
+
 //	Allows for a gettext language po file to be administered
 /*	Steve Kitchen
 	Up front menu for language file maintenance */
@@ -11,17 +11,17 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_poAdmin';
 $Title = __('Maintain Language Files');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
 /* Check if we have gettext - we're useless without it... */
-
-if (!function_exists('gettext')){
-	prnMsg(__('gettext is not installed on this system') . '. ' . __('You cannot use the language files without it'),'error');
-	exit();
-}
+//if (!function_exists('gettext')){
+//	prnMsg(__('gettext is not installed on this system') . '. ' . __('You cannot use the language files without it'),'error');
+//	exit();
+//}
 
 if (!is_writable('./locale/' . $_SESSION['Language'])) {
 	prnMsg(__('You do not have write access to the required files please contact your system administrator'),'error');

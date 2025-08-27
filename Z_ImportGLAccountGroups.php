@@ -3,7 +3,7 @@
 include('includes/session.php');
 
 include('api/api_errorcodes.php');
-include('api/glgroups.php');
+include('api/api_glgroups.php');
 
 $Title = __('Import Chart of Accounts');
 $ViewTopic = 'SpecialUtilities';

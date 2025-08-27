@@ -1,9 +1,10 @@
 <?php
+
 //$PageSecurity = 15;
 include('includes/session.php');
+
 $Title = __('Upgrade webERP 3.11 - 4.00');
 include('includes/header.php');
-
 
 if (empty($_POST['DoUpgrade'])){
 	prnMsg(__('This script will run perform any modifications to the database since v 3.11 required to allow the additional functionality in version 4.00 scripts'),'info');
