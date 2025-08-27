@@ -13,11 +13,11 @@ echo '<html>
 			<title>', $Title, '</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 			<meta name="viewport" content="width=device-width, initial-scale=1.0">
-			<link rel="icon" href="favicon.ico" type="image/x-icon" />
-			<script async src="javascripts/DBUpgrade.js"></script>';
+			<link rel="icon" href="' . $RootPath. '/favicon.ico" type="image/x-icon" />
+			<script async src="' . $RootPath. '/javascripts/DBUpgrade.js"></script>';
 
 echo '<title>', $Title, '</title>';
-echo '<link rel="stylesheet" href="css/dbupgrade.css" type="text/css" />';
+echo '<link rel="stylesheet" href="' . $RootPath. '/css/dbupgrade.css" type="text/css" />';
 
 //ob_start(); /*what is this for? */
 if (!isset($_SESSION['DBVersion'])) {

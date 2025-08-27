@@ -382,7 +382,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
-                	echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
+                	echo '<a href="'.$RootPath.'/SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
@@ -960,7 +960,7 @@ if (isset($_POST['NonStockOrder'])) {
 		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
 
-	echo'</select><a href="FixedAssetItems.php" target=_blank>' .  __('New Fixed Asset') . '</a></td></tr>
+	echo'</select><a href="'.$RootPath.'/FixedAssetItems.php" target=_blank>' .  __('New Fixed Asset') . '</a></td></tr>
 		<tr>
 			<td>' . __('Quantity to purchase') . '</td>
 			<td><input type="text" class="number" name="Qty" size="10" value="1" /></td>

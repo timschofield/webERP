@@ -1,6 +1,6 @@
 <?php
 
-$PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
+$PageSecurity = 15; // hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
 require(__DIR__ . '/includes/session.php');
 

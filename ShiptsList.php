@@ -4,7 +4,11 @@
 
 //$PageSecurity = 2;
 
+<<<<<<< HEAD
 require(__DIR__ . '/includes/session.php');
+=======
+include('includes/session.php');
+>>>>>>> master
 
 $Title = __('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';

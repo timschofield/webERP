@@ -124,7 +124,7 @@ echo '<field>
 		<label for="AssetID">', __('Enter Asset ID'), ':</label>
 		<input class="integer" maxlength="6" name="AssetID" pattern="[^-]{1,5}" placeholder="', __('Positive integer'), '" size="7" title="" type="text" value="',  $_POST['AssetID'], '" />
 		<fieldhelp>', __('The Asset ID should be positive integer'), '</fieldhelp>
-		<a href="FixedAssetItems.php" target="_blank">', __('New Fixed Asset'), '</a>
+		<a href="' . $RootPath . '/FixedAssetItems.php" target="_blank">', __('New Fixed Asset'), '</a>
 	</field>
 	<field>
 		<label for="AssetSelection">', '<b>' . __('OR') . ' </b>' . __('Select from list'), ':</label>

@@ -2,7 +2,7 @@
 
 require(__DIR__ . '/includes/session.php');
 
-if (!in_array($PageSecurity,$_SESSION['AllowedPageSecurityTokens'])){
+if (!in_array($PageSecurity, $_SESSION['AllowedPageSecurityTokens'])){
 	echo '<html><head></head><body><br /><br /><br /><br /><br /><br /><br /><div class="centre"><font color="red" size="4"><b>' . __('The security settings on your account do not permit you to access this function') . '</b></font></div></body></html>';
 	exit();
 }
