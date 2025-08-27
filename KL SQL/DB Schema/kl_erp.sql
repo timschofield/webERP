@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 26, 2025 at 04:58 PM
+-- Generation Time: Aug 27, 2025 at 12:08 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.8
 
@@ -4721,7 +4721,8 @@ ALTER TABLE `locations`
   ADD UNIQUE KEY `uk_locations_klposcashaccount_loccode` (`klposcashaccount`,`loccode`),
   ADD KEY `idx_locations_taxprovinceid` (`taxprovinceid`),
   ADD KEY `idx_locations_klemaillastpackacgingtransfer_loccode` (`klemaillastpackacgingtransfer`,`loccode`),
-  ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`);
+  ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
+  ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`);
 
 --
 -- Indexes for table `locationtypes`
@@ -4751,7 +4752,8 @@ ALTER TABLE `locstock`
   ADD PRIMARY KEY (`loccode`,`stockid`),
   ADD UNIQUE KEY `uk_locstock_stockid_loccode` (`stockid`,`loccode`),
   ADD UNIQUE KEY `uk_locstock_reorderlevel_loccode_stockid` (`reorderlevel`,`loccode`,`stockid`),
-  ADD KEY `idx_locstock_bin` (`bin`);
+  ADD KEY `idx_locstock_bin` (`bin`),
+  ADD KEY `idx_locstock_stockid_loccode_reorderlevel_quantity` (`stockid`,`loccode`,`reorderlevel`,`quantity`);
 
 --
 -- Indexes for table `loctransfercancellations`
@@ -5391,7 +5393,8 @@ ALTER TABLE `stockcategory`
   ADD PRIMARY KEY (`categoryid`),
   ADD KEY `idx_stockcategory_categorydescription` (`categorydescription`),
   ADD KEY `idx_stockcategory_stocktype_categoryid` (`stocktype`,`categoryid`),
-  ADD KEY `idx_stockcategory_klprioritytransfers` (`klprioritytransfers`);
+  ADD KEY `idx_stockcategory_klprioritytransfers` (`klprioritytransfers`),
+  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`);
 
 --
 -- Indexes for table `stockcatproperties`
@@ -5450,7 +5453,8 @@ ALTER TABLE `stockmaster`
   ADD UNIQUE KEY `uk_stockmaster_controlled_stockid` (`controlled`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_discountcategory_stockid` (`discountcategory`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`),
-  ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`);
+  ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`),
+  ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`);
 
 --
 -- Indexes for table `stockmoves`

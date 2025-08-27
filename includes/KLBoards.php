@@ -1045,38 +1045,41 @@ function FinishedStockDistribution($Kind, $ByReport){
 	}else{
 		$Operator1 =  "	";
 	}
-if ($ByReport == "LOCATION") {
-    $SQL = "SELECT locstock.loccode,
-            	locations.locationname,
-                SUM(locstock.reorderlevel) AS optimalstock,
-                SUM(locstock.quantity) AS realstock,
-                SUM(CASE WHEN locstock.reorderlevel != 0 THEN 1 ELSE 0 END) AS optimalmodels,
-                SUM(CASE WHEN locstock.quantity != 0 THEN 1 ELSE 0 END) AS realmodels
-            FROM locstock
-			INNER JOIN locations
-				ON locstock.loccode = locations.loccode
-            INNER JOIN stockmaster
-				ON locstock.stockid = stockmaster.stockid
-            INNER JOIN stockcategory
-				ON stockmaster.categoryid = stockcategory.categoryid
-            WHERE stockcategory.stocktype = 'F'" .
-            	$Operator1 . "
-            GROUP BY locstock.loccode
-            ORDER BY locations.locationname";
+	
+	if ($ByReport == "LOCATION") {
+		$SQL = "SELECT locstock.loccode,
+					locations.locationname,
+					SUM(locstock.reorderlevel) AS optimalstock,
+					SUM(locstock.quantity) AS realstock,
+					SUM(CASE WHEN locstock.reorderlevel > 0 THEN 1 ELSE 0 END) AS optimalmodels,
+					SUM(CASE WHEN locstock.quantity > 0 THEN 1 ELSE 0 END) AS realmodels
+				FROM stockcategory
+				INNER JOIN stockmaster
+					ON stockmaster.categoryid = stockcategory.categoryid
+				INNER JOIN locstock
+					ON locstock.stockid = stockmaster.stockid
+				INNER JOIN locations
+					ON locations.loccode = locstock.loccode
+				WHERE stockcategory.stocktype = 'F'
+					AND stockmaster.discontinued = 0" .
+					$Operator1 . "
+				GROUP BY locstock.loccode, locations.locationname
+				ORDER BY locations.locationname";
 	}elseif ($ByReport == "STOCKCATEGORY") {
-		$SQL = "SELECT stockmaster.categoryid,
+		$SQL = "SELECT stockcategory.categoryid,
 					stockcategory.categorydescription,
 					SUM(locstock.reorderlevel) AS optimalstock,
 					SUM(locstock.quantity) AS realstock,
-					COUNT(DISTINCT CASE WHEN locstock.quantity != 0 THEN locstock.stockid ELSE NULL END) AS realmodels
-				FROM locstock
+					COUNT(DISTINCT CASE WHEN locstock.quantity > 0 THEN locstock.stockid END) AS realmodels
+				FROM stockcategory
 				INNER JOIN stockmaster
-					ON locstock.stockid = stockmaster.stockid
-				INNER JOIN stockcategory
 					ON stockmaster.categoryid = stockcategory.categoryid
-				WHERE stockcategory.stocktype = 'F'" .
+				INNER JOIN locstock
+					ON locstock.stockid = stockmaster.stockid
+				WHERE stockcategory.stocktype = 'F'
+					AND stockmaster.discontinued = 0" .
 					$Operator1 . "
-				GROUP BY stockmaster.categoryid
+				GROUP BY stockcategory.categoryid, stockcategory.categorydescription
 				ORDER BY stockcategory.categorydescription";
 	}else{
 		return false;
