@@ -1,5 +1,5 @@
 <?php
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;

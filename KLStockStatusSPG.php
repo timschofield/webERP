@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Status in Shops');
 include('includes/header.php');

@@ -5,7 +5,7 @@
 *            and without showing tags fields.
 ********************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('View Unfulfilled Stock Requests');
 $ViewTopic = 'Inventory';

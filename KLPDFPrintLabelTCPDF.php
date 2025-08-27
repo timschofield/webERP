@@ -6,7 +6,7 @@
  * 
  ******************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');

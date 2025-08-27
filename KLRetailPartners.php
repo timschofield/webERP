@@ -2,7 +2,7 @@
 
 /* Defines the KL retail Partners */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Retail Partners Maintenance'); // Screen identification.
 $ViewTopic = ''; // Filename's id in ManualContents.php's TOC.

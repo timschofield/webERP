@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Import Excel with Lazada URL information');
 include('includes/header.php');

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('List of packaging needed to fill up the shops');
 include('includes/header.php');

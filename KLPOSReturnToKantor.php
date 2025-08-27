@@ -4,7 +4,7 @@
 KL RICARD Clean up of StockLocTransfer so SPG can create transfers from their shop to KANTO
 ***************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";

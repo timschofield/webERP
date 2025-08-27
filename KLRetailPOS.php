@@ -39,7 +39,7 @@ v 1.00 2011-07-25: Kantor starts using it.
 
 include('includes/DefineCartClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('POS ' . $_SESSION['locationname']);
 include('includes/header.php');

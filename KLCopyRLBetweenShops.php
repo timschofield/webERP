@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Copy all reorder levels from one location to another');// Screen identificator.
 include('includes/header.php');

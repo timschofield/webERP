@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Item Tags') . ' / ' . __('Maintenance');
 include('includes/header.php');

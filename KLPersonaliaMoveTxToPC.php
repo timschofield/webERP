@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Move Monthly Salaries Data to Petty Cash');
 include('includes/header.php');

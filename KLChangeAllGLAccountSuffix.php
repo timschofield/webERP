@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE Change ALL GL Account Code SUFFIX');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.

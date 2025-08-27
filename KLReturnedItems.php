@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $NumDays = 30;
 $Title = __('Items Returned by Customers for the last ') . $NumDays . ' days';

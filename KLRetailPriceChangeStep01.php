@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Change of Retail Price -> Step 01');
 include('includes/header.php');

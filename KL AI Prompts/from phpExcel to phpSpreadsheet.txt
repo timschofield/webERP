@@ -1,13 +1,13 @@
 Convert this script from using PHPExcel to PHPSpreadsheet
 
-Before include('includes/session.php');
+Before require(__DIR__ . '/includes/session.php');
 add the line:
 require_once 'vendor/autoload.php';
 delete the 2 lines:
 require_once ('Classes/PHPExcel.php');
 require_once ('Classes/PHPExcel/IOFactory.php');
 
-After the line include('includes/session.php');
+After the line require(__DIR__ . '/includes/session.php');
 add the lines:
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;

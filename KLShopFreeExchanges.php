@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('SPG Last 10 Shop Tali Exchanges');
 include('includes/header.php');

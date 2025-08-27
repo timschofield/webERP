@@ -8,7 +8,7 @@
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 // Info about a statement of cash flows using the indirect method: IAS 7 - Statement of Cash Flows.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Statement of Cash Flows, Cash Accounts Difference Method');
 $ViewTopic = 'GeneralLedger';

@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Move Item To 50% Discount -> Step 01');
 include('includes/header.php');

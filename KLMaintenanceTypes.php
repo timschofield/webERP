@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Maintenance Types') . ' / ' . __('Types of Maintenance ');
 include('includes/header.php');

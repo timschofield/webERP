@@ -10,7 +10,7 @@
  *  
  ************************************************************************************************************************ */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Daily Sales Inquiry');
 include('includes/header.php');

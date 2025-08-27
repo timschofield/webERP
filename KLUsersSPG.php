@@ -3,7 +3,7 @@
 KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts 
 ***************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL SPG User Maintenance');
 $ViewTopic= 'GettingStarted';

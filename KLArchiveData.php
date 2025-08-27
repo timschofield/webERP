@@ -19,7 +19,7 @@ submit - Processes form submission and calls the appropriate archive functions.
 UpdateArchiveTablePeriod - Updates the archived period for a specific table in the klarchivedtables table.
 **************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Archive Data from Production DB into Archive DB');
 

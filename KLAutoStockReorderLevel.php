@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Automatic Setting of Stock Re-Order Level');
 include('includes/header.php');

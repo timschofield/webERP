@@ -1,7 +1,7 @@
 <?php
 /* $Id: locationzones.php 6998 2014-11-22 02:28:56Z daintree $*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('Location Zones Maintenance');
 include('includes/header.php');
 

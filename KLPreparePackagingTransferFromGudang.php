@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Send email to team to prepare a Packaging Transfer');
 include('includes/header.php');

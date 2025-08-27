@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('KL Set Reorder Level zero for a location');// Screen identificator.
 include('includes/header.php');
