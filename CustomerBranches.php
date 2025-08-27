@@ -1,4 +1,5 @@
 <?php
+
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.php');
@@ -234,7 +235,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['DeliverBlind'] . "')";
 	}
 	echo '<br />';
-	$Msg = __('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . __('has been added, add another branch, or return to the') . ' <a href="index.php">' . __('Main Menu') . '</a>';
+	$Msg = __('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . __('has been added, add another branch, or return to the') . ' <a href="' . $RootPath . '/index.php">' . __('Main Menu') . '</a>';
 
 	//run the SQL from either of the above possibilites
 

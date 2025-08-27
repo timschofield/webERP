@@ -634,7 +634,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 } else { //show file upload form
 	prnMsg(__('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'), 'warn');
 
-	echo '<a href="Z_ImportDebtors.php?gettemplate=1">Get Import Template</a>';
+	echo '<a href="' . $RootPath . '/Z_ImportDebtors.php?gettemplate=1">Get Import Template</a>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
