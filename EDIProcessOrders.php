@@ -94,17 +94,17 @@ while ($SegRow=DB_fetch_array($OrderSeg)){
 
 $TotalNoOfSegments = $i-1;
 
-$ediordersdir = $_SERVER['DOCUMENT_ROOT'] . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders'];
+$ediordersdir = $PathPrefix . $_SESSION['EDI_Incoming_Orders'];
 echo '<br />' . $ediOrdersdir;
 if (!is_dir($ediordersdir)) {
 	error_log("EDI orders directory error " . $ediordersdir, 0); // php logging
 	exit();
-
 }
+
 //	error_log("EDI orders directory " . $ediordersdir , 0);
 
 /*get the list of files in the incoming orders directory - from config.php */
-//$DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
+//$DirHandle = opendir($PathPrefix . $_SESSION['EDI_Incoming_Orders']);
 $DirHandle = opendir($ediordersdir);
 
 //if $DirHandle = false {
@@ -127,7 +127,7 @@ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the inc
 	$FirstSegInGrp =0;
 	$SegGroup =0;
 
-//	$fp = fopen($_SERVER['DOCUMENT_ROOT'] .'/$RootPath/'.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
+//	$fp = fopen($PathPrefix.$_SESSION['EDI_Incoming_Orders'].'/'.$OrderFile,'r');
 	$fp = fopen($ediordersdir.'/'.$OrderFile,'r');
 
 	$SegID = 0;
