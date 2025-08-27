@@ -7,13 +7,15 @@
 ***************************************************************/
 
 include('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
+
 $Title = __('Assignment of Cash to Petty Cash Tab');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);

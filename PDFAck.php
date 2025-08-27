@@ -1,11 +1,12 @@
 <?php
+
 /* Prints an acknowledgement using DomPDF */
 
 require_once('includes/session.php');
-require_once('includes/SQL_CommonFunctions.php');
-require_once('vendor/autoload.php'); // DomPDF
 
 use Dompdf\Dompdf;
+
+require_once('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {

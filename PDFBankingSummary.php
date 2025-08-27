@@ -1,8 +1,10 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+
 use Dompdf\Dompdf;
+
+include('includes/SQL_CommonFunctions.php');
 
 if (isset($_GET['BatchNo'])){
 	$_POST['BatchNo'] = $_GET['BatchNo'];

@@ -7,6 +7,7 @@
 *********************************************************************************************/
 
 include('includes/session.php');
+
 $ViewTopic = 'PettyCash';
 $BookMark = 'PCExpenses';
 $Title = __('Maintenance Of Petty Cash Of Expenses');
@@ -36,6 +37,7 @@ if (isset($_POST['Cancel'])) {
 if (isset($Errors)) {
 	unset($Errors);
 }
+
 if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;

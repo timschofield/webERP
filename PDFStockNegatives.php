@@ -2,11 +2,10 @@
 
 include('includes/session.php');
 
-// Include DomPDF autoloader and setup (similar to InventoryPlanning.php)
-require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
 
 $Title = __('Inventory Negatives Listing');
+
 $ErrMsg = __('An error occurred retrieving the negative quantities.');
 
 $SQL = "SELECT stockmaster.stockid,

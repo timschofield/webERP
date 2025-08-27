@@ -10,11 +10,12 @@
 *********************************************************************/
 
 include('includes/session.php');
+
 $Title = __('Authorisation of Petty Cash Expenses');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 

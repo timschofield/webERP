@@ -1,7 +1,9 @@
 <?php
 
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerStatements';
 $Title = __('Print Customer Statements');

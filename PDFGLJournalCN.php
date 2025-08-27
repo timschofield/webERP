@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 if (isset($_POST['JournalNo'])) {
 	$JournalNo=$_POST['JournalNo'];
 	$TypeID=$_POST['Type'];

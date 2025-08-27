@@ -7,15 +7,18 @@
 * KL RICARD Added KL fields to control timing, status, etc.
 * 
 **************************************************************************************/
+
+/// @todo move to after session.php if no side effects
 include('includes/DefinePOClass.php');
-include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
 include('includes/session.php');
 
-if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
-
 $Title = __('Purchase Order Items');
+
+include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
 $identifier = $_GET['identifier'];
 

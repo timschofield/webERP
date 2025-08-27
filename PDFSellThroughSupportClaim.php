@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 use Dompdf\Dompdf;
 
 $Title = __('Sell Through Support Claims Report');

@@ -17,10 +17,6 @@ if (isset($_GET['SelectedTerms'])){
 	$SelectedTerms = $_POST['SelectedTerms'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 if (isset($_POST['submit'])) {
