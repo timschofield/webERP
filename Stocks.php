@@ -2,7 +2,7 @@
 
 // Defines an item - maintenance and addition of new parts.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Item Maintenance');
 $ViewTopic = 'Inventory';

@@ -3,7 +3,7 @@
 
 include('includes/DefinePaymentClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 $Title = __('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php

@@ -1,7 +1,7 @@
 <?php
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
 $Title = __('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?

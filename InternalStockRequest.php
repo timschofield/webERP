@@ -3,7 +3,7 @@
 /// @todo move to after session.php if no side effects
 include('includes/DefineStockRequestClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create an Internal Materials Request');
 $ViewTopic = 'Inventory';

@@ -2,7 +2,8 @@
 
 // Entry of users and security settings of users.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Users Maintenance');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';

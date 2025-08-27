@@ -3,7 +3,7 @@
 // Script to rebuild sales analysis records from stock movements
 $PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Rebuild sales analysis Records');
 $ViewTopic = 'SpecialUtilities';

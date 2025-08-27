@@ -2,7 +2,7 @@
 
 /* Defines the general ledger account to be used for cost of sales entries */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Cost Of Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';

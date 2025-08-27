@@ -2,7 +2,7 @@
 
 /* Utility to change a GL account code in all webERP. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE Change A GL Account Code');
 $ViewTopic = 'SpecialUtilities';

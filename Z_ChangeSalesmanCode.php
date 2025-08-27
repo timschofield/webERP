@@ -2,7 +2,7 @@
 
 /* This script is an utility to change a salesman code. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('UTILITY PAGE To Change A Salesman Code In All Tables');
 $ViewTopic = 'SpecialUtilities';

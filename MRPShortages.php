@@ -1,7 +1,7 @@
 <?php
 
 // Report of parts with demand greater than supply as determined by MRP
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (!DB_table_exists('mrprequirements')) {
 	$Title = __('MRP error');

@@ -8,7 +8,7 @@ Also an array of shipment charges for charges to shipments to be apportioned acc
 include('includes/DefineSuppTransClass.php');
 include('includes/DefinePOClass.php'); //needed for auto receiving code
 /* Session started in header.php for password checking and authorisation level check */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Enter Supplier Invoice');
 /* webERP manual links before header.php */

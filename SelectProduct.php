@@ -6,7 +6,7 @@ $PricesSecurity = 12; //don't show pricing info unless security token 12 availab
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Search Inventory Items');
 $ViewTopic = 'Inventory';

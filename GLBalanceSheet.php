@@ -19,8 +19,8 @@ Parameters:
 // END: Functions division =====================================================
 
 // BEGIN: Procedure division ===================================================
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-	include('includes/session.php');
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	require(__DIR__ . '/includes/session.php');
 }
 
 use Dompdf\Dompdf;
@@ -469,7 +469,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else {
 	// Show a form to allow input of criteria for TB to show
-	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		include('includes/header.php');
 	}
 	if (!isset($_POST['ShowZeroBalance'])) {

@@ -2,7 +2,7 @@
 
 $PageSecurity = 15; // hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Upgrade webERP Database');
 include('includes/header.php');

@@ -2,7 +2,7 @@
 
 // Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
 

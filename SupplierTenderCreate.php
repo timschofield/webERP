@@ -1,6 +1,6 @@
 <?php
 include('includes/DefineTenderClass.php');
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 

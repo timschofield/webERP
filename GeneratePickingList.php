@@ -2,7 +2,7 @@
 
 // Generate a picking list using DomPDF.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 /* $Title is set in several parts of this script. */
 $ViewTopic = 'Sales';

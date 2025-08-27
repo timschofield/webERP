@@ -27,7 +27,7 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('webERP Manual');
 

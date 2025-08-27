@@ -8,7 +8,8 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangRemaining";
 $Title = __('Edit Remaining Strings For This Language');

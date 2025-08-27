@@ -1,8 +1,9 @@
 <?php
 
-//Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
+// Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Internal Stock Request Inquiry');
 $ViewTopic = 'Inventory';
 $BookMark = 'InventoryRequests';

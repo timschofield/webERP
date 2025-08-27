@@ -13,7 +13,7 @@ and an array of the recipients */
 
 $AllowAnyone = true;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 /*The Sales report to send */
 $_GET['ReportID'] = 2;

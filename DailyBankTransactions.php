@@ -1,7 +1,7 @@
 <?php
 
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';

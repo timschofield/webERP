@@ -3,7 +3,7 @@
 // Report of manufactured parts that MRP has determined should have
 // work orders created for them
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
