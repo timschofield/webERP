@@ -9,11 +9,11 @@ $Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
-$MySQLPort = $_SESSION['Installer']['Port'];
+$DBPort = $_SESSION['Installer']['Port'];
 $_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
 $DefaultDatabase = 'default';
 
-ob_start();
+//ob_start();
 
 if (isset($_POST['install'])) {
 	$_SESSION['CompanyRecord']['coyname'] = $_POST['CompanyName'];
@@ -28,12 +28,16 @@ if (isset($_POST['install'])) {
 
 include($PathPrefix . 'includes/InstallFunctions.php');
 
-$Errors = CreateDataBase($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['Installer']['Database']);
+$Errors = CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Database'], $DBPort);
 
-/// @todo exit if any errors
+if (count($Errors)) {
+	echo '<div class="error">' . __('Unable to create the database schema.') . '</div>';
 
-include($PathPrefix . 'includes/ConnectDB_' . $_SESSION['Installer']['DBMS'] . '.php');
-include($PathPrefix . 'includes/UpgradeDB_' . $_SESSION['Installer']['DBMS'] . '.php');
+	/// @todo exit immediately instead of trying to do more
+}
+
+include($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+include($PathPrefix . 'includes/UpgradeDB_' . $DBType . '.php');
 
 // gg: unused variable?
 //$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
@@ -52,13 +56,14 @@ CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root);
  */
 $configArray = $_SESSION['Installer'];
 $configArray += [
-    'Host'            => $_SESSION['Installer']['HostName'],
-    'DBUser'          => $_SESSION['Installer']['UserName'],
-    'DBPassword'      => $_SESSION['Installer']['Password'],
-    'DBType'          => $_SESSION['Installer']['DBMS'],
-    'DefaultLanguage' => $_SESSION['Installer']['Language'],
-    'DefaultDatabase' => $_SESSION['Installer']['Database'],
-    'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
+	'Host'            => $_SESSION['Installer']['HostName'],
+	'DBUser'          => $_SESSION['Installer']['UserName'],
+	'DBPassword'      => $_SESSION['Installer']['Password'],
+	'DBPort'          => $_SESSION['Installer']['Port'],
+	'DBType'          => $_SESSION['Installer']['DBMS'],
+	'DefaultLanguage' => $_SESSION['Installer']['Language'],
+	'DefaultDatabase' => $_SESSION['Installer']['Database'],
+	'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
 ];
 
 // Define the paths relative to the `installer` directory

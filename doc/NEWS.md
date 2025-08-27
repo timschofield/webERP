@@ -32,6 +32,8 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 * changed the default timezone to be Auckland
 * various directory restructuring. Image files are now in `images`, external dependencies in `vendor`. Unused sql dumps
   have been removed
+* changed the following variable in config.php:
+  `$MySQLPort` -> `$DBPort`
 * introduced usage of Composer to manage dependencies
 * improved support for installing webERP in a directory below the webserver root
 * update dependencies to their latest version (barcodepack, polyfill-gettext, phplot, phpmailer, phpspreadsheet, phpxmlrpc)
