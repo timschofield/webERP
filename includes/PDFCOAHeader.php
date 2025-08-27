@@ -1,6 +1,6 @@
 <?php
 
-if ($PageNumber>1){
+if ($PageNumber>1) {
 	$pdf->newPage();
 }
 $SectionHeading=0;

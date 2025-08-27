@@ -1,7 +1,8 @@
 <?php
+
 /* MT940 per SCB - Siam Comercial Bank Thailand */
 
-if (substr($LineText,0,4)==':20:'){ //Timestamp of report MT940 generation
+if (substr($LineText,0,4)==':20:') { //Timestamp of report MT940 generation
 		$_SESSION['Statement']->ReportCreated = substr($LineText,4); //in format DDDHHMM where DDD is the number of day in year and HHMM is the time
 		$TransactionLine = false;
 	  }

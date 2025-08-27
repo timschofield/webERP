@@ -1,4 +1,5 @@
 <?php
+
 $PageNumber++;
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -21,7 +22,7 @@ $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;
 $pdf->addText($XPos, $YPos,$FontSize, __('Page') .': ' . $PageNumber);
 
-/*Now print out the company name and address */
+/* Now print out the company name and address */
 $XPos = $Left_Margin;
 $YPos -= $LineHeight;
 

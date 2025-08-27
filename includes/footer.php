@@ -33,7 +33,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				$Class = 'error';
 				$Message[2] = $Message[2] ? $Message[2] : __('ERROR') . ' ' . __('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 0) {
-					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . strip_tags(trim($Message[0], ',')) . "\n");
 				}
 			    break;
 
@@ -42,7 +42,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				$Class = 'warn';
 				$Message[2] = $Message[2] ? $Message[2] : __('WARNING') . ' ' . __('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 1) {
-					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . strip_tags(trim($Message[0], ',')) . "\n");
 				}
 				break;
 
@@ -50,7 +50,7 @@ if (isset($Messages) and count($Messages) > 0) {
                 $Class = 'info';
                 $Message[2] = $Message[2] ? $Message[2] : __('INFORMATION') . ' ' . __('Message');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 2) {
-					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . strip_tags(trim($Message[0], ',')) . "\n");
 				}
 				break;
 
@@ -59,7 +59,7 @@ if (isset($Messages) and count($Messages) > 0) {
                 $Class = 'success';
                 $Message[2] = $Message[2] ? $Message[2] : __('SUCCESS') . ' ' . __('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . strip_tags(trim($Message[0], ',')) . "\n");
 				}
 		}
 
@@ -85,4 +85,3 @@ echo '<footer class="noPrint">
 	</footer>'; // FooterDiv
 echo '</body>';
 echo '</html>';
-

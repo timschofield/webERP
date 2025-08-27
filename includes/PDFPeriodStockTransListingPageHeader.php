@@ -10,14 +10,12 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin,$YPos,0,50);
 
 $FontSize=15;
 
-
 $XPos = $Page_Width/2;
 $YPos += 30;
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=12;
 $YPos -=30;
 $pdf->addText($XPos, $YPos,$FontSize, $TransType . ' ' .__('dated from') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate']);
-
 
 $XPos = $Page_Width-$Right_Margin-50;
 $YPos -=30;

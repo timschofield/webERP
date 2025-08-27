@@ -104,7 +104,7 @@ class ContractComponent {
 	var $UOM;
 	var $DecimalPlaces;
 
-	function __construct ($ComponentID,
+	function __construct($ComponentID,
 								$StockID,
 								$ItemDescription,
 								$WorkCentre,
@@ -150,7 +150,7 @@ class ContractRequirement {
 	var $Quantity;
 	var $CostPerUnit;
 
-	function __construct ($Requirement,
+	function __construct($Requirement,
 									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0){
@@ -165,7 +165,7 @@ class ContractRequirement {
 									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0){
-		self::__construct ($Requirement,
+		self::__construct($Requirement,
 									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0);
