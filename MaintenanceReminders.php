@@ -1,6 +1,6 @@
 <?php
 
-//this script can be set to run from cron
+// this script can be set to run from cron
 $AllowAnyone = true;
 
 include('includes/session.php');
