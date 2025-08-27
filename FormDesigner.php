@@ -33,28 +33,33 @@ function InputX($keyName, $keyValue) {
 	// Function to input the X coordinate from the left side of the sheet to the left side of the field in points (72 points = 25,4 mm).
 	echo '<td class="number"><label for="', $keyName, 'x">', __('x'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'x" maxlength="4" name="', $keyName, 'x" size="4" title="', __('Distance from the left side of the sheet to the left side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
+
 function InputY($keyName, $keyValue) {
 	// Function to input the Y coordinate from the lower side of the sheet to the top side of the field in points (72 points = 25,4 mm).
 	echo '<td class="number"><label for="', $keyName, 'y">', __('y'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'y" maxlength="4" name="', $keyName, 'y" size="4" title="', __('Distance from the lower side of the sheet to the top side of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
+
 function InputLength($keyName, $keyValue) {
 	// Function to input the the Length of the field in points (72 points = 25,4 mm).
 	echo '<td class="number"><label for="', $keyName, 'Length">', __('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'Length" maxlength="4" name="', $keyName, 'Length" size="4" title="', __('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "Length" to "Width" before changing the xml name.**********
 
 }
+
 function InputWidth($keyName, $keyValue) {
 	// Function to input the the width of the field in points (72 points = 25,4 mm).
 	echo '<td class="number"><label for="', $keyName, 'width">', __('Width'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'width" maxlength="4" name="', $keyName, 'width" size="4" title="', __('Width of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "width" to "Width" before changing the xml name.**********
 
 }
+
 function InputHeight($keyName, $keyValue) {
 	// Function to input the the height of the field in points (72 points = 25,4 mm).
 	echo '<td class="number"><label for="', $keyName, 'height">', __('Height'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'height" maxlength="4" name="', $keyName, 'height" size="4" title="', __('Height of the element in points'), '" type="number" value="', $keyValue, '" /></td>';
 	// Requires to standardize xml files from "height" to "Height" before changing the xml name.**********
 
 }
+
 function SelectAlignment($keyName, $keyValue) {
 	// Function to select a text alignment.
 	$Alignments = array(); // Possible alignments
@@ -76,10 +81,12 @@ function SelectAlignment($keyName, $keyValue) {
 	}
 	echo '</select></td>';
 }
+
 function InputFontSize($keyName, $keyValue) {
 	// Function to select a text font size.
 	echo '<td class="number"><label for="', $keyName, 'FontSize">', __('Font Size'), ' = </label></td>', '<td><input class="number" id="', $keyName, 'FontSize" maxlength="4" name="', $keyName, 'FontSize" size="4" title="', __('Font size in points'), '" type="number" value="', $keyValue, '" /></td>';
 }
+
 function SelectShowElement($keyName, $keyValue) {
 	// Function to select to show or not an element.
 	$Shows = array(); // Possible alignments
