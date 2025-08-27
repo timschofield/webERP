@@ -1,7 +1,7 @@
 <?php
 /* definition of the Journal class */
 
-Class Journal {
+class Journal {
 
 	var $GLEntries; /*array of objects of JournalGLAnalysis class - id is the pointer */
 	var $JnlDate; /*Date the journal to be processed */
@@ -44,13 +44,13 @@ Class Journal {
 
 } /* end of class defintion */
 
-Class JournalGLAnalysis {
+class JournalGLAnalysis {
 
-	Var $Amount;
-	Var $Narrative;
-	Var $GLCode;
+	var $Amount;
+	var $Narrative;
+	var $GLCode;
 	var $GLActName;
-	Var $ID;
+	var $ID;
 	var $Tag;
 	var $AssetID;
 

@@ -2,7 +2,7 @@
 
 /* definition of the ReceiptBatch class */
 
-Class Receipt_Batch {
+class Receipt_Batch {
 
 	var $Items; /*array of objects of Receipt class - id is the pointer */
 	var $BatchNo; /*Batch Number*/
@@ -50,15 +50,15 @@ Class Receipt_Batch {
 
 } /* end of class defintion */
 
-Class Receipt {
-	Var $Amount;	/*in currency of the customer*/
-	Var $Customer; /*customer code */
-	Var $CustomerName;
-	Var $Discount;
-	Var $Narrative;
-	Var $GLCode;
-	Var $PayeeBankDetail;
-	Var $ID;
+class Receipt {
+	var $Amount;	/*in currency of the customer*/
+	var $Customer; /*customer code */
+	var $CustomerName;
+	var $Discount;
+	var $Narrative;
+	var $GLCode;
+	var $PayeeBankDetail;
+	var $ID;
 	var $Tag;
 	var $TagName;
 

@@ -3,7 +3,7 @@
 */
 
 
-Class Offer {
+class Offer {
 
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
 	var $TenderID;
@@ -177,7 +177,7 @@ Class Offer {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
