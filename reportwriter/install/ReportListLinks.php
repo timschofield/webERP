@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 /**
  * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php
@@ -8,7 +8,7 @@
  *
  * Revision History:
  * Revision 1.0 - 2005-11-03 - By D. Premo - Initial Release
-*/
+ */
 function GetRptLinks($GroupID) {
 	global $RootPath;
 	$Title= array(__('Custom Reports'), __('Standard Reports'));

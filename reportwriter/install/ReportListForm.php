@@ -1,4 +1,4 @@
-<?PHP
+<?php
 
 /**
  * This function retrieves the reports given a certain group id as defined in /reports/admin/defaults.php

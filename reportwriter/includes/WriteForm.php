@@ -1,5 +1,7 @@
 <?php
 
+require_once($PathPrefix .'/includes/class.cpdf.php');
+
 class PDF extends Cpdf {
 
 	var $y0; // current y position
@@ -212,9 +214,10 @@ class PDF extends Cpdf {
 
 	function ShowTableRow($Params, $myrow, $Heading) {
 		$maxY = $this->y0; // set to current top of row
-		$Col=0;
+		$Col = 0;
 		$NextXPos = $Params['LineXStrt'];
-		foreach ($myrow as $key=>$value) {
+		$MaxRowHt = 0;
+		foreach ($myrow as $value) {
 			if ($Params['Seq'][$Col]['TblShow']) {
 				$this->SetLeftMargin($NextXPos);
 				$this->SetXY($NextXPos, $this->y0);
@@ -235,9 +238,9 @@ class PDF extends Cpdf {
 			}
 			$Col++;
 		}
-		$ThisRowHt = $maxY-$this->y0; // seee how tall this row was
+		$ThisRowHt = $maxY-$this->y0; // see how tall this row was
 		if ($ThisRowHt>$MaxRowHt) $MaxRowHt = $ThisRowHt; // keep that largest row so far to track pagination
-		$this->y0 = $maxY; // set y position to largest value for next row
+		$this->y0 = $maxY; // set y position to the largest value for next row
 		if ($Heading AND $Params['Line']) { // then it's the heading draw a line after if fill is set
 			$this->Line($Params['LineXStrt'],$maxY,$Params['LineXStrt']+$Params['BoxWidth'],$maxY);
 			$this->y0 = $this->y0+($Params['LineSize']*0.35);
@@ -268,7 +271,7 @@ class PDF extends Cpdf {
 		$CurWidth = $this->GetStringWidth($strData);
 		if ($CurWidth>($ColWidth*.90)) { // then it needs to be truncated
 			// for now we'll do an approximation based on averages and scale to 90% of the width to allow for variance
-			// A better aproach would be an recursive call to this function until the string just fits.
+			// A better approach would be a recursive call to this function until the string just fits.
 			$NumChars = mb_strlen($strData);
 			// Reduce the string by 1-$percent and retest
 			$strData = $this->TruncData(mb_substr($strData, 0, ($ColWidth/$CurWidth)*$NumChars*$percent), $ColWidth);

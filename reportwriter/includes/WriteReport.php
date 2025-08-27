@@ -1,11 +1,12 @@
 <?php
+
 require_once($PathPrefix .'/includes/class.cpdf.php');
 
 class PDF extends Cpdf {
 
-var $y0; // current y position
-var $x0; // current x position
-var $pageY; // y value of bottom of page less bottom margin
+	var $y0; // current y position
+	var $x0; // current x position
+	var $pageY; // y value of bottom of page less bottom margin
 
 	function __construct() {
 		global $Prefs;
@@ -191,7 +192,7 @@ var $pageY; // y value of bottom of page less bottom margin
 					$this->SetX($CellXPos[0]);
 					$this->SetY($this->y0);
 					$this->SetFillColor(240);
-					$this->Cell(0,$CellHeight,'',$brdr,0,'L',1);
+					$this->Cell(0,$CellHeight,'',0,0,'L',1);
 					// Add total heading
 					$this->SetLeftMargin($CellXPos[0]);
 					$this->SetX($CellXPos[0]);
