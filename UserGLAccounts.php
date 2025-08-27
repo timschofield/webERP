@@ -9,10 +9,12 @@
 /* Maintenance of GL Accounts allowed for a user. */
 
 include('includes/session.php');
+
 $Title = __('User Authorised GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserGLAccounts';
 include('includes/header.php');
+
 // KL RICARD
 include('includes/KLEmails.php');
 

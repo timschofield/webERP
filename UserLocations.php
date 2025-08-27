@@ -7,9 +7,10 @@
 **************************************************************************************/
 
 include('includes/session.php');
+
 $Title = __('User Authorised Inventory Locations Maintenance');
-$ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
-$BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
+$ViewTopic = 'Inventory';
+$BookMark = 'LocationUsers';
 include('includes/header.php');
 // KL RICARD
 include('includes/KLEmails.php');

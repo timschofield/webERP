@@ -3,15 +3,15 @@
 /* Timesheet Entry */
 
 include('includes/session.php');
+
 $Title = __('Timesheet Entry');// Screen identification.
 $ViewTopic = 'Labour';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'Timesheets';// Anchor's id in the manual's html document.
+include('includes/header.php');
 
+include('includes/SQL_CommonFunctions.php');
 
 $MaxHours = 15; // perhaps this should be a configuration option??
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/company.png" title="',// Icon image.

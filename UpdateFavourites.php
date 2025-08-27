@@ -1,5 +1,7 @@
 <?php
-$PageSecurity=1;
+
+$PageSecurity = 1;
+
 include('includes/session.php');
 
 $SQL = "SELECT caption

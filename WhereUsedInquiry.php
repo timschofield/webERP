@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title = __('Where Used Inquiry');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
