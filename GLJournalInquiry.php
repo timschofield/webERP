@@ -164,10 +164,10 @@ else {
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&PDF=True" target="_blank">' . __('Print') . '</a>
 					</td>';
 				echo '<td class="number">
-						<a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
+						<a href="' . $RootPath . '/PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '&View=True" target="_blank">' . __('View') . '</a>
 					</td></tr>';
 			}
 

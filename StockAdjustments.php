@@ -143,7 +143,7 @@ if (isset($_POST['CheckCode'])) {
 		echo '<tr>
 				<td>' . $MyRow[0] . '</td>
 				<td>' . $MyRow[1] . '</td>
-				<td><a href="StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
+				<td><a href="' . $RootPath . '/StockAdjustments.php?StockID='.$MyRow[0].'&amp;Description='.$MyRow[1].'&amp;OldIdentifier='.$identifier.'">' . __('Adjust') . '</a>
 			</tr>';
 	}
 	echo '</table>';

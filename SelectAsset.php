@@ -279,7 +279,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		echo '</form>';
 
-		echo '<form action="FixedAssetItems.php" method="post">';
+		echo '<form action="' . $RootPath . '/FixedAssetItems.php" method="post">';
 		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
