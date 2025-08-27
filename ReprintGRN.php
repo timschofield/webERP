@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+
 $Title=__('Reprint a GRN');
 $ViewTopic = 'Inventory';
 $BookMark = '';

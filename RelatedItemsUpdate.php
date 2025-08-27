@@ -1,9 +1,12 @@
 <?php
 
+/* Quality Test Maintenance */
+
 include('includes/session.php');
+
 $Title = __('Update Related Items');
-$ViewTopic = '';
-$BookMark = '';
+$ViewTopic = 'QualityAssurance';
+$BookMark = 'QA_Tests';
 include('includes/header.php');
 
 echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . __('Back to Items') . '</a>';
