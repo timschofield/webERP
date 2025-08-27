@@ -33,18 +33,19 @@ if (!$db) {
 mysqli_set_charset($db, 'utf8');
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
+/// @todo test if this is in fact necessary, as RecurringSalesOrdersProcess.php also sets $_SESSION['DatabaseName']
 if (isset($DatabaseName)) {
 	if (!mysqli_select_db($db, $DatabaseName)) {
 		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
-		unset ($DatabaseName);
+		//unset ($DatabaseName);
 		exit();
 	}
 } else {
 	if (!mysqli_select_db($db, $_SESSION['DatabaseName'])) {
 		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
-		unset ($_SESSION['DatabaseName']);
+		//unset ($_SESSION['DatabaseName']);
 		exit();
 	}
 }
