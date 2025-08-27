@@ -12,13 +12,13 @@ include('includes/header.php');
 /// @todo this action is dangerous. Trigger it only on POST
 if (isset($_GET['BackupFile'])) {
 
-	$BackupFiles = scandir('companies/' . $_SESSION['DatabaseName'], 0);
+	$BackupFiles = scandir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'], 0);
 	$DeletedFiles = false;
 	foreach ($BackupFiles as $BackupFile) {
 		/// @todo check as well for file extension, not only the file name prefix
 		if (mb_substr($BackupFile, 0, 6) == 'Backup') {
 
-			$DeleteResult = unlink('companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
+			$DeleteResult = unlink($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile);
 
 			if ($DeleteResult == true) {
 				prnMsg(__('Deleted') . ' companies/' . $_SESSION['DatabaseName'] . '/' . $BackupFile, 'info');
