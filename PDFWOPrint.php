@@ -1,5 +1,5 @@
 <?php
-// PDFWOPrint.php
+
 // Converted to use DomPDF for PDF generation
 
 require_once 'vendor/autoload.php'; // Make sure DomPDF is installed via Composer
@@ -514,7 +514,7 @@ else {
 		</div>';
 
 	if ($PrintLabels=="Yes") {
-		echo '<form action="PDFFGLabel.php" method="post" target="_blank">';
+		echo '<form action="' . $RootPath . '/PDFFGLabel.php" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		if ($ViewingOnly == 1) {
 			echo '<input type="hidden" name="ViewingOnly" value="1" />';
