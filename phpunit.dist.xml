@@ -2,24 +2,27 @@
 
 <phpunit colors="true" cacheResult="false">
 	<testsuites>
-		<testsuite name="webERP Test Suite">
-			<directory suffix=".php">./tests</directory>
+		<testsuite name="webERP Installer Test Suite">
+			<directory suffix=".php">./tests/install</directory>
+		</testsuite>
+		<testsuite name="webERP Website Test Suite">
+			<directory suffix=".php">./tests/run</directory>
 		</testsuite>
 	</testsuites>
 
 	<!-- override the value of these in a file ./phpunit.xml if your test environment is different -->
 	<php>
-		<env name="TARGET_PROTOCOL" value="http" />
-		<env name="TARGET_HOSTNAME" value="localhost" />
-		<env name="TARGET_PORT" value="" />
-		<env name="TARGET_BASE_URL" value="/" />
+		<env name="TEST_TARGET_PROTOCOL" value="http" />
+		<env name="TEST_TARGET_HOSTNAME" value="localhost" />
+		<env name="TEST_TARGET_PORT" value="" />
+		<env name="TEST_TARGET_BASE_URL" value="/" />
 
-		<env name="DB_TYPE" value="mysqli" />
-		<env name="DB_HOSTNAME" value="localhost" />
-		<env name="DB_PORT" value="3306" />
-		<env name="DB_USER" value="root" />
-		<env name="DB_PASSWORD" value="root" />
-		<env name="DB_SCHEMA" value="weberp" />
+		<env name="TEST_DB_TYPE" value="mysqli" />
+		<env name="TEST_DB_HOSTNAME" value="localhost" />
+		<env name="TEST_DB_PORT" value="3306" />
+		<env name="TEST_DB_USER" value="root" />
+		<env name="TEST_DB_PASSWORD" value="root" />
+		<env name="TEST_DB_SCHEMA" value="weberp" />
 	</php>
 
 	<!-- code coverage reporting -->

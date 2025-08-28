@@ -39,6 +39,7 @@ jobs:
 
             - name: Set up the Database
               # @todo we should set up a different version of mysql/mariadb for each matrix combination. Use Docker?
+              #       Also, somtimes use a different port number than 3306, to stress the config
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
               run: |
@@ -129,9 +130,9 @@ jobs:
                 sudo systemctl start apache2.service
 
             - name: Install dev dependencies
-              # @todo is there a composer command which does require us to know which packages to force-install?
               run: |
-                composer update phpunit/phpunit symfony/browser-kit symfony/http-client
+                chmod 755 ./tests/setup/run_composer.sh
+                ./tests/setup/run_composer.sh
 
             # Make sure Apache can access the installation in its current dir.
             # We set the installation to be fully writeable to anyone - this is a test install anyway
@@ -152,7 +153,8 @@ jobs:
                 #echo
                 #curl -L --fail-with-body http://localhost/index.php
 
-                ./vendor/bin/phpunit tests
+                ./vendor/bin/phpunit tests/install
+                ./vendor/bin/phpunit tests/run
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
