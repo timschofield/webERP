@@ -5,7 +5,7 @@ the SuppTrans class contains an array of Contract objects - containing details o
 Contract charges are posted to the debit of Work In Progress (based on the account specified in the stock category record of the contract item
 This is cleared against the cost of the contract as originally costed - when the contract is closed and any difference is taken to the price variance on the contract */
 
-/// @todo move to after session.php if no side effects
+// has to be included before session.php
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */
