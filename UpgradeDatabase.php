@@ -168,9 +168,9 @@ if (isset($_POST['DoUpgrade'])) {
 						$ConfigFileContents = str_replace('dbuser','DBUser', $ConfigFileContents);
 						$ConfigFileContents = str_replace('dbpassword','DBPassword', $ConfigFileContents);
 						$ConfigFileContents = str_replace('dbType','DBType', $ConfigFileContents);
-						$ConfigFileContents = str_replace('allow_demo_mode','AllowDemoMode',$ConfigFileContents);
-						$ConfigFileContents = str_replace('rootpath','RootPath',$ConfigFileContents);
-						file_put_contents('config.php',$ConfigFileContents);
+						$ConfigFileContents = str_replace('allow_demo_mode','AllowDemoMode', $ConfigFileContents);
+						$ConfigFileContents = str_replace('rootpath','RootPath', $ConfigFileContents);
+						file_put_contents($PathPrefix . 'config.php', $ConfigFileContents);
 						prnMsg( __('You should now make the config.php read only for the web server.'), 'warning');
 					}
 					$SQLScripts[] = './sql/mysql/upgrade4.09-4.10.sql';

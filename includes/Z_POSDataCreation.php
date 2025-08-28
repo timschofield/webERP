@@ -17,7 +17,6 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$DefaultDateFormatRow = DB_fetch_row($Result);
 	$DefaultDateFormat= $DefaultDateFormatRow[0];
 
-
 	$Result = DB_query("SELECT currcode, salestype FROM debtorsmaster WHERE debtorno='" . $POSDebtorNo . "'");
 	$CustomerRow = DB_fetch_array($Result);
 	if (DB_num_rows($Result)==0){
