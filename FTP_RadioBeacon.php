@@ -201,7 +201,6 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 				$FileNumber=1;
 			}
 
-
 			$fp = fopen($FileCounter,'w');
 			fwrite($fp, $FileNumber);
 			fclose ($fp);

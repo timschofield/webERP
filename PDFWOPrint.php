@@ -362,9 +362,11 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$_SESSION['CompanyRecord']['email'],
 			array($_POST['EmailTo'] => ''),
 			__('Work Order Number') . ' ' . $SelectedWO,
-			('Please Process this Work order number') . ' ' . $SelectedWO,
-			$pdfFileName
+			__('Please Process this Work order number') . ' ' . $SelectedWO,
+			array($pdfFileName)
 		);
+
+		/// @todo should we delete the generated report?
 
 		include('includes/header.php');
 		if ($Success == 1) {
