@@ -22,8 +22,8 @@ echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the 
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file header');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 $fpIn = fopen($PathToLanguage, 'r');
 

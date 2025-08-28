@@ -22,7 +22,7 @@ $FieldHeadings = array('StockID',
 if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //start file processing
 	//check file info
 	$FileName = $_FILES['CostUpdateFile']['name'];
-	$TempName  = $_FILES['CostUpdateFile']['tmp_name'];
+	$TempName = $_FILES['CostUpdateFile']['tmp_name'];
 	$FileSize = $_FILES['CostUpdateFile']['size'];
 	$InputError = 0;
 

@@ -5,7 +5,7 @@ Call this page with:
 	1. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
 */
 
-// has to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCustAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');

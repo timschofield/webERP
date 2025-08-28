@@ -2,7 +2,7 @@
 
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
-// has to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineReceiptClass.php');
 
 require(__DIR__ . '/includes/session.php');

@@ -402,6 +402,7 @@ if (isset($_POST['submit'])) {
 		$longitude = 0;
 		if ($_SESSION['geocode_integration'] == 1) {
 			// Get the lat/long from our geocoding host
+			/// @todo move getting of geocode info into a dedicated function, and move off google maps
 			$SQL = "SELECT * FROM geocode_param";
 			$Resultgeo = DB_query($SQL);
 			$Row = DB_fetch_array($Resultgeo);
@@ -417,6 +418,7 @@ if (isset($_POST['submit'])) {
 				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 				$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
+				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
 				$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
 				//			$xml = simplexml_load_file($RequestURL) or die("url not loading");
 				$coordinates = $xml->Response->Placemark->Point->coordinates;

@@ -12,6 +12,7 @@
  */
 
 if (!isset($PathPrefix)) {
+	/// @todo make it a constant. Also, rename it to ROOT_PATH, ROOT_DIR or similar
 	$PathPrefix = __DIR__ . '/../';
 }
 

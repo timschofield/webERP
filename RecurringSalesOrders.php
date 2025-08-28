@@ -2,7 +2,7 @@
 
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
-// have to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');
