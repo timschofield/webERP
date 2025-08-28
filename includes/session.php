@@ -75,6 +75,8 @@ session_start();
 
 include($PathPrefix . 'includes/LanguageSetup.php');
 
+/// @todo instead of delegating to ConnectDB.php the handling of $_POST, do it here, so that that file can then be used
+///       for even when authentication is not based on login-form
 include($PathPrefix . 'includes/ConnectDB.php');
 include($PathPrefix . 'includes/DateFunctions.php');
 
@@ -117,6 +119,8 @@ if (isset($_SESSION['DatabaseName'])) {
 $FirstLogin = false;
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
+
+	/// @todo move this processing inside Logout.php
 	if (isset($_SESSION['Favourites'])) {
 		// Remove from the db the user favorites which are not in the session
 		/// @todo this could be done in a single query using WHERE NOT IN ...
@@ -137,7 +141,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
-} elseif (isset($AllowAnyone)) { /* only do security checks if AllowAnyone is not true */
+	/// @todo should we not just return, here?
+
+} elseif (isset($AllowAnyone) && $AllowAnyone == true) { /* only do security checks if AllowAnyone is not true */
 	if (!isset($_SESSION['AllowedPageSecurityTokens'])) {
 		$_SESSION['AllowedPageSecurityTokens'] = array();
 	}
@@ -159,7 +165,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$rc = UL_OK;
 	}
 
-	/*  Need to set the theme to make login screen nice */
+	/* Need to set the theme to make login screen nice */
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 
 	switch ($rc) {
@@ -257,6 +263,7 @@ if (isset($_POST['Theme']) and ($_SESSION['UsersRealName'] == $_POST['RealName']
 	$_SESSION['Theme'] = $DefaultTheme;
 }
 
+/// @todo move this block to just after session_start
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -282,7 +289,7 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) 
  */
 if (!isset($PageSecurity)) {
 	//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
-	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME']) ];
+	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME'])];
 }
 
 if (!isset($AllowAnyone)) {
@@ -323,8 +330,11 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
 }
 
+/// @todo instead of checking for $_POST['CompanyNameField'], only disable this check on posts from Login.php, or
+///       at least make it harder for an attacker to disable the check, f.e. add a var in the session when displaying
+///       the form. Or just also do the check on Login...
 if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
-	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	/* Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login */
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = __('Error in form verification');
 		include('includes/header.php');

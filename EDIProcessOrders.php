@@ -101,12 +101,12 @@ echo '<br />' . $ediOrdersdir;
 if (!is_dir($ediordersdir)) {
 	error_log("EDI orders directory error " . $ediordersdir, 0); // php logging
 	exit();
-
 }
+
 //	error_log("EDI orders directory " . $ediordersdir , 0);
 
 /*get the list of files in the incoming orders directory - from config.php */
-//$DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
+//$DirHandle = opendir($PathPrefix . $_SESSION['EDI_Incoming_Orders']);
 $DirHandle = opendir($ediordersdir);
 
 //if $DirHandle = false {

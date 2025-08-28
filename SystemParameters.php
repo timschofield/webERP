@@ -486,7 +486,7 @@ if (is_writable('config.php')) {
 	echo '<field>
 			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
 			<select name="X_DefaultTheme">';
-	$ThemeDirectories = scandir('css');// List directories inside ~/css. Each diretory is a theme.
+	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
 	foreach($ThemeDirectories as $ThemeName) {
 		if(is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
 			echo '<option';
