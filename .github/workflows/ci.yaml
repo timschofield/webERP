@@ -145,16 +145,14 @@ jobs:
               run: |
                 ./build/check_syntax.sh
 
-            # @todo test loading of sql files, either manually or via the installer
+            - name: Run the test suite
+              run: |
+                # smoke-testing
+                #curl -L --fail-with-body http://localhost/images/default_logo.jpg
+                #echo
+                #curl -L --fail-with-body http://localhost/index.php
 
-            # @todo check that there are no security issues with composer deps (does github already do this for us?)
-
-            # @todo run unit/functional tests
-            #- name: Check web pages
-            #  run: |
-            #    curl -L --fail-with-body http://localhost/images/default_logo.jpg
-            #    echo
-            #    curl -L --fail-with-body http://localhost/index.php
+                ./vendor/bin/phpunit tests
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
