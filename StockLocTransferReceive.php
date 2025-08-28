@@ -2,7 +2,7 @@
 
 /* Inventory Transfer - Receive */
 
-// have to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 

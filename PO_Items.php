@@ -2,7 +2,7 @@
 
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
-// has to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
 
 require(__DIR__ . '/includes/session.php');
