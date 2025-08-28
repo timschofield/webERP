@@ -131,7 +131,7 @@ jobs:
             - name: Install dev dependencies
               # @todo is there a composer command which does require us to know which packages to force-install?
               run: |
-                composer update phpunit/phpunit
+                composer update phpunit/phpunit symfony/browser-kit symfony/http-client
 
             # Make sure Apache can access the installation in its current dir.
             # We set the installation to be fully writeable to anyone - this is a test install anyway

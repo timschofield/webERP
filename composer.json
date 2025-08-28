@@ -38,7 +38,9 @@
 		"ext-sqlite3": "*",
 		"ext-zip": "*",
 		"ext-zlib": "*",
-		"phpunit/phpunit": "^10.5.53"
+		"phpunit/phpunit": "^10.5.53",
+		"symfony/browser-kit": "^6.4.24",
+		"symfony/http-client": "^6.4.24"
 	},
 	"suggest": {
 		"ext-bcmath": "Required to print barcode labels in PDFs",
