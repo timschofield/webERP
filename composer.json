@@ -28,6 +28,18 @@
 		"phpxmlrpc/phpxmlrpc": "^4.11.0",
 		"tecnickcom/tcpdf": "=6.8.0"
 	},
+	"require-dev": {
+		"ext-bcmath": "*",
+		"ext-calendar": "*",
+		"ext-ftp": "*",
+		"ext-gd": "*",
+		"ext-iconv": "*",
+		"ext-simplexml": "*",
+		"ext-sqlite3": "*",
+		"ext-zip": "*",
+		"ext-zlib": "*",
+		"phpunit/phpunit": "^10.5.53"
+	},
 	"suggest": {
 		"ext-bcmath": "Required to print barcode labels in PDFs",
 		"ext-calendar": "Required to print some reports",
@@ -35,7 +47,6 @@
 		"ext-ftp": "",
 		"ext-gd": "Required to print barcode labels",
 		"ext-gettext": "Recommended for translations. A slower, pure-php implementation will be used if this is not available",
-		"ext-mcrypt": "Improves the support for PDF files",
 		"ext-iconv": "Required to print barcode labels in PDFs",
 		"ext-simplexml": "Required for geocoding integration",
 		"ext-sqlite3": "For POS data creation",

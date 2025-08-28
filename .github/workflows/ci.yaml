@@ -81,7 +81,7 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: bcmath, calendar, curl, gettext, iconv, mbstring, mcrypt, mysqli, ftp, gd, simplexml, sqlite3, xml, zip, zlib
+                  extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xml, zip, zlib
 
             - name: Set up the Webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
