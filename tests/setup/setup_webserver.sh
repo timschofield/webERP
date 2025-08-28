@@ -23,8 +23,8 @@ if [ -n "$(ls /etc/apache2/mods-enabled/php* 2>/dev/null)" ]; then
 	sudo rm /etc/apache2/mods-enabled/php*
 fi
 sudo cp ./tests/setup/config/apache2/000-default.conf /etc/apache2/sites-available/
-sudo sed -r -i -e 's|DocumentRoot /var/www/html|DocumentRoot ${{ github.workspace }}|' /etc/apache2/sites-available/000-default.conf
-sudo sed -r -i -e 's|<Directory "/var/www/html">|<Directory "${{ github.workspace }}">|' /etc/apache2/sites-available/000-default.conf
+sudo sed -r -i -e "s|DocumentRoot /var/www/html|DocumentRoot $BASE_DIR|" /etc/apache2/sites-available/000-default.conf
+sudo sed -r -i -e "s|<Directory /var/www/html>|<Directory $BASE_DIR>|" /etc/apache2/sites-available/000-default.conf
 sudo ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
 
 sudo a2enmod proxy_fcgi

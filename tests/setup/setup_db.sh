@@ -2,7 +2,9 @@
 
 set -e
 
-# @todo add support for 1st argument, being db type and 2nd eing version
+# @todo add support for 1st argument, being db type and 2nd being version
+
+# @todo set up specific db config: strict mode, maybe enabling the query log?
 
 BASE_DIR="$(dirname -- "$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")")";
 
