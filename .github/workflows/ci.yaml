@@ -34,42 +34,14 @@ jobs:
             - name: Check out repository code
               uses: actions/checkout@v3
 
-            # @todo it probably makes sense to move all this shell scripting into dedicated files, rather than
-            #       keeping it all inline. Besides clarity, we gain independence from GH actions...
-
             - name: Set up the Database
               # @todo we should set up a different version of mysql/mariadb for each matrix combination. Use Docker?
               #       Also, somtimes use a different port number than 3306, to stress the config
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
               run: |
-                # Set up the config
-
-                # Debugging
-                #echo '### /etc/mysql/'
-                #sudo ls -la /etc/mysql/
-                #echo
-                #echo '### /etc/mysql/debian-start'
-                #sudo cat /etc/mysql/debian-start
-                #echo
-                #echo '### /etc/mysql/debian.cnf'
-                #sudo cat /etc/mysql/debian.cnf
-                #echo
-                #echo '### /etc/mysql/my.cnf'
-                #sudo cat /etc/mysql/my.cnf
-                #echo
-                #echo '### /etc/mysql/my.cnf.fallback'
-                #sudo cat /etc/mysql/my.cnf.fallback
-                #echo
-                #echo '### /etc/mysql/mysql.cnf'
-                #sudo cat /etc/mysql/mysql.cnf
-                #echo
-                #sudo ls -la /etc/mysql/conf.d/
-                #echo
-                #sudo ls -la /etc/mysql/mysql.conf.d/
-
-                # Start the service
-                sudo systemctl start mysql.service
+                chmod 755 ./tests/setup/setup_db.sh
+                ./tests/setup/setup_db.sh
 
             - name: Stop php-fpm if running
               run: |
@@ -82,52 +54,15 @@ jobs:
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xml, zip, zlib
+                  extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
+
+            # @todo set up specific php config if needed, eg. display_errors
 
             - name: Set up the Webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
               run: |
-                # Set up the config
-                if [ -f /etc/apache2/sites-enabled/000-default.conf ]; then
-                    sudo rm /etc/apache2/sites-enabled/000-default.conf
-                fi
-                if [ -f /etc/apache2/sites-available/000-default.conf ]; then
-                    sudo rm /etc/apache2/sites-available/000-default.conf
-                fi
-                if [ -n "$(ls /etc/apache2/mods-enabled/php* 2>/dev/null)" ]; then
-                    sudo rm /etc/apache2/mods-enabled/php*
-                fi
-                sudo cp ./tests/setup/config/apache2/000-default.conf /etc/apache2/sites-available/
-                sudo sed -r -i -e 's|DocumentRoot /var/www/html|DocumentRoot ${{ github.workspace }}|' /etc/apache2/sites-available/000-default.conf
-                sudo sed -r -i -e 's|<Directory "/var/www/html">|<Directory "${{ github.workspace }}">|' /etc/apache2/sites-available/000-default.conf
-                sudo ln -s /etc/apache2/sites-available/000-default.conf /etc/apache2/sites-enabled/000-default.conf
-
-                sudo a2enmod proxy_fcgi
-                sudo cp ./tests/setup/config/apache2/php_fpm_proxyfcgi.conf /etc/apache2/mods-available
-                sudo ln -s /etc/apache2/mods-available/php_fpm_proxyfcgi.conf /etc/apache2/mods-enabled/php_fpm_proxyfcgi.conf
-                PHPVER=$(php -r 'echo implode(".",array_slice(explode(".",PHP_VERSION),0,2));' 2>/dev/null)
-                SOCKET=$(cat "/etc/php/$PHPVER/fpm/pool.d/www.conf" | grep -E '^listen *=' | sed -e 's/^listen *= *//')
-                sudo sed -r -i -e "s|proxy:unix:/run/php/php-fpm.sock|proxy:unix:$SOCKET|" /etc/apache2/mods-available/php_fpm_proxyfcgi.conf
-
-                # Debugging
-                #echo '### /etc/apache2/'
-                #sudo ls -la /etc/apache2/
-                #echo
-                #sudo cat /etc/apache2/*.conf
-                #echo
-                #sudo ls -la /etc/apache2/mods-enabled
-                #sudo cat /etc/apache2/mods-enabled/*
-                #echo
-                #sudo ls -la /etc/apache2/conf-enabled
-                #sudo cat /etc/apache2/conf-enabled/*
-                #echo
-                #sudo ls -la /etc/apache2/sites-enabled
-                #sudo cat /etc/apache2/sites-enabled/*
-                echo
-                sudo cat /etc/apache2/mods-enabled/php_fpm_proxyfcgi.conf
-
-                # Start the service
-                sudo systemctl start apache2.service
+                chmod 755 ./tests/setup/setup_webserver.sh
+                ./tests/setup/setup_webserver.sh
 
             - name: Install dev dependencies
               run: |
@@ -144,6 +79,7 @@ jobs:
 
             - name: Check syntax of php files
               run: |
+                chmod 755 ./build/check_syntax.sh
                 ./build/check_syntax.sh
 
             - name: Run the test suite
