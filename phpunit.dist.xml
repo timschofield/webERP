@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<phpunit
-		colors="true"
-		cacheResult="false"
->
+<phpunit colors="true" cacheResult="false">
+	<testsuites>
+		<testsuite name="webERP Test Suite">
+			<directory suffix=".php">./tests</directory>
+		</testsuite>
+	</testsuites>
+
+	<!-- override the value of these in a file ./phpunit.xml if your test environment is different -->
+	<php>
+		<env name="TARGET_PROTOCOL" value="http" />
+		<env name="TARGET_HOSTNAME" value="localhost" />
+		<env name="TARGET_PORT" value="" />
+		<env name="TARGET_BASE_URL" value="/" />
+	</php>
+
 	<!-- code coverage reporting -->
 	<filter>
 		<whitelist>
@@ -16,10 +27,4 @@
 			</exclude>
 		</whitelist>
 	</filter>
-
-	<testsuites>
-		<testsuite name="webERP Test Suite">
-			<directory suffix=".php">./tests</directory>
-		</testsuite>
-	</testsuites>
 </phpunit>
