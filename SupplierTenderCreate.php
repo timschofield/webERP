@@ -1,5 +1,6 @@
 <?php
 
+// has to be included before session.php
 include('includes/DefineTenderClass.php');
 
 require(__DIR__ . '/includes/session.php');

@@ -1,5 +1,8 @@
 <?php
 
+// has to be included before session.php
+include('includes/DefineShiptClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipment Costing');

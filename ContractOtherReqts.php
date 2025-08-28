@@ -1,6 +1,6 @@
 <?php
 
-/// @todo move to after session.php inclusion, unless there are side effects
+// has to be included before session.php
 include('includes/DefineContractClass.php');
 
 require(__DIR__ . '/includes/session.php');

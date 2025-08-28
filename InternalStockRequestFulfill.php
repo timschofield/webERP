@@ -241,6 +241,9 @@ if (!isset($_POST['Location'])) {
 			ORDER BY locationname";
 	$ResultStkLocs = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
+		/// @todo there seems to be no code setting $_SESSION['Adjustment'], ever
+		///       If there was, we would need to include the DefineXXX.php fil at the top of this file, to have the
+		///       corresponding class definition loaded
 		if (isset($_SESSION['Adjustment']->StockLocation)) {
 			if ($MyRow['loccode'] == $_SESSION['Adjustment']->StockLocation) {
 				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';

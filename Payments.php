@@ -2,6 +2,7 @@
 
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
+// has to be included before session.php
 include('includes/DefinePaymentClass.php');
 
 require(__DIR__ . '/includes/session.php');
