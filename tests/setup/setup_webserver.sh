@@ -10,7 +10,7 @@ cd "$BASE_DIR";
 
 if [ -z "$GITHUB_ACTION" ]; then
 	# @todo install the webserver
-	.
+	apt-get install apache2
 fi
 
 if [ -f /etc/apache2/sites-enabled/000-default.conf ]; then
@@ -48,8 +48,8 @@ sudo sed -r -i -e "s|proxy:unix:/run/php/php-fpm.sock|proxy:unix:$SOCKET|" /etc/
 #echo
 #sudo ls -la /etc/apache2/sites-enabled
 #sudo cat /etc/apache2/sites-enabled/*
-echo
-sudo cat /etc/apache2/mods-enabled/php_fpm_proxyfcgi.conf
+#echo
+#sudo cat /etc/apache2/mods-enabled/php_fpm_proxyfcgi.conf
 
 # Start the service
-sudo systemctl start apache2.service
+sudo systemctl restart apache2.service
