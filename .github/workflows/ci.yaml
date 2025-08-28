@@ -36,7 +36,7 @@ jobs:
 
             - name: Set up the Database
               # @todo we should set up a different version of mysql/mariadb for each matrix combination. Use Docker?
-              #       Also, somtimes use a different port number than 3306, to stress the config
+              #       Also, sometimes use a different port number than 3306, to stress the config
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
               run: |
@@ -90,22 +90,25 @@ jobs:
                 #curl -L --fail-with-body http://localhost/index.php
 
                 ./vendor/bin/phpunit tests/install
-                ./vendor/bin/phpunit tests/run
+                ### @todo enable as soon as we have at least 1 test
+                #./vendor/bin/phpunit tests/run
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
               run: |
                 echo '### running processes'
                 ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
-
+                echo
                 sudo systemctl status mysql.service
-
+                echo
                 sudo systemctl status apache2.service
 
                 #echo '### fpm socket(s)'
                 #ls -la /run/php/
 
+                #echo
                 #sudo ls -la /var/log/apache2/
+                #echo
                 #sudo cat /var/log/apache2/error.log
                 echo
                 echo '### apache access log'
