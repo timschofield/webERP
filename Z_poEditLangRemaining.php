@@ -71,8 +71,10 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		}
 
     /*now need to create the .mo file from the .po file */
+		/// @todo escape args
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
-		system($MsgfmtCommand);
+		/// @todo check for failures
+		exec($MsgfmtCommand, $output, $result);
 
 		prnMsg(__('Done') . '<br />', 'info', ' ');
 
