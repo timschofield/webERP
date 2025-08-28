@@ -9,7 +9,7 @@ $BookMark = '';
 $Title = __('Backup webERP Database');
 include('includes/header.php');
 
-/// @todo this action is dangerous. Trigger it only on POST
+/// @todo this action is dangerous. Trigger it only on POST. Also, deleting one backup and all backups is not the same
 if (isset($_GET['BackupFile'])) {
 
 	$BackupFiles = scandir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'], 0);
@@ -38,6 +38,7 @@ if (isset($_GET['BackupFile'])) {
 	$BackupFile = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/' . __('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
 	/// @todo add as well $DBPort
 	/// @todo use the same mysqldump options as in the build/dump_database?
+	/// @todo test for presence of gzip using `which` / `where.exe`. If not present, do not try to compress the dump
 	$Command = 'mysqldump --opt -h' . escapeshellarg($Host) . ' -u' . escapeshellarg($DBUser) . ' -p' . escapeshellarg($DBPassword) . ' ' . escapeshellarg($_SESSION['DatabaseName']) .
 		'| gzip > ' . escapeshellarg($BackupFile);
 
