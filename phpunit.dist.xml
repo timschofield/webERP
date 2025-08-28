@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<phpunit
+		colors="true"
+		cacheResult="false"
+>
+	<!-- code coverage reporting -->
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./</directory>
+			<exclude>
+				<directory>./build</directory>
+				<directory>./doc</directory>
+				<directory>./tests</directory>
+				<directory>./vendor</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+
+	<testsuites>
+		<testsuite name="webERP Test Suite">
+			<directory>./tests</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
