@@ -168,7 +168,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Email'])
 									array($_SESSION['InventoryManagerEmail'] =>  ''),
 									$EmailSubject,
 									$ConfirmationText,
-									array(sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf')
+									array($pdfFileName)
 								);
 			}
 		}
