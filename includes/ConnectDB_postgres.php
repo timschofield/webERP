@@ -1,4 +1,5 @@
 <?php
+
 /* Database abstraction for postgres */
 
 define ('LIKE','ILIKE');
@@ -7,11 +8,13 @@ define ('LIKE','ILIKE');
 /* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
-if( isset($Host) && ($Host != "")) {
+if (isset($Host) && ($Host != "")) {
 	$PgConnStr = 'host='.$Host.' '.$PgConnStr;
 }
 
-if ( isset( $DBUser ) && ($DBUser != "") ) {
+/// @todo add support for $DBPort
+
+if (isset( $DBUser ) && ($DBUser != "")) {
 	// if we have a user we need to use password if supplied
 	$PgConnStr .= " user=".$DBUser;
 	if ( isset( $DBPassword ) && ($DBPassword != "") ) {

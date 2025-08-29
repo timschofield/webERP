@@ -1,17 +1,18 @@
 <?php
-/* Database abstraction for MariaDB (based on mysqli) */
+
+/* Database abstraction for MariaDB (based on the php mysqli extension) */
 
 define ('LIKE', 'LIKE');
 
-if (!isset($MySQLPort)) {
-	$MySQLPort = 3306;
+if (!isset($DBPort)) {
+	$DBPort = 3306;
 }
 global $db;	// Make sure it IS global, regardless of our context
 
 // since php 8.1, failures to connect will throw an exception, preventing our own error handling. Reset that
 mysqli_report(MYSQLI_REPORT_ERROR);
 
-$db = mysqli_connect($Host, $DBUser, $DBPassword, $_SESSION['DatabaseName'], $MySQLPort);
+$db = mysqli_connect($Host, $DBUser, $DBPassword, $_SESSION['DatabaseName'], $DBPort);
 
 /* check connection */
 if (mysqli_connect_errno()) {
