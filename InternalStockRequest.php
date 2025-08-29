@@ -6,8 +6,7 @@
 *
 **********************************************************************************************/ 
 
-/// @todo move to after session.php if no side effects
-
+// has to be included before session.php
 include('includes/DefineStockRequestClass.php');
 
 require(__DIR__ . '/includes/session.php');
@@ -19,7 +18,9 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
+
 include('includes/KLRoles.php');
+
 if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 
 if (isset($_GET['New'])) {

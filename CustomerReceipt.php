@@ -9,7 +9,7 @@ KL RICARD MODIFICATIONS:
   customers. It needs to take shipment into account as well (currently it doesn't.
 ***************************************************************************************/
 
-/// @todo move to after session.php inclusion, unless there are side effects
+// has to be included before session.php
 include('includes/DefineReceiptClass.php');
 
 require(__DIR__ . '/includes/session.php');

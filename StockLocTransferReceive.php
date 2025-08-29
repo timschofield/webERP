@@ -8,6 +8,7 @@ KL RICARD MODIFICATIONS:
 
 /* Inventory Transfer - Receive */
 
+// have to be included before session.php
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 

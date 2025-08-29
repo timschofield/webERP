@@ -17,6 +17,7 @@ This is widely considered poor programming but in my view, much easier to read f
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing and also
 an array of GLCodes objects - only used if the AP - GL link is effective */
 
+// has to be included before session.php
 include('includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');

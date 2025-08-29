@@ -14,6 +14,7 @@
 	allocated
 */
 
+// has to be included before session.php
 include('includes/DefineSuppAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');

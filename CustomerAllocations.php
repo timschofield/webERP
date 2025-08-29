@@ -6,8 +6,8 @@
 	3. No parameters to show all outstanding credits and receipts yet to be allocated.
 */
 
-/// @todo move to after session.php inclusion, unless there are side effects
-include('includes/DefineCustAllocsClass.php');// Before includes/session.php *******
+// has to be included before session.php
+include('includes/DefineCustAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');
 

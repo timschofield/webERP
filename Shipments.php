@@ -5,6 +5,9 @@ KL RICARD MODIFICATIONS:
 - change of "consignment" to "tracking"
 ***************************************************************************************/
 
+// has to be included before session.php
+include('includes/DefineShiptClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shipments');
@@ -12,7 +15,6 @@ $ViewTopic = 'Shipments';
 $BookMark = '';
 include('includes/header.php');
 
-include('includes/DefineShiptClass.php');
 include('includes/SQL_CommonFunctions.php');
 
 if (isset($_POST['ETA'])){$_POST['ETA'] = ConvertSQLDate($_POST['ETA']);}

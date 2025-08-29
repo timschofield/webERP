@@ -2,7 +2,7 @@
 
 // Imports bank transactions.
 
-/// @todo move to after session.php if no side effects
+// has to be included before session.php
 include('includes/DefineImportBankTransClass.php');
 
 require(__DIR__ . '/includes/session.php');

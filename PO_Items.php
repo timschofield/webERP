@@ -8,15 +8,15 @@
 * 
 **************************************************************************************/
 
-/// @todo move to after session.php if no side effects
+// has to be included before session.php
 include('includes/DefinePOClass.php');
-include('includes/ImageFunctions.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Purchase Order Items');
 
 include('includes/SQL_CommonFunctions.php');
+include('includes/ImageFunctions.php');
 
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 

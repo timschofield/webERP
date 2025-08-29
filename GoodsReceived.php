@@ -8,7 +8,7 @@
  * 
  ****************************************************************************************************************************************************************************/
 
-/// @todo move to after session.php if no side effects
+// have to be included before session.php
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 

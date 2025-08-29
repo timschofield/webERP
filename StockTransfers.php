@@ -8,16 +8,17 @@ KL RICARD MODIFICATIONS:
 - Added $_POST['Reason']
 ***************************************************************************************/
 
-require(__DIR__ . '/includes/session.php');
+// have to be included before session.php
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockTransfers.php');
 
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Transfers');
 $ViewTopic = "Inventory";
 $BookMark = "LocationTransfers";
 include('includes/header.php');
 
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
 include('includes/SQL_CommonFunctions.php');
 
 //KL RICARD

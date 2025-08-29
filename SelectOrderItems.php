@@ -6,6 +6,9 @@ KL RICARD MODIFICATIONS:
 - Change the title
 ***************************************************************************************/
 
+// has to be included before session.php
+include('includes/DefineCartClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 // KL RICARD: Change the Title
@@ -18,7 +21,6 @@ $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
 include('includes/header.php');
 
-include('includes/DefineCartClass.php');
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

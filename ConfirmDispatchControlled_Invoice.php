@@ -1,6 +1,6 @@
 <?php
 
-/// @todo move to after session.php inclusion, unless there are side effects
+// have to be included before session.php
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 

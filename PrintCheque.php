@@ -2,9 +2,10 @@
 
 /* Hard coded for currencies with 2 decimal places */
 
-require(__DIR__ . '/includes/session.php');
-
+// has to be included before session.php
 include('includes/DefinePaymentClass.php');
+
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['identifier'])){
 	$identifier = $_GET['identifier'];

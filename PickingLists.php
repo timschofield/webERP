@@ -2,7 +2,7 @@
 
 /* Picking List Maintenance */
 
-/// @todo move to after session.php if no side effects
+// have to be included before session.php
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
