@@ -150,7 +150,10 @@ if (!isset($_SESSION['DBVersion'])) {
 			}
 		}
 		echo '</table><br />';
+
 		$ForceConfigReload = true;
+		include('includes/GetConfig.php');
+		$ForceConfigReload = false;
 
 		echo '<div class="centre">
 			<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">
