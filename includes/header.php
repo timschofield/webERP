@@ -45,7 +45,7 @@ if (!headers_sent()) {
 	trigger_error('Page output started before header file was included, this should not happen');
 }
 
-echo '<!DOCTYPE html>';
+echo "<!DOCTYPE html>\n";
 
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">

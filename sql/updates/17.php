@@ -1,4 +1,5 @@
 <?php
+
 CreateTable('gltotals', "CREATE TABLE IF NOT EXISTS `gltotals` (
   `account` varchar(20) NOT NULL DEFAULT '',
   `period` smallint(6) NOT NULL DEFAULT 0,

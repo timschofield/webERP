@@ -6,9 +6,8 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Database Upgrade');
 
-/// @todo use $RootPath for links
-echo '<!DOCTYPE html>';
-echo '<html>
+echo "<!DOCTYPE html>\n";
+echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . '">
 		<head>
 			<title>', $Title, '</title>
 			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -17,20 +16,21 @@ echo '<html>
 			<script async src="' . $RootPath. '/javascripts/DBUpgrade.js"></script>';
 
 echo '<title>', $Title, '</title>';
-echo '<link rel="stylesheet" href="' . $RootPath. '/css/dbupgrade.css" type="text/css" />';
+echo '<link rel="stylesheet" href="' . $RootPath . '/css/dbupgrade.css" type="text/css" />';
 
-//ob_start(); /*what is this for? */
+//ob_start(); /* what is this for? */
+
 if (!isset($_SESSION['DBVersion'])) {
 //	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php');
 	$_SESSION['DBVersion'] = 0;
 }
+
 	// Fix: Check if CompanyRecord['coyname'] is set before using stripslashes
 	$CompanyName = isset($_SESSION['CompanyRecord']['coyname']) ? stripslashes($_SESSION['CompanyRecord']['coyname']) : '';
 	echo '<div class="title_bar" id="title_bar">', $Title, ' - ', $CompanyName, '
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
 	//include('includes/header.php');
-
 
 	function executeSQL($SQL, $TrapErrors = false) {
 		global $SQLFile;
@@ -117,17 +117,22 @@ if (!isset($_SESSION['DBVersion'])) {
 	} else {
 		$StartingUpdate = $_SESSION['DBUpdateNumber'] + 1;
 		$EndingUpdate = $_SESSION['DBVersion'];
-		unset($_SESSION['Updates']);
-		$_SESSION['Updates']['Errors'] = 0;
-		$_SESSION['Updates']['Successes'] = 0;
-		$_SESSION['Updates']['Warnings'] = 0;
-		for ($UpdateNumber = $StartingUpdate;$UpdateNumber <= $EndingUpdate;$UpdateNumber++) {
+		$_SESSION['Updates'] = array(
+			'Errors' => 0,
+			'Successes' => 0,
+			'Warnings' => 0,
+		);
+		for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 			if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
 				$SQL = "SET FOREIGN_KEY_CHECKS=0";
 				$Result = DB_query($SQL);
 				include('sql/updates/' . $UpdateNumber . '.php');
 				$SQL = "SET FOREIGN_KEY_CHECKS=1";
 				$Result = DB_query($SQL);
+
+				$_SESSION['DBVersion'] = $UpdateNumber;
+				/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
+				 *        every update file? */
 			}
 		}
 		echo '<table>
@@ -150,7 +155,10 @@ if (!isset($_SESSION['DBVersion'])) {
 			}
 		}
 		echo '</table><br />';
+
 		$ForceConfigReload = true;
+		include('includes/GetConfig.php');
+		$ForceConfigReload = false;
 
 		echo '<div class="centre">
 			<a href="' . $RootPath . '/Logout.php" title="' . __('Log out of') . ' ' . 'webERP" alt="">

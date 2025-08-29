@@ -244,7 +244,13 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 /* If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
 /* If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
-$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+/* gg: reduce resource usage by not checking the available upgrade files on every page - only on session start.
+ * This poses a small risk of users not being told to upgrade the db if a deployment happens while users are logged-in,
+ * but that is definitely a not-recommended practice
+ */
+if (!isset($_SESSION['DBVersion'])) {
+	$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+}
 if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])
 	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
