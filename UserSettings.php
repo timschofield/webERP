@@ -191,7 +191,7 @@ if ($KL_SystemAdmin){
 			<label for="Theme">' . __('Theme') . ':</label>
 			<select name="Theme">';
 
-	$ThemeDirectories = scandir('css/');
+	$ThemeDirectories = scandir($PathPrefix . 'css/');
 
 	foreach ($ThemeDirectories as $ThemeName) {
 		if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
