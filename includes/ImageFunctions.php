@@ -33,3 +33,17 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
     }
    return $ImageLink;
 }
+
+function getImageTag($stockid) {
+	$SupportedImgExt = array('png', 'jpg', 'jpeg');
+	$partPicsDir = $_SESSION['part_pics_dir'];
+	foreach ($SupportedImgExt as $ext) {
+		$imageFile = "{$partPicsDir}/{$stockid}.{$ext}";
+		if (file_exists($imageFile)) {
+			$base64 = base64_encode(file_get_contents($imageFile));
+			$mime = "image/{$ext}";
+			return "<img src='data:{$mime};base64,{$base64}' style='width:35px; height:35px; vertical-align:middle; margin-right:4px;' />";
+		}
+	}
+	return '';
+}
