@@ -514,6 +514,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 		$Lat = $MyRow2['lat'];
 		$Lng = $MyRow2['lng'];
 
+		/// @todo move getting of geocode info into a dedicated function, and move off google maps
 		if ($Lat == 0 and $MyRow2['braddress1'] != '' and $_SESSION['BranchCode'] != '') {
 			$delay = 0;
 			$base_url = 'https://' . $map_host . '/maps/api/geocode/xml?address=';
@@ -525,6 +526,7 @@ if (isset($_SESSION['CustomerID']) and $_SESSION['CustomerID'] != '') {
 				$debtorno = $MyRow2['debtorno'];
 				$request_url = $base_url . $address . ',&sensor=true';
 
+				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
 				$buffer = file_get_contents($request_url) /* or die("url not loading")*/;
 				$xml = simplexml_load_string($buffer);
 				// echo $xml->asXML();

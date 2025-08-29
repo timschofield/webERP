@@ -6,7 +6,7 @@ KL RICARD MODIFICATIONS:
 - Change the title
 ***************************************************************************************/
 
-// has to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');

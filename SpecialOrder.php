@@ -2,7 +2,7 @@
 
 // Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
-// has to be included before session.php
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSpecialOrderClass.php');
 
 require(__DIR__ . '/includes/session.php');
