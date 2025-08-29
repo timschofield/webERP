@@ -182,23 +182,23 @@ while ($MyRow = DB_fetch_array($Result)){
 					} else { /* its a calculation need to re-perform on the totals*/
 
 						switch ($Cols['calcoperator']) {
-							Case '/':
+							case '/':
 								if ($AccumLvl1[$Cols['coldenominator']]==0){
 									$TotalCalculation = 0;
 								} else {
 									$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
 								}
 								break;
-							Case '+':
+							case '+':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 								break;
-							Case '-':
+							case '-':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 								break;
-							Case '*':
+							case '*':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
 								break;
-							Case 'C':
+							case 'C':
 								if ($Cols['constant']==0){
 									$TotalCalculation = 0;
 								} else {
@@ -318,23 +318,23 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl3[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $AccumLvl3[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -369,23 +369,23 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl2[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $AccumLvl2[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -418,23 +418,23 @@ if ($LastLine['col3']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-				Case '/':
+				case '/':
 					if ($AccumLvl1[$Cols['coldenominator']]==0){
 						$TotalCalculation = 0;
 					} else {
 						$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
 					}
 					break;
-				Case '+':
+				case '+':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
-				Case '-':
+				case '-':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
-				Case '*':
+				case '*':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
 					break;
-				Case 'C':
+				case 'C':
 					if ($Cols['constant']==0){
 						$TotalCalculation = 0;
 					} else {
@@ -465,23 +465,23 @@ if ($Counter>0){
 		} else { /* its a calculation need to re-perform on the totals*/
 
 			switch ($Cols['calcoperator']) {
-			Case '/':
+			case '/':
 				if ($AccumLvl4[$Cols['coldenominator']]==0){
 					$TotalCalculation = 0;
 				} else {
 					$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] / $AccumLvl4[$Cols['coldenominator']];
 				}
 				break;
-			Case '+':
+			case '+':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
 				break;
-			Case '-':
+			case '-':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
 				break;
-			Case '*':
+			case '*':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] * $Cols['constant'];
 				break;
-			Case 'C':
+			case 'C':
 				if ($Cols['constant']==0){
 					$TotalCalculation = 0;
 				} else {
