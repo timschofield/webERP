@@ -20,10 +20,11 @@ echo '<link rel="stylesheet" href="' . $RootPath . '/css/dbupgrade.css" type="te
 
 //ob_start(); /* what is this for? */
 
-if (!isset($_SESSION['DBVersion'])) {
+// This is always set in session.php
+/*if (!isset($_SESSION['DBVersion'])) {
 //	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php');
 	$_SESSION['DBVersion'] = 0;
-}
+}*/
 
 	// Fix: Check if CompanyRecord['coyname'] is set before using stripslashes
 	$CompanyName = isset($_SESSION['CompanyRecord']['coyname']) ? stripslashes($_SESSION['CompanyRecord']['coyname']) : '';
@@ -130,7 +131,6 @@ if (!isset($_SESSION['DBVersion'])) {
 				$SQL = "SET FOREIGN_KEY_CHECKS=1";
 				$Result = DB_query($SQL);
 
-				$_SESSION['DBVersion'] = $UpdateNumber;
 				/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
 				 *        every update file? */
 			}
