@@ -128,12 +128,12 @@ if (isset($_POST['submit'])) {
 		}
 		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			// BEGIN: Update the config.php file:
-			$FileHandle = fopen('config.php', 'r');
+			$FileHandle = fopen($PathPrefix . 'config.php', 'r');
 			if($FileHandle) {
 				$Content = fread($FileHandle, filesize('config.php'));
 				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
 				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
-				$FileHandle = fopen('config.php','w');
+				$FileHandle = fopen($PathPrefix . 'config.php','w');
 				if(!fwrite($FileHandle,$Content)) {
 					prnMsg(__('Cannot write to the configuration file.'), 'error');
 				} else {
@@ -376,7 +376,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['SmtpSetting'] != $_POST['X_SmtpSetting']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_SmtpSetting'] . "' WHERE confname='SmtpSetting'";
-
 		}
 		if ($_SESSION['QualityLogSamples'] != $_POST['X_QualityLogSamples']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityLogSamples'] . "' WHERE confname='QualityLogSamples'";
@@ -384,7 +383,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['QualityProdSpecText'] != $_POST['X_QualityProdSpecText']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityProdSpecText'] . "' WHERE confname='QualityProdSpecText'";
-
 		}
 		if ($_SESSION['QualityCOAText'] != $_POST['X_QualityCOAText']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
@@ -392,11 +390,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
-
 		}
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
-
 		}
 
 		$ErrMsg =  __('The system configuration could not be updated because');

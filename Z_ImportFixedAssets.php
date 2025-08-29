@@ -46,7 +46,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		exit();
 	}
 */
-	//get file handle
+	// get file handle
 	$FileHandle = fopen($_FILES['SelectedAssetFile']['tmp_name'], 'r');
 
 	//get the header row

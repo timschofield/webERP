@@ -20,8 +20,8 @@ echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
 echo '<br />&nbsp;' . __('Make sure you have selected the correct language to translate!');
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 if (isset($_POST['ReMergePO'])){
 

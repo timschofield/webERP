@@ -24,7 +24,7 @@ $FieldHeadings = array(
 if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //start file processing
 	//check file info
 	$FileName = $_FILES['PriceListFile']['name'];
-	$TempName  = $_FILES['PriceListFile']['tmp_name'];
+	$TempName = $_FILES['PriceListFile']['tmp_name'];
 	$FileSize = $_FILES['PriceListFile']['size'];
 	$FieldTarget = 4;
 	$InputError = 0;

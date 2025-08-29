@@ -197,8 +197,8 @@ if (isset($_POST['CreateTemplate'])){
                                            " . $TaxGroupTaxesRow['taxontax'] . ");\n";
           }
 		  $SQLScript .= "SET FOREIGN_KEY_CHECKS=1;";
-          /*Now write $SQLScript to a file */
-          $FilePath = './companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql';
+          /* Now write $SQLScript to a file */
+          $FilePath = $PathPrefix . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql';
           $FileHandle = fopen($FilePath,"w");
            fwrite ($FileHandle, $SQLScript);
            fclose ($FileHandle);

@@ -66,9 +66,9 @@ $configArray += [
 	'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
 ];
 
-// Define the paths relative to the `installer` directory
-$SampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
-$NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
+// The config files are in the main directory
+$SampleConfigFile = $Path_To_Root . '/config.distrib.php';
+$NewConfigFile = $Path_To_Root . '/config.php';
 
 // Read the content of the sample config file
 if (!file_exists($SampleConfigFile)) {

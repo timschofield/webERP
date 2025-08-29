@@ -202,7 +202,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 			DB_data_seek($MessageLinesResult, 0);
 
 			$EDITransNo = GetNextTransNo(99);
-			$fp = fopen('EDI_INV_' . $TransNo . '.txt', 'w');
+
+			/// @todo is there a better dir than this? eg. the sys temp dir?
+			$fp = fopen($PathPrefix . 'EDI_INV_' . $TransNo . '.txt', 'w');
 
 			while ($LineDetails = DB_fetch_array($MessageLinesResult)) {
 
@@ -345,10 +347,10 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)) {
 				*/
 			}
 
-			if ($MessageSent == true) { /*the email was sent sucessfully */
+			if ($MessageSent == true) { /*the email was sent successfully */
 				/* move the sent file to sent directory */
-				$Source = 'EDI_INV_' . $TransNo . '.txt';
-				$destination = 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
+				$Source = $PathPrefix . 'EDI_INV_' . $TransNo . '.txt';
+				$destination = $PathPrefix . 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
 				rename($Source, $destination);
 			}
 

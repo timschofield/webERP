@@ -21,7 +21,8 @@ KL RICARD MODIFICATIONS:
  */
 
 if (!isset($PathPrefix)) {
-//	$PathPrefix = __DIR__ . '//'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
+	/// @todo make it a constant. Also, rename it to ROOT_PATH, ROOT_DIR or similar
+//	$PathPrefix = __DIR__ . '/../'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
 	$PathPrefix = '';
 }
 
