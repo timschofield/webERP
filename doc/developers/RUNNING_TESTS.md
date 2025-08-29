@@ -37,7 +37,7 @@ AGAINST YOUR PRODUCTION DATABASE!
 3. set up the test configuration for your environment: in the webERP root directory, create a file `phpunit.xml`
    with the following contents, tweaked with the correct values
 
-    ```
+   ```
    <?xml version="1.0" encoding="UTF-8" ?>
 	<phpunit>
 		<php>
@@ -68,7 +68,10 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 6. after your testing is complete, to avoid accidentally committing to git the test suite tools found
 
-   `composer install --ignore-platform-reqs --no-interaction --no-dev`
+   ```
+   composer install --ignore-platform-reqs --no-dev
+   composer --ignore-platform-reqs dump-autoload --optimize --no-dev
+   ```
 
    Also, if you created a new db schema in step 4 above, feel free to drop it
 
