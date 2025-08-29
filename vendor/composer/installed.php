@@ -5,9 +5,9 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a601df8097fa944f28f08a01d29acc39f9e9cd8b',
+        'reference' => '91c5f0b8b108587dab546829f0e5919f52fd9301',
         'name' => 'timschofield/weberp',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'composer/pcre' => array(
@@ -201,7 +201,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a601df8097fa944f28f08a01d29acc39f9e9cd8b',
+            'reference' => '91c5f0b8b108587dab546829f0e5919f52fd9301',
             'dev_requirement' => false,
         ),
     ),
