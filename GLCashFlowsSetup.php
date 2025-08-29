@@ -4,7 +4,6 @@
 // This program is under the GNU General Public License, last version. 2016-10-08.
 // This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
-// BEGIN: Procedure division ---------------------------------------------------
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Cash Flows Activities Maintenance');
@@ -220,4 +219,3 @@ echo				'</select>
 	</form>';
 
 include('includes/footer.php');
-// END: Procedure division -----------------------------------------------------
