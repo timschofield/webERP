@@ -160,6 +160,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	/// @todo what if the current user is already logged in? We should at least log him/her out before re-logging in...
 	///       (or maybe swallow that event, and log it as suspected hack attempt?)
 
+	/// @todo the login form points to /index.php. Should we avoid processing $_POST['UserNameEntryField'] and
+	///       $_POST['Password'] on other pages? We might even go as far as creating a dedicated Login.php...
+
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
 		$FirstLogin = true;
@@ -222,6 +225,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			break;
 
 		case UL_SHOWLOGIN:
+			/// @todo here, we should store in the sessions table the current session id and the script name. This
+			///       way, when the user logs in, (s)he can be redirected to the original script.
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 
