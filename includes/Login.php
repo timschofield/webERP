@@ -11,7 +11,7 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == true) and (!isset($DemoText))
 	$DemoText = __('Please login here');
 }
 
-echo '<!DOCTYPE html>';
+echo "<!DOCTYPE html>\n";
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<head>
