@@ -40,7 +40,7 @@ class HttpBrowser extends BaseHttpBrowser
 		return $response;
 	}
 
-	public function setExpectedStatusCodes(array $codes)
+	public function setExpectedStatusCodes(array $codes): void
 	{
 		$this->expectedStatusCodes = $codes;
 	}
