@@ -22,8 +22,10 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 ## Testing workflow
 
-1. prerequisites: set up the webserver, php, database, and install webERP (see the installation instructions). Make
-   sure that the `composer` command is in your PATH
+1. prerequisites: set up the webserver, php, database, and install webERP (see the installation instructions).
+
+   Make sure that the `composer` command is in your PATH. If not, run `sudo ./tests/setup/setup_composer.sh` to
+   have it downloaded and installed in the `/usr/local/bin` folder
 
 2. install the php test dependencies by running, in the webERP root directory, the cli command
 
