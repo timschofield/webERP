@@ -348,6 +348,7 @@ function DeleteSequence($SeqNum, $EntryType) {
 	}
 	return true;
 }
+
 function InsertFormSeq(&$Params, $Insert) {
 // This function creates a hole in the sequencing to allow inserting new form table field data
 	$SeqNum = $_POST['TblSeqNum'];

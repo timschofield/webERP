@@ -406,6 +406,7 @@ function PageHeaderDetail() {
 	$pdf->addTextWrap($Page_Width - $Right_Margin - 60, $YPos - $FontSize, 60, $FontSize, __('Tax'), 'right');
 	$YPos -= $FontSize * 2;
 }
+
 function PageHeaderSummary() {
 	global $pdf;
 	global $Page_Width;
