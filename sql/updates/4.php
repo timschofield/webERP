@@ -1,4 +1,5 @@
 <?php
+
 CreateTable('regularpayments', "CREATE TABLE IF NOT EXISTS `regularpayments` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `frequency` char(1) NOT NULL default 'M',
