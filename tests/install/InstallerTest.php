@@ -2,6 +2,9 @@
 
 require_once(__DIR__ . '/../src/WebTestCase.php');
 
+/**
+ * All public methods starting with `test` are tests which will be executed by PHPUnit
+ */
 class InstallerTest extends WebTestCase
 {
 

@@ -2,6 +2,9 @@
 
 require_once(__DIR__ . '/../src/AnonymousUserTestCase.php');
 
+/**
+ * All public methods starting with `test` are tests which will be executed by PHPUnit
+ */
 class AnonymousUsersTest extends AnonymousUserTestCase
 {
 	/**
