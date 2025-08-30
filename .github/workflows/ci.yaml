@@ -61,6 +61,7 @@ jobs:
                     chmod 755 ./tests/setup/setup_db.sh
                     ./tests/setup/setup_db.sh "mysql" "native"
                 else
+                    # @todo move this to setup_db.sh
                     case "${{ matrix.dbtype }}" in
                         mysql)
                             docker run --rm --detach --name mysql -p '${{ matrix.dbport }}:3306' -e MYSQL_ROOT_PASSWORD=root \
@@ -101,7 +102,6 @@ jobs:
                 chmod 755 ./tests/setup/setup_dependencies.sh
                 ./tests/setup/setup_dependencies.sh
 
-            # @todo ...
             - name: Set up phpunit configuration
               run: |
                   cp phpunit.dist.xml phpunit.xml
