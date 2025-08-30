@@ -134,6 +134,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 	///       at being db-agnostic
 
 	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
+	/// @todo this query is not failsafe - it might be just as good not to check permissions and just try to create the db...
 	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
 
 	$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
@@ -154,7 +155,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 			}
 		}
 	} else { /* Need to make sure any old data is removed from existing DB */
-		/// @todo this is dangerous!
+		/// @todo this is dangerous! Ask permission to the user before dropping existing tables
 		$SQL = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . $DataBaseName . "'";
 		$Result = @mysqli_query($DB, $SQL);
 		if (!@mysqli_query($DB, $SQL)) {
@@ -162,7 +163,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 		} else {
 			// only drop tables which we will recreate
 			$Rows = @mysqli_fetch_all($Result, MYSQLI_ASSOC);
-file_put_contents('./a.out', var_export($Rows, true));
+//file_put_contents('./a.out', var_export($Rows, true));
 			$TableNames = array();
 			foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 				$SQLScriptFile = file_get_contents($FileName);
@@ -170,7 +171,7 @@ file_put_contents('./a.out', var_export($Rows, true));
 					$TableNames[] = str_replace('`', '', $matches[1]);
 				}
 			}
-file_put_contents('./b.out', var_export($TableNames, true));
+//file_put_contents('./b.out', var_export($TableNames, true));
 			foreach($Rows as $i => $Row) {
 				if (!in_array($Row['table_name'], $TableNames)) {
 					unset($Row[$i]);
