@@ -280,9 +280,9 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				}
 
 				// gg: moved this into session.php, to make this code independent of the login web form
-				unset($_POST['UserNameEntryField']);
-				unset($_POST['Password']);
-				unset($_SESSION['DatabaseName']);
+				//unset($_POST['UserNameEntryField']);
+				//unset($_POST['Password']);
+				//unset($_SESSION['DatabaseName']);
 
 				return  UL_BLOCKED;
 			}
