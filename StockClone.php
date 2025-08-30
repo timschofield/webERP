@@ -1,5 +1,6 @@
 <?php
 
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Clone Item');

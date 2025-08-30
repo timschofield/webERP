@@ -13,7 +13,7 @@ $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
 include('includes/header.php');
 
-include('includes/CurrenciesArray.php');
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 include('includes/SQL_CommonFunctions.php');
 include('includes/FreightCalculation.php');
 include('includes/GetSalesTransGLCodes.php');

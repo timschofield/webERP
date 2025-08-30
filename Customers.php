@@ -1,8 +1,15 @@
 <?php
 
+<<<<<<< HEAD
+include('includes/session.php');
+
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
+
+=======
 require(__DIR__ . '/includes/session.php');
 
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+>>>>>>> master
 if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);}
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
