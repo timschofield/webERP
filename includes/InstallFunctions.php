@@ -1,17 +1,21 @@
 <?php
 
+/**
+ * @param $CompanyName
+ * @param $Path_To_Root
+ * @param $CompanyDir
+ * @return bool true on success
+ */
 function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 	if (extension_loaded('gd')) {
 		// generate an image, based on company name
 
-		// same size as logo_server.jpg
-		/// @todo grab the size from the file via gd calls
-		$width = 200;
-		$height = 51;
 		$Font = 3;
 
-		$im = imagecreate($width, $height);
-		$BackgroundColour = imagecolorallocate($im, 119, 119, 119); // #777777, same as default color theme
+		$im = imagecreatefrompng($Path_To_Root . '/images/logo_background.png');
+		imagealphablending($im, false);
+
+		//$BackgroundColour = imagecolorallocate($im, 119, 119, 119); // #777777, same as default color theme
 		$TextColour = imagecolorallocate($im, 255, 255, 255);
 
 		$fw = imagefontwidth($Font);
@@ -19,42 +23,112 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		$TextWidth = $fw * mb_strlen($CompanyName);
 		$px = (imagesx($im) - $TextWidth) / 2;
 		$py = (imagesy($im) - ($fh)) / 2;
-		imagefill($im, 0, 0, $BackgroundColour);
+		//imagefill($im, 0, 0, $BackgroundColour);
 		imagestring($im, $Font, $px, $py, $CompanyName, $TextColour);
 
-		/// @todo add white bevel, rounded border with transparent background
+		imagesavealpha($im, true);
 
+		$Result = true;
 		if (!imagepng($im, $CompanyDir . '/logo.png')) {
-			copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+			$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 		}
 		imagedestroy($im);
 
 	} else {
-		copy($Path_To_Root . '/images/logo_server.jpg', $CompanyDir . '/logo.jpg');
+		$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 	}
+
+	if ($Result) {
+		echo '<div class="success">' . __('A default company logo has been generated') . '</div>';
+	} else {
+		echo '<div class="warning">' . __('Failed generating default company logo.') . '</div>';
+	}
+	flush();
+
+	return $Result;
 }
 
 /**
- * @todo we miss the PORT setting!
- * @return string[] error messages
+ * @param $DatabaseName
+ * @param $Path_To_Root
+ * @return bool true on success
+ */
+function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
+{
+	/* Upload logo file */
+	$UploadOK = 1;
+
+	$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
+	$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
+	$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
+
+	// Check if image file is an actual image or fake image
+	if(isset($_POST["install"])) {
+		$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
+		if($check !== false) {
+			$UploadOK = 1;
+		} else {
+			echo '<div class="warning">' . __('Logo file is not an image.') . '</div>';
+			$UploadOK = 0;
+		}
+	}
+
+	// Check if file already exists
+	if (file_exists($TargetFile)) {
+		echo '<div class="warning">' . __('Sorry, logo file already exists.') . '</div>';
+		$UploadOK = 0;
+	}
+
+	// Check file size
+	if ($_FILES["LogoFile"]["size"] > 500000) {
+		echo '<div class="warning">' . __('Sorry, your logo file is too large.') . '</div>';
+		$UploadOK = 0;
+	}
+
+	// Allow certain file formats
+	if ($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
+		echo '<div class="warning">' . __('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
+		$UploadOK = 0;
+	}
+
+	// Check if $UploadOK is set to 0 by an error
+	if ($UploadOK == 0) {
+		echo '<div class="warning">' . __('Sorry, your logo file was not uploaded.') . '</div>';
+	} else {
+		// if everything is ok, try to upload file
+		if (move_uploaded_file($_FILES["LogoFile"]["tmp_name"], $TargetFile)) {
+			echo '<div class="success">' . __('Your logo has been successfully uploaded') . '</div>';
+		} else {
+			echo '<div class="warning">' . __('Your logo could not be uploaded. You must copy this to your companies directory later.') . '</div>';
+		}
+	}
+	flush();
+
+	return (bool)$UploadOK;
+}
+
+/**
+ * @return bool false when a fatal error happened
  */
 function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort) {
-	$Errors = [];
+
+	// avoid exceptions being thrown on query errors
+	mysqli_report(MYSQLI_REPORT_ERROR);
 
 	$DB = @mysqli_connect($HostName, $UserName, $Password, null, $DBPort);
-
 	if (!$DB) {
-		$Errors[] = __('Failed to connect the database management system');
-		return $Errors;
-	} else {
-		// avoid exceptions being thrown on query errors
-		mysqli_report(MYSQLI_REPORT_ERROR);
-
-		mysqli_set_charset($DB, 'utf8');
-
-		$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
-		$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
+		echo '<div class="error">' . __('Unable to connect to the database to create the schema.') . '</div>';
+		flush();
+		return false;
 	}
+
+	$Errors = [];
+
+	mysqli_set_charset($DB, 'utf8');
+
+	/// @todo are these needed?
+	$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
+	$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 
 	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
 	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
@@ -63,6 +137,8 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 	$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
 	$Rows = @mysqli_num_rows($DBExistsResult);
 	$Privileges = @mysqli_num_rows($PrivilegesResult);
+
+	/// @todo exit with errors if any of the above failed?
 
 	if ($Rows == 0) { /* Then the database does not exist */
 		if ($Privileges == 0) {
@@ -74,89 +150,107 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 				$Errors[] = __('Failed creating the database');
 			}
 		}
-	} else { /* Need to make sure any data is removed from existing DB */
-		/// @todo this is incomplete - and dangerous!
-		$SQL = "SELECT 'TRUNCATE TABLE ' + table_name + ';' FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
+	} else { /* Need to make sure any old data is removed from existing DB */
+		/// @todo this is dangerous!
+		$SQL = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . $DataBaseName . "'";
 		$Result = @mysqli_query($DB, $SQL);
+		if (!@mysqli_query($DB, $SQL)) {
+			$Errors[] = __('Failed enumerating existing database tables');
+		} else {
+			// only drop tables which we will recreate
+			$Rows = @mysqli_fetch_all($Result, MYSQLI_ASSOC);
+file_put_contents('./a.out', var_export($Rows, true));
+			$TableNames = array();
+			foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
+				$SQLScriptFile = file_get_contents($FileName);
+				if (preg_match('/^CREATE +TABLE +([^ (])+/', $SQLScriptFile, $matches)) {
+					$TableNames[] = str_replace('`', '', $matches[1]);
+				}
+			}
+file_put_contents('./b.out', var_export($TableNames, true));
+			foreach($Rows as $i => $Row) {
+				if (!in_array($Row['table_name'], $TableNames)) {
+					unset($Row[$i]);
+				}
+			}
+
+			foreach($Rows as $i => $Row) {
+				$SQL = "DROP TABLE {$Row['table_name']} IF EXISTS;";
+				if (!@mysqli_query($DB, $SQL)) {
+					$Errors[] = __('Failed dropping existing database table' . ' ' . $Row['table_name']);
+				}
+			}
+		}
 	}
 
-	return $Errors;
+	if ($Errors) {
+		echo '<div class="error">' . __('Unable to create the database schema.') . '</div>';
+
+		// display the errors
+		echo '<div class="error">';
+		foreach ($Errors as $error) {
+			echo '<p>' . htmlspecialchars($error) . "</p>\n";
+		}
+		echo '</div>';
+
+		return false;
+	}
+
+	return true;
 }
 
 function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
-	if (!file_exists($Path_To_Root . '/companies/' . $DatabaseName)) {
-		$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
+	$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
+
+	if (is_file($CompanyDir)) {
+		echo '<div class="error">' . __('The companies directory can not be created as a file exists at its place') . '</div>';
+		return false;
+	}
+
+	if (is_dir($CompanyDir)) {
+		/// @todo check if the directory is empty. If not, return with an error
+	} else {
 		$Result = mkdir($CompanyDir);
-		$Result = mkdir($CompanyDir . '/part_pics');
-		$Result = mkdir($CompanyDir . '/EDI_Incoming_Orders');
-		$Result = mkdir($CompanyDir . '/reports');
-		$Result = mkdir($CompanyDir . '/EDI_Sent');
-		$Result = mkdir($CompanyDir . '/EDI_Pending');
-		$Result = mkdir($CompanyDir . '/reportwriter');
-		$Result = mkdir($CompanyDir . '/pdf_append');
-		$Result = mkdir($CompanyDir . '/FormDesigns');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-		copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+	}
+
+	$Result = mkdir($CompanyDir);
+	$Result = $Result && mkdir($CompanyDir . '/part_pics');
+	$Result = $Result && mkdir($CompanyDir . '/EDI_Incoming_Orders');
+	$Result = $Result && mkdir($CompanyDir . '/reports');
+	$Result = $Result && mkdir($CompanyDir . '/EDI_Sent');
+	$Result = $Result && mkdir($CompanyDir . '/EDI_Pending');
+	$Result = $Result && mkdir($CompanyDir . '/reportwriter');
+	$Result = $Result && mkdir($CompanyDir . '/pdf_append');
+	$Result = $Result && mkdir($CompanyDir . '/FormDesigns');
+
+	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
+	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
+	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+
+	if ($Result) {
 		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
-		ob_flush();
+	} else {
+		echo '<div class="success">' . __('The companies directory was not created successfully') . '</div>';
+	}
+	flush();
 
+	// failure to save the logo is not fatal for the installer
+	if (is_dir($CompanyDir)) {
 		if (isset($_FILES["LogoFile"]) && $_FILES["LogoFile"]["tmp_name"] != '') {
-			/* Upload logo file */
-			$UploadOK = 1;
-
-			$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
-			$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
-			$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
-
-			// Check if image file is an actual image or fake image
-			if(isset($_POST["install"])) {
-				$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
-				if($check !== false) {
-					$UploadOK = 1;
-				} else {
-					echo '<div class="error">' . __('Logo file is not an image.') . '</div>';
-					$UploadOK = 0;
-				}
-			}
-
-			// Check if file already exists
-			if (file_exists($TargetFile)) {
-				echo '<div class="error">' . __('Sorry, logo file already exists.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Check file size
-			if ($_FILES["LogoFile"]["size"] > 500000) {
-				echo '<div class="error">' . __('Sorry, your logo file is too large.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Allow certain file formats
-			if ($ImageFileType != "jpg" && $ImageFileType != "png" && $ImageFileType != "jpeg" && $ImageFileType != "gif" ) {
-				echo '<div class="error">' . __('Sorry, only JPG, JPEG, PNG & GIF logo files are allowed.') . '</div>';
-				$UploadOK = 0;
-			}
-
-			// Check if $UploadOK is set to 0 by an error
-			if ($UploadOK == 0) {
-				echo '<div class="error">' . __('Sorry, your logo file was not uploaded.') . '</div>';
-				// if everything is ok, try to upload file
-			} else {
-				if (move_uploaded_file($_FILES["LogoFile"]["tmp_name"], $TargetFile)) {
-					echo '<div class="success">' . __('Your logo has been successfully uploaded') . '</div>';
-				} else {
-					echo '<div class="warn">' . __('Your logo could not be uploaded. You must copy this to your companies directory later.') . '</div>';
-				}
-			}
-			ob_flush();
+			SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root);
 		} else {
 			CreateCompanyLogo($DatabaseName, $Path_To_Root, $CompanyDir);
 		}
 	}
+
+	return $Result;
 }
 
+/**
+ * @param $Path_To_Root
+ * @return bool
+ */
 function CreateTables($Path_To_Root) {
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
@@ -171,11 +265,13 @@ function CreateTables($Path_To_Root) {
 	} else {
 		echo '<div class="success">' . __('All database tables have been created') . '</div>';
 	}
-	ob_flush();
+	flush();
+
+	return ($DBErrors == 0);
 }
 
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
-	if (isset($Demo) and $Demo != 'Yes') {
+	if ($Demo != 'Yes') {
 		DB_IgnoreForeignKeys();
 		/* Create the admin user */
 		$SQL = "INSERT INTO www_users  (userid,
@@ -238,7 +334,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
 
 		$COAScriptFile = file($CoA);
 		$ScriptFileEntries = sizeof($COAScriptFile);
@@ -278,7 +374,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		} //end of for loop around the lines of the sql script
 		echo '<div class="success">' . __('Your chosen chart of accounts has been uploaded') . '</div>';
-		ob_flush();
+		flush();
 
 		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
 		$Result = DB_query($SQL);
@@ -287,7 +383,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . __('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
 		$Result = DB_query($SQL);
@@ -296,7 +392,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
 
 		$DBErrors = 0;
 		foreach (glob($Path_To_Root . '/install/sql/data/*.sql') as $FileName) {
@@ -306,20 +402,22 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$DBErrors += DB_error_no($Result);
 		}
 		if ($DBErrors > 0) {
-			echo '<div class="error">' . __('Database tables could not be created') . '</div>';
+			echo '<div class="error">' . __('Database tables could not be populated') . '</div>';
 		} else {
-			echo '<div class="success">' . __('All database tables have been created') . '</div>';
+			echo '<div class="success">' . __('All database tables have been populated') . '</div>';
 		}
-		ob_flush();
+		flush();
 
-		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName('../') . ")";
+		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
+		///       the installer - that is left to the person preparing the release to verify...
+		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The database update revision has been inserted.') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
 
 		$SQL ="INSERT INTO `companies` VALUES (1,
 											'" . $CompanyName . "',
@@ -355,23 +453,25 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
 
 	} else {
+		/// @todo do not use a 'success' formatting for this line...
 		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
+		flush();
 
 		PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
 
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);
+		/// @todo echo error (warning?) if failure
 
-		// gg: there is no /companies/default folder atm...
+		/// @todo there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . '/companies/default/part_pics/*.jp*') as $JpegFile) {
-			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+			$Result = copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
-//		copy("companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
@@ -434,13 +534,18 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
-		ob_flush();
+		flush();
+
+		/// @todo display a warning message if there was any query failure
 		echo '<div class="success">' . __('Database now contains the demo data.') . '</div>';
 	}
+
+	/// @todo do not always return true
+	return true;
 }
 
-function HighestFileName($PathPrefix) {
-	$files = glob($PathPrefix . 'sql/updates/*.php');
+function HighestFileName($Path_To_Root) {
+	$files = glob($Path_To_Root . '/sql/updates/*.php');
 	natsort($files);
 	$LastFile = array_pop($files);
 	return $LastFile ? basename($LastFile, ".php") : '';
@@ -473,14 +578,20 @@ function PopulateSQLDataBySQL($File) {
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
 			$Result = DB_query($SQL);
+			if (DB_error_no() == 0) {
+				echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
+			}
 			$SQL = '';
 		}
 		flush();
 
 	} //end of for loop around the lines of the sql script
-
 }
 
+/**
+ * @param $Path_To_Root
+ * @return bool
+ */
 function CreateGLTriggers($Path_To_Root)
 {
 	$DBErrors = 0;
@@ -495,6 +606,94 @@ function CreateGLTriggers($Path_To_Root)
 	} else {
 		echo '<div class="success">' . __('All database triggers have been created') . '</div>';
 	}
+	flush();
 
-	return $DBErrors;
+	return ($DBErrors == 0);
+}
+
+function CreateConfigFile($Path_To_Root, $configArray) {
+	// The config files are in the main directory
+	$SampleConfigFile = $Path_To_Root . '/config.distrib.php';
+	$NewConfigFile = $Path_To_Root . '/config.php';
+
+	// Read the content of the sample config file
+	if (!file_exists($SampleConfigFile)) {
+		echo '<div class="error">' . __('The sample configuration file does not exist.') . '</div>';
+		return false;
+	}
+
+	// Open the sample file for reading and create the new config file for writing
+	$SampleHandle = fopen($SampleConfigFile, 'r');
+	$NewLines = [];
+
+	if ($SampleHandle) {
+		while (($Line = fgets($SampleHandle)) !== false) {
+			// Check if the line is commented (starting with //, #, or within /* */)
+			$isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
+
+			// Skip replacements on comment lines, otherwise process a config line.
+			if (!$isComment) {
+				// Loop Installer Data
+				foreach ($configArray as $key => $Value) {
+					// if (strpos($Line, $key) !== false) {
+					if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
+						$NewValue = addslashes($Value);
+						$Line = "\$$key = '$NewValue';\n";
+						unset($configArray[$key]);
+					}
+				}
+				// Replace date_default_timezone_set
+				if (strpos($Line, 'date_default_timezone_set') !== false) {
+					$NewValue = addslashes($_SESSION['Installer']['TimeZone']);
+					$Line = "date_default_timezone_set('".$NewValue."');\n";
+				}
+			}
+			// Append the line to the new content
+			$NewLines[] = $Line;
+		}
+
+		fclose($SampleHandle);
+	} else {
+		echo '<div class="error">' . __('Unable to read the sample configuration file.') . '</div>';
+		return false;
+	}
+
+	// Write the updated content to the new config file
+	$NewConfigContent = implode($NewLines);
+	$Result = file_put_contents($NewConfigFile, $NewConfigContent);
+
+	if ($Result) {
+		echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
+	} else {
+		echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
+	}
+	flush();
+
+	return $Result;
+}
+
+/**
+ * @param $Path_To_Root
+ * @return bool
+ */
+function CreateCompaniesFile($Path_To_Root) {
+	$Contents = "<?php\n\n";
+	$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
+
+	$Result = false;
+
+	$CompanyFileHandler = fopen($Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
+	if ($CompanyFileHandler) {
+		$Result = fwrite($CompanyFileHandler, $Contents);
+		@fclose($CompanyFileHandler);
+	}
+
+	if ($Result) {
+		echo '<div class="error">' . __('Created the Companies.php file') . '</div>';
+	} else {
+		echo '<div class="error">' . __('Could not write the Companies.php file') . '</div>';
+	}
+	flush();
+
+	return (bool)$Result;
 }
