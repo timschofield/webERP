@@ -66,8 +66,8 @@ jobs:
 
             - name: Install dev dependencies
               run: |
-                chmod 755 ./tests/setup/run_composer.sh
-                ./tests/setup/run_composer.sh
+                chmod 755 ./tests/setup/setup_dependecies.sh
+                ./tests/setup/setup_dependecies.sh
 
             # Make sure Apache can access the installation in its current dir.
             # We set the installation to be fully writeable to anyone - this is a test install anyway

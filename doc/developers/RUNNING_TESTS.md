@@ -29,7 +29,7 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 2. install the php test dependencies by running, in the webERP root directory, the cli command
 
-   `./tests/setup/run_composer.sh`
+   `./tests/setup/setup_dependecies.sh`
 
    Note: if the `composer` command is not in your path, or is named differently, set the env var COMPOSER to point
    to the correct command before running the script
@@ -37,23 +37,26 @@ AGAINST YOUR PRODUCTION DATABASE!
 3. set up the test configuration for your environment: in the webERP root directory, create a file `phpunit.xml`
    with the following contents, tweaked with the correct values
 
-   ```
-   <?xml version="1.0" encoding="UTF-8" ?>
+	```
+	<?xml version="1.0" encoding="UTF-8" ?>
 	<phpunit>
 		<php>
 			<env name="TEST_TARGET_PROTOCOL" value="http" />
 			<env name="TEST_TARGET_HOSTNAME" value="localhost" />
 			<env name="TEST_TARGET_PORT" value="" />
 			<env name="TEST_TARGET_BASE_URL" value="/...some path.../webERP/" />
-   			<env name="TEST_DB_TYPE" value="mysqli" />
+			<env name="TEST_DB_TYPE" value="mysqli" />
 			<env name="TEST_DB_HOSTNAME" value="localhost" />
 			<env name="TEST_DB_PORT" value="3306" />
 			<env name="TEST_DB_USER" value="root" />
 			<env name="TEST_DB_PASSWORD" value="root" />
 			<env name="TEST_DB_SCHEMA" value="weberp_test" />
+			<env name="TEST_USER_ACCOUNT" value="admin" />
+			<env name="TEST_USER_PASSWORD" value="weberp" />
+			<env name="TEST_USER_EMAIL" value="admin@weberp.org" />
 		</php>
 	</phpunit>
-   ```
+	```
 
    _NB:_ the TEST_DB_SCHEMA might be either an existing, throw-away webERP database, prefilled with data, or
    the name of a new db schema which will be created on the fly in the next step
