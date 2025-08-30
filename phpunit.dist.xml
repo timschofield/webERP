@@ -23,6 +23,10 @@
 		<env name="TEST_DB_USER" value="root" />
 		<env name="TEST_DB_PASSWORD" value="root" />
 		<env name="TEST_DB_SCHEMA" value="weberp" />
+
+		<env name="TEST_USER_ACCOUNT" value="admin" />
+		<env name="TEST_USER_PASSWORD" value="weberp" />
+		<env name="TEST_USER_EMAIL" value="admin@weberp.org" />
 	</php>
 
 	<!-- code coverage reporting -->

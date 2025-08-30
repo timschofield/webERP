@@ -33,8 +33,8 @@ class LoggedInUserTestCase extends WebTestCase
 
 		/* @todo ...
 		$this->browser->submitForm('Log in', [
-			'login' => $_ENV['TEST_USER_ACCOUNT'],
-			'password' => $_ENV['TEST_USER_PASSWORD'],
+			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
+			'Password' => $_ENV['TEST_USER_PASSWORD'],
 		]);
 		$this->assertStringContainsString();
 		*/
