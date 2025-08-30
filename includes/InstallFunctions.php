@@ -102,13 +102,14 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
 		ob_flush();
 
-		/* Upload logo file */
-		$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
-		$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
-		$UploadOK = 1;
-		$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
+		if (isset($_FILES["LogoFile"]) && $_FILES["LogoFile"]["tmp_name"] != '') {
+			/* Upload logo file */
+			$UploadOK = 1;
 
-		if ($_FILES["LogoFile"]["tmp_name"] != '') {
+			$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
+			$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
+			$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
+
 			// Check if image file is an actual image or fake image
 			if(isset($_POST["install"])) {
 				$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
