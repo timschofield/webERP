@@ -5,25 +5,27 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
+//ob_start();
+
+if (!isset($_POST['install'])) {
+	/// @todo what to display? Page 5 always sends a POST here, but what if the user tries a GET?
+}
+
 $Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
 $DBPort = $_SESSION['Installer']['Port'];
 $_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
-$DefaultDatabase = 'default';
+//$DefaultDatabase = 'default';
 
-//ob_start();
-
-if (isset($_POST['install'])) {
-	$_SESSION['CompanyRecord']['coyname'] = $_POST['CompanyName'];
-	$_SESSION['Installer']['CoA'] = $_POST['COA'];
-	$_SESSION['Installer']['TimeZone'] = $_POST['TimeZone'];
-	if (isset($_POST['Demo'])) {
-		$_SESSION['Installer']['Demo'] = $_POST['Demo'];
-	} else {
-		$_SESSION['Installer']['Demo'] = 'No';
-	}
+$_SESSION['CompanyRecord']['coyname'] = $_POST['CompanyName'];
+$_SESSION['Installer']['CoA'] = $_POST['COA'];
+$_SESSION['Installer']['TimeZone'] = $_POST['TimeZone'];
+if (isset($_POST['Demo'])) {
+	$_SESSION['Installer']['Demo'] = $_POST['Demo'];
+} else {
+	$_SESSION['Installer']['Demo'] = 'No';
 }
 
 include($PathPrefix . 'includes/InstallFunctions.php');

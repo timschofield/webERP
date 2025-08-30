@@ -130,6 +130,9 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 	$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
 	$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 
+	/// @todo move checking for permissions and for existing tables into UpgradeDB_$dbtype.php, to give it a chance
+	///       at being db-agnostic
+
 	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
 	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
 
