@@ -93,12 +93,12 @@ jobs:
                         mysql)
                             docker run --rm --detach --name mysql -p '${{ matrix.dbport }}:3306' -e MYSQL_ROOT_PASSWORD=root \
                                 -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
-                                ${{ matrix.dbtype }}:${{ matrix.version }}
+                                ${{ matrix.dbtype }}:${{ matrix.dbversion }}
                         ;;
                         mariadb)
                             docker run --rm --detach --name mariadb -p '${{ matrix.dbport }}:3306' -e MARIADB_ROOT_PASSWORD=root \
                             -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
-                            ${{ matrix.dbtype }}:${{ matrix.version }}
+                            ${{ matrix.dbtype }}:${{ matrix.dbversion }}
                         ;;
                     esac
                 fi
