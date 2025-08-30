@@ -11,7 +11,7 @@ if (!extension_loaded('mbstring')) {
 	exit();
 }
 
-$PathPrefix = __DIR__ . '/../';
+$PathPrefix = realpath(__DIR__ . '/../') . '/';
 
 if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
@@ -126,6 +126,7 @@ if ($_SESSION['Installer']['CurrentPage'] != 0 and $_SESSION['Installer']['Curre
 		</div>';
 }
 
+/// @todo is the form closed here or in the single pages ???
 echo '</footer>
 	</div>
 </form>';
