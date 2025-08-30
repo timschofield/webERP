@@ -47,7 +47,7 @@ case "$DB_TYPE" in
 		if [ -z "$GITHUB_ACTION" ]; then
 			apt-get install mysql-server
 		fi
-		sudo copy ./tests/setup/config/mysql/test.cnf /etc/mysql/conf.d/
+		sudo cp ./tests/setup/config/mysql/test.cnf /etc/mysql/conf.d/
 		# Start the service
 		sudo systemctl start mysql.service
 	;;
@@ -55,7 +55,7 @@ case "$DB_TYPE" in
 		if [ -z "$GITHUB_ACTION" ]; then
 			apt-get install mariadb-server
 		fi
-		sudo copy ./tests/setup/config/mariadb/test.cnf /etc/mysql/conf.d/
+		sudo cp ./tests/setup/config/mariadb/test.cnf /etc/mysql/conf.d/
 		# Start the service
 		### @todo check the name of the service!
 		sudo systemctl start mariadb.service
