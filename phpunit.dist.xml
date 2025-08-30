@@ -12,6 +12,10 @@
 
 	<!-- override the value of these in a file ./phpunit.xml if your test environment is different -->
 	<php>
+		<!--
+		     NB: a note to developers: if adding an env var here, please update correspondingly the example given in
+		     docs/developers/RUNNING_TESTS.md
+		-->
 		<env name="TEST_TARGET_PROTOCOL" value="http" />
 		<env name="TEST_TARGET_HOSTNAME" value="localhost" />
 		<env name="TEST_TARGET_PORT" value="" />

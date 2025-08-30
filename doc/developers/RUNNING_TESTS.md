@@ -24,6 +24,11 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 1. prerequisites: set up the webserver, php, database, and install webERP (see the installation instructions).
 
+   Make sure you have the following PHP extensions installed and enabled:
+   `bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, xdebug, xml, zip, zlib`
+
+   Make sure you have the following configuration settings in your `php.ini`: ...TODO...
+
    Make sure that the `composer` command is in your PATH. If not, run `sudo ./tests/setup/setup_composer.sh` to
    have it downloaded and installed in the `/usr/local/bin` folder
 
@@ -33,6 +38,9 @@ AGAINST YOUR PRODUCTION DATABASE!
 
    Note: if the `composer` command is not in your path, or is named differently, set the env var COMPOSER to point
    to the correct command before running the script
+
+   _NB:_ after running this command, the local `./vendor/` directory will be modified. Please do not commit back any of
+   those changes to the `master` branch on GitHub! See step 6 below on how to undo those changes.
 
 3. set up the test configuration for your environment: in the webERP root directory, create a file `phpunit.xml`
    with the following contents, tweaked with the correct values
@@ -60,6 +68,10 @@ AGAINST YOUR PRODUCTION DATABASE!
 
    _NB:_ the TEST_DB_SCHEMA might be either an existing, throw-away webERP database, prefilled with data, or
    the name of a new db schema which will be created on the fly in the next step
+
+   _NB:_ if the tests fail with unexpected error messages, check that in the `phpunit.xml` file you have set values
+   (empty strings are ok) for all the env variables defined in file `phpunit.dist.xml` - it might be that the example
+   given above here has not been updated to keep track of recent developments...
 
 4. (optional) create the test database schema and fill it with demo data: run
 

@@ -2,13 +2,22 @@
 
 set -e
 
-# @todo add support for 1st argument, being db type and 2nd being version
-
-# @todo set up specific db config: strict mode, maybe enabling the query log?
-
 BASE_DIR="$(dirname -- "$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]}")")")")";
 
 cd "$BASE_DIR";
+
+DB_TYPE="$1"
+DB_VERSION="$2"
+
+if [ -z "$DB_TYPE" ] || [ -z "$DB_VERSION" ]; then
+	echo "Please specify db type as first arg and db version as 2nd" >&2
+	exit 1
+fi
+
+if [ "$DB_VERSION" != native ]; then
+	echo "At the moment only the db version native to the host is supported" >&2
+	exit 1
+fi
 
 # Debugging
 #echo '### /etc/mysql/'
@@ -33,5 +42,27 @@ cd "$BASE_DIR";
 #echo
 #sudo ls -la /etc/mysql/mysql.conf.d/
 
-# Start the service
-sudo systemctl start mysql.service
+case "$DB_TYPE" in
+	mysql)
+		if [ -z "$GITHUB_ACTION" ]; then
+			apt-get install mysql-server
+		fi
+		sudo copy ./tests/setup/config/mysql/test.cnf /etc/mysql/conf.d/
+		# Start the service
+		sudo systemctl start mysql.service
+	;;
+	mariadb)
+		if [ -z "$GITHUB_ACTION" ]; then
+			apt-get install mariadb-server
+		fi
+		sudo copy ./tests/setup/config/mariadb/test.cnf /etc/mysql/conf.d/
+		# Start the service
+		### @todo check the name of the service!
+		sudo systemctl start mariadb.service
+	;;
+	\?)
+		printf "\n\e[31mERROR: unsupported db type: $DB_TYPE\e[0m\n\n" >&2
+		help
+		exit 1
+	;;
+esac

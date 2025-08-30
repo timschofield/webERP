@@ -73,29 +73,71 @@ class WebTestCase extends TestCase
 
 	// *** Functions useful for usage in subclasses ***
 
+	/**
+	 * Calls a URI.
+	 *
+	 * @param string $method        The request method
+	 * @param string $uri           The URI to fetch
+	 * @param array  $parameters    The Request parameters
+	 * @param array  $files         The files
+	 * @param array  $server        The server parameters (HTTP headers are referenced with an HTTP_ prefix as PHP does)
+	 * @param string $content       The raw body data
+	 * @param bool   $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
+	 */
 	protected function request(string $method, string $uri, array $parameters = [], array $files = [], array $server = [], ?string $content = null, bool $changeHistory = true): Crawler
 	{
 		return $this->browser->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
 	}
 
+	/**
+	 * Sets whether to automatically follow redirects or not.
+	 */
 	protected function followRedirects(bool $followRedirects = true): void
 	{
 		$this->browser->followRedirects($followRedirects);
 	}
 
+	/**
+	 * Sets an array of expected HTTP status code that will be checked when sending requests.
+	 * The test will fail when receiving any other status code.
+	 * NB: to check for redirect responses, has to be used together with `$this->followRedirects(false);`
+	 */
 	protected function setExpectedStatusCodes(array $codes): void
 	{
-		$this->setExpectedStatusCodes($codes);
+		$this->browser->setExpectedStatusCodes($codes);
 	}
 
+	/**
+	 * Clicks the first link (or clickable image) that contains the given text.
+	 *
+	 * @param string $linkText         The text of the link or the alt attribute of the clickable image
+	 * @param array  $serverParameters An array of server parameters
+	 */
 	protected function clickLink(string $linkText): Crawler
 	{
 		return $this->browser->clickLink($linkText);
 	}
 
+	/**
+	 * Finds the first form that contains a button with the given content and
+	 * uses it to submit the given form field values.
+	 *
+	 * @param string $button           The text content, id, value or name of the form <button> or <input type="submit">
+	 * @param array  $fieldValues      Use this syntax: ['my_form[name]' => '...', 'my_form[email]' => '...']
+	 * @param string $method           The HTTP method used to submit the form
+	 * @param array  $serverParameters These values override the ones stored in $_SERVER (HTTP headers must include an HTTP_ prefix as PHP does)
+	 */
 	protected function submitForm(string $button, array $fieldValues = [], string $method = 'POST', array $serverParameters = []): Crawler
 	{
 		return $this->browser->submitForm($button, $fieldValues, $method, $serverParameters);
+	}
+
+	/**
+	 * Returns the current response instance.
+	 */
+	protected function getResponse(): Symfony\Component\BrowserKit\Response
+	{
+		return $this->browser->getResponse();
 	}
 
 	/**
@@ -139,11 +181,12 @@ class WebTestCase extends TestCase
 
 	protected function assertIsNotOnInstallerPage(Crawler $crawler): void
 	{
+		/// @todo what about using $this->getResponse() instead of $crawler?
 		$this->assertStringNotContainsString($crawler->getUri(), '/install/');
 	}
 
 	protected function assertIsNotOnLoginPage()
 	{
-		/// @todo ...
+/// @todo ...
 	}
 }
