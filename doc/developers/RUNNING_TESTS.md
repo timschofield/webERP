@@ -29,7 +29,7 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 2. install the php test dependencies by running, in the webERP root directory, the cli command
 
-   `./tests/setup/setup_dependecies.sh`
+   `./tests/setup/setup_dependencies.sh`
 
    Note: if the `composer` command is not in your path, or is named differently, set the env var COMPOSER to point
    to the correct command before running the script
