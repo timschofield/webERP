@@ -294,9 +294,9 @@ if (isset($_POST['DoUpgrade'])) {
 	} //end of loop around SQLScripts  apply
 	DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
-	$ForceConfigReload=true;
+	$ForceConfigReload = true;
 	include('includes/GetConfig.php');
-	$ForceConfigReload=false;
+	$ForceConfigReload = false;
 } /*Dont do upgrade */
 
 include('includes/footer.php');

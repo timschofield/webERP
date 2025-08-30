@@ -217,9 +217,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		$SQL = "UPDATE companies SET coyname='" . $_POST['NewCompany'] . "' WHERE coycode = 1";
 		$Result = DB_query($SQL);
 
-		$ForceConfigReload=true;
+		$ForceConfigReload = true;
 		include('includes/GetConfig.php');
-		$ForceConfigReload=false;
+		$ForceConfigReload = false;
 
 		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
