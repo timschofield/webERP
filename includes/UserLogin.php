@@ -9,9 +9,12 @@ define('UL_CONFIGERR', 3);	/* Configuration error in webERP or server */
 define('UL_SHOWLOGIN', 4);
 define('UL_MAINTENANCE', 5);
 
-/*
- *  Function to validate username and password, perform validity checks and initialise $_SESSION data.
- *  @returns int See define() statements above.
+/**
+ * Function to validate username and password, perform validity checks and initialise $_SESSION data.
+ * @param string $Name
+ * @param string $Password
+ * @param string $SysAdminEmail
+ * @returns int See define() statements above.
  */
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 
@@ -36,7 +39,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			return  UL_SHOWLOGIN;
 		}
 
-		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
+		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specified directly then the sql fails and the db upgrade will fail */
 		$SQL = "SELECT *
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'";
@@ -84,15 +87,16 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		if ($PasswordVerified) {
 
 			if ($MyRow['blocked']==1) {
-				//the account is blocked
-				unset($_POST['UserNameEntryField']);
-				unset($_POST['Password']);
-				unset($_SESSION['DatabaseName']);
+				// gg: moved this into session.php, to make this code independent of the login web form
+				// the account is blocked
+				//unset($_POST['UserNameEntryField']);
+				//unset($_POST['Password']);
+				//unset($_SESSION['DatabaseName']);
 
 				return  UL_BLOCKED;
 			}
 
-			/*reset the attempts counter on successful login */
+			/* reset the attempts counter on successful login */
 			$_SESSION['UserID'] = $MyRow['userid'];
 			$_SESSION['AttemptsCounter'] = 0;
 			$_SESSION['AccessLevel'] = $MyRow['fullaccess'];
@@ -275,6 +279,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 										$EmailText);
 				}
 
+				// gg: moved this into session.php, to make this code independent of the login web form
 				unset($_POST['UserNameEntryField']);
 				unset($_POST['Password']);
 				unset($_SESSION['DatabaseName']);
