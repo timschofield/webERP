@@ -33,6 +33,11 @@ cd "$BASE_DIR";
 # @todo enable this after we remove the comments from composer.json
 #composer --no-interaction validate
 
+if [ -d vendor/phpunit/phpunit ]; then
+	echo "Waring: you have installed composer dev dependencies. removing them..."
+	composer install --ignore-platform-reqs --no-interaction --no-dev
+fi
+
 # abort if any files in vendor/ do not match upstream, ie. have been modified locally
 composer --no-interaction status
 

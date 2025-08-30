@@ -24,26 +24,92 @@ jobs:
             - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
             - run: echo "Job is now running on a ${{ runner.os }} server"
             - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
+            - run: echo "Current directory is ${{ github.workspace }}, current user is $(id -u -n)"
 
             #- name: Install required packages
             #  run: |
             #    sudo apt-get -y install fonts-dejavu
 
+            # has to be run before setting up the db and webserver, as we store their config files in the codebase
             - name: Check out repository code
               uses: actions/checkout@v3
+
+            - name: Set up the Database
+              # @todo we should set up a different version of mysql/mariadb for each matrix combination. Use Docker?
+              #       Also, sometimes use a different port number than 3306, to stress the config
+              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
+              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
+              run: |
+                chmod 755 ./tests/setup/setup_db.sh
+                ./tests/setup/setup_db.sh
+
+            - name: Stop php-fpm if running
+              run: |
+                if ps auxwww | fgrep -q php-fpm; then
+                    PHPVER=$(php -r 'echo implode(".",array_slice(explode(".",PHP_VERSION),0,2));' 2>/dev/null)
+                    sudo service "php${PHPVER}-fpm" stop || sudo pkill php-fpm
+                fi
 
             - name: Set up the required php version
               uses: shivammathur/setup-php@v2
               with:
                   php-version: ${{ matrix.php }}
-                  extensions: bcmath, calendar, curl, gettext, iconv, mbstring, mcrypt, mysqli, ftp, gd, simplexml, sqlite3, xml, zip, zlib
+                  extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
+
+            # @todo set up specific php config if needed, eg. display_errors
+
+            - name: Set up the Webserver
+              # @todo we should set up either nginx or apache depending on the matrix combination
+              run: |
+                chmod 755 ./tests/setup/setup_webserver.sh
+                ./tests/setup/setup_webserver.sh
+
+            - name: Install dev dependencies
+              run: |
+                chmod 755 ./tests/setup/run_composer.sh
+                ./tests/setup/run_composer.sh
+
+            # Make sure Apache can access the installation in its current dir.
+            # We set the installation to be fully writeable to anyone - this is a test install anyway
+            # @todo the `/home/runner` path should not be hardcoded. Figure out if we can get if from some GH param
+            - name: Fix filesystem permissions
+              run: |
+                sudo chmod g+rx,o+rx /home/
+                sudo chmod -R g+rwX,o+rwX /home/runner/
 
             - name: Check syntax of php files
               run: |
+                chmod 755 ./build/check_syntax.sh
                 ./build/check_syntax.sh
 
-            # @todo test loading of sql files - use a different db version for each php version
+            - name: Run the test suite
+              run: |
+                # smoke-testing
+                #curl -L --fail-with-body http://localhost/images/default_logo.jpg
+                #echo
+                #curl -L --fail-with-body http://localhost/index.php
 
-            # @todo check that there are no security issues with composer deps
+                ./vendor/bin/phpunit tests/install
+                ### @todo enable as soon as we have at least 1 test
+                #./vendor/bin/phpunit tests/run
 
-            # @todo run unit/functional tests
+            - name: Failure troubleshooting
+              if: ${{ failure() }}
+              run: |
+                echo '### running processes'
+                ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
+                echo
+                sudo systemctl status mysql.service
+                echo
+                sudo systemctl status apache2.service
+
+                #echo '### fpm socket(s)'
+                #ls -la /run/php/
+
+                #echo
+                #sudo ls -la /var/log/apache2/
+                #echo
+                #sudo cat /var/log/apache2/error.log
+                echo
+                echo '### apache access log'
+                sudo cat /var/log/apache2/access.log
