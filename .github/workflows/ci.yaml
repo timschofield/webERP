@@ -37,35 +37,35 @@ jobs:
                       dbport: 3307
 
         # These are all docker containers
-        services:
-            mysql:
-                # @see https://hub.docker.com/_/mysql
-                # Docker Hub image - the funky syntax is to avoid starting the container if not needed
-                image: ${{ matrix.dbtype == 'mysql' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
-                env:
-                    MYSQL_ROOT_PASSWORD: root
-                # @todo this breaks actions/checkout@v3, probably it needs to delete the file mounted to docker :-(
-                #       should we move instead to running docker manually by ourselves?
-                #volumes:
-                #  - '${{ github.workspace }}/tests/setup/config/mysql/test.cnf:/etc/mysql/conf.d/test.cnf'
-                ports:
-                    - '${{ matrix.dbport }}:3306'
-            mariadb:
-                # @see https://hub.docker.com/_/mariadb
-                image: ${{ matrix.dbtype == 'mariadb' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
-                env:
-                    MARIADB_ROOT_PASSWORD: root
-                # @todo same as above :-(
-                #volumes:
-                #  - '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf'
-                ports:
-                    - '${{ matrix.dbport }}:3306'
-            #postgres:
-            #    image: ${{ matrix.dbtype == 'postgres' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
-            #    env:
-            #        POSTGRES_PASSWORD: postgres
-            #    ports:
-            #       - '${{ matrix.dbport }}:5432'
+        #services:
+        #    mysql:
+        #        # @see https://hub.docker.com/_/mysql
+        #        # Docker Hub image - the funky syntax is to avoid starting the container if not needed
+        #        image: ${{ matrix.dbtype == 'mysql' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
+        #        env:
+        #            MYSQL_ROOT_PASSWORD: root
+        #        # @todo this breaks actions/checkout@v3, probably it needs to delete the file mounted to docker :-(
+        #        #       should we move instead to running docker manually by ourselves?
+        #        #volumes:
+        #        #  - '${{ github.workspace }}/tests/setup/config/mysql/test.cnf:/etc/mysql/conf.d/test.cnf'
+        #        ports:
+        #            - '${{ matrix.dbport }}:3306'
+        #    mariadb:
+        #        # @see https://hub.docker.com/_/mariadb
+        #        image: ${{ matrix.dbtype == 'mariadb' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
+        #        env:
+        #            MARIADB_ROOT_PASSWORD: root
+        #        # @todo same as above :-(
+        #        #volumes:
+        #        #  - '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf'
+        #        ports:
+        #            - '${{ matrix.dbport }}:3306'
+        #    #postgres:
+        #    #    image: ${{ matrix.dbtype == 'postgres' && format('{0}:{1}', matrix.dbtype, matrix.dbversion) || '' }}
+        #    #    env:
+        #    #        POSTGRES_PASSWORD: postgres
+        #    #    ports:
+        #    #       - '${{ matrix.dbport }}:5432'
 
         steps:
             - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
@@ -84,10 +84,23 @@ jobs:
             - name: Set up the Database
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
               # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
-              if: ${{ matrix.dbtype == '' }}
               run: |
-                chmod 755 ./tests/setup/setup_db.sh
-                ./tests/setup/setup_db.sh "mysql" "native"
+                if [ -z "${{ matrix.dbtype }}" ]; then
+                    chmod 755 ./tests/setup/setup_db.sh
+                    ./tests/setup/setup_db.sh "mysql" "native"
+                else
+                    case "${{ matrix.dbtype }}" in
+                        mysql)
+                            docker run --rm --detach --name mysql -p '${{ matrix.dbport }}:3306' -e MYSQL_ROOT_PASSWORD=root \
+                                -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
+                                ${{ matrix.dbtype }}:${{ matrix.version }}
+                        mariadb)
+                            docker run --rm --detach --name mariadb -p '${{ matrix.dbport }}:3306' -e MARIADB_ROOT_PASSWORD=root \
+                            -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
+                            ${{ matrix.dbtype }}:${{ matrix.version }}
+                        ;;
+                    esac
+                fi
 
             - name: Stop php-fpm if running
               run: |
