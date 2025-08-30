@@ -22,7 +22,8 @@
 		<env name="TEST_TARGET_BASE_URL" value="/" />
 
 		<env name="TEST_DB_TYPE" value="mysqli" />
-		<env name="TEST_DB_HOSTNAME" value="localhost" />
+		<!-- usage of IP instead of `localhost` works better with mysql/mariadb running in containers -->
+		<env name="TEST_DB_HOSTNAME" value="127.0.0.1" />
 		<env name="TEST_DB_PORT" value="3306" />
 		<env name="TEST_DB_USER" value="root" />
 		<env name="TEST_DB_PASSWORD" value="root" />
