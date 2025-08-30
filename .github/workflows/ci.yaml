@@ -115,7 +115,7 @@ jobs:
             # @todo ...
             - name: Set up phpunit configuration
               run: |
-                  copy phpunit.dist.xml phpunit.xml
+                  cp phpunit.dist.xml phpunit.xml
                   sed -r -i -e 's|<env name="TEST_DB_TYPE" value="mysqli" />|<env name="TEST_DB_TYPE" value="${{ matrix.dbtype }}" />|' phpunit.xml
                   sed -r -i -e 's|<env name="TEST_DB_PORT" value="3306" />|<env name="TEST_DB_PORT" value="${{ matrix.dbport }}" />|' phpunit.xml
 
