@@ -80,32 +80,32 @@ $SampleHandle = fopen($SampleConfigFile, 'r');
 $NewLines = [];
 
 if ($SampleHandle) {
-    while (($Line = fgets($SampleHandle)) !== false) {
-        // Check if the line is commented (starting with //, #, or within /* */)
-        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
+	while (($Line = fgets($SampleHandle)) !== false) {
+		// Check if the line is commented (starting with //, #, or within /* */)
+		$isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
 
-        // Skip replacements on comment lines, otherwise process a config line.
-        if (!$isComment) {
-            // Loop Installer Data
-            foreach ($configArray as $key => $Value) {
-                // if (strpos($Line, $key) !== false) {
+		// Skip replacements on comment lines, otherwise process a config line.
+		if (!$isComment) {
+			// Loop Installer Data
+			foreach ($configArray as $key => $Value) {
+				// if (strpos($Line, $key) !== false) {
 				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
-                    $NewValue = addslashes($Value);
-                    $Line = "\$$key = '$NewValue';\n";
-                    unset($configArray[$key]);
-                }
-            }
+					$NewValue = addslashes($Value);
+					$Line = "\$$key = '$NewValue';\n";
+					unset($configArray[$key]);
+				}
+			}
 			// Replace date_default_timezone_set
 			if (strpos($Line, 'date_default_timezone_set') !== false) {
-                $NewValue = addslashes($_SESSION['Installer']['TimeZone']);
+				$NewValue = addslashes($_SESSION['Installer']['TimeZone']);
 				$Line = "date_default_timezone_set('".$NewValue."');\n";
-            }
-        }
-        // Append the line to the new content
-        $NewLines[] = $Line;
-    }
+			}
+		}
+		// Append the line to the new content
+		$NewLines[] = $Line;
+	}
 
-    fclose($SampleHandle);
+	fclose($SampleHandle);
 } else {
 	echo '<div class="error">' . __('Unable to read the sample configuration file.') . '</div>';
 }
@@ -113,7 +113,7 @@ if ($SampleHandle) {
 // Write the updated content to the new config file
 $NewConfigContent = implode($NewLines);
 if (file_put_contents($NewConfigFile, $NewConfigContent)) {
-    echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
+	echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
 } else {
 	echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
 }
