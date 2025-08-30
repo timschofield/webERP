@@ -33,7 +33,14 @@ $Errors = CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Da
 if (count($Errors)) {
 	echo '<div class="error">' . __('Unable to create the database schema.') . '</div>';
 
-	/// @todo exit immediately instead of trying to do more
+	// display the errors
+	echo '<div class="error">';
+	foreach ($Errors as $error) {
+		echo '<p>' . htmlspecialchars($error) . "</p>\n";
+	}
+	echo '</div>';
+
+	return;
 }
 
 include($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
@@ -145,3 +152,5 @@ if (!fwrite($CompanyFileHandler, $Contents)) {
 }
 //close file
 fclose($CompanyFileHandler);
+
+$Installed = true;

@@ -1097,9 +1097,10 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 }
 echo '<field>
 		<label for="Paymenttype">' . __('Payment type') . ':</label>
-		<select name="Paymenttype">';
+		<select name="Paymenttype" required="required">';
 
 include('includes/GetPaymentMethods.php');
+array_unshift($PaytTypes, '');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
  payment methods can be modified from the setup tab of the main menu under payment methods*/
 
@@ -1374,21 +1375,24 @@ else {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
+			<thead>
 				<tr>
-					<th class="Ascending">' . __('Date') . '</th>
-					<th class="Ascending">' . __('Transaction Type') . '</th>
-					<th class="Ascending">' . __('Transaction Number') . '</th>
-					<th class="Ascending">' . __('Reference') . '</th>
-					<th class="Ascending">' . __('Amount') . '</th>
-					<th class="Ascending">' . __('This time to pay') . '</th>
-				</tr>';
+					<th class="SortedColumn">' . __('Date') . '</th>
+					<th class="SortedColumn">' . __('Transaction Type') . '</th>
+					<th class="SortedColumn">' . __('Transaction Number') . '</th>
+					<th class="SortedColumn">' . __('Reference') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th>' . __('This time to pay') . '</th>
+					<th>' . __('Amount to allocate') . '</th>
+				</tr>
+			</thead>';
 	$ids = '';
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
 		if (!isset($_POST['paid' . $MyRow['id']])) {
 			$_POST['paid' . $MyRow['id']] = 0;
 		}
-		echo '<tr>
+		echo '<tr class="striped_row">
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
 					<td>' . $MyRow['typename'] . '</td>
 					<td>' . $MyRow['transno'] . '</td>
