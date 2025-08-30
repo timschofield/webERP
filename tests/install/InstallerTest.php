@@ -31,27 +31,30 @@ class InstallerTest extends WebTestCase
 		$crawler = $this->request('GET', self::$baseUri . '/install/index.php');
 
 		// page 0
-		$this->assertStringContainsString('Welcome to the webERP installer', $crawler->text(), 'Missing title in installer 1st page');
+		$this->assertStringContainsString('Welcome to the webERP installer', $crawler->text(), 'Missing title in installer page 0');
 		$crawler = $this->clickLink('Next');
 
 		// page 1
-		$this->assertStringContainsString('GNU GENERAL PUBLIC LICENSE Version 2', $crawler->text(), 'Missing license in installer 2nd page');
+		$this->assertStringContainsString('Page=1', $crawler->getUri());
+		$this->assertStringContainsString('GNU GENERAL PUBLIC LICENSE Version 2', $crawler->text(), 'Missing license in installer page 1');
 
 		// check that the Next link is not activated (user has not accepted the license yet)
 		$nextLinkUrl = $crawler->selectLink('Next')->link()->getUri();
-		$this->assertStringNotContainsString('Page=2', $nextLinkUrl);
-		$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl);
+		$this->assertStringNotContainsString('Page=2', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
+		$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accpeting the license');
 
 		// @todo sadly we have to emulate the JS manually. Check if we can submit the form instead...
 		$nextLinkUrl = str_replace('Page=1', 'Page=2', $nextLinkUrl) . '&Agreed=Yes';
 		$crawler = $this->request('GET', $nextLinkUrl);
 
 		// page 2
-		/// @todo should check that all system checks are passed?
+		$this->assertStringContainsString('Page=2', $crawler->getUri());
 		$this->assertStringContainsString('System Checks', $crawler->text());
+		/// @todo should check that all system checks are passed?
 		$crawler = $this->clickLink('Next');
 
 		// page 3
+		$this->assertStringContainsString('Page=3', $crawler->getUri());
 		$this->assertStringContainsString('Database settings', $crawler->text());
 
 		// check that the 'Next' link has the is_disabled class
@@ -75,11 +78,12 @@ class InstallerTest extends WebTestCase
 		$crawler = $this->clickLink('Next');
 
 		// page 4
+		$this->assertStringContainsString('Page=4', $crawler->getUri());
 		$this->assertStringContainsString('Administrator account settings', $crawler->text());
 
 		// check that the 'Next' link has the is_disabled class
 		$nextLinkUrl = $crawler->selectLink('Next');
-		$this->assertStringContainsString('is_disabled', $nextLinkUrl->attr('class'));
+		$this->assertStringContainsString('is_disabled', $nextLinkUrl->attr('class'), 'link from page 4 to page 5 is enabled without submitting db details');
 
 		$crawler = $this->submitForm('test', [
 			'adminaccount' => $_ENV['TEST_USER_ACCOUNT'],
@@ -90,11 +94,12 @@ class InstallerTest extends WebTestCase
 
 		// check that the 'Next' link has no is_disabled class
 		$nextLinkUrl = $crawler->selectLink('Next');
-		$this->assertStringNotContainsString('is_disabled', (string)$nextLinkUrl->attr('class'));
+		$this->assertStringNotContainsString('is_disabled', (string)$nextLinkUrl->attr('class'), 'db connection test on page 4 failed');
 
 		$crawler = $this->clickLink('Next');
 
 		// page 5
+		$this->assertStringContainsString('Page=5', $crawler->getUri());
 		$this->assertStringContainsString('Company Settings', $crawler->text());
 
 		/// @todo should we make all of the values below come from config/env-vars?
@@ -104,6 +109,9 @@ class InstallerTest extends WebTestCase
 			'TimeZone' => 'Europe/London', /// @todo load this from the data available
 			'Demo' => 'Yes',
 		]);
+
+		// page 6
+		$this->assertStringContainsString('Page=6', $crawler->getUri());
 
 		// test that configuration was created
 		$this->assertFileExists(self::$rootDir . '/config.php');

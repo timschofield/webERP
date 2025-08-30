@@ -38,8 +38,9 @@ class HttpBrowser extends BaseHttpBrowser
 		// check that there are no php warnings or errors displayed
 		/// @todo find a way to make this check more robust - the string might be different with xdebug active!
 		$responseContent = $response->getContent();
-		if (strpos($responseContent, '<b>Warning</b>:  ') !== false) {
-			throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri());
+		if (($start = strpos($responseContent, '<b>Warning</b>:  ')) !== false) {
+			throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri() . ': ' .
+				substr($responseContent, $start + 17, 40) . '...');
 		}
 		/// @todo check for errors, too
 
