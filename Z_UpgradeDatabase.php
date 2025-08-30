@@ -117,17 +117,22 @@ if (!isset($_SESSION['DBVersion'])) {
 	} else {
 		$StartingUpdate = $_SESSION['DBUpdateNumber'] + 1;
 		$EndingUpdate = $_SESSION['DBVersion'];
-		unset($_SESSION['Updates']);
-		$_SESSION['Updates']['Errors'] = 0;
-		$_SESSION['Updates']['Successes'] = 0;
-		$_SESSION['Updates']['Warnings'] = 0;
-		for ($UpdateNumber = $StartingUpdate;$UpdateNumber <= $EndingUpdate;$UpdateNumber++) {
+		$_SESSION['Updates'] = array(
+			'Errors' => 0,
+			'Successes' => 0,
+			'Warnings' => 0,
+		);
+		for ($UpdateNumber = $StartingUpdate; $UpdateNumber <= $EndingUpdate; $UpdateNumber++) {
 			if (file_exists('sql/updates/' . $UpdateNumber . '.php')) {
 				$SQL = "SET FOREIGN_KEY_CHECKS=0";
 				$Result = DB_query($SQL);
 				include('sql/updates/' . $UpdateNumber . '.php');
 				$SQL = "SET FOREIGN_KEY_CHECKS=1";
 				$Result = DB_query($SQL);
+
+				$_SESSION['DBVersion'] = $UpdateNumber;
+				/** @todo can we move here the line `UpdateDBNo(basename(__FILE__, '.php')`, and avoid having it in
+				 *        every update file? */
 			}
 		}
 		echo '<table>

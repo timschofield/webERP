@@ -1,4 +1,5 @@
 <?php
+
 CreateTable('salescommissiontypes', "CREATE TABLE `salescommissiontypes` (
   `commissiontypeid` tinyint(4) NOT NULL AUTO_INCREMENT,
   `commissiontypename` varchar(55) NOT NULL DEFAULT '',
