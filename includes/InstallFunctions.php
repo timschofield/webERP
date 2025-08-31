@@ -110,7 +110,7 @@ function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
 /**
  * @return bool false when a fatal error happened
  */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort) {
+function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $Path_To_Root) {
 
 	// avoid exceptions being thrown on query errors
 	mysqli_report(MYSQLI_REPORT_ERROR);
@@ -155,15 +155,15 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 			}
 		}
 	} else { /* Need to make sure any old data is removed from existing DB */
+
 		/// @todo this is dangerous! Ask permission to the user before dropping existing tables
-		$SQL = "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . $DataBaseName . "'";
+		$SQL = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
 		$Result = @mysqli_query($DB, $SQL);
 		if (!@mysqli_query($DB, $SQL)) {
 			$Errors[] = __('Failed enumerating existing database tables');
 		} else {
 			// only drop tables which we will recreate
 			$Rows = @mysqli_fetch_all($Result, MYSQLI_ASSOC);
-//file_put_contents('./a.out', var_export($Rows, true));
 			$TableNames = array();
 			foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 				$SQLScriptFile = file_get_contents($FileName);
@@ -171,19 +171,20 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort)
 					$TableNames[] = str_replace('`', '', $matches[1]);
 				}
 			}
-//file_put_contents('./b.out', var_export($TableNames, true));
 			foreach($Rows as $i => $Row) {
-				if (!in_array($Row['table_name'], $TableNames)) {
+				if (!in_array($Row['TABLE_NAME'], $TableNames)) {
 					unset($Row[$i]);
 				}
 			}
 
+			/*
 			foreach($Rows as $i => $Row) {
 				$SQL = "DROP TABLE {$Row['table_name']} IF EXISTS;";
 				if (!@mysqli_query($DB, $SQL)) {
 					$Errors[] = __('Failed dropping existing database table' . ' ' . $Row['table_name']);
 				}
 			}
+			*/
 		}
 	}
 
@@ -212,12 +213,18 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 	}
 
 	if (is_dir($CompanyDir)) {
-		/// @todo check if the directory is empty. If not, return with an error
+		/// @todo ask the user if she's ok with us wiping the existing dir
+		$files = glob($CompanyDir . '/*');
+		if (count($files)) {
+			echo '<div class="error">' . __('The companies directory exists and is not empty') . '</div>';
+			flush();
+			return false;
+		}
+		$Result = true;
 	} else {
 		$Result = mkdir($CompanyDir);
 	}
 
-	$Result = mkdir($CompanyDir);
 	$Result = $Result && mkdir($CompanyDir . '/part_pics');
 	$Result = $Result && mkdir($CompanyDir . '/EDI_Incoming_Orders');
 	$Result = $Result && mkdir($CompanyDir . '/reports');
@@ -235,7 +242,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 	if ($Result) {
 		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
 	} else {
-		echo '<div class="success">' . __('The companies directory was not created successfully') . '</div>';
+		echo '<div class="error">' . __('The companies directory was not created successfully') . '</div>';
 	}
 	flush();
 
@@ -662,6 +669,11 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 		return false;
 	}
 
+	/// @todo ask a question before overwriting the file
+	if (file_exists($NewConfigFile)) {
+		echo '<div class="warning">' . __('The configuration file existed and has been overwritten') . ' ' . $NewConfigFile . '</div>';
+	}
+
 	// Write the updated content to the new config file
 	$NewConfigContent = implode($NewLines);
 	$Result = file_put_contents($NewConfigFile, $NewConfigContent);
@@ -669,7 +681,7 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 	if ($Result) {
 		echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
 	} else {
-		echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
+		echo '<div class="error">' . __('Cannot write to the configuration file') . ' ' . $NewConfigFile . '</div>';
 	}
 	flush();
 
@@ -685,15 +697,23 @@ function CreateCompaniesFile($Path_To_Root) {
 	$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
 
 	$Result = false;
+	$CompaniesFile = $Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php';
 
-	$CompanyFileHandler = fopen($Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
-	if ($CompanyFileHandler) {
-		$Result = fwrite($CompanyFileHandler, $Contents);
-		@fclose($CompanyFileHandler);
+	// give at least a warning if the files exists already
+	$FileExists = file_exists($CompaniesFile);
+
+	$CompanyFileHandle = fopen($CompaniesFile, 'w');
+	if ($CompanyFileHandle) {
+		$Result = @fwrite($CompanyFileHandle, $Contents);
+		@fclose($CompanyFileHandle);
+	}
+
+	if ($FileExists) {
+		echo '<div class="warning">' . __('The Companies.php file already exists') . '</div>';
 	}
 
 	if ($Result) {
-		echo '<div class="error">' . __('Created the Companies.php file') . '</div>';
+		echo '<div class="success">' . __('Created the Companies.php file') . '</div>';
 	} else {
 		echo '<div class="error">' . __('Could not write the Companies.php file') . '</div>';
 	}

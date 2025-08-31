@@ -8,8 +8,14 @@ if (!isset($PathPrefix)) {
 //ob_start();
 
 if (!isset($_POST['install'])) {
-	/// @todo what to display? Page 5 always sends a POST here, but what if the user tries a GET?
+	header('Location: index.php');
+	exit();
 }
+
+include($PathPrefix . 'includes/InstallFunctions.php');
+include($PathPrefix . 'includes/DateFunctions.php');
+
+$Path_To_Root = rtrim($PathPrefix, '/');
 
 $Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
@@ -28,9 +34,9 @@ if (isset($_POST['Demo'])) {
 	$_SESSION['Installer']['Demo'] = 'No';
 }
 
-include($PathPrefix . 'includes/InstallFunctions.php');
+date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 
-if (!CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Database'], $DBPort)) {
+if (!CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Database'], $DBPort, $Path_To_Root)) {
 	return;
 }
 
@@ -40,11 +46,6 @@ include($PathPrefix . 'includes/UpgradeDB_' . $DBType . '.php');
 
 // gg: unused variable?
 //$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
-
-include($PathPrefix . 'includes/DateFunctions.php');
-date_default_timezone_set($_SESSION['Installer']['TimeZone']);
-$Path_To_Root = rtrim($PathPrefix, '/');
-$Config_File = $Path_To_Root . '/config.php';
 
 if (!CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root)) {
 	return;

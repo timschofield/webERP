@@ -7,12 +7,14 @@ if (!isset($PathPrefix)) {
 
 echo '<h1>', __('System Checks'), '</h1>';
 
-//set the default time zone
-if (!empty($_SESSION['Installer']['TimeZone'])) {
-	date_default_timezone_set($_SESSION['Installer']['TimeZone']);
-}
+// set the default time zone
+// gg: no need for this on page 2... also, the tz is only set on page 6
+//if (!empty($_SESSION['Installer']['TimeZone'])) {
+//	date_default_timezone_set($_SESSION['Installer']['TimeZone']);
+//}
 
-//Check if cookies are allowed
+/// @todo bring this back ?
+// Check if cookies are allowed
 if (false) {
 	$InputError = 1;
 	echo '<div class="error">' . __('Please set Cookies allowed in your web browser, otherwise webERP cannot run properly') . '</div>';
