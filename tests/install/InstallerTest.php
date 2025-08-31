@@ -1,12 +1,15 @@
 <?php
 
 require_once(__DIR__ . '/../src/WebTestCase.php');
+require_once(__DIR__ . '/../src/DBAwareTest.php');
 
 /**
  * All public methods starting with `test` are tests which will be executed by PHPUnit
  */
 class InstallerTest extends WebTestCase
 {
+	use DBAwareTest;
+
 	/**
 	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
 	 */
@@ -16,6 +19,15 @@ class InstallerTest extends WebTestCase
 		$this->assertEquals(200, $this->getResponse()->getStatusCode(), 'The php configuration for running the test suite could not be checked');
 		/// @todo change local config based on response
 		$this->assertEquals('ok', $this->getResponse()->getContent(), 'The php configuration is not correct for running the test suite');
+	}
+
+	/**
+	 * Runs a prerequisite check: check for the db config parameters to actually allow to connect
+	 */
+	public function testDBConnectivity()
+	{
+		$this->assertCanConnect();
+		$this->assertTrue(true);
 	}
 
 	/**

@@ -14,10 +14,15 @@ trait DBAwareTest {
 				case 'mysqli':
 				case 'mariadb':
 					$this->db = new mysqli($_ENV['TEST_DB_HOSTNAME'], $_ENV['TEST_DB_USER'], $_ENV['TEST_DB_PASSWORD'], $_ENV['TEST_DB_SCHEMA'], $_ENV['TEST_DB_PORT']);
+					break;
 				default:
 					throw new ExpectationFailedException('Unsupported db type for testing: ' . $_ENV['TEST_DB_TYPE']);
 			}
 		}
+	}
+
+	protected function assertCanConnect(): void {
+		$this->__connect();
 	}
 
 	/**

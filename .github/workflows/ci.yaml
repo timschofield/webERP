@@ -136,23 +136,23 @@ jobs:
                 ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
 
-#            - name: Failure troubleshooting
-#              if: ${{ failure() }}
-#              run: |
-#                echo '### running processes'
-#                ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
-#                echo
-#                sudo systemctl status mysql.service
-#                echo
-#                sudo systemctl status apache2.service
-#
-#                #echo '### fpm socket(s)'
-#                #ls -la /run/php/
-#
-#                #echo
-#                #sudo ls -la /var/log/apache2/
-#                #echo
-#                #sudo cat /var/log/apache2/error.log
-#                echo
-#                echo '### apache access log'
-#                sudo cat /var/log/apache2/access.log
+            - name: Failure troubleshooting
+              if: ${{ failure() }}
+              run: |
+                #echo '### running processes'
+                #ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
+                #echo
+                #sudo systemctl status mysql.service
+                #echo
+                #sudo systemctl status apache2.service
+
+                #echo '### fpm socket(s)'
+                #ls -la /run/php/
+
+                #echo
+                #sudo ls -la /var/log/apache2/
+                #echo
+                #sudo cat /var/log/apache2/error.log
+                #echo
+                echo '### apache access log'
+                sudo cat /var/log/apache2/access.log
