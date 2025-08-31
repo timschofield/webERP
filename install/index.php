@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * Web ERP Installer
+ * Step 0: Choose Language and Introduction
+ * Step 1: Licence acknowledgement
+ * Step 2: Check requirements
+ * Step 3: Database connection
+ * Step 4: Company details
+ * Step 5: Administrator account details
+ * Step 6: Finalise
+**/
+
 require(__DIR__.'/../vendor/autoload.php');
 
 ini_set('max_execution_time', "6000");
@@ -13,11 +24,16 @@ if (!extension_loaded('mbstring')) {
 
 $PathPrefix = realpath(__DIR__ . '/../') . '/';
 
+$SessionExpired = false;
 if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
-	/// @todo check: if $_SESSION['Installer'] is not set or not an array, redirect to `/install/index.php`
-	$_SESSION['Installer']['CurrentPage'] = (int)$_GET['Page'];
+	if (is_array($_SESSION['Installer'])) {
+		$_SESSION['Installer']['CurrentPage'] = (int)$_GET['Page'];
+	} else {
+		$SessionExpired = true;
+		/// @todo the code below will generate php warnings, as items in $_SESSION['Installer'] will be missing...
+	}
 } else {
-	unset($_SESSION['Installer']);
+	$_SESSION['Installer'] = array();
 	$_SESSION['Installer']['CurrentPage'] = 0;
 	$_SESSION['Installer']['License_Agreed'] = false;
 	$_SESSION['Installer']['Port'] = 3306;
@@ -27,43 +43,42 @@ if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 	$_SESSION['Installer']['Password'] = '';
 	$_SESSION['Installer']['DBMS'] = 'mysqli';
 	$_SESSION['Installer']['AdminUser'] = 'admin';
-	$_SESSION['Installer']['AdminPassword'] = 'weberp';
+	// discourage default passwords
+	$_SESSION['Installer']['AdminPassword'] = '';
 	$_SESSION['Installer']['AdminEmail'] = '';
 	$_SESSION['Installer']['Language'] = 'en_GB.utf8';
 	$_SESSION['Installer']['CoA'] = 'en_GB.utf8';
+	/// @todo rename - why not use $_SESSION['Installer']['coyname'] ?
 	$_SESSION['CompanyRecord']['coyname'] = '';
 	$_SESSION['Installer']['TimeZone'] = 'Europe/London';
 	$_SESSION['Installer']['Email'] = 'info@example.com';
 	$_SESSION['Installer']['Demo'] = 'No';
 }
 
-if (isset($_GET['Agreed']) && $_SESSION['Installer']['CurrentPage'] == 2) {
-	$_SESSION['Installer']['License_Agreed'] = true;
-}
-if (!$_SESSION['Installer']['License_Agreed'] && $_SESSION['Installer']['CurrentPage'] >=2) {
-	$_SESSION['Installer']['CurrentPage'] = 1;
+if ($_SESSION['Installer']['CurrentPage'] == 1) {
+	if (isset($_GET['Agreed']) && $_GET['Agreed'] == 'Yes') {
+		$_SESSION['Installer']['License_Agreed'] = true;
+	} else {
+		$_SESSION['Installer']['License_Agreed'] = false;
+	}
 }
 
+if (!$_SESSION['Installer']['License_Agreed'] && $_SESSION['Installer']['CurrentPage'] >=2) {
+	header('Location: index.php?Page=1');
+	exit();
+}
+
+/// @todo review - do we need MiscFunctions.php?
 include($PathPrefix . 'includes/MiscFunctions.php');
-include($PathPrefix . 'includes/LanguagesArray.php');
-$DefaultLanguage = $_SESSION['Installer']['Language']; // Need the language in this variable as this is the variable used elsewhere in webERP
+
+// Need the language in this variable as this is the variable used elsewhere in webERP
+/// @todo is that true? There seems to be no usage of $DefaultLanguage in the installer code, nor in any other functions it uses...
+$DefaultLanguage = $_SESSION['Installer']['Language'];
 include($PathPrefix . 'includes/LanguageSetup.php');
 
-/*
- * Web ERP Installer
- * Step 0: Choose Language and Introduction
- * Step 1: Licence acknowledgement
- * Step 2: Check requirements
- * Step 3: Database connection
- * Step 4: Company details
- * Step 5: Administrator account details
- * Step 6: Finalise
-**/
+echo "<!DOCTYPE html>\n";
 
-/// @todo move to html5, as the rest of the app
-echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-
-echo '<html xmlns="http://www.w3.org/1999/xhtml">';
+echo '<html lang="' . str_replace('_', '-', substr($_SESSION['Installer']['Language'], 0, 5)) . '">' . "\n";
 
 $Title = __('WebERP Installation Wizard');
 
@@ -72,18 +87,23 @@ echo '<head>
 		<title>', $Title, '</title>
 		<link rel="icon" href="../favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="installer.css" />
-		<script src="misc_functions.js"></script>
-	</head>';
+	</head>' . "\n";
 
-echo '<body>';
+echo '<body>' . "\n";
 
 echo '<div class="wizard">
 		<header>', $Title, '</header>
-		<img id="main_icon" src="images/installer.png" />';
+		<img id="main_icon" src="images/installer.png" />' . "\n";
 
-include($PathPrefix . 'install/pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+if ($SessionExpired) {
+	/// @todo display a warning and a link to the starting page
+} else {
+	include($PathPrefix . 'install/pages/page_' . $_SESSION['Installer']['CurrentPage'] . '.php');
+}
 
-echo '<footer>';
+/// @todo why not move all of the code below in the single pages?
+
+echo  "\n<footer>\n";
 
 if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer']['License_Agreed'] and $_SESSION['Installer']['CurrentPage'] == 1) {
 	echo '<div class="nav_button">
@@ -107,7 +127,9 @@ if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer'][
 				<img src="images/right.png" style="float:right" />
 		</div>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 5) {
-	echo '<input type="submit" class="install nav_button" name="install" value="', __('Install'), '" />';
+	/// @todo only enable the link via js after the form fields have been filled
+	echo '<input type="submit" class="install nav_button" name="install" value="', __('Install'), '" />
+</form>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 6) {
 	if (isset($Installed) && $Installed) {
 		echo '<div class="nav_button">
@@ -134,10 +156,7 @@ if ($_SESSION['Installer']['CurrentPage'] != 0 and $_SESSION['Installer']['Curre
 		</div>';
 }
 
-/// @todo is the form closed here or in the single pages ???
-echo '</footer>
-	</div>
-</form>';
-
-echo '</body>
-	</html>';
+echo '			</footer>
+		</div>
+	</body>
+</html>';
