@@ -589,9 +589,9 @@ function PopulateSQLDataBySQL($File) {
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
 			$Result = DB_query($SQL);
-			if (DB_error_no() == 0) {
+/*			if (DB_error_no() == 0) {
 				echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
-			}
+			}*/
 			$SQL = '';
 		}
 		flush();
