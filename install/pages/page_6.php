@@ -33,7 +33,14 @@ $Errors = CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Da
 if (count($Errors)) {
 	echo '<div class="error">' . __('Unable to create the database schema.') . '</div>';
 
-	/// @todo exit immediately instead of trying to do more
+	// display the errors
+	echo '<div class="error">';
+	foreach ($Errors as $error) {
+		echo '<p>' . htmlspecialchars($error) . "</p>\n";
+	}
+	echo '</div>';
+
+	return;
 }
 
 include($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
@@ -66,9 +73,9 @@ $configArray += [
 	'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
 ];
 
-// Define the paths relative to the `installer` directory
-$SampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
-$NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
+// The config files are in the main directory
+$SampleConfigFile = $Path_To_Root . '/config.distrib.php';
+$NewConfigFile = $Path_To_Root . '/config.php';
 
 // Read the content of the sample config file
 if (!file_exists($SampleConfigFile)) {
@@ -80,32 +87,32 @@ $SampleHandle = fopen($SampleConfigFile, 'r');
 $NewLines = [];
 
 if ($SampleHandle) {
-    while (($Line = fgets($SampleHandle)) !== false) {
-        // Check if the line is commented (starting with //, #, or within /* */)
-        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
+	while (($Line = fgets($SampleHandle)) !== false) {
+		// Check if the line is commented (starting with //, #, or within /* */)
+		$isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
 
-        // Skip replacements on comment lines, otherwise process a config line.
-        if (!$isComment) {
-            // Loop Installer Data
-            foreach ($configArray as $key => $Value) {
-                // if (strpos($Line, $key) !== false) {
+		// Skip replacements on comment lines, otherwise process a config line.
+		if (!$isComment) {
+			// Loop Installer Data
+			foreach ($configArray as $key => $Value) {
+				// if (strpos($Line, $key) !== false) {
 				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
-                    $NewValue = addslashes($Value);
-                    $Line = "\$$key = '$NewValue';\n";
-                    unset($configArray[$key]);
-                }
-            }
+					$NewValue = addslashes($Value);
+					$Line = "\$$key = '$NewValue';\n";
+					unset($configArray[$key]);
+				}
+			}
 			// Replace date_default_timezone_set
 			if (strpos($Line, 'date_default_timezone_set') !== false) {
-                $NewValue = addslashes($_SESSION['Installer']['TimeZone']);
+				$NewValue = addslashes($_SESSION['Installer']['TimeZone']);
 				$Line = "date_default_timezone_set('".$NewValue."');\n";
-            }
-        }
-        // Append the line to the new content
-        $NewLines[] = $Line;
-    }
+			}
+		}
+		// Append the line to the new content
+		$NewLines[] = $Line;
+	}
 
-    fclose($SampleHandle);
+	fclose($SampleHandle);
 } else {
 	echo '<div class="error">' . __('Unable to read the sample configuration file.') . '</div>';
 }
@@ -113,7 +120,7 @@ if ($SampleHandle) {
 // Write the updated content to the new config file
 $NewConfigContent = implode($NewLines);
 if (file_put_contents($NewConfigFile, $NewConfigContent)) {
-    echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
+	echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
 } else {
 	echo '<div class="error">' . __('Cannot write to the configuration file') . $Config_File . '</div>';
 }
@@ -145,3 +152,5 @@ if (!fwrite($CompanyFileHandler, $Contents)) {
 }
 //close file
 fclose($CompanyFileHandler);
+
+$Installed = true;

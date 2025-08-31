@@ -731,7 +731,7 @@ echo '<field>
 		<label for="Theme">' . __('Theme') . ':</label>
 		<select required="required" name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+$ThemeDirectories = scandir($PathPrefix . 'css/');
 
 if (!isset($_POST['Theme'])) {
 	$_POST['Theme'] = $DefaultTheme;

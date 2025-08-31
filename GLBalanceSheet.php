@@ -15,10 +15,6 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Functions division ===================================================
-// END: Functions division =====================================================
-
-// BEGIN: Procedure division ===================================================
 if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	require(__DIR__ . '/includes/session.php');
 }

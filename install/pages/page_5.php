@@ -43,7 +43,7 @@ echo '</select>
 	</field>';
 
 echo '<field>
-			<label for="Logo">' . __('Company logo file') . ': </label>
+			<label for="LogoFile">' . __('Company logo file') . ': </label>
 			<input type="file" accept="image/jpg" name="LogoFile" title="' . __('A jpg file up to 10kb, and not greater than 170px x 80px') . '" />
 			<fieldhelp>' . __('jpg/jpeg/png/gif files up to 10kb, and not greater than 170px x 80px') . '<br />' . __('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
 		</field>
@@ -54,7 +54,7 @@ echo '<fieldset>
 			<legend>' . __('Installation option') . '</legend>
 				<ul>
 					<field>
-						<label for="InstallDemo">' . __('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
+						<label for="Demo">' . __('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
 						<fieldhelp>' . __('webERP Demo site and data will be installed') . '</fieldhelp>
 					</field>
 				</ul>

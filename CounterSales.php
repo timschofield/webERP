@@ -2,7 +2,7 @@
 
 // Allows sales to be entered against a cash sale customer account defined in the users location record.
 
-/// @todo move to after session.php inclusion, unless there are side effects
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');

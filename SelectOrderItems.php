@@ -1,5 +1,8 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineCartClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
@@ -11,7 +14,6 @@ $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
 include('includes/header.php');
 
-include('includes/DefineCartClass.php');
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');

@@ -2,7 +2,7 @@
 
 /* Picking List Maintenance */
 
-/// @todo move to after session.php if no side effects
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 

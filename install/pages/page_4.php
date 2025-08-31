@@ -16,7 +16,7 @@ if (isset($_POST['test'])) {
 	$Message = __('Information saved successfully');
 }
 
-echo '<form method="post" action="index.php?Page=4">
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=4">
 		<fieldset>
 			<legend>' . __('Administrator account settings') . '</legend>
 			<div class="page_help_text">

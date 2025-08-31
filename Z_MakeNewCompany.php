@@ -181,7 +181,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
          //now update the config.php file if using the obfuscated database login else we don't want it there
         if (isset($CompanyList) && is_array($CompanyList)) {
-            $ConfigFile = './config.php';
+            $ConfigFile = $PathPrefix . 'config.php';
             $config_php = join('', file($ConfigFile));
             //fix the Post var - it is being preprocessed with slashes and entity encoded which we do not want here
             $_POST['NewCompany'] =  html_entity_decode($_POST['NewCompany'],ENT_QUOTES,'UTF-8');
@@ -217,9 +217,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		$SQL = "UPDATE companies SET coyname='" . $_POST['NewCompany'] . "' WHERE coycode = 1";
 		$Result = DB_query($SQL);
 
-		$ForceConfigReload=true;
+		$ForceConfigReload = true;
 		include('includes/GetConfig.php');
-		$ForceConfigReload=false;
+		$ForceConfigReload = false;
 
 		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 

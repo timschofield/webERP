@@ -102,13 +102,14 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
 		ob_flush();
 
-		/* Upload logo file */
-		$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
-		$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
-		$UploadOK = 1;
-		$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
+		if (isset($_FILES["LogoFile"]) && $_FILES["LogoFile"]["tmp_name"] != '') {
+			/* Upload logo file */
+			$UploadOK = 1;
 
-		if ($_FILES["LogoFile"]["tmp_name"] != '') {
+			$TargetDir = $Path_To_Root . '/companies/' . $DatabaseName . '/';
+			$TargetFile = $TargetDir . basename($_FILES["LogoFile"]["name"]);
+			$ImageFileType = strtolower(pathinfo($TargetFile, PATHINFO_EXTENSION));
+
 			// Check if image file is an actual image or fake image
 			if(isset($_POST["install"])) {
 				$check = getimagesize($_FILES["LogoFile"]["tmp_name"]);
@@ -158,7 +159,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 
 function CreateTables($Path_To_Root) {
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/sql/tables/*.sql") as $FileName) {
+	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		// avoid the standard error-handling kicking in
@@ -298,7 +299,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		ob_flush();
 
 		$DBErrors = 0;
-		foreach (glob($Path_To_Root . "/install/sql/data/*.sql") as $FileName) {
+		foreach (glob($Path_To_Root . '/install/sql/data/*.sql') as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
 			DB_IgnoreForeignKeys();
 			$Result = DB_query($SQLScriptFile);
@@ -359,14 +360,14 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	} else {
 		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
 
-		PopulateSQLDataBySQL(__DIR__ . '/../sql/demo.sql');
+		PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
 
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);
 
 		// gg: there is no /companies/default folder atm...
-		$CompanyDir = $Path_To_Root . 'companies/' . $DataBaseName;
-		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
+		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
+		foreach (glob($Path_To_Root . '/companies/default/part_pics/*.jp*') as $JpegFile) {
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
@@ -483,7 +484,7 @@ function PopulateSQLDataBySQL($File) {
 function CreateGLTriggers($Path_To_Root)
 {
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/sql/triggers/*.sql") as $FileName) {
+	foreach (glob($Path_To_Root . '/install/sql/triggers/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		$Result = DB_query($SQLScriptFile);

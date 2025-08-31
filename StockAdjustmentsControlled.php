@@ -1,12 +1,13 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockAdjustment.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Adjusting Controlled Items');
 include('includes/header.php');
-
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockAdjustment.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other stock adjustment sessions on the same machine  */

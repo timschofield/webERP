@@ -5,6 +5,7 @@ the SuppTrans class contains an array of GRNs objects - containing details of GR
 Also an array of GLCodes objects - only used if the AP - GL link is effective
 Also an array of shipment charges for charges to shipments to be apportioned accross the cost of stock items */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSuppTransClass.php');
 include('includes/DefinePOClass.php'); //needed for auto receiving code
 

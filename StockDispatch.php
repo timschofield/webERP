@@ -10,20 +10,7 @@ use Dompdf\Dompdf;
 
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
-
-function getImageTag($stockid) {
-	$SupportedImgExt = array('png', 'jpg', 'jpeg');
-	$partPicsDir = $_SESSION['part_pics_dir'];
-	foreach ($SupportedImgExt as $ext) {
-		$imageFile = "{$partPicsDir}/{$stockid}.{$ext}";
-		if (file_exists($imageFile)) {
-			$base64 = base64_encode(file_get_contents($imageFile));
-			$mime = "image/{$ext}";
-			return "<img src='data:{$mime};base64,{$base64}' style='width:35px; height:35px; vertical-align:middle; margin-right:4px;' />";
-		}
-	}
-	return '';
-}
+include ('includes/ImageFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
