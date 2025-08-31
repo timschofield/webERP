@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 31, 2025 at 11:52 AM
+-- Generation Time: Aug 31, 2025 at 03:34 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -5355,7 +5355,8 @@ ALTER TABLE `sellthroughsupport`
 -- Indexes for table `session_data`
 --
 ALTER TABLE `session_data`
-  ADD PRIMARY KEY (`userid`,`value`);
+  ADD PRIMARY KEY (`userid`,`value`),
+  ADD KEY `idx_session_data_userid_field` (`userid`,`field`);
 
 --
 -- Indexes for table `shipmentcharges`
