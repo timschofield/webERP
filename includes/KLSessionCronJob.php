@@ -170,8 +170,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
-		include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
-		break;
+			include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			break;
 	
 		case UL_SHOWLOGIN:
 			include($PathPrefix . 'includes/Login.php');
