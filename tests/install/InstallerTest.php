@@ -23,7 +23,8 @@ class InstallerTest extends WebTestCase
 	 */
 	public function testInstallation()
 	{
-		/// @todo allow using a phpunit env var to allow forcing removal of these if found
+		/// @todo allow using a phpunit env var to allow forcing removal of these if found (and also dropping the db schema),
+		///       or is it too dangerous for end users?
 		if (file_exists(self::$rootDir . '/config.php') || is_dir(self::$rootDir . '/companies/' . $_ENV['TEST_DB_SCHEMA'])) {
 			$this->markTestSkipped('config.php is already present. Will not run the installer test');
 		}
