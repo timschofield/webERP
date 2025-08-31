@@ -1720,13 +1720,4 @@ LOCK TABLES `woserialnos` WRITE;
 /*!40000 ALTER TABLE `woserialnos` DISABLE KEYS */;
 INSERT INTO `woserialnos` (`wo`, `stockid`, `serialno`, `quantity`, `qualitytext`) VALUES (1,'MANUF','123',10,''),(1,'MANUF','124',1,'');
 /*!40000 ALTER TABLE `woserialnos` ENABLE KEYS */;
-
-
-LOCK TABLES `prodspecgroups` WRITE;
-INSERT INTO `prodspecgroups` (`groupid`, `groupname`, `groupbyNo`, `headertitle`, `trailertext`, `labels`, `numcols`) VALUES
-(1, 'PhysicalProperty', 1, 'Physical Properties', NULL, 'Physical Property,Value,Test Method', 3),
-(2, 'MechanicalProperty', 2, NULL, NULL, '', 3),
-(3, 'ThermalProperty', 3, NULL, NULL, '', 3),
-(4, 'Processing', 6, 'Injection Molding Processing Guidelines', '* Desicant type dryer required.', 'Setting,Value', 2),
-(5, 'RegulatoryCompliance', 5, 'Regulatory Compliance', NULL, 'Regulatory Compliance,Value', 2);
 UNLOCK TABLES;
