@@ -179,10 +179,26 @@ class WebTestCase extends TestCase
 		return $pages;
 	}
 
-	protected function assertIsNotOnInstallerPage(Crawler $crawler): void
+	protected function assertHasNoElementsMatching(Crawler $crawler, string $cssSelector, string $message = '')
+	{
+		$count = $crawler->filter('body > div.wizard div.error')->count();
+		$text = '';
+		if ($count > 0) {
+			$text = $crawler->filter('body > div.wizard div.error')->text();
+		}
+		if ($message === '') {
+			$message = "Found unexpected element in page ($cssSelector)";
+		}
+		if ($text != '') {
+			$message .= ": $text";
+		}
+		$this->assertEquals(0, $count, $message);
+	}
+
+	protected function assertIsNotOnInstallerPage(Crawler $crawler, $message = ''): void
 	{
 		/// @todo what about using $this->getResponse() instead of $crawler?
-		$this->assertStringNotContainsString($crawler->getUri(), '/install/');
+		$this->assertStringNotContainsString($crawler->getUri(), '/install/', $message);
 	}
 
 	protected function assertIsNotOnLoginPage()

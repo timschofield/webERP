@@ -32,16 +32,20 @@ class InstallerTest extends WebTestCase
 
 		// page 0
 		$this->assertStringContainsString('Welcome to the webERP installer', $crawler->text(), 'Missing title in installer page 0');
+		// for each page, check that there are no DIV elements with class "error"
+
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 0');
 		$crawler = $this->clickLink('Next');
 
 		// page 1
 		$this->assertStringContainsString('Page=1', $crawler->getUri());
 		$this->assertStringContainsString('GNU GENERAL PUBLIC LICENSE Version 2', $crawler->text(), 'Missing license in installer page 1');
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 1');
 
 		// check that the Next link is not activated (user has not accepted the license yet)
 		$nextLinkUrl = $crawler->selectLink('Next')->link()->getUri();
 		$this->assertStringNotContainsString('Page=2', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
-		$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accpeting the license');
+		$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
 
 		// @todo sadly we have to emulate the JS manually. Check if we can submit the form instead...
 		$nextLinkUrl = str_replace('Page=1', 'Page=2', $nextLinkUrl) . '&Agreed=Yes';
@@ -50,12 +54,14 @@ class InstallerTest extends WebTestCase
 		// page 2
 		$this->assertStringContainsString('Page=2', $crawler->getUri());
 		$this->assertStringContainsString('System Checks', $crawler->text());
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 2');
 		/// @todo should check that all system checks are passed?
 		$crawler = $this->clickLink('Next');
 
 		// page 3
 		$this->assertStringContainsString('Page=3', $crawler->getUri());
 		$this->assertStringContainsString('Database settings', $crawler->text());
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 3');
 
 		// check that the 'Next' link has the is_disabled class
 		$nextLinkUrl = $crawler->selectLink('Next');
@@ -80,6 +86,7 @@ class InstallerTest extends WebTestCase
 		// page 4
 		$this->assertStringContainsString('Page=4', $crawler->getUri());
 		$this->assertStringContainsString('Administrator account settings', $crawler->text());
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 4');
 
 		// check that the 'Next' link has the is_disabled class
 		$nextLinkUrl = $crawler->selectLink('Next');
@@ -101,6 +108,7 @@ class InstallerTest extends WebTestCase
 		// page 5
 		$this->assertStringContainsString('Page=5', $crawler->getUri());
 		$this->assertStringContainsString('Company Settings', $crawler->text());
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 5');
 
 		/// @todo should we make all of the values below come from config/env-vars?
 		$crawler = $this->submitForm('install', [
@@ -112,6 +120,7 @@ class InstallerTest extends WebTestCase
 
 		// page 6
 		$this->assertStringContainsString('Page=6', $crawler->getUri());
+		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 6');
 
 		// test that configuration was created
 		$this->assertFileExists(self::$rootDir . '/config.php');
@@ -120,10 +129,6 @@ class InstallerTest extends WebTestCase
 		$this->assertFileExists(self::$rootDir . '/companies/' . $_ENV['TEST_DB_SCHEMA'] . '/logo.png');
 
 		// go to homepage
-/// @todo is this necessary? check current url!
-//var_dump($crawler->getUri());
-//var_dump($this->getResponse()->);
-
 		$crawler = $this->request('GET', self::$baseUri . '/index.php');
 		$this->assertStringContainsString('Please login here', $crawler->text(), 'Missing title in installer 1st page');
 
@@ -135,6 +140,6 @@ class InstallerTest extends WebTestCase
 		]);
 		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
 
-//var_dump($crawler->text());
+//var_dump($this->getResponse()->getContent());
 	}
 }
