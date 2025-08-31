@@ -1146,10 +1146,9 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 }
 echo '<field>
 		<label for="Paymenttype">' . __('Payment type') . ':</label>
-		<select name="Paymenttype" required="required">';
+		<select name="Paymenttype">';
 
 include('includes/GetPaymentMethods.php');
-array_unshift($PaytTypes, '');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
  payment methods can be modified from the setup tab of the main menu under payment methods*/
 
