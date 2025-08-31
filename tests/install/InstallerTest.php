@@ -175,6 +175,9 @@ class InstallerTest extends WebTestCase
 		// test that the auto-generated logo was created
 		$this->assertFileExists(self::$rootDir . '/companies/' . $_ENV['TEST_DB_SCHEMA'] . '/logo.png');
 
+		/// @todo inject `$Debug = 99` at the end of config.php. We want tests to run with detailed info.
+		///       Also, make it load a custom error handler, that can help us testing for php warning/errors
+
 		// go to homepage
 		$crawler = $this->request('GET', self::$baseUri . '/index.php');
 		$this->assertStringContainsString('Please login here', $crawler->text(), 'Missing title in installer 1st page');

@@ -32,8 +32,10 @@ class WebTestCase extends TestCase
 			self::$rootDir = realpath(__DIR__ . '/../..');
 		}
 
-		self::$randId = uniqid();
-		file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
+		/// @todo  This is a file which can be read by pages server-side to validate that the request is coming from the test
+		///        It remains to be done: 1. send self::$randId as cookie on every http request, and 2. check for it server-side
+		//self::$randId = uniqid();
+		//file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
 	}
 
 	/**
@@ -41,9 +43,9 @@ class WebTestCase extends TestCase
 	 */
 	public static function tearDownAfterClass(): void
 	{
-		if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
-			unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
-		}
+		//if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
+		//	unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
+		//}
 
 		parent::tearDownAfterClass();
 	}

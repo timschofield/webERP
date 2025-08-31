@@ -89,7 +89,9 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
 
-            # @todo set up specific php config if needed, eg. display_errors
+            # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
+            #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
+            #       code coverage information)
 
             - name: Set up the Webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
