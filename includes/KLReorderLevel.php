@@ -326,7 +326,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					// 1st: shops with all collection = true
 					// 2nd: shops with all collection = false (small shops or slow shops)
 					// 3rd: shops with higher sales of the item
-					// 4rd: shops with higer sales in general
+					// 4th: shops with higher sales in general
 
 					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
 						$OrderBy = " locations.alltestitems DESC, ";
@@ -337,28 +337,28 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					}else{
 						$OrderBy = "";
 					}
-					$DistributionSQL = "SELECT locstock.loccode, 
-											locstock.reorderlevel AS oldrl
-										FROM locstock, locations
-										WHERE  locstock.loccode = locations.loccode
-											AND locstock.stockid = '" . $MyRow['stockid'] . "'
-											AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-											AND locstock.reorderlevel > 0 
-										ORDER BY locations.priority ASC, ".
+					// Optimized DistributionSQL query - eliminates correlated subquery for better performance
+					$DistributionSQL = "SELECT ls.loccode,
+											ls.reorderlevel AS oldrl,
+											COALESCE(sales_data.sales_count, 0) as sales_count
+										FROM locstock ls
+										INNER JOIN locations loc ON ls.loccode = loc.loccode
+										LEFT JOIN (
+											SELECT so.fromstkloc,
+												   COUNT(sod.qtyinvoiced) as sales_count
+											FROM salesorders so
+											INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+											WHERE sod.stkcode = '" . $MyRow['stockid'] . "'
+											  AND sod.completed = 1
+											  AND so.orddate >= '" . $StartDate . "'
+											GROUP BY so.fromstkloc
+										) sales_data ON ls.loccode = sales_data.fromstkloc
+										WHERE ls.stockid = '" . $MyRow['stockid'] . "'
+											AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+											AND ls.reorderlevel > 0
+										ORDER BY loc.priority ASC, ".
 												$OrderBy ."
-												(SELECT COUNT(qtyinvoiced)
-													FROM salesorderdetails, salesorders
-													WHERE salesorderdetails.orderno = salesorders.orderno
-														AND salesorderdetails.completed = 1
-														AND salesorders.orddate >= '". $StartDate . "'
-														AND salesorders.fromstkloc = locstock.loccode
-														AND salesorderdetails.stkcode = '". $MyRow['stockid'] . "') DESC, 
-												(SELECT COUNT(qtyinvoiced)
-													FROM salesorderdetails, salesorders
-													WHERE salesorderdetails.orderno = salesorders.orderno
-														AND salesorderdetails.completed = 1
-														AND salesorders.orddate >= '". $StartDate . "'
-														AND salesorders.fromstkloc = locstock.loccode) DESC";
+												sales_data.sales_count DESC";
 														
 					$DistributionResult = DB_query($DistributionSQL);
 					$LocationsToDistribute = DB_num_rows($DistributionResult);

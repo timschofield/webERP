@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 31, 2025 at 11:27 AM
+-- Generation Time: Aug 31, 2025 at 11:52 AM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -4726,7 +4726,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
   ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`),
   ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`),
-  ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`);
+  ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`),
+  ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`);
 
 --
 -- Indexes for table `locationtypes`
@@ -5270,7 +5271,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`),
   ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
   ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
-  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`);
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`),
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`);
 
 --
 -- Indexes for table `salesorders`
