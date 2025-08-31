@@ -71,6 +71,33 @@ class WebTestCase extends TestCase
 		parent::tearDown();
 	}
 
+	// *** Functions useful for usage in subclasses ***
+
+	protected function request(string $method, string $uri, array $parameters = [], array $files = [], array $server = [], ?string $content = null, bool $changeHistory = true): Crawler
+	{
+		return $this->browser->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
+	}
+
+	protected function followRedirects(bool $followRedirects = true): void
+	{
+		$this->browser->followRedirects($followRedirects);
+	}
+
+	protected function setExpectedStatusCodes(array $codes): void
+	{
+		$this->setExpectedStatusCodes($codes);
+	}
+
+	protected function clickLink(string $linkText): Crawler
+	{
+		return $this->browser->clickLink($linkText);
+	}
+
+	protected function submitForm(string $button, array $fieldValues = [], string $method = 'POST', array $serverParameters = []): Crawler
+	{
+		return $this->browser->submitForm($button, $fieldValues, $method, $serverParameters);
+	}
+
 	/**
 	 * Scans the source code for web pages (php files).
 	 * @param string[] $dirs List of dirs. Will _not_ recurse into them

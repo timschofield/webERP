@@ -5,11 +5,18 @@ use Symfony\Component\BrowserKit\HttpBrowser as BaseHttpBrowser;
 use Symfony\Component\BrowserKit\Request;
 use Symfony\Component\BrowserKit\Response;
 
+/**
+ * The HttpBrowser class used by the WebTestCase.
+ * It adds custom functionality to the stock HttpBrowser from Symfony BrowserKit
+ */
 class HttpBrowser extends BaseHttpBrowser
 {
 	protected $expectedStatusCodes = null;
 
 	/**
+	 * Adds an easy way to check for requests resulting in errors or redirects, without having to specify
+	 * that in every single test method.
+	 *
 	 * @param Request $request
 	 */
 	protected function doRequest(object $request): Response
@@ -24,7 +31,7 @@ class HttpBrowser extends BaseHttpBrowser
 		if ($this->expectedStatusCodes) {
 			if (!in_array($response->getStatusCode(), $this->expectedStatusCodes)) {
 				throw new ExpectationFailedException('Got HTTP response code ' . $response->getStatusCode() . ' for ' .
-					$request->getUri());
+					$request->getUri() . ' while expecting ' . implode('/', $this->expectedStatusCodes));
 			}
 		}
 
@@ -33,7 +40,7 @@ class HttpBrowser extends BaseHttpBrowser
 		return $response;
 	}
 
-	public function setExpectedStatusCodes(array $codes)
+	public function setExpectedStatusCodes(array $codes): void
 	{
 		$this->expectedStatusCodes = $codes;
 	}
