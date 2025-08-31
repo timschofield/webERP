@@ -186,7 +186,7 @@ class WebTestCase extends TestCase
 		$count = $crawler->filter($cssSelector)->count();
 		$text = '';
 		if ($count > 0) {
-			$text = $crawler->filter($cssSelector)->text();
+			$text = implode(', ', $crawler->filter($cssSelector)->extract(['_text']));
 		}
 		if ($message === '') {
 			$message = "Found unexpected element in page ($cssSelector)";
