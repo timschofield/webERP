@@ -498,23 +498,38 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 * @return int - The total available quantity.
 **************************************************************************************************************/
 function QtyAvailable($StockID, $Location){
-	$SQL = "SELECT SUM(locstock.quantity) AS total
-			FROM locstock,locations
-			WHERE locstock.stockid = '" . $StockID . "'
-				AND locstock.loccode = locations.loccode";
-	if ($Location == "ALLSHOPS"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
-	}elseif ($Location == "ALLSHOPSANDONLINE"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
-	}elseif ($Location == "ALL"){
-		$SQL = $SQL . " "; 
-	}else{
-		$SQL = $SQL . " AND locstock.loccode = '". $Location . "'"; 
+	// Optimized query using explicit JOINs and better conditional logic
+	if ($Location == "ALL") {
+		// Simple case: sum all quantities for the stock item across all locations
+		$SQL = "SELECT SUM(quantity) AS total
+				FROM locstock
+				WHERE stockid = '" . $StockID . "'";
+	} elseif ($Location == "ALLSHOPS") {
+		// Join with locations table only when needed for type filtering
+		$SQL = "SELECT SUM(ls.quantity) AS total
+				FROM locstock ls
+				INNER JOIN locations loc ON ls.loccode = loc.loccode
+				WHERE ls.stockid = '" . $StockID . "'
+					AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE;
+	} elseif ($Location == "ALLSHOPSANDONLINE") {
+		// Join with locations table only when needed for type filtering
+		$SQL = "SELECT SUM(ls.quantity) AS total
+				FROM locstock ls
+				INNER JOIN locations loc ON ls.loccode = loc.loccode
+				WHERE ls.stockid = '" . $StockID . "'
+					AND loc.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE;
+	} else {
+		// Specific location: use primary key for fastest access
+		$SQL = "SELECT quantity AS total
+				FROM locstock
+				WHERE stockid = '" . $StockID . "'
+					AND loccode = '" . $Location . "'";
 	}
+	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$Qty = $MyRow['total'];
+		$Qty = $MyRow['total'] ?? 0;
 	}else{
 		$Qty = 0;
 	}
@@ -529,14 +544,16 @@ function QtyAvailable($StockID, $Location){
 * @return int - The count of active locations.
 **************************************************************************************************************/
 function ActiveLocationsForItem($StockID){
-	$SQL = "SELECT COUNT(locstock.loccode) AS total
+	// Optimized query using COUNT(*) for better performance
+	// and leveraging existing indexes
+	$SQL = "SELECT COUNT(*) AS total
 			FROM locstock
-			WHERE locstock.stockid = '" . $StockID . "'
-				AND locstock.reorderlevel > 0";
+			WHERE stockid = '" . $StockID . "'
+				AND reorderlevel > 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$Qty = $MyRow['total'];
+		$Qty = (int)($MyRow['total'] ?? 0);
 	}else{
 		$Qty = 0;
 	}
@@ -562,26 +579,27 @@ function ActiveLocationsForItem($StockID){
 		$EmailText = $EmailText . "Set RL = 0 for not available items." . "\n\n";
 	}
 	
-	$SQL = "SELECT locstock.stockid,
-					stockmaster.description,
-					locstock.reorderlevel
-			FROM locstock, stockmaster, stockcategory, locations
-			WHERE locstock.stockid = stockmaster.stockid
-				AND locstock.loccode = locations.loccode
-				AND stockmaster.discontinued = 0
-				AND stockmaster.categoryid = stockcategory.categoryid
-				AND stockmaster.categoryid != 'SHCONS'
-				AND stockmaster.categoryid != 'SHPACK'
-				AND stockcategory.stocktype = 'F'
-				AND locations.stockreadytosell = 1
-				AND EXISTS (SELECT *
-							FROM locstock, locations loc2
-							WHERE locstock.stockid = stockmaster.stockid
-								AND locstock.loccode = loc2.loccode
-								AND locstock.reorderlevel > 0 
-								AND loc2.stockreadytosell = 1)
-			GROUP BY locstock.stockid
-			HAVING SUM(locstock.quantity) = 0";
+	$SQL = "SELECT sm.stockid,
+					sm.description,
+					MAX(ls.reorderlevel) as reorderlevel
+			FROM stockmaster sm
+			INNER JOIN stockcategory sc ON sm.categoryid = sc.categoryid
+			INNER JOIN locstock ls ON sm.stockid = ls.stockid
+			INNER JOIN locations loc ON ls.loccode = loc.loccode
+			WHERE sm.discontinued = 0
+				AND sm.categoryid NOT IN ('SHCONS', 'SHPACK')
+				AND sc.stocktype = 'F'
+				AND loc.stockreadytosell = 1
+				AND EXISTS (
+					SELECT 1
+					FROM locstock ls2
+					INNER JOIN locations loc2 ON ls2.loccode = loc2.loccode
+					WHERE ls2.stockid = sm.stockid
+						AND ls2.reorderlevel > 0
+						AND loc2.stockreadytosell = 1
+				)
+			GROUP BY sm.stockid, sm.description
+			HAVING SUM(ls.quantity) = 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){

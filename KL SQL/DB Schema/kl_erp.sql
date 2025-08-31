@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 31, 2025 at 04:50 PM
+-- Generation Time: Aug 31, 2025 at 05:04 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -4728,7 +4728,9 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`),
   ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`),
   ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`),
-  ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`);
+  ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`),
+  ADD KEY `idx_locations_typeloc` (`typeloc`),
+  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`);
 
 --
 -- Indexes for table `locationtypes`
@@ -4759,7 +4761,8 @@ ALTER TABLE `locstock`
   ADD UNIQUE KEY `uk_locstock_stockid_loccode` (`stockid`,`loccode`),
   ADD UNIQUE KEY `uk_locstock_reorderlevel_loccode_stockid` (`reorderlevel`,`loccode`,`stockid`),
   ADD KEY `idx_locstock_bin` (`bin`),
-  ADD KEY `idx_locstock_stockid_loccode_reorderlevel_quantity` (`stockid`,`loccode`,`reorderlevel`,`quantity`);
+  ADD KEY `idx_locstock_stockid_loccode_reorderlevel_quantity` (`stockid`,`loccode`,`reorderlevel`,`quantity`),
+  ADD KEY `idx_locstock_stockid_reorderlevel` (`stockid`,`reorderlevel`);
 
 --
 -- Indexes for table `loctransfercancellations`
