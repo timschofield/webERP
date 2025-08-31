@@ -202,7 +202,7 @@ $XPos = $Left_Margin;
 $YPos = $Page_Height - $Top_Margin - 190;
 $FontSize = 8;
 
-require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+$CurrencyName = \webERP\CurrencyManager::getCurrencyNames();
 $pdf->addText($Left_Margin, $YPos-8, $FontSize, __('All amounts stated in') . ': ' . $MyRow['currcode'] . ' - ' . $CurrencyName[$MyRow['currcode']]);
 
 if ($InvOrCredit=='Invoice') {

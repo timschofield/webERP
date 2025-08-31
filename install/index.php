@@ -45,7 +45,7 @@ if (!$_SESSION['Installer']['License_Agreed'] && $_SESSION['Installer']['Current
 }
 
 include($PathPrefix . 'includes/MiscFunctions.php');
-include($PathPrefix . 'includes/LanguagesArray.php');
+//include($PathPrefix . 'includes/LanguagesArray.php');
 $DefaultLanguage = $_SESSION['Installer']['Language']; // Need the language in this variable as this is the variable used elsewhere in webERP
 include($PathPrefix . 'includes/LanguageSetup.php');
 
