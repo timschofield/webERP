@@ -2,6 +2,9 @@
 
 use PHPUnit\Framework\ExpectationFailedException;
 
+/**
+ * @todo add support for postgres, sqlite
+ */
 trait DBAwareTest {
 	protected $db;
 

@@ -32,8 +32,11 @@ class InstallerTest extends WebTestCase
 		$crawler = $this->request('GET', self::$baseUri . '/install/index.php');
 
 		// page 0
-		$this->assertStringContainsString('Welcome to the webERP installer', $crawler->text(), 'Missing title in installer page 0');
+		$this->assertStringContainsString('Welcome to the webERP installer', $crawler->filter('body > div.wizard > h1')->text(), 'Missing title in installer page 0');
 		// for each page, check that there are no DIV elements with class "error"
+
+		/// @todo make all the checks for textual labels (such as h1) internationalized, so that we can then run the
+		///       test picking a random language for the installer. See the LanguageAwareTest trait
 
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 0');
 		$crawler = $this->clickLink('Next');
@@ -54,14 +57,14 @@ class InstallerTest extends WebTestCase
 
 		// page 2
 		$this->assertStringContainsString('Page=2', $crawler->getUri());
-		$this->assertStringContainsString('System Checks', $crawler->text());
+		$this->assertStringContainsString('System Checks', $crawler->filter('body > div.wizard > h1')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 2');
 		/// @todo should check that all system checks are passed?
 		$crawler = $this->clickLink('Next');
 
 		// page 3
 		$this->assertStringContainsString('Page=3', $crawler->getUri());
-		$this->assertStringContainsString('Database settings', $crawler->text());
+		$this->assertStringContainsString('Database settings', $crawler->filter('body > div.wizard > h1')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 3');
 
 		// check that the 'Next' link has the is_disabled class
@@ -86,7 +89,7 @@ class InstallerTest extends WebTestCase
 
 		// page 4
 		$this->assertStringContainsString('Page=4', $crawler->getUri());
-		$this->assertStringContainsString('Administrator account settings', $crawler->text());
+		$this->assertStringContainsString('Administrator account settings', $crawler->filter('body > div.wizard > h1')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 4');
 
 		// check that the 'Next' link has the is_disabled class
@@ -108,7 +111,7 @@ class InstallerTest extends WebTestCase
 
 		// page 5
 		$this->assertStringContainsString('Page=5', $crawler->getUri());
-		$this->assertStringContainsString('Company Settings', $crawler->text());
+		$this->assertStringContainsString('Company Settings', $crawler->filter('body > div.wizard > h1')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 5');
 
 		/// @todo should we make all of the values below come from config/env-vars?
