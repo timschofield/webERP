@@ -329,11 +329,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					// 4th: shops with higher sales in general
 
 					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
-						$OrderBy = " locations.alltestitems DESC, ";
+						$OrderBy = " loc.alltestitems DESC, ";
 					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
-						$OrderBy = " locations.allstableitems DESC, ";
+						$OrderBy = " loc.allstableitems DESC, ";
 					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
-						$OrderBy = " locations.allnopoitems DESC, ";
+						$OrderBy = " loc.allnopoitems DESC, ";
 					}else{
 						$OrderBy = "";
 					}
