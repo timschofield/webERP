@@ -10,8 +10,22 @@ class InstallerTest extends WebTestCase
 {
 	use DBAwareTest;
 
+	protected $envDbSchema;
+
+	protected function onNotSuccessfulTest(Throwable $t): never
+	{
+		// Set back the db schema name in case the testDBConnectivity test failed, and other tests will follow,
+		// even though that is not the recommended way of running the tests in this class
+		if ($_ENV['TEST_DB_SCHEMA'] === null && $this->envDbSchema !== null) {
+			$_ENV['TEST_DB_SCHEMA'] = $this->envDbSchema;
+		}
+
+		parent::onNotSuccessfulTest($t);
+	}
+
 	/**
 	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
+	 * NB: this works best when running phpunit with `--stop-on-failure`
 	 */
 	public function testPHPConfiguration()
 	{
@@ -23,10 +37,14 @@ class InstallerTest extends WebTestCase
 
 	/**
 	 * Runs a prerequisite check: check for the db config parameters to actually allow to connect
+	 * NB: this works best when running phpunit with `--stop-on-failure`
 	 */
 	public function testDBConnectivity()
 	{
+		$this->envDbSchema = $_ENV['TEST_DB_SCHEMA'];
+		$_ENV['TEST_DB_SCHEMA'] = null;
 		$this->assertCanConnect();
+		$_ENV['TEST_DB_SCHEMA'] = $this->envDbSchema;
 		$this->assertTrue(true);
 	}
 

@@ -132,7 +132,7 @@ jobs:
                 #echo
                 #curl -L --fail-with-body http://localhost/index.php
 
-                ./vendor/bin/phpunit tests/install
+                ./vendor/bin/phpunit --stop-on-failure tests/install
                 ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
 
