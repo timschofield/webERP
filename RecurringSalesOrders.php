@@ -1,24 +1,19 @@
 <?php
+
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
-/* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php */
-/* webERP manual links before header.php */
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Recurring Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
+include('includes/header.php');
 
-include('includes/session.php');
-$Title = __('Recurring Orders');
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
 if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);}
-
-
-/* webERP manual links before header.php */
-$ViewTopic = 'SalesOrders';
-$BookMark = 'RecurringSalesOrders';
-
-include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=date('U');
@@ -38,7 +33,7 @@ if (isset($_GET['NewRecurringOrder'])){
 
 		/*Need to read in the existing recurring order template */
 
-		$_SESSION['Items'.$identifier] = new cart;
+		$_SESSION['Items'.$identifier] = new Cart;
 
 		/*read in all the guff from the selected order into the Items cart  */
 

@@ -1,12 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Export CSV File for Transfer to Danamon Accounts');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = __('Export CSV File for Transfer to Danamon Accounts');
 
 if (isset($_POST['submit'])) {
 	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);

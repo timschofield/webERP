@@ -1,14 +1,16 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Move Monthly Salaries Data to Petty Cash');
+include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-$Title = __('Move Monthly Salaries Data to Petty Cash');
-include('includes/header.php');
 
 echo '<p class="page_title_text">
 		<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '

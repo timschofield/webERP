@@ -17,7 +17,6 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Functions division ===================================================
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
@@ -39,14 +38,13 @@ function colDebitCredit($Amount) {
 		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';// Inflow.
 	}
 }
-// END: Functions division =====================================================
 
-// BEGIN: Procedure division ===================================================
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-	include('includes/session.php');
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	require(__DIR__ . '/includes/session.php');
 }
+
 $Title = __('Statement of Cash Flows, Indirect Method');
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	$ViewTopic = 'GeneralLedger';
 	$BookMark = 'GLCashFlowsIndirect';
 	include('includes/header.php');
@@ -403,7 +401,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	}
 	echo '</tbody></table>',
 		'</div>';// div id="Report".
-	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		echo // Shows a form to select an action after the report was shown:
 			'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 			'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
@@ -536,6 +534,6 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 }
 echo	'</form>';
 
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	include('includes/footer.php');
 }

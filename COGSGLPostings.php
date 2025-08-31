@@ -1,7 +1,9 @@
 <?php
+
 /* Defines the general ledger account to be used for cost of sales entries */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Cost Of Sales GL Postings Set Up');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'COGSGLPostings';
@@ -133,13 +135,13 @@ if (!isset($SelectedCOGSPostingID)) {
 												sectioninaccounts,
 												pandl,
 												sequenceintb,
-												accountgroups
-										       			)
-										VALUES ('Sales',
+												parentgroupname
+											) VALUES ('Sales',
 												'1',
 												'1',
 												'10',
-												' ')";
+												' '
+											)";
 
 			$Result = DB_query($SQL);
 		}

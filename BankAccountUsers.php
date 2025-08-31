@@ -1,14 +1,15 @@
 <?php
-// BankAccountUsers.php
+
 // Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccountUsers';
 include('includes/header.php');
 
-echo '<a class="toplink" href="BankAccountUsers.php">', __('Select another bank account'), '</a>';
+echo '<a class="toplink" href="' . $RootPath . '/BankAccountUsers.php">', __('Select another bank account'), '</a>';
 
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/bank.png" title="' .

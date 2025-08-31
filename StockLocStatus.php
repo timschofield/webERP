@@ -1,19 +1,21 @@
 <?php
+
 /* Shows the stock on hand together with outstanding sales orders and outstanding purchase orders by stock location for all items in the selected stock category */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('All Stock Status By Location/Category');
 $ViewTopic = 'Inventory';
 $BookMark = 'StockLocStatus';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/magnifier.png" title="',// Icon image.
-	$Title, '" /> ',// Icon title.
-	$Title, '</p>';// Page title.
-
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+'/images/magnifier.png" title="',// Icon image.
+$Title, '" /> ',// Icon title.
+$Title, '</p>';// Page title.
 
 if(isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));

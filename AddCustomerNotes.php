@@ -1,12 +1,15 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Notes');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'CustomerNotes';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
 
 if (isset($_GET['Id'])){
 	$Id = (int)$_GET['Id'];

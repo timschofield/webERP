@@ -8,10 +8,11 @@
 
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePaymentClass.php');
 
-include('includes/session.php');
-if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -24,6 +25,8 @@ else {
 	$PageTitleText = __('Bank Account Payments Entry');
 }
 include('includes/header.php');
+
+if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 $PageTitleText, '" /> ', // Icon title.
@@ -1425,21 +1428,24 @@ else {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
+			<thead>
 				<tr>
-					<th class="Ascending">' . __('Date') . '</th>
-					<th class="Ascending">' . __('Transaction Type') . '</th>
-					<th class="Ascending">' . __('Transaction Number') . '</th>
-					<th class="Ascending">' . __('Reference') . '</th>
-					<th class="Ascending">' . __('Amount') . '</th>
-					<th class="Ascending">' . __('This time to pay') . '</th>
-				</tr>';
+					<th class="SortedColumn">' . __('Date') . '</th>
+					<th class="SortedColumn">' . __('Transaction Type') . '</th>
+					<th class="SortedColumn">' . __('Transaction Number') . '</th>
+					<th class="SortedColumn">' . __('Reference') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th>' . __('This time to pay') . '</th>
+					<th>' . __('Amount to allocate') . '</th>
+				</tr>
+			</thead>';
 	$ids = '';
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
 		if (!isset($_POST['paid' . $MyRow['id']])) {
 			$_POST['paid' . $MyRow['id']] = 0;
 		}
-		echo '<tr>
+		echo '<tr class="striped_row">
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
 					<td>' . $MyRow['typename'] . '</td>
 					<td>' . $MyRow['transno'] . '</td>

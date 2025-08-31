@@ -2,7 +2,7 @@
 <form name="DBRptLine" method="post" action="ReportCreator.php?action=step6a">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">
-	<input name="index" type="hidden" value="<?PHP echo $Params['index']; ?>">
+	<input name="index" type="hidden" value="<?php echo $Params['index']; ?>">
 	<input name="ID" type="hidden" value="<?php echo $FormParams['id']; ?>">
 	<input name="SeqNum" type="hidden" value="<?php echo $SeqNum; ?>">
 	<input name="ReportID" type="hidden" value="<?php echo $ReportID; ?>">

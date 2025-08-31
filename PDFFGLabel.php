@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -71,15 +71,15 @@ if (isset($_GET['LeftOverQty'])) {
 /* If we are previewing the order then we dont want to email it */
 if ($SelectedWO == 'Preview') { //WO is set to 'Preview' when just looking at the format of the printed order
 	$_POST['PrintOrEmail'] = 'Print';
-	$MakePDFThenDisplayIt = True;
+	$MakePDFThenDisplayIt = true;
 } //$SelectedWO == 'Preview'
 
 if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly == 1)) {
-	$MakePDFThenDisplayIt = True;
-	$MakePDFThenEmailIt = False;
+	$MakePDFThenDisplayIt = true;
+	$MakePDFThenEmailIt = false;
 } elseif (isset($_POST['DoIt']) AND $_POST['PrintOrEmail'] == 'Email' AND isset($_POST['EmailTo'])) {
-	$MakePDFThenEmailIt = True;
-	$MakePDFThenDisplayIt = False;
+	$MakePDFThenEmailIt = true;
+	$MakePDFThenDisplayIt = false;
 }
 
 $FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/FGLabel.xml');

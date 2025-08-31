@@ -6,17 +6,21 @@
 *			Not show template options	
 *
 ********************************************************************************************************/
+
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineJournalClass.php');
 
-include('includes/session.php');
-if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
+
+if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);}
 
 if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' and isset($_SESSION['JournalDetail'])) {
 

@@ -1,10 +1,13 @@
 <?php
-include('includes/session.php');
-if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Stock On Hand By Date');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);}
 
 echo '<p class="page_title_text" >
 		<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b>

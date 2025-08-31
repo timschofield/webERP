@@ -1,15 +1,16 @@
 <?php
-// BankMatching.php
+
 // Allows payments and receipts to be matched off against bank statements.
 
-include('includes/session.php');
-if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
-if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
-
 include('includes/header.php');
+
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);}
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);}
 
 if ((isset($_GET['Type']) AND $_GET['Type']=='Receipts')
 		OR (isset($_POST['Type']) AND $_POST['Type']=='Receipts')) {
@@ -47,7 +48,7 @@ if (isset($_GET['Account'])) {
 
 if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 	for ($Counter=1;$Counter <= $_POST['RowCounter']; $Counter++) {
-		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==True) {
+		if (isset($_POST['Clear_' . $Counter]) AND $_POST['Clear_' . $Counter]==true) {
 			/*Get amount to be cleared */
 			$SQL = "SELECT amount,
 							exrate
@@ -78,7 +79,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 			$Result = DB_query($SQL, $ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter])
-					AND $_POST['Unclear_' . $Counter]==True) {
+					AND $_POST['Unclear_' . $Counter]==true) {
 
 			$SQL = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
@@ -87,7 +88,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 		}
 	}
 	/*Show the updated position with the same criteria as previously entered*/
-	$_POST['ShowTransactions'] = True;
+	$_POST['ShowTransactions'] = true;
 }
 
 echo '<div class="page_help_text">' . __('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';

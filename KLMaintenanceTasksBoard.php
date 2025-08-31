@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Maintenance Tasks Board');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLBoards.php');

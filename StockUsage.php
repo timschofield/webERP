@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Usage');
 
@@ -22,7 +22,6 @@ if (isset($_POST['ShowGraphUsage'])) {
 
 $ViewTopic = 'Inventory';
 $BookMark = '';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">
@@ -44,12 +43,12 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 
-$Its_A_KitSet_Assembly_Or_Dummy =False;
+$Its_A_KitSet_Assembly_Or_Dummy =false;
 if ($MyRow[2]=='K'
 	OR $MyRow[2]=='A'
 	OR $MyRow[2]=='D') {
 
-	$Its_A_KitSet_Assembly_Or_Dummy =True;
+	$Its_A_KitSet_Assembly_Or_Dummy =true;
 	echo '<h3>' . $StockID . ' - ' . $MyRow[0] . '</h3>';
 
 	prnMsg( __('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . __('Please select a different item'),'warn');

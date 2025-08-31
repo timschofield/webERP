@@ -3,27 +3,30 @@
 /**********************************************************************************************
 *
 * KL RICARD Do not send emails to authorizers, as authorization is done automatically every day.
-*			Fixed departments and locations for SPG.
 *
 **********************************************************************************************/ 
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineStockRequestClass.php');
 
-include('includes/session.php');
-if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
+
 include('includes/KLRoles.php');
+
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);}
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
 	$_SESSION['Request'] = new StockRequest();
 }
-
 
 
 /* KL RICARD for SPG, we request only to KANTOR and SPG are only allowed 1 location */

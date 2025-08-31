@@ -1,13 +1,15 @@
 <?php
-// PcAssignCashTabToTab.php
+
 // Assign cash from one tab to another.
 
-include('includes/session.php');
-if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = __('Assignment of Cash from Tab to Tab');
 include('includes/header.php');
+
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);}
 
 if (isset($_POST['SelectedTabs'])){
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);

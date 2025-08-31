@@ -1,7 +1,9 @@
 <?php
+
 /* Adds customer contacts */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Contacts');
 $ViewTopic = 'AccountsReceivable';
 $BookMark = 'AddCustomerContacts';

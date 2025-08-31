@@ -1,4 +1,5 @@
 <?php
+
 NewScript('GLBudgetHeaders.php', 10);
 NewMenuItem('GL', 'Maintenance', __('Create/Amend General Ledger Budgets'), '/GLBudgetHeaders.php', 2);
 RemoveMenuItem('GL', 'Maintenance', __('GL Budgets'), '/GLBudgets.php');

@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Move Item To 20% Discount -> Step 01');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
@@ -22,10 +24,6 @@ if (!isset($_POST['Stockid'])){
 
 if (!isset($_POST['DiscountCategory'])){
 	$_POST['DiscountCategory']='20';
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

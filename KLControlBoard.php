@@ -1,7 +1,26 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL General Control Board');
+include('includes/header.php');
+
+include('includes/GLFunctions.php');
+
+include('includes/KLDefines.php');
+include('includes/KLBoards.php');
+include('includes/KLControlBoardFunctions.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLPrices.php');
+include('includes/KLEmails.php');
+include('includes/KLReorderLevel.php');
+include('includes/KLUIGeneralFunctions.php');
+
+include('includes/OCOpenCartGeneralFunctions.php');
+include('includes/OCOpenCartConnectDB.php');
+
+$begintime = time_start();
+$NumberOfTestExecuted = 0;
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = false;
@@ -20,24 +39,6 @@ if (!isset($_GET['Section'])){
 		$ProcessSection02 = true;
 	}
 }
-
-include('includes/header.php');
-include('includes/GLFunctions.php');
-
-include('includes/KLDefines.php');
-include('includes/KLBoards.php');
-include('includes/KLControlBoardFunctions.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLPrices.php');
-include('includes/KLEmails.php');
-include('includes/KLReorderLevel.php');
-include('includes/KLUIGeneralFunctions.php');
-
-include('includes/OCOpenCartGeneralFunctions.php');
-include('includes/OCOpenCartConnectDB.php');
-
-$begintime = time_start();
-$NumberOfTestExecuted = 0;
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 $NumberOfOpenShopsKL = NumberOfShops("SHOPKL");

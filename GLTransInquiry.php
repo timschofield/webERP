@@ -1,5 +1,7 @@
 <?php
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('General Ledger Transaction Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTransInquiry';

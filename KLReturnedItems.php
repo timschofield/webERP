@@ -1,21 +1,18 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $NumDays = 30;
 $Title = __('Items Returned by Customers for the last ') . $NumDays . ' days';
 include('includes/header.php');
+
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-
 
 if (isset($_POST['SelectedReturnedItemsId'])) {
 	$SelectedReturnedItemsId = mb_strtoupper($_POST['SelectedReturnedItemsId']);
 } elseif (isset($_GET['SelectedReturnedItemsId'])) {
 	$SelectedReturnedItemsId = mb_strtoupper($_GET['SelectedReturnedItemsId']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

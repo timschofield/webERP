@@ -1,18 +1,19 @@
 <?php
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 $Title = __('Enter GL Budget amounts');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'GLBudgets';
+include('includes/header.php');
 
 if (isset($_POST['SelectedBudget'])) {
 	$SelectedBudget = $_POST['SelectedBudget'];
 } elseif (isset($_GET['SelectedBudget'])) {
 	$SelectedBudget = $_GET['SelectedBudget'];
 }
-
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'GLBudgets';
-include('includes/header.php');
 
 if (isset($_POST['Update'])) {
 	$UpdateSQL = array();

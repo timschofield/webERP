@@ -1,10 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Maintain General Ledger Tags');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLTags';
-
 include('includes/header.php');
 
 if (isset($_GET['SelectedTag'])) {

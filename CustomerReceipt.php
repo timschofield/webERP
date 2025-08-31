@@ -1,15 +1,18 @@
 <?php
+
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
 - Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
-customers. It needs to take shipment into account as well (currently it doesn't.
+  customers. It needs to take shipment into account as well (currently it doesn't.
 ***************************************************************************************/
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineReceiptClass.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_POST['DateBanked'])) {
 	$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);
@@ -28,6 +31,7 @@ if ($_GET['Type']=='GL') {
 }
 
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
@@ -746,7 +750,7 @@ customer record returned by the search - this record is then auto selected */
 
 		/*Because there is no balance - so just retrieve the header information about the customer - the choice is do one query to get the balance and transactions for those customers who have a balance and two queries for those who don't have a balance OR always do two queries - I opted for the former */
 
-		$NIL_BALANCE = True;
+		$NIL_BALANCE = true;
 
 		$SQL = "SELECT debtorsmaster.name,
 						debtorsmaster.pymtdiscount,
@@ -770,12 +774,12 @@ customer record returned by the search - this record is then auto selected */
 		$CustomerResult = DB_query($SQL, $ErrMsg);
 
 	} else {
-		$NIL_BALANCE = False;
+		$NIL_BALANCE = false;
 	}
 
 	$_SESSION['CustomerRecord' . $identifier] = DB_fetch_array($CustomerResult);
 
-	if ($NIL_BALANCE==True){
+	if ($NIL_BALANCE==true){
 		$_SESSION['CustomerRecord' . $identifier]['balance']=0;
 		$_SESSION['CustomerRecord' . $identifier]['due']=0;
 		$_SESSION['CustomerRecord' . $identifier]['overdue1']=0;
@@ -1090,7 +1094,7 @@ if (isset($_SESSION['CustomerRecord' . $identifier])
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord' . $identifier]['due']-$_SESSION['CustomerRecord' . $identifier]['overdue1']),$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format(($_SESSION['CustomerRecord' . $identifier]['overdue1']-$_SESSION['CustomerRecord' . $identifier]['overdue2']) ,$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($_SESSION['CustomerRecord' . $identifier]['overdue2'],$_SESSION['CustomerRecord' . $identifier]['currdecimalplaces']) . '</td>
-		<td><a href="CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . __('Inquiry') . '</td>
+		<td><a href="' . $RootPath . '/CustomerInquiry.php?CustomerID=' . $_POST['CustomerID'] . '&Status=0" target="_blank">' . __('Inquiry') . '</td>
 		</tr>
 		</table>';
 

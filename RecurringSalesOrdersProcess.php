@@ -11,25 +11,30 @@ KL RICARD MODIFICATIONS:
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {
+	/// @todo make this safer, by eg. defining a whitelist of accessible databases...
 	$_SESSION['DatabaseName'] = $_GET['Database'];
+	/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 	$DatabaseName = $_GET['Database'];
 	$_POST['CompanyNameField'] = $_GET['Database'];
 }
 
 if (isset($argc)) {
 	if (isset($argv[1])) {
+		/// @todo make this safer, by eg. defining a whitelist of accessible databases...
 		$_SESSION['DatabaseName'] = $argv[1];
+		/// @todo is this required? DB code seems to use $DatabaseName as an alternative to $_SESSION['DatabaseName']...
 		$DatabaseName = $argv[1];
 		$_POST['CompanyNameField'] = $argv[1];
 	}
 }
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Recurring Orders Process');
-/* webERP manual links before header.php */
 $ViewTopic = "SalesOrders";
 $BookMark = "RecurringSalesOrders";
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GetSalesTransGLCodes.php');
 

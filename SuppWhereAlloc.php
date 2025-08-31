@@ -1,7 +1,9 @@
 <?php
+
 /* Suppliers Where allocated */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Supplier How Paid Inquiry');
 $ViewTopic = 'APInquiries';
 $BookMark = 'WhereAllocated';

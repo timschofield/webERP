@@ -1,5 +1,5 @@
 <?php
-// ManualContents.php
+
 /* Shows the local manual content if available, else shows the manual content in en-GB. */
 /* This program is under the GNU General Public License, last version. */
 /* This creative work is under the CC BY-NC-SA, later version. */
@@ -16,7 +16,6 @@ Comments beginning with Help Begin and Help End denote the beginning and end of 
 What section is named after Help Begin: and there can be multiple sections separated with a comma.
 */
 
-// BEGIN: Procedure division ---------------------------------------------------
 $PageSecurity = 0;
 
 // Set the language to show the manual:
@@ -27,7 +26,7 @@ if(isset($_GET['Language'])) {// Set an other language for manual.
 	$Language = $_GET['Language'];
 }
 */
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('webERP Manual');
 
@@ -144,4 +143,3 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 }
 
 ob_end_flush();
-// END: Procedure division -----------------------------------------------------

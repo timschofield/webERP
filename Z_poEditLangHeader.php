@@ -4,11 +4,13 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Edit Header');// __('Edit a Language File Header')
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangHeader";// Anchor's id in the manual's html document.
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Edit a Language File Header') . '" />' . ' ' .
@@ -20,8 +22,8 @@ echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the 
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file header');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 $fpIn = fopen($PathToLanguage, 'r');
 

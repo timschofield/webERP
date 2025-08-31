@@ -1,8 +1,9 @@
 <?php
-/* Definition of the Supplier Transactions class to hold all the information for an accounts payable invoice or credit note
-*/
 
-Class SuppTrans {
+/**
+ * Class to hold all the information for an accounts payable invoice or credit note
+ */
+class SuppTrans {
 
 	var $GRNs; /*array of objects of class GRNs using the GRN No as the pointer */
 	var $GLCodes; /*array of objects of class GLCode using a counter as the pointer */
@@ -47,10 +48,6 @@ Class SuppTrans {
 		$this->Taxes = array();
 	}
 
-	function SuppTrans() {
-		self::__construct();
-	}
-
 	function GetTaxes () {
 		/*Gets the Taxes and rates applicable to the tax group of the supplier
 		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
@@ -82,8 +79,7 @@ Class SuppTrans {
 																$MyRow['taxontax'],
 																$MyRow['purchtaxglaccount']);
 		}
-	} //end method GetTaxes()
-
+	}
 
 	function Add_GRN_To_Trans($GRNNo,
 								$PODetailItem,
@@ -104,7 +100,7 @@ Class SuppTrans {
 								$Hold=0,
 								$DecimalPlaces=2,
 								$GRNBatchNo,
-								$SupplierRef){
+								$SupplierRef) {
 
 		if ($This_QuantityInv!=0 AND isset($This_QuantityInv)){
 			$this->GRNs[$GRNNo] = new GRNs($GRNNo,
@@ -170,7 +166,7 @@ Class SuppTrans {
 		Return 0;
 	}
 
-	function Copy_GRN_To_Trans($GRNSrc){
+	function Copy_GRN_To_Trans($GRNSrc) {
 		if ($GRNSrc->This_QuantityInv!=0 && isset($GRNSrc->This_QuantityInv)){
 
 			$this->GRNs[$GRNSrc->GRNNo] = new GRNs($GRNSrc->GRNNo,
@@ -202,7 +198,7 @@ Class SuppTrans {
 									$GLActName,
 									$Amount,
 									$Narrative,
-									$Tag){
+									$Tag) {
 
 		if ($Amount!=0 AND isset($Amount)){
 			$this->GLCodes[$this->GLCodesCounter] = new GLCodes($this->GLCodesCounter,
@@ -217,7 +213,7 @@ Class SuppTrans {
 		Return 0;
 	}
 
-	function Add_Shipt_To_Trans($ShiptRef, $Amount){
+	function Add_Shipt_To_Trans($ShiptRef, $Amount) {
 		if ($Amount!=0){
 			$this->Shipts[$this->ShiptCounter] = new Shipment($this->ShiptCounter,
 																$ShiptRef,
@@ -228,7 +224,7 @@ Class SuppTrans {
 		Return 0;
 	}
 
-	function Add_Asset_To_Trans($AssetID, $Amount){
+	function Add_Asset_To_Trans($AssetID, $Amount) {
 		if ($Amount!=0){
 			$this->Assets[$this->AssetCounter] = new Asset($this->AssetCounter,
 															$AssetID,
@@ -239,7 +235,7 @@ Class SuppTrans {
 		Return 0;
 	}
 
-	function Add_Contract_To_Trans($ContractRef, $Amount,$Narrative, $AnticipatedCost){
+	function Add_Contract_To_Trans($ContractRef, $Amount,$Narrative, $AnticipatedCost) {
 		if ($Amount!=0){
 			$this->Contracts[$this->ContractsCounter] = new Contract($this->ContractsCounter,
 																	$ContractRef,
@@ -251,66 +247,72 @@ Class SuppTrans {
 		}
 		Return 0;
 	}
-	function Remove_Asset_From_Trans($AssetCounter){
+	function Remove_Asset_From_Trans($AssetCounter) {
 	     unset($this->Assets[$AssetCounter]);
 	}
-	function Remove_GRN_From_Trans($GRNNo){
+
+	function Remove_GRN_From_Trans($GRNNo) {
 	     unset($this->GRNs[$GRNNo]);
 	}
 
-	function Remove_GLCodes_From_Trans($GLCodeCounter){
+	function Remove_GLCodes_From_Trans($GLCodeCounter) {
 	     unset($this->GLCodes[$GLCodeCounter]);
 	}
 
-	function Remove_Shipt_From_Trans($ShiptCounter){
+	function Remove_Shipt_From_Trans($ShiptCounter) {
 	     unset($this->Shipts[$ShiptCounter]);
 	}
 
-	function Remove_Contract_From_Trans($ContractID){
+	function Remove_Contract_From_Trans($ContractID) {
 	     unset($this->Contracts[$ContractID]);
 	}
 
-	function Total_GRN_Value(){
+	function Total_GRN_Value() {
 		$TotalGRNs =0;
 		foreach ($this->GRNs as $GRN) {
 			$TotalGRNs += ($GRN->This_QuantityInv*$GRN->ChgPrice);
 		}
 		return $TotalGRNs;
 	}
-	function Total_Shipts_Value(){
+
+	function Total_Shipts_Value() {
 		$TotalShiptValue =0;
 		foreach ($this->Shipts as $Shipt) {
 			$TotalShiptValue += $Shipt->Amount;
 		}
 		return $TotalShiptValue;
 	}
-	function Total_GL_Value(){
+
+	function Total_GL_Value() {
 		$TotalGLValue =0;
 		foreach ($this->GLCodes as $GL) {
 			$TotalGLValue += $GL->Amount;
 		}
 		return $TotalGLValue;
 	}
-	function Total_Assets_Value(){
+
+	function Total_Assets_Value() {
 		$TotalAssetValue =0;
 		foreach ($this->Assets as $Asset) {
 			$TotalAssetValue += $Asset->Amount;
 		}
 		return $TotalAssetValue;
 	}
-	function Total_Contracts_Value(){
+
+	function Total_Contracts_Value() {
 		$TotalContractsValue =0;
 		foreach ($this->Contracts as $Contract) {
 			$TotalContractsValue += $Contract->Amount;
 		}
 		return $TotalContractsValue;
 	}
-} /* end of class defintion */
+}
 
-Class GRNs {
-
-/* Contains relavent information from the PurchOrderDetails as well to provide in cached form,
-all the info to do the necessary entries without looking up ie additional queries of the database again */
+/**
+ * Contains relevant information from the PurchOrderDetails as well to provide in cached form,
+ * all the info to do the necessary entries without looking up ie additional queries of the database again
+ */
+class GRNs {
 
 	var $GRNNo;
 	var $PODetailItem;
@@ -333,7 +335,7 @@ all the info to do the necessary entries without looking up ie additional querie
 	var $GRNBatchNo;
 	var $SupplierRef;
 
-	function __construct ($GRNNo,
+	function __construct($GRNNo,
 					$PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -377,48 +379,6 @@ all the info to do the necessary entries without looking up ie additional querie
 		$this->SupplierRef = $SupplierRef;
 	}
 
-	function GRNs($GRNNo,
-					$PODetailItem,
-					$ItemCode,
-					$ItemDescription,
-					$QtyRecd,
-					$Prev_QuantityInv,
-					$This_QuantityInv,
-					$OrderPrice,
-					$ChgPrice,
-					$Complete,
-					$StdCostUnit=0,
-					$ShiptRef,
-					$JobRef,
-					$GLCode,
-					$PONo,
-					$AssetID,
-					$Hold=0,
-					$DecimalPlaces=2,
-					$GRNBatchNo,
-					$SupplierRef=''){
-		self::__construct($GRNNo,
-					$PODetailItem,
-					$ItemCode,
-					$ItemDescription,
-					$QtyRecd,
-					$Prev_QuantityInv,
-					$This_QuantityInv,
-					$OrderPrice,
-					$ChgPrice,
-					$Complete,
-					$StdCostUnit=0,
-					$ShiptRef,
-					$JobRef,
-					$GLCode,
-					$PONo,
-					$AssetID,
-					$Hold=0,
-					$DecimalPlaces=2,
-					$GRNBatchNo,
-					$SupplierRef='');
-	}
-
 	function Modify ($PODetailItem,
 					$ItemCode,
 					$ItemDescription,
@@ -454,15 +414,15 @@ all the info to do the necessary entries without looking up ie additional querie
 	}
 }
 
-Class GLCodes {
+class GLCodes {
 
-	Var $Counter;
-	Var $GLCode;
-	Var $GLActName;
-	Var $Amount;
-	Var $Narrative;
-	Var $Tag;
-	Var $TagName;
+	var $Counter;
+	var $GLCode;
+	var $GLActName;
+	var $Amount;
+	var $Narrative;
+	var $Tag;
+	var $TagName;
 
 	function __construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
 	/* Constructor function to add a new GLCodes object with passed params */
@@ -474,38 +434,28 @@ Class GLCodes {
 		$this->Tag = $Tag;
 
 	}
-
-	function GLCodes($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
-		self::__construct($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName='');
-	}
-
-
 }
 
-Class Shipment {
+class Shipment {
 
-	Var $Counter;
-	Var $ShiptRef;
-	Var $Amount;
+	var $Counter;
+	var $ShiptRef;
+	var $Amount;
 
 	function __construct($Counter, $ShiptRef, $Amount){
 		$this->Counter = $Counter;
 		$this->ShiptRef = $ShiptRef;
 		$this->Amount = $Amount;
 	}
-
-	function Shipment ($Counter, $ShiptRef, $Amount){
-		self::__construct($Counter, $ShiptRef, $Amount);
-	}
 }
 
-Class Asset {
+class Asset {
 
-	Var $Counter;
-	Var $AssetID;
-	Var $Description;
-	Var $CostAct;
-	Var $Amount;
+	var $Counter;
+	var $AssetID;
+	var $Description;
+	var $CostAct;
+	var $Amount;
 
 	function __construct($Counter, $AssetID, $Amount){
 		$this->Counter = $Counter;
@@ -521,19 +471,15 @@ Class Asset {
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];
 	}
-
-	function Asset ($Counter, $AssetID, $Amount){
-		self::__construct($Counter, $AssetID, $Amount);
-	}
 }
 
-Class Contract {
+class Contract {
 
-	Var $Counter;
-	Var $ContractRef;
-	Var $Amount;
-	Var $Narrative;
-	Var $AniticipatedCost;
+	var $Counter;
+	var $ContractRef;
+	var $Amount;
+	var $Narrative;
+	var $AniticipatedCost;
 
 	function __construct($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
 		$this->Counter = $Counter;
@@ -542,23 +488,21 @@ Class Contract {
 		$this->Narrative = $Narrative;
 		$this->AnticipatedCost = $AnticipatedCost;
 	}
-
-	function Contract ($Counter, $ContractRef, $Amount,$Narrative,$AnticipatedCost){
-		self::__construct($Counter, $AssetID, $Amount,$Narrative,$AnticipatedCost);
-	}
 }
 
 
-Class Tax {
-	Var $TaxCalculationOrder;  /*the index for the array */
-	Var $TaxAuthID;
-	Var $TaxAuthDescription;
-	Var $TaxRate;
-	Var $TaxOnTax;
-	Var $TaxGLCode;
-	Var $TaxOvAmount;
+class Tax {
 
-	function __construct ($TaxCalculationOrder,
+	var $TaxCalculationOrder;  /*the index for the array */
+	var $TaxAuthID;
+	var $TaxAuthDescription;
+	var $TaxRate;
+	var $TaxOnTax;
+	var $TaxGLCode;
+	var $TaxOvAmount;
+
+
+	function __construct($TaxCalculationOrder,
 					$TaxAuthID,
 					$TaxAuthDescription,
 					$TaxRate,
@@ -572,19 +516,4 @@ Class Tax {
 		$this->TaxOnTax = $TaxOnTax;
 		$this->TaxGLCode = $TaxGLCode;
 	}
-
-	function Tax ($TaxCalculationOrder,
-					$TaxAuthID,
-					$TaxAuthDescription,
-					$TaxRate,
-					$TaxOnTax,
-					$TaxGLCode){
-		self::__construct($TaxCalculationOrder,
-					$TaxAuthID,
-					$TaxAuthDescription,
-					$TaxRate,
-					$TaxOnTax,
-					$TaxGLCode);
-	}
-
 }

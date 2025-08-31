@@ -227,7 +227,7 @@ if (isset($_POST['EntryType'])
 									echo '<br />' . '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> '. __('has already been sold'). '.';
 									$AddThisBundle = false;
 								} elseif ($ExistingBundleQty==0) { /* and its a batch */
-									echo '<br />' . __('There is none of'). ' <a href="/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> '. __('remaining') .'.';
+									echo '<br />' . __('There is none of'). ' <a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> '. __('remaining') .'.';
 									$AddThisBundle = false;
 							} else {
 									echo '<br />' .  __('There is only') . ' ' . $ExistingBundleQty . ' '. __('of') . ' ' .

@@ -1,4 +1,5 @@
 <?php
+
 /* Maintenance of GL Accounts allowed for a user. */
 
 /*****************************************************************************************************************
@@ -7,7 +8,8 @@
  * 
  ****************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('GL Account Authorised Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountUsers';

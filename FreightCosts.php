@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Freight Costs Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'FreightCosts';
 include('includes/header.php');
+
 include('includes/CountriesArray.php');
 
 if (isset($_GET['LocationFrom'])){

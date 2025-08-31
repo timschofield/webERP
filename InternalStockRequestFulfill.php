@@ -7,13 +7,13 @@
  * 
  ********************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Fulfill Stock Requests');
 $ViewTopic = 'Inventory';
 $BookMark = 'FulfilRequest';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
@@ -33,10 +33,10 @@ if (isset($_POST['UpdateAll'])) {
 			$Controlled = $_POST[$RequestID . 'Controlled' . $LineID];
 			$SerialNo = $_POST[$RequestID . 'Ser' . $LineID];
 			if (isset($_POST[$RequestID . 'Completed' . $LineID])) {
-				$Completed = True;
+				$Completed = true;
 			}
 			else {
-				$Completed = False;
+				$Completed = false;
 			}
 
 			$SQL = "SELECT actualcost, decimalplaces FROM stockmaster WHERE stockid='" . $StockID . "'";
@@ -186,7 +186,7 @@ if (isset($_POST['UpdateAll'])) {
 					$Result = DB_query($SQL, $ErrMsg, '', true);
 				}
 
-				if (($Quantity >= $RequestedQuantity) OR $Completed == True) {
+				if (($Quantity >= $RequestedQuantity) OR $Completed == true) {
 					$SQL = "UPDATE stockrequestitems
 								SET completed=1
 							WHERE dispatchid='" . $RequestID . "'
@@ -250,6 +250,9 @@ if (!isset($_POST['Location'])) {
 			ORDER BY locationname";
 	$ResultStkLocs = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
+		/// @todo there seems to be no code setting $_SESSION['Adjustment'], ever
+		///       If there was, we would need to include the DefineXXX.php fil at the top of this file, to have the
+		///       corresponding class definition loaded
 		if (isset($_SESSION['Adjustment']->StockLocation)) {
 			if ($MyRow['loccode'] == $_SESSION['Adjustment']->StockLocation) {
 				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';

@@ -2,17 +2,19 @@
 
 /* Defines the KL online Partners */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Online Partners Maintenance');// Screen identification.
 $ViewTopic = '';// Filename's id in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
+include('includes/CountriesArray.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/supplier.png" title="',// Icon image.
 	__('Setup'), '" /> ',// Icon title.
 	__('KL Online Partners Maintenance'), '</p>';// Page title.
-
-include('includes/CountriesArray.php');
 
 if(isset($_GET['SelectedPartner'])) {
 	$SelectedPartner = $_GET['SelectedPartner'];

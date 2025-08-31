@@ -1,8 +1,9 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
+
 $Title = __('Daily Sales Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = '';

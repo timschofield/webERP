@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/class.cpdf.php');
 include('includes/SQL_CommonFunctions.php');
 
@@ -177,7 +178,7 @@ if (DB_num_rows($Result)>0){
 // Javier: better to not use references
 //	$PageSize = array(0,0,$Page_Width,$Page_Height);
 	//	$pdf = & new Cpdf($PageSize);
-	Class Cpdf1 extends Cpdf {
+	class Cpdf1 extends Cpdf {
 
 		Public function Footer() {
 			// Position at 15 mm from bottom
@@ -216,12 +217,12 @@ if (DB_num_rows($Result)>0){
 		$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 		$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 
-		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$MyRow2['stkcode'],'left');
-		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$MyRow2['description'],'left');
-		$LeftOvers = $pdf->addTextWrap(387,$YPos,90,$FontSize,$DisplayQty,'right');
-		$LeftOvers = $pdf->addTextWrap(475,$YPos,20,$FontSize,$MyRow2['units'],'left');
-		$LeftOvers = $pdf->addTextWrap(505,$YPos,90,$FontSize,$DisplayQtySupplied,'right');
-		$LeftOvers = $pdf->addTextWrap(604,$YPos,90,$FontSize,$DisplayPrevDel,'right');
+		$pdf->addTextWrap(13,$YPos,135,$FontSize,$MyRow2['stkcode'],'left');
+		$pdf->addTextWrap(148,$YPos,239,$FontSize,$MyRow2['description'],'left');
+		$pdf->addTextWrap(387,$YPos,90,$FontSize,$DisplayQty,'right');
+		$pdf->addTextWrap(475,$YPos,20,$FontSize,$MyRow2['units'],'left');
+		$pdf->addTextWrap(505,$YPos,90,$FontSize,$DisplayQtySupplied,'right');
+		$pdf->addTextWrap(604,$YPos,90,$FontSize,$DisplayPrevDel,'right');
 
 		if ($YPos-$LineHeight <= 136){
 	   /* We reached the end of the page so finsih off the page and start a newy */

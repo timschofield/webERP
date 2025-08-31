@@ -1,16 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Fixed Asset Maintenance Tasks');
-
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetMaintenance';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-
 
 if (isset($_POST['Submit'])) {
 	if (!is_numeric(filter_number_format($_POST['FrequencyDays'])) OR filter_number_format($_POST['FrequencyDays']) < 0){

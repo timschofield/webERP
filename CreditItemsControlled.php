@@ -1,17 +1,15 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreditNotes';
-
 $Title = __('Specify Credited Controlled Items');
-
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
-
 
 if ($_GET['CreditInvoice']=='Yes' OR $_POST['CreditInvoice']=='Yes'){
 	$CreditLink = 'Credit_Invoice.php';

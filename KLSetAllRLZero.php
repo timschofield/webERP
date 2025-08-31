@@ -1,19 +1,21 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Set Reorder Level zero for a location');// Screen identificator.
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title="',// Icon image.
-	$Title, '" /> ',// Icon title.
-	$Title, '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-if (!isset($_POST['FromLocationID'])){
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="',// Icon image.
+	$Title, '" /> ',// Icon title.
+	$Title, '</p>';// Page title.
+
+	if (!isset($_POST['FromLocationID'])){
 	$_POST['FromLocationID'] = '';
 }
 

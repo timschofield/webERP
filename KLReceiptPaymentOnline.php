@@ -1,9 +1,11 @@
 <?php
 
-include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Receipt Payment Online');
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');

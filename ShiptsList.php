@@ -1,9 +1,11 @@
 <?php
-// ShiptsList.php
+
 // Shows a list of all the open shipments for a selected supplier. Linked from POItems.php
 
 //$PageSecurity = 2;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Shipments Open Inquiry');
 $ViewTopic = 'Shipments';
 $BookMark = '';

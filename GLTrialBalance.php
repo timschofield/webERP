@@ -1,21 +1,25 @@
 <?php
-/*Through deviousness and cunning, this system allows trial balances for
- * any date range that recalcuates the p & l balances and shows the balance
+
+/* Through deviousness and cunning, this system allows trial balances for
+ * any date range that recalculates the p & l balances and shows the balance
  * sheets as at the end of the period selected - so first off need to show
  * the input of criteria screen
-*/
+ */
+
 $PageSecurity = 1;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
-
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+//use PhpOffice\PhpSpreadsheet\Helper\Sample;
+//use PhpOffice\PhpSpreadsheet\IOFactory;
+//use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 $Title = __('Trial Balance');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/AccountSectionsDef.php'); //this reads in the Accounts Sections array
+
 // Merges gets into posts:
 if (isset($_GET['PeriodFrom'])) {
 	$_POST['PeriodFrom'] = $_GET['PeriodFrom'];

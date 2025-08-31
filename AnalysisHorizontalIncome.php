@@ -7,7 +7,7 @@
  * 
  ****************************************************************************************/
 
-/* AnalysisHorizontalIncome.php
+/*
 Shows the horizontal analysis of the statement of comprehensive income.
 
 Parameters:
@@ -25,13 +25,13 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Procedure division ===================================================
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Horizontal Analysis of Statement of Comprehensive Income');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalIncome';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 // KL RICARD: prepare the data for each company

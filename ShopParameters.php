@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Shop Configuration');
 $ViewTopic = 'Setup';
@@ -175,9 +175,9 @@ if (isset($_POST['submit'])) {
 			DB_Txn_Commit();
 			prnMsg( __('Shop configuration updated'),'success');
 
-			$ForceConfigReload = True; // Required to force a load even if stored in the session vars
+			$ForceConfigReload = true; // Required to force a load even if stored in the session vars
 			include($PathPrefix . 'includes/GetConfig.php');
-			$ForceConfigReload = False;
+			$ForceConfigReload = false;
 		}
 	} else {
 		prnMsg( __('Validation failed') . ', ' . __('no updates or deletes took place'),'warn');

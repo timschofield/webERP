@@ -1,7 +1,9 @@
 <?php
+
 /* Defines the sections in the general ledger reports */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Account Sections');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AccountSections';
@@ -31,10 +33,6 @@ include('includes/header.php');
 	}
 // DONE WITH MINIMUM TESTS
 
-
-if(isset($Errors)) {
-	unset($Errors);
-}
 
 $Errors = array();
 

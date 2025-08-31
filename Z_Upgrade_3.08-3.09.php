@@ -1,9 +1,11 @@
 <?php
+
 //$PageSecurity = 15;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Upgrade webERP 3.08 - 3.09');
 include('includes/header.php');
-
 
 prnMsg(__('This script will run perform any modifications to the database since v 3.08 required to allow the additional functionality in version 3.09 scripts'),'info');
 

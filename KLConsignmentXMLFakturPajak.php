@@ -1,12 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Export XML File for Faktur Pajak');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
-
-$Title = __('Export XML File for Faktur Pajak');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {

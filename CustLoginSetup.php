@@ -1,13 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Customer Login Configuration');
 $ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
-include('includes/LanguagesArray.php');
 
+include('includes/SQL_CommonFunctions.php');
+//include('includes/LanguagesArray.php');
 
 if (!isset($_SESSION['CustomerID'])){
 	echo '<br />

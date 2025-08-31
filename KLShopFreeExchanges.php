@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('SPG Last 10 Shop Tali Exchanges');
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
-
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
@@ -13,10 +13,6 @@ if (isset($_GET['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_GET['SelectedExchange']);
 } elseif(isset($_POST['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_POST['SelectedExchange']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

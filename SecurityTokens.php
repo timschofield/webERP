@@ -1,4 +1,5 @@
 <?php
+
 /* Administration of security tokens */
 
 /********************************************************************************************************************************
@@ -7,7 +8,8 @@
  * 
  *******************************************************************************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Maintain Security Tokens');
 $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
@@ -20,7 +22,7 @@ include('includes/header.php');
  * 9: Supplier entry only
  * 12: Prices
  * 15: System administration
- * 18: Cost 
+ * 18: Cost
  */
 $FixedTokens = array(0, 1, 9, 12, 15, 18);
 

@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Configure Dashboard Scripts');
 $ViewTopic = 'Dashboard';
 $BookMark = 'Configure';

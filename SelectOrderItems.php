@@ -6,21 +6,21 @@ KL RICARD MODIFICATIONS:
 - Change the title
 ***************************************************************************************/
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
-// KL RICARD: CHange the Title
+// KL RICARD: Change the Title
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modify Sales Order');
 } else {
 	$Title = __('Select Sales Order Items');
 }
-/* webERP manual links before header.php */
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SalesOrderEntry';
-
 include('includes/header.php');
+
 include('includes/GetPrice.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
@@ -47,7 +47,7 @@ if (isset($_POST['UploadFile'])) {
 		$FileHandle = fopen($TempName, 'r');
 		$Row = 0;
 		$InsertNum = 0;
-		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 			/* Check the stock code exists */
 			++$Row;
 			$SQL = "SELECT stockid FROM stockmaster WHERE stockid='" . $FileRow[0] . "'";
@@ -86,7 +86,7 @@ if (isset($_GET['NewOrder'])){
 	}
 
 	$_SESSION['ExistingOrder' .$identifier]=0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 
 	if ($CustomerLogin==1){ //its a customer logon
 		$_SESSION['Items'.$identifier]->DebtorNo=$_SESSION['CustomerID'];
@@ -113,7 +113,7 @@ if (isset($_GET['ModifyOrderNumber'])
 	}
 	$_SESSION['ExistingOrder'.$identifier]=$_GET['ModifyOrderNumber'];
 	$_SESSION['RequireCustomerSelection'] = 0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 
 /*read in all the guff from the selected order into the Items cart  */
 
@@ -324,7 +324,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	inserted depending on the value of ExistingOrder */
 
 	$_SESSION['ExistingOrder'.$identifier]=0;
-	$_SESSION['Items'.$identifier] = new cart;
+	$_SESSION['Items'.$identifier] = new Cart;
 	$_SESSION['PrintedPackingSlip'] = 0; /*Of course cos the order aint even started !!*/
 
 	if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])
@@ -699,7 +699,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			unset($_SESSION['Items'.$identifier]->LineItems);
 			$_SESSION['Items'.$identifier]->ItemsOrdered=0;
 			unset($_SESSION['Items'.$identifier]);
-			$_SESSION['Items'.$identifier] = new cart;
+			$_SESSION['Items'.$identifier] = new Cart;
 
 			if (in_array($_SESSION['PageSecurityArray']['ConfirmDispatch_Invoice.php'], $_SESSION['AllowedPageSecurityTokens'])){
 				$_SESSION['RequireCustomerSelection'] = 1;

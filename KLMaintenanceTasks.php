@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Open Location Maintenance Tasks');
 include('includes/header.php');
+
 include('includes/KLGeneralFunctions.php');
 
 if (isset($_GET['SelectedIndex'])){
@@ -11,10 +13,8 @@ if (isset($_GET['SelectedIndex'])){
 	$SelectedIndex = $_POST['SelectedIndex'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
+
 $InputError = false;
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title.'

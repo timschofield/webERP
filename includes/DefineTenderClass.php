@@ -2,7 +2,7 @@
 // DefineTenderClass.php
 // Definition of the tender class to hold all the information for a supplier tender.
 
-Class Tender {
+class Tender {
 
 	var $TenderId;
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -53,15 +53,16 @@ Class Tender {
 		$Subject=(__('Tender received from').' '.$_SESSION['CompanyRecord']['coyname'] );
 		$Headers = 'From: '. $_SESSION['PurchasingManagerEmail']. "\r\n" . 'Reply-To: ' . $_SESSION['PurchasingManagerEmail'] . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 		foreach ($this->Suppliers as $Supplier) {
-		 if($_SESSION['SmtpSetting']==0){
-			$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
-		 }else{
-			$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
-										$Supplier->EmailAddress,
-										$Subject,
-										$EmailText
-									);
-		 }
+			/// @todo drop this IF - it's handled within SendEmailFromWebERP
+			if ($_SESSION['SmtpSetting']==0) {
+				$Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
+			}else{
+				$Result = SendEmailFromWebERP($_SESSION['PurchasingManagerEmail'],
+											$Supplier->EmailAddress,
+											$Subject,
+											$EmailText
+										);
+			}
 		}
 	}
 
@@ -146,12 +147,12 @@ Class Tender {
 			}
 		}
 		DB_Txn_Begin();
-		$Result = DB_query($HeaderSQL, '', '', True);
+		$Result = DB_query($HeaderSQL, '', '', true);
 		foreach ($SuppliersSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		foreach ($ItemsSQL as $SQL) {
-			$Result = DB_query($SQL, '', '', True);
+			$Result = DB_query($SQL, '', '', true);
 		}
 		DB_Txn_Commit();
 	}
@@ -202,12 +203,12 @@ Class Tender {
 			$this->LineItems[$LineNo]->ExpiryDate = $ExpiryDate;
 	}
 
-	function remove_item_from_tender(&$LineNo){
+	function remove_item_from_tender($LineNo){
 		unset($this->LineItems[$LineNo]);
 		$this->LinesOnTender--;
 	}
 
-	function remove_supplier_from_tender(&$SupplierCode){
+	function remove_supplier_from_tender($SupplierCode){
 		unset($this->Suppliers[$SupplierCode]);
 		$this->SuppliersOnTender--;
 	}
@@ -221,7 +222,7 @@ Class Tender {
 	}
 } /* end of class defintion */
 
-Class LineDetails {
+class LineDetails {
 /* PurchOrderDetails */
 	var $LineNo;
 	var $StockID;
@@ -233,7 +234,7 @@ Class LineDetails {
 	var $Deleted;
 	var $ExpiryDate;
 
-	function __construct ($LineNo,
+	function __construct($LineNo,
 							$StockItem,
 							$Qty,
 							$ItemDescr,
@@ -249,7 +250,7 @@ Class LineDetails {
 		$this->Units = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 		$this->ExpiryDate = $ExpiryDate;
-		$this->Deleted = False;
+		$this->Deleted = false;
 	}
 
 	function LineDetails($LineNo,
@@ -270,14 +271,14 @@ Class LineDetails {
 
 }
 
-Class Supplier {
+class Supplier {
 
 	var $SupplierCode;
 	var $SupplierName;
 	var $EmailAddress;
 	var $Responded;
 
-	function __construct ($SupplierCode,
+	function __construct($SupplierCode,
 						$SupplierName,
 						$EmailAddress) {
 		$this->SupplierCode = $SupplierCode;

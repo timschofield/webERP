@@ -1,13 +1,15 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Shipment Costing');
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineShiptClass.php');
 
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Shipment Costing');
 $ViewTopic = 'Shipments';
 $BookMark = '';
-
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 

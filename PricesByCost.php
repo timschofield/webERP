@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_POST['submit']) OR isset($_POST['update']) && (@$_POST['Margin'] == '')) {
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/PricesByCost.php');

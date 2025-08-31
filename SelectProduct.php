@@ -2,16 +2,17 @@
 /***************************************************************************
 *
 * KL RICARD Add Top Sales
-* 			Limit supplier data to last 10 rows
+* 	    Limit supplier data to last 10 rows
 *
 ****************************************************************************/
 /* Selection of items. All item maintenance, transactions and inquiries start with this script. */
 
-$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
+$PricesSecurity = 12; //don't show pricing info unless security token 12 available to user
 $SuppliersSecurity = 9; //don't show supplier purchasing info unless security token 9 available to user
 $CostSecurity = 18; //don't show cost info unless security token 18 available to user
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Search Inventory Items');
 $ViewTopic = 'Inventory';
 $BookMark = 'SelectingInventory';
@@ -23,7 +24,6 @@ include('includes/ImageFunctions.php');
 // KL RICARD
 include('includes/KLDefines.php');
 // KL RICARD END
-
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
 	$_GET['StockID'] = trim(mb_strtoupper($_GET['StockID']));
@@ -131,24 +131,24 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	switch ($MyRow['mbflag']) {
 		case 'A':
 			echo __('Assembly Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
 		break;
         case 'G':
             echo __('Phantom Assembly Item');
-            $Its_A_Kitset_Assembly_Or_Dummy = True;
-            $Its_A_Kitset = True;
+            $Its_A_Kitset_Assembly_Or_Dummy = true;
+            $Its_A_Kitset = true;
         break;
 		case 'K':
 			echo __('Kitset Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
-			$Its_A_Kitset = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
+			$Its_A_Kitset = true;
 		break;
 		case 'D':
 			echo __('Service/Labour Item');
-			$Its_A_Kitset_Assembly_Or_Dummy = True;
-			$Its_A_Dummy = True;
+			$Its_A_Kitset_Assembly_Or_Dummy = true;
+			$Its_A_Dummy = true;
 			if ($MyRow['stocktype'] == 'L') {
-				$Its_A_Labour_Item = True;
+				$Its_A_Labour_Item = true;
 			}
 		break;
 		case 'B':
@@ -413,13 +413,13 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				<td valign="top" class="select">';
 	/*Stock Inquiry Options */
 	echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Movements') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Status') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockUsage.php?StockID=' . urlencode($StockID) . '">' . __('Show Stock Usage') . '</a><br />';
 	}
 	echo '<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Sales Orders') . '</a><br />';
 	echo '<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Completed Sales Orders') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search Outstanding Purchase Orders') . '</a><br />';
 		echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . __('Search All Purchase Orders') . '</a><br />';
 
@@ -431,11 +431,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		}
 		echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . __('Show Part Picture (if available)') . '</a><br />';
 	}
-	if ($Its_A_Dummy == False) {
+	if ($Its_A_Dummy == false) {
 		echo '<a href="' . $RootPath . '/BOMInquiry.php?StockID=' . urlencode($StockID) . '">' . __('View Costed Bill Of Material') . '</a><br />';
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Item Is Used') . '</a><br />';
 	}
-	if ($Its_A_Labour_Item == True) {
+	if ($Its_A_Labour_Item == true) {
 		echo '<a href="' . $RootPath . '/WhereUsedInquiry.php?StockID=' . urlencode($StockID) . '">' . __('Where This Labour Item Is Used') . '</a><br />';
 	}
 	wikiLink('Product', $StockID);
@@ -478,18 +478,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 				/**/
 			} /* end of while */
 		} /* end of $MyRow['mbflag'] == 'B' */
-	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == False) */
+	} /* end of ($Its_A_Kitset_Assembly_Or_Dummy == false) */
 	echo '</td><td valign="top" class="select">';
 	/* Stock Maintenance Options */
 	echo '<a href="' . $RootPath . '/Stocks.php?">' . __('Insert New Item') . '</a><br />';
 	echo '<a href="' . $RootPath . '/Stocks.php?StockID=' . urlencode($StockID) . '">' . __('Modify Item Details') . '</a><br />';
-	if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
+	if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 		echo '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Reorder Levels') . '</a><br />';
 		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
 		echo '<a href="' . $RootPath . '/PurchData.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Purchasing Data') . '</a><br />';
 		echo '<a href="' . $RootPath . '/CustItem.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Customer Item Data') . '</a><br />';
 	}
-	if ($Its_A_Labour_Item == True) {
+	if ($Its_A_Labour_Item == true) {
 		echo '<a href="' . $RootPath . '/StockCostUpdate.php?StockID=' . urlencode($StockID) . '">' . __('Maintain Standard Cost') . '</a><br />';
 	}
 	if (!$Its_A_Kitset) {
@@ -709,26 +709,26 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 
 include('includes/footer.php');
 
+/**
+ * Code mostly generated by Gemini 2.0
+ * Generates an SQL query for stockmaster data based on user-provided filters.
+ *
+ * The function constructs a SELECT query with JOINs to retrieve stock information,
+ * including quantity on hand (qoh).  It supports filtering by keywords,
+ * stock code, supplier stock code, and stock category.  The query is ordered
+ * by discontinued status and stock ID.
+ *
+ * @param array $post An array containing user input, typically from $_POST.
+ * Expected keys:
+ * - 'Keywords':  String to search for in stock descriptions.
+ * - 'StockCode': String to search for in stock IDs.
+ * - 'SupplierStockCode': String to search for in supplier part numbers.
+ * - 'StockCat':  Category ID to filter by, or 'All' for all categories.
+ *
+ * @return string The generated SQL query string.  Returns an empty string if
+ * no valid search criteria are provided.
+ */
 function GenerateStockmasterQuery(array $post): string {
-	/**
-	 * Code mostly generated by Gemini 2.0
-	 * Generates an SQL query for stockmaster data based on user-provided filters.
-	 *
-	 * The function constructs a SELECT query with JOINs to retrieve stock information,
-	 * including quantity on hand (qoh).  It supports filtering by keywords,
-	 * stock code, supplier stock code, and stock category.  The query is ordered
-	 * by discontinued status and stock ID.
-	 *
-	 * @param array $post An array containing user input, typically from $_POST.
-	 * Expected keys:
-	 * - 'Keywords':  String to search for in stock descriptions.
-	 * - 'StockCode': String to search for in stock IDs.
-	 * - 'SupplierStockCode': String to search for in supplier part numbers.
-	 * - 'StockCat':  Category ID to filter by, or 'All' for all categories.
-	 *
-	 * @return string The generated SQL query string.  Returns an empty string if
-	 * no valid search criteria are provided.
-	 */
 
     // Helper function to sanitize and prepare search strings.
     function PrepareSearchString(string $InputString): string {

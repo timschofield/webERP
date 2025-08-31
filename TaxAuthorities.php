@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Tax Authorities');
-$ViewTopic = 'Tax';// Filename in ManualContents.php's TOC.
-$BookMark = 'TaxAuthorities';// Anchor's id in the manual's html document.
+$ViewTopic = 'Tax';
+$BookMark = 'TaxAuthorities';
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Tax Authorities Maintenance') . '" />' . ' ' .
@@ -91,10 +93,10 @@ if(isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	if(isset($InputError) and $InputError !=1) {
-		unset( $_POST['TaxGLCode']);
-		unset( $_POST['PurchTaxGLCode']);
-		unset( $_POST['Description']);
-		unset( $SelectedTaxID );
+		unset($_POST['TaxGLCode']);
+		unset($_POST['PurchTaxGLCode']);
+		unset($_POST['Description']);
+		unset($SelectedTaxID);
 	}
 
 	prnMsg($Msg);

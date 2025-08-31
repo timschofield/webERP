@@ -9,18 +9,20 @@
 *
 *********************************************************************/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Authorisation of Petty Cash Expenses');
-/* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
 // KL RICARD
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])) {

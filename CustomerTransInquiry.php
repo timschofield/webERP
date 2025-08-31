@@ -1,14 +1,14 @@
 <?php
-// CustomerTransInquiry.php
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Customer Transactions Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'ARTransInquiry';
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . __('Transaction Inquiry') . '" alt="" />' . ' ' . __('Transaction Inquiry') . '

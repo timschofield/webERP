@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 11, 2025 at 09:57 AM
+-- Generation Time: Aug 31, 2025 at 05:04 PM
 -- Server version: 10.3.39-MariaDB-log
--- PHP Version: 8.4.8
+-- PHP Version: 8.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -4024,9 +4024,9 @@ CREATE TABLE `www_users` (
 --
 ALTER TABLE `accountgroups`
   ADD PRIMARY KEY (`groupname`),
-  ADD KEY `SequenceInTB` (`sequenceintb`),
-  ADD KEY `sectioninaccounts` (`sectioninaccounts`),
-  ADD KEY `parentgroupname` (`parentgroupname`);
+  ADD KEY `idx_accountgroups_sequenceintb` (`sequenceintb`),
+  ADD KEY `idx_accountgroups_sectioninaccounts` (`sectioninaccounts`),
+  ADD KEY `idx_accountgroups_parentgroupname` (`parentgroupname`);
 
 --
 -- Indexes for table `accountsection`
@@ -4050,118 +4050,117 @@ ALTER TABLE `assetmanager`
 -- Indexes for table `auditscripts`
 --
 ALTER TABLE `auditscripts`
-  ADD KEY `UserID` (`userid`),
-  ADD KEY `ExecutionDate` (`executiondate`),
-  ADD KEY `Title` (`scripttitle`);
+  ADD KEY `idx_auditscripts_userid` (`userid`),
+  ADD KEY `idx_auditscripts_executiondate` (`executiondate`),
+  ADD KEY `idx_auditscripts_scripttitle` (`scripttitle`);
 
 --
 -- Indexes for table `audittrail`
 --
 ALTER TABLE `audittrail`
-  ADD KEY `UserID` (`userid`),
-  ADD KEY `transactiondate` (`transactiondate`),
-  ADD KEY `transactiondate_2` (`transactiondate`);
+  ADD KEY `idx_audittrail_userid` (`userid`),
+  ADD KEY `idx_audittrail_transactiondate` (`transactiondate`);
 
 --
 -- Indexes for table `bankaccounts`
 --
 ALTER TABLE `bankaccounts`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `currcode` (`currcode`),
-  ADD KEY `BankAccountName` (`bankaccountname`),
-  ADD KEY `BankAccountNumber` (`bankaccountnumber`);
+  ADD KEY `idx_bankaccounts_currcode` (`currcode`),
+  ADD KEY `idx_bankaccounts_bankaccountname` (`bankaccountname`),
+  ADD KEY `idx_bankaccounts_bankaccountnumber` (`bankaccountnumber`);
 
 --
 -- Indexes for table `banktrans`
 --
 ALTER TABLE `banktrans`
   ADD PRIMARY KEY (`banktransid`) USING BTREE,
-  ADD KEY `BankAct` (`bankact`,`ref`),
-  ADD KEY `TransDate` (`transdate`),
-  ADD KEY `TransType` (`banktranstype`),
-  ADD KEY `Type` (`type`,`transno`),
-  ADD KEY `CurrCode` (`currcode`),
-  ADD KEY `ref` (`ref`);
+  ADD KEY `idx_banktrans_bankact_ref` (`bankact`,`ref`),
+  ADD KEY `idx_banktrans_transdate` (`transdate`),
+  ADD KEY `idx_banktrans_banktranstype` (`banktranstype`),
+  ADD KEY `idx_banktrans_type_transno` (`type`,`transno`),
+  ADD KEY `idx_banktrans_currcode` (`currcode`),
+  ADD KEY `idx_banktrans_ref` (`ref`);
 
 --
 -- Indexes for table `bom`
 --
 ALTER TABLE `bom`
   ADD PRIMARY KEY (`parent`,`component`,`workcentreadded`,`loccode`),
-  ADD KEY `Component` (`component`),
-  ADD KEY `EffectiveAfter` (`effectiveafter`),
-  ADD KEY `EffectiveTo` (`effectiveto`),
-  ADD KEY `LocCode` (`loccode`),
-  ADD KEY `Parent` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
-  ADD KEY `Parent_2` (`parent`),
-  ADD KEY `WorkCentreAdded` (`workcentreadded`);
+  ADD KEY `idx_bom_component` (`component`),
+  ADD KEY `idx_bom_effectiveafter` (`effectiveafter`),
+  ADD KEY `idx_bom_effectiveto` (`effectiveto`),
+  ADD KEY `idx_bom_loccode` (`loccode`),
+  ADD KEY `idx_bom_parent_effective_loccode` (`parent`,`effectiveafter`,`effectiveto`,`loccode`),
+  ADD KEY `idx_bom_parent` (`parent`),
+  ADD KEY `idx_bom_workcentreadded` (`workcentreadded`);
 
 --
 -- Indexes for table `buckets`
 --
 ALTER TABLE `buckets`
   ADD PRIMARY KEY (`workcentre`,`availdate`),
-  ADD KEY `WorkCentre` (`workcentre`),
-  ADD KEY `AvailDate` (`availdate`);
+  ADD KEY `idx_buckets_workcentre` (`workcentre`),
+  ADD KEY `idx_buckets_availdate` (`availdate`);
 
 --
 -- Indexes for table `chartmaster`
 --
 ALTER TABLE `chartmaster`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmaster_accountname` (`accountname`),
+  ADD KEY `idx_chartmaster_group` (`group_`);
 
 --
 -- Indexes for table `chartmasterADU`
 --
 ALTER TABLE `chartmasterADU`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmasteradu_accountname` (`accountname`),
+  ADD KEY `idx_chartmasteradu_group` (`group_`);
 
 --
 -- Indexes for table `chartmasterBB`
 --
 ALTER TABLE `chartmasterBB`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmasterbb_accountname` (`accountname`),
+  ADD KEY `idx_chartmasterbb_group` (`group_`);
 
 --
 -- Indexes for table `chartmasterIK`
 --
 ALTER TABLE `chartmasterIK`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmasterik_accountname` (`accountname`),
+  ADD KEY `idx_chartmasterik_group` (`group_`);
 
 --
 -- Indexes for table `chartmasterPI`
 --
 ALTER TABLE `chartmasterPI`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmasterpi_accountname` (`accountname`),
+  ADD KEY `idx_chartmasterpi_group` (`group_`);
 
 --
 -- Indexes for table `chartmasterSMH`
 --
 ALTER TABLE `chartmasterSMH`
   ADD PRIMARY KEY (`accountcode`),
-  ADD KEY `AccountName` (`accountname`),
-  ADD KEY `Group_` (`group_`);
+  ADD KEY `idx_chartmastersmh_accountname` (`accountname`),
+  ADD KEY `idx_chartmastersmh_group` (`group_`);
 
 --
 -- Indexes for table `cogsglpostings`
 --
 ALTER TABLE `cogsglpostings`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
-  ADD KEY `Area` (`area`),
-  ADD KEY `StkCat` (`stkcat`),
-  ADD KEY `GLCode` (`glcode`),
-  ADD KEY `SalesType` (`salestype`);
+  ADD UNIQUE KEY `uk_cogsglpostings_area_stkcat_salestype` (`area`,`stkcat`,`salestype`),
+  ADD KEY `idx_cogsglpostings_area` (`area`),
+  ADD KEY `idx_cogsglpostings_stkcat` (`stkcat`),
+  ADD KEY `idx_cogsglpostings_glcode` (`glcode`),
+  ADD KEY `idx_cogsglpostings_salestype` (`salestype`);
 
 --
 -- Indexes for table `companies`
@@ -4180,65 +4179,65 @@ ALTER TABLE `config`
 --
 ALTER TABLE `contractbom`
   ADD PRIMARY KEY (`contractref`,`stockid`,`workcentreadded`),
-  ADD KEY `Stockid` (`stockid`),
-  ADD KEY `ContractRef` (`contractref`),
-  ADD KEY `WorkCentreAdded` (`workcentreadded`);
+  ADD KEY `idx_contractbom_stockid` (`stockid`),
+  ADD KEY `idx_contractbom_contractref` (`contractref`),
+  ADD KEY `idx_contractbom_workcentreadded` (`workcentreadded`);
 
 --
 -- Indexes for table `contractcharges`
 --
 ALTER TABLE `contractcharges`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `contractref` (`contractref`,`transtype`,`transno`),
-  ADD KEY `contractcharges_ibfk_2` (`transtype`);
+  ADD KEY `idx_contractcharges_contractref_transtype_transno` (`contractref`,`transtype`,`transno`),
+  ADD KEY `idx_contractcharges_transtype` (`transtype`);
 
 --
 -- Indexes for table `contractreqts`
 --
 ALTER TABLE `contractreqts`
   ADD PRIMARY KEY (`contractreqid`),
-  ADD KEY `ContractRef` (`contractref`);
+  ADD KEY `idx_contractreqts_contractref` (`contractref`);
 
 --
 -- Indexes for table `contracts`
 --
 ALTER TABLE `contracts`
   ADD PRIMARY KEY (`contractref`),
-  ADD KEY `OrderNo` (`orderno`),
-  ADD KEY `CategoryID` (`categoryid`),
-  ADD KEY `Status` (`status`),
-  ADD KEY `WO` (`wo`),
-  ADD KEY `loccode` (`loccode`),
-  ADD KEY `DebtorNo` (`debtorno`,`branchcode`);
+  ADD KEY `idx_contracts_orderno` (`orderno`),
+  ADD KEY `idx_contracts_categoryid` (`categoryid`),
+  ADD KEY `idx_contracts_status` (`status`),
+  ADD KEY `idx_contracts_wo` (`wo`),
+  ADD KEY `idx_contracts_loccode` (`loccode`),
+  ADD KEY `idx_contracts_debtorno_branchcode` (`debtorno`,`branchcode`);
 
 --
 -- Indexes for table `currencies`
 --
 ALTER TABLE `currencies`
   ADD PRIMARY KEY (`currabrev`),
-  ADD KEY `Country` (`country`);
+  ADD KEY `idx_currencies_country` (`country`);
 
 --
 -- Indexes for table `custallocns`
 --
 ALTER TABLE `custallocns`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `DateAlloc` (`datealloc`),
-  ADD KEY `TransID_AllocFrom` (`transid_allocfrom`),
-  ADD KEY `TransID_AllocTo` (`transid_allocto`);
+  ADD KEY `idx_custallocns_datealloc` (`datealloc`),
+  ADD KEY `idx_custallocns_transid_allocfrom` (`transid_allocfrom`),
+  ADD KEY `idx_custallocns_transid_allocto` (`transid_allocto`);
 
 --
 -- Indexes for table `custbranch`
 --
 ALTER TABLE `custbranch`
   ADD PRIMARY KEY (`branchcode`,`debtorno`),
-  ADD KEY `BrName` (`brname`),
-  ADD KEY `DebtorNo` (`debtorno`),
-  ADD KEY `Salesman` (`salesman`),
-  ADD KEY `Area` (`area`),
-  ADD KEY `DefaultLocation` (`defaultlocation`),
-  ADD KEY `DefaultShipVia` (`defaultshipvia`),
-  ADD KEY `taxgroupid` (`taxgroupid`);
+  ADD KEY `idx_custbranch_brname` (`brname`),
+  ADD KEY `idx_custbranch_debtorno` (`debtorno`),
+  ADD KEY `idx_custbranch_salesman` (`salesman`),
+  ADD KEY `idx_custbranch_area` (`area`),
+  ADD KEY `idx_custbranch_defaultlocation` (`defaultlocation`),
+  ADD KEY `idx_custbranch_defaultshipvia` (`defaultshipvia`),
+  ADD KEY `idx_custbranch_taxgroupid` (`taxgroupid`);
 
 --
 -- Indexes for table `custcontacts`
@@ -4251,8 +4250,8 @@ ALTER TABLE `custcontacts`
 --
 ALTER TABLE `custitem`
   ADD PRIMARY KEY (`debtorno`,`stockid`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `Debtorno` (`debtorno`);
+  ADD KEY `idx_custitem_stockid` (`stockid`),
+  ADD KEY `idx_custitem_debtorno` (`debtorno`);
 
 --
 -- Indexes for table `custnotes`
@@ -4277,45 +4276,47 @@ ALTER TABLE `dashboard_users`
 --
 ALTER TABLE `debtorsmaster`
   ADD PRIMARY KEY (`debtorno`),
-  ADD UNIQUE KEY `TypeId` (`typeid`,`debtorno`),
-  ADD UNIQUE KEY `ClientSince` (`clientsince`,`debtorno`),
-  ADD UNIQUE KEY `Currency` (`currcode`,`debtorno`),
-  ADD KEY `HoldReason` (`holdreason`),
-  ADD KEY `Name` (`name`),
-  ADD KEY `PaymentTerms` (`paymentterms`),
-  ADD KEY `SalesType` (`salestype`),
-  ADD KEY `EDIInvoices` (`ediinvoices`),
-  ADD KEY `EDIOrders` (`ediorders`);
+  ADD UNIQUE KEY `uk_debtorsmaster_typeid_debtorno` (`typeid`,`debtorno`),
+  ADD UNIQUE KEY `uk_debtorsmaster_clientsince_debtorno` (`clientsince`,`debtorno`),
+  ADD UNIQUE KEY `uk_debtorsmaster_currcode_debtorno` (`currcode`,`debtorno`),
+  ADD KEY `idx_debtorsmaster_holdreason` (`holdreason`),
+  ADD KEY `idx_debtorsmaster_name` (`name`),
+  ADD KEY `idx_debtorsmaster_paymentterms` (`paymentterms`),
+  ADD KEY `idx_debtorsmaster_salestype` (`salestype`),
+  ADD KEY `idx_debtorsmaster_ediinvoices` (`ediinvoices`),
+  ADD KEY `idx_debtorsmaster_ediorders` (`ediorders`),
+  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`);
 
 --
 -- Indexes for table `debtortrans`
 --
 ALTER TABLE `debtortrans`
   ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `DebtorNo` (`debtorno`,`branchcode`),
-  ADD KEY `Order_` (`order_`),
-  ADD KEY `Prd` (`prd`),
-  ADD KEY `Tpe` (`tpe`),
-  ADD KEY `Type` (`type`),
-  ADD KEY `Settled` (`settled`),
-  ADD KEY `TranDate` (`trandate`),
-  ADD KEY `TransNo` (`transno`),
-  ADD KEY `Type_2` (`type`,`transno`),
-  ADD KEY `EDISent` (`edisent`),
-  ADD KEY `salesperson` (`salesperson`);
+  ADD KEY `idx_debtortrans_debtorno_branchcode` (`debtorno`,`branchcode`),
+  ADD KEY `idx_debtortrans_order` (`order_`),
+  ADD KEY `idx_debtortrans_prd` (`prd`),
+  ADD KEY `idx_debtortrans_tpe` (`tpe`),
+  ADD KEY `idx_debtortrans_type` (`type`),
+  ADD KEY `idx_debtortrans_settled` (`settled`),
+  ADD KEY `idx_debtortrans_trandate` (`trandate`),
+  ADD KEY `idx_debtortrans_transno` (`transno`),
+  ADD KEY `idx_debtortrans_type_transno` (`type`,`transno`),
+  ADD KEY `idx_debtortrans_edisent` (`edisent`),
+  ADD KEY `idx_debtortrans_salesperson` (`salesperson`);
 
 --
 -- Indexes for table `debtortranstaxes`
 --
 ALTER TABLE `debtortranstaxes`
   ADD PRIMARY KEY (`debtortransid`,`taxauthid`),
-  ADD KEY `taxauthid` (`taxauthid`);
+  ADD KEY `idx_debtortranstaxes_taxauthid` (`taxauthid`);
 
 --
 -- Indexes for table `debtortype`
 --
 ALTER TABLE `debtortype`
-  ADD PRIMARY KEY (`typeid`);
+  ADD PRIMARY KEY (`typeid`),
+  ADD KEY `idx_debtortype_typeid_typename` (`typeid`,`typename`);
 
 --
 -- Indexes for table `debtortypenotes`
@@ -4328,7 +4329,7 @@ ALTER TABLE `debtortypenotes`
 --
 ALTER TABLE `deliverynotes`
   ADD PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
-  ADD KEY `deliverynotes_ibfk_2` (`salesorderno`,`salesorderlineno`);
+  ADD KEY `idx_deliverynotes_salesorder` (`salesorderno`,`salesorderlineno`);
 
 --
 -- Indexes for table `departments`
@@ -4341,35 +4342,35 @@ ALTER TABLE `departments`
 --
 ALTER TABLE `discountmatrix`
   ADD PRIMARY KEY (`salestype`,`discountcategory`,`quantitybreak`),
-  ADD KEY `QuantityBreak` (`quantitybreak`),
-  ADD KEY `DiscountCategory` (`discountcategory`),
-  ADD KEY `SalesType` (`salestype`);
+  ADD KEY `idx_discountmatrix_quantitybreak` (`quantitybreak`),
+  ADD KEY `idx_discountmatrix_discountcategory` (`discountcategory`),
+  ADD KEY `idx_discountmatrix_salestype` (`salestype`);
 
 --
 -- Indexes for table `ediitemmapping`
 --
 ALTER TABLE `ediitemmapping`
   ADD PRIMARY KEY (`supporcust`,`partnercode`,`stockid`),
-  ADD KEY `PartnerCode` (`partnercode`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `PartnerStockID` (`partnerstockid`),
-  ADD KEY `SuppOrCust` (`supporcust`);
+  ADD KEY `idx_ediitemmapping_partnercode` (`partnercode`),
+  ADD KEY `idx_ediitemmapping_stockid` (`stockid`),
+  ADD KEY `idx_ediitemmapping_partnerstockid` (`partnerstockid`),
+  ADD KEY `idx_ediitemmapping_supporcust` (`supporcust`);
 
 --
 -- Indexes for table `edimessageformat`
 --
 ALTER TABLE `edimessageformat`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `PartnerCode` (`partnercode`,`messagetype`,`sequenceno`),
-  ADD KEY `Section` (`section`);
+  ADD UNIQUE KEY `uk_edimessageformat_partner_msg_seq` (`partnercode`,`messagetype`,`sequenceno`),
+  ADD KEY `idx_edimessageformat_section` (`section`);
 
 --
 -- Indexes for table `edi_orders_segs`
 --
 ALTER TABLE `edi_orders_segs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `SegTag` (`segtag`),
-  ADD KEY `SegNo` (`seggroup`);
+  ADD KEY `idx_edi_orders_segs_segtag` (`segtag`),
+  ADD KEY `idx_edi_orders_segs_seggroup` (`seggroup`);
 
 --
 -- Indexes for table `edi_orders_seg_groups`
@@ -4388,11 +4389,11 @@ ALTER TABLE `emailsettings`
 --
 ALTER TABLE `employees`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `surname` (`surname`),
-  ADD KEY `firstname` (`firstname`),
-  ADD KEY `stockid` (`stockid`),
-  ADD KEY `manager` (`manager`),
-  ADD KEY `userid` (`userid`);
+  ADD KEY `idx_employees_surname` (`surname`),
+  ADD KEY `idx_employees_firstname` (`firstname`),
+  ADD KEY `idx_employees_stockid` (`stockid`),
+  ADD KEY `idx_employees_manager` (`manager`),
+  ADD KEY `idx_employees_userid` (`userid`);
 
 --
 -- Indexes for table `factorcompanies`
@@ -4446,10 +4447,10 @@ ALTER TABLE `fixedassettrans`
 --
 ALTER TABLE `freightcosts`
   ADD PRIMARY KEY (`shipcostfromid`),
-  ADD KEY `Destination` (`destination`),
-  ADD KEY `LocationFrom` (`locationfrom`),
-  ADD KEY `ShipperID` (`shipperid`),
-  ADD KEY `Destination_2` (`destination`,`locationfrom`,`shipperid`);
+  ADD KEY `idx_freightcosts_destination` (`destination`),
+  ADD KEY `idx_freightcosts_locationfrom` (`locationfrom`),
+  ADD KEY `idx_freightcosts_shipperid` (`shipperid`),
+  ADD KEY `idx_freightcosts_dest_loc_shipper` (`destination`,`locationfrom`,`shipperid`);
 
 --
 -- Indexes for table `geocode_param`
@@ -4461,16 +4462,16 @@ ALTER TABLE `geocode_param`
 -- Indexes for table `glaccountusers`
 --
 ALTER TABLE `glaccountusers`
-  ADD UNIQUE KEY `useraccount` (`userid`,`accountcode`),
-  ADD UNIQUE KEY `accountuser` (`accountcode`,`userid`);
+  ADD UNIQUE KEY `uk_glaccountusers_userid_accountcode` (`userid`,`accountcode`),
+  ADD UNIQUE KEY `uk_glaccountusers_accountcode_userid` (`accountcode`,`userid`);
 
 --
 -- Indexes for table `glbudgetdetails`
 --
 ALTER TABLE `glbudgetdetails`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `account` (`account`),
-  ADD KEY `headerid` (`headerid`,`account`,`period`);
+  ADD KEY `idx_glbudgetdetails_account` (`account`),
+  ADD KEY `idx_glbudgetdetails_header_account_period` (`headerid`,`account`,`period`);
 
 --
 -- Indexes for table `glbudgetheaders`
@@ -4483,7 +4484,7 @@ ALTER TABLE `glbudgetheaders`
 --
 ALTER TABLE `gltags`
   ADD PRIMARY KEY (`counterindex`,`tagref`),
-  ADD KEY `tagref` (`tagref`);
+  ADD KEY `idx_gltags_tagref` (`tagref`);
 
 --
 -- Indexes for table `gltotals`
@@ -4496,35 +4497,35 @@ ALTER TABLE `gltotals`
 --
 ALTER TABLE `gltrans`
   ADD PRIMARY KEY (`counterindex`) USING BTREE,
-  ADD KEY `Account` (`account`,`trandate`) USING BTREE,
-  ADD KEY `TranDate` (`trandate`,`account`) USING BTREE,
-  ADD KEY `PeriodNo` (`periodno`,`account`) USING BTREE,
-  ADD KEY `Type_and_Number` (`type`,`typeno`) USING BTREE;
+  ADD KEY `idx_gltrans_account_trandate` (`account`,`trandate`),
+  ADD KEY `idx_gltrans_trandate_account` (`trandate`,`account`),
+  ADD KEY `idx_gltrans_periodno_account` (`periodno`,`account`),
+  ADD KEY `idx_gltrans_type_typeno` (`type`,`typeno`);
 
 --
 -- Indexes for table `grns`
 --
 ALTER TABLE `grns`
   ADD PRIMARY KEY (`grnno`),
-  ADD KEY `DeliveryDate` (`deliverydate`),
-  ADD KEY `ItemCode` (`itemcode`),
-  ADD KEY `PODetailItem` (`podetailitem`),
-  ADD KEY `SupplierID` (`supplierid`);
+  ADD KEY `idx_grns_deliverydate` (`deliverydate`),
+  ADD KEY `idx_grns_itemcode` (`itemcode`),
+  ADD KEY `idx_grns_podetailitem` (`podetailitem`),
+  ADD KEY `idx_grns_supplierid` (`supplierid`);
 
 --
 -- Indexes for table `holdreasons`
 --
 ALTER TABLE `holdreasons`
   ADD PRIMARY KEY (`reasoncode`),
-  ADD KEY `ReasonDescription` (`reasondescription`);
+  ADD KEY `idx_holdreasons_reasondescription` (`reasondescription`);
 
 --
 -- Indexes for table `internalstockcatrole`
 --
 ALTER TABLE `internalstockcatrole`
   ADD PRIMARY KEY (`categoryid`,`secroleid`),
-  ADD KEY `internalstockcatrole_ibfk_1` (`categoryid`),
-  ADD KEY `internalstockcatrole_ibfk_2` (`secroleid`);
+  ADD KEY `idx_internalstockcatrole_categoryid` (`categoryid`),
+  ADD KEY `idx_internalstockcatrole_secroleid` (`secroleid`);
 
 --
 -- Indexes for table `jnltmpldetails`
@@ -4543,29 +4544,29 @@ ALTER TABLE `jnltmplheader`
 --
 ALTER TABLE `kladjustrl`
   ADD PRIMARY KEY (`counteradjust`),
-  ADD KEY `StockID` (`stockid`);
+  ADD KEY `idx_kladjustrl_stockid` (`stockid`);
 
 --
 -- Indexes for table `klarchivedtables`
 --
 ALTER TABLE `klarchivedtables`
-  ADD UNIQUE KEY `name` (`name`);
+  ADD UNIQUE KEY `uk_klarchivedtables_name` (`name`);
 
 --
 -- Indexes for table `klchangeprice`
 --
 ALTER TABLE `klchangeprice`
   ADD PRIMARY KEY (`counterpricechange`),
-  ADD KEY `stockid` (`stockid`,`startprocessdate`,`endprocessdate`);
+  ADD KEY `idx_klchangeprice_stockid_dates` (`stockid`,`startprocessdate`,`endprocessdate`);
 
 --
 -- Indexes for table `klconsignment`
 --
 ALTER TABLE `klconsignment`
   ADD PRIMARY KEY (`idconsignment`),
-  ADD KEY `stockid+dates` (`stockid`,`saledate`,`fakturpajakdate`),
-  ADD KEY `stockid+dateinvoiced` (`stockid`,`saledate`,`invoicedtopartner`),
-  ADD KEY `issued` (`companycode`,`partnercode`,`invoicedtopartner`);
+  ADD KEY `idx_klconsignment_stockid_dates` (`stockid`,`saledate`,`fakturpajakdate`),
+  ADD KEY `idx_klconsignment_stockid_invoiced` (`stockid`,`saledate`,`invoicedtopartner`),
+  ADD KEY `idx_klconsignment_company_partner_invoiced` (`companycode`,`partnercode`,`invoicedtopartner`);
 
 --
 -- Indexes for table `klfreeexchanges`
@@ -4577,74 +4578,74 @@ ALTER TABLE `klfreeexchanges`
 -- Indexes for table `klkpi`
 --
 ALTER TABLE `klkpi`
-  ADD UNIQUE KEY `concept+date` (`kpicode`,`date`) USING BTREE,
-  ADD UNIQUE KEY `date+concept` (`date`,`kpicode`) USING BTREE;
+  ADD UNIQUE KEY `uk_klkpi_kpicode_date` (`kpicode`,`date`),
+  ADD UNIQUE KEY `uk_klkpi_date_kpicode` (`date`,`kpicode`);
 
 --
 -- Indexes for table `klkpidescriptions`
 --
 ALTER TABLE `klkpidescriptions`
-  ADD UNIQUE KEY `kpicode` (`kpicode`);
+  ADD UNIQUE KEY `uk_klkpidescriptions_kpicode` (`kpicode`);
 
 --
 -- Indexes for table `klmaintenancetasks`
 --
 ALTER TABLE `klmaintenancetasks`
-  ADD UNIQUE KEY `CounterIndex` (`counterindex`),
-  ADD UNIQUE KEY `Location` (`loccode`,`creationdate`,`counterindex`) USING BTREE,
-  ADD UNIQUE KEY `closed` (`closed`,`loccode`,`counterindex`);
+  ADD UNIQUE KEY `uk_klmaintenancetasks_counterindex` (`counterindex`) USING BTREE,
+  ADD UNIQUE KEY `uk_klmaintenancetasks_loc_date_counter` (`loccode`,`creationdate`,`counterindex`) USING BTREE,
+  ADD UNIQUE KEY `uk_klmaintenancetasks_closed_loc_counter` (`closed`,`loccode`,`counterindex`) USING BTREE;
 
 --
 -- Indexes for table `klmaintenancetaskupdates`
 --
 ALTER TABLE `klmaintenancetaskupdates`
-  ADD UNIQUE KEY `counterindex` (`counterindex`),
-  ADD UNIQUE KEY `taskcounter` (`taskcounter`,`counterindex`);
+  ADD UNIQUE KEY `uk_klmaintenancetaskupdates_counterindex` (`counterindex`) USING BTREE,
+  ADD UNIQUE KEY `uk_klmaintenancetaskupdates_task_counter` (`taskcounter`,`counterindex`) USING BTREE;
 
 --
 -- Indexes for table `klmaintenancetypes`
 --
 ALTER TABLE `klmaintenancetypes`
-  ADD UNIQUE KEY `maintenancetype` (`maintenancetype`);
+  ADD UNIQUE KEY `uk_klmaintenancetypes_maintenancetype` (`maintenancetype`);
 
 --
 -- Indexes for table `klmovetodiscount20`
 --
 ALTER TABLE `klmovetodiscount20`
   ADD PRIMARY KEY (`countermovediscount`),
-  ADD KEY `stockid` (`stockid`,`startprocessdate`,`endprocessdate`);
+  ADD KEY `idx_klmovetodiscount20_stockid_dates` (`stockid`,`startprocessdate`,`endprocessdate`);
 
 --
 -- Indexes for table `klmovetodiscount50`
 --
 ALTER TABLE `klmovetodiscount50`
   ADD PRIMARY KEY (`countermovediscount`),
-  ADD KEY `stockid` (`stockid`,`startprocessdate`,`endprocessdate`);
+  ADD KEY `idx_klmovetodiscount50_stockid_dates` (`stockid`,`startprocessdate`,`endprocessdate`);
 
 --
 -- Indexes for table `klmovetodiscount80`
 --
 ALTER TABLE `klmovetodiscount80`
   ADD PRIMARY KEY (`countermovediscount`),
-  ADD KEY `stockid` (`stockid`,`startprocessdate`,`endprocessdate`);
+  ADD KEY `idx_klmovetodiscount80_stockid_dates` (`stockid`,`startprocessdate`,`endprocessdate`);
 
 --
 -- Indexes for table `klonlinepartners`
 --
 ALTER TABLE `klonlinepartners`
-  ADD UNIQUE KEY `onlinepartnercode` (`onlinepartnercode`);
+  ADD UNIQUE KEY `uk_klonlinepartners_onlinepartnercode` (`onlinepartnercode`);
 
 --
 -- Indexes for table `klpackaging`
 --
 ALTER TABLE `klpackaging`
-  ADD UNIQUE KEY `packagingcode` (`packagingcode`);
+  ADD UNIQUE KEY `uk_klpackaging_packagingcode` (`packagingcode`);
 
 --
 -- Indexes for table `klpostatus`
 --
 ALTER TABLE `klpostatus`
-  ADD UNIQUE KEY `code` (`paymentterm`,`code`);
+  ADD UNIQUE KEY `uk_klpostatus_paymentterm_code` (`paymentterm`,`code`);
 
 --
 -- Indexes for table `klretailcustomers`
@@ -4656,32 +4657,32 @@ ALTER TABLE `klretailcustomers`
 -- Indexes for table `klretailpartners`
 --
 ALTER TABLE `klretailpartners`
-  ADD UNIQUE KEY `partnercode` (`partnercode`);
+  ADD UNIQUE KEY `uk_klretailpartners_partnercode` (`partnercode`);
 
 --
 -- Indexes for table `klrevisedemaildomains`
 --
 ALTER TABLE `klrevisedemaildomains`
-  ADD UNIQUE KEY `wrongdomain` (`wrongdomain`);
+  ADD UNIQUE KEY `uk_klrevisedemaildomains_wrongdomain` (`wrongdomain`);
 
 --
 -- Indexes for table `klsalesperformance`
 --
 ALTER TABLE `klsalesperformance`
   ADD PRIMARY KEY (`stockid`),
-  ADD UNIQUE KEY `TopSales60` (`topsales60`,`stockid`),
-  ADD UNIQUE KEY `ValueSales60` (`valuesales60`,`stockid`),
-  ADD UNIQUE KEY `TopSales30` (`topsales30`,`stockid`),
-  ADD UNIQUE KEY `ValueSales30` (`valuesales30`,`stockid`),
-  ADD UNIQUE KEY `TopSales90` (`topsales90`,`stockid`),
-  ADD UNIQUE KEY `ValueSales90` (`valuesales90`,`stockid`);
+  ADD UNIQUE KEY `uk_klsalesperformance_topsales60_stockid` (`topsales60`,`stockid`),
+  ADD UNIQUE KEY `uk_klsalesperformance_valuesales60_stockid` (`valuesales60`,`stockid`),
+  ADD UNIQUE KEY `uk_klsalesperformance_topsales30_stockid` (`topsales30`,`stockid`),
+  ADD UNIQUE KEY `uk_klsalesperformance_valuesales30_stockid` (`valuesales30`,`stockid`),
+  ADD UNIQUE KEY `uk_klsalesperformance_topsales90_stockid` (`topsales90`,`stockid`),
+  ADD UNIQUE KEY `uk_klsalesperformance_valuesales90_stockid` (`valuesales90`,`stockid`);
 
 --
 -- Indexes for table `klservicetypes`
 --
 ALTER TABLE `klservicetypes`
-  ADD UNIQUE KEY `servicedescription` (`servicedescription`),
-  ADD UNIQUE KEY `servicecode` (`servicecode`);
+  ADD UNIQUE KEY `uk_klservicetypes_servicedescription` (`servicedescription`),
+  ADD UNIQUE KEY `uk_klservicetypes_servicecode` (`servicecode`);
 
 --
 -- Indexes for table `klstockmarketplaces`
@@ -4694,8 +4695,8 @@ ALTER TABLE `klstockmarketplaces`
 --
 ALTER TABLE `labelfields`
   ADD PRIMARY KEY (`labelfieldid`),
-  ADD KEY `labelid` (`labelid`),
-  ADD KEY `vpos` (`vpos`);
+  ADD KEY `idx_labelfields_labelid` (`labelid`),
+  ADD KEY `idx_labelfields_vpos` (`vpos`);
 
 --
 -- Indexes for table `labels`
@@ -4707,91 +4708,102 @@ ALTER TABLE `labels`
 -- Indexes for table `levels`
 --
 ALTER TABLE `levels`
-  ADD KEY `part` (`part`);
+  ADD KEY `idx_levels_part` (`part`);
 
 --
 -- Indexes for table `locations`
 --
 ALTER TABLE `locations`
   ADD PRIMARY KEY (`loccode`),
-  ADD UNIQUE KEY `locationname` (`locationname`),
-  ADD UNIQUE KEY `typeloc` (`typeloc`,`loccode`),
-  ADD UNIQUE KEY `zone` (`zone`,`loccode`),
-  ADD UNIQUE KEY `StockReadyToSell` (`stockreadytosell`,`loccode`),
-  ADD UNIQUE KEY `StockAvailableForOnline` (`stockavailableforonline`,`loccode`),
-  ADD UNIQUE KEY `KLPOSGLAccount` (`klposcashaccount`,`loccode`),
-  ADD KEY `taxprovinceid` (`taxprovinceid`),
-  ADD KEY `LastTransferDate` (`klemaillastpackacgingtransfer`,`loccode`),
-  ADD KEY `type+partner` (`typeloc`,`partnercode`,`klposcashaccount`) USING BTREE;
+  ADD UNIQUE KEY `uk_locations_locationname` (`locationname`),
+  ADD UNIQUE KEY `uk_locations_typeloc_loccode` (`typeloc`,`loccode`),
+  ADD UNIQUE KEY `uk_locations_zone_loccode` (`zone`,`loccode`),
+  ADD UNIQUE KEY `uk_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`),
+  ADD UNIQUE KEY `uk_locations_stockavailableforonline_loccode` (`stockavailableforonline`,`loccode`),
+  ADD UNIQUE KEY `uk_locations_klposcashaccount_loccode` (`klposcashaccount`,`loccode`),
+  ADD KEY `idx_locations_taxprovinceid` (`taxprovinceid`),
+  ADD KEY `idx_locations_klemaillastpackacgingtransfer_loccode` (`klemaillastpackacgingtransfer`,`loccode`),
+  ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
+  ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`),
+  ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`),
+  ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`),
+  ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`),
+  ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`),
+  ADD KEY `idx_locations_typeloc` (`typeloc`),
+  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`);
 
 --
 -- Indexes for table `locationtypes`
 --
 ALTER TABLE `locationtypes`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `description` (`description`);
+  ADD KEY `idx_locationtypes_description` (`description`);
 
 --
 -- Indexes for table `locationusers`
 --
 ALTER TABLE `locationusers`
   ADD PRIMARY KEY (`loccode`,`userid`),
-  ADD KEY `UserId` (`userid`);
+  ADD KEY `idx_locationusers_userid` (`userid`);
 
 --
 -- Indexes for table `locationzones`
 --
 ALTER TABLE `locationzones`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `description` (`description`);
+  ADD KEY `idx_locationzones_description` (`description`);
 
 --
 -- Indexes for table `locstock`
 --
 ALTER TABLE `locstock`
   ADD PRIMARY KEY (`loccode`,`stockid`),
-  ADD UNIQUE KEY `StockID` (`stockid`,`loccode`),
-  ADD UNIQUE KEY `ReorderLevel,Location` (`reorderlevel`,`loccode`,`stockid`) USING BTREE,
-  ADD KEY `bin` (`bin`);
+  ADD UNIQUE KEY `uk_locstock_stockid_loccode` (`stockid`,`loccode`),
+  ADD UNIQUE KEY `uk_locstock_reorderlevel_loccode_stockid` (`reorderlevel`,`loccode`,`stockid`),
+  ADD KEY `idx_locstock_bin` (`bin`),
+  ADD KEY `idx_locstock_stockid_loccode_reorderlevel_quantity` (`stockid`,`loccode`,`reorderlevel`,`quantity`),
+  ADD KEY `idx_locstock_stockid_reorderlevel` (`stockid`,`reorderlevel`);
 
 --
 -- Indexes for table `loctransfercancellations`
 --
 ALTER TABLE `loctransfercancellations`
-  ADD KEY `Index1` (`reference`,`stockid`),
-  ADD KEY `Index2` (`canceldate`,`reference`,`stockid`);
+  ADD KEY `idx_loctransfercancellations_ref_stockid` (`reference`,`stockid`),
+  ADD KEY `idx_loctransfercancellations_date_ref_stockid` (`canceldate`,`reference`,`stockid`);
 
 --
 -- Indexes for table `loctransfers`
 --
 ALTER TABLE `loctransfers`
   ADD PRIMARY KEY (`loctransferid`) USING BTREE,
-  ADD KEY `Reference` (`reference`,`stockid`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `ShipLoc+StockID` (`shiploc`,`stockid`),
-  ADD KEY `RecLoc+StockID` (`recloc`,`stockid`),
-  ADD KEY `Pending+StockID` (`pendingqty`,`stockid`,`shiploc`) USING BTREE;
+  ADD KEY `idx_loctransfers_reference_stockid` (`reference`,`stockid`),
+  ADD KEY `idx_loctransfers_stockid` (`stockid`),
+  ADD KEY `idx_loctransfers_shiploc_stockid` (`shiploc`,`stockid`),
+  ADD KEY `idx_loctransfers_recloc_stockid` (`recloc`,`stockid`),
+  ADD KEY `idx_loctransfers_pending_stockid_shiploc` (`pendingqty`,`stockid`,`shiploc`),
+  ADD KEY `idx_loctransfers_recdate_reference` (`recdate`,`reference`),
+  ADD KEY `idx_loctransfers_shipdate_reference` (`shipdate`,`reference`);
 
 --
 -- Indexes for table `mailgroupdetails`
 --
 ALTER TABLE `mailgroupdetails`
-  ADD KEY `userid` (`userid`),
-  ADD KEY `groupname` (`groupname`);
+  ADD KEY `idx_mailgroupdetails_userid` (`userid`),
+  ADD KEY `idx_mailgroupdetails_groupname` (`groupname`);
 
 --
 -- Indexes for table `mailgroups`
 --
 ALTER TABLE `mailgroups`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `groupname` (`groupname`);
+  ADD UNIQUE KEY `uk_mailgroups_groupname` (`groupname`);
 
 --
 -- Indexes for table `manufacturers`
 --
 ALTER TABLE `manufacturers`
   ADD PRIMARY KEY (`manufacturers_id`),
-  ADD KEY `manufacturers_name` (`manufacturers_name`);
+  ADD KEY `idx_manufacturers_name` (`manufacturers_name`);
 
 --
 -- Indexes for table `menuitems`
@@ -4810,15 +4822,15 @@ ALTER TABLE `modules`
 --
 ALTER TABLE `mrpcalendar`
   ADD PRIMARY KEY (`calendardate`),
-  ADD KEY `daynumber` (`daynumber`);
+  ADD KEY `idx_mrpcalendar_daynumber` (`daynumber`);
 
 --
 -- Indexes for table `mrpdemands`
 --
 ALTER TABLE `mrpdemands`
   ADD PRIMARY KEY (`demandid`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `mrpdemands_ibfk_1` (`mrpdemandtype`);
+  ADD KEY `idx_mrpdemands_stockid` (`stockid`),
+  ADD KEY `idx_mrpdemands_mrpdemandtype` (`mrpdemandtype`);
 
 --
 -- Indexes for table `mrpdemandtypes`
@@ -4836,39 +4848,39 @@ ALTER TABLE `mrpplannedorders`
 -- Indexes for table `mrprequirements`
 --
 ALTER TABLE `mrprequirements`
-  ADD KEY `part` (`part`);
+  ADD KEY `idx_mrprequirements_part` (`part`);
 
 --
 -- Indexes for table `mrpsupplies`
 --
 ALTER TABLE `mrpsupplies`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `part` (`part`);
+  ADD KEY `idx_mrpsupplies_part` (`part`);
 
 --
 -- Indexes for table `offers`
 --
 ALTER TABLE `offers`
   ADD PRIMARY KEY (`offerid`),
-  ADD KEY `offers_ibfk_1` (`supplierid`),
-  ADD KEY `offers_ibfk_2` (`stockid`);
+  ADD KEY `idx_offers_supplierid` (`supplierid`),
+  ADD KEY `idx_offers_stockid` (`stockid`);
 
 --
 -- Indexes for table `orderdeliverydifferenceslog`
 --
 ALTER TABLE `orderdeliverydifferenceslog`
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `DebtorNo` (`debtorno`,`branch`),
-  ADD KEY `Can_or_BO` (`can_or_bo`),
-  ADD KEY `OrderNo` (`orderno`);
+  ADD KEY `idx_orderdeliverydifferenceslog_stockid` (`stockid`),
+  ADD KEY `idx_orderdeliverydifferenceslog_debtorno_branch` (`debtorno`,`branch`),
+  ADD KEY `idx_orderdeliverydifferenceslog_can_or_bo` (`can_or_bo`),
+  ADD KEY `idx_orderdeliverydifferenceslog_orderno` (`orderno`);
 
 --
 -- Indexes for table `packagingused`
 --
 ALTER TABLE `packagingused`
-  ADD UNIQUE KEY `Order+Location+Stockid` (`orderno`,`fromlocation`,`stockid`),
-  ADD KEY `StockID+Date` (`stockid`,`date`),
-  ADD KEY `Location+StockId+Date` (`fromlocation`,`stockid`,`date`);
+  ADD UNIQUE KEY `uk_packagingused_order_location_stockid` (`orderno`,`fromlocation`,`stockid`),
+  ADD KEY `idx_packagingused_stockid_date` (`stockid`,`date`),
+  ADD KEY `idx_packagingused_location_stockid_date` (`fromlocation`,`stockid`,`date`);
 
 --
 -- Indexes for table `paymentmethods`
@@ -4881,16 +4893,16 @@ ALTER TABLE `paymentmethods`
 --
 ALTER TABLE `paymentterms`
   ADD PRIMARY KEY (`termsindicator`),
-  ADD KEY `DaysBeforeDue` (`daysbeforedue`),
-  ADD KEY `DayInFollowingMonth` (`dayinfollowingmonth`);
+  ADD KEY `idx_paymentterms_daysbeforedue` (`daysbeforedue`),
+  ADD KEY `idx_paymentterms_dayinfollowingmonth` (`dayinfollowingmonth`);
 
 --
 -- Indexes for table `pcashdetails`
 --
 ALTER TABLE `pcashdetails`
   ADD PRIMARY KEY (`counterindex`),
-  ADD UNIQUE KEY `tabcodedate` (`tabcode`,`date`,`codeexpense`,`counterindex`),
-  ADD UNIQUE KEY `codeexpensedate` (`codeexpense`,`date`,`tabcode`,`counterindex`);
+  ADD UNIQUE KEY `uk_pcashdetails_tabcode_date_expense_counter` (`tabcode`,`date`,`codeexpense`,`counterindex`),
+  ADD UNIQUE KEY `uk_pcashdetails_expense_date_tabcode_counter` (`codeexpense`,`date`,`tabcode`,`counterindex`);
 
 --
 -- Indexes for table `pcashdetailtaxes`
@@ -4903,39 +4915,39 @@ ALTER TABLE `pcashdetailtaxes`
 --
 ALTER TABLE `pcexpenses`
   ADD PRIMARY KEY (`codeexpense`),
-  ADD KEY `pcexpenses_ibfk_1` (`glaccount`);
+  ADD KEY `idx_pcexpenses_glaccount` (`glaccount`);
 
 --
 -- Indexes for table `pcreceipts`
 --
 ALTER TABLE `pcreceipts`
   ADD PRIMARY KEY (`counterindex`),
-  ADD KEY `pcreceipts_ibfk_1` (`pccashdetail`);
+  ADD KEY `idx_pcreceipts_pccashdetail` (`pccashdetail`);
 
 --
 -- Indexes for table `pcsalaries`
 --
 ALTER TABLE `pcsalaries`
-  ADD UNIQUE KEY `salaries` (`salariescompany`,`salariespaymentmethod`,`salariesexpense`);
+  ADD UNIQUE KEY `uk_pcsalaries_company_payment_expense` (`salariescompany`,`salariespaymentmethod`,`salariesexpense`);
 
 --
 -- Indexes for table `pctabexpenses`
 --
 ALTER TABLE `pctabexpenses`
-  ADD KEY `pctabexpenses_ibfk_1` (`typetabcode`),
-  ADD KEY `pctabexpenses_ibfk_2` (`codeexpense`);
+  ADD KEY `idx_pctabexpenses_typetabcode` (`typetabcode`),
+  ADD KEY `idx_pctabexpenses_codeexpense` (`codeexpense`);
 
 --
 -- Indexes for table `pctabs`
 --
 ALTER TABLE `pctabs`
   ADD PRIMARY KEY (`tabcode`),
-  ADD KEY `pctabs_ibfk_1` (`usercode`),
-  ADD KEY `pctabs_ibfk_2` (`typetabcode`),
-  ADD KEY `pctabs_ibfk_3` (`currency`),
-  ADD KEY `pctabs_ibfk_4` (`authorizer`),
-  ADD KEY `pctabs_ibfk_5` (`glaccountassignment`),
-  ADD KEY `assigner` (`assigner`);
+  ADD KEY `idx_pctabs_usercode` (`usercode`),
+  ADD KEY `idx_pctabs_typetabcode` (`typetabcode`),
+  ADD KEY `idx_pctabs_currency` (`currency`),
+  ADD KEY `idx_pctabs_authorizer` (`authorizer`),
+  ADD KEY `idx_pctabs_glaccountassignment` (`glaccountassignment`),
+  ADD KEY `idx_pctabs_assigner` (`assigner`);
 
 --
 -- Indexes for table `pctags`
@@ -4954,7 +4966,7 @@ ALTER TABLE `pctypetabs`
 --
 ALTER TABLE `periods`
   ADD PRIMARY KEY (`periodno`),
-  ADD KEY `LastDate_in_Period` (`lastdate_in_period`);
+  ADD KEY `idx_periods_lastdate_in_period` (`lastdate_in_period`);
 
 --
 -- Indexes for table `pickinglistdetails`
@@ -4967,56 +4979,56 @@ ALTER TABLE `pickinglistdetails`
 --
 ALTER TABLE `pickinglists`
   ADD PRIMARY KEY (`pickinglistno`),
-  ADD KEY `pickinglists_ibfk_1` (`orderno`);
+  ADD KEY `idx_pickinglists_orderno` (`orderno`);
 
 --
 -- Indexes for table `pickreq`
 --
 ALTER TABLE `pickreq`
   ADD PRIMARY KEY (`prid`),
-  ADD KEY `orderno` (`orderno`),
-  ADD KEY `requestdate` (`requestdate`),
-  ADD KEY `shipdate` (`shipdate`),
-  ADD KEY `status` (`status`),
-  ADD KEY `closed` (`closed`),
-  ADD KEY `loccode` (`loccode`);
+  ADD KEY `idx_pickreq_orderno` (`orderno`),
+  ADD KEY `idx_pickreq_requestdate` (`requestdate`),
+  ADD KEY `idx_pickreq_shipdate` (`shipdate`),
+  ADD KEY `idx_pickreq_status` (`status`),
+  ADD KEY `idx_pickreq_closed` (`closed`),
+  ADD KEY `idx_pickreq_loccode` (`loccode`);
 
 --
 -- Indexes for table `pickreqdetails`
 --
 ALTER TABLE `pickreqdetails`
   ADD PRIMARY KEY (`detailno`),
-  ADD KEY `prid` (`prid`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_pickreqdetails_prid` (`prid`),
+  ADD KEY `idx_pickreqdetails_stockid` (`stockid`);
 
 --
 -- Indexes for table `pickserialdetails`
 --
 ALTER TABLE `pickserialdetails`
   ADD PRIMARY KEY (`serialmoveid`),
-  ADD KEY `detailno` (`detailno`),
-  ADD KEY `stockid` (`stockid`,`serialno`),
-  ADD KEY `serialno` (`serialno`);
+  ADD KEY `idx_pickserialdetails_detailno` (`detailno`),
+  ADD KEY `idx_pickserialdetails_stockid_serialno` (`stockid`,`serialno`),
+  ADD KEY `idx_pickserialdetails_serialno` (`serialno`);
 
 --
 -- Indexes for table `pricematrix`
 --
 ALTER TABLE `pricematrix`
   ADD PRIMARY KEY (`salestype`,`stockid`,`currabrev`,`quantitybreak`,`startdate`,`enddate`),
-  ADD KEY `SalesType` (`salestype`),
-  ADD KEY `currabrev` (`currabrev`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_pricematrix_salestype` (`salestype`),
+  ADD KEY `idx_pricematrix_currabrev` (`currabrev`),
+  ADD KEY `idx_pricematrix_stockid` (`stockid`);
 
 --
 -- Indexes for table `prices`
 --
 ALTER TABLE `prices`
   ADD PRIMARY KEY (`stockid`,`typeabbrev`,`currabrev`,`debtorno`,`branchcode`,`startdate`,`enddate`),
-  ADD KEY `CurrAbrev` (`currabrev`),
-  ADD KEY `DebtorNo` (`debtorno`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `TypeAbbrev` (`typeabbrev`),
-  ADD KEY `Idx_KLPrices01` (`stockid`,`typeabbrev`,`currabrev`,`startdate`,`enddate`);
+  ADD KEY `idx_prices_currabrev` (`currabrev`),
+  ADD KEY `idx_prices_debtorno` (`debtorno`),
+  ADD KEY `idx_prices_stockid` (`stockid`),
+  ADD KEY `idx_prices_typeabbrev` (`typeabbrev`),
+  ADD KEY `idx_prices_stockid_type_curr_dates` (`stockid`,`typeabbrev`,`currabrev`,`startdate`,`enddate`);
 
 --
 -- Indexes for table `prodspecs`
@@ -5030,9 +5042,9 @@ ALTER TABLE `prodspecs`
 --
 ALTER TABLE `purchdata`
   ADD PRIMARY KEY (`supplierno`,`stockid`,`effectivefrom`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `SupplierNo` (`supplierno`),
-  ADD KEY `Preferred` (`preferred`);
+  ADD KEY `idx_purchdata_stockid` (`stockid`),
+  ADD KEY `idx_purchdata_supplierno` (`supplierno`),
+  ADD KEY `idx_purchdata_preferred` (`preferred`);
 
 --
 -- Indexes for table `purchorderauth`
@@ -5045,14 +5057,15 @@ ALTER TABLE `purchorderauth`
 --
 ALTER TABLE `purchorderdetails`
   ADD PRIMARY KEY (`podetailitem`),
-  ADD KEY `DeliveryDate` (`deliverydate`),
-  ADD KEY `GLCode` (`glcode`),
-  ADD KEY `JobRef` (`jobref`),
-  ADD KEY `ShiptRef` (`shiptref`),
-  ADD KEY `Completed` (`completed`,`orderno`,`itemcode`),
-  ADD KEY `OrderNo` (`orderno`,`itemcode`),
-  ADD KEY `ItemCode` (`itemcode`,`orderno`),
-  ADD KEY `Completed2` (`completed`,`itemcode`,`orderno`);
+  ADD KEY `idx_purchorderdetails_deliverydate` (`deliverydate`),
+  ADD KEY `idx_purchorderdetails_glcode` (`glcode`),
+  ADD KEY `idx_purchorderdetails_jobref` (`jobref`),
+  ADD KEY `idx_purchorderdetails_shiptref` (`shiptref`),
+  ADD KEY `idx_purchorderdetails_completed_orderno_itemcode` (`completed`,`orderno`,`itemcode`),
+  ADD KEY `idx_purchorderdetails_orderno_itemcode` (`orderno`,`itemcode`),
+  ADD KEY `idx_purchorderdetails_itemcode_orderno` (`itemcode`,`orderno`),
+  ADD KEY `idx_purchorderdetails_completed_itemcode_orderno` (`completed`,`itemcode`,`orderno`),
+  ADD KEY `idx_purchorderdetails_orderno_completed_itemcode` (`orderno`,`completed`,`itemcode`);
 
 --
 -- Indexes for table `purchorders`
@@ -5063,10 +5076,12 @@ ALTER TABLE `purchorders`
   ADD UNIQUE KEY `paymentdate` (`paymentdate`,`orderno`),
   ADD UNIQUE KEY `shipmentdate` (`shipmentdate`,`orderno`),
   ADD UNIQUE KEY `arrivaldate` (`arrivaldate`,`orderno`),
-  ADD KEY `OrdDate` (`orddate`),
-  ADD KEY `SupplierNo` (`supplierno`),
-  ADD KEY `IntoStockLocation` (`intostocklocation`),
-  ADD KEY `AllowPrintPO` (`allowprint`);
+  ADD KEY `idx_orddate_status_klstatus` (`orddate`,`status`,`klstatus`),
+  ADD KEY `idx_purchorders_orddate` (`orddate`),
+  ADD KEY `idx_purchorders_supplierno` (`supplierno`),
+  ADD KEY `idx_purchorders_intostocklocation` (`intostocklocation`),
+  ADD KEY `idx_purchorders_allowprint` (`allowprint`),
+  ADD KEY `idx_purchorders_klstatus_dates` (`klstatus`,`orddate`,`deliverydate`,`paymentdate`,`shipmentdate`,`customsdate`,`arrivaldate`);
 
 --
 -- Indexes for table `qasamples`
@@ -5177,15 +5192,15 @@ ALTER TABLE `salariescalculated`
 --
 ALTER TABLE `salesanalysis`
   ADD PRIMARY KEY (`id`) USING BTREE,
-  ADD KEY `CustBranch` (`custbranch`),
-  ADD KEY `Cust` (`cust`),
-  ADD KEY `PeriodNo` (`periodno`),
-  ADD KEY `StkCategory` (`stkcategory`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `TypeAbbrev` (`typeabbrev`),
-  ADD KEY `Area` (`area`),
-  ADD KEY `BudgetOrActual` (`budgetoractual`),
-  ADD KEY `Salesperson` (`salesperson`);
+  ADD KEY `idx_salesanalysis_custbranch` (`custbranch`),
+  ADD KEY `idx_salesanalysis_cust` (`cust`),
+  ADD KEY `idx_salesanalysis_periodno` (`periodno`),
+  ADD KEY `idx_salesanalysis_stkcategory` (`stkcategory`),
+  ADD KEY `idx_salesanalysis_stockid` (`stockid`),
+  ADD KEY `idx_salesanalysis_typeabbrev` (`typeabbrev`),
+  ADD KEY `idx_salesanalysis_area` (`area`),
+  ADD KEY `idx_salesanalysis_budgetoractual` (`budgetoractual`),
+  ADD KEY `idx_salesanalysis_salesperson` (`salesperson`);
 
 --
 -- Indexes for table `salescat`
@@ -5243,44 +5258,56 @@ ALTER TABLE `salesglpostings`
 --
 ALTER TABLE `salesman`
   ADD PRIMARY KEY (`salesmancode`),
-  ADD UNIQUE KEY `Current+Code` (`current`,`salesmancode`);
+  ADD UNIQUE KEY `Current+Code` (`current`,`salesmancode`),
+  ADD KEY `idx_salesman_salesmancode_current` (`salesmancode`,`current`);
 
 --
 -- Indexes for table `salesorderdetails`
 --
 ALTER TABLE `salesorderdetails`
   ADD PRIMARY KEY (`orderlineno`,`orderno`) USING BTREE,
-  ADD UNIQUE KEY `OrderNo` (`orderno`,`orderlineno`) USING BTREE,
-  ADD KEY `Date+StkCode` (`actualdispatchdate`,`stkcode`),
-  ADD KEY `StkCode+Date` (`stkcode`,`actualdispatchdate`),
-  ADD KEY `Completed` (`completed`,`orderno`),
-  ADD KEY `Date+Order` (`actualdispatchdate`,`orderno`);
+  ADD UNIQUE KEY `uk_salesorderdetails_orderno_orderlineno` (`orderno`,`orderlineno`),
+  ADD KEY `idx_itemdue_stkcode` (`itemdue`,`stkcode`),
+  ADD KEY `idx_orderno_completed` (`orderno`,`completed`),
+  ADD KEY `idx_salesorderdetails_actualdispatchdate_stkcode` (`actualdispatchdate`,`stkcode`),
+  ADD KEY `idx_salesorderdetails_stkcode_actualdispatchdate` (`stkcode`,`actualdispatchdate`),
+  ADD KEY `idx_salesorderdetails_completed_orderno` (`completed`,`orderno`),
+  ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`),
+  ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
+  ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`),
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`);
 
 --
 -- Indexes for table `salesorders`
 --
 ALTER TABLE `salesorders`
   ADD PRIMARY KEY (`orderno`) USING BTREE,
-  ADD UNIQUE KEY `SalesPerson+Date+OrderNo` (`salesperson`,`orddate`,`orderno`),
-  ADD UNIQUE KEY `SalesPerson+OrderNo+Date` (`salesperson`,`orderno`,`orddate`),
-  ADD UNIQUE KEY `Date+DebtorNo+OrderNo` (`orddate`,`debtorno`,`orderno`),
-  ADD UNIQUE KEY `DateLocation,Orderno` (`orddate`,`fromstkloc`,`orderno`),
-  ADD UNIQUE KEY `DebtorNo+OrderNo` (`debtorno`,`orderno`) USING BTREE,
-  ADD UNIQUE KEY `OpenCartStatus` (`klocorderstatus`,`orderno`) USING BTREE,
-  ADD KEY `OrderType` (`ordertype`),
-  ADD KEY `BranchCode` (`branchcode`,`debtorno`),
-  ADD KEY `ShipVia` (`shipvia`),
-  ADD KEY `quotation` (`quotation`),
-  ADD KEY `DebtorNo+Date` (`debtorno`,`orddate`),
-  ADD KEY `LocationIndex` (`fromstkloc`,`orddate`,`salesperson`),
-  ADD KEY `OrderTime` (`debtorno`,`ordtime`,`orddate`);
+  ADD UNIQUE KEY `uk_salesorders_salesperson_orddate_orderno` (`salesperson`,`orddate`,`orderno`),
+  ADD UNIQUE KEY `uk_salesorders_salesperson_orderno_orddate` (`salesperson`,`orderno`,`orddate`),
+  ADD UNIQUE KEY `uk_salesorders_orddate_debtorno_orderno` (`orddate`,`debtorno`,`orderno`),
+  ADD UNIQUE KEY `uk_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`),
+  ADD UNIQUE KEY `uk_salesorders_debtorno_orderno` (`debtorno`,`orderno`),
+  ADD UNIQUE KEY `uk_salesorders_klocorderstatus_orderno` (`klocorderstatus`,`orderno`),
+  ADD KEY `idx_orddate_debtorno_salesperson` (`orddate`,`debtorno`,`salesperson`),
+  ADD KEY `idx_salesperson_orddate` (`salesperson`,`orddate`),
+  ADD KEY `idx_salesorders_ordertype` (`ordertype`),
+  ADD KEY `idx_salesorders_branchcode_debtorno` (`branchcode`,`debtorno`),
+  ADD KEY `idx_salesorders_shipvia` (`shipvia`),
+  ADD KEY `idx_salesorders_quotation` (`quotation`),
+  ADD KEY `idx_salesorders_debtorno_orddate` (`debtorno`,`orddate`),
+  ADD KEY `idx_salesorders_fromstkloc_orddate_salesperson` (`fromstkloc`,`orddate`,`salesperson`),
+  ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`),
+  ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
+  ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
+  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`);
 
 --
 -- Indexes for table `salestypes`
 --
 ALTER TABLE `salestypes`
   ADD PRIMARY KEY (`typeabbrev`),
-  ADD KEY `Sales_Type` (`sales_type`);
+  ADD KEY `idx_salestypes_sales_type` (`sales_type`);
 
 --
 -- Indexes for table `sampleresults`
@@ -5332,7 +5359,8 @@ ALTER TABLE `sellthroughsupport`
 -- Indexes for table `session_data`
 --
 ALTER TABLE `session_data`
-  ADD PRIMARY KEY (`userid`,`value`);
+  ADD PRIMARY KEY (`userid`,`value`),
+  ADD KEY `idx_session_data_userid_field` (`userid`,`field`);
 
 --
 -- Indexes for table `shipmentcharges`
@@ -5380,9 +5408,10 @@ ALTER TABLE `stockadjustments`
 --
 ALTER TABLE `stockcategory`
   ADD PRIMARY KEY (`categoryid`),
-  ADD KEY `CategoryDescription` (`categorydescription`),
-  ADD KEY `StockType` (`stocktype`,`categoryid`),
-  ADD KEY `PriorityTransfers` (`klprioritytransfers`);
+  ADD KEY `idx_stockcategory_categorydescription` (`categorydescription`),
+  ADD KEY `idx_stockcategory_stocktype_categoryid` (`stocktype`,`categoryid`),
+  ADD KEY `idx_stockcategory_klprioritytransfers` (`klprioritytransfers`),
+  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`);
 
 --
 -- Indexes for table `stockcatproperties`
@@ -5426,36 +5455,39 @@ ALTER TABLE `stockitemproperties`
 --
 ALTER TABLE `stockmaster`
   ADD PRIMARY KEY (`stockid`),
-  ADD UNIQUE KEY `Discontinued+StockID` (`discontinued`,`stockid`),
-  ADD UNIQUE KEY `Discounted+CategoryID+StockID` (`discontinued`,`categoryid`,`stockid`),
-  ADD UNIQUE KEY `SyncToOpenCart` (`klsynctoopencart`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `CategoryID` (`categoryid`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `LastCurCostDate+StockID` (`lastcostupdate`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `Description+StockID` (`description`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `MBflag+StockID` (`mbflag`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `Controlled+StockID` (`controlled`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `DiscountCategory+StockID` (`discountcategory`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `taxcatid+StockID` (`taxcatid`,`stockid`) USING BTREE,
   ADD UNIQUE KEY `KLMovingDiscount50+StockID` (`klmovingdiscount50`,`stockid`) USING BTREE,
   ADD UNIQUE KEY `KLMovingDiscount20+StockID` (`klmovingdiscount20`,`stockid`) USING BTREE,
   ADD UNIQUE KEY `KLMovingDiscount80+StockID` (`klmovingdiscount80`,`stockid`) USING BTREE,
   ADD UNIQUE KEY `KLChangingPrice+StockID` (`klchangingprice`,`discontinued`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `UsableStockIDs` (`discontinued`,`klchangingprice`,`klmovingdiscount20`,`klmovingdiscount50`,`klmovingdiscount80`,`stockid`);
+  ADD UNIQUE KEY `UsableStockIDs` (`discontinued`,`klchangingprice`,`klmovingdiscount20`,`klmovingdiscount50`,`klmovingdiscount80`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_discontinued_stockid` (`discontinued`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_discontinued_categoryid_stockid` (`discontinued`,`categoryid`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_klsynctoopencart_stockid` (`klsynctoopencart`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_categoryid_stockid` (`categoryid`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_lastcostupdate_stockid` (`lastcostupdate`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_description_stockid` (`description`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_mbflag_stockid` (`mbflag`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_controlled_stockid` (`controlled`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_discountcategory_stockid` (`discountcategory`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`),
+  ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`),
+  ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`),
+  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`);
 
 --
 -- Indexes for table `stockmoves`
 --
 ALTER TABLE `stockmoves`
   ADD PRIMARY KEY (`stkmoveno`) USING BTREE,
-  ADD KEY `DebtorNo` (`debtorno`),
-  ADD KEY `Prd` (`prd`),
-  ADD KEY `StockID_2` (`stockid`),
-  ADD KEY `TranDate` (`trandate`),
-  ADD KEY `TransNo` (`transno`),
-  ADD KEY `Type` (`type`),
-  ADD KEY `reference` (`reference`),
-  ADD KEY `Show_On_Inv_Crds` (`show_on_inv_crds`,`type`,`transno`) USING BTREE,
-  ADD KEY `LocCode` (`loccode`,`trandate`,`stockid`) USING BTREE;
+  ADD KEY `idx_stockmoves_debtorno` (`debtorno`),
+  ADD KEY `idx_stockmoves_prd` (`prd`),
+  ADD KEY `idx_stockmoves_stockid` (`stockid`),
+  ADD KEY `idx_stockmoves_trandate` (`trandate`),
+  ADD KEY `idx_stockmoves_transno` (`transno`),
+  ADD KEY `idx_stockmoves_type` (`type`),
+  ADD KEY `idx_stockmoves_reference` (`reference`),
+  ADD KEY `idx_stockmoves_show_on_inv_crds_type_transno` (`show_on_inv_crds`,`type`,`transno`),
+  ADD KEY `idx_stockmoves_loccode_trandate_stockid` (`loccode`,`trandate`,`stockid`);
 
 --
 -- Indexes for table `stockmovestaxes`
@@ -5486,19 +5518,19 @@ ALTER TABLE `stockrequestitems`
 --
 ALTER TABLE `stockserialitems`
   ADD PRIMARY KEY (`stockid`,`serialno`,`loccode`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `LocCode` (`loccode`),
-  ADD KEY `serialno` (`serialno`),
-  ADD KEY `createdate` (`createdate`);
+  ADD KEY `idx_stockserialitems_stockid` (`stockid`),
+  ADD KEY `idx_stockserialitems_loccode` (`loccode`),
+  ADD KEY `idx_stockserialitems_serialno` (`serialno`),
+  ADD KEY `idx_stockserialitems_createdate` (`createdate`);
 
 --
 -- Indexes for table `stockserialmoves`
 --
 ALTER TABLE `stockserialmoves`
   ADD PRIMARY KEY (`stkitmmoveno`),
-  ADD KEY `StockMoveNo` (`stockmoveno`),
-  ADD KEY `StockID_SN` (`stockid`,`serialno`),
-  ADD KEY `serialno` (`serialno`);
+  ADD KEY `idx_stockserialmoves_stockmoveno` (`stockmoveno`),
+  ADD KEY `idx_stockserialmoves_stockid_serialno` (`stockid`,`serialno`),
+  ADD KEY `idx_stockserialmoves_serialno` (`serialno`);
 
 --
 -- Indexes for table `stocktags`
@@ -5513,9 +5545,9 @@ ALTER TABLE `stocktags`
 --
 ALTER TABLE `suppallocs`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `TransID_AllocFrom` (`transid_allocfrom`),
-  ADD KEY `TransID_AllocTo` (`transid_allocto`),
-  ADD KEY `DateAlloc` (`datealloc`);
+  ADD KEY `idx_suppallocs_transid_allocfrom` (`transid_allocfrom`),
+  ADD KEY `idx_suppallocs_transid_allocto` (`transid_allocto`),
+  ADD KEY `idx_suppallocs_datealloc` (`datealloc`);
 
 --
 -- Indexes for table `suppinvstogrn`
@@ -5547,10 +5579,10 @@ ALTER TABLE `supplierdiscounts`
 --
 ALTER TABLE `suppliers`
   ADD PRIMARY KEY (`supplierid`),
-  ADD UNIQUE KEY `PaymentTerms` (`paymentterms`,`supplierid`),
-  ADD UNIQUE KEY `taxgroupid` (`taxgroupid`,`supplierid`),
-  ADD UNIQUE KEY `CurrCode` (`currcode`,`supplierid`),
-  ADD KEY `SuppName` (`suppname`);
+  ADD UNIQUE KEY `uk_suppliers_paymentterms_supplierid` (`paymentterms`,`supplierid`),
+  ADD UNIQUE KEY `uk_suppliers_taxgroupid_supplierid` (`taxgroupid`,`supplierid`),
+  ADD UNIQUE KEY `uk_suppliers_currcode_supplierid` (`currcode`,`supplierid`),
+  ADD KEY `idx_suppliers_suppname` (`suppname`);
 
 --
 -- Indexes for table `suppliertype`
@@ -5563,30 +5595,30 @@ ALTER TABLE `suppliertype`
 --
 ALTER TABLE `supptrans`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `DueDate` (`duedate`),
-  ADD KEY `Hold` (`hold`),
-  ADD KEY `SupplierNo` (`supplierno`),
-  ADD KEY `Settled` (`settled`),
-  ADD KEY `SupplierNo_2` (`supplierno`,`suppreference`),
-  ADD KEY `SuppReference` (`suppreference`),
-  ADD KEY `TranDate` (`trandate`),
-  ADD KEY `TransNo` (`transno`),
-  ADD KEY `Type` (`type`),
-  ADD KEY `TypeTransNo` (`transno`,`type`);
+  ADD KEY `idx_supptrans_duedate` (`duedate`),
+  ADD KEY `idx_supptrans_hold` (`hold`),
+  ADD KEY `idx_supptrans_supplierno` (`supplierno`),
+  ADD KEY `idx_supptrans_settled` (`settled`),
+  ADD KEY `idx_supptrans_supplierno_suppreference` (`supplierno`,`suppreference`),
+  ADD KEY `idx_supptrans_suppreference` (`suppreference`),
+  ADD KEY `idx_supptrans_trandate` (`trandate`),
+  ADD KEY `idx_supptrans_transno` (`transno`),
+  ADD KEY `idx_supptrans_type` (`type`),
+  ADD KEY `idx_supptrans_transno_type` (`transno`,`type`);
 
 --
 -- Indexes for table `supptranstaxes`
 --
 ALTER TABLE `supptranstaxes`
   ADD PRIMARY KEY (`supptransid`,`taxauthid`),
-  ADD KEY `taxauthid` (`taxauthid`);
+  ADD KEY `idx_supptranstaxes_taxauthid` (`taxauthid`);
 
 --
 -- Indexes for table `systypes`
 --
 ALTER TABLE `systypes`
   ADD PRIMARY KEY (`typeid`),
-  ADD KEY `TypeNo` (`typeno`);
+  ADD KEY `idx_systypes_typeno` (`typeno`);
 
 --
 -- Indexes for table `tags`
@@ -5599,17 +5631,17 @@ ALTER TABLE `tags`
 --
 ALTER TABLE `taxauthorities`
   ADD PRIMARY KEY (`taxid`),
-  ADD KEY `TaxGLCode` (`taxglcode`),
-  ADD KEY `PurchTaxGLAccount` (`purchtaxglaccount`);
+  ADD KEY `idx_taxauthorities_taxglcode` (`taxglcode`),
+  ADD KEY `idx_taxauthorities_purchtaxglaccount` (`purchtaxglaccount`);
 
 --
 -- Indexes for table `taxauthrates`
 --
 ALTER TABLE `taxauthrates`
   ADD PRIMARY KEY (`taxauthority`,`dispatchtaxprovince`,`taxcatid`),
-  ADD KEY `TaxAuthority` (`taxauthority`),
-  ADD KEY `dispatchtaxprovince` (`dispatchtaxprovince`),
-  ADD KEY `taxcatid` (`taxcatid`);
+  ADD KEY `idx_taxauthrates_taxauthority` (`taxauthority`),
+  ADD KEY `idx_taxauthrates_dispatchtaxprovince` (`dispatchtaxprovince`),
+  ADD KEY `idx_taxauthrates_taxcatid` (`taxcatid`);
 
 --
 -- Indexes for table `taxcategories`
@@ -5628,8 +5660,8 @@ ALTER TABLE `taxgroups`
 --
 ALTER TABLE `taxgrouptaxes`
   ADD PRIMARY KEY (`taxgroupid`,`taxauthid`),
-  ADD KEY `taxgroupid` (`taxgroupid`),
-  ADD KEY `taxauthid` (`taxauthid`);
+  ADD KEY `idx_taxgrouptaxes_taxgroupid` (`taxgroupid`),
+  ADD KEY `idx_taxgrouptaxes_taxauthid` (`taxauthid`);
 
 --
 -- Indexes for table `taxprovinces`
@@ -5660,10 +5692,10 @@ ALTER TABLE `tendersuppliers`
 --
 ALTER TABLE `timesheets`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `workcentre` (`workcentre`),
-  ADD KEY `employees` (`employeeid`),
-  ADD KEY `wo` (`wo`),
-  ADD KEY `weekending` (`weekending`);
+  ADD KEY `idx_timesheets_workcentre` (`workcentre`),
+  ADD KEY `idx_timesheets_employeeid` (`employeeid`),
+  ADD KEY `idx_timesheets_wo` (`wo`),
+  ADD KEY `idx_timesheets_weekending` (`weekending`);
 
 --
 -- Indexes for table `unitsofdimension`
@@ -5682,32 +5714,32 @@ ALTER TABLE `unitsofmeasure`
 --
 ALTER TABLE `woitems`
   ADD PRIMARY KEY (`wo`,`stockid`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_woitems_stockid` (`stockid`);
 
 --
 -- Indexes for table `worequirements`
 --
 ALTER TABLE `worequirements`
   ADD PRIMARY KEY (`wo`,`parentstockid`,`stockid`),
-  ADD KEY `stockid` (`stockid`),
-  ADD KEY `worequirements_ibfk_3` (`parentstockid`);
+  ADD KEY `idx_worequirements_stockid` (`stockid`),
+  ADD KEY `idx_worequirements_parentstockid` (`parentstockid`);
 
 --
 -- Indexes for table `workcentres`
 --
 ALTER TABLE `workcentres`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `Description` (`description`),
-  ADD KEY `Location` (`location`);
+  ADD KEY `idx_workcentres_description` (`description`),
+  ADD KEY `idx_workcentres_location` (`location`);
 
 --
 -- Indexes for table `workorders`
 --
 ALTER TABLE `workorders`
   ADD PRIMARY KEY (`wo`),
-  ADD KEY `LocCode` (`loccode`),
-  ADD KEY `StartDate` (`startdate`),
-  ADD KEY `RequiredBy` (`requiredby`);
+  ADD KEY `idx_workorders_loccode` (`loccode`),
+  ADD KEY `idx_workorders_startdate` (`startdate`),
+  ADD KEY `idx_workorders_requiredby` (`requiredby`);
 
 --
 -- Indexes for table `woserialnos`
@@ -5720,8 +5752,8 @@ ALTER TABLE `woserialnos`
 --
 ALTER TABLE `www_users`
   ADD PRIMARY KEY (`userid`),
-  ADD KEY `CustomerID` (`customerid`),
-  ADD KEY `DefaultLocation` (`defaultlocation`);
+  ADD KEY `idx_www_users_customerid` (`customerid`),
+  ADD KEY `idx_www_users_defaultlocation` (`defaultlocation`);
 
 --
 -- AUTO_INCREMENT for dumped tables

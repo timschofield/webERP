@@ -3,6 +3,7 @@
 $ForceConfigReload = true;
 
 include('includes/KLSessionCronJob.php');
+
 include('includes/KLCronJobFunctions.php');
 
 /* Getting time now to calculate starting time */

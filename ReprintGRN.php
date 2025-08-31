@@ -1,6 +1,7 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title=__('Reprint a GRN');
 $ViewTopic = 'Inventory';
 $BookMark = '';
@@ -99,8 +100,8 @@ if (isset($_POST['Show'])) {
 			<td>' . $MyRow['deliverydate'] . '</td>
 			<td class="number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
 			<td>' . $MyRow['suppinv'] . '</td>
-			<td><a href="PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint GRN ') . '</a>
-			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint Labels') . '</a></td>
+			<td><a href="' . $RootPath . '/PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint GRN ') . '</a>
+			&nbsp;<a href="' . $RootPath . '/PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . __('Reprint Labels') . '</a></td>
 		</tr>';
 	}
 	echo '</table>';

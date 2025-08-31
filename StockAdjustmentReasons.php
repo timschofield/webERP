@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 include('includes/UIGeneralFunctions.php');
 $Title = __('Reasons for Stock Adjustment Maintenance');
 include('includes/header.php');
@@ -9,10 +9,6 @@ if (isset($_POST['SelectedType'])){
 	$SelectedType = mb_strtoupper($_POST['SelectedType']);
 } elseif (isset($_GET['SelectedType'])){
 	$SelectedType = mb_strtoupper($_GET['SelectedType']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

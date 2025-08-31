@@ -1,14 +1,16 @@
 <?php
-include('includes/session.php');
-if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
-if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Setup regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
+
+if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);}
+if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);}
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '

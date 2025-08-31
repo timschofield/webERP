@@ -5,9 +5,9 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '41a4fa201cd8f3c89b8f29c9ccec2592d877b1f5',
+        'reference' => 'cecf5fea173e2dc27e6007e481cf0dce537a08bc',
         'name' => 'timschofield/weberp',
-        'dev' => true,
+        'dev' => false,
     ),
     'versions' => array(
         'composer/pcre' => array(
@@ -64,7 +64,7 @@
                 0 => '9999999-dev',
                 1 => '1.99.99',
             ),
-            'reference' => '8ee19ba965aafa929fdaf9c80f1d74c685e0efd0',
+            'reference' => 'b4150ffea9f9a1122daf1d0301cd734a42af7173',
             'dev_requirement' => false,
         ),
         'maennchen/zipstream-php' => array(
@@ -201,7 +201,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '41a4fa201cd8f3c89b8f29c9ccec2592d877b1f5',
+            'reference' => 'cecf5fea173e2dc27e6007e481cf0dce537a08bc',
             'dev_requirement' => false,
         ),
     ),

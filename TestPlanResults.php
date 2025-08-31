@@ -1,14 +1,16 @@
 <?php
-// TestPlanResults.php
+
 // Test Plan Results Entry.
 
-include('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
-$ViewTopic = 'QualityAssurance';/* ?????????? */
+require(__DIR__ . '/includes/session.php');
+
+$ViewTopic = 'QualityAssurance'; /* ?????????? */
 $BookMark = 'TestPlanResults';
 $Title = __('Test Plan Results');
 include('includes/header.php');
+
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);}
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);}
 
 if (isset($_GET['SelectedSampleID'])){
 	$SelectedSampleID =mb_strtoupper($_GET['SelectedSampleID']);
@@ -23,13 +25,10 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+
 if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 	if (!isset($_POST['CopyToSampleID']) OR $_POST['CopyToSampleID']=='' OR !isset($_POST['Copy'])) {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">

@@ -135,12 +135,6 @@ function ContainsIllegalCharacters($CheckVariable) {
 	}
 }
 
-function pre_var_dump(&$var) {
-	echo '<div align=left><pre>';
-	var_dump($var);
-	echo '</pre></div>';
-}
-
 class XmlElement {
 	var $name;
 	var $attributes;
@@ -151,6 +145,7 @@ class XmlElement {
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
+	/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
 	if (http_file_exists('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
 		$xml = file_get_contents('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
@@ -212,6 +207,7 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 
 function quote_oanda_currency($CurrCode) {
 	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		/// @todo file_get_contents and co. might be disabled for remote files. Use a better api: curl or sockets
 		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
@@ -257,7 +253,6 @@ function Convert_CRLF($string, $Line_break=PHP_EOL)
     $string = preg_replace($patterns, $Replacements, $string);
     return $string;
 }
-
 
 //NPFunc - New Page Function, can be a direct function call or an anonymous function for more complex behavior
 //         Null if not used
@@ -440,6 +435,7 @@ function LogBackTrace($dest = 0) {
 }
 
 function http_file_exists($url) {
+	/// @todo send a proper HEAD request
 	$f = @fopen($url, 'r');
 	if ($f) {
 		fclose($f);
@@ -727,7 +723,6 @@ function fShowFieldHelp($HelpText) {
 	if ($_SESSION['ShowFieldHelp'] || !isset($_SESSION['ShowFieldHelp'])) {
 		echo '<span class="field_help_text">', $HelpText, '</span>';
 	}
-	return;
 }
 
 function fShowPageHelp($HelpText) {
@@ -735,7 +730,6 @@ function fShowPageHelp($HelpText) {
 	if ($_SESSION['ShowPageHelp'] || !isset($_SESSION['ShowPageHelp'])) {
 		echo '<div class="page_help_text">', $HelpText, '</div><br />';
 	}
-	return;
 }
 
 /*
@@ -748,23 +742,23 @@ function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
 
+/**
+ * Main email sending function for WebERP
+ *
+ * This function serves as the primary interface for sending emails from WebERP.
+ * It determines whether to use standard PHP mail() function or SMTP based on system configuration
+ * and handles different input formats for recipients and attachments.
+ *
+ * @param string $From        Email address of the sender
+ * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
+ * @param string $Subject     Subject of the email
+ * @param string $Body        Body content of the email
+ * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
+ * @param bool   $Silent      If true, suppresses success/error messages (default: false)
+ *
+ * @return mixed Returns true if email was sent successfully, or error message if failed
+ */
 function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
-	/**
-	 * Main email sending function for WebERP
-	 *
-	 * This function serves as the primary interface for sending emails from WebERP.
-	 * It determines whether to use standard PHP mail() function or SMTP based on system configuration
-	 * and handles different input formats for recipients and attachments.
-	 *
-	 * @param string $From        Email address of the sender
-	 * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
-	 * @param string $Subject     Subject of the email
-	 * @param string $Body        Body content of the email
-	 * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
-	 * @param bool   $Silent      If true, suppresses success/error messages (default: false)
-	 *
-	 * @return mixed Returns true if email was sent successfully, or error message if failed
-	 */
 
 	// KL RICARD Send to a dummy address depending on the webERP code version
 	if (KLwebERPScriptCalledFromTEST()){
@@ -779,8 +773,7 @@ function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), 
 		$Attachments = array($Attachments);
 	}
 
-	$EmailSent = false;
-	if($_SESSION['SmtpSetting'] == 0){
+	if ($_SESSION['SmtpSetting'] == 0) {
 		// Handle both string and array formats for $To
 		if (is_array($To)) {
 			$EmailSent = true; // Start with true, will be set to false if any email fails
@@ -855,8 +848,8 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	$MailObj->Password = $MyEmailRow['password'];
 	$MailObj->Port = $MyEmailRow['port'];
 	$MailObj->setFrom($From, '');
-	$Recipients = '';
-	$RecipientNames = '';
+	//$Recipients = '';
+	//$RecipientNames = '';
 	foreach ($To as $ToAddress => $ToName) {
 		$MailObj->addAddress($ToAddress, $ToName);
 	}

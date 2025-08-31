@@ -6,7 +6,8 @@
  * 
  ****************************************************************************************/
 
-/* AnalysisHorizontalPosition.php
+
+/*
 Shows the horizontal analysis of the statement of financial position.
 
 Parameters:
@@ -24,13 +25,13 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Procedure division ===================================================
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Horizontal Analysis of Statement of Financial Position');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'AnalysisHorizontalPosition';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 // KL RICARD: prepare the data for each company

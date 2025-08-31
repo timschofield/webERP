@@ -57,7 +57,7 @@ CREATE TABLE `reports` (
   `table5` VARCHAR(25) ,
   `table5criteria` VARCHAR(75) ,
   `table6` VARCHAR(25),
-  `table6criteria` VARCHAR(75), 
+  `table6criteria` VARCHAR(75),
   PRIMARY KEY  (`id`),
   KEY `name` (`reportname`,`groupname`)
 ) ENGINE=InnoDB ;
@@ -84,9 +84,9 @@ CREATE TABLE IF NOT EXISTS `reportlinks` (
   `equation` varchar(75) NOT NULL default ''
 ) ENGINE=InnoDB;
 
--- 
+--
 -- Dumping data for table `reportlinks`
--- 
+--
 
 INSERT INTO `reportlinks` VALUES ('accountgroups', 'accountsection', 'accountgroups.sectioninaccounts=accountsection.sectionid');
 INSERT INTO `reportlinks` VALUES ('accountsection', 'accountgroups', 'accountsection.sectionid=accountgroups.sectioninaccounts');

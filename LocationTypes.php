@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('Location Types Maintenance');
 include('includes/header.php');
 
@@ -8,10 +8,6 @@ if (isset($_POST['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_POST['SelectedCode']);
 } elseif (isset($_GET['SelectedCode'])){
 	$SelectedCode = mb_strtoupper($_GET['SelectedCode']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

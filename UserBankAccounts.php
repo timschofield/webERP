@@ -6,14 +6,15 @@
 *
 **************************************************************************************/
 
-// UserBankAccounts.php
 // Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include('includes/header.php');
+
 // KL RICARD
 include('includes/KLEmails.php');
 

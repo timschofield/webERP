@@ -1,10 +1,17 @@
 <?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 echo '<h1>', __('Welcome to the webERP installer'), '</h1>';
 
 echo '<section class="installer_about">';
+
 /* Get the php-gettext function.
  * When users have not select the language, we guess user's language via
- * the http header information. once the user has select their lanugage,
+ * the http header information. Once the user has selected their language,
  * use the language user selected
 */
 
@@ -101,7 +108,6 @@ if (!isset($_POST['Language']) and !isset($_SESSION['Installer']['Language'])) {
 		if (isset($_SESSION['Language'])) {
 			unset($_SESSION['Language']);
 		}
-
 	}
 } elseif (isset($_POST['Language'])) {
 	$_SESSION['Installer']['Language'] = $_POST['Language'];
@@ -111,7 +117,6 @@ echo '<form id="installation" action="' . htmlspecialchars($_SERVER['PHP_SELF'],
 		<label for="Language">' . __('Language:') . '&#160;</label>
 		<select id="Language" name="Language" onchange="document.getElementById(\'installation\').submit()">';
 foreach ($LanguagesArray as $Key => $Language1) {
-echo $Key .'xxx'. $_SESSION['Installer']['Language'];
 	if (isset($_SESSION['Installer']['Language']) and $Key == $_SESSION['Installer']['Language']) {
 		echo '<option value="' . $Key . '" selected="selected">' . $Language1['LanguageName'] . '</option>';
 	} else {

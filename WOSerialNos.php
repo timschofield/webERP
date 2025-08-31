@@ -1,6 +1,6 @@
 <?php
 
-/*This page shows the serial numbers created for a works order
+/* This page shows the serial numbers created for a works order
  * - creating automatically from the last serial number counter in the stockmaster or by manual entry
  * - If the item is lot controlled then the lot reference and the quantity in the lot can be entered
  * - this updates the quantity on the work order.
@@ -9,8 +9,7 @@
  * Need to allow adding serial numbers/batches and deleting batches/serial numbers
  */
 
-include('includes/session.php');
-
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['StockID'])){ //the page was called for the first time - get variables into $_POST array
 	$StockID = $_GET['StockID'];

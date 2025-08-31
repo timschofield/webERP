@@ -1,6 +1,11 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Item Prices');
+$ViewTopic = 'Prices';
+//$BookMark = '';
+include('includes/header.php');
 
 if (isset($_POST['StartDate'])) {
 	$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);
@@ -8,11 +13,6 @@ if (isset($_POST['StartDate'])) {
 if (isset($_POST['EndDate'])) {
 	$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);
 }
-
-$Title = __('Item Prices');
-$ViewTopic = 'Prices';
-/*$BookMark = '';// Anchor's id in the manual's html document.*/
-include('includes/header.php');
 
 /* Check at least one sales type exists */
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";

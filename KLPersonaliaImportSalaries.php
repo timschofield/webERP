@@ -1,6 +1,5 @@
 <?php
-include('includes/session.php');
-
+require(__DIR__ . '/includes/session.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -9,14 +8,14 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
+$Title = __('Import Excel with Monthly Salary Information');
+include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-
-$Title = __('Import Excel with Monthly Salary Information');
-include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>

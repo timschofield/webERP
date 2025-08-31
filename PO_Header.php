@@ -7,34 +7,37 @@
  * 
  *************************************************************************************************************/
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
-include('includes/session.php');
 
-if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
-if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);}
-if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);}
-if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);}
-if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);}
-if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);}
+require(__DIR__ . '/includes/session.php');
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = __('Modify Purchase Order');
 } else {
 	$Title = __('Purchase Order Entry');
 }
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = 'PurchaseOrdering';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);}
 
 if (isset($_GET['SupplierID'])) {
 	$_POST['Select'] = $_GET['SupplierID'];
 }
 
-/* webERP manual links before header.php */
-$ViewTopic = 'PurchaseOrdering';
-$BookMark = 'PurchaseOrdering';
+if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);}
+if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);}
+if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);}
+if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);}
+if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);}
 
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
-/*If the page is called is called without an identifier being set then
+
+/*If the page is called without an identifier being set then
  * it must be either a new order, or the start of a modification of an
  * order, and so we must create a new identifier.
  *
@@ -540,7 +543,7 @@ if (isset($_POST['Select'])) {
 
 	} else {
 
-		prnMsg(__('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . __('Please Consult your system administrator for more information.') . '<br />' . __('You can setup authorisations') . ' ' . '<a href="PO_AuthorisationLevels.php">' . __('here') . '</a>', 'warn');
+		prnMsg(__('You do not have the authority to raise Purchase Orders for') . ' ' . $MyRow['suppname'] . '. ' . __('Please Consult your system administrator for more information.') . '<br />' . __('You can setup authorisations') . ' ' . '<a href="' . $RootPath . '/PO_AuthorisationLevels.php">' . __('here') . '</a>', 'warn');
 		include('includes/footer.php');
 		exit();
 	}
@@ -904,9 +907,9 @@ KL RICARD COMMENTED OUT END */
 
 	if (isset($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) and mb_strlen($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted) > 6) {
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->DatePurchaseOrderPrinted);
-		$Printed = True;
+		$Printed = true;
 	} else {
-		$Printed = False;
+		$Printed = false;
 		echo '<fieldtext>', __('Not yet printed') . '</fieldtext>
 			</field>';
 	}

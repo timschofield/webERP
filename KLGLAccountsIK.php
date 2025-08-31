@@ -1,12 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Chart of Accounts Maintenance for POIK');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Chart of Accounts Maintenance for POIK');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
-
 include('includes/header.php');
+
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 

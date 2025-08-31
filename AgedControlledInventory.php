@@ -1,13 +1,13 @@
 <?php
 
-include('includes/session.php');
-$PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
+require(__DIR__ . '/includes/session.php');
+
+$PricesSecurity = 12; // don't show pricing info unless security token 12 available to user
 
 $Today =  time();
 $Title = __('Aged Controlled Inventory') . ' ' . __('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
 $ViewTopic = 'Inventory';
 $BookMark = 'AgedControlled';
-
 include('includes/header.php');
 
 echo '<p class="page_title_text">

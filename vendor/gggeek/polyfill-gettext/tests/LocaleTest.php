@@ -14,13 +14,17 @@ class LocaleTest extends PGettext_PolyfillTestCase
    */
   protected function list_system_locales()
   {
-    // for unix-like systems, get the list of available locales using `locale -a`
-    exec('which locale', $output, $retcode);
-    if ($retcode == 0) {
-      $output = array();
-      exec('locale -a', $output, $retcode);
+    if (PHP_OS === 'WINNT') {
+      /// @todo ... retrieve the list of available locales
+    } else {
+      // for unix-like systems, get the list of available locales using `locale -a`
+      exec('which locale', $output, $retcode);
       if ($retcode == 0) {
-        return $output;
+        $output = array();
+        exec('locale -a', $output, $retcode);
+        if ($retcode == 0) {
+          return $output;
+        }
       }
     }
     return false;
@@ -61,6 +65,10 @@ class LocaleTest extends PGettext_PolyfillTestCase
 
   public function test_setlocale_system()
   {
+    /// @todo figure out which locale is available by default on windows
+    if (PHP_OS === 'WINNT') {
+      $this->markTestSkipped('ToDo: figure out a locale which is always installed on Windows');
+    }
     // For an existing locale, it never needs emulation.
     $locale = 'C';
     T::setlocale(LC_MESSAGES, $locale);

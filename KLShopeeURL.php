@@ -1,7 +1,9 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Import Excel with Shopee URL information');
+include('includes/header.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -15,10 +17,6 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
 include('includes/OCOpenCartGeneralFunctions.php');
-
-$Title = __('Import Excel with Shopee URL information');
-
-include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>

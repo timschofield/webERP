@@ -1,9 +1,8 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Supplier Contacts');
-/* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierContact';
 include('includes/header.php');

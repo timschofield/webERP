@@ -7,15 +7,18 @@
 * KL RICARD Added KL fields to control timing, status, etc.
 * 
 **************************************************************************************/
+
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
+
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Purchase Order Items');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 
-include('includes/session.php');
-
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
-
-$Title = __('Purchase Order Items');
 
 $identifier = $_GET['identifier'];
 
@@ -235,7 +238,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		     /*Insert the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
-				if ($POLine->Deleted==False) {
+				if ($POLine->Deleted==false) {
 					$SQL = "INSERT INTO purchorderdetails
 									(orderno,
 									itemcode,
@@ -424,7 +427,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
-                	echo '<a href="SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
+                	echo '<a href="'.$RootPath.'/SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
@@ -465,7 +468,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		prnMsg( __('Cannot Enter this order line') . '<br />' . __('The price entered must be numeric'),'error');
 	}
 	if (!Is_Date($_POST['ReqDelDate'])){
-		$AllowUpdate = False;
+		$AllowUpdate = false;
 		prnMsg( __('Cannot Enter this order line') . '</b><br />' . __('The date entered must be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 	}
 
@@ -725,7 +728,7 @@ if (isset($_POST['UploadFile'])) {
 		$Row = 0;
 		$InsertNum = 0;
 
-		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== False) {
+		while (($FileRow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 			++$Row;
 			if (filter_number_format($FileRow[1])!=0) { //if the form variable represents a Qty to add to the order
 
@@ -915,7 +918,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 
 	foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 
-		if ($POLine->Deleted==False) {
+		if ($POLine->Deleted==false) {
 			$LineTotal = $POLine->Quantity * $POLine->Price;
 			$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['PO'.$identifier]->CurrDecimalPlaces);
 			// Note if the price is greater than 1 use 2 decimal place, if the price is a fraction of 1, use 4 decimal places
@@ -1013,7 +1016,7 @@ if (isset($_POST['NonStockOrder'])) {
 		echo '<option value="' . $AssetRow['assetid'] . '">'  . $AssetRow['assetid'] . ' - '.  $DatePurchased . ' - ' . $AssetRow['description'] . '</option>';
 	}
 
-	echo'</select><a href="FixedAssetItems.php" target=_blank>' .  __('New Fixed Asset') . '</a></td></tr>
+	echo'</select><a href="'.$RootPath.'/FixedAssetItems.php" target=_blank>' .  __('New Fixed Asset') . '</a></td></tr>
 		<tr>
 			<td>' . __('Quantity to purchase') . '</td>
 			<td><input type="text" class="number" name="Qty" size="10" value="1" /></td>

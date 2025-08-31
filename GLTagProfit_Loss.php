@@ -1,13 +1,15 @@
 <?php
-// GLTagProfit_Loss.php
-//
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
+
 $Title = __('Income and Expenditure by Tag');
-include('includes/SQL_CommonFunctions.php');
-include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'TagReports';
+
+include('includes/SQL_CommonFunctions.php');
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if (isset($_POST['PeriodFrom']) AND ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) {
 	prnMsg(__('The selected period from is actually after the period to') . '! ' . __('Please reselect the reporting period') , 'error');

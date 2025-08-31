@@ -32,19 +32,19 @@ echo "Checking syntax of php files..."
 
 "$BASE_DIR/build/check_syntax.sh" || exit 1
 
+echo "Checking and updating composer configuration..."
+
+"$BASE_DIR/build/run_composer.sh" || exit 1
+
 echo "Updating translation files..."
 
 "$BASE_DIR/build/update_translations.sh" all
 
 echo "Cleaning up and dumping the database..."
 
-"$BASE_DIR/build/dump_database.sh"
-
-# @todo make dump_database.sh do this on its own via passing an appropriate cli option
-if [ -f ./install/sql/demo.sql ]; then rm ./install/sql/demo.sql; fi
-mv ./sql/mysql/demo.sql ./install/sql/
-rm ./sql/mysql/default.sql
+# @todo review the options used - should we not add -t -d ?
+"$BASE_DIR/build/dump_database.sh" -o ./install/sql demo
 
 echo "Creating the final tarball..."
 
-"$BASE_DIR/build/make_tarball.sh"
+"$BASE_DIR/build/create_tarball.sh"

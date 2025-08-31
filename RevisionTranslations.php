@@ -1,18 +1,20 @@
 <?php
+
 /* This script is to review the item description translations. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Review Translated Descriptions');// Screen identificator.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'ReviewTranslatedDescriptions';// Anchor's id in the manual's html document.
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/maintenance.png" title="' .// Title icon.
 	__('Review Translated Descriptions') . '" />' .// Icon title.
 	__('Review Translated Descriptions') . '</p>';// Page title.
-
-include('includes/SQL_CommonFunctions.php');
 
 //update database if update pressed
 if(isset($_POST['Submit'])) {

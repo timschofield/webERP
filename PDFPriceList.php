@@ -1,5 +1,5 @@
 <?php
-//	PDFPriceList.php
+
 //	Script to print a price list by inventory category.
 
 /*
@@ -14,9 +14,11 @@ Output column sizes:
 Please note that addTextWrap() YPos is a font-size-height further down than addText() and other functions. Use addText() instead of addTextWrap() to print left aligned elements.
 All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
 */
-include('includes/session.php');
-if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
+
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);}
 
 // Merges gets into posts:
 if (isset($_GET['ShowObsolete'])) {// Option to show obsolete items.
@@ -261,7 +263,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				if ($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().
 					PageHeader();
 				}
-				$LeftOvers = $pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
+				$pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
 				$YPosImage = $YPos-36;// Stores the $YPos of the image bottom (see bottom).
 			}
 			// Prints stockmaster.longdescription:
@@ -452,4 +454,3 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	include('includes/footer.php');
 } /*end of else not PrintPDF */
-// END: Procedure division -----------------------------------------------------

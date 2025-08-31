@@ -1,11 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Mailing Group Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = 'MailingGroupMaintenance';
-
 include('includes/header.php');
 
 echo '<p class= "page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" alt="" />' . $Title . '</p>';
@@ -35,6 +34,7 @@ if (isset($_POST['Enter'])) { //user has input a new value
 	}
 
 } //end of handling new mail group input
+
 //Add the new users to the mail group
 if (isset($_GET['Add']) and isset($_GET['UserId'])) {
 	if (isset($_GET['UserId']) and mb_strlen($_GET['UserId']) < 21 and !ContainsIllegalCharacters($_GET['UserId'])) {

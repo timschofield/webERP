@@ -1,17 +1,19 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Copy all reorder levels from one location to another');// Screen identificator.
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title="',// Icon image.
-	$Title, '" /> ',// Icon title.
-	$Title, '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php'); // Add this line to include UI functions
 include('includes/KLUIGeneralFunctions.php');
+
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="',// Icon image.
+	$Title, '" /> ',// Icon title.
+	$Title, '</p>';// Page title.
 
 if(isset($_POST['ProcessCopyAuthority'])) {
 

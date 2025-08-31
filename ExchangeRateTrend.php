@@ -1,7 +1,8 @@
 <?php
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('View Currency Trend');
 $ViewTopic = 'Currencies';
 $BookMark = 'ExchangeRateTrend';

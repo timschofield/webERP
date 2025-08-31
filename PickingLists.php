@@ -1,18 +1,21 @@
 <?php
+
 /* Picking List Maintenance */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Picking List Maintenance');
 $ViewTopic = '';
 $BookMark = 'PickingLists';
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 
 $ARSecurity = 3;
-
-include('includes/header.php');
-include('includes/SQL_CommonFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other order entry sessions on the same machine  */
@@ -38,7 +41,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 
 	$_SESSION['ProcessingPick'] = (int) $_GET['Prid'];
 	$_GET['Prid'] = (int) $_GET['Prid'];
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	/*read in all the guff from the selected order into the Items cart  */
 

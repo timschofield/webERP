@@ -1,7 +1,7 @@
 <?php
 /* definition of the Payment class */
 
-Class Payment {
+class Payment {
 
 	var $GLItems; /*array of objects of Payment class - id is the pointer */
 	var $Account; /*Bank account GL Code Paid from */
@@ -43,6 +43,7 @@ Class Payment {
 		$this->Address4 ="";
 		$this->Address5 ="";
 		$this->Address6 ="";
+		$this->Narrative ="";
 
 	}
 
@@ -78,7 +79,7 @@ Class Payment {
 
 } /* end of class defintion */
 
-Class PaymentGLAnalysis {
+class PaymentGLAnalysis {
 
 	var $Amount;	/* in currency of the payment*/
 	var $Narrative;
@@ -88,15 +89,14 @@ Class PaymentGLAnalysis {
 	var $Tag;
 	var $Cheque;
 
-	function __construct ($Amt,
+	function __construct($Amt,
 								$Narr,
 								$id,
 								$GLCode,
 								$GLActName,
 								$Tag,
-								$Cheque){
+								$Cheque) {
 
-/* Constructor function to add a new PaymentGLAnalysis object with passed params */
 		$this->Amount =$Amt;
 		$this->Narrative = $Narr;
 		$this->GLCode = $GLCode;
@@ -104,20 +104,5 @@ Class PaymentGLAnalysis {
 		$this->ID = $id;
 		$this->Tag = $Tag;
 		$this->Cheque = $Cheque;
-	}
-	function PaymentGLAnalysis($Amt,
-								$Narr,
-								$id,
-								$GLCode,
-								$GLActName,
-								$Tag,
-								$Cheque){
-		self::__construct($Amt,
-								$Narr,
-								$id,
-								$GLCode,
-								$GLActName,
-								$Tag,
-								$Cheque);
 	}
 }

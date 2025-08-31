@@ -1,12 +1,12 @@
 <?php
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Sales Category Maintenance');
-
 $ViewTopic = 'Setup';
 $BookMark = '';
-
 include('includes/header.php');
+
 include('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
@@ -483,7 +483,7 @@ if (!isset($_GET['Select'])) {
 			<td><select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
-		echo '<option selected="True" value="All">', __('All'), '</option>';
+		echo '<option selected="selected" value="All">', __('All'), '</option>';
 		$_POST['StockCat'] = 'All';
 	} else {
 		echo '<option value="All">', __('All'), '</option>';
@@ -492,7 +492,7 @@ if (!isset($_GET['Select'])) {
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 
 		if ($_POST['StockCat'] == $MyRow1['categoryid']) {
-			echo '<option selected="True" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
+			echo '<option selected="selected" value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		} else {
 			echo '<option value=', $MyRow1['categoryid'], '>', $MyRow1['categorydescription'], '</option>';
 		}

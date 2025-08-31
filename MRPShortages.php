@@ -1,6 +1,7 @@
 <?php
-// MRPShortages.php - Report of parts with demand greater than supply as determined by MRP
-include('includes/session.php');
+
+// Report of parts with demand greater than supply as determined by MRP
+require(__DIR__ . '/includes/session.php');
 
 if (!DB_table_exists('mrprequirements')) {
 	$Title = __('MRP error');
@@ -275,7 +276,7 @@ if (isset($_POST['PrintPDF'])) {
 
 } /*end of else not PrintPDF */
 
-function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
+function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
 
 	$LineHeight = 12;
 	/*PDF page header for MRP Shortages report */

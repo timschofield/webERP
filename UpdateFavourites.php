@@ -1,6 +1,8 @@
 <?php
-$PageSecurity=1;
-include('includes/session.php');
+
+$PageSecurity = 1;
+
+require(__DIR__ . '/includes/session.php');
 
 $SQL = "SELECT caption
 			FROM favourites

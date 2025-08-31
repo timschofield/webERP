@@ -1,15 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Sell Through Support');
-
 $ViewTopic = 'Sales';
 $BookMark = '';
-
 include('includes/header.php');
+
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);}
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {
 	$SupplierID = trim(mb_strtoupper($_GET['SupplierID']));

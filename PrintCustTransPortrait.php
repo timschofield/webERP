@@ -1,12 +1,14 @@
 <?php
-/*	PrintCustTransPortrait.php */
+
 /*  Print Invoices or Credit Notes (Portrait Mode) */
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - change of "consignment" to "tracking"
 ***************************************************************************************/
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Print Invoices or Credit Notes (Portrait Mode)');
 $ViewTopic = 'ARReports';
 $BookMark = 'PrintInvoicesCredits';
@@ -305,7 +307,7 @@ if(isset($PrintPDF)
 			$PageNumber = 1;
 
 			include('includes/PDFTransPageHeaderPortrait.php');
-			$FirstPage = False;
+			$FirstPage = false;
 
 			while($MyRow2=DB_fetch_array($Result)) {
 				if($MyRow2['discountpercent'] == 0) {

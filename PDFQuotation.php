@@ -1,8 +1,10 @@
 <?php
+
 /*	Please note that addTextWrap prints a font-size-height further down than
 	addText and other functions.*/
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with

@@ -5,7 +5,7 @@
  * KL RICARD: Multicompany options
  * 
  ****************************************************************************************/
-// GLBalanceSheet.php
+
 // This script shows the balance sheet for the company as at a specified date.
 // Through deviousness and cunning, this system allows shows the balance sheets as at the end of any period selected - so first off need to show the input of criteria screen.
 /*
@@ -21,14 +21,12 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Functions division ===================================================
-// END: Functions division =====================================================
-
-// BEGIN: Procedure division ===================================================
-if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-	include('includes/session.php');
+if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	require(__DIR__ . '/includes/session.php');
 }
+
 use Dompdf\Dompdf;
+
 $GeneralTitle = __('Balance Sheet');
 $Title2 = __('Statement of Financial Position'); // Name as IAS.
 $ViewTopic = 'GeneralLedger';
@@ -519,7 +517,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 } else {
 	// Show a form to allow input of criteria for TB to show
-	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
+	if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		include('includes/header.php');
 	}
 	if (!isset($_POST['ShowZeroBalance'])) {

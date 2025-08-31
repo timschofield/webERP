@@ -1,12 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Chart of Accounts Maintenance for PT. Angin Dingin Utara');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Chart of Accounts Maintenance for PT. Angin Dingin Utara');
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
-
 include('includes/header.php');
+
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 

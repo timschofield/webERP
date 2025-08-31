@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<phpunit colors="true" cacheResult="false">
+	<testsuites>
+		<testsuite name="webERP Installer Test Suite">
+			<directory suffix=".php">./tests/install</directory>
+		</testsuite>
+		<testsuite name="webERP Website Test Suite">
+			<directory suffix=".php">./tests/run</directory>
+		</testsuite>
+	</testsuites>
+
+	<!-- override the value of these in a file ./phpunit.xml if your test environment is different -->
+	<php>
+		<env name="TEST_TARGET_PROTOCOL" value="http" />
+		<env name="TEST_TARGET_HOSTNAME" value="localhost" />
+		<env name="TEST_TARGET_PORT" value="" />
+		<env name="TEST_TARGET_BASE_URL" value="/" />
+
+		<env name="TEST_DB_TYPE" value="mysqli" />
+		<env name="TEST_DB_HOSTNAME" value="localhost" />
+		<env name="TEST_DB_PORT" value="3306" />
+		<env name="TEST_DB_USER" value="root" />
+		<env name="TEST_DB_PASSWORD" value="root" />
+		<env name="TEST_DB_SCHEMA" value="weberp" />
+
+		<env name="TEST_USER_ACCOUNT" value="admin" />
+		<env name="TEST_USER_PASSWORD" value="weberp" />
+		<env name="TEST_USER_EMAIL" value="admin@weberp.org" />
+	</php>
+
+	<!-- code coverage reporting -->
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./</directory>
+			<exclude>
+				<directory>./build</directory>
+				<directory>./doc</directory>
+				<directory>./tests</directory>
+				<directory>./vendor</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>

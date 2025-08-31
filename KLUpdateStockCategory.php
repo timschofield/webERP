@@ -1,9 +1,11 @@
 <?php
 
-include('includes/session.php');
-include('includes/SQL_CommonFunctions.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Update stock category');
 include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
 include('includes/KLBoards.php');
 
 //Get Out if we have no StockId or OldCat or NewCat

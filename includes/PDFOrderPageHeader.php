@@ -19,14 +19,11 @@ $pdf->addText($XPos, $YPos-13,$FontSize, $MyRow['address1']);
 $pdf->addText($XPos, $YPos-26,$FontSize, $MyRow['address2']);
 $pdf->addText($XPos, $YPos-39,$FontSize, $MyRow['address3'] . ' ' . $MyRow['address4'] . ' ' . $MyRow['address5']. ' ' . $MyRow['deladd6']);
 
-
 /*Print Dispatch Date - as current date
 $XPos=50;
 $YPos=98;
 $pdf->addText($XPos, $YPos,$FontSize, Date($_SESSION['DefaultDateFormat']));
-
 */
-
 
 /*Print the freight company to be used */
 $XPos=65;
@@ -37,7 +34,6 @@ $XPos=630;
 $YPos=567;
 $pdf->addText($XPos, $YPos,$FontSize, __('Order No') . ': ' . $_GET['TransNo']);
 $pdf->addText($XPos, $YPos-14,$FontSize, __('Your Ref') . ': ' . $MyRow['customerref']);
-
 
 $XPos=687;
 $YPos=539;

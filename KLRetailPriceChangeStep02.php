@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Change of Retail Price -> Step 02');
 include('includes/header.php');
+
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');

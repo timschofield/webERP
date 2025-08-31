@@ -6,7 +6,7 @@
 
 <p>All invoices require a sales order to be entered first.</p>
 <p>From the main menu select the receivables tab. Choose 'Select Order to Invoice' from the transactions menu. This page shows all the orders outstanding. If the order number is known it can be entered on this screen to select the order to invoice. Hit search orders and the order should show below, together with links to modify the order, print the packing slip and to invoice. Click the link to invoice the order.</p>
- 
+
 <h3><a id="ConfirmInvoice">Producing An Invoice From A Selected Order</a></h3>
 
 <p>Having selected an order to invoice the order line comes up for confirming the quantities of the order that were dispatched. If the quantity dispatched differs from the order the difference is recorded in the table OrderDeliveryDifferencesLog - and a report is available to show the orders that were not able to be delivered with the first dispatch. There is also opportunity to enter the freight charge and if necessary enter the tax charge - which will normally be calculated automatically based on the tax authority of the customer branch being invoiced. The date of the invoice is defaulted based on the time of day and the settings in config.php. If the hour (in 24 hour format) is after the setting of $DispatchCutOffTime in config.php, then the following day is deemed to be the invoice date, alternatively the invoice date will default to today. Where not all lines on the order are being invoiced there are two choices with how to deal with the balance.</p>

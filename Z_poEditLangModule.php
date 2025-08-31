@@ -1,10 +1,12 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Edit Module');// __('Edit a Language File Module')
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Edit Module');
 $ViewTopic = "SpecialUtilities";
-$BookMark = "Z_poEditLangModule";// Anchor's id in the manual's html document.
+$BookMark = "Z_poEditLangModule";
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Edit a Language File Module') . '" />' . ' ' .
@@ -18,12 +20,13 @@ echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
 echo '<br />&nbsp;' . __('Make sure you have selected the correct language to translate!');
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 if (isset($_POST['ReMergePO'])){
 
 /*update the messages.po file with any new strings */
+	/// @bug we have to check that msgmerge is a cli command, not a php function!!!
 	if (!function_exists('msgmerge')) {
 		prnMsg(__('The gettext utilities must be present on your server for these language utilities to work'),'error');
 		exit();
@@ -31,15 +34,20 @@ if (isset($_POST['ReMergePO'])){
 /*first rebuild the en_GB default with xgettext */
 
 		$PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.po';
+		/// @todo review this list
 		$FilesToInclude	= '*php includes/*.php includes/*.php';
+
+		/// @todo add proper escaping to prevent shell injection
+
 		$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
-		system($xgettextCmd);
+		exec($xgettextCmd, $output, $result);
 	/*now merge the translated file with the new template to get new strings*/
 
 		$MsgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
 
-		system($MsgMergeCmd);
+		/// @todo check for failures
+		exec($MsgMergeCmd, $output, $result);
 		//$Result = rename($PathToNewLanguage, $PathToLanguage);
 		exit();
 	}
@@ -60,7 +68,7 @@ if (isset($_POST['module'])) {
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -91,7 +99,8 @@ if (isset($_POST['module'])) {
 
     /*now need to create the .mo file from the .po file */
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
-		system($MsgfmtCommand);
+		/// @todo check for failures
+		exec($MsgfmtCommand, $output, $result);
 
 		prnMsg(__('Done') . '<br />', 'info', ' ');
 
@@ -152,7 +161,7 @@ if (isset($_POST['module'])) {
 
 			$b = mb_strpos($AlsoIn[$i], $_POST['module']);
 
-			if ($b === False) {
+			if ($b === false) {
 /* skip it */
 
 			} else {

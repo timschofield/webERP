@@ -1,10 +1,14 @@
 <?php
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Update Item Costs From CSV');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Update Item Costs from CSV file') . '" />' . ' ' .
@@ -18,7 +22,7 @@ $FieldHeadings = array('StockID',
 if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //start file processing
 	//check file info
 	$FileName = $_FILES['CostUpdateFile']['name'];
-	$TempName  = $_FILES['CostUpdateFile']['tmp_name'];
+	$TempName = $_FILES['CostUpdateFile']['tmp_name'];
 	$FileSize = $_FILES['CostUpdateFile']['size'];
 	$InputError = 0;
 

@@ -1,20 +1,21 @@
 <?php
 
-/*The credit selection screen uses the Cart class used for the making up orders
+/* The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create Credit Note');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'CreateCreditNote';
-
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
-
 include('includes/GetSalesTransGLCodes.php');
 include('includes/GetPrice.php');
 
@@ -44,7 +45,7 @@ if (isset($_GET['NewCredit'])){
 if (!isset($_SESSION['CreditItems'.$identifier])){
 	 /* It must be a new credit note being created $_SESSION['CreditItems'.$identifier] would be set up from a previous call*/
 
-	$_SESSION['CreditItems'.$identifier] = new cart;
+	$_SESSION['CreditItems'.$identifier] = new Cart;
 
 	$_SESSION['RequireCustomerSelection'] = 1;
 }
@@ -60,7 +61,7 @@ if (isset($_POST['Quick'])){
 if (isset($_POST['CancelCredit'])) {
 	unset($_SESSION['CreditItems'.$identifier]->LineItems);
 	unset($_SESSION['CreditItems'.$identifier]);
-	$_SESSION['CreditItems'.$identifier] = new cart;
+	$_SESSION['CreditItems'.$identifier] = new Cart;
 	$_SESSION['RequireCustomerSelection'] = 1;
 }
 

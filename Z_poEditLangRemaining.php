@@ -1,5 +1,5 @@
 <?php
-// Z_poEditLangRemaining.php
+
 // Edit Remaining Strings For This Language.
 
 /* Steve Kitchen */
@@ -8,11 +8,13 @@
 
 //$PageSecurity = 15;
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $ViewTopic = "SpecialUtilities";
 $BookMark = "Z_poEditLangRemaining";
 $Title = __('Edit Remaining Strings For This Language');
 include('includes/header.php');
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -24,8 +26,8 @@ echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the 
 echo '<br /><br />&nbsp;' . __('Utility to edit a language file module');
 echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
@@ -39,7 +41,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
 		echo '<br /><table><tr><td>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
 
@@ -69,8 +71,10 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		}
 
     /*now need to create the .mo file from the .po file */
+		/// @todo escape args
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
-		system($MsgfmtCommand);
+		/// @todo check for failures
+		exec($MsgfmtCommand, $output, $result);
 
 		prnMsg(__('Done') . '<br />', 'info', ' ');
 
@@ -95,7 +99,6 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 			}
 		}
 		$TotalLines = $j - 1;
-
 
 /* stick it on the screen */
 

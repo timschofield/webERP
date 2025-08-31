@@ -9,18 +9,20 @@ KL RICARD MODIFICATIONS:
 - Load the KLRoles Variables
 *****************************************************************************************/
 
-/* webERP Session handling
- * This file is included at the start of every script in webERP
+/* webERP Session handling and general bootstrapping.
+ *
+ * This file is included at the start of every script in webERP.
  * It sets up the session and includes the necessary files for:
  * - database connection
  * - language setup
  * - password checking
  * - security authorisation level check
- * - config.php is included in session.php
+ * NB: config.php is included in session.php
  */
 
 if (!isset($PathPrefix)) {
-//	$PathPrefix = __DIR__ . '//'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
+	/// @todo make it a constant. Also, rename it to ROOT_PATH, ROOT_DIR or similar
+//	$PathPrefix = __DIR__ . '/../'; It does not work on KL environment. Check https://github.com/timschofield/webERP/commit/53b1dab27b1bc212004c88f10edc053f7f2abc8f
 	$PathPrefix = '';
 }
 
@@ -51,9 +53,24 @@ include($PathPrefix . 'KLConfig.php');
 // KL RICARD END: Include the specific KL config file
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
+	/// @todo we should attempt to update the config.php file...
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
 	$DBType = $dbType;
+	unset($dbuser, $dbpassword, $dbType);
+}
+
+// another upgrade issue - mysql php extension is not available anymore, unless users are on obsolete php versions
+if ($DBType === 'mysql' && !extension_loaded('mysql')) {
+	/// @todo we should attempt to update the config.php file...
+	$DBType = 'mysqli';
+}
+
+// another upgrade issue
+if (isset($MySQLPort) && !isset($DBPort)) {
+	/// @todo we should attempt to update the config.php file...
+	$DBPort = $MySQLPort;
+	unset($MySQLPort);
 }
 
 if (isset($SessionSavePath)) {
@@ -77,6 +94,10 @@ if (!isset($SessionName)) {
 session_name($SessionName);
 session_start();
 
+include($PathPrefix . 'includes/LanguageSetup.php');
+
+/// @todo instead of delegating to ConnectDB.php the handling of $_POST, do it here, so that that file can then be used
+///       for even when authentication is not based on login-form
 include($PathPrefix . 'includes/ConnectDB.php');
 include($PathPrefix . 'includes/DateFunctions.php');
 
@@ -119,12 +140,14 @@ if (isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FormID'] = sha1(uniqid(mt_rand(), true));
 }
 
-include($PathPrefix . 'includes/LanguageSetup.php');
-$FirstLogin = False;
+$FirstLogin = false;
 
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
+
+	/// @todo move this processing inside Logout.php
 	if (isset($_SESSION['Favourites'])) {
-		//retrieve the sql data;
+		// Remove from the db the user favorites which are not in the session
+		/// @todo this could be done in a single query using WHERE NOT IN ...
 		$SQL = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
 		$ErrMsg = __('Failed to retrieve favorites');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -142,16 +165,26 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/index.php'); //go back to the main index/login
 
-} elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
-	if (!isset($_SESSION['DatabaseName'])) {
+	/// @todo should we not just return, here?
 
+} elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
+	if (!isset($_SESSION['AllowedPageSecurityTokens'])) {
 		$_SESSION['AllowedPageSecurityTokens'] = array();
+	}
+	if (!isset($_SESSION['DatabaseName'])) {
 		$_SESSION['DatabaseName'] = $DefaultDatabase;
 	}
 	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	include($PathPrefix . 'includes/GetConfig.php');
+
 } else {
 	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
+
+	/// @todo what if the current user is already logged in? We should at least log him/her out before re-logging in...
+	///       (or maybe swallow that event, and log it as suspected hack attempt?)
+
+	/// @todo the login form points to /index.php. Should we avoid processing $_POST['UserNameEntryField'] and
+	///       $_POST['Password'] on other pages? We might even go as far as creating a dedicated Login.php...
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
@@ -169,11 +202,13 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
 	$Theme = KLThemeSelection();
 	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
-	
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
+			/// @todo shouldn't we only set the cookie if $FirstLogin = true ?
 			setcookie('Login', $_SESSION['DatabaseName']);
-			include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			//include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+
+			/// @todo the session table was created in DBUpdateNumber 13, not 11!
 			if ($_SESSION['DBUpdateNumber'] >= 11) {
 				$CheckSQL = "SELECT sessionid
 							FROM sessions
@@ -201,19 +236,24 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 										NOW())";
 						$Result = DB_query($SQL);
 					}
+					/// @todo if if DBUpdateNumber < 22, insert into sessions the sessionid
 				} else {
 					// it is not a new session, update the script name
+					/// @todo if if DBUpdateNumber < 22, do nothing
+					/// @todo if DBUpdateNumber >= 22, check that the known session userID matches $_SESSION['UserID']
+					// no need to escape the session ID - see https://www.php.net/manual/en/function.session-id.php#116836
 					$SQL = "UPDATE sessions
-							SET script = '" . basename($_SERVER['SCRIPT_NAME']) . "',
-								scripttime = NOW()
+							SET script = '" . basename($_SERVER['SCRIPT_NAME']) . "', scripttime = NOW()
 							WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
-				unset($Result);
+				unset($CheckSQL, $CheckResult, $Result, $SQL);
 			}
-		break;
+			break;
 
 		case UL_SHOWLOGIN:
+			/// @todo here, we should store in the sessions table the current session id and the script name. This
+			///       way, when the user logs in, (s)he can be redirected to the original script.
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 
@@ -240,6 +280,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit();
 	}
 
+	unset($rc);
+
 	// KL RICARD Check if the user is allowed to access the page
 	if (KLwebERPScriptCalledFromTEST()){
 		/* If script is from TEST weberp or from localhost */
@@ -249,7 +291,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			include($PathPrefix . 'includes/header.php');
 			prnMsg(__('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
 			include($PathPrefix . 'includes/footer.php');
-			exit();
 		}
 	}else{
 		/* The script is not from TEST*/
@@ -266,7 +307,17 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 /* If the Code $Version - held in ConnectDB.php is > than the Database VersionNumber held in config table then do upgrades */
 /* If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
-$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+/* gg: reduce resource usage by not checking the available upgrade files on every page - only on session start.
+ * This poses a small risk of users not being told to upgrade the db if a deployment happens while users are logged-in,
+ * but that is definitely a not-recommended practice
+ */
+if (!isset($_SESSION['DBVersion'])) {
+	$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+}
+// $_SESSION['DBUpdateNumber'] is normally set by GetConfig.php - but in case we never passed via that code path...
+if (!isset($_SESSION['DBUpdateNumber'])) {
+	$_SESSION['DBUpdateNumber'] = -1;
+}
 if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])
 	and ($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber'])
@@ -279,6 +330,8 @@ if (isset($_SESSION['DBVersion'])
 /* RICARD KL Set up the theme for production, test, development, development test webERP */
 $_SESSION['Theme'] = KLThemeSelection();
 /* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
+
+/// @todo move this block to just after session_start
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(__('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -304,7 +357,7 @@ if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobTo
  */
 if (!isset($PageSecurity)) {
 	//only hardcoded in the UpgradeDatabase script - so old versions that don't have the scripts.pagesecurity field do not choke
-	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME']) ];
+	$PageSecurity = $_SESSION['PageSecurityArray'][basename($_SERVER['SCRIPT_NAME'])];
 }
 
 if (!isset($AllowCronJobToBeRun)){
@@ -345,8 +398,11 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 	header('Location: ' . htmlspecialchars_decode($RootPath) . '/Dashboard.php');
 }
 
+/// @todo instead of checking for $_POST['CompanyNameField'], only disable this check on posts from Login.php, or
+///       at least make it harder for an attacker to disable the check, f.e. add a var in the session when displaying
+///       the form. Or just also do the check on Login...
 if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
-	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	/* Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login */
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = __('Session verification error');
 		include('includes/header.php');
@@ -372,10 +428,10 @@ function HighestFileName($PathPrefix) {
 	return $LastFile ? basename($LastFile, ".php") : '';
 }
 
-function quote_smart($Value) {
+/*function quote_smart($Value) {
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
 	}
 	return $Value;
-}
+}*/

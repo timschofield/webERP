@@ -1,5 +1,5 @@
 <?php
-/* $Id: GLCashFlowsIndirect.php 7672 2016-11-17 10:42:50Z rchacon $ */
+
 /* Shows a statement of cash flows for the period using the indirect method. */
 /* This program is under the GNU General Public License, last version. Rafael E. Chacón, 2016-10-08. */
 /* This creative work is under the CC BY-NC-SA, later version. Rafael E. Chacón, 2016-10-08. */
@@ -8,45 +8,13 @@
 // Coding Conventions/Style: http://www.weberp.org/CodingConventions.html
 // Info about a statement of cash flows using the indirect method: IAS 7 - Statement of Cash Flows.
 
-// BEGIN: Functions division ---------------------------------------------------
-function CashFlowsActivityName($Activity) {
-	// Converts the cash flow activity number to an activity text.
-	switch ($Activity) {
-		case -1: return __('Without setting up');
-		case 0: return __('No effect on cash flow');
-		case 1: return __('Operating activities (Net change in stock)');
-		case 2: return __('Investing activities (Including depreciation)');
-		case 3: return __('Financing activities');
-		case 4: return __('Cash or cash equivalent');
-		default: return __('Unknown');
-	}
-}
+require(__DIR__ . '/includes/session.php');
 
-function colDebitCredit($Amount) {
-	// Function to display in debit or Credit columns in a HTML table.
-	if ($Amount < 0) {
-		return '<td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td><td>&nbsp;</td>'; // Outflow.
-	} else {
-		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>'; // Inflow.
-	}
-}
-
-function colDebitCreditPercent($Amount) {
-	// Function to display in debit or Credit columns in a HTML table.
-	if ($Amount < 0) {
-		return '<td class="number">' . locale_number_format($Amount, 1) . '%' . '</td><td>&nbsp;</td>'; // Outflow.
-	} else {
-		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, 1) . '%' . '</td>'; // Inflow.
-	}
-}
-// END: Functions division -----------------------------------------------------
-
-// BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.php');
 $Title = __('KL Statement of Cash Flows, Cash Accounts Difference Method');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLCashFlowsIndirect';
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php'); // Added include
 include('includes/KLUIGeneralFunctions.php'); // Added include
@@ -406,3 +374,35 @@ if (isset($_POST['PeriodFrom']) && isset($_POST['PeriodTo']) && $_POST['Action']
 echo '</form>';
 include('includes/footer.php');
 
+// BEGIN: Functions division ---------------------------------------------------
+function CashFlowsActivityName($Activity) {
+	// Converts the cash flow activity number to an activity text.
+	switch ($Activity) {
+		case -1: return __('Without setting up');
+		case 0: return __('No effect on cash flow');
+		case 1: return __('Operating activities (Net change in stock)');
+		case 2: return __('Investing activities (Including depreciation)');
+		case 3: return __('Financing activities');
+		case 4: return __('Cash or cash equivalent');
+		default: return __('Unknown');
+	}
+}
+
+function colDebitCredit($Amount) {
+	// Function to display in debit or Credit columns in a HTML table.
+	if ($Amount < 0) {
+		return '<td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td><td>&nbsp;</td>'; // Outflow.
+	} else {
+		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>'; // Inflow.
+	}
+}
+
+function colDebitCreditPercent($Amount) {
+	// Function to display in debit or Credit columns in a HTML table.
+	if ($Amount < 0) {
+		return '<td class="number">' . locale_number_format($Amount, 1) . '%' . '</td><td>&nbsp;</td>'; // Outflow.
+	} else {
+		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, 1) . '%' . '</td>'; // Inflow.
+	}
+}
+// END: Functions division -----------------------------------------------------

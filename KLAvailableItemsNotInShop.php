@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Items with stock available not in shop');
 include('includes/header.php');
+
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');

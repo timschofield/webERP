@@ -8,7 +8,7 @@
  * It supports different file types: Full Update, QOH Only, and Prices Only.
  */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
@@ -39,7 +39,6 @@ if (isset($_POST['submit'])) {
 } else {
 	display($RootPath, $Theme);
 }
-
 
 /**
  * Processes the form submission, generates the spreadsheet, and sends it to the browser.

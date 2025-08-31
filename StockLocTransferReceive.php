@@ -8,10 +8,12 @@ KL RICARD MODIFICATIONS:
 
 /* Inventory Transfer - Receive */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSerialItems.php');
 include('includes/DefineStockTransfers.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Inventory Transfer') . ' - ' . __('Receiving');// Screen identification.
 $ViewTopic = 'Inventory';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'LocationTransfers';// Anchor's id in the manual's html document.
@@ -33,7 +35,7 @@ if(isset($_POST['ProcessTransfer'])) {
 	$PeriodNo = GetPeriod ($_SESSION['Transfer']->TranDate);
 	$SQLTransferDate = FormatDateForSQL($_SESSION['Transfer']->TranDate);
 
-	$InputError = False; /*Start off hoping for the best */
+	$InputError = false; /*Start off hoping for the best */
 	$i=0;
 	$TotalQuantity = 0;
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
@@ -44,15 +46,15 @@ if(isset($_POST['ProcessTransfer'])) {
 			$_SESSION['Transfer']->TransferItem[$i]->Quantity= 0;
 		} else {
 			prnMsg(__('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. __('is not numeric') . '. ' . __('All quantities must be numeric'),'error');
-			$InputError = True;
+			$InputError = true;
 		}
 		if(filter_number_format($_POST['Qty' . $i])<0) {
 			prnMsg(__('The quantity entered for'). ' ' . $TrfLine->StockID . ' '. __('is negative') . '. ' . __('All quantities must be for positive numbers greater than zero'),'error');
-			$InputError = True;
+			$InputError = true;
 		}
 		if($TrfLine->PrevRecvQty + $TrfLine->Quantity > $TrfLine->ShipQty) {
 			prnMsg( __('The Quantity entered plus the Quantity Previously Received can not be greater than the Total Quantity shipped for').' '. $TrfLine->StockID , 'error');
-			$InputError = True;
+			$InputError = true;
 		}
 		if(isset($_POST['CancelBalance' . $i]) and $_POST['CancelBalance' . $i]==1) {
 			$_SESSION['Transfer']->TransferItem[$i]->CancelBalance=1;
@@ -64,7 +66,7 @@ if(isset($_POST['ProcessTransfer'])) {
 	} /*end loop to validate and update the SESSION['Transfer'] data */
 	if($TotalQuantity < 0) {
 		prnMsg( __('All quantities entered are less than zero') . '. ' . __('Please correct that and try again'), 'error' );
-		$InputError = True;
+		$InputError = true;
 	}
 //exit();
 	if(!$InputError) {

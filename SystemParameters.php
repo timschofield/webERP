@@ -1,7 +1,9 @@
 <?php
+
 /* This script is for maintenance of the system parameters. */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('System Parameters');
 $ViewTopic = 'CreatingNewSystem';
 $BookMark = 'SystemParameters';
@@ -91,15 +93,6 @@ if (isset($_POST['submit'])) {
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('The maximum size of item image files must be between 1 KB and 9999 KB'),'error');
-	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
-		$InputError = 1;
-		prnMsg(__('The Factory Manager Email address does not appear to be valid'),'error');
-	}elseif (!IsEmailAddress($_POST['X_PurchasingManagerEmail'])){
-		$InputError = 1;
-		prnMsg(__('The Purchasing Manager Email address does not appear to be valid'),'error');
-	}elseif (!IsEmailAddress($_POST['X_InventoryManagerEmail']) AND $_POST['X_InventoryManagerEmail']!=''){
-		$InputError = 1;
-		prnMsg(__('The Inventory Manager Email address does not appear to be valid'),'error');
 	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(__('The number of frequently ordered items to display must be numeric'),'error');
@@ -126,12 +119,12 @@ if (isset($_POST['submit'])) {
 		}
 		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			// BEGIN: Update the config.php file:
-			$FileHandle = fopen('config.php', 'r');
+			$FileHandle = fopen($PathPrefix . 'config.php', 'r');
 			if($FileHandle) {
 				$Content = fread($FileHandle, filesize('config.php'));
 				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
 				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
-				$FileHandle = fopen('config.php','w');
+				$FileHandle = fopen($PathPrefix . 'config.php','w');
 				if(!fwrite($FileHandle,$Content)) {
 					prnMsg(__('Cannot write to the configuration file.'), 'error');
 				} else {
@@ -374,7 +367,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['SmtpSetting'] != $_POST['X_SmtpSetting']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_SmtpSetting'] . "' WHERE confname='SmtpSetting'";
-
 		}
 		if ($_SESSION['QualityLogSamples'] != $_POST['X_QualityLogSamples']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityLogSamples'] . "' WHERE confname='QualityLogSamples'";
@@ -382,7 +374,6 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['QualityProdSpecText'] != $_POST['X_QualityProdSpecText']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityProdSpecText'] . "' WHERE confname='QualityProdSpecText'";
-
 		}
 		if ($_SESSION['QualityCOAText'] != $_POST['X_QualityCOAText']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
@@ -390,11 +381,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
-
 		}
 		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
 			$SQL[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
-
 		}
 
 		$ErrMsg =  __('The system configuration could not be updated because');
@@ -410,9 +399,9 @@ if (isset($_POST['submit'])) {
 
 		prnMsg( __('System configuration updated'),'success');
 
-		$ForceConfigReload = True; // Required to force a load even if stored in the session vars
+		$ForceConfigReload = true; // Required to force a load even if stored in the session vars
 		include('includes/GetConfig.php');
-		$ForceConfigReload = False;
+		$ForceConfigReload = false;
 	} else {
 		prnMsg( __('Validation failed') . ', ' . __('no updates or deletes took place'),'warn');
 	}
@@ -484,7 +473,7 @@ if (is_writable('config.php')) {
 	echo '<field>
 			<label for="X_DefaultTheme">' . __('Default Theme') . ':</label>
 			<select name="X_DefaultTheme">';
-	$ThemeDirectories = scandir('css');// List directories inside ~/css. Each diretory is a theme.
+	$ThemeDirectories = scandir($PathPrefix . 'css');// List directories inside ~/css. Each diretory is a theme.
 	foreach($ThemeDirectories as $ThemeName) {
 		if(is_dir('css/'.$ThemeName) AND $ThemeName!='.' AND $ThemeName!='..' AND $ThemeName!='.svn') {
 			echo '<option';

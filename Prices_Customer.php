@@ -1,8 +1,6 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
+require(__DIR__ . '/includes/session.php');
 
 $Result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
@@ -18,10 +16,12 @@ $CurrDecimalPlaces = $MyRow['currdecimalplaces'];
 $Name = $MyRow['name'];
 
 $Title = __('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
-
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
+
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
 
 if (isset($_GET['Item'])){
 	$Item = $_GET['Item'];

@@ -1,11 +1,12 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
-include('includes/session.php');
-$Title = __('Specify Picked Controlled Items');
 
-/* Session started in header.php for password checking and authorisation level check */
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Specify Picked Controlled Items');
 include('includes/header.php');
 
 if (empty($_GET['identifier'])) {

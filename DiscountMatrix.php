@@ -1,17 +1,14 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Discount Matrix Maintenance');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'DiscountMatrix';
 include('includes/header.php');
 
-if (isset($Errors)) {
-	unset($Errors);
-}
-
 $Errors = array();
-$i=1;
+$i = 1;
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
 

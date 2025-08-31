@@ -1,14 +1,13 @@
 <?php
 
-include('includes/session.php');
-include('includes/UIGeneralFunctions.php');
-
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIGeneralFunctions.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title=__('KPI Graph');
-
 include('includes/header.php');
+
+include('includes/UIGeneralFunctions.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $ErrorInDates =false;
 

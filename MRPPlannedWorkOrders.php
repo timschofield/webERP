@@ -1,8 +1,10 @@
 <?php
-// MRPPlannedWorkOrders.php - Report of manufactured parts that MRP has determined should have
+
+// Report of manufactured parts that MRP has determined should have
 // work orders created for them
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);}
 
 if ( !DB_table_exists('mrprequirements') ) {
@@ -217,7 +219,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		echo '<p class="page_title_text">
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
-		echo '<form action="MRPConvertWorkOrders.php" method="post">
+		echo '<form action="' . $RootPath . '/MRPConvertWorkOrders.php" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
@@ -321,7 +323,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 } /*end of else not PrintPDF */
 
-function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+function PrintHeader($PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$Consolidation,$ReportDate) {
 
 	/*PDF page header for MRP Planned Work Orders report */

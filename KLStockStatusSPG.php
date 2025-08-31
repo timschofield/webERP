@@ -1,12 +1,13 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
+$Title = __('Stock Status in Shops');
+include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
-$Title = __('Stock Status in Shops');
-
-include('includes/header.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));

@@ -1,13 +1,21 @@
 <?php
 
-/*EDI configuration variables definition */
+/// @deprecated this script seems unused. Also, it does not belong to the 'includes' folder...
 
-/*EDI Draft version 01B - Controlling agency is the UN - EAN version control number (EAN Code)
+require('includes/session.php');
+
+include('includes/header.php');
+
+include('includes/SQL_CommonFunctions.php');
+
+/* EDI configuration variables definition */
+
+/* EDI Draft version 01B - Controlling agency is the UN - EAN version control number (EAN Code)
 this info is required in the header record of every message sent - prepended with the message type*/
 
 $EDIHeaderMsgId = 'D:01B:UN:EAN010';
 
-/*EDI Reference of the company */
+/* EDI Reference of the company */
 
 $EDIReference = 'WEBERP';
 
@@ -19,15 +27,12 @@ $EDI_MsgPending = 'EDI_Pending';
 
 $EDI_MsgSent = 'EDI_Sent';
 
-//Testing variables
-include('includes/session.php');
-include('includes/header.php');
+// Testing variables
+
 $PartnerCode='WALMON';
 $MessageType ='INVOIC';
 
-/*end of testing variables / code */
-
-include('includes/SQL_CommonFunctions.php');
+// end of testing variables / code
 
 $EDITrans = GetNextTransNo(99);
 
@@ -46,6 +51,7 @@ $SQL = "SELECT section,
 
 $MessageLinesResult = DB_query($SQL);
 
+/// @bug undefined variable $EDI_Pending
 $fp = fopen( $EDI_Pending . '/EDI_' . $MessageType . '_' . $EDITrans , 'w');
 
 while ($LineDetails = DB_fetch_array($MessageLinesResult)){
@@ -53,7 +59,7 @@ while ($LineDetails = DB_fetch_array($MessageLinesResult)){
 	$PoistionPointer = 0;
 	$NewLineText ='';
 	/* now get each occurence of [ in the line */
-	while (mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer)!=False){
+	while (mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer)!=false){
 		$LastPositionPointer = $PoistionPointer;
 		$PositionPointer = mb_strpos ($LineDetails['linetext'],'[',$PoistionPointer);
 

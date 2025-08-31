@@ -1,6 +1,8 @@
 <?php
-/*Code to print footer details for each supplier being paid and process payment total for each supplier
+
+/* Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
+
 $YPos -= (0.5*$LineHeight);
 $PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 

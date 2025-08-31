@@ -1,11 +1,10 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Costed Bill Of Material');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Costed Bill Of Material');
 $ViewTopic = 'Manufacturing';
 $BookMark = '';
-
 include('includes/header.php');
 
 if (isset($_GET['StockID'])){

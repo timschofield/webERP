@@ -5,7 +5,7 @@ INSERT INTO config VALUES ('ShopFreightMethod','webERPCalculation');
 INSERT INTO config VALUES ('ShopPaypalCommissionAccount', '7220');
 INSERT INTO  `scripts` (`script` , `pagesecurity` , `description`) VALUES ('StockClone.php',  '11',  'Script to copy a stock item and associated properties, image, price, purchase and cost data');
 ALTER table locstock change bin bin varchar(10) NOT NULL DEFAULT '';
-INSERT INTO `scripts` (`script`, `pagesecurity`, `description`) 
+INSERT INTO `scripts` (`script`, `pagesecurity`, `description`)
 	VALUES ('BankAccountUsers.php', '15', 'Maintains table bankaccountusers (Authorized users to work with a bank account in webERP)');
 
 CREATE TABLE IF NOT EXISTS `bankaccountusers` (
@@ -13,4 +13,3 @@ CREATE TABLE IF NOT EXISTS `bankaccountusers` (
   `userid` varchar(20) NOT NULL COMMENT 'User code'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 UPDATE config SET confvalue='4.11.2' WHERE confname='VersionNumber';
-

@@ -1,5 +1,7 @@
 <?php
+
 /*PDF page header for price list report */
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -8,7 +10,6 @@ $FontSize=10;
 $YPos= $Page_Height-$Top_Margin;
 $XPos=0;
 $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,$YPos-50,0,60);
-
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*1.5),550,$FontSize, __('Stock transfer number ').' ' . $_GET['TransferNo'] );

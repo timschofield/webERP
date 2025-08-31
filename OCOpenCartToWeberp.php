@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 $Title = __('OpenCart to webERP Syncrhonizer');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');

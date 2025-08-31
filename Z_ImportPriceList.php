@@ -1,11 +1,14 @@
 <?php
 
-include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Import Sales Price List');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
+
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
 		__('Import Price List from CSV file') . '" />' . ' ' .
@@ -21,7 +24,7 @@ $FieldHeadings = array(
 if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //start file processing
 	//check file info
 	$FileName = $_FILES['PriceListFile']['name'];
-	$TempName  = $_FILES['PriceListFile']['tmp_name'];
+	$TempName = $_FILES['PriceListFile']['tmp_name'];
 	$FileSize = $_FILES['PriceListFile']['size'];
 	$FieldTarget = 4;
 	$InputError = 0;

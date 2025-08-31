@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Result = DB_query("SELECT description FROM stockmaster WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) . "'");
 $MyRow = DB_fetch_row($Result);

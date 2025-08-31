@@ -1,5 +1,7 @@
 <?php
 
+/// @todo drop usage of SQLite3::escapeString, to avoid relying on the SQLite3 extension.
+
 function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 
 	set_time_limit(1800);
@@ -17,7 +19,6 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$DefaultDateFormatRow = DB_fetch_row($Result);
 	$DefaultDateFormat= $DefaultDateFormatRow[0];
 
-
 	$Result = DB_query("SELECT currcode, salestype FROM debtorsmaster WHERE debtorno='" . $POSDebtorNo . "'");
 	$CustomerRow = DB_fetch_array($Result);
 	if (DB_num_rows($Result)==0){
@@ -25,7 +26,6 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	}
 	$CurrCode = $CustomerRow['currcode'];
 	$SalesType = $CustomerRow['salestype'];
-
 
 	$FileHandle = fopen($PathPrefix . $ReportDir . '/POS.sql','w');
 
@@ -186,6 +186,9 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	return 1;
 }
 
+/// @todo 1. only replace characters which break SQL strings, ie. no &, <, >. Stop conflating sql-injection
+///          prevention with html-escaping. Possibly use db-specific escapes for \n, \r (not html entities!)
+/// @todo 2. the correct string to be used to escape single quotes might be database-dependent. Check $DBType global var
 function escapeString($String) {
   $SearchCharacters  = array('&', '"', "'",'<', '>',"\n","\r");
   $ReplaceWith = array('&amp;', '""', "''", '&lt;', '&gt;', '', '&#13;');

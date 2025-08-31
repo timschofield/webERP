@@ -1,11 +1,15 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineOfferClass.php');
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Supplier Tendering');
 $ViewTopic = 'SupplierTenders';
 $BookMark = '';
 include('includes/header.php');
+
 include('includes/ImageFunctions.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;
@@ -330,7 +334,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 			</tr>';
 
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
-		if ($LineItems->Deleted==False) {
+		if ($LineItems->Deleted==false) {
 			if ($LineItems->ExpiryDate < date('Y-m-d')) {
 				echo '<tr style="background-color:#F7A9A9">';
 			} else {

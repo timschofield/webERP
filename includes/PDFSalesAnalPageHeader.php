@@ -1,6 +1,6 @@
 <?php
 
-/*PDF page header for user defined sales reports */
+/* PDF page header for user defined sales reports */
 
 if ($PageNumber>0){
 	$pdf->newPage();
@@ -12,7 +12,6 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$Page_Height-$Top_Margin,250,$FontSi
 $LeftOvers = $pdf->addTextWrap($Page_Width/2 -60,$Page_Height-$Top_Margin,150,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-160,$Page_Height-$Top_Margin,150,$FontSize,__('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber);
 
-
 /*Draw a rectangle to put the headings in     */
 $Left_Edge = 220;
 $Bottom_Edge = $Page_Height-$Top_Margin-38;
@@ -23,7 +22,6 @@ $pdf->line($Left_Edge, $Bottom_Edge,$Right_Edge, $Bottom_Edge);  /*Draw the bott
 $pdf->line($Right_Edge, $Bottom_Edge,$Right_Edge, $Top_Edge);   /*Draw the right side line */
 $pdf->line($Right_Edge, $Top_Edge,$Left_Edge, $Top_Edge); /*Draw the top line */
 $pdf->line($Left_Edge, $Bottom_Edge,$Left_Edge, $Top_Edge); /*Draw the left side line */
-
 
 /*Run through the columns and set up the headings */
 $FontSize=8;

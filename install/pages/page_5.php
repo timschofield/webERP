@@ -1,6 +1,12 @@
 <?php
 
-include('../includes/CountriesArray.php');
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
+include($PathPrefix . 'includes/CountriesArray.php');
+
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=6" method="post" enctype="multipart/form-data">';
 echo '<fieldset>
 			<legend>' . __('Company Settings') . '</legend>
@@ -20,7 +26,7 @@ $COAs = glob('sql/coa/*.sql');
 
 foreach ($COAs as $Value) {
 	if ($Value == 'sql/coa/' . $_SESSION['Installer']['CoA'] . '.sql') {
-		echo '<option value="' . $Value . '" selected="true">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
+		echo '<option value="' . $Value . '" selected="selected">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	} else {
 		echo '<option value="' . $Value . '">' . $CountriesArray[substr(basename($Value, '.sql'), 3, 2) ] . '</option>';
 	}
@@ -32,12 +38,12 @@ echo '</select>
 echo '<field>
 			<label for="TimeZone">' . __('Time Zone') . ': </label>
 			<select name="TimeZone">';
-include('timezone.php');
+include($PathPrefix . 'install/timezone.php');
 echo '</select>
 	</field>';
 
 echo '<field>
-			<label for="Logo">' . __('Company logo file') . ': </label>
+			<label for="LogoFile">' . __('Company logo file') . ': </label>
 			<input type="file" accept="image/jpg" name="LogoFile" title="' . __('A jpg file up to 10kb, and not greater than 170px x 80px') . '" />
 			<fieldhelp>' . __('jpg/jpeg/png/gif files up to 10kb, and not greater than 170px x 80px') . '<br />' . __('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
 		</field>
@@ -48,7 +54,7 @@ echo '<fieldset>
 			<legend>' . __('Installation option') . '</legend>
 				<ul>
 					<field>
-						<label for="InstallDemo">' . __('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
+						<label for="Demo">' . __('Install the demo data?') . '</label><input type="checkbox" name="Demo" value="Yes" />
 						<fieldhelp>' . __('webERP Demo site and data will be installed') . '</fieldhelp>
 					</field>
 				</ul>

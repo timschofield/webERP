@@ -1,16 +1,17 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Produce Stock Quantities CSV');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
-
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
+
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
 
 echo '<div class="centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
 

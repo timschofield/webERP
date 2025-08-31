@@ -1,4 +1,5 @@
 <?php
+
 class StockAdjustment {
 
 	var $StockID;
@@ -15,8 +16,8 @@ class StockAdjustment {
 	var $SerialItems; /*array to hold controlled items*/
 	var $AdjustmentReason;
 
-	//Constructor
-	function __construct(){
+	/// @todo move this in the definitions above
+	function __construct() {
 		$this->StockID = '';
 		$this->StockLocation = '';
 		$this->Controlled = '';
@@ -30,9 +31,5 @@ class StockAdjustment {
 		$this->Tag=0;
 		$this->AdjustmentReason=0;
 		$this->Narrative='';
-	}
-
-	function StockAdjustment() {
-		self::__construct();
 	}
 }

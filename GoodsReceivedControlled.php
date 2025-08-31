@@ -1,12 +1,12 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Receive Controlled Items');
-/* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
@@ -18,7 +18,6 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
-
 
 if (!isset($_SESSION['PO'.$identifier])) {
 	/* This page can only be called with a purchase order number for receiving*/

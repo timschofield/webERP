@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL Change of Retail Price -> Step 01');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
@@ -14,10 +16,6 @@ if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);
 } elseif(isset($_POST['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_POST['SelectedPriceChange']);
-}
-
-if (isset($Errors)) {
-	unset($Errors);
 }
 
 $Errors = array();

@@ -1,11 +1,11 @@
 <?php
 
-include('includes/session.php');
-$Title = __('Geocode Maintenance');
-include('includes/header.php');
+require(__DIR__ . '/includes/session.php');
 
+$Title = __('Geocode Maintenance');
 $ViewTopic = 'Setup';
 $BookMark = '';
+include('includes/header.php');
 
 if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_GET['SelectedParam'];
@@ -13,9 +13,6 @@ if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_POST['SelectedParam'];
 }
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = array();
 $InputError = 0;
 

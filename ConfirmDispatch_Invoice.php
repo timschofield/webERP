@@ -10,10 +10,12 @@
 
 /* Creates sales invoices from entered sales orders based on the quantities dispatched that can be modified */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Confirm Dispatches and Invoice An Order');
 $ViewTopic = 'ARTransactions';
 $BookMark = 'ConfirmInvoice';
@@ -53,7 +55,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 
 	$_SESSION['ProcessingOrder'] = (int)$_GET['OrderNumber'];
 	$_GET['OrderNumber'] = (int)$_GET['OrderNumber'];
-	$_SESSION['Items' . $identifier] = new cart;
+	$_SESSION['Items' . $identifier] = new Cart;
 
 	/*read in all the guff from the selected order into the Items cart */
 
@@ -513,7 +515,7 @@ It seems unfair to charge the customer twice for freight if the order
 was not fully delivered the first time ?? */
 
 if (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_SESSION['Items' . $identifier]->FreightCost == 0) {
-	if ($_SESSION['DoFreightCalc'] == True) {
+	if ($_SESSION['DoFreightCalc'] == true) {
 		list($FreightCost, $BestShipper) = CalcFreightCost($_SESSION['Items' . $identifier]->total, $_SESSION['Items' . $identifier]->BrAdd2, $_SESSION['Items' . $identifier]->BrAdd3, $_SESSION['Items' . $identifier]->BrAdd4, $_SESSION['Items' . $identifier]->BrAdd5, $_SESSION['Items' . $identifier]->BrAdd6, $_SESSION['Items' . $identifier]->totalVolume, $_SESSION['Items' . $identifier]->totalWeight, $_SESSION['Items' . $identifier]->Location, $_SESSION['Items' . $identifier]->DefaultCurrency);
 		$_SESSION['Items' . $identifier]->ShipVia = $BestShipper;
 	}
@@ -551,7 +553,7 @@ echo '<tr>
 	<td class="number" colspan="2">', __('Order Freight Cost'), '</td>
 	<td class="number">', locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 
-if ($_SESSION['DoFreightCalc'] == True) {
+if ($_SESSION['DoFreightCalc'] == true) {
 	echo '<td class="number" colspan="2">', __('Recalculated Freight Cost'), '</td>
 		<td class="number">', locale_number_format($FreightCost, $_SESSION['Items' . $identifier]->CurrDecimalPlaces), '</td>';
 } else {
@@ -1021,7 +1023,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 			$MBFlag = $MyRow[0];
 
 			if ($MBFlag == 'B' or $MBFlag == 'M') {
-				$Assembly = False;
+				$Assembly = false;
 
 				/* Need to get the current location quantity
 				 will need it later for the stock movement */
@@ -1051,7 +1053,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 			} elseif ($MBFlag == 'A') { /* its an assembly */
 				/*Need to get the BOM for this part and make
 				 stock moves for the components then update the Location stock balances */
-				$Assembly = True;
+				$Assembly = true;
 				$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,

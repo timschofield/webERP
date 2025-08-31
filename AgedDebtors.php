@@ -1,7 +1,9 @@
 <?php
- /* Lists customer account balances in detail or summary in selected currency */
 
-include('includes/session.php');
+/* Lists customer account balances in detail or summary in selected currency */
+
+require(__DIR__ . '/includes/session.php');
+
 use Dompdf\Dompdf;
 
 if(isset($_POST['PrintPDF']) or isset($_POST['View'])

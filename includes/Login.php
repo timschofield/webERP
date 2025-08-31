@@ -22,13 +22,13 @@ if (KLwebERPScriptCalledFromTEST()) {
 }
 
 // Display demo user name and password within login form if $AllowDemoMode is true
-if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))) {
+if ((isset($AllowDemoMode)) and ($AllowDemoMode == true) and (!isset($DemoText))) {
 	$DemoText = __('Login as user') . ': <i>' . __('admin') . '</i><br />' . __('with password') . ': <i>' . __('weberp') . '</i>';
 } elseif (!isset($DemoText)) {
 	$DemoText = '';
 }
 
-echo '<!DOCTYPE html>';
+echo "<!DOCTYPE html>\n";
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<head>
@@ -101,7 +101,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 if ($AllowCompanySelectionBox != 'Hide') {
 	echo '<label for="CompanySelect">', __('Company'), ':</label>';
 	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
-	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
 	} else {
 		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:15px;">';
@@ -118,7 +118,7 @@ while (false !== ($CompanyEntry = $DirHandle->read())) {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}
 		if ($AllowCompanySelectionBox != 'Hide'){
-			if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+			if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == true)) {
 				if (file_exists('companies/' . $CompanyEntry . '/logo.png')) {
 					echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
 				} else if (file_exists('companies/' . $CompanyEntry . '/logo.jpg')) {

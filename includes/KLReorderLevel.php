@@ -238,41 +238,32 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 	}
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.categoryid,
-					stockmaster.description,
-					(SELECT locstock.loccode
-						FROM locstock, locations
-						WHERE stockmaster.stockid = locstock.stockid 
-							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-							AND locstock.quantity < locstock.reorderlevel
-						ORDER BY reorderlevel DESC
-						LIMIT 1) AS locationneeded
-			FROM stockmaster
-			WHERE stockmaster.categoryid NOT IN ('SHDISP', 'SHPACK')
-				AND EXISTS (SELECT *
-							FROM locstock, locations
-							WHERE stockmaster.stockid = locstock.stockid 
-								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-								AND locstock.quantity < locstock.reorderlevel)
-				AND EXISTS (SELECT *
-							FROM locstock, locations
-							WHERE stockmaster.stockid = locstock.stockid 
-								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-								AND locstock.quantity > 0)
-				AND EXISTS (SELECT *
-						FROM locstock
-						WHERE stockmaster.stockid = locstock.stockid 
-							AND locstock.loccode = " . CODE_KANTOR . "
-							AND locstock.quantity = 0)
-				AND NOT EXISTS (SELECT *
-						FROM loctransfers 
-						WHERE  pendingqty > 0
-							AND loctransfers.stockid =  stockmaster.stockid)
-			ORDER BY stockmaster.stockid";
+
+	/* Find all the items needed in some shops (RL > QOH), available in other shops (QOH > 0), with QOH = 0 at kantor, and no pending transfers */
+	$SQL = "SELECT DISTINCT sm.stockid,
+				sm.categoryid,
+				sm.description,
+				needed_loc.loccode AS locationneeded
+			FROM stockmaster sm
+			INNER JOIN locstock kantor_stock ON sm.stockid = kantor_stock.stockid 
+				AND kantor_stock.loccode = " . CODE_KANTOR . "
+				AND kantor_stock.quantity = 0
+			INNER JOIN (
+				SELECT ls1.stockid,
+					MAX(CASE WHEN ls1.quantity < ls1.reorderlevel THEN ls1.loccode END) AS loccode
+				FROM locstock ls1
+				INNER JOIN locations loc1 ON ls1.loccode = loc1.loccode
+				WHERE loc1.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				GROUP BY ls1.stockid
+				HAVING COUNT(CASE WHEN ls1.quantity < ls1.reorderlevel THEN 1 END) > 0
+					AND COUNT(CASE WHEN ls1.quantity > 0 THEN 1 END) > 0
+				ORDER BY ls1.reorderlevel
+			) needed_loc ON sm.stockid = needed_loc.stockid
+			LEFT JOIN loctransfers lt ON sm.stockid = lt.stockid AND lt.pendingqty > 0
+			WHERE sm.categoryid NOT IN ('SHDISP', 'SHPACK')
+			AND lt.stockid IS NULL
+			ORDER BY sm.stockid";
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
@@ -326,39 +317,39 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					// 1st: shops with all collection = true
 					// 2nd: shops with all collection = false (small shops or slow shops)
 					// 3rd: shops with higher sales of the item
-					// 4rd: shops with higer sales in general
+					// 4th: shops with higher sales in general
 
 					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
-						$OrderBy = " locations.alltestitems DESC, ";
+						$OrderBy = " loc.alltestitems DESC, ";
 					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
-						$OrderBy = " locations.allstableitems DESC, ";
+						$OrderBy = " loc.allstableitems DESC, ";
 					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
-						$OrderBy = " locations.allnopoitems DESC, ";
+						$OrderBy = " loc.allnopoitems DESC, ";
 					}else{
 						$OrderBy = "";
 					}
-					$DistributionSQL = "SELECT locstock.loccode, 
-											locstock.reorderlevel AS oldrl
-										FROM locstock, locations
-										WHERE  locstock.loccode = locations.loccode
-											AND locstock.stockid = '" . $MyRow['stockid'] . "'
-											AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-											AND locstock.reorderlevel > 0 
-										ORDER BY locations.priority ASC, ".
+					// Optimized DistributionSQL query - eliminates correlated subquery for better performance
+					$DistributionSQL = "SELECT ls.loccode,
+											ls.reorderlevel AS oldrl,
+											COALESCE(sales_data.sales_count, 0) as sales_count
+										FROM locstock ls
+										INNER JOIN locations loc ON ls.loccode = loc.loccode
+										LEFT JOIN (
+											SELECT so.fromstkloc,
+												   COUNT(sod.qtyinvoiced) as sales_count
+											FROM salesorders so
+											INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+											WHERE sod.stkcode = '" . $MyRow['stockid'] . "'
+											  AND sod.completed = 1
+											  AND so.orddate >= '" . $StartDate . "'
+											GROUP BY so.fromstkloc
+										) sales_data ON ls.loccode = sales_data.fromstkloc
+										WHERE ls.stockid = '" . $MyRow['stockid'] . "'
+											AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+											AND ls.reorderlevel > 0
+										ORDER BY loc.priority ASC, ".
 												$OrderBy ."
-												(SELECT COUNT(qtyinvoiced)
-													FROM salesorderdetails, salesorders
-													WHERE salesorderdetails.orderno = salesorders.orderno
-														AND salesorderdetails.completed = 1
-														AND salesorders.orddate >= '". $StartDate . "'
-														AND salesorders.fromstkloc = locstock.loccode
-														AND salesorderdetails.stkcode = '". $MyRow['stockid'] . "') DESC, 
-												(SELECT COUNT(qtyinvoiced)
-													FROM salesorderdetails, salesorders
-													WHERE salesorderdetails.orderno = salesorders.orderno
-														AND salesorderdetails.completed = 1
-														AND salesorders.orddate >= '". $StartDate . "'
-														AND salesorders.fromstkloc = locstock.loccode) DESC";
+												sales_data.sales_count DESC";
 														
 					$DistributionResult = DB_query($DistributionSQL);
 					$LocationsToDistribute = DB_num_rows($DistributionResult);
@@ -455,26 +446,37 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 **************************************************************************************************************/
 function WorstLocationForItem($StockID, $Kind, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$maxdays));
-	$SQL = "SELECT locstock.loccode
-			FROM locstock, locations
-			WHERE locstock.loccode = locations.loccode
-				AND locstock.stockid = '" . $StockID . "'";
-
+	
+	// Build the quantity condition based on $Kind
+	$QuantityCondition = "";
 	if ($Kind == "OVERSTOCK"){
-		$SQL = $SQL . " AND locstock.quantity > locstock.reorderlevel"; 
+		$QuantityCondition = " AND ls.quantity > ls.reorderlevel";
 	}elseif ($Kind == "AVAILABLE"){
-		$SQL = $SQL . " AND locstock.quantity > 0 "; 
+		$QuantityCondition = " AND ls.quantity > 0 ";
 	}
-
-	$SQL = $SQL . "	AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-					ORDER BY locations.priority DESC,
-					(SELECT COUNT(qtyinvoiced)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDate . "'
-							AND salesorders.fromstkloc = locstock.loccode
-							AND salesorderdetails.stkcode = '". $StockID . "') ASC";
+	
+	// Optimized query using LEFT JOIN and single aggregation to eliminate correlated subquery
+	$SQL = "SELECT ls.loccode,
+				   loc.priority,
+				   COALESCE(sales_count.sales_total, 0) as sales_count
+			FROM locstock ls
+			INNER JOIN locations loc ON ls.loccode = loc.loccode
+			LEFT JOIN (
+				SELECT so.fromstkloc,
+					   COUNT(sod.qtyinvoiced) as sales_total
+				FROM salesorders so
+				INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+				WHERE sod.stkcode = '" . $StockID . "'
+				  AND sod.completed = 1
+				  AND so.orddate >= '" . $StartDate . "'
+				GROUP BY so.fromstkloc
+			) sales_count ON ls.loccode = sales_count.fromstkloc
+			WHERE ls.stockid = '" . $StockID . "'"
+			. $QuantityCondition . "
+			  AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			ORDER BY loc.priority DESC, sales_count ASC
+			LIMIT 1";
+			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -496,23 +498,38 @@ function WorstLocationForItem($StockID, $Kind, $maxdays){
 * @return int - The total available quantity.
 **************************************************************************************************************/
 function QtyAvailable($StockID, $Location){
-	$SQL = "SELECT SUM(locstock.quantity) AS total
-			FROM locstock,locations
-			WHERE locstock.stockid = '" . $StockID . "'
-				AND locstock.loccode = locations.loccode";
-	if ($Location == "ALLSHOPS"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
-	}elseif ($Location == "ALLSHOPSANDONLINE"){
-		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
-	}elseif ($Location == "ALL"){
-		$SQL = $SQL . " "; 
-	}else{
-		$SQL = $SQL . " AND locstock.loccode = '". $Location . "'"; 
+	// Optimized query using explicit JOINs and better conditional logic
+	if ($Location == "ALL") {
+		// Simple case: sum all quantities for the stock item across all locations
+		$SQL = "SELECT SUM(quantity) AS total
+				FROM locstock
+				WHERE stockid = '" . $StockID . "'";
+	} elseif ($Location == "ALLSHOPS") {
+		// Join with locations table only when needed for type filtering
+		$SQL = "SELECT SUM(ls.quantity) AS total
+				FROM locstock ls
+				INNER JOIN locations loc ON ls.loccode = loc.loccode
+				WHERE ls.stockid = '" . $StockID . "'
+					AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE;
+	} elseif ($Location == "ALLSHOPSANDONLINE") {
+		// Join with locations table only when needed for type filtering
+		$SQL = "SELECT SUM(ls.quantity) AS total
+				FROM locstock ls
+				INNER JOIN locations loc ON ls.loccode = loc.loccode
+				WHERE ls.stockid = '" . $StockID . "'
+					AND loc.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE;
+	} else {
+		// Specific location: use primary key for fastest access
+		$SQL = "SELECT quantity AS total
+				FROM locstock
+				WHERE stockid = '" . $StockID . "'
+					AND loccode = '" . $Location . "'";
 	}
+	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$Qty = $MyRow['total'];
+		$Qty = $MyRow['total'] ?? 0;
 	}else{
 		$Qty = 0;
 	}
@@ -527,14 +544,16 @@ function QtyAvailable($StockID, $Location){
 * @return int - The count of active locations.
 **************************************************************************************************************/
 function ActiveLocationsForItem($StockID){
-	$SQL = "SELECT COUNT(locstock.loccode) AS total
+	// Optimized query using COUNT(*) for better performance
+	// and leveraging existing indexes
+	$SQL = "SELECT COUNT(*) AS total
 			FROM locstock
-			WHERE locstock.stockid = '" . $StockID . "'
-				AND locstock.reorderlevel > 0";
+			WHERE stockid = '" . $StockID . "'
+				AND reorderlevel > 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$Qty = $MyRow['total'];
+		$Qty = (int)($MyRow['total'] ?? 0);
 	}else{
 		$Qty = 0;
 	}
@@ -560,26 +579,27 @@ function ActiveLocationsForItem($StockID){
 		$EmailText = $EmailText . "Set RL = 0 for not available items." . "\n\n";
 	}
 	
-	$SQL = "SELECT locstock.stockid,
-					stockmaster.description,
-					locstock.reorderlevel
-			FROM locstock, stockmaster, stockcategory, locations
-			WHERE locstock.stockid = stockmaster.stockid
-				AND locstock.loccode = locations.loccode
-				AND stockmaster.discontinued = 0
-				AND stockmaster.categoryid = stockcategory.categoryid
-				AND stockmaster.categoryid != 'SHCONS'
-				AND stockmaster.categoryid != 'SHPACK'
-				AND stockcategory.stocktype = 'F'
-				AND locations.stockreadytosell = 1
-				AND EXISTS (SELECT *
-							FROM locstock, locations loc2
-							WHERE locstock.stockid = stockmaster.stockid
-								AND locstock.loccode = loc2.loccode
-								AND locstock.reorderlevel > 0 
-								AND loc2.stockreadytosell = 1)
-			GROUP BY locstock.stockid
-			HAVING SUM(locstock.quantity) = 0";
+	$SQL = "SELECT sm.stockid,
+					sm.description,
+					MAX(ls.reorderlevel) as reorderlevel
+			FROM stockmaster sm
+			INNER JOIN stockcategory sc ON sm.categoryid = sc.categoryid
+			INNER JOIN locstock ls ON sm.stockid = ls.stockid
+			INNER JOIN locations loc ON ls.loccode = loc.loccode
+			WHERE sm.discontinued = 0
+				AND sm.categoryid NOT IN ('SHCONS', 'SHPACK')
+				AND sc.stocktype = 'F'
+				AND loc.stockreadytosell = 1
+				AND EXISTS (
+					SELECT 1
+					FROM locstock ls2
+					INNER JOIN locations loc2 ON ls2.loccode = loc2.loccode
+					WHERE ls2.stockid = sm.stockid
+						AND ls2.reorderlevel > 0
+						AND loc2.stockreadytosell = 1
+				)
+			GROUP BY sm.stockid, sm.description
+			HAVING SUM(ls.quantity) = 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){

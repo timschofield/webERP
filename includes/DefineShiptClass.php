@@ -1,7 +1,9 @@
 <?php
-/* Definition of the Shipment class to hold all the information for a shipment*/
 
-Class Shipment {
+/**
+ * Class to hold all the information for a shipment
+ */
+class Shipment {
 
 	var $ShiptRef; /*unqique identifier for the shipment */
 	var $LineItems; /*array of objects of class LineDetails using the product id as the pointer */
@@ -16,15 +18,10 @@ Class Shipment {
 	var $CurrDecimalPlaces;
 	var $AccumValue;
 
-	function __construct(){
-	/*Constructor function initialises a new Shipment object */
+	function __construct() {
 		$this->LineItems = array();
 		$this->AccumValue =0;
 		$this->Closed =0;
-	}
-
-	function Shipment() {
-		self::__construct();
 	}
 
 	function Add_To_Shipment($PODetailItem,
@@ -61,8 +58,7 @@ Class Shipment {
 		Return 1;
 	}
 
-
-	function Remove_From_Shipment($PODetailItem){
+	function Remove_From_Shipment($PODetailItem) {
 
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced==0){
 
@@ -73,10 +69,9 @@ Class Shipment {
 			prnMsg(__('This shipment line has a quantity invoiced and already charged to the shipment - it cannot now be removed'),'warn');
 		}
 	}
+}
 
-} /* end of class defintion */
-
-Class LineDetails {
+class LineDetails {
 
 	var $PODetailItem;
 	var $OrderNo;
@@ -91,8 +86,7 @@ Class LineDetails {
 	var $StdCostUnit;
 	var $DecimalPlaces;
 
-
-	function __construct ($PODetailItem,
+	function __construct($PODetailItem,
 							$OrderNo,
 							$StockID,
 							$ItemDescr,
@@ -103,9 +97,8 @@ Class LineDetails {
 							$QuantityOrd,
 							$QuantityRecd,
 							$StdCostUnit,
-							$DecimalPlaces=2){
+							$DecimalPlaces=2) {
 
-	/* Constructor function to add a new LineDetail object with passed params */
 		$this->PODetailItem = $PODetailItem;
 		$this->OrderNo = $OrderNo;
 		$this->StockID =$StockID;

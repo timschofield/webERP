@@ -10,7 +10,6 @@
  * 
  ************************************************************************************************************************************************************/
 
-// BEGIN: Functions division ---------------------------------------------------
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
@@ -23,10 +22,8 @@ function CashFlowsActivityName($Activity) {
 		default: return '<b>' . __('Unknown') . '</b>';
 	}
 }
-// END: Functions division -----------------------------------------------------
 
-// BEGIN: Procedure division ---------------------------------------------------
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('General Ledger Accounts');
 $ViewTopic = 'GeneralLedger';

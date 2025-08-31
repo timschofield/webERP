@@ -1,11 +1,14 @@
 <?php
-// Z_RebuildSalesAnalysis.php
+
 // Script to rebuild sales analysis records from stock movements
+
 $PageSecurity = 15;
-include('includes/session.php');
+
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Rebuild sales analysis Records');
 $ViewTopic = 'SpecialUtilities';
-$BookMark = basename(__FILE__, '.php'); ;
+$BookMark = basename(__FILE__, '.php');
 include('includes/header.php');
 
 echo '<br /><br />' . __('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');

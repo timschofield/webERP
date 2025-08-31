@@ -1292,7 +1292,8 @@ function PettyCashStatus($Currency){
 * @return void - Outputs HTML table and may insert KPI values
 **************************************************************************************************************/
 function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
-	
+
+	/* SQL optimized by Claude Sonnet 4.0 23/08/2025 */
 	if ($NumDaysA == "YTD"){
 		// we need to translate YTD to a number of days
 		// As suggested by OpenAI ChatGPT ;-)
@@ -1301,6 +1302,7 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 		// Extract the year of yesterday
 		$Current_year = date('Y', strtotime("-1 days"));
 		// Create a timestamp for the first day of the year
+	
 		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $Current_year);
 		// Calculate the number of seconds between the two timestamps
 		$seconds_diff = $Current_timestamp - $first_day_timestamp;
@@ -1352,92 +1354,114 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	$TotalOldRent = 0;
 
 	if (($Typereport == "Shop") OR ($Typereport == "Online")) {
-		// Define common sales subquery parts
-		$SalesSubqueryA = "(SELECT SUM(linenetprice)/currencies.rate
-							FROM salesorderdetails, salesorders, currencies
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND debtorsmaster.currcode = currencies.currabrev
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.debtorno = debtorsmaster.debtorno) AS salesA";
-
-		$SalesSubqueryB = "(SELECT SUM(linenetprice)/currencies.rate
-							FROM salesorderdetails, salesorders, currencies
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND debtorsmaster.currcode = currencies.currabrev
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateB . "'
-								AND salesorders.orddate <= '" . $YesterdayB . "'
-								AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB";
-
 		if ($Typereport == "Shop") {
-			$YearlyRentSubquery = "(SELECT locations.klyearlyrent 
-									FROM locations
-									WHERE locations.cashsalecustomer = debtorsmaster.debtorno
-									LIMIT 1) AS yearlyrent";
-
-			$OrderBySubquery = "(SELECT SUM(linenetprice)
-								FROM salesorderdetails, salesorders
-								WHERE salesorderdetails.orderno = salesorders.orderno
-									AND salesorderdetails.completed = 1
-									AND salesorders.orddate >= '" . $StartDateA . "'
-									AND salesorders.orddate <= '" . $YesterdayA . "'
-									AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
-
-			$SQL = "SELECT debtorno,
-						name,
-						{$YearlyRentSubquery},
-						{$SalesSubqueryA},
-						{$SalesSubqueryB}
-					FROM debtorsmaster
-					WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)
-					ORDER BY {$OrderBySubquery}";
+			// Optimized Shop query with separate subqueries for current and compare periods
+			$SQL = "SELECT dm.debtorno,
+						dm.name,
+						COALESCE(loc.klyearlyrent, 0) AS yearlyrent,
+						COALESCE(current_sales.sales, 0) AS salesA,
+						COALESCE(compare_sales.sales, 0) AS salesB
+					FROM debtorsmaster dm
+					LEFT JOIN locations loc ON loc.cashsalecustomer = dm.debtorno
+					LEFT JOIN (
+						SELECT so.debtorno,
+							SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+						FROM salesorders so
+						INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+						INNER JOIN debtorsmaster dm2 ON so.debtorno = dm2.debtorno
+						INNER JOIN currencies c ON dm2.currcode = c.currabrev
+						WHERE so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "'
+							AND so.quotation = 0
+							AND sod.qtyinvoiced > 0
+						GROUP BY so.debtorno
+					) current_sales ON dm.debtorno = current_sales.debtorno
+					LEFT JOIN (
+						SELECT so.debtorno,
+							SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+						FROM salesorders so
+						INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+						INNER JOIN debtorsmaster dm2 ON so.debtorno = dm2.debtorno
+						INNER JOIN currencies c ON dm2.currcode = c.currabrev
+						WHERE so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'
+							AND so.quotation = 0
+							AND sod.qtyinvoiced > 0
+						GROUP BY so.debtorno
+					) compare_sales ON dm.debtorno = compare_sales.debtorno
+					WHERE (dm.typeid = 2 OR dm.typeid = 11)
+						AND (current_sales.sales > 0 OR compare_sales.sales > 0)
+					ORDER BY COALESCE(current_sales.sales, 0) DESC";
 		} else {
-			// Online type
-			$SQL = "SELECT debtorno,
-						name,
+			// Optimized Online query with separate subqueries for current and compare periods
+			$SQL = "SELECT dm.debtorno,
+						CONCAT(dm.name, ' (', dt.typename, ')') AS name,
 						0 AS yearlyrent,
-						{$SalesSubqueryA},
-						{$SalesSubqueryB}
-					FROM debtorsmaster
-					WHERE (debtorsmaster.typeid = 9 OR debtorsmaster.typeid = 10)
-						AND debtorsmaster.debtorno NOT IN ('WEB-WH-IDR', 'WEB-WH-USD', 'WEB-WH-EUR', 'WEB-WH-AUD')
-					ORDER BY debtorsmaster.debtorno";
+						COALESCE(current_sales.sales, 0) AS salesA,
+						COALESCE(compare_sales.sales, 0) AS salesB
+					FROM debtorsmaster dm
+					INNER JOIN debtortype dt ON dm.typeid = dt.typeid
+					LEFT JOIN (
+						SELECT so.debtorno,
+							SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+						FROM salesorders so
+						INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+						INNER JOIN debtorsmaster dm2 ON so.debtorno = dm2.debtorno
+						INNER JOIN currencies c ON dm2.currcode = c.currabrev
+						WHERE so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "'
+							AND so.quotation = 0
+							AND sod.qtyinvoiced > 0
+						GROUP BY so.debtorno
+					) current_sales ON dm.debtorno = current_sales.debtorno
+					LEFT JOIN (
+						SELECT so.debtorno,
+							SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+						FROM salesorders so
+						INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+						INNER JOIN debtorsmaster dm2 ON so.debtorno = dm2.debtorno
+						INNER JOIN currencies c ON dm2.currcode = c.currabrev
+						WHERE so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'
+							AND so.quotation = 0
+							AND sod.qtyinvoiced > 0
+						GROUP BY so.debtorno
+					) compare_sales ON dm.debtorno = compare_sales.debtorno
+					WHERE dm.typeid IN (2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20)
+						AND dm.debtorno NOT IN ('WEB-WH-IDR', 'WEB-WH-USD', 'WEB-WH-EUR', 'WEB-WH-AUD')
+						AND (current_sales.sales > 0 OR compare_sales.sales > 0)
+					ORDER BY COALESCE(current_sales.sales, 0) DESC";
 		}
 	} else {
-		// Salesman report
-		$SalesSubqueryA = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.salesperson = salesman.salesmancode) AS salesA";
-
-		$SalesSubqueryB = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateB . "'
-								AND salesorders.orddate <= '" . $YesterdayB . "'
-								AND salesorders.salesperson = salesman.salesmancode) AS salesB";
-
-		$OrderBySubquery = "(SELECT SUM(linenetprice)
-							FROM salesorderdetails, salesorders
-							WHERE salesorderdetails.orderno = salesorders.orderno
-								AND salesorderdetails.completed = 1
-								AND salesorders.orddate >= '" . $StartDateA . "'
-								AND salesorders.orddate <= '" . $YesterdayA . "'
-								AND salesorders.salesperson = salesman.salesmancode) DESC";
-
-		$SQL = "SELECT salesmancode,
-					salesmanname,
-					{$SalesSubqueryA},
-					{$SalesSubqueryB}
-				FROM salesman
-				WHERE salesman.current = 1
-				ORDER BY {$OrderBySubquery}";
+		// Optimized Salesman query with separate subqueries for current and compare periods
+		$SQL = "SELECT s.salesmancode,
+					s.salesmanname,
+					COALESCE(current_sales.sales, 0) AS salesA,
+					COALESCE(compare_sales.sales, 0) AS salesB
+				FROM salesman s
+				LEFT JOIN (
+					SELECT so.salesperson,
+						SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+					FROM salesorders so
+					INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+					INNER JOIN debtorsmaster dm ON so.debtorno = dm.debtorno
+					INNER JOIN currencies c ON dm.currcode = c.currabrev
+					WHERE so.orddate >= '" . $StartDateA . "' AND so.orddate <= '" . $YesterdayA . "'
+						AND so.quotation = 0
+						AND sod.qtyinvoiced > 0
+					GROUP BY so.salesperson
+				) current_sales ON s.salesmancode = current_sales.salesperson
+				LEFT JOIN (
+					SELECT so.salesperson,
+						SUM(sod.qtyinvoiced * sod.unitprice * (1 - sod.discountpercent/100) / c.rate) AS sales
+					FROM salesorders so
+					INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+					INNER JOIN debtorsmaster dm ON so.debtorno = dm.debtorno
+					INNER JOIN currencies c ON dm.currcode = c.currabrev
+					WHERE so.orddate >= '" . $StartDateB . "' AND so.orddate <= '" . $YesterdayB . "'
+						AND so.quotation = 0
+						AND sod.qtyinvoiced > 0
+					GROUP BY so.salesperson
+				) compare_sales ON s.salesmancode = compare_sales.salesperson
+				WHERE s.current = 1
+					AND (current_sales.sales > 0 OR compare_sales.sales > 0)
+				ORDER BY COALESCE(current_sales.sales, 0) DESC";
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){

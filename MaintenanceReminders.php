@@ -1,5 +1,6 @@
 <?php
-//this script can be set to run from cron
+
+// this script can be set to run from cron
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -7,9 +8,9 @@ KL RICARD MODIFICATIONS:
 *****************************************************************************************/
 
 $AllowCronJobToBeRun = true;
-include('includes/session.php');
-$Title = __('Send maintenance reminders');
 
+require(__DIR__ . '/includes/session.php');
+$Title = __('Send maintenance reminders');
 
 $SQL = "SELECT description,
 			taskdescription,

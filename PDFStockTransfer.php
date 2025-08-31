@@ -2,7 +2,7 @@
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 if (!isset($_GET['TransferNo'])){
 	if (isset($_POST['TransferNo'])){
@@ -87,7 +87,7 @@ if (DB_num_rows($Result) == 0){
 	$Title = __('Print Stock Transfer - Error');
 	include('includes/header.php');
 	prnMsg(__('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="PDFStockTransfer.php">' . __('Try Again')  . '</a>';
+	echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again')  . '</a>';
 	include('includes/footer.php');
 	exit();
 }
@@ -100,11 +100,11 @@ while ($MyRow=DB_fetch_array($Result)) {
 	$Quantity=-$MyRow['qty'];
 	$Description=$MyRow['description'];
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
+	$pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
+	$pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
+	$pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
+	$pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
+	$pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
 
 	$YPos=$YPos-$LineHeight;
 
@@ -128,16 +128,16 @@ while ($MyRow=DB_fetch_array($Result)) {
 				AND stockmoves.transno='" .$_GET['TransferNo']. "'";
 		$GetStockMoveResult = DB_query($SQL,__('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
 		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, __('Lot/Serial:'));
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
+			$pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, __('Lot/Serial:'));
+			$pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
+			$pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
 			$YPos=$YPos-$LineHeight;
 
 			if ($YPos < $Bottom_Margin + $LineHeight){
 				include('includes/PDFStockTransferHeader.php');
 			} //while SerialStockMoves
 		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
+		$pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
 		$YPos=$YPos-$LineHeight;
 		if ($YPos < $Bottom_Margin + $LineHeight){
 			include('includes/PDFStockTransferHeader.php');
@@ -145,10 +145,10 @@ while ($MyRow=DB_fetch_array($Result)) {
 	}
 
 }
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, __('Date of transfer: ').$Date);
+$pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, __('Date of transfer: ').$Date);
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, __('Signed for').' '.$From.'______________________');
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, __('Signed for').' '.$To.'______________________');
+$pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, __('Signed for').' '.$From.'______________________');
+$pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, __('Signed for').' '.$To.'______________________');
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();

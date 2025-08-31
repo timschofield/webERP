@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('KL DataBase Maintenance');
 include('includes/header.php');
+
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLBoards.php');

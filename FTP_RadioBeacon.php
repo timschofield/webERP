@@ -2,9 +2,11 @@
 
 /*Variables required to configure this script must be set in config.php */
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title=__('FTP order to Radio Beacon');
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.php');
 
 echo '<p class="page_title_text">
@@ -198,7 +200,6 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			} else {
 				$FileNumber=1;
 			}
-
 
 			$fp = fopen($FileCounter,'w');
 			fwrite($fp, $FileNumber);

@@ -1,5 +1,7 @@
 <?php
 
+// Entry of users and security settings of users.
+
 /**************************************************************************************
 *
 * KL RICARD: Send emails to admin, allow usage of group os scripts Personalia
@@ -8,12 +10,16 @@
 *
 ***************************************************************************************/
 
-// Entry of users and security settings of users.
+require(__DIR__ . '/includes/session.php');
 
-include('includes/session.php');
 $Title = __('Users Maintenance (except SPG)');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserMaintenance';
+
+// KL RICARD : Include KL scripts needed 
+include('includes/KLGeneralFunctions.php');
+include('includes/KLEmails.php');
+// KL RICARD END
 
 if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	if($_POST['UserID'] == $_POST['ID']) {
@@ -26,11 +32,6 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 }
 
 include('includes/header.php');
-
-// KL RICARD : Include KL scripts needed 
-include('includes/KLGeneralFunctions.php');
-include('includes/KLEmails.php');
-// KL RICARD END
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
@@ -121,7 +122,7 @@ if(isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg(__('The password entered must be at least 5 characters long'), 'error');
 		}
-	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= False) {
+	} elseif(mb_strstr($_POST['Password'],$_POST['UserID'])!= false) {
 		$InputError = 1;
 		prnMsg(__('The password cannot contain the user id'), 'error');
 	} elseif((mb_strlen($_POST['Cust'] ?? '')>0)
@@ -742,7 +743,7 @@ echo '<field>
 		<label for="Theme">' . __('Theme') . ':</label>
 		<select required="required" name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+$ThemeDirectories = scandir($PathPrefix . 'css/');
 
 if (!isset($_POST['Theme'])) {
 	$_POST['Theme'] = $DefaultTheme;

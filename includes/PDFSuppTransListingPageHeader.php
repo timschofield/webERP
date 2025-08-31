@@ -1,4 +1,5 @@
 <?php
+
 if ($PageNumber>1){
 	$pdf->newPage();
 }
@@ -9,7 +10,7 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$Left_Margin,$YPos,0,50);
 
 $FontSize=15;
 
-Switch ($_POST['TransType']) {
+switch ($_POST['TransType']) {
 	case 20:
 		$TransType=__('Supplier Invoices');
 		break;

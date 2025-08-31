@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
 
 $Title = __('Authorise Purchase Orders');
 $ViewTopic = 'PurchaseOrdering';
@@ -10,9 +10,9 @@ include('includes/header.php');
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .
 	 '" alt="" />' . ' ' . $Title . '</p>';
 
-$EmailSQL="SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
+$EmailSQL = "SELECT email FROM www_users WHERE userid='".$_SESSION['UserID']."'";
 $EmailResult = DB_query($EmailSQL);
-$EmailRow=DB_fetch_array($EmailResult);
+$EmailRow = DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
 	foreach ($_POST as $key => $Value) {

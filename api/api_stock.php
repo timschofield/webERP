@@ -1,143 +1,143 @@
 <?php
 
-/* Check that the stock code*/
-	function VerifyStockCode($StockCode, $i, $Errors) {
-		$Searchsql = "SELECT count(stockid)
-    				  FROM stockmaster
-	    			  WHERE stockid='".$StockCode."'";
-		$SearchResult = DB_query($Searchsql);
-		$Answer = DB_fetch_array($SearchResult);
-		if ($Answer[0]>0) {
-			$Errors[$i] = StockCodeAlreadyExists;
-		}
-		return $Errors;
+/** Check that the stock code */
+function VerifyStockCode($StockCode, $i, $Errors) {
+	$Searchsql = "SELECT count(stockid)
+				  FROM stockmaster
+				  WHERE stockid='".$StockCode."'";
+	$SearchResult = DB_query($Searchsql);
+	$Answer = DB_fetch_array($SearchResult);
+	if ($Answer[0]>0) {
+		$Errors[$i] = StockCodeAlreadyExists;
 	}
+	return $Errors;
+}
 
-/* Check that the stock code exists*/
-	function VerifyStockCodeExists($StockCode, $i, $Errors) {
-		$Searchsql = "SELECT count(stockid)
-				      FROM stockmaster
-				      WHERE stockid='".$StockCode."'";
-		$SearchResult = DB_query($Searchsql);
-		$Answer = DB_fetch_array($SearchResult);
-		if ($Answer[0]==0) {
-			$Errors[$i] = StockCodeDoesntExist;
-		}
-		return $Errors;
+/** Check that the stock code exists */
+function VerifyStockCodeExists($StockCode, $i, $Errors) {
+	$Searchsql = "SELECT count(stockid)
+				  FROM stockmaster
+				  WHERE stockid='".$StockCode."'";
+	$SearchResult = DB_query($Searchsql);
+	$Answer = DB_fetch_array($SearchResult);
+	if ($Answer[0]==0) {
+		$Errors[$i] = StockCodeDoesntExist;
 	}
+	return $Errors;
+}
 
 /* Verify the category exists */
-	function VerifyStockCategoryExists($StockCategory, $i, $Errors) {
-		$Searchsql = "SELECT count(categoryid)
-				      FROM stockcategory
-				      WHERE categoryid='".$StockCategory."'";
-		$SearchResult = DB_query($Searchsql);
-		$Answer = DB_fetch_array($SearchResult);
-		if ($Answer[0]==0) {
-			$Errors[$i] = StockCategoryDoesntExist;
-		}
-		return $Errors;
+function VerifyStockCategoryExists($StockCategory, $i, $Errors) {
+	$Searchsql = "SELECT count(categoryid)
+				  FROM stockcategory
+				  WHERE categoryid='".$StockCategory."'";
+	$SearchResult = DB_query($Searchsql);
+	$Answer = DB_fetch_array($SearchResult);
+	if ($Answer[0]==0) {
+		$Errors[$i] = StockCategoryDoesntExist;
 	}
+	return $Errors;
+}
 
-/* Check that the description is 50 characters or less long */
-	function VerifyStockDescription($StockDescription, $i, $Errors) {
-		if (mb_strlen($StockDescription)>50) {
-			$Errors[$i] = IncorrectStockDescriptionLength;
-		}
-		return $Errors;
+/** Check that the description is 50 characters or less long */
+function VerifyStockDescription($StockDescription, $i, $Errors) {
+	if (mb_strlen($StockDescription)>50) {
+		$Errors[$i] = IncorrectStockDescriptionLength;
 	}
+	return $Errors;
+}
 
-/* Check that the long description is 256 characters or less long */
-	function VerifyStockLongDescription($StockLongDescription, $i, $Errors) {
-		if (mb_strlen($StockLongDescription)>256) {
-			$Errors[$i] = IncorrectLongStockDescriptionLength;
-		}
-		return $Errors;
+/** Check that the long description is 256 characters or less long */
+function VerifyStockLongDescription($StockLongDescription, $i, $Errors) {
+	if (mb_strlen($StockLongDescription)>256) {
+		$Errors[$i] = IncorrectLongStockDescriptionLength;
 	}
+	return $Errors;
+}
 
-/* Check that the units description is 20 characters or less long */
-	function VerifyUnits($units, $i, $Errors) {
-		if (mb_strlen($units)>20) {
-			$Errors[$i] = IncorrectUnitsLength;
-		}
-		return $Errors;
+/** Check that the units description is 20 characters or fewer */
+function VerifyUnits($units, $i, $Errors) {
+	if (mb_strlen($units)>20) {
+		$Errors[$i] = IncorrectUnitsLength;
 	}
+	return $Errors;
+}
 
 /* Check the mbflag has a valid value */
-	function VerifyMBFlag($mbflag,$i, $Errors) {
-		if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
-			$Errors[$i] = IncorrectMBFlag;
-		}
-		return $Errors;
+function VerifyMBFlag($mbflag,$i, $Errors) {
+	if ($mbflag!='M' and $mbflag!='K' and $mbflag!='A' and $mbflag!='B' and $mbflag!='D' and $mbflag!='G') {
+		$Errors[$i] = IncorrectMBFlag;
 	}
+	return $Errors;
+}
 
-/* Check that the last current cost date is a valid date. The date
+/** Check that the last current cost date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
-	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
-		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$Result = DB_query($SQL);
-		$MyRow=DB_fetch_array($Result);
-		$DateFormat=$MyRow[0];
-		if (mb_strstr('/',$PeriodEnd)) {
-			$Date_Array = explode('/',$PeriodEnd);
-		} elseif (mb_strstr('.',$PeriodEnd)) {
-			$Date_Array = explode('.',$PeriodEnd);
-		}
-		if ($DateFormat=='d/m/Y') {
-			$Day=$DateArray[0];
-			$Month=$DateArray[1];
-			$Year=$DateArray[2];
-		} elseif ($DateFormat=='m/d/Y') {
-			$Day=$DateArray[1];
-			$Month=$DateArray[0];
-			$Year=$DateArray[2];
-		} elseif ($DateFormat=='Y/m/d') {
-			$Day=$DateArray[2];
-			$Month=$DateArray[1];
-			$Year=$DateArray[0];
-		} elseif ($DateFormat=='d.m.Y') {
-			$Day=$DateArray[0];
-			$Month=$DateArray[1];
-			$Year=$DateArray[2];
-		}
-		if (!checkdate(intval($Month), intval($Day), intval($Year))) {
-			$Errors[$i] = InvalidCurCostDate;
-		}
-		return $Errors;
+function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
+	$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+	$Result = DB_query($SQL);
+	$MyRow=DB_fetch_array($Result);
+	$DateFormat=$MyRow[0];
+	if (mb_strstr('/',$PeriodEnd)) {
+		$Date_Array = explode('/',$PeriodEnd);
+	} elseif (mb_strstr('.',$PeriodEnd)) {
+		$Date_Array = explode('.',$PeriodEnd);
 	}
+	if ($DateFormat=='d/m/Y') {
+		$Day=$DateArray[0];
+		$Month=$DateArray[1];
+		$Year=$DateArray[2];
+	} elseif ($DateFormat=='m/d/Y') {
+		$Day=$DateArray[1];
+		$Month=$DateArray[0];
+		$Year=$DateArray[2];
+	} elseif ($DateFormat=='Y/m/d') {
+		$Day=$DateArray[2];
+		$Month=$DateArray[1];
+		$Year=$DateArray[0];
+	} elseif ($DateFormat=='d.m.Y') {
+		$Day=$DateArray[0];
+		$Month=$DateArray[1];
+		$Year=$DateArray[2];
+	}
+	if (!checkdate(intval($Month), intval($Day), intval($Year))) {
+		$Errors[$i] = InvalidCurCostDate;
+	}
+	return $Errors;
+}
 
-/* Verify that the actual cost figure is numeric */
-	function VerifyActualCost($ActualCost, $i, $Errors) {
-		if (!is_numeric($ActualCost)) {
-			$Errors[$i] = InvalidActualCost;
-		}
-		return $Errors;
+/** Verify that the actual cost figure is numeric */
+function VerifyActualCost($ActualCost, $i, $Errors) {
+	if (!is_numeric($ActualCost)) {
+		$Errors[$i] = InvalidActualCost;
 	}
+	return $Errors;
+}
 
-/* Verify that the last cost figure is numeric */
-	function VerifyLastCost($LastCost, $i, $Errors) {
-		if (!is_numeric($LastCost)) {
-			$Errors[$i] = InvalidLastCost;
-		}
-		return $Errors;
+/** Verify that the last cost figure is numeric */
+function VerifyLastCost($LastCost, $i, $Errors) {
+	if (!is_numeric($LastCost)) {
+		$Errors[$i] = InvalidLastCost;
 	}
+	return $Errors;
+}
 
-/* Verify that the material cost figure is numeric */
-	function VerifyMaterialCost($MaterialCost, $i, $Errors) {
-		if (!is_numeric($MaterialCost)) {
-			$Errors[$i] = InvalidMaterialCost;
-		}
-		return $Errors;
+/** Verify that the material cost figure is numeric */
+function VerifyMaterialCost($MaterialCost, $i, $Errors) {
+	if (!is_numeric($MaterialCost)) {
+		$Errors[$i] = InvalidMaterialCost;
 	}
+	return $Errors;
+}
 
-/* Verify that the labour cost figure is numeric */
-	function VerifyLabourCost($LabourCost, $i, $Errors) {
-		if (!is_numeric($LabourCost)) {
-			$Errors[$i] = InvalidLabourCost;
-		}
-		return $Errors;
+/** Verify that the labour cost figure is numeric */
+function VerifyLabourCost($LabourCost, $i, $Errors) {
+	if (!is_numeric($LabourCost)) {
+		$Errors[$i] = InvalidLabourCost;
 	}
+	return $Errors;
+}
 
 /* Verify that the overhead cost figure is numeric */
 	function VerifyOverheadCost($OverheadCost, $i, $Errors) {

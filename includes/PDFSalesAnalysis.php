@@ -53,14 +53,14 @@ while ($MyRow = DB_fetch_array($Result)){
 
 /*First off check that at least one of the columns of data has some none zero amounts */
 	DB_data_seek($ColsResult,0); /*go back to the beginning */
-	$ThisLineHasOutput=False;   /*assume no output to start with */
+	$ThisLineHasOutput=false;   /*assume no output to start with */
 	while ($Cols = DB_fetch_array($ColsResult)){
 		$ColumnNo ='col' . ((int) $Cols['colno'] + 8);
 		if (abs($MyRow[$ColumnNo])>0.5){
-			$ThisLineHasOutput = True;
+			$ThisLineHasOutput = true;
 		}
 	}
-	if ($ThisLineHasOutput==True){
+	if ($ThisLineHasOutput==true){
 
 		if ($MyRow['col5']!=$GrpData3 && $MyRow['col5']!='0' && $MyRow['col7']!='0'){
 			/*Totals only relevant to GrpByLevel 3 if GrpByLevel 4 also used */
@@ -182,23 +182,23 @@ while ($MyRow = DB_fetch_array($Result)){
 					} else { /* its a calculation need to re-perform on the totals*/
 
 						switch ($Cols['calcoperator']) {
-							Case '/':
+							case '/':
 								if ($AccumLvl1[$Cols['coldenominator']]==0){
 									$TotalCalculation = 0;
 								} else {
 									$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
 								}
 								break;
-							Case '+':
+							case '+':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 								break;
-							Case '-':
+							case '-':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 								break;
-							Case '*':
+							case '*':
 								$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
 								break;
-							Case 'C':
+							case 'C':
 								if ($Cols['constant']==0){
 									$TotalCalculation = 0;
 								} else {
@@ -318,23 +318,23 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl3[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] / $AccumLvl3[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] + $AccumLvl3[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl3[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -369,23 +369,23 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-					Case '/':
+					case '/':
 						if ($AccumLvl2[$Cols['coldenominator']]==0){
 							$TotalCalculation = 0;
 						} else {
 							$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] / $AccumLvl2[$Cols['coldenominator']];
 						}
 						break;
-					Case '+':
+					case '+':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '-':
+					case '-':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] + $AccumLvl2[$Cols['coldenominator']];
 						break;
-					Case '*':
+					case '*':
 						$TotalCalculation = $AccumLvl2[$Cols['colnumerator']] * $Cols['constant'];
 						break;
-					Case 'C':
+					case 'C':
 						if ($Cols['constant']==0){
 							$TotalCalculation = 0;
 						} else {
@@ -418,23 +418,23 @@ if ($LastLine['col3']!='0'){
 			} else { /* its a calculation need to re-perform on the totals*/
 
 				switch ($Cols['calcoperator']) {
-				Case '/':
+				case '/':
 					if ($AccumLvl1[$Cols['coldenominator']]==0){
 						$TotalCalculation = 0;
 					} else {
 						$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] / $AccumLvl1[$Cols['coldenominator']];
 					}
 					break;
-				Case '+':
+				case '+':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
-				Case '-':
+				case '-':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] + $AccumLvl1[$Cols['coldenominator']];
 					break;
-				Case '*':
+				case '*':
 					$TotalCalculation = $AccumLvl1[$Cols['colnumerator']] * $Cols['constant'];
 					break;
-				Case 'C':
+				case 'C':
 					if ($Cols['constant']==0){
 						$TotalCalculation = 0;
 					} else {
@@ -465,23 +465,23 @@ if ($Counter>0){
 		} else { /* its a calculation need to re-perform on the totals*/
 
 			switch ($Cols['calcoperator']) {
-			Case '/':
+			case '/':
 				if ($AccumLvl4[$Cols['coldenominator']]==0){
 					$TotalCalculation = 0;
 				} else {
 					$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] / $AccumLvl4[$Cols['coldenominator']];
 				}
 				break;
-			Case '+':
+			case '+':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
 				break;
-			Case '-':
+			case '-':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] + $AccumLvl4[$Cols['coldenominator']];
 				break;
-			Case '*':
+			case '*':
 				$TotalCalculation = $AccumLvl4[$Cols['colnumerator']] * $Cols['constant'];
 				break;
-			Case 'C':
+			case 'C':
 				if ($Cols['constant']==0){
 					$TotalCalculation = 0;
 				} else {
@@ -514,15 +514,15 @@ if (isset($_GET['ProduceCVSFile'])){
 	while ($MyRow = DB_fetch_row($Result)){
 
 	/*First off check that at least one of the columns of data has some none zero amounts */
-	      $ThisLineHasOutput=False;   /*assume no output to start with */
+	      $ThisLineHasOutput=false;   /*assume no output to start with */
 	      $NumberOfFields = DB_num_rows($ColsResult);
 
 	      for ($i=3; $i<=$NumberOfFields+7; $i++) {
 		     if (abs($MyRow[$i])>0.009){
-			 $ThisLineHasOutput = True;
+			 $ThisLineHasOutput = true;
 		     }
 	      }
-	      if ($ThisLineHasOutput==True){
+	      if ($ThisLineHasOutput==true){
 	      		$Line='';
 			for ($i=0;$i<=$NumberOfFields+7;$i++){
 				if (isset($MyRow[$i])){

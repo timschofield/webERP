@@ -1,8 +1,10 @@
 <?php
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Delete webERP User');
 include('includes/header.php');
+
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 

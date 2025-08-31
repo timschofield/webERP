@@ -1,18 +1,16 @@
 <?php
 
-//The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
+// The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
-include('includes/session.php');
-if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
-if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Price break matrix Maintenance');
 $ViewTopic = 'Sales';
 $BookMark = '';
 include('includes/header.php');
 
-if (isset($Errors)) {
-	unset($Errors);
-}
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);}
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);}
 
 $Errors = array();
 $i=1;
@@ -329,6 +327,7 @@ function GetMySQLMaxDate () {
 			return '9999/12/31';
 	}
 }
+
 function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBreak) {
 
 	/*This is quite complicated - the idea is that prices set up should be unique and there is no way two prices could be returned as valid - when getting a price in includes/GetPrice.php the logic is to first look for a price of the salestype/currency within the effective start and end dates - then if not get the price with a start date prior but a blank end date (the default price). We would not want two prices where one price falls inside another effective date range except in the case of a blank end date - ie no end date - the default price for the currency/salestype.

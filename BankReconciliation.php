@@ -1,13 +1,14 @@
 <?php
-// BankReconciliation.php
+
 // Displays the bank reconciliation for a selected bank account.
 
-include('includes/session.php');
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Bank Reconciliation');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankAccounts';
-
 include('includes/header.php');
+
 include('includes/GLFunctions.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';

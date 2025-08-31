@@ -7,8 +7,8 @@
 *
 ***************************************************************************************/
 
-include('includes/session.php');
-if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
+require(__DIR__ . '/includes/session.php');
+
 $Title = __('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
@@ -18,16 +18,18 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/CountriesArray.php');
 
+if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);}
+
 function Is_ValidAccount($ActNo) {
 
 	if (mb_strlen($ActNo) < 16) {
 		echo __('NZ account numbers must have 16 numeric characters in it');
-		return False;
+		return false;
 	}
 
 	if (!Is_double((double)$ActNo)) {
 		echo __('NZ account numbers entered must use all numeric characters in it');
-		return False;
+		return false;
 	}
 
 	$BankPrefix = mb_substr($ActNo, 0, 2);
@@ -44,20 +46,20 @@ function Is_ValidAccount($ActNo) {
 		case '01':
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1100 and $BranchNumber <= 1199))) {
 				echo __('ANZ branches must be between 0001 and 0999 or between 1100 and 1199') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 			}
 		break;
 		case '02':
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1200 and $BranchNumber <= 1299))) {
 				echo __('Bank Of New Zealand branches must be between 0001 and 0999 or between 1200 and 1299') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
 		case '03':
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1300 and $BranchNumber <= 1399))) {
 				echo __('Westpac Trust branches must be between 0001 and 0999 or between 1300 and 1399') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -65,7 +67,7 @@ function Is_ValidAccount($ActNo) {
 		case '06':
 			if (!(($BranchNumber >= 1 and $BranchNumber <= 999) or ($BranchNumber >= 1400 and $BranchNumber <= 1499))) {
 				echo __('National Bank branches must be between 0001 and 0999 or between 1400 and 1499') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -73,14 +75,14 @@ function Is_ValidAccount($ActNo) {
 		case '08':
 			if (!($BranchNumber >= 6500 and $BranchNumber <= 6599)) {
 				echo __('National Australia branches must be between 6500 and 6599') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
 		case '09':
 			if ($BranchNumber != 0) {
 				echo __('The Reserve Bank branch should be 0000') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -89,7 +91,7 @@ function Is_ValidAccount($ActNo) {
 			//"13" "14" "15", "16", "17", "18", "19", "20", "21", "22", "23", "24":
 			if (!($BranchNumber >= 3000 and $BranchNumber <= 4999)) {
 				echo __('Trust Bank and Regional Bank branches must be between 3000 and 4999') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -97,7 +99,7 @@ function Is_ValidAccount($ActNo) {
 		case '11':
 			if (!($BranchNumber >= 5000 and $BranchNumber <= 6499)) {
 				echo __('Post Office Bank branches must be between 5000 and 6499') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -105,14 +107,14 @@ function Is_ValidAccount($ActNo) {
 		case '25':
 			if (!($BranchNumber >= 2500 and $BranchNumber <= 2599)) {
 				echo __('Countrywide Bank branches must be between 2500 and 2599') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
 		case '29':
 			if (!($BranchNumber >= 2150 and $BranchNumber <= 2299)) {
 				echo __('United Bank branches must be between 2150 and 2299') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -120,7 +122,7 @@ function Is_ValidAccount($ActNo) {
 		case '30':
 			if (!($BranchNumber >= 2900 and $BranchNumber <= 2949)) {
 				echo __('Hong Kong and Shanghai branches must be between 2900 and 2949') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -128,7 +130,7 @@ function Is_ValidAccount($ActNo) {
 		case '31':
 			if (!($BranchNumber >= 2800 and $BranchNumber <= 2849)) {
 				echo __('Citibank NA branches must be between 2800 and 2849') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
@@ -136,14 +138,14 @@ function Is_ValidAccount($ActNo) {
 		case '33':
 			if (!($BranchNumber >= 6700 and $BranchNumber <= 6799)) {
 				echo __('Rural Bank branches must be between 6700 and 6799') . '. ' . __('The branch number used is invalid');
-				return False;
+				return false;
 				exit();
 			}
 		break;
 
 		default:
 			echo __('The prefix') . ' - ' . $BankPrefix . ' ' . __('is not a valid New Zealand Bank') . '.<br />' . __('If you are using webERP outside New Zealand error trapping relevant to your country should be used');
-			return False;
+			return false;
 			exit();
 
 	} // end of first Bank prefix switch
@@ -283,12 +285,12 @@ function Is_ValidAccount($ActNo) {
 	if ($BankPrefix == '25' or $BankPrefix == '33') {
 		if ($CheckSum / 10 - (int)($CheckSum / 10) != 0) {
 			echo '<p>' . __('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
-			return False;
+			return false;
 		}
 	} else {
 		if ($CheckSum / 11 - (int)($CheckSum / 11) != 0) {
 			echo '<p>' . __('The account number entered does not meet the banking check sum requirement and cannot be a valid account number');
-			return False;
+			return false;
 		}
 	}
 
@@ -311,9 +313,6 @@ if (isset($SupplierID)) {
 }
 $InputError = 0;
 
-if (isset($Errors)) {
-	unset($Errors);
-}
 $Errors = Array();
 if (isset($_POST['submit'])) {
 
@@ -410,6 +409,7 @@ if (isset($_POST['submit'])) {
 		$longitude = 0;
 		if ($_SESSION['geocode_integration'] == 1) {
 			// Get the lat/long from our geocoding host
+			/// @todo move getting of geocode info into a dedicated function, and move off google maps
 			$SQL = "SELECT * FROM geocode_param";
 			$Resultgeo = DB_query($SQL);
 			$Row = DB_fetch_array($Resultgeo);
@@ -425,6 +425,7 @@ if (isset($_POST['submit'])) {
 				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 				$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
+				/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
 				$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
 				//			$xml = simplexml_load_file($RequestURL) or die("url not loading");
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
