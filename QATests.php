@@ -245,11 +245,41 @@ if (! isset($_GET['delete'])) {
 			<input type="text" name="Method" title="" size="20" maxlength="20" value="' . $_POST['Method'] . '" />
 			<fieldhelp>' . __('ASTM, ISO, UL or other') . '</fieldhelp>
 		</field>';
-	echo '<field>
-			<label for="GroupBy">' . __('Group By') . ':</label>
-			<input type="text" name="GroupBy" title="" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" />
+	//echo '<field>
+	//		<label for="GroupBy">' . __('Group By') . ':</label>
+	//		<input type="text" name="GroupBy" title="" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" />
+	//		<fieldhelp>' . __('Can be used to group certain Tests on the Product Specification or Certificate of Analysis or left blank') . '</fieldhelp>
+	//	</field>';
+	
+	
+	$result2 = DB_query("SELECT groupname FROM prodspecgroups", $db);
+	// Error if no groups  setup
+	if (DB_num_rows($result2) == 0) {
+		$DataError = 1;
+		echo '<a href="ProdSpecGroups.php" target="_parent">' . _('Setup Product Spec Groups') . '</a>';
+		echo '<tr><td colspan="2">' . prnMsg(_('No Product Spec Groups defined') . '&nbsp;&nbsp;<a href="ProdSpecGroups.php" target="_parent">' . _('Setup Product Spec Groups') . '</a></td></tr>', 'error');
+		include('includes/footer.php');
+		exit();
+	} else {
+		// if OK show select box with available options to choose
+		echo '<field>
+			<label for="Type">' . __('Group By') . ':</label>
+			<td><select title="" name="GroupBy">';
+		while ($myrow = DB_fetch_array($result2)) {
+			if (isset($_POST['GroupBy']) AND $_POST['GroupBy'] == $myrow['groupname']) {
+				echo '<option selected="selected" value="' . $myrow['groupname'] . '">' . $myrow['groupname'] . '</option>';
+			} else {
+				echo '<option value="' . $myrow['groupname'] . '">' . $myrow['groupname'] . '</option>';
+			}
+		} //end while loop
+		DB_data_seek($result2, 0);
+		echo '</select></td></tr>';
+		echo '</select>
 			<fieldhelp>' . __('Can be used to group certain Tests on the Product Specification or Certificate of Analysis or left blank') . '</fieldhelp>
-		</field>';
+			</field>';
+	}
+				
+	
 	echo '<field>
 			<label for="Units">' . __('Units') . ':</label>
 			<input type="text" name="Units" title="" size="20" maxlength="20" value="' . $_POST['Units'] . '" />
