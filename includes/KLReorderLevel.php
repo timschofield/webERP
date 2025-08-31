@@ -455,26 +455,37 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 **************************************************************************************************************/
 function WorstLocationForItem($StockID, $Kind, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$maxdays));
-	$SQL = "SELECT locstock.loccode
-			FROM locstock, locations
-			WHERE locstock.loccode = locations.loccode
-				AND locstock.stockid = '" . $StockID . "'";
-
+	
+	// Build the quantity condition based on $Kind
+	$QuantityCondition = "";
 	if ($Kind == "OVERSTOCK"){
-		$SQL = $SQL . " AND locstock.quantity > locstock.reorderlevel"; 
+		$QuantityCondition = " AND ls.quantity > ls.reorderlevel";
 	}elseif ($Kind == "AVAILABLE"){
-		$SQL = $SQL . " AND locstock.quantity > 0 "; 
+		$QuantityCondition = " AND ls.quantity > 0 ";
 	}
-
-	$SQL = $SQL . "	AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-					ORDER BY locations.priority DESC,
-					(SELECT COUNT(qtyinvoiced)
-						FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno
-							AND salesorderdetails.completed = 1
-							AND salesorders.orddate >= '". $StartDate . "'
-							AND salesorders.fromstkloc = locstock.loccode
-							AND salesorderdetails.stkcode = '". $StockID . "') ASC";
+	
+	// Optimized query using LEFT JOIN and single aggregation to eliminate correlated subquery
+	$SQL = "SELECT ls.loccode,
+				   loc.priority,
+				   COALESCE(sales_count.sales_total, 0) as sales_count
+			FROM locstock ls
+			INNER JOIN locations loc ON ls.loccode = loc.loccode
+			LEFT JOIN (
+				SELECT so.fromstkloc,
+					   COUNT(sod.qtyinvoiced) as sales_total
+				FROM salesorders so
+				INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+				WHERE sod.stkcode = '" . $StockID . "'
+				  AND sod.completed = 1
+				  AND so.orddate >= '" . $StartDate . "'
+				GROUP BY so.fromstkloc
+			) sales_count ON ls.loccode = sales_count.fromstkloc
+			WHERE ls.stockid = '" . $StockID . "'"
+			. $QuantityCondition . "
+			  AND loc.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+			ORDER BY loc.priority DESC, sales_count ASC
+			LIMIT 1";
+			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);

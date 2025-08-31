@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 27, 2025 at 03:37 PM
+-- Generation Time: Aug 31, 2025 at 11:27 AM
 -- Server version: 10.3.39-MariaDB-log
--- PHP Version: 8.4.8
+-- PHP Version: 8.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -4725,7 +4725,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_klemaillastpackacgingtransfer_loccode` (`klemaillastpackacgingtransfer`,`loccode`),
   ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
   ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`),
-  ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`);
+  ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`),
+  ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`);
 
 --
 -- Indexes for table `locationtypes`
@@ -5268,7 +5269,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_completed_orderno` (`completed`,`orderno`),
   ADD KEY `idx_salesorderdetails_actualdispatchdate_orderno` (`actualdispatchdate`,`orderno`),
   ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
-  ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`);
+  ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`);
 
 --
 -- Indexes for table `salesorders`
@@ -5291,7 +5293,8 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_fromstkloc_orddate_salesperson` (`fromstkloc`,`orddate`,`salesperson`),
   ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`),
   ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
-  ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`);
+  ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
+  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`);
 
 --
 -- Indexes for table `salestypes`
