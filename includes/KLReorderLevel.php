@@ -238,41 +238,32 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 	}
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.categoryid,
-					stockmaster.description,
-					(SELECT locstock.loccode
-						FROM locstock, locations
-						WHERE stockmaster.stockid = locstock.stockid 
-							AND locstock.loccode = locations.loccode
-							AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-							AND locstock.quantity < locstock.reorderlevel
-						ORDER BY reorderlevel DESC
-						LIMIT 1) AS locationneeded
-			FROM stockmaster
-			WHERE stockmaster.categoryid NOT IN ('SHDISP', 'SHPACK')
-				AND EXISTS (SELECT *
-							FROM locstock, locations
-							WHERE stockmaster.stockid = locstock.stockid 
-								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-								AND locstock.quantity < locstock.reorderlevel)
-				AND EXISTS (SELECT *
-							FROM locstock, locations
-							WHERE stockmaster.stockid = locstock.stockid 
-								AND locstock.loccode = locations.loccode
-								AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-								AND locstock.quantity > 0)
-				AND EXISTS (SELECT *
-						FROM locstock
-						WHERE stockmaster.stockid = locstock.stockid 
-							AND locstock.loccode = " . CODE_KANTOR . "
-							AND locstock.quantity = 0)
-				AND NOT EXISTS (SELECT *
-						FROM loctransfers 
-						WHERE  pendingqty > 0
-							AND loctransfers.stockid =  stockmaster.stockid)
-			ORDER BY stockmaster.stockid";
+
+	/* Find all the items needed in some shops (RL > QOH), available in other shops (QOH > 0), with QOH = 0 at kantor, and no pending transfers */
+	$SQL = "SELECT DISTINCT sm.stockid,
+				sm.categoryid,
+				sm.description,
+				needed_loc.loccode AS locationneeded
+			FROM stockmaster sm
+			INNER JOIN locstock kantor_stock ON sm.stockid = kantor_stock.stockid 
+				AND kantor_stock.loccode = " . CODE_KANTOR . "
+				AND kantor_stock.quantity = 0
+			INNER JOIN (
+				SELECT ls1.stockid,
+					MAX(CASE WHEN ls1.quantity < ls1.reorderlevel THEN ls1.loccode END) AS loccode
+				FROM locstock ls1
+				INNER JOIN locations loc1 ON ls1.loccode = loc1.loccode
+				WHERE loc1.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				GROUP BY ls1.stockid
+				HAVING COUNT(CASE WHEN ls1.quantity < ls1.reorderlevel THEN 1 END) > 0
+					AND COUNT(CASE WHEN ls1.quantity > 0 THEN 1 END) > 0
+				ORDER BY ls1.reorderlevel
+			) needed_loc ON sm.stockid = needed_loc.stockid
+			LEFT JOIN loctransfers lt ON sm.stockid = lt.stockid AND lt.pendingqty > 0
+			WHERE sm.categoryid NOT IN ('SHDISP', 'SHPACK')
+			AND lt.stockid IS NULL
+			ORDER BY sm.stockid";
+
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
