@@ -17,6 +17,8 @@
 		     docs/developers/RUNNING_TESTS.md
 		-->
 		<env name="TEST_TARGET_PROTOCOL" value="http" />
+		<!-- NB: tests are guaranteed to only work when testing the _current_ codebase.
+		     This variable is not meant to be used for testing servers which run a different branch/commit -->
 		<env name="TEST_TARGET_HOSTNAME" value="localhost" />
 		<env name="TEST_TARGET_PORT" value="" />
 		<env name="TEST_TARGET_BASE_URL" value="/" />

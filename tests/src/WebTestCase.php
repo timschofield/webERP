@@ -181,10 +181,10 @@ class WebTestCase extends TestCase
 
 	protected function assertHasNoElementsMatching(Crawler $crawler, string $cssSelector, string $message = '')
 	{
-		$count = $crawler->filter('body > div.wizard div.error')->count();
+		$count = $crawler->filter($cssSelector)->count();
 		$text = '';
 		if ($count > 0) {
-			$text = $crawler->filter('body > div.wizard div.error')->text();
+			$text = $crawler->filter($cssSelector)->text();
 		}
 		if ($message === '') {
 			$message = "Found unexpected element in page ($cssSelector)";

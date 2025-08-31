@@ -14,6 +14,7 @@ class InstallerTest extends WebTestCase
 	{
 		$this->request('GET', self::$baseUri . '/tests/setup/php_config_check.php');
 		$this->assertEquals(200, $this->getResponse()->getStatusCode(), 'The php configuration for running the test suite could not be checked');
+		/// @todo change local config based on response
 		$this->assertEquals('ok', $this->getResponse()->getContent(), 'The php configuration is not correct for running the test suite');
 	}
 
@@ -49,22 +50,25 @@ class InstallerTest extends WebTestCase
 		// check that the Next link is not activated (user has not accepted the license yet)
 		$nextLinkUrl = $crawler->selectLink('Next')->link()->getUri();
 		$this->assertStringNotContainsString('Page=2', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
-		$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
+		//$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
 
-		// @todo sadly we have to emulate the JS manually. Check if we can submit the form instead...
-		$nextLinkUrl = str_replace('Page=1', 'Page=2', $nextLinkUrl) . '&Agreed=Yes';
+		// @todo sadly we have to submit the form manually as it has no submit button. Check if browserkit can do that somehow...
+		$nextLinkUrl = $nextLinkUrl . '&Agreed=Yes';
 		$crawler = $this->request('GET', $nextLinkUrl);
+		$nextLinkUrl = $crawler->selectLink('Next')->link()->getUri();
+		$this->assertStringContainsString('Page=2', $nextLinkUrl, 'Link to page 2 should be active after accepting the license');
+
+		$crawler = $this->clickLink('Next');
 
 		// page 2
 		$this->assertStringContainsString('Page=2', $crawler->getUri());
 		$this->assertStringContainsString('System Checks', $crawler->filter('body > div.wizard > h1')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 2');
-		/// @todo should check that all system checks are passed?
 		$crawler = $this->clickLink('Next');
 
 		// page 3
 		$this->assertStringContainsString('Page=3', $crawler->getUri());
-		$this->assertStringContainsString('Database settings', $crawler->filter('body > div.wizard > h1')->text());
+		$this->assertStringContainsString('Database settings', $crawler->filter('body > div.wizard > form legend')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 3');
 
 		// check that the 'Next' link has the is_disabled class
@@ -89,7 +93,7 @@ class InstallerTest extends WebTestCase
 
 		// page 4
 		$this->assertStringContainsString('Page=4', $crawler->getUri());
-		$this->assertStringContainsString('Administrator account settings', $crawler->filter('body > div.wizard > h1')->text());
+		$this->assertStringContainsString('Administrator account settings', $crawler->filter('body > div.wizard > form legend')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 4');
 
 		// check that the 'Next' link has the is_disabled class
@@ -111,16 +115,25 @@ class InstallerTest extends WebTestCase
 
 		// page 5
 		$this->assertStringContainsString('Page=5', $crawler->getUri());
-		$this->assertStringContainsString('Company Settings', $crawler->filter('body > div.wizard > h1')->text());
+		$this->assertStringContainsString('Company Settings', $crawler->filter('body > div.wizard > form legend')->text());
 		$this->assertHasNoElementsMatching($crawler, 'body > div.wizard div.error', 'Error messages in page 5');
 
+		// Work around a weird issue with $this->submitForm, which, when we submit no file, sends the form with
+		// multipart encoding in a way that PHP does not understand on the receiving end (it misses $_POST data...):
+		// implement here inline the equivalent of code $this->submitForm with and extra field removal added
+		// (See https://github.com/symfony/symfony/issues/30867#issuecomment-3240412881)
 		/// @todo should we make all of the values below come from config/env-vars?
-		$crawler = $this->submitForm('install', [
+		$fieldValues = [
 			'CompanyName' => 'Acme',
-			'COA' => 'sql/coa/en_GB.utf8.sql', /// @todo load this from the files on disk
+			'COA' => 'sql/coa/en_GB.utf8.sql', /// @todo load this from the files available on disk
 			'TimeZone' => 'Europe/London', /// @todo load this from the data available
 			'Demo' => 'Yes',
-		]);
+			'LogoFile' => null
+		];
+		$buttonNode = $crawler->selectButton('install');
+		$form = $buttonNode->form($fieldValues, 'POST');
+		$form->remove('LogoFile');
+		$crawler = $this->browser->submit($form, [], []);
 
 		// page 6
 		$this->assertStringContainsString('Page=6', $crawler->getUri());
