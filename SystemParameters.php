@@ -93,15 +93,6 @@ if (isset($_POST['submit'])) {
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
 		prnMsg(__('The maximum size of item image files must be between 1 KB and 9999 KB'),'error');
-	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
-		$InputError = 1;
-		prnMsg(__('The Factory Manager Email address does not appear to be valid'),'error');
-	}elseif (!IsEmailAddress($_POST['X_PurchasingManagerEmail'])){
-		$InputError = 1;
-		prnMsg(__('The Purchasing Manager Email address does not appear to be valid'),'error');
-	}elseif (!IsEmailAddress($_POST['X_InventoryManagerEmail']) AND $_POST['X_InventoryManagerEmail']!=''){
-		$InputError = 1;
-		prnMsg(__('The Inventory Manager Email address does not appear to be valid'),'error');
 	}elseif (mb_strlen($_POST['X_FrequentlyOrderedItems']) > 2 OR !is_numeric($_POST['X_FrequentlyOrderedItems'])) {
 		$InputError = 1;
 		prnMsg(__('The number of frequently ordered items to display must be numeric'),'error');
