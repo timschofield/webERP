@@ -70,6 +70,7 @@ $Title = __('WebERP Installation Wizard');
 echo '<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>', $Title, '</title>
+		<link rel="icon" href="../favicon.ico" type="image/x-icon" />
 		<link rel="stylesheet" type="text/css" href="installer.css" />
 		<script src="misc_functions.js"></script>
 	</head>';
@@ -108,10 +109,17 @@ if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer'][
 } elseif ($_SESSION['Installer']['CurrentPage'] == 5) {
 	echo '<input type="submit" class="install nav_button" name="install" value="', __('Install'), '" />';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 6) {
-	echo '<div class="nav_button">
+	if (isset($Installed) && $Installed) {
+		echo '<div class="nav_button">
 			<a href="../Logout.php?Installed=Yes">', __('Restart webERP'), '</a>
 				<img src="images/restart.png"  style="float:right; width:24px;">
 		</div>';
+	} else {
+		echo '<div class="nav_button">
+			<a href="index.php?Page=0">', __('Restart the install wizard'), '</a>
+				<img src="images/restart.png"  style="float:right; width:24px;">
+		</div>';
+	}
 } else {
 	echo '<div class="nav_button">
 			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] + 1), '">', __('Next'), '</a>
