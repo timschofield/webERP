@@ -13,27 +13,28 @@ jobs:
                 include:
                     # @see https://github.com/actions/runner-images
                     # @todo run some tests on 'windows-latest'
+                    # NB: the order of options is picked to make the github page display nicer (test naming in left col)
                     - php: '8.4'
-                      operating-system: ubuntu-24.04
                       # Using 'native' version will result in the mysql service on the host to be used.
                       # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
                       dbtype: mysql
                       dbversion: native
+                      operating-system: ubuntu-24.04
                       dbport: 3306
                     - php: '8.3'
-                      operating-system: ubuntu-24.04
                       dbtype: mariadb
                       dbversion: 'latest'
+                      operating-system: ubuntu-24.04
                       dbport: 3306
                     - php: '8.2'
-                      operating-system: ubuntu-22.04
                       dbtype: mysql
                       dbversion: '5.5'
+                      operating-system: ubuntu-22.04
                       dbport: 3307
                     - php: '8.1'
-                      operating-system: ubuntu-22.04
                       dbtype: mariadb
                       dbversion: '5.5'
+                      operating-system: ubuntu-22.04
                       dbport: 3307
 
         # NB: we do not run docker containers using the native `services` tag because we have to mount one or more files
