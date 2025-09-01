@@ -1267,19 +1267,18 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText) {
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$DaysSales));
-	$SQL = "SELECT 	locations.locationname,
-					locations.rldaysforpackaging,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = '" . $Item . "'
-							AND packagingused.date >= '" . $FromDate . "') AS Sales,
-					(SELECT locstock.reorderlevel
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = '" . $Item . "') AS RL
-			FROM locations
-			WHERE locations.loccode = '" . $Shop . "'";
+	$SQL = "SELECT loc.locationname,
+					loc.rldaysforpackaging,
+					COALESCE(SUM(pu.qty), 0) AS Sales,
+					ls.reorderlevel AS RL
+			FROM locations loc
+			LEFT JOIN packagingused pu ON loc.loccode = pu.fromlocation
+				AND pu.stockid = '" . $Item . "'
+				AND pu.date >= '" . $FromDate . "'
+			LEFT JOIN locstock ls ON loc.loccode = ls.loccode
+				AND ls.stockid = '" . $Item . "'
+			WHERE loc.loccode = '" . $Shop . "'
+			GROUP BY loc.loccode, loc.locationname, loc.rldaysforpackaging, ls.reorderlevel";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
 		$MyRow = DB_fetch_array($Result);
