@@ -817,13 +817,18 @@ function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 		$WhereCat = " ";
 	}
 	
-	$SQL = "SELECT MAX(topsales" .$NumDays. ") AS maxtopsales
-			FROM klsalesperformance, stockmaster
-			WHERE klsalesperformance.stockid = stockmaster.stockid" .
+	$SQL = "SELECT MAX(ksp.topsales" .$NumDays. ") AS maxtopsales
+			FROM klsalesperformance ksp
+			INNER JOIN stockmaster sm ON ksp.stockid = sm.stockid" .
 			$WhereCat;
 	$Result = DB_query($SQL);		
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['maxtopsales'];
+	
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return (int)($MyRow['maxtopsales'] ?? 0);
+	}else{
+		return 0;
+	}
 }
 
 /**************************************************************************************************************
