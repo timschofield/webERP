@@ -289,6 +289,7 @@ function CreateTables($Path_To_Root) {
 }
 
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
+	$Errors = 0;
 	if ($Demo != 'Yes') {
 		DB_IgnoreForeignKeys();
 		/* Create the admin user */
@@ -346,10 +347,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0,
 										0
 									)";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -362,16 +364,19 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		for ($i = 0;$i < $ScriptFileEntries;$i++) {
 
 			$COAScriptFile[$i] = trim($COAScriptFile[$i]);
-			//ignore lines that start with -- or USE or /*
+			// ignore lines that start with -- or USE or /*
+			/// @todo use a regexp to account for initial spaces
 			if (mb_substr($COAScriptFile[$i], 0, 2) != '--' and mb_strstr($COAScriptFile[$i], '/*') == false and mb_strlen($COAScriptFile[$i]) > 1) {
 
 				$SQL.= ' ' . $COAScriptFile[$i];
 
-				//check if this line kicks off a function definition - pg chokes otherwise
+				// check if this line kicks off a function definition - pg chokes otherwise
+				/// @todo use a regexp
 				if (mb_substr($COAScriptFile[$i], 0, 15) == 'CREATE FUNCTION') {
 					$InAFunction = true;
 				}
-				//check if this line completes a function definition - pg chokes otherwise
+				// check if this line completes a function definition - pg chokes otherwise
+				/// @todo use a regexp
 				if (mb_substr($COAScriptFile[$i], 0, 8) == 'LANGUAGE') {
 					$InAFunction = false;
 				}
@@ -380,8 +385,9 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 					if (strncasecmp($SQL, ' CREATE DATABASE ', 17) and strncasecmp($SQL, ' USE ', 5)) {
 						$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1);
 						DB_IgnoreForeignKeys();
-						$Result = DB_query($SQL);
+						$Result = DB_query($SQL, '', '', false, false);
 						if (DB_error_no($Result) != 0) {
+							$Errors++;
 							echo '<div class="error">' . __('Your chosen chart of accounts could not be uploaded') . '</div>';
 						}
 					}
@@ -395,19 +401,21 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		flush();
 
 		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been given permissions on all GL accounts') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The default GL tag has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -416,10 +424,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		foreach (glob($Path_To_Root . '/install/sql/data/*.sql') as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
 			DB_IgnoreForeignKeys();
-			$Result = DB_query($SQLScriptFile);
+			$Result = DB_query($SQLScriptFile, '', '', false, false);
 			$DBErrors += DB_error_no($Result);
 		}
 		if ($DBErrors > 0) {
+			$Errors++;
 			echo '<div class="error">' . __('Database tables could not be populated') . '</div>';
 		} else {
 			echo '<div class="success">' . __('All database tables have been populated') . '</div>';
@@ -429,10 +438,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
 		///       the installer - that is left to the person preparing the release to verify...
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -465,10 +475,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 											1,
 											'5600'
 										)";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The company record has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -478,16 +489,22 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
-		PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
+		$Errors = (int)PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
 
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		/// @todo echo error (warning?) if failure
+		if (DB_error_no() == 0) {
+			//echo '<div class="success">' . __('...') . '</div>';
+		} else {
+			$Errors++;
+			//echo '<div class="error">' . __('...') . '</div>';
+		}
 
 		/// @todo there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . '/companies/default/part_pics/*.jp*') as $JpegFile) {
-			$Result = copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
 		DB_IgnoreForeignKeys();
@@ -545,11 +562,12 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0,
 										0
 									)";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -558,8 +576,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="success">' . __('Database now contains the demo data.') . '</div>';
 	}
 
-	/// @todo do not always return true
-	return true;
+	return ($Errors == 0);
 }
 
 function HighestFileName($Path_To_Root) {
@@ -574,15 +591,23 @@ function CryptPass($Password) {
 	return $Hash;
 }
 
+/**
+ * @param string $File
+ * @return bool
+ */
 function PopulateSQLDataBySQL($File) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
+
+	$Errors = 0;
 	$SQL = '';
 	$InAFunction = false;
 	for ($i = 1;$i <= $ScriptFileEntries;$i++) {
 
 		$SQLScriptFile[$i - 1] = trim($SQLScriptFile[$i - 1]);
-		//ignore lines that start with -- or USE or /*
+
+		/// @todo ignore lines that start with -- or USE or /*
+
 		$SQL.= ' ' . $SQLScriptFile[$i - 1];
 
 		//check if this line kicks off a function definition - pg chokes otherwise
@@ -595,15 +620,17 @@ function PopulateSQLDataBySQL($File) {
 		}
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
-			$Result = DB_query($SQL);
-/*			if (DB_error_no() == 0) {
-				echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
-			}*/
+			$Result = DB_query($SQL, '', '', false, false);
+			if (DB_error_no() != 0) {
+				$Errors++;
+			}
 			$SQL = '';
 		}
 		flush();
 
 	} //end of for loop around the lines of the sql script
+
+	return ($Errors == 0);
 }
 
 /**
@@ -616,7 +643,7 @@ function CreateGLTriggers($Path_To_Root)
 	foreach (glob($Path_To_Root . '/install/sql/triggers/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
-		$Result = DB_query($SQLScriptFile);
+		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no();
 	}
 	if ($DBErrors > 0) {
