@@ -123,6 +123,7 @@ else
 				-v "$BASE_DIR/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf" \
 				"${DB_TYPE}:${DB_VERSION}"
 			# it seems that using --detach means we do not get an error exit code if the container aborts
+			sleep 1
 			if [ -z "$(docker ps --filter name=mysql -q)" ]; then
 				echo "MySQL container failed starting up"
 				exit 1
@@ -133,7 +134,6 @@ else
 			ALIVE=no
 			set +e
 			while [ "$COUNT" -lt 60 ]; do
-				sleep 1
 				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
 					ALIVE=yes
@@ -141,10 +141,13 @@ else
 				fi
 				echo "Waiting for mysql..."
 				COUNT=$((COUNT+1))
+				sleep 1
 			done
 			set -e
 			if [ "$ALIVE" != yes ]; then
 				echo "MySQL (in container) did not start up in time"
+				echo "latest error:"
+				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
 				exit 1
 			fi
 		;;
@@ -153,6 +156,7 @@ else
 				-v "$BASE_DIR/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf" \
 				"${DB_TYPE}:${DB_VERSION}"
 			# it seems that using --detach means we do not get an error exit code if the container aborts
+			sleep 1
 			if [ -z "$(docker ps --filter name=mariadb -q)" ]; then
 				echo "MariaDB container failed starting up"
 				exit 1
@@ -162,7 +166,6 @@ else
 			ALIVE=no
 			set +e
 			while [ "$COUNT" -lt 60 ]; do
-				sleep 1
 				docker exec -ti mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
 					ALIVE=yes
@@ -170,10 +173,13 @@ else
 				fi
 				echo "Waiting for mariadb..."
 				COUNT=$((COUNT+1))
+				sleep 1
 			done
 			set -e
 			if [ "$ALIVE" != yes ]; then
 				echo "MariaDB (in container) did not start up in time"
+				echo "latest error:"
+				docker exec -ti mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
 				exit 1
 			fi
 		;;
