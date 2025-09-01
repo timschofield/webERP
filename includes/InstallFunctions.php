@@ -126,65 +126,70 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 
 	mysqli_set_charset($DB, 'utf8');
 
-	/// @todo are these needed?
-	$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
-	$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
+	// gg: we only use this db connection for creating the database, as we use separate one for creating tables etc.
+	//     So this seems useless/overkill
+	//$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
+	//$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 
 	/// @todo move checking for permissions and for existing tables into UpgradeDB_$dbtype.php, to give it a chance
 	///       at being db-agnostic
 
-	$DBExistsSql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
-	/// @todo this query is not failsafe - it might be just as good not to check permissions and just try to create the db...
-	$PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
-
+	$DBExistsSql = "SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
 	$DBExistsResult = @mysqli_query($DB, $DBExistsSql);
-	$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
-	$Rows = @mysqli_num_rows($DBExistsResult);
-	$Privileges = @mysqli_num_rows($PrivilegesResult);
+	if ($DBExistsResult) {
+		$Rows = mysqli_num_rows($DBExistsResult);
+	} else {
+		echo '<div class="warning">' . __('Failed to check for the presence of the database schema.') . '</div>';
+		$Rows = 0;
+	}
+
+	// this query is not failsafe (it does not work on every db type) - it is just as good not to check permissions and just try to create the db...
+	//$PrivilegesSql = "SELECT * FROM information_schema.USER_PRIVILEGES WHERE GRANTEE=" . '"' . "'" . mysqli_real_escape_string($DB, $UserName) . "'@'" . mysqli_real_escape_string($DB, $HostName) . "'" . '"' . " AND PRIVILEGE_TYPE='CREATE'";
+	//$PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
+	//$Privileges = @mysqli_num_rows($PrivilegesResult);
 
 	/// @todo exit with errors if any of the above failed?
 
 	if ($Rows == 0) { /* Then the database does not exist */
-		if ($Privileges == 0) {
-			$Errors[] = __('The database does not exist, and this database user does not have privileges to create it');
-		} else { /* Then we can create the database */
-			/// @todo add utf8-mb4 as default charset
+		//if ($Privileges == 0) {
+		//	$Errors[] = __('The database does not exist, and this database user does not have privileges to create it');
+		//} else { /* Then we can create the database */
+			/// @todo add utf8-mb4 as default charset (check 1st that the db supports it. If not, utf8mb3)
 			$SQL = "CREATE DATABASE " . $DataBaseName;
 			if (!@mysqli_query($DB, $SQL)) {
 				$Errors[] = __('Failed creating the database');
 			}
-		}
-	} else { /* Need to make sure any old data is removed from existing DB */
+		//}
+	} else {
 
-		/// @todo this is dangerous! Ask permission to the user before dropping existing tables
+		/* Need to make sure NO data is removed from the existing DB */
+
 		$SQL = "SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" . $DataBaseName . "'";
-		$Result = @mysqli_query($DB, $SQL);
-		if (!@mysqli_query($DB, $SQL)) {
+		if (!($Result = @mysqli_query($DB, $SQL))) {
 			$Errors[] = __('Failed enumerating existing database tables');
 		} else {
-			// only drop tables which we will recreate
+			// only check tables which we will recreate
 			$Rows = @mysqli_fetch_all($Result, MYSQLI_ASSOC);
+			$ExistingTablesNum = count($Rows);
 			$TableNames = array();
 			foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 				$SQLScriptFile = file_get_contents($FileName);
-				if (preg_match('/^CREATE +TABLE +([^ (])+/', $SQLScriptFile, $matches)) {
+				if (preg_match('/^CREATE +TABLE +`?([^ (`]+)`?/', $SQLScriptFile, $matches)) {
 					$TableNames[] = str_replace('`', '', $matches[1]);
 				}
 			}
 			foreach($Rows as $i => $Row) {
 				if (!in_array($Row['TABLE_NAME'], $TableNames)) {
-					unset($Row[$i]);
+					unset($Rows[$i]);
 				}
 			}
-
-			/*
-			foreach($Rows as $i => $Row) {
-				$SQL = "DROP TABLE {$Row['table_name']} IF EXISTS;";
-				if (!@mysqli_query($DB, $SQL)) {
-					$Errors[] = __('Failed dropping existing database table' . ' ' . $Row['table_name']);
+			if (count($Rows)) {
+				$Errors[] = __('Would overwrite' . ' ' . count($Rows) . ' ' . 'existing database tables');
+			} else {
+				if ($ExistingTablesNum > 0) {
+					echo '<div class="warning">' . __('Found') . ' ' . $ExistingTablesNum . ' ' . __('unrelated tables in the existing schema') . '</div>';
 				}
 			}
-			*/
 		}
 	}
 
@@ -208,15 +213,15 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 	$CompanyDir = $Path_To_Root . '/companies/' . $DatabaseName;
 
 	if (is_file($CompanyDir)) {
-		echo '<div class="error">' . __('The companies directory can not be created as a file exists at its place') . '</div>';
+		echo '<div class="error">' . __('The company config directory can not be created as a file exists at its place') . '</div>';
 		return false;
 	}
 
 	if (is_dir($CompanyDir)) {
-		/// @todo ask the user if she's ok with us wiping the existing dir
+		/// @todo allow more flexibility? Check if $database.bak does not exist, rename the current dir and go on
 		$files = glob($CompanyDir . '/*');
 		if (count($files)) {
-			echo '<div class="error">' . __('The companies directory exists and is not empty') . '</div>';
+			echo '<div class="error">' . __('The company config directory exists and is not empty') . '</div>';
 			flush();
 			return false;
 		}
@@ -225,24 +230,26 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
 		$Result = mkdir($CompanyDir);
 	}
 
-	$Result = $Result && mkdir($CompanyDir . '/part_pics');
-	$Result = $Result && mkdir($CompanyDir . '/EDI_Incoming_Orders');
-	$Result = $Result && mkdir($CompanyDir . '/reports');
-	$Result = $Result && mkdir($CompanyDir . '/EDI_Sent');
-	$Result = $Result && mkdir($CompanyDir . '/EDI_Pending');
-	$Result = $Result && mkdir($CompanyDir . '/reportwriter');
-	$Result = $Result && mkdir($CompanyDir . '/pdf_append');
-	$Result = $Result && mkdir($CompanyDir . '/FormDesigns');
+	if ($Result) {
+		$Result = $Result && mkdir($CompanyDir . '/part_pics');
+		$Result = $Result && mkdir($CompanyDir . '/EDI_Incoming_Orders');
+		$Result = $Result && mkdir($CompanyDir . '/reports');
+		$Result = $Result && mkdir($CompanyDir . '/EDI_Sent');
+		$Result = $Result && mkdir($CompanyDir . '/EDI_Pending');
+		$Result = $Result && mkdir($CompanyDir . '/reportwriter');
+		$Result = $Result && mkdir($CompanyDir . '/pdf_append');
+		$Result = $Result && mkdir($CompanyDir . '/FormDesigns');
 
-	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
-	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
-	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
-	$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+		$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/GoodsReceived.xml', $CompanyDir . '/FormDesigns/GoodsReceived.xml');
+		$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PickingList.xml', $CompanyDir . '/FormDesigns/PickingList.xml');
+		$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/PurchaseOrder.xml', $CompanyDir . '/FormDesigns/PurchaseOrder.xml');
+		$Result = $Result && copy($Path_To_Root . '/companies/weberpdemo/FormDesigns/Journal.xml', $CompanyDir . '/FormDesigns/Journal.xml');
+	}
 
 	if ($Result) {
-		echo '<div class="success">' . __('The companies directory has been successfully created') . '</div>';
+		echo '<div class="success">' . __('The company config directory has been successfully created') . '</div>';
 	} else {
-		echo '<div class="error">' . __('The companies directory was not created successfully') . '</div>';
+		echo '<div class="error">' . __('The company config directory was not created successfully') . '</div>';
 	}
 	flush();
 
@@ -341,7 +348,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 									)";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The admin user has been inserted') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
@@ -390,7 +397,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The admin user has been given permissions on all GL accounts.') . '</div>';
+			echo '<div class="success">' . __('The admin user has been given permissions on all GL accounts') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
@@ -399,7 +406,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The default GL tag has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The default GL tag has been inserted') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
 		}
@@ -424,7 +431,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The database update revision has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
@@ -460,7 +467,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										)";
 		$Result = DB_query($SQL);
 		if (DB_error_no() == 0) {
-			echo '<div class="success">' . __('The company record has been inserted.') . '</div>';
+			echo '<div class="success">' . __('The company record has been inserted') . '</div>';
 		} else {
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
@@ -669,9 +676,12 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 		return false;
 	}
 
-	/// @todo ask a question before overwriting the file
+	/// @todo allow more flexibility? Check if config.bak.php does not exist, rename the current config file and go on
+
 	if (file_exists($NewConfigFile)) {
-		echo '<div class="warning">' . __('The configuration file existed and has been overwritten') . ' ' . $NewConfigFile . '</div>';
+		echo '<div class="error">' . __('The configuration file exists and has not been overwritten') . ' ' . $NewConfigFile . '</div>';
+		flush();
+		return false;
 	}
 
 	// Write the updated content to the new config file
@@ -679,7 +689,7 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 	$Result = file_put_contents($NewConfigFile, $NewConfigContent);
 
 	if ($Result) {
-		echo '<div class="success">' . __('The config.php file has been created based on your settings.') . '</div>';
+		echo '<div class="success">' . __('The config.php file has been created based on your settings') . '</div>';
 	} else {
 		echo '<div class="error">' . __('Cannot write to the configuration file') . ' ' . $NewConfigFile . '</div>';
 	}
@@ -713,7 +723,7 @@ function CreateCompaniesFile($Path_To_Root) {
 	}
 
 	if ($Result) {
-		echo '<div class="success">' . __('Created the Companies.php file') . '</div>';
+		echo '<div class="success">' . __('The Companies.php file has been created') . '</div>';
 	} else {
 		echo '<div class="error">' . __('Could not write the Companies.php file') . '</div>';
 	}
