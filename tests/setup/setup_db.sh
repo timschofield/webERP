@@ -122,6 +122,11 @@ else
 			docker run --rm --detach --name mysql -p "${DB_PORT}:3306" -e "MYSQL_ROOT_PASSWORD=$DB_PASSWORD" \
 				-v "$BASE_DIR/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf" \
 				"${DB_TYPE}:${DB_VERSION}"
+			# it seems that using --detach means we do not get an error exit code if the container aborts
+			if [ -z "$(docker ps --filter name=mysql -q)" ]; then
+				echo "MySQL container failed starting up"
+				exit 1
+			fi
 			# wait up to 10 secs for the db to be started up
 			# @todo move to a function, to share code with mariadb
 			COUNT=0
@@ -147,6 +152,11 @@ else
 			docker run --rm --detach --name mariadb -p "${DB_PORT}:3306" -e "MARIADB_ROOT_PASSWORD=$DB_PASSWORD" -e "MYSQL_ROOT_PASSWORD=$DB_PASSWORD"\
 				-v "$BASE_DIR/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf" \
 				"${DB_TYPE}:${DB_VERSION}"
+			# it seems that using --detach means we do not get an error exit code if the container aborts
+			if [ -z "$(docker ps --filter name=mariadb -q)" ]; then
+				echo "MariaDB container failed starting up"
+				exit 1
+			fi
 			# wait up to 10 secs for the db to be started up
 			COUNT=0
 			ALIVE=no
@@ -163,7 +173,7 @@ else
 			done
 			set -e
 			if [ "$ALIVE" != yes ]; then
-				echo "Mariadb (in container) did not start up in time"
+				echo "MariaDB (in container) did not start up in time"
 				exit 1
 			fi
 		;;
