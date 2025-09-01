@@ -152,6 +152,7 @@ else
 			fi
 		;;
 		mariadb)
+			# the env var for root passwd changed across mariadb container image versions...
 			docker run --rm --detach --name mariadb -p "${DB_PORT}:3306" -e "MARIADB_ROOT_PASSWORD=$DB_PASSWORD" -e "MYSQL_ROOT_PASSWORD=$DB_PASSWORD"\
 				-v "$BASE_DIR/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf" \
 				"${DB_TYPE}:${DB_VERSION}"
@@ -168,6 +169,10 @@ else
 			while [ "$COUNT" -lt 60 ]; do
 				docker exec mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
+					# the db cli client changed name across mariadb container image versions...
+					docker exec mariadb mariadb -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
+				fi
+				if [ $? -eq 0 ]; then
 					ALIVE=yes
 					break
 				fi
@@ -180,6 +185,7 @@ else
 				echo "MariaDB (in container) did not start up in time"
 				echo "latest error:"
 				docker exec mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
+				docker exec mariadb mariadb -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
 				exit 1
 			fi
 		;;
