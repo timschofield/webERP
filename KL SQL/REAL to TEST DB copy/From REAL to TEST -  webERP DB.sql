@@ -1,19 +1,41 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 DROP TRIGGER IF EXISTS test_erp.currencies_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.currencies_update_timestamp;
+
+DROP TRIGGER IF EXISTS test_erp.gltrans_after_delete;
 DROP TRIGGER IF EXISTS test_erp.gltrans_after_insert;
 DROP TRIGGER IF EXISTS test_erp.gltrans_after_update;
-DROP TRIGGER IF EXISTS test_erp.gltrans_after_delete;
+
 DROP TRIGGER IF EXISTS test_erp.klretailcustomers_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.klretailcustomers_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.klstockmarketplaces_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.klstockmarketplaces_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.locstock_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.locstock_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.prices_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.prices_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.relateditems_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.relateditems_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.salariescalculated_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salariescalculated_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.salescat_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salescat_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.salescatprod_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.salescatprod_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.stockdescriptiontranslations_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.stockdescriptiontranslations_update_timestamp;
+
 DROP TRIGGER IF EXISTS test_erp.stockmaster_creation_timestamp;
+DROP TRIGGER IF EXISTS test_erp.stockmaster_update_timestamp;
 
 TRUNCATE test_erp.`accountgroups`;
 INSERT INTO test_erp.accountgroups SELECT * FROM kl_erp.accountgroups;
@@ -328,7 +350,7 @@ TRUNCATE test_erp.`loctransfers`;
 /* Special insert to prevent error when copying calculated fields*/
 INSERT INTO test_erp.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc)
 SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc
-FROM kl_erp.loctransfers;
+FROM kl_erp.loctransfers WHERE reference >= 200000;
 
 TRUNCATE test_erp.`mailgroupdetails`;
 INSERT INTO test_erp.mailgroupdetails SELECT * FROM kl_erp.mailgroupdetails;
@@ -647,9 +669,9 @@ INSERT INTO test_erp.supptranstaxes SELECT * FROM kl_erp.supptranstaxes WHERE su
 TRUNCATE test_erp.`systypes`;
 INSERT INTO test_erp.systypes SELECT * FROM kl_erp.systypes;
 
-/* do not copy to avoid prolem with auto generated codes
+/* do not copy to avoid prolem with auto generated codes */
 TRUNCATE test_erp.`tags`;
-INSERT INTO test_erp.tags SELECT * FROM kl_erp.tags; */
+INSERT INTO test_erp.tags SELECT * FROM kl_erp.tags; 
 
 TRUNCATE test_erp.`taxauthorities`;
 INSERT INTO test_erp.taxauthorities SELECT * FROM kl_erp.taxauthorities;
@@ -705,20 +727,33 @@ INSERT INTO test_erp.woserialnos SELECT * FROM kl_erp.woserialnos;
 TRUNCATE test_erp.`www_users`;
 INSERT INTO test_erp.www_users SELECT * FROM kl_erp.www_users;
 
-DELIMITER //
+DELIMITER $$
+CREATE TRIGGER `currencies_creation_timestamp` BEFORE INSERT ON `currencies` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `currencies_update_timestamp` BEFORE UPDATE ON `currencies` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `currencies_creation_timestamp` BEFORE INSERT ON `currencies`
- FOR EACH ROW SET NEW.date_created = NOW() //
-
-CREATE TRIGGER gltrans_after_insert AFTER INSERT ON gltrans FOR EACH ROW
-BEGIN
-  INSERT INTO gltotals (account, period, amount)
-  VALUES (NEW.account, NEW.periodno, NEW.amount)
-  ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
-END //
-
-CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans`
- FOR EACH ROW BEGIN
+DELIMITER $$
+CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans` FOR EACH ROW BEGIN
+			UPDATE gltotals
+			SET amount = amount - OLD.amount
+			WHERE account = OLD.account AND period = OLD.periodno;
+		END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `gltrans_after_insert` AFTER INSERT ON `gltrans` FOR EACH ROW BEGIN
+			INSERT INTO gltotals (account, period, amount)
+			VALUES (NEW.account, NEW.periodno, NEW.amount)
+			ON DUPLICATE KEY UPDATE amount = amount + NEW.amount;
+		END
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans` FOR EACH ROW BEGIN
 			IF NEW.account <> OLD.account OR NEW.periodno <> OLD.periodno THEN
 				UPDATE gltotals
 				SET amount = amount - OLD.amount
@@ -732,45 +767,98 @@ CREATE TRIGGER `gltrans_after_update` AFTER UPDATE ON `gltrans`
 				SET amount = amount - OLD.amount + NEW.amount
 				WHERE account = NEW.account AND period = NEW.periodno;
 			END IF;
-		END //
-		
-CREATE TRIGGER `gltrans_after_delete` AFTER DELETE ON `gltrans`
- FOR EACH ROW BEGIN
-			UPDATE gltotals
-			SET amount = amount - OLD.amount
-			WHERE account = OLD.account AND period = OLD.periodno;
-		END //
+		END
+$$
+DELIMITER ;
 
-CREATE TRIGGER `klretailcustomers_creation_timestamp` BEFORE INSERT ON `klretailcustomers`
- FOR EACH ROW SET NEW.date_added = NOW() //
+DELIMITER $$
+CREATE TRIGGER `klretailcustomers_creation_timestamp` BEFORE INSERT ON `klretailcustomers` FOR EACH ROW SET NEW.date_added = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `klretailcustomers_update_timestamp` BEFORE UPDATE ON `klretailcustomers` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `klstockmarketplaces_creation_timestamp` BEFORE INSERT ON `klstockmarketplaces`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `klstockmarketplaces_creation_timestamp` BEFORE INSERT ON `klstockmarketplaces` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `klstockmarketplaces_update_timestamp` BEFORE UPDATE ON `klstockmarketplaces` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `locstock_creation_timestamp` BEFORE INSERT ON `locstock`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `locstock_creation_timestamp` BEFORE INSERT ON `locstock` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `locstock_update_timestamp` BEFORE UPDATE ON `locstock` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `prices_creation_timestamp` BEFORE INSERT ON `prices`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `prices_creation_timestamp` BEFORE INSERT ON `prices` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `prices_update_timestamp` BEFORE UPDATE ON `prices` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `relateditems_creation_timestamp` BEFORE INSERT ON `relateditems`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `relateditems_creation_timestamp` BEFORE INSERT ON `relateditems` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `relateditems_update_timestamp` BEFORE UPDATE ON `relateditems` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `salariescalculated_creation_timestamp` BEFORE INSERT ON `salariescalculated`
- FOR EACH ROW SET NEW.date_added = NOW() //
+DELIMITER $$
+CREATE TRIGGER `salariescalculated_creation_timestamp` BEFORE INSERT ON `salariescalculated` FOR EACH ROW SET NEW.date_added = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salariescalculated_update_timestamp` BEFORE UPDATE ON `salariescalculated` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `salescat_creation_timestamp` BEFORE INSERT ON `salescat`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `salescat_creation_timestamp` BEFORE INSERT ON `salescat` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salescat_update_timestamp` BEFORE UPDATE ON `salescat` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `salescatprod_creation_timestamp` BEFORE INSERT ON `salescatprod`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `salescatprod_creation_timestamp` BEFORE INSERT ON `salescatprod` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `salescatprod_update_timestamp` BEFORE UPDATE ON `salescatprod` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `stockdescriptiontranslations_creation_timestamp` BEFORE INSERT ON `stockdescriptiontranslations`
- FOR EACH ROW SET NEW.date_created = NOW() //
+DELIMITER $$
+CREATE TRIGGER `stockdescriptiontranslations_creation_timestamp` BEFORE INSERT ON `stockdescriptiontranslations` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stockdescriptiontranslations_update_timestamp` BEFORE UPDATE ON `stockdescriptiontranslations` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
+DELIMITER ;
 
-CREATE TRIGGER `stockmaster_creation_timestamp` BEFORE INSERT ON `stockmaster`
- FOR EACH ROW SET NEW.date_created = NOW() //
-
+DELIMITER $$
+CREATE TRIGGER `stockmaster_creation_timestamp` BEFORE INSERT ON `stockmaster` FOR EACH ROW SET NEW.date_created = NOW()
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `stockmaster_update_timestamp` BEFORE UPDATE ON `stockmaster` FOR EACH ROW SET NEW.date_updated = NOW()
+$$
 DELIMITER ;
 
 UPDATE test_erp.`config` SET `confvalue` = 'companies/test_erp/part_pics' WHERE `confname` = 'part_pics_dir';
