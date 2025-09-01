@@ -34,6 +34,9 @@
 		<env name="TEST_USER_ACCOUNT" value="admin" />
 		<env name="TEST_USER_PASSWORD" value="weberp" />
 		<env name="TEST_USER_EMAIL" value="admin@weberp.org" />
+
+		<!-- when a test fails which tests a web page, the html contents of that page will be saved in this directory -->
+		<env name="TEST_ERROR_SCREENSHOTS_DIR" value="./" />
 	</php>
 
 	<!-- code coverage reporting -->

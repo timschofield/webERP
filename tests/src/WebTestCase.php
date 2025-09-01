@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/HttpBrowser.php');
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\TestStatus;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -68,6 +69,18 @@ class WebTestCase extends TestCase
 	 */
 	public function tearDown(): void
 	{
+		// Save a "screenshot" of the web page on which the test error failed
+		// NB: we have to check $testStatus here instead of using method `onNotSuccessfulTest` because that one is
+		// called later in the execution, so it will not be able to use `$this->browser`
+		$testStatus =  $this->status();
+		if ($testStatus instanceof TestStatus\Failure || $testStatus instanceof TestStatus\Error) {
+			if ($this->browser) {
+				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception
+				$testName = get_class($this) . '_' . $this->name();
+				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
+			}
+		}
+
 		$this->browser = null;
 
 		parent::tearDown();

@@ -54,27 +54,9 @@ jobs:
               uses: actions/checkout@v5
 
             - name: Set up the Database
-              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
-              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
               run: |
-                if [ -z "${{ matrix.dbtype }}" ]; then
-                    chmod 755 ./tests/setup/setup_db.sh
-                    ./tests/setup/setup_db.sh "mysql" "native"
-                else
-                    # @todo move this to setup_db.sh
-                    case "${{ matrix.dbtype }}" in
-                        mysql)
-                            docker run --rm --detach --name mysql -p '${{ matrix.dbport }}:3306' -e MYSQL_ROOT_PASSWORD=root \
-                                -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
-                                ${{ matrix.dbtype }}:${{ matrix.dbversion }}
-                        ;;
-                        mariadb)
-                            docker run --rm --detach --name mariadb -p '${{ matrix.dbport }}:3306' -e MARIADB_ROOT_PASSWORD=root \
-                            -v '${{ github.workspace }}/tests/setup/config/mariadb/test.cnf:/etc/mysql/conf.d/test.cnf' \
-                            ${{ matrix.dbtype }}:${{ matrix.dbversion }}
-                        ;;
-                    esac
-                fi
+                chmod 755 ./tests/setup/setup_db.sh
+                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "{{ matrix.dbport }}"
 
             - name: Stop php-fpm if running
               run: |
