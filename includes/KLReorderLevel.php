@@ -1137,11 +1137,11 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 	}
 
 	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
-	$SQL = "SELECT  MAX(locations.rlfactorforpackaging) AS rlfactor,
-					MAX(locations.rldaysforpackaging) AS rldays
-			FROM locations
-			WHERE locations.packagingfrom = '" . $GudangCode . "'
-				AND locations.loccode != '" . $GudangCode . "'";
+	$SQL = "SELECT MAX(loc.rlfactorforpackaging) AS rlfactor,
+					MAX(loc.rldaysforpackaging) AS rldays
+			FROM locations loc
+			WHERE loc.packagingfrom = '" . $GudangCode . "'
+				AND loc.loccode != '" . $GudangCode . "'";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
@@ -1171,17 +1171,17 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 	}	
 
 	// Now, update the RL for the items to be stocked at the gudang
-	$SQL = "SELECT  stockmaster.stockid,
-					SUM(locstock.reorderlevel) AS rl
-			FROM locations, locstock, stockmaster
-			WHERE locations.loccode = locstock.loccode
-				AND stockmaster.stockid = locstock.stockid
-				AND locations.packagingfrom = '" . $GudangCode . "'
-				AND locations.loccode != '" . $GudangCode . "'
-				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND stockmaster.discontinued = 0
-			GROUP BY stockmaster.stockid
-			ORDER BY stockmaster.stockid";
+	$SQL = "SELECT sm.stockid,
+					SUM(ls.reorderlevel) AS rl
+			FROM locations loc
+			INNER JOIN locstock ls ON loc.loccode = ls.loccode
+			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
+			WHERE loc.packagingfrom = '" . $GudangCode . "'
+				AND loc.loccode != '" . $GudangCode . "'
+				AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND sm.discontinued = 0
+			GROUP BY sm.stockid
+			ORDER BY sm.stockid";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
