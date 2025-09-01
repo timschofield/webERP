@@ -126,9 +126,10 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 
 	mysqli_set_charset($DB, 'utf8');
 
-	/// @todo are these needed?
-	$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
-	$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
+	// gg: we only use this db connection for creating the database, as we use separate one for creating tables etc.
+	//     So this seems useless/overkill
+	//$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
+	//$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 
 	/// @todo move checking for permissions and for existing tables into UpgradeDB_$dbtype.php, to give it a chance
 	///       at being db-agnostic
