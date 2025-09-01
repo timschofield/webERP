@@ -15,11 +15,11 @@ jobs:
                     # @todo run some tests on 'windows-latest'
                     - php: '8.4'
                       operating-system: ubuntu-24.04
-                      # Leaving these empty will result in the mysql service on the host to be used.
+                      # Using 'native' version will result in the mysql service on the host to be used.
                       # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
-                      dbtype: ''
-                      dbversion: ''
-                      dbport: ''
+                      dbtype: mysql
+                      dbversion: native
+                      dbport: 3306
                     - php: '8.3'
                       operating-system: ubuntu-24.04
                       dbtype: mariadb
