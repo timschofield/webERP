@@ -134,7 +134,7 @@ else
 			ALIVE=no
 			set +e
 			while [ "$COUNT" -lt 60 ]; do
-				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
+				docker exec mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
 					ALIVE=yes
 					break
@@ -147,7 +147,7 @@ else
 			if [ "$ALIVE" != yes ]; then
 				echo "MySQL (in container) did not start up in time"
 				echo "latest error:"
-				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
+				docker exec mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
 				exit 1
 			fi
 		;;
@@ -166,7 +166,7 @@ else
 			ALIVE=no
 			set +e
 			while [ "$COUNT" -lt 60 ]; do
-				docker exec -ti mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
+				docker exec mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
 					ALIVE=yes
 					break
@@ -179,7 +179,7 @@ else
 			if [ "$ALIVE" != yes ]; then
 				echo "MariaDB (in container) did not start up in time"
 				echo "latest error:"
-				docker exec -ti mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
+				docker exec mariadb mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases'
 				exit 1
 			fi
 		;;
