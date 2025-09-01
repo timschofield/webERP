@@ -696,16 +696,17 @@ to the shops with RL > 0.
 	}
 	
 	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.categoryid,
-					stockmaster.description,
-					klsalesperformance.topsales60
-			FROM stockmaster, klsalesperformance
-			WHERE stockmaster.stockid = klsalesperformance.stockid
-				AND stockmaster.discontinued = 0
+				stockmaster.categoryid,
+				stockmaster.description,
+				klsalesperformance.topsales60
+			FROM stockmaster
+			INNER JOIN klsalesperformance ON stockmaster.stockid = klsalesperformance.stockid
+			WHERE stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				" . $WhereCat . "
-			ORDER BY topsales60 DESC
-			LIMIT " . ($StartTopItems - 1) . "," . ($EndTopItems - $StartTopItems + 1);			
+			ORDER BY klsalesperformance.topsales60 DESC
+			LIMIT " . ($StartTopItems - 1) . "," . ($EndTopItems - $StartTopItems + 1);
+
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -714,24 +715,28 @@ to the shops with RL > 0.
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			$SQLQtyAvailable = "SELECT SUM(locstock.quantity) AS QtyAvailable
-								FROM locstock, locations loc2
-								WHERE locstock.stockid  = '" . $MyRow['stockid'] . "'
-									AND locstock.loccode = loc2.loccode
+								FROM locstock
+								INNER JOIN locations loc2 ON locstock.loccode = loc2.loccode
+								WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
 									AND loc2.stockreadytosell = 1";
+
 			$ResultQtyAvailable = DB_query($SQLQtyAvailable);
 			$MyRowQtyAvailable = DB_fetch_array($ResultQtyAvailable);
 			
 			if (($MyRowQtyAvailable['QtyAvailable'] > $MinStockAvailable) 
 				AND ($MyRowQtyAvailable['QtyAvailable'] <= $MaxStockAvailable)){
+
 				$DistributionSQL = "SELECT locstock.loccode, 
 										locstock.reorderlevel AS oldrl
-									FROM locstock,locations
+									FROM locstock
+									INNER JOIN locations ON locstock.loccode = locations.loccode
 									WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
-										AND locstock.loccode = locations.loccode
 										AND locations.stockreadytosell = 1
 										AND locstock.reorderlevel > 0";
+
 				$DistributionResult = DB_query($DistributionSQL);
 				$LocationsToDistribute = DB_num_rows($DistributionResult);
+				
 				if ($LocationsToDistribute != 0){
 					while ($MyDistribution = DB_fetch_array($DistributionResult)) {
 
