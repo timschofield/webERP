@@ -18,13 +18,6 @@ CreateTable('prodspecgroups', "CREATE TABLE IF NOT EXISTS prodspecgroups (
   KEY groupbyNo (groupbyNo)
 )");
 
-executeSQL ("INSERT INTO prodspecgroups (groupid, groupname, groupbyNo, headertitle, trailertext, labels, numcols) VALUES
-(1, 'PhysicalProperty', 1, 'Physical Properties', NULL, 'Physical Property,Value,Test Method', 3),
-(2, 'MechanicalProperty', 2, NULL, NULL, '', 3),
-(3, 'ThermalProperty', 3, NULL, NULL, '', 3),
-(4, 'Processing', 6, 'Injection Molding Processing Guidelines', '* Desicant type dryer required.', 'Setting,Value', 2),
-(5, 'RegulatoryCompliance', 5, 'Regulatory Compliance', NULL, 'Regulatory Compliance,Value', 2);");
-
 executeSQL("INSERT INTO prodspecgroups (groupname,groupbyNo,headertitle,trailertext,labels,numcols)
 SELECT DISTINCT(qatests.groupby),10,'Your Section Title Here','Trailer Notes Here','Label1,Label2,Label3',3
 FROM qatests WHERE groupby NOT IN (SELECT val_ps.groupname FROM prodspecgroups AS val_ps)
