@@ -1047,18 +1047,18 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		}
 	}
 // adjust RL for toko online as needed
-	$SQL = "SELECT salesorderdetails.stkcode,
-				SUM(salesorderdetails.quantity) AS totalqty,
-				locstock.reorderlevel
-			FROM salesorders, salesorderdetails, locstock
-			WHERE salesorderdetails.orderno = salesorders.orderno
-				AND salesorderdetails.stkcode = locstock.stockid
-				AND locstock.loccode = ". CODE_ONLINE_SHOP ."
-				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
-				AND salesorders.quotation = 0
-				AND salesorderdetails.completed = 0
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY salesorderdetails.stkcode";
+	$SQL = "SELECT sod.stkcode,
+				SUM(sod.quantity) AS totalqty,
+				ls.reorderlevel
+			FROM salesorders so
+			INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+			INNER JOIN locstock ls ON sod.stkcode = ls.stockid
+			WHERE ls.loccode = ". CODE_ONLINE_SHOP ."
+				AND so.fromstkloc = ". CODE_ONLINE_SHOP ."
+				AND so.quotation = 0
+				AND sod.completed = 0
+			GROUP BY sod.stkcode, ls.reorderlevel
+			ORDER BY sod.stkcode";
 				
 	$Result = DB_query($SQL);		
 	
