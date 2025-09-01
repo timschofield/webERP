@@ -808,11 +808,11 @@ to the shops with RL > 0.
 **************************************************************************************************************/
 function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 	if ($ShopType == "SHOPKL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}elseif ($ShopType == "SHOPOU") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	}else{
 		$WhereCat = " ";
 	}
@@ -858,11 +858,11 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	}
 
 	if ($ShopType == "SHOPKL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}elseif ($ShopType == "SHOPOU") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	}else{
 		$WhereCat = " ";
 	}
@@ -870,26 +870,30 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	$MaxTopSales = MaxTopSalesForTypeOfShop($ShopType, 60);
 	$MinTopSales = round($MaxTopSales * ((100 - $BottomPercentTopSales) / 100), 0);
 	
-	$SQL = "SELECT 	stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.categoryid,
-					stockmaster.units, 
-					locstock.quantity,
-					locstock.reorderlevel,
-					locstock.loccode
-			FROM 	stockmaster,locstock,klsalesperformance
-			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.stockid = klsalesperformance.stockid
-					AND klsalesperformance.topsales60 >= " . $MinTopSales . 
+	$SQL = "SELECT sm.stockid,
+					sm.description,
+					sm.categoryid,
+					sm.units,
+					ls.quantity,
+					ls.reorderlevel,
+					ls.loccode
+			FROM stockmaster sm
+			INNER JOIN locstock ls ON sm.stockid = ls.stockid
+			INNER JOIN klsalesperformance ksp ON sm.stockid = ksp.stockid
+			INNER JOIN (
+				SELECT ls_inner.stockid,
+					   SUM(ls_inner.quantity) AS total_available_stock
+				FROM locstock ls_inner
+				INNER JOIN locations loc ON ls_inner.loccode = loc.loccode
+				WHERE loc.stockreadytosell = 1
+				GROUP BY ls_inner.stockid
+				HAVING SUM(ls_inner.quantity) <= " . $minavailablestock . "
+			) stock_summary ON sm.stockid = stock_summary.stockid
+			WHERE ksp.topsales60 >= " . $MinTopSales .
 					$WhereCat . "
-					AND (locstock.quantity > 0)
-					AND (locstock.reorderlevel >= ". $OldRL .")
-					AND (SELECT SUM(locstock.quantity)
-						FROM locstock, locations loc2
-						WHERE stockmaster.stockid = locstock.stockid
-							AND locstock.loccode = loc2.loccode
-							AND loc2.stockreadytosell = 1) <= ".$minavailablestock."
-			ORDER BY stockmaster.stockid";
+				AND ls.quantity > 0
+				AND ls.reorderlevel >= " . $OldRL . "
+			ORDER BY sm.stockid";
 	
 	$Result = DB_query($SQL);		
 	
