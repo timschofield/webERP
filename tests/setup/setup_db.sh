@@ -127,7 +127,7 @@ else
 			COUNT=0
 			ALIVE=no
 			set +e
-			while [ "$COUNT" -lt 10 ]; do
+			while [ "$COUNT" -lt 30 ]; do
 				sleep 1
 				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
@@ -151,7 +151,7 @@ else
 			COUNT=0
 			ALIVE=no
 			set +e
-			while [ "$COUNT" -lt 10 ]; do
+			while [ "$COUNT" -lt 30 ]; do
 				sleep 1
 				docker exec -ti mysql mysql -h127.0.0.1 -uroot -p"$DB_PASSWORD" -e 'show databases' >/dev/null 2>/dev/null
 				if [ $? -eq 0 ]; then
@@ -161,7 +161,7 @@ else
 				echo "Waiting for mariadb..."
 				COUNT=$((COUNT+1))
 			done
-			set-e
+			set -e
 			if [ "$ALIVE" != yes ]; then
 				echo "Mariadb (in container) did not start up in time"
 				exit 1
