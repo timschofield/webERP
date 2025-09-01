@@ -57,7 +57,7 @@ jobs:
             - name: Set up the Database
               run: |
                 chmod 755 ./tests/setup/setup_db.sh
-                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "{{ matrix.dbport }}"
+                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "${{ matrix.dbport }}"
 
             - name: Stop php-fpm if running
               run: |
