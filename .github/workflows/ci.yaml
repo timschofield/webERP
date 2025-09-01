@@ -141,3 +141,7 @@ jobs:
                 #echo
                 echo '### apache access log'
                 sudo cat /var/log/apache2/access.log
+                echo
+                if [ -n "$(ls webpage_failing_*.html >/dev/null 2>/dev/null)" ]; then
+                  cat webpage_failing_*.html
+                fi
