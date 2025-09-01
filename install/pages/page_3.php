@@ -65,7 +65,7 @@ echo '</select>
 				<field>
 					<label for="Port">' . __('Database Port') . ': </label>
 					<input type="text" name="Port" id="Port" required="required" value="' . $_SESSION['Installer']['Port'] . '" maxlength="16" placeholder="' . __('The database port') . '" />
-					<fieldhelp>' . __('The port to use to connect to the databse.') . '</fieldhelp>
+					<fieldhelp>' . __('The port to use to connect to the database.') . '</fieldhelp>
 				</field>
 				<field>
 					<label for="Database">' . __('Database Name') . ': </label>

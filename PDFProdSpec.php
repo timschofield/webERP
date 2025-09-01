@@ -84,9 +84,10 @@ $SQL = "SELECT keyval,
 			FROM prodspecs INNER JOIN qatests
 			ON qatests.testid=prodspecs.testid
 			LEFT OUTER JOIN stockmaster on stockmaster.stockid=prodspecs.keyval
+			LEFT OUTER JOIN prodspecgroups on prodspecgroups.groupname=qatests.groupby
 			WHERE prodspecs.keyval='" .$SelectedProdSpec."'
 			AND prodspecs.showonspec='1'
-			ORDER by groupby, prodspecs.testid";
+			ORDER by groupbyNo, prodspecs.testid";
 
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -131,10 +132,21 @@ $CurSection='NULL';
 $SectionTitle='';
 $SectionTrailer='';
 
-$SectionsArray=array(array('PhysicalProperty',3, __('Technical Data Sheet Properties'), __('* Data herein is typical and not to be construed as specifications.'), array(260,110,135),array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
-					 array('',3, __('Header'), __('* Trailer'), array(260,110,135), array(__('Physical Property'),__('Value'),__('Test Method')),array('left','center','center')),
-					 array('Processing',2, __('Injection Molding Processing Guidelines'), __('* Desicant type dryer required.'), array(240,265),array(__('Setting'),__('Value')),array('left','center')),
-					 array('RegulatoryCompliance',2, __('Regulatory Compliance'), '', array(240,265),array(__('Regulatory Compliance'),__('Value')),array('left','center')));
+$SectionsArray=[];
+$result2 = DB_query("SELECT groupname, headertitle, trailertext, labels, numcols FROM prodspecgroups", $db);
+while ($MyGroupRow = DB_fetch_array($result2)) {
+	//echo $MyGroupRow['groupname'] . '&nbsp;' . $MyGroupRow['headertitle'] . '&nbsp;' . $MyGroupRow['trailertext'] . '&nbsp;' . $MyGroupRow['labels'] . '&nbsp;' . $MyGroupRow['numcols'] . '&nbsp;' ; 
+	//echo'<br/>';
+	if ($MyGroupRow['numcols']==2) {
+		$align=array('left','center');
+		$cols=array(240,265);
+	} else {
+		$align=array('left','center','center');
+		$cols=array(260,110,135);
+	}
+	$SectionsArray[] = array($MyGroupRow['groupname'], $MyGroupRow['numcols'], $MyGroupRow['headertitle'],$MyGroupRow['trailertext'],$cols,explode(",",$MyGroupRow['labels']), $align);
+} //end while loop
+DB_data_seek($result2, 0);
 
 while ($MyRow=DB_fetch_array($Result)){
 	if ($MyRow['description']=='') {
@@ -187,6 +199,7 @@ while ($MyRow=DB_fetch_array($Result)){
 			$PageNumber++;
 			include('includes/PDFProdSpecHeader.php');
 		}
+		$YPos -= $LineHeight; //added
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
 		$YPos -= $LineHeight;
 		$pdf->setFont('','B');

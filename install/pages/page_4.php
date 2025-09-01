@@ -22,8 +22,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 			<div class="page_help_text">
 				<p>' . __('Please enter your administrator account details below.') . '<br />
 				</p>
-				<p>' . __('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . __('which you can change below.') . '<br />
-				   ' . __('The default password is') . ' ' . '<b><i>weberp</i></b>' . ' ' . __('which you can change below.') . '</p>
+				<p>' . __('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . __('which you can change below.') . '</p>
 			</div>
 			<ul>
 				<field>
@@ -32,7 +31,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 				</field>
 				<field>
 					<label for="Email">' . __('Email Address') . ': </label>
-					<input type="email" name="Email" value="' . $_SESSION['Installer']['AdminEmail'] . '" placeholder="admin@yoursite.com" />
+					<input type="email" name="Email" value="' . $_SESSION['Installer']['AdminEmail'] . '" />
 					<fieldhelp>' . __('For example: admin@yoursite.com') . '</fieldhelp>
 				</field>
 				<field>

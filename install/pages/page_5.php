@@ -58,4 +58,7 @@ echo '<fieldset>
 						<fieldhelp>' . __('webERP Demo site and data will be installed') . '</fieldhelp>
 					</field>
 				</ul>
-		</fieldset>';
+		</fieldset>
+';
+
+// the form is closed in index.php...
