@@ -9,8 +9,12 @@ tests locally to check that there are no bugs introduced before submitting a pul
 In order to do so, it is necessary to have already set up:
 
 * a webserver running php and configured to serve the local webERP installation
-* a database (currently only mariadb and mysql are supported), which must be reachable from the webserver
+* a database (currently only mariadb and mysql are supported), which must be reachable from the webserver - note that
+  if you don't have one set up, you can run one via Docker using the included scripts (see bottom of this page)
 * the php tool `composer`
+
+_NB_ the test suite is not included if you have downloaded webERP from GutHub as a tarball. You need to have
+gotten it via `git clone`.
 
 There are two main modes of operation:
 1. run the tests using a dedicated database schema, loaded with demo data
@@ -96,3 +100,24 @@ AGAINST YOUR PRODUCTION DATABASE!
 ## Writing tests
 
 TO BE DOCUMENTED...
+
+for the moment, look at an example in `tests/install/InstallerTest.php`
+
+
+## Using the test scripts to run a specific version of a database
+
+In short: you can _easily_ run any version of MySql and MariaDB locally, and use it for webERP.
+
+The prerequisite is to have Docker installer.
+
+The script to run them is `tests/setup/setup_db.sh` run it with `-h` for help.
+
+NB: the db container does not stop once started. To stop it, run
+
+	`docker ps`
+
+then
+
+	`docker stop $id`
+
+where `$id` is the id of the container, gotten from the 1st command
