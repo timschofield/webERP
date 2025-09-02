@@ -197,7 +197,8 @@ TRUNCATE test_erp.`fixedassettasks`;
 INSERT INTO test_erp.fixedassettasks SELECT * FROM kl_erp.fixedassettasks;
 
 TRUNCATE test_erp.`fixedassettrans`;
-INSERT INTO test_erp.fixedassettrans SELECT * FROM kl_erp.fixedassettrans WHERE transdate >= '2025-01-01';
+/* INSERT INTO test_erp.fixedassettrans SELECT * FROM kl_erp.fixedassettrans WHERE transdate >= '2025-01-01'; */
+INSERT INTO test_erp.fixedassettrans SELECT * FROM kl_erp.fixedassettrans;
 
 TRUNCATE test_erp.`freightcosts`;
 INSERT INTO test_erp.freightcosts SELECT * FROM kl_erp.freightcosts;
@@ -265,10 +266,10 @@ TRUNCATE test_erp.`klconsignment`;
 INSERT INTO test_erp.klconsignment SELECT * FROM kl_erp.klconsignment; 
 
 TRUNCATE test_erp.`klfreeexchanges`;
-/*INSERT INTO test_erp.klfreeexchanges SELECT * FROM kl_erp.klfreeexchanges;*/
+INSERT INTO test_erp.klfreeexchanges SELECT * FROM kl_erp.klfreeexchanges;
 
 TRUNCATE test_erp.`klkpi`;
-/*INSERT INTO test_erp.klkpi SELECT * FROM kl_erp.klkpi;*/
+INSERT INTO test_erp.klkpi SELECT * FROM kl_erp.klkpi;
 
 TRUNCATE test_erp.`klkpidescriptions`;
 INSERT INTO test_erp.klkpidescriptions SELECT * FROM kl_erp.klkpidescriptions;
@@ -298,7 +299,7 @@ TRUNCATE test_erp.`klpostatus`;
 INSERT INTO test_erp.klpostatus SELECT * FROM kl_erp.klpostatus;
 
 TRUNCATE test_erp.`klretailcustomers`;
-/* INSERT INTO test_erp.klretailcustomers SELECT * FROM kl_erp.klretailcustomers; */
+INSERT INTO test_erp.klretailcustomers SELECT * FROM kl_erp.klretailcustomers;
 
 TRUNCATE test_erp.`klretailpartners`;
 INSERT INTO test_erp.klretailpartners SELECT * FROM kl_erp.klretailpartners;
@@ -348,9 +349,12 @@ INSERT INTO test_erp.loctransfercancellations SELECT * FROM kl_erp.loctransferca
 TRUNCATE test_erp.`loctransfers`;
 /*INSERT INTO test_erp.loctransfers SELECT * FROM kl_erp.loctransfers WHERE reference >= 200000;*/
 /* Special insert to prevent error when copying calculated fields*/
+/* INSERT INTO test_erp.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc)
+SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc
+FROM kl_erp.loctransfers WHERE reference >= 200000; */
 INSERT INTO test_erp.loctransfers (loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc)
 SELECT loctransferid, reference, stockid, shipqty, recqty, shipdate, recdate, shiploc, recloc
-FROM kl_erp.loctransfers WHERE reference >= 200000;
+FROM kl_erp.loctransfers;
 
 TRUNCATE test_erp.`mailgroupdetails`;
 INSERT INTO test_erp.mailgroupdetails SELECT * FROM kl_erp.mailgroupdetails;
@@ -395,7 +399,7 @@ TRUNCATE test_erp.`orderdeliverydifferenceslog`;
 INSERT INTO test_erp.orderdeliverydifferenceslog SELECT * FROM kl_erp.orderdeliverydifferenceslog;
 
 TRUNCATE test_erp.`packagingused`;
-/* INSERT INTO test_erp.packagingused SELECT * FROM kl_erp.packagingused; */
+INSERT INTO test_erp.packagingused SELECT * FROM kl_erp.packagingused;
 
 TRUNCATE test_erp.`paymentmethods`;
 INSERT INTO test_erp.paymentmethods SELECT * FROM kl_erp.paymentmethods;
@@ -513,7 +517,7 @@ TRUNCATE test_erp.`salariescalculated`;
 INSERT INTO test_erp.salariescalculated SELECT * FROM kl_erp.salariescalculated;
 
 TRUNCATE test_erp.`salesanalysis`;
-/*INSERT INTO test_erp.salesanalysis SELECT * FROM kl_erp.salesanalysis WHERE periodno >= 170; */
+INSERT INTO test_erp.salesanalysis SELECT * FROM kl_erp.salesanalysis;
 
 TRUNCATE test_erp.`salescat`;
 INSERT INTO test_erp.salescat SELECT * FROM kl_erp.salescat;
@@ -540,13 +544,19 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-INSERT INTO test_erp.salesorderdetails (
+/* INSERT INTO test_erp.salesorderdetails (
   orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
 )
 SELECT
   orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
 FROM kl_erp.salesorderdetails
-WHERE orderno >= 600000;
+WHERE orderno >= 600000; */
+INSERT INTO test_erp.salesorderdetails (
+  orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
+)
+SELECT
+  orderlineno, orderno, stkcode, qtyinvoiced, unitprice, units, conversionfactor, decimalplaces, quantity, estimate, discountpercent, actualdispatchdate, completed, narrative, itemdue, poline
+FROM kl_erp.salesorderdetails;
 
 TRUNCATE test_erp.`salesorders`;
 INSERT INTO test_erp.salesorders SELECT * FROM kl_erp.salesorders WHERE orderno >= 600000; 
@@ -628,10 +638,12 @@ TRUNCATE test_erp.`stockmovestaxes`;
 INSERT INTO test_erp.stockmovestaxes SELECT * FROM kl_erp.stockmovestaxes;
 
 TRUNCATE test_erp.`stockrequest`;
-INSERT INTO test_erp.stockrequest SELECT * FROM kl_erp.stockrequest WHERE dispatchid >= 30000;
+/* INSERT INTO test_erp.stockrequest SELECT * FROM kl_erp.stockrequest WHERE dispatchid >= 30000; */
+INSERT INTO test_erp.stockrequest SELECT * FROM kl_erp.stockrequest;
 
 TRUNCATE test_erp.`stockrequestitems`;
-INSERT INTO test_erp.stockrequestitems SELECT * FROM kl_erp.stockrequestitems WHERE dispatchid >= 30000; 
+/* INSERT INTO test_erp.stockrequestitems SELECT * FROM kl_erp.stockrequestitems WHERE dispatchid >= 30000; */
+INSERT INTO test_erp.stockrequestitems SELECT * FROM kl_erp.stockrequestitems;
 
 TRUNCATE test_erp.`stockserialitems`;
 INSERT INTO test_erp.stockserialitems SELECT * FROM kl_erp.stockserialitems;
@@ -646,7 +658,8 @@ TRUNCATE test_erp.`suppallocs`;
 INSERT INTO test_erp.suppallocs SELECT * FROM kl_erp.suppallocs;
 
 TRUNCATE test_erp.`suppinvstogrn`;
-INSERT INTO test_erp.suppinvstogrn SELECT * FROM kl_erp.suppinvstogrn WHERE grnno >= 50000;
+/* INSERT INTO test_erp.suppinvstogrn SELECT * FROM kl_erp.suppinvstogrn WHERE grnno >= 50000; */
+INSERT INTO test_erp.suppinvstogrn SELECT * FROM kl_erp.suppinvstogrn;
 
 TRUNCATE test_erp.`suppliercontacts`;
 INSERT INTO test_erp.suppliercontacts SELECT * FROM kl_erp.suppliercontacts;
@@ -661,15 +674,16 @@ TRUNCATE test_erp.`suppliertype`;
 INSERT INTO test_erp.suppliertype SELECT * FROM kl_erp.suppliertype;
 
 TRUNCATE test_erp.`supptrans`;
-INSERT INTO test_erp.supptrans SELECT * FROM kl_erp.supptrans WHERE trandate >= '2025-01-01'; 
+/* INSERT INTO test_erp.supptrans SELECT * FROM kl_erp.supptrans WHERE trandate >= '2025-01-01'; */
+INSERT INTO test_erp.supptrans SELECT * FROM kl_erp.supptrans; 
 
 TRUNCATE test_erp.`supptranstaxes`;
-INSERT INTO test_erp.supptranstaxes SELECT * FROM kl_erp.supptranstaxes WHERE supptransid >= 10000; 
+/* INSERT INTO test_erp.supptranstaxes SELECT * FROM kl_erp.supptranstaxes WHERE supptransid >= 10000; */
+INSERT INTO test_erp.supptranstaxes SELECT * FROM kl_erp.supptranstaxes; 
 
 TRUNCATE test_erp.`systypes`;
 INSERT INTO test_erp.systypes SELECT * FROM kl_erp.systypes;
 
-/* do not copy to avoid prolem with auto generated codes */
 TRUNCATE test_erp.`tags`;
 INSERT INTO test_erp.tags SELECT * FROM kl_erp.tags; 
 
@@ -710,16 +724,19 @@ TRUNCATE test_erp.`unitsofmeasure`;
 INSERT INTO test_erp.unitsofmeasure SELECT * FROM kl_erp.unitsofmeasure;
 
 TRUNCATE test_erp.`woitems`;
-INSERT INTO test_erp.woitems SELECT * FROM kl_erp.woitems WHERE wo >= 5000;
+/* INSERT INTO test_erp.woitems SELECT * FROM kl_erp.woitems WHERE wo >= 5000; */
+INSERT INTO test_erp.woitems SELECT * FROM kl_erp.woitems;
 
 TRUNCATE test_erp.`worequirements`;
-INSERT INTO test_erp.worequirements SELECT * FROM kl_erp.worequirements WHERE wo >= 5000;
+/* INSERT INTO test_erp.worequirements SELECT * FROM kl_erp.worequirements WHERE wo >= 5000; */
+INSERT INTO test_erp.worequirements SELECT * FROM kl_erp.worequirements;
 
 TRUNCATE test_erp.`workcentres`;
 INSERT INTO test_erp.workcentres SELECT * FROM kl_erp.workcentres;
 
 TRUNCATE test_erp.`workorders`;
-INSERT INTO test_erp.workorders SELECT * FROM kl_erp.workorders WHERE wo >= 5000;
+/* INSERT INTO test_erp.workorders SELECT * FROM kl_erp.workorders WHERE wo >= 5000; */
+INSERT INTO test_erp.workorders SELECT * FROM kl_erp.workorders;
 
 TRUNCATE test_erp.`woserialnos`;
 INSERT INTO test_erp.woserialnos SELECT * FROM kl_erp.woserialnos;
