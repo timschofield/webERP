@@ -681,7 +681,9 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 	if (file_exists($NewConfigFile)) {
 		echo '<div class="error">' . __('The configuration file exists and has not been overwritten') . ' ' . $NewConfigFile . '</div>';
 		flush();
+		$Result = true;
 
+	} else {
 		// Write the updated content to the new config file
 		$NewConfigContent = implode($NewLines);
 		$Result = file_put_contents($NewConfigFile, $NewConfigContent);
@@ -694,7 +696,6 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 		flush();
 		$Result = true;
 	}
-
 	return $Result;
 }
 
