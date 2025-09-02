@@ -699,12 +699,7 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText){
 	DB_query($SQL);
 	$Text = "Purge Audit Trail table in webERP";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
-	DB_query_archive($SQL);
-	$Text = "Purge Audit Trail table in archive webERP";
-	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
-	DB_query_oc($SQL);
-	$Text = "Purge Audit Trail table in OpenCart";
-	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+
 	return $EmailText;
 }
 
