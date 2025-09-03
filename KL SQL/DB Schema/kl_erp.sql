@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 11:49 AM
+-- Generation Time: Sep 03, 2025 at 02:56 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -4285,7 +4285,8 @@ ALTER TABLE `debtorsmaster`
   ADD KEY `idx_debtorsmaster_salestype` (`salestype`),
   ADD KEY `idx_debtorsmaster_ediinvoices` (`ediinvoices`),
   ADD KEY `idx_debtorsmaster_ediorders` (`ediorders`),
-  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`);
+  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`),
+  ADD KEY `idx_debtorsmaster_debtorno_currcode_salestype` (`debtorno`,`currcode`,`salestype`);
 
 --
 -- Indexes for table `debtortrans`
@@ -5413,7 +5414,8 @@ ALTER TABLE `stockcategory`
   ADD KEY `idx_stockcategory_categorydescription` (`categorydescription`),
   ADD KEY `idx_stockcategory_stocktype_categoryid` (`stocktype`,`categoryid`),
   ADD KEY `idx_stockcategory_klprioritytransfers` (`klprioritytransfers`),
-  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`);
+  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`),
+  ADD KEY `idx_stockcategory_stocktype_klprioritytransfers_categoryid` (`stocktype`,`klprioritytransfers`,`categoryid`);
 
 --
 -- Indexes for table `stockcatproperties`
@@ -5474,7 +5476,8 @@ ALTER TABLE `stockmaster`
   ADD UNIQUE KEY `uk_stockmaster_usable_stockids` (`discontinued`,`klchangingprice`,`klmovingdiscount20`,`klmovingdiscount50`,`klmovingdiscount80`,`stockid`),
   ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`),
   ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`),
-  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`);
+  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`),
+  ADD KEY `idx_stockmaster_mbflag_categoryid_stockid` (`mbflag`,`categoryid`,`stockid`);
 
 --
 -- Indexes for table `stockmoves`
