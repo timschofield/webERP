@@ -110,7 +110,7 @@ function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
 /**
  * @return bool false when a fatal error happened
  */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $Path_To_Root) {
+function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $DBType, $Path_To_Root) {
 
 	// avoid exceptions being thrown on query errors
 	mysqli_report(MYSQLI_REPORT_ERROR);
@@ -273,6 +273,16 @@ function CreateTables($Path_To_Root, $DBType) {
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
+
+		if ($DBType == 'mariadb') {
+			// mariadb 5.5 chokes on STORED
+			$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
+		}
+
+		if ($DBType == 'mysqli' || $DBType == 'mysql' ) {
+			// mysql 5.5 chokes on GENERATED ALWAYS
+		}
+
 		// we disable FKs for each script, in case the previous script re-enabled them
 		/// @todo do we need to disable FKs while creating tables and inserting no data?
 		DB_IgnoreForeignKeys();

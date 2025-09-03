@@ -36,7 +36,7 @@ if (isset($_POST['Demo'])) {
 
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 
-if (!CreateDataBase($Host, $DBUser, $DBPassword, $Database, $DBPort, $Path_To_Root)) {
+if (!CreateDataBase($Host, $DBUser, $DBPassword, $Database, $DBPort, $DBType, $Path_To_Root)) {
 	return;
 }
 
