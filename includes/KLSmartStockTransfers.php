@@ -120,12 +120,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 
 	$TableResult = array();
 
-	// from location
-	$ErrMsg = __('Could not retrieve location name from the database');
-	$SQLfrom = "SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
-	$Result = DB_query($SQLfrom, $ErrMsg);
-	$Row = DB_fetch_row($Result);
-	$FromLocation = $Row['0'];
+	$FromLocation = GetLocationNameFromCode($FromLocCode);
 
 	// to location
 	if ($ToLocCode == 'KANTO'){
@@ -143,9 +138,9 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$SQLto = "SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch
-				FROM `locations`
-				WHERE loccode='" . $ToLocCode . "'";
-		$Resultto = DB_query($SQLto, $ErrMsg);
+				FROM locations
+				WHERE loccode = '" . $ToLocCode . "'";
+		$Resultto = DB_query($SQLto);
 		$RowTo = DB_fetch_row($Resultto);
 		$ToLocation = $RowTo['0'];
 		$ToCustomer = $RowTo['1'];
@@ -156,8 +151,8 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 						currencies.decimalplaces
 					FROM debtorsmaster, currencies
 					WHERE debtorsmaster.currcode = currencies.currabrev
-						AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-		$ResultPrices = DB_query($SQLPrices, $ErrMsg);
+						AND debtorsmaster.debtorno = '" . $ToCustomer . "'";
+		$ResultPrices = DB_query($SQLPrices);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency = $RowPrices['0'];
 		$ToPriceList = $RowPrices['1'];
@@ -223,38 +218,13 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$NumPcsInThisStockDispatch = 0;
 		while (($MyRow = DB_fetch_array($Result)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
 			// Check if there is any stock in transit already sent from FROM LOCATION
-			$InTransitQuantityAtFrom = 0;
-			if ($_SESSION['ProhibitNegativeStock'] == 1){
-				$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-								FROM loctransfers
-								WHERE stockid='" . $MyRow['stockid'] . "'
-									AND shiploc='" . $FromLocCode . "'
-									AND pendingqty > 0";
-				$InTransitResult = DB_query($InTransitSQL);
-				$InTransitRow = DB_fetch_array($InTransitResult);
-				if ($InTransitRow['intransit'] != '') {
-					$InTransitQuantityAtFrom = $InTransitRow['intransit'];
-				} else {
-					$InTransitQuantityAtFrom = 0;
-				}
-			}
+			$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $FromLocCode);
+
 			// The real available stock to ship is the (qty - reorder level - in transit).
 			$AvailableShipQtyAtFrom = $MyRow['fromquantity'] - $MyRow['fromreorderlevel'] - $InTransitQuantityAtFrom;
 
 			// Check if TO location is already waiting to receive some stock of this item
-			$InTransitQuantityAtTo = 0;
-			$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-							FROM loctransfers
-							WHERE stockid='" . $MyRow['stockid'] . "'
-								AND recloc='" . $ToLocCode . "'
-								AND pendingqty > 0";
-			$InTransitResult = DB_query($InTransitSQL);
-			$InTransitRow = DB_fetch_array($InTransitResult);
-			if ($InTransitRow['intransit'] != '') {
-				$InTransitQuantityAtTo = $InTransitRow['intransit'];
-			} else {
-				$InTransitQuantityAtTo = 0;
-			}
+			$InTransitQuantityAtTo = GetItemQtyInTransitToLocation($MyRow['stockid'], $ToLocCode);
 
 			// The real needed stock is reorder level - qty - in transit).
 			$NeededQty = round(($MyRow['reorderlevel'] - $MyRow['quantity']) * (1 + $DispatchPercent / 100));

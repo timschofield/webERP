@@ -47,6 +47,10 @@ YesterdayServerUsage - Collects and reports server usage statistics for the prev
 * @return string - Updated email text containing results of operations
 **************************************************************************************************************/
 function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
+	include('includes/GetPrice.php');
+	include('includes/SQL_CommonFunctions.php');
+	include('includes/StockFunctions.php');
+
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
 	include('includes/KLBoards.php');
@@ -54,13 +58,13 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
 	include('includes/KLMarketplaceFunctions.php');
-	include('includes/GetPrice.php');
-	include('includes/SQL_CommonFunctions.php');
+	include('includes/KLSmartStockTransfers.php');
+
 	include('includes/OCOpenCartGeneralFunctions.php');
 	include('includes/OCWeberpToOpenCartSync.php');
 	include('includes/OCOpenCartToWeberpSync.php');
 	include('includes/OCOpenCartConnectDB.php');
-	include('includes/KLSmartStockTransfers.php');
+
 	include('includes/ArchiveConnectDB.php');
 	
 	if ($Group == "0010-HourlySyncOpenCart"){
