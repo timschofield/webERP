@@ -273,11 +273,14 @@ function CreateTables($Path_To_Root) {
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
+		// we disable FKs for each script, in case the previous script re-enabled them
+		/// @todo do we need to disable FKs while creating tables and inserting no data?
 		DB_IgnoreForeignKeys();
 		// avoid the standard error-handling kicking in
 		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no($Result);
 	}
+	DB_ReinstateForeignKeys();
 	if ($DBErrors > 0) {
 		echo '<div class="error">' . __('Database tables could not be created') . '</div>';
 	} else {
@@ -291,8 +294,9 @@ function CreateTables($Path_To_Root) {
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
 	$Errors = 0;
 	if ($Demo != 'Yes') {
-		DB_IgnoreForeignKeys();
 		/* Create the admin user */
+		/// @todo is this needed for this insert?
+		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
 										realname,
@@ -354,8 +358,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 		flush();
 
+		/* insert COA data */
+		/// @todo use function PopulateSQLDataBySQLFile and avoid code duplication!
 		$COAScriptFile = file($CoA);
 		$ScriptFileEntries = sizeof($COAScriptFile);
 		$SQL = '';
@@ -384,12 +391,15 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 					// Database created above with correct name.
 					if (strncasecmp($SQL, ' CREATE DATABASE ', 17) and strncasecmp($SQL, ' USE ', 5)) {
 						$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1);
-						DB_IgnoreForeignKeys();
+						// gg: no need to disable FKs for each statement - we did that just before starting the whole script
+						//DB_IgnoreForeignKeys();
 						$Result = DB_query($SQL, '', '', false, false);
 						if (DB_error_no($Result) != 0) {
 							$Errors++;
 							echo '<div class="error">' . __('Your chosen chart of accounts could not be uploaded') . '</div>';
 						}
+					} else {
+						/// @todo log a warning, so that developers can know that they should fix the sql...
 					}
 					$SQL = '';
 				}
@@ -397,6 +407,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			} //end if its a valid sql line not a comment
 
 		} //end of for loop around the lines of the sql script
+		DB_ReinstateForeignKeys();
 		echo '<div class="success">' . __('Your chosen chart of accounts has been uploaded') . '</div>';
 		flush();
 
@@ -423,10 +434,12 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$DBErrors = 0;
 		foreach (glob($Path_To_Root . '/install/sql/data/*.sql') as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
+			// we disable FKs for each script, in case the previous script re-enabled them
 			DB_IgnoreForeignKeys();
 			$Result = DB_query($SQLScriptFile, '', '', false, false);
 			$DBErrors += DB_error_no($Result);
 		}
+		DB_ReinstateForeignKeys();
 		if ($DBErrors > 0) {
 			$Errors++;
 			echo '<div class="error">' . __('Database tables could not be populated') . '</div>';
@@ -484,13 +497,15 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 		flush();
 
+		DB_ReinstateForeignKeys();
+
 	} else {
-		/// @todo do not use a 'success' formatting for this line...
-		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
+		echo '<div class="info">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
-		$Errors = (int)PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
+		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql');
 
+		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL, '', '', false, false);
 		/// @todo echo error (warning?) if failure
@@ -507,6 +522,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
+		/// @todo is there need to disable foreign keys for this insert?
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
@@ -563,13 +579,13 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0
 									)";
 		$Result = DB_query($SQL, '', '', false, false);
-
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
 		} else {
 			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 		flush();
 
 		/// @todo display a warning message if there was any query failure
@@ -595,22 +611,22 @@ function CryptPass($Password) {
  * @param string $File
  * @return bool
  */
-function PopulateSQLDataBySQL($File) {
+function PopulateSQLDataBySQLFile($File) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 
 	$Errors = 0;
 	$SQL = '';
 	$InAFunction = false;
-	for ($i = 1;$i <= $ScriptFileEntries;$i++) {
+	for ($i = 1; $i <= $ScriptFileEntries; $i++) {
 
 		$SQLScriptFile[$i - 1] = trim($SQLScriptFile[$i - 1]);
 
-		/// @todo ignore lines that start with -- or USE or /*
+		/// @todo ignore lines that start with `--` or USE or /* or CREATE DATABASE
 
 		$SQL.= ' ' . $SQLScriptFile[$i - 1];
 
-		//check if this line kicks off a function definition - pg chokes otherwise
+		// check if this line kicks off a function definition - pg chokes otherwise
 		if (mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
 			$InAFunction = true;
 		}
@@ -639,13 +655,18 @@ function PopulateSQLDataBySQL($File) {
  */
 function CreateGLTriggers($Path_To_Root)
 {
+	/// @todo the trigger code will not work with postgres
+	/// @todo why not use PopulateSQLDataBySQLFile?
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/triggers/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
+		// we disable FKs for each script, in case the previous script re-enabled them
+		/// @todo do we need to disable FKs while creating  triggers?
 		DB_IgnoreForeignKeys();
 		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no();
 	}
+	DB_ReinstateForeignKeys();
 	if ($DBErrors > 0) {
 		echo '<div class="error">' . __('Database triggers could not be created') . '</div>';
 	} else {
@@ -726,7 +747,7 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 }
 
 /**
- * @param $Path_To_Root
+ * @param string $Path_To_Root
  * @return bool
  */
 function CreateCompaniesFile($Path_To_Root) {

@@ -96,6 +96,7 @@ if (!UploadData($_SESSION['Installer']['Demo'],
 $SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/part_pics')";
 $Result = DB_query($SQL);
 
+/// @todo wouldn't it make more sense to have this be run as part of CreateCompanyFolder, or just after it?
 if (!CreateCompaniesFile($Path_To_Root)) {
 	return;
 }
