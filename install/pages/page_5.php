@@ -7,6 +7,9 @@ if (!isset($PathPrefix)) {
 
 include($PathPrefix . 'includes/CountriesArray.php');
 
+/// @todo act like on previous pages: post to self, and set values to the session if all is ok, before using a link
+///       to move on to page 6. This allows f.e. to check if the company name is already taken and refuse to go on if it is
+
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=6" method="post" enctype="multipart/form-data">';
 echo '<fieldset>
 			<legend>' . __('Company Settings') . '</legend>
