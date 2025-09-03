@@ -784,49 +784,50 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Set Top Sales Ranking Table" . "\n\n"; 
 	}	
+	
+	// TRUNCATE operation remains the same - already optimal
 	$SQL = "TRUNCATE klsalesperformance";
 	$ErrMsg =__('Could not set TRUNCATE klsalesperformance because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Truncated klsaleseprformace table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	
-	$SQL="SELECT stockmaster.stockid
-			FROM stockmaster
-			WHERE stockmaster.discontinued = 0 
-				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ") ";
-	$Result = DB_query($SQL);
+	// OPTIMIZED BATCH INSERT OPERATION
+	// ORIGINAL ISSUES:
+	// - Multiple OR conditions with IN clauses (inefficient query execution)
+	// - Row-by-row INSERT operations (high transaction overhead)
+	// - No table aliases (reduced readability)
+	//
+	// OPTIMIZED IMPROVEMENTS:
+	// - Single IN clause with combined category lists
+	// - Batch INSERT...SELECT operation (eliminates loop and individual INSERTs)
+	// - Table alias 'sm' for stockmaster
+	// - Direct INSERT from SELECT result (no PHP loop required)
+	
+	// Combine all category lists into a single comprehensive list
+	// This eliminates the need for multiple OR conditions
+	$AllCategories = str_replace(')', '', LIST_STOCK_CATEGORIES_KAPAL_LAUT);
+	$AllCategories = str_replace('(', '', $AllCategories);
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_BLINK));
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_OUTLET));
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_GENERAL));
+	$AllCategories = '(' . $AllCategories . ')';
+	
+	// Single optimized INSERT...SELECT operation
+	$SQL = "INSERT INTO klsalesperformance 
+				(stockid, topsales30, topsales60, topsales90, valuesales30, valuesales60, valuesales90)
+			SELECT sm.stockid, 9999999, 9999999, 9999999, 0, 0, 0
+			FROM stockmaster sm
+			WHERE sm.discontinued = 0 
+				AND sm.categoryid IN " . $AllCategories;
+	
 	$ErrMsg =__('Could not insert items by top sales because');
-	if (DB_num_rows($Result) != 0){	
-		while ($MyRow = DB_fetch_array($Result)) {
-			$SQLOp="INSERT INTO klsalesperformance
-									(
-									stockid,
-									topsales30,
-									topsales60,
-									topsales90,
-									valuesales30,
-									valuesales60,
-									valuesales90
-									)
-								VALUES (
-									'" . $MyRow['stockid'] . "',
-									'9999999',
-									'9999999',
-									'9999999',
-									'0',
-									'0',
-									'0'
-									)";
-			DB_query($SQLOp,$ErrMsg);
-		}
-	}
-	$Text = "Initialized klsaleseprformace table";
+	DB_query($SQL,$ErrMsg);
+	
+	$Text = "Initialized klsaleseprformace table with batch INSERT";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	
-
+	// The SetTopSalesByGroup calls remain the same - they use the already optimized function
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 90, $ShowMessages, $EmailText);
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 60, $ShowMessages, $EmailText);
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 30, $ShowMessages, $EmailText);
@@ -869,14 +870,28 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 		return;
 	}
 	
-	$SQL="SELECT salesorderdetails.stkcode,
-				SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) AS valuesales
-			FROM salesorderdetails, stockmaster
-			WHERE salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-				AND stockmaster.categoryid IN " . $ListCategories . "
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC";
+	// OPTIMIZED MAIN QUERY
+	// ORIGINAL ISSUES:
+	// - Old-style comma JOIN syntax (salesorderdetails, stockmaster)
+	// - Missing table aliases
+	// - Repeated SUM calculation in SELECT and ORDER BY
+	// - Suboptimal filter order
+	//
+	// OPTIMIZED IMPROVEMENTS:
+	// - Modern explicit INNER JOIN syntax
+	// - Table aliases (sod, sm) for all tables
+	// - ORDER BY references alias 'valuesales' instead of repeating SUM
+	// - Date filter applied first for better selectivity
+	// - Cleaner, more maintainable SQL structure
+	$SQL="SELECT sod.stkcode,
+			SUM(sod.qtyinvoiced * sod.unitprice) AS valuesales
+		FROM salesorderdetails sod
+		INNER JOIN stockmaster sm ON sod.stkcode = sm.stockid
+		WHERE sod.actualdispatchdate >= '" . $StartDate . "'
+			AND sm.categoryid IN " . $ListCategories . "
+		GROUP BY sod.stkcode
+		ORDER BY valuesales DESC";
+	
 	$ErrMsg =__('Could not sort items by top sales because');
 	$Result = DB_query($SQL,$ErrMsg);
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 02:56 PM
+-- Generation Time: Sep 03, 2025 at 03:18 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -4676,7 +4676,8 @@ ALTER TABLE `klsalesperformance`
   ADD UNIQUE KEY `uk_klsalesperformance_topsales30_stockid` (`topsales30`,`stockid`),
   ADD UNIQUE KEY `uk_klsalesperformance_valuesales30_stockid` (`valuesales30`,`stockid`),
   ADD UNIQUE KEY `uk_klsalesperformance_topsales90_stockid` (`topsales90`,`stockid`),
-  ADD UNIQUE KEY `uk_klsalesperformance_valuesales90_stockid` (`valuesales90`,`stockid`);
+  ADD UNIQUE KEY `uk_klsalesperformance_valuesales90_stockid` (`valuesales90`,`stockid`),
+  ADD KEY `idx_klsalesperformance_stockid` (`stockid`);
 
 --
 -- Indexes for table `klservicetypes`
@@ -5278,7 +5279,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
   ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
   ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`),
-  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`);
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`),
+  ADD KEY `idx_salesorderdetails_actualdispatch_stkcode_qtyinv_unitprice` (`actualdispatchdate`,`stkcode`,`qtyinvoiced`,`unitprice`);
 
 --
 -- Indexes for table `salesorders`
