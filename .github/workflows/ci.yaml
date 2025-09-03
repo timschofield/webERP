@@ -6,19 +6,39 @@ jobs:
     test:
         runs-on: ${{ matrix.operating-system }}
         strategy:
+            # Do not halt all tests in the matrix if one fails
             fail-fast: false
+            # Define a list of test environments to run the test suite in
             matrix:
                 include:
-                    # @see https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+                    # @see https://github.com/actions/runner-images
                     # @todo run some tests on 'windows-latest'
+                    # NB: the order of options is picked to make the github page display nicer (test naming in left col)
                     - php: '8.4'
+                      # Using 'native' version will result in the mysql service on the host to be used.
+                      # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
+                      dbtype: mysql
+                      dbversion: native
                       operating-system: ubuntu-24.04
+                      dbport: 3306
                     - php: '8.3'
+                      dbtype: mariadb
+                      dbversion: 'latest'
                       operating-system: ubuntu-24.04
+                      dbport: 3306
                     - php: '8.2'
+                      dbtype: mysql
+                      dbversion: '5.5'
                       operating-system: ubuntu-22.04
+                      dbport: 3307
                     - php: '8.1'
+                      dbtype: mariadb
+                      dbversion: '5.5'
                       operating-system: ubuntu-22.04
+                      dbport: 3307
+
+        # NB: we do not run docker containers using the native `services` tag because we have to mount one or more files
+        # from the local filesystem to the containers (eg. the db config), and doing so breaks actions/checkout@v5
 
         steps:
             - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
@@ -32,16 +52,12 @@ jobs:
 
             # has to be run before setting up the db and webserver, as we store their config files in the codebase
             - name: Check out repository code
-              uses: actions/checkout@v3
+              uses: actions/checkout@v5
 
             - name: Set up the Database
-              # @todo we should set up a different version of mysql/mariadb for each matrix combination. Use Docker?
-              #       Also, sometimes use a different port number than 3306, to stress the config
-              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md#mysql
-              # @see https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md#mysql
               run: |
                 chmod 755 ./tests/setup/setup_db.sh
-                ./tests/setup/setup_db.sh
+                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "${{ matrix.dbport }}"
 
             - name: Stop php-fpm if running
               run: |
@@ -56,7 +72,9 @@ jobs:
                   php-version: ${{ matrix.php }}
                   extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
 
-            # @todo set up specific php config if needed, eg. display_errors
+            # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
+            #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
+            #       code coverage information)
 
             - name: Set up the Webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
@@ -68,6 +86,16 @@ jobs:
               run: |
                 chmod 755 ./tests/setup/setup_dependencies.sh
                 ./tests/setup/setup_dependencies.sh
+
+            - name: Set up phpunit configuration
+              run: |
+                  cp phpunit.dist.xml phpunit.xml
+                  if [ -n "${{ matrix.dbtype }}" ] && [ "${{ matrix.dbtype }}" != mysql ]; then
+                      sed -r -i -e 's|<env name="TEST_DB_TYPE" value="mysqli" />|<env name="TEST_DB_TYPE" value="${{ matrix.dbtype }}" />|' phpunit.xml
+                  fi
+                  if [ -n "${{ matrix.dbport }}" ]; then
+                      sed -r -i -e 's|<env name="TEST_DB_PORT" value="3306" />|<env name="TEST_DB_PORT" value="${{ matrix.dbport }}" />|' phpunit.xml
+                  fi
 
             # Make sure Apache can access the installation in its current dir.
             # We set the installation to be fully writeable to anyone - this is a test install anyway
@@ -89,19 +117,19 @@ jobs:
                 #echo
                 #curl -L --fail-with-body http://localhost/index.php
 
-                ./vendor/bin/phpunit tests/install
-                ### @todo enable as soon as we have at least 1 test
+                ./vendor/bin/phpunit --stop-on-failure tests/install
+                ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
               run: |
-                echo '### running processes'
-                ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
-                echo
-                sudo systemctl status mysql.service
-                echo
-                sudo systemctl status apache2.service
+                #echo '### running processes'
+                #ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
+                #echo
+                #sudo systemctl status mysql.service
+                #echo
+                #sudo systemctl status apache2.service
 
                 #echo '### fpm socket(s)'
                 #ls -la /run/php/
@@ -110,6 +138,10 @@ jobs:
                 #sudo ls -la /var/log/apache2/
                 #echo
                 #sudo cat /var/log/apache2/error.log
-                echo
+                #echo
                 echo '### apache access log'
                 sudo cat /var/log/apache2/access.log
+                echo
+                if [ -n "$(ls webpage_failing_*.html >/dev/null 2>/dev/null)" ]; then
+                  cat webpage_failing_*.html
+                fi

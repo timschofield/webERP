@@ -47,6 +47,10 @@ YesterdayServerUsage - Collects and reports server usage statistics for the prev
 * @return string - Updated email text containing results of operations
 **************************************************************************************************************/
 function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
+	include('includes/GetPrice.php');
+	include('includes/SQL_CommonFunctions.php');
+	include('includes/StockFunctions.php');
+
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
 	include('includes/KLBoards.php');
@@ -54,13 +58,13 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLEmails.php');
 	include('includes/KLGeneralFunctions.php');
 	include('includes/KLMarketplaceFunctions.php');
-	include('includes/GetPrice.php');
-	include('includes/SQL_CommonFunctions.php');
+	include('includes/KLSmartStockTransfers.php');
+
 	include('includes/OCOpenCartGeneralFunctions.php');
 	include('includes/OCWeberpToOpenCartSync.php');
 	include('includes/OCOpenCartToWeberpSync.php');
 	include('includes/OCOpenCartConnectDB.php');
-	include('includes/KLSmartStockTransfers.php');
+
 	include('includes/ArchiveConnectDB.php');
 	
 	if ($Group == "0010-HourlySyncOpenCart"){
@@ -89,11 +93,11 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	}elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1050-SmartStockTransfersKL"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for KL
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for KL
 	}elseif ($Group == "1060-SmartStockTransfersBL"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for BL 
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for BL 
 	}elseif ($Group == "1070-SmartStockTransfersOU"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, false, $EmailText);
 	}elseif ($Group == "1200-DailySyncOpenCart"){
@@ -699,12 +703,7 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText){
 	DB_query($SQL);
 	$Text = "Purge Audit Trail table in webERP";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
-	DB_query_archive($SQL);
-	$Text = "Purge Audit Trail table in archive webERP";
-	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
-	DB_query_oc($SQL);
-	$Text = "Purge Audit Trail table in OpenCart";
-	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+
 	return $EmailText;
 }
 
@@ -785,49 +784,50 @@ function SetTopSalesRanking($ShowMessages, $EmailText){
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Set Top Sales Ranking Table" . "\n\n"; 
 	}	
+	
+	// TRUNCATE operation remains the same - already optimal
 	$SQL = "TRUNCATE klsalesperformance";
 	$ErrMsg =__('Could not set TRUNCATE klsalesperformance because');
-	$Result = DB_query($SQL,$ErrMsg);
+	DB_query($SQL,$ErrMsg);
 	$Text = "Truncated klsaleseprformace table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	
-	$SQL="SELECT stockmaster.stockid
-			FROM stockmaster
-			WHERE stockmaster.discontinued = 0 
-				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " 
-				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ") ";
-	$Result = DB_query($SQL);
+	// OPTIMIZED BATCH INSERT OPERATION
+	// ORIGINAL ISSUES:
+	// - Multiple OR conditions with IN clauses (inefficient query execution)
+	// - Row-by-row INSERT operations (high transaction overhead)
+	// - No table aliases (reduced readability)
+	//
+	// OPTIMIZED IMPROVEMENTS:
+	// - Single IN clause with combined category lists
+	// - Batch INSERT...SELECT operation (eliminates loop and individual INSERTs)
+	// - Table alias 'sm' for stockmaster
+	// - Direct INSERT from SELECT result (no PHP loop required)
+	
+	// Combine all category lists into a single comprehensive list
+	// This eliminates the need for multiple OR conditions
+	$AllCategories = str_replace(')', '', LIST_STOCK_CATEGORIES_KAPAL_LAUT);
+	$AllCategories = str_replace('(', '', $AllCategories);
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_BLINK));
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_OUTLET));
+	$AllCategories .= ',' . str_replace(')', '', str_replace('(', '', LIST_STOCK_CATEGORIES_GENERAL));
+	$AllCategories = '(' . $AllCategories . ')';
+	
+	// Single optimized INSERT...SELECT operation
+	$SQL = "INSERT INTO klsalesperformance 
+				(stockid, topsales30, topsales60, topsales90, valuesales30, valuesales60, valuesales90)
+			SELECT sm.stockid, 9999999, 9999999, 9999999, 0, 0, 0
+			FROM stockmaster sm
+			WHERE sm.discontinued = 0 
+				AND sm.categoryid IN " . $AllCategories;
+	
 	$ErrMsg =__('Could not insert items by top sales because');
-	if (DB_num_rows($Result) != 0){	
-		while ($MyRow = DB_fetch_array($Result)) {
-			$SQLOp="INSERT INTO klsalesperformance
-									(
-									stockid,
-									topsales30,
-									topsales60,
-									topsales90,
-									valuesales30,
-									valuesales60,
-									valuesales90
-									)
-								VALUES (
-									'" . $MyRow['stockid'] . "',
-									'9999999',
-									'9999999',
-									'9999999',
-									'0',
-									'0',
-									'0'
-									)";
-			DB_query($SQLOp,$ErrMsg);
-		}
-	}
-	$Text = "Initialized klsaleseprformace table";
+	DB_query($SQL,$ErrMsg);
+	
+	$Text = "Initialized klsaleseprformace table with batch INSERT";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	
-
+	// The SetTopSalesByGroup calls remain the same - they use the already optimized function
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 90, $ShowMessages, $EmailText);
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 60, $ShowMessages, $EmailText);
 	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 30, $ShowMessages, $EmailText);
@@ -870,14 +870,28 @@ function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 		return;
 	}
 	
-	$SQL="SELECT salesorderdetails.stkcode,
-				SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) AS valuesales
-			FROM salesorderdetails, stockmaster
-			WHERE salesorderdetails.stkcode = stockmaster.stockid
-				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-				AND stockmaster.categoryid IN " . $ListCategories . "
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY SUM(salesorderdetails.qtyinvoiced * salesorderdetails.unitprice) DESC";
+	// OPTIMIZED MAIN QUERY
+	// ORIGINAL ISSUES:
+	// - Old-style comma JOIN syntax (salesorderdetails, stockmaster)
+	// - Missing table aliases
+	// - Repeated SUM calculation in SELECT and ORDER BY
+	// - Suboptimal filter order
+	//
+	// OPTIMIZED IMPROVEMENTS:
+	// - Modern explicit INNER JOIN syntax
+	// - Table aliases (sod, sm) for all tables
+	// - ORDER BY references alias 'valuesales' instead of repeating SUM
+	// - Date filter applied first for better selectivity
+	// - Cleaner, more maintainable SQL structure
+	$SQL="SELECT sod.stkcode,
+			SUM(sod.qtyinvoiced * sod.unitprice) AS valuesales
+		FROM salesorderdetails sod
+		INNER JOIN stockmaster sm ON sod.stkcode = sm.stockid
+		WHERE sod.actualdispatchdate >= '" . $StartDate . "'
+			AND sm.categoryid IN " . $ListCategories . "
+		GROUP BY sod.stkcode
+		ORDER BY valuesales DESC";
+	
 	$ErrMsg =__('Could not sort items by top sales because');
 	$Result = DB_query($SQL,$ErrMsg);
 

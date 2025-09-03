@@ -1,0 +1,3 @@
+# Managing dependencies via Composer
+
+TO BE DOCUMENTED...

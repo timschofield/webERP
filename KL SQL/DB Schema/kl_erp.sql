@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Aug 31, 2025 at 05:04 PM
+-- Generation Time: Sep 03, 2025 at 03:18 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -33,7 +33,7 @@ CREATE TABLE `accountgroups` (
   `pandl` tinyint(4) NOT NULL DEFAULT 1,
   `sequenceintb` smallint(6) NOT NULL DEFAULT 0,
   `parentgroupname` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -43,8 +43,8 @@ CREATE TABLE `accountgroups` (
 
 CREATE TABLE `accountsection` (
   `sectionid` int(11) NOT NULL DEFAULT 0,
-  `sectionname` text NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `sectionname` mediumtext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -55,7 +55,7 @@ CREATE TABLE `accountsection` (
 CREATE TABLE `areas` (
   `areacode` char(3) NOT NULL,
   `areadescription` varchar(25) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,7 @@ CREATE TABLE `assetmanager` (
   `depn` double NOT NULL DEFAULT 0,
   `datepurchased` date NOT NULL DEFAULT '1000-01-01',
   `disposalvalue` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -85,7 +85,7 @@ CREATE TABLE `auditscripts` (
   `secondsrunning` decimal(10,5) NOT NULL DEFAULT 0.00000,
   `userid` varchar(20) NOT NULL DEFAULT '',
   `scripttitle` varchar(200) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -96,8 +96,8 @@ CREATE TABLE `auditscripts` (
 CREATE TABLE `audittrail` (
   `transactiondate` datetime NOT NULL DEFAULT current_timestamp(),
   `userid` varchar(20) NOT NULL DEFAULT '',
-  `querystring` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `querystring` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -114,7 +114,7 @@ CREATE TABLE `bankaccounts` (
   `bankaccountnumber` char(50) NOT NULL DEFAULT '',
   `bankaddress` char(50) DEFAULT NULL,
   `importformat` varchar(10) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -125,7 +125,7 @@ CREATE TABLE `bankaccounts` (
 CREATE TABLE `bankaccountusers` (
   `accountcode` varchar(20) NOT NULL COMMENT 'Bank account code',
   `userid` varchar(20) NOT NULL COMMENT 'User code'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE `banktrans` (
   `amount` double NOT NULL DEFAULT 0,
   `currcode` char(3) NOT NULL DEFAULT '',
   `chequeno` varchar(16) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -167,7 +167,7 @@ CREATE TABLE `bom` (
   `autoissue` tinyint(4) NOT NULL DEFAULT 0,
   `remark` varchar(500) NOT NULL DEFAULT '',
   `digitals` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -179,7 +179,7 @@ CREATE TABLE `buckets` (
   `workcentre` char(5) NOT NULL DEFAULT '',
   `availdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `capacity` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,7 @@ CREATE TABLE `chartmaster` (
   `group_` char(30) NOT NULL DEFAULT '',
   `cashflowsactivity` tinyint(1) NOT NULL DEFAULT -1 COMMENT 'Cash flows activity',
   `controlled` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -205,7 +205,7 @@ CREATE TABLE `chartmasterADU` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -217,7 +217,7 @@ CREATE TABLE `chartmasterBB` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -229,7 +229,7 @@ CREATE TABLE `chartmasterIK` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -241,7 +241,7 @@ CREATE TABLE `chartmasterPI` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -253,7 +253,7 @@ CREATE TABLE `chartmasterSMH` (
   `accountcode` varchar(20) NOT NULL DEFAULT '0',
   `accountname` char(50) NOT NULL DEFAULT '',
   `group_` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -267,7 +267,7 @@ CREATE TABLE `cogsglpostings` (
   `stkcat` varchar(6) NOT NULL DEFAULT '',
   `glcode` varchar(20) NOT NULL DEFAULT '0',
   `salestype` char(2) NOT NULL DEFAULT 'AN'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -303,7 +303,7 @@ CREATE TABLE `companies` (
   `gllink_creditors` tinyint(1) DEFAULT 1,
   `gllink_stock` tinyint(1) DEFAULT 1,
   `freightact` varchar(20) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -313,8 +313,8 @@ CREATE TABLE `companies` (
 
 CREATE TABLE `config` (
   `confname` varchar(35) NOT NULL DEFAULT '',
-  `confvalue` text NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `confvalue` mediumtext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -327,7 +327,7 @@ CREATE TABLE `contractbom` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `workcentreadded` char(5) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -341,9 +341,9 @@ CREATE TABLE `contractcharges` (
   `transtype` smallint(6) NOT NULL DEFAULT 20,
   `transno` int(11) NOT NULL DEFAULT 0,
   `amount` double NOT NULL DEFAULT 0,
-  `narrative` text NOT NULL DEFAULT '',
+  `narrative` mediumtext NOT NULL DEFAULT '',
   `anticipated` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -357,7 +357,7 @@ CREATE TABLE `contractreqts` (
   `requirement` varchar(40) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT 1,
   `costperunit` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -367,7 +367,7 @@ CREATE TABLE `contractreqts` (
 
 CREATE TABLE `contracts` (
   `contractref` varchar(20) NOT NULL DEFAULT '',
-  `contractdescription` text NOT NULL,
+  `contractdescription` mediumtext NOT NULL,
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branchcode` varchar(10) NOT NULL DEFAULT '',
   `loccode` varchar(5) NOT NULL DEFAULT '',
@@ -380,7 +380,7 @@ CREATE TABLE `contracts` (
   `requireddate` date NOT NULL DEFAULT '1000-01-01',
   `drawing` varchar(50) NOT NULL DEFAULT '',
   `exrate` double NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -398,7 +398,7 @@ CREATE TABLE `currencies` (
   `webcart` tinyint(1) NOT NULL DEFAULT 1 COMMENT 'If 1 shown in weberp cart. if 0 no show',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `currencies`
@@ -424,7 +424,7 @@ CREATE TABLE `custallocns` (
   `datealloc` date NOT NULL DEFAULT '1000-01-01',
   `transid_allocfrom` int(11) NOT NULL DEFAULT 0,
   `transid_allocto` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -463,9 +463,9 @@ CREATE TABLE `custbranch` (
   `brpostaddr4` varchar(50) NOT NULL DEFAULT '',
   `brpostaddr5` varchar(20) NOT NULL DEFAULT '',
   `brpostaddr6` varchar(40) NOT NULL DEFAULT '',
-  `specialinstructions` text NOT NULL DEFAULT '',
+  `specialinstructions` mediumtext NOT NULL DEFAULT '',
   `custbranchcode` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -482,7 +482,7 @@ CREATE TABLE `custcontacts` (
   `notes` varchar(255) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT '',
   `statement` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -497,7 +497,7 @@ CREATE TABLE `custitem` (
   `cust_description` varchar(30) NOT NULL DEFAULT '',
   `customersuom` char(50) NOT NULL DEFAULT '',
   `conversionfactor` double NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -509,10 +509,10 @@ CREATE TABLE `custnotes` (
   `noteid` tinyint(4) NOT NULL,
   `debtorno` varchar(10) NOT NULL DEFAULT '0',
   `href` varchar(100) NOT NULL DEFAULT '',
-  `note` mediumtext NOT NULL DEFAULT '',
+  `note` longtext NOT NULL DEFAULT '',
   `date` date NOT NULL DEFAULT '1000-01-01',
   `priority` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -524,8 +524,8 @@ CREATE TABLE `dashboard_scripts` (
   `id` int(11) NOT NULL,
   `scripts` varchar(78) NOT NULL DEFAULT '',
   `pagesecurity` int(11) NOT NULL DEFAULT 1,
-  `description` text NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `description` mediumtext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -537,7 +537,7 @@ CREATE TABLE `dashboard_users` (
   `id` int(10) NOT NULL,
   `userid` varchar(20) NOT NULL DEFAULT '',
   `scripts` varchar(255) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -578,7 +578,7 @@ CREATE TABLE `debtorsmaster` (
   `typeid` tinyint(4) NOT NULL DEFAULT 1,
   `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
   `klemailnowebshoporder` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -606,14 +606,14 @@ CREATE TABLE `debtortrans` (
   `ovdiscount` double NOT NULL DEFAULT 0,
   `diffonexch` double NOT NULL DEFAULT 0,
   `alloc` double NOT NULL DEFAULT 0,
-  `invtext` text DEFAULT NULL,
+  `invtext` mediumtext DEFAULT NULL,
   `shipvia` int(11) NOT NULL DEFAULT 0,
   `edisent` tinyint(4) NOT NULL DEFAULT 0,
   `consignment` varchar(20) NOT NULL DEFAULT '',
   `packages` int(11) NOT NULL DEFAULT 1 COMMENT 'number of cartons',
   `salesperson` varchar(4) NOT NULL DEFAULT '',
   `balance` double GENERATED ALWAYS AS (`ovamount` + `ovgst` + `ovfreight` + `ovdiscount` - `alloc`) STORED
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -625,7 +625,7 @@ CREATE TABLE `debtortranstaxes` (
   `debtortransid` int(11) NOT NULL DEFAULT 0,
   `taxauthid` tinyint(4) NOT NULL DEFAULT 0,
   `taxamount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -636,7 +636,7 @@ CREATE TABLE `debtortranstaxes` (
 CREATE TABLE `debtortype` (
   `typeid` tinyint(4) NOT NULL,
   `typename` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -651,7 +651,7 @@ CREATE TABLE `debtortypenotes` (
   `note` varchar(200) NOT NULL DEFAULT '',
   `date` date NOT NULL DEFAULT '1000-01-01',
   `priority` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -668,7 +668,7 @@ CREATE TABLE `deliverynotes` (
   `printed` tinyint(4) NOT NULL DEFAULT 0,
   `invoiced` tinyint(4) NOT NULL DEFAULT 0,
   `deliverydate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -680,7 +680,7 @@ CREATE TABLE `departments` (
   `departmentid` int(11) NOT NULL,
   `description` varchar(100) NOT NULL DEFAULT '',
   `authoriser` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -693,7 +693,7 @@ CREATE TABLE `discountmatrix` (
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `quantitybreak` int(11) NOT NULL DEFAULT 1,
   `discountrate` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -706,7 +706,7 @@ CREATE TABLE `ediitemmapping` (
   `partnercode` varchar(10) NOT NULL DEFAULT '',
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `partnerstockid` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -721,7 +721,7 @@ CREATE TABLE `edimessageformat` (
   `section` varchar(7) NOT NULL DEFAULT '',
   `sequenceno` int(11) NOT NULL DEFAULT 0,
   `linetext` varchar(70) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -734,7 +734,7 @@ CREATE TABLE `edi_orders_segs` (
   `segtag` char(3) NOT NULL DEFAULT '',
   `seggroup` tinyint(4) NOT NULL DEFAULT 0,
   `maxoccur` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -746,7 +746,7 @@ CREATE TABLE `edi_orders_seg_groups` (
   `seggroupno` tinyint(4) NOT NULL DEFAULT 0,
   `maxoccur` int(4) NOT NULL DEFAULT 0,
   `parentseggroup` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -764,7 +764,7 @@ CREATE TABLE `emailsettings` (
   `timeout` int(11) DEFAULT 5,
   `companyname` varchar(50) DEFAULT NULL,
   `auth` tinyint(1) DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -781,7 +781,7 @@ CREATE TABLE `employees` (
   `normalhours` double NOT NULL DEFAULT 40,
   `userid` varchar(20) NOT NULL DEFAULT '' COMMENT 'loose FK with www-users will have some employees who are not users',
   `email` varchar(55) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -802,7 +802,7 @@ CREATE TABLE `factorcompanies` (
   `telephone` varchar(25) NOT NULL DEFAULT '',
   `fax` varchar(25) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -814,7 +814,7 @@ CREATE TABLE `favourites` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `caption` varchar(50) NOT NULL DEFAULT '',
   `href` varchar(200) NOT NULL DEFAULT '#'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -831,7 +831,7 @@ CREATE TABLE `fixedassetcategories` (
   `accumdepnact` varchar(20) NOT NULL DEFAULT '0',
   `defaultdepnrate` double NOT NULL DEFAULT 0.2,
   `defaultdepntype` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -843,7 +843,7 @@ CREATE TABLE `fixedassetlocations` (
   `locationid` char(6) NOT NULL DEFAULT '',
   `locationdescription` char(20) NOT NULL DEFAULT '',
   `parentlocationid` char(6) DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -861,12 +861,12 @@ CREATE TABLE `fixedassets` (
   `disposalproceeds` double NOT NULL DEFAULT 0,
   `assetcategoryid` varchar(6) NOT NULL DEFAULT '',
   `description` varchar(50) NOT NULL DEFAULT '',
-  `longdescription` text NOT NULL DEFAULT '',
+  `longdescription` mediumtext NOT NULL DEFAULT '',
   `depntype` int(11) NOT NULL DEFAULT 1,
   `depnrate` double NOT NULL DEFAULT 0,
   `barcode` varchar(30) NOT NULL DEFAULT '',
   `disposaldate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -877,12 +877,12 @@ CREATE TABLE `fixedassets` (
 CREATE TABLE `fixedassettasks` (
   `taskid` int(11) NOT NULL,
   `assetid` int(11) NOT NULL,
-  `taskdescription` text NOT NULL DEFAULT '',
+  `taskdescription` mediumtext NOT NULL DEFAULT '',
   `frequencydays` int(11) NOT NULL DEFAULT 365,
   `lastcompleted` date NOT NULL DEFAULT '1000-01-01',
   `userresponsible` varchar(20) NOT NULL DEFAULT '',
   `manager` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -900,7 +900,7 @@ CREATE TABLE `fixedassettrans` (
   `inputdate` date NOT NULL DEFAULT '1000-01-01',
   `fixedassettranstype` varchar(8) NOT NULL DEFAULT '',
   `amount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -920,7 +920,7 @@ CREATE TABLE `freightcosts` (
   `maxcub` double NOT NULL DEFAULT 999999,
   `fixedprice` double NOT NULL DEFAULT 0,
   `minimumchg` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -936,7 +936,7 @@ CREATE TABLE `geocode_param` (
   `map_height` varchar(10) NOT NULL DEFAULT '',
   `map_width` varchar(10) NOT NULL DEFAULT '',
   `map_host` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -949,7 +949,7 @@ CREATE TABLE `glaccountusers` (
   `userid` varchar(20) NOT NULL,
   `canview` tinyint(4) NOT NULL DEFAULT 0,
   `canupd` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -963,7 +963,7 @@ CREATE TABLE `glbudgetdetails` (
   `account` varchar(20) NOT NULL DEFAULT '',
   `period` int(6) NOT NULL DEFAULT 0,
   `amount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -975,11 +975,11 @@ CREATE TABLE `glbudgetheaders` (
   `id` int(11) NOT NULL,
   `owner` varchar(20) NOT NULL DEFAULT '',
   `name` varchar(200) NOT NULL DEFAULT '',
-  `description` text DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
   `startperiod` int(6) NOT NULL DEFAULT 0,
   `endperiod` int(6) NOT NULL DEFAULT 0,
   `current` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -990,7 +990,7 @@ CREATE TABLE `glbudgetheaders` (
 CREATE TABLE `gltags` (
   `counterindex` int(11) NOT NULL DEFAULT 0,
   `tagref` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1002,7 +1002,7 @@ CREATE TABLE `gltotals` (
   `account` varchar(20) NOT NULL DEFAULT '',
   `period` smallint(6) NOT NULL DEFAULT 0,
   `amount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1021,7 +1021,7 @@ CREATE TABLE `gltrans` (
   `narrative` varchar(200) NOT NULL DEFAULT '',
   `amount` double NOT NULL DEFAULT 0,
   `jobref` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `gltrans`
@@ -1080,7 +1080,7 @@ CREATE TABLE `grns` (
   `supplierid` varchar(10) NOT NULL DEFAULT '',
   `stdcostunit` double NOT NULL DEFAULT 0,
   `supplierref` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1092,7 +1092,7 @@ CREATE TABLE `holdreasons` (
   `reasoncode` smallint(6) NOT NULL DEFAULT 1,
   `reasondescription` char(30) NOT NULL DEFAULT '',
   `dissallowinvoices` tinyint(4) NOT NULL DEFAULT -1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1103,7 +1103,7 @@ CREATE TABLE `holdreasons` (
 CREATE TABLE `internalstockcatrole` (
   `categoryid` varchar(6) NOT NULL,
   `secroleid` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1118,7 +1118,7 @@ CREATE TABLE `jnltmpldetails` (
   `accountcode` varchar(20) NOT NULL DEFAULT '1',
   `amount` double NOT NULL DEFAULT 0,
   `narrative` varchar(200) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1130,7 +1130,7 @@ CREATE TABLE `jnltmplheader` (
   `templateid` int(11) NOT NULL DEFAULT 0,
   `templatedescription` varchar(50) NOT NULL DEFAULT '',
   `journaltype` int(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1146,7 +1146,7 @@ CREATE TABLE `kladjustrl` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `oldrl` bigint(20) NOT NULL DEFAULT 0,
   `newrl` bigint(20) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1157,7 +1157,7 @@ CREATE TABLE `kladjustrl` (
 CREATE TABLE `klarchivedtables` (
   `name` varchar(80) NOT NULL COMMENT 'Table name',
   `period` smallint(6) NOT NULL COMMENT 'Period until this table has been archived'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1172,7 +1172,7 @@ CREATE TABLE `klchangeprice` (
   `newretailprice` decimal(20,4) NOT NULL DEFAULT 0.0000,
   `pricechanged` tinyint(1) NOT NULL DEFAULT 0,
   `endprocessdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1195,7 +1195,7 @@ CREATE TABLE `klconsignment` (
   `standardcost` double NOT NULL DEFAULT 0,
   `invoicedtopartner` date NOT NULL DEFAULT '1000-01-01',
   `fakturpajakdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1210,7 +1210,7 @@ CREATE TABLE `klfreeexchanges` (
   `date` datetime NOT NULL DEFAULT current_timestamp(),
   `userid` varchar(20) NOT NULL DEFAULT '',
   `invoicenumber` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1222,7 +1222,7 @@ CREATE TABLE `klkpi` (
   `date` date NOT NULL DEFAULT '1000-01-01',
   `kpicode` varchar(30) NOT NULL DEFAULT '',
   `value` decimal(20,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1233,7 +1233,7 @@ CREATE TABLE `klkpi` (
 CREATE TABLE `klkpidescriptions` (
   `kpicode` varchar(30) NOT NULL,
   `kpidescription` varchar(80) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1245,13 +1245,13 @@ CREATE TABLE `klmaintenancetasks` (
   `counterindex` int(20) NOT NULL,
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `maintenancetype` varchar(10) NOT NULL DEFAULT '',
-  `description` text DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
   `closed` tinyint(4) NOT NULL DEFAULT 0,
   `creationuser` varchar(20) DEFAULT NULL,
   `creationdate` datetime NOT NULL DEFAULT current_timestamp(),
   `closeuser` varchar(20) DEFAULT NULL,
   `closedate` datetime DEFAULT '1000-01-01 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1262,10 +1262,10 @@ CREATE TABLE `klmaintenancetasks` (
 CREATE TABLE `klmaintenancetaskupdates` (
   `counterindex` int(20) NOT NULL,
   `taskcounter` int(20) NOT NULL,
-  `description` text DEFAULT NULL,
+  `description` mediumtext DEFAULT NULL,
   `updateuser` varchar(20) DEFAULT NULL,
   `updatedate` datetime DEFAULT '1000-01-01 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1276,7 +1276,7 @@ CREATE TABLE `klmaintenancetaskupdates` (
 CREATE TABLE `klmaintenancetypes` (
   `maintenancetype` varchar(10) NOT NULL COMMENT 'code for the type',
   `description` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1290,7 +1290,7 @@ CREATE TABLE `klmovetodiscount20` (
   `startprocessdate` date NOT NULL DEFAULT '1000-01-01',
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `endprocessdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1304,7 +1304,7 @@ CREATE TABLE `klmovetodiscount50` (
   `startprocessdate` date NOT NULL DEFAULT '1000-01-01',
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `endprocessdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1318,7 +1318,7 @@ CREATE TABLE `klmovetodiscount80` (
   `startprocessdate` date NOT NULL DEFAULT '1000-01-01',
   `discountcategory` char(2) NOT NULL DEFAULT '',
   `endprocessdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1368,7 +1368,7 @@ CREATE TABLE `klonlinepartners` (
   `accountlazadaidr` varchar(20) NOT NULL DEFAULT '',
   `accountlazadacomissionidr` varchar(20) NOT NULL DEFAULT '',
   `comissionlazadapercent` decimal(5,2) NOT NULL DEFAULT 1.80
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1379,7 +1379,7 @@ CREATE TABLE `klonlinepartners` (
 CREATE TABLE `klpackaging` (
   `packagingcode` varchar(20) NOT NULL,
   `packagingdescription` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1391,7 +1391,7 @@ CREATE TABLE `klpostatus` (
   `paymentterm` char(2) NOT NULL DEFAULT '',
   `code` char(6) NOT NULL DEFAULT '',
   `description` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1411,7 +1411,7 @@ CREATE TABLE `klretailcustomers` (
   `exported` varchar(1) NOT NULL DEFAULT 'N',
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `klretailcustomers`
@@ -1490,7 +1490,7 @@ CREATE TABLE `klretailpartners` (
   `settlementdelayqris` int(11) NOT NULL DEFAULT 1 COMMENT 'Number of days after POS retail sale to get the settlement of funds',
   `comissionqris` decimal(5,2) NOT NULL DEFAULT 0.00,
   `accountcomissionqris` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1501,7 +1501,7 @@ CREATE TABLE `klretailpartners` (
 CREATE TABLE `klrevisedemaildomains` (
   `wrongdomain` varchar(128) NOT NULL,
   `fixeddomain` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1517,7 +1517,7 @@ CREATE TABLE `klsalesperformance` (
   `valuesales60` double NOT NULL DEFAULT 0,
   `topsales90` int(11) NOT NULL DEFAULT 9999999,
   `valuesales90` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1531,7 +1531,7 @@ CREATE TABLE `klservicetypes` (
   `pricetier01` decimal(20,4) NOT NULL,
   `pricetier02` decimal(20,4) NOT NULL,
   `pricetier03` decimal(20,4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1543,16 +1543,16 @@ CREATE TABLE `klstockmarketplaces` (
   `stockid` varchar(20) NOT NULL,
   `tokopediaproductid` varchar(20) DEFAULT NULL,
   `tokopediaenabled` tinyint(1) NOT NULL DEFAULT 0,
-  `tokopediaurl` text DEFAULT NULL,
+  `tokopediaurl` mediumtext DEFAULT NULL,
   `shopeeproductid` varchar(20) DEFAULT NULL,
   `shopeeenabled` tinyint(1) NOT NULL DEFAULT 0,
-  `shopeeurl` text DEFAULT NULL,
+  `shopeeurl` mediumtext DEFAULT NULL,
   `lazadaproductid` varchar(20) DEFAULT NULL,
   `lazadaenabled` tinyint(1) NOT NULL DEFAULT 0,
-  `lazadaurl` text DEFAULT NULL,
+  `lazadaurl` mediumtext DEFAULT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `klstockmarketplaces`
@@ -1580,7 +1580,7 @@ CREATE TABLE `labelfields` (
   `hpos` double NOT NULL DEFAULT 0,
   `fontsize` tinyint(4) NOT NULL,
   `barcode` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1599,7 +1599,7 @@ CREATE TABLE `labels` (
   `leftmargin` double NOT NULL DEFAULT 0,
   `rowheight` double NOT NULL DEFAULT 0,
   `columnwidth` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1619,7 +1619,7 @@ CREATE TABLE `lastcostrollup` (
   `newmatcost` decimal(20,4) NOT NULL DEFAULT 0.0000,
   `newlabcost` decimal(20,4) NOT NULL DEFAULT 0.0000,
   `newoheadcost` decimal(20,4) NOT NULL DEFAULT 0.0000
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1634,7 +1634,7 @@ CREATE TABLE `levels` (
   `pansize` double NOT NULL DEFAULT 0,
   `shrinkfactor` double NOT NULL DEFAULT 0,
   `eoq` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1690,7 +1690,7 @@ CREATE TABLE `locations` (
   `alldisc50items` tinyint(4) NOT NULL DEFAULT 1,
   `alldisc80items` tinyint(4) NOT NULL DEFAULT 1,
   `departmentid` int(11) NOT NULL COMMENT 'department code assigned to this location (if any)'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1701,7 +1701,7 @@ CREATE TABLE `locations` (
 CREATE TABLE `locationtypes` (
   `code` char(6) NOT NULL DEFAULT '',
   `description` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1714,7 +1714,7 @@ CREATE TABLE `locationusers` (
   `userid` varchar(20) NOT NULL,
   `canview` tinyint(4) NOT NULL DEFAULT 0,
   `canupd` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1732,7 +1732,7 @@ CREATE TABLE `locationzones` (
   `smarttransferonweekday4` tinyint(1) NOT NULL DEFAULT 1,
   `smarttransferonweekday5` tinyint(1) NOT NULL DEFAULT 1,
   `smarttransferonweekday6` tinyint(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1748,7 +1748,7 @@ CREATE TABLE `locstock` (
   `bin` varchar(10) NOT NULL DEFAULT '',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `locstock`
@@ -1774,7 +1774,7 @@ CREATE TABLE `loctransfercancellations` (
   `cancelqty` double NOT NULL DEFAULT 0,
   `canceldate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `canceluserid` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1793,7 +1793,7 @@ CREATE TABLE `loctransfers` (
   `shiploc` varchar(7) NOT NULL DEFAULT '',
   `recloc` varchar(7) NOT NULL DEFAULT '',
   `pendingqty` double GENERATED ALWAYS AS (`shipqty` - `recqty`) STORED
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Stores Shipments To And From Locations';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Stores Shipments To And From Locations';
 
 -- --------------------------------------------------------
 
@@ -1804,7 +1804,7 @@ CREATE TABLE `loctransfers` (
 CREATE TABLE `mailgroupdetails` (
   `groupname` varchar(100) NOT NULL,
   `userid` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1815,7 +1815,7 @@ CREATE TABLE `mailgroupdetails` (
 CREATE TABLE `mailgroups` (
   `id` int(11) NOT NULL,
   `groupname` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1828,7 +1828,7 @@ CREATE TABLE `manufacturers` (
   `manufacturers_name` varchar(32) NOT NULL DEFAULT '',
   `manufacturers_url` varchar(50) NOT NULL DEFAULT '',
   `manufacturers_image` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1842,7 +1842,7 @@ CREATE TABLE `menuitems` (
   `caption` varchar(60) NOT NULL DEFAULT '',
   `url` varchar(60) NOT NULL DEFAULT '',
   `sequence` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1855,7 +1855,7 @@ CREATE TABLE `modules` (
   `reportlink` varchar(4) NOT NULL DEFAULT '',
   `modulename` varchar(25) NOT NULL DEFAULT '',
   `sequence` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1867,7 +1867,7 @@ CREATE TABLE `mrpcalendar` (
   `calendardate` date NOT NULL,
   `daynumber` int(6) NOT NULL DEFAULT 0,
   `manufacturingflag` smallint(6) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1881,7 +1881,7 @@ CREATE TABLE `mrpdemands` (
   `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
   `quantity` double NOT NULL DEFAULT 0,
   `duedate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1892,7 +1892,7 @@ CREATE TABLE `mrpdemands` (
 CREATE TABLE `mrpdemandtypes` (
   `mrpdemandtype` varchar(6) NOT NULL DEFAULT '',
   `description` char(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1909,7 +1909,7 @@ CREATE TABLE `mrpparameters` (
   `usemrpdemands` varchar(5) DEFAULT NULL,
   `userldemands` varchar(5) DEFAULT NULL,
   `leeway` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1926,7 +1926,7 @@ CREATE TABLE `mrpplannedorders` (
   `orderno` int(11) DEFAULT NULL,
   `mrpdate` date DEFAULT NULL,
   `updateflag` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1942,7 +1942,7 @@ CREATE TABLE `mrprequirements` (
   `orderno` int(11) DEFAULT NULL,
   `directdemand` smallint(6) DEFAULT NULL,
   `whererequired` char(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1959,7 +1959,7 @@ CREATE TABLE `mrpsupplies` (
   `orderno` int(11) DEFAULT NULL,
   `mrpdate` date DEFAULT NULL,
   `updateflag` smallint(6) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1977,7 +1977,7 @@ CREATE TABLE `offers` (
   `price` double NOT NULL DEFAULT 0,
   `expirydate` date NOT NULL DEFAULT '1000-01-01',
   `currcode` char(3) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1993,7 +1993,7 @@ CREATE TABLE `orderdeliverydifferenceslog` (
   `debtorno` varchar(10) NOT NULL DEFAULT '',
   `branch` varchar(10) NOT NULL DEFAULT '',
   `can_or_bo` char(3) NOT NULL DEFAULT 'CAN'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2007,7 +2007,7 @@ CREATE TABLE `packagingused` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `qty` double NOT NULL DEFAULT 0,
   `date` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2024,7 +2024,7 @@ CREATE TABLE `paymentmethods` (
   `usepreprintedstationery` tinyint(4) NOT NULL DEFAULT 0,
   `opencashdrawer` tinyint(4) NOT NULL DEFAULT 0,
   `percentdiscount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2037,7 +2037,7 @@ CREATE TABLE `paymentterms` (
   `terms` char(40) NOT NULL DEFAULT '',
   `daysbeforedue` smallint(6) NOT NULL DEFAULT 0,
   `dayinfollowingmonth` smallint(6) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2053,10 +2053,10 @@ CREATE TABLE `pcashdetails` (
   `amount` double NOT NULL DEFAULT 0,
   `authorized` date NOT NULL DEFAULT '1000-01-01',
   `posted` tinyint(4) NOT NULL DEFAULT 0,
-  `purpose` text DEFAULT NULL,
-  `notes` text NOT NULL,
-  `receipt` text DEFAULT NULL COMMENT 'Not redundant for KL webERP as it stores the receipt code as usual'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `purpose` mediumtext DEFAULT NULL,
+  `notes` mediumtext NOT NULL,
+  `receipt` mediumtext DEFAULT NULL COMMENT 'Not redundant for KL webERP as it stores the receipt code as usual'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2074,7 +2074,7 @@ CREATE TABLE `pcashdetailtaxes` (
   `taxontax` tinyint(4) NOT NULL DEFAULT 0,
   `taxrate` double NOT NULL DEFAULT 0,
   `amount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2089,7 +2089,7 @@ CREATE TABLE `pcexpenses` (
   `taxcatid` tinyint(4) NOT NULL DEFAULT 1,
   `klretentionpph21` decimal(5,2) NOT NULL DEFAULT 0.00,
   `klretentionpph23` decimal(5,2) NOT NULL DEFAULT 0.00
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2104,7 +2104,7 @@ CREATE TABLE `pcreceipts` (
   `type` varchar(80) NOT NULL DEFAULT '' COMMENT 'Mime type of uploaded receipt file',
   `extension` varchar(4) NOT NULL DEFAULT '' COMMENT 'File extension of uploaded receipt',
   `size` int(20) NOT NULL DEFAULT 0 COMMENT 'File size of uploaded receipt'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2118,7 +2118,7 @@ CREATE TABLE `pcsalaries` (
   `salariesexpense` varchar(20) NOT NULL DEFAULT '',
   `pctabcode` varchar(20) NOT NULL DEFAULT '',
   `pcexpensecode` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2129,7 +2129,7 @@ CREATE TABLE `pcsalaries` (
 CREATE TABLE `pctabexpenses` (
   `typetabcode` varchar(20) NOT NULL,
   `codeexpense` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2149,7 +2149,7 @@ CREATE TABLE `pctabs` (
   `glaccountassignment` varchar(20) NOT NULL DEFAULT '0',
   `glaccountpcash` varchar(20) NOT NULL DEFAULT '0',
   `taxgroupid` tinyint(4) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2160,7 +2160,7 @@ CREATE TABLE `pctabs` (
 CREATE TABLE `pctags` (
   `pccashdetail` int(11) NOT NULL DEFAULT 0,
   `tag` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2171,7 +2171,7 @@ CREATE TABLE `pctags` (
 CREATE TABLE `pctypetabs` (
   `typetabcode` varchar(20) NOT NULL COMMENT 'code for the type of petty cash tab',
   `typetabdescription` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2182,7 +2182,7 @@ CREATE TABLE `pctypetabs` (
 CREATE TABLE `periods` (
   `periodno` smallint(6) NOT NULL DEFAULT 0,
   `lastdate_in_period` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2196,7 +2196,7 @@ CREATE TABLE `pickinglistdetails` (
   `orderlineno` int(11) NOT NULL DEFAULT 0,
   `qtyexpected` double NOT NULL DEFAULT 0,
   `qtypicked` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2210,7 +2210,7 @@ CREATE TABLE `pickinglists` (
   `pickinglistdate` date NOT NULL DEFAULT '1000-01-01',
   `dateprinted` date NOT NULL DEFAULT '1000-01-01',
   `deliverynotedate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2226,13 +2226,13 @@ CREATE TABLE `pickreq` (
   `requestdate` date NOT NULL DEFAULT '1000-01-01',
   `shipdate` date NOT NULL DEFAULT '1000-01-01',
   `status` varchar(12) NOT NULL DEFAULT '',
-  `comments` text DEFAULT NULL,
+  `comments` mediumtext DEFAULT NULL,
   `closed` tinyint(4) NOT NULL DEFAULT 0,
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `orderno` int(11) NOT NULL DEFAULT 1,
   `consignment` varchar(15) NOT NULL DEFAULT '',
   `packages` int(11) NOT NULL DEFAULT 1 COMMENT 'number of cartons'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2249,7 +2249,7 @@ CREATE TABLE `pickreqdetails` (
   `qtypicked` double NOT NULL DEFAULT 0,
   `invoicedqty` double NOT NULL DEFAULT 0,
   `shipqty` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2263,7 +2263,7 @@ CREATE TABLE `pickserialdetails` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `serialno` varchar(30) NOT NULL DEFAULT '',
   `moveqty` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2279,7 +2279,7 @@ CREATE TABLE `pricematrix` (
   `currabrev` char(3) NOT NULL DEFAULT '',
   `startdate` date NOT NULL DEFAULT '1000-01-01',
   `enddate` date NOT NULL DEFAULT '9999-12-31'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2299,7 +2299,7 @@ CREATE TABLE `prices` (
   `enddate` date NOT NULL DEFAULT '1000-01-01',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `prices`
@@ -2330,7 +2330,7 @@ CREATE TABLE `prodspecs` (
   `showonspec` tinyint(4) NOT NULL DEFAULT 1,
   `showontestplan` tinyint(4) NOT NULL DEFAULT 1,
   `active` tinyint(4) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2350,7 +2350,7 @@ CREATE TABLE `purchdata` (
   `effectivefrom` date NOT NULL DEFAULT '1000-01-01',
   `suppliers_partno` varchar(50) NOT NULL DEFAULT '',
   `minorderqty` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2364,7 +2364,7 @@ CREATE TABLE `purchorderauth` (
   `cancreate` smallint(2) NOT NULL DEFAULT 0,
   `authlevel` int(11) NOT NULL DEFAULT 0,
   `offhold` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2392,7 +2392,7 @@ CREATE TABLE `purchorderdetails` (
   `conversionfactor` int(11) NOT NULL DEFAULT 0,
   `suppliers_partno` varchar(50) NOT NULL DEFAULT '',
   `assetid` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2440,10 +2440,10 @@ CREATE TABLE `purchorders` (
   `arrivaldate` date NOT NULL DEFAULT '1000-01-01',
   `status` varchar(12) NOT NULL DEFAULT '',
   `klstatus` char(6) NOT NULL DEFAULT '',
-  `stat_comment` text NOT NULL DEFAULT '',
+  `stat_comment` mediumtext NOT NULL DEFAULT '',
   `paymentterms` char(2) NOT NULL DEFAULT '',
   `port` varchar(40) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2460,7 +2460,7 @@ CREATE TABLE `qasamples` (
   `sampledate` date NOT NULL DEFAULT '1000-01-01',
   `comments` varchar(255) NOT NULL DEFAULT '',
   `cert` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2481,7 +2481,7 @@ CREATE TABLE `qatests` (
   `showonspec` int(11) NOT NULL DEFAULT 1,
   `showontestplan` tinyint(4) NOT NULL DEFAULT 1,
   `active` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2514,7 +2514,7 @@ CREATE TABLE `recurringsalesorders` (
   `stopdate` date NOT NULL DEFAULT '1000-01-01',
   `frequency` tinyint(4) NOT NULL DEFAULT 1,
   `autoinvoice` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2528,8 +2528,8 @@ CREATE TABLE `recurrsalesorderdetails` (
   `unitprice` double NOT NULL DEFAULT 0,
   `quantity` double NOT NULL DEFAULT 0,
   `discountpercent` double NOT NULL DEFAULT 0,
-  `narrative` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `narrative` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2551,7 +2551,7 @@ CREATE TABLE `regularpayments` (
   `finalpayment` date NOT NULL DEFAULT '1000-01-01',
   `nextpayment` date NOT NULL DEFAULT '1000-01-01',
   `completed` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2564,7 +2564,7 @@ CREATE TABLE `relateditems` (
   `related` varchar(20) NOT NULL,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `relateditems`
@@ -2599,7 +2599,7 @@ CREATE TABLE `reportcolumns` (
   `budgetoractual` tinyint(1) NOT NULL DEFAULT 0,
   `valformat` char(1) NOT NULL DEFAULT 'N',
   `constant` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2616,8 +2616,8 @@ CREATE TABLE `reportfields` (
   `displaydesc` varchar(25) NOT NULL DEFAULT '',
   `visible` enum('1','0') NOT NULL DEFAULT '1',
   `columnbreak` enum('1','0') NOT NULL DEFAULT '1',
-  `params` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `params` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2644,7 +2644,7 @@ CREATE TABLE `reportheaders` (
   `newpageafter4` tinyint(1) NOT NULL DEFAULT 0,
   `upper4` varchar(10) NOT NULL DEFAULT '',
   `lower4` varchar(10) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2657,7 +2657,7 @@ CREATE TABLE `reportlets` (
   `id` varchar(50) NOT NULL DEFAULT '',
   `title` varchar(50) NOT NULL DEFAULT '',
   `refresh` int(11) NOT NULL DEFAULT 600
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2669,7 +2669,7 @@ CREATE TABLE `reportlinks` (
   `table1` varchar(25) NOT NULL DEFAULT '',
   `table2` varchar(25) NOT NULL DEFAULT '',
   `equation` varchar(75) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2749,7 +2749,7 @@ CREATE TABLE `reports` (
   `table5criteria` varchar(75) DEFAULT NULL,
   `table6` varchar(25) DEFAULT NULL,
   `table6criteria` varchar(75) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2765,7 +2765,7 @@ CREATE TABLE `returneditems` (
   `itemcode` varchar(20) NOT NULL DEFAULT '',
   `oldinvoice` varchar(20) NOT NULL DEFAULT '',
   `oldinvoicedate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2776,7 +2776,7 @@ CREATE TABLE `returneditems` (
 CREATE TABLE `returnitemreasons` (
   `reasonid` tinyint(4) NOT NULL,
   `reasonname` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2825,7 +2825,7 @@ CREATE TABLE `salariescalculated` (
   `bulatan` double NOT NULL DEFAULT 0,
   `date_added` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` timestamp NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `salariescalculated`
@@ -2860,7 +2860,7 @@ CREATE TABLE `salesanalysis` (
   `salesperson` varchar(4) NOT NULL DEFAULT '',
   `stkcategory` varchar(6) NOT NULL DEFAULT '',
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2875,7 +2875,7 @@ CREATE TABLE `salescat` (
   `active` int(11) NOT NULL DEFAULT 1 COMMENT '1 if active 0 if inactive',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `salescat`
@@ -2902,7 +2902,7 @@ CREATE TABLE `salescatprod` (
   `featured` int(11) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `salescatprod`
@@ -2926,7 +2926,7 @@ CREATE TABLE `salescattranslations` (
   `salescatid` int(11) NOT NULL DEFAULT 0,
   `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
   `salescattranslation` varchar(40) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2942,7 +2942,7 @@ CREATE TABLE `salescommissionrates` (
   `daysactive` int(11) NOT NULL DEFAULT 0,
   `rate` double NOT NULL DEFAULT 0,
   `currency` char(3) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2960,7 +2960,7 @@ CREATE TABLE `salescommissions` (
   `amount` double NOT NULL DEFAULT 0,
   `currency` char(3) NOT NULL DEFAULT '',
   `exrate` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2971,7 +2971,7 @@ CREATE TABLE `salescommissions` (
 CREATE TABLE `salescommissiontypes` (
   `commissiontypeid` tinyint(4) NOT NULL,
   `commissiontypename` varchar(55) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -2986,7 +2986,7 @@ CREATE TABLE `salesglpostings` (
   `discountglcode` varchar(20) NOT NULL DEFAULT '0',
   `salesglcode` varchar(20) NOT NULL DEFAULT '0',
   `salestype` char(2) NOT NULL DEFAULT 'AN'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3003,7 +3003,7 @@ CREATE TABLE `salesman` (
   `commissionperiod` int(1) NOT NULL DEFAULT 0,
   `commissiontypeid` tinyint(4) NOT NULL DEFAULT 0,
   `glaccount` varchar(20) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3025,11 +3025,11 @@ CREATE TABLE `salesorderdetails` (
   `discountpercent` double NOT NULL DEFAULT 0,
   `actualdispatchdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `completed` tinyint(1) NOT NULL DEFAULT 0,
-  `narrative` text DEFAULT NULL,
+  `narrative` mediumtext DEFAULT NULL,
   `itemdue` date DEFAULT NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
   `poline` varchar(10) DEFAULT NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
   `linenetprice` double GENERATED ALWAYS AS (`qtyinvoiced` * (`unitprice` * (1 - `discountpercent`))) STORED COMMENT 'qtyinvoiced * (unitprice * (1 - discountpercent))'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3081,7 +3081,7 @@ CREATE TABLE `salesorders` (
   `klocpaymentcode` varchar(128) DEFAULT NULL COMMENT 'Payment Code used in OpenCart',
   `klocorderstatus` int(11) NOT NULL DEFAULT 0 COMMENT 'Order Status in OC',
   `internalcomment` blob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3092,7 +3092,7 @@ CREATE TABLE `salesorders` (
 CREATE TABLE `salestypes` (
   `typeabbrev` char(2) NOT NULL DEFAULT '',
   `sales_type` varchar(40) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3116,7 +3116,7 @@ CREATE TABLE `sampleresults` (
   `showoncert` tinyint(4) NOT NULL DEFAULT 1,
   `showontestplan` tinyint(4) NOT NULL DEFAULT 1,
   `manuallyadded` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3127,8 +3127,8 @@ CREATE TABLE `sampleresults` (
 CREATE TABLE `scripts` (
   `script` varchar(78) NOT NULL DEFAULT '',
   `pagesecurity` int(11) NOT NULL DEFAULT 1,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `description` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3139,7 +3139,7 @@ CREATE TABLE `scripts` (
 CREATE TABLE `securitygroups` (
   `secroleid` int(11) NOT NULL DEFAULT 0,
   `tokenid` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3149,8 +3149,8 @@ CREATE TABLE `securitygroups` (
 
 CREATE TABLE `securityroles` (
   `secroleid` int(11) NOT NULL,
-  `secrolename` text NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `secrolename` mediumtext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3160,8 +3160,8 @@ CREATE TABLE `securityroles` (
 
 CREATE TABLE `securitytokens` (
   `tokenid` int(11) NOT NULL DEFAULT 0,
-  `tokenname` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `tokenname` mediumtext NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3180,7 +3180,7 @@ CREATE TABLE `sellthroughsupport` (
   `rebateamount` double NOT NULL DEFAULT 0,
   `effectivefrom` date NOT NULL DEFAULT '1000-01-01',
   `effectiveto` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3194,7 +3194,7 @@ CREATE TABLE `sessions` (
   `userid` varchar(20) DEFAULT NULL,
   `script` varchar(100) NOT NULL,
   `scripttime` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3206,7 +3206,7 @@ CREATE TABLE `session_data` (
   `userid` varchar(20) NOT NULL DEFAULT '',
   `field` varchar(100) NOT NULL DEFAULT '',
   `value` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3221,7 +3221,7 @@ CREATE TABLE `shipmentcharges` (
   `transno` int(11) NOT NULL DEFAULT 0,
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `value` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3237,7 +3237,7 @@ CREATE TABLE `shipments` (
   `accumvalue` double NOT NULL DEFAULT 0,
   `supplierid` varchar(10) NOT NULL DEFAULT '',
   `closed` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3251,7 +3251,7 @@ CREATE TABLE `shippers` (
   `mincharge` double NOT NULL DEFAULT 0,
   `opencart_text` varchar(20) NOT NULL DEFAULT '',
   `powertrack_code` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3262,7 +3262,7 @@ CREATE TABLE `shippers` (
 CREATE TABLE `stockadjustmentreasons` (
   `reasonid` tinyint(4) NOT NULL,
   `reasonname` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3273,7 +3273,7 @@ CREATE TABLE `stockadjustmentreasons` (
 CREATE TABLE `stockadjustments` (
   `transno` int(11) NOT NULL,
   `reasonid` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3293,7 +3293,7 @@ CREATE TABLE `stockcategory` (
   `wipact` varchar(20) NOT NULL DEFAULT '0',
   `defaulttaxcatid` tinyint(4) NOT NULL DEFAULT 1,
   `klprioritytransfers` int(11) NOT NULL DEFAULT 5 COMMENT 'KL priority to send in transfers. 1 MAX 9 min priority'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3304,14 +3304,14 @@ CREATE TABLE `stockcategory` (
 CREATE TABLE `stockcatproperties` (
   `stkcatpropid` int(11) NOT NULL,
   `categoryid` char(6) NOT NULL DEFAULT '',
-  `label` text NOT NULL,
+  `label` mediumtext NOT NULL,
   `controltype` tinyint(4) NOT NULL DEFAULT 0,
   `defaultvalue` varchar(100) NOT NULL DEFAULT '''''',
   `maximumvalue` double NOT NULL DEFAULT 999999999,
   `reqatsalesorder` tinyint(4) NOT NULL DEFAULT 0,
   `minimumvalue` double NOT NULL DEFAULT -999999999,
   `numericvalue` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3324,7 +3324,7 @@ CREATE TABLE `stockcheckfreeze` (
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `qoh` double NOT NULL DEFAULT 0,
   `stockcheckdate` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3338,7 +3338,7 @@ CREATE TABLE `stockcounts` (
   `loccode` varchar(5) NOT NULL DEFAULT '',
   `qtycounted` double NOT NULL DEFAULT 0,
   `reference` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3350,11 +3350,11 @@ CREATE TABLE `stockdescriptiontranslations` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `language_id` varchar(10) NOT NULL DEFAULT 'en_GB.utf8',
   `descriptiontranslation` varchar(50) DEFAULT NULL COMMENT 'Item''s short description',
-  `longdescriptiontranslation` text DEFAULT NULL COMMENT 'Item''s long description',
+  `longdescriptiontranslation` mediumtext DEFAULT NULL COMMENT 'Item''s long description',
   `needsrevision` int(1) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `stockdescriptiontranslations`
@@ -3378,7 +3378,7 @@ CREATE TABLE `stockitemproperties` (
   `stockid` varchar(20) NOT NULL,
   `stkcatpropid` int(11) NOT NULL,
   `value` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3391,7 +3391,7 @@ CREATE TABLE `stockmaster` (
   `categoryid` varchar(6) NOT NULL DEFAULT '',
   `lastcategoryupdate` date NOT NULL DEFAULT '1000-01-01',
   `description` varchar(50) NOT NULL DEFAULT '',
-  `longdescription` text NOT NULL,
+  `longdescription` mediumtext NOT NULL,
   `units` varchar(20) NOT NULL DEFAULT 'each',
   `mbflag` char(1) NOT NULL DEFAULT 'B',
   `lastcostupdate` date NOT NULL DEFAULT '1000-01-01',
@@ -3429,7 +3429,7 @@ CREATE TABLE `stockmaster` (
   `klservicebyreplacement` tinyint(1) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `date_updated` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Triggers `stockmaster`
@@ -3468,8 +3468,8 @@ CREATE TABLE `stockmoves` (
   `show_on_inv_crds` tinyint(4) NOT NULL DEFAULT 1,
   `newqoh` double NOT NULL DEFAULT 0,
   `hidemovt` tinyint(4) NOT NULL DEFAULT 0,
-  `narrative` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `narrative` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3483,7 +3483,7 @@ CREATE TABLE `stockmovestaxes` (
   `taxrate` double NOT NULL DEFAULT 0,
   `taxontax` tinyint(4) NOT NULL DEFAULT 0,
   `taxcalculationorder` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3498,9 +3498,9 @@ CREATE TABLE `stockrequest` (
   `despatchdate` date NOT NULL DEFAULT '1000-01-01',
   `authorised` tinyint(4) NOT NULL DEFAULT 0,
   `closed` tinyint(4) NOT NULL DEFAULT 0,
-  `narrative` text NOT NULL DEFAULT '',
+  `narrative` mediumtext NOT NULL DEFAULT '',
   `initiator` varchar(20) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3517,7 +3517,7 @@ CREATE TABLE `stockrequestitems` (
   `decimalplaces` int(11) NOT NULL DEFAULT 0,
   `uom` varchar(20) NOT NULL DEFAULT '',
   `completed` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3531,9 +3531,9 @@ CREATE TABLE `stockserialitems` (
   `serialno` varchar(30) NOT NULL DEFAULT '',
   `expirationdate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   `quantity` double NOT NULL DEFAULT 0,
-  `qualitytext` text NOT NULL,
+  `qualitytext` mediumtext NOT NULL,
   `createdate` timestamp NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3547,7 +3547,7 @@ CREATE TABLE `stockserialmoves` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `serialno` varchar(30) NOT NULL DEFAULT '',
   `moveqty` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3559,7 +3559,7 @@ CREATE TABLE `stocktags` (
   `tagid` int(11) NOT NULL,
   `tagname` varchar(100) NOT NULL DEFAULT '',
   `tagnamebahasa` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3573,7 +3573,7 @@ CREATE TABLE `suppallocs` (
   `datealloc` date NOT NULL DEFAULT '1000-01-01',
   `transid_allocfrom` int(11) NOT NULL DEFAULT 0,
   `transid_allocto` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3584,7 +3584,7 @@ CREATE TABLE `suppallocs` (
 CREATE TABLE `suppinvstogrn` (
   `suppinv` int(11) NOT NULL DEFAULT 0,
   `grnno` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3601,7 +3601,7 @@ CREATE TABLE `suppliercontacts` (
   `mobile` varchar(30) NOT NULL DEFAULT '',
   `email` varchar(55) NOT NULL DEFAULT '',
   `ordercontact` tinyint(1) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3618,7 +3618,7 @@ CREATE TABLE `supplierdiscounts` (
   `discountamount` double NOT NULL DEFAULT 0,
   `effectivefrom` date NOT NULL DEFAULT '1000-01-01',
   `effectiveto` date NOT NULL DEFAULT '1000-01-01'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3659,7 +3659,7 @@ CREATE TABLE `suppliers` (
   `url` varchar(50) NOT NULL DEFAULT '',
   `defaultshipper` int(11) NOT NULL DEFAULT 0,
   `defaultgl` varchar(20) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3670,7 +3670,7 @@ CREATE TABLE `suppliers` (
 CREATE TABLE `suppliertype` (
   `typeid` tinyint(4) NOT NULL,
   `typename` varchar(100) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3692,12 +3692,12 @@ CREATE TABLE `supptrans` (
   `ovgst` double NOT NULL DEFAULT 0,
   `diffonexch` double NOT NULL DEFAULT 0,
   `alloc` double NOT NULL DEFAULT 0,
-  `transtext` text DEFAULT NULL,
+  `transtext` mediumtext DEFAULT NULL,
   `hold` tinyint(4) NOT NULL DEFAULT 0,
   `chequeno` varchar(16) NOT NULL DEFAULT '',
   `void` tinyint(1) NOT NULL DEFAULT 0,
   `id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3709,7 +3709,7 @@ CREATE TABLE `supptranstaxes` (
   `supptransid` int(11) NOT NULL DEFAULT 0,
   `taxauthid` tinyint(4) NOT NULL DEFAULT 0,
   `taxamount` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3721,7 +3721,7 @@ CREATE TABLE `systypes` (
   `typeid` smallint(6) NOT NULL DEFAULT 0,
   `typename` char(50) NOT NULL DEFAULT '',
   `typeno` int(11) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3732,7 +3732,7 @@ CREATE TABLE `systypes` (
 CREATE TABLE `tags` (
   `tagref` int(11) NOT NULL,
   `tagdescription` varchar(50) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3749,7 +3749,7 @@ CREATE TABLE `taxauthorities` (
   `bankacctype` varchar(20) NOT NULL DEFAULT '',
   `bankacc` varchar(50) NOT NULL DEFAULT '',
   `bankswift` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3762,7 +3762,7 @@ CREATE TABLE `taxauthrates` (
   `dispatchtaxprovince` tinyint(4) NOT NULL DEFAULT 1,
   `taxcatid` tinyint(4) NOT NULL DEFAULT 0,
   `taxrate` double NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3773,7 +3773,7 @@ CREATE TABLE `taxauthrates` (
 CREATE TABLE `taxcategories` (
   `taxcatid` tinyint(4) NOT NULL,
   `taxcatname` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3784,7 +3784,7 @@ CREATE TABLE `taxcategories` (
 CREATE TABLE `taxgroups` (
   `taxgroupid` tinyint(4) NOT NULL,
   `taxgroupdescription` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3797,7 +3797,7 @@ CREATE TABLE `taxgrouptaxes` (
   `taxauthid` tinyint(4) NOT NULL DEFAULT 0,
   `calculationorder` tinyint(4) NOT NULL DEFAULT 0,
   `taxontax` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3808,7 +3808,7 @@ CREATE TABLE `taxgrouptaxes` (
 CREATE TABLE `taxprovinces` (
   `taxprovinceid` tinyint(4) NOT NULL,
   `taxprovincename` varchar(30) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3821,7 +3821,7 @@ CREATE TABLE `tenderitems` (
   `stockid` varchar(20) NOT NULL DEFAULT '',
   `quantity` varchar(40) NOT NULL DEFAULT '',
   `units` varchar(20) NOT NULL DEFAULT 'each'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3841,7 +3841,7 @@ CREATE TABLE `tenders` (
   `telephone` varchar(25) NOT NULL DEFAULT '',
   `closed` int(2) NOT NULL DEFAULT 0,
   `requiredbydate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3854,7 +3854,7 @@ CREATE TABLE `tendersuppliers` (
   `supplierid` varchar(10) NOT NULL DEFAULT '',
   `email` varchar(40) NOT NULL DEFAULT '',
   `responded` int(2) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3876,7 +3876,7 @@ CREATE TABLE `timesheets` (
   `day6` double NOT NULL DEFAULT 0,
   `day7` double NOT NULL DEFAULT 0,
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '0=entered 1=submitted 2=approved'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3887,7 +3887,7 @@ CREATE TABLE `timesheets` (
 CREATE TABLE `unitsofdimension` (
   `unitid` tinyint(4) NOT NULL,
   `unitname` varchar(15) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3898,7 +3898,7 @@ CREATE TABLE `unitsofdimension` (
 CREATE TABLE `unitsofmeasure` (
   `unitid` tinyint(4) NOT NULL DEFAULT 0,
   `unitname` varchar(15) NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3914,7 +3914,7 @@ CREATE TABLE `woitems` (
   `stdcost` double NOT NULL DEFAULT 0,
   `nextlotsnref` varchar(20) DEFAULT '',
   `comments` longblob DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3929,7 +3929,7 @@ CREATE TABLE `worequirements` (
   `qtypu` double NOT NULL DEFAULT 1,
   `stdcost` double NOT NULL DEFAULT 0,
   `autoissue` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3945,7 +3945,7 @@ CREATE TABLE `workcentres` (
   `overheadperhour` decimal(10,0) NOT NULL DEFAULT 0,
   `overheadrecoveryact` varchar(20) NOT NULL DEFAULT '0',
   `setuphrs` decimal(10,0) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3962,8 +3962,8 @@ CREATE TABLE `workorders` (
   `closed` tinyint(4) NOT NULL DEFAULT 0,
   `closecomments` longblob DEFAULT NULL,
   `reference` varchar(40) NOT NULL DEFAULT '',
-  `remark` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `remark` mediumtext DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3976,8 +3976,8 @@ CREATE TABLE `woserialnos` (
   `stockid` varchar(20) NOT NULL,
   `serialno` varchar(30) NOT NULL,
   `quantity` double NOT NULL DEFAULT 1,
-  `qualitytext` text NOT NULL DEFAULT ''
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  `qualitytext` mediumtext NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -3987,7 +3987,7 @@ CREATE TABLE `woserialnos` (
 
 CREATE TABLE `www_users` (
   `userid` varchar(20) NOT NULL DEFAULT '',
-  `password` text NOT NULL,
+  `password` mediumtext NOT NULL,
   `realname` varchar(35) NOT NULL DEFAULT '',
   `customerid` varchar(10) NOT NULL DEFAULT '',
   `supplierid` varchar(10) NOT NULL DEFAULT '',
@@ -4013,7 +4013,7 @@ CREATE TABLE `www_users` (
   `fontsize` tinyint(4) NOT NULL DEFAULT 1,
   `department` int(11) NOT NULL DEFAULT 0,
   `dashboard` tinyint(4) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
@@ -4285,7 +4285,8 @@ ALTER TABLE `debtorsmaster`
   ADD KEY `idx_debtorsmaster_salestype` (`salestype`),
   ADD KEY `idx_debtorsmaster_ediinvoices` (`ediinvoices`),
   ADD KEY `idx_debtorsmaster_ediorders` (`ediorders`),
-  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`);
+  ADD KEY `idx_debtorsmaster_debtorno_typeid` (`debtorno`,`typeid`),
+  ADD KEY `idx_debtorsmaster_debtorno_currcode_salestype` (`debtorno`,`currcode`,`salestype`);
 
 --
 -- Indexes for table `debtortrans`
@@ -4329,7 +4330,7 @@ ALTER TABLE `debtortypenotes`
 --
 ALTER TABLE `deliverynotes`
   ADD PRIMARY KEY (`deliverynotenumber`,`deliverynotelineno`),
-  ADD KEY `idx_deliverynotes_salesorder` (`salesorderno`,`salesorderlineno`);
+  ADD KEY `idx_deliverynotes_salesorderno_salesorderlineno` (`salesorderno`,`salesorderlineno`);
 
 --
 -- Indexes for table `departments`
@@ -4361,7 +4362,7 @@ ALTER TABLE `ediitemmapping`
 --
 ALTER TABLE `edimessageformat`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `uk_edimessageformat_partner_msg_seq` (`partnercode`,`messagetype`,`sequenceno`),
+  ADD UNIQUE KEY `uk_edimessageformat_partnercode_messagetype_sequenceno` (`partnercode`,`messagetype`,`sequenceno`),
   ADD KEY `idx_edimessageformat_section` (`section`);
 
 --
@@ -4450,7 +4451,7 @@ ALTER TABLE `freightcosts`
   ADD KEY `idx_freightcosts_destination` (`destination`),
   ADD KEY `idx_freightcosts_locationfrom` (`locationfrom`),
   ADD KEY `idx_freightcosts_shipperid` (`shipperid`),
-  ADD KEY `idx_freightcosts_dest_loc_shipper` (`destination`,`locationfrom`,`shipperid`);
+  ADD KEY `idx_freightcosts_destination_locationfrom_shipperid` (`destination`,`locationfrom`,`shipperid`);
 
 --
 -- Indexes for table `geocode_param`
@@ -4471,7 +4472,7 @@ ALTER TABLE `glaccountusers`
 ALTER TABLE `glbudgetdetails`
   ADD PRIMARY KEY (`id`),
   ADD KEY `idx_glbudgetdetails_account` (`account`),
-  ADD KEY `idx_glbudgetdetails_header_account_period` (`headerid`,`account`,`period`);
+  ADD KEY `idx_glbudgetdetails_headerid_account_period` (`headerid`,`account`,`period`);
 
 --
 -- Indexes for table `glbudgetheaders`
@@ -4675,7 +4676,8 @@ ALTER TABLE `klsalesperformance`
   ADD UNIQUE KEY `uk_klsalesperformance_topsales30_stockid` (`topsales30`,`stockid`),
   ADD UNIQUE KEY `uk_klsalesperformance_valuesales30_stockid` (`valuesales30`,`stockid`),
   ADD UNIQUE KEY `uk_klsalesperformance_topsales90_stockid` (`topsales90`,`stockid`),
-  ADD UNIQUE KEY `uk_klsalesperformance_valuesales90_stockid` (`valuesales90`,`stockid`);
+  ADD UNIQUE KEY `uk_klsalesperformance_valuesales90_stockid` (`valuesales90`,`stockid`),
+  ADD KEY `idx_klsalesperformance_stockid` (`stockid`);
 
 --
 -- Indexes for table `klservicetypes`
@@ -4730,7 +4732,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`),
   ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`),
   ADD KEY `idx_locations_typeloc` (`typeloc`),
-  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`);
+  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`),
+  ADD KEY `idx_locations_typeloc_smartdispatch` (`typeloc`,`smartdispatchfrom`);
 
 --
 -- Indexes for table `locationtypes`
@@ -5035,7 +5038,7 @@ ALTER TABLE `prices`
 --
 ALTER TABLE `prodspecs`
   ADD PRIMARY KEY (`keyval`,`testid`),
-  ADD KEY `testid` (`testid`);
+  ADD KEY `idx_prodspecs_testid` (`testid`);
 
 --
 -- Indexes for table `purchdata`
@@ -5088,33 +5091,33 @@ ALTER TABLE `purchorders`
 --
 ALTER TABLE `qasamples`
   ADD PRIMARY KEY (`sampleid`),
-  ADD KEY `prodspeckey` (`prodspeckey`,`lotkey`);
+  ADD KEY `idx_qasamples_prodspeckey_lotkey` (`prodspeckey`,`lotkey`);
 
 --
 -- Indexes for table `qatests`
 --
 ALTER TABLE `qatests`
   ADD PRIMARY KEY (`testid`),
-  ADD KEY `name` (`name`),
-  ADD KEY `groupname` (`groupby`,`name`);
+  ADD KEY `idx_qatests_name` (`name`),
+  ADD KEY `idx_qatests_groupby_name` (`groupby`,`name`);
 
 --
 -- Indexes for table `recurringsalesorders`
 --
 ALTER TABLE `recurringsalesorders`
   ADD PRIMARY KEY (`recurrorderno`),
-  ADD KEY `debtorno` (`debtorno`),
-  ADD KEY `orddate` (`orddate`),
-  ADD KEY `ordertype` (`ordertype`),
-  ADD KEY `locationindex` (`fromstkloc`),
-  ADD KEY `branchcode` (`branchcode`,`debtorno`);
+  ADD KEY `idx_recurringsalesorders_debtorno` (`debtorno`),
+  ADD KEY `idx_recurringsalesorders_orddate` (`orddate`),
+  ADD KEY `idx_recurringsalesorders_ordertype` (`ordertype`),
+  ADD KEY `idx_recurringsalesorders_fromstkloc` (`fromstkloc`),
+  ADD KEY `idx_recurringsalesorders_branchcode_debtorno` (`branchcode`,`debtorno`);
 
 --
 -- Indexes for table `recurrsalesorderdetails`
 --
 ALTER TABLE `recurrsalesorderdetails`
-  ADD KEY `orderno` (`recurrorderno`),
-  ADD KEY `stkcode` (`stkcode`);
+  ADD KEY `idx_recurrsalesorderdetails_recurrorderno` (`recurrorderno`),
+  ADD KEY `idx_recurrsalesorderdetails_stkcode` (`stkcode`);
 
 --
 -- Indexes for table `regularpayments`
@@ -5127,9 +5130,9 @@ ALTER TABLE `regularpayments`
 --
 ALTER TABLE `relateditems`
   ADD PRIMARY KEY (`stockid`,`related`),
-  ADD UNIQUE KEY `Related` (`related`,`stockid`),
-  ADD KEY `DateCreated` (`date_created`),
-  ADD KEY `DateUpdated` (`date_updated`);
+  ADD UNIQUE KEY `uk_relateditems_related_stockid` (`related`,`stockid`),
+  ADD KEY `idx_relateditems_date_created` (`date_created`),
+  ADD KEY `idx_relateditems_date_updated` (`date_updated`);
 
 --
 -- Indexes for table `reportcolumns`
@@ -5149,7 +5152,7 @@ ALTER TABLE `reportfields`
 --
 ALTER TABLE `reportheaders`
   ADD PRIMARY KEY (`reportid`),
-  ADD KEY `ReportHeading` (`reportheading`);
+  ADD KEY `idx_reportheaders_reportheading` (`reportheading`);
 
 --
 -- Indexes for table `reportlets`
@@ -5162,18 +5165,18 @@ ALTER TABLE `reportlets`
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `name` (`reportname`,`groupname`);
+  ADD KEY `idx_reports_reportname_groupname` (`reportname`,`groupname`);
 
 --
 -- Indexes for table `returneditems`
 --
 ALTER TABLE `returneditems`
   ADD PRIMARY KEY (`returneditemsid`),
-  ADD UNIQUE KEY `oldinvoice` (`oldinvoice`,`returneditemsid`),
-  ADD UNIQUE KEY `returndate` (`returndate`,`orderno`,`returneditemsid`),
-  ADD UNIQUE KEY `orderno` (`orderno`,`returndate`,`returneditemsid`),
-  ADD KEY `reasonid` (`reasonid`) USING BTREE,
-  ADD KEY `idx_reasonid_oldinvoicedate_itemcode` (`reasonid`,`oldinvoicedate`,`itemcode`);
+  ADD UNIQUE KEY `uk_returneditems_oldinvoice_returneditemsid` (`oldinvoice`,`returneditemsid`),
+  ADD UNIQUE KEY `uk_returneditems_returndate_orderno_returneditemsid` (`returndate`,`orderno`,`returneditemsid`),
+  ADD UNIQUE KEY `uk_returneditems_orderno_returndate_returneditemsid` (`orderno`,`returndate`,`returneditemsid`),
+  ADD KEY `idx_reasonid_oldinvoicedate_itemcode` (`reasonid`,`oldinvoicedate`,`itemcode`),
+  ADD KEY `idx_returneditems_reasonid` (`reasonid`);
 
 --
 -- Indexes for table `returnitemreasons`
@@ -5185,7 +5188,7 @@ ALTER TABLE `returnitemreasons`
 -- Indexes for table `salariescalculated`
 --
 ALTER TABLE `salariescalculated`
-  ADD UNIQUE KEY `Period+Code` (`periodno`,`salarytype`,`codename`);
+  ADD UNIQUE KEY `uk_salariescalculated_period_salarytype_codename` (`periodno`,`salarytype`,`codename`);
 
 --
 -- Indexes for table `salesanalysis`
@@ -5213,8 +5216,8 @@ ALTER TABLE `salescat`
 --
 ALTER TABLE `salescatprod`
   ADD PRIMARY KEY (`salescatid`,`stockid`),
-  ADD KEY `salescatid` (`salescatid`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_salescatprod_salescatid` (`salescatid`),
+  ADD KEY `idx_salescatprod_stockid` (`stockid`);
 
 --
 -- Indexes for table `salescattranslations`
@@ -5227,15 +5230,15 @@ ALTER TABLE `salescattranslations`
 --
 ALTER TABLE `salescommissionrates`
   ADD PRIMARY KEY (`salespersoncode`,`categoryid`,`startfrom`),
-  ADD KEY `salespersoncode` (`salespersoncode`);
+  ADD KEY `idx_salescommissionrates_salespersoncode` (`salespersoncode`);
 
 --
 -- Indexes for table `salescommissions`
 --
 ALTER TABLE `salescommissions`
   ADD PRIMARY KEY (`type`,`transno`),
-  ADD KEY `salespersoncode` (`salespersoncode`),
-  ADD KEY `paid` (`paid`);
+  ADD KEY `idx_salescommissions_salespersoncode` (`salespersoncode`),
+  ADD KEY `idx_salescommissions_paid` (`paid`);
 
 --
 -- Indexes for table `salescommissiontypes`
@@ -5248,17 +5251,17 @@ ALTER TABLE `salescommissiontypes`
 --
 ALTER TABLE `salesglpostings`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `Area_StkCat` (`area`,`stkcat`,`salestype`),
-  ADD KEY `Area` (`area`),
-  ADD KEY `StkCat` (`stkcat`),
-  ADD KEY `SalesType` (`salestype`);
+  ADD UNIQUE KEY `uk_salesglpostings_area_stkcat_salestype` (`area`,`stkcat`,`salestype`),
+  ADD KEY `idx_salesglpostings_area` (`area`),
+  ADD KEY `idx_salesglpostings_stkcat` (`stkcat`),
+  ADD KEY `idx_salesglpostings_salestype` (`salestype`);
 
 --
 -- Indexes for table `salesman`
 --
 ALTER TABLE `salesman`
   ADD PRIMARY KEY (`salesmancode`),
-  ADD UNIQUE KEY `Current+Code` (`current`,`salesmancode`),
+  ADD UNIQUE KEY `uk_salesman_current_salesmancode` (`current`,`salesmancode`),
   ADD KEY `idx_salesman_salesmancode_current` (`salesmancode`,`current`);
 
 --
@@ -5276,7 +5279,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_itemdue_stkcode_qtyinvoiced` (`itemdue`,`stkcode`,`qtyinvoiced`),
   ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
   ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`),
-  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`);
+  ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`),
+  ADD KEY `idx_salesorderdetails_actualdispatch_stkcode_qtyinv_unitprice` (`actualdispatchdate`,`stkcode`,`qtyinvoiced`,`unitprice`);
 
 --
 -- Indexes for table `salesorders`
@@ -5300,7 +5304,8 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`),
   ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
   ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
-  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`);
+  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`),
+  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`);
 
 --
 -- Indexes for table `salestypes`
@@ -5314,8 +5319,8 @@ ALTER TABLE `salestypes`
 --
 ALTER TABLE `sampleresults`
   ADD PRIMARY KEY (`resultid`),
-  ADD KEY `sampleid` (`sampleid`),
-  ADD KEY `testid` (`testid`);
+  ADD KEY `idx_sampleresults_sampleid` (`sampleid`),
+  ADD KEY `idx_sampleresults_testid` (`testid`);
 
 --
 -- Indexes for table `scripts`
@@ -5328,8 +5333,8 @@ ALTER TABLE `scripts`
 --
 ALTER TABLE `securitygroups`
   ADD PRIMARY KEY (`secroleid`,`tokenid`),
-  ADD KEY `secroleid` (`secroleid`),
-  ADD KEY `tokenid` (`tokenid`);
+  ADD KEY `idx_securitygroups_secroleid` (`secroleid`),
+  ADD KEY `idx_securitygroups_tokenid` (`tokenid`);
 
 --
 -- Indexes for table `securityroles`
@@ -5348,12 +5353,12 @@ ALTER TABLE `securitytokens`
 --
 ALTER TABLE `sellthroughsupport`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `supplierno` (`supplierno`),
-  ADD KEY `debtorno` (`debtorno`),
-  ADD KEY `effectivefrom` (`effectivefrom`),
-  ADD KEY `effectiveto` (`effectiveto`),
-  ADD KEY `stockid` (`stockid`),
-  ADD KEY `categoryid` (`categoryid`);
+  ADD KEY `idx_sellthroughsupport_supplierno` (`supplierno`),
+  ADD KEY `idx_sellthroughsupport_debtorno` (`debtorno`),
+  ADD KEY `idx_sellthroughsupport_effectivefrom` (`effectivefrom`),
+  ADD KEY `idx_sellthroughsupport_effectiveto` (`effectiveto`),
+  ADD KEY `idx_sellthroughsupport_stockid` (`stockid`),
+  ADD KEY `idx_sellthroughsupport_categoryid` (`categoryid`);
 
 --
 -- Indexes for table `session_data`
@@ -5367,28 +5372,28 @@ ALTER TABLE `session_data`
 --
 ALTER TABLE `shipmentcharges`
   ADD PRIMARY KEY (`shiptchgid`),
-  ADD KEY `TransType` (`transtype`,`transno`),
-  ADD KEY `ShiptRef` (`shiptref`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `TransType_2` (`transtype`);
+  ADD KEY `idx_shipmentcharges_transtype_transno` (`transtype`,`transno`),
+  ADD KEY `idx_shipmentcharges_shiptref` (`shiptref`),
+  ADD KEY `idx_shipmentcharges_stockid` (`stockid`),
+  ADD KEY `idx_shipmentcharges_transtype` (`transtype`);
 
 --
 -- Indexes for table `shipments`
 --
 ALTER TABLE `shipments`
   ADD PRIMARY KEY (`shiptref`),
-  ADD KEY `ETA` (`eta`),
-  ADD KEY `SupplierID` (`supplierid`),
-  ADD KEY `ShipperRef` (`voyageref`),
-  ADD KEY `Vessel` (`vessel`);
+  ADD KEY `idx_shipments_eta` (`eta`),
+  ADD KEY `idx_shipments_supplierid` (`supplierid`),
+  ADD KEY `idx_shipments_voyageref` (`voyageref`),
+  ADD KEY `idx_shipments_vessel` (`vessel`);
 
 --
 -- Indexes for table `shippers`
 --
 ALTER TABLE `shippers`
   ADD PRIMARY KEY (`shipper_id`),
-  ADD KEY `opencart_text` (`opencart_text`),
-  ADD KEY `powertrack_code` (`powertrack_code`);
+  ADD KEY `idx_shippers_opencart_text` (`opencart_text`),
+  ADD KEY `idx_shippers_powertrack_code` (`powertrack_code`);
 
 --
 -- Indexes for table `stockadjustmentreasons`
@@ -5401,7 +5406,7 @@ ALTER TABLE `stockadjustmentreasons`
 --
 ALTER TABLE `stockadjustments`
   ADD PRIMARY KEY (`transno`),
-  ADD KEY `reasonid` (`reasonid`);
+  ADD KEY `idx_stockadjustments_reasonid` (`reasonid`);
 
 --
 -- Indexes for table `stockcategory`
@@ -5411,7 +5416,8 @@ ALTER TABLE `stockcategory`
   ADD KEY `idx_stockcategory_categorydescription` (`categorydescription`),
   ADD KEY `idx_stockcategory_stocktype_categoryid` (`stocktype`,`categoryid`),
   ADD KEY `idx_stockcategory_klprioritytransfers` (`klprioritytransfers`),
-  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`);
+  ADD KEY `idx_stockcategory_categorydescription_categoryid_stocktype` (`categorydescription`,`categoryid`,`stocktype`),
+  ADD KEY `idx_stockcategory_stocktype_klprioritytransfers_categoryid` (`stocktype`,`klprioritytransfers`,`categoryid`);
 
 --
 -- Indexes for table `stockcatproperties`
@@ -5425,15 +5431,15 @@ ALTER TABLE `stockcatproperties`
 --
 ALTER TABLE `stockcheckfreeze`
   ADD PRIMARY KEY (`stockid`,`loccode`),
-  ADD KEY `LocCode` (`loccode`);
+  ADD KEY `idx_stockcheckfreeze_loccode` (`loccode`);
 
 --
 -- Indexes for table `stockcounts`
 --
 ALTER TABLE `stockcounts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `StockID` (`stockid`),
-  ADD KEY `LocCode` (`loccode`);
+  ADD KEY `idx_stockcounts_stockid` (`stockid`),
+  ADD KEY `idx_stockcounts_loccode` (`loccode`);
 
 --
 -- Indexes for table `stockdescriptiontranslations`
@@ -5446,20 +5452,15 @@ ALTER TABLE `stockdescriptiontranslations`
 --
 ALTER TABLE `stockitemproperties`
   ADD PRIMARY KEY (`stockid`,`stkcatpropid`),
-  ADD KEY `stockid` (`stockid`),
-  ADD KEY `value` (`value`),
-  ADD KEY `stkcatpropid` (`stkcatpropid`);
+  ADD KEY `idx_stockitemproperties_stockid` (`stockid`),
+  ADD KEY `idx_stockitemproperties_value` (`value`),
+  ADD KEY `idx_stockitemproperties_stkcatpropid` (`stkcatpropid`);
 
 --
 -- Indexes for table `stockmaster`
 --
 ALTER TABLE `stockmaster`
   ADD PRIMARY KEY (`stockid`),
-  ADD UNIQUE KEY `KLMovingDiscount50+StockID` (`klmovingdiscount50`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `KLMovingDiscount20+StockID` (`klmovingdiscount20`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `KLMovingDiscount80+StockID` (`klmovingdiscount80`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `KLChangingPrice+StockID` (`klchangingprice`,`discontinued`,`stockid`) USING BTREE,
-  ADD UNIQUE KEY `UsableStockIDs` (`discontinued`,`klchangingprice`,`klmovingdiscount20`,`klmovingdiscount50`,`klmovingdiscount80`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_discontinued_stockid` (`discontinued`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_discontinued_categoryid_stockid` (`discontinued`,`categoryid`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_klsynctoopencart_stockid` (`klsynctoopencart`,`stockid`),
@@ -5470,9 +5471,15 @@ ALTER TABLE `stockmaster`
   ADD UNIQUE KEY `uk_stockmaster_controlled_stockid` (`controlled`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_discountcategory_stockid` (`discountcategory`,`stockid`),
   ADD UNIQUE KEY `uk_stockmaster_taxcatid_stockid` (`taxcatid`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_klmovingdiscount50_stockid` (`klmovingdiscount50`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_klmovingdiscount20_stockid` (`klmovingdiscount20`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_klmovingdiscount80_stockid` (`klmovingdiscount80`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_klchangingprice_discontinued_stockid` (`klchangingprice`,`discontinued`,`stockid`),
+  ADD UNIQUE KEY `uk_stockmaster_usable_stockids` (`discontinued`,`klchangingprice`,`klmovingdiscount20`,`klmovingdiscount50`,`klmovingdiscount80`,`stockid`),
   ADD KEY `idx_stockmaster_discontinued_categoryid` (`discontinued`,`categoryid`),
   ADD KEY `idx_stockmaster_categoryid_discontinued_stockid` (`categoryid`,`discontinued`,`stockid`),
-  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`);
+  ADD KEY `idx_stockmaster_stockid_categoryid_discontinued` (`stockid`,`categoryid`,`discontinued`),
+  ADD KEY `idx_stockmaster_mbflag_categoryid_stockid` (`mbflag`,`categoryid`,`stockid`);
 
 --
 -- Indexes for table `stockmoves`
@@ -5494,24 +5501,24 @@ ALTER TABLE `stockmoves`
 --
 ALTER TABLE `stockmovestaxes`
   ADD PRIMARY KEY (`stkmoveno`,`taxauthid`),
-  ADD KEY `taxauthid` (`taxauthid`),
-  ADD KEY `calculationorder` (`taxcalculationorder`);
+  ADD KEY `idx_stockmovestaxes_taxauthid` (`taxauthid`),
+  ADD KEY `idx_stockmovestaxes_taxcalculationorder` (`taxcalculationorder`);
 
 --
 -- Indexes for table `stockrequest`
 --
 ALTER TABLE `stockrequest`
   ADD PRIMARY KEY (`dispatchid`),
-  ADD KEY `loccode` (`loccode`),
-  ADD KEY `departmentid` (`departmentid`);
+  ADD KEY `idx_stockrequest_loccode` (`loccode`),
+  ADD KEY `idx_stockrequest_departmentid` (`departmentid`);
 
 --
 -- Indexes for table `stockrequestitems`
 --
 ALTER TABLE `stockrequestitems`
   ADD PRIMARY KEY (`dispatchitemsid`,`dispatchid`),
-  ADD KEY `dispatchid` (`dispatchid`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_stockrequestitems_dispatchid` (`dispatchid`),
+  ADD KEY `idx_stockrequestitems_stockid` (`stockid`);
 
 --
 -- Indexes for table `stockserialitems`
@@ -5537,8 +5544,8 @@ ALTER TABLE `stockserialmoves`
 --
 ALTER TABLE `stocktags`
   ADD PRIMARY KEY (`tagid`),
-  ADD UNIQUE KEY `TagName` (`tagname`),
-  ADD KEY `TagBahasa` (`tagnamebahasa`);
+  ADD UNIQUE KEY `uk_stocktags_tagname` (`tagname`),
+  ADD KEY `idx_stocktags_tagnamebahasa` (`tagnamebahasa`);
 
 --
 -- Indexes for table `suppallocs`
@@ -5554,25 +5561,25 @@ ALTER TABLE `suppallocs`
 --
 ALTER TABLE `suppinvstogrn`
   ADD PRIMARY KEY (`suppinv`,`grnno`),
-  ADD KEY `suppinvstogrn_ibfk_2` (`grnno`);
+  ADD KEY `idx_suppinvstogrn_grnno` (`grnno`);
 
 --
 -- Indexes for table `suppliercontacts`
 --
 ALTER TABLE `suppliercontacts`
   ADD PRIMARY KEY (`supplierid`,`contact`),
-  ADD KEY `Contact` (`contact`),
-  ADD KEY `SupplierID` (`supplierid`);
+  ADD KEY `idx_suppliercontacts_contact` (`contact`),
+  ADD KEY `idx_suppliercontacts_supplierid` (`supplierid`);
 
 --
 -- Indexes for table `supplierdiscounts`
 --
 ALTER TABLE `supplierdiscounts`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `supplierno` (`supplierno`),
-  ADD KEY `effectivefrom` (`effectivefrom`),
-  ADD KEY `effectiveto` (`effectiveto`),
-  ADD KEY `stockid` (`stockid`);
+  ADD KEY `idx_supplierdiscounts_supplierno` (`supplierno`),
+  ADD KEY `idx_supplierdiscounts_effectivefrom` (`effectivefrom`),
+  ADD KEY `idx_supplierdiscounts_effectiveto` (`effectiveto`),
+  ADD KEY `idx_supplierdiscounts_stockid` (`stockid`);
 
 --
 -- Indexes for table `suppliers`

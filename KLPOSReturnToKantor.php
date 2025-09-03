@@ -10,6 +10,7 @@ $Title = __('Return Transfer from Shop to Kantor');
 $BookMark = "LocationTransfers";
 $ViewTopic = "Inventory";
 include('includes/header.php');
+include('includes/StockFunctions.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/KLDefines.php');
@@ -73,21 +74,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					$_POST['LinesCounter'] -= 1;
 				}
 				if ($_SESSION['ProhibitNegativeStock']==1){
-					$InTransitSQL="SELECT SUM(pendingqty) as intransit
-									FROM loctransfers
-									WHERE stockid='" . $_POST['StockID' . $i] . "'
-										AND shiploc='".$_POST['FromStockLocation']."'
-										AND pendingqty > 0";
-					$InTransitResult=DB_query($InTransitSQL);
-					$InTransitRow=DB_fetch_array($InTransitResult);
-					$InTransitQuantity=$InTransitRow['intransit'];
-					// Only if stock exists at this location
-					$Result = DB_query("SELECT quantity
-										FROM locstock
-										WHERE stockid='" . $_POST['StockID' . $i] . "'
-										AND loccode='".$_POST['FromStockLocation']."'");
-
-					$MyRow = DB_fetch_array($Result);
+					$InTransitQuantity = GetItemQtyInTransitFromLocation($_POST['StockID' . $i], $_POST['FromStockLocation']);
 				}
 				// Check if the last one entered already exists on the transfer
 				$LastItem = $_POST['LinesCounter']-1;

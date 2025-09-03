@@ -69,8 +69,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['Identifier'] = $MyRow['identifier'];
 		$_POST['Comments'] = $MyRow['comments'];
 		$_POST['SampleDate'] = ConvertSQLDate($MyRow['sampledate']);
-		$_POST['Cert'] = $MyRow['cert'];
-
+		if (!isset($_POST['Cert'])) {$_POST['Cert'] = $MyRow['cert'];}
 		echo '<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />';
 		echo '<fieldset>
 				<legend>', __('Edit QA Sample Details'), '</legend>

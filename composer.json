@@ -40,6 +40,7 @@
 		"ext-zlib": "*",
 		"phpunit/phpunit": "^10.5.53",
 		"symfony/browser-kit": "^6.4.24",
+		"symfony/css-selector": "^6.4.24",
 		"symfony/http-client": "^6.4.24",
 		"symfony/mime": "^6.4.24"
 	},

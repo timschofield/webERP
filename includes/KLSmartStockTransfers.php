@@ -20,14 +20,13 @@ based on day of week, priority and sales history, then creates bidirectional tra
 
 Parameters:
 - $Group (string): Group identifier for shop type (e.g., "1050-SmartStockTransfersKL")
-- $RootPath (string): Root path for file operations
 - $EmailText (string): Email text content to append transfer information to
 
 Returns:
 - string: Updated email text with transfer operation results and status messages
 **************************************************************************************************************/
 
-function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
+function KLPrepareGroupSmartStockTransfers($Group, $EmailText){
 
 	if ($Group == "1050-SmartStockTransfersKL"){
 		$ShopType = "SHOPKL";
@@ -58,21 +57,25 @@ function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
 
 	$DayOfWeek = date('w', strtotime(Date('Y-m-d')));
 
-	$SQL = "SELECT locations.loccode,
-					locations.smartdispatchmaxmodels,
-					locations.smartdispatchminmodels
-			FROM locations,locationzones
-			WHERE locations.zone = locationzones.code
-				AND locations.smartdispatchfrom = 'KANTO'
-				AND locations.typeloc = '" . $ShopType . "'
-				AND locationzones.smarttransferonweekday" . $DayOfWeek . " = 1
-			ORDER BY locations.priority ASC,
-				(SELECT COUNT(qtyinvoiced)
-				FROM salesorderdetails, salesorders
-				WHERE salesorderdetails.orderno = salesorders.orderno
-					AND salesorderdetails.completed = 1
-					AND salesorders.orddate >= '" . $StartDate . "'
-					AND salesorders.fromstkloc = locations.loccode) DESC";
+	$SQL = "SELECT loc.loccode,
+					loc.smartdispatchmaxmodels,
+					loc.smartdispatchminmodels,
+					COALESCE(sales_summary.sales_count, 0) AS sales_count
+			FROM locations loc
+			INNER JOIN locationzones lz ON loc.zone = lz.code
+			LEFT JOIN (
+				SELECT so.fromstkloc,
+					   COUNT(sod.qtyinvoiced) AS sales_count
+				FROM salesorders so
+				INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+				WHERE sod.completed = 1
+					AND so.orddate >= '" . $StartDate . "'
+				GROUP BY so.fromstkloc
+			) sales_summary ON loc.loccode = sales_summary.fromstkloc
+			WHERE loc.smartdispatchfrom = 'KANTO'
+				AND loc.typeloc = '" . $ShopType . "'
+				AND lz.smarttransferonweekday" . $DayOfWeek . " = 1
+			ORDER BY loc.priority ASC, sales_summary.sales_count DESC";
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -117,12 +120,7 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 
 	$TableResult = array();
 
-	// from location
-	$ErrMsg = __('Could not retrieve location name from the database');
-	$SQLfrom = "SELECT locationname FROM `locations` WHERE loccode='" . $FromLocCode . "'";
-	$Result = DB_query($SQLfrom, $ErrMsg);
-	$Row = DB_fetch_row($Result);
-	$FromLocation = $Row['0'];
+	$FromLocation = GetLocationNameFromCode($FromLocCode);
 
 	// to location
 	if ($ToLocCode == 'KANTO'){
@@ -140,21 +138,21 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$SQLto = "SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch
-				FROM `locations`
-				WHERE loccode='" . $ToLocCode . "'";
-		$Resultto = DB_query($SQLto, $ErrMsg);
+				FROM locations
+				WHERE loccode = '" . $ToLocCode . "'";
+		$Resultto = DB_query($SQLto);
 		$RowTo = DB_fetch_row($Resultto);
 		$ToLocation = $RowTo['0'];
 		$ToCustomer = $RowTo['1'];
 		$ToBranch = $RowTo['2'];
 
-		$SQLPrices = "SELECT debtorsmaster.currcode,
-						debtorsmaster.salestype,
-						currencies.decimalplaces
-					FROM debtorsmaster, currencies
-					WHERE debtorsmaster.currcode = currencies.currabrev
-						AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-		$ResultPrices = DB_query($SQLPrices, $ErrMsg);
+		$SQLPrices = "SELECT dm.currcode,
+						dm.salestype,
+						c.decimalplaces
+					FROM debtorsmaster dm
+					INNER JOIN currencies c ON dm.currcode = c.currabrev
+					WHERE dm.debtorno = '" . $ToCustomer . "'";
+		$ResultPrices = DB_query($SQLPrices);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency = $RowPrices['0'];
 		$ToPriceList = $RowPrices['1'];
@@ -162,44 +160,39 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	}
 	
 	$CategoryDescription = __('All');
-	$WhereCategory = " AND stockmaster.categoryid != 'SHCONS'
-						   AND stockmaster.categoryid != 'SHPACK' ";
 
 	// If Strategy is "Items needed at TO location with overstock at FROM" we need to control the "needed at TO" part
 	// The "overstock at FROM" part is controlled in any case with AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 	if ($Strategy == 'All') {
-		$WhereCategory = $WhereCategory . " AND locstock.reorderlevel > locstock.quantity ";
+		$WhereCategory = " AND ls.reorderlevel > ls.quantity ";
 		$StrategyText = "Items needed at " . $ToLocCode . " with stock available at " . $FromLocCode . " ";
 	}else{
+		$WhereCategory = " ";
 		$StrategyText = "Items with overstock at " . $FromLocCode . " returning to " . $ToLocCode;
 	}
 
-	$SQL = "SELECT locstock.stockid,
-				stockmaster.description,
-				locstock.loccode,
-				locstock.quantity,
-				locstock.reorderlevel,
-				stockmaster.decimalplaces,
-				stockmaster.serialised,
-				stockmaster.controlled,
-				stockmaster.discountcategory,
-				fromlocstock.reorderlevel as fromreorderlevel,
-				fromlocstock.quantity as fromquantity
-			FROM stockmaster
-			LEFT JOIN stockcategory
-				ON stockmaster.categoryid = stockcategory.categoryid,
-			locstock
-			LEFT JOIN locstock AS fromlocstock ON
-			  locstock.stockid = fromlocstock.stockid
-			  AND fromlocstock.loccode = '" . $FromLocCode . "'
-			WHERE locstock.stockid = stockmaster.stockid
-			AND locstock.loccode = '" . $ToLocCode . "'
-			AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
-			AND stockcategory.stocktype <> 'A'
-			AND (stockmaster.mbflag = 'B' OR stockmaster.mbflag = 'M') " .
-			$WhereCategory .
-			" ORDER BY stockcategory.klprioritytransfers,
-						locstock.stockid";
+	$SQL = "SELECT ls.stockid,
+				sm.description,
+				ls.loccode,
+				ls.quantity,
+				ls.reorderlevel,
+				sm.decimalplaces,
+				sm.discountcategory,
+				fls.reorderlevel AS fromreorderlevel,
+				fls.quantity AS fromquantity
+			FROM locstock ls
+			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
+			INNER JOIN stockcategory sc ON sm.categoryid = sc.categoryid
+			LEFT JOIN locstock fls ON ls.stockid = fls.stockid 
+				AND fls.loccode = '" . $FromLocCode . "'
+			WHERE ls.loccode = '" . $ToLocCode . "'
+				AND (fls.quantity - fls.reorderlevel) > 0
+				AND sc.stocktype <> 'A'
+				AND sm.mbflag IN ('B', 'M')
+				AND sm.categoryid NOT IN ('SHCONS', 'SHPACK')
+			" . $WhereCategory . "
+			ORDER BY sc.klprioritytransfers ASC,
+				ls.stockid ASC";
 
 	$Result = DB_query($SQL, '', '', false, true);
 
@@ -220,38 +213,13 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 		$NumPcsInThisStockDispatch = 0;
 		while (($MyRow = DB_fetch_array($Result)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
 			// Check if there is any stock in transit already sent from FROM LOCATION
-			$InTransitQuantityAtFrom = 0;
-			if ($_SESSION['ProhibitNegativeStock'] == 1){
-				$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-								FROM loctransfers
-								WHERE stockid='" . $MyRow['stockid'] . "'
-									AND shiploc='" . $FromLocCode . "'
-									AND pendingqty > 0";
-				$InTransitResult = DB_query($InTransitSQL);
-				$InTransitRow = DB_fetch_array($InTransitResult);
-				if ($InTransitRow['intransit'] != '') {
-					$InTransitQuantityAtFrom = $InTransitRow['intransit'];
-				} else {
-					$InTransitQuantityAtFrom = 0;
-				}
-			}
+			$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $FromLocCode);
+
 			// The real available stock to ship is the (qty - reorder level - in transit).
 			$AvailableShipQtyAtFrom = $MyRow['fromquantity'] - $MyRow['fromreorderlevel'] - $InTransitQuantityAtFrom;
 
 			// Check if TO location is already waiting to receive some stock of this item
-			$InTransitQuantityAtTo = 0;
-			$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-							FROM loctransfers
-							WHERE stockid='" . $MyRow['stockid'] . "'
-								AND recloc='" . $ToLocCode . "'
-								AND pendingqty > 0";
-			$InTransitResult = DB_query($InTransitSQL);
-			$InTransitRow = DB_fetch_array($InTransitResult);
-			if ($InTransitRow['intransit'] != '') {
-				$InTransitQuantityAtTo = $InTransitRow['intransit'];
-			} else {
-				$InTransitQuantityAtTo = 0;
-			}
+			$InTransitQuantityAtTo = GetItemQtyInTransitToLocation($MyRow['stockid'], $ToLocCode);
 
 			// The real needed stock is reorder level - qty - in transit).
 			$NeededQty = round(($MyRow['reorderlevel'] - $MyRow['quantity']) * (1 + $DispatchPercent / 100));
@@ -396,12 +364,12 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 															shipdate,
 															shiploc,
 															recloc)
-														VALUES ('" . $Trf_ID . "',
-															'" . $TableResult[$ModelInTransfer]['stockid'] . "',
-															'" . $TableResult[$ModelInTransfer]['shipqty'] . "',
-															'" . $Now . "',
-															'" . $FromLocCode . "',
-															'" . $ToLocCode . "')";
+								VALUES ('" . $Trf_ID . "',
+									'" . $TableResult[$ModelInTransfer]['stockid'] . "',
+									'" . $TableResult[$ModelInTransfer]['shipqty'] . "',
+									'" . $Now . "',
+									'" . $FromLocCode . "',
+									'" . $ToLocCode . "')";
 						$ErrMsg = __('CRITICAL ERROR') . '! ' . 
 								__('Unable to enter Location Transfer record for') . ' ' . 
 								$TableResult[$ModelInTransfer]['stockid'];

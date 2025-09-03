@@ -696,16 +696,17 @@ to the shops with RL > 0.
 	}
 	
 	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.categoryid,
-					stockmaster.description,
-					klsalesperformance.topsales60
-			FROM stockmaster, klsalesperformance
-			WHERE stockmaster.stockid = klsalesperformance.stockid
-				AND stockmaster.discontinued = 0
+				stockmaster.categoryid,
+				stockmaster.description,
+				klsalesperformance.topsales60
+			FROM stockmaster
+			INNER JOIN klsalesperformance ON stockmaster.stockid = klsalesperformance.stockid
+			WHERE stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				" . $WhereCat . "
-			ORDER BY topsales60 DESC
-			LIMIT " . ($StartTopItems - 1) . "," . ($EndTopItems - $StartTopItems + 1);			
+			ORDER BY klsalesperformance.topsales60 DESC
+			LIMIT " . ($StartTopItems - 1) . "," . ($EndTopItems - $StartTopItems + 1);
+
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -714,24 +715,28 @@ to the shops with RL > 0.
 		while ($MyRow = DB_fetch_array($Result)) {
 
 			$SQLQtyAvailable = "SELECT SUM(locstock.quantity) AS QtyAvailable
-								FROM locstock, locations loc2
-								WHERE locstock.stockid  = '" . $MyRow['stockid'] . "'
-									AND locstock.loccode = loc2.loccode
+								FROM locstock
+								INNER JOIN locations loc2 ON locstock.loccode = loc2.loccode
+								WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
 									AND loc2.stockreadytosell = 1";
+
 			$ResultQtyAvailable = DB_query($SQLQtyAvailable);
 			$MyRowQtyAvailable = DB_fetch_array($ResultQtyAvailable);
 			
 			if (($MyRowQtyAvailable['QtyAvailable'] > $MinStockAvailable) 
 				AND ($MyRowQtyAvailable['QtyAvailable'] <= $MaxStockAvailable)){
+
 				$DistributionSQL = "SELECT locstock.loccode, 
 										locstock.reorderlevel AS oldrl
-									FROM locstock,locations
+									FROM locstock
+									INNER JOIN locations ON locstock.loccode = locations.loccode
 									WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
-										AND locstock.loccode = locations.loccode
 										AND locations.stockreadytosell = 1
 										AND locstock.reorderlevel > 0";
+
 				$DistributionResult = DB_query($DistributionSQL);
 				$LocationsToDistribute = DB_num_rows($DistributionResult);
+				
 				if ($LocationsToDistribute != 0){
 					while ($MyDistribution = DB_fetch_array($DistributionResult)) {
 
@@ -803,22 +808,27 @@ to the shops with RL > 0.
 **************************************************************************************************************/
 function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 	if ($ShopType == "SHOPKL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}elseif ($ShopType == "SHOPOU") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	}else{
 		$WhereCat = " ";
 	}
 	
-	$SQL = "SELECT MAX(topsales" .$NumDays. ") AS maxtopsales
-			FROM klsalesperformance, stockmaster
-			WHERE klsalesperformance.stockid = stockmaster.stockid" .
+	$SQL = "SELECT MAX(ksp.topsales" .$NumDays. ") AS maxtopsales
+			FROM klsalesperformance ksp
+			INNER JOIN stockmaster sm ON ksp.stockid = sm.stockid" .
 			$WhereCat;
 	$Result = DB_query($SQL);		
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['maxtopsales'];
+	
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return (int)($MyRow['maxtopsales'] ?? 0);
+	}else{
+		return 0;
+	}
 }
 
 /**************************************************************************************************************
@@ -848,11 +858,11 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	}
 
 	if ($ShopType == "SHOPKL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
 	}elseif ($ShopType == "SHOPOU") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+		$WhereCat = " AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 	}else{
 		$WhereCat = " ";
 	}
@@ -860,26 +870,30 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	$MaxTopSales = MaxTopSalesForTypeOfShop($ShopType, 60);
 	$MinTopSales = round($MaxTopSales * ((100 - $BottomPercentTopSales) / 100), 0);
 	
-	$SQL = "SELECT 	stockmaster.stockid,
-					stockmaster.description,
-					stockmaster.categoryid,
-					stockmaster.units, 
-					locstock.quantity,
-					locstock.reorderlevel,
-					locstock.loccode
-			FROM 	stockmaster,locstock,klsalesperformance
-			WHERE 	stockmaster.stockid = locstock.stockid
-					AND stockmaster.stockid = klsalesperformance.stockid
-					AND klsalesperformance.topsales60 >= " . $MinTopSales . 
+	$SQL = "SELECT sm.stockid,
+					sm.description,
+					sm.categoryid,
+					sm.units,
+					ls.quantity,
+					ls.reorderlevel,
+					ls.loccode
+			FROM stockmaster sm
+			INNER JOIN locstock ls ON sm.stockid = ls.stockid
+			INNER JOIN klsalesperformance ksp ON sm.stockid = ksp.stockid
+			INNER JOIN (
+				SELECT ls_inner.stockid,
+					   SUM(ls_inner.quantity) AS total_available_stock
+				FROM locstock ls_inner
+				INNER JOIN locations loc ON ls_inner.loccode = loc.loccode
+				WHERE loc.stockreadytosell = 1
+				GROUP BY ls_inner.stockid
+				HAVING SUM(ls_inner.quantity) <= " . $minavailablestock . "
+			) stock_summary ON sm.stockid = stock_summary.stockid
+			WHERE ksp.topsales60 >= " . $MinTopSales .
 					$WhereCat . "
-					AND (locstock.quantity > 0)
-					AND (locstock.reorderlevel >= ". $OldRL .")
-					AND (SELECT SUM(locstock.quantity)
-						FROM locstock, locations loc2
-						WHERE stockmaster.stockid = locstock.stockid
-							AND locstock.loccode = loc2.loccode
-							AND loc2.stockreadytosell = 1) <= ".$minavailablestock."
-			ORDER BY stockmaster.stockid";
+				AND ls.quantity > 0
+				AND ls.reorderlevel >= " . $OldRL . "
+			ORDER BY sm.stockid";
 	
 	$Result = DB_query($SQL);		
 	
@@ -1033,18 +1047,18 @@ function OnlineReorderLevelAdjustments($ShowMessages, $UpdateDB, $RootPath, $Ema
 		}
 	}
 // adjust RL for toko online as needed
-	$SQL = "SELECT salesorderdetails.stkcode,
-				SUM(salesorderdetails.quantity) AS totalqty,
-				locstock.reorderlevel
-			FROM salesorders, salesorderdetails, locstock
-			WHERE salesorderdetails.orderno = salesorders.orderno
-				AND salesorderdetails.stkcode = locstock.stockid
-				AND locstock.loccode = ". CODE_ONLINE_SHOP ."
-				AND salesorders.fromstkloc = ". CODE_ONLINE_SHOP ."
-				AND salesorders.quotation = 0
-				AND salesorderdetails.completed = 0
-			GROUP BY salesorderdetails.stkcode
-			ORDER BY salesorderdetails.stkcode";
+	$SQL = "SELECT sod.stkcode,
+				SUM(sod.quantity) AS totalqty,
+				ls.reorderlevel
+			FROM salesorders so
+			INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+			INNER JOIN locstock ls ON sod.stkcode = ls.stockid
+			WHERE ls.loccode = ". CODE_ONLINE_SHOP ."
+				AND so.fromstkloc = ". CODE_ONLINE_SHOP ."
+				AND so.quotation = 0
+				AND sod.completed = 0
+			GROUP BY sod.stkcode, ls.reorderlevel
+			ORDER BY sod.stkcode";
 				
 	$Result = DB_query($SQL);		
 	
@@ -1123,11 +1137,11 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 	}
 
 	// updating the RL settings for packaging, just in case any of the dependant shops has change its settings and affects the gudang
-	$SQL = "SELECT  MAX(locations.rlfactorforpackaging) AS rlfactor,
-					MAX(locations.rldaysforpackaging) AS rldays
-			FROM locations
-			WHERE locations.packagingfrom = '" . $GudangCode . "'
-				AND locations.loccode != '" . $GudangCode . "'";
+	$SQL = "SELECT MAX(loc.rlfactorforpackaging) AS rlfactor,
+					MAX(loc.rldaysforpackaging) AS rldays
+			FROM locations loc
+			WHERE loc.packagingfrom = '" . $GudangCode . "'
+				AND loc.loccode != '" . $GudangCode . "'";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
@@ -1157,17 +1171,17 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 	}	
 
 	// Now, update the RL for the items to be stocked at the gudang
-	$SQL = "SELECT  stockmaster.stockid,
-					SUM(locstock.reorderlevel) AS rl
-			FROM locations, locstock, stockmaster
-			WHERE locations.loccode = locstock.loccode
-				AND stockmaster.stockid = locstock.stockid
-				AND locations.packagingfrom = '" . $GudangCode . "'
-				AND locations.loccode != '" . $GudangCode . "'
-				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND stockmaster.discontinued = 0
-			GROUP BY stockmaster.stockid
-			ORDER BY stockmaster.stockid";
+	$SQL = "SELECT sm.stockid,
+					SUM(ls.reorderlevel) AS rl
+			FROM locations loc
+			INNER JOIN locstock ls ON loc.loccode = ls.loccode
+			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
+			WHERE loc.packagingfrom = '" . $GudangCode . "'
+				AND loc.loccode != '" . $GudangCode . "'
+				AND sm.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+				AND sm.discontinued = 0
+			GROUP BY sm.stockid
+			ORDER BY sm.stockid";
 	$Result = DB_query($SQL);
 
 	if (DB_num_rows($Result) != 0){
@@ -1253,19 +1267,18 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $UpdateDB, $RootP
 function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $UpdateDB, $RootPath, $EmailText) {
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$DaysSales));
-	$SQL = "SELECT 	locations.locationname,
-					locations.rldaysforpackaging,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = '" . $Item . "'
-							AND packagingused.date >= '" . $FromDate . "') AS Sales,
-					(SELECT locstock.reorderlevel
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = '" . $Item . "') AS RL
-			FROM locations
-			WHERE locations.loccode = '" . $Shop . "'";
+	$SQL = "SELECT loc.locationname,
+					loc.rldaysforpackaging,
+					COALESCE(SUM(pu.qty), 0) AS Sales,
+					ls.reorderlevel AS RL
+			FROM locations loc
+			LEFT JOIN packagingused pu ON loc.loccode = pu.fromlocation
+				AND pu.stockid = '" . $Item . "'
+				AND pu.date >= '" . $FromDate . "'
+			LEFT JOIN locstock ls ON loc.loccode = ls.loccode
+				AND ls.stockid = '" . $Item . "'
+			WHERE loc.loccode = '" . $Shop . "'
+			GROUP BY loc.loccode, loc.locationname, loc.rldaysforpackaging, ls.reorderlevel";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0) {
 		$MyRow = DB_fetch_array($Result);

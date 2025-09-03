@@ -15,6 +15,7 @@ $ViewTopic = "Inventory";
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
+include('includes/StockFunctions.php');
 
 // KL RICARD
 include('includes/KLEmails.php');
@@ -76,14 +77,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						break;
 				} // end switch statement
 				if ($_SESSION['ProhibitNegativeStock']==1){
-					$InTransitSQL="SELECT SUM(pendingqty) as intransit
-									FROM loctransfers
-									WHERE stockid='" . $StockID . "'
-										AND shiploc='".$_POST['FromStockLocation']."'
-										AND pendingqty > 0";
-					$InTransitResult = DB_query($InTransitSQL);
-					$InTransitRow=DB_fetch_array($InTransitResult);
-					$InTransitQuantity=$InTransitRow['intransit'];
+					$InTransitQuantity = GetItemQtyInTransitFromLocation($StockID, $_POST['FromStockLocation']);
 					// Only if stock exists at this location
 					$Result = DB_query("SELECT quantity
 										FROM locstock
@@ -143,14 +137,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$_POST['LinesCounter'] -= 10;
 					}
 					if ($_SESSION['ProhibitNegativeStock']==1){
-						$InTransitSQL="SELECT SUM(pendingqty) as intransit
-										FROM loctransfers
-										WHERE stockid='" . $_POST['StockID' . $i] . "'
-											AND shiploc='".$_POST['FromStockLocation']."'
-											AND pendingqty > 0";
-						$InTransitResult = DB_query($InTransitSQL);
-						$InTransitRow=DB_fetch_array($InTransitResult);
-						$InTransitQuantity=$InTransitRow['intransit'];
+						$InTransitQuantity = GetItemQtyInTransitFromLocation($_POST['StockID' . $i], $_POST['FromStockLocation']);
 						// Only if stock exists at this location
 						$Result = DB_query("SELECT quantity
 											FROM locstock

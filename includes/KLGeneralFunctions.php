@@ -1990,4 +1990,3 @@ function GetNumberOfRecordsInTable($TableName, $Database) {
 	}
 	return 0;
 }
-

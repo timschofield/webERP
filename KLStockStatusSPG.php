@@ -4,6 +4,7 @@ require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Status in Shops');
 include('includes/header.php');
+include('includes/StockFunctions.php');
 
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -68,7 +69,7 @@ if ($StockID != ''){
 					locstock.quantity
 			FROM locstock 
 			INNER JOIN locations
-				ON locstock.loccode=locations.loccode
+				ON locstock.loccode = locations.loccode
 			WHERE locstock.stockid = '" . $StockID . "'
 				AND  (locations.stockreadytosell= '1'
 					OR locations.loccode = 'KANTO')
@@ -80,31 +81,11 @@ if ($StockID != ''){
 //	echo $TableHeader;
 	while ($MyRow=DB_fetch_array($LocStockResult)) {
 
-		$InTransitSQL="SELECT SUM(pendingqty) as intransit
-						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND shiploc='".$MyRow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL);
-		$InTransitRow=DB_fetch_array($InTransitResult);
-		if ($InTransitRow['intransit']!='') {
-			$InTransitQuantityOut=-$InTransitRow['intransit'];
-		} else {
-			$InTransitQuantityOut=0;
-		}
+		$InTransitQuantityOut = -GetItemQtyInTransitFromLocation($StockID, $MyRow['loccode']);
 
-		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
-						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND recloc='".$MyRow['loccode']."'";
-		$InTransitResult=DB_query($InTransitSQL);
-		$InTransitRow=DB_fetch_array($InTransitResult);
-		if ($InTransitRow['intransit']!='') {
-			$InTransitQuantityIn=-$InTransitRow['intransit'];
-		} else {
-			$InTransitQuantityIn=0;
-		}
+		$InTransitQuantityIn = GetItemQtyInTransitToLocation($StockID, $MyRow['loccode']);
 
-		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
+		$InTransit = $InTransitQuantityIn + $InTransitQuantityOut;
 		$Available = $MyRow['quantity'];
 
 		echo '<tr class="striped_row">
