@@ -269,7 +269,7 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
  * @param $Path_To_Root
  * @return bool
  */
-function CreateTables($Path_To_Root) {
+function CreateTables($Path_To_Root, $DBType) {
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
@@ -291,7 +291,8 @@ function CreateTables($Path_To_Root) {
 	return ($DBErrors == 0);
 }
 
-function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
+function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root,
+	$DataBaseName, $DBType) {
 	$Errors = 0;
 	if ($Demo != 'Yes') {
 		/* Create the admin user */
@@ -331,7 +332,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
+										'" . $Email . "',
 										'',
 										8,
 										1,
@@ -378,6 +379,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 				$SQL.= ' ' . $COAScriptFile[$i];
 
 				// check if this line kicks off a function definition - pg chokes otherwise
+				/// @todo we can disable this filter if on mysql/mariadb
 				/// @todo use a regexp
 				if (mb_substr($COAScriptFile[$i], 0, 15) == 'CREATE FUNCTION') {
 					$InAFunction = true;
@@ -503,7 +505,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="info">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
-		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql');
+		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType);
 
 		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
@@ -558,7 +560,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
+										'" . $Email . "',
 										'',
 										8,
 										1,
@@ -592,6 +594,10 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="success">' . __('Database now contains the demo data.') . '</div>';
 	}
 
+	/// @todo check for errors
+	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir', 'companies/" . $DataBaseName . "/part_pics')";
+	$Result = DB_query($SQL);
+
 	return ($Errors == 0);
 }
 
@@ -609,9 +615,10 @@ function CryptPass($Password) {
 
 /**
  * @param string $File
+ * @param string $DBType
  * @return bool
  */
-function PopulateSQLDataBySQLFile($File) {
+function PopulateSQLDataBySQLFile($File, $DBType) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 
@@ -627,10 +634,13 @@ function PopulateSQLDataBySQLFile($File) {
 		$SQL.= ' ' . $SQLScriptFile[$i - 1];
 
 		// check if this line kicks off a function definition - pg chokes otherwise
+		/// @todo we can disable this filter if on mysql/mariadb
+		/// @todo use a regexp
 		if (mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
 			$InAFunction = true;
 		}
-		//check if this line completes a function definition - pg chokes otherwise
+		// check if this line completes a function definition - pg chokes otherwise
+		/// @todo use a regexp
 		if (mb_substr($SQLScriptFile[$i - 1], 0, 8) == 'LANGUAGE') {
 			$InAFunction = false;
 		}
@@ -653,7 +663,7 @@ function PopulateSQLDataBySQLFile($File) {
  * @param $Path_To_Root
  * @return bool
  */
-function CreateGLTriggers($Path_To_Root)
+function CreateGLTriggers($Path_To_Root, $DBType)
 {
 	/// @todo the trigger code will not work with postgres
 	/// @todo why not use PopulateSQLDataBySQLFile?
@@ -677,7 +687,7 @@ function CreateGLTriggers($Path_To_Root)
 	return ($DBErrors == 0);
 }
 
-function CreateConfigFile($Path_To_Root, $configArray) {
+function CreateConfigFile($Path_To_Root, $configArray, $timezone) {
 	// The config files are in the main directory
 	$SampleConfigFile = $Path_To_Root . '/config.distrib.php';
 	$NewConfigFile = $Path_To_Root . '/config.php';
@@ -710,7 +720,7 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 				}
 				// Replace date_default_timezone_set
 				if (strpos($Line, 'date_default_timezone_set') !== false) {
-					$NewValue = addslashes($_SESSION['Installer']['TimeZone']);
+					$NewValue = addslashes($timezone);
 					$Line = "date_default_timezone_set('".$NewValue."');\n";
 				}
 			}
@@ -750,12 +760,12 @@ function CreateConfigFile($Path_To_Root, $configArray) {
  * @param string $Path_To_Root
  * @return bool
  */
-function CreateCompaniesFile($Path_To_Root) {
+function CreateCompaniesFile($Path_To_Root, $DatabaseName, $CoyName) {
 	$Contents = "<?php\n\n";
-	$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
+	$Contents.= "\$CompanyName['" . $DatabaseName . "'] = '" . $CoyName . "';\n";
 
 	$Result = false;
-	$CompaniesFile = $Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php';
+	$CompaniesFile = $Path_To_Root . '/companies/' . $DatabaseName . '/Companies.php';
 
 	// give at least a warning if the files exists already
 	$FileExists = file_exists($CompaniesFile);
