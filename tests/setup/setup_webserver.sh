@@ -9,7 +9,7 @@ BASE_DIR="$(dirname -- "$(dirname -- "$(dirname -- "$(realpath "${BASH_SOURCE[0]
 cd "$BASE_DIR";
 
 if [ -z "$GITHUB_ACTION" ]; then
-	# @todo install the webserver
+	# @todo check - do we need more packages than this?
 	apt-get install apache2
 fi
 

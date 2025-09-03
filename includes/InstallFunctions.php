@@ -681,20 +681,21 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 	if (file_exists($NewConfigFile)) {
 		echo '<div class="error">' . __('The configuration file exists and has not been overwritten') . ' ' . $NewConfigFile . '</div>';
 		flush();
-		return false;
-	}
+		$Result = true;
 
-	// Write the updated content to the new config file
-	$NewConfigContent = implode($NewLines);
-	$Result = file_put_contents($NewConfigFile, $NewConfigContent);
-
-	if ($Result) {
-		echo '<div class="success">' . __('The config.php file has been created based on your settings') . '</div>';
 	} else {
-		echo '<div class="error">' . __('Cannot write to the configuration file') . ' ' . $NewConfigFile . '</div>';
-	}
-	flush();
+		// Write the updated content to the new config file
+		$NewConfigContent = implode($NewLines);
+		$Result = file_put_contents($NewConfigFile, $NewConfigContent);
 
+		if ($Result) {
+			echo '<div class="success">' . __('The config.php file has been created based on your settings') . '</div>';
+		} else {
+			echo '<div class="error">' . __('Cannot write to the configuration file') . ' ' . $NewConfigFile . '</div>';
+		}
+		flush();
+		$Result = true;
+	}
 	return $Result;
 }
 

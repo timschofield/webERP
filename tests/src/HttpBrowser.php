@@ -35,11 +35,22 @@ class HttpBrowser extends BaseHttpBrowser
 			}
 		}
 
-		/// @todo add checking that there are no php warnings or errors displayed
+		// check that there are no php warnings or errors displayed
+		/// @todo find a way to make this check more robust - the string is different with xdebug active!
+		$responseContent = $response->getContent();
+		if (($start = strpos($responseContent, '<b>Warning</b>:  ')) !== false) {
+			throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri() . ': ' .
+				substr($responseContent, $start + 17, 40) . '...');
+		}
+		/// @todo check for errors, too
 
 		return $response;
 	}
 
+	/**
+	 * Sets an array of expected HTTP status code that will be checked when sending requests.
+	 * The test will fail when receiving any other status code.
+	 */
 	public function setExpectedStatusCodes(array $codes): void
 	{
 		$this->expectedStatusCodes = $codes;
