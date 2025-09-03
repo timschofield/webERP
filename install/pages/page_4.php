@@ -8,8 +8,11 @@ if (!isset($PathPrefix)) {
 $DataSaved = '';
 
 if (isset($_POST['test'])) {
+	/// @todo validate this is not ''
 	$_SESSION['Installer']['AdminUser'] = $_POST['adminaccount'];
+	/// @todo validate this is a valid email address according to RFC
 	$_SESSION['Installer']['AdminEmail'] = $_POST['Email'];
+	/// @todo do basic checks on password - eg. min length, possibly more
 	$_SESSION['Installer']['AdminPassword'] = $_POST['webERPPassword'];
 
 	$DataSaved = 'yes';
