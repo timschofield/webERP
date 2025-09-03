@@ -12,6 +12,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
+
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
 } elseif (isset($_POST['StockID'])){
@@ -134,29 +135,9 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 		// Get the QOO
 		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
-		$InTransitSQL="SELECT SUM(pendingqty) as intransit
-						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND shiploc='".$MyRow['loccode']."'";
-		$InTransitResult = DB_query($InTransitSQL);
-		$InTransitRow=DB_fetch_array($InTransitResult);
-		if ($InTransitRow['intransit']!='') {
-			$InTransitQuantityOut=-$InTransitRow['intransit'];
-		} else {
-			$InTransitQuantityOut=0;
-		}
+		$InTransitQuantityOut = -GetItemQtyInTransitFromLocation($StockID, $MyRow['loccode']);
 
-		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
-						FROM loctransfers
-						WHERE stockid='" . $StockID . "'
-							AND recloc='".$MyRow['loccode']."'";
-		$InTransitResult = DB_query($InTransitSQL);
-		$InTransitRow=DB_fetch_array($InTransitResult);
-		if ($InTransitRow['intransit']!='') {
-			$InTransitQuantityIn=-$InTransitRow['intransit'];
-		} else {
-			$InTransitQuantityIn=0;
-		}
+		$InTransitQuantityIn = GetItemQtyInTransitToLocation($StockID, $MyRow['loccode']);
 
 		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
 			$Available = $MyRow['quantity'] - $DemandQty + ($InTransitQuantityIn+$InTransitQuantityOut);
