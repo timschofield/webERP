@@ -89,11 +89,11 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	}elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(false, true, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1050-SmartStockTransfersKL"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for KL
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for KL
 	}elseif ($Group == "1060-SmartStockTransfersBL"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for BL 
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for BL 
 	}elseif ($Group == "1070-SmartStockTransfersOU"){
-		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, false, $EmailText);
 	}elseif ($Group == "1200-DailySyncOpenCart"){

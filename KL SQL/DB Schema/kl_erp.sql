@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 11:13 AM
+-- Generation Time: Sep 03, 2025 at 11:49 AM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -4730,7 +4730,8 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`),
   ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`),
   ADD KEY `idx_locations_typeloc` (`typeloc`),
-  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`);
+  ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`),
+  ADD KEY `idx_locations_typeloc_smartdispatch` (`typeloc`,`smartdispatchfrom`);
 
 --
 -- Indexes for table `locationtypes`
@@ -5300,7 +5301,8 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_debtorno_ordtime_orddate` (`debtorno`,`ordtime`,`orddate`),
   ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
   ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
-  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`);
+  ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`),
+  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`);
 
 --
 -- Indexes for table `salestypes`

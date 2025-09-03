@@ -20,14 +20,13 @@ based on day of week, priority and sales history, then creates bidirectional tra
 
 Parameters:
 - $Group (string): Group identifier for shop type (e.g., "1050-SmartStockTransfersKL")
-- $RootPath (string): Root path for file operations
 - $EmailText (string): Email text content to append transfer information to
 
 Returns:
 - string: Updated email text with transfer operation results and status messages
 **************************************************************************************************************/
 
-function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
+function KLPrepareGroupSmartStockTransfers($Group, $EmailText){
 
 	if ($Group == "1050-SmartStockTransfersKL"){
 		$ShopType = "SHOPKL";
@@ -58,21 +57,25 @@ function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
 
 	$DayOfWeek = date('w', strtotime(Date('Y-m-d')));
 
-	$SQL = "SELECT locations.loccode,
-					locations.smartdispatchmaxmodels,
-					locations.smartdispatchminmodels
-			FROM locations,locationzones
-			WHERE locations.zone = locationzones.code
-				AND locations.smartdispatchfrom = 'KANTO'
-				AND locations.typeloc = '" . $ShopType . "'
-				AND locationzones.smarttransferonweekday" . $DayOfWeek . " = 1
-			ORDER BY locations.priority ASC,
-				(SELECT COUNT(qtyinvoiced)
-				FROM salesorderdetails, salesorders
-				WHERE salesorderdetails.orderno = salesorders.orderno
-					AND salesorderdetails.completed = 1
-					AND salesorders.orddate >= '" . $StartDate . "'
-					AND salesorders.fromstkloc = locations.loccode) DESC";
+	$SQL = "SELECT loc.loccode,
+					loc.smartdispatchmaxmodels,
+					loc.smartdispatchminmodels,
+					COALESCE(sales_summary.sales_count, 0) AS sales_count
+			FROM locations loc
+			INNER JOIN locationzones lz ON loc.zone = lz.code
+			LEFT JOIN (
+				SELECT so.fromstkloc,
+					   COUNT(sod.qtyinvoiced) AS sales_count
+				FROM salesorders so
+				INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
+				WHERE sod.completed = 1
+					AND so.orddate >= '" . $StartDate . "'
+				GROUP BY so.fromstkloc
+			) sales_summary ON loc.loccode = sales_summary.fromstkloc
+			WHERE loc.smartdispatchfrom = 'KANTO'
+				AND loc.typeloc = '" . $ShopType . "'
+				AND lz.smarttransferonweekday" . $DayOfWeek . " = 1
+			ORDER BY loc.priority ASC, sales_summary.sales_count DESC";
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
