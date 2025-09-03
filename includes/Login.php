@@ -35,7 +35,7 @@ echo '<body>
 		</div>
 		<div id="login_box">
 			<form action="' . $RootPath . '/index.php" name="LogIn" method="post" class="noPrint">
-			<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+			<input type="hidden" name="FormID" value="', sha1(uniqid(mt_rand(), true)), '" />';
 
 if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $_COOKIE['Login'];
