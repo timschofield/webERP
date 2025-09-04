@@ -2,6 +2,8 @@
 
 set -e
 
+# @todo add a cli option to insert a FirstLogin line in `config` table - needed when creating the demo dump
+
 help() {
 	printf "Usage: dump_database.sh [OPIONS] ACTION
 

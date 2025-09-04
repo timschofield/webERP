@@ -18,6 +18,10 @@ if (isset($_POST['test'])) {
 		$conn = mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'],
 			$_SESSION['Installer']['Password'], 'information_schema', $_SESSION['Installer']['Port']);
 		$Result = 'valid';
+
+		/// @todo check out if db type is mysql/mariadb by querying the server. If a wrong type is found, fix the setting
+		///       and notify the user with a warning
+
 		$Message = __('Database connection working');
 	}
 	catch(Exception $e) {

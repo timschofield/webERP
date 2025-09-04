@@ -32,6 +32,10 @@ echo "Checking syntax of php files..."
 
 "$BASE_DIR/build/check_syntax.sh" || exit 1
 
+#echo "Checking the sql files..."
+#"$BASE_DIR/build/check_install_sql_files.sh"
+#"$BASE_DIR/build/check_demo_db_dump.sh"
+
 echo "Checking and updating composer configuration..."
 
 "$BASE_DIR/build/run_composer.sh" || exit 1
