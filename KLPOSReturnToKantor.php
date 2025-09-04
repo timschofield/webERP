@@ -62,7 +62,6 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					$ErrorMessage .= __('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. __('is not set up in the database') . '. ' . __('Only valid parts can be entered for transfers'). '<br />';
 					$_POST['LinesCounter'] -= 1;
 				}
-				DB_free_result( $Result );
 				if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 					$InputError = True;
 					$ErrorMessage .= __('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. __('for part code'). ' ' . $_POST['StockID' . $i] . ' '. __('is not numeric') . '. ' . __('The quantity entered for transfers is expected to be numeric') . '<br />';
@@ -86,7 +85,6 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					prnMsg("Item ". $_POST['StockID' . $i] . " was already in the transfer. Just updating quantity to " . $_POST['StockQTY' . $i],"warn");
 				}
 
-				DB_free_result( $Result );
 				$TotalItems++;
 			}
 		}//for all LinesCounter
