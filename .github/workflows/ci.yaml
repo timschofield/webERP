@@ -14,6 +14,13 @@ jobs:
                     # @see https://github.com/actions/runner-images
                     # @todo run some tests on 'windows-latest'
                     # NB: the order of options is picked to make the github page display nicer (test naming in left col)
+                    - php: '8.5'
+                      # Using 'native' version will result in the mysql service on the host to be used.
+                      # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
+                      dbtype: mysql
+                      dbversion: latest
+                      operating-system: ubuntu-24.04
+                      dbport: 3306
                     - php: '8.4'
                       # Using 'native' version will result in the mysql service on the host to be used.
                       # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
