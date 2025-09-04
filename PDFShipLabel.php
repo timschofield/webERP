@@ -323,15 +323,15 @@ if ($NoOfLabels > 0) {
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf');
 		$pdf->__destruct();
 	} else {
-		$PdfFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
-		$pdf->Output(sys_get_temp_dir() . '/' . $PdfFileName, 'F');
+		$PDFFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
+		$pdf->Output(sys_get_temp_dir() . '/' . $PDFFileName, 'F');
 		$pdf->__destruct();
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 										array($_POST['EmailTo'] => ''),
 										__('Work Order Number') . ' ' . $SelectedORD,
 										__('Please Process this Work order number') . ' ' . $SelectedORD,
-										array(sys_get_temp_dir() . '/' . $PdfFileName)
+										array(sys_get_temp_dir() . '/' . $PDFFileName)
 									);
 
 		if ($Success == 1) {
@@ -345,7 +345,7 @@ if ($NoOfLabels > 0) {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedORD . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
 	}
-	unlink(sys_get_temp_dir() . '/' . $PdfFileName);
+	unlink(sys_get_temp_dir() . '/' . $PDFFileName);
 	include('includes/footer.php');
 
 } else { //there were not labels to print
