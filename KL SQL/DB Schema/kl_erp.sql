@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 03:18 PM
+-- Generation Time: Sep 04, 2025 at 12:17 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -2312,6 +2312,22 @@ DELIMITER $$
 CREATE TRIGGER `prices_update_timestamp` BEFORE UPDATE ON `prices` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prodspecgroups`
+--
+
+CREATE TABLE `prodspecgroups` (
+  `groupid` smallint(6) NOT NULL,
+  `groupname` char(50) DEFAULT NULL,
+  `groupbyNo` int(11) NOT NULL DEFAULT 1,
+  `headertitle` varchar(100) DEFAULT NULL,
+  `trailertext` varchar(240) DEFAULT NULL,
+  `labels` varchar(240) NOT NULL,
+  `numcols` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -5034,6 +5050,14 @@ ALTER TABLE `prices`
   ADD KEY `idx_prices_stockid_type_curr_dates` (`stockid`,`typeabbrev`,`currabrev`,`startdate`,`enddate`);
 
 --
+-- Indexes for table `prodspecgroups`
+--
+ALTER TABLE `prodspecgroups`
+  ADD PRIMARY KEY (`groupid`),
+  ADD UNIQUE KEY `groupname` (`groupname`),
+  ADD KEY `groupbyNo` (`groupbyNo`);
+
+--
 -- Indexes for table `prodspecs`
 --
 ALTER TABLE `prodspecs`
@@ -5305,7 +5329,8 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
   ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
   ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`),
-  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`);
+  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`),
+  ADD KEY `idx_salesorders_orddate_orderno` (`orddate`,`orderno`);
 
 --
 -- Indexes for table `salestypes`
@@ -6077,6 +6102,12 @@ ALTER TABLE `pickreqdetails`
 --
 ALTER TABLE `pickserialdetails`
   MODIFY `serialmoveid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `prodspecgroups`
+--
+ALTER TABLE `prodspecgroups`
+  MODIFY `groupid` smallint(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchorderdetails`
