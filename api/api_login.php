@@ -30,20 +30,20 @@ function  LoginAPI($databasename, $user, $password) {
 	}
 	$rc = userLogin($user, $password, $SysAdminEmail);
 	switch ($rc) {
-	case  UL_OK:
-		$RetCode[0] = 0;		// All is well
-		DoSetup();	    // Additional setting up
-		break;
-	case  UL_NOTVALID:
-	case  UL_BLOCKED:
-	case  UL_CONFIGERR:
-	case  UL_SHOWLOGIN:
-	//  Following not in use at 18 Nov 09.
-	case  UL_MAINTENANCE:
-		/*  Just return an error for now */
-		$RetCode[0] = NoAuthorisation;
-		$RetCode[1] = $rc;
-		break;
+		case  UL_OK:
+			$RetCode[0] = 0; // All is well
+			DoSetup();	    // Additional setting up
+			break;
+		case  UL_NOTVALID:
+		case  UL_BLOCKED:
+		case  UL_CONFIGERR:
+		case  UL_SHOWLOGIN:
+		//  Following not in use at 18 Nov 09.
+		case  UL_MAINTENANCE:
+			/*  Just return an error for now */
+			$RetCode[0] = NoAuthorisation;
+			$RetCode[1] = $rc;
+			break;
 	}
 	return  $RetCode;
 }
