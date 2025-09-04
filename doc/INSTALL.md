@@ -15,7 +15,7 @@ are upgrading an existing installation.
     write privileges to the ./companies/ directory, and at least temporarily to the root
     directory for the web installer to save the created configuration file ./config.php.
 
-* MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default, but
+* MySQL ver. 5.7.5+ or MariaDb 5.5+ (innodb tables MUST be enabled, which should be the default, but
     you can check `my.cnf` file to confirm, e.g. `/etc/my.cnf` or `/usr/local/etc/mysql/my.cnf`).
 
 Detailed instructions for installing those components can be readily found in a web search. XAMPP is
@@ -183,7 +183,7 @@ the initial "admin" user details.
 If desired, the database can be created manually before accessing the webERP web installer. The installer
 will use an existing database if one exists.
 
-webERP requires either MySQL version 4.1 or greater or MariaDb 10.4+
+webERP requires either MySQL version 5.7.5 or greater or MariaDb 5.5+
 
 In webERP each company has its own database. For example, if you have a company called MyCompany, webERP
 expects there will be database named mycompany (in lower case). Before starting to install webERP, ensure
