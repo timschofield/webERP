@@ -362,7 +362,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		if (file_exists($_SESSION['reports_dir'] . '/' . $ReportFileName)) {
 			unlink($_SESSION['reports_dir'] . '/' . $ReportFileName);
 		}
-		$PDF->Output($_SESSION['reports_dir'] . '/' . $ReportFileName, 'F');
+		$pdf->Output($_SESSION['reports_dir'] . '/' . $ReportFileName, 'F');
 
 		$From = $_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>';
 		$To = $_SESSION['FactoryManagerEmail'];

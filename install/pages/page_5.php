@@ -5,7 +5,11 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
+include($PathPrefix . 'includes/InstallFunctions.php');
 include($PathPrefix . 'includes/CountriesArray.php');
+
+/// @todo act like on previous pages: post to self, and set values to the session if all is ok, before using a link
+///       to move on to page 6. This allows f.e. to check if the company name is already taken and refuse to go on if it is
 
 echo '<form id="DatabaseConfig" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=6" method="post" enctype="multipart/form-data">';
 echo '<fieldset>
@@ -35,10 +39,22 @@ echo '</select>
 			<fieldhelp>' . __('Will be installed as starter Chart of Accounts. If installing the Demo data then this wont work and you will just get a standard set of accounts') . '</fieldhelp>
 		</field>';
 
+if (isset($_SESSION['timezone']) && mb_strlen($_SESSION['timezone']) > 0 ) {
+	$ltz = $_SESSION['timezone'];
+} else {
+	$ltz = date_default_timezone_get();
+}
+
 echo '<field>
 			<label for="TimeZone">' . __('Time Zone') . ': </label>
 			<select name="TimeZone">';
-include($PathPrefix . 'install/timezone.php');
+foreach(GetTimezones() as $timezone) {
+	if ($timezone == $ltz) {
+		echo "<option selected='selected' value='".$timezone."'>".$timezone.'</option>';
+	} else {
+		echo "<option value='".$timezone."'>".$timezone.'</option>';
+	}
+}
 echo '</select>
 	</field>';
 

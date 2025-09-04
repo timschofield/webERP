@@ -288,23 +288,23 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			'fontsize' => $CodeFontSize,
 			'stretchtext' => 0);
 
-	$Pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
+	$pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
 	
 	// set PDF document information
-	$Pdf->SetCreator('webERP');
-	$Pdf->SetAuthor('webERP');
-	$Pdf->SetTitle($CoreFileName);
-	$Pdf->SetSubject($CoreFileName);
-	$Pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-	$Pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-	$Pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-	$Pdf->SetMargins(0, 0, 0);
-	$Pdf->SetHeaderMargin(0);
-	$Pdf->SetFooterMargin(0);
-	$Pdf->setPrintHeader(false);
-	$Pdf->setPrintFooter(false);
-	$Pdf->SetAutoPageBreak(true, 0);
-	$Pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+	$pdf->SetCreator('webERP');
+	$pdf->SetAuthor('webERP');
+	$pdf->SetTitle($CoreFileName);
+	$pdf->SetSubject($CoreFileName);
+	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	$pdf->SetMargins(0, 0, 0);
+	$pdf->SetHeaderMargin(0);
+	$pdf->SetFooterMargin(0);
+	$pdf->setPrintHeader(false);
+	$pdf->setPrintFooter(false);
+	$pdf->SetAutoPageBreak(true, 0);
+	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 	// now print the labels
 	$LabelsPrinted = 0;
@@ -380,37 +380,37 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 			for ($LabelNumber = 0; $LabelNumber < $_POST['LabelsToPrint' . $i]; $LabelNumber++){
 				
-				$Pdf->AddPage();
+				$pdf->AddPage();
 
 				// print depending on each type of label
 				if ($_POST['LabelID'] == 'T570'){
 					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
 						// print the previous price 
-						$Pdf->SetXY($PriceXPosition, $PreviousPriceYPosition);
-						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$Pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+						$pdf->SetXY($PriceXPosition, $PreviousPriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 						// print the discounted price 
-						$Pdf->SetXY($PriceXPosition, $PriceYPosition);
-						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$Pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
+						$pdf->SetXY($PriceXPosition, $PriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
 					}else{
 						//Print the logo
-						$Pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
+						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
 							true, 203, '', false, false, 0, false, false, false);
 						// print the price
-						$Pdf->SetXY($PriceXPosition, $PriceYPosition);
-						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$Pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+						$pdf->SetXY($PriceXPosition, $PriceYPosition);
+						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 					}
 					// print the barcode
-					$Pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
+					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
 						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}elseif ($_POST['LabelID'] == 'CodeSticker'){
 					//Print the logo
-					$Pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
+					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
 						true, 203, '', false, false, 0, false, false, false);
 					// print the barcode
-					$Pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
+					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
 						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}else{
 					//not code yet
@@ -422,8 +422,8 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		} //this label is set to print
 	} //loop through labels selected to print
 
-	$Pdf->Output($FileName, 'D');
-	$Pdf->__destruct();
+	$pdf->Output($FileName, 'D');
+	$pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 

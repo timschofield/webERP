@@ -110,7 +110,7 @@ function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
 /**
  * @return bool false when a fatal error happened
  */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $Path_To_Root) {
+function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $DBType, $Path_To_Root) {
 
 	// avoid exceptions being thrown on query errors
 	mysqli_report(MYSQLI_REPORT_ERROR);
@@ -269,15 +269,28 @@ function CreateCompanyFolder($DatabaseName, $Path_To_Root) {
  * @param $Path_To_Root
  * @return bool
  */
-function CreateTables($Path_To_Root) {
+function CreateTables($Path_To_Root, $DBType) {
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/tables/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
+
+		if ($DBType == 'mariadb') {
+			// mariadb 5.5 chokes on STORED
+			$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
+		}
+
+		if ($DBType == 'mysqli' || $DBType == 'mysql' ) {
+			// mysql 5.5 chokes on GENERATED ALWAYS
+		}
+
+		// we disable FKs for each script, in case the previous script re-enabled them
+		/// @todo do we need to disable FKs while creating tables and inserting no data?
 		DB_IgnoreForeignKeys();
 		// avoid the standard error-handling kicking in
 		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no($Result);
 	}
+	DB_ReinstateForeignKeys();
 	if ($DBErrors > 0) {
 		echo '<div class="error">' . __('Database tables could not be created') . '</div>';
 	} else {
@@ -288,10 +301,13 @@ function CreateTables($Path_To_Root) {
 	return ($DBErrors == 0);
 }
 
-function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
+function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root,
+	$DataBaseName, $DBType) {
+	$Errors = 0;
 	if ($Demo != 'Yes') {
-		DB_IgnoreForeignKeys();
 		/* Create the admin user */
+		/// @todo is this needed for this insert?
+		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
 										realname,
@@ -326,7 +342,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
+										'" . $Email . "',
 										'',
 										8,
 										1,
@@ -346,14 +362,18 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0,
 										0
 									)";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 		flush();
 
+		/* insert COA data */
+		/// @todo use function PopulateSQLDataBySQLFile and avoid code duplication!
 		$COAScriptFile = file($CoA);
 		$ScriptFileEntries = sizeof($COAScriptFile);
 		$SQL = '';
@@ -362,16 +382,20 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		for ($i = 0;$i < $ScriptFileEntries;$i++) {
 
 			$COAScriptFile[$i] = trim($COAScriptFile[$i]);
-			//ignore lines that start with -- or USE or /*
+			// ignore lines that start with -- or USE or /*
+			/// @todo use a regexp to account for initial spaces
 			if (mb_substr($COAScriptFile[$i], 0, 2) != '--' and mb_strstr($COAScriptFile[$i], '/*') == false and mb_strlen($COAScriptFile[$i]) > 1) {
 
 				$SQL.= ' ' . $COAScriptFile[$i];
 
-				//check if this line kicks off a function definition - pg chokes otherwise
+				// check if this line kicks off a function definition - pg chokes otherwise
+				/// @todo we can disable this filter if on mysql/mariadb
+				/// @todo use a regexp
 				if (mb_substr($COAScriptFile[$i], 0, 15) == 'CREATE FUNCTION') {
 					$InAFunction = true;
 				}
-				//check if this line completes a function definition - pg chokes otherwise
+				// check if this line completes a function definition - pg chokes otherwise
+				/// @todo use a regexp
 				if (mb_substr($COAScriptFile[$i], 0, 8) == 'LANGUAGE') {
 					$InAFunction = false;
 				}
@@ -379,11 +403,15 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 					// Database created above with correct name.
 					if (strncasecmp($SQL, ' CREATE DATABASE ', 17) and strncasecmp($SQL, ' USE ', 5)) {
 						$SQL = mb_substr($SQL, 0, mb_strlen($SQL) - 1);
-						DB_IgnoreForeignKeys();
-						$Result = DB_query($SQL);
+						// gg: no need to disable FKs for each statement - we did that just before starting the whole script
+						//DB_IgnoreForeignKeys();
+						$Result = DB_query($SQL, '', '', false, false);
 						if (DB_error_no($Result) != 0) {
+							$Errors++;
 							echo '<div class="error">' . __('Your chosen chart of accounts could not be uploaded') . '</div>';
 						}
+					} else {
+						/// @todo log a warning, so that developers can know that they should fix the sql...
 					}
 					$SQL = '';
 				}
@@ -391,23 +419,26 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			} //end if its a valid sql line not a comment
 
 		} //end of for loop around the lines of the sql script
+		DB_ReinstateForeignKeys();
 		echo '<div class="success">' . __('Your chosen chart of accounts has been uploaded') . '</div>';
 		flush();
 
 		$SQL = "INSERT INTO glaccountusers SELECT accountcode, 'admin', 1, 1 FROM chartmaster";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been given permissions on all GL accounts') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
 
 		$SQL = "INSERT INTO tags VALUES(0, 'None')";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The default GL tag has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -415,11 +446,14 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		$DBErrors = 0;
 		foreach (glob($Path_To_Root . '/install/sql/data/*.sql') as $FileName) {
 			$SQLScriptFile = file_get_contents($FileName);
+			// we disable FKs for each script, in case the previous script re-enabled them
 			DB_IgnoreForeignKeys();
-			$Result = DB_query($SQLScriptFile);
+			$Result = DB_query($SQLScriptFile, '', '', false, false);
 			$DBErrors += DB_error_no($Result);
 		}
+		DB_ReinstateForeignKeys();
 		if ($DBErrors > 0) {
+			$Errors++;
 			echo '<div class="error">' . __('Database tables could not be populated') . '</div>';
 		} else {
 			echo '<div class="success">' . __('All database tables have been populated') . '</div>';
@@ -429,10 +463,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		/// @todo there is no guarantee that all the db updates have been applied to the single SQL files making up
 		///       the installer - that is left to the person preparing the release to verify...
 		$SQL = "INSERT INTO config VALUES('DBUpdateNumber', " . HighestFileName($Path_To_Root) . ")";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The database update revision has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
@@ -465,31 +500,41 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 											1,
 											'5600'
 										)";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The company record has been inserted') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the DB revision number') . ' - ' . DB_error_msg() . '</div>';
 		}
 		flush();
 
+		DB_ReinstateForeignKeys();
+
 	} else {
-		/// @todo do not use a 'success' formatting for this line...
-		echo '<div class="success">' . __('Populating the database with demo data.') . '</div>';
+		echo '<div class="info">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
-		PopulateSQLDataBySQL($Path_To_Root. '/install/sql/demo.sql');
+		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType);
 
+		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
-		$Result = DB_query($SQL);
+		$Result = DB_query($SQL, '', '', false, false);
 		/// @todo echo error (warning?) if failure
+		if (DB_error_no() == 0) {
+			//echo '<div class="success">' . __('...') . '</div>';
+		} else {
+			$Errors++;
+			//echo '<div class="error">' . __('...') . '</div>';
+		}
 
 		/// @todo there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . '/companies/default/part_pics/*.jp*') as $JpegFile) {
-			$Result = copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
+		/// @todo is there need to disable foreign keys for this insert?
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
@@ -525,7 +570,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $_SESSION['Installer']['AdminEmail'] . "',
+										'" . $Email . "',
 										'',
 										8,
 										1,
@@ -545,21 +590,25 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										0,
 										0
 									)";
-		$Result = DB_query($SQL);
-
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
 			echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
 		} else {
+			$Errors++;
 			echo '<div class="error">' . __('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 		flush();
 
 		/// @todo display a warning message if there was any query failure
 		echo '<div class="success">' . __('Database now contains the demo data.') . '</div>';
 	}
 
-	/// @todo do not always return true
-	return true;
+	/// @todo check for errors
+	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir', 'companies/" . $DataBaseName . "/part_pics')";
+	$Result = DB_query($SQL);
+
+	return ($Errors == 0);
 }
 
 function HighestFileName($Path_To_Root) {
@@ -574,51 +623,70 @@ function CryptPass($Password) {
 	return $Hash;
 }
 
-function PopulateSQLDataBySQL($File) {
+/**
+ * @param string $File
+ * @param string $DBType
+ * @return bool
+ */
+function PopulateSQLDataBySQLFile($File, $DBType) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
+
+	$Errors = 0;
 	$SQL = '';
 	$InAFunction = false;
-	for ($i = 1;$i <= $ScriptFileEntries;$i++) {
+	for ($i = 1; $i <= $ScriptFileEntries; $i++) {
 
 		$SQLScriptFile[$i - 1] = trim($SQLScriptFile[$i - 1]);
-		//ignore lines that start with -- or USE or /*
+
+		/// @todo ignore lines that start with `--` or USE or /* or CREATE DATABASE
+
 		$SQL.= ' ' . $SQLScriptFile[$i - 1];
 
-		//check if this line kicks off a function definition - pg chokes otherwise
+		// check if this line kicks off a function definition - pg chokes otherwise
+		/// @todo we can disable this filter if on mysql/mariadb
+		/// @todo use a regexp
 		if (mb_substr($SQLScriptFile[$i - 1], 0, 15) == 'CREATE FUNCTION') {
 			$InAFunction = true;
 		}
-		//check if this line completes a function definition - pg chokes otherwise
+		// check if this line completes a function definition - pg chokes otherwise
+		/// @todo use a regexp
 		if (mb_substr($SQLScriptFile[$i - 1], 0, 8) == 'LANGUAGE') {
 			$InAFunction = false;
 		}
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
-			$Result = DB_query($SQL);
-/*			if (DB_error_no() == 0) {
-				echo '<div class="success">' . __('The admin user has been inserted.') . '</div>';
-			}*/
+			$Result = DB_query($SQL, '', '', false, false);
+			if (DB_error_no() != 0) {
+				$Errors++;
+			}
 			$SQL = '';
 		}
 		flush();
 
 	} //end of for loop around the lines of the sql script
+
+	return ($Errors == 0);
 }
 
 /**
  * @param $Path_To_Root
  * @return bool
  */
-function CreateGLTriggers($Path_To_Root)
+function CreateGLTriggers($Path_To_Root, $DBType)
 {
+	/// @todo the trigger code will not work with postgres
+	/// @todo why not use PopulateSQLDataBySQLFile?
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . '/install/sql/triggers/*.sql') as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
+		// we disable FKs for each script, in case the previous script re-enabled them
+		/// @todo do we need to disable FKs while creating  triggers?
 		DB_IgnoreForeignKeys();
-		$Result = DB_query($SQLScriptFile);
+		$Result = DB_query($SQLScriptFile, '', '', false, false);
 		$DBErrors += DB_error_no();
 	}
+	DB_ReinstateForeignKeys();
 	if ($DBErrors > 0) {
 		echo '<div class="error">' . __('Database triggers could not be created') . '</div>';
 	} else {
@@ -629,7 +697,7 @@ function CreateGLTriggers($Path_To_Root)
 	return ($DBErrors == 0);
 }
 
-function CreateConfigFile($Path_To_Root, $configArray) {
+function CreateConfigFile($Path_To_Root, $configArray, $timezone) {
 	// The config files are in the main directory
 	$SampleConfigFile = $Path_To_Root . '/config.distrib.php';
 	$NewConfigFile = $Path_To_Root . '/config.php';
@@ -662,7 +730,7 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 				}
 				// Replace date_default_timezone_set
 				if (strpos($Line, 'date_default_timezone_set') !== false) {
-					$NewValue = addslashes($_SESSION['Installer']['TimeZone']);
+					$NewValue = addslashes($timezone);
 					$Line = "date_default_timezone_set('".$NewValue."');\n";
 				}
 			}
@@ -700,15 +768,15 @@ function CreateConfigFile($Path_To_Root, $configArray) {
 }
 
 /**
- * @param $Path_To_Root
+ * @param string $Path_To_Root
  * @return bool
  */
-function CreateCompaniesFile($Path_To_Root) {
+function CreateCompaniesFile($Path_To_Root, $DatabaseName, $CoyName) {
 	$Contents = "<?php\n\n";
-	$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_SESSION['CompanyRecord']['coyname'] . "';\n";
+	$Contents.= "\$CompanyName['" . $DatabaseName . "'] = '" . $CoyName . "';\n";
 
 	$Result = false;
-	$CompaniesFile = $Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php';
+	$CompaniesFile = $Path_To_Root . '/companies/' . $DatabaseName . '/Companies.php';
 
 	// give at least a warning if the files exists already
 	$FileExists = file_exists($CompaniesFile);
@@ -731,4 +799,448 @@ function CreateCompaniesFile($Path_To_Root) {
 	flush();
 
 	return (bool)$Result;
+}
+
+/// @todo in case this is used outside the installer, we could move to its own file, TimezonesArray.php
+function GetTimezones() {
+	return array(
+		'Africa/Abidjan',
+		'Africa/Accra',
+		'Africa/Addis_Ababa',
+		'Africa/Algiers',
+		'Africa/Asmara',
+		'Africa/Asmera',
+		'Africa/Bamako',
+		'Africa/Bangui',
+		'Africa/Banjul',
+		'Africa/Bissau',
+		'Africa/Blantyre',
+		'Africa/Brazzaville',
+		'Africa/Bujumbura',
+		'Africa/Cairo',
+		'Africa/Casablanca',
+		'Africa/Ceuta',
+		'Africa/Conakry',
+		'Africa/Dakar',
+		'Africa/Dar_es_Salaam',
+		'Africa/Djibouti',
+		'Africa/Douala',
+		'Africa/El_Aaiun',
+		'Africa/Freetown',
+		'Africa/Gaborone',
+		'Africa/Harare',
+		'Africa/Johannesburg',
+		'Africa/Kampala',
+		'Africa/Khartoum',
+		'Africa/Kigali',
+		'Africa/Kinshasa',
+		'Africa/Lagos',
+		'Africa/Libreville',
+		'Africa/Lome',
+		'Africa/Luanda',
+		'Africa/Lubumbashi',
+		'Africa/Lusaka',
+		'Africa/Malabo',
+		'Africa/Maputo',
+		'Africa/Maseru',
+		'Africa/Mbabane',
+		'Africa/Mogadishu',
+		'Africa/Monrovia',
+		'Africa/Nairobi',
+		'Africa/Ndjamena',
+		'Africa/Niamey',
+		'Africa/Nouakchott',
+		'Africa/Ouagadougou',
+		'Africa/Porto-Novo',
+		'Africa/Sao_Tome',
+		'Africa/Timbuktu',
+		'Africa/Tripoli',
+		'Africa/Tunis',
+		'Africa/Windhoek',
+		'America/Adak',
+		'America/Anchorage',
+		'America/Anguilla',
+		'America/Antigua',
+		'America/Araguaina',
+		'America/Argentina/Buenos_Aires',
+		'America/Argentina/Catamarca',
+		'America/Argentina/ComodRivadavia',
+		'America/Argentina/Cordoba',
+		'America/Argentina/Jujuy',
+		'America/Argentina/La_Rioja',
+		'America/Argentina/Mendoza',
+		'America/Argentina/Rio_Gallegos',
+		'America/Argentina/Salta',
+		'America/Argentina/San_Juan',
+		'America/Argentina/San_Luis',
+		'America/Argentina/Tucuman',
+		'America/Argentina/Ushuaia',
+		'America/Aruba',
+		'America/Asuncion',
+		'America/Atikokan',
+		'America/Atka',
+		'America/Bahia',
+		'America/Barbados',
+		'America/Belem',
+		'America/Belize',
+		'America/Blanc-Sablon',
+		'America/Boa_Vista',
+		'America/Bogota',
+		'America/Boise',
+		'America/Buenos_Aires',
+		'America/Cambridge_Bay',
+		'America/Campo_Grande',
+		'America/Cancun',
+		'America/Caracas',
+		'America/Catamarca',
+		'America/Cayenne',
+		'America/Cayman',
+		'America/Chicago',
+		'America/Chihuahua',
+		'America/Coral_Harbour',
+		'America/Cordoba',
+		'America/Costa_Rica',
+		'America/Cuiaba',
+		'America/Curacao',
+		'America/Danmarkshavn',
+		'America/Dawson',
+		'America/Dawson_Creek',
+		'America/Denver',
+		'America/Detroit',
+		'America/Dominica',
+		'America/Edmonton',
+		'America/Eirunepe',
+		'America/El_Salvador',
+		'America/Ensenada',
+		'America/Fort_Wayne',
+		'America/Fortaleza',
+		'America/Glace_Bay',
+		'America/Godthab',
+		'America/Goose_Bay',
+		'America/Grand_Turk',
+		'America/Grenada',
+		'America/Guadeloupe',
+		'America/Guatemala',
+		'America/Guayaquil',
+		'America/Guyana',
+		'America/Halifax',
+		'America/Havana',
+		'America/Hermosillo',
+		'America/Indiana/Indianapolis',
+		'America/Indiana/Knox',
+		'America/Indiana/Marengo',
+		'America/Indiana/Petersburg',
+		'America/Indiana/Tell_City',
+		'America/Indiana/Vevay',
+		'America/Indiana/Vincennes',
+		'America/Indiana/Winamac',
+		'America/Indianapolis',
+		'America/Inuvik',
+		'America/Iqaluit',
+		'America/Jamaica',
+		'America/Jujuy',
+		'America/Juneau',
+		'America/Kentucky/Louisville',
+		'America/Kentucky/Monticello',
+		'America/Knox_IN',
+		'America/La_Paz',
+		'America/Lima',
+		'America/Los_Angeles',
+		'America/Louisville',
+		'America/Maceio',
+		'America/Managua',
+		'America/Manaus',
+		'America/Marigot',
+		'America/Martinique',
+		'America/Mazatlan',
+		'America/Mendoza',
+		'America/Menominee',
+		'America/Merida',
+		'America/Mexico_City',
+		'America/Miquelon',
+		'America/Moncton',
+		'America/Monterrey',
+		'America/Montevideo',
+		'America/Montreal',
+		'America/Montserrat',
+		'America/Nassau',
+		'America/New_York',
+		'America/Nipigon',
+		'America/Nome',
+		'America/Noronha',
+		'America/North_Dakota/Center',
+		'America/North_Dakota/New_Salem',
+		'America/Panama',
+		'America/Pangnirtung',
+		'America/Paramaribo',
+		'America/Phoenix',
+		'America/Port-au-Prince',
+		'America/Port_of_Spain',
+		'America/Porto_Acre',
+		'America/Porto_Velho',
+		'America/Puerto_Rico',
+		'America/Rainy_River',
+		'America/Rankin_Inlet',
+		'America/Recife',
+		'America/Regina',
+		'America/Resolute',
+		'America/Rio_Branco',
+		'America/Rosario',
+		'America/Santarem',
+		'America/Santiago',
+		'America/Santo_Domingo',
+		'America/Sao_Paulo',
+		'America/Scoresbysund',
+		'America/Shiprock',
+		'America/St_Barthelemy',
+		'America/St_Johns',
+		'America/St_Kitts',
+		'America/St_Lucia',
+		'America/St_Thomas',
+		'America/St_Vincent',
+		'America/Swift_Current',
+		'America/Tegucigalpa',
+		'America/Thule',
+		'America/Thunder_Bay',
+		'America/Tijuana',
+		'America/Toronto',
+		'America/Tortola',
+		'America/Vancouver',
+		'America/Virgin',
+		'America/Whitehorse',
+		'America/Winnipeg',
+		'America/Yakutat',
+		'America/Yellowknife',
+		'Asia/Aden',
+		'Asia/Almaty',
+		'Asia/Amman',
+		'Asia/Anadyr',
+		'Asia/Aqtau',
+		'Asia/Aqtobe',
+		'Asia/Ashgabat',
+		'Asia/Ashkhabad',
+		'Asia/Baghdad',
+		'Asia/Bahrain',
+		'Asia/Baku',
+		'Asia/Bangkok',
+		'Asia/Beirut',
+		'Asia/Bishkek',
+		'Asia/Brunei',
+		'Asia/Choibalsan',
+		'Asia/Chongqing',
+		'Asia/Chungking',
+		'Asia/Colombo',
+		'Asia/Dacca',
+		'Asia/Damascus',
+		'Asia/Dhaka',
+		'Asia/Dili',
+		'Asia/Dubai',
+		'Asia/Dushanbe',
+		'Asia/Gaza',
+		'Asia/Harbin',
+		'Asia/Ho_Chi_Minh',
+		'Asia/Hong_Kong',
+		'Asia/Hovd',
+		'Asia/Irkutsk',
+		'Asia/Istanbul',
+		'Asia/Jakarta',
+		'Asia/Jayapura',
+		'Asia/Jerusalem',
+		'Asia/Kabul',
+		'Asia/Kamchatka',
+		'Asia/Karachi',
+		'Asia/Kashgar',
+		'Asia/Kathmandu',
+		'Asia/Katmandu',
+		'Asia/Kolkata',
+		'Asia/Krasnoyarsk',
+		'Asia/Kuala_Lumpur',
+		'Asia/Kuching',
+		'Asia/Kuwait',
+		'Asia/Macao',
+		'Asia/Macau',
+		'Asia/Magadan',
+		'Asia/Makassar',
+		'Asia/Manila',
+		'Asia/Muscat',
+		'Asia/Nicosia',
+		'Asia/Novosibirsk',
+		'Asia/Omsk',
+		'Asia/Oral',
+		'Asia/Phnom_Penh',
+		'Asia/Pontianak',
+		'Asia/Pyongyang',
+		'Asia/Qatar',
+		'Asia/Qyzylorda',
+		'Asia/Rangoon',
+		'Asia/Riyadh',
+		'Asia/Saigon',
+		'Asia/Sakhalin',
+		'Asia/Samarkand',
+		'Asia/Seoul',
+		'Asia/Shanghai',
+		'Asia/Singapore',
+		'Asia/Taipei',
+		'Asia/Tashkent',
+		'Asia/Tbilisi',
+		'Asia/Tehran',
+		'Asia/Tel_Aviv',
+		'Asia/Thimbu',
+		'Asia/Thimphu',
+		'Asia/Tokyo',
+		'Asia/Ujung_Pandang',
+		'Asia/Ulaanbaatar',
+		'Asia/Ulan_Bator',
+		'Asia/Urumqi',
+		'Asia/Vientiane',
+		'Asia/Vladivostok',
+		'Asia/Yakutsk',
+		'Asia/Yekaterinburg',
+		'Asia/Yerevan',
+		'Atlantic/Azores',
+		'Atlantic/Bermuda',
+		'Atlantic/Canary',
+		'Atlantic/Cape_Verde',
+		'Atlantic/Faeroe',
+		'Atlantic/Faroe',
+		'Atlantic/Jan_Mayen',
+		'Atlantic/Madeira',
+		'Atlantic/Reykjavik',
+		'Atlantic/South_Georgia',
+		'Atlantic/St_Helena',
+		'Atlantic/Stanley',
+		'Australia/ACT',
+		'Australia/Adelaide',
+		'Australia/Brisbane',
+		'Australia/Broken_Hill',
+		'Australia/Canberra',
+		'Australia/Currie',
+		'Australia/Darwin',
+		'Australia/Eucla',
+		'Australia/Hobart',
+		'Australia/LHI',
+		'Australia/Lindeman',
+		'Australia/Lord_Howe',
+		'Australia/Melbourne',
+		'Australia/North',
+		'Australia/NSW',
+		'Australia/Perth',
+		'Australia/Queensland',
+		'Australia/South',
+		'Australia/Sydney',
+		'Australia/Tasmania',
+		'Australia/Victoria',
+		'Australia/West',
+		'Australia/Yancowinna',
+		'Europe/Amsterdam',
+		'Europe/Andorra',
+		'Europe/Athens',
+		'Europe/Belfast',
+		'Europe/Belgrade',
+		'Europe/Berlin',
+		'Europe/Bratislava',
+		'Europe/Brussels',
+		'Europe/Bucharest',
+		'Europe/Budapest',
+		'Europe/Chisinau',
+		'Europe/Copenhagen',
+		'Europe/Dublin',
+		'Europe/Gibraltar',
+		'Europe/Guernsey',
+		'Europe/Helsinki',
+		'Europe/Isle_of_Man',
+		'Europe/Istanbul',
+		'Europe/Jersey',
+		'Europe/Kaliningrad',
+		'Europe/Kiev',
+		'Europe/Lisbon',
+		'Europe/Ljubljana',
+		'Europe/London',
+		'Europe/Luxembourg',
+		'Europe/Madrid',
+		'Europe/Malta',
+		'Europe/Mariehamn',
+		'Europe/Minsk',
+		'Europe/Monaco',
+		'Europe/Moscow',
+		'Europe/Nicosia',
+		'Europe/Oslo',
+		'Europe/Paris',
+		'Europe/Podgorica',
+		'Europe/Prague',
+		'Europe/Riga',
+		'Europe/Rome',
+		'Europe/Samara',
+		'Europe/San_Marino',
+		'Europe/Sarajevo',
+		'Europe/Simferopol',
+		'Europe/Skopje',
+		'Europe/Sofia',
+		'Europe/Stockholm',
+		'Europe/Tallinn',
+		'Europe/Tirane',
+		'Europe/Tiraspol',
+		'Europe/Uzhgorod',
+		'Europe/Vaduz',
+		'Europe/Vatican',
+		'Europe/Vienna',
+		'Europe/Vilnius',
+		'Europe/Volgograd',
+		'Europe/Warsaw',
+		'Europe/Zagreb',
+		'Europe/Zaporozhye',
+		'Europe/Zurich',
+		'Indian/Antananarivo',
+		'Indian/Chagos',
+		'Indian/Christmas',
+		'Indian/Cocos',
+		'Indian/Comoro',
+		'Indian/Kerguelen',
+		'Indian/Mahe',
+		'Indian/Maldives',
+		'Indian/Mauritius',
+		'Indian/Mayotte',
+		'Indian/Reunion',
+		'Pacific/Apia',
+		'Pacific/Auckland',
+		'Pacific/Chatham',
+		'Pacific/Easter',
+		'Pacific/Efate',
+		'Pacific/Enderbury',
+		'Pacific/Fakaofo',
+		'Pacific/Fiji',
+		'Pacific/Funafuti',
+		'Pacific/Galapagos',
+		'Pacific/Gambier',
+		'Pacific/Guadalcanal',
+		'Pacific/Guam',
+		'Pacific/Honolulu',
+		'Pacific/Johnston',
+		'Pacific/Kiritimati',
+		'Pacific/Kosrae',
+		'Pacific/Kwajalein',
+		'Pacific/Majuro',
+		'Pacific/Marquesas',
+		'Pacific/Midway',
+		'Pacific/Nauru',
+		'Pacific/Niue',
+		'Pacific/Norfolk',
+		'Pacific/Noumea',
+		'Pacific/Pago_Pago',
+		'Pacific/Palau',
+		'Pacific/Pitcairn',
+		'Pacific/Ponape',
+		'Pacific/Port_Moresby',
+		'Pacific/Rarotonga',
+		'Pacific/Saipan',
+		'Pacific/Samoa',
+		'Pacific/Tahiti',
+		'Pacific/Tarawa',
+		'Pacific/Tongatapu',
+		'Pacific/Truk',
+		'Pacific/Wake',
+		'Pacific/Wallis',
+		'Pacific/Yap',
+		'Etc/UTC'
+	);
 }

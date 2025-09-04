@@ -27,9 +27,9 @@ class Payment {
 	var $GLItemCounter; /*Counter for the number of GL accounts being posted to by the Payment */
 	var $Paymenttype;
 	var $PaymentType;
-	var $gltrans_narrative;
-	var $SuppTrans_suppreference;
-	var $SuppTrans_transtext;
+	var $GLTransNarrative;
+	var $SuppTransSuppReference;
+	var $SuppTransTransText;
 
 	function __construct(){
 	/*Constructor function initialises a new Payment batch */
@@ -90,12 +90,12 @@ class PaymentGLAnalysis {
 	var $Cheque;
 
 	function __construct($Amt,
-								$Narr,
-								$id,
-								$GLCode,
-								$GLActName,
-								$Tag,
-								$Cheque) {
+						$Narr,
+						$id,
+						$GLCode,
+						$GLActName,
+						$Tag,
+						$Cheque) {
 
 		$this->Amount =$Amt;
 		$this->Narrative = $Narr;

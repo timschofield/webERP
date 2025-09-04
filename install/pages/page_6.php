@@ -22,7 +22,7 @@ $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
 $DBPort = $_SESSION['Installer']['Port'];
-$_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
+$Database = $_SESSION['DatabaseName'] = $_SESSION['Installer']['Database'];
 //$DefaultDatabase = 'default';
 
 $_SESSION['CompanyRecord']['coyname'] = $_POST['CompanyName'];
@@ -36,7 +36,7 @@ if (isset($_POST['Demo'])) {
 
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 
-if (!CreateDataBase($Host, $DBUser, $DBPassword, $_SESSION['Installer']['Database'], $DBPort, $Path_To_Root)) {
+if (!CreateDataBase($Host, $DBUser, $DBPassword, $Database, $DBPort, $DBType, $Path_To_Root)) {
 	return;
 }
 
@@ -47,7 +47,7 @@ include($PathPrefix . 'includes/UpgradeDB_' . $DBType . '.php');
 // gg: unused variable?
 //$DB = @mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], $_SESSION['DatabaseName']);
 
-if (!CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root)) {
+if (!CreateCompanyFolder($Database, $Path_To_Root)) {
 	return;
 }
 
@@ -58,25 +58,25 @@ if (!CreateCompanyFolder($_SESSION['Installer']['Database'], $Path_To_Root)) {
  */
 $configArray = $_SESSION['Installer'];
 $configArray += [
-	'Host'            => $_SESSION['Installer']['HostName'],
-	'DBUser'          => $_SESSION['Installer']['UserName'],
-	'DBPassword'      => $_SESSION['Installer']['Password'],
-	'DBPort'          => $_SESSION['Installer']['Port'],
-	'DBType'          => $_SESSION['Installer']['DBMS'],
+	'Host'            => $Host,
+	'DBUser'          => $DBUser,
+	'DBPassword'      => $DBPassword,
+	'DBPort'          => $DBPort,
+	'DBType'          => $DBType,
 	'DefaultLanguage' => $_SESSION['Installer']['Language'],
-	'DefaultDatabase' => $_SESSION['Installer']['Database'],
+	'DefaultDatabase' => $Database,
 	'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
 ];
 
-if (!CreateConfigFile($Path_To_Root, $configArray)) {
+if (!CreateConfigFile($Path_To_Root, $configArray, $_SESSION['Installer']['TimeZone'])) {
 	return;
 }
 
-if (!CreateTables($Path_To_Root)) {
+if (!CreateTables($Path_To_Root, $DBType)) {
 	return;
 }
 
-if (!CreateGLTriggers($Path_To_Root)) {
+if (!CreateGLTriggers($Path_To_Root, $DBType)) {
 	return;
 }
 
@@ -88,15 +88,13 @@ if (!UploadData($_SESSION['Installer']['Demo'],
 			$_SESSION['Installer']['CoA'],
 			$_SESSION['CompanyRecord']['coyname'],
 			$Path_To_Root,
-			$_SESSION['Installer']['Database'])) {
+			$Database,
+			$DBType)) {
 	return;
 };
 
-/// @todo move into UploadData
-$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/part_pics')";
-$Result = DB_query($SQL);
-
-if (!CreateCompaniesFile($Path_To_Root)) {
+/// @todo wouldn't it make more sense to have this be run as part of CreateCompanyFolder, or just after it?
+if (!CreateCompaniesFile($Path_To_Root, $Database, $_SESSION['CompanyRecord']['coyname'])) {
 	return;
 }
 
