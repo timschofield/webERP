@@ -322,15 +322,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		/* must be MakingPDF to email it */
 
-		$PdfFileName = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf';
-		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
+		$PDFFileName = $_SESSION['DatabaseName'] . '_PurchaseOrder_' . $OrderNo . '_' . date('Y-m-d') . '.pdf';
+		$pdf->Output($_SESSION['reports_dir'] . '/' . $PDFFileName, 'F');
 		$pdf->__destruct();
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								__('Purchase Order Number') . ' ' . $OrderNo,
 								('Please find herewith our purchase order number') . ' ' . $OrderNo,
-								$_SESSION['reports_dir'] . '/' . $PdfFileName);
+								$_SESSION['reports_dir'] . '/' . $PDFFileName);
 
 		if ($Success == 1) {
 			$Title = __('Email a Purchase Order');

@@ -280,7 +280,7 @@ function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 			}
 			$YPos=$YPos-$FontSize-$InitialExtraSpace;
 			$InitialExtraSpace=0;
-			$LeftOvers = $PDF->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
+			$LeftOvers = $pdf->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
 		}
 	}
 }
@@ -290,20 +290,20 @@ function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$PDF->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
+	$pdf->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
 	$YPos -= $FontSize;
 	$FontSize = 10;
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-	$PDF->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-	$PDF->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
-	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
-	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
+	$pdf->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+	$pdf->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+	$pdf->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+	$pdf->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
+	$pdf->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
 		' ' . $_SESSION['CompanyRecord']['regoffice6']);
-	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  __('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+	$pdf->addText($XPos, $YPos-$FontSize*5, $FontSize,  __('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
 		' ' . __('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
+	$pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
 }
 
 // Generically move down 82 units after printing this
@@ -313,16 +313,16 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 
 	$FontSize = 14;
 	$LineHeight=15;
-	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
-	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
-	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
-	$PDF->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
+	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
+	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
+	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
+	$pdf->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$PDF->RoundRectangle(
+	$pdf->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.
@@ -338,16 +338,16 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 
 	$FontSize = 14;
 	$LineHeight=15;
-	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
-	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
-	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
-	$PDF->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
+	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
+	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
+	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
+	$pdf->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$PDF->RoundRectangle(
+	$pdf->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.

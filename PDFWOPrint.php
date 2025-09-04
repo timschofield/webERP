@@ -430,15 +430,15 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		// Save PDF to file and send email
 		$pdfOutput = $dompdf->output();
-		$pdfFileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		file_put_contents($pdfFileName, $pdfOutput);
+		$PDFFileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
+		file_put_contents($PDFFileName, $pdfOutput);
 
 		$Success = SendEmailFromWebERP(
 			$_SESSION['CompanyRecord']['email'],
 			array($_POST['EmailTo'] => ''),
 			__('Work Order Number') . ' ' . $SelectedWO,
 			__('Please Process this Work order number') . ' ' . $SelectedWO,
-			array($pdfFileName)
+			array($PDFFileName)
 		);
 
 		/// @todo should we delete the generated report?

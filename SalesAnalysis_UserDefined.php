@@ -14,10 +14,10 @@ if (isset($_GET['ProducePDF'])) {
 	include('includes/PDFSalesAnalysis.php');
 
 	if ($Counter >0) {
-		$PDF->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
-		$PDF->__destruct();
+		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
+		$pdf->__destruct();
 	} else {
-		$PDF->__destruct();
+		$pdf->__destruct();
 		$Title = __('User Defined Sales Analysis Problem');
 		include('includes/header.php');
 		echo '<p>' . __('The report did not have any none zero lines of information to show and so it has not been created');
