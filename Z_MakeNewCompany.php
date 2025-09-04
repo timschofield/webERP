@@ -63,12 +63,12 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				}
 			}
 
-			if ($_POST['CreateDB']==true){
-				/* Need to read in the sql script and process the queries to iniate a new DB */
+			if ($_POST['CreateDB']==true) {
+				/* Need to read in the sql script and process the queries to initiate a new DB */
 
 				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
 
-				if ($DBType=='postgres'){
+				if ($DBType=='postgres') {
 
 					$PgConnStr = 'dbname=' . $_POST['NewDatabase'];
 					if ( isset($Host) && ($Host != "")) {
@@ -85,12 +85,12 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 					$db = pg_connect( $PgConnStr );
 					$SQLScriptFile = file('./sql/pg/default.psql');
 
-				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
+				} elseif ($DBType =='mysql') { // it's a mysql/mariadb db, using the defunct php API
 					mysql_select_db($_POST['NewDatabase'],$db);
 					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
-				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
-					mysqli_select_db($db,$_POST['NewDatabase']);
+				} elseif ($DBType =='mysqli' or $DBType =='mariadb') { // it's a mysql/mariadb db
+					mysqli_select_db($db, $_POST['NewDatabase']);
 					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
 				}

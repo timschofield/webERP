@@ -28,7 +28,7 @@ jobs:
                       dbport: 3306
                     - php: '8.2'
                       dbtype: mysql
-                      dbversion: '5.5'
+                      dbversion: '5.7'
                       operating-system: ubuntu-22.04
                       dbport: 3307
                     - php: '8.1'

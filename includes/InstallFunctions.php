@@ -279,10 +279,6 @@ function CreateTables($Path_To_Root, $DBType) {
 			$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
 		}
 
-		if ($DBType == 'mysqli' || $DBType == 'mysql' ) {
-			// mysql 5.5 chokes on GENERATED ALWAYS
-		}
-
 		// we disable FKs for each script, in case the previous script re-enabled them
 		/// @todo do we need to disable FKs while creating tables and inserting no data?
 		DB_IgnoreForeignKeys();
