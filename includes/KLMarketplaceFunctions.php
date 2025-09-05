@@ -247,16 +247,19 @@ function CreateTextSize($StockID, $language, $IncludeTextDescription) {
 /**************************************************************************************************************
 * Creates marketplace name for an item
 *
+* @param string $MarketPlace Marketplace we are creating the name for (FORSTOK, SHOPEE, TOKOPEDIA, LAZADA)
 * @param string $StockID Stock ID
 * @param string $Description Item description
 * @param string $Translation Item translation
 * @return string Formatted marketplace name
 **************************************************************************************************************/
-function ItemMarketplaceName($StockID, $Description, $Translation) {
+function ItemMarketplaceName($MarketPlace, $StockID, $Description, $Translation) {
 	$Name = trim($Translation) . 
 			" -"  . 
-			trim($Description) . 
-			CreateTextSize($StockID, "EN", false);
+			trim($Description);
+	if ($MarketPlace == "ADMINCERDAS") {
+		$Name .= CreateTextSize($StockID, "EN", false);
+	}
 	return $Name;
 }
 

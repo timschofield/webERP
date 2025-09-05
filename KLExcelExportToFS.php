@@ -50,14 +50,16 @@ function submit($TypeOfFile) {
 						stockdescriptiontranslations.descriptiontranslation,
 						stockdescriptiontranslations.longdescriptiontranslation,
 						prices.price
-				FROM stockmaster, prices, stockdescriptiontranslations
-				WHERE stockmaster.stockid = prices.stockid
-					AND stockmaster.stockid = stockdescriptiontranslations.stockid
-					AND stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "
+				FROM stockmaster
+				INNER JOIN prices 
+					ON stockmaster.stockid = prices.stockid
+				INNER JOIN stockdescriptiontranslations 
+					ON stockmaster.stockid = stockdescriptiontranslations.stockid
+				WHERE stockmaster.categoryid IN " . ONLINESHOP_AVAILABLE_STOCK_CATEGORIES . "
 					AND stockdescriptiontranslations.language_id = 'id_ID.utf8'
 					AND stockmaster.discontinued = 0 
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-					AND prices.currabrev = '". CURRENCY_CODE ."'
+					AND prices.currabrev = '" . CURRENCY_CODE . "'
 					AND prices.startdate <= CURRENT_DATE 
 					AND prices.enddate >= CURRENT_DATE
 				ORDER BY stockmaster.stockid";
@@ -164,7 +166,7 @@ function submit($TypeOfFile) {
 
 				$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
 				$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
-/*					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
+/*				$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
 */
 				$OnlySize = ClassicalSize($StockID);
 				if ($OnlySize != "NO SIZE"){
@@ -174,7 +176,7 @@ function submit($TypeOfFile) {
 					$OnlySize = "";
 				}
 
-				$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
+				$Name = ItemMarketplaceName("FORSTOK", $StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
 				$Price = round($MyRow['price']);
 
 				$Description = trim($MyRow['longdescriptiontranslation']). " " . 
@@ -318,7 +320,6 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 // Display form fields. This function is called the first time
 // the page is called.
 	$Title = __('Excel file for uploading products to FORSTOK');
-
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">

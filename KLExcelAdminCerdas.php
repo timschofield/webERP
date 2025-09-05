@@ -173,7 +173,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$NamaVariant = "";
 					}
 
-					$Name = ItemMarketplaceName($MyRow['stockid'], $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Name = ItemMarketplaceName("ADMINCERDAS", $MyRow['stockid'], $MyRow['description'], $MyRow['descriptiontranslation']);
 					// Handle potential NULL price if no matching price record is found
 					$Price = round($MyRow['price'] ?? 0);
 					$PriceDiscount = '';
