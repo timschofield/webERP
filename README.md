@@ -27,7 +27,7 @@ be downloaded from [SourceForge](http://sourceforge.net/projects/web-erp/files/l
 ## Requirements
 - A web server - webERP has been tested on Apache, Nginx, Lighthttpd, and Hiawatha
 - PHP version 8.1 and above
-- MySQL version 4.3 and above, or MariaDB version 5.1 and above (recent, supported versions recommended)
+- MySQL version 5.7.5 and above, or MariaDB version 5.5 and above (recent, supported versions recommended)
 - A web browser with HTML5 compatibility
 
 Further information about hardware and software requirements is available in the [documentation](https://www.weberp.org/Documentation.html)

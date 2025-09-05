@@ -1,4 +1,4 @@
-# NB: this config file should be compatible with all mysql versions from 5.5 onwards
+# NB: this config file should be compatible with all mysql versions from 5.7.5 onwards
 
 [mysqld]
 
