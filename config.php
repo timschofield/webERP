@@ -41,7 +41,7 @@ date_default_timezone_set('Asia/Singapore');
 // assuming that the web server is also the sql server
 // $Host Moved to KLConfig.php
 // $Host = 'localhost';
-$MySQLPort = 3306;
+$DBPort = 3306;
 
 // The type of db server being used
 // $DBType = 'postgres' - now DEPRECIATED;

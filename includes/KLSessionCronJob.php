@@ -51,6 +51,13 @@ if (isset($dbuser)) { //this gets past an upgrade issue where old versions used 
 	$DBType = $dbType;
 }
 
+// another upgrade issue
+if (isset($MySQLPort) && !isset($DBPort)) {
+	/// @todo we should attempt to update the config.php file...
+	$DBPort = $MySQLPort;
+	unset($MySQLPort);
+}
+
 if (isset($SessionSavePath)) {
 	session_save_path($SessionSavePath);
 }
