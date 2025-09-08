@@ -65,7 +65,7 @@ function KLPrepareGroupSmartStockTransfers($Group, $EmailText){
 			INNER JOIN locationzones lz ON loc.zone = lz.code
 			LEFT JOIN (
 				SELECT so.fromstkloc,
-					   COUNT(sod.qtyinvoiced) AS sales_count
+					   SUM(sod.qtyinvoiced) AS sales_count
 				FROM salesorders so
 				INNER JOIN salesorderdetails sod ON so.orderno = sod.orderno
 				WHERE sod.completed = 1
@@ -164,35 +164,35 @@ function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $Report
 	// If Strategy is "Items needed at TO location with overstock at FROM" we need to control the "needed at TO" part
 	// The "overstock at FROM" part is controlled in any case with AND (fromlocstock.quantity - fromlocstock.reorderlevel) > 0
 	if ($Strategy == 'All') {
-		$WhereCategory = " AND ls.reorderlevel > ls.quantity ";
+		$WhereCategory = " AND tols.reorderlevel > tols.quantity ";
 		$StrategyText = "Items needed at " . $ToLocCode . " with stock available at " . $FromLocCode . " ";
 	}else{
 		$WhereCategory = " ";
 		$StrategyText = "Items with overstock at " . $FromLocCode . " returning to " . $ToLocCode;
 	}
 
-	$SQL = "SELECT ls.stockid,
+	$SQL = "SELECT tols.stockid,
 				sm.description,
-				ls.loccode,
-				ls.quantity,
-				ls.reorderlevel,
+				tols.loccode,
+				tols.quantity,
+				tols.reorderlevel,
 				sm.decimalplaces,
 				sm.discountcategory,
-				fls.reorderlevel AS fromreorderlevel,
-				fls.quantity AS fromquantity
-			FROM locstock ls
-			INNER JOIN stockmaster sm ON ls.stockid = sm.stockid
+				fromls.reorderlevel AS fromreorderlevel,
+				fromls.quantity AS fromquantity
+			FROM locstock tols
+			INNER JOIN stockmaster sm ON tols.stockid = sm.stockid
 			INNER JOIN stockcategory sc ON sm.categoryid = sc.categoryid
-			LEFT JOIN locstock fls ON ls.stockid = fls.stockid 
-				AND fls.loccode = '" . $FromLocCode . "'
-			WHERE ls.loccode = '" . $ToLocCode . "'
-				AND (fls.quantity - fls.reorderlevel) > 0
+			LEFT JOIN locstock fromls ON tols.stockid = fromls.stockid 
+				AND fromls.loccode = '" . $FromLocCode . "'
+			WHERE tols.loccode = '" . $ToLocCode . "'
+				AND (fromls.quantity - fromls.reorderlevel) > 0
 				AND sc.stocktype <> 'A'
 				AND sm.mbflag IN ('B', 'M')
 				AND sm.categoryid NOT IN ('SHCONS', 'SHPACK')
 			" . $WhereCategory . "
 			ORDER BY sc.klprioritytransfers ASC,
-				ls.stockid ASC";
+				tols.stockid ASC";
 
 	$Result = DB_query($SQL, '', '', false, true);
 
