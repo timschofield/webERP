@@ -7,6 +7,9 @@ from the folder
 What is the command?
 
 cd /var/www/vhosts/kapal-laut.com/ptadu.com/weberp/companies/kl_erp
+or
+cd /var/www/vhosts/kapal-laut.com/ptadu.com/TEST/weberp/companies/test_erp
+then
 ln -s /var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics part_pics
 
 cd /var/www/vhosts/kapal-laut.com/ptadu-development.com/weberp/companies

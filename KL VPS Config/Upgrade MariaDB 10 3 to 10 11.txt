@@ -1,0 +1,133 @@
+UPGRADE mariaDB 10.3 to 10.11
+
+Copy  /etc/my.cnf and /etc/systemd/system/mariadb.service.d/override.conf
+from gitHub to the folder /var/www/vhosts/kapal-laut.com via FileZilla
+
+
+/*
+ * STEP 1
+ */
+
+Running the upgrade from Plesk 18 I get these warnings pre-upgrade: The following package manager configuration files contain options that may result in an upgrade failure:
+/etc/yum.conf
+/etc/yum.repos.d/almalinux.repo
+
+To proceed with the upgrade, comment out or remove the following options:
+exclude, excludepkgs, includepkgs, installonlypkgs, tsflags.
+
+/*
+ * STEP 1 FIX 
+ */
+
+How to Fix It (Safely)
+You just need to temporarily comment out these directives. It's a simple and reversible process.
+
+1. 🛡️ Back Up the Configuration Files
+
+Before editing anything, make a quick backup of the files. This lets you restore them easily.
+
+Bash
+
+sudo cp /etc/yum.conf /etc/yum.conf.bak
+sudo cp /etc/yum.repos.d/almalinux.repo /etc/yum.repos.d/almalinux.repo.bak
+
+2. 📝 Edit the Files
+
+Open each file with a text editor like nano.
+
+sudo nano /etc/yum.conf
+Look for any of the lines mentioned in the warning (exclude, includepkgs, etc.) and add a # character to the beginning of that line. This "comments out" the line, making the system ignore it.
+
+For example, if you find this line:
+exclude=mariadb* php*
+
+Change it to:
+#exclude=mariadb* php*
+
+Save the file (Ctrl+X, then Y, then Enter in nano).
+
+Do the same for the other file:
+sudo nano /etc/yum.repos.d/almalinux.repo
+
+3. ✅ Re-run the Pre-Upgrade Check
+
+Go back to the Plesk interface and run the pre-upgrade check again. The warning should now be gone.
+
+4. 🎉 Proceed with the Upgrade
+
+You can now safely continue with the Plesk upgrade process.
+
+
+/*
+ * STEP 2
+ */
+
+Since the proposed my.cnf is causing errors due to: Could not increase number of max_open_files to more than 32768 (request: 65875)
+
+cp /var/www/vhosts/kapal-laut.com/my.cnf /etc/my.cnf
+
+How to Fix the MariaDB Startup Failure
+You need to create a systemd override file to grant the MariaDB service a higher file limit.
+
+1. 🛡️ Create the Override Directory
+
+First, create a directory for the MariaDB service override configuration. This is the standard way to modify service behavior on modern Linux systems like AlmaLinux.
+
+Bash
+
+sudo mkdir -p /etc/systemd/system/mariadb.service.d/
+2. 📝 Create the Override Configuration File
+
+copy file from github /etc/systemd/system/mariadb.service.d/override.conf into same path into server
+cp /var/www/vhosts/kapal-laut.com/override.conf /etc/systemd/system/mariadb.service.d/override.conf
+
+3. ✅ Reload Systemd and Restart MariaDB
+
+For the system to recognize this new rule, you must reload the systemd daemon and then you can start MariaDB.
+
+Bash
+
+sudo systemctl daemon-reload
+sudo systemctl restart mariadb
+Your MariaDB service should now start successfully. The systemctl daemon-reload command tells the OS to read your new override.conf file, which now grants MariaDB the permission to open up to 65,536 files, matching the setting in your my.cnf.
+
+
+
+
+# Back up the entire my.cnf.d directory
+sudo mv /etc/my.cnf.d /etc/my.cnf.d.backup
+
+# Create a fresh, empty directory to prevent errors
+sudo mkdir /etc/my.cnf.d
+
+for slow queress analysis
+
+sudo chown -R mysql:mysql /var/log/mariadb/
+sudo dnf install -y https://repo.percona.com/yum/percona-release-latest.noarch.rpm
+sudo percona-release enable-only tools release
+sudo pt-query-digest /var/log/mariadb/mariadb-slow.log
+
+
+-- Index for Query 1: To speed up the date-based filtering on sales orders.
+ALTER TABLE `salesorders` ADD INDEX `idx_salesorders_orddate_quotation` (`orddate`, `quotation`);
+
+-- Index for Query 3 & others: To improve joins between debtorsmaster and debtortrans.
+ALTER TABLE `debtorsmaster` ADD INDEX `uk_debtorsmaster_typeid_debtorno` (`typeid`, `debtorno`);
+
+-- Index for Query 4, 5, 6: To optimize lookups on stockmaster by category.
+ALTER TABLE `stockmaster` ADD INDEX `idx_stockmaster_categoryid_discontinued` (`categoryid`, `discontinued`);
+
+
+/*
+ * AFTER THE UPGRADE
+ */
+ 
+/*
+ * UNDO STEP 1
+ */
+Once the Plesk upgrade is successfully completed, it's a good practice to restore your original configurations. You can do this by editing the files again and removing the # you added.
+
+Alternatively, since you made backups, you can just restore them:
+Bash
+sudo mv /etc/yum.conf.bak /etc/yum.conf
+sudo mv /etc/yum.repos.d/almalinux.repo.bak /etc/yum.repos.d/almalinux.repo
