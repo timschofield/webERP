@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e214d6a236d049b13f45acc337943b6",
+    "content-hash": "16b4770cbcc9a2418da1c88bafa801c2",
     "packages": [
         {
             "name": "composer/pcre",
@@ -615,7 +615,7 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
+            "version": "8.0.1-rc1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/phplot",
@@ -4044,18 +4044,12 @@
             "version": "dev-main",
             "alias": "1.99.99",
             "alias_normalized": "1.99.99.0"
-        },
-        {
-            "package": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
-            "alias": "8.0.1",
-            "alias_normalized": "8.0.1.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "gggeek/polyfill-gettext": 20,
-        "phplot/phplot": 20
+        "phplot/phplot": 5
     },
     "prefer-stable": false,
     "prefer-lowest": false,
