@@ -54,9 +54,10 @@ jobs:
             - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
             - run: echo "Current directory is ${{ github.workspace }}, current user is $(id -u -n)"
 
-            #- name: Install required packages
-            #  run: |
-            #    sudo apt-get -y install fonts-dejavu
+            - name: Install required packages
+              run: |
+                chmod 755 ./tests/setup/setup_packages.sh
+                sudo ./tests/setup/setup_packages.sh
 
             # has to be run before setting up the db and webserver, as we store their config files in the codebase
             - name: Check out repository code
