@@ -10,7 +10,7 @@ cd "$BASE_DIR";
 
 if [ -z "$GITHUB_ACTION" ]; then
 	# @todo check - do we need more packages than this?
-	apt-get install apache2
+	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2
 fi
 
 if [ -f /etc/apache2/sites-enabled/000-default.conf ]; then
