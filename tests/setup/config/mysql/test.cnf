@@ -1,0 +1,7 @@
+# NB: this config file should be compatible with all mysql versions from 5.7.5 onwards
+
+[mysqld]
+
+# Use a strict sql mode to catch as many errors as possible - and make mysql behave closer to pgsql/sqlite/other
+# @todo enable ONLY_FULL_GROUP_BY once we are sure this breaks no queries...
+sql-mode="STRICT_ALL_TABLES,ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_VALUE_ON_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,PAD_CHAR_TO_FULL_LENGTH"

@@ -2,6 +2,9 @@
 
 require_once(__DIR__ . '/../src/AnonymousUserTestCase.php');
 
+/**
+ * All public methods starting with `test` are tests which will be executed by PHPUnit
+ */
 class AnonymousUsersTest extends AnonymousUserTestCase
 {
 	/**
@@ -11,10 +14,10 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 	 */
 	public function testDirectAccessToInstallerPages(string $fileName): void
 	{
-		$this->browser->followRedirects(false);
+		$this->followRedirects(false);
 		// be tolerant in case in the future we replace the redirect with a page-not-found
-		$this->browser->setExpectedStatusCodes([301, 302, 404]);
-		$this->browser->request('GET', self::$baseUri . $fileName);
+		$this->setExpectedStatusCodes([301, 302, 404]);
+		$this->request('GET', self::$baseUri . $fileName);
 
 		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
 		$this->assertTrue(true);
@@ -31,9 +34,9 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 			$this->markTestSkipped('config.php is missing. webERP setup has not been done');
 		}
 
-		$this->browser->followRedirects(false);
-		$this->browser->setExpectedStatusCodes([200]);
-		$crawler = $this->browser->request('GET', self::$baseUri . $fileName);
+		$this->followRedirects(false);
+		$this->setExpectedStatusCodes([200]);
+		$crawler = $this->request('GET', self::$baseUri . $fileName);
 
 		/// @todo check for no php warnings being displayed
 

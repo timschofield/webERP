@@ -31,11 +31,12 @@ class LoggedInUserTestCase extends WebTestCase
 		// make sure we do have not been redirected to the installer (belts-and-suspenders)
 		$this->assertIsNotOnInstallerPage($crawler);
 
-		/* @todo ...
-		$this->browser->submitForm('Log in', [
-			'login' => $_ENV['TEST_USER_ACCOUNT'],
-			'password' => $_ENV['TEST_USER_PASSWORD'],
+		$this->browser->submitForm('SubmitUser', [
+			'CompanyNameField' => $_ENV['TEST_DB_SCHEMA'],
+			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
+			'Password' => $_ENV['TEST_USER_PASSWORD'],
 		]);
+		/* @todo ...
 		$this->assertStringContainsString();
 		*/
 	}

@@ -157,6 +157,12 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 } else {
 	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
 
+	/// @todo what if the current user is already logged in? We should at least log him/her out before re-logging in...
+	///       (or maybe swallow that event, and log it as suspected hack attempt?)
+
+	/// @todo the login form points to /index.php. Should we avoid processing $_POST['UserNameEntryField'] and
+	///       $_POST['Password'] on other pages? We might even go as far as creating a dedicated Login.php...
+
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
 		$FirstLogin = true;
@@ -171,8 +177,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
+			/// @todo shouldn't we only set the cookie if $FirstLogin = true ?
 			setcookie('Login', $_SESSION['DatabaseName']);
-			include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			//include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+
+			/// @todo the session table was created in DBUpdateNumber 13, not 11!
 			if ($_SESSION['DBUpdateNumber'] >= 11) {
 				$CheckSQL = "SELECT sessionid
 							FROM sessions
@@ -200,11 +209,14 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 										NOW())";
 						$Result = DB_query($SQL);
 					}
+					/// @todo if if DBUpdateNumber < 22, insert into sessions the sessionid
 				} else {
 					// it is not a new session, update the script name
+					/// @todo if if DBUpdateNumber < 22, do nothing
+					/// @todo if DBUpdateNumber >= 22, check that the known session userID matches $_SESSION['UserID']
+					// no need to escape the session ID - see https://www.php.net/manual/en/function.session-id.php#116836
 					$SQL = "UPDATE sessions
-							SET script = '" . basename($_SERVER['SCRIPT_NAME']) . "',
-								scripttime = NOW()
+							SET script = '" . basename($_SERVER['SCRIPT_NAME']) . "', scripttime = NOW()
 							WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
@@ -213,6 +225,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			break;
 
 		case UL_SHOWLOGIN:
+			/// @todo here, we should store in the sessions table the current session id and the script name. This
+			///       way, when the user logs in, (s)he can be redirected to the original script.
 			include($PathPrefix . 'includes/Login.php');
 			exit();
 
@@ -250,6 +264,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
  */
 if (!isset($_SESSION['DBVersion'])) {
 	$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+}
+// $_SESSION['DBUpdateNumber'] is normally set by GetConfig.php - but in case we never passed via that code path...
+if (!isset($_SESSION['DBUpdateNumber'])) {
+	$_SESSION['DBUpdateNumber'] = -1;
 }
 if (isset($_SESSION['DBVersion'])
 	and isset($_SESSION['DBUpdateNumber'])

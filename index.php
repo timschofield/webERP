@@ -7,6 +7,7 @@ require(__DIR__ . '/includes/session.php');
 /*The module link codes are hard coded in a switch statement below to determine the options to show for each tab */
 include('includes/MainMenuLinksArray.php');
 
+/// @todo this is better left handled to be done in session.php, which can send an http redirect instead
 if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset($_SESSION['DatabaseName'])) {
 	$_SESSION['FirstRun'] = true;
 	echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/InitialScripts.php">';
