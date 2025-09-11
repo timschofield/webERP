@@ -12,7 +12,7 @@
 			"url": "https://github.com/gggeek/phplot"
 		}
 	],
-	"_note": "the mysqli extension is required by the installer. Once we add to it support for mysql and pdo, it can be demoted to suggested",
+	"_note": "the mysqli extension is required by the installer. Once we add to it support for pgsql and pdo, it can be demoted to suggested",
 	"require": {
 		"php": "^8.1",
 		"ext-ctype": "*",

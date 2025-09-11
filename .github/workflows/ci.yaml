@@ -78,6 +78,9 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
                   extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
+              #run: |
+              #  chmod 755 ./tests/setup/setup_php.sh
+              #  ./tests/setup/setup_php.sh
 
             # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
             #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
@@ -112,11 +115,6 @@ jobs:
                 sudo chmod g+rx,o+rx /home/
                 sudo chmod -R g+rwX,o+rwX /home/runner/
 
-            - name: Check syntax of php files
-              run: |
-                chmod 755 ./build/check_syntax.sh
-                ./build/check_syntax.sh
-
             - name: Run the test suite
               run: |
                 # smoke-testing
@@ -127,6 +125,11 @@ jobs:
                 ./vendor/bin/phpunit --stop-on-failure tests/install
                 ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
+
+            - name: Test the release-preparing script (run it)
+              run: |
+                chmod 755 ./build/make_release.sh
+                ./build/make_release.sh
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
@@ -149,6 +152,12 @@ jobs:
                 echo '### apache access log'
                 sudo cat /var/log/apache2/access.log
                 echo
-                if [ -n "$(ls webpage_failing_*.html >/dev/null 2>/dev/null)" ]; then
-                  cat webpage_failing_*.html
+
+                if [ -n "$(ls webpage_failing_*.html 2>/dev/null)" ]; then
+                    for PAGE in webpage_failing_*.html; do
+                        echo "### output of failed test $PAGE"
+                        echo
+                        cat "$PAGE"
+                        echo
+                    done
                 fi
