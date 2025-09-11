@@ -38,7 +38,7 @@ cd "$BASE_DIR";
 #$COMPOSER --no-interaction validate
 
 # make sure composer.lock is up-to-date wrt composer.json
-$COMPOSER update --no-dev --no-autoloader --no-interaction nothing
+$COMPOSER update --no-dev --no-autoloader --no-interaction --prefer-stable --prefer-dist nothing
 
 if [ -d vendor/phpunit/phpunit ]; then
 	echo "Warning: you have installed composer dev dependencies. Removing them..."

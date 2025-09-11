@@ -8,7 +8,7 @@
 	"_comment": "We use a patched version of phplot, while we wait for upstream to remove warnings with php 8",
 	"repositories": [
 		{
-			"type": "git",
+			"type": "github",
 			"url": "https://github.com/gggeek/phplot"
 		}
 	],
