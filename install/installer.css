@@ -125,6 +125,18 @@ margin-right:10px;
 margin-bottom:8px;
 text-align:left;
 }
+.warning {
+/* @todo add a yellowish style and dedicated icon */
+background:#ffd3bf url(images/invalid.png) no-repeat right;
+border:1px solid #ED5410;
+border-radius:5px;
+padding:2px 8px;
+margin:2px 0;
+margin-left:41%;
+margin-right:10px;
+margin-bottom:8px;
+text-align:left;
+}
 .error {
 background:#ffd3bf url(images/invalid.png) no-repeat right;
 border:1px solid #ED5410;

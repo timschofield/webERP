@@ -1,7 +1,8 @@
 <?php
 
-// Report of parts with demand greater than supply as determined by MRP
 require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
 
 if (!DB_table_exists('mrprequirements')) {
 	$Title = __('MRP error');
@@ -12,23 +13,9 @@ if (!DB_table_exists('mrprequirements')) {
 	exit();
 }
 
-if (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-	include('includes/PDFStarter.php');
-	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addInfo('Title', __('MRP Shortages Report'));
-		$pdf->addInfo('Subject', __('MRP Shortages'));
-	} else {
-		$pdf->addInfo('Title', __('MRP Excess Report'));
-		$pdf->addInfo('Subject', __('MRP Excess'));
-	}
-	$FontSize = 9;
-	$PageNumber = 1;
-	$LineHeight = 12;
-
-	// Create temporary tables for supply and demand, with one record per part with the
-	// total for either supply or demand. Did this to simplify main sql where used
-	// several subqueries.
+	// Prepare data as in the original script
 	$SQL = "CREATE TEMPORARY TABLE demandtotal (
 				part char(20),
 				demand double,
@@ -50,8 +37,6 @@ if (isset($_POST['PrintPDF'])) {
 				KEY `PART` (`part`)) DEFAULT CHARSET=utf8";
 	$Result = DB_query($SQL, __('Create of supplytotal failed because'));
 
-	/* 21/03/2010: Ricard modification to allow items with total supply = 0 be included in the report */
-
 	$SQL = "INSERT INTO supplytotal
 						(part,
 						 supply)
@@ -70,33 +55,6 @@ if (isset($_POST['PrintPDF'])) {
 	$SQL = "UPDATE supplytotal SET supply = 0 WHERE supply IS NULL";
 	$Result = DB_query($SQL);
 
-	// Only include directdemand mrprequirements so don't have demand for top level parts and also
-	// show demand for the lower level parts that the upper level part generates. See MRP.php for
-	// more notes - Decided not to exclude derived demand so using $SQL, not $SQLexclude
-	$SQLexclude = "SELECT stockmaster.stockid,
-					   stockmaster.description,
-					   stockmaster.mbflag,
-					   stockmaster.actualcost,
-					   stockmaster.decimalplaces,
-					   (stockmaster.actualcost) as computedcost,
-					   demandtotal.demand,
-					   supplytotal.supply,
-					   (demandtotal.demand - supplytotal.supply) *
-					   (stockmaster.actualcost) as extcost
-					FROM stockmaster
-						LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
-						LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
-					  GROUP BY stockmaster.stockid,
-							   stockmaster.description,
-							   stockmaster.mbflag,
-							   stockmaster.actualcost,
-							   stockmaster.decimalplaces,
-							   supplytotal.supply,
-							   demandtotal.demand,
-							   extcost
-					  HAVING demand > supply
-					  ORDER BY '" . $_POST['Sort'] . "'";
-
 	if ($_POST['CategoryID'] == 'All') {
 		$SQLCategory = ' ';
 	} else {
@@ -105,9 +63,15 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($_POST['ReportType'] == 'Shortage') {
 		$SQLHaving = " HAVING demandtotal.demand > supplytotal.supply ";
+		$reportTitle = __('MRP Shortages Report');
+		$reportSubject = __('MRP Shortages');
 	} else {
 		$SQLHaving = " HAVING demandtotal.demand <= supplytotal.supply ";
+		$reportTitle = __('MRP Excess Report');
+		$reportSubject = __('MRP Excess');
 	}
+
+	$SortField = $_POST['Sort'] === 'stockid' ? 'stockmaster.stockid' : 'extcost';
 
 	$SQL = "SELECT stockmaster.stockid,
 		stockmaster.description,
@@ -117,8 +81,8 @@ if (isset($_POST['PrintPDF'])) {
 		(stockmaster.actualcost) as computedcost,
 		demandtotal.demand,
 		supplytotal.supply,
-	   (demandtotal.demand - supplytotal.supply) *
-	   (stockmaster.actualcost) as extcost
+		(demandtotal.demand - supplytotal.supply) *
+		(stockmaster.actualcost) as extcost
 		   FROM stockmaster
 			 LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
 			 LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
@@ -130,7 +94,7 @@ if (isset($_POST['PrintPDF'])) {
 			   stockmaster.decimalplaces,
 			   stockmaster.actualcost,
 			   supplytotal.supply,
-			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
+			   demandtotal.demand " . $SQLHaving . " ORDER BY $SortField";
 
 	$ErrMsg = __('The MRP shortages and excesses could not be retrieved');
 	$Result = DB_query($SQL, $ErrMsg);
@@ -144,79 +108,131 @@ if (isset($_POST['PrintPDF'])) {
 		exit();
 	}
 
-	PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
+	// Build report as HTML
+	$HTML = '<html><head><meta charset="UTF-8"><style>
+		body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 10px; }
+		h1 { text-align: center; font-size: 18px; }
+		table { border-collapse: collapse; width: 100%; margin-top: 10px; }
+		th, td { border: 1px solid #aaa; padding: 4px 6px; font-size: 10px; }
+		th { background: #f0f0f0; }
+		.fill { background-color: #e0ebff; }
+		.right { text-align: right; }
+		.centre { text-align: center; }
+	</style></head><body>';
+
+	$HTML .= '<h1>' . htmlspecialchars($_SESSION['CompanyRecord']['coyname']) . '</h1>';
+	$HTML .= '<h2>' . $reportTitle . '</h2>';
+	$HTML .= '<div>' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '</div>';
+
+	$HTML .= '<table><thead><tr>
+		<th>' . __('Part Number') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('M/B') . '</th>
+		<th>' . __('Unit Cost') . '</th>
+		<th>' . __('Supply') . '</th>
+		<th>' . __('Demand') . '</th>';
+
+	if ($_POST['ReportType'] == 'Shortage') {
+		$HTML .= '<th>' . __('Shortage') . '</th><th>' . __('Ext. Shortage') . '</th>';
+	} else {
+		$HTML .= '<th>' . __('Excess') . '</th><th>' . __('Ext. Excess') . '</th>';
+	}
+
+	$HTML .= '</tr></thead><tbody>';
 
 	$Total_Shortage = 0;
 	$Partctr = 0;
-	$Fill = false;
-	$pdf->SetFillColor(224, 235, 255); // Defines color to make alternating lines highlighted
-	while ($MyRow = DB_fetch_array($Result)) {
+	$fillRow = ($_POST['Fill'] == 'yes');
+	$rowAlt = false;
 
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($_POST['ReportType'] == 'Shortage') {
 			$LineToPrint = ($MyRow['demand'] > $MyRow['supply']);
+			$Shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
+			$Extcost = $Shortage * $MyRow['computedcost'];
+			$shortageVal = locale_number_format($Shortage, $MyRow['decimalplaces']);
+			$extcostVal = locale_number_format($MyRow['extcost'], 2);
 		} else {
 			$LineToPrint = ($MyRow['demand'] <= $MyRow['supply']);
+			$Shortage = ($MyRow['supply'] - $MyRow['demand']);
+			$Extcost = $Shortage * $MyRow['computedcost'];
+			$shortageVal = locale_number_format($Shortage, $MyRow['decimalplaces']);
+			$extcostVal = locale_number_format($MyRow['extcost'], 2);
 		}
 
 		if ($LineToPrint) {
-			$YPos-= $LineHeight;
-			$FontSize = 8;
+			$class = ($fillRow && $rowAlt) ? 'fill' : '';
+			$HTML .= '<tr class="' . $class . '">';
+			$HTML .= '<td>' . htmlspecialchars($MyRow['stockid']) . '</td>';
+			$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
+			$HTML .= '<td class="centre">' . htmlspecialchars($MyRow['mbflag']) . '</td>';
+			$HTML .= '<td class="right">' . locale_number_format($MyRow['computedcost'], 2) . '</td>';
+			$HTML .= '<td class="right">' . locale_number_format($MyRow['supply'], $MyRow['decimalplaces']) . '</td>';
+			$HTML .= '<td class="right">' . locale_number_format($MyRow['demand'], $MyRow['decimalplaces']) . '</td>';
+			$HTML .= '<td class="right">' . $shortageVal . '</td>';
+			$HTML .= '<td class="right">' . $extcostVal . '</td>';
+			$HTML .= '</tr>';
 
-			// Use to alternate between lines with transparent and painted background
-			if ($_POST['Fill'] == 'yes') {
-				$Fill = !$Fill;
-			}
-
-			// Parameters for addTextWrap are defined in /includes/class.cpdf.php
-			// 1) X position 2) Y position 3) Width
-			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
-			// and False to set to transparent
-			$Shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
-			$Extcost = $Shortage * $MyRow['computedcost'];
-			$pdf->addTextWrap($Left_Margin, $YPos, 90, $FontSize, $MyRow['stockid'], '', 0, $Fill);
-			$pdf->addTextWrap(130, $YPos, 150, $FontSize, $MyRow['description'], '', 0, $Fill);
-			$pdf->addTextWrap(280, $YPos, 25, $FontSize, $MyRow['mbflag'], 'right', 0, $Fill);
-			$pdf->addTextWrap(305, $YPos, 55, $FontSize, locale_number_format($MyRow['computedcost'], 2), 'right', 0, $Fill);
-			$pdf->addTextWrap(360, $YPos, 50, $FontSize, locale_number_format($MyRow['supply'], $MyRow['decimalplaces']), 'right', 0, $Fill);
-			$pdf->addTextWrap(410, $YPos, 50, $FontSize, locale_number_format($MyRow['demand'], $MyRow['decimalplaces']), 'right', 0, $Fill);
-			$pdf->addTextWrap(460, $YPos, 50, $FontSize, locale_number_format($Shortage, $MyRow['decimalplaces']), 'right', 0, $Fill);
-			$pdf->addTextWrap(510, $YPos, 60, $FontSize, locale_number_format($MyRow['extcost'], 2), 'right', 0, $Fill);
-
-			$Total_Shortage+= $MyRow['extcost'];
+			$Total_Shortage += $MyRow['extcost'];
 			$Partctr++;
-
-			if ($YPos < $Bottom_Margin + $LineHeight) {
-				PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
-			}
+			$rowAlt = !$rowAlt;
 		}
-
-	} /*end while loop */
-
-	$FontSize = 8;
-	$YPos-= (2 * $LineHeight);
-
-	if ($YPos < $Bottom_Margin + $LineHeight) {
-		PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 	}
-	/*Print out the grand totals */
-	$pdf->addTextWrap($Left_Margin, $YPos, 120, $FontSize, __('Number of Parts: '), 'left');
-	$pdf->addTextWrap(150, $YPos, 30, $FontSize, $Partctr, 'left');
-	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap(300, $YPos, 180, $FontSize, __('Total Extended Shortage:'), 'right');
-	} else {
-		$pdf->addTextWrap(300, $YPos, 180, $FontSize, __('Total Extended Excess:'), 'right');
-	}
+
+	$HTML .= '</tbody></table>';
+
 	$DisplayTotalVal = locale_number_format($Total_Shortage, 2);
-	$pdf->addTextWrap(510, $YPos, 60, $FontSize, $DisplayTotalVal, 'right');
 
-	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d') . '.pdf');
+	$HTML .= '<br><table style="width: 40%;"><tr>
+		<td>' . __('Number of Parts:') . '</td>
+		<td class="right">' . $Partctr . '</td>
+	</tr><tr>
+		<td>' . ($_POST['ReportType'] == 'Shortage' ? __('Total Extended Shortage:') : __('Total Extended Excess:')) . '</td>
+		<td class="right">' . $DisplayTotalVal . '</td>
+	</tr></table>';
+
+	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPExcess_' . date('Y-m-d') . '.pdf');
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				</div>';
 	}
-	$pdf->__destruct();
-} else { /*The option to print PDF was not hit so display form */
+	$HTML .= '</body>
+		</html>';
 
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_MRPShortages_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = __('Reorder Level Reporting');
+		include('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Shortages') . '" alt="" />' . ' ' . __('MRP Shortages Report') . '</p>';
+		echo $HTML;
+		include('includes/footer.php');
+	}
+
+} else {
+	// Display form as before (unchanged)
 	$Title = __('MRP Shortages - Excess Reporting');
 	$ViewTopic = 'MRP';
 	$BookMark = '';
@@ -224,7 +240,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>
@@ -240,7 +256,7 @@ if (isset($_POST['PrintPDF'])) {
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
-	} //end while loop
+	}
 	echo '</select>
 		</field>';
 
@@ -269,61 +285,10 @@ if (isset($_POST['PrintPDF'])) {
 		</field>';
 	echo '</fieldset>
 		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
+			<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
+			<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
 		</div>
-		</form>';
+	</form>';
 
 	include('includes/footer.php');
-
-} /*end of else not PrintPDF */
-
-function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
-
-	$LineHeight = 12;
-	/*PDF page header for MRP Shortages report */
-	if ($PageNumber > 1) {
-		$pdf->newPage();
-	}
-
-	$FontSize = 9;
-	$YPos = $Page_Height - $Top_Margin;
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
-
-	$YPos-= $LineHeight;
-	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('MRP Shortages Report'));
-	} else {
-		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, __('MRP Excess Report'));
-	}
-
-	$pdf->addTextWrap($Page_Width - $Right_Margin - 110, $YPos, 160, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
-
-	$YPos-= (2 * $LineHeight);
-
-	/*Draw a rectangle to put the headings in	 */
-
-	//$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
-	//$pdf->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
-	//$pdf->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
-	//$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
-	/*set up the headings */
-	$Xpos = $Left_Margin + 1;
-
-	$pdf->addTextWrap($Xpos, $YPos, 130, $FontSize, __('Part Number'), 'left');
-	$pdf->addTextWrap(130, $YPos, 150, $FontSize, __('Description'), 'left');
-	$pdf->addTextWrap(285, $YPos, 20, $FontSize, __('M/B'), 'right');
-	$pdf->addTextWrap(305, $YPos, 55, $FontSize, __('Unit Cost'), 'right');
-	$pdf->addTextWrap(360, $YPos, 50, $FontSize, __('Supply'), 'right');
-	$pdf->addTextWrap(410, $YPos, 50, $FontSize, __('Demand'), 'right');
-	if ($_POST['ReportType'] == 'Shortage') {
-		$pdf->addTextWrap(460, $YPos, 50, $FontSize, __('Shortage'), 'right');
-		$pdf->addTextWrap(510, $YPos, 60, $FontSize, __('Ext. Shortage'), 'right');
-	} else {
-		$pdf->addTextWrap(460, $YPos, 50, $FontSize, __('Excess'), 'right');
-		$pdf->addTextWrap(510, $YPos, 60, $FontSize, __('Ext. Excess'), 'right');
-	}
-	$FontSize = 8;
-	$YPos = $YPos - (2 * $LineHeight);
-	$PageNumber++;
-} // End of PrintHeader function
+}

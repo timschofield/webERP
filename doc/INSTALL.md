@@ -10,15 +10,15 @@ are upgrading an existing installation.
 * Web server (e.g. Apache HTTP Server or Nginx).
 
 * PHP interpreter. PHP v8.1 or later is required, with
-    MySQL or MariaDb extension (generally both use "mysqli"), gd, gettext (for translations),
+    mysqli extension (usd for accessing both MySql and MariaDB), gd, gettext (for translations),
     libxml, mbstring and ftp (optional for file transfer). The web server user must have full
     write privileges to the ./companies/ directory, and at least temporarily to the root
     directory for the web installer to save the created configuration file ./config.php.
 
-* MySQL or v4.1+ or MariaDb 10.4+ (innodb tables MUST be enabled, which should be the default, but
-    you can check my.cnf file to confirm, e.g. /etc/my.cnf or /usr/local/etc/mysql/my.cnf).
+* MySQL ver. 5.7.5+ or MariaDb 5.5+ (innodb tables MUST be enabled, which should be the default, but
+    you can check `my.cnf` file to confirm, e.g. `/etc/my.cnf` or `/usr/local/etc/mysql/my.cnf`).
 
-Detailed instructions for installing these components can be readily found in a web search. XAMPP is
+Detailed instructions for installing those components can be readily found in a web search. XAMPP is
 recommended for development on a Windows(R) platform, see https://www.apachefriends.org/index.html.
 
 webERP supported PostgreSQL at one time but does not currently due to lack of an interested
@@ -27,9 +27,9 @@ a Discussion topic in the webERP repo!
 
 Required PHP configuration (all are default values at least for XAMPP with PHP v8.2):
 
-1. register_globals must be set to off (current default)
-2. magic_quotes_gpc should be set to Off to avoid annoying "\" characters in some fields
-3. session.use_cookies must be enabled
+1. `register_globals` must be set to off (current default)
+2. `magic_quotes_gpc` should be set to Off to avoid annoying "\" characters in some fields
+3. `session.use_cookies` must be enabled
 
 Configuring PHP is done by editing the server php.ini file. If you don't have file access on the
 server, webERP provides a .htaccess file which can be used for those web servers that support it.
@@ -183,7 +183,7 @@ the initial "admin" user details.
 If desired, the database can be created manually before accessing the webERP web installer. The installer
 will use an existing database if one exists.
 
-webERP requires either MySQL version 4.1 or greater or MariaDb 10.4+
+webERP requires either MySQL version 5.7.5 or greater or MariaDb 5.5+
 
 In webERP each company has its own database. For example, if you have a company called MyCompany, webERP
 expects there will be database named mycompany (in lower case). Before starting to install webERP, ensure
@@ -268,7 +268,7 @@ You can also the following SQL commands to the top of the demo.sql script
 	CREATE DATABASE mycompanyname DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_unicode_ci;
 	USE mycompanyname
 
-Instead of mycompanyname use the name of your company. Note that the name of the database must all be in
+Instead of "mycompanyname" use the name of your company. Note that the name of the database must all be in
 lower case.
 
 This creates a weberp database and populates it with only the very basic data to start off.
@@ -288,7 +288,7 @@ Use the demo.sql file if you wish demo data to be loaded.
 
 #### 3.3 Create the companies/ directory
 
-Copy the ./companies/weberpdemo to ./companies/mycompanyname
+Copy the `./companies/weberpdemo` dir to `./companies/mycompanyname`
 
 
 #### 3.4 Edit config.php
@@ -296,7 +296,7 @@ Copy the ./companies/weberpdemo to ./companies/mycompanyname
 `config.php` is the low-level configuration file for webERP and is site specific. The `config.distrib.php`
 file is provided as a template.
 
-Copy config.distrib.php to config.php. Edit config.php with database connection parameters and any
+Copy `config.distrib.php` to `config.php`. Edit `config.php` with database connection parameters and any
 other relevant data.
 
 
@@ -307,7 +307,7 @@ Browse to the site URL e.g. http://yourdomain/weberp (if you are using XAMPP htt
 Enter the web access password if file-level security was enabled (see above), accept all cookies and
 enter the initial admin username and password (admin/weberp if you accepted the default).
 
-- Select mycompanyname from the drop down list.
+- Select 'mycompanyname' from the drop down list.
 - Enter the user name 'admin'
 - Enter password 'weberp'
 
@@ -330,28 +330,25 @@ worth reading before going live.
 ## Configuration file (config.php)
 
 webERP gets low-level configuration parameters, such as the database connection, from the config.php
-file. As this file is typically site-specific, the template file config.distrib.php is provided
+file. As this file is typically site-specific, the template file `config.distrib.php` is provided
 to use as a template.
 
 config.distrib.php is well commented (lines starting with // are comments and not processed by
 PHP). Critical parameters are the computer $host, the $DBType, the $DBUser and the $DBPassword. The
 remaining variables can typically be left at their defaults.
 
-Sha1 encryption requires PHP v4.3 or greater. If you are attempting to use a prior version (not
-recommended) you could try md5 encryption.
-
-webERP determines the appropriate database name from the sub-directory names in ./Companies/.
-When a new database is created, the /Companies/weberpdemo/ sub-directory must be manually copied
+webERP determines the appropriate database name from the sub-directory names in `./companies/`.
+When a new database is created, the `/companies/weberpdemo/` sub-directory must be manually copied
 to a new sub-directory with the same name as the database that was created.
 
-(in prior versions the variable $DatabaseName was required in config.php, this is no longer the case).
+(in prior versions the variable `$DatabaseName` was required in `config.php`, this is no longer the case).
 
 
 ## Troubleshooting
 
 You can get unexpected behavior in the installer if you happen to have used the installer multiple
 times on the same codebase with different database names (specifying a database name results in
-creating a copy of the companies/weberpdemo directory with the same name as the specified database,
+creating a copy of the `companies/weberpdemo` directory with the same name as the specified database,
 and a "Companies.php" file in the directory containing the full company name which is used in the
 login screen).
 
@@ -376,8 +373,8 @@ fresh or clean environment.
 ## Security
 
 Note: Once you have installed webERP it is important to remove the installer files by deleting the
-installation directory and all the scripts underneath it. It is also wise to change the permissions on the
-config.php file to ensure that it can no longer be written to by the web-server.
+install directory and all the scripts underneath it. It is also wise to change the permissions on the
+`config.php` file to ensure that it can no longer be written to by the web-server.
 
 
 ## Legal

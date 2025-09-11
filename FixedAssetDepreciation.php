@@ -17,9 +17,10 @@ if (isset($_POST['ProcessDate'])){
 /*Get the last period depreciation (depn is transtype =44) was posted for */
 $Result = DB_query("SELECT periods.lastdate_in_period,
 							max(fixedassettrans.periodno)
-					FROM fixedassettrans INNER JOIN periods
-					ON fixedassettrans.periodno=periods.periodno
-					WHERE transtype=44
+					FROM fixedassettrans
+					INNER JOIN periods
+						ON fixedassettrans.periodno = periods.periodno
+					WHERE transtype = 44
 					GROUP BY periods.lastdate_in_period
 					ORDER BY periods.lastdate_in_period DESC");
 
@@ -35,7 +36,7 @@ if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 		if (!Is_Date($_POST['ProcessDate'])){
 			prnMsg(__('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 			$InputError =true;
-		}else {
+		} else {
 			$_POST['ProcessDate'] = LastDayOfMonth($_POST['ProcessDate']);
 		}
 	}
@@ -47,7 +48,7 @@ if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 
 
 /* Get list of assets for journal */
-$SQL="SELECT fixedassets.assetid,
+$SQL = "SELECT fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,
 			fixedassets.depnrate,
@@ -55,15 +56,15 @@ $SQL="SELECT fixedassets.assetid,
 			fixedassetcategories.accumdepnact,
 			fixedassetcategories.depnact,
 			fixedassetcategories.categorydescription,
-			SUM(CASE WHEN fixedassettrans.fixedassettranstype='cost' THEN fixedassettrans.amount ELSE 0 END) AS costtotal,
-			SUM(CASE WHEN fixedassettrans.fixedassettranstype='depn' THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd
+			SUM(CASE WHEN fixedassettrans.fixedassettranstype = 'cost' THEN fixedassettrans.amount ELSE 0 END) AS costtotal,
+			SUM(CASE WHEN fixedassettrans.fixedassettranstype = 'depn' THEN fixedassettrans.amount ELSE 0 END) AS depnbfwd
 		FROM fixedassets
 		INNER JOIN fixedassetcategories
-			ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
+			ON fixedassets.assetcategoryid = fixedassetcategories.categoryid
 		INNER JOIN fixedassettrans
-			ON fixedassets.assetid=fixedassettrans.assetid
-		WHERE fixedassettrans.transdate<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
-			AND fixedassets.datepurchased<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
+			ON fixedassets.assetid = fixedassettrans.assetid
+		WHERE fixedassettrans.transdate <= '" . FormatDateForSQL($_POST['ProcessDate']) . "'
+			AND fixedassets.datepurchased <= '" . FormatDateForSQL($_POST['ProcessDate']) . "'
 			AND fixedassets.disposaldate = '1000-01-01'
 		GROUP BY fixedassets.assetid,
 			fixedassets.description,
@@ -88,7 +89,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	$PeriodNo = GetPeriod($_POST['ProcessDate']);
 }
 
-echo '<br /><table>';
+echo '<table>';
 $Heading = '<tr>
 				<th>' . __('Asset ID') . '</th>
 				<th>' . __('Description') . '</th>
@@ -102,20 +103,20 @@ $Heading = '<tr>
 			</tr>';
 echo $Heading;
 
-$AssetCategoryDescription ='0';
+$AssetCategoryDescription = '0';
 
-$TotalCost =0;
-$TotalAccumDepn=0;
+$TotalCost = 0;
+$TotalAccumDepn = 0;
 $TotalDepn = 0;
 $TotalCategoryCost = 0;
-$TotalCategoryAccumDepn =0;
+$TotalCategoryAccumDepn = 0;
 $TotalCategoryDepn = 0;
 
 $RowCounter = 0;
 
 while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
-		if ($AssetCategoryDescription !='0'){ //then print totals
+		if ($AssetCategoryDescription != '0'){ //then print totals
 			echo '<tr><th colspan="3" align="right">' . __('Total for') . ' ' . $AssetCategoryDescription . ' </th>
 					<th class="number">' . locale_number_format($TotalCategoryCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
 					<th class="number">' . locale_number_format($TotalCategoryAccumDepn,$_SESSION['CompanyRecord']['decimalplaces']) . '</th>
@@ -130,7 +131,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 			</tr>';
 		$AssetCategoryDescription = $AssetRow['categorydescription'];
 		$TotalCategoryCost = 0;
-		$TotalCategoryAccumDepn =0;
+		$TotalCategoryAccumDepn = 0;
 		$TotalCategoryDepn = 0;
 	}
 	$BookValueBfwd = $AssetRow['costtotal'] - $AssetRow['depnbfwd'];
@@ -146,12 +147,12 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	}
 	if (Date1GreaterThanDate2(ConvertSQLDate($AssetRow['datepurchased']),$_POST['ProcessDate'])){
 		/*Over-ride calculations as the asset was not purchased at the date of the calculation!! */
-		$NewDepreciation =0;
+		$NewDepreciation = 0;
 	}
 	$RowCounter++;
-	if ($RowCounter ==15){
+	if ($RowCounter == 15){
 		echo $Heading;
-		$RowCounter =0;
+		$RowCounter = 0;
 	}
 
 	echo '<tr class="striped_row">
@@ -165,16 +166,16 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		<td class="number">' . $AssetRow['depnrate']  . '</td>
 		<td class="number">' . locale_number_format($NewDepreciation ,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>';
-	$TotalCategoryCost +=$AssetRow['costtotal'];
-	$TotalCategoryAccumDepn +=$AssetRow['depnbfwd'];
-	$TotalCategoryDepn +=$NewDepreciation;
-	$TotalCost +=$AssetRow['costtotal'];
-	$TotalAccumDepn +=$AssetRow['depnbfwd'];
-	$TotalDepn +=$NewDepreciation;
+	$TotalCategoryCost += $AssetRow['costtotal'];
+	$TotalCategoryAccumDepn += $AssetRow['depnbfwd'];
+	$TotalCategoryDepn += $NewDepreciation;
+	$TotalCost += $AssetRow['costtotal'];
+	$TotalAccumDepn += $AssetRow['depnbfwd'];
+	$TotalDepn += $NewDepreciation;
 
 	if (isset($_POST['CommitDepreciation'])
-		AND $NewDepreciation !=0
-		AND $InputError==false){
+		AND $NewDepreciation != 0
+		AND $InputError == false){
 
 		//debit depreciation expense
 		$SQL = "INSERT INTO gltrans (type,
@@ -259,7 +260,7 @@ echo '</table>
 		<hr />
 		<br />';
 
-if (isset($_POST['CommitDepreciation']) AND $InputError==false){
+if (isset($_POST['CommitDepreciation']) AND $InputError == false){
 	DB_Txn_Commit();
 	prnMsg(__('Depreciation') . ' ' . $TransNo . ' ' . __('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
@@ -276,7 +277,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	} else {
 		echo '<field>
 				<label for="ProcessDate">' . __('Date to Process Depreciation'). ':</label>
-				<fieldtext>' . FormatDateForSQL($_POST['ProcessDate'])  . '</fieldtext>';
+				<fieldtext>' . $_POST['ProcessDate'] . '</fieldtext>';
 	}
 	echo '</fieldset>
 		<div class="centre">

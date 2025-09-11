@@ -171,15 +171,15 @@ if ($NoOfLabels >0){
 		$pdf->OutputD($_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf');
 		$pdf->__destruct();
 	} else {
-		$PdfFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		$pdf->Output($_SESSION['reports_dir'] . '/' . $PdfFileName, 'F');
+		$PDFFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
+		$pdf->Output($_SESSION['reports_dir'] . '/' . $PDFFileName, 'F');
 		$pdf->__destruct();
 
 		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
 								array($_POST['EmailTo'] => ''),
 								__('Work Order Number') . ' ' . $SelectedWO,
 								__('Please Process this Work order number') . ' ' . $SelectedWO,
-								$_SESSION['reports_dir'] . '/' . $PdfFileName
+								$_SESSION['reports_dir'] . '/' . $PDFFileName
 								);
 
 		if ($Success == 1) {
