@@ -93,6 +93,12 @@ jobs:
                 chmod 755 ./tests/setup/setup_webserver.sh
                 ./tests/setup/setup_webserver.sh
 
+            # We run the release-preparing script before messing up the vendor/ dir to run the test suite
+            - name: Test the release-preparing script (run it)
+              run: |
+                chmod 755 ./build/make_release.sh
+                ./build/make_release.sh
+
             - name: Install dev dependencies
               run: |
                 chmod 755 ./tests/setup/setup_dependencies.sh
@@ -126,11 +132,6 @@ jobs:
                 ./vendor/bin/phpunit --stop-on-failure tests/install
                 ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
-
-            - name: Test the release-preparing script (run it)
-              run: |
-                chmod 755 ./build/make_release.sh
-                ./build/make_release.sh
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
