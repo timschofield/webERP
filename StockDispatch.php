@@ -11,6 +11,7 @@ use Dompdf\Dompdf;
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
 include ('includes/ImageFunctions.php');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -189,27 +190,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		// Check if any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock'] == 1) {
-			$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-				FROM loctransfers
-				WHERE stockid='" . $MyRow['stockid'] . "'
-					AND shiploc='" . $_POST['FromLocation'] . "'
-					AND pendingqty>0";
-			$InTransitResult = DB_query($InTransitSQL);
-			$InTransitRow = DB_fetch_array($InTransitResult);
-			$InTransitQuantityAtFrom = $InTransitRow['intransit'];
+			$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $_POST['FromLocation']);
 		}
 		$AvailableShipQtyAtFrom = $MyRow['available'] - $InTransitQuantityAtFrom;
 
 		// Check if TO location is waiting to receive some stock
-		$InTransitQuantityAtTo = 0;
-		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-				FROM loctransfers
-				WHERE stockid='" . $MyRow['stockid'] . "'
-					AND recloc='" . $_POST['ToLocation'] . "'
-					AND pendingqty>0";
-		$InTransitResult = DB_query($InTransitSQL);
-		$InTransitRow = DB_fetch_array($InTransitResult);
-		$InTransitQuantityAtTo = $InTransitRow['intransit'];
+		$InTransitQuantityAtTo = GetItemQtyInTransitToLocation($MyRow['stockid'], $_POST['ToLocation']);
 
 		$NeededQtyAtTo = $MyRow['neededqty'] - $InTransitQuantityAtTo;
 

@@ -159,8 +159,8 @@ if ($ListCount == 0) {
 	// Output the generated PDF to a temporary file
 	$output = $dompdf->output();
 
-	$pdfFileName = sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf';
-	file_put_contents($pdfFileName, $output);
+	$PDFFileName = sys_get_temp_dir() . '/' . $_SESSION['DatabaseName'] . '_InventoryValuation_' . date('Y-m-d') . '.pdf';
+	file_put_contents($PDFFileName, $output);
 
 	$From = $_SESSION['CompanyRecord']['email'];
 	if ($From != '') {
@@ -172,10 +172,10 @@ if ($ListCount == 0) {
 		if ($_SESSION['SmtpSetting'] == 0) {
 			mail($_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
 		} else {
-			$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, array($pdfFileName), false);
+			$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, array($PDFFileName), false);
 		}
 	}
-	unlink($pdfFileName);
+	unlink($PDFFileName);
 
 	$Title = __('Send Report By Email');
 	include('includes/header.php');
