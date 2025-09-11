@@ -54,14 +54,14 @@ jobs:
             - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
             - run: echo "Current directory is ${{ github.workspace }}, current user is $(id -u -n)"
 
+            # has to be run before setting up the db and webserver, as we store their config files in the codebase
+            - name: Check out repository code
+              uses: actions/checkout@v5
+
             - name: Install required packages
               run: |
                 chmod 755 ./tests/setup/setup_packages.sh
                 sudo ./tests/setup/setup_packages.sh
-
-            # has to be run before setting up the db and webserver, as we store their config files in the codebase
-            - name: Check out repository code
-              uses: actions/checkout@v5
 
             - name: Set up the Database
               run: |
@@ -87,6 +87,12 @@ jobs:
             # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
             #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
             #       code coverage information)
+
+            # Composer latest is installed by shivammathur/setup-php
+            #- name: Set up Composer
+            #  run: |
+            #    chmod 755 ./tests/setup/setup_composer.sh
+            #    ./tests/setup/setup_composer.sh
 
             - name: Set up the Webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
