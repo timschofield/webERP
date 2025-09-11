@@ -88,7 +88,7 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" != 'true' ] && [ "$ADD_DROP_TABLES_OPTION" 
 	exit 1
 fi
 
-mysql -u"$MYSQL_USER"  -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
+mysql -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER"  -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
 
 if [ "$ADD_CREATE_SCHEMA_STATEMENTS" = true ]; then
 	# @todo add default collation to be utf8mb4
