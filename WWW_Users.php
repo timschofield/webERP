@@ -459,7 +459,6 @@ if(isset($SelectedUser)) {
 				email,
 				timeout,
 				customerid,
-				password,
 				branchcode,
 				supplierid,
 				salesman,
@@ -544,9 +543,6 @@ if(isset($SelectedUser)) {
 	$_POST['ShowFieldHelp'] = 1;
 }
 
-if(!isset($_POST['Password'])) {
-	$_POST['Password']='';
-}
 if(!isset($_POST['RealName'])) {
 	$_POST['RealName']='';
 }
@@ -561,7 +557,7 @@ if(!isset($_POST['Timeout'])) {
 }
 echo '<field>
 		<label for="Password">' . __('Password') . ':</label>
-		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'.__('At least 5 characters').'" title="" />
+		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="" placeholder="'.__('At least 5 characters').'" title="" />
 		<fieldhelp>'.__('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'</fieldhelp>
 	</field>';
 echo '<field>
