@@ -46,7 +46,7 @@ if [ -d vendor/phpunit/phpunit ]; then
 fi
 
 # abort if any files in vendor/ do not match upstream, ie. have been modified locally
-$COMPOSER status --no-interaction
+$COMPOSER status --no-interaction --verbose
 
 # make it visible to developers when there are dependency upgrades available
 $COMPOSER outdated --ignore-platform-reqs --no-interaction
