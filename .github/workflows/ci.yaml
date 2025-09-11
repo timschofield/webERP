@@ -103,6 +103,8 @@ jobs:
             # We run the release-preparing script before messing up the vendor/ dir to run the test suite
             - name: Test the release-preparing script (run it)
               run: |
+                export MYSQL_HOST=127.0.0.1
+                export MYSQL_PORT="${{ matrix.dbport }}"
                 chmod 755 ./build/make_release.sh
                 ./build/make_release.sh
 
