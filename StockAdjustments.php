@@ -1,5 +1,9 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineStockAdjustment.php');
+include('includes/DefineSerialItems.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Adjustments');
@@ -7,8 +11,6 @@ $ViewTopic = 'Inventory';
 $BookMark = 'InventoryAdjustments';
 include('includes/header.php');
 
-include('includes/DefineStockAdjustment.php');
-include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 

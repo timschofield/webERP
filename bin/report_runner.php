@@ -1,0 +1,107 @@
+#!/usr/bin/php
+<?php
+
+//--------------------------------------------------------------------
+// This program is designed to run reports in batch command mode for
+// weberp. Many thanks to Phil Daintree as the major author of WEBERP.
+//
+// --------------------------------------------------------------------
+// Written by Alan B Jones (mor3ton@yahoo.com)
+// based on code originally from weberp
+// (c) alan jones 2006.
+// (c) 2006 logic works Ltd and others
+// licenced under the terms of the GPL V(2)
+// if you want to know the details of the use of this software
+// and how you are licenced to use it under the terms of the
+// see here http://www.gnu.org/licenses/gpl.txt
+//--------------------------------------------------------------------
+
+/// @todo should we exit if php_sapi_name() != "cli" ?
+
+// The script where your main installation is located
+// Remember this is different for each location
+$weberp_home = realpath(__DIR__ . '/..');
+
+$usage="USAGE\n".$argv[0].":\n".
+       "     -r reportnumber (the number of the weberp report)\n".
+       "     -n reportname   (the name you want to give the report)\n".
+       "     -e emailaddress[;emailaddress;emailaddres...] (who you want to send it to)\n".
+       "     -d database name (the mysql db to use for the data for the report)\n".
+       "     [-t reporttext ]  (some words you want to send with the report-optional)\n";
+
+$reportnumber = '';
+$reportname = '';
+$emailaddresses = '';
+$mailtext = '';
+
+for ($i=1; $i < $argc; $i++) {
+	switch($argv[$i]) {
+		case '-r':
+			$i++;
+			$reportnumber=$argv[$i];
+			break;
+		case '-n':
+			$i++;
+			$reportname=$argv[$i];
+			break;
+		case '-e':
+			$i++;
+			$emailaddresses=$argv[$i];
+			break;
+		case '-d':
+			$i++;
+			$DatabaseName=$argv[$i];
+			break;
+		case '-t':
+			$i++;
+			$mailtext=$argv[$i];
+			break;
+		case '-h':
+			echo $usage;
+			exit(0);
+		default:
+			echo "unknown option".$argv[$i]."\n";
+			echo $usage;
+			exit(1);
+	}
+}
+
+if (($reportname == "") || ($reportnumber == "") || ($emailaddresses == "")) {
+	echo $usage;
+	exit(1);
+}
+
+// change directory to the weberp home to get all the includes to work nicely
+chdir($weberp_home);
+
+$AllowAnyone = true;
+
+require(__DIR__ . '/../includes/session.php');
+
+// get me the report name from the command line
+$_GET['ReportID'] = $reportnumber;
+$Recipients = explode(";", $emailaddresses);
+
+include(__DIR__ . '/../includes/ConstructSQLForUserDefinedSalesReport.php');
+include(__DIR__ . '/../includes/PDFSalesAnalysis.php');
+
+if ($Counter > 0) { /* the number of lines of the sales report is more than 0  ie there is a report to send! */
+	$pdfcode = $pdf->output();
+	$fp = fopen($_SESSION['reports_dir']. "/".$reportname,"wb");
+	fwrite ($fp, $pdfcode);
+	fclose ($fp);
+
+	$Subject = $reportname." Report";
+	$Body = $mailtext."\nPlease find herewith ".$reportname." report";
+	$AttachmentPath = $_SESSION['reports_dir'] . "/" . $reportname;
+	$From = $_SESSION['CompanyRecord']['email']; // Use company email as sender
+
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body, array($AttachmentPath));
+
+} else {
+	$Subject = "Error running automated sales report";
+	$Body = "Error running automated sales report number " . $reportnumber; // Use $reportnumber instead of $ReportID
+	$From = $_SESSION['CompanyRecord']['email']; // Use company email as sender
+
+	$Result = SendEmailFromWebERP($From, $Recipients, $Subject, $Body);
+}

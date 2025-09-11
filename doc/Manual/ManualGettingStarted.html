@@ -201,12 +201,11 @@ mysql&gt; GRANT ALL PRIVILEGES ON *.* TO weberp@localhost IDENTIFIED BY 'some_pa
         // putenv('TZ=Pacific/Auckland');
 
         // Connection information for the database
-        // $host is the computer ip address or name where the database is located
+        // $Host is the computer ip address or name where the database is located
         // assuming that the web server is also the sql server
-        $host = 'localhost';
-        $mysqlport=3306;
-        //The type of db server being used - currently only mysqli or mysql
-        //$DBType = 'mysql';
+        $Host = 'localhost';
+        $DBPort=3306;
+        //The type of db server being used - currently only mysqli or mariadb
         //$DBType = 'mysqli';
 
         // sql user & password

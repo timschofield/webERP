@@ -3,6 +3,10 @@
 /* The credit selection screen uses the Cart class used for the making up orders
 some of the variable names refer to order - please think credit when you read order */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineCartClass.php');
+include('includes/DefineSerialItems.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Create Credit Note');
@@ -10,8 +14,6 @@ $ViewTopic = 'ARTransactions';
 $BookMark = 'CreateCreditNote';
 include('includes/header.php');
 
-include('includes/DefineCartClass.php');
-include('includes/DefineSerialItems.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 include('includes/GetSalesTransGLCodes.php');

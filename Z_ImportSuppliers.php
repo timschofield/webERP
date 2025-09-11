@@ -57,7 +57,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 
 	//check file info
 	$FileName = $_FILES['userfile']['name'];
-	$TempName  = $_FILES['userfile']['tmp_name'];
+	$TempName = $_FILES['userfile']['tmp_name'];
 	$FileSize = $_FILES['userfile']['size'];
 
 	//get file handle

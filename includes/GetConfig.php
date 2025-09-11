@@ -2,9 +2,10 @@
 
 global $RootPath;
 
-// Systems can temporarily force a reload by setting the variable $ForceConfigReload to true
+// Systems can force a reload by setting the variable $ForceConfigReload to true and including this file
 
 if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
+
 	$SQL = "SELECT confname, confvalue FROM config";
 	$ErrMsg = __('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($SQL, $ErrMsg);
@@ -16,9 +17,11 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 			$_SESSION[$MyRow['confname']] =  $MyRow['confvalue'];
 		}
 	} //end loop through all config variables
+
 	if (!isset($_SESSION['DBUpdateNumber'])) {
 		$_SESSION['DBUpdateNumber'] = -1;
 	}
+
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 
 	DB_free_result($ConfigResult); // no longer needed
@@ -43,7 +46,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 		$_SESSION['PageSecurityArray'][$MyRow['script']]=$MyRow['pagesecurity'];
 	}
 
-/* Also reads all the company data set up in the company record and returns an array */
+	/* Also reads all the company data set up in the company record and returns an array */
 
 	$SQL=	"SELECT	coyname,
 					gstno,
@@ -111,6 +114,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 		$_SESSION['SMTPSettings']['timeout']=$MyRow['timeout'];
 		$_SESSION['SMTPSettings']['auth']=$MyRow['auth'];
 	}
+
 	//Add favorite scripts
 	//Check that the favourites table exists (upgrades will choke otherwise)
 

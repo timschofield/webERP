@@ -6,6 +6,7 @@ Shipment charges are posted to the debit of GRN suspense if the Creditors - GL l
 This is cleared against credits to the GRN suspense when the products are received into stock and any
 purchase price variance calculated when the shipment is closed */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSuppTransClass.php');
 
 /* Session started here for password checking and authorisation level check */

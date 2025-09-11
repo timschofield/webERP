@@ -39,7 +39,7 @@ date_default_timezone_set('Pacific/Auckland');
 // $Host is the computer ip address or name where the database is located
 // If the web server is also the database server then use 'localhost' or '127.0.0.1'
 $Host = 'localhost';
-$MySQLPort = 3306;
+$DBPort = 3306;
 // The type of db server being used
 //$DBType = 'mysqli'; // use for mysql server
 //$DBType = 'mariadb';

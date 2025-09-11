@@ -61,7 +61,7 @@ if (!isset($_POST['DoUpgrade'])) {
 
 if (isset($_POST['DoUpgrade'])) {
 
-	if ($DBType=='mysql' OR $DBType =='mysqli') {
+	if ($DBType == 'mysql' or $DBType == 'mysqli' or $DBType == 'mariadb') {
 
 		$SQLScripts = array();
 
@@ -168,9 +168,9 @@ if (isset($_POST['DoUpgrade'])) {
 						$ConfigFileContents = str_replace('dbuser','DBUser', $ConfigFileContents);
 						$ConfigFileContents = str_replace('dbpassword','DBPassword', $ConfigFileContents);
 						$ConfigFileContents = str_replace('dbType','DBType', $ConfigFileContents);
-						$ConfigFileContents = str_replace('allow_demo_mode','AllowDemoMode',$ConfigFileContents);
-						$ConfigFileContents = str_replace('rootpath','RootPath',$ConfigFileContents);
-						file_put_contents('config.php',$ConfigFileContents);
+						$ConfigFileContents = str_replace('allow_demo_mode','AllowDemoMode', $ConfigFileContents);
+						$ConfigFileContents = str_replace('rootpath','RootPath', $ConfigFileContents);
+						file_put_contents($PathPrefix . 'config.php', $ConfigFileContents);
 						prnMsg( __('You should now make the config.php read only for the web server.'), 'warning');
 					}
 					$SQLScripts[] = './sql/mysql/upgrade4.09-4.10.sql';
@@ -294,9 +294,9 @@ if (isset($_POST['DoUpgrade'])) {
 	} //end of loop around SQLScripts  apply
 	DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
-	$ForceConfigReload=true;
+	$ForceConfigReload = true;
 	include('includes/GetConfig.php');
-	$ForceConfigReload=false;
+	$ForceConfigReload = false;
 } /*Dont do upgrade */
 
 include('includes/footer.php');

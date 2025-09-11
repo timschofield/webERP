@@ -2,15 +2,15 @@
 
 // Entry of a purchase order items - allows entry of items with lookup of currency cost from Purchasing Data previously entered also allows entry of nominal items against a general ledger code if the AP is integrated to the GL.
 
-/// @todo move to after session.php if no side effects
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePOClass.php');
-include('includes/ImageFunctions.php');
 
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Purchase Order Items');
 
 include('includes/SQL_CommonFunctions.php');
+include('includes/ImageFunctions.php');
 
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 

@@ -15,5 +15,5 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$CreateResult = DB_query($CreateSQL);
 	$CreateRow = DB_fetch_array($CreateResult);
 
-	file_put_contents('install/sql/tables/' . $CreateRow[0] . '.sql', $CreateRow[1]);
+	file_put_contents($PathPrefix . 'install/sql/tables/' . $CreateRow[0] . '.sql', $CreateRow[1]);
 }

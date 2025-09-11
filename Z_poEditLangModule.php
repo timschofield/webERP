@@ -20,8 +20,8 @@ echo '<br />&nbsp;' . __('Current language is') . ' ' . $_SESSION['Language'];
 echo '<br /><br />&nbsp;' . __('To change language click on the user name at the top left, change to language desired and click Modify');
 echo '<br />&nbsp;' . __('Make sure you have selected the correct language to translate!');
 
-$PathToLanguage		= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
-$PathToNewLanguage	= './locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
+$PathToLanguage		= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po';
+$PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESSAGES/messages.po.new';
 
 if (isset($_POST['ReMergePO'])){
 
@@ -41,12 +41,13 @@ if (isset($_POST['ReMergePO'])){
 
 		$xgettextCmd		= 'xgettext --no-wrap -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;
 
-		system($xgettextCmd);
+		exec($xgettextCmd, $output, $result);
 	/*now merge the translated file with the new template to get new strings*/
 
 		$MsgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
 
-		system($MsgMergeCmd);
+		/// @todo check for failures
+		exec($MsgMergeCmd, $output, $result);
 		//$Result = rename($PathToNewLanguage, $PathToLanguage);
 		exit();
 	}
@@ -98,7 +99,8 @@ if (isset($_POST['module'])) {
 
     /*now need to create the .mo file from the .po file */
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
-		system($MsgfmtCommand);
+		/// @todo check for failures
+		exec($MsgfmtCommand, $output, $result);
 
 		prnMsg(__('Done') . '<br />', 'info', ' ');
 

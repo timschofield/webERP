@@ -6,7 +6,7 @@
 This is where the delivery details are confirmed/entered/modified and the order committed to the database once the place order/modify order button is hit.
 */
 
-/// @todo move to after session.php, if no side effects
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 
 require(__DIR__ . '/includes/session.php');

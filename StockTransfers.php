@@ -2,6 +2,10 @@
 
 /* Entry of point to point stock location transfers of a single part. */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockTransfers.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Stock Transfers');
@@ -9,8 +13,6 @@ $ViewTopic = "Inventory";
 $BookMark = "LocationTransfers";
 include('includes/header.php');
 
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
 include('includes/SQL_CommonFunctions.php');
 
 if(isset($_GET['New'])) {

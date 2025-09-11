@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<phpunit colors="true" cacheResult="false">
+	<testsuites>
+		<testsuite name="webERP Installer Test Suite">
+			<directory suffix=".php">./tests/install</directory>
+		</testsuite>
+		<testsuite name="webERP Website Test Suite">
+			<directory suffix=".php">./tests/run</directory>
+		</testsuite>
+	</testsuites>
+
+	<!-- override the value of these in a file ./phpunit.xml if your test environment is different -->
+	<php>
+		<!--
+		     NB: a note to developers: if adding an env var here, please update correspondingly the example given in
+		     docs/developers/RUNNING_TESTS.md
+		-->
+		<env name="TEST_TARGET_PROTOCOL" value="http" />
+		<!-- NB: tests are guaranteed to only work when testing the _current_ codebase.
+		     This variable is not meant to be used for testing servers which run a different branch/commit -->
+		<env name="TEST_TARGET_HOSTNAME" value="localhost" />
+		<env name="TEST_TARGET_PORT" value="" />
+		<env name="TEST_TARGET_BASE_URL" value="/" />
+
+		<env name="TEST_DB_TYPE" value="mysqli" />
+		<!-- usage of IP instead of `localhost` works better with mysql/mariadb running in containers -->
+		<env name="TEST_DB_HOSTNAME" value="127.0.0.1" />
+		<env name="TEST_DB_PORT" value="3306" />
+		<env name="TEST_DB_USER" value="root" />
+		<env name="TEST_DB_PASSWORD" value="root" />
+		<env name="TEST_DB_SCHEMA" value="weberp" />
+
+		<env name="TEST_USER_ACCOUNT" value="admin" />
+		<env name="TEST_USER_PASSWORD" value="weberp" />
+		<env name="TEST_USER_EMAIL" value="admin@weberp.org" />
+
+		<!-- when a test fails which tests a web page, the html contents of that page will be saved in this directory -->
+		<env name="TEST_ERROR_SCREENSHOTS_DIR" value="./" />
+	</php>
+
+	<!-- code coverage reporting -->
+	<filter>
+		<whitelist>
+			<directory suffix=".php">./</directory>
+			<exclude>
+				<directory>./build</directory>
+				<directory>./doc</directory>
+				<directory>./tests</directory>
+				<directory>./vendor</directory>
+			</exclude>
+		</whitelist>
+	</filter>
+</phpunit>

@@ -10,20 +10,8 @@ use Dompdf\Dompdf;
 
 include ('includes/SQL_CommonFunctions.php');
 include ('includes/GetPrice.php');
-
-function getImageTag($stockid) {
-	$SupportedImgExt = array('png', 'jpg', 'jpeg');
-	$partPicsDir = $_SESSION['part_pics_dir'];
-	foreach ($SupportedImgExt as $ext) {
-		$imageFile = "{$partPicsDir}/{$stockid}.{$ext}";
-		if (file_exists($imageFile)) {
-			$base64 = base64_encode(file_get_contents($imageFile));
-			$mime = "image/{$ext}";
-			return "<img src='data:{$mime};base64,{$base64}' style='width:35px; height:35px; vertical-align:middle; margin-right:4px;' />";
-		}
-	}
-	return '';
-}
+include ('includes/ImageFunctions.php');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
@@ -202,27 +190,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		// Check if any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock'] == 1) {
-			$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-				FROM loctransfers
-				WHERE stockid='" . $MyRow['stockid'] . "'
-					AND shiploc='" . $_POST['FromLocation'] . "'
-					AND pendingqty>0";
-			$InTransitResult = DB_query($InTransitSQL);
-			$InTransitRow = DB_fetch_array($InTransitResult);
-			$InTransitQuantityAtFrom = $InTransitRow['intransit'];
+			$InTransitQuantityAtFrom = GetItemQtyInTransitFromLocation($MyRow['stockid'], $_POST['FromLocation']);
 		}
 		$AvailableShipQtyAtFrom = $MyRow['available'] - $InTransitQuantityAtFrom;
 
 		// Check if TO location is waiting to receive some stock
-		$InTransitQuantityAtTo = 0;
-		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
-				FROM loctransfers
-				WHERE stockid='" . $MyRow['stockid'] . "'
-					AND recloc='" . $_POST['ToLocation'] . "'
-					AND pendingqty>0";
-		$InTransitResult = DB_query($InTransitSQL);
-		$InTransitRow = DB_fetch_array($InTransitResult);
-		$InTransitQuantityAtTo = $InTransitRow['intransit'];
+		$InTransitQuantityAtTo = GetItemQtyInTransitToLocation($MyRow['stockid'], $_POST['ToLocation']);
 
 		$NeededQtyAtTo = $MyRow['neededqty'] - $InTransitQuantityAtTo;
 

@@ -63,12 +63,12 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 				}
 			}
 
-			if ($_POST['CreateDB']==true){
-				/* Need to read in the sql script and process the queries to iniate a new DB */
+			if ($_POST['CreateDB']==true) {
+				/* Need to read in the sql script and process the queries to initiate a new DB */
 
 				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
 
-				if ($DBType=='postgres'){
+				if ($DBType=='postgres') {
 
 					$PgConnStr = 'dbname=' . $_POST['NewDatabase'];
 					if ( isset($Host) && ($Host != "")) {
@@ -85,12 +85,12 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 					$db = pg_connect( $PgConnStr );
 					$SQLScriptFile = file('./sql/pg/default.psql');
 
-				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
+				} elseif ($DBType =='mysql') { // it's a mysql/mariadb db, using the defunct php API
 					mysql_select_db($_POST['NewDatabase'],$db);
 					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
-				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
-					mysqli_select_db($db,$_POST['NewDatabase']);
+				} elseif ($DBType =='mysqli' or $DBType =='mariadb') { // it's a mysql/mariadb db
+					mysqli_select_db($db, $_POST['NewDatabase']);
 					/// @todo fix - which db dump to start with ?
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
 				}
@@ -181,7 +181,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
          //now update the config.php file if using the obfuscated database login else we don't want it there
         if (isset($CompanyList) && is_array($CompanyList)) {
-            $ConfigFile = './config.php';
+            $ConfigFile = $PathPrefix . 'config.php';
             $config_php = join('', file($ConfigFile));
             //fix the Post var - it is being preprocessed with slashes and entity encoded which we do not want here
             $_POST['NewCompany'] =  html_entity_decode($_POST['NewCompany'],ENT_QUOTES,'UTF-8');
@@ -217,9 +217,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		$SQL = "UPDATE companies SET coyname='" . $_POST['NewCompany'] . "' WHERE coycode = 1";
 		$Result = DB_query($SQL);
 
-		$ForceConfigReload=true;
+		$ForceConfigReload = true;
 		include('includes/GetConfig.php');
-		$ForceConfigReload=false;
+		$ForceConfigReload = false;
 
 		prnMsg(__('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . __('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 

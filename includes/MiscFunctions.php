@@ -145,6 +145,7 @@ class XmlElement {
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
+	/// @todo file_get_contents might be disabled for remote files. Use a better api: curl or sockets
 	if (http_file_exists('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
 		$xml = file_get_contents('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
@@ -206,6 +207,7 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 
 function quote_oanda_currency($CurrCode) {
 	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		/// @todo file_get_contents and co. might be disabled for remote files. Use a better api: curl or sockets
 		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
@@ -278,7 +280,7 @@ function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 			}
 			$YPos=$YPos-$FontSize-$InitialExtraSpace;
 			$InitialExtraSpace=0;
-			$LeftOvers = $PDF->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
+			$LeftOvers = $pdf->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
 		}
 	}
 }
@@ -288,20 +290,20 @@ function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$PDF->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
+	$pdf->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
 	$YPos -= $FontSize;
 	$FontSize = 10;
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-	$PDF->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-	$PDF->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
-	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
-	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
+	$pdf->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+	$pdf->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+	$pdf->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+	$pdf->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
+	$pdf->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
 		' ' . $_SESSION['CompanyRecord']['regoffice6']);
-	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  __('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+	$pdf->addText($XPos, $YPos-$FontSize*5, $FontSize,  __('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
 		' ' . __('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
+	$pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
 }
 
 // Generically move down 82 units after printing this
@@ -311,16 +313,16 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 
 	$FontSize = 14;
 	$LineHeight=15;
-	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
-	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
-	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
-	$PDF->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
+	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
+	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
+	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
+	$pdf->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$PDF->RoundRectangle(
+	$pdf->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.
@@ -336,16 +338,16 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 
 	$FontSize = 14;
 	$LineHeight=15;
-	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
-	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
-	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
-	$PDF->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
+	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
+	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
+	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
+	$pdf->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$PDF->RoundRectangle(
+	$pdf->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.
@@ -433,6 +435,7 @@ function LogBackTrace($dest = 0) {
 }
 
 function http_file_exists($url) {
+	/// @todo send a proper HEAD request
 	$f = @fopen($url, 'r');
 	if ($f) {
 		fclose($f);
@@ -739,31 +742,30 @@ function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
 
+/**
+ * Main email sending function for WebERP
+ *
+ * This function serves as the primary interface for sending emails from WebERP.
+ * It determines whether to use standard PHP mail() function or SMTP based on system configuration
+ * and handles different input formats for recipients and attachments.
+ *
+ * @param string $From        Email address of the sender
+ * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
+ * @param string $Subject     Subject of the email
+ * @param string $Body        Body content of the email
+ * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
+ * @param bool   $Silent      If true, suppresses success/error messages (default: false)
+ *
+ * @return mixed Returns true if email was sent successfully, or error message if failed
+ */
 function SendEmailFromWebERP($From, $To, $Subject, $Body, $Attachments=array(), $Silent = false) {
-	/**
-	 * Main email sending function for WebERP
-	 *
-	 * This function serves as the primary interface for sending emails from WebERP.
-	 * It determines whether to use standard PHP mail() function or SMTP based on system configuration
-	 * and handles different input formats for recipients and attachments.
-	 *
-	 * @param string $From        Email address of the sender
-	 * @param mixed  $To          Can be string with single email or array of email addresses (keys) with names (values)
-	 * @param string $Subject     Subject of the email
-	 * @param string $Body        Body content of the email
-	 * @param mixed  $Attachments Can be string with single file path or array of file paths to attach
-	 * @param bool   $Silent      If true, suppresses success/error messages (default: false)
-	 *
-	 * @return mixed Returns true if email was sent successfully, or error message if failed
-	 */
 
 	// Convert $Attachments to array if it's a string
 	if (!is_array($Attachments) && !empty($Attachments)) {
 		$Attachments = array($Attachments);
 	}
 
-	$EmailSent = false;
-	if($_SESSION['SmtpSetting'] == 0){
+	if ($_SESSION['SmtpSetting'] == 0) {
 		// Handle both string and array formats for $To
 		if (is_array($To)) {
 			$EmailSent = true; // Start with true, will be set to false if any email fails
@@ -838,8 +840,8 @@ function SendEmailBySmtp($MailObj, $From, $To, $Subject, $Body, $Attachments=arr
 	$MailObj->Password = $MyEmailRow['password'];
 	$MailObj->Port = $MyEmailRow['port'];
 	$MailObj->setFrom($From, '');
-	$Recipients = '';
-	$RecipientNames = '';
+	//$Recipients = '';
+	//$RecipientNames = '';
 	foreach ($To as $ToAddress => $ToName) {
 		$MailObj->addAddress($ToAddress, $ToName);
 	}

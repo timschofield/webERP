@@ -1,14 +1,15 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineSerialItems.php');
+include('includes/DefineStockTransfers.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Transfer Controlled Items');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
-
-include('includes/DefineSerialItems.php');
-include('includes/DefineStockTransfers.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') . '" alt="" /><b>' . $Title . '</b></p>';
 

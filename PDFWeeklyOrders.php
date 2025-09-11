@@ -1,6 +1,6 @@
 <?php
 
-/// @todo this should probably not be hardcoded here. What about using $DefaultDatabase from config.php?
+/// @todo this should probably not be hardcoded here. What about using $DefaultDatabase from config.php? Or just not defining it?
 $DatabaseName = 'weberp';
 $AllowAnyone = true;
 
