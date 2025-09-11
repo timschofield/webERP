@@ -18,7 +18,6 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Procedure division ===================================================
 require(__DIR__ . '/includes/session.php');
 
 $Title = __('Horizontal Analysis of Statement of Financial Position');

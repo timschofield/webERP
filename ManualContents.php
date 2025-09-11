@@ -16,7 +16,6 @@ Comments beginning with Help Begin and Help End denote the beginning and end of 
 What section is named after Help Begin: and there can be multiple sections separated with a comma.
 */
 
-// BEGIN: Procedure division ---------------------------------------------------
 $PageSecurity = 0;
 
 // Set the language to show the manual:
@@ -144,4 +143,3 @@ if(file_exists($ManualFooter)) {// Use locale ManualHeader.html if exists. Each 
 }
 
 ob_end_flush();
-// END: Procedure division -----------------------------------------------------

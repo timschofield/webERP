@@ -11,8 +11,8 @@ if (isset($_GET['SelectedTag'])) {
 	if ($_GET['Action'] == 'delete') {
 		//first off test there are no transactions created with this tag
 		$Result = DB_query("SELECT counterindex
-							FROM gltrans
-							WHERE tag='" . $_GET['SelectedTag'] . "'");
+							FROM gltags
+							WHERE tagref='" . $_GET['SelectedTag'] . "'");
 		if (DB_num_rows($Result) > 0) {
 			prnMsg(__('This tag cannot be deleted since there are already general ledger transactions created using it.') , 'error');
 		}
@@ -42,12 +42,22 @@ else {
 if (isset($_POST['submit'])) {
 	$SQL = "INSERT INTO tags values(NULL, '" . $_POST['Description'] . "')";
 	$Result = DB_query($SQL);
+	if (DB_error_no($Result) == 0) {
+		prnMsg(__('The tag was inserted correctly'), 'success');
+	} else {
+		prnMsg(__('The tag could not be inserted'), 'error');
+	}
 }
 
 if (isset($_POST['update'])) {
 	$SQL = "UPDATE tags SET tagdescription='" . $_POST['Description'] . "'
 		WHERE tagref='" . $_POST['reference'] . "'";
 	$Result = DB_query($SQL);
+	if (DB_error_no($Result) == 0) {
+		prnMsg(__('The tag was updated correctly'), 'success');
+	} else {
+		prnMsg(__('The tag could not be updated'), 'error');
+	}
 }
 echo '<p class="page_title_text">
 		<img src="' . $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . __('Print') . '" alt="" />' . ' ' . $Title . '
@@ -82,10 +92,13 @@ echo '</div>
 	</form>';
 
 echo '<table class="selection">
-	<tr>
-		<th>' . __('Tag ID') . '</th>
-		<th>' . __('Description') . '</th>
-	</tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . __('Tag ID') . '</th>
+				<th class="SortedColumn">' . __('Description') . '</th>
+				<th colspan="2"></th>
+			</tr>
+		</thead>';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -94,14 +107,16 @@ $SQL = "SELECT tagref,
 
 $Result = DB_query($SQL);
 
+echo '<tbody>';
 while ($MyRow = DB_fetch_array($Result)) {
-	echo '<tr>
+	echo '<tr class="striped_row">
 			<td>' . $MyRow['tagref'] . '</td>
 			<td>' . $MyRow['tagdescription'] . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=edit">' . __('Edit') . '</a></td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=delete" onclick="return confirm(\'' . __('Are you sure you wish to delete this GL tag?') . '\');">' . __('Delete') . '</a></td>
 		</tr>';
 }
+echo '</tbody>';
 
 echo '</table>';
 

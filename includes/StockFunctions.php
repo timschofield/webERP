@@ -7,6 +7,8 @@ GetDemand                                    - Calculates total demand from all 
 GetDemandQuantityAsComponentInAssemblyItems  - Gets quantity needed as components in bill of materials
 GetDemandQuantityAsComponentInWorkOrders     - Gets quantity needed as components in work orders
 GetDemandQuantityDueToOutstandingSalesOrders - Gets quantity demanded from outstanding sales orders
+GetItemQtyInTransitFromLocation              - Gets quantity in transit from a specific location
+GetItemQtyInTransitToLocation                - Gets quantity in transit to a specific location
 GetQuantityOnHand                            - Gets total quantity available in stock
 GetQuantityOnOrder                           - Gets total quantity on order from all sources
 GetQuantityOnOrderDueToPurchaseOrders        - Gets quantity on order from purchase orders
@@ -465,4 +467,74 @@ function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location) {
 		$MyRow = DB_fetch_array($Result);
 		return (float)$MyRow['demand'];
 	}
+}
+
+/**
+Calculates the total quantity of a stock item that is currently in transit FROM a specific location.
+
+### Parameters
+- `$StockId` (string): The unique identifier for the stock item
+- `$LocationCode` (string): The location code from which items are being shipped
+
+### Returns
+- `float`: The sum of pending quantities being shipped from the specified location
+- Returns `0` if no items are in transit from this location
+
+### Query Conditions
+- Only includes transfers with pending quantities greater than 0
+- Filters by shipping location (shiploc)
+- Sums all pending quantities for the specified stock item and location
+
+### Notes
+- Used to track inventory that has been shipped but not yet received
+- Helps in calculating available stock by accounting for outbound transfers
+*/
+function GetItemQtyInTransitFromLocation($StockId, $LocationCode) {
+		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
+						FROM loctransfers
+						WHERE stockid='" . $StockId . "'
+							AND shiploc='" . $LocationCode . "'
+							AND pendingqty > 0";
+		$InTransitResult = DB_query($InTransitSQL);
+		$InTransitRow = DB_fetch_array($InTransitResult);
+		if ($InTransitRow['intransit'] != '') {
+			return $InTransitRow['intransit'];
+		} else {
+			return 0;
+		}
+}
+
+/**
+Calculates the total quantity of a stock item that is currently in transit TO a specific location.
+
+### Parameters
+- `$StockId` (string): The unique identifier for the stock item
+- `$LocationCode` (string): The location code to which items are being received
+
+### Returns
+- `float`: The sum of pending quantities being received at the specified location
+- Returns `0` if no items are in transit to this location
+
+### Query Conditions
+- Only includes transfers with pending quantities greater than 0
+- Filters by receiving location (recloc)
+- Sums all pending quantities for the specified stock item and location
+
+### Notes
+- Used to track inventory that has been shipped but not yet received
+- Helps in calculating expected stock by accounting for inbound transfers
+*/
+function GetItemQtyInTransitToLocation($StockId, $LocationCode) {
+		$InTransitSQL = "SELECT SUM(pendingqty) as intransit
+						FROM loctransfers
+						WHERE stockid='" . $StockId . "'
+							AND recloc='" . $LocationCode . "'
+							AND pendingqty > 0";
+		$InTransitResult = DB_query($InTransitSQL);
+		$InTransitRow = DB_fetch_array($InTransitResult);
+		if ($InTransitRow['intransit'] != '') {
+			return $InTransitRow['intransit'];
+		} else {
+			return 0;
+		}
 }

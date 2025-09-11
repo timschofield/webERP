@@ -1,5 +1,8 @@
 <?php
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineWOClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 $ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
@@ -7,7 +10,6 @@ $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 $Title = __('Work Order Entry');
 include('includes/header.php');
 
-include('includes/DefineWOClass.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/ImageFunctions.php');
 

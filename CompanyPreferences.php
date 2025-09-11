@@ -36,9 +36,9 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if ($InputError !=1){
+	if ($InputError !=1) {
 
-		$CompanyFileHandler = fopen('companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
+		$CompanyFileHandler = fopen($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
 		$Contents = "<?php\n\n";
 		$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_POST['CoyName'] . "';\n";
 		$Contents.= "?>";

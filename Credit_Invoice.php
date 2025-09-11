@@ -1,9 +1,9 @@
 <?php
 
-/// @todo move to after session.php inclusion, unless there are side effects
 /* Functions to get the GL codes to post the transaction to */
 include('includes/GetSalesTransGLCodes.php');
 /* defines the structure of the data required to hold the transaction as a session variable */
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 

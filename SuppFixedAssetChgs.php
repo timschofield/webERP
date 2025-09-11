@@ -4,6 +4,7 @@
 the SuppTrans class contains an array of Asset objects called Assets - containing details of all asset additions on a supplier invoice
 Asset additions are posted to the debit of fixed asset category cost account if the creditors GL link is on */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSuppTransClass.php');
 
 require(__DIR__ . '/includes/session.php');

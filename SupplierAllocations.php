@@ -14,6 +14,7 @@
 	allocated
 */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefineSuppAllocsClass.php');
 
 require(__DIR__ . '/includes/session.php');

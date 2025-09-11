@@ -5,6 +5,7 @@
 require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
+use gggeek\barcodepack;
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -248,17 +249,67 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	$HTML = '<html><head><style>
 		body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
-		.table { border-collapse: collapse; width: 100%; }
+		.table { border-collapse: collapse; width: 100%;margin-bottom:10px; }
 		.table th, .table td { border: 1px solid #000; padding: 4px; }
 		.header { font-weight: bold; font-size: 16px; text-align: center; margin-bottom: 20px; }
 		</style></head><body>';
-	$HTML .= '<div class="centre" id="ReportHeader">
-					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
-				</div>';
+
+	$HTML .= '<html>
+				<head>';
+	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	$HTML .= '<img class="logo" src=' . $_SESSION['LogoFile'] . ' /><br />';
+
+	$HTML .= '<table>
+				<tr>
+					<td style="width:50%;background:transparent">';
+	$HTML .= '<div class="centre" id="ReportHeader">';
+	$HTML .= $_SESSION['CompanyRecord']['coyname'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice1'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice2'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice3'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice4'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice5'] . '<br />';
+	$HTML .= $_SESSION['CompanyRecord']['regoffice6'] . '<br />';
+	$HTML .= __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />';
+	$HTML .= '</div>';
+	$HTML .= '</td>';
+	$HTML .= '<td style="width:50%;background:transparent"><div class="centre" id="ReportHeader" style="float:right">';
+	$HTML .= __('Produced At') . ':<br />';
+	$HTML .= $WOHeader['locationname'] . '<br />';
+	$HTML .= $WOHeader['deladd1'] . '<br />';
+	$HTML .= $WOHeader['deladd2'] . '<br />';
+	$HTML .= $WOHeader['deladd3'] . '<br />';
+	$HTML .= $WOHeader['deladd4'] . '<br />';
+	$HTML .= $WOHeader['deladd5'] . '<br />';
+	$HTML .= $WOHeader['deladd6'] . '<br />';
+	$HTML .= '</div></td></tr></table>';
 	$HTML .= '<div class="header">' . __('Work Order Number') . ' ' . htmlspecialchars($SelectedWO) . '</div>';
+	$HTML .= '<table class="table"><tr>
+				<th colspan="7"><h4>' . __('Work Order Details') . '</h4></th>
+			</tr><tr>
+				<th>' . __('Item Number') . '</th>
+				<th>' . __('Item Description') . '</th>
+				<th>' . __('Lot') . '</th>
+				<th>' . __('Required By') . '</th>
+				<th>' . __('Qty Required') . '</th>
+				<th>' . __('Qty Received') . '</th>
+				<th>' . __('Packing Qty') . '</th>
+			</tr>
+			<tr>
+				<td>' . $StockID . '</td>
+				<td>' . $WOHeader['description'] . '</td>
+				<td>' . $SerialNo . '</td>
+				<td>' . ConvertSQLDate($WOHeader['requiredby']) . '</td>
+				<td class="number">' . $WOHeader['qtyreqd'] . '</td>
+				<td class="number">' . $WOHeader['qtyrecd'] . '</td>
+				<td class="number">' . $PackQty . '</td>
+			</tr>
+			</table>';
 	$HTML .= '<table class="table">';
 	$HTML .= '<tr>
+				<th colspan="6"><h4>' . __('Material Requirements for this Work Order') . '</h4></th>
+			</tr>
+			<tr>
 				<th>' . __('Action') . '</th>
 				<th>' . __('Item') . '</th>
 				<th>' . __('Description') . '</th>
@@ -319,14 +370,38 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			<td>' . htmlspecialchars($line['action']) . '</td>
 			<td>' . htmlspecialchars($line['item']) . '</td>
 			<td>' . htmlspecialchars($line['description']) . '</td>
-			<td style="text-align:right;">' . locale_number_format($line['qtyreqd'], $line['decimalplaces']) . '</td>
-			<td style="text-align:right;">' . locale_number_format($line['issued'], $line['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($line['qtyreqd'], $line['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($line['issued'], $line['decimalplaces']) . '</td>
 			<td>' . htmlspecialchars($line['units']) . '</td>
 		</tr>';
 	}
 	$HTML .= '</table>';
-
 	$HTML .= '<br/><b>' . __('Comments') . ':</b><br/>' . nl2br(htmlspecialchars($WOHeader['comments'])) . '<br/>';
+
+	// Generate QR code for https://weberp.org via barcodepack
+	ob_start();
+	$qr = new \BarcodePack\qrCode($RootPath.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr->draw();  // This outputs PNG image directly
+	$imageData = ob_get_contents();
+	ob_end_clean();
+	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr.png');
+	$qrImgTag = '<div style="margin-right:18px 0;"><img style="width:192px" style="margin-top:80px" src="' .$_SESSION['part_pics_dir'] . '/qr.png" alt="QR Code">';
+	ob_start();
+	$qr = new \BarcodePack\qrCode($StockID,7);
+	$qr->draw();  // This outputs PNG image directly
+	$imageData = ob_get_contents();
+	ob_end_clean();
+	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr1.png');
+	$qrImgTag .= '<img style="width:192px" style="margin-bottom:-10px" src="' .$_SESSION['part_pics_dir'] . '/qr1.png" alt="QR Code">';
+	ob_start();
+	$qr = new \BarcodePack\qrCode($BaseURL.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr->draw();  // This outputs PNG image directly
+	$imageData = ob_get_contents();
+	ob_end_clean();
+	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr2.png');
+	$qrImgTag .= '<img style="width:192px" style="margin-top:80px" src="' .$_SESSION['part_pics_dir'] . '/qr2.png" alt="QR Code"></div>';
+	// Insert QR code here
+	$HTML .= $qrImgTag;
 
 	$HTML .= '<br/><b>' . __('Date') . ':</b> ______________ &nbsp;&nbsp; <b>' . __('Signed for') . ':</b> ____________________________________';
 
@@ -342,7 +417,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$dompdf->loadHtml($HTML);
 
 		// (Optional) Setup the paper size and orientation
-		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
 
 		// Render the HTML as PDF
 		$dompdf->render();
@@ -355,16 +430,18 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	} else {
 		// Save PDF to file and send email
 		$pdfOutput = $dompdf->output();
-		$pdfFileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
-		file_put_contents($pdfFileName, $pdfOutput);
+		$PDFFileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_WorkOrder_' . $SelectedWO . '_' . date('Y-m-d') . '.pdf';
+		file_put_contents($PDFFileName, $pdfOutput);
 
 		$Success = SendEmailFromWebERP(
 			$_SESSION['CompanyRecord']['email'],
 			array($_POST['EmailTo'] => ''),
 			__('Work Order Number') . ' ' . $SelectedWO,
-			('Please Process this Work order number') . ' ' . $SelectedWO,
-			$pdfFileName
+			__('Please Process this Work order number') . ' ' . $SelectedWO,
+			array($PDFFileName)
 		);
+
+		/// @todo should we delete the generated report?
 
 		include('includes/header.php');
 		if ($Success == 1) {

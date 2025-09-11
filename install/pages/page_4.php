@@ -8,22 +8,24 @@ if (!isset($PathPrefix)) {
 $DataSaved = '';
 
 if (isset($_POST['test'])) {
+	/// @todo validate this is not ''
 	$_SESSION['Installer']['AdminUser'] = $_POST['adminaccount'];
+	/// @todo validate this is a valid email address according to RFC
 	$_SESSION['Installer']['AdminEmail'] = $_POST['Email'];
+	/// @todo do basic checks on password - eg. min length, possibly more
 	$_SESSION['Installer']['AdminPassword'] = $_POST['webERPPassword'];
 
 	$DataSaved = 'yes';
 	$Message = __('Information saved successfully');
 }
 
-echo '<form method="post" action="index.php?Page=4">
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Page=4">
 		<fieldset>
 			<legend>' . __('Administrator account settings') . '</legend>
 			<div class="page_help_text">
 				<p>' . __('Please enter your administrator account details below.') . '<br />
 				</p>
-				<p>' . __('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . __('which you can change below.') . '<br />
-				   ' . __('The default password is') . ' ' . '<b><i>weberp</i></b>' . ' ' . __('which you can change below.') . '</p>
+				<p>' . __('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . __('which you can change below.') . '</p>
 			</div>
 			<ul>
 				<field>
@@ -32,7 +34,7 @@ echo '<form method="post" action="index.php?Page=4">
 				</field>
 				<field>
 					<label for="Email">' . __('Email Address') . ': </label>
-					<input type="email" name="Email" value="' . $_SESSION['Installer']['AdminEmail'] . '" placeholder="admin@yoursite.com" />
+					<input type="email" name="Email" value="' . $_SESSION['Installer']['AdminEmail'] . '" />
 					<fieldhelp>' . __('For example: admin@yoursite.com') . '</fieldhelp>
 				</field>
 				<field>

@@ -17,7 +17,6 @@ Parameters:
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
 
-// BEGIN: Functions division ===================================================
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
@@ -39,9 +38,7 @@ function colDebitCredit($Amount) {
 		return '<td>&nbsp;</td><td class="number">' . locale_number_format($Amount, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';// Inflow.
 	}
 }
-// END: Functions division =====================================================
 
-// BEGIN: Procedure division ===================================================
 if (!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 	require(__DIR__ . '/includes/session.php');
 }

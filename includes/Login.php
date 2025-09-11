@@ -11,7 +11,7 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == true) and (!isset($DemoText))
 	$DemoText = __('Please login here');
 }
 
-echo '<!DOCTYPE html>';
+echo "<!DOCTYPE html>\n";
 /// @todo handle better the case where $Language is not in xx-YY format (full spec is at https://www.rfc-editor.org/rfc/rfc5646.html)
 echo '<html lang="' , str_replace('_', '-', substr($Language, 0, 5)) , '">
 	<head>
@@ -35,7 +35,7 @@ echo '<body>
 		</div>
 		<div id="login_box">
 			<form action="' . $RootPath . '/index.php" name="LogIn" method="post" class="noPrint">
-			<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+			<input type="hidden" name="FormID" value="', sha1(uniqid(mt_rand(), true)), '" />';
 
 if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $_COOKIE['Login'];

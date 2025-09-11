@@ -2,6 +2,9 @@
 
 // Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
+include('includes/DefineSpecialOrderClass.php');
+
 require(__DIR__ . '/includes/session.php');
 
 include('includes/SQL_CommonFunctions.php');
@@ -10,8 +13,6 @@ $ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';
 $Title = __('Special Order Entry');
 include('includes/header.php');
-
-include('includes/DefineSpecialOrderClass.php');
 
 if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);}
 
@@ -60,7 +61,6 @@ if (!isset($_SESSION['SPL'.$identifier])){
 	$_SESSION['SPL'.$identifier] = new SpecialOrder;
 
 }
-
 
 /*if not already done populate the SPL object with supplier data */
 if (!isset($_SESSION['SPL'.$identifier]->SupplierID)){

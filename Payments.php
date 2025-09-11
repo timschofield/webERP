@@ -2,6 +2,7 @@
 
 /* Entry of bank account payments either against an AP account or a general ledger payment - if the AP-GL link in company preferences is set */
 
+// NB: these classes are not autoloaded, and their definition has to be included before the session is started (in session.php)
 include('includes/DefinePaymentClass.php');
 
 require(__DIR__ . '/includes/session.php');
@@ -272,31 +273,31 @@ if (isset($_POST['Narrative']) AND $_POST['Narrative'] != '') {
 // Supplier narrative in general ledger transactions:
 if (isset($_POST['gltrans_narrative'])) {
 	if ($_POST['gltrans_narrative'] == '') {
-		$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative = $_POST['Narrative']; // If blank, it uses the bank narrative.
+		$_SESSION['PaymentDetail' . $identifier]->GLTransNarrative = $_POST['Narrative']; // If blank, it uses the bank narrative.
 
 	}
 	else {
-		$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative = $_POST['gltrans_narrative'];
+		$_SESSION['PaymentDetail' . $identifier]->GLTransNarrative = $_POST['gltrans_narrative'];
 	}
 }
 // Supplier reference in supplier transactions:
 if (isset($_POST['supptrans_suppreference'])) {
 	if ($_POST['supptrans_suppreference'] == '') {
-		$_SESSION['PaymentDetail' . $identifier]->supptrans_suppreference = $_POST['Paymenttype']; // If blank, it uses the payment type.
+		$_SESSION['PaymentDetail' . $identifier]->SuppTransSuppReference = $_POST['Paymenttype']; // If blank, it uses the payment type.
 
 	}
 	else {
-		$_SESSION['PaymentDetail' . $identifier]->supptrans_suppreference = $_POST['supptrans_suppreference'];
+		$_SESSION['PaymentDetail' . $identifier]->SuppTransSuppReference = $_POST['supptrans_suppreference'];
 	}
 }
 // Transaction text in supplier transactions:
 if (isset($_POST['supptrans_transtext'])) {
 	if ($_POST['supptrans_transtext'] == '') {
-		$_SESSION['PaymentDetail' . $identifier]->supptrans_transtext = $_POST['Narrative']; // If blank, it uses the narrative.
+		$_SESSION['PaymentDetail' . $identifier]->SuppTransTransText = $_POST['Narrative']; // If blank, it uses the narrative.
 
 	}
 	else {
-		$_SESSION['PaymentDetail' . $identifier]->supptrans_transtext = $_POST['supptrans_transtext'];
+		$_SESSION['PaymentDetail' . $identifier]->SuppTransTransText = $_POST['supptrans_transtext'];
 	}
 }
 
@@ -605,10 +606,10 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							$_SESSION['PaymentDetail' . $identifier]->SupplierID . "','" .
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							date('Y-m-d H-i-s') . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->supptrans_suppreference . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->SuppTransSuppReference . "','" .
 							($_SESSION['PaymentDetail' . $identifier]->FunctionalExRate * $_SESSION['PaymentDetail' . $identifier]->ExRate) . "','" .
 							(-$_SESSION['PaymentDetail' . $identifier]->Amount - $_SESSION['PaymentDetail' . $identifier]->Discount) . "','" .
-							$_SESSION['PaymentDetail' . $identifier]->supptrans_transtext . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->SuppTransTransText . "','" .
 							$_POST['ChequeNum'] . "'
 						)";
 			$ErrMsg = __('Cannot insert a payment transaction against the supplier because');
@@ -651,7 +652,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			$ErrMsg = __('Cannot update the supplier record for the date of the last payment made because');
 			$Result = DB_query($SQL, $ErrMsg, '', true);
 
-			$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative = $_SESSION['PaymentDetail' . $identifier]->SupplierID . ' - ' . $_SESSION['PaymentDetail' . $identifier]->gltrans_narrative;
+			$_SESSION['PaymentDetail' . $identifier]->GLTransNarrative = $_SESSION['PaymentDetail' . $identifier]->SupplierID . ' - ' . $_SESSION['PaymentDetail' . $identifier]->GLTransNarrative;
 
 			if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1) { /* then do the supplier control GLTrans */
 				/* Now debit creditors account with payment + discount */
@@ -670,7 +671,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 							$PeriodNo . "','" .
 							$_SESSION['CompanyRecord']['creditorsact'] . "','" .
-							mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
+							mb_substr($_SESSION['PaymentDetail' . $identifier]->GLTransNarrative, 0, 200) . "','" .
 							$CreditorTotal . "'
 						)";
 				$ErrMsg = __('Cannot insert a GL transaction for the creditors account debit because');
@@ -692,7 +693,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$PeriodNo . "','" .
 								$_SESSION['CompanyRecord']['pytdiscountact'] . "','" .
-								mb_substr($_SESSION['PaymentDetail' . $identifier]->gltrans_narrative, 0, 200) . "','" .
+								mb_substr($_SESSION['PaymentDetail' . $identifier]->GLTransNarrative, 0, 200) . "','" .
 								(-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
 							)";
 					$ErrMsg = __('Cannot insert a GL transaction for the payment discount credit because');
@@ -1096,9 +1097,10 @@ if ($_SESSION['PaymentDetail' . $identifier]->AccountCurrency != $_SESSION['Comp
 }
 echo '<field>
 		<label for="Paymenttype">' . __('Payment type') . ':</label>
-		<select name="Paymenttype">';
+		<select name="Paymenttype" required="required">';
 
 include('includes/GetPaymentMethods.php');
+array_unshift($PaytTypes, '');
 /* The array Payttypes is set up in includes/GetPaymentMethods.php
  payment methods can be modified from the setup tab of the main menu under payment methods*/
 
@@ -1373,21 +1375,24 @@ else {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
+			<thead>
 				<tr>
-					<th class="Ascending">' . __('Date') . '</th>
-					<th class="Ascending">' . __('Transaction Type') . '</th>
-					<th class="Ascending">' . __('Transaction Number') . '</th>
-					<th class="Ascending">' . __('Reference') . '</th>
-					<th class="Ascending">' . __('Amount') . '</th>
-					<th class="Ascending">' . __('This time to pay') . '</th>
-				</tr>';
+					<th class="SortedColumn">' . __('Date') . '</th>
+					<th class="SortedColumn">' . __('Transaction Type') . '</th>
+					<th class="SortedColumn">' . __('Transaction Number') . '</th>
+					<th class="SortedColumn">' . __('Reference') . '</th>
+					<th class="SortedColumn">' . __('Amount') . '</th>
+					<th>' . __('This time to pay') . '</th>
+					<th>' . __('Amount to allocate') . '</th>
+				</tr>
+			</thead>';
 	$ids = '';
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
 		if (!isset($_POST['paid' . $MyRow['id']])) {
 			$_POST['paid' . $MyRow['id']] = 0;
 		}
-		echo '<tr>
+		echo '<tr class="striped_row">
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
 					<td>' . $MyRow['typename'] . '</td>
 					<td>' . $MyRow['transno'] . '</td>

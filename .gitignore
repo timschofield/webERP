@@ -15,5 +15,9 @@ Thumbs.db
 # ...except for weberpdemo
 !/companies/weberpdemo
 
+# the per-developer phpunit config and phpunit cache
+/.phpunit.result.cache
+/phpunit.xml
+
 # And the eventual .git dir from composer-installed projects which are downloaded as git clones
 /vendor/phplot/phplot/.git/
