@@ -89,6 +89,10 @@ jobs:
               #  chmod 755 ./tests/setup/setup_php.sh
               #  ./tests/setup/setup_php.sh
 
+            # This is required to make fpm take into account the php.ini settings added by shivammathur/setup-php
+            - name: Restart php-fpm
+              run: service 'php${{ matrix.php }}-fpm' restart
+
             # Composer latest is installed by shivammathur/setup-php - no need for manual install
             #- name: Set up Composer
             #  run: |
