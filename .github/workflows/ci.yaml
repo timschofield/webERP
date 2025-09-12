@@ -12,7 +12,8 @@ jobs:
             matrix:
                 include:
                     # @see https://github.com/actions/runner-images
-                    # @todo run some tests on 'windows-latest'
+                    # @todo run some tests on 'windows-latest' (no need to try testing on macs: those runners are never
+                    #       available on the github cloud, at least for free plans)
                     # NB: the order of options is picked to make the github page display nicer (test naming in left col)
                     - php: '8.5'
                       dbtype: mysql
@@ -49,12 +50,14 @@ jobs:
         # from the local filesystem to the containers (eg. the db config), and doing so breaks actions/checkout@v5
 
         steps:
-            - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
-            - run: echo "Job is now running on a ${{ runner.os }} server"
-            - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
+            - run: echo 'Job was automatically triggered by a ${{ github.event_name }} event'
+            - run: echo 'Job is now running on a ${{ runner.os }} server'
+            - run: echo 'Branch is ${{ github.ref }} and Repository is ${{ github.repository }}'
             - run: echo "Current directory is ${{ github.workspace }}, current user is $(id -u -n)"
 
             # has to be run before setting up the db and webserver, as we store their config files in the codebase
+            # @todo this way of checking out the code somehow breaks the build script `run_composer.sh`. We should
+            #       figure out how to fix that - or plain replace this with a `git clone` command
             - name: Check out repository code
               uses: actions/checkout@v5
 
@@ -66,7 +69,7 @@ jobs:
             - name: Set up the Database
               run: |
                 chmod 755 ./tests/setup/setup_db.sh
-                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "${{ matrix.dbport }}"
+                ./tests/setup/setup_db.sh -t '${{ matrix.dbtype }}' -v '${{ matrix.dbversion }}' -P '${{ matrix.dbport }}'
 
             - name: Stop php-fpm if running
               run: |
@@ -78,17 +81,15 @@ jobs:
             - name: Set up the required php version
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php }}
+                  php-version: '${{ matrix.php }}'
                   extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
+                  ini-values: 'auto_prepend_file=${{ github.workspace }}/tests/setup/config/php/auto_prepend.php'
+              # Alternative version
               #run: |
               #  chmod 755 ./tests/setup/setup_php.sh
               #  ./tests/setup/setup_php.sh
 
-            # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
-            #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
-            #       code coverage information)
-
-            # Composer latest is installed by shivammathur/setup-php
+            # Composer latest is installed by shivammathur/setup-php - no need for manual install
             #- name: Set up Composer
             #  run: |
             #    chmod 755 ./tests/setup/setup_composer.sh
@@ -100,13 +101,12 @@ jobs:
                 chmod 755 ./tests/setup/setup_webserver.sh
                 ./tests/setup/setup_webserver.sh
 
-            # We run the release-preparing script before messing up the vendor/ dir to run the test suite
+            # We run the release-preparing script before messing up the vendor/ dir to run the test suite (except
+            # for the step of dumping the database, as the db schema has not yet been created)
             - name: Test the release-preparing script (run it)
               run: |
-                export MYSQL_HOST=127.0.0.1
-                export MYSQL_PORT="${{ matrix.dbport }}"
                 chmod 755 ./build/make_release.sh
-                ./build/make_release.sh
+                ./build/make_release.sh -s dump_db
 
             - name: Install dev dependencies
               run: |
@@ -116,7 +116,7 @@ jobs:
             - name: Set up phpunit configuration
               run: |
                 cp phpunit.dist.xml phpunit.xml
-                if [ -n "${{ matrix.dbtype }}" ] && [ "${{ matrix.dbtype }}" != mysql ]; then
+                if [ -n '${{ matrix.dbtype }}' ] && [ '${{ matrix.dbtype }}' != mysql ]; then
                     sed -r -i -e 's|<env name="TEST_DB_TYPE" value="mysqli" />|<env name="TEST_DB_TYPE" value="${{ matrix.dbtype }}" />|' phpunit.xml
                 fi
                 if [ -n "${{ matrix.dbport }}" ]; then
@@ -141,6 +141,14 @@ jobs:
                 ./vendor/bin/phpunit --stop-on-failure tests/install
                 ### @todo enable as soon as we have finished the 'tests/install' suite
                 #./vendor/bin/phpunit tests/run
+
+            - name: Test the db-dumping script (run it)
+              run: |
+                export MYSQL_HOST=127.0.0.1
+                export MYSQL_PORT='${{ matrix.dbport }}'
+                export MYSQL_DATABASE=weberp
+                chmod 755 ./build/dump_database.sh
+                ./build/dump_database.sh
 
             - name: Failure troubleshooting
               if: ${{ failure() }}

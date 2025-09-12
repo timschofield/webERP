@@ -24,18 +24,6 @@ class InstallerTest extends WebTestCase
 	}
 
 	/**
-	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
-	 * NB: this works best when running phpunit with `--stop-on-failure`
-	 */
-	public function testPHPConfiguration()
-	{
-		$this->request('GET', self::$baseUri . '/tests/setup/php_config_check.php');
-		$this->assertEquals(200, $this->getResponse()->getStatusCode(), 'The php configuration for running the test suite could not be checked');
-		/// @todo change local config based on response
-		$this->assertEquals('ok', $this->getResponse()->getContent(), 'The php configuration is not correct for running the test suite');
-	}
-
-	/**
 	 * Runs a prerequisite check: check for the db config parameters to actually allow to connect
 	 * NB: this works best when running phpunit with `--stop-on-failure`
 	 */

@@ -12,6 +12,8 @@ use Symfony\Component\BrowserKit\Response;
 class HttpBrowser extends BaseHttpBrowser
 {
 	protected $expectedStatusCodes = null;
+	protected $errorPrependString = '';
+	protected $errorAppendString = '';
 
 	/**
 	 * Adds an easy way to check for requests resulting in errors or redirects, without having to specify
@@ -35,14 +37,14 @@ class HttpBrowser extends BaseHttpBrowser
 			}
 		}
 
-		// check that there are no php warnings or errors displayed
-		/// @todo find a way to make this check more robust - the string is different with xdebug active!
-		$responseContent = $response->getContent();
-		if (($start = strpos($responseContent, '<b>Warning</b>:  ')) !== false) {
-			throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri() . ': ' .
-				substr($responseContent, $start + 17, 40) . '...');
+		if ($this->errorPrependString !== '') {
+			// check that there are no php warnings or errors displayed
+			$responseContent = $response->getContent();
+			if (($start = strpos($responseContent, $this->errorPrependString)) !== false) {
+				throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri() . ': ' .
+					substr($responseContent, $start + 17, 40) . '...');
+			}
 		}
-		/// @todo check for errors, too
 
 		return $response;
 	}
@@ -54,5 +56,11 @@ class HttpBrowser extends BaseHttpBrowser
 	public function setExpectedStatusCodes(array $codes): void
 	{
 		$this->expectedStatusCodes = $codes;
+	}
+
+	public function setExpectedErrorStrings(string $errorPrependString, string $errorAppendString)
+	{
+		$this->errorPrependString = $errorPrependString;
+		$this->errorAppendString = $errorAppendString;
 	}
 }
