@@ -242,7 +242,7 @@ class WebTestCase extends TestCase
 
 		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
-		//self::assertContains('xdebug', $config['active_extensions'], 'The server-side php configuration is not correct for running the test suite: xdebug is off');
+		self::assertStringContainsString('tests/setup/config/php/auto_prepend.php', (string)$config['ini_settings']['auto_prepend_file'], 'The server-side php configuration is not correct for running the test suite: auto_prepend.php is not loaded');
 		self::assertNotEquals('', (string)$config['ini_settings']['error_prepend_string'], 'The server-side php configuration is not correct for running the test suite: error_prepend_string is null');
 		self::assertNotEquals('', (string)$config['ini_settings']['error_append_string'], 'The server-side php configuration is not correct for running the test suite: error_append_string is null');
 		self::$errorPrependString = $config['ini_settings']['error_prepend_string'];
