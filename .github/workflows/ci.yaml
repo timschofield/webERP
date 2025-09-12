@@ -173,9 +173,6 @@ jobs:
                 #echo
                 #php -i
 
-                echo
-                fgrep -R 'auto_prepend_file' /etc/php/*
-
                 #echo
                 #sudo ls -la /var/log/apache2/
                 #echo

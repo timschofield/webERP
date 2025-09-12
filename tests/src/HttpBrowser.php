@@ -41,8 +41,10 @@ class HttpBrowser extends BaseHttpBrowser
 			// check that there are no php warnings or errors displayed
 			$responseContent = $response->getContent();
 			if (($start = strpos($responseContent, $this->errorPrependString)) !== false) {
-				throw new ExpectationFailedException('Got PHP warnings in page ' . $request->getUri() . ': ' .
-					substr($responseContent, $start + 17, 40) . '...');
+				/// @todo 1. halt extraction where error_append_string starts instead of at 40 chars
+				/// @todo 2. look for more than one error message
+				throw new ExpectationFailedException('Got PHP errors or warnings in page ' . $request->getUri() . ': ' .
+					substr($responseContent, $start + strlen($this->errorPrependString), 40) . '...');
 			}
 		}
 

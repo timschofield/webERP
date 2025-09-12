@@ -177,7 +177,5 @@ class InstallerTest extends WebTestCase
 			'Password' => $_ENV['TEST_USER_PASSWORD'],
 		]);
 		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
-
-//var_dump($this->getResponse()->getContent());
 	}
 }

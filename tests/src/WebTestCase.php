@@ -82,7 +82,8 @@ class WebTestCase extends TestCase
 		$testStatus =  $this->status();
 		if ($testStatus instanceof TestStatus\Failure || $testStatus instanceof TestStatus\Error) {
 			if ($this->browser) {
-				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception
+				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception.
+				///       Also, the url being requested
 				$testName = get_class($this) . '_' . $this->name();
 				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
 			}
@@ -239,8 +240,6 @@ class WebTestCase extends TestCase
 		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
 		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
 		$config = @json_decode($browser->getResponse()->getContent(), true);
-### @TODO REMOVE THIS AFTER TESTING!
-var_dump($config['ini_settings']['auto_prepend_file']);
 		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertStringContainsString('tests/setup/config/php/auto_prepend.php', (string)$config['ini_settings']['auto_prepend_file'], 'The server-side php configuration is not correct for running the test suite: auto_prepend.php is not loaded');
