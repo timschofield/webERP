@@ -67,7 +67,7 @@ class WebTestCase extends TestCase
 	public function setUp(): void
 	{
 		$this->browser = new HttpBrowser(HttpClient::create());
-		$this->browser->setExpectedErrorStrings(self::$errorPrependString. self::$errorAppendString);
+		$this->browser->setExpectedErrorStrings(self::$errorPrependString, self::$errorAppendString);
 		parent::setUp();
 	}
 
@@ -239,7 +239,8 @@ class WebTestCase extends TestCase
 		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
 		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
 		$config = @json_decode($browser->getResponse()->getContent(), true);
-
+### @TODO REMOVE THIS AFTER TESTING!
+var_dump($config['ini_settings']['auto_prepend_file']);
 		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertStringContainsString('tests/setup/config/php/auto_prepend.php', (string)$config['ini_settings']['auto_prepend_file'], 'The server-side php configuration is not correct for running the test suite: auto_prepend.php is not loaded');

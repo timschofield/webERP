@@ -166,9 +166,11 @@ jobs:
                 #echo '### fpm socket(s)'
                 #ls -la /run/php/
 
-                echo auto-prepend
-                cat '${{ github.workspace }}/tests/setup/config/php/auto_prepend.php'
+                #echo
                 #php -i
+
+                echo
+                fgrep -R 'auto_prepend_file' /etc/php/*
 
                 #echo
                 #sudo ls -la /var/log/apache2/
