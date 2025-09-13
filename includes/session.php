@@ -231,6 +231,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit();
 
 		case UL_BLOCKED:
+			unset($_POST['UserNameEntryField']);
+			unset($_POST['Password']);
+			unset($_SESSION['DatabaseName']);
+
 			include($PathPrefix . 'includes/FailedLogin.php');
 			exit();
 
