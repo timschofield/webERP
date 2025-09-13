@@ -511,6 +511,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="info">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
+		DB_IgnoreForeignKeys();
 		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType);
 
 		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
@@ -523,6 +524,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$Errors++;
 			//echo '<div class="error">' . __('...') . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 
 		/// @todo there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
