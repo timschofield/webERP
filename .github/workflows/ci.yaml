@@ -152,7 +152,7 @@ jobs:
                 export MYSQL_PORT='${{ matrix.dbport }}'
                 export MYSQL_DATABASE=weberp
                 chmod 755 ./build/dump_database.sh
-                ./build/dump_database.sh
+                ./build/dump_database.sh -o ./install/sql demo
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
