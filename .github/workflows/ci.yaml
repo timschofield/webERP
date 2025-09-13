@@ -66,7 +66,7 @@ jobs:
                 chmod 755 ./tests/setup/setup_packages.sh
                 sudo ./tests/setup/setup_packages.sh
 
-            - name: Set up the Database
+            - name: Set up the database
               run: |
                 chmod 755 ./tests/setup/setup_db.sh
                 ./tests/setup/setup_db.sh -t '${{ matrix.dbtype }}' -v '${{ matrix.dbversion }}' -P '${{ matrix.dbport }}'
@@ -99,7 +99,7 @@ jobs:
             #    chmod 755 ./tests/setup/setup_composer.sh
             #    ./tests/setup/setup_composer.sh
 
-            - name: Set up the Webserver
+            - name: Set up the webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
               run: |
                 chmod 755 ./tests/setup/setup_webserver.sh
@@ -137,7 +137,6 @@ jobs:
 
             - name: Run the test suite
               run: |
-                #
                 # smoke-testing
                 #curl -L --fail-with-body http://localhost/images/default_logo.jpg
                 #echo
@@ -149,7 +148,6 @@ jobs:
 
             - name: Test the db-dumping script (run it)
               run: |
-                #
                 export MYSQL_HOST=127.0.0.1
                 export MYSQL_PORT='${{ matrix.dbport }}'
                 export MYSQL_DATABASE=weberp
@@ -159,7 +157,6 @@ jobs:
             - name: Failure troubleshooting
               if: ${{ failure() }}
               run: |
-                #
                 #echo '### running processes'
                 #ps auxwww | grep -E -v '^root .+:[0-9]{2} \[' | grep -v ' grep'
                 #echo
@@ -182,6 +179,7 @@ jobs:
                 sudo cat /var/log/apache2/access.log
                 echo
 
+                # failed phpunit tests might have saved to disk the html contents of the failing pages. Show them
                 if [ -n "$(ls webpage_failing_*.html 2>/dev/null)" ]; then
                     for PAGE in webpage_failing_*.html; do
                         echo "### output of failed test $PAGE"
