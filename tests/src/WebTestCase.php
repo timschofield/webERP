@@ -21,6 +21,10 @@ class WebTestCase extends TestCase
 	protected static $randId;
 	/** @var HttpBrowser */
 	protected $browser;
+	/** @var string */
+	protected static $errorPrependString = '';
+	/** @var string */
+	protected static $errorAppendString = '';
 
 	/**
 	 * Runs once before all the test methods of this object
@@ -33,10 +37,16 @@ class WebTestCase extends TestCase
 			self::$rootDir = realpath(__DIR__ . '/../..');
 		}
 
+		self::$baseUri = $_ENV['TEST_TARGET_PROTOCOL'] . '://'. $_ENV['TEST_TARGET_HOSTNAME'] .
+			($_ENV['TEST_TARGET_PORT'] != '' ? (':' . ltrim($_ENV['TEST_TARGET_PORT'], ':')) : '') .
+			rtrim($_ENV['TEST_TARGET_BASE_URL'], '/');
+
 		/// @todo  This is a file which can be read by pages server-side to validate that the request is coming from the test
 		///        It remains to be done: 1. send self::$randId as cookie on every http request, and 2. check for it server-side
-		//self::$randId = uniqid();
-		//file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
+		self::$randId = uniqid();
+		file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
+
+		self::checkPHPConfiguration();
 	}
 
 	/**
@@ -44,9 +54,9 @@ class WebTestCase extends TestCase
 	 */
 	public static function tearDownAfterClass(): void
 	{
-		//if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
-		//	unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
-		//}
+		if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
+			unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
+		}
 
 		parent::tearDownAfterClass();
 	}
@@ -56,11 +66,8 @@ class WebTestCase extends TestCase
 	 */
 	public function setUp(): void
 	{
-		self::$baseUri = $_ENV['TEST_TARGET_PROTOCOL'] . '://'. $_ENV['TEST_TARGET_HOSTNAME'] .
-			($_ENV['TEST_TARGET_PORT'] != '' ? (':' . ltrim($_ENV['TEST_TARGET_PORT'], ':')) : '') .
-			rtrim($_ENV['TEST_TARGET_BASE_URL'], '/');
 		$this->browser = new HttpBrowser(HttpClient::create());
-
+		$this->browser->setExpectedErrorStrings(self::$errorPrependString, self::$errorAppendString);
 		parent::setUp();
 	}
 
@@ -75,7 +82,8 @@ class WebTestCase extends TestCase
 		$testStatus =  $this->status();
 		if ($testStatus instanceof TestStatus\Failure || $testStatus instanceof TestStatus\Error) {
 			if ($this->browser) {
-				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception
+				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception.
+				///       Also, the url being requested
 				$testName = get_class($this) . '_' . $this->name();
 				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
 			}
@@ -219,5 +227,25 @@ class WebTestCase extends TestCase
 	protected function assertIsNotOnLoginPage()
 	{
 /// @todo ...
+	}
+
+	/**
+	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
+	 */
+	protected static function checkPHPConfiguration()
+	{
+		$browser = new HttpBrowser(HttpClient::create());
+		$browser->request('GET', self::$baseUri . '/tests/setup/php_config_check.php?phpunit_rand_id=' . self::$randId);
+
+		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
+		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
+		$config = @json_decode($browser->getResponse()->getContent(), true);
+		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::assertStringContainsString('tests/setup/config/php/auto_prepend.php', (string)$config['ini_settings']['auto_prepend_file'], 'The server-side php configuration is not correct for running the test suite: auto_prepend.php is not loaded');
+		self::assertNotEquals('', (string)$config['ini_settings']['error_prepend_string'], 'The server-side php configuration is not correct for running the test suite: error_prepend_string is null');
+		self::assertNotEquals('', (string)$config['ini_settings']['error_append_string'], 'The server-side php configuration is not correct for running the test suite: error_append_string is null');
+		self::$errorPrependString = $config['ini_settings']['error_prepend_string'];
+		self::$errorAppendString = $config['ini_settings']['error_append_string'];
 	}
 }

@@ -19,5 +19,5 @@ Thumbs.db
 /.phpunit.result.cache
 /phpunit.xml
 
-# And the eventual .git dir from composer-installed projects which are downloaded as git clones
+# And the eventual .git dir from composer-installed projects which are downloaded as git clones instead of zipballs
 /vendor/phplot/phplot/.git/

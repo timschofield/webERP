@@ -10,7 +10,7 @@ cd "$BASE_DIR";
 
 if [ -z "$GITHUB_ACTION" ]; then
 	# @todo check - do we need more packages than this?
-	apt-get install apache2
+	DEBIAN_FRONTEND=noninteractive apt-get install -y apache2
 fi
 
 if [ -f /etc/apache2/sites-enabled/000-default.conf ]; then
@@ -22,6 +22,9 @@ fi
 if [ -n "$(ls /etc/apache2/mods-enabled/php* 2>/dev/null)" ]; then
 	sudo rm /etc/apache2/mods-enabled/php*
 fi
+
+# @todo check usage of apache envvars file to simplify the sed commands
+
 sudo cp ./tests/setup/config/apache2/000-default.conf /etc/apache2/sites-available/
 sudo sed -r -i -e "s|DocumentRoot /var/www/html|DocumentRoot $BASE_DIR|" /etc/apache2/sites-available/000-default.conf
 sudo sed -r -i -e "s|<Directory /var/www/html>|<Directory $BASE_DIR>|" /etc/apache2/sites-available/000-default.conf

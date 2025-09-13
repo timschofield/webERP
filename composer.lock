@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e214d6a236d049b13f45acc337943b6",
+    "content-hash": "88a85d500bf432118bec4e6cc62f9064",
     "packages": [
         {
             "name": "composer/pcre",
@@ -615,11 +615,17 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
+            "version": "8.0.1-rc1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/gggeek/phplot",
+                "url": "https://github.com/gggeek/phplot.git",
                 "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/phplot/zipball/63f0365661becdc66ab1420b2634a263f996504f",
+                "reference": "63f0365661becdc66ab1420b2634a263f996504f",
+                "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
@@ -641,6 +647,15 @@
                 }
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+            "support": {
+                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc1"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/ajrepo"
+                }
+            ],
             "time": "2025-08-06T10:02:49+00:00"
         },
         {
@@ -1801,16 +1816,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.53",
+            "version": "10.5.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "32768472ebfb6969e6c7399f1c7b09009723f653"
+                "reference": "b1dbbaaf96106b76d500b9d3db51f9b01f6a3589"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/32768472ebfb6969e6c7399f1c7b09009723f653",
-                "reference": "32768472ebfb6969e6c7399f1c7b09009723f653",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b1dbbaaf96106b76d500b9d3db51f9b01f6a3589",
+                "reference": "b1dbbaaf96106b76d500b9d3db51f9b01f6a3589",
                 "shasum": ""
             },
             "require": {
@@ -1882,7 +1897,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.53"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.54"
             },
             "funding": [
                 {
@@ -1906,7 +1921,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-20T14:40:06+00:00"
+            "time": "2025-09-11T06:19:38+00:00"
         },
         {
             "name": "psr/container",
@@ -4044,20 +4059,14 @@
             "version": "dev-main",
             "alias": "1.99.99",
             "alias_normalized": "1.99.99.0"
-        },
-        {
-            "package": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
-            "alias": "8.0.1",
-            "alias_normalized": "8.0.1.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "gggeek/polyfill-gettext": 20,
-        "phplot/phplot": 20
+        "phplot/phplot": 5
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
@@ -4080,5 +4089,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
