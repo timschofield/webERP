@@ -24,7 +24,7 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		$px = (imagesx($im) - $TextWidth) / 2;
 		$py = (imagesy($im) - ($fh)) / 2;
 		//imagefill($im, 0, 0, $BackgroundColour);
-		imagestring($im, $Font, $px, $py, $CompanyName, $TextColour);
+		imagestring($im, $Font, (int)$px, (int)$py, $CompanyName, $TextColour);
 
 		imagesavealpha($im, true);
 
