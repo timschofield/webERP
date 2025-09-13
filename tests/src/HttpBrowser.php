@@ -25,6 +25,10 @@ class HttpBrowser extends BaseHttpBrowser
 	{
 		$response = parent::doRequest($request);
 
+		// Store the response immediately, in case we throw rather than returning.
+		// This is normally done in the parent class, as a result of invoking this method.
+		$this->response = $response;
+
 		if ($response->getStatusCode() >= 400 && (!$this->expectedStatusCodes || !in_array($response->getStatusCode(), $this->expectedStatusCodes))) {
 			throw new ExpectationFailedException('Got HTTP response code ' . $response->getStatusCode() . ' for ' .
 				$request->getUri());
@@ -43,6 +47,7 @@ class HttpBrowser extends BaseHttpBrowser
 			if (($start = strpos($responseContent, $this->errorPrependString)) !== false) {
 				/// @todo 1. halt extraction where error_append_string starts instead of at 40 chars
 				/// @todo 2. look for more than one error message
+				/// @todo 3. strip html tags from the error message
 				throw new ExpectationFailedException('Got PHP errors or warnings in page ' . $request->getUri() . ': ' .
 					substr($responseContent, $start + strlen($this->errorPrependString), 40) . '...');
 			}
