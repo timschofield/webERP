@@ -8,7 +8,7 @@ $BookMark = '';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
-include('includes/LanguagesArray.php');
+//$LanguagesArray = \webERP\LanguageManager::getLanguagesArray();
 
 if (!isset($_SESSION['SupplierID'])){
 	echo '<br />
