@@ -32,7 +32,6 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		if (!imagepng($im, $CompanyDir . '/logo.png')) {
 			$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 		}
-		imagedestroy($im);
 
 	} else {
 		$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
