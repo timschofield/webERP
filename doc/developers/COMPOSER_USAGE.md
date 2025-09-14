@@ -1,6 +1,6 @@
 # Using Composer with webERP
 
-The webERP project has adopted a somewhat unconventional approach to managing dependencies on other php libraries.
+This document describes the webERP approach to managing dependencies on other php libraries.
 
 The main requirement is to allow the software to be installed via a simple "download and unzip" workflow - or a
 workflow based on "git clone", but still requiring no execution of manual commands to set it up.
