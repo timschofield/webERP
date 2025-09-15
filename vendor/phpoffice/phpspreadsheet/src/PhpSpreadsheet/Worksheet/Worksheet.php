@@ -373,7 +373,8 @@ class Worksheet
      */
     public function __destruct()
     {
-        Calculation::getInstance($this->parent)->clearCalculationCacheForWorksheet($this->title);
+        Calculation::getInstanceOrNull($this->parent)
+            ?->clearCalculationCacheForWorksheet($this->title);
 
         $this->disconnectCells();
         unset($this->rowDimensions, $this->columnDimensions, $this->tableCollection, $this->drawingCollection, $this->chartCollection, $this->autoFilter);
@@ -909,7 +910,7 @@ class Worksheet
         // Set title
         $this->title = $title;
 
-        if ($this->parent && $this->parent->getIndex($this, true) >= 0 && $this->parent->getCalculationEngine()) {
+        if ($this->parent && $this->parent->getIndex($this, true) >= 0) {
             // New title
             $newTitle = $this->getTitle();
             $this->parent->getCalculationEngine()
@@ -2925,11 +2926,9 @@ class Worksheet
                 $currentColumn = $startColumn;
                 foreach ($rowData as $cellValue) {
                     if ($cellValue !== $nullValue) {
-                        /** @var string $currentColumn */
                         $this->getCell($currentColumn . $startRow)->setValue($cellValue);
                     }
-                    /** @var string $currentColumn */
-                    ++$currentColumn;
+                    StringHelper::stringIncrement($currentColumn);
                 }
                 ++$startRow;
             }
@@ -2938,11 +2937,9 @@ class Worksheet
                 $currentColumn = $startColumn;
                 foreach ($rowData as $cellValue) {
                     if ($cellValue != $nullValue) {
-                        /** @var string $currentColumn */
                         $this->getCell($currentColumn . $startRow)->setValue($cellValue);
                     }
-                    /** @var string $currentColumn */
-                    ++$currentColumn;
+                    StringHelper::stringIncrement($currentColumn);
                 }
                 ++$startRow;
             }
@@ -3084,7 +3081,7 @@ class Worksheet
         $minColInt = $rangeStart[0];
         $maxColInt = $rangeEnd[0];
 
-        ++$maxCol;
+        StringHelper::stringIncrement($maxCol);
         /** @var array<string, bool> */
         $hiddenColumns = [];
         $nullRow = $this->buildNullRow($nullValue, $minCol, $maxCol, $returnCellRef, $ignoreHidden, $hiddenColumns);
@@ -3159,8 +3156,7 @@ class Worksheet
     ): array {
         $nullRow = [];
         $c = -1;
-        for ($col = $minCol; $col !== $maxCol; ++$col) {
-            /** @var string $col */
+        for ($col = $minCol; $col !== $maxCol; StringHelper::stringIncrement($col)) {
             if ($ignoreHidden === true && $this->columnDimensionExists($col) && $this->getColumnDimension($col)->getVisible() === false) {
                 $hiddenColumns[$col] = true;
             } else {
@@ -3982,5 +3978,23 @@ class Worksheet
         }
 
         return true;
+    }
+
+    public function copyFormula(string $fromCell, string $toCell): void
+    {
+        $formula = $this->getCell($fromCell)->getValue();
+        $newFormula = $formula;
+        if (is_string($formula) && $this->getCell($fromCell)->getDataType() === DataType::TYPE_FORMULA) {
+            [$fromColInt, $fromRow] = Coordinate::indexesFromString($fromCell);
+            [$toColInt, $toRow] = Coordinate::indexesFromString($toCell);
+            $helper = ReferenceHelper::getInstance();
+            $newFormula = $helper->updateFormulaReferences(
+                $formula,
+                'A1',
+                $toColInt - $fromColInt,
+                $toRow - $fromRow
+            );
+        }
+        $this->setCellValue($toCell, $newFormula);
     }
 }
