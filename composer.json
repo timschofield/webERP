@@ -24,7 +24,7 @@
 		"gggeek/polyfill-gettext": "dev-main as 1.99.99",
 		"phplot/phplot": "8.0.1-rc2",
 		"phpmailer/phpmailer": "^6.9",
-		"phpoffice/phpspreadsheet": "^4.1",
+		"phpoffice/phpspreadsheet": "^5.0",
 		"phpxmlrpc/phpxmlrpc": "^4.11.0",
 		"tecnickcom/tcpdf": "=6.8.0"
 	},

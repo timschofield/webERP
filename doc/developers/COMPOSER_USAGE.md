@@ -27,17 +27,13 @@ to a new version, or setting up "dev" dependencies to run the test suite.
    			"dompdf/dompdf": "^3.1",
    			"my/package": "^2.0",
 
-2. download the package into the `vendor` folder:
+2. download the package into the `vendor` folder and update the autoloader:
 
-       composer update --no-dev --no-autoloader --no-interaction --prefer-stable --prefer-dist my/package
+       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist my/package
 
    NB: please take care to use all of the above options
 
-3. update the autoloader:
-
-       composer  dump-autoload --ignore-platform-reqs --no-interaction --optimize --no-dev
-
-4. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
+3. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
 
 
 ## Updating an existing dependency
@@ -55,17 +51,13 @@ This workflow is similar to the one above:
    			"dompdf/dompdf": "^3.1",
    			"my/package": "^3.0",
 
-2. update the package into the `vendor` folder:
+2. update the package into the `vendor` folder and update the autoloader:
 
-       composer update --no-dev --no-autoloader --no-interaction --prefer-stable --prefer-dist my/package
+       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist my/package
 
    NB: please take care to use all of the above options
 
-3. update the autoloader:
-
-       composer  dump-autoload --ignore-platform-reqs --no-interaction --optimize --no-dev
-
-4. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
+3. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
 
 
 ## Merging the "Bump package" Pull Requests from Dependabot
@@ -81,15 +73,11 @@ The correct workflow to handle them is:
 
 2. pull the changes locally
 
-3. download the new package version to the `vendor` folder:
+3. download the new package version to the `vendor` folder and update the autoloader:
 
-       composer update --no-dev --no-autoloader --no-interaction --prefer-stable --prefer-dist updated/package
+       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist updated/package
 
-4. update the autoloader:
-
-       composer  dump-autoload --ignore-platform-reqs --no-interaction --optimize --no-dev
-
-5. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
+4. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
 
 
 ## Setting up "dev" dependencies to run the test suite
