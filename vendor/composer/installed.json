@@ -639,24 +639,24 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "8.0.1-rc1",
-            "version_normalized": "8.0.1.0-RC1",
+            "version": "8.0.1-rc2",
+            "version_normalized": "8.0.1.0-RC2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/phplot.git",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gggeek/phplot/zipball/63f0365661becdc66ab1420b2634a263f996504f",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f",
+                "url": "https://api.github.com/repos/gggeek/phplot/zipball/ea097b8cee126b443620b20b9382c92a406666f0",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "php": ">=7.1"
             },
-            "time": "2025-08-06T10:02:49+00:00",
+            "time": "2025-09-13T11:39:43+00:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -675,7 +675,7 @@
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
             "support": {
-                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc1"
+                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc2"
             },
             "funding": [
                 {

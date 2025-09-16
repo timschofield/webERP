@@ -22,7 +22,7 @@
 		"dompdf/dompdf": "^3.1",
 		"gggeek/barcodepack": "^1.0.1",
 		"gggeek/polyfill-gettext": "dev-main as 1.99.99",
-		"phplot/phplot": "8.0.1-rc1",
+		"phplot/phplot": "8.0.1-rc2",
 		"phpmailer/phpmailer": "^6.9",
 		"phpoffice/phpspreadsheet": "^4.1",
 		"phpxmlrpc/phpxmlrpc": "^4.11.0",

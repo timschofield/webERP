@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "88a85d500bf432118bec4e6cc62f9064",
+    "content-hash": "894c908c678bf4c0b5e2abb345252ff9",
     "packages": [
         {
             "name": "composer/pcre",
@@ -615,16 +615,16 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "8.0.1-rc1",
+            "version": "8.0.1-rc2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/gggeek/phplot.git",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/gggeek/phplot/zipball/63f0365661becdc66ab1420b2634a263f996504f",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f",
+                "url": "https://api.github.com/repos/gggeek/phplot/zipball/ea097b8cee126b443620b20b9382c92a406666f0",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +648,7 @@
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
             "support": {
-                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc1"
+                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc2"
             },
             "funding": [
                 {
@@ -656,7 +656,7 @@
                     "url": "https://github.com/ajrepo"
                 }
             ],
-            "time": "2025-08-06T10:02:49+00:00"
+            "time": "2025-09-13T11:39:43+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
