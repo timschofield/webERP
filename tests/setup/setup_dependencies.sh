@@ -3,7 +3,7 @@
 # @todo allow a '--uninstall' action
 
 help() {
-	printf "Usage: setup_depepdencies.sh [OPIONS]
+	printf "Usage: setup_dependencies.sh [OPTIONS]
 
 Used to install / uninstall the php dependencies used for testing.
 
@@ -15,7 +15,7 @@ Options:
 ACTION=install
 
 # parse cli options and arguments
-while getopts ":hu:" opt
+while getopts ":hu" opt
 do
 	case $opt in
 		h)
@@ -23,13 +23,13 @@ do
 			exit 0
 			;;
 		u)
-			ACTION=unstall
-		;;
+			ACTION=uninstall
+			;;
 		\?)
 			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
 			help
 			exit 1
-		;;
+			;;
 	esac
 done
 shift $((OPTIND-1))
@@ -39,12 +39,13 @@ shift $((OPTIND-1))
 COMPOSER=${COMPOSER:-composer}
 
 case $ACTION in
-	install)
-		# @todo is there a composer command which does require us to know which packages to force-install?
-
-        $COMPOSER update --no-interaction --prefer-stable --prefer-dist phpunit/phpunit symfony/browser-kit symfony/css-selector symfony/http-client symfony/mime
-		;;
 	uninstall)
 		$COMPOSER install --no-interaction --prefer-dist --ignore-platform-reqs --optimize-autoloader --no-dev
+		# This file will most likely have been modified during the install phase, and is not rolled back by the command above
+		git checkout vendor/composer/installed.php
+		;;
+	install)
+		# @todo is there a composer command which does require us to know which packages to force-install?
+        $COMPOSER update --no-interaction --prefer-stable --prefer-dist phpunit/phpunit symfony/browser-kit symfony/css-selector symfony/http-client symfony/mime
 		;;
 esac
