@@ -5,6 +5,13 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
+if (!function_exists('__')) {
+	// NB: this function always exists if this page is included after api_session.php, and that is guaranteed by the above check.
+	// However, we still get a fatal error if this page is accessed directly, because in that case php tries to
+	// parse the code below even without executing it. So we resort to this silly hack
+	function __($string) {return $string;}
+}
+
 /* Define error codes that are returned by api functions*/
 	define('NoAuthorisation', 1);
 	define('IncorrectDebtorNumberLength', 1000);
