@@ -270,7 +270,7 @@ class Worksheet extends BIFFwriter
             if (isset($columnDimensions[$columnLetter])) {
                 $columnDimension = $columnDimensions[$columnLetter];
                 if ($columnDimension->getWidth() >= 0) {
-                    $width = $columnDimension->getWidth();
+                    $width = $columnDimension->getWidthForOutput(true);
                 }
                 $hidden = $columnDimension->getVisible() ? 0 : 1;
                 $level = $columnDimension->getOutlineLevel();
@@ -380,6 +380,19 @@ class Worksheet extends BIFFwriter
                         $getFont = $element->getFont();
                         if ($getFont !== null) {
                             $str_fontidx = $this->fontHashIndex[$getFont->getHashCode()];
+                        }
+                    } else {
+                        $styleArray = $this->phpSheet
+                            ->getParent()
+                            ?->getCellXfCollection();
+                        if ($styleArray !== null) {
+                            $font = $styleArray[$xfIndex - 15] ?? null;
+                            if ($font !== null) {
+                                $font = $font->getFont();
+                            }
+                            if ($font !== null) {
+                                $str_fontidx = $this->fontHashIndex[$font->getHashCode()];
+                            }
                         }
                     }
                     $arrcRun[] = ['strlen' => $str_pos, 'fontidx' => $str_fontidx];

@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . __('Reorder Level Report') . '<br />
+					' . __('No Sales Report') . '<br />
 					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Location') . ' - ' . $Locations . '
 					' . __('Customer Type') . ' - ' . $_POST['Customers'] . '<br />
@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = __('Reorder Level Reporting');
+		$Title = __('No Sales Items');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . __('No Sales Items List') . '" alt="" />' . ' ' . __('Top Sales Items List') . '

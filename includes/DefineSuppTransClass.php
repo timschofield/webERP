@@ -38,8 +38,7 @@ class SuppTrans {
 	var $Hold;
 	var $SupplierRef='';
 
-	function __construct(){
-	/*Constructor function initialises a new Supplier Transaction object */
+	function __construct() {
 		$this->GRNs = array();
 		$this->GLCodes = array();
 		$this->Shipts = array();
@@ -48,7 +47,7 @@ class SuppTrans {
 		$this->Taxes = array();
 	}
 
-	function GetTaxes () {
+	function GetTaxes() {
 		/*Gets the Taxes and rates applicable to the tax group of the supplier
 		and SESSION['DefaultTaxCategory'] and the taxprovince of the location that the user is setup to use*/
 
@@ -91,14 +90,14 @@ class SuppTrans {
 								$OrderPrice,
 								$ChgPrice,
 								$Complete,
-								$StdCostUnit=0,
+								$StdCostUnit,
 								$ShiptRef,
 								$JobRef,
 								$GLCode,
 								$PONo,
-								$AssetID=0,
-								$Hold=0,
-								$DecimalPlaces=2,
+								$AssetID,
+								$Hold,
+								$DecimalPlaces,
 								$GRNBatchNo,
 								$SupplierRef) {
 
@@ -345,14 +344,14 @@ class GRNs {
 					$OrderPrice,
 					$ChgPrice,
 					$Complete,
-					$StdCostUnit=0,
+					$StdCostUnit,
 					$ShiptRef,
 					$JobRef,
 					$GLCode,
 					$PONo,
 					$AssetID,
-					$Hold=0,
-					$DecimalPlaces=2,
+					$Hold,
+					$DecimalPlaces,
 					$GRNBatchNo,
 					$SupplierRef=''){
 
