@@ -203,7 +203,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	$Theme = KLThemeSelection();
 	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
 	switch ($rc) {
-		case UL_OK; //user logged in successfully
+		case UL_OK: //user logged in successfully
 			/// @todo shouldn't we only set the cookie if $FirstLogin = true ?
 			setcookie('Login', $_SESSION['DatabaseName']);
 			//include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
