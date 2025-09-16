@@ -527,7 +527,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
-			copy($Path_To_Root . "/companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
 		/// @todo is there need to disable foreign keys for this insert?
