@@ -605,7 +605,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir', 'companies/" . $DataBaseName . "/part_pics')";
 	$Result = DB_query($SQL);
 
-	copy($Path_To_Root . '/companies/default/part_pics/webERPsmall.png', $CompanyDir . '/part_pics/webERPsmall.png');
+	copy($Path_To_Root . '/companies/weberpdemo/part_pics/webERPsmall.png', $CompanyDir . '/part_pics/webERPsmall.png');
 
 	return ($Errors == 0);
 }
