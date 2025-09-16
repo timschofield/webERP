@@ -199,6 +199,11 @@ class WebTestCase extends TestCase
 				}
 			}
 		}
+		if ($pathAsArray) {
+			/// @todo
+		} else {
+			sort($pages);
+		}
 		return $pages;
 	}
 
