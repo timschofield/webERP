@@ -224,7 +224,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = __('Reorder Level Reporting');
+		$Title = __('MRP Shortages');
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Shortages') . '" alt="" />' . ' ' . __('MRP Shortages Report') . '</p>';
 		echo $HTML;
