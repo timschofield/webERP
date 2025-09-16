@@ -31,7 +31,9 @@ AGAINST YOUR PRODUCTION DATABASE!
    Make sure you have the following PHP extensions installed and enabled:
    `bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, xdebug, xml, zip, zlib`
 
-   Make sure you have the following configuration settings in your `php.ini`: ...TODO...
+   Make sure you have the following configuration settings in your `php.ini`:
+
+       auto_prepend_file = (path to weberp install)/tests/setup/config/php/auto_prepend.php
 
    Make sure that the `composer` command is in your PATH. If not, run `sudo ./tests/setup/setup_composer.sh` to
    have it downloaded and installed in the `/usr/local/bin` folder

@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
+class ComposerStaticInit16b4770cbcc9a2418da1c88bafa801c2
 {
     public static $files = array (
         'b7d00421084cf06d0263087a92fe9aea' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/polyfill.php',
@@ -325,6 +325,7 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
         'Matrix\\Operators\\Operator' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Operator.php',
         'Matrix\\Operators\\Subtraction' => __DIR__ . '/..' . '/markbaker/matrix/classes/src/Operators/Subtraction.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
+        'PGetText\\ReaderInterface' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/ReaderInterface.php',
         'PGettext\\Plurals\\Expression' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/Plurals/Expression.php',
         'PGettext\\Plurals\\Header' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/Plurals/Header.php',
         'PGettext\\Plurals\\Lexer' => __DIR__ . '/..' . '/gggeek/polyfill-gettext/src/Plurals/Lexer.php',
@@ -1024,9 +1025,9 @@ class ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitc0ac61ce55161fabab3d86f57aff7648::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit16b4770cbcc9a2418da1c88bafa801c2::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit16b4770cbcc9a2418da1c88bafa801c2::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit16b4770cbcc9a2418da1c88bafa801c2::$classMap;
 
         }, null, ClassLoader::class);
     }
