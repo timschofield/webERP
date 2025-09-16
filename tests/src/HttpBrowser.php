@@ -84,7 +84,7 @@ class HttpBrowser extends BaseHttpBrowser
 
 			$message = str_replace("\n", ' ', preg_replace('/^ +/m', '', strip_tags($message)));
 			if (strlen($message) > 40) {
-				$message = substr($message, 37) . '...';
+				$message = substr($message, 0, 37) . '...';
 			}
 			$errors[] = $message;
 		}

@@ -166,7 +166,7 @@ class WebTestCase extends TestCase
 	/**
 	 * Scans the source code for web pages (php files).
 	 * @param string[] $dirs List of dirs. Will _not_ recurse into them
-	 * @param bool $pathAsArray when set, return an array of arrays. good for dataProvider methods
+	 * @param bool $pathAsArray when set, return an array of arrays. Good for dataProvider methods
 	 * @return array every php file is returned with its path relative to the root directory (starting with '/')
 	 */
 	protected static function listWebPages(array $dirs = [], $pathAsArray=false): array
@@ -224,9 +224,10 @@ class WebTestCase extends TestCase
 		$this->assertStringNotContainsString($crawler->getUri(), '/install/', $message);
 	}
 
-	protected function assertIsNotOnLoginPage()
+	protected function assertIsNotOnLoginPage(Crawler $crawler, $message = '')
 	{
-/// @todo ...
+		/// @todo what about using $this->getResponse() instead of $crawler?
+		$this->assertStringNotContainsString('Please login here', $crawler->text(), $message);
 	}
 
 	/**
@@ -249,5 +250,26 @@ class WebTestCase extends TestCase
 		self::assertNotEquals('', (string)$config['ini_settings']['error_append_string'], 'The server-side php configuration is not correct for running the test suite: error_append_string is null');
 		self::$errorPrependString = $config['ini_settings']['error_prepend_string'];
 		self::$errorAppendString = $config['ini_settings']['error_append_string'];
+	}
+
+	protected function loginUser()
+	{
+		if (count($this->browser->getCookieJar()->all())) {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/Logout.php');
+		} else {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/index.php');
+		}
+
+		// make sure we do have not been redirected to the installer (belts-and-suspenders)
+		$this->assertIsNotOnInstallerPage($crawler);
+
+		$crawler = $this->browser->submitForm('SubmitUser', [
+			'CompanyNameField' => $_ENV['TEST_DB_SCHEMA'],
+			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
+			'Password' => $_ENV['TEST_USER_PASSWORD'],
+		]);
+
+		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
+		$this->assertStringNotContainsString('Please login here', $crawler->text(), 'Failed logging in');
 	}
 }
