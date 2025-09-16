@@ -43,13 +43,11 @@ class HttpBrowser extends BaseHttpBrowser
 
 		if ($this->errorPrependString !== '') {
 			// check that there are no php warnings or errors displayed
-			$responseContent = $response->getContent();
-			if (($start = strpos($responseContent, $this->errorPrependString)) !== false) {
-				/// @todo 1. halt extraction where error_append_string starts instead of at 40 chars
-				/// @todo 2. look for more than one error message
-				/// @todo 3. strip html tags from the error message
+			$errorMessages = $this->extractErrorMessages($response->getContent());
+			if ($errorMessages) {
+				/// @todo display more than one error message
 				throw new ExpectationFailedException('Got PHP errors or warnings in page ' . $request->getUri() . ': ' .
-					substr($responseContent, $start + strlen($this->errorPrependString), 40) . '...');
+					$errorMessages[0]);
 			}
 		}
 
@@ -69,5 +67,28 @@ class HttpBrowser extends BaseHttpBrowser
 	{
 		$this->errorPrependString = $errorPrependString;
 		$this->errorAppendString = $errorAppendString;
+	}
+
+	protected function extractErrorMessages($html)
+	{
+		$errors = array();
+		$start = 0;
+		while (($start = strpos($html, $this->errorPrependString, $start)) !== false) {
+			$start += strlen($this->errorPrependString);
+			$end = strpos($html, $this->errorAppendString, $start);
+			if ($end === false) {
+				$end = strlen($html);
+			}
+			$message = substr($html, $start, $end - $start);
+			$start = $end;
+
+			$message = str_replace("\n", ' ', preg_replace('/^ +/m', '', strip_tags($message)));
+			if (strlen($message) > 40) {
+				$message = substr($message, 0, 37) . '...';
+			}
+			$errors[] = $message;
+		}
+
+		return $errors;
 	}
 }

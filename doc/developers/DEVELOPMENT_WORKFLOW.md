@@ -21,7 +21,7 @@ computer. There are versions for most operating systems available (from here)htt
 On the GitHub site, navigate to the webERP project repository (https://github.com/timschofield/webERP), and click on the
 'Fork' button at the top right area of the page (as shown in the image below).
 
-![screenshot of github webpage](github.avif)
+![screenshot of github webpage](images/github.avif)
 
 This makes a copy of that repository into your own github account and is where you will upload changes (you can only
 commit to your own repository).
@@ -36,11 +36,11 @@ Next, clone your fork of the project repository to your computer for development
 
 3. On the right side of the page, you should see a button labelled "<> Code". Click on the button.
 
-   ![screenshot of github webpage](CodeButton.avif)
+   ![screenshot of github webpage](images/CodeButton.avif)
 
 4. The pop-up box which appears will display a URL. Click on the icon next to the URL field, to copy the URL to your clipboard.
 
-   ![screenshot of github webpage](CodeURL.avif)
+   ![screenshot of github webpage](images/CodeURL.avif)
 
 There are many applications that interface with the Git system, and you are urged to find the one that suits you best.
 For the sake of this tutorial we will use the command line, and SourceTree.

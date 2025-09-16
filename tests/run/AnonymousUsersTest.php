@@ -10,6 +10,7 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 	/**
 	 * Tests that direct access to the installer pages does always result in a redirect.
 	 * This test is run many times - the filename to test is provided via the dataProvider.
+	 * It can be executed even before the installer has been run.
 	 * @dataProvider listInstallerPages
 	 */
 	public function testDirectAccessToInstallerPages(string $fileName): void
@@ -28,7 +29,7 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 	 * This test is run many times - the filename to test is provided via the dataProvider.
 	 * @dataProvider listAnonAccessPages
 	 */
-	public function testAccessToAnonPages(string $fileName): void
+	public function testAccessToAnonPages(string $filePath): void
 	{
 		if (!is_file(self::$rootDir . '/config.php')) {
 			$this->markTestSkipped('config.php is missing. webERP setup has not been done');
@@ -36,9 +37,7 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 
 		$this->followRedirects(false);
 		$this->setExpectedStatusCodes([200]);
-		$crawler = $this->request('GET', self::$baseUri . $fileName);
-
-		/// @todo check for no php warnings being displayed
+		$crawler = $this->request('GET', self::$baseUri . $filePath);
 
 		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
 		$this->assertTrue(true);
@@ -55,14 +54,14 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 
 	/**
 	 * List all pages which set $AllowAnyone to true
-	 * @return array[]
+	 * @return string[][]
 	 */
 	public static function listAnonAccessPages(): array
 	{
 		$pages = [];
 		foreach(self::listWebPages() as $path) {
 			$fileName = basename($path);
-			if (in_array($fileName, ['Logout.php', 'config.dist.php'])) {
+			if (in_array($fileName, ['Logout.php', 'config.distrib.php'])) {
 				continue;
 			}
 			if (preg_match('/^\s*\\$AllowAnyone\s*=\s*[Tt][Rr][Uu][eE]\s*;/m', file_get_contents(self::$rootDir . $path))) {
