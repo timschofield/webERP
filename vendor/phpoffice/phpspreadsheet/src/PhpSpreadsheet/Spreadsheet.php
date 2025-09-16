@@ -8,6 +8,7 @@ use PhpOffice\PhpSpreadsheet\Cell\IValueBinder;
 use PhpOffice\PhpSpreadsheet\Document\Properties;
 use PhpOffice\PhpSpreadsheet\Document\Security;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Shared\Font as SharedFont;
 use PhpOffice\PhpSpreadsheet\Shared\StringHelper;
 use PhpOffice\PhpSpreadsheet\Style\Style;
 use PhpOffice\PhpSpreadsheet\Worksheet\Iterator;
@@ -57,7 +58,7 @@ class Spreadsheet implements JsonSerializable
     /**
      * Calculation Engine.
      */
-    private ?Calculation $calculationEngine;
+    private Calculation $calculationEngine;
 
     /**
      * Active sheet index.
@@ -176,6 +177,36 @@ class Spreadsheet implements JsonSerializable
     private Theme $theme;
 
     private ?IValueBinder $valueBinder = null;
+
+    /** @var array<string, int> */
+    private array $fontCharsets = [
+        'B Nazanin' => SharedFont::CHARSET_ANSI_ARABIC,
+    ];
+
+    /**
+     * @param int $charset uses any value from Shared\Font,
+     *    but defaults to ARABIC because that is the only known
+     *    charset for which this declaration might be needed
+     */
+    public function addFontCharset(string $fontName, int $charset = SharedFont::CHARSET_ANSI_ARABIC): void
+    {
+        $this->fontCharsets[$fontName] = $charset;
+    }
+
+    public function getFontCharset(string $fontName): int
+    {
+        return $this->fontCharsets[$fontName] ?? -1;
+    }
+
+    /**
+     * Return all fontCharsets.
+     *
+     * @return array<string, int>
+     */
+    public function getFontCharsets(): array
+    {
+        return $this->fontCharsets;
+    }
 
     public function getTheme(): Theme
     {
@@ -446,7 +477,7 @@ class Spreadsheet implements JsonSerializable
     public function __destruct()
     {
         $this->disconnectWorksheets();
-        $this->calculationEngine = null;
+        unset($this->calculationEngine);
         $this->cellXfCollection = [];
         $this->cellStyleXfCollection = [];
         $this->definedNames = [];
@@ -468,8 +499,22 @@ class Spreadsheet implements JsonSerializable
     /**
      * Return the calculation engine for this worksheet.
      */
-    public function getCalculationEngine(): ?Calculation
+    public function getCalculationEngine(): Calculation
     {
+        return $this->calculationEngine;
+    }
+
+    /**
+     * Intended for use only via a destructor.
+     *
+     * @internal
+     */
+    public function getCalculationEngineOrNull(): ?Calculation
+    {
+        if (!isset($this->calculationEngine)) { //* @phpstan-ignore-line
+            return null;
+        }
+
         return $this->calculationEngine;
     }
 
@@ -660,10 +705,10 @@ class Spreadsheet implements JsonSerializable
      */
     public function getSheetByName(string $worksheetName): ?Worksheet
     {
-        $worksheetCount = count($this->workSheetCollection);
-        for ($i = 0; $i < $worksheetCount; ++$i) {
-            if (strcasecmp($this->workSheetCollection[$i]->getTitle(), trim($worksheetName, "'")) === 0) {
-                return $this->workSheetCollection[$i];
+        $trimWorksheetName = StringHelper::strToUpper(trim($worksheetName, "'"));
+        foreach ($this->workSheetCollection as $worksheet) {
+            if (StringHelper::strToUpper($worksheet->getTitle()) === $trimWorksheetName) {
+                return $worksheet;
             }
         }
 
@@ -986,13 +1031,34 @@ class Spreadsheet implements JsonSerializable
         if ($definedName !== '') {
             $definedName = StringHelper::strToUpper($definedName);
             // first look for global defined name
-            if (isset($this->definedNames[$definedName])) {
-                $returnValue = $this->definedNames[$definedName];
+            foreach ($this->definedNames as $dn) {
+                $upper = StringHelper::strToUpper($dn->getName());
+                if (
+                    !$dn->getLocalOnly()
+                    && $definedName === $upper
+                ) {
+                    $returnValue = $dn;
+
+                    break;
+                }
             }
 
             // then look for local defined name (has priority over global defined name if both names exist)
-            if (($worksheet !== null) && isset($this->definedNames[$worksheet->getTitle() . '!' . $definedName])) {
-                $returnValue = $this->definedNames[$worksheet->getTitle() . '!' . $definedName];
+            if ($worksheet !== null) {
+                $wsTitle = StringHelper::strToUpper($worksheet->getTitle());
+                $definedName = (string) preg_replace('/^.*!/', '', $definedName);
+                foreach ($this->definedNames as $dn) {
+                    $sheet = $dn->getScope() ?? $dn->getWorksheet();
+                    $upper = StringHelper::strToUpper($dn->getName());
+                    $upperTitle = StringHelper::strToUpper((string) $sheet?->getTitle());
+                    if (
+                        $dn->getLocalOnly()
+                        && $upper === $definedName
+                        && $upperTitle === $wsTitle
+                    ) {
+                        return $dn;
+                    }
+                }
             }
         }
 
@@ -1089,21 +1155,19 @@ class Spreadsheet implements JsonSerializable
 
         $oldCalc = $this->calculationEngine;
         $this->calculationEngine = new Calculation($this);
-        if ($oldCalc !== null) {
-            $this->calculationEngine
-                ->setSuppressFormulaErrors(
-                    $oldCalc->getSuppressFormulaErrors()
-                )
-                ->setCalculationCacheEnabled(
-                    $oldCalc->getCalculationCacheEnabled()
-                )
-                ->setBranchPruningEnabled(
-                    $oldCalc->getBranchPruningEnabled()
-                )
-                ->setInstanceArrayReturnType(
-                    $oldCalc->getInstanceArrayReturnType()
-                );
-        }
+        $this->calculationEngine
+            ->setSuppressFormulaErrors(
+                $oldCalc->getSuppressFormulaErrors()
+            )
+            ->setCalculationCacheEnabled(
+                $oldCalc->getCalculationCacheEnabled()
+            )
+            ->setBranchPruningEnabled(
+                $oldCalc->getBranchPruningEnabled()
+            )
+            ->setInstanceArrayReturnType(
+                $oldCalc->getInstanceArrayReturnType()
+            );
         $usedKeys['calculationEngine'] = true;
 
         $currentCollection = $this->cellStyleXfCollection;
@@ -1752,5 +1816,36 @@ class Spreadsheet implements JsonSerializable
                 }
             }
         }
+    }
+
+    /**
+     * Excel will sometimes replace user's formatting choice
+     * with a built-in choice that it thinks is equivalent.
+     * Its choice is often not equivalent after all.
+     * Such treatment is astonishingly user-hostile.
+     * This function will undo such changes.
+     */
+    public function replaceBuiltinNumberFormat(int $builtinFormatIndex, string $formatCode): void
+    {
+        foreach ($this->cellXfCollection as $style) {
+            $numberFormat = $style->getNumberFormat();
+            if ($numberFormat->getBuiltInFormatCode() === $builtinFormatIndex) {
+                $numberFormat->setFormatCode($formatCode);
+            }
+        }
+    }
+
+    public function returnArrayAsArray(): void
+    {
+        $this->calculationEngine->setInstanceArrayReturnType(
+            Calculation::RETURN_ARRAY_AS_ARRAY
+        );
+    }
+
+    public function returnArrayAsValue(): void
+    {
+        $this->calculationEngine->setInstanceArrayReturnType(
+            Calculation::RETURN_ARRAY_AS_VALUE
+        );
     }
 }
