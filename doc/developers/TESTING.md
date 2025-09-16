@@ -10,7 +10,7 @@ tests locally to check that there are no bugs introduced before submitting a pul
 
 To understand the cause of failures from the CI test runs, follow this process:
 
-1. go to the lit of executions (aka. "runs") of the CI tests: https://github.com/timschofield/webERP/actions/workflows/ci.yaml
+1. go to the list of executions (aka. "runs") of the CI tests: https://github.com/timschofield/webERP/actions/workflows/ci.yaml
 
 2. click on the failed run, f.e. https://github.com/timschofield/webERP/actions/runs/17749928838
 
