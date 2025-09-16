@@ -21,9 +21,13 @@ DB_PORT=3306
 DB_PASSWORD=root
 
 # parse cli options and arguments
-while getopts ":P:p:t:v:" opt
+while getopts ":hP:p:t:v:" opt
 do
 	case $opt in
+		h)
+			help
+			exit 0
+		;;
 		P)
 			DB_PORT="$OPTARG"
 			;;

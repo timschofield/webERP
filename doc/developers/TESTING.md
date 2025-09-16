@@ -124,9 +124,7 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 6. after your testing is complete, to avoid accidentally committing to git the test suite tools installed, run
 
-   ```
-   composer install --ignore-platform-reqs --no-dev --prefer-dist --optimize-autoloader
-   ```
+   `./tests/setup/setup_dependencies.sh -u`
 
    Also, if you created a new db schema in step 4 above, feel free to drop it
 
