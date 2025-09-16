@@ -226,10 +226,6 @@ if ( $automake AND !isset($FileName) ) {
 		$im = imagecreatefrompng($tmpFileName);
 	}
 
-	if (!$im) {
-		var_dump($tmpFileName);
-	}
-
 	// Have we got a background color
 	if ( isset($BackgroundColour) )
 		$BackgroundColour = DecodeBgColor( $BackgroundColour );
