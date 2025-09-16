@@ -40,15 +40,16 @@
 	</php>
 
 	<!-- code coverage reporting -->
-	<filter>
-		<whitelist>
+	<source>
+		<include>
 			<directory suffix=".php">./</directory>
-			<exclude>
-				<directory>./build</directory>
-				<directory>./doc</directory>
-				<directory>./tests</directory>
-				<directory>./vendor</directory>
-			</exclude>
-		</whitelist>
-	</filter>
+		</include>
+		<exclude>
+			<directory>./build</directory>
+			<directory>./companies</directory>
+			<directory>./doc</directory>
+			<directory>./tests</directory>
+			<directory>./vendor</directory>
+		</exclude>
+	</source>
 </phpunit>
