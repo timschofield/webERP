@@ -156,7 +156,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	include($PathPrefix . 'includes/GetConfig.php');
 } else {
-	include $PathPrefix . 'includes/UserLogin.php'; /* Login checking and setup */
+	include $PathPrefix . 'includes/LoginFunctions.php'; /* Login checking and setup */
 
 	if (isset($_POST['UserNameEntryField']) and isset($_POST['Password'])) {
 		$rc = userLogin($_POST['UserNameEntryField'], $_POST['Password'], $SysAdminEmail);
