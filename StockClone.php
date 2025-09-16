@@ -1075,7 +1075,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
 					<td>';
 			switch ($PropertyRow['controltype']) {
-				case 0; //textbox
+				case 0: //textbox
 					if ($PropertyRow['numericvalue']==1) {
 						echo '<input type="hidden" name="PropMin' . $PropertyCounter . '" value="' . $PropertyRow['minimumvalue'] . '" />';
 						echo '<input type="hidden" name="PropMax' . $PropertyCounter . '" value="' . $PropertyRow['maximumvalue'] . '" />';
@@ -1086,7 +1086,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 						echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
 					}
 					break;
-				case 1; //select box
+				case 1: //select box
 					$OptionValues = explode(',',$PropertyRow['defaultvalue']);
 					echo '<select name="PropValue' . $PropertyCounter . '">';
 					foreach ($OptionValues as $PropertyOptionValue){
@@ -1098,7 +1098,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 					}
 					echo '</select>';
 					break;
-				case 2; //checkbox
+				case 2: //checkbox
 					echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
 					if ($PropertyValue==1){
 						echo 'checked';

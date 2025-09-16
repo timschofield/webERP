@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* This function returns a list of the stock salesman codes
  * currently setup on webERP
  */

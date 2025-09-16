@@ -172,7 +172,7 @@ $SectionTrailer='';
 $SectionsArray=[];
 $result2 = DB_query("SELECT groupname, headertitle, trailertext, labels, numcols FROM prodspecgroups", $db);
 while ($MyGroupRow = DB_fetch_array($result2)) {
-	//echo $MyGroupRow['groupname'] . '&nbsp;' . $MyGroupRow['headertitle'] . '&nbsp;' . $MyGroupRow['trailertext'] . '&nbsp;' . $MyGroupRow['labels'] . '&nbsp;' . $MyGroupRow['numcols'] . '&nbsp;' ; 
+	//echo $MyGroupRow['groupname'] . '&nbsp;' . $MyGroupRow['headertitle'] . '&nbsp;' . $MyGroupRow['trailertext'] . '&nbsp;' . $MyGroupRow['labels'] . '&nbsp;' . $MyGroupRow['numcols'] . '&nbsp;' ;
 	//echo'<br/>';
 	if ($MyGroupRow['numcols']==2) {
 		$align=array('left','center');
@@ -196,7 +196,7 @@ while ($MyRow=DB_fetch_array($Result)){
 		if ($MyRow['groupby']==$Row[0]) {
 			$SectionColSizes=$Row[4];
 			$SectionColLabs=$Row[5];
-			$SectionAlign=$Row[6]; 
+			$SectionAlign=$Row[6];
 		}
 	}
 	$TrailerPrinted=1;
@@ -270,13 +270,13 @@ while ($MyRow=DB_fetch_array($Result)){
 		$ColWidth=$SectionColSizes[$x];
 		$ColAlign=$SectionAlign[$x];
 		switch ($x) {
-			case 0;
+			case 0:
 				$DispValue=$MyRow['name'];
 				break;
-			case 1;
+			case 1:
 				$DispValue=$Value;
 				break;
-			case 2;
+			case 2:
 				$DispValue=$MyRow['method'];
 				break;
 		}

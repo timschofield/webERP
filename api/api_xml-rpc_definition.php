@@ -1,6 +1,12 @@
 <?php
 
-/* Note api_php.php includes api */
+/**
+ * Definition of all the php functions exposed as xml-rpc methods. Those are just wrappers around functions
+ * defined in the various api_*.php files.
+ * NB: this file by itself does not do anything. It is supposed to be included
+ */
+
+/* Note api_php.php includes api_session.php and api_*.php */
 include('api_php.php');
 
 PhpXmlRpc\PhpXmlRpc::$xmlrpc_internalencoding = 'UTF-8';

@@ -7,7 +7,8 @@ class SinglePageTest extends LoggedInUserTestCase
 	protected static $redirectingPages = [
 		'/ContractBOM.php',
 		'/ContractOtherReqts.php',
-		'/PO_Items.php'
+		'/PO_Items.php',
+		'/reportwriter/admin/defaults.php'
 	];
 
 	/**
@@ -21,6 +22,9 @@ class SinglePageTest extends LoggedInUserTestCase
 		// some pages are known to return a redirect if missing a GET/POST param
 		if (in_array($filePath, self::$redirectingPages)) {
 			$this->setExpectedStatusCodes([302]);
+		} elseif (strpos($filePath, '/api/') === 0) {
+			// some api pages do redirect
+			$this->setExpectedStatusCodes([200, 301, 302]);
 		} else {
 			$this->setExpectedStatusCodes([200]);
 		}

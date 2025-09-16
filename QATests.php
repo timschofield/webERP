@@ -250,8 +250,8 @@ if (! isset($_GET['delete'])) {
 	//		<input type="text" name="GroupBy" title="" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" />
 	//		<fieldhelp>' . __('Can be used to group certain Tests on the Product Specification or Certificate of Analysis or left blank') . '</fieldhelp>
 	//	</field>';
-	
-	
+
+
 	$result2 = DB_query("SELECT groupname FROM prodspecgroups", $db);
 	// Error if no groups  setup
 	if (DB_num_rows($result2) == 0) {
@@ -278,8 +278,8 @@ if (! isset($_GET['delete'])) {
 			<fieldhelp>' . __('Can be used to group certain Tests on the Product Specification or Certificate of Analysis or left blank') . '</fieldhelp>
 			</field>';
 	}
-				
-	
+
+
 	echo '<field>
 			<label for="Units">' . __('Units') . ':</label>
 			<input type="text" name="Units" title="" size="20" maxlength="20" value="' . $_POST['Units'] . '" />
@@ -482,19 +482,19 @@ or deletion of the records*/
 	}
 
 	switch ($MyRow['type']) {
-		case 0; //textbox
+		case 0: //textbox
 			$TypeDisp='Text Box';
 			break;
-		case 1; //select box
+		case 1: //select box
 			$TypeDisp='Select Box';
 			break;
-		case 2; //checkbox
+		case 2: //checkbox
 			$TypeDisp='Check Box';
 			break;
-		case 3; //datebox
+		case 3: //datebox
 			$TypeDisp='Date Box';
 			break;
-		case 4; //range
+		case 4: //range
 			$TypeDisp='Range';
 			break;
 	} //end switch

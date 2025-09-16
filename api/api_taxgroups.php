@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* This function returns a list of the tax group id's
  * currently setup on webERP
  */

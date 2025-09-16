@@ -16,18 +16,16 @@ if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['Sta
 if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);}
 
 if (empty($_GET['identifier'])) {
-	$identifier=date('U');
+	$identifier = date('U');
 } else {
-	$identifier=$_GET['identifier'];
+	$identifier = $_GET['identifier'];
 }
 
-if (isset($_GET['NewRecurringOrder'])){
-	$NewRecurringOrder ='Yes';
-} elseif (isset($_POST['NewRecurringOrder'])){
+if (isset($_GET['NewRecurringOrder']) or isset($_POST['NewRecurringOrder'])) {
 	$NewRecurringOrder ='Yes';
 } else {
 	$NewRecurringOrder ='No';
-	if (isset($_GET['ModifyRecurringSalesOrder'])){
+	if (isset($_GET['ModifyRecurringSalesOrder'])) {
 
 		$_POST['ExistingRecurrOrderNo'] = $_GET['ModifyRecurringSalesOrder'];
 
@@ -156,17 +154,22 @@ if (isset($_GET['NewRecurringOrder'])){
 				} /* line items from sales order details */
 			} //end of checks on returned data set
 		}
+	} else {
+		/// @todo should we use a different error message?
+		/// @todo why not use the same IF a few lines below, removing the $NewRecurringOrder == 'Yes' part?
+		prnMsg(__('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . __('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
+		include('includes/footer.php');
+		exit();
 	}
 }
 
-if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder=='Yes'){
+if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->ItemsOrdered == 0) AND $NewRecurringOrder == 'Yes') {
 	prnMsg(__('A new recurring order can only be created if an order template has already been created from the normal order entry screen') . '. ' . __('To enter an order template select sales order entry from the orders tab of the main menu'),'error');
 	include('includes/footer.php');
 	exit();
 }
 
-
-if (isset($_POST['DeleteRecurringOrder'])){
+if (isset($_POST['DeleteRecurringOrder'])) {
 	$SQL = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = __('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
 	$Result = DB_query($SQL, $ErrMsg);
@@ -184,6 +187,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	include('includes/footer.php');
 	exit();
 }
+
 if (isset($_POST['Process'])) {
 	DB_Txn_Begin();
 	$InputErrors =0;
@@ -484,7 +488,6 @@ if (isset($_POST['Frequency']) and $_POST['Frequency']==1){
 }
 echo '</select>
 	</field>';
-
 
 if ($_SESSION['Items'.$identifier]->AllDummyLineItems()==true){
 
