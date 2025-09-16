@@ -24,18 +24,6 @@ class InstallerTest extends WebTestCase
 	}
 
 	/**
-	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
-	 * NB: this works best when running phpunit with `--stop-on-failure`
-	 */
-	public function testPHPConfiguration()
-	{
-		$this->request('GET', self::$baseUri . '/tests/setup/php_config_check.php');
-		$this->assertEquals(200, $this->getResponse()->getStatusCode(), 'The php configuration for running the test suite could not be checked');
-		/// @todo change local config based on response
-		$this->assertEquals('ok', $this->getResponse()->getContent(), 'The php configuration is not correct for running the test suite');
-	}
-
-	/**
 	 * Runs a prerequisite check: check for the db config parameters to actually allow to connect
 	 * NB: this works best when running phpunit with `--stop-on-failure`
 	 */
@@ -56,6 +44,8 @@ class InstallerTest extends WebTestCase
 	{
 		/// @todo allow using a phpunit env var to allow forcing removal of these if found (and also dropping the db schema),
 		///       or is it too dangerous for end users?
+		///       In the end it might be better to add a 2nd tests which runs the installer after config.php exists,
+		///       and adds a new company
 		if (file_exists(self::$rootDir . '/config.php') || is_dir(self::$rootDir . '/companies/' . $_ENV['TEST_DB_SCHEMA'])) {
 			$this->markTestSkipped('config.php is already present. Will not run the installer test');
 		}
@@ -82,7 +72,8 @@ class InstallerTest extends WebTestCase
 		$this->assertStringNotContainsString('Page=2', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
 		//$this->assertStringNotContainsString('Agreed=Yes', $nextLinkUrl, 'Link to page 2 should not be active until accepting the license');
 
-		// @todo sadly we have to submit the form manually as it has no submit button. Check if browserkit can do that somehow...
+		/// @todo sadly we have to submit the form manually as it has no submit button. Check if browserkit can do that somehow...
+		//        (or, better, add a hidden submit button to the form?)
 		$nextLinkUrl = $nextLinkUrl . '&Agreed=Yes';
 		$crawler = $this->request('GET', $nextLinkUrl);
 		$nextLinkUrl = $crawler->selectLink('Next')->link()->getUri();
@@ -153,6 +144,7 @@ class InstallerTest extends WebTestCase
 		// implement here inline the equivalent of code $this->submitForm with and extra field removal added
 		// (See https://github.com/symfony/symfony/issues/30867#issuecomment-3240412881)
 		/// @todo should we make all of the values below come from config/env-vars?
+		/// @todo add a test which does not load the demo.sql file
 		$fieldValues = [
 			'CompanyName' => 'Acme',
 			'COA' => 'sql/coa/en_GB.utf8.sql', /// @todo load this from the files available on disk
@@ -176,20 +168,18 @@ class InstallerTest extends WebTestCase
 		$this->assertFileExists(self::$rootDir . '/companies/' . $_ENV['TEST_DB_SCHEMA'] . '/logo.png');
 
 		/// @todo inject `$Debug = 99` at the end of config.php. We want tests to run with detailed info.
-		///       Also, make it load a custom error handler, that can help us testing for php warning/errors
 
 		// go to homepage
 		$crawler = $this->request('GET', self::$baseUri . '/index.php');
 		$this->assertStringContainsString('Please login here', $crawler->text(), 'Missing title in installer 1st page');
 
 		// log in
-		$this->submitForm('SubmitUser', [
+		$crawler = $this->submitForm('SubmitUser', [
 			'CompanyNameField' => $_ENV['TEST_DB_SCHEMA'],
 			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
 			'Password' => $_ENV['TEST_USER_PASSWORD'],
 		]);
 		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
-
-//var_dump($this->getResponse()->getContent());
+		$this->assertStringNotContainsString('Please login here', $crawler->text(), 'Failed logging in after installation');
 	}
 }

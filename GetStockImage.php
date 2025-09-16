@@ -269,7 +269,6 @@ if ( $automake AND !isset($FileName) ) {
 		$tmpim = imagecreatetruecolor($resize_new_width, $resize_new_height);
 		imagealphablending ( $tmpim, true);
 		imagecopyresampled($tmpim, $im, 0, 0, 0, 0, $resize_new_width, $resize_new_height, $sw, $sh );
-		imagedestroy($im);
 		$im = $tmpim;
 		unset($tmpim);
 
@@ -355,5 +354,3 @@ header('Content-type: image/'.$style);
 $func = 'image'.$functype;
 // AND send image
 $func($im);
-// Destroy image
-imagedestroy($im);

@@ -8,4 +8,4 @@ COMPOSER=${COMPOSER:-composer}
 
 # @todo is there a composer command which does require us to know which packages to force-install?
 
-$COMPOSER update phpunit/phpunit symfony/browser-kit symfony/http-client symfony/mime
+$COMPOSER update --no-interaction --prefer-stable --prefer-dist phpunit/phpunit symfony/browser-kit symfony/css-selector symfony/http-client symfony/mime

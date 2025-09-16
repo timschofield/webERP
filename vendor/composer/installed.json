@@ -639,18 +639,24 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
-            "version_normalized": "dev-release-candidate-for-8.0.1",
+            "version": "8.0.1-rc2",
+            "version_normalized": "8.0.1.0-RC2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/gggeek/phplot",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+                "url": "https://github.com/gggeek/phplot.git",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/phplot/zipball/ea097b8cee126b443620b20b9382c92a406666f0",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0",
+                "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "php": ">=7.1"
             },
-            "time": "2025-08-06T10:02:49+00:00",
+            "time": "2025-09-13T11:39:43+00:00",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -668,6 +674,15 @@
                 }
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
+            "support": {
+                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc2"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/ajrepo"
+                }
+            ],
             "install-path": "../phplot/phplot"
         },
         {
@@ -756,17 +771,17 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "4.3.1",
-            "version_normalized": "4.3.1.0",
+            "version": "5.1.0",
+            "version_normalized": "5.1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "d0ac70d610fb62ccad38c2696569ae1ad42acc70"
+                "reference": "fd26e45a814e94ae2aad0df757d9d1739c4bf2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/d0ac70d610fb62ccad38c2696569ae1ad42acc70",
-                "reference": "d0ac70d610fb62ccad38c2696569ae1ad42acc70",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/fd26e45a814e94ae2aad0df757d9d1739c4bf2e0",
+                "reference": "fd26e45a814e94ae2aad0df757d9d1739c4bf2e0",
                 "shasum": ""
             },
             "require": {
@@ -813,7 +828,7 @@
                 "mpdf/mpdf": "Option for rendering PDF with PDF Writer",
                 "tecnickcom/tcpdf": "Option for rendering PDF with PDF Writer"
             },
-            "time": "2025-05-26T18:51:08+00:00",
+            "time": "2025-09-04T05:34:49+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -859,7 +874,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/4.3.1"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/5.1.0"
             },
             "install-path": "../phpoffice/phpspreadsheet"
         },

@@ -12,12 +12,21 @@ jobs:
             matrix:
                 include:
                     # @see https://github.com/actions/runner-images
-                    # @todo run some tests on 'windows-latest'
+                    # @todo run some tests on 'windows-latest' (no need to try testing on macs: those runners are never
+                    #       available on the github cloud, at least for free plans)
                     # NB: the order of options is picked to make the github page display nicer (test naming in left col)
+                    - php: '8.5'
+                      dbtype: mysql
+                      # As of 2025/09, 'latest' mysql version is 9.4. That is known to fail installation - see bug #703.
+                      # @todo re-enable testing with 'latest' as soon as that bug is fixed
+                      #dbversion: latest
+                      dbversion: 8.3
+                      operating-system: ubuntu-24.04
+                      dbport: 3306
                     - php: '8.4'
+                      dbtype: mysql
                       # Using 'native' version will result in the mysql service on the host to be used.
                       # For Ubuntu 22.04 and 24.04 runners, that is mysql 8.0.43
-                      dbtype: mysql
                       dbversion: native
                       operating-system: ubuntu-24.04
                       dbport: 3306
@@ -41,23 +50,26 @@ jobs:
         # from the local filesystem to the containers (eg. the db config), and doing so breaks actions/checkout@v5
 
         steps:
-            - run: echo "Job was automatically triggered by a ${{ github.event_name }} event"
-            - run: echo "Job is now running on a ${{ runner.os }} server"
-            - run: echo "Branch is ${{ github.ref }} and Repository is ${{ github.repository }}"
+            - run: echo 'Job was automatically triggered by a ${{ github.event_name }} event'
+            - run: echo 'Job is now running on a ${{ runner.os }} server'
+            - run: echo 'Branch is ${{ github.ref }} and Repository is ${{ github.repository }}'
             - run: echo "Current directory is ${{ github.workspace }}, current user is $(id -u -n)"
 
-            #- name: Install required packages
-            #  run: |
-            #    sudo apt-get -y install fonts-dejavu
-
             # has to be run before setting up the db and webserver, as we store their config files in the codebase
+            # @todo this way of checking out the code somehow breaks the build script `run_composer.sh`. We should
+            #       figure out how to fix that - or plain replace this with a `git clone` command
             - name: Check out repository code
               uses: actions/checkout@v5
 
-            - name: Set up the Database
+            - name: Install required packages
+              run: |
+                chmod 755 ./tests/setup/setup_packages.sh
+                sudo ./tests/setup/setup_packages.sh
+
+            - name: Set up the database
               run: |
                 chmod 755 ./tests/setup/setup_db.sh
-                ./tests/setup/setup_db.sh -t "${{ matrix.dbtype }}" -v "${{ matrix.dbversion }}" -P "${{ matrix.dbport }}"
+                ./tests/setup/setup_db.sh -t '${{ matrix.dbtype }}' -v '${{ matrix.dbversion }}' -P '${{ matrix.dbport }}'
 
             - name: Stop php-fpm if running
               run: |
@@ -69,18 +81,36 @@ jobs:
             - name: Set up the required php version
               uses: shivammathur/setup-php@v2
               with:
-                  php-version: ${{ matrix.php }}
+                  php-version: '${{ matrix.php }}'
                   extensions: bcmath, calendar, curl, ftp, gd, gettext, iconv, mbstring, mysqli, simplexml, sqlite3, xdebug, xml, zip, zlib
+                  ini-values: 'auto_prepend_file=${{ github.workspace }}/tests/setup/config/php/auto_prepend.php'
+              # Alternative version
+              #run: |
+              #  chmod 755 ./tests/setup/setup_php.sh
+              #  ./tests/setup/setup_php.sh
 
-            # @todo set up specific php config: display_errors on, error_reporting = E_ALL and use a prepend_file to
-            #       handle $_COOKIE['PHPUNIT_SELENIUM_TEST_ID'] (see how phpxmlrpc does it in order to collect remote
-            #       code coverage information)
+            # This is required to make fpm take into account the php.ini settings added by shivammathur/setup-php
+            - name: Restart php-fpm
+              run: sudo service 'php${{ matrix.php }}-fpm' restart
 
-            - name: Set up the Webserver
+            # Composer latest is installed by shivammathur/setup-php - no need for manual install
+            #- name: Set up Composer
+            #  run: |
+            #    chmod 755 ./tests/setup/setup_composer.sh
+            #    ./tests/setup/setup_composer.sh
+
+            - name: Set up the webserver
               # @todo we should set up either nginx or apache depending on the matrix combination
               run: |
                 chmod 755 ./tests/setup/setup_webserver.sh
                 ./tests/setup/setup_webserver.sh
+
+            # We run the release-preparing script before messing up the vendor/ dir to run the test suite (except
+            # for the step of dumping the database, as the db schema has not yet been created)
+            - name: Test the release-preparing script (run it)
+              run: |
+                chmod 755 ./build/make_release.sh
+                ./build/make_release.sh -s dump_db
 
             - name: Install dev dependencies
               run: |
@@ -89,13 +119,13 @@ jobs:
 
             - name: Set up phpunit configuration
               run: |
-                  cp phpunit.dist.xml phpunit.xml
-                  if [ -n "${{ matrix.dbtype }}" ] && [ "${{ matrix.dbtype }}" != mysql ]; then
-                      sed -r -i -e 's|<env name="TEST_DB_TYPE" value="mysqli" />|<env name="TEST_DB_TYPE" value="${{ matrix.dbtype }}" />|' phpunit.xml
-                  fi
-                  if [ -n "${{ matrix.dbport }}" ]; then
-                      sed -r -i -e 's|<env name="TEST_DB_PORT" value="3306" />|<env name="TEST_DB_PORT" value="${{ matrix.dbport }}" />|' phpunit.xml
-                  fi
+                cp phpunit.dist.xml phpunit.xml
+                if [ -n '${{ matrix.dbtype }}' ] && [ '${{ matrix.dbtype }}' != mysql ]; then
+                    sed -r -i -e 's|<env name="TEST_DB_TYPE" value="mysqli" />|<env name="TEST_DB_TYPE" value="${{ matrix.dbtype }}" />|' phpunit.xml
+                fi
+                if [ -n "${{ matrix.dbport }}" ]; then
+                    sed -r -i -e 's|<env name="TEST_DB_PORT" value="3306" />|<env name="TEST_DB_PORT" value="${{ matrix.dbport }}" />|' phpunit.xml
+                fi
 
             # Make sure Apache can access the installation in its current dir.
             # We set the installation to be fully writeable to anyone - this is a test install anyway
@@ -105,11 +135,6 @@ jobs:
                 sudo chmod g+rx,o+rx /home/
                 sudo chmod -R g+rwX,o+rwX /home/runner/
 
-            - name: Check syntax of php files
-              run: |
-                chmod 755 ./build/check_syntax.sh
-                ./build/check_syntax.sh
-
             - name: Run the test suite
               run: |
                 # smoke-testing
@@ -118,8 +143,17 @@ jobs:
                 #curl -L --fail-with-body http://localhost/index.php
 
                 ./vendor/bin/phpunit --stop-on-failure tests/install
-                ### @todo enable as soon as we have finished the 'tests/install' suite
-                #./vendor/bin/phpunit tests/run
+                ./vendor/bin/phpunit tests/run
+
+            # @todo this test always uses the mysql and mysqldump cli tools from the host computer/image. It would be
+            #       nice to also run the dump_database.sh script using the cli tools from the db version being tested
+            - name: Test the db-dumping script (run it)
+              run: |
+                export MYSQL_HOST=127.0.0.1
+                export MYSQL_PORT='${{ matrix.dbport }}'
+                export MYSQL_DATABASE=weberp
+                chmod 755 ./build/dump_database.sh
+                ./build/dump_database.sh -o ./install/sql demo
 
             - name: Failure troubleshooting
               if: ${{ failure() }}
@@ -135,6 +169,9 @@ jobs:
                 #ls -la /run/php/
 
                 #echo
+                #php -i
+
+                #echo
                 #sudo ls -la /var/log/apache2/
                 #echo
                 #sudo cat /var/log/apache2/error.log
@@ -142,6 +179,13 @@ jobs:
                 echo '### apache access log'
                 sudo cat /var/log/apache2/access.log
                 echo
-                if [ -n "$(ls webpage_failing_*.html >/dev/null 2>/dev/null)" ]; then
-                  cat webpage_failing_*.html
+
+                # failed phpunit tests might have saved to disk the html contents of the failing pages. Show them
+                if [ -n "$(ls webpage_failing_*.html 2>/dev/null)" ]; then
+                    for PAGE in webpage_failing_*.html; do
+                        echo "### output of failed test $PAGE"
+                        echo
+                        cat "$PAGE"
+                        echo
+                    done
                 fi
