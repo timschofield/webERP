@@ -136,14 +136,16 @@ jobs:
                 sudo chmod g+rx,o+rx /home/
                 sudo chmod -R g+rwX,o+rwX /home/runner/
 
+            #- name: Smoke testing
+            #  run: |
+            #    curl -L --fail-with-body http://localhost/images/default_logo.jpg
+            #    echo
+            #    curl -L --fail-with-body http://localhost/index.php
+
             - name: Run the test suite
               run: |
-                # smoke-testing
-                #curl -L --fail-with-body http://localhost/images/default_logo.jpg
-                #echo
-                #curl -L --fail-with-body http://localhost/index.php
-
                 ./vendor/bin/phpunit --stop-on-failure tests/install
+                echo
                 ./vendor/bin/phpunit tests/run
 
             # @todo this test always uses the mysql and mysqldump cli tools from the host computer/image. It would be
