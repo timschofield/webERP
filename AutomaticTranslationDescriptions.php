@@ -14,7 +14,7 @@ if (!function_exists("curl_init")) {
 	exit();
 }
 
-include('includes/GoogleTranslator.php');
+include('includes/TranslationFunctions.php');
 
 $SourceLanguage=mb_substr($_SESSION['Language'],0,2);
 
