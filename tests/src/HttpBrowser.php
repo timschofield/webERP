@@ -1,5 +1,7 @@
 <?php
 
+include_once(__DIR__ . '/ErrorsInWebPageException.php');
+
 use PHPUnit\Framework\ExpectationFailedException;
 use Symfony\Component\BrowserKit\HttpBrowser as BaseHttpBrowser;
 use Symfony\Component\BrowserKit\Request;
@@ -45,9 +47,9 @@ class HttpBrowser extends BaseHttpBrowser
 			// check that there are no php warnings or errors displayed
 			$errorMessages = $this->extractErrorMessages($response->getContent());
 			if ($errorMessages) {
-				/// @todo display more than one error message
-				throw new ExpectationFailedException('Got PHP errors or warnings in page ' . $request->getUri() . ': ' .
-					$errorMessages[0]);
+				/// @todo display more than one error message / more than the first few chars of it...
+				throw new ExpectationFailedException('PHP errors/warnings in page ' . $request->getUri() . ': ' .
+					$errorMessages[0], null, new ErrorsInWebPageException($request->getUri(), $errorMessages));
 			}
 		}
 
@@ -82,7 +84,7 @@ class HttpBrowser extends BaseHttpBrowser
 			$message = substr($html, $start, $end - $start);
 			$start = $end;
 
-			$message = str_replace("\n", ' ', preg_replace('/^ +/m', '', strip_tags($message)));
+			$message = trim(str_replace("\n", ' ', preg_replace('/^ +/m', '', strip_tags(str_ireplace(['<br>', '<br/>', '<br />'], "\n", $message)))));
 			if (strlen($message) > 40) {
 				$message = substr($message, 0, 37) . '...';
 			}
