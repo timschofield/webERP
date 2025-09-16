@@ -757,9 +757,9 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$PIA = explode('+',mb_substr($LineText,4));
 					$PIA2 = explode(':',$PIA[1]);
 					switch ($PIA[0]){
-					   case '1'; // additional item id
-//					      $Qty=$QTY2[1];
-					   break;
+						case '1': // additional item id
+//					        $Qty=$QTY2[1];
+					   		break;
 					}
 					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA2[0] ;
 					break;
@@ -768,7 +768,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$IMD = explode('+',mb_substr($LineText,4));
 					$IMD2 = explode(':',mb_substr($LineText,4));
 					switch ($IMD[1]){
-					   case 'F'; //
+						case 'F': //
 					   //   $Qty=$QTY2[1];
 					   break;
 					}
@@ -792,10 +792,10 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$MOA = explode('+',mb_substr($LineText,4));
 					$MOA2 = explode(':',$MOA[0]);
 					switch ($MOA[0]){
-					   case '203'; // Line item amount
-					   break;
-					   case '39'; // total amount
-					   break;
+						case '203': // Line item amount
+					   		break;
+						case '39': // total amount
+					   		break;
 					}
 					$EmailText .= "\n" . __('Monetary amount'). ': ' . $MOA2[1];
 					break;
