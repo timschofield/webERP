@@ -53,6 +53,9 @@ echo
 if [ -d vendor/phpunit/phpunit ]; then
 	echo "Warning: you have installed composer dev dependencies. Removing them..."
 	$COMPOSER install --no-interaction --ignore-platform-reqs --prefer-dist --no-autoloader --no-dev
+	# @todo we should checkout vendor/composer/installed.php, as we do in setup_dependencies.php - but that does not
+	#       seem to work here ?
+	#git checkout vendor/composer/installed.php
 	echo
 fi
 
