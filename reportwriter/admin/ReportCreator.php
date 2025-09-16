@@ -33,7 +33,7 @@ define ('MyDocPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/r
 // Fetch necessary include files for report creator
 require_once(__DIR__ . '/../languages/' . $ReportLanguage . '/reports.php');
 require_once(__DIR__ . '/../includes/defaults.php');
-require(__DIR__ . '/RCFunctions.php');
+require(__DIR__ . '/../includes/RCFunctions.php');
 
 $usrMsg = array(); // initialize array for return messages
 
