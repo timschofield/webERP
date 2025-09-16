@@ -508,20 +508,20 @@ if (isset($_GET['ListTests'])) {
 		}
 
 		switch ($MyRow['type']) {
-		 	case 0; //textbox
+			case 0: //textbox
 		 		$TypeDisp='Text Box';
 		 		break;
-		 	case 1; //select box
+			case 1: //select box
 		 		$TypeDisp='Select Box';
 				break;
-			case 2; //checkbox
+			case 2: //checkbox
 				$TypeDisp='Check Box';
 				break;
-			case 3; //datebox
+			case 3: //datebox
 				$TypeDisp='Date Box';
 				$Class="date";
 				break;
-			case 4; //range
+			case 4: //range
 				$TypeDisp='Range';
 				$RangeMin='<input  class="' .$Class. '" type="text" name="AddRangeMin' .$x.'" />';
 				$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';

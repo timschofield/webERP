@@ -1392,44 +1392,44 @@ if (DB_num_rows($PropertiesResult) > 0) {
 
 			<td>';
 		switch ($PropertyRow['controltype']) {
-			case 0; //textbox
-			if ($PropertyRow['numericvalue'] == 1) {
-				echo '<input type="hidden" name="PropMin' . $PropertyCounter . '" value="' . $PropertyRow['minimumvalue'] . '" />';
-				echo '<input type="hidden" name="PropMax' . $PropertyCounter . '" value="' . $PropertyRow['maximumvalue'] . '" />';
+			case 0: //textbox
+				if ($PropertyRow['numericvalue'] == 1) {
+					echo '<input type="hidden" name="PropMin' . $PropertyCounter . '" value="' . $PropertyRow['minimumvalue'] . '" />';
+					echo '<input type="hidden" name="PropMax' . $PropertyCounter . '" value="' . $PropertyRow['maximumvalue'] . '" />';
 
-				echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue, 'Variable') . '" />';
-				echo __('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'], 'Variable') . ' ' . __('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'], 'Variable') . ' ' . __('is expected');
-			} else {
-				echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
-			}
-		break;
-		case 1; //select box
-		$OptionValues = explode(',', $PropertyRow['defaultvalue']);
-		echo '<select name="PropValue' . $PropertyCounter . '">';
-		foreach ($OptionValues as $PropertyOptionValue) {
-			if ($PropertyOptionValue == $PropertyValue) {
-				echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-			} else {
-				echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
-			}
-		}
-		echo '</select>';
-	break;
-	case 2; //checkbox
-	echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
-	if ($PropertyValue == 1) {
-		echo 'checked';
-	}
-	echo ' />';
-break;
-} //end switch
-echo '<input type="hidden" name="PropType' . $PropertyCounter . '" value="' . $PropertyRow['controltype'] . '" />';
-echo '</td></tr>';
-$PropertyCounter++;
+					echo '<input type="text" class="number" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . locale_number_format($PropertyValue, 'Variable') . '" />';
+					echo __('A number between') . ' ' . locale_number_format($PropertyRow['minimumvalue'], 'Variable') . ' ' . __('and') . ' ' . locale_number_format($PropertyRow['maximumvalue'], 'Variable') . ' ' . __('is expected');
+				} else {
+					echo '<input type="text" name="PropValue' . $PropertyCounter . '" size="20" maxlength="100" value="' . $PropertyValue . '" />';
+				}
+				break;
+			case 1: //select box
+				$OptionValues = explode(',', $PropertyRow['defaultvalue']);
+				echo '<select name="PropValue' . $PropertyCounter . '">';
+				foreach ($OptionValues as $PropertyOptionValue) {
+					if ($PropertyOptionValue == $PropertyValue) {
+						echo '<option selected="selected" value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
+					} else {
+						echo '<option value="' . $PropertyOptionValue . '">' . $PropertyOptionValue . '</option>';
+					}
+				}
+				echo '</select>';
+				break;
+			case 2: //checkbox
+				echo '<input type="checkbox" name="PropValue' . $PropertyCounter . '"';
+				if ($PropertyValue == 1) {
+					echo 'checked';
+				}
+				echo ' />';
+			break;
+		} //end switch
+		echo '<input type="hidden" name="PropType' . $PropertyCounter . '" value="' . $PropertyRow['controltype'] . '" />';
+		echo '</td></tr>';
+		$PropertyCounter++;
 
-} //end loop round properties for the item category
-unset($StockID);
-echo '</table>';
+	} //end loop round properties for the item category
+	unset($StockID);
+	echo '</table>';
 }
 echo '<input type="hidden" name="PropertyCounter" value="' . $PropertyCounter . '" />';
 

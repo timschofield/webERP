@@ -189,7 +189,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 		echo '<br />' . __('The segment tag') . ' ' . $SegTag . ' ' . __('is being processed');
 
 		switch ($SegTag){
-			case 'UNB';
+			case 'UNB':
 				$UNB = explode ('+',mb_substr($LineText,4));
 				if (mb_substr($UNB[6],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an edi order');
