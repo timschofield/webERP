@@ -15,6 +15,9 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 	 */
 	public function testDirectAccessToInstallerPages(string $fileName): void
 	{
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
+
 		$this->followRedirects(false);
 		// be tolerant in case in the future we replace the redirect with a page-not-found
 		$this->setExpectedStatusCodes([301, 302, 404]);
@@ -34,6 +37,9 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 		if (!is_file(self::$rootDir . '/config.php')) {
 			$this->markTestSkipped('config.php is missing. webERP setup has not been done');
 		}
+
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($filePath));
 
 		$this->followRedirects(false);
 		$this->setExpectedStatusCodes([200]);

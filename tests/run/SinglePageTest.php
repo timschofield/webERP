@@ -18,6 +18,9 @@ class SinglePageTest extends LoggedInUserTestCase
 	 */
 	public function testAccessToAllPages(string $filePath): void
 	{
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($filePath));
+
 		$this->followRedirects(false);
 		// some pages are known to return a redirect if missing a GET/POST param
 		if (in_array($filePath, self::$redirectingPages)) {

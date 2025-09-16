@@ -22,6 +22,8 @@ class WebTestCase extends TestCase
 	/** @var HttpBrowser */
 	protected $browser;
 	/** @var string */
+	protected $executingTestIdentifier;
+	/** @var string */
 	protected static $errorPrependString = '';
 	/** @var string */
 	protected static $errorAppendString = '';
@@ -84,7 +86,8 @@ class WebTestCase extends TestCase
 			if ($this->browser) {
 				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception.
 				///       Also, the url being requested
-				$testName = get_class($this) . '_' . $this->name();
+				$testName = get_class($this) . '_' . $this->name() .
+					($this->executingTestIdentifier != '' ? '_' . $this->executingTestIdentifier : '');
 				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
 			}
 		}
