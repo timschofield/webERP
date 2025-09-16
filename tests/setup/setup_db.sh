@@ -89,7 +89,7 @@ if [ "$DB_VERSION" = native ]; then
 				exit 1
 			fi
 			if [ -z "$GITHUB_ACTION" ]; then
-				apt-get install mysql-server
+				DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
 			fi
 			sudo cp ./tests/setup/config/mysql/test.cnf /etc/mysql/conf.d/
 			# Start the service
@@ -101,7 +101,7 @@ if [ "$DB_VERSION" = native ]; then
 				exit 1
 			fi
 			if [ -z "$GITHUB_ACTION" ]; then
-				apt-get install mariadb-server
+				DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
 			fi
 			sudo cp ./tests/setup/config/mariadb/test.cnf /etc/mysql/conf.d/
 			# Start the service

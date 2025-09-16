@@ -155,7 +155,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	include($PathPrefix . 'includes/GetConfig.php');
 
 } else {
-	include($PathPrefix . 'includes/UserLogin.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
+	include($PathPrefix . 'includes/LoginFunctions.php'); /* Login checking and setup. Includes GetConfig.php on successful logins */
 
 	/// @todo what if the current user is already logged in? We should at least log him/her out before re-logging in...
 	///       (or maybe swallow that event, and log it as suspected hack attempt?)
@@ -176,7 +176,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 
 	switch ($rc) {
-		case UL_OK; //user logged in successfully
+		case UL_OK: //user logged in successfully
 			/// @todo shouldn't we only set the cookie if $FirstLogin = true ?
 			setcookie('Login', $_SESSION['DatabaseName']);
 			//include($PathPrefix . 'includes/LanguageSetup.php'); //set up the language

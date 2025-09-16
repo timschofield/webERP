@@ -7,7 +7,7 @@ function  LoginAPI($databasename, $user, $password) {
 	//include($PathPrefix . 'config.php');
 
 	// Include now for the error code values.
-	include($PathPrefix . 'includes/UserLogin.php');	/* Login checking and setup */
+	include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
 
 	$RetCode = array();		// Return result.
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {

@@ -4,9 +4,6 @@
 # This compares a plot with the same plot produced from a serialized/
 # unserialized copy of the PHPlot object.
 
-# NB: currently disabled in tests.ini
-# @todo make the test smarter, and skip based on php version
-
 require_once 'phplot.php';
 require_once 'makedata.php'; // For generating data arrays.
 

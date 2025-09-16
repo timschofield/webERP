@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8e214d6a236d049b13f45acc337943b6",
+    "content-hash": "e79652f0334435b9dff1457dfcba0432",
     "packages": [
         {
             "name": "composer/pcre",
@@ -615,11 +615,17 @@
         },
         {
             "name": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
+            "version": "8.0.1-rc2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/gggeek/phplot",
-                "reference": "63f0365661becdc66ab1420b2634a263f996504f"
+                "url": "https://github.com/gggeek/phplot.git",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/gggeek/phplot/zipball/ea097b8cee126b443620b20b9382c92a406666f0",
+                "reference": "ea097b8cee126b443620b20b9382c92a406666f0",
+                "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
@@ -641,7 +647,16 @@
                 }
             ],
             "description": "PHP graph library for dynamic scientific, business, and stock-market charts and graphs.",
-            "time": "2025-08-06T10:02:49+00:00"
+            "support": {
+                "source": "https://github.com/gggeek/phplot/tree/8.0.1-rc2"
+            },
+            "funding": [
+                {
+                    "type": "github",
+                    "url": "https://github.com/ajrepo"
+                }
+            ],
+            "time": "2025-09-13T11:39:43+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
@@ -726,16 +741,16 @@
         },
         {
             "name": "phpoffice/phpspreadsheet",
-            "version": "4.3.1",
+            "version": "5.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "d0ac70d610fb62ccad38c2696569ae1ad42acc70"
+                "reference": "fd26e45a814e94ae2aad0df757d9d1739c4bf2e0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/d0ac70d610fb62ccad38c2696569ae1ad42acc70",
-                "reference": "d0ac70d610fb62ccad38c2696569ae1ad42acc70",
+                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/fd26e45a814e94ae2aad0df757d9d1739c4bf2e0",
+                "reference": "fd26e45a814e94ae2aad0df757d9d1739c4bf2e0",
                 "shasum": ""
             },
             "require": {
@@ -826,9 +841,9 @@
             ],
             "support": {
                 "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/4.3.1"
+                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/5.1.0"
             },
-            "time": "2025-05-26T18:51:08+00:00"
+            "time": "2025-09-04T05:34:49+00:00"
         },
         {
             "name": "phpxmlrpc/phpxmlrpc",
@@ -1801,16 +1816,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.5.53",
+            "version": "10.5.54",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "32768472ebfb6969e6c7399f1c7b09009723f653"
+                "reference": "b1dbbaaf96106b76d500b9d3db51f9b01f6a3589"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/32768472ebfb6969e6c7399f1c7b09009723f653",
-                "reference": "32768472ebfb6969e6c7399f1c7b09009723f653",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b1dbbaaf96106b76d500b9d3db51f9b01f6a3589",
+                "reference": "b1dbbaaf96106b76d500b9d3db51f9b01f6a3589",
                 "shasum": ""
             },
             "require": {
@@ -1882,7 +1897,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.53"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.5.54"
             },
             "funding": [
                 {
@@ -1906,7 +1921,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-08-20T14:40:06+00:00"
+            "time": "2025-09-11T06:19:38+00:00"
         },
         {
             "name": "psr/container",
@@ -4044,20 +4059,14 @@
             "version": "dev-main",
             "alias": "1.99.99",
             "alias_normalized": "1.99.99.0"
-        },
-        {
-            "package": "phplot/phplot",
-            "version": "dev-release-candidate-for-8.0.1",
-            "alias": "8.0.1",
-            "alias_normalized": "8.0.1.0"
         }
     ],
     "minimum-stability": "stable",
     "stability-flags": {
         "gggeek/polyfill-gettext": 20,
-        "phplot/phplot": 20
+        "phplot/phplot": 5
     },
-    "prefer-stable": false,
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1",
@@ -4080,5 +4089,5 @@
     "platform-overrides": {
         "php": "8.1.0"
     },
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
