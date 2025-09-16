@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Check that the stock code exists*/
 	function VerifyWorkOrderExists($WorkOrder, $i, $Errors) {
 		$Searchsql = "SELECT count(wo)

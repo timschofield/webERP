@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Check that the debtor number exists*/
 	function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors) {
 		$Searchsql = "SELECT count(debtorno)

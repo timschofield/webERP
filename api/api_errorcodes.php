@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Define error codes that are returned by api functions*/
 	define('NoAuthorisation', 1);
 	define('IncorrectDebtorNumberLength', 1000);
