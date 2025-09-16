@@ -1,5 +1,6 @@
 <?php
 
+// in case this file is accessed directly...
 if (!isset($PathPrefix)) {
 	$PathPrefix = __DIR__ . '/../../';
 }

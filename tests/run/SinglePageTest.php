@@ -7,7 +7,8 @@ class SinglePageTest extends LoggedInUserTestCase
 	protected static $redirectingPages = [
 		'/ContractBOM.php',
 		'/ContractOtherReqts.php',
-		'/PO_Items.php'
+		'/PO_Items.php',
+		'/reportwriter/admin/defaults.php'
 	];
 
 	/**
