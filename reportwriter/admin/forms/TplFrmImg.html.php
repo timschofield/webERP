@@ -1,4 +1,11 @@
-<h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../');
+	exit();
+}
+
+?><h2 align="center"><?php echo 'Form Field: '.$DisplayName.' - '.RPT_BTN_PROP; ?></h2>
 <form method="post" action="ReportCreator.php?action=step6a" enctype="multipart/form-data" name="DBRptLine">
 	<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
 	<input name="DisplayName" type="hidden" value="<?php echo $DisplayName; ?>">

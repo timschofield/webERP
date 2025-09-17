@@ -1,4 +1,11 @@
-<script type="text/javascript">
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../');
+	exit();
+}
+
+?><script type="text/javascript">
 <!--
 var fActiveMenu = false;
 var oOverMenu = false;

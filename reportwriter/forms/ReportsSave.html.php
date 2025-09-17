@@ -1,4 +1,11 @@
-<?php echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
+<?php
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../');
+	exit();
+}
+
+echo '<html lang="' . str_replace('_', '-', substr($Language, 0, 5)) . ">"; ?>
 <head></head>
 <body>
 <h2 align="center"><?php echo RPT_RPTFRM.$Prefs['reportname'].' - '.RPT_PAGESAVE; ?></h2>
