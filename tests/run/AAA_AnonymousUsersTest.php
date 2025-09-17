@@ -8,26 +8,6 @@ require_once(__DIR__ . '/../src/AnonymousUserTestCase.php');
 class AnonymousUsersTest extends AnonymousUserTestCase
 {
 	/**
-	 * Tests that direct access to the installer pages does always result in a redirect.
-	 * This test is run many times - the filename to test is provided via the dataProvider.
-	 * It can be executed even before the installer has been run.
-	 * @dataProvider listInstallerPages
-	 */
-	public function testDirectAccessToInstallerPages(string $fileName): void
-	{
-		// use the name of the currently tested script as part of the name of the html file saved in case of failure
-		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
-
-		$this->followRedirects(false);
-		// be tolerant in case in the future we replace the redirect with a page-not-found
-		$this->setExpectedStatusCodes([301, 302, 404]);
-		$this->request('GET', self::$baseUri . $fileName);
-
-		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
-		$this->assertTrue(true);
-	}
-
-	/**
 	 * Tests access to pages which set $AllowAnyone to true
 	 * This test is run many times - the filename to test is provided via the dataProvider.
 	 * @dataProvider listAnonAccessPages
@@ -67,6 +47,46 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 		$crawler = $this->request('GET', self::$baseUri . $filePath);
 
 		$this->assertIsOnLoginPage($crawler);
+	}
+
+	/**
+	 * Tests that direct access to the installer pages does always result in a redirect.
+	 * This test is run many times - the filename to test is provided via the dataProvider.
+	 * It can be executed even before the installer has been run.
+	 * @dataProvider listInstallerPages
+	 */
+	public function testDirectAccessToInstallerPages(string $fileName): void
+	{
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
+
+		$this->followRedirects(false);
+		// be tolerant in case in the future we replace the redirect with a page-not-found
+		$this->setExpectedStatusCodes([301, 302, 404]);
+		$this->request('GET', self::$baseUri . $fileName);
+
+		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
+		$this->assertTrue(true);
+	}
+
+	/**
+	 * Tests that direct access to the non-full-pages/ non-html-pages does not generate a php warning or error.
+	 * This test is run many times - the filename to test is provided via the dataProvider.
+	 * It can be executed even before the installer has been run.
+	 * @dataProvider listNonWebPages
+	 */
+	public function testDirectAccessToNonWebPages(string $fileName): void
+	{
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
+
+		$this->followRedirects(false);
+		// be tolerant in case in the future we replace the redirect with a page-not-found
+		$this->setExpectedStatusCodes([200, 301, 302]);
+		$this->request('GET', self::$baseUri . $fileName);
+
+		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
+		$this->assertTrue(true);
 	}
 
 	/**
@@ -122,5 +142,21 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 			}
 		}
 		return $pages;
+	}
+
+	public static function listNonWebPages(): array
+	{
+		$dirs = [
+			__DIR__ . '/../../api',
+			//__DIR__ . '/../../bin',
+			__DIR__ . '/../../doc/Manual',
+			//__DIR__ . '/../../includes',
+			__DIR__ . '/../../reportwriter/admin/forms',
+			__DIR__ . '/../../reportwriter/forms',
+			__DIR__ . '/../../reportwriter/includes',
+			__DIR__ . '/../../reportwriter/install',
+		];
+
+		return self::listWebPages($dirs, true);
 	}
 }
