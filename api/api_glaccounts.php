@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Check that the account code doesn't already exist'*/
+/** Check that the account code doesn't already exist */
 function VerifyAccountCode($AccountCode, $i, $Errors) {
 	$Searchsql = "SELECT count(accountcode)
 			FROM chartmaster
@@ -18,7 +18,7 @@ function VerifyAccountCode($AccountCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the account code already exists'*/
+/** Check that the account code already exists */
 function VerifyAccountCodeExists($AccountCode, $i, $Errors) {
 	$Searchsql = "SELECT count(accountcode)
 			FROM chartmaster
@@ -31,7 +31,7 @@ function VerifyAccountCodeExists($AccountCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the name is 50 characters or less long */
+/** Check that the name is 50 characters or less long */
 function VerifyAccountName($AccountName, $i, $Errors) {
 	if (mb_strlen($AccountName)>50) {
 		$Errors[$i] = IncorrectAccountNameLength;
@@ -39,7 +39,7 @@ function VerifyAccountName($AccountName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the account group exists*/
+/** Check that the account group exist */
 function VerifyAccountGroupExists($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)
 			FROM accountgroups
@@ -86,7 +86,7 @@ function InsertGLAccount($AccountDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function returns a list of the general ledger accounts
+/** This function returns a list of the general ledger accounts
  * currently setup on webERP
  */
 function GetGLAccountList($user, $password) {
@@ -114,7 +114,7 @@ function GetGLAccountList($user, $password) {
 	return $GLAccountList;
 }
 
-/* This function takes as a parameter a general ledger account code
+/** This function takes as a parameter a general ledger account code
  * and returns an array containing the details of the selected
  * general ledger code.
  */

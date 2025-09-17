@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Check that the debtor number exists*/
+/** Check that the debtor number exist */
 function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors) {
 	$Searchsql = "SELECT count(debtorno)
 			FROM debtorsmaster
@@ -18,8 +18,8 @@ function VerifyBranchDebtorExists($DebtorNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the branch number is valid, and doesn't already
-   exist.*/
+/** Verify that the branch number is valid, and doesn't already
+   exist. */
 function VerifyBranchNo($DebtorNumber, $BranchNumber, $i, $Errors) {
 	if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 		$Errors[$i] = IncorrectBranchNumberLength;
@@ -36,7 +36,7 @@ function VerifyBranchNo($DebtorNumber, $BranchNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the branch number exists.*/
+/** Verify that the branch number exists. */
 function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors) {
 	if ((mb_strlen($BranchNumber)<1) or (mb_strlen($BranchNumber)>10)) {
 		$Errors[$i] = IncorrectBranchNumberLength;
@@ -54,7 +54,7 @@ function VerifyBranchNoExists($DebtorNumber, $BranchNumber, $i, $Errors) {
 }
 
 
-/* Check that the name exists and is 40 characters or less long */
+/** Check that the name exists and is 40 characters or less long */
 function VerifyBranchName($BranchName, $i, $Errors) {
 	if ((mb_strlen($BranchName)<1) or (mb_strlen($BranchName)>40)) {
 		$Errors[$i] = IncorrectBranchNameLength;
@@ -62,7 +62,7 @@ function VerifyBranchName($BranchName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the address lines are correct length*/
+/** Check that the address lines are correct length */
 function VerifyBranchAddressLine($AddressLine, $Length, $i, $Errors) {
 	if (mb_strlen($AddressLine)>$Length) {
 		$Errors[$i] = InvalidAddressLine;
@@ -70,7 +70,7 @@ function VerifyBranchAddressLine($AddressLine, $Length, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the latitude is a numeric field*/
+/** Check that the latitude is a numeric field */
 function VerifyLatitude($Latitude, $i, $Errors) {
 	if (!is_numeric($Latitude)) {
 		$Errors[$i] = InvalidLatitude;
@@ -78,7 +78,7 @@ function VerifyLatitude($Latitude, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the longitude is a numeric field*/
+/** Check that the longitude is a numeric field */
 function VerifyLongitude($Longitude, $i, $Errors) {
 	if (!is_numeric($Longitude)) {
 		$Errors[$i] = InvalidLongitude;
@@ -86,7 +86,7 @@ function VerifyLongitude($Longitude, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the delivery days is a numeric field*/
+/** Check that the delivery days is a numeric field */
 function VerifyEstDeliveryDays($EstDeliveryDays, $i, $Errors) {
 	if (!is_numeric($EstDeliveryDays)) {
 		$Errors[$i] = InvalidEstDeliveryDays;
@@ -94,7 +94,7 @@ function VerifyEstDeliveryDays($EstDeliveryDays, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the area code is set up in the weberp database */
+/** Check that the area code is set up in the weberp database */
 function VerifyAreaCode($AreaCode , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(areacode)
 				  FROM areas
@@ -107,7 +107,7 @@ function VerifyAreaCode($AreaCode , $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the salesman is set up in the weberp database */
+/** Check that the salesman is set up in the weberp database */
 function VerifySalesmanCode($SalesmanCode , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(salesmancode)
 				  FROM salesman
@@ -120,7 +120,7 @@ function VerifySalesmanCode($SalesmanCode , $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the forward date is a valid date */
+/** Check that the forward date is a valid date */
 function VerifyFwdDate($FwdDate, $i, $Errors) {
 	if (!is_numeric($FwdDate)) {
 		$Errors[$i] = InvalidFwdDate;
@@ -128,7 +128,7 @@ function VerifyFwdDate($FwdDate, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the phone number only has 20 or fewer characters */
+/** Check that the phone number only has 20 or fewer characters */
 function VerifyPhoneNumber($PhoneNumber, $i, $Errors) {
 	if (mb_strlen($PhoneNumber)>20) {
 		$Errors[$i] = InvalidPhoneNumber;
@@ -136,7 +136,7 @@ function VerifyPhoneNumber($PhoneNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the fax number only has 20 or fewer characters */
+/** Check that the fax number only has 20 or fewer characters */
 function VerifyFaxNumber($FaxNumber, $i, $Errors) {
 	if (mb_strlen($FaxNumber)>20) {
 		$Errors[$i] = InvalidFaxNumber;
@@ -144,7 +144,7 @@ function VerifyFaxNumber($FaxNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the contact name only has 30 or fewer characters */
+/** Check that the contact name only has 30 or fewer characters */
 function VerifyContactName($ContactName, $i, $Errors) {
 	if (mb_strlen($ContactName)>30) {
 		$Errors[$i] = InvalidContactName;
@@ -152,7 +152,7 @@ function VerifyContactName($ContactName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Validate email addresses */
+/** Validate email addresses */
 function  checkEmail($email) {
 	if (!preg_match("/^( [a-zA-Z0-9] )+( [a-zA-Z0-9\._-] )*@( [a-zA-Z0-9_-] )+( [a-zA-Z0-9\._-] +)+$/" , $email)) {
 		return false;
@@ -160,7 +160,7 @@ function  checkEmail($email) {
 	return true;
 }
 
-/* Check that the email address is in a valid format and only has 55 or fewer characters */
+/** Check that the email address is in a valid format and only has 55 or fewer characters */
 function VerifyEmailAddress($EmailAddress, $i, $Errors) {
 	if (mb_strlen($EmailAddress)>55 and !checkEmail($EmailAddress)) {
 		$Errors[$i] = InvalidEmailAddress;
@@ -168,7 +168,7 @@ function VerifyEmailAddress($EmailAddress, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the default location is set up in the weberp database */
+/** Check that the default location is set up in the weberp database */
 function VerifyDefaultLocation($DefaultLocation , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(loccode)
 				  FROM locations
@@ -181,7 +181,7 @@ function VerifyDefaultLocation($DefaultLocation , $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the tax group id is set up in the weberp database */
+/** Check that the tax group id is set up in the weberp database */
 function VerifyTaxGroupId($TaxGroupId , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(taxgroupid)
 				  FROM taxgroups
@@ -194,7 +194,7 @@ function VerifyTaxGroupId($TaxGroupId , $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the default shipper is set up in the weberp database */
+/** Check that the default shipper is set up in the weberp database */
 function VerifyDefaultShipVia($DefaultShipVia , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(shipper_id)
 				 FROM shippers
@@ -207,7 +207,7 @@ function VerifyDefaultShipVia($DefaultShipVia , $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the Deliver Blind flag is a 1 or 2 */
+/** Verify that the Deliver Blind flag is a 1 or 2 */
 function VerifyDeliverBlind($DeliverBlind, $i, $Errors) {
 	if ($DeliverBlind!=1 and $DeliverBlind!=2) {
 		$Errors[$i] = InvalidDeliverBlind;
@@ -215,7 +215,7 @@ function VerifyDeliverBlind($DeliverBlind, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the Disable Trans flag is a 1 or 0 */
+/** Verify that the Disable Trans flag is a 1 or 0 */
 function VerifyDisableTrans($DisableTrans, $i, $Errors) {
 	if ($DisableTrans!=0 and $DisableTrans!=1) {
 		$Errors[$i] = InvalidDisableTrans;
@@ -223,7 +223,7 @@ function VerifyDisableTrans($DisableTrans, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the special instructions only have 256 or fewer characters */
+/** Check that the special instructions only have 256 or fewer characters */
 function VerifySpecialInstructions($SpecialInstructions, $i, $Errors) {
 	if (mb_strlen($SpecialInstructions)>256) {
 		$Errors[$i] = InvalidSpecialInstructions;
@@ -231,7 +231,7 @@ function VerifySpecialInstructions($SpecialInstructions, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the customer branch code only has 30 or fewer characters */
+/** Check that the customer branch code only has 30 or fewer characters */
 function VerifyCustBranchCode($CustBranchCode, $i, $Errors) {
 	if (mb_strlen($CustBranchCode)>30) {
 		$Errors[$i] = InvalidCustBranchCode;
@@ -485,7 +485,7 @@ function ModifyBranch($BranchDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function returns a list of branch codes from the given debtorno.
+/** This function returns a list of branch codes from the given debtorno.
  * The returned data is an array with first value 0 and then as many branch
  * codes are there are branches.  Otherwise, the first value is non-zero,
  * and it (and any following) are error codes encountered.
@@ -513,7 +513,7 @@ function GetCustomerBranchCodes($DebtorNumber, $user, $password)
 	return  $Errors;
 }
 
-/* This function takes a debtorno and branch code and returns an associative array containing
+/** This function takes a debtorno and branch code and returns an associative array containing
    the database record for that branch. If the debtor/branch code doesn't exist
    then it returns an $Errors array.
 */

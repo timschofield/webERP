@@ -14,7 +14,7 @@ $SOH_DateFields = array ('orddate',
 						'quotedate',
 						'confirmeddate' );
 
-/* Check that the custmerref field is 50 characters or less long */
+/** Check that the custmerref field is 50 characters or less long */
 function VerifyCustomerRef($customerref, $i, $Errors) {
 	if (mb_strlen($customerref)>50) {
 		$Errors[$i] = InvalidCustomerRef;
@@ -22,7 +22,7 @@ function VerifyCustomerRef($customerref, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the buyername field is 50 characters or less long */
+/** Check that the buyername field is 50 characters or less long */
 function VerifyBuyerName($buyername, $i, $Errors) {
 	if (mb_strlen($buyername)>50) {
 		$Errors[$i] = InvalidBuyerName;
@@ -30,7 +30,7 @@ function VerifyBuyerName($buyername, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the comments field is 256 characters or less long */
+/** Check that the comments field is 256 characters or less long */
 function VerifyComments($comments, $i, $Errors) {
 	if (mb_strlen($comments)>256) {
 		$Errors[$i] = InvalidComments;
@@ -38,7 +38,7 @@ function VerifyComments($comments, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the order date is a valid date. The date
+/** Check that the order date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 function VerifyOrderDate($orddate, $i, $Errors) {
@@ -74,7 +74,7 @@ function VerifyOrderDate($orddate, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the order type is set up in the weberp database */
+/** Check that the order type is set up in the weberp database */
 function VerifyOrderType($Ordertype, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(typeabbrev)
 				 FROM salestypes
@@ -87,7 +87,7 @@ function VerifyOrderType($Ordertype, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the delivery name field is 40 characters or less long */
+/** Check that the delivery name field is 40 characters or less long */
 function VerifyDeliverTo($delverto, $i, $Errors) {
 	if (mb_strlen($delverto)>40) {
 		$Errors[$i] = InvalidDeliverTo;
@@ -95,7 +95,7 @@ function VerifyDeliverTo($delverto, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the last freight cost is numeric */
+/** Verify that the last freight cost is numeric */
 function VerifyFreightCost($freightcost, $i, $Errors) {
 	if (!is_numeric($freightcost)) {
 		$Errors[$i] = InvalidFreightCost;
@@ -103,7 +103,7 @@ function VerifyFreightCost($freightcost, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the from stock location is set up in the weberp database */
+/** Check that the from stock location is set up in the weberp database */
 function VerifyFromStockLocation($FromStockLocn, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(loccode)
 				 FROM locations
@@ -116,7 +116,7 @@ function VerifyFromStockLocation($FromStockLocn, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the delivery date is a valid date. The date
+/** Check that the delivery date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 function VerifyDeliveryDate($DeliveryDate, $i, $Errors) {
@@ -152,7 +152,7 @@ function VerifyDeliveryDate($DeliveryDate, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the quotation flag is a 1 or 0 */
+/** Verify that the quotation flag is a 1 or 0 */
 function VerifyQuotation($quotation, $i, $Errors) {
 	if ($quotation!=0 and $quotation!=1) {
 		$Errors[$i] = InvalidQuotationFlag;
@@ -160,7 +160,7 @@ function VerifyQuotation($quotation, $i, $Errors) {
 	return $Errors;
 }
 
-/* Fetch the next line number */
+/** Fetch the next line number */
 function GetOrderLineNumber($OrderNo, $i, $Errors) {
 	$Linesql = "SELECT MAX(orderlineno)
 				FROM salesorderdetails
@@ -173,7 +173,7 @@ function GetOrderLineNumber($OrderNo, $i, $Errors) {
 	}
 }
 
-/* Check that the order header already exists */
+/** Check that the order header already exists */
 function VerifyOrderHeaderExists($OrderNo, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(orderno)
 				 FROM salesorders
@@ -186,7 +186,7 @@ function VerifyOrderHeaderExists($OrderNo, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the unit price is numeric */
+/** Verify that the unit price is numeric */
 function VerifyUnitPrice($unitprice, $i, $Errors) {
 	if (!is_numeric($unitprice)) {
 		$Errors[$i] = InvalidUnitPrice;
@@ -194,7 +194,7 @@ function VerifyUnitPrice($unitprice, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the quantity is numeric */
+/** Verify that the quantity is numeric */
 function VerifyQuantity($quantity, $i, $Errors) {
 	if (!is_numeric($quantity)) {
 		$Errors[$i] = InvalidQuantity;
@@ -202,7 +202,7 @@ function VerifyQuantity($quantity, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the discount percent is numeric */
+/** Verify that the discount percent is numeric */
 function VerifyDiscountPercent($discountpercent, $i, $Errors) {
 	if (!is_numeric($discountpercent) or $discountpercent>100) {
 		$Errors[$i] = InvalidDiscountPercent;
@@ -210,7 +210,7 @@ function VerifyDiscountPercent($discountpercent, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the narrative field is 256 characters or less long */
+/** Check that the narrative field is 256 characters or less long */
 function VerifyNarrative($Narrative, $i, $Errors) {
 	if (mb_strlen($Narrative)>256) {
 		$Errors[$i] = InvalidNarrative;
@@ -218,7 +218,7 @@ function VerifyNarrative($Narrative, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the poline field is 10 characters or less long */
+/** Check that the poline field is 10 characters or less long */
 function VerifyPOLine($poline, $i, $Errors) {
 	if (mb_strlen($poline)>10) {
 		$Errors[$i] = InvalidPOLine;
@@ -226,7 +226,7 @@ function VerifyPOLine($poline, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the item due date is a valid date. The date
+/** Check that the item due date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 function VerifyItemDueDate($ItemDue, $i, $Errors) {
@@ -262,7 +262,7 @@ function VerifyItemDueDate($ItemDue, $i, $Errors) {
 	return $Errors;
 }
 
-/* Create a customer sales order header in webERP. If successful
+/** Create a customer sales order header in webERP. If successful
  * returns $Errors[0]=0 and $Errors[1] will contain the order number.
  */
 function InsertSalesOrderHeader($OrderHeader, $user, $password) {
@@ -365,7 +365,7 @@ function InsertSalesOrderHeader($OrderHeader, $user, $password) {
 	return $Errors;
 }
 
-/* Modify a customer sales order header in webERP.
+/** Modify a customer sales order header in webERP.
  */
 function ModifySalesOrderHeader($OrderHeader, $user, $password) {
 	$Errors = array();
@@ -461,7 +461,7 @@ function ModifySalesOrderHeader($OrderHeader, $user, $password) {
 	return $Errors;
 }
 
-/* Create a customer sales order line in webERP. The order header must
+/** Create a customer sales order line in webERP. The order header must
  * already exist in webERP.
  */
 function InsertSalesOrderLine($OrderLine, $user, $password) {
@@ -492,8 +492,8 @@ function InsertSalesOrderLine($OrderLine, $user, $password) {
 	if (isset($OrderLine['narrative'])){
 		$Errors=VerifyNarrative($OrderLine['narrative'], sizeof($Errors), $Errors);
 	}
+	// Not sure why the verification of itemdue doesn't work
 	/*
-	 * Not sure why the verification of itemdue doesn't work
 	if (isset($OrderLine['itemdue'])){
 		$Errors=VerifyItemDueDate($OrderLine['itemdue'], sizeof($Errors), $Errors);
 	}
@@ -527,7 +527,7 @@ function InsertSalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
-/* Modify a customer sales order line in webERP. The order header must
+/** Modify a customer sales order line in webERP. The order header must
  * already exist in webERP.
  */
 function ModifySalesOrderLine($OrderLine, $user, $password) {
@@ -588,7 +588,7 @@ function ModifySalesOrderLine($OrderLine, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes a Order Header ID  and returns an associative array containing
+/** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
@@ -612,7 +612,7 @@ function GetSalesOrderHeader($OrderNo, $user, $password) {
 	}
 }
 
-/* This function takes a Order Header ID  and returns an associative array containing
+/** This function takes a Order Header ID  and returns an associative array containing
    the database record for that Order. If the Order Header ID doesn't exist
    then it returns an $Errors array.
 */
@@ -723,7 +723,7 @@ function InvoiceSalesOrder($OrderNo, $User, $Password) {
 
 /*Start an SQL transaction */
 	DB_Txn_Begin();
-/*Now Get the next invoice number - function in SQL_CommonFunctions*/
+/*Now Get the next invoice number - function in SQL_CommonFunctions */
 	$InvoiceNo = GetNextTransNo(10);
 	$PeriodNo = GetCurrentPeriod();
 
