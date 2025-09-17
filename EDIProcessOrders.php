@@ -189,7 +189,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 		echo '<br />' . __('The segment tag') . ' ' . $SegTag . ' ' . __('is being processed');
 
 		switch ($SegTag){
-			case 'UNB';
+			case 'UNB':
 				$UNB = explode ('+',mb_substr($LineText,4));
 				if (mb_substr($UNB[6],0,6)!='ORDERS'){
 					$EmailText .= "\n" . __('This message is not an edi order');
@@ -757,9 +757,9 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$PIA = explode('+',mb_substr($LineText,4));
 					$PIA2 = explode(':',$PIA[1]);
 					switch ($PIA[0]){
-					   case '1'; // additional item id
-//					      $Qty=$QTY2[1];
-					   break;
+						case '1': // additional item id
+//					        $Qty=$QTY2[1];
+					   		break;
 					}
 					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA2[0] ;
 					break;
@@ -768,7 +768,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$IMD = explode('+',mb_substr($LineText,4));
 					$IMD2 = explode(':',mb_substr($LineText,4));
 					switch ($IMD[1]){
-					   case 'F'; //
+						case 'F': //
 					   //   $Qty=$QTY2[1];
 					   break;
 					}
@@ -781,7 +781,7 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$QTY = explode('+',mb_substr($LineText,4));
 					$QTY2 = explode(':',$QTY[0]);
 					switch ($QTY2[0]){
-					   case '21'; // ordered qty
+						case '21': // ordered qty
 					      $Qty=$QTY2[1];
 					   break;
 					}
@@ -792,10 +792,10 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$MOA = explode('+',mb_substr($LineText,4));
 					$MOA2 = explode(':',$MOA[0]);
 					switch ($MOA[0]){
-					   case '203'; // Line item amount
-					   break;
-					   case '39'; // total amount
-					   break;
+						case '203': // Line item amount
+					   		break;
+						case '39': // total amount
+					   		break;
 					}
 					$EmailText .= "\n" . __('Monetary amount'). ': ' . $MOA2[1];
 					break;
@@ -804,9 +804,9 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$PRI = explode('+',mb_substr($LineText,4));
 					$PRI2 = explode(':',$PRI[0]);
 					switch ($PRI2[0]){
-					   case 'AAA'; // Calculation net
-					     $Price = $PRI2[1];
-					   break;
+						case 'AAA': // Calculation net
+					     	$Price = $PRI2[1];
+					   		break;
 					}
 					$EmailText .= "\n" . __('Price details') . ': ' . $PRI2[1] ;
 					break;
@@ -821,8 +821,8 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$PIA = explode('+',mb_substr($LineText,4));
 					$PIA2 = explode(':',$PIA[1]);
 					switch ($PIA2[1]){
-					   case 'SA'; // Supplier's article number
-					   break;
+						case 'SA': // Supplier's article number
+							break;
 					}
 					$EmailText .= "\n" . __('Additional product id') . ': ' . $PIA[3];
 					break;
@@ -837,8 +837,8 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$TAX2 = explode(':',mb_substr($LineText,4));
 					$TAX3 = explode('+',mb_substr($TAX2[3],1));
 					switch ($TAX[0]){
-					   case '7'; // tax
-					   break;
+						case '7': // tax
+							break;
 					}
 					$EmailText .= "\n" . __('Duty/tax/fee details') . ': ' . $TAX[1] . ' ' . $TAX3[0];
 					break;
@@ -848,10 +848,10 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					// MEA+AAE+G+10'
 					// AAE measurement
 					switch ($MEA[2]){
-					   case 'G'; // gross weight
-					   break;
-					   case 'K'; // netweight kg
-					   break;
+						case 'G': // gross weight
+					   		break;
+						case 'K': // netweight kg
+					   		break;
 					}
 					$EmailText .= "\n" . __('Measurements'). ': ' . $MEA[1] . ' ' . $MEA[2] . ' kg' ;
 					break;
@@ -874,8 +874,8 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 					$CNT = explode('+',mb_substr($LineText,4));
 					$CNT2 = explode(':',mb_substr($LineText,4));
 					switch ($CNT[0]){
-					   case '2'; // lin count
-					   break;
+						case '2': // lin count
+					   		break;
 					}
 
 					$EmailText .= "\n" . __('Control total') . ': ' . $CNT[0] ;

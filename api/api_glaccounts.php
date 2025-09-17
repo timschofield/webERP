@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Check that the account code doesn't already exist'*/
 	function VerifyAccountCode($AccountCode, $i, $Errors) {
 		$Searchsql = "SELECT count(accountcode)

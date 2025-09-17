@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /** Check that the account group doesn't already exist'*/
 function VerifyAccountGroup($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)

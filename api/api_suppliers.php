@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Verify that the supplier number is valid, and doesn't already
    exist.*/
 	function VerifySupplierNo($SupplierNumber, $i, $Errors) {

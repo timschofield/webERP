@@ -38,7 +38,7 @@ if ( isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (isset($_POST['Con_ID']) AND !is_long((integer)$_POST['Con_ID'])) {
+	if (isset($_POST['Con_ID']) AND !is_long((int)$_POST['Con_ID'])) {
 		$InputError = 1;
 		prnMsg( __('The Contact ID must be an integer.'), 'error');
 	} elseif (mb_strlen($_POST['ContactName']) >40) {

@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 // InsertSalesOrderHeader and ModifySalesOrderHeader have date fields
 // which need to be converted to the appropriate format.  This is
 // a list of such fields used to detect date values and format appropriately.

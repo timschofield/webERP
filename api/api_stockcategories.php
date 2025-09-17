@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 	function VerifyCategoryID($CategoryID, $i, $Errors) {
 		if (mb_strlen($CategoryID)>6 or $CategoryID=='') {
 			$Errors[$i] = InvalidCategoryID;

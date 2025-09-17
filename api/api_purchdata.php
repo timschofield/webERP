@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 	function VerifyPurchDataLineExists($SupplierID, $StockID, $i, $Errors) {
 		if (VerifyStockCodeExists($StockID, $i, $Errors)!=0 and
 			VerifySupplierNoExists($SupplierID, $i, $Errors)!=0) {
