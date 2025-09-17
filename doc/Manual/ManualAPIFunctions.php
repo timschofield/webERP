@@ -2,7 +2,7 @@
 
 $PathPrefix = __DIR__ . '/../../';
 
-include('api/api_errorcodes.php');
+include($PathPrefix . 'api/api_errorcodes.php');
 
 $Title = 'API documentation';
 
