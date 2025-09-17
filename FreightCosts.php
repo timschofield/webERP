@@ -121,7 +121,7 @@ if (isset($_POST['submit'])) {
 		$_POST['MinimumChg'] = 0;
 	}
 
-	if (!is_double((double) $_POST['CubRate']) OR !is_double((double) $_POST['KGRate']) OR !is_double((double) $_POST['MAXKGs']) OR !is_double((double) $_POST['MAXCub']) OR !is_double((double) $_POST['FixedPrice']) OR !is_double((double) $_POST['MinimumChg'])) {
+	if (!is_double((float) $_POST['CubRate']) OR !is_double((float) $_POST['KGRate']) OR !is_double((float) $_POST['MAXKGs']) OR !is_double((float) $_POST['MAXCub']) OR !is_double((float) $_POST['FixedPrice']) OR !is_double((float) $_POST['MinimumChg'])) {
 		$InputError=1;
 		prnMsg(__('The entries for Cubic Rate, KG Rate, Maximum Weight, Maximum Volume, Fixed Price and Minimum charge must be numeric'),'warn');
 	}

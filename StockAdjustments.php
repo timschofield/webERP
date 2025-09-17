@@ -80,22 +80,22 @@ if (isset($_POST['Narrative'])){
 
 $SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $ResultStkLocs = DB_query($SQL);
-$LocationList=array();
-while ($MyRow=DB_fetch_array($ResultStkLocs)){
-	$LocationList[$MyRow['loccode']]=$MyRow['locationname'];
+$LocationList = array();
+while ($MyRow = DB_fetch_array($ResultStkLocs)) {
+	$LocationList[$MyRow['loccode']] = $MyRow['locationname'];
 }
 
-if (isset($_POST['StockLocation'])){
-	if($_SESSION['Adjustment' . $identifier]->StockLocation != $_POST['StockLocation']){/* User has changed the stock location, so the serial no must be validated again */
+if (isset($_POST['StockLocation'])) {
+	if ($_SESSION['Adjustment' . $identifier]->StockLocation != $_POST['StockLocation']){/* User has changed the stock location, so the serial no must be validated again */
 		$_SESSION['Adjustment' . $identifier]->SerialItems = array();
 	}
 	$_SESSION['Adjustment' . $identifier]->StockLocation = $_POST['StockLocation'];
-}else{
-	if(empty($_SESSION['Adjustment' . $identifier]->StockLocation)){
-		if(empty($_SESSION['UserStockLocation'])){
-			$_SESSION['Adjustment' . $identifier]->StockLocation=key(reset($LocationList));
-		}else{
-			$_SESSION['Adjustment' . $identifier]->StockLocation=$_SESSION['UserStockLocation'];
+} else {
+	if (empty($_SESSION['Adjustment' . $identifier]->StockLocation)) {
+		if (empty($_SESSION['UserStockLocation'])) {
+			$_SESSION['Adjustment' . $identifier]->StockLocation = array_key_first($LocationList);
+		} else {
+			$_SESSION['Adjustment' . $identifier]->StockLocation = $_SESSION['UserStockLocation'];
 		}
 	}
 }

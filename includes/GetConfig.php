@@ -12,7 +12,7 @@ if ((isset($ForceConfigReload) AND $ForceConfigReload==true) OR !isset($_SESSION
 	while( $MyRow = DB_fetch_array($ConfigResult) ) {
 		if (is_numeric($MyRow['confvalue']) AND $MyRow['confname']!='DefaultPriceList' AND $MyRow['confname']!='VersionNumber'){
 			//the variable name is given by $MyRow[0]
-			$_SESSION[$MyRow['confname']] = (double) $MyRow['confvalue'];
+			$_SESSION[$MyRow['confname']] = (float) $MyRow['confvalue'];
 		} else {
 			$_SESSION[$MyRow['confname']] =  $MyRow['confvalue'];
 		}

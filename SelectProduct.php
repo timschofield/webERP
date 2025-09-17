@@ -247,7 +247,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			case 1:
 				echo '<td class="select" style="width:60px">' . $PropertyValue;
 			break;
-			case 2; //checkbox
+			case 2: //checkbox
 				echo '<td class="select" style="width:60px">';
 				if ($PropertyValue == __('Not Set')){
 					echo __('Not Set');

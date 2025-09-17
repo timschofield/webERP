@@ -181,20 +181,20 @@ if (isset($_GET['ListTests'])) {
 	}
 
 	switch ($MyRow['type']) {
-	 	case 0; //textbox
+		case 0: //textbox
 	 		$TypeDisp=__('Text Box');
 	 		break;
-	 	case 1; //select box
+		case 1: //select box
 	 		$TypeDisp=__('Select Box');
 			break;
-		case 2; //checkbox
+		case 2: //checkbox
 			$TypeDisp=__('Check Box');
 			break;
-		case 3; //datebox
+		case 3: //datebox
 			$TypeDisp=__('Date Box');
 			$Class="date";
 			break;
-		case 4; //range
+		case 4: //range
 			$TypeDisp=__('Range');
 			$RangeMin='<input  class="' .$Class. '" type="text" name="AddRangeMin' .$x.'" />';
 			$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
@@ -409,20 +409,20 @@ or deletion of the records*/
 		$ShowOnTestPlanText = __('No');
 	}
 	switch ($MyRow['type']) {
-	 	case 0; //textbox
+		case 0: //textbox
 	 		$TypeDisp='Text Box';
 	 		break;
-	 	case 1; //select box
+		case 1: //select box
 	 		$TypeDisp='Select Box';
 			break;
-		case 2; //checkbox
+		case 2: //checkbox
 			$TypeDisp='Check Box';
 			break;
-		case 3; //datebox
+		case 3: //datebox
 			$TypeDisp='Date Box';
 			$Class="date";
 			break;
-		case 4; //range
+		case 4: //range
 			$TypeDisp='Range';
 			break;
 	} //end switch
@@ -522,20 +522,20 @@ if (! isset($_GET['delete'])) {
 			$Class="number";
 		}
 		switch ($MyRow['type']) {
-			case 0; //textbox
+			case 0: //textbox
 				$TypeDisp='Text Box';
 				break;
-			case 1; //select box
+			case 1: //select box
 				$TypeDisp='Select Box';
 				break;
-			case 2; //checkbox
+			case 2: //checkbox
 				$TypeDisp='Check Box';
 				break;
-			case 3; //datebox
+			case 3: //datebox
 				$TypeDisp='Date Box';
 				$Class="date";
 				break;
-			case 4; //range
+			case 4: //range
 				$TypeDisp='Range';
 				break;
 		} //end switch

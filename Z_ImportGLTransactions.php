@@ -120,7 +120,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		//Finally force the amount to be a double
-		$MyRow[3] = (double)$MyRow[3];
+		$MyRow[3] = (float)$MyRow[3];
 		if ($InputError !=1){
 
 			//Firstly add the line to the gltrans table

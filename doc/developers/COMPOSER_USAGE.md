@@ -53,7 +53,7 @@ This workflow is similar to the one above:
 
 2. update the package into the `vendor` folder and update the autoloader:
 
-       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist my/package
+       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist --with-dependencies my/package
 
    NB: please take care to use all of the above options
 
@@ -75,11 +75,11 @@ The correct workflow to handle them is:
 
 3. download the new package version to the `vendor` folder and update the autoloader:
 
-       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist updated/package
+       composer update --no-dev --optimize-autoloader --no-interaction --prefer-stable --prefer-dist --with-dependencies updated/package
 
 4. review all the modified files, add the modified files to a new Git branch, commit and send a Pull Request
 
 
 ## Setting up "dev" dependencies to run the test suite
 
-See [RUNNING_TESTS.md](RUNNING_TESTS.md)
+See [TESTING.md](TESTING.md)
