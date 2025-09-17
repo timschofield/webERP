@@ -8,7 +8,7 @@ if (!isset($RootPath)) {
 	$RootPath = htmlspecialchars(dirname(dirname(dirname($_SERVER['PHP_SELF']))), ENT_QUOTES, 'UTF-8');
 }
 
-include($PathPrefix . 'api/api_errorcodes.php');
+include($PathPrefix . 'api/includes/api_errorcodes.php');
 
 $Title = 'API documentation';
 
