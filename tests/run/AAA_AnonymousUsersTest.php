@@ -5,7 +5,7 @@ require_once(__DIR__ . '/../src/AnonymousUserTestCase.php');
 /**
  * All public methods starting with `test` are tests which will be executed by PHPUnit
  */
-class AnonymousUsersTest extends AnonymousUserTestCase
+class AAA_AnonymousUsersTest extends AnonymousUserTestCase
 {
 	/**
 	 * Tests access to pages which set $AllowAnyone to true
@@ -70,9 +70,8 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 	}
 
 	/**
-	 * Tests that direct access to the non-full-pages/ non-html-pages does not generate a php warning or error.
+	 * Tests that direct access to the non-full-pages/non-html-pages does not generate a php warning or error.
 	 * This test is run many times - the filename to test is provided via the dataProvider.
-	 * It can be executed even before the installer has been run.
 	 * @dataProvider listNonWebPages
 	 */
 	public function testDirectAccessToNonWebPages(string $fileName): void
@@ -82,7 +81,7 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 
 		$this->followRedirects(false);
 		// be tolerant in case in the future we replace the redirect with a page-not-found
-		$this->setExpectedStatusCodes([200, 301, 302]);
+		$this->setExpectedStatusCodes([200, 301, 302, 404]);
 		$this->request('GET', self::$baseUri . $fileName);
 
 		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
@@ -150,6 +149,7 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 			__DIR__ . '/../../api',
 			//__DIR__ . '/../../bin',
 			__DIR__ . '/../../doc/Manual',
+			/// @todo once we have fixed all the files in /includes for direct we access, uncomment the line below
 			//__DIR__ . '/../../includes',
 			__DIR__ . '/../../reportwriter/admin/forms',
 			__DIR__ . '/../../reportwriter/forms',
@@ -157,6 +157,12 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 			__DIR__ . '/../../reportwriter/install',
 		];
 
-		return self::listWebPages($dirs, true);
+		return array_merge(
+			[
+				['/config.php'],
+				['/config.distrib.php'],
+			],
+			self::listWebPages($dirs, true)
+		);
 	}
 }

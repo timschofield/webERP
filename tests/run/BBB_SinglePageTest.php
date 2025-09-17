@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../src/LoggedInUserTestCase.php');
 
-class SinglePageTest extends LoggedInUserTestCase
+class BBB_SinglePageTest extends LoggedInUserTestCase
 {
 	protected static $redirectingPages = [
 		'/ContractBOM.php',
