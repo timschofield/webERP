@@ -1,7 +1,7 @@
 # Testing webERP
 
 The webERP test suite consists mostly of functional tests - tests accessing the web interface rather than
-driving directly the single code components. It is built using PHPUnit and the Symfony DomCrawler component.
+driving directly the single code components. It is built using PHPUnit version 10.5 and the Symfony DomCrawler component.
 
 The testsuite is run automatically on GitHub to validate every commit and pull request. It is also possible to run
 tests locally to check that there are no bugs introduced before submitting a pull request.
@@ -84,11 +84,11 @@ AGAINST YOUR PRODUCTION DATABASE!
    those changes to the `master` branch on GitHub! See step 6 below on how to undo those changes.
 
 3. set up the test configuration for your environment: in the webERP root directory, create a file `phpunit.xml`
-   with the following contents, tweaked with the correct values
+   by copying `phpunit.dist.xml`, and tweaking it with the correct values
 
 	```
 	<?xml version="1.0" encoding="UTF-8" ?>
-	<phpunit>
+	<phpunit colors="true" cacheResult="false" displayDetailsOnSkippedTests="true" displayDetailsOnPhpunitDeprecations="true">
 		<php>
 			<env name="TEST_TARGET_PROTOCOL" value="http" />
 			<env name="TEST_TARGET_HOSTNAME" value="localhost" />
@@ -124,9 +124,11 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 6. after your testing is complete, to avoid accidentally committing to git the test suite tools installed, run
 
-   ```
-   composer install --ignore-platform-reqs --no-dev --prefer-dist --optimize-autoloader
-   ```
+   `./tests/setup/setup_dependencies.sh -u`
+
+   Note that failed tests might have left .html files in the project's root dir. If so, remove them with
+
+   `rm webpage_failing_*.html`
 
    Also, if you created a new db schema in step 4 above, feel free to drop it
 
@@ -135,10 +137,58 @@ AGAINST YOUR PRODUCTION DATABASE!
 
 ## Writing tests
 
+TO BE DOCUMENTED MORE...
+
+Tests cases are written as PHP classes, which extend \PHPUnit\Framework\Testcase, or more commonly one of the customised
+test classes present in `tests/src`.
+
+The test classes should be positioned in `tests/run`. The name of the file should be the same as the name of the class.
+The name of the class should end in `Test`.
+
+We manage the order of execution of tests via specific naming of the classes/files, eg:
+
+	AAA_AnonymousUsersTest.php
+    ...
+    DDF_SomeScenarioTest.php
+
+Every public method named `testSomething` is a single test, which wll be executed by PHPUnit.
+
+Those methods should all carry out some work, and check that the result is expected, via using one of the `assertSomething`
+methods, such as:
+
+    $data = doSomething(...);
+	$this->assertTrue($data, 'We expected true as result of this operation');
+
+Please read PHPUnit documentation and tutorials for more information about the available assertion methods. See: https://docs.phpunit.de/en/10.5/
+
+### Tests accessing web pages
+
+If the tests are carried out by means of interacting with the app's web pages as a logged-in user, they should extend
+the class `LoggedInuserTestcase`.
+
+Before the execution of every test method, an admin user will be automatically logged in to the site (and he will be
+logged out after execution of the test).
+
+To browse pages, use the method `$crawler = $this->sendRequest()`.
+
+To check the contents of the resulting web page, use methods of `$crawler`.
+
+See the tests in `tests/install/InstallerTest.php`, method `testInstallation`, for a more in-depth example.
+
+### Tests accessing the database
+
 TO BE DOCUMENTED...
 
-for the moment, look at an example in `tests/install/InstallerTest.php`
+### Tips on writing tests
 
+* Use an IDE with support for Composer for resolving the location of class definitions
+* Always run `./tests/setup/setup_dependencies.sh` before starting to read/write test code, as you will need the
+  code from PHPUnit and co. to be available on disk
+* Please use camelCase convention for test code, ie. `$variable` instead of `$Variable`
+* Please use phpdoc convention for test code comments
+* Please add as much type-hinting as possible. Tests are not meant to be run on php versions less than 8.1
+* get acquainted with PHPUnit's concept of a `dataProvider` if you want to run a test multiple times with different
+  parameters
 
 ## Using the test scripts to run a specific version of a database
 

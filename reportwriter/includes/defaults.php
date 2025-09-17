@@ -1,8 +1,14 @@
 <?php
 
-/************************************************************************************
-Default setups
-*************************************************************************************/
+/**
+ * Default setups
+ */
+
+if (!isset($PathPrefix)) {
+	header('Location: ../../');
+	exit();
+}
+
 define ('CompanyDataBase','companies'); // Defines the db to be used to fetch the company information
 
 // Sets the default groups for forms, index max 4 chars

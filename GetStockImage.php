@@ -128,7 +128,7 @@ if ( file_exists($tmpFileName.'.jpg') ) {
 	$IsJpeg = $DefaultIsJpeg;
 }
 
-if ( !extension_loaded('gd') OR (!$automake && !isset($FileName)) ) {
+if ( !extension_loaded('gd') OR (!$automake and (!isset($FileName) or !file_exists($FilePath.$FileName))) ) {
 	$Title = __('Stock Image Retrieval ....');
 	include('includes/header.php');
 	if ( !extension_loaded('gd') ) {
@@ -225,6 +225,7 @@ if ( $automake AND !isset($FileName) ) {
 	} else {
 		$im = imagecreatefrompng($tmpFileName);
 	}
+
 	// Have we got a background color
 	if ( isset($BackgroundColour) )
 		$BackgroundColour = DecodeBgColor( $BackgroundColour );

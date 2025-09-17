@@ -3,7 +3,7 @@
         'name' => 'timschofield/weberp',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '7fa075932935932ad5b102e8be8376a33b6de045',
+        'reference' => 'c0ccf7ad6c211b16bd2b2aa7a698f0dd54be93c9',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -196,7 +196,7 @@
         'timschofield/weberp' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '7fa075932935932ad5b102e8be8376a33b6de045',
+            'reference' => 'c0ccf7ad6c211b16bd2b2aa7a698f0dd54be93c9',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

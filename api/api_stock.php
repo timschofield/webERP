@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /** Check that the stock code */
 function VerifyStockCode($StockCode, $i, $Errors) {
 	$Searchsql = "SELECT count(stockid)

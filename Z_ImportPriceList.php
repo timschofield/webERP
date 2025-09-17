@@ -109,7 +109,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 		}
 
 		//Finally force the price to be a double
-		$MyRow[3] = (double)$MyRow[3];
+		$MyRow[3] = (float)$MyRow[3];
 		if ($InputError !=1){
 
 			//Firstly close any open prices for this item

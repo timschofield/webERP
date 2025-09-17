@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /** Check that the account section doesn't already exist'*/
 function VerifyAccountSection($AccountSection, $i, $Errors) {
 	$Searchsql = "SELECT count(sectionid)

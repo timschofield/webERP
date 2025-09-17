@@ -20,7 +20,7 @@ function Is_ValidAccount($ActNo) {
 		return false;
 	}
 
-	if (!Is_double((double)$ActNo)) {
+	if (!Is_double((float)$ActNo)) {
 		echo __('NZ account numbers entered must use all numeric characters in it');
 		return false;
 	}
@@ -144,7 +144,7 @@ function Is_ValidAccount($ActNo) {
 	} // end of first Bank prefix switch
 	for ($i = 3;$i <= 14;$i++) {
 
-		$DigitVal = (double)(mb_substr($ActNo, $i, 1));
+		$DigitVal = (float)(mb_substr($ActNo, $i, 1));
 
 		switch ($i) {
 			case 3:

@@ -46,13 +46,16 @@ cd "$BASE_DIR";
 #echo
 
 # make sure composer.lock is up-to-date wrt composer.json
-$COMPOSER update --no-dev --no-autoloader --no-interaction --prefer-stable --prefer-dist nothing
+$COMPOSER update --no-interaction --prefer-stable --prefer-dist  --no-autoloader --no-dev nothing
 
 echo
 
 if [ -d vendor/phpunit/phpunit ]; then
 	echo "Warning: you have installed composer dev dependencies. Removing them..."
-	$COMPOSER install --ignore-platform-reqs --no-interaction --no-dev
+	$COMPOSER install --no-interaction --ignore-platform-reqs --prefer-dist --no-autoloader --no-dev
+	# @todo we should checkout vendor/composer/installed.php, as we do in setup_dependencies.php - but that does not
+	#       seem to work here ?
+	#git checkout vendor/composer/installed.php
 	echo
 fi
 
@@ -76,9 +79,9 @@ fi
 echo
 
 # make it visible to developers when there are dependency upgrades available
-$COMPOSER outdated --ignore-platform-reqs --no-interaction
+$COMPOSER outdated --no-interaction --ignore-platform-reqs
 
 echo
 
 # generate an optimized autoload configuration
-$COMPOSER dump-autoload --ignore-platform-reqs --no-interaction --optimize --no-dev
+$COMPOSER dump-autoload --no-interaction --ignore-platform-reqs --optimize --no-dev

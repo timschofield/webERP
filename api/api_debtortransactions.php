@@ -1,5 +1,10 @@
 <?php
 
+if (!isset($PathPrefix)) {
+	header('Location: ../');
+	exit();
+}
+
 /* Check that the transaction number is unique
  * for this type of transaction*/
 	function VerifyTransNo($TransNo, $Type, $i, $Errors) {
