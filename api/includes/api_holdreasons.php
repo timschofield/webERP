@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	header('Location: ../');
+	header('Location: ../../');
 	exit();
 }
 

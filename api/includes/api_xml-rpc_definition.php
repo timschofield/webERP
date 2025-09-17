@@ -7,7 +7,7 @@
  */
 
 /* Note api_php.php includes api_session.php and api_*.php */
-include('api_php.php');
+include(__DIR__ . '/api_php.php');
 
 PhpXmlRpc\PhpXmlRpc::$xmlrpc_internalencoding = 'UTF-8';
 
