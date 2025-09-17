@@ -31,9 +31,9 @@ define ('DefRptPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/
 define ('MyDocPath',$PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/reportwriter/');	// path to user saved documents
 
 // Fetch necessary include files for report creator
-require_once('../languages/' . $ReportLanguage . '/reports.php');
-require_once('defaults.php');
-require(__DIR__ . '/RCFunctions.php');
+require_once(__DIR__ . '/../languages/' . $ReportLanguage . '/reports.php');
+require_once(__DIR__ . '/../includes/defaults.php');
+require(__DIR__ . '/../includes/RCFunctions.php');
 
 $usrMsg = array(); // initialize array for return messages
 

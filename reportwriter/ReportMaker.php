@@ -15,8 +15,8 @@ define('DBRptFields','reportfields');	// name of the database table holding the 
 //define('FPDF_FONTPATH','../fonts/');  FPDF path to fonts directory
 
 // Include files for ReportMaker.php
-require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php
-require('admin/defaults.php'); // load default values
+require(__DIR__ . '/languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php
+require(__DIR__ . '/includes/defaults.php'); // load default values
 
 $usrMsg = array(); // setup array for return messages
 if (isset($_GET['reportid'])) { // then entered with report id requested, fix variable to show filter form

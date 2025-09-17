@@ -1,6 +1,7 @@
 <?php
 
 // Include functions needed for ReportCreator.php
+
 function PrepStep($StepNum) {
 	// This function sets the titles and include information to prepare for the defined step number
 	switch ($StepNum) {
