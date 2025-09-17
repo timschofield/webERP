@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the stock shipper id's
  * currently setup on webERP
  */
-
 function GetShipperList($User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -31,7 +30,6 @@ function GetShipperList($User, $Password) {
  * and returns an array containing the details of the selected
  * shipper.
  */
-
 function GetShipperDetails($Shipper, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);

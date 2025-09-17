@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the hold reason codes
  * currently setup on webERP
  */
-
 function GetHoldReasonList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetHoldReasonList($user, $password) {
  * and returns an array containing the details of the selected
  * hold reason.
  */
-
 function GetHoldReasonDetails($holdreason, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

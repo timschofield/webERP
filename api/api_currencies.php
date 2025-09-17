@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the currency abbreviations
  * currently setup on webERP
  */
-
 function GetCurrencyList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetCurrencyList($user, $password) {
  * and returns an array containing the details of the selected
  * currency.
  */
-
 function GetCurrencyDetails($Currency, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the sales type abbreviations
  * currently setup on webERP
  */
-
 function GetSalesTypeList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -33,7 +32,6 @@ function GetSalesTypeList($user, $password) {
  * and returns an array containing the details of the selected
  * sales type.
  */
-
 function GetSalesTypeDetails($salestype, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -56,7 +54,6 @@ function GetSalesTypeDetails($salestype, $user, $password) {
 /* This function takes as a parameter an array of sales type details
  * to be inserted into webERP.
  */
-
 function InsertSalesType($SalesTypeDetails, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

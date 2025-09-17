@@ -89,7 +89,6 @@ function InsertGLAccount($AccountDetails, $user, $password) {
 /* This function returns a list of the general ledger accounts
  * currently setup on webERP
  */
-
 function GetGLAccountList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -119,7 +118,6 @@ function GetGLAccountList($user, $password) {
  * and returns an array containing the details of the selected
  * general ledger code.
  */
-
 function GetGLAccountDetails($AccountCode, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

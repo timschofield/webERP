@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the customer types
  * currently setup on webERP
  */
-
 function GetCustomerTypeList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetCustomerTypeList($user, $password) {
  * and returns an array containing the details of the selected
  * customer type.
  */
-
 function GetCustomerTypeDetails($typeid, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

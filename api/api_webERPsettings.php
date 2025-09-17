@@ -7,7 +7,6 @@ if (!isset($PathPrefix)) {
 
 /* This function returns the default currency code in webERP.
  */
-
 function GetDefaultCurrency($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -25,7 +24,6 @@ function GetDefaultCurrency($user, $password) {
 
 /* This function returns the default sales type in webERP.
  */
-
 function GetDefaultPriceList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -43,7 +41,6 @@ function GetDefaultPriceList($user, $password) {
 
 /* This function returns the default date format in webERP.
  */
-
 function GetDefaultDateFormat($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -60,7 +57,6 @@ function GetDefaultDateFormat($user, $password) {
 }
 
 /* This function returns the reports directory of the webERP installation for the company in api/api_php.php */
-
 function GetReportsDirectory($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -77,7 +73,6 @@ function GetReportsDirectory($user, $password) {
 }
 
 /* This function returns the default location of the weberp user being used */
-
 function GetDefaultLocation($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -95,7 +90,6 @@ function GetDefaultLocation($user, $password) {
 
 /* This function returns the default shipper in webERP.
  */
-
 function GetDefaultShipper($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -112,7 +106,6 @@ function GetDefaultShipper($user, $password) {
 }
 
 	/* This function creates a POS zipped update file */
-
 function CreatePOSDataFull($POSDebtorNo, $POSBranchCode, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);

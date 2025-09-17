@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the tax group id's
  * currently setup on webERP
  */
-
 function GetTaxGroupList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetTaxGroupList($user, $password) {
  * and returns an array containing the details of the selected
  * tax group.
  */
-
 function GetTaxGroupDetails($taxgroup, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -48,7 +46,6 @@ function GetTaxGroupDetails($taxgroup, $user, $password) {
  * and returns an array containing the taxes in the selected
  * tax group.
  */
-
 function GetTaxGroupTaxes($TaxGroup, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -97,7 +94,6 @@ function GetTaxAuthorityList($User, $Password) {
  * and returns an array containing the details of the selected
  * tax authority.
  */
-
 function GetTaxAuthorityDetails($TaxAuthority, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -114,7 +110,6 @@ function GetTaxAuthorityDetails($TaxAuthority, $User, $Password) {
  * and returns an array containing the rate of tax for the selected
  * tax authority and tax category
  */
-
 function GetTaxAuthorityRates($TaxAuthority, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);

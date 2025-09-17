@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the stock salesman codes
  * currently setup on webERP
  */
-
 function GetSalesmanList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetSalesmanList($user, $password) {
  * and returns an array containing the details of the selected
  * salesman.
  */
-
 function GetSalesmanDetails($salesman, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -54,7 +52,6 @@ function GetSalesmanDetails($salesman, $user, $password) {
 /* This function takes as a parameter an array of salesman details
  * to be inserted into webERP.
  */
-
 function InsertSalesman($SalesmanDetails, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -86,7 +83,6 @@ function InsertSalesman($SalesmanDetails, $user, $password) {
  * and returns an array containing the details of the selected
  * salesman.
  */
-
 function GetSalesmanDetailsFromName($SalesmanName, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

@@ -11,7 +11,6 @@ if (!isset($PathPrefix)) {
 
 /* Verify that the Location code is valid, and doesn't already
    exist.*/
-
 function VerifyLocationCode($LocationCode, $i, $Errors) {
 	if ((mb_strlen($LocationCode)<1) or (mb_strlen($LocationCode)>5)) {
 		$Errors[$i] = IncorrectLocationCodeLength;
@@ -65,7 +64,6 @@ function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors) {
 /* This function returns a list of the stock location id's
  * currently setup on webERP
  */
-
 function GetLocationList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -88,7 +86,6 @@ function GetLocationList($user, $password) {
  * and returns an array containing the details of the selected
  * location.
  */
-
 function GetLocationDetails($Location, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -103,7 +100,6 @@ function GetLocationDetails($Location, $user, $password) {
 
 /* Inserts a Location in webERP.
  */
-
 function InsertLocation($Location, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -169,7 +165,6 @@ function InsertLocation($Location, $user, $password) {
 
 /* Modify a Location Details in webERP.
  */
-
 function ModifyLocation($Location, $user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

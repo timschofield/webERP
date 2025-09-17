@@ -8,7 +8,6 @@ if (!isset($PathPrefix)) {
 /* This function returns a list of the payment terms abbreviations
  * currently setup on webERP
  */
-
 function GetPaymentTermsList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);
@@ -31,7 +30,6 @@ function GetPaymentTermsList($user, $password) {
  * and returns an array containing the details of the selected
  * payment terms.
  */
-
 function GetPaymentTermsDetails($paymentterms, $user, $password) {
 	$Errors = array();
 	if (!isset($db)) {
@@ -73,7 +71,6 @@ function GetPaymentMethodsList($User, $Password) {
  * and returns an array containing the details of the selected
  * payment method.
  */
-
 function GetPaymentMethodDetails($PaymentMethod, $User, $Password) {
 	$Errors = array();
 	if (!isset($db)) {

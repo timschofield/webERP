@@ -21,7 +21,6 @@ function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors) {
 /* This function returns a list of the sales areas
  * currently setup on webERP
  */
-
 function GetSalesAreasList($User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -44,7 +43,6 @@ function GetSalesAreasList($User, $Password) {
  * and returns an array containing the details of the selected
  * areas.
  */
-
 function GetSalesAreaDetails($area, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -67,7 +65,6 @@ function GetSalesAreaDetails($area, $User, $Password) {
 /* This function takes as a parameter an array of sales area details
  * to be inserted into webERP.
  */
-
 function InsertSalesArea($AreaDetails, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);
@@ -102,7 +99,6 @@ function InsertSalesArea($AreaDetails, $User, $Password) {
  * and returns an array containing the details of the selected
  * areas.
  */
-
 function GetSalesAreaDetailsFromName($AreaName, $User, $Password) {
 	$Errors = array();
 	$db = db($User, $Password);

@@ -217,7 +217,6 @@ function GetStockCatProperty($Property, $StockID, $user, $password) {
 }
 
 /* This function returns a list of the stock categories setup on webERP  */
-
 function GetStockCategoryList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

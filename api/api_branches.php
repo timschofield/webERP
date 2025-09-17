@@ -490,7 +490,6 @@ function ModifyBranch($BranchDetails, $user, $password) {
  * codes are there are branches.  Otherwise, the first value is non-zero,
  * and it (and any following) are error codes encountered.
  */
-
 function GetCustomerBranchCodes($DebtorNumber, $user, $password)
 {
 	$Errors = array();
