@@ -16,7 +16,7 @@ if (isset($_SESSION['DatabaseName'])) {
 }
 
 $AllowAnyone = true;
-$PathPrefix = __DIR__ . '/../';
+$PathPrefix = __DIR__ . '/../../';
 include(__DIR__ . '/api_session.php');
 
 include(__DIR__ . '/api_errorcodes.php');
