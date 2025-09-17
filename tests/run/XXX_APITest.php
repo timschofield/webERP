@@ -8,7 +8,6 @@ use PhpXmlRpc\Request;
 
 class XXX_APITest extends AnonymousUserTestCase
 {
-
 	/**
 	 * Send an XMLRPC request listing all available methods, check that at least 'weberp.xmlrpc_Login' is registered
 	 */
@@ -18,14 +17,14 @@ class XXX_APITest extends AnonymousUserTestCase
 		$this->assertContains('weberp.xmlrpc_Login', $methods);
 	}
 
-	protected function apiRequest($method, $args = array())
+	/// @todo add more tests - at least one doing log-in, get some data, log-out
+
+	protected function apiRequest($method, array $args = array())
 	{
 		$client = new Client(self::$baseUri . '/api/api_xml-rpc.php');
 		$e = new Encoder();
-		if ($args) {
-			foreach($args as &$arg) {
-				$arg = $e->encode($arg);
-			}
+		foreach($args as &$arg) {
+			$arg = $e->encode($arg);
 		}
 		$response = $client->send(new Request($method, $args));
 		$this->assertEquals(0, $response->faultCode(), 'The xmlrpc response has a fault code');

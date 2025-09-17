@@ -151,9 +151,10 @@ class AAA_AnonymousUsersTest extends AnonymousUserTestCase
 			__DIR__ . '/../../doc/Manual',
 			/// @todo once we have fixed all the files in /includes for direct we access, uncomment the line below
 			//__DIR__ . '/../../includes',
-			__DIR__ . '/../../reportwriter/admin/forms',
-			__DIR__ . '/../../reportwriter/forms',
-			__DIR__ . '/../../reportwriter/includes',
+			/// @todo same for these 3 folder after PR #715 is merged
+			//__DIR__ . '/../../reportwriter/admin/forms',
+			//__DIR__ . '/../../reportwriter/forms',
+			//__DIR__ . '/../../reportwriter/includes',
 			__DIR__ . '/../../reportwriter/install',
 		];
 

@@ -82,4 +82,4 @@ The correct workflow to handle them is:
 
 ## Setting up "dev" dependencies to run the test suite
 
-See [RUNNING_TESTS.md](RUNNING_TESTS.md)
+See [TESTING.md](TESTING.md)

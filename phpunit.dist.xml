@@ -14,7 +14,7 @@
 	<php>
 		<!--
 		     NB: a note to developers: if adding an env var here, please update correspondingly the example given in
-		     docs/developers/RUNNING_TESTS.md
+		     docs/developers/TESTING.md
 		-->
 		<env name="TEST_TARGET_PROTOCOL" value="http" />
 		<!-- NB: tests are guaranteed to only work when testing the _current_ codebase.
