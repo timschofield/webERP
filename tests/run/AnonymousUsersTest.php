@@ -45,8 +45,28 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 		$this->setExpectedStatusCodes([200]);
 		$crawler = $this->request('GET', self::$baseUri . $filePath);
 
-		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
-		$this->assertTrue(true);
+		$this->assertIsNotOnLoginPage($crawler);
+	}
+
+	/**
+	 * Tests access to pages which do not set $AllowAnyone to true (exclude api, manual, installer)
+	 * This test is run many times - the filename to test is provided via the dataProvider.
+	 * @dataProvider listNonAnonAccessPages
+	 */
+	public function testAccessToNonAnonPages(string $filePath): void
+	{
+		if (!is_file(self::$rootDir . '/config.php')) {
+			$this->markTestSkipped('config.php is missing. webERP setup has not been done');
+		}
+
+		// use the name of the currently tested script as part of the name of the html file saved in case of failure
+		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($filePath));
+
+		$this->followRedirects(false);
+		$this->setExpectedStatusCodes([200]);
+		$crawler = $this->request('GET', self::$baseUri . $filePath);
+
+		$this->assertIsOnLoginPage($crawler);
 	}
 
 	/**
@@ -67,10 +87,37 @@ class AnonymousUsersTest extends AnonymousUserTestCase
 		$pages = [];
 		foreach(self::listWebPages() as $path) {
 			$fileName = basename($path);
-			if (in_array($fileName, ['Logout.php', 'config.distrib.php'])) {
+			if (in_array($fileName, ['Logout.php'])) {
 				continue;
 			}
 			if (preg_match('/^\s*\\$AllowAnyone\s*=\s*[Tt][Rr][Uu][eE]\s*;/m', file_get_contents(self::$rootDir . $path))) {
+				$pages[] = [$path];
+			}
+		}
+		return $pages;
+	}
+
+	/**
+	 * List all web pages which do not set $AllowAnyone to true - excluding API, manual, installer.
+	 * These are all the pages which should not be accessible by anon user
+	 * @return string[][]
+	 */
+	public static function listNonAnonAccessPages(): array
+	{
+		$dirs = [
+			__DIR__ . '/../../',
+			__DIR__ . '/../../dashboard',
+			__DIR__ . '/../../reportwriter',
+			__DIR__ . '/../../reportwriter/admin',
+		];
+
+		$pages = [];
+		foreach(self::listWebPages($dirs) as $path) {
+			$fileName = basename($path);
+			if (in_array($fileName, ['Logout.php', 'config.php', 'config.distrib.php'])) {
+				continue;
+			}
+			if (!preg_match('/^\s*\\$AllowAnyone\s*=\s*[Tt][Rr][Uu][eE]\s*;/m', file_get_contents(self::$rootDir . $path))) {
 				$pages[] = [$path];
 			}
 		}
