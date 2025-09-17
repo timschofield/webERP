@@ -2,8 +2,6 @@
 
 /**
  * Default setups
- *
- * @todo move to include/ dir
  */
 
 if (!isset($PathPrefix)) {
