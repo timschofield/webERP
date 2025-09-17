@@ -4,7 +4,6 @@
 require (__DIR__ . '/includes/session.php');
 require_once 'vendor/autoload.php';
 use Dompdf\Dompdf;
-use Dompdf\Options;
 
 if (isset($_POST['cutoffdate'])) {
 	$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);
@@ -227,7 +226,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->stream($_SESSION['DatabaseName'] . '_MRPPlannedPurchases_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 	}
 	else {
-		$Title = __('Reorder Level Reporting');
+		$Title = __('MRP Planned Purchase Orders');
 		include ('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Planned Purchase Orders') . '" alt="" />' . ' ' . __('MRP Planned Purchase Orders') . '</p>';
 		echo $HTML;

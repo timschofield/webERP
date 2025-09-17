@@ -299,7 +299,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$dompdf->render();
 
 		// Output the generated PDF to Browser
-		$dompdf->stream($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf', array(
+		$dompdf->stream($_SESSION['DatabaseName'] . '_PettyCashTabReport_' . date('Y-m-d') . '.pdf', array(
 			"Attachment" => false
 		));
 	} else {
