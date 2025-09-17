@@ -5,8 +5,8 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Check that the transaction number is unique
-* for this type of transaction*/
+/** Check that the transaction number is unique
+* for this type of transaction */
 function VerifyTransNo($TransNo, $Type, $i, $Errors) {
 	$Searchsql = "SELECT count(transno)
 			FROM debtortrans
@@ -48,7 +48,7 @@ function ConvertToSQLDate($DateEntry) {
 
 } // end function ConvertSQLDate
 
-/* Check that the transaction date is a valid date. The date
+/** Check that the transaction date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 function VerifyTransactionDate($TranDate, $i, $Errors) {
@@ -84,9 +84,9 @@ function VerifyTransactionDate($TranDate, $i, $Errors) {
 	return $Errors;
 }
 
-/* Find the period number from the transaction date */
-/* Why use this function over GetPeriod we already have this function included in DateFunctions.php
- * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
+/** Find the period number from the transaction date
+ * Why use this function over GetPeriod we already have this function included in DateFunctions.php
+ * This function doesn't create periods if required so there is the danger of not being able to insert transactions */
 function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
 	$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 	$Result = DB_query($SQL);
@@ -125,7 +125,7 @@ function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
 	return $MyRow[0];
 }
 
-/* Verify that the Settled flag is a 1 or 0 */
+/** Verify that the Settled flag is a 1 or 0 */
 function VerifySettled($Settled, $i, $Errors) {
 	if ($Settled!=0 and $Settled!=1) {
 		$Errors[$i] = InvalidSettled;
@@ -133,7 +133,7 @@ function VerifySettled($Settled, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the transaction reference is 20 characters
+/** Check that the transaction reference is 20 characters
  *  or less long */
 function VerifyReference($Reference, $i, $Errors) {
 	if (mb_strlen($Reference)>20) {
@@ -142,7 +142,7 @@ function VerifyReference($Reference, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the tpe field is 2 characters or less long */
+/** Check that the tpe field is 2 characters or less long */
 function VerifyTpe($tpe, $i, $Errors) {
 	if (mb_strlen($tpe)>2) {
 		$Errors[$i] = IncorrectTpe;
@@ -150,7 +150,7 @@ function VerifyTpe($tpe, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the order number is numeric */
+/** Verify that the order number is numeric */
 function VerifyOrderNumber($Order, $i, $Errors) {
 	if (!is_numeric($Order)) {
 		$Errors[$i] = InvalidOrderNumbers;
@@ -158,7 +158,7 @@ function VerifyOrderNumber($Order, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the exchange rate is numeric */
+/** Verify that the exchange rate is numeric */
 function VerifyExchangeRate($rate, $i, $Errors) {
 	if (!is_numeric($rate)) {
 		$Errors[$i] = InvalidExchangeRate;
@@ -166,7 +166,7 @@ function VerifyExchangeRate($rate, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the ovamount is numeric */
+/** Verify that the ovamount is numeric */
 function VerifyOVAmount($ovamount, $i, $Errors) {
 	if (!is_numeric($ovamount)) {
 		$Errors[$i] = InvalidOVAmount;
@@ -174,7 +174,7 @@ function VerifyOVAmount($ovamount, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the ovgst is numeric */
+/** Verify that the ovgst is numeric */
 function VerifyOVGst($ovgst, $i, $Errors) {
 	if (!is_numeric($ovgst)) {
 		$Errors[$i] = InvalidOVGst;
@@ -182,7 +182,7 @@ function VerifyOVGst($ovgst, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the ovfreight is numeric */
+/** Verify that the ovfreight is numeric */
 function VerifyOVFreight($ovfreight, $i, $Errors) {
 	if (!is_numeric($ovfreight)) {
 		$Errors[$i] = InvalidOVFreight;
@@ -190,7 +190,7 @@ function VerifyOVFreight($ovfreight, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the ovdiscount is numeric */
+/** Verify that the ovdiscount is numeric */
 function VerifyOVDiscount($ovdiscount, $i, $Errors) {
 	if (!is_numeric($ovdiscount)) {
 		$Errors[$i] = InvalidOVDiscount;
@@ -198,7 +198,7 @@ function VerifyOVDiscount($ovdiscount, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the diffonexch is numeric */
+/** Verify that the diffonexch is numeric */
 function VerifyDiffOnExchange($diffonexch, $i, $Errors) {
 	if (!is_numeric($diffonexch)) {
 		$Errors[$i] = InvalidDiffOnExchange;
@@ -206,7 +206,7 @@ function VerifyDiffOnExchange($diffonexch, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the allocated figure is numeric */
+/** Verify that the allocated figure is numeric */
 function VerifyAllocated($alloc, $i, $Errors) {
 	if (!is_numeric($alloc)) {
 		$Errors[$i] = InvalidAllocation;
@@ -214,7 +214,7 @@ function VerifyAllocated($alloc, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the invoice text is 256 characters or less long */
+/** Check that the invoice text is 256 characters or less long */
 function VerifyInvoiceText($invtext, $i, $Errors) {
 	if (mb_strlen($invtext)>256) {
 		$Errors[$i] = IncorrectInvoiceText;
@@ -222,7 +222,7 @@ function VerifyInvoiceText($invtext, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the ship via field is 10 characters or less long */
+/** Check that the ship via field is 10 characters or less long */
 function VerifyShipVia($shipvia, $i, $Errors) {
 	if (mb_strlen($shipvia)>10) {
 		$Errors[$i] = InvalidShipVia;
@@ -230,7 +230,7 @@ function VerifyShipVia($shipvia, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the edisent flag is a 1 or 0 */
+/** Verify that the edisent flag is a 1 or 0 */
 function VerifyEdiSent($edisent, $i, $Errors) {
 	if ($edisent!=0 and $edisent!=1) {
 		$Errors[$i] = InvalidEdiSent;
@@ -238,7 +238,7 @@ function VerifyEdiSent($edisent, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the consignment field is 15 characters or less long */
+/** Check that the consignment field is 15 characters or less long */
 function VerifyConsignment($consignment, $i, $Errors) {
 	if (mb_strlen($consignment)>15) {
 		$Errors[$i] = InvalidConsignment;
@@ -246,7 +246,7 @@ function VerifyConsignment($consignment, $i, $Errors) {
 	return $Errors;
 }
 
-/* Retrieves the default sales GL code for a given part code and sales area
+/** Retrieves the default sales GL code for a given part code and sales area
  *
  * This function also in SQL_CommonFunctions...better to use it from there as it covers all cases
  * and not limited to stk='any'!!
@@ -260,7 +260,7 @@ function VerifyConsignment($consignment, $i, $Errors) {
 	}
 */
 
-/* Retrieves the default debtors code for webERP */
+/** Retrieves the default debtors code for webERP */
 function GetDebtorsGLCode() {
 	$SQL="SELECT debtorsact FROM companies";
 	$Result = DB_query($SQL);
@@ -316,7 +316,7 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 
 	$CustCurrRow = DB_fetch_array($CurrResult);
 
-	/*Get the currency and rate of the bank account receiving  into*/
+	/*Get the currency and rate of the bank account receiving  into */
 	$SQL = "SELECT currcode,
 					rate
 				FROM bankaccounts INNER JOIN currencies
@@ -474,28 +474,27 @@ function InsertDebtorReceipt($Receipt, $User, $Password) {
 	return $Errors;
 }
 
+/** Create a customer credit note in webERP.
+ * Needs an associative array for the $Header
+ * and an array of assocative arrays for the $LineDetails
+
+ * $Header contains an associative array in the format:
+ * Header['debtorno'] - the customer code
+ * Header['branchcode']  - the branch code
+ * Header['trandate'] - the date of the credit note
+ * Header['tpe'] - the sales type
+ * Header['fromstkloc'] - the inventory location where the stock is put back into
+ * Header['customerref'] - the customer's reference
+ * Header['shipvia'] - the shipper required by webERP
+ *
+ * and $LineDetails contains an array of associative arrays of the format:
+ *
+ * $LineDetails[0]['stockid']
+ * $LineDetails[0]['price']
+ * $LineDetails[0]['qty'] - expected to be a negative quantity (a negative sale)
+ * $LineDetails[0]['discountpercent']
+ */
 function CreateCreditNote($Header,$LineDetails, $User, $Password) {
-
-	/* Create a customer credit note in webERP.
-	 * Needs an associative array for the $Header
-	 * and an array of assocative arrays for the $LineDetails
-
-	 * $Header contains an associative array in the format:
-	 * Header['debtorno'] - the customer code
-	 * Header['branchcode']  - the branch code
-	 * Header['trandate'] - the date of the credit note
-	 * Header['tpe'] - the sales type
-	 * Header['fromstkloc'] - the inventory location where the stock is put back into
-	 * Header['customerref'] - the customer's reference
-	 * Header['shipvia'] - the shipper required by webERP
-	 *
-	 * and $LineDetails contains an array of associative arrays of the format:
-	 *
-	 * $LineDetails[0]['stockid']
-	 * $LineDetails[0]['price']
-	 * $LineDetails[0]['qty'] - expected to be a negative quantity (a negative sale)
-	 * $LineDetails[0]['discountpercent']
-	 */
 	$Errors = array();
 	$db = db($User, $Password);
 	if (gettype($db)=='integer') {
@@ -549,7 +548,7 @@ function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 
 /*Start an SQL transaction */
 	DB_Txn_Begin();
-/*Now Get the next credit note number - function in SQL_CommonFunctions*/
+/*Now Get the next credit note number - function in SQL_CommonFunctions */
 	$CreditNoteNo = GetNextTransNo(11);
 	$PeriodNo = GetCurrentPeriod();
 
@@ -695,7 +694,7 @@ function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 
 			$Result = api_DB_query($SQL,'', '', true);
 
-		} else if ($LineRow['mbflag']=='A'){ /* its an assembly */
+		} else if ($LineRow['mbflag']=='A'){ /* it's an assembly */
 			/*Need to get the BOM for this part and make
 			stock moves for the components then update the Location stock balances */
 			$Assembly=true;
@@ -768,7 +767,7 @@ function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 
 				$Result = DB_query($SQL,'', '', true);
 			} /* end of assembly explosion and updates */
-		} /* end of its an assembly */
+		} /* end of it's an assembly */
 
 
 		if ($LineRow['mbflag']=='A' OR $LineRow['mbflag']=='D'){
@@ -1172,7 +1171,7 @@ function CreateCreditNote($Header,$LineDetails, $User, $Password) {
 	return $Errors;
 } /*End of CreateCreditNote method */
 
-/* Create a customer invoice in webERP. This function will bypass the
+/** Create a customer invoice in webERP. This function will bypass the
  * normal procedure in webERP for creating a sales order first, and then
  * delivering it.
 
@@ -1304,17 +1303,16 @@ function InsertSalesInvoice($InvoiceDetails, $user, $password) {
 	}
 }
 
+/** This function is quite specific and probably not generally useful
+ * It only attempts to allocate a receipt or credit note sent to invoices that have a customerref equal to the value sent
+ *
+ * The first parameter  AllocDetails is an associative array containing:
+ * AllocDetails['debtorno']
+ * AllocDetails['type']
+ * AllocDetails['transno']
+ * AllocDetails['customerref']
+ */
 function AllocateTrans($AllocDetails, $User, $Password) {
-
-	/* This function is quite specific and probably not generally useful
-	 * It only attempts to allocate a receipt or credit note sent to invoices that have a customerref equal to the value sent
-	 *
-	 * The first parameter  AllocDetails is an associative array containing:
-	 * AllocDetails['debtorno']
-	 * AllocDetails['type']
-	 * AllocDetails['transno']
-	 * AllocDetails['customerref']
-	 */
 
 	$Errors = array();
 	$db = db($User, $Password);
@@ -1323,7 +1321,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 		return $Errors;
 	}
 	$Errors=VerifyDebtorExists($AllocDetails['debtorno'], sizeof($Errors), $Errors);
-	/*Get the outstanding amount to allocate (all amounts in FX) from the transaction*/
+	/*Get the outstanding amount to allocate (all amounts in FX) from the transaction */
 
 	if ($AllocDetails['type'] !='11' AND $AllocDetails['type'] !=12){
 		$Errors[] = MustBeReceiptOrCreditNote;
@@ -1357,7 +1355,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 			$Errors[0] = NoTransactionToAllocate;
 			return $Errors;
 		}
-		/* The receipts will always be smaller than the invoice as there can be several receipts to make up payment for a single invocie - but not vice-versa - that's why there is no point iterating over the possibilities  - in the words of McCloud "There can be only one"*/
+		/* The receipts will always be smaller than the invoice as there can be several receipts to make up payment for a single invocie - but not vice-versa - that's why there is no point iterating over the possibilities  - in the words of McCloud "There can be only one" */
 
 		$OSInvRow = DB_fetch_array($Result);
 
@@ -1391,7 +1389,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 					WHERE id = '" . $OSInvRow['id'] . "'";
 			$Result = api_DB_query($SQL,'', '', true);
 		} /*end if the exchange rates are the same so no diff on exchange */
-	 /*end if it is a normal allocation of receipt to invoice*/
+	 /*end if it is a normal allocation of receipt to invoice */
 	} elseif ($LeftToAllocRow['lefttoalloc']>0) {
 		/* it is a payment - negative receipt - already checked type=12 need to find credit note to allocate to
 		  Now look for credit notes  type 11 with the same customerref to allocate to */
@@ -1469,7 +1467,7 @@ function AllocateTrans($AllocDetails, $User, $Password) {
 
 }
 
-/* Create a customer credit note in webERP. This function will bypass the
+/** Create a customer credit note in webERP. This function will bypass the
  * normal procedure in webERP for creating a sales order first, and then
  * delivering it. All values should be sent as negatives.
 

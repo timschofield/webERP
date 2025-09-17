@@ -20,7 +20,7 @@ function VerifySuppliersUOM($suppliersuom, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the conversion factor figure is numeric */
+/** Verify that the conversion factor figure is numeric */
 function VerifyConversionFactor($ConversionFactor, $i, $Errors) {
 	if (!is_numeric($ConversionFactor)) {
 		$Errors[$i] = InvalidConversionFactor;
@@ -35,7 +35,7 @@ function VerifySupplierDescription($supplierdescription, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the lead time is numeric */
+/** Verify that the lead time is numeric */
 function VerifyLeadTime($LeadTime, $i, $Errors) {
 	if (!is_numeric($LeadTime)) {
 		$Errors[$i] = InvalidLeadTime;
@@ -43,7 +43,7 @@ function VerifyLeadTime($LeadTime, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the Preferred flag is a 1 or 0 */
+/** Verify that the Preferred flag is a 1 or 0 */
 function VerifyPreferredFlag($Preferred, $i, $Errors) {
 	if ($Preferred!=0 and $Preferred!=1) {
 		$Errors[$i] = InvalidPreferredFlag;

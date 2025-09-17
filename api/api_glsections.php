@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/** Check that the account section doesn't already exist'*/
+/** Check that the account section doesn't already exist' */
 function VerifyAccountSection($AccountSection, $i, $Errors) {
 	$Searchsql = "SELECT count(sectionid)
 			FROM accountsection

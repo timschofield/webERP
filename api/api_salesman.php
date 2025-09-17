@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the stock salesman codes
+/** This function returns a list of the stock salesman codes
  * currently setup on webERP
  */
 function GetSalesmanList($user, $password) {
@@ -26,7 +26,7 @@ function GetSalesmanList($user, $password) {
 	return $SalesmanList;
 }
 
-/* This function takes as a parameter a salesman code
+/** This function takes as a parameter a salesman code
  * and returns an array containing the details of the selected
  * salesman.
  */
@@ -49,7 +49,7 @@ function GetSalesmanDetails($salesman, $user, $password) {
 	}
 }
 
-/* This function takes as a parameter an array of salesman details
+/** This function takes as a parameter an array of salesman details
  * to be inserted into webERP.
  */
 function InsertSalesman($SalesmanDetails, $user, $password) {
@@ -79,7 +79,7 @@ function InsertSalesman($SalesmanDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes as a parameter a sales man name
+/** This function takes as a parameter a sales man name
  * and returns an array containing the details of the selected
  * salesman.
  */

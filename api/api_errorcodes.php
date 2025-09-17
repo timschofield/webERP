@@ -12,7 +12,7 @@ if (!function_exists('__')) {
 	function __($string) {return $string;}
 }
 
-/* Define error codes that are returned by api functions*/
+/* Define error codes that are returned by api functions */
 define('NoAuthorisation', 1);
 define('IncorrectDebtorNumberLength', 1000);
 define('DebtorNoAlreadyExists', 1001);

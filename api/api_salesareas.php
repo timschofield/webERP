@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Check that the area code is set up in the weberp database */
+/** Check that the area code is set up in the weberp database */
 function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(areacode)
 				 FROM areas
@@ -18,7 +18,7 @@ function VerifyAreaCodeDoesntExist($AreaCode , $i, $Errors) {
 	return $Errors;
 }
 
-/* This function returns a list of the sales areas
+/** This function returns a list of the sales areas
  * currently setup on webERP
  */
 function GetSalesAreasList($User, $Password) {
@@ -39,7 +39,7 @@ function GetSalesAreasList($User, $Password) {
 	return $SalesAreaList;
 }
 
-/* This function takes as a parameter a sales area code
+/** This function takes as a parameter a sales area code
  * and returns an array containing the details of the selected
  * areas.
  */
@@ -62,7 +62,7 @@ function GetSalesAreaDetails($area, $User, $Password) {
 	}
 }
 
-/* This function takes as a parameter an array of sales area details
+/** This function takes as a parameter an array of sales area details
  * to be inserted into webERP.
  */
 function InsertSalesArea($AreaDetails, $User, $Password) {
@@ -95,7 +95,7 @@ function InsertSalesArea($AreaDetails, $User, $Password) {
 	return $Errors;
 }
 
-/* This function takes as a parameter a sales area description
+/** This function takes as a parameter a sales area description
  * and returns an array containing the details of the selected
  * areas.
  */

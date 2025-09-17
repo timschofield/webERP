@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the sales type abbreviations
+/** This function returns a list of the sales type abbreviations
  * currently setup on webERP
  */
 function GetSalesTypeList($user, $password) {
@@ -28,7 +28,7 @@ function GetSalesTypeList($user, $password) {
 	return $Errors;
 }
 
-/* This function takes as a parameter a sales type abbreviation
+/** This function takes as a parameter a sales type abbreviation
  * and returns an array containing the details of the selected
  * sales type.
  */
@@ -51,7 +51,7 @@ function GetSalesTypeDetails($salestype, $user, $password) {
 	}
 }
 
-/* This function takes as a parameter an array of sales type details
+/** This function takes as a parameter an array of sales type details
  * to be inserted into webERP.
  */
 function InsertSalesType($SalesTypeDetails, $user, $password) {

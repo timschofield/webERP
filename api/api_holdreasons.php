@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the hold reason codes
+/** This function returns a list of the hold reason codes
  * currently setup on webERP
  */
 function GetHoldReasonList($user, $password) {
@@ -26,7 +26,7 @@ function GetHoldReasonList($user, $password) {
 	return $HoldReasonList;
 }
 
-/* This function takes as a parameter a hold reason code
+/** This function takes as a parameter a hold reason code
  * and returns an array containing the details of the selected
  * hold reason.
  */

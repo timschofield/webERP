@@ -9,8 +9,8 @@ if (!isset($PathPrefix)) {
 //revision 1.2
 */
 
-/* Verify that the Location code is valid, and doesn't already
-   exist.*/
+/** Verify that the Location code is valid, and doesn't already
+   exist. */
 function VerifyLocationCode($LocationCode, $i, $Errors) {
 	if ((mb_strlen($LocationCode)<1) or (mb_strlen($LocationCode)>5)) {
 		$Errors[$i] = IncorrectLocationCodeLength;
@@ -26,7 +26,7 @@ function VerifyLocationCode($LocationCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the Location Code exists*/
+/** Check that the Location Code exists */
 function VerifyLocationExists($LocationCode, $i, $Errors) {
 	$Searchsql = "SELECT count(loccode)
 					FROM locations
@@ -39,7 +39,7 @@ function VerifyLocationExists($LocationCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the Location name is valid and is 50 characters or less long */
+/** Check that the Location name is valid and is 50 characters or less long */
 function VerifyLocationName($LocationName, $i, $Errors) {
 	if ((mb_strlen($LocationName)<1) or (mb_strlen($LocationName)>50)) {
 		$Errors[$i] = IncorrectLocationNameLength;
@@ -47,7 +47,7 @@ function VerifyLocationName($LocationName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the tax province id is set up in the weberp database */
+/** Check that the tax province id is set up in the weberp database */
 function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(taxprovinceid)
 					FROM taxprovinces
@@ -61,7 +61,7 @@ function VerifyTaxProvinceId($TaxProvinceId , $i, $Errors) {
 }
 
 
-/* This function returns a list of the stock location id's
+/** This function returns a list of the stock location id's
  * currently setup on webERP
  */
 function GetLocationList($user, $password) {
@@ -82,7 +82,7 @@ function GetLocationList($user, $password) {
 	return array(0, $LocationList);
 }
 
-/* This function takes as a parameter a stock location id
+/** This function takes as a parameter a stock location id
  * and returns an array containing the details of the selected
  * location.
  */
@@ -98,7 +98,7 @@ function GetLocationDetails($Location, $user, $password) {
 	return array(0, DB_fetch_array($Result));
 }
 
-/* Inserts a Location in webERP.
+/** Inserts a Location in webERP.
  */
 function InsertLocation($Location, $user, $password) {
 	$Errors = array();
@@ -163,7 +163,7 @@ function InsertLocation($Location, $user, $password) {
 	return $Errors;
 }
 
-/* Modify a Location Details in webERP.
+/** Modify a Location Details in webERP.
  */
 function ModifyLocation($Location, $user, $password) {
 	$Errors = array();

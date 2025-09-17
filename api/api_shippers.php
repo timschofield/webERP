@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the stock shipper id's
+/** This function returns a list of the stock shipper id's
  * currently setup on webERP
  */
 function GetShipperList($User, $Password) {
@@ -26,7 +26,7 @@ function GetShipperList($User, $Password) {
 	return $ShipperList;
 }
 
-/* This function takes as a parameter a shipper id
+/** This function takes as a parameter a shipper id
  * and returns an array containing the details of the selected
  * shipper.
  */

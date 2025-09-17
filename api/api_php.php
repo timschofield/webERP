@@ -26,7 +26,7 @@ include($PathPrefix . 'includes/SQL_CommonFunctions.php');
 include($PathPrefix . 'includes/GetSalesTransGLCodes.php');
 include($PathPrefix . 'includes/Z_POSDataCreation.php');
 
-/* Get weberp authentication, and return a valid database connection */
+/** Get weberp authentication, and return a valid database connection */
 function db($user, $password) {
 
 	if (!isset($_SESSION['AccessLevel']) OR

@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the tax group id's
+/** This function returns a list of the tax group id's
  * currently setup on webERP
  */
 function GetTaxGroupList($user, $password) {
@@ -26,7 +26,7 @@ function GetTaxGroupList($user, $password) {
 	return $TaxgroupList;
 }
 
-/* This function takes as a parameter a tax group id
+/** This function takes as a parameter a tax group id
  * and returns an array containing the details of the selected
  * tax group.
  */
@@ -42,7 +42,7 @@ function GetTaxGroupDetails($taxgroup, $user, $password) {
 	return DB_fetch_array($Result);
 }
 
-	/* This function takes as a parameter a tax group id
+/** This function takes as a parameter a tax group id
  * and returns an array containing the taxes in the selected
  * tax group.
  */
@@ -69,7 +69,7 @@ function GetTaxGroupTaxes($TaxGroup, $User, $Password) {
 	return $Errors;
 }
 
-/* This function returns a list of the tax authority ids
+/** This function returns a list of the tax authority ids
  * currently setup on webERP
  */
 function GetTaxAuthorityList($User, $Password) {
@@ -90,7 +90,7 @@ function GetTaxAuthorityList($User, $Password) {
 	return $TaxAuthList;
 }
 
-/* This function takes as a parameter a tax authority id
+/** This function takes as a parameter a tax authority id
  * and returns an array containing the details of the selected
  * tax authority.
  */
@@ -106,7 +106,7 @@ function GetTaxAuthorityDetails($TaxAuthority, $User, $Password) {
 	return DB_fetch_array($Result);
 }
 
-/* This function takes as a parameter a tax authority id and a tax category id
+/** This function takes as a parameter a tax authority id and a tax category id
  * and returns an array containing the rate of tax for the selected
  * tax authority and tax category
  */

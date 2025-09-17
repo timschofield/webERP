@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Check that the stock code exists*/
+/** Check that the stock code exists */
 function VerifyWorkOrderExists($WorkOrder, $i, $Errors) {
 	$Searchsql = "SELECT count(wo)
 			FROM workorders
@@ -18,7 +18,7 @@ function VerifyWorkOrderExists($WorkOrder, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the stock location is set up in the weberp database */
+/** Check that the stock location is set up in the weberp database */
 function VerifyStockLocation($Location, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(loccode)
 				 FROM locations
@@ -31,7 +31,7 @@ function VerifyStockLocation($Location, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the quantity figure is numeric */
+/** Verify that the quantity figure is numeric */
 function VerifyIssuedQuantity($quantity, $i, $Errors) {
 	if (!is_numeric($quantity)) {
 		$Errors[$i] = InvalidIssuedQuantity;
@@ -39,7 +39,7 @@ function VerifyIssuedQuantity($quantity, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the quantity figure is numeric */
+/** Verify that the quantity figure is numeric */
 function VerifyReceivedQuantity($quantity, $i, $Errors) {
 	if (!is_numeric($quantity)) {
 		$Errors[$i] = InvalidReceivedQuantity;

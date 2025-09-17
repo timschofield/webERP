@@ -12,7 +12,7 @@ function VerifyCategoryID($CategoryID, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify the category doesnt exist */
+/** Verify the category doesnt exist */
 function VerifyStockCategoryAlreadyExists($StockCategory, $i, $Errors) {
 	$Searchsql = "SELECT count(categoryid)
 				  FROM stockcategory
@@ -122,7 +122,7 @@ function ModifyStockCategory($CategoryDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes a categoryid and returns an associative array containing
+/** This function takes a categoryid and returns an associative array containing
    the database record for that category. If the category doesn't exist
    then it returns an $Errors array.
 */
@@ -146,7 +146,7 @@ function GetStockCategory($Categoryid, $user, $password) {
 	}
 }
 
-/* This function takes a field name, and a string, and then returns an
+/** This function takes a field name, and a string, and then returns an
    array of categories that fulfill this criteria.
 */
 function SearchStockCategories($Field, $Criteria, $user, $password) {
@@ -216,7 +216,7 @@ function GetStockCatProperty($Property, $StockID, $user, $password) {
 	return $Errors;
 }
 
-/* This function returns a list of the stock categories setup on webERP  */
+/** This function returns a list of the stock categories setup on webERP  */
 function GetStockCategoryList($user, $password) {
 	$Errors = array();
 	$db = db($user, $password);

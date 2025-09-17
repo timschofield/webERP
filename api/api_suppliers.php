@@ -5,8 +5,8 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Verify that the supplier number is valid, and doesn't already
-   exist.*/
+/** Verify that the supplier number is valid, and doesn't already
+   exist. */
 function VerifySupplierNo($SupplierNumber, $i, $Errors) {
 	if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 		$Errors[$i] = IncorrectDebtorNumberLength;
@@ -22,8 +22,8 @@ function VerifySupplierNo($SupplierNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the supplier number is valid, and already
-   exists.*/
+/** Verify that the supplier number is valid, and already
+   exists. */
 function VerifySupplierNoExists($SupplierNumber, $i, $Errors) {
 	if ((mb_strlen($SupplierNumber)<1) or (mb_strlen($SupplierNumber)>10)) {
 		$Errors[$i] = IncorrectDebtorNumberLength;
@@ -39,7 +39,7 @@ function VerifySupplierNoExists($SupplierNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the name exists and is 40 characters or less long */
+/** Check that the name exists and is 40 characters or less long */
 function VerifySupplierName($SupplierName, $i, $Errors) {
 	if ((mb_strlen($SupplierName)<1) or (mb_strlen($SupplierName)>40)) {
 		$Errors[$i] = IncorrectSupplierNameLength;
@@ -47,7 +47,7 @@ function VerifySupplierName($SupplierName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the supplier since date is a valid date. The date
+/** Check that the supplier since date is a valid date. The date
  * must be in the same format as the date format specified in the
  * target webERP company */
 function VerifySupplierSinceDate($suppliersincedate, $i, $Errors) {
@@ -111,7 +111,7 @@ function VerifyRemittance($Remittance, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the factor company is set up in the weberp database */
+/** Check that the factor company is set up in the weberp database */
 function VerifyFactorCompany($factorco , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(id)
 				 FROM factorcompanies
@@ -124,7 +124,7 @@ function VerifyFactorCompany($factorco , $i, $Errors) {
 	return $Errors;
 }
 
-/* Insert a new supplier in the webERP database. This function takes an
+/** Insert a new supplier in the webERP database. This function takes an
    associative array called $SupplierDetails, where the keys are the
    names of the fields in the suppliers table, and the values are the
    values to insert.
@@ -309,7 +309,7 @@ function ModifySupplier($SupplierDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes a supplier id and returns an associative array containing
+/** This function takes a supplier id and returns an associative array containing
    the database record for that supplier. If the supplier id doesn't exist
    then it returns an $Errors array.
 */
@@ -333,7 +333,7 @@ function GetSupplier($SupplierID, $user, $password) {
 	}
 }
 
-/* This function takes a field name, and a string, and then returns an
+/** This function takes a field name, and a string, and then returns an
    array of supplier ids that fulfill this criteria.
 */
 function SearchSuppliers($Field, $Criteria, $user, $password) {

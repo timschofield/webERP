@@ -5,8 +5,8 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* Verify that the debtor number is valid, and doesn't already
-   exist.*/
+/** Verify that the debtor number is valid, and doesn't already
+   exist. */
 function VerifyDebtorNo($DebtorNumber, $i, $Errors) {
 	if ((mb_strlen($DebtorNumber)<1) or (mb_strlen($DebtorNumber)>10)) {
 		$Errors[$i] = IncorrectDebtorNumberLength;
@@ -22,7 +22,7 @@ function VerifyDebtorNo($DebtorNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the debtor number exists*/
+/** Check that the debtor number exists */
 function VerifyDebtorExists($DebtorNumber, $i, $Errors) {
 	$Searchsql = "SELECT count(debtorno)
 				 FROM debtorsmaster
@@ -35,7 +35,7 @@ function VerifyDebtorExists($DebtorNumber, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the name exists and is 40 characters or less long */
+/** Check that the name exists and is 40 characters or less long */
 function VerifyDebtorName($DebtorName, $i, $Errors) {
 	if ((mb_strlen($DebtorName)<1) or (mb_strlen($DebtorName)>40)) {
 		$Errors[$i] = IncorrectDebtorNameLength;
@@ -43,7 +43,7 @@ function VerifyDebtorName($DebtorName, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the address lines are correct length*/
+/** Check that the address lines are correct length */
 function VerifyAddressLine($AddressLine, $Length, $i, $Errors) {
 	if (mb_strlen($AddressLine)>$Length) {
 		$Errors[$i] = InvalidAddressLine;
@@ -51,7 +51,7 @@ function VerifyAddressLine($AddressLine, $Length, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the currency code is set up in the weberp database */
+/** Check that the currency code is set up in the weberp database */
 function VerifyCurrencyCode($CurrCode, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(currabrev)
 				  FROM currencies
@@ -64,7 +64,7 @@ function VerifyCurrencyCode($CurrCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the sales type is set up in the weberp database */
+/** Check that the sales type is set up in the weberp database */
 function VerifySalesType($SalesType, $i, $Errors) {
 	$Searchsql = "SELECT COUNT(typeabbrev)
 				 FROM salestypes
@@ -77,7 +77,7 @@ function VerifySalesType($SalesType, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the clientsince date is a valid date */
+/** Check that the clientsince date is a valid date */
 function VerifyClientSince($ClientSince, $i, $Errors) {
 	if (!Is_Date($ClientSince)) {
 //			$Errors[$i] = InvalidClientSinceDate;
@@ -85,7 +85,7 @@ function VerifyClientSince($ClientSince, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the hold reason is set up in the weberp database */
+/** Check that the hold reason is set up in the weberp database */
 function VerifyHoldReason($HoldReason , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(reasoncode)
 				 FROM holdreasons
@@ -98,7 +98,7 @@ function VerifyHoldReason($HoldReason , $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the payment terms are set up in the weberp database */
+/** Check that the payment terms are set up in the weberp database */
 function VerifyPaymentTerms($PaymentTerms , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(termsindicator)
 				 FROM paymentterms
@@ -111,7 +111,7 @@ function VerifyPaymentTerms($PaymentTerms , $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the discount figure is numeric */
+/** Verify that the discount figure is numeric */
 function VerifyDiscount($Discount, $i, $Errors) {
 	if (!is_numeric($Discount)) {
 		$Errors[$i] = InvalidDiscount;
@@ -119,7 +119,7 @@ function VerifyDiscount($Discount, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the payment discount figure is numeric */
+/** Verify that the payment discount figure is numeric */
 function VerifyPymtDiscount($Discount, $i, $Errors) {
 	if (!is_numeric($Discount)) {
 		$Errors[$i] = InvalidPaymentDiscount;
@@ -127,7 +127,7 @@ function VerifyPymtDiscount($Discount, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the last paid amount is numeric */
+/** Verify that the last paid amount is numeric */
 function VerifyLastPaid($LastPaid, $i, $Errors) {
 	if (!is_numeric($LastPaid)) {
 		$Errors[$i] = InvalidLastPaid;
@@ -135,7 +135,7 @@ function VerifyLastPaid($LastPaid, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the last paid date is a valid date */
+/** Check that the last paid date is a valid date */
 function VerifyLastPaidDate($ClientSince, $i, $Errors) {
 	if (!Is_Date($ClientSince)) {
 		$Errors[$i] = InvalidLastPaidDate;
@@ -143,7 +143,7 @@ function VerifyLastPaidDate($ClientSince, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the last credit limit is numeric and positive */
+/** Verify that the last credit limit is numeric and positive */
 function VerifyCreditLimit($CreditLimit, $i, $Errors) {
 	if (!is_numeric($CreditLimit) or $CreditLimit<0) {
 		$Errors[$i] = InvalidCreditLimit;
@@ -151,7 +151,7 @@ function VerifyCreditLimit($CreditLimit, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the InvAddrBranch is a 1 or 0 */
+/** Verify that the InvAddrBranch is a 1 or 0 */
 function VerifyInvAddrBranch($InvAddrBranch, $i, $Errors) {
 	if ($InvAddrBranch!=0 and $InvAddrBranch!=1) {
 		$Errors[$i] = InvalidInvAddrBranch;
@@ -159,7 +159,7 @@ function VerifyInvAddrBranch($InvAddrBranch, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the discount code only has 1 or 2 characters */
+/** Check that the discount code only has 1 or 2 characters */
 function VerifyDiscountCode($DiscountCode, $i, $Errors) {
 	if (mb_strlen($DiscountCode)>2) {
 		$Errors[$i] = InvalidDiscountCode;
@@ -167,7 +167,7 @@ function VerifyDiscountCode($DiscountCode, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the EDIInvoices is a 1 or 0 */
+/** Verify that the EDIInvoices is a 1 or 0 */
 function VerifyEDIInvoices($EDIInvoices, $i, $Errors) {
 	if ($EDIInvoices!=0 and $EDIInvoices!=1) {
 		$Errors[$i] = InvalidEDIInvoices;
@@ -175,7 +175,7 @@ function VerifyEDIInvoices($EDIInvoices, $i, $Errors) {
 	return $Errors;
 }
 
-/* Verify that the EDIOrders is a 1 or 0 */
+/** Verify that the EDIOrders is a 1 or 0 */
 function VerifyEDIOrders($EDIOrders, $i, $Errors) {
 	if ($EDIOrders!=0 and $EDIOrders!=1) {
 		$Errors[$i] = InvalidEDIOrders;
@@ -232,7 +232,7 @@ function VerifyCustomerPOLine($CustomerPOLine, $i, $Errors) {
 	return $Errors;
 }
 
-/* Check that the customer type is set up in the weberp database */
+/** Check that the customer type is set up in the weberp database */
 function VerifyCustomerType($DebtorType , $i, $Errors) {
 	$Searchsql = "SELECT COUNT(typeid)
 				 FROM debtortype
@@ -245,7 +245,7 @@ function VerifyCustomerType($DebtorType , $i, $Errors) {
 	return $Errors;
 }
 
-/* Insert a new customer in the webERP database. This function takes an
+/** Insert a new customer in the webERP database. This function takes an
    associative array called $CustomerDetails, where the keys are the
    names of the fields in the debtorsmaster table, and the values are the
    values to insert. The only mandatory fields are the debtorno, name,
@@ -375,7 +375,7 @@ function InsertCustomer($CustomerDetails, $user = '', $password = '') {
 	return $Errors;
 }
 
-/* Modifies a customer record in the webERP database. This function takes an
+/** Modifies a customer record in the webERP database. This function takes an
    associative array called $CustomerDetails, where the keys are the
    names of the fields in the debtorsmaster table, and the values are the
    values to update. The debtorno is mandatory and only fields that need
@@ -501,7 +501,7 @@ function ModifyCustomer($CustomerDetails, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes a debtorno and returns an associative array containing
+/** This function takes a debtorno and returns an associative array containing
    the database record for that debtor. If the debtor number doesn't exist
    then it returns an $Errors array.
 */
@@ -524,7 +524,7 @@ function GetCustomer($DebtorNumber, $user, $password) {
 	return $Errors;
 }
 
-/* This function takes a field name, and a string, and then returns an
+/** This function takes a field name, and a string, and then returns an
    array of debtornos that fulfill this criteria.
 */
 function SearchCustomers($Field, $Criteria, $user, $password) {

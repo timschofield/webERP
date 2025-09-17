@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the customer types
+/** This function returns a list of the customer types
  * currently setup on webERP
  */
 function GetCustomerTypeList($user, $password) {
@@ -26,7 +26,7 @@ function GetCustomerTypeList($user, $password) {
 	return $TaxgroupList;
 }
 
-/* This function takes as a parameter a customer type id
+/** This function takes as a parameter a customer type id
  * and returns an array containing the details of the selected
  * customer type.
  */

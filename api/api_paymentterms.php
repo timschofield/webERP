@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the payment terms abbreviations
+/** This function returns a list of the payment terms abbreviations
  * currently setup on webERP
  */
 function GetPaymentTermsList($user, $password) {
@@ -26,7 +26,7 @@ function GetPaymentTermsList($user, $password) {
 	return $PaymentTermsList;
 }
 
-/* This function takes as a parameter a payment terms code
+/** This function takes as a parameter a payment terms code
  * and returns an array containing the details of the selected
  * payment terms.
  */
@@ -44,7 +44,7 @@ function GetPaymentTermsDetails($paymentterms, $user, $password) {
 	return DB_fetch_array($Result);
 }
 
-/* This function returns a list of the payment methods
+/** This function returns a list of the payment methods
  * currently setup on webERP
  */
 function GetPaymentMethodsList($User, $Password) {
@@ -67,7 +67,7 @@ function GetPaymentMethodsList($User, $Password) {
 	return $PaymentMethodsList;
 }
 
-/* This function takes as a parameter a payment method code
+/** This function takes as a parameter a payment method code
  * and returns an array containing the details of the selected
  * payment method.
  */

@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/* This function returns a list of the currency abbreviations
+/** This function returns a list of the currency abbreviations
  * currently setup on webERP
  */
 function GetCurrencyList($user, $password) {
@@ -26,7 +26,7 @@ function GetCurrencyList($user, $password) {
 	return $CurrencyList;
 }
 
-/* This function takes as a parameter a currency abbreviation
+/** This function takes as a parameter a currency abbreviation
  * and returns an array containing the details of the selected
  * currency.
  */
