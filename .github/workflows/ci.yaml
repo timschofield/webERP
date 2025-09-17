@@ -143,8 +143,7 @@ jobs:
                 #curl -L --fail-with-body http://localhost/index.php
 
                 ./vendor/bin/phpunit --stop-on-failure tests/install
-                ### @todo enable as soon as we have finished the 'tests/install' suite
-                #./vendor/bin/phpunit tests/run
+                ./vendor/bin/phpunit tests/run
 
             # @todo this test always uses the mysql and mysqldump cli tools from the host computer/image. It would be
             #       nice to also run the dump_database.sh script using the cli tools from the db version being tested

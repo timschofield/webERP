@@ -166,7 +166,7 @@ class WebTestCase extends TestCase
 	/**
 	 * Scans the source code for web pages (php files).
 	 * @param string[] $dirs List of dirs. Will _not_ recurse into them
-	 * @param bool $pathAsArray when set, return an array of arrays. good for dataProvider methods
+	 * @param bool $pathAsArray when set, return an array of arrays. Good for dataProvider methods
 	 * @return array every php file is returned with its path relative to the root directory (starting with '/')
 	 */
 	protected static function listWebPages(array $dirs = [], $pathAsArray=false): array
@@ -199,6 +199,11 @@ class WebTestCase extends TestCase
 				}
 			}
 		}
+		if ($pathAsArray) {
+			/// @todo
+		} else {
+			sort($pages);
+		}
 		return $pages;
 	}
 
@@ -224,9 +229,10 @@ class WebTestCase extends TestCase
 		$this->assertStringNotContainsString($crawler->getUri(), '/install/', $message);
 	}
 
-	protected function assertIsNotOnLoginPage()
+	protected function assertIsNotOnLoginPage(Crawler $crawler, $message = '')
 	{
-/// @todo ...
+		/// @todo what about using $this->getResponse() instead of $crawler?
+		$this->assertStringNotContainsString('Please login here', $crawler->text(), $message);
 	}
 
 	/**
@@ -240,12 +246,35 @@ class WebTestCase extends TestCase
 		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
 		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
 		$config = @json_decode($browser->getResponse()->getContent(), true);
-		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		/// @todo check that xdebug is enabled, but only when asked to generate code coverage
+		//self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
-		self::assertStringContainsString('tests/setup/config/php/auto_prepend.php', (string)$config['ini_settings']['auto_prepend_file'], 'The server-side php configuration is not correct for running the test suite: auto_prepend.php is not loaded');
+		self::assertEquals(E_ALL, (int)$config['ini_settings']['error_reporting'], 'The server-side php configuration is not correct for running the test suite: error_reporting is not set to E_ALL');
+		self::assertEquals(true, (bool)$config['ini_settings']['display_errors'], 'The server-side php configuration is not correct for running the test suite: display_errors is not set to true');
 		self::assertNotEquals('', (string)$config['ini_settings']['error_prepend_string'], 'The server-side php configuration is not correct for running the test suite: error_prepend_string is null');
 		self::assertNotEquals('', (string)$config['ini_settings']['error_append_string'], 'The server-side php configuration is not correct for running the test suite: error_append_string is null');
 		self::$errorPrependString = $config['ini_settings']['error_prepend_string'];
 		self::$errorAppendString = $config['ini_settings']['error_append_string'];
+	}
+
+	protected function loginUser()
+	{
+		if (count($this->browser->getCookieJar()->all())) {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/Logout.php');
+		} else {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/index.php');
+		}
+
+		// make sure we do have not been redirected to the installer (belts-and-suspenders)
+		$this->assertIsNotOnInstallerPage($crawler);
+
+		$crawler = $this->browser->submitForm('SubmitUser', [
+			'CompanyNameField' => $_ENV['TEST_DB_SCHEMA'],
+			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
+			'Password' => $_ENV['TEST_USER_PASSWORD'],
+		]);
+
+		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
+		$this->assertStringNotContainsString('Please login here', $crawler->text(), 'Failed logging in');
 	}
 }
