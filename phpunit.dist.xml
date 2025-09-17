@@ -47,7 +47,6 @@
 		<exclude>
 			<directory>./build</directory>
 			<directory>./companies</directory>
-			<directory>./doc</directory>
 			<directory>./tests</directory>
 			<directory>./vendor</directory>
 		</exclude>
