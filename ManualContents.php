@@ -113,14 +113,14 @@ if(!isset($_GET['ViewTopic'])) {
 
 foreach($TOC_Array['TableOfContents'] as $Name => $FullName) {
 	$PostName = 'Select' . $Name;
-	if(($_GET['ViewTopic'] == $Name) or (isset($_POST[$PostName]))) {
-		if($Name == 'APIFunctions') {
+	if (($_GET['ViewTopic'] == $Name) or (isset($_POST[$PostName]))) {
+		if ($Name == 'APIFunctions') {
 			$Name .= '.php';
 		} else {
 			$Name .= '.html';
 		}
 		$ManualPage = 'locale/' . $Language . '/Manual/Manual' . $Name;
-		if(!file_exists($ManualPage)) {// If locale topic page not exist, use topic page in doc/Manual.
+		if (!file_exists($ManualPage)) {// If locale topic page not exist, use topic page in doc/Manual.
 			$ManualPage = 'doc/Manual/Manual' . $Name;
 		}
 		echo '<div id="manualpage">';
