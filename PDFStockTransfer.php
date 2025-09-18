@@ -4,7 +4,126 @@
 
 require(__DIR__ . '/includes/session.php');
 
-if (!isset($_GET['TransferNo'])){
+use Dompdf\Dompdf;
+
+if (isset($_POST['Process'])) {
+// Prepare HTML for DomPDF
+$HTML = '<html><head><meta charset="UTF-8"><style>
+	body { font-family: DejaVu Sans, Arial, Helvetica, sans-serif; font-size: 12px; }
+	table { width: 100%; border-collapse: collapse; margin-bottom: 10px; }
+	th, td { border: 1px solid #000; padding: 5px; text-align: left; }
+	.header { font-weight: bold; margin-bottom: 15px; font-size: 18px; }
+	.sign { margin-top: 50px; }
+</style></head><body>';
+$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+
+$HTML .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
+$HTML .= '<div class="header">' . __('Stock Transfer Form') . '</div>';
+$HTML .= '<table><thead>
+	<tr>
+		<th>' . __('Stock ID') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('From Location') . '</th>
+		<th>' . __('To Location/Reference') . '</th>
+		<th>' . __('Quantity') . '</th>
+	</tr>
+</thead><tbody>';
+
+/*Print out the category totals */
+$SQL="SELECT stockmoves.stockid,
+			description,
+			transno,
+			stockmoves.loccode,
+			locationname,
+			trandate,
+			qty,
+			reference
+		FROM stockmoves
+		INNER JOIN stockmaster
+		ON stockmoves.stockid=stockmaster.stockid
+		INNER JOIN locations
+		ON stockmoves.loccode=locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+		WHERE transno='".$_POST['TransferNo']."'
+		AND qty < 0
+		AND type=16";
+
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) == 0){
+	$Title = __('Print Stock Transfer - Error');
+	include('includes/header.php');
+	prnMsg(__('There was no transfer found with number') . ': ' . $_POST['TransferNo'], 'error');
+	echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again')  . '</a>';
+	include('includes/footer.php');
+	exit();
+}
+
+$Date = '';
+$From = '';
+$To = '';
+//get the first stock movement which will be the quantity taken from the initiating location
+while ($MyRow=DB_fetch_array($Result)) {
+	$StockID=$MyRow['stockid'];
+	$From = $MyRow['locationname'];
+	$Date=$MyRow['trandate'];
+	$To = $MyRow['reference'];
+	$Quantity=-$MyRow['qty'];
+	$Description=$MyRow['description'];
+
+	$HTML .= '<tr>';
+	$HTML .= '<td>' . htmlspecialchars($StockID) . '</td>';
+	$HTML .= '<td>' . htmlspecialchars($Description) . '</td>';
+	$HTML .= '<td>' . htmlspecialchars($From) . '</td>';
+	$HTML .= '<td>' . htmlspecialchars($To) . '</td>';
+	$HTML .= '<td class="number">' . htmlspecialchars($Quantity) . '</td>';
+	$HTML .= '</tr>';
+
+	$SQL = "SELECT stockmaster.controlled
+			FROM stockmaster WHERE stockid ='" . $StockID . "'";
+	$CheckControlledResult = DB_query($SQL,'<br />' . __('Could not determine if the item was controlled or not because') . ' ');
+	$ControlledRow = DB_fetch_row($CheckControlledResult);
+
+	if ($ControlledRow[0]==1) { /*Then its a controlled item */
+		$SQL = "SELECT stockserialmoves.serialno,
+				stockserialmoves.moveqty
+				FROM stockmoves INNER JOIN stockserialmoves
+				ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
+				WHERE stockmoves.stockid='" . $StockID . "'
+				AND stockmoves.type =16
+				AND qty > 0
+				AND stockmoves.transno='" .$_GET['TransferNo']. "'";
+		$GetStockMoveResult = DB_query($SQL,__('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
+		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
+			$HTML .= '<tr style="background:#f9f9f9;"><td colspan="2">' . __('Lot/Serial:') . ' ' . htmlspecialchars($SerialStockMoves['serialno']) . '</td>';
+			$HTML .= '<td colspan="2"></td>';
+			$HTML .= '<td>' . htmlspecialchars($SerialStockMoves['moveqty']) . '</td></tr>';
+		}
+	}
+}
+$HTML .= '</tbody></table>';
+
+$HTML .= '<div class="sign">' . __('Date of transfer: ') . htmlspecialchars(ConvertSQLDate($Date)) . '</div>';
+$HTML .= '<div class="sign">' . __('Signed for').' '.htmlspecialchars($From).'______________________</div>';
+$HTML .= '<div class="sign">' . __('Signed for').' '.htmlspecialchars($To).'______________________</div>';
+
+$HTML .= '</body></html>';
+
+// Setup DomPDF
+
+$FileName = $_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d H-m-s') . '.pdf';
+$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf->loadHtml($HTML);
+
+// (Optional) Setup the paper size and orientation
+$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Output the generated PDF to Browser
+$dompdf->stream($FileName, array("Attachment" => false));
+
+} else {
 	if (isset($_POST['TransferNo'])){
 		if (is_numeric($_POST['TransferNo'])){
 			$_GET['TransferNo'] = $_POST['TransferNo'];
@@ -20,7 +139,7 @@ if (!isset($_GET['TransferNo'])){
 		$BookMark = '';
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p>';
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<fieldset>';
 		echo '<fieldset>
@@ -53,102 +172,3 @@ if (!isset($_GET['TransferNo'])){
 		exit();
 	}
 }
-
-
-include('includes/PDFStarter.php');
-$pdf->addInfo('Title', __('Stock Transfer Form') );
-$PageNumber=1;
-$LineHeight=12;
-
-include('includes/PDFStockTransferHeader.php');
-
-/*Print out the category totals */
-
-$SQL="SELECT stockmoves.stockid,
-			description,
-			transno,
-			stockmoves.loccode,
-			locationname,
-			trandate,
-			qty,
-			reference
-		FROM stockmoves
-		INNER JOIN stockmaster
-		ON stockmoves.stockid=stockmaster.stockid
-		INNER JOIN locations
-		ON stockmoves.loccode=locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-		WHERE transno='".$_GET['TransferNo']."'
-		AND qty < 0
-		AND type=16";
-
-$Result = DB_query($SQL);
-if (DB_num_rows($Result) == 0){
-	$Title = __('Print Stock Transfer - Error');
-	include('includes/header.php');
-	prnMsg(__('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
-	echo '<a href="' . $RootPath . '/PDFStockTransfer.php">' . __('Try Again')  . '</a>';
-	include('includes/footer.php');
-	exit();
-}
-//get the first stock movement which will be the quantity taken from the initiating location
-while ($MyRow=DB_fetch_array($Result)) {
-	$StockID=$MyRow['stockid'];
-	$From = $MyRow['locationname'];
-	$Date=$MyRow['trandate'];
-	$To = $MyRow['reference'];
-	$Quantity=-$MyRow['qty'];
-	$Description=$MyRow['description'];
-
-	$pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
-	$pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
-	$pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $From);
-	$pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
-	$pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
-
-	$YPos=$YPos-$LineHeight;
-
-	if ($YPos < $Bottom_Margin + $LineHeight){
-	   include('includes/PDFStockTransferHeader.php');
-	}
-
-	$SQL = "SELECT stockmaster.controlled
-			FROM stockmaster WHERE stockid ='" . $StockID . "'";
-	$CheckControlledResult = DB_query($SQL,'<br />' . __('Could not determine if the item was controlled or not because') . ' ');
-	$ControlledRow = DB_fetch_row($CheckControlledResult);
-
-	if ($ControlledRow[0]==1) { /*Then its a controlled item */
-		$SQL = "SELECT stockserialmoves.serialno,
-				stockserialmoves.moveqty
-				FROM stockmoves INNER JOIN stockserialmoves
-				ON stockmoves.stkmoveno= stockserialmoves.stockmoveno
-				WHERE stockmoves.stockid='" . $StockID . "'
-				AND stockmoves.type =16
-				AND qty > 0
-				AND stockmoves.transno='" .$_GET['TransferNo']. "'";
-		$GetStockMoveResult = DB_query($SQL,__('Could not retrieve the stock movement reference number which is required in order to retrieve details of the serial items that came in with this GRN'));
-		while ($SerialStockMoves = DB_fetch_array($GetStockMoveResult)){
-			$pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, __('Lot/Serial:'));
-			$pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
-			$pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
-			$YPos=$YPos-$LineHeight;
-
-			if ($YPos < $Bottom_Margin + $LineHeight){
-				include('includes/PDFStockTransferHeader.php');
-			} //while SerialStockMoves
-		}
-		$pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
-		$YPos=$YPos-$LineHeight;
-		if ($YPos < $Bottom_Margin + $LineHeight){
-			include('includes/PDFStockTransferHeader.php');
-		} //controlled item*/
-	}
-
-}
-$pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, __('Date of transfer: ').$Date);
-
-$pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, __('Signed for').' '.$From.'______________________');
-$pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, __('Signed for').' '.$To.'______________________');
-
-$pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
-$pdf->__destruct();
