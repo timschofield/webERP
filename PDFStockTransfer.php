@@ -153,7 +153,7 @@ $dompdf->stream($FileName, array("Attachment" => false));
 			</div>
 			</form>';
 
-		echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
+		echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php?Type=Sales" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="Type" value="Transfer" />';
 		echo '<fieldset>

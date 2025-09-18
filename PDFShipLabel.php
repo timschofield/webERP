@@ -1,8 +1,12 @@
 <?php
 
-/* Prints a ship label */
+/* Prints a ship label using DomPDF */
 
 require(__DIR__ . '/includes/session.php');
+require_once __DIR__ . '/vendor/autoload.php'; // Make sure DomPDF is installed via composer
+
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 if (isset($_GET['ORD'])) {
 	$SelectedORD = $_GET['ORD'];
@@ -85,10 +89,10 @@ if (isset($_GET['Type'])) {
 }
 
 /* If we are previewing the order then we dont want to email it */
-if ($SelectedORD == 'Preview') { //ORD is set to 'Preview' when just looking at the format of the printed order
+if ($SelectedORD == 'Preview') {
 	$_POST['PrintOrEmail'] = 'Print';
 	$MakePDFThenDisplayIt = true;
-} //$SelectedORD == 'Preview'
+}
 
 if (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Print') {
 	$MakePDFThenDisplayIt = true;
@@ -103,12 +107,14 @@ if (isset($_POST['PrintOrEmail']) and $_POST['PrintOrEmail'] == 'Print') {
 
 $FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/ShippingLabel.xml');
 
-// Set the paper size/orintation
-$PaperSize = $FormDesign->PaperSize;
-$LineHeight = $FormDesign->LineHeight;
-include('includes/PDFStarter.php');
-$PageNumber = 1;
-$pdf->addInfo('Title', __('FG Label'));
+// Set up DomPDF options
+$options = new Options();
+$options->set('isHtml5ParserEnabled', true);
+$options->set('isRemoteEnabled', true); // Enable for images/logos
+$dompdf = new Dompdf($options);
+
+$HTMLLabels = '';
+$HTMLLabels .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 
 if ($SelectedORD == 'Preview') {
 	$NoOfLabels = 1;
@@ -123,8 +129,7 @@ if ($SelectedORD == 'Preview') {
 	$MyArray[1]['customerref'] = str_pad('', 30, 'x');
 	$MyArray[1]['stockid'] = str_pad('', 30, 'x');
 	$MyArray[1]['custitem'] = str_pad('', 30, 'x');
-
-} else { //NOT PREVIEW
+} else {
 	if ($Type == "Sales") {
 		$OrderHeaderSQL = "SELECT debtorsmaster.name as deliverto,
 								salesorderdetails.quantity as shipqty,
@@ -181,7 +186,7 @@ if ($SelectedORD == 'Preview') {
 								ON loctransfers.recloc = locationsrec.loccode
 							WHERE loctransfers.reference='" . $SelectedORD . "'";
 	}
-	//echo $OrderHeaderSQL;
+
 	$ErrMsg = __('The order cannot be retrieved because');
 	$GetOrdHdrResult = DB_query($OrderHeaderSQL, $ErrMsg);
 
@@ -199,9 +204,13 @@ if ($SelectedORD == 'Preview') {
 					WHERE stockid='" . $MyRow['stockid'] . "'
 						AND label='PackQty'";
 			$Result = DB_query($SQL, $ErrMsg);
-			$PackQtyArray = DB_fetch_array($Result);
-			$QtyPerBox = $PackQtyArray['value'];
-			if ($QtyPerBox == 0) {
+			if (DB_num_rows($Result) > 0) {
+				$PackQtyArray = DB_fetch_array($Result);
+				$QtyPerBox = $PackQtyArray['value'];
+				if ($QtyPerBox == 0) {
+					$QtyPerBox = 1;
+				}
+			} else {
 				$QtyPerBox = 1;
 			}
 			$NoOfBoxes = (int) ($MyRow['shipqty'] / $QtyPerBox);
@@ -210,7 +219,6 @@ if ($SelectedORD == 'Preview') {
 			$QtyPerBox = locale_number_format($QtyPerBox, $MyRow['decimalplaces']);
 			$LeftOverQty = locale_number_format($LeftOverQty, $MyRow['decimalplaces']);
 
-			//echo $MyRow['stockid'] . ' ' .$MyRow['deliverto'] . ' ' .$MyRow['deladd1'] . ' ' . $MyRow['shipqty'].' ' .$QtyPerBox.' ' .$NoOfLabelsLine.' ' .$LeftOverQty.'<br>';
 			while ($i <= $NoOfLabelsLine) {
 				$MyArray[$NoOfLabels]['deliverto'] = $MyRow['deliverto'];
 				$MyArray[$NoOfLabels]['deladd1'] = $MyRow['deladd1'];
@@ -218,7 +226,6 @@ if ($SelectedORD == 'Preview') {
 				$MyArray[$NoOfLabels]['deladd3'] = $MyRow['deladd3'];
 				$MyArray[$NoOfLabels]['deladd4'] = $MyRow['deladd4'];
 				$MyArray[$NoOfLabels]['deladd5'] = $MyRow['deladd5'];
-				$MyArray[$NoOfLabels]['deladd6'] = $MyRow['deladd6'];
 				$MyArray[$NoOfLabels]['deladd6'] = $MyRow['deladd6'];
 				$MyArray[$NoOfLabels]['customerref'] = $MyRow['customerref'];
 				$MyArray[$NoOfLabels]['stockid'] = $MyRow['stockid'];
@@ -236,119 +243,103 @@ if ($SelectedORD == 'Preview') {
 					$MyArray[$NoOfLabels]['deladd4'] = $MyRow['deladd4'];
 					$MyArray[$NoOfLabels]['deladd5'] = $MyRow['deladd5'];
 					$MyArray[$NoOfLabels]['deladd6'] = $MyRow['deladd6'];
-					$MyArray[$NoOfLabels]['deladd6'] = $MyRow['deladd6'];
 					$MyArray[$NoOfLabels]['customerref'] = $MyRow['customerref'];
 					$MyArray[$NoOfLabels]['stockid'] = $MyRow['stockid'];
 					$MyArray[$NoOfLabels]['custitem'] = $MyRow['cust_part'] . ' ' . $MyRow['cust_description'];
 					++$i;
 					++$j;
-					//$NoOfLabels++;
 				}
 			}
 		}
-	} // get data to print
-} //
-//echo $LeftOverQty . ' ' . $NoOfLabels ;
-if ($NoOfLabels > 0) {
+	}
+}
+
+// Compose HTML for each label
+if (isset($NoOfLabels) && $NoOfLabels > 0) {
 	for ($i = 1; $i < $NoOfLabels; $i++) {
-		if ($PageNumber > 1) {
-			$pdf->newPage();
-		}
-		$PageNumber++;
-		$AddressLine = 0;
-		$pdf->addJpegFromFile($_SESSION['LogoFile'], $FormDesign->logo->x, $Page_Height - $FormDesign->logo->y, $FormDesign->logo->width, $FormDesign->logo->height);
-		$pdf->setFont('', 'B');
-		$pdf->addText($FormDesign->CompanyAddress->CompanyLabel->x, $Page_Height - $FormDesign->CompanyAddress->CompanyLabel->y, $FormDesign->CompanyAddress->CompanyLabel->FontSize, __('Ship From') . ': ');
-		$pdf->setFont('', '');
-		$pdf->addText($FormDesign->CompanyAddress->CompanyName->x, $Page_Height - $FormDesign->CompanyAddress->CompanyName->y, $FormDesign->CompanyAddress->CompanyName->FontSize, $_SESSION['CompanyRecord']['coyname']);
-		$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-		++$AddressLine;
-		if ($_SESSION['CompanyRecord']['regoffice2'] > '') {
-			$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-			++$AddressLine;
-		}
-		if ($_SESSION['CompanyRecord']['regoffice3'] > '') {
-			$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice3']);
-			++$AddressLine;
-		}
-		if ($_SESSION['CompanyRecord']['regoffice4'] > '') {
-			$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice4']);
-			++$AddressLine;
-		}
-		if ($_SESSION['CompanyRecord']['regoffice5'] > '') {
-			$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice5']);
-			++$AddressLine;
-		}
-		if ($_SESSION['CompanyRecord']['regoffice6'] > '') {
-			$pdf->addText($FormDesign->CompanyAddress->Address->x, $Page_Height - $FormDesign->CompanyAddress->Address->y - ($AddressLine * $FormDesign->CompanyAddress->Address->FontSize), $FormDesign->CompanyAddress->Address->FontSize, $_SESSION['CompanyRecord']['regoffice6']);
-			++$AddressLine;
-		}
-		$pdf->Line($FormDesign->LabelLine->startx, $Page_Height - $FormDesign->LabelLine->starty, $FormDesign->LabelLine->endx, $Page_Height - $FormDesign->LabelLine->endy);
-		$pdf->setFont('', 'B');
-		$pdf->addText($FormDesign->DeliveryAddress->DelLabel->x, $Page_Height - $FormDesign->DeliveryAddress->DelLabel->y, $FormDesign->DeliveryAddress->DelLabel->FontSize, __('Ship To') . ': ');
-		$pdf->setFont('', '');
-		$pdf->addText($FormDesign->DeliveryAddress->DelName->x, $Page_Height - $FormDesign->DeliveryAddress->DelName->y, $FormDesign->DeliveryAddress->DelName->FontSize, $MyArray[$i]['deliverto']);
-		$AddressLine = 0;
-		$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd1']);
-		++$AddressLine;
-		if ($MyArray[$i]['deladd2'] > '') {
-			$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd2']);
-			++$AddressLine;
-		}
-		if ($MyArray[$i]['deladd3'] > '') {
-			$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd3']);
-			++$AddressLine;
-		}
-		if ($MyArray[$i]['deladd4'] > '') {
-			$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd4']);
-			++$AddressLine;
-		}
-		if ($MyArray[$i]['deladd5'] > '') {
-			$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd5']);
-			++$AddressLine;
-		}
-		if ($MyArray[$i]['deladd6'] > '') {
-			$pdf->addText($FormDesign->DeliveryAddress->DelAddress->x, $Page_Height - $FormDesign->DeliveryAddress->DelAddress->y - ($AddressLine * $FormDesign->DeliveryAddress->DelAddress->FontSize), $FormDesign->DeliveryAddress->DelAddress->FontSize, $MyArray[$i]['deladd6']);
-			++$AddressLine;
-		}
+		$companyAddress = $_SESSION['CompanyRecord']['regoffice1'];
+		$companyAddress2 = $_SESSION['CompanyRecord']['regoffice2'] ?? '';
+		$companyAddress3 = $_SESSION['CompanyRecord']['regoffice3'] ?? '';
+		$companyAddress4 = $_SESSION['CompanyRecord']['regoffice4'] ?? '';
+		$companyAddress5 = $_SESSION['CompanyRecord']['regoffice5'] ?? '';
+		$companyAddress6 = $_SESSION['CompanyRecord']['regoffice6'] ?? '';
 
-		$pdf->addText($FormDesign->PONbr->x, $Page_Height - $FormDesign->PONbr->y, $FormDesign->PONbr->FontSize, __('Order') . ': ' . $MyArray[$i]['customerref']);
-		$pdf->addText($FormDesign->ItemNbr->x, $Page_Height - $FormDesign->ItemNbr->y, $FormDesign->ItemNbr->FontSize, __('Item') . ': ' . $MyArray[$i]['stockid']);
-		$pdf->addText($FormDesign->CustItem->x, $Page_Height - $FormDesign->CustItem->y, $FormDesign->CustItem->FontSize, __('Customer Item') . ': ' . $MyArray[$i]['custitem']);
+		$HTMLLabels .= '
+		<div style="page-break-after: always; border: 1px solid #333; padding: 12px; font-family: Arial, sans-serif;">
+			<table style="width:100%; border:none;">
+				<tr>
+					<td style="width:40%; vertical-align:top;">';
+		$HTMLLabels .= '<img class="logo" src="' . $_SESSION['LogoFile'] . '" /><br />';
 
-	} //end of loop labels
+		$HTMLLabels .= '<div style="font-weight:bold; margin-top:8px;">' . __('Ship From') . ':</div>
+						<div>' . htmlentities($_SESSION['CompanyRecord']['coyname']) . '</div>
+						<div>' . htmlentities($companyAddress) . '</div>
+						' . ($companyAddress2 ? '<div>' . htmlentities($companyAddress2) . '</div>' : '') . '
+						' . ($companyAddress3 ? '<div>' . htmlentities($companyAddress3) . '</div>' : '') . '
+						' . ($companyAddress4 ? '<div>' . htmlentities($companyAddress4) . '</div>' : '') . '
+						' . ($companyAddress5 ? '<div>' . htmlentities($companyAddress5) . '</div>' : '') . '
+						' . ($companyAddress6 ? '<div>' . htmlentities($companyAddress6) . '</div>' : '') . '
+					</td>
+					<td style="width:60%; vertical-align:top;">
+						<div style="font-weight:bold;">' . __('Ship To') . ':</div>
+						<div>' . htmlentities($MyArray[$i]['deliverto']) . '</div>
+						<div>' . htmlentities($MyArray[$i]['deladd1']) . '</div>
+						' . ($MyArray[$i]['deladd2'] ? '<div>' . htmlentities($MyArray[$i]['deladd2']) . '</div>' : '') . '
+						' . ($MyArray[$i]['deladd3'] ? '<div>' . htmlentities($MyArray[$i]['deladd3']) . '</div>' : '') . '
+						' . ($MyArray[$i]['deladd4'] ? '<div>' . htmlentities($MyArray[$i]['deladd4']) . '</div>' : '') . '
+						' . ($MyArray[$i]['deladd5'] ? '<div>' . htmlentities($MyArray[$i]['deladd5']) . '</div>' : '') . '
+						' . ($MyArray[$i]['deladd6'] ? '<div>' . htmlentities($MyArray[$i]['deladd6']) . '</div>' : '') . '
+					</td>
+				</tr>
+			</table>
+			<hr>
+			<div><strong>' . __('Order') . ':</strong> ' . htmlentities($MyArray[$i]['customerref']) . '</div>
+			<div><strong>' . __('Item') . ':</strong> ' . htmlentities($MyArray[$i]['stockid']) . '</div>
+			<div><strong>' . __('Customer Item') . ':</strong> ' . htmlentities($MyArray[$i]['custitem']) . '</div>
+		</div>
+		';
+	}
 
-	$Success = 1; //assume the best and email goes - has to be set to 1 to allow update status
+	$dompdf->loadHtml($HTMLLabels);
+
+	// Optionally set paper size/orientation from $FormDesign
+	$paperSize = isset($FormDesign->PaperSize) ? (string)$FormDesign->PaperSize : 'A4';
+	$orientation = 'portrait';
+	$dompdf->setPaper($paperSize, $orientation);
+
+	$dompdf->render();
+
+	$PDFFileName = $_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
+
 	if ($MakePDFThenDisplayIt) {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+		// Stream to browser
+		$dompdf->stream($PDFFileName, ['Attachment' => false]);
+		exit;
 	} else {
-		$PDFFileName = $_SESSION['DatabaseName'] . '__FGLABEL_' . $SelectedORD . '_' . date('Y-m-d') . '.pdf';
-		$pdf->Output(sys_get_temp_dir() . '/' . $PDFFileName, 'F');
-		$pdf->__destruct();
+		// Save to file and email
+		$output = $dompdf->output();
+		$tmpFile = sys_get_temp_dir() . '/' . $PDFFileName;
+		file_put_contents($tmpFile, $output);
 
-		$Success = SendEmailFromWebERP($_SESSION['CompanyRecord']['email'],
-										array($_POST['EmailTo'] => ''),
-										__('Work Order Number') . ' ' . $SelectedORD,
-										__('Please Process this Work order number') . ' ' . $SelectedORD,
-										array(sys_get_temp_dir() . '/' . $PDFFileName)
-									);
+		$Success = SendEmailFromWebERP(
+			$_SESSION['CompanyRecord']['email'],
+			[$_POST['EmailTo'] => ''],
+			__('Work Order Number') . ' ' . $SelectedORD,
+			__('Please Process this Work order number') . ' ' . $SelectedORD,
+			[$tmpFile]
+		);
 
+		$Title = __('Email a Work Order');
+		include('includes/header.php');
 		if ($Success == 1) {
-			$Title = __('Email a Work Order');
-			include('includes/header.php');
 			prnMsg(__('Work Order') . ' ' . $SelectedORD . ' ' . __('has been emailed to') . ' ' . $_POST['EmailTo'] . ' ' . __('as directed'), 'success');
-
-		} else { //email failed
-			$Title = __('Email a Work Order');
-			include('includes/header.php');
+		} else {
 			prnMsg(__('Emailing Work order') . ' ' . $SelectedORD . ' ' . __('to') . ' ' . $_POST['EmailTo'] . ' ' . __('failed'), 'error');
 		}
+		unlink($tmpFile);
+		include('includes/footer.php');
 	}
-	unlink(sys_get_temp_dir() . '/' . $PDFFileName);
-	include('includes/footer.php');
-
-} else { //there were not labels to print
+} else {
 	$Title = __('Label Error');
 	include('includes/header.php');
 	prnMsg(__('There were no labels to print'), 'warn');
