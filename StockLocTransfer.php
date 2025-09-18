@@ -155,7 +155,6 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$StockIDAccQty[$_POST['StockID'.$i]] = filter_number_format($_POST['StockQTY' . $i]);
 					} //end of accumulated check
 
-					DB_free_result( $Result );
 					$TotalItems++;
 				}
 			}//for all LinesCounter
@@ -208,7 +207,7 @@ if(isset($_POST['Submit']) AND $InputError==false){
 	DB_Txn_Commit();
 
 	prnMsg( __('The inventory transfer records have been created successfully'),'success');
-	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '">' .  __('Print the Transfer Docket'). '</a></p>';
+	echo '<p><a href="'.$RootPath.'/PDFStockLocTransfer.php?TransferNo=' . $_POST['Trf_ID'] . '" target="_blank">' .  __('Print the Transfer Docket'). '</a></p>';
 	include('includes/footer.php');
 
 } else {
