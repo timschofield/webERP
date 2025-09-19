@@ -5,7 +5,7 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
-/** Check that the account group doesn't already exist'*/
+/** Check that the account group doesn't already exist' */
 function VerifyAccountGroup($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)
 			FROM accountgroups
@@ -18,7 +18,7 @@ function VerifyAccountGroup($AccountGroup, $i, $Errors) {
 	return $Errors;
 }
 
-/** Check that the account sectiont already exists'*/
+/** Check that the account sectiont already exists' */
 function VerifyAccountSectionExists($AccountSection, $i, $Errors) {
 	$Searchsql = "SELECT count(sectionid)
 			FROM accountsection
@@ -47,7 +47,7 @@ function VerifySequenceInTB($sequenceintb, $i, $Errors) {
 	return $Errors;
 }
 
-/** Check that the parent group exists*/
+/** Check that the parent group exists */
 function VerifyParentGroupExists($AccountGroup, $i, $Errors) {
 	$Searchsql = "SELECT count(groupname)
 			FROM accountgroups
