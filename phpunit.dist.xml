@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<phpunit colors="true" cacheResult="false">
+<phpunit colors="true" cacheResult="false" displayDetailsOnSkippedTests="true" displayDetailsOnPhpunitDeprecations="true">
 	<testsuites>
 		<testsuite name="webERP Installer Test Suite">
 			<directory suffix=".php">./tests/install</directory>
@@ -14,7 +14,7 @@
 	<php>
 		<!--
 		     NB: a note to developers: if adding an env var here, please update correspondingly the example given in
-		     docs/developers/RUNNING_TESTS.md
+		     docs/developers/TESTING.md
 		-->
 		<env name="TEST_TARGET_PROTOCOL" value="http" />
 		<!-- NB: tests are guaranteed to only work when testing the _current_ codebase.
@@ -40,15 +40,15 @@
 	</php>
 
 	<!-- code coverage reporting -->
-	<filter>
-		<whitelist>
+	<source>
+		<include>
 			<directory suffix=".php">./</directory>
-			<exclude>
-				<directory>./build</directory>
-				<directory>./doc</directory>
-				<directory>./tests</directory>
-				<directory>./vendor</directory>
-			</exclude>
-		</whitelist>
-	</filter>
+		</include>
+		<exclude>
+			<directory>./build</directory>
+			<directory>./companies</directory>
+			<directory>./tests</directory>
+			<directory>./vendor</directory>
+		</exclude>
+	</source>
 </phpunit>

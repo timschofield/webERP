@@ -22,9 +22,13 @@ class WebTestCase extends TestCase
 	/** @var HttpBrowser */
 	protected $browser;
 	/** @var string */
+	protected $executingTestIdentifier;
+	/** @var string */
 	protected static $errorPrependString = '';
 	/** @var string */
 	protected static $errorAppendString = '';
+	/** @var bool|null */
+	protected static $serverRunsXDebug;
 
 	/**
 	 * Runs once before all the test methods of this object
@@ -67,7 +71,7 @@ class WebTestCase extends TestCase
 	public function setUp(): void
 	{
 		$this->browser = new HttpBrowser(HttpClient::create());
-		$this->browser->setExpectedErrorStrings(self::$errorPrependString, self::$errorAppendString);
+		$this->browser->setExpectedErrorStrings(self::$errorPrependString, self::$errorAppendString, self::$serverRunsXDebug);
 		parent::setUp();
 	}
 
@@ -84,7 +88,8 @@ class WebTestCase extends TestCase
 			if ($this->browser) {
 				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception.
 				///       Also, the url being requested
-				$testName = get_class($this) . '_' . $this->name();
+				$testName = get_class($this) . '_' . $this->name() .
+					($this->executingTestIdentifier != '' ? '_' . $this->executingTestIdentifier : '');
 				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
 			}
 		}
@@ -165,11 +170,12 @@ class WebTestCase extends TestCase
 
 	/**
 	 * Scans the source code for web pages (php files).
-	 * @param string[] $dirs List of dirs. Will _not_ recurse into them
+	 * NB: does not list php scripts known to be "includes", such as those in .../include as well as api scripts
+	 * @param string[] $dirs List of dirs to use instead of the default set. Will _not_ recurse into them
 	 * @param bool $pathAsArray when set, return an array of arrays. Good for dataProvider methods
 	 * @return array every php file is returned with its path relative to the root directory (starting with '/')
 	 */
-	protected static function listWebPages(array $dirs = [], $pathAsArray=false): array
+	protected static function listWebPages(array $dirs = [], $pathAsArray = false): array
 	{
 		if (self::$rootDir == '') {
 			self::$rootDir = realpath(__DIR__ . '/../..');
@@ -179,9 +185,9 @@ class WebTestCase extends TestCase
 			// directories with scripts known to be web-accessible
 			$dirs = [
 				self::$rootDir,
-				self::$rootDir . '/api',
+				//self::$rootDir . '/api',
 				self::$rootDir . '/dashboard',
-				self::$rootDir . '/doc/Manual',
+				//self::$rootDir . '/doc/Manual',
 				self::$rootDir . '/install',
 				self::$rootDir . '/reportwriter',
 				self::$rootDir . '/reportwriter/admin',
@@ -192,6 +198,9 @@ class WebTestCase extends TestCase
 		foreach($dirs as $dir) {
 			foreach(glob($dir . '/*.php') as $path) {
 				$path = preg_replace('|^' . self::$rootDir .'|', '', realpath($path));
+				if (in_array($path, ['/config.php', '/config.distrib.php'])) {
+					continue;
+				}
 				if ($pathAsArray) {
 					$pages[] = [$path];
 				} else {
@@ -229,9 +238,15 @@ class WebTestCase extends TestCase
 		$this->assertStringNotContainsString($crawler->getUri(), '/install/', $message);
 	}
 
+	protected function assertIsOnLoginPage(Crawler $crawler, $message = '')
+	{
+		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for presence of login form
+		$this->assertStringContainsString('Please login here', $crawler->text(), $message);
+	}
+
 	protected function assertIsNotOnLoginPage(Crawler $crawler, $message = '')
 	{
-		/// @todo what about using $this->getResponse() instead of $crawler?
+		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for absence of login form
 		$this->assertStringNotContainsString('Please login here', $crawler->text(), $message);
 	}
 
@@ -246,8 +261,8 @@ class WebTestCase extends TestCase
 		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
 		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
 		$config = @json_decode($browser->getResponse()->getContent(), true);
-		/// @todo check that xdebug is enabled, but only when asked to generate code coverage
-		//self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::$serverRunsXDebug = in_array('xdebug', $config['active_extensions']);
 		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
 		self::assertEquals(E_ALL, (int)$config['ini_settings']['error_reporting'], 'The server-side php configuration is not correct for running the test suite: error_reporting is not set to E_ALL');
 		self::assertEquals(true, (bool)$config['ini_settings']['display_errors'], 'The server-side php configuration is not correct for running the test suite: display_errors is not set to true');

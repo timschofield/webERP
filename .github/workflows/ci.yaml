@@ -106,11 +106,12 @@ jobs:
                 ./tests/setup/setup_webserver.sh
 
             # We run the release-preparing script before messing up the vendor/ dir to run the test suite (except
-            # for the step of dumping the database, as the db schema has not yet been created)
+            # for the step of dumping the database, as the db schema has not yet been created, and for the step
+            # checking php syntax, as that is tested by the unit test requesting every web page)
             - name: Test the release-preparing script (run it)
               run: |
                 chmod 755 ./build/make_release.sh
-                ./build/make_release.sh -s dump_db
+                ./build/make_release.sh -s check_php,dump_db
 
             - name: Install dev dependencies
               run: |
@@ -135,14 +136,16 @@ jobs:
                 sudo chmod g+rx,o+rx /home/
                 sudo chmod -R g+rwX,o+rwX /home/runner/
 
+            #- name: Smoke testing
+            #  run: |
+            #    curl -L --fail-with-body http://localhost/images/default_logo.jpg
+            #    echo
+            #    curl -L --fail-with-body http://localhost/index.php
+
             - name: Run the test suite
               run: |
-                # smoke-testing
-                #curl -L --fail-with-body http://localhost/images/default_logo.jpg
-                #echo
-                #curl -L --fail-with-body http://localhost/index.php
-
                 ./vendor/bin/phpunit --stop-on-failure tests/install
+                echo
                 ./vendor/bin/phpunit tests/run
 
             # @todo this test always uses the mysql and mysqldump cli tools from the host computer/image. It would be
@@ -176,9 +179,10 @@ jobs:
                 #echo
                 #sudo cat /var/log/apache2/error.log
                 #echo
-                echo '### apache access log'
-                sudo cat /var/log/apache2/access.log
-                echo
+
+                #echo '### apache access log'
+                #sudo cat /var/log/apache2/access.log
+                #echo
 
                 # failed phpunit tests might have saved to disk the html contents of the failing pages. Show them
                 if [ -n "$(ls webpage_failing_*.html 2>/dev/null)" ]; then
