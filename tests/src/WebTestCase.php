@@ -241,13 +241,16 @@ class WebTestCase extends TestCase
 	protected function assertIsOnLoginPage(Crawler $crawler, $message = '')
 	{
 		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for presence of login form
-		$this->assertStringContainsString('Please login here', $crawler->text(), $message);
+		/// KL RICARD Modify the text to check
+		$this->assertStringContainsString('KL / Blink webERP', $crawler->text(), $message);
 	}
 
 	protected function assertIsNotOnLoginPage(Crawler $crawler, $message = '')
 	{
 		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for absence of login form
-		$this->assertStringNotContainsString('Please login here', $crawler->text(), $message);
+		/// KL RICARD Modify the text to check
+		$this->assertStringNotContainsString('KL / Blink webERP', $crawler->text(), $message);
+		
 	}
 
 	/**
@@ -290,6 +293,7 @@ class WebTestCase extends TestCase
 		]);
 
 		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
-		$this->assertStringNotContainsString('Please login here', $crawler->text(), 'Failed logging in');
+		/// KL RICARD Modify the text to check
+		$this->assertStringNotContainsString('KL / Blink webERP', $crawler->text(), 'Failed logging in');
 	}
 }

@@ -25,8 +25,6 @@ if (KLwebERPScriptCalledFromTEST()) {
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == true) and (!isset($DemoText))) {
 	$DemoText = __('Login as user') . ': <i>' . __('admin') . '</i><br />' . __('with password') . ': <i>' . __('weberp') . '</i>';
 } elseif (!isset($DemoText)) {
-	$DemoText = __('Please login here');
-	// overwritting the demo text to avoid confusion, but leaving the previous line as it is needed for GH continuous tests suites
 	$DemoText = '';
 }
 
