@@ -1,7 +1,7 @@
 <?php
 
 if (!isset($PathPrefix)) {
-	header('Location: ../');
+	header('Location: ../../');
 	exit();
 }
 
@@ -24,7 +24,7 @@ function  LoginAPI($databasename, $user, $password) {
 		 * NOTE:  This is needed here, as the api_session.php file
 		 * does NOT include this if there is no database name set.
 		 */
-		include('../includes/ConnectDB.php');
+		include($PathPrefix . 'includes/ConnectDB.php');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
 			$RetCode[0] = NoAuthorisation;

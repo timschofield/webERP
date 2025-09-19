@@ -1,28 +1,24 @@
 <?php
 
-// in case this file is accessed directly...
-if (!isset($PathPrefix)) {
-	$PathPrefix = __DIR__ . '/../../';
-}
-if (!isset($RootPath)) {
-	$RootPath = htmlspecialchars(dirname(dirname(dirname($_SERVER['PHP_SELF']))), ENT_QUOTES, 'UTF-8');
-}
-
-include($PathPrefix . 'api/includes/api_errorcodes.php');
+$PageSecurity = 1;
+$PathPrefix = __DIR__ . '/../../../';
+//include('../../includes/session.php');
+include('../../api/api_errorcodes.php');
 
 $Title = 'API documentation';
 
-/// @todo move to html5 as the rest of the app
+/// @todo move to html5, as the rest of the app uses
 echo '<html xmlns="http://www.w3.org/1999/xhtml"><head><title>' . $Title . '</title>';
-echo '<link rel="icon" href="' . $RootPath . '/favicon.ico" type="image/x-icon" />';
-echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8">';
-
+echo '<link rel="icon" href="'. $RootPath.'/favicon.ico" type="image/x-icon" />';
+/// @todo change the translation string, as it makes no sense! In zh_CN, we are translating 'iso-8859-1' as 'utf-8'!
+echo '<meta http-equiv="Content-Type" content="text/html; charset=' . __('iso-8859-1') . '">';
+echo '<link href="'.$RootPath. '/../../css/'. $_SESSION['Theme'] .'/default.css" REL="stylesheet" TYPE="text/css">';
 echo '</head>';
 
 echo '<body>';
 
 // avoid sending an xml-rpc request to self, interrogate directly the server
-$dispatchMap = include($PathPrefix . 'api/includes/api_xml-rpc_definition.php');
+$dispatchMap = include('api/includes/api_xml-rpc_definition.php');
 $server = new PhpXmlRpc\Server($dispatchMap, false);
 $response = PhpXmlRpc\Server::_xmlrpcs_listMethods($server);
 $answer = $response->value();
