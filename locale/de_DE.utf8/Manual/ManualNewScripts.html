@@ -1,0 +1,57 @@
+<h1><a name="NewScripts">Entwicklung - Grundlagen</a></h1>
+<br /><br />
+<font size="+2"><b>Verzeichnisstruktur</b></font>
+<br /><br />
+Die Skripte, aus denen das System besteht, sind in zwei Verzeichnisse aufgeteilt. Das Hauptverzeichnis enthält alle Skripte, die direkt vom System aufgerufen werden. Skripte oder Skriptteile, die in ein oder mehrere Skripte eingebunden werden, sind im Unterverzeichnis includes/ abgelegt. Die Skripte, welche die Datenbank anlegen, sind im Unterverzeichnis sql/ enthalten, sie sind mit dem Programm mysqldump erstellt worden. Die Dokumentation finden Sie im Unterverzeichnis doc/, wo sich dieses Handbuch und die regelmäßig gestellten Fragen (FAQ) befinden.
+<br /><br />
+Bei der Erstellung neuer Skripte sollten Sie von der Verwendung der folgenden Bausteine Gebrauch machen, die durch das gesamte System hindurch eingesetzt werden.
+<br /><br />
+<font size="+1"><b>session.php</b></font>
+<br /><br />
+Diese Seite muss auf jeder Seite eingebunden werden, nachdem die Variable $PageSecurity mit einem entsprechenden Wert versorgt wurde (siehe Abschnitt Sicherheitskonzept). Das Skript session.php hat folgende Funktionen:
+<br /><br />
+<ul>
+<li>Es eröffnet eine Sitzung, wenn dies noch nicht geschehen ist und prüft, dass ein berechtigter Benutzer angemeldet ist. Wenn das der Fall ist, wird geprüft, ob der Benutzer die für die aufgerufene Seite die erforderliche Berechtigung besitzt, Grundlage ist der übergebene Wert in $PageSecurity.</li>
+<li>Es bindet im Weiteren folgende Skripte ein:</li>
+<li>config.php - Dieses Script beinhaltet alle Grundeinstellungen für das System. Zusammen mit der session.php sorgt es dafür, dass zum Programmstart alle benötigten Systemvariablen belegt sind.</li>
+<li>ConnectDB.inc - Dieses Skript stellt eine Datenbankverbindung her und enthält alle die Funktionen, die die Datenbank einbinden. Wenn mit der Datenbank kommuniziert wird, ruft das System nur die hier definierten Funktionen auf und keine MySQL-spezifischen Funktionen. Änderungen an der Datenbenk wären ansonsten sehr schwierig anzuwenden. Durch die Verwendung dieser Datei muss nur diese selbst angepasst werden, falls eine andere Datenbank verwendet werden soll.</li>
+</ul>
+<font size="+1"><b>header.php</b></font>
+<br /><br />
+Diese Datei sollte eingebunden werden, nachdem die Variable $Title mit dem Namen der Seite versorgt wurde. Sie setzt voraus, dass die config.php bereits geladen wurde ebenso muss die session.php natürlich vor der header.php eingebunden sein. Das Programm hat die folgenden Funktionen:
+<br /><br />
+<ul>
+<li>es gibt den Seitenkopf mit dem Menü (Hauptmenü, Kundensuche, Materialsuche, Lieferantensuche, Handbuch, Abmelden) aus.</li>
+<li>es setzt das Cascaded-Style-Sheet, das das vom Benutzer ausgewählte Layout auf die folgenden Seiteninhalte anwendet.</li>
+</ul>
+<font size="+1"><b>footer.php</b></font>
+<br /><br />
+Diese Datei enthält das Datum, ein kleines Logo, den Firmennamen, den Copyright-Hinweis und die abschließenden HTML-Tags &lt;/body&gt;&lt;/html&gt;.
+<br /><br />
+<font size="+1"><b>config.php</b></font>
+<br /><br />
+Der Programmierer sollte sich selbst mit den Variablen in config.php vertraut machen, weil diese für alle Scripte, welche die session.php eingebunden haben, verfügbar sind. Von grundlegender Bedeutung ist $RootPath, welche das Verzeichnis beschreibt, in dem der Webserver die Systemdateien findet. Wenn Sie die Seite mit session.php und header.php beginnen und mit footer.php abschließen ist die meiste Arbeit schon getan, die ein einheitliches Aussehen sichert.
+<br /><br />
+<font size="+1"><b>PDFStarter.php</b></font>
+<br /><br />
+Der einzige Fall, wo es nicht angemessen ist, die Dateien session.php und header.php einzubinden, ist wenn eine PDF-Datei erstellt werden soll. Hierfür enthält die Datei PDFStarter.php die Eröffnung der Sitzung und die Überprüfung der Benutzeranmeldung und der Seitenberechtigung mit Hilfe der Variablen $PageSecurity, die natürlich wieder belegt werden muss, bevor Sie die PDFStarter.php einbinden. Normalerweise werden config.php und ConnectDB.inc einzeln (und noch vor PDF_starter_ros.inc) in die PDF-Scripte eingebunden.
+<br /><br />
+<font size="+1"><b>Datenbank-Abstraktionsschicht - ConnectDB.inc</b></font>
+<br /><br />
+Obwohl das System unter MySQL entwickelt wurde, wurde immer mit berücksichtigt, dass die Benutzer nicht auf MySQL festgelegt bleiben, ganz im Sinne der Open-Source-Prinzipien. Aus diesem Grunde werden alle Datenbankanforderungen über die abstrahierenden Funktionen in der ConnectDB.inc abgewickelt. Diese Vorgehensweise wurde konsequent gehandhabt und die Entwicklung von Erweiterungen, die nicht diesem Schema folgen, würde die momentan mögliche Übertragbarkeit zwischen Datenbanken zerstören. Um zu sichern, dass Probleme bei Datenbankumsetzungen gering bleiben, muss auf durchgängig den Standards entsprechende SQL Wert gelegt werden.
+<br /><br />
+<font size="+1"><b>DateFunctions.inc</b></font>
+<br /><br />
+Dieses Skript enthält eine Reihe von Funktionen für Datumsumwandlungen, die durch das System verwendet werden - die wichtigsten davon:
+<br /><br />
+<ul>
+<li>DateDiff - berechnet den Unterschied zwischen zwei Datumsangaben und hat einen Parameter für die Angabe in Tagen, Wochen oder Monaten.</li>
+<li>FormatDateForSQL - wandelt das Datum von dem für webERP eingestellten Format $DefaultDateFormat in das für die Datenbank benötigte Format jjjj-mm-tt um.</li>
+<li>ConvertSQLDate - wandelt das Datum vom SQL-Format jjjj-mm-tt in das für webERP eingestellt Datumsformat um.</li>
+<li>GetPeriodNo - gibt die Periodennummer zu einem angegebenen Datum zurück und berücksichtigt dabei die Einstellungen zum Geschäftsjahr. Damit immer eine gültige Periode zurückgegeben wird, werden erforderlichenfalls neue Summensätze für die Sachkontenverkehrszahlen angelegt.</li>
+</ul>
+<font size="+1"><b>SQL_CommonFuctions.inc</b></font>
+<br /><br />
+Dieses Skript hat einige allgemeine Funktionen, die durch das System hinweg angewendet werden, im Besonderen:
+<br /><br />
+ReadInCompanyRecord - gibt ein Feld von Variablen mit den Unternehmenseinstellungen zurück.
