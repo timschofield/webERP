@@ -70,7 +70,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	// Show selection box ($AllowCompanySelectionBox == 'ShowSelectionBox')
 	echo '<select name="CompanyNameField" id="CompanyNameField">';
 
-	$DirHandle = dir('companies/');
+	$DirHandle = dir($PathPrefix . 'companies/');
 
 	if (!isset($_COOKIE["Company"])) {
 		$Company = $DefaultCompany;
@@ -108,7 +108,7 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	}
 }
 
-$DirHandle = dir('companies/');
+$DirHandle = dir($PathPrefix . 'companies/');
 
 while (false !== ($CompanyEntry = $DirHandle->read())) {
 	if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
