@@ -108,10 +108,12 @@ jobs:
             # We run the release-preparing script before messing up the vendor/ dir to run the test suite (except
             # for the step of dumping the database, as the db schema has not yet been created, and for the step
             # checking php syntax, as that is tested by the unit test requesting every web page)
+            # KL RICARD: Added ,composer as per https://github.com/timschofield/webERP/issues/692#issuecomment-3312955547
+            # To prevent many of the issues seen on https://github.com/timschofield/webERP/issues/692
             - name: Test the release-preparing script (run it)
               run: |
                 chmod 755 ./build/make_release.sh
-                ./build/make_release.sh -s check_php,dump_db
+                ./build/make_release.sh -s check_php,dump_db,composer
 
             - name: Install dev dependencies
               run: |
