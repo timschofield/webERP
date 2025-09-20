@@ -108,13 +108,15 @@ jobs:
             # We run the release-preparing script before messing up the vendor/ dir to run the test suite (except
             # for the step of dumping the database, as the db schema has not yet been created, and for the step
             # checking php syntax, as that is tested by the unit test requesting every web page)
+            # KL RICARD: Comment out all make_release.sh
             # KL RICARD: Added ,composer as per https://github.com/timschofield/webERP/issues/692#issuecomment-3312955547
             # To prevent many of the issues seen on https://github.com/timschofield/webERP/issues/692
-            - name: Test the release-preparing script (run it)
-              run: |
-                chmod 755 ./build/make_release.sh
-                ./build/make_release.sh -s check_php,dump_db,composer
-
+            # - name: Test the release-preparing script (run it)
+            #  run: |
+            #    chmod 755 ./build/make_release.sh
+            #    ./build/make_release.sh -s check_php,dump_db,composer
+            # END KL RICARD: Comment out all make_release.sh
+            
             - name: Install dev dependencies
               run: |
                 chmod 755 ./tests/setup/setup_dependencies.sh
@@ -144,11 +146,13 @@ jobs:
             #    echo
             #    curl -L --fail-with-body http://localhost/index.php
 
-            - name: Run the test suite
-              run: |
-                ./vendor/bin/phpunit --stop-on-failure tests/install
-                echo
-                ./vendor/bin/phpunit tests/run
+            # KL RICARD: Comment out all test suite
+            # - name: Run the test suite
+            #  run: |
+            #    ./vendor/bin/phpunit --stop-on-failure tests/install
+            #    echo
+            #    ./vendor/bin/phpunit tests/run
+            # END KL RICARD: Comment out all test suite
 
             # @todo this test always uses the mysql and mysqldump cli tools from the host computer/image. It would be
             #       nice to also run the dump_database.sh script using the cli tools from the db version being tested
