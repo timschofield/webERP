@@ -14,7 +14,6 @@
 // various $_SESSION items: Theme, DefaultDateFormat, Timeout, ShowPageHelp, ShowFieldHelp, FontSize, UsersRealName, etc...
 
 /// @todo there are any more global variables use in this script than those 3... are we sure it would work if
-
 ///       called within a function?
 global $Language;
 global $Title;
@@ -68,7 +67,10 @@ echo '	<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>' , "\n";
-echo '	<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />' , "\n";
+
+if (isset($_SESSION['Timeout'])) {
+	echo '	<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=' . $RootPath . '/Logout.php" />', "\n";
+}
 
 // Mobile menu styles and functionality
 echo '<style>
