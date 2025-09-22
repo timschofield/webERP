@@ -474,7 +474,7 @@ else {
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
 						WHERE woitems.stockid='" . $StockID . "'
-                        AND woitems.wo ='" . $SelectedWO . "'";
+						AND woitems.wo ='" . $SelectedWO . "'";
 
 		$Result = DB_query($SQL, $ErrMsg);
 		$Labels = DB_fetch_array($Result);
@@ -589,7 +589,8 @@ else {
 	}
 	echo '<div class="centre">
 			<input type="submit" name="DoIt" value="' . __('Paperwork') . '" />
-		</div>';
+		</div>
+	</form>';
 
 	if ($PrintLabels=="Yes") {
 		echo '<form action="' . $RootPath . '/PDFFGLabel.php" method="post" target="_blank">';
@@ -675,7 +676,7 @@ else {
 			echo '</fieldset>';
 		}
 		echo '<div class="centre">
-				<input type="submit" name="DoIt" value="' . __('Labels') . '" />
+				<input type="submit" name="PrintLabels" value="' . __('Labels') . '" />
 			</div>
 			</form>';
 	}
