@@ -1243,7 +1243,7 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 		while ($MyRow=DB_fetch_array($CustomerSearchResult)) {
 
 			echo '<tr class="striped_row">
-					<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="', $MyRow['debtorno'], '" /></td>
+					<td><input type="submit" name="Select" value="', $MyRow['debtorno'], '" /></td>
 					<td>', $MyRow['name'], '</td>
 				</tr>';
 
