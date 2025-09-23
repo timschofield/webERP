@@ -970,8 +970,8 @@ if (isset($StockItemsResult)
 				} else { /*pre-printed stationery default */
 					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 				}
-				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
-				$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
+				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=landscape';
+				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=portrait';
 				$FormatedDelDate = isset($MyRow['deliverydate']) && $MyRow['deliverydate'] != '' ? ConvertSQLDate($MyRow['deliverydate']) : '';
 				$FormatedOrderDate = isset($MyRow['orddate']) && $MyRow['orddate'] != '' ? ConvertSQLDate($MyRow['orddate']) : '';
 				$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
@@ -1039,7 +1039,7 @@ if (isset($StockItemsResult)
 		echo '</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="', ($PrintPickLabel <> '' ? '12' : '11'), '" class="number"><b>';
+					<td colspan="', ($PrintPickLabel <> '' ? '8' : '10'), '" class="number"><b>';
 
 		if ($_POST['Quotations'] == 'Orders_Only') {
 			echo __('Total Order(s) Value in');
