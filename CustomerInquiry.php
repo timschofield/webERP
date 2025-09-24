@@ -273,9 +273,9 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
 	if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
-		$PrintCustomerTransactionScript = 'PrintCustTransPortrait.php';
+		$Orientation = 'portrait';
 	} else { //produce pdfs in landscape
-		$PrintCustomerTransactionScript = 'PrintCustTrans.php';
+		$Orientation = 'landscape';
 	}
 
 	/* if the user is allowed to create credits for invoices */
@@ -304,13 +304,13 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 						</a>
 					</td>
 					<td class="noPrint">
-						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice" title="', __('Click to preview the invoice'), '">
+						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
 							__('HTML'), '
 						</a>
 					</td>
 					<td class="noPrint">
-						<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True" title="', __('Click for PDF'), '">
+						<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
 							<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
 							__('PDF'), '
 						</a>
