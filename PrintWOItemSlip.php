@@ -1,4 +1,7 @@
 <?php
+require 'vendor/autoload.php'; // Make sure DomPDF is installed via Composer
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 require(__DIR__ . '/includes/session.php');
 
@@ -34,28 +37,22 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 				AND woitems.wo = '" . $WO . "'
 				AND woitems.stockid = '" . $StockId . "' ";
 
-	$ErrMsg = __('The SQL to find the details of the item to produce failed');
+	$ErrMsg = _('The SQL to find the details of the item to produce failed');
 	$ResultItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ResultItems) != 0) {
-		include('includes/PDFStarter.php');
+		$options = new Options();
+		$options->set('isHtml5ParserEnabled', true);
+		$options->set('isRemoteEnabled', true);
 
-		$pdf->addInfo('Title', __('WO Production Slip'));
-		$pdf->addInfo('Subject', __('WO Production Slip'));
+		$dompdf = new Dompdf($options);
 
-		while ($MyItem = DB_fetch_array($ResultItems)) {
-			// print the info of the parent product
-			$FontSize = 10;
-			$PageNumber = 1;
-			$LineHeight = 12;
-			$Xpos = $Left_Margin + 1;
-			$Fill = false;
+		$HTML = '';
+		while ($myItem = DB_fetch_array($ResultItems)) {
+			$FontSize = '12px';
+			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
 
-			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
-
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
-
-			$PartCounter = 0;
+			$HTML .= PrintHeaderHTML($_SESSION['CompanyRecord']['coyname'], $WO, $StockId, $myItem['description'], $QtyPending, $myItem['units'], $myItem['decimalplaces'], date('Y-m-d'));
 
 			$SQLBOM = "SELECT bom.parent,
 						bom.component,
@@ -70,137 +67,113 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '" . $Location . "'
 						AND bom.parent = '" . $StockId . "'
-                        AND bom.effectiveafter <= CURRENT_DATE
-                        AND bom.effectiveto > CURRENT_DATE";
+                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
-			$ErrMsg = __('The bill of material could not be retrieved because');
+			$ErrMsg = _('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
-			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
-				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
-				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
+			$HTML .= "<table style='width:100%; border-collapse:collapse; margin-bottom:20px;'><thead>
+			<tr>
+				<th style='border:1px solid #000;padding:4px;'>Component Code</th>
+				<th style='border:1px solid #000;padding:4px;'>Qty BOM</th>
+				<th style='border:1px solid #000;padding:4px;'>Unit</th>
+				<th style='border:1px solid #000;padding:4px;'>Qty Needed</th>
+				<th style='border:1px solid #000;padding:4px;'>Unit</th>
+				<th style='border:1px solid #000;padding:4px;'>Shrinkage</th>
+				<th style='border:1px solid #000;padding:4px;'>Unit</th>
+			</tr>
+			</thead><tbody>";
 
-				$Xpos = $Left_Margin + 1;
+			while ($myComponent = DB_fetch_array($BOMResult)) {
+				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;
+				$PrevisionShrinkage = $ComponentNeeded * ($myComponent['shrinkfactor'] / 100);
 
-				$pdf->addTextWrap($Xpos, $YPos, 150, $FontSize, $MyComponent['component'], 'left');
-				$pdf->addTextWrap(150, $YPos, 50, $FontSize, locale_number_format($MyComponent['bomqty'], 'Variable'), 'right');
-				$pdf->addTextWrap(200, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
-				$pdf->addTextWrap(230, $YPos, 50, $FontSize, locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']), 'right');
-				$pdf->addTextWrap(280, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
-				$pdf->addTextWrap(310, $YPos, 50, $FontSize, locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']), 'right');
-				$pdf->addTextWrap(360, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
-
-				$YPos-= $LineHeight;
-
-				if ($YPos < $Bottom_Margin + $LineHeight) {
-					PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
-				}
+				$HTML .= "<tr>
+					<td style='border:1px solid #000;padding:4px;'>{$myComponent['component']}</td>
+					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($myComponent['bomqty'], 'Variable') . "</td>
+					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
+					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($ComponentNeeded, $myComponent['decimalplaces']) . "</td>
+					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
+					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($PrevisionShrinkage, $myComponent['decimalplaces']) . "</td>
+					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
+				</tr>";
 			}
+			$HTML .= "</tbody></table>";
 		}
 
-		// Production Notes
-		$pdf->addTextWrap($Xpos, $YPos - 50, 200, $FontSize, __('Incidences / Production Notes') . ':', 'left');
-		$YPos-= (8 * $LineHeight);
+		$HTML .= "<div style='margin-bottom:30px;'><strong>Incidences / Production Notes:</strong></div>";
 
-		PrintFooterSlip($pdf, __('Components Ready By'), __('Item Produced By'), __('Quality Control By'), $YPos, $FontSize, false);
+		$HTML .= PrintFooterSlipHTML(_('Components Ready By'), _('Item Produced By'), _('Quality Control By'));
 
-		if ($YPos < $Bottom_Margin + $LineHeight) {
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
-		}
+		$dompdf->loadHtml($HTML);
+		$dompdf->setPaper('A4', 'portrait');
+		$dompdf->render();
 
-		$pdf->OutputD('WO-' . $WO . '-' . $StockId . '-' . Date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
+		$dompdf->stream($filename, ['Attachment' => 1]);
+		exit;
 	} else {
-		$Title = __('WO Item production Slip');
-		include('includes/header.php');
-		prnMsg(__('There were no items with ready to produce'), 'info');
+		$Title = _('WO Item production Slip');
+		include ('includes/header.php');
+		prnMsg(_('There were no items with ready to produce'), 'info');
 		prnMsg($SQL);
-		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit();
-
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		include ('includes/footer.php');
+		exit;
 	}
 }
 
-function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
-
-	if ($PageNumber > 1) {
-		$pdf->newPage();
+function PrintHeaderHTML($CompanyName, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
+	$imgTag = '';
+	$imgPath = $_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg';
+	if (file_exists($imgPath)) {
+		// DomPDF requires file:// prefix for local images
+		$imgTag = "<img src='file://$imgPath' style='width:200px;height:auto;margin-bottom:16px;' />";
 	}
-	$LineHeight = 12;
-	$FontSize = 10;
-	$YPos = $Page_Height - $Top_Margin;
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
-	$pdf->addTextWrap(190, $YPos, 100, $FontSize, $ReportDate);
-	$pdf->addTextWrap($Page_Width - $Right_Margin - 150, $YPos, 160, $FontSize, __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . __('Page') . ' ' . $PageNumber, 'left');
-	$YPos-= $LineHeight;
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Work Order Item Production Slip'));
-	$YPos-= (2 * $LineHeight);
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('WO') . ': ' . $WO);
-	$YPos-= $LineHeight;
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 500, $FontSize, __('Item Code') . ': ' . $StockId . ' --> ' . $Description);
-	$YPos-= $LineHeight;
-
-	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, __('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . $UOM);
-	$YPos-= (2 * $LineHeight);
-
-	if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg')) {
-		$pdf->Image($_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg', 135, $Page_Height - $Top_Margin - $YPos + 10, 200, 200);
-		$YPos-= (16 * $LineHeight);
-	} /*end checked file exist*/
-
-	/*set up the headings */
-	$Xpos = $Left_Margin + 1;
-
-	$pdf->addTextWrap($Xpos, $YPos, 150, $FontSize, __('Component Code'), 'left');
-	$pdf->addTextWrap(150, $YPos, 50, $FontSize, __('Qty BOM'), 'right');
-	$pdf->addTextWrap(200, $YPos, 30, $FontSize, '', 'left');
-	$pdf->addTextWrap(230, $YPos, 50, $FontSize, __('Qty Needed'), 'right');
-	$pdf->addTextWrap(280, $YPos, 30, $FontSize, '', 'left');
-	$pdf->addTextWrap(310, $YPos, 50, $FontSize, __('Shrinkage'), 'right');
-	$pdf->addTextWrap(360, $YPos, 30, $FontSize, '', 'left');
-
-	$FontSize = 10;
-	$YPos-= $LineHeight;
-
-	$PageNumber++;
+	return "
+	<div style='margin-bottom:24px;'>
+		<div style='font-size:18px;font-weight:bold;'>$CompanyName</div>
+		<div style='float:right;'>$ReportDate</div>
+		<div style='clear:both;'></div>
+		<div style='font-size:16px;font-weight:bold;margin-top:10px;'>Work Order Item Production Slip</div>
+		<div style='font-size:14px;margin-top:10px;'><strong>WO:</strong> $WO</div>
+		<div style='font-size:14px;margin-top:8px;'><strong>Item Code:</strong> $StockId &rarr; $Description</div>
+		<div style='font-size:14px;margin-top:8px;'><strong>Quantity:</strong> " . locale_number_format($Qty, $DecimalPlaces) . " $UOM</div>
+		$imgTag
+	</div>
+	";
 }
 
-function PrintFooterSlip($pdf, $Column1, $Column2, $Column3, $YPos, $FontSize, $Fill) {
-	//add column 1
-	$pdf->addTextWrap(40, $YPos - 50, 100, $FontSize, $Column1 . ':', 'left');
-	$pdf->addTextWrap(40, $YPos - 70, 100, $FontSize, __('Name'), 'left');
-	$pdf->addTextWrap(80, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(40, $YPos - 90, 100, $FontSize, __('Date'), 'left');
-	$pdf->addTextWrap(80, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(40, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
-	$pdf->addTextWrap(80, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(40, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
-	$pdf->addTextWrap(80, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-
-	//add column 2
-	$pdf->addTextWrap(220, $YPos - 50, 100, $FontSize, $Column2 . ':', 'left');
-	$pdf->addTextWrap(220, $YPos - 70, 100, $FontSize, __('Name'), 'left');
-	$pdf->addTextWrap(260, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(220, $YPos - 90, 100, $FontSize, __('Date'), 'left');
-	$pdf->addTextWrap(260, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(220, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
-	$pdf->addTextWrap(260, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(220, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
-	$pdf->addTextWrap(260, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-
-	//add column 3
-	$pdf->addTextWrap(400, $YPos - 50, 100, $FontSize, $Column3 . ':', 'left');
-	$pdf->addTextWrap(400, $YPos - 70, 100, $FontSize, __('Name'), 'left');
-	$pdf->addTextWrap(440, $YPos - 70, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(400, $YPos - 90, 100, $FontSize, __('Date'), 'left');
-	$pdf->addTextWrap(440, $YPos - 90, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(400, $YPos - 110, 100, $FontSize, __('Hour'), 'left');
-	$pdf->addTextWrap(440, $YPos - 110, 200, $FontSize, ':__________________', 'left', 0, $Fill);
-	$pdf->addTextWrap(400, $YPos - 150, 100, $FontSize, __('Signature'), 'left');
-	$pdf->addTextWrap(440, $YPos - 150, 200, $FontSize, ':__________________', 'left', 0, $Fill);
+function PrintFooterSlipHTML($Column1, $Column2, $Column3) {
+	$footerTable = "
+	<table style='width:100%;margin-top:30px;'>
+		<tr>
+			<td style='vertical-align:top;'>
+				<strong>$Column1:</strong><br>
+				Name: __________________<br>
+				Date: __________________<br>
+				Hour: __________________<br>
+				Signature: __________________
+			</td>
+			<td style='vertical-align:top;'>
+				<strong>$Column2:</strong><br>
+				Name: __________________<br>
+				Date: __________________<br>
+				Hour: __________________<br>
+				Signature: __________________
+			</td>
+			<td style='vertical-align:top;'>
+				<strong>$Column3:</strong><br>
+				Name: __________________<br>
+				Date: __________________<br>
+				Hour: __________________<br>
+				Signature: __________________
+			</td>
+		</tr>
+	</table>
+	";
+	return $footerTable;
 }
+
+?>
