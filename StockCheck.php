@@ -1,79 +1,96 @@
 <?php
+require_once 'vendor/autoload.php'; // DomPDF autoload
+use Dompdf\Dompdf;
 
-require(__DIR__ . '/includes/session.php');
+require (__DIR__ . '/includes/session.php');
 
 if (isset($_POST['PrintPDF'])) {
 
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',__('Stock Count Sheets'));
-	$pdf->addInfo('Subject',__('Stock Count Sheets'));
-	$FontSize=10;
-	$PageNumber=1;
-	$LineHeight=30;
+	$HTML = '';
+	$HTML .= '<html>
+				<head>';
+	$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	$HTML .= '</head><body>';
+	$HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
+	$HTML .= '<div><span class="label">' . $_SESSION['CompanyRecord']['coyname'] . '</span></div>';
+	$HTML .= '<h2>' . _('Stock Count Sheets') . '</h2>';
 
-/*First off do the stock check file stuff */
-	if ($_POST['MakeStkChkData']=='New'){
-		$SQL = "TRUNCATE TABLE stockcheckfreeze";
-		$Result = DB_query($SQL);
-		$SQL = "INSERT INTO stockcheckfreeze (stockid,
+	// Stock check freeze file logic
+	if ($_POST['MakeStkChkData'] == 'New') {
+		$sql = "TRUNCATE TABLE stockcheckfreeze";
+		$result = DB_query($sql);
+		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
 										  stockcheckdate)
 					   SELECT locstock.stockid,
 							  locstock.loccode,
 							  locstock.quantity,
-							  CURRENT_DATE
+							  '" . Date('Y-m-d') . "'
 					   FROM locstock,
 							stockmaster
 					   WHERE locstock.stockid=stockmaster.stockid
 					   AND locstock.loccode='" . $_POST['Location'] . "'
-					   AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+					   AND stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
 					   AND stockmaster.mbflag!='A'
 					   AND stockmaster.mbflag!='K'
 					   AND stockmaster.mbflag!='D'";
 
-		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
-		$Result = DB_query($SQL, $ErrMsg);
+		$result = DB_query($sql, '', '', false, false);
+		if (DB_error_no() != 0) {
+			$HTML .= '<p class="error">' . _('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg() . '</p>';
+			$HTML .= '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo $HTML;
+			exit;
+		}
 	}
 
-	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$SQL = "DELETE stockcheckfreeze
+	if ($_POST['MakeStkChkData'] == 'AddUpdate') {
+		$sql = "DELETE stockcheckfreeze
 				FROM stockcheckfreeze
 				INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
-				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+				WHERE stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$ErrMsg = __('The old quantities could not be deleted from the freeze file');
-		$Result = DB_query($SQL, $ErrMsg);
+		$result = DB_query($sql, '', '', false, false);
+		if (DB_error_no() != 0) {
+			$HTML .= '<p class="error">' . _('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg() . '</p>';
+			$HTML .= '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo $HTML;
+			exit;
+		}
 
-		$SQL = "INSERT INTO stockcheckfreeze (stockid,
+		$sql = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
 										  stockcheckdate)
 				SELECT locstock.stockid,
 					loccode ,
 					locstock.quantity,
-					CURRENT_DATE
+					'" . Date('Y-m-d') . "'
 				FROM locstock INNER JOIN stockmaster
 				ON locstock.stockid=stockmaster.stockid
 				WHERE locstock.loccode='" . $_POST['Location'] . "'
-				AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+				AND stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
 				AND stockmaster.mbflag!='A'
 				AND stockmaster.mbflag!='K'
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$ErrMsg = __('The inventory quantities could not be added to the freeze file');
-		$Result = DB_query($SQL, $ErrMsg);
-
-		$Title = __('Stock Check Freeze Update');
-		include('includes/header.php');
-		echo '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Print Check Sheets') . '</a>';
-		prnMsg( __('Added to the stock check file successfully'),'success');
-		include('includes/footer.php');
-		exit();
+		$result = DB_query($sql, '', '', false, false);
+		if (DB_error_no() != 0) {
+			$HTML .= '<p class="error">' . _('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg() . '</p>';
+			$HTML .= '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+			echo $HTML;
+			exit;
+		}
+		else {
+			$HTML .= '<p><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Print Check Sheets') . '</a></p>';
+			$HTML .= '<p class="success">' . _('Added to the stock check file successfully') . '</p>';
+			echo $HTML;
+			exit;
+		}
 	}
-
 
 	$SQL = "SELECT stockmaster.categoryid,
 				 stockcheckfreeze.stockid,
@@ -85,97 +102,151 @@ if (isset($_POST['PrintPDF'])) {
 			 ON stockcheckfreeze.stockid=stockmaster.stockid
 			 INNER JOIN stockcategory
 			 ON stockmaster.categoryid=stockcategory.categoryid
-			 WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
+			 WHERE stockmaster.categoryid IN ('" . implode("','", $_POST['Categories']) . "')
 			 AND (stockmaster.mbflag='B' OR mbflag='M')
 			 AND stockcheckfreeze.loccode = '" . $_POST['Location'] . "'";
-	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly']==true){
+	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == true) {
 		$SQL .= " AND stockcheckfreeze.qoh<>0";
 	}
 
-	$SQL .=  " ORDER BY stockmaster.categoryid, stockmaster.stockid";
+	$SQL .= " ORDER BY stockmaster.categoryid, stockmaster.stockid";
 
-	$ErrMsg = __('The inventory quantities could not be retrieved');
-	$InventoryResult = DB_query($SQL, $ErrMsg);
+	$InventoryResult = DB_query($SQL, '', '', false, false);
 
-	if (DB_num_rows($InventoryResult) ==0) {
-		$Title = __('Stock Count Sheets - Problem Report');
-		include('includes/header.php');
-		prnMsg(__('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first'),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit();
+	if (DB_error_no() != 0) {
+		$HTML .= '<p class="error">' . _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg() . '</p>';
+		$HTML .= '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo $HTML;
+		exit;
+	}
+	if (DB_num_rows($InventoryResult) == 0) {
+		$HTML .= '<p class="error">' . _('Before stock count sheets can be printed, a copy of the stock quantities needs to be taken - the stock check freeze. Make a stock check data file first') . '</p>';
+		$HTML .= '<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		echo $HTML;
+		exit;
 	}
 
-	include('includes/PDFStockCheckPageHeader.php');
+	// Start table for PDF
+	$HTML .= '<style>
+	table { border-collapse: collapse; width: 100%; }
+	th, td { border: 1px solid #999; padding: 4px 8px; font-size: 10px; }
+	th { background: #eee; }
+	.category { font-size: 10px; font-weight: bold; padding-top: 10px; }
+	</style>';
 
 	$Category = '';
+	$HTML .= '<table>
+	<tr>
+	<th>' . _('Category') . '</th>
+	<th>' . _('Stock ID') . '</th>
+	<th>' . _('Description') . '</th>
+	<th>' . _('QOH') . '</th>';
+	if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == true) {
+		$HTML .= '<th>' . _('Demand') . '</th>
+		<th>' . _('Available') . '</th>';
+	}
+	$HTML .= '<th>' . __('Count') . '</th>';
+	$HTML .= '</tr>';
 
-	while ($InventoryCheckRow = DB_fetch_array($InventoryResult)){
-
-		if ($Category!=$InventoryCheckRow['categoryid']){
-			$FontSize=12;
-			if ($Category!=''){ /*Then it's NOT the first time round */
-				/*draw a line under the CATEGORY TOTAL*/
-				$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
-				$YPos -=(2*$LineHeight);
-			}
-
-			$pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryCheckRow['categoryid'] . ' - ' . $InventoryCheckRow['categorydescription'], 'left');
+	while ($InventoryCheckRow = DB_fetch_array($InventoryResult)) {
+		if ($Category != $InventoryCheckRow['categoryid']) {
+			$HTML .= '<tr><td class="category" colspan="7">' . $InventoryCheckRow['categoryid'] . ' - ' . $InventoryCheckRow['categorydescription'] . '</td></tr>';
 			$Category = $InventoryCheckRow['categoryid'];
 		}
 
-		$FontSize=10;
-		$YPos -=$LineHeight;
+		$HTML .= '<tr>';
+		$HTML .= '<td>' . $InventoryCheckRow['categoryid'] . '</td>';
+		$HTML .= '<td>' . $InventoryCheckRow['stockid'] . '</td>';
+		$HTML .= '<td>' . $InventoryCheckRow['description'] . '</td>';
+		$HTML .= '<td style="text-align:right;">' . locale_number_format($InventoryCheckRow['qoh'], $InventoryCheckRow['decimalplaces']) . '</td>';
 
-		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
+		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == true) {
+			// Get Demand Quantity
+			$SQL_demand = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
+			   		FROM salesorderdetails INNER JOIN salesorders
+			   		ON salesorderdetails.orderno=salesorders.orderno
+			   		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
+			   		AND salesorderdetails.stkcode = '" . $InventoryCheckRow['stockid'] . "'
+			   		AND salesorderdetails.completed = 0
+			   		AND salesorders.quotation=0";
+			$DemandResult = DB_query($SQL_demand, '', '', false, false);
 
-			$DemandQty = GetDemand($InventoryCheckRow['stockid'], $_POST['Location']);
+			$DemandQty = 0;
+			if (DB_error_no() == 0) {
+				$DemandRow = DB_fetch_array($DemandResult);
+				$DemandQty = $DemandRow['qtydemand'];
+			}
 
-			$pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($InventoryCheckRow['qoh'], $InventoryCheckRow['decimalplaces']), 'right');
-			$pdf->addTextWrap(410,$YPos,60,$FontSize,locale_number_format($DemandQty,$InventoryCheckRow['decimalplaces']), 'right');
-			$pdf->addTextWrap(470,$YPos,60,$FontSize,locale_number_format($InventoryCheckRow['qoh']-$DemandQty,$InventoryCheckRow['decimalplaces']), 'right');
+			// Also need to add in the demand for components of assembly items
+			$sql_bom = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+						   FROM salesorderdetails INNER JOIN salesorders
+						   ON salesorders.orderno = salesorderdetails.orderno
+						   INNER JOIN bom
+						   ON salesorderdetails.stkcode=bom.parent
+						   INNER JOIN stockmaster
+						   ON stockmaster.stockid=bom.parent
+						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
+						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
+						   AND bom.component='" . $InventoryCheckRow['stockid'] . "'
+						   AND stockmaster.mbflag='A'
+						   AND salesorders.quotation=0";
+			$DemandResultBom = DB_query($sql_bom, '', '', false, false);
+			if (DB_error_no() == 0 && DB_num_rows($DemandResultBom) == 1) {
+				$DemandRowBom = DB_fetch_row($DemandResultBom);
+				$DemandQty += $DemandRowBom[0];
+			}
 
+			$HTML .= '<td style="text-align:right;">' . locale_number_format($DemandQty, $InventoryCheckRow['decimalplaces']) . '</td>';
+			$HTML .= '<td style="text-align:right;">' . locale_number_format($InventoryCheckRow['qoh'] - $DemandQty, $InventoryCheckRow['decimalplaces']) . '</td>';
+			$HTML .= '<td></td>';
 		}
 
-		$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$InventoryCheckRow['stockid'], 'left');
+		$HTML .= '</tr>';
+	}
 
-		$pdf->addTextWrap(150,$YPos,200,$FontSize,$InventoryCheckRow['description'], 'left');
+	$HTML .= '</table>
+			</body>
+		</head>';
 
-		$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
+	// Output PDF
+	$dompdf = new Dompdf(['chroot' => __DIR__]);
+	$dompdf->loadHtml($HTML);
 
-		if ($YPos < $Bottom_Margin + $LineHeight){
-			$PageNumber++;
-			include('includes/PDFStockCheckPageHeader.php');
-		}
+	// (Optional) Setup the paper size and orientation
+	$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
 
-	} /*end STOCK SHEETS while loop */
+	// Render the HTML as PDF
+	$dompdf->render();
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Stock_Count_Sheets_' . Date('Y-m-d') .'.pdf');
+	// Output the generated PDF to Browser
+	$dompdf->stream($_SESSION['DatabaseName'] . '_StockCountSheets_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 
-} else { /*The option to print PDF was not hit */
+}
+else {
 
-	$Title=__('Stock Check Sheets');
+	$Title = _('Stock Check Sheets');
 	$ViewTopic = 'Inventory';
 	$BookMark = '';
-	include('includes/header.php');
+	include ('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'. __('print') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . _('print') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
-			<legend>', __('Select Items For Stock Check'), '</legend>
+			<legend>', _('Select Items For Stock Check'), '</legend>
 			<field>
-				<label for="Categories">' . __('Select Inventory Categories') . ':</label>
+				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
 				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
+		if (isset($_POST['Categories']) and in_array($MyRow['categoryid'], $_POST['Categories'])) {
+			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
+		else {
 			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 	}
@@ -183,60 +254,65 @@ if (isset($_POST['PrintPDF'])) {
 		</field>';
 
 	echo '<field>
-			<label for="Location">' . __('For Inventory in Location') . ':</label>
+			<label for="Location">' . _('For Inventory in Location') . ':</label>
 			<select name="Location">';
-	$SQL = "SELECT locations.loccode, locationname FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+	$sql = "SELECT locations.loccode, locationname FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			ORDER BY locationname";
-	$LocnResult = DB_query($SQL);
+	$LocnResult = DB_query($sql);
 
-	while ($MyRow=DB_fetch_array($LocnResult)){
-			  echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
+	while ($myrow = DB_fetch_array($LocnResult)) {
+		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="MakeStkChkData">' . __('Action for Stock Check Freeze') . ':</label>
+			<label for="MakeStkChkData">' . _('Action for Stock Check Freeze') . ':</label>
 			<select name="MakeStkChkData">';
 
-	if (!isset($_POST['MakeStkChkData'])){
+	if (!isset($_POST['MakeStkChkData'])) {
 		$_POST['MakeStkChkData'] = 'PrintOnly';
 	}
-	if ($_POST['MakeStkChkData'] =='New'){
-		echo '<option selected="selected" value="New">' . __('Make new stock check data file') . '</option>';
-	} else {
-		echo '<option value="New">' . __('Make new stock check data file') . '</option>';
+	if ($_POST['MakeStkChkData'] == 'New') {
+		echo '<option selected="selected" value="New">' . _('Make new stock check data file') . '</option>';
 	}
-	if ($_POST['MakeStkChkData'] =='AddUpdate'){
-		echo '<option selected="selected" value="AddUpdate">' . __('Add/update existing stock check file') . '</option>';
-	} else {
-		echo '<option value="AddUpdate">' . __('Add/update existing stock check file') . '</option>';
+	else {
+		echo '<option value="New">' . _('Make new stock check data file') . '</option>';
 	}
-	if ($_POST['MakeStkChkData'] =='PrintOnly'){
-		echo '<option selected="selected" value="PrintOnly">' . __('Print Stock Check Sheets Only') . '</option>';
-	} else {
-		echo '<option value="PrintOnly">' . __('Print Stock Check Sheets Only') . '</option>';
+	if ($_POST['MakeStkChkData'] == 'AddUpdate') {
+		echo '<option selected="selected" value="AddUpdate">' . _('Add/update existing stock check file') . '</option>';
+	}
+	else {
+		echo '<option value="AddUpdate">' . _('Add/update existing stock check file') . '</option>';
+	}
+	if ($_POST['MakeStkChkData'] == 'PrintOnly') {
+		echo '<option selected="selected" value="PrintOnly">' . _('Print Stock Check Sheets Only') . '</option>';
+	}
+	else {
+		echo '<option value="PrintOnly">' . _('Print Stock Check Sheets Only') . '</option>';
 	}
 	echo '</select>
 		</field>';
 
 	echo '<field>
-			<label for="ShowInfo">' . __('Show system quantity on sheets') . ':</label>';
+			<label for="ShowInfo">' . _('Show system quantity on sheets') . ':</label>';
 
-	if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
-			echo '<input type="checkbox" name="ShowInfo" value="false" />';
-	} else {
-			echo '<input type="checkbox" name="ShowInfo" value="true" />';
+	if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false) {
+		echo '<input type="checkbox" name="ShowInfo" value="false" />';
+	}
+	else {
+		echo '<input type="checkbox" name="ShowInfo" value="true" />';
 	}
 	echo '</field>';
 
 	echo '<field>
-			<label for="NonZerosOnly">' . __('Only print items with non zero quantities') . ':</label>';
-	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false){
-			echo '<input type="checkbox" name="NonZerosOnly" value="false" />';
-	} else {
-			echo '<input type="checkbox" name="NonZerosOnly" value="true" />';
+			<label for="NonZerosOnly">' . _('Only print items with non zero quantities') . ':</label>';
+	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false) {
+		echo '<input type="checkbox" name="NonZerosOnly" value="false" />';
+	}
+	else {
+		echo '<input type="checkbox" name="NonZerosOnly" value="true" />';
 	}
 
 	echo '</field>';
@@ -244,10 +320,10 @@ if (isset($_POST['PrintPDF'])) {
 	echo '</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . __('Print and Process') . '" />
+			<input type="submit" name="PrintPDF" value="' . _('Print and Process') . '" />
 		</div>
 	</form>';
 
-	include('includes/footer.php');
+	include ('includes/footer.php');
 
-} /*end of else not PrintPDF */
+}
