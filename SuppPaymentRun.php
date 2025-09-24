@@ -212,7 +212,7 @@ if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset
 	$dompdf->render();
 
 	// Output the generated PDF to Browser
-	$dompdf->stream($_SESSION['DatabaseName'] . '_StockCountSheets_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
+	$dompdf->stream($_SESSION['DatabaseName'] . '_SupplierPaymentRun_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 
 }
 else {
@@ -231,7 +231,7 @@ else {
 	}
 
 	/* show form to allow input */
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', _('Select Suppliers To Pay'), '</legend>';
