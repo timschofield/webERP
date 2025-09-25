@@ -1002,7 +1002,7 @@ if (isset($StockItemsResult)
 								', $PrintPickLabel, '
 								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
 								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
-								<td><a href="', $PrintLabels, '">', __('Labels'), '</a></td>
+								<td><a href="', $PrintLabels, '" target="_blank">', __('Labels'), '</a></td>
 								<td>', $MyRow['name'], '</td>
 								<td>', $MyRow['brname'], '</td>
 								<td>', $CustomerRef, '</td>
