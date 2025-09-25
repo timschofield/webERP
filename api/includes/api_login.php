@@ -5,14 +5,14 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
+// Include now for the error code values.
+include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
+
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
-	global $PathPrefix, $SysAdminEmail;
+	global $PathPrefix, $SysAdminEmail, $db;
 
 	//include($PathPrefix . 'config.php');
-
-	// Include now for the error code values.
-	include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
 
 	$RetCode = array();		// Return result.
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
@@ -21,7 +21,7 @@ function  LoginAPI($databasename, $user, $password) {
 		/* Drag in the code to connect to the DB, and some other
 		 * functions.  If the connection is established, the
 		 * variable $db will be set as the DB connection id.
-		 * NOTE:  This is needed here, as the api_session.php file
+		 * NOTE: This is needed here, as the api_session.php file
 		 * does NOT include this if there is no database name set.
 		 */
 		include($PathPrefix . 'includes/ConnectDB.php');
@@ -35,21 +35,22 @@ function  LoginAPI($databasename, $user, $password) {
 	}
 	$rc = userLogin($user, $password, $SysAdminEmail);
 	switch ($rc) {
-	case  UL_OK:
-		$RetCode[0] = 0;		// All is well
-		DoSetup();	    // Additional setting up
-		break;
-	case  UL_NOTVALID:
-	case  UL_BLOCKED:
-	case  UL_CONFIGERR:
-	case  UL_SHOWLOGIN:
-	//  Following not in use at 18 Nov 09.
-	case  UL_MAINTENANCE:
-		/*  Just return an error for now */
-		$RetCode[0] = NoAuthorisation;
-		$RetCode[1] = $rc;
-		break;
+		case  UL_OK:
+			$RetCode[0] = 0;		// All is well
+			DoSetup();	    // Additional setting up
+			break;
+		case  UL_NOTVALID:
+		case  UL_BLOCKED:
+		case  UL_CONFIGERR:
+		case  UL_SHOWLOGIN:
+		//  Following not in use at 18 Nov 09.
+		case  UL_MAINTENANCE:
+			/*  Just return an error for now */
+			$RetCode[0] = NoAuthorisation;
+			$RetCode[1] = $rc;
+			break;
 	}
+
 	return  $RetCode;
 }
 
@@ -111,7 +112,7 @@ function DoSetup()
         include($PathPrefix . 'includes/GetConfig.php');
 
     $db = $_SESSION['db'];	    // Used a bit in the following.
-    if(isset($_SESSION['DB_Maintenance'])){
+    if (isset($_SESSION['DB_Maintenance'])){
 		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				 	ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])

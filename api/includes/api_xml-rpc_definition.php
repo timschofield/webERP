@@ -17,7 +17,8 @@ use PhpXmlRpc\Response;
 
 /**
  * Empty handler function for unwanted output.
- * Must be a better way of doing this, but at least it works
+ * Must be a better way of doing this, but at least it works.
+ * @todo when running tests, save any output to a file with a known name, so that the invoker can check for it
  */
 function ob_file_callback($buffer)
 {
@@ -49,12 +50,12 @@ $Parameter[1]['name'] = __('User name');
 $Parameter[1]['description'] = __('A valid weberp username. This user should have security access to this data.');
 $Parameter[2]['name'] = __('User password');
 $Parameter[2]['description'] = __('The weberp password associated with this user name. ');
-$ReturnValue = __('This function returns an integer. ') .
+$ReturnValue = __('This function returns an array. The fist element of it is an integer. ') .
 	__('Zero means the function was successful. ') .
 	__('Otherwise an error code is returned. ') .
 	__('When the login is successful, a session cookie is also returned in the HTTP headers');
 
-$Login_sig = array(array(Value::$xmlrpcInt, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
+$Login_sig = array(array(Value::$xmlrpcArray, Value::$xmlrpcString, Value::$xmlrpcString, Value::$xmlrpcString));
 $Login_doc = apiBuildDocHTML($Description, $Parameter, $ReturnValue);
 
 /**
@@ -71,6 +72,7 @@ function xmlrpc_Login($request)
 			$request->getParam(1)->scalarval(),
 			$request->getParam(2)->scalarval()
 		)));
+
 	ob_end_flush();
 	return $rtn;
 }

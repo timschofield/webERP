@@ -17,8 +17,19 @@ class XXX_APITest extends AnonymousUserTestCase
 		$this->assertContains('weberp.xmlrpc_Login', $methods);
 	}
 
+	public function testLogin()
+	{
+		$result = $this->apiRequest('weberp.xmlrpc_Login', [$_ENV['TEST_DB_SCHEMA'], $_ENV['TEST_USER_ACCOUNT'], $_ENV['TEST_USER_PASSWORD']]);
+		$this->assertEquals(0, $result[0], 'method weberp.xmlrpc_Login should return 0');
+	}
+
 	/// @todo add more tests - at least one doing log-in, get some data, log-out
 
+	/**
+	 * @param string $method
+	 * @param array $args
+	 * @return mixed
+	 */
 	protected function apiRequest($method, array $args = array())
 	{
 		$client = new Client(self::$baseUri . '/api/api_xml-rpc.php');

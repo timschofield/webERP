@@ -8,16 +8,15 @@
  *       - simplify the api bootstrap chain
  */
 
-// FOLLOWING IS ALWAYS REQUIRED
-
-$api_DatabaseName = 'weberpdemo';
-if (isset($_SESSION['DatabaseName'])) {
-	$api_DatabaseName = $_SESSION['DatabaseName'];
-}
-
 $AllowAnyone = true;
 $PathPrefix = __DIR__ . '/../../';
 include(__DIR__ . '/api_session.php');
+
+if (isset($_SESSION['DatabaseName'])) {
+    $api_DatabaseName = $_SESSION['DatabaseName'];
+} else {
+    $api_DatabaseName = $DefaultDatabase;
+}
 
 include(__DIR__ . '/api_errorcodes.php');
 /* Include SQL_CommonFunctions.php, to use GetNextTransNo(). */
@@ -26,7 +25,10 @@ include($PathPrefix . 'includes/SQL_CommonFunctions.php');
 include($PathPrefix . 'includes/GetSalesTransGLCodes.php');
 include($PathPrefix . 'includes/Z_POSDataCreation.php');
 
-/** Get weberp authentication, and return a valid database connection */
+/**
+ * Get weberp authentication, and return a valid database connection, or 1
+ * @return int|resource
+ */
 function db($user, $password) {
 
 	if (!isset($_SESSION['AccessLevel']) OR
@@ -34,7 +36,7 @@ function db($user, $password) {
 		//  Login to default database = old clients.
 		if ($user != '' AND $password != '') {
 			global  $api_DatabaseName;
-			$rc = LoginAPI ($api_DatabaseName, $user, $password);
+			$rc = LoginAPI($api_DatabaseName, $user, $password);
 			if ($rc[0] == UL_OK ) {
 				return $_SESSION['db'];
 			}
@@ -43,6 +45,23 @@ function db($user, $password) {
 	} else {
 		return $_SESSION['db'];
 	}
+}
+
+// API wrapper for DB issues - no HTML output, AND remember any error message
+function api_DB_query( $SQL, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=false )
+{
+    //  Basically we have disabled the error reporting from the standard
+    //  query function,  and will remember any error message in the session
+    //  data.
+
+    $Result = DB_query($SQL, $EMsg, $DMsg, $Transaction, $TrapErrors);
+    if (DB_error_no() != 0) {
+        $_SESSION['db_err_msg'] = "SQL: " . $SQL . "\nDB error message: " . DB_error_msg() . "\n";
+    } else {
+        $_SESSION['db_err_msg'] = '';
+    }
+
+    return  $Result;
 }
 
 include(__DIR__ . '/api_login.php');
