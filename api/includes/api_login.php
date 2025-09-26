@@ -24,6 +24,8 @@ function  LoginAPI($databasename, $user, $password) {
 		 * NOTE: This is needed here, as the api_session.php file
 		 * does NOT include this if there is no database name set.
 		 */
+		/// @todo set up a php exit handler (or teach ConnectDB not to exit on db connect failure), as ConnectDB
+		///       might end with an exit call + html output, and we should trap that and return NoAuthorisation + UL_CONFIGERR
 		include($PathPrefix . 'includes/ConnectDB.php');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
