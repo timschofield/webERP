@@ -7,7 +7,7 @@ define ('LIKE', 'LIKE');
 if (!isset($DBPort)) {
 	$DBPort = 3306;
 }
-global $db;	// Make sure it IS global, regardless of our context
+global $db, $Host, $DBUser, $DBPassword, $DBPort;	// Make sure it IS global, regardless of our context
 
 // since php 8.1, failures to connect will throw an exception, preventing our own error handling. Reset that
 mysqli_report(MYSQLI_REPORT_ERROR);

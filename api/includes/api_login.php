@@ -5,25 +5,28 @@ if (!isset($PathPrefix)) {
 	exit();
 }
 
+// Include now for the error code values.
+include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
+
 //  Validates user and sets up $_SESSION environment for API users.
 function  LoginAPI($databasename, $user, $password) {
-	global $PathPrefix, $SysAdminEmail;
+	global $PathPrefix, $SysAdminEmail, $db;
 
 	//include($PathPrefix . 'config.php');
 
-	// Include now for the error code values.
-	include($PathPrefix . 'includes/LoginFunctions.php');	/* Login checking and setup */
-
 	$RetCode = array();		// Return result.
+
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
 		// Establish the database connection for this session.
 		$_SESSION['DatabaseName'] = $databasename;
 		/* Drag in the code to connect to the DB, and some other
 		 * functions.  If the connection is established, the
 		 * variable $db will be set as the DB connection id.
-		 * NOTE:  This is needed here, as the api_session.php file
+		 * NOTE: This is needed here, as the api_session.php file
 		 * does NOT include this if there is no database name set.
 		 */
+		/// @todo set up a php exit handler (or teach ConnectDB not to exit on db connect failure), as ConnectDB
+		///       might end with an exit call + html output, and we should trap that and return NoAuthorisation + UL_CONFIGERR
 		include($PathPrefix . 'includes/ConnectDB.php');
 		//  Need to ensure we have a connection.
 		if (!isset($db)) {
@@ -33,23 +36,25 @@ function  LoginAPI($databasename, $user, $password) {
 		}
 		$_SESSION['db'] = $db;		// Set in above include
 	}
+
 	$rc = userLogin($user, $password, $SysAdminEmail);
 	switch ($rc) {
-	case  UL_OK:
-		$RetCode[0] = 0;		// All is well
-		DoSetup();	    // Additional setting up
-		break;
-	case  UL_NOTVALID:
-	case  UL_BLOCKED:
-	case  UL_CONFIGERR:
-	case  UL_SHOWLOGIN:
-	//  Following not in use at 18 Nov 09.
-	case  UL_MAINTENANCE:
-		/*  Just return an error for now */
-		$RetCode[0] = NoAuthorisation;
-		$RetCode[1] = $rc;
-		break;
+		case  UL_OK:
+			$RetCode[0] = 0;		// All is well
+			DoSetup();	    // Additional setting up
+			break;
+		case  UL_NOTVALID:
+		case  UL_BLOCKED:
+		case  UL_CONFIGERR:
+		case  UL_SHOWLOGIN:
+		//  Following not in use at 18 Nov 09.
+		case  UL_MAINTENANCE:
+			/*  Just return an error for now */
+			$RetCode[0] = NoAuthorisation;
+			$RetCode[1] = $rc;
+			break;
 	}
+
 	return  $RetCode;
 }
 
@@ -106,12 +111,12 @@ function GetAPIErrorMessages( $errcodes )
  */
 function DoSetup()
 {
-    global  $PathPrefix;
+    global $PathPrefix;
     if (isset($_SESSION['db']) AND $_SESSION['db'] != '' )
         include($PathPrefix . 'includes/GetConfig.php');
 
     $db = $_SESSION['db'];	    // Used a bit in the following.
-    if(isset($_SESSION['DB_Maintenance'])){
+    if (isset($_SESSION['DB_Maintenance'])) {
 		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				 	ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
@@ -132,7 +137,7 @@ function DoSetup()
     }
 
     /*Check to see if currency rates need to be updated */
-    if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+    if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
 		if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				 	ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])
