@@ -17,11 +17,21 @@ use PhpXmlRpc\Response;
 
 /**
  * Empty handler function for unwanted output.
- * Must be a better way of doing this, but at least it works.
- * @todo when running tests, save any output to a file with a known name, so that the invoker can check for it
+ * Must be a better way of doing this, but at least it works...
  */
 function ob_file_callback($buffer)
 {
+	$randIdFile = sys_get_temp_dir() . '/phpunit_rand_id.txt';
+	$isTestSuiteCall = false;
+	if (isset($_GET['phpunit_rand_id']) && $_GET['phpunit_rand_id'] !== '' && file_exists($randIdFile)) {
+		if (file_get_contents($randIdFile) == $_GET['phpunit_rand_id']) {
+			$isTestSuiteCall = true;
+		}
+	}
+	if ($isTestSuiteCall) {
+		/// @todo when running tests, save any output to a file with a known name, so that the invoker can check for it.
+
+	}
 }
 
 /**

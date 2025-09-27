@@ -15,6 +15,7 @@ function  LoginAPI($databasename, $user, $password) {
 	//include($PathPrefix . 'config.php');
 
 	$RetCode = array();		// Return result.
+
 	if (!isset($_SESSION['DatabaseName']) || $_SESSION['DatabaseName'] == '' || $_SESSION['DatabaseName'] != $databasename) {
 		// Establish the database connection for this session.
 		$_SESSION['DatabaseName'] = $databasename;
@@ -35,6 +36,7 @@ function  LoginAPI($databasename, $user, $password) {
 		}
 		$_SESSION['db'] = $db;		// Set in above include
 	}
+
 	$rc = userLogin($user, $password, $SysAdminEmail);
 	switch ($rc) {
 		case  UL_OK:
@@ -109,12 +111,12 @@ function GetAPIErrorMessages( $errcodes )
  */
 function DoSetup()
 {
-    global  $PathPrefix;
+    global $PathPrefix;
     if (isset($_SESSION['db']) AND $_SESSION['db'] != '' )
         include($PathPrefix . 'includes/GetConfig.php');
 
     $db = $_SESSION['db'];	    // Used a bit in the following.
-    if (isset($_SESSION['DB_Maintenance'])){
+    if (isset($_SESSION['DB_Maintenance'])) {
 		if ($_SESSION['DB_Maintenance']>0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				 	ConvertSQLDate($_SESSION['DB_Maintenance_LastRun'])
@@ -135,7 +137,7 @@ function DoSetup()
     }
 
     /*Check to see if currency rates need to be updated */
-    if (isset($_SESSION['UpdateCurrencyRatesDaily'])){
+    if (isset($_SESSION['UpdateCurrencyRatesDaily'])) {
 		if ($_SESSION['UpdateCurrencyRatesDaily']!=0)  {
 		    if (DateDiff(Date($_SESSION['DefaultDateFormat']),
 				 	ConvertSQLDate($_SESSION['UpdateCurrencyRatesDaily'])

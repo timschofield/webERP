@@ -140,6 +140,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
 
+			/// @todo should we not update this for API logins?
 			$SQL = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
 			$Auth_Result = DB_query($SQL);

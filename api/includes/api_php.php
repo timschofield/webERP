@@ -31,16 +31,16 @@ include($PathPrefix . 'includes/Z_POSDataCreation.php');
  */
 function db($user, $password) {
 
-	if (!isset($_SESSION['AccessLevel']) OR
-			   $_SESSION['AccessLevel'] == '') {
-		//  Login to default database = old clients.
+	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR !isset($_SESSION['db'])) {
+		// Login to default database = old clients.
 		if ($user != '' AND $password != '') {
-			global  $api_DatabaseName;
+			global $api_DatabaseName;
 			$rc = LoginAPI($api_DatabaseName, $user, $password);
 			if ($rc[0] == UL_OK ) {
 				return $_SESSION['db'];
 			}
 		}
+		/// @todo why not return null/false ?
 		return NoAuthorisation;
 	} else {
 		return $_SESSION['db'];
