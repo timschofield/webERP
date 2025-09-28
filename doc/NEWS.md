@@ -33,16 +33,16 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 * fixed sending emails to multiple addresses
 * changed the default timezone to be Auckland
 * various directory restructuring. Image files are now in `images`, external dependencies in `vendor`. Unused sql dumps
-  have been removed
+  have been removed. Some files in `includes/` have been renamed
 * the `report_runner.php` script has been moved to the `/bin` directory. It also does not use anymore the option
   to set the installation directory (it gets it automatically)
 * changed the following variable in config.php:
   `$MySQLPort` -> `$DBPort`
 * introduced usage of Composer to manage dependencies
 * improved support for installing webERP in a directory below the webserver root
-* update dependencies to their latest version (barcodepack, polyfill-gettext, phplot, phpmailer, phpspreadsheet, phpxmlrpc)
-* moved documentation files to Markdown format, to ease viewing directly on GitHub
+* updated dependencies to their latest version (barcodepack, polyfill-gettext, phplot, phpmailer, phpspreadsheet, phpxmlrpc)
+* moved documentation files, except for the user manual, to Markdown format, to ease viewing directly on GitHub
 * introduced file `robots.txt` to avoid accidental indexation of site contents
 * improved the debugging of failed SQL queries when `$Debug` is set to 1
 * css styling changes
-* various bugfixes
+* many bugfixes

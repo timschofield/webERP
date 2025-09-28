@@ -124,6 +124,8 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 	$Errors = [];
 
 	/// @todo move this to a shared function (eg. in UpgradeDB_$DBType.php)
+	/// @todo allow to pick/suggest a preferred charset - possibly leave the choice hidden in the installer, so that
+	///       end users do not get confused, but allow the test suite to force the code path which uses utf8mb3
 	$ListCharsetsSQL = "SHOW COLLATION WHERE Charset = 'utf8mb4'";
 	$ListCharsetsResult = @mysqli_query($DB, $ListCharsetsSQL);
 	if ($ListCharsetsResult) {

@@ -82,6 +82,8 @@ Also, the following variables have been introduced:
 
 `$DBCharset = utf8_mb4`
 
+NB: if upgrading an old installation, and your database is using the `utf8_mb3` character set, you will have to
+edit the `config.php`file and add the following line: `$DBCharset = 'utf8mb3';`
 
 ### Upgrading from a version before 4.10
 
