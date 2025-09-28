@@ -31,6 +31,7 @@ if (!$db) {
 
 // this statement sets the charset to be used for sending data to and from the db server
 // if not set, both mysqli server and mysqli client/library may assume otherwise
+/// @todo log a warning, or maybe even error out, if this fails
 mysqli_set_charset($db, $DBCharset);
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
