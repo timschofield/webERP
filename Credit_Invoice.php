@@ -1542,9 +1542,9 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 	echo '<div class="centre">' . __('Credit Note number') . ' ' . $CreditNo . ' ' . __('has been processed');
 	if ($_SESSION['InvoicePortraitFormat'] == 0) {
-		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . __('Print this credit note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True&orientation=landscape">' . __('Print this credit note') . '</a>';
 	} else {
-		echo '<br /><a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . __('Print this credit note') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True&orientation=portrait">' . __('Print this credit note') . '</a>';
 	}
 	echo '</div>';
 	/*end of process credit note */

@@ -2002,12 +2002,9 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 		echo '<br /><div class="centre">';
 
 		if ($_SESSION['InvoicePortraitFormat']==0) {
-			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True" />';
-
-			//echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' .  __('Print this invoice'). ' (' . __('Landscape') . ')</a><br /><br />';
+			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=landscape" />';
 		} else {
-			//echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="'.$RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' .  __('Print this invoice'). ' (' . __('Portrait') . ')</a><br /><br />';
-			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath.'/PrintCustTransPortrait.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True" />';
+			echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath.'/PrintCustTrans.php?FromTransNo='.$InvoiceNo.'&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=portrait" />';
 		}
 
 		echo '<br /><br /><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . __('Start a new Counter Sale') . '</a></div>';

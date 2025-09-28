@@ -1,37 +1,41 @@
 <?php
 
-/*	Please note that addTextWrap prints a font-size-height further down than
-	addText and other functions.*/
+// Use DomPDF for PDF generation
+use Dompdf\Dompdf;
 
 require(__DIR__ . '/includes/session.php');
-
 include('includes/SQL_CommonFunctions.php');
 
 //Get Out if we have no order number to work with
 if (!isset($_GET['QuotationNo']) || $_GET['QuotationNo']==""){
 	$Title = __('Select Quotation To Print');
 	include('includes/header.php');
-	echo '<div class="centre">
-			<br />
-			<br />
-			<br />';
+	echo '<div class="centre"><br /><br /><br />';
 	prnMsg( __('Select a Quotation to Print before calling this page') , 'error');
-	echo '<br />
-			<br />
-			<br />
+	echo '<br /><br /><br />
 			<table class="table_index">
 				<tr>
 					<td class="menu_group_item">
 						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Quotations') . '</a></td>
 				</tr>
 			</table>
-			</div>
-			<br />
-			<br />
-			<br />';
+			</div><br /><br /><br />';
 	include('includes/footer.php');
 	exit();
 }
+
+$Orientation = $_GET['orientation'];
+// Get company info from session
+$Company = $_SESSION['CompanyRecord'];
+$CompanyName = $Company['coyname'];
+$CompanyAddress = [
+	$Company['regoffice1'],
+	$Company['regoffice2'],
+	$Company['regoffice3'],
+	$Company['regoffice4'],
+	$Company['regoffice5'],
+	$Company['regoffice6']
+];
 
 /*retrieve the order details from the database to print */
 $ErrMsg = __('There was a problem retrieving the quotation header details for Order Number') . ' ' . $_GET['QuotationNo'] . ' ' . __('from the database');
@@ -77,48 +81,26 @@ $Result = DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
 if (DB_num_rows($Result)==0){
-        $Title = __('Print Quotation Error');
-        include('includes/header.php');
-         echo '<div class="centre">
-				<br />
-				<br />
-				<br />';
-        prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
-        echo '<br />
-				<br />
-				<br />
-				<table class="table_index">
-				<tr>
-					<td class="menu_group_item">
-						<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Outstanding Quotations') . '</a>
-					</td>
-				</tr>
-				</table>
-				</div>
-				<br />
-				<br />
-				<br />';
-        include('includes/footer.php');
-        exit();
-} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
-
-        $MyRow = DB_fetch_array($Result);
+	$Title = __('Print Quotation Error');
+	include('includes/header.php');
+	echo '<div class="centre"><br /><br /><br />';
+	prnMsg( __('Unable to Locate Quotation Number') . ' : ' . $_GET['QuotationNo'] . ' ', 'error');
+	echo '<br /><br /><br />
+			<table class="table_index">
+			<tr>
+				<td class="menu_group_item">
+					<a href="'. $RootPath . '/SelectSalesOrder.php?Quotations=Quotes_Only">' . __('Outstanding Quotations') . '</a>
+				</td>
+			</tr>
+			</table>
+			</div><br /><br /><br />';
+	include('includes/footer.php');
+	exit();
+} elseif (DB_num_rows($Result)==1) {
+	$MyRow = DB_fetch_array($Result);
 }
 
-/*retrieve the order details from the database to print */
-
-/* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;
-)
-LETS GO */
-$PaperSize = 'A4_Landscape';// PDFStarter.php: $Page_Width=842; $Page_Height=595; $Top_Margin=30; $Bottom_Margin=30; $Left_Margin=40; $Right_Margin=30;
-include('includes/PDFStarter.php');
-$pdf->addInfo('Title', __('Customer Quotation') );
-$pdf->addInfo('Subject', __('Quotation') . ' ' . $_GET['QuotationNo']);
-$FontSize = 12;
-$LineHeight = 12;// Recommended: $LineHeight = $x * $FontSize.
-
 /* Now ... Has the order got any line items still outstanding to be invoiced */
-
 $ErrMsg = __('There was a problem retrieving the quotation line details for quotation Number') . ' ' .
 	$_GET['QuotationNo'] . ' ' . __('from the database');
 
@@ -138,125 +120,100 @@ $SQL = "SELECT salesorderdetails.stkcode,
 $Result = DB_query($SQL, $ErrMsg);
 
 $ListCount = 0;
+$QuotationTotal = 0;
+$QuotationTotalEx = 0;
+$TaxTotal = 0;
 
-if (DB_num_rows($Result)>0){
-	/*Yes there are line items to start the ball rolling with a page header */
-	include('includes/PDFQuotationPageHeader.php');
+// Start building the HTML for DomPDF
+$HTML = '
+<style>
+	body { font-family: Arial, sans-serif; font-size: 10pt; }
+	.header { font-size: 12pt; text-align: left; margin-bottom: 20px; position:absolute; top:20px; float:right}
+	.subheader { font-size: 10pt; margin-top: 10px;  }
+	.small { font-size: 10pt; }
+	table { border-collapse: collapse; width: 100%; margin-bottom: 10px;}
+	th, td { border: 1px solid #000; padding: 5px; }
+	th { background: #eee; }
+</style>';
+$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+$HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
+$HTML .= '<div><span class="label">' . $CompanyName . '</span></div>';
 
-	$QuotationTotal = 0;
-	$QuotationTotalEx = 0;
-	$TaxTotal = 0;
-
-	while ($MyRow2=DB_fetch_array($Result)){
-	$LineHeight=15;
-        $ListCount ++;
-
-		$YPos -= $LineHeight;// Increment a line down for the next line item.
-
-		if ((mb_strlen($MyRow2['narrative']) >200 AND $YPos-$LineHeight <= 75)
-			OR (mb_strlen($MyRow2['narrative']) >1 AND $YPos-$LineHeight <= 62)
-			OR $YPos-$LineHeight <= 50){
-		/* We reached the end of the page so finsih off the page and start a newy */
-			include('includes/PDFQuotationPageHeader.php');
-		} //end if need a new page headed up
-
-		$DisplayQty = locale_number_format($MyRow2['quantity'],$MyRow2['decimalplaces']);
-		$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
-		$DisplayPrice = locale_number_format($MyRow2['unitprice'],$MyRow['currdecimalplaces']);
-		$DisplayDiscount = locale_number_format($MyRow2['discountpercent']*100,2) . '%';
-		$SubTot =  $MyRow2['unitprice']*$MyRow2['quantity']*(1-$MyRow2['discountpercent']);
-		$TaxProv = $MyRow['taxprovinceid'];
-		$TaxCat = $MyRow2['taxcatid'];
-		$Branch = $MyRow['branchcode'];
-		$SQL3 = "SELECT taxgrouptaxes.taxauthid
-					FROM taxgrouptaxes INNER JOIN custbranch
-					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
-					WHERE custbranch.branchcode='" .$Branch ."'";
-		$Result3=DB_query($SQL3, $ErrMsg);
-		while ($MyRow3=DB_fetch_array($Result3)){
-			$TaxAuth = $MyRow3['taxauthid'];
-		}
-
-		$SQL4 = "SELECT * FROM taxauthrates
-					WHERE dispatchtaxprovince='" .$TaxProv ."'
-					AND taxcatid='" .$TaxCat ."'
-					AND taxauthority='" .$TaxAuth ."'";
-		$Result4=DB_query($SQL4, $ErrMsg);
-		while ($MyRow4=DB_fetch_array($Result4)){
-			$TaxClass = 100 * $MyRow4['taxrate'];
-		}
-
-		$DisplayTaxClass = $TaxClass . '%';
-		$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
-		$DisplayTaxAmount = locale_number_format($TaxAmount,$MyRow['currdecimalplaces']);
-
-		$LineTotal = $SubTot + $TaxAmount;
-		$DisplayTotal = locale_number_format($LineTotal,$MyRow['currdecimalplaces']);
-
-		$FontSize = 10;// Font size for the line item.
-
-		$LeftOvers = $pdf->addText($Left_Margin, $YPos+$FontSize, $FontSize, $MyRow2['stkcode']);
-		$LeftOvers = $pdf->addText(145, $YPos+$FontSize, $FontSize, $MyRow2['description']);
-		$LeftOvers = $pdf->addTextWrap(420, $YPos,85,$FontSize,$DisplayQty,'right');
-		$LeftOvers = $pdf->addTextWrap(485, $YPos,85,$FontSize,$DisplayPrice,'right');
-		if ($DisplayDiscount > 0) {
-			$LeftOvers = $pdf->addTextWrap(535, $YPos,85,$FontSize,$DisplayDiscount,'right');
-		}
-		$LeftOvers = $pdf->addTextWrap(585, $YPos,85,$FontSize,$DisplayTaxClass,'right');
-		$LeftOvers = $pdf->addTextWrap(650, $YPos,85,$FontSize,$DisplayTaxAmount,'right');
-		$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, $DisplayTotal,'right');
-
-		// Prints salesorderdetails.narrative:
-		$FontSize2 = $FontSize*0.8;// Font size to print salesorderdetails.narrative.
-		$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
-
-		//XPos was 145, same as Description. Move it +10, slight tab in to improve readability
-		PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 155, $YPos, $Width2, $FontSize2, null, 'includes/PDFQuotationPageHeader.php');
-
-		$QuotationTotal += $LineTotal;
-		$QuotationTotalEx += $SubTot;
-		$TaxTotal += $TaxAmount;
-
-	}// Ends while there are line items to print out.
-
-	if ((mb_strlen($MyRow['comments']) >200 AND $YPos-$LineHeight <= 75)
-			OR (mb_strlen($MyRow['comments']) >1 AND $YPos-$LineHeight <= 62)
-			OR $YPos-$LineHeight <= 50){
-		/* We reached the end of the page so finish off the page and start a newy */
-			include('includes/PDFQuotationPageHeader.php');
-	} //end if need a new page headed up
-
-	$FontSize = 10;
-	$YPos -= $LineHeight;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Quotation Excluding Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']), 'right');
-	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Total Tax'), 'right');
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($TaxTotal,$MyRow['currdecimalplaces']), 'right');
-	$YPos -= $FontSize;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90-655, $YPos, 655, $FontSize, __('Quotation Including Tax'),'right');
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-90, $YPos, 90, $FontSize, locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']), 'right');
-
-	// Print salesorders.comments:
-	$YPos -= $FontSize*2;
-	$pdf->addText($XPos, $YPos+$FontSize, $FontSize, __('Notes').':');
-	$Width2 = $Page_Width-$Right_Margin-120;// Width to print salesorders.comments.
-	$LeftOvers = trim($MyRow['comments']);
-	//**********
-	$LeftOvers = str_replace('\n', ' ', $LeftOvers);// Replaces line feed character.
-	$LeftOvers = str_replace('\r', '', $LeftOvers);// Delete carriage return character
-	$LeftOvers = str_replace('\t', '', $LeftOvers);// Delete tabulator character
-	//**********
-	while(mb_strlen($LeftOvers) > 1) {
-		$YPos -= $FontSize;
-		if ($YPos < ($Bottom_Margin)) {// Begins new page.
-			include('includes/PDFQuotationPageHeader.php');
-		}
-		$LeftOvers = $pdf->addTextWrap(40, $YPos, $Width2, $FontSize, $LeftOvers);
+foreach ($CompanyAddress as $line) {
+	if (trim($line) != '') {
+		$HTML .= '<div>' . $line . '</div>';
 	}
+}
 
-} /*end if there are line details to show on the quotation*/
+$HTML .= '<div class="header">
+<div class="subheader">' . __('Quotation No.') . ': ' . $_GET['QuotationNo'] . '</div>
+<div class="small">' . __('Date') . ': ' . date('Y-m-d', strtotime($MyRow['quotedate'])) . '</div>
+<div class="small">' . __('Customer') . ': ' . htmlspecialchars($MyRow['name']) . '</div>
+<div class="small">' . __('Customer Ref') . ': ' . htmlspecialchars($MyRow['customerref']) . '</div>
+<div class="small">' . __('Deliver To') . ': ' . htmlspecialchars($MyRow['deliverto']) . '</div>
+</div><br />
+<table>
+	<tr>
+		<th>' . __('Item Code') . '</th>
+		<th>' . __('Description') . '</th>
+		<th>' . __('Quantity') . '</th>
+		<th>' . __('Unit Price') . '</th>
+		<th>' . __('Discount') . '</th>
+		<th>' . __('Tax Rate') . '</th>
+		<th>' . __('Tax Amount') . '</th>
+		<th>' . __('Line Total') . '</th>
+	</tr>';
 
+while ($MyRow2 = DB_fetch_array($Result)) {
+	$ListCount ++;
+	$DisplayQty = locale_number_format($MyRow2['quantity'],$MyRow2['decimalplaces']);
+	$DisplayPrice = locale_number_format($MyRow2['unitprice'],$MyRow['currdecimalplaces']);
+	$DisplayDiscount = locale_number_format($MyRow2['discountpercent']*100,2) . '%';
+	$SubTot =  $MyRow2['unitprice']*$MyRow2['quantity']*(1-$MyRow2['discountpercent']);
+	$TaxProv = $MyRow['taxprovinceid'];
+	$TaxCat = $MyRow2['taxcatid'];
+	$Branch = $MyRow['branchcode'];
+	$SQL3 = "SELECT taxgrouptaxes.taxauthid
+				FROM taxgrouptaxes INNER JOIN custbranch
+				ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
+				WHERE custbranch.branchcode='" .$Branch ."'";
+	$Result3=DB_query($SQL3, $ErrMsg);
+	$TaxAuth = 0;
+	while ($MyRow3=DB_fetch_array($Result3)){
+		$TaxAuth = $MyRow3['taxauthid'];
+	}
+	$SQL4 = "SELECT * FROM taxauthrates
+				WHERE dispatchtaxprovince='" .$TaxProv ."'
+				AND taxcatid='" .$TaxCat ."'
+				AND taxauthority='" .$TaxAuth ."'";
+	$Result4=DB_query($SQL4, $ErrMsg);
+	$TaxClass = 0;
+	while ($MyRow4=DB_fetch_array($Result4)){
+		$TaxClass = 100 * $MyRow4['taxrate'];
+	}
+	$DisplayTaxClass = $TaxClass . '%';
+	$TaxAmount =  (($SubTot/100)*(100+$TaxClass))-$SubTot;
+	$DisplayTaxAmount = locale_number_format($TaxAmount,$MyRow['currdecimalplaces']);
+	$LineTotal = $SubTot + $TaxAmount;
+	$DisplayTotal = locale_number_format($LineTotal,$MyRow['currdecimalplaces']);
+	$QuotationTotal += $LineTotal;
+	$QuotationTotalEx += $SubTot;
+	$TaxTotal += $TaxAmount;
+
+	$HTML .= '
+	<tr>
+		<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
+		<td>' . htmlspecialchars($MyRow2['description']) . '<br /><span class="small">' . nl2br(htmlspecialchars($MyRow2['narrative'])) . '</span></td>
+		<td style="text-align:right;">' . $DisplayQty . '</td>
+		<td style="text-align:right;">' . $DisplayPrice . '</td>
+		<td style="text-align:right;">' . $DisplayDiscount . '</td>
+		<td style="text-align:right;">' . $DisplayTaxClass . '</td>
+		<td style="text-align:right;">' . $DisplayTaxAmount . '</td>
+		<td style="text-align:right;">' . $DisplayTotal . '</td>
+	</tr>';
+}
+
+$HTML .= '</table>';
 
 if ($ListCount == 0){
 	$Title = __('Print Quotation Error');
@@ -266,7 +223,44 @@ if ($ListCount == 0){
 			<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 	include('includes/footer.php');
 	exit();
-} else {
-    $pdf->OutputI($_SESSION['DatabaseName'] . '_Quotation_' . $_GET['QuotationNo'] . '_' . date('Y-m-d') . '.pdf');
-    $pdf->__destruct();
 }
+
+// Totals
+$HTML .= '
+<table style="width:60%; margin-left:auto; margin-bottom:20px;">
+	<tr>
+		<th style="text-align:right;">' . __('Quotation Excluding Tax') . '</th>
+		<td style="text-align:right;">' . locale_number_format($QuotationTotalEx,$MyRow['currdecimalplaces']) . '</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;">' . __('Total Tax') . '</th>
+		<td style="text-align:right;">' . locale_number_format($TaxTotal,$MyRow['currdecimalplaces']) . '</td>
+	</tr>
+	<tr>
+		<th style="text-align:right;">' . __('Quotation Including Tax') . '</th>
+		<td style="text-align:right;">' . locale_number_format($QuotationTotal,$MyRow['currdecimalplaces']) . '</td>
+	</tr>
+</table>';
+
+// Notes
+if (mb_strlen(trim($MyRow['comments'])) > 1) {
+	$comments = $MyRow['comments'];
+	$comments = str_replace('\n', ' ', $comments);
+	$comments = str_replace('\r', '', $comments);
+	$comments = str_replace('\t', '', $comments);
+	$HTML .= '<div class="subheader">' . __('Notes') . ':</div><div class="small">' . nl2br(htmlspecialchars($comments)) . '</div>';
+}
+
+// Generate PDF with DomPDF
+$PdfFileName = $_SESSION['DatabaseName'] . '_Quotation_No_' . $_GET['QuotationNo'] . ' _ ' . date('Y-m-d') . '.pdf';
+// Display PDF in browser
+$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf->loadHtml($HTML);
+
+$dompdf->setPaper($_SESSION['PageSize'], $Orientation);
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Output the generated PDF to Browser
+$dompdf->stream($PdfFileName, array("Attachment" => false));

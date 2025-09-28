@@ -741,7 +741,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 			'. prnMsg(__('GRN number'). ' '. $GRN .' '. __('has been processed'),'success','',true) . '
 			<br />
 			<br />
-			<a href="' . $RootPath . '/PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print this Goods Received Note (GRN)') . '</a>
+			<a href="' . $RootPath . '/PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'" target="_blank">' .  __('Print this Goods Received Note (GRN)') . '</a>
 			<br />
 			<br />
 			<a href="' . $RootPath . '/PDFQALabel.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  __('Print QA Labels for this Receipt') . '</a>

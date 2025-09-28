@@ -5,7 +5,7 @@
 require(__DIR__ . '/includes/session.php');
 
 use Dompdf\Dompdf;
-use gggeek\barcodepack;
+use BarcodePack\qrCode;
 
 include('includes/SQL_CommonFunctions.php');
 
@@ -380,21 +380,22 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 
 	// Generate QR code for https://weberp.org via barcodepack
 	ob_start();
-	$qr = new \BarcodePack\qrCode($RootPath.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderIssue.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	/// @todo there seems to be double work done here... $imageData is set but never used?
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr.png');
 	$qrImgTag = '<div style="margin-right:18px 0;"><img style="width:192px" style="margin-top:80px" src="' .$_SESSION['part_pics_dir'] . '/qr.png" alt="QR Code">';
 	ob_start();
-	$qr = new \BarcodePack\qrCode($StockID,7);
+	$qr = new qrCode($StockID,7);
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
 	imagepng(($qr->draw()),$_SESSION['part_pics_dir'] . '/qr1.png');
 	$qrImgTag .= '<img style="width:192px" style="margin-bottom:-10px" src="' .$_SESSION['part_pics_dir'] . '/qr1.png" alt="QR Code">';
 	ob_start();
-	$qr = new \BarcodePack\qrCode($BaseURL.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
+	$qr = new qrCode($RootPath.'/WorkOrderReceive.php?WO='.$SelectedWO.'&StockID='.$StockID,5);
 	$qr->draw();  // This outputs PNG image directly
 	$imageData = ob_get_contents();
 	ob_end_clean();
@@ -473,7 +474,7 @@ else {
 						INNER JOIN stockmaster
 						ON woitems.stockid=stockmaster.stockid
 						WHERE woitems.stockid='" . $StockID . "'
-                        AND woitems.wo ='" . $SelectedWO . "'";
+						AND woitems.wo ='" . $SelectedWO . "'";
 
 		$Result = DB_query($SQL, $ErrMsg);
 		$Labels = DB_fetch_array($Result);
@@ -588,7 +589,8 @@ else {
 	}
 	echo '<div class="centre">
 			<input type="submit" name="DoIt" value="' . __('Paperwork') . '" />
-		</div>';
+		</div>
+	</form>';
 
 	if ($PrintLabels=="Yes") {
 		echo '<form action="' . $RootPath . '/PDFFGLabel.php" method="post" target="_blank">';
@@ -674,7 +676,7 @@ else {
 			echo '</fieldset>';
 		}
 		echo '<div class="centre">
-				<input type="submit" name="DoIt" value="' . __('Labels') . '" />
+				<input type="submit" name="PrintLabels" value="' . __('Labels') . '" />
 			</div>
 			</form>';
 	}

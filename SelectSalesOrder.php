@@ -970,8 +970,8 @@ if (isset($StockItemsResult)
 				} else { /*pre-printed stationery default */
 					$PrintDispatchNote = $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode((string) $MyRow['orderno']);
 				}
-				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
-				$PrintQuotationPortrait = $RootPath . '/PDFQuotationPortrait.php?QuotationNo=' . urlencode((string) $MyRow['orderno']);
+				$PrintQuotation = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=landscape';
+				$PrintQuotationPortrait = $RootPath . '/PDFQuotation.php?QuotationNo=' . urlencode((string) $MyRow['orderno']) . '&orientation=portrait';
 				$FormatedDelDate = isset($MyRow['deliverydate']) && $MyRow['deliverydate'] != '' ? ConvertSQLDate($MyRow['deliverydate']) : '';
 				$FormatedOrderDate = isset($MyRow['orddate']) && $MyRow['orddate'] != '' ? ConvertSQLDate($MyRow['orddate']) : '';
 				$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$_SESSION['CompanyRecord']['decimalplaces']);
@@ -1002,7 +1002,7 @@ if (isset($StockItemsResult)
 								', $PrintPickLabel, '
 								<td><a href="', $Confirm_Invoice, '">', __('Invoice'), '</a></td>
 								<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', __('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
-								<td><a href="', $PrintLabels, '">', __('Labels'), '</a></td>
+								<td><a href="', $PrintLabels, '" target="_blank">', __('Labels'), '</a></td>
 								<td>', $MyRow['name'], '</td>
 								<td>', $MyRow['brname'], '</td>
 								<td>', $CustomerRef, '</td>
@@ -1039,7 +1039,7 @@ if (isset($StockItemsResult)
 		echo '</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="', ($PrintPickLabel <> '' ? '12' : '11'), '" class="number"><b>';
+					<td colspan="', ($PrintPickLabel <> '' ? '8' : '10'), '" class="number"><b>';
 
 		if ($_POST['Quotations'] == 'Orders_Only') {
 			echo __('Total Order(s) Value in');

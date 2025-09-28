@@ -1,123 +1,144 @@
 <?php
 
 require(__DIR__ . '/includes/session.php');
+require_once('vendor/autoload.php'); // Ensure DomPDF is autoloaded
 
-include('includes/PDFStarter.php');
+use Dompdf\Dompdf;
 
-$FontSize=10;
-$pdf->addInfo('Title', __('Sales Receipt') );
+// Fetch values from session and GET
+$BatchNumber = $_GET['BatchNumber'];
+$ReceiptNumber = $_GET['ReceiptNumber'];
 
-$PageNumber=1;
-$LineHeight=12;
-if ($PageNumber>1){
-	$pdf->newPage();
-}
-
-$FontSize=10;
-$YPos= $Page_Height-$Top_Margin;
-$XPos=0;
-
-/* Prints company logo */
-$pdf->addJpegFromFile($_SESSION['LogoFile'], $XPos+20, $YPos-50, 0, 60);
-
-/* Prints company info */
-$pdf->addTextWrap(50,$YPos-($LineHeight*6),300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*7),300,$FontSize,$_SESSION['CompanyRecord']['regoffice1']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*8),300,$FontSize,$_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*9),300,$FontSize,$_SESSION['CompanyRecord']['regoffice3']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*10),300,$FontSize,$_SESSION['CompanyRecord']['regoffice4']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*11),300,$FontSize,$_SESSION['CompanyRecord']['regoffice5']);
-$pdf->addTextWrap(50,$YPos-($LineHeight*12),300,$FontSize,$_SESSION['CompanyRecord']['regoffice6']);
-
-$pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*3),550,$FontSize, __('Customer Receipt Number ').'  : ' . $_GET['BatchNumber'] .'/'.$_GET['ReceiptNumber'] );
-$pdf->addTextWrap($Page_Width-$Right_Margin-180,$YPos-($LineHeight*4.5),140,$FontSize, __('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. __('Page'). ' ' . $PageNumber);
-
-$YPos -= 150;
-
-$YPos -=$LineHeight;
-//Note, this is ok for multilang as this is the value of a Select, text in option is different
-
-$YPos -=(2*$LineHeight);
-
-/*Draw a rectangle to put the headings in     */
-
-$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
-
-$FontSize=10;
-$YPos -= (1.5 * $LineHeight);
-
-$PageNumber++;
-
-$SQL="SELECT MIN(id) as start FROM debtortrans WHERE type=12 AND transno='". $_GET['BatchNumber']. "'";
+// SQL Queries
+$SQL = "SELECT MIN(id) as start FROM debtortrans WHERE type=12 AND transno='" . $BatchNumber . "'";
 $Result = DB_query($SQL);
-$MyRow=DB_fetch_array($Result);
-$StartReceiptNumber=$MyRow['start'];
+$MyRow = DB_fetch_array($Result);
+$StartReceiptNumber = $MyRow['start'];
 
-$SQL="SELECT debtorno,
-			ovamount,
-			invtext
-		FROM debtortrans
-		WHERE type=12
-		AND transno='" . $_GET['BatchNumber'] . "'
-		AND id='". ($StartReceiptNumber-1+$_GET['ReceiptNumber']) ."'";
+$SQL = "SELECT debtorno, ovamount, invtext FROM debtortrans WHERE type=12 AND transno='" . $BatchNumber . "' AND id='" . ($StartReceiptNumber - 1 + $ReceiptNumber) . "'";
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $DebtorNo = $MyRow['debtorno'];
 $Amount = $MyRow['ovamount'];
 $Narrative = $MyRow['invtext'];
 
-$SQL = "SELECT 	currabrev,
-				decimalplaces
-			FROM currencies
-			WHERE currabrev=(SELECT currcode
-				FROM banktrans
-				WHERE type=12
-				AND transno='" . $_GET['BatchNumber']."')";
+$SQL = "SELECT currabrev, decimalplaces FROM currencies WHERE currabrev=(SELECT currcode FROM banktrans WHERE type=12 AND transno='" . $BatchNumber . "')";
 $Result = DB_query($SQL);
-$MyRow=DB_fetch_array($Result);
-$CurrencyCode=$MyRow['currabrev'];
-$DecimalPlaces=$MyRow['decimalplaces'];
+$MyRow = DB_fetch_array($Result);
+$CurrencyCode = $MyRow['currabrev'];
+$DecimalPlaces = $MyRow['decimalplaces'];
 
-$SQL="SELECT name,
-             address1,
-			 address2,
-			 address3,
-			 address4,
-			 address5,
-			 address6
-		FROM debtorsmaster
-		WHERE debtorno='".$DebtorNo."'";
-
+$SQL = "SELECT name, address1, address2, address3, address4, address5, address6 FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQL);
-$MyRow=DB_fetch_array($Result);
+$MyRow = DB_fetch_array($Result);
 
-/* Prints customer info */
-$pdf->addTextWrap(50,$YPos,300,$FontSize,__('Received From').' :');
-$pdf->addTextWrap(150,$YPos,300,$FontSize, htmlspecialchars_decode($MyRow['name']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*1),300,$FontSize, htmlspecialchars_decode($MyRow['address1']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*2),300,$FontSize, htmlspecialchars_decode($MyRow['address2']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*3),300,$FontSize, htmlspecialchars_decode($MyRow['address3']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*4),300,$FontSize, htmlspecialchars_decode($MyRow['address4']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*5),300,$FontSize, htmlspecialchars_decode($MyRow['address5']));
-$pdf->addTextWrap(150,$YPos-($LineHeight*6),300,$FontSize, htmlspecialchars_decode($MyRow['address6']));
+$CustomerName = htmlspecialchars_decode($MyRow['name']);
+$CustomerAddress = [
+	htmlspecialchars_decode($MyRow['address1']),
+	htmlspecialchars_decode($MyRow['address2']),
+	htmlspecialchars_decode($MyRow['address3']),
+	htmlspecialchars_decode($MyRow['address4']),
+	htmlspecialchars_decode($MyRow['address5']),
+	htmlspecialchars_decode($MyRow['address6'])
+];
 
-$YPos=$YPos-($LineHeight*8);
+// Get company info from session
+$Company = $_SESSION['CompanyRecord'];
+$CompanyName = $Company['coyname'];
+$CompanyAddress = [
+	$Company['regoffice1'],
+	$Company['regoffice2'],
+	$Company['regoffice3'],
+	$Company['regoffice4'],
+	$Company['regoffice5'],
+	$Company['regoffice6']
+];
 
-$pdf->addTextWrap(50,$YPos,300,$FontSize, __('The Sum Of').' :');
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-$pdf->addTextWrap(150,$YPos,300,$FontSize, locale_number_format(-$Amount,$DecimalPlaces).' '. $CurrencyCode . '-' . $CurrencyName[$CurrencyCode]);
+// Logo
+$LogoFile = $_SESSION['LogoFile'];
+$LogoBase64 = '';
+if (file_exists($LogoFile)) {
+	$LogoData = file_get_contents($LogoFile);
+	$LogoBase64 = 'data:image/jpeg;base64,' . base64_encode($LogoData);
+}
 
-$YPos=$YPos-($LineHeight*2);
+// Get currency name
+include('includes/CurrenciesArray.php'); // $CurrencyName array
+$CurrencyLongName = isset($CurrencyName[$CurrencyCode]) ? $CurrencyName[$CurrencyCode] : $CurrencyCode;
 
-$pdf->addTextWrap(50,$YPos,500,$FontSize, __('Details').' :');
-$pdf->addTextWrap(150,$YPos,500,$FontSize, $Narrative);
+// Format amount
+//require_once('includes/NumberFormat.php'); // ensure locale_number_format is available
+$AmountFormatted = locale_number_format(-$Amount, $DecimalPlaces) . ' ' . $CurrencyCode . ' - ' . $CurrencyLongName;
 
-$YPos=$YPos-($LineHeight*8);
+// Date
+$PrintedDate = date($_SESSION['DefaultDateFormat']);
 
-$pdf->addTextWrap(50,$YPos,500,$FontSize,__('Signed On Behalf Of').' :     '.$_SESSION['CompanyRecord']['coyname']);
+// Build HTML for DomPDF
+$HTML = '<!DOCTYPE html>
+<html>
+<head>';
+$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+$HTML .= '<style>
+		body { font-family: DejaVu Sans, Arial, Helvetica, sans-serif; font-size: 10pt; }
+		.header-logo { float: left; margin-right: 20px; }
+		.company-info { margin-bottom: 20px; }
+		.customer-info, .company-info { margin-left: 30px; }
+		.section { margin-bottom: 18px; }
+		.label { font-weight: bold; }
+		.line { border-bottom: 1px solid #000; margin: 24px 0; }
+		.signed { margin-top: 40px; }
+	</style>';
 
-$YPos=$YPos-($LineHeight*10);
+$HTML .='</head>
+<body>';
+$HTML .= '<div><img class="logo" src="' . $_SESSION['LogoFile'] . '" /></div>';
+$HTML .= '<div><span class="label">' . $CompanyName . '</span></div>';
 
-$pdf->addTextWrap(50,$YPos,300,$FontSize,'______________________________________________________________________________');
+foreach ($CompanyAddress as $line) {
+	if (trim($line) != '') {
+		$HTML .= '<div>' . $line . '</div>';
+	}
+}
 
-$pdf->Output('Receipt-'.$_GET['ReceiptNumber'], 'I');
+$HTML .= '<div style="float:right; text-align:right;">
+		<div><span class="label">' . __('Customer Receipt Number') . '</span> : ' . $BatchNumber . '/' . $ReceiptNumber . '</div>
+		<div><span class="label">' . __('Printed') . '</span>: ' . $PrintedDate . ' &nbsp; <span class="label">' . __('Page') . '</span> 1</div>
+	</div>
+	<div style="clear:both;"></div>
+	<div class="line"></div>
+	<div class="section customer-info">
+		<div><span class="label">' . __('Received From') . '</span> : ' . $CustomerName . '</div>';
+
+foreach ($CustomerAddress as $AddressLine) {
+	if (trim($AddressLine) != '') {
+		$HTML .= '<div>' . $AddressLine . '</div>';
+	}
+}
+
+$HTML .= '</div>
+	<div class="section">
+		<div><span class="label">' . __('The Sum Of') . '</span> : ' . $AmountFormatted . '</div>
+	</div>
+	<div class="section">
+		<div><span class="label">' . __('Details') . '</span> : ' . $Narrative . '</div>
+	</div>
+	<div class="signed">
+		<div><span class="label">' . __('Signed On Behalf Of') . '</span> : ' . $CompanyName . '</div>
+	</div>
+	<div class="line" style="margin-top:80px"></div>
+</body>
+</html>';
+
+// Generate PDF with DomPDF
+$PdfFileName = $_SESSION['DatabaseName'] . '_CustomerReceipt_No_' . $BatchNumber . ' - ' . $ReceiptNumber . ' _ ' . date('Y-m-d') . '.pdf';
+// Display PDF in browser
+$dompdf = new Dompdf(['chroot' => __DIR__]);
+$dompdf->loadHtml($HTML);
+
+$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+
+// Render the HTML as PDF
+$dompdf->render();
+
+// Output the generated PDF to Browser
+$dompdf->stream($PdfFileName, array("Attachment" => false));
