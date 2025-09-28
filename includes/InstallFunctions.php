@@ -109,7 +109,7 @@ function SaveUploadedCompanyLogo($DatabaseName, $Path_To_Root)
 /**
  * @return bool false when a fatal error happened
  */
-function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $DBType, $Path_To_Root) {
+function 	CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort, $DBType, $Path_To_Root) {
 
 	// avoid exceptions being thrown on query errors
 	mysqli_report(MYSQLI_REPORT_ERROR);
@@ -138,10 +138,22 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 	if ($Rows > 0) {
 		$_SESSION['Installer']['DBCharset'] = 'utf8mb4';
 	} else {
-		$_SESSION['Installer']['DBCharset'] = 'utf8mb3';
+		// NB: utf8 is an alias for utf8mb3, up to Mysql < 8.4, and mariadb < 10.6.1.
+		// After that, it becomes an alias for utf8mb4.
+		// A great win for BC! ;-)
+		// Ideally, the value we pick here should be an utf8 encoding supported by all db-versions/php-versions.
+		// The string 'utf8mb3' is a good candidate, but it was tested on both mysql 8.3 and mariadb 10.5, and it raised
+		// php warnings in both cases :-(
+		// Using 'utf8' instead worked, and got us a 3-bytes charset (tested with `mysqli_get_charset($DB)`).
+		// So be it.
+		// Final note: both mariadb and mysql support utf8mb4 since rev 5.5, which is less-or-equal to the minimum
+		// DB version we support. So this whole block (and the above test) could in fact be removed...
+		$_SESSION['Installer']['DBCharset'] = 'utf8';
 	}
 
-	mysqli_set_charset($DB, $_SESSION['Installer']['DBCharset']);
+	if (!mysqli_set_charset($DB, $_SESSION['Installer']['DBCharset'])) {
+		echo '<div class="warning">' . __('Failed setting the database connection character set to') . ' ' . htmlspecialchars($_SESSION['Installer']['DBCharset']) . '</div>';
+	}
 
 	// gg: we only use this db connection for creating the database, as we use separate one for creating tables etc.
 	//     So this seems useless/overkill
@@ -319,6 +331,8 @@ function CreateTables($Path_To_Root, $DBType) {
 
 function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root,
 	$DataBaseName, $DBType) {
+
+	$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 	$Errors = 0;
 	if ($Demo != 'Yes') {
 		/* Create the admin user */
@@ -546,7 +560,6 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		}
 		DB_ReinstateForeignKeys();
 
-		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
 		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
 			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
