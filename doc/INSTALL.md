@@ -17,7 +17,7 @@ are upgrading an existing installation.
 * MySQL ver. 5.7.5+ or MariaDb 5.5+ (innodb tables MUST be enabled, which should be the default, but
   you can check `my.cnf` file to confirm, e.g. `/etc/my.cnf` or `/usr/local/etc/mysql/my.cnf`).
 
-  The utf8mb4 character set is required.
+  The utf8mb4 character set is recommended. utf8mb3 will be used as fallback
 
   The DB user account must have privileges sufficient to create triggers.
 

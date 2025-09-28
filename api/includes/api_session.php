@@ -19,6 +19,18 @@ if ($DBType === 'mysql' && !extension_loaded('mysql')) {
 	$DBType = 'mysqli';
 }
 
+// another upgrade issue
+if (isset($MySQLPort) && !isset($DBPort)) {
+	/// @todo we should attempt to update the config.php file...
+	$DBPort = $MySQLPort;
+	unset($MySQLPort);
+}
+
+// another upgrade issue
+if (!isset($DBCharset)) {
+	$DBCharset = 'utf8';
+}
+
 if (isset($SessionSavePath)) {
 	session_save_path($SessionSavePath);
 }

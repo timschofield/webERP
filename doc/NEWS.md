@@ -12,7 +12,9 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 * increased minimum php requirements to version 8.1
 * removed support for php extension `mysql` to connect to the database. Use `mysqli` instead
 * db tables are now created using the `utf8_mb4` character set if the database supports it, instead of `utf8_mb3`,
-  to allow full support of emojis and other unicode niceties (NB: this is actually not yet merged ;-)
+  to allow full support of emojis and other unicode niceties.
+  NB: if upgrading an old installation, and your database is using the `utf8_mb3` character set, you will have to
+  edit the `config.php`file and add the following line: `$DBCharset = 'utf8mb3';`
 * rewritten the installer
 * fixed the XMLRPC API
 * updated the pdf report writer library TCPDF to version 6.XX

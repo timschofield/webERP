@@ -123,14 +123,30 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 
 	$Errors = [];
 
-	mysqli_set_charset($DB, 'utf8');
+	/// @todo move this to a shared function (eg. in UpgradeDB_$DBType.php)
+	$ListCharsetsSQL = "SHOW COLLATION WHERE Charset = 'utf8mb4'";
+	$ListCharsetsResult = @mysqli_query($DB, $ListCharsetsSQL);
+	if ($ListCharsetsResult) {
+		$Rows = mysqli_num_rows($ListCharsetsResult);
+	} else {
+		echo '<div class="warning">' . __('Failed to check for the available database character sets.') . '</div>';
+		$Rows = 0;
+	}
+
+	if ($Rows > 0) {
+		$_SESSION['Installer']['DBCharset'] = 'utf8mb4';
+	} else {
+		$_SESSION['Installer']['DBCharset'] = 'utf8mb3';
+	}
+
+	mysqli_set_charset($DB, $_SESSION['Installer']['DBCharset']);
 
 	// gg: we only use this db connection for creating the database, as we use separate one for creating tables etc.
 	//     So this seems useless/overkill
 	//$Result = @mysqli_query($DB, 'SET SQL_MODE=""');
 	//$Result = @mysqli_query($DB, 'SET SESSION SQL_MODE=""');
 
-	/// @todo move checking for permissions and for existing tables into UpgradeDB_$dbtype.php, to give it a chance
+	/// @todo move checking for permissions and for existing tables into UpgradeDB_$DBType.php, to give it a chance
 	///       at being db-agnostic
 
 	$DBExistsSql = "SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = '" . mysqli_real_escape_string($DB, $DataBaseName) . "'";
@@ -153,8 +169,7 @@ function CreateDataBase($HostName, $UserName, $Password, $DataBaseName, $DBPort,
 		//if ($Privileges == 0) {
 		//	$Errors[] = __('The database does not exist, and this database user does not have privileges to create it');
 		//} else { /* Then we can create the database */
-			/// @todo add utf8-mb4 as default charset (check 1st that the db supports it. If not, utf8mb3)
-			$SQL = "CREATE DATABASE " . $DataBaseName;
+			$SQL = "CREATE DATABASE " . $DataBaseName . " CHARACTER SET = " . $_SESSION['Installer']['DBCharset'];
 			if (!@mysqli_query($DB, $SQL)) {
 				$Errors[] = __('Failed creating the database');
 			}
@@ -276,6 +291,10 @@ function CreateTables($Path_To_Root, $DBType) {
 		if ($DBType == 'mariadb') {
 			// mariadb 5.5 chokes on STORED
 			$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
+		}
+
+		if ($_SESSION['Installer']['DBCharset'] != 'utf8mb4') {
+			$SQLScriptFile = preg_replace('/ CHARSET *= *utf8mb4/', ' CHARSET = utf8mb3', $SQLScriptFile);
 		}
 
 		// we disable FKs for each script, in case the previous script re-enabled them

@@ -4,10 +4,11 @@
 
 define ('LIKE', 'LIKE');
 
+global $db, $Host, $DBUser, $DBPassword, $DBPort, $DBCharset, $RootPath; // Make sure these are global, regardless of our context
+
 if (!isset($DBPort)) {
 	$DBPort = 3306;
 }
-global $db;	// Make sure it IS global, regardless of our context
 
 // since php 8.1, failures to connect will throw an exception, preventing our own error handling. Reset that
 mysqli_report(MYSQLI_REPORT_ERROR);
@@ -28,9 +29,9 @@ if (!$db) {
 	exit(1);
 }
 
-//this statement sets the charset to be used for sending data to and from the db server
-//if not set, both mysqli server and mysqli client/library may assume otherwise
-mysqli_set_charset($db, 'utf8');
+// this statement sets the charset to be used for sending data to and from the db server
+// if not set, both mysqli server and mysqli client/library may assume otherwise
+mysqli_set_charset($db, $DBCharset);
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 /// @todo test if this is in fact necessary, as RecurringSalesOrdersProcess.php also sets $_SESSION['DatabaseName']
@@ -113,7 +114,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 }
 
 function DB_fetch_row($ResultIndex) {
-	$RowPointer=mysqli_fetch_row($ResultIndex);
+	$RowPointer = mysqli_fetch_row($ResultIndex);
 	return $RowPointer;
 }
 
