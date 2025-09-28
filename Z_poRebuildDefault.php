@@ -27,7 +27,7 @@ echo '<br />&nbsp;<a href="' . $RootPath . '/Z_poAdmin.php">' . __('Back to the 
 echo '<br /><br />&nbsp;' . __('Utility page to rebuild the system default language file');
 
 $PathToDefault = './locale/en_GB.utf8/LC_MESSAGES/messages.pot';
-/// @todo this list should be updated
+/// @todo this list should be updated - look at the one in update_translations.sh
 $FilesToInclude = '*.php api/*.php includes/*.php includes/*.php install/*.php reportwriter/languages/en_US/reports.php';
 /// @todo escape args
 $xgettextCmd = 'xgettext --no-wrap --from-code=utf-8 -L php -o ' . $PathToDefault . ' ' . $FilesToInclude;

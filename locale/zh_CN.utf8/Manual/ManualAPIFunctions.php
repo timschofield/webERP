@@ -18,7 +18,7 @@ echo '</head>';
 echo '<body>';
 
 // avoid sending an xml-rpc request to self, interrogate directly the server
-$dispatchMap = include('api/api_xml-rpc_definition.php');
+$dispatchMap = include('api/includes/api_xml-rpc_definition.php');
 $server = new PhpXmlRpc\Server($dispatchMap, false);
 $response = PhpXmlRpc\Server::_xmlrpcs_listMethods($server);
 $answer = $response->value();

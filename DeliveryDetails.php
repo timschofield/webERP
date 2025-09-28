@@ -573,13 +573,12 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			echo '<fieldset>
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' . __('Print Quotation (Landscape)') . '</a></td>
-					</tr>
-					</table>';
+						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '&orientation=landscape" target="_blank">' . __('Print Quotation (Landscape)') . '</a></td>
+					</tr>';
 			echo '<fieldset>
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt="" /></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
+						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '&orientation=portrait" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
 					</tr>
 					</fieldset>';
 		}
@@ -588,7 +587,8 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Order') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="'. $RootPath .'/SelectOrderItems.php?identifier='.$identifier . '&amp;NewOrder=Yes">' .  __('Add Another Sales Order')  . '</a></td>
 				</tr>
-				</fieldset>';
+				</fieldset>
+					</table>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(__('Thank you for your business'),'success');
@@ -757,13 +757,13 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		echo '<fieldset>
 				<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt=""></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  __('Print Quotation (Landscape)')  . '</a></td>
+					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '&orientation=landscape" target="_blank">' .  __('Print Quotation (Landscape)')  . '</a></td>
 				</tr>
 				</fieldset>';
 		echo '<fieldset>
 				<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
+					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '&orientation=portrait" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
 				</tr>
 				</fieldset>';
 	} else {

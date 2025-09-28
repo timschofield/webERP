@@ -262,9 +262,9 @@ echo '<br /><table class="selection">
 
 $OutstandingOrSettled = '';
 if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
-	$PrintCustomerTransactionScript = 'PrintCustTransPortrait.php';
+	$Orientation = 'portrait';
 } else { //produce pdfs in landscape
-	$PrintCustomerTransactionScript = 'PrintCustTrans.php';
+	$Orientation = 'landscape';
 }
 foreach ($Transactions as $MyRow) {
 
@@ -291,11 +291,17 @@ foreach ($Transactions as $MyRow) {
 			<td>&nbsp;</td>
 			<td class="number">', locale_number_format($MyRow['alloc'], $CustomerRecord['decimalplaces']), '</td>
 			<td class="number">', locale_number_format($MyRow['balance'], $CustomerRecord['decimalplaces']), '</td>
-			<td class="noPrint" title="', __('Click to preview the invoice'), '">
-				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ', __('HTML'), '</a>
+			<td class="noPrint">
+				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&View=Yes" title="', __('Click to preview the invoice'), '" target="_blank">
+					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/preview.png" /> ',
+					__('HTML'), '
+				</a>
 			</td>
-			<td class="noPrint" title="', __('Click for PDF'), '">
-				<a href="', $RootPath, '/', $PrintCustomerTransactionScript, '?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', __('PDF'), '</a>
+			<td class="noPrint">
+				<a href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=' . $Orientation . '" title="', __('Click for PDF'), '" target="_blank">
+					<img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ',
+					__('PDF'), '
+				</a>
 			</td>
 			<td class="noPrint" title="', __('Click to email the invoice'), '">
 				<a href="', $RootPath, '/EmailCustTrans.php?FromTransNo=', $MyRow['transno'], '&amp;InvOrCredit=Invoice"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/email.png" />', __('Email'), '</a>

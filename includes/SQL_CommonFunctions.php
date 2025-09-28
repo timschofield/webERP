@@ -344,7 +344,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty = 1, $ParentID = '') {
 /*Ensures general ledger entries balance for a given transaction */
 function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 
-	$Result = DB_query("SELECT SUM(amount)
+	$Result = DB_query("SELECT COALESCE(SUM(amount), 0)
 						FROM gltrans
 						WHERE type = '" . $TransType . "'
 							AND typeno = '" . $TransTypeNo . "'");

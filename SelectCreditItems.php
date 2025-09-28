@@ -1947,9 +1947,9 @@ then debit the expense account the stock is to written off to */
 	 echo __('Credit Note number') . ' ' . $CreditNo . ' ' . __('processed') . '<br />';
 	 echo '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit">' . __('Show this Credit Note on screen') . '</a><br />';
 	if ($_SESSION['InvoicePortraitFormat']==0){
-	 	echo '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . __('Print this Credit Note') . '</a>';
+	 	echo '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True&orientation=landscape">' . __('Print this Credit Note') . '</a>';
 	} else {
-		echo '<a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True">' . __('Print this Credit Note') . '</a>';
+		echo '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $CreditNo . '&InvOrCredit=Credit&PrintPDF=True&orientation=portrait">' . __('Print this Credit Note') . '</a>';
 	}
 	 echo '<br /><a href="' . $RootPath . '/SelectCreditItems.php">' . __('Enter Another Credit Note') . '</a>';
 

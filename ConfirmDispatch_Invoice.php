@@ -967,15 +967,17 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 			$ErrMsg = __('The line items of the pick list cannot be retrieved because');
 			$LineItemsResult = DB_query($LineItemsSQL, $ErrMsg);
 
-			$MyLine = DB_fetch_array($LineItemsResult);
-			$DetailNo = $MyLine['detailno'];
-			$SQL = "UPDATE pickreqdetails
-					SET invoicedqty='" . $OrderLine->QtyDispatched . "'
-					WHERE detailno='" . $DetailNo . "'";
+			if (DB_num_rows($LineItemsResult) > 0) {
 
-			$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The pickreqdetail record could not be inserted because');
-			$Result = DB_query($SQL, $ErrMsg, '', true);
+				$MyLine = DB_fetch_array($LineItemsResult);
+				$DetailNo = $MyLine['detailno'];
+				$SQL = "UPDATE pickreqdetails
+						SET invoicedqty='" . $OrderLine->QtyDispatched . "'
+						WHERE detailno='" . $DetailNo . "'";
 
+				$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The pickreqdetail record could not be inserted because');
+				$Result = DB_query($SQL, $ErrMsg, '', true);
+			}
 			/* Update location stock records if not a dummy stock item
 			 need the MBFlag later too so save it to $MBFlag */
 			$Result = DB_query("SELECT mbflag
@@ -1402,6 +1404,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 			if ($_SESSION['CompanyRecord']['gllink_stock'] == 1 and $OrderLine->StandardCost != 0 and !$IsAsset) {
 
 				/*first the cost of sales entry - GL accounts are retrieved using the function GetCOGSGLAccount from includes/GetSalesTransGLCodes.php */
+				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
@@ -1725,9 +1728,9 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	echo '<br /><div class="centre">';
 
 	if ($_SESSION['InvoicePortraitFormat'] == 0) {
-		echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . __('Print this invoice') . ' (' . __('Landscape') . ')</a><br /><br />';
+		echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=landscape">' . __('Print this invoice') . ' (' . __('Landscape') . ')</a><br /><br />';
 	} else {
-		echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True">' . __('Print this invoice') . ' (' . __('Portrait') . ')</a><br /><br />';
+		echo '<img src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . __('Print') . '" alt="" />' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $InvoiceNo . '&amp;InvOrCredit=Invoice&amp;PrintPDF=True&orientation=portrait">' . __('Print this invoice') . ' (' . __('Portrait') . ')</a><br /><br />';
 	}
 	echo '<a href="' . $RootPath . '/SelectSalesOrder.php">' . __('Select another order for invoicing') . '</a><br /><br />';
 	echo '<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . __('Sales Order Entry') . '</a></div><br />';
