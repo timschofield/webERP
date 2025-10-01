@@ -23,6 +23,9 @@ trait DBAwareTest {
 
 	protected function assertCanConnect(): void {
 		$this->__connect();
+
+		// avoid phpunit warnings, while ensuring code coverage
+		$this->assertTrue(true);
 	}
 
 	/**

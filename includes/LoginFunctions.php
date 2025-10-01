@@ -140,6 +140,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
 
+			/// @todo should we not update this for API logins?
 			$SQL = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
 			$Auth_Result = DB_query($SQL);
@@ -265,7 +266,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							WHERE www_users.userid='" . $Name . "'";
 				$Auth_Result = DB_query($SQL);
 
-				if ($SysAdminEmail != ''){
+				if ($SysAdminEmail != '') {
 					$EmailSubject = __('User access blocked'). ' ' . $Name ;
 					$EmailText =  __('User ID') . ' ' . $Name . ' - ' . $Password . ' - ' . __('has been blocked access at') . ' ' .
 								Date('Y-m-d H:i:s') . ' ' . __('from IP') . ' ' . $_SERVER["REMOTE_ADDR"] . ' ' . __('due to too many failed attempts.');

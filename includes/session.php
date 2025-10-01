@@ -20,6 +20,7 @@ require($PathPrefix.'vendor/autoload.php');
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	// gg: there is no need for htmlspecialchars here, as we never output $RootPath into html
+	/// @todo what if we are on a webpage in a subfolder?
 	$RootPath = dirname($_SERVER['PHP_SELF']);
 	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
@@ -28,7 +29,7 @@ if (!file_exists($PathPrefix . 'config.php')) {
 	exit();
 }
 
-$DefaultDatabase = 'weberp';
+$DefaultDatabase = 'weberpdemo';
 
 include($PathPrefix . 'config.php');
 
@@ -68,7 +69,10 @@ if (!isset($SysAdminEmail)) {
 
 if (isset($_SESSION['Timeout'])) {
 	ini_set('session.gc_maxlifetime', (60 * $_SESSION['Timeout'] + 1));
+} else {
+	ini_set('session.gc_maxlifetime', $SessionLifeTime);
 }
+ini_set('max_execution_time', $MaximumExecutionTime);
 
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
@@ -374,11 +378,13 @@ if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowA
 	}
 }
 
+/// @todo move to LoginFunctions.php
 function CryptPass($Password) {
 	$Hash = password_hash($Password, PASSWORD_DEFAULT);
 	return $Hash;
 }
 
+/// @todo move to LoginFunctions.php
 function VerifyPass($Password, $Hash) {
 	return password_verify($Password, $Hash);
 }

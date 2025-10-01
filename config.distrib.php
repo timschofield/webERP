@@ -72,6 +72,7 @@ $AllowCompanySelectionBox = 'ShowSelectionBox';
 $DefaultDatabase = 'weberpdemo';
 
 // The maximum time that a login session can be idle before automatic logout.
+// Currently only used for the API and for users for which the timeout is not defined in their personal settings.
 // Time is in seconds. 3600 seconds in an hour
 $SessionLifeTime = 3600;
 
