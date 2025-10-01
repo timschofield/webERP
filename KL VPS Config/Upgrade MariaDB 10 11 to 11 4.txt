@@ -1,4 +1,4 @@
-UPGRADE mariaDB 10.3 to 10.11
+UPGRADE mariaDB 10.11 to 11.4
 
 Copy  /etc/my.cnf and /etc/systemd/system/mariadb.service.d/override.conf
 from gitHub to the folder /var/www/vhosts/kapal-laut.com via FileZilla
@@ -56,6 +56,53 @@ Go back to the Plesk interface and run the pre-upgrade check again. The warning 
 4. 🎉 Proceed with the Upgrade
 
 You can now safely continue with the Plesk upgrade process.
+
+
+The upgrade can not restart mariaDB because:
+
+Job for mariadb.service failed because the control process exited with error code.
+See "systemctl status mariadb.service" and "journalctl -xe" for details.
+INFO: [Sun Sep 21 07:31:02 +08 2025]: Service: mariadb, Action: start
+ Trying to start service mariadb... inactive
+Sep 21 07:31:02 PTADU01-clone systemd[1]: Starting MariaDB 11.4.8 database server...
+Sep 21 07:31:02 PTADU01-clone mariadbd[3674518]: 2025-09-21  7:31:02 0 [ERROR] /usr/sbin/mariadbd: Error while setting value 'index_merge=on,index_merge_union=on,index_merge_sort_union=on,index_merge_intersection=on,index_merge_sort_intersection=on,engine_condition_pushdown=on,index_condition_pushdown=on,derived_merge=on,derived_with_keys=on,firstmatch=on,loosescan=on,materialization=on,in_to_exists=on,semijoin=on,partial_match_rowid_merge=on,partial_match_table_scan=on,subquery_cache=on,mrr=off,mrr_cost_based=off,mrr_sort_keys=off,outer_join_with_cache=on,semijoin_with_cache=on,join_cache_incremental=on,join_cache_hashed=on,join_cache_bka=on,optimize_join_buffer_size=on,table_elimination=on,extended_keys=on,exists_to_in=on,orderby_uses_equalities=on,condition_pushdown_for_derived=on,split_materialized=on,condition_pushdown_for_subquery=on,rowid_filter=on,condition_pushdown_from_having=on,not_null_range_scan=off,hash_join_cardinality=off,cset_narrowing=off' to 'optimizer_switch'
+Sep 21 07:31:02 PTADU01-clone systemd[1]: mariadb.service: Main process exited, code=exited, status=13/n/a
+Sep 21 07:31:02 PTADU01-clone systemd[1]: mariadb.service: Failed with result 'exit-code'.
+Sep 21 07:31:02 PTADU01-clone systemd[1]: Failed to start MariaDB 11.4.8 database server.
+
+*****  problem report *****
+Warning: start service mariadb failed
+
+Job for mariadb.service failed because the control process exited with error code.
+See "systemctl status mariadb.service" and "journalctl -xe" for details.
+INFO: [Sun Sep 21 07:31:04 +08 2025]: Service: mariadb, Action: start
+ Trying to start service mariadb... failed
+Sep 21 07:31:04 PTADU01-clone systemd[1]: Starting MariaDB 11.4.8 database server...
+Sep 21 07:31:05 PTADU01-clone mariadbd[3674916]: 2025-09-21  7:31:05 0 [ERROR] /usr/sbin/mariadbd: Error while setting value 'index_merge=on,index_merge_union=on,index_merge_sort_union=on,index_merge_intersection=on,index_merge_sort_intersection=on,engine_condition_pushdown=on,index_condition_pushdown=on,derived_merge=on,derived_with_keys=on,firstmatch=on,loosescan=on,materialization=on,in_to_exists=on,semijoin=on,partial_match_rowid_merge=on,partial_match_table_scan=on,subquery_cache=on,mrr=off,mrr_cost_based=off,mrr_sort_keys=off,outer_join_with_cache=on,semijoin_with_cache=on,join_cache_incremental=on,join_cache_hashed=on,join_cache_bka=on,optimize_join_buffer_size=on,table_elimination=on,extended_keys=on,exists_to_in=on,orderby_uses_equalities=on,condition_pushdown_for_derived=on,split_materialized=on,condition_pushdown_for_subquery=on,rowid_filter=on,condition_pushdown_from_having=on,not_null_range_scan=off,hash_join_cardinality=off,cset_narrowing=off' to 'optimizer_switch'
+Sep 21 07:31:05 PTADU01-clone systemd[1]: mariadb.service: Main process exited, code=exited, status=13/n/a
+Sep 21 07:31:05 PTADU01-clone systemd[1]: mariadb.service: Failed with result 'exit-code'.
+Sep 21 07:31:05 PTADU01-clone systemd[1]: Failed to start MariaDB 11.4.8 database server.
+
+*****  problem report *****
+Warning: start service mariadb failed
+
+
+
+Checked with gemini and recommends to comment out the  optimizer_switch = line
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
