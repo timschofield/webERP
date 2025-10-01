@@ -12,7 +12,7 @@ function KLDatabaseSelection(){
 		$DefaultDatabase = 'test_erp';
 	} else {
 		// the current script filename resides in the production server
-		if (URLWithoutScriptNameContains("TEST")){
+		if (URLWithoutScriptNameContains("/TEST")){
 			// the current script filename contains TEST, we are on TEST code
 			$DefaultDatabase = 'test_erp';
 		}else{
@@ -31,7 +31,7 @@ function KLThemeSelection(){
 	} else {
 		if (URLWithoutScriptNameContains("DEVELOPMENT")){
 			// we are on ptadu-development.com (development code)
-			if (URLWithoutScriptNameContains("TEST")){
+			if (URLWithoutScriptNameContains("/TEST")){
 				// development environment with the test DB (safe)
 				$Theme = 'xenos'; 
 			}else{
@@ -40,7 +40,7 @@ function KLThemeSelection(){
 			}
 		} else {
 			// we are on ptadu.com (production code)
-			if (URLWithoutScriptNameContains("TEST")){
+			if (URLWithoutScriptNameContains("/TEST")){
 				// Training staff environment: we are on production code with the test DB 
 				$Theme = 'gel'; 
 			}else{
@@ -54,7 +54,7 @@ function KLThemeSelection(){
 }
 
 function KLwebERPScriptCalledFromTEST() {
-	return (URLWithoutScriptNameContains(".LOCAL") || URLWithoutScriptNameContains("TEST"));
+	return (URLWithoutScriptNameContains(".LOCAL") || URLWithoutScriptNameContains("/TEST"));
 }
 
 function URLWithoutScriptNameContains($keyword) {

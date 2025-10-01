@@ -64,7 +64,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 		$StockID = mb_strtoupper($MyRow[0]);
 
-		$NewCost = (double)$MyRow[1]+(double)$MyRow[2]+(double)$MyRow[3];
+		$NewCost = (float)$MyRow[1]+(float)$MyRow[2]+(float)$MyRow[3];
 
 		$SQL = "SELECT mbflag,
 						materialcost,
@@ -94,9 +94,9 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 			ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 
 			$SQL = "UPDATE stockmaster
-					SET	materialcost='" . (double) $MyRow[1] . "',
-						labourcost='" . (double) $MyRow[2] . "',
-						overheadcost='" . (double) $MyRow[3] . "',
+					SET	materialcost='" . (float) $MyRow[1] . "',
+						labourcost='" . (float) $MyRow[2] . "',
+						overheadcost='" . (float) $MyRow[3] . "',
 						lastcost='" . $OldCost . "',
 						lastcostupdate = CURRENT_DATE
 					WHERE stockid='" . $StockID . "'";

@@ -1,0 +1,30 @@
+<br /><br />
+<a name="SpecialUtilities"><font size="+3"><b>Servicewerkzeuge</b></font></a>
+<br /><br />
+Alle diese Programme dürfen nur von der Person ausgeführt werden, der als Systemadministrator im Unternehmen ein durchgängiges Systemverständnis besitzt. Wenn Sie im Zweifel sind, suchen Sie Hilfe. Viele dieser Werkzeuge führen umfangreiche Änderungen in der Datenbank durch, und es ist immer ratsam, ein Backup zu erstellen, bevor Sie ein solches Werkzeug ausführen. Alle diese Werkzeuge haben normalerweise ein Sicherheitsniveau 15 (siehe Abschnitt Sicherheitskonzept).
+<br /><br />
+Es gibt keinen Link zum Servicemenü in der Anwendung, damit kein gelegentlicher Anwender, sollte er die Berechtigungen besitzen, zufällig auf diese Seite stolpern kann. Die URL zu Z_index.php muss händisch eingegeben werden. Alle Serviceprogramme haben das Präfix Z_.
+<br /><br />
+<font size="+2"><b>Ergebnisrechnungssätze zu Standardkosten neu bewerten</b></font>
+<br /><br />
+Dieses Werkzeug erlaubt es, eine Periode auszuwählen, für welche die AKTUELLEN Standardkosten auf die fakturierten Mengen in den Ergebnisrechnungssätzen angewendet werden, um die Herstellkosten des Umsatzes neu zu berechnen.
+<br /><br />
+Es ist wichtig, dass Sie sich darüber im Klaren sind, dass Sie damit die Integrität der zugehörigen Hauptbuchbelege verletzen, so dass die zum Zeitpunkt der Fakturierung mit den dann gültigen Herstellkosten gebuchten Hauptbuchbelege nicht mehr zu den Auswertungen der Ergebnisrechung passen.
+<br /><br />
+Gelegentlich falsche Kostenangaben, die ein der Ergebnisrechnung und der Hauptbuchhaltung Unkundiger in der Bestandsführung eingestellt hat, können nur auf diese Weise korrigiert werden.
+<br /><br />
+<font size="+2"><b>Eine Kundennummer ändern</b></font>
+<br /><br />
+Diese Seite erfordert die Angabe der vorhandenen zu ändernden Kundennummer und der neu zuvergebenden Kundennummer. Das System prüft das Vorhandensein der alten und das Nichtvorhandensein der neuen Kundennummer. Wenn alles in Ordnung ist, wird in einer Datenbanktransaktion ein neuer Stammsatz mit Vorlage des alten angelegt, alle vorhandenen Daten vom alten auf den neuen Stammsatz zugeordnet und dann der alte Stammsatz gelöscht. Wegen der umfangreichen Änderungen die in der gesamten Datenbank durchgeführt werden, sollte dieses Programm nicht laufen, während andere Personen am System arbeiten müssen.
+<br /><br />
+<font size="+2"><b>Eine Materialnummer ändern</b></font>
+<br /><br />
+Diese Seite erfordert die Angabe der vorhandenen zu ändernden Materialnummer und der neu zuvergebenden Materialnummer. Das System prüft das Vorhandensein der alten und das Nichtvorhandensein der neuen Materialnummer. Wenn alles in Ordnung ist, werden alle vorhandenen Daten, wie Ergebnisrechnungssätze, Warenbewegungen, Warenbestandssätze, Stücklisten, übergeordnete Sammelmaterialien oder Bestellsätze, Kundenauftragspositionen, Bestellpositionen genau wie der Stammsatz selbst, Preis- und Transportkosten geändert. Wegen der umfangreichen Änderungen die in der gesamten Datenbank durchgeführt werden, sollte dieses Programm nicht laufen, während andere Personen am System arbeiten müssen.
+<br /><br />
+<font size="+2"><b>Bestandsdatensätze erzeugen</b></font>
+<br /><br />
+Wenn die Bestandsdatenbank aus einem anderen System eingespielt worden ist, können die Bestandsdatensätze für alle als Lagerort definierte Betriebsstätten mit dem Skript Z_MakeStockLocns.php angelegt werden.
+<br /><br />
+<font size="+2"><b>Hauptbuchsalden nachbuchen</b></font>
+<br /><br />
+Das Skript Z_RePostGLFromPeriod.php löscht die Istdaten in der Hauptbuch-Summentabelle, welche die Verkehrszahlen für jedes Hauptbuchkonto enthält. Die Bewegungen werden neu berechnet, indem die einzelnen Belege als nicht gebucht gesetzt und die Buchung aller Belege neu durchgeführt wird. Diese verzweifelte Maßnahme sollte nur in Extremsituationen unternommen werden, wenn durch eine defekte Datenbank oder einen Systemzusammenbruch einmal die Probebilanz nicht mehr aufgehen sollte.

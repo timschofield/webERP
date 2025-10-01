@@ -6,7 +6,7 @@
 echo "Installing Composer..."
 
 if dpkg -l composer 2>/dev/null; then
-    apt-get remove -y composer
+    DEBIAN_FRONTEND=noninteractive apt-get remove -y composer
 fi
 
 ### Code below taken from https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md

@@ -1,8 +1,14 @@
 <?php
 
-$PathPrefix = __DIR__ . '/../../';
+// in case this file is accessed directly...
+if (!isset($PathPrefix)) {
+	$PathPrefix = __DIR__ . '/../../';
+}
+if (!isset($RootPath)) {
+	$RootPath = htmlspecialchars(dirname(dirname(dirname($_SERVER['PHP_SELF']))), ENT_QUOTES, 'UTF-8');
+}
 
-include('api/api_errorcodes.php');
+include($PathPrefix . 'api/includes/api_errorcodes.php');
 
 $Title = 'API documentation';
 
@@ -16,7 +22,7 @@ echo '</head>';
 echo '<body>';
 
 // avoid sending an xml-rpc request to self, interrogate directly the server
-$dispatchMap = include('api/api_xml-rpc_definition.php');
+$dispatchMap = include($PathPrefix . 'api/includes/api_xml-rpc_definition.php');
 $server = new PhpXmlRpc\Server($dispatchMap, false);
 $response = PhpXmlRpc\Server::_xmlrpcs_listMethods($server);
 $answer = $response->value();

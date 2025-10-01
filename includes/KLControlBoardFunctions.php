@@ -3977,7 +3977,7 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 			FROM www_users
 			WHERE lastvisitdate IS NOT NULL
 				AND DATE(lastvisitdate) < '" . $StartDate . "'
-				AND userid NOT LIKE '999%'
+				AND userid NOT LIKE '%999%'
 				AND userid <> 'TestUser'" . $WhereType;
 			
 	$Result = DB_query($SQL);

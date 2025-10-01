@@ -31,35 +31,39 @@ $PathToNewLanguage	= $PathPrefix . 'locale/' . $_SESSION['Language'] . '/LC_MESS
 
 $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) . '.mo';
 
-  /* now read in the language file */
+/* now read in the language file */
 
-	$LangFile = file($PathToLanguage);
+$LangFile = file($PathToLanguage);
+if (!$LangFile) {
+	prnMsg(__('You do not have read access to the required files please contact your system administrator'),'error');
+
+} else {
 	$LangFileEntries = sizeof($LangFile);
 
 	if (isset($_POST['submit'])) {
-    // save the modifications
+		// save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-    /* write the new language file */
+		/* write the new language file */
 
 		prnMsg(__('Writing the language file') . '.....<br />', 'info', ' ');
 
-		for ($i=17; $i<=$LangFileEntries; $i++) {
-			if (isset($_POST['msgstr_'.$i])) {
-				$LangFile[$i] = 'msgstr "' . $_POST['moduletext_'.$i] . '"' . "\n";
+		for ($i = 17; $i <= $LangFileEntries; $i++) {
+			if (isset($_POST['msgstr_' . $i])) {
+				$LangFile[$i] = 'msgstr "' . $_POST['moduletext_' . $i] . '"' . "\n";
 			}
 		}
 		$fpOut = fopen($PathToNewLanguage, 'w');
-		for ($i=0; $i<=$LangFileEntries; $i++) {
+		for ($i = 0; $i <= $LangFileEntries; $i++) {
 			$Result = fputs($fpOut, $LangFile[$i]);
 		}
 		$Result = fclose($fpOut);
 
-    /* Done writing, now move the original file to a .old */
-    /* and the new one to the default */
+		/* Done writing, now move the original file to a .old */
+		/* and the new one to the default */
 
 		if (file_exists($PathToLanguage . '.old')) {
 			$Result = rename($PathToLanguage . '.old', $PathToLanguage . '.bak');
@@ -70,7 +74,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 			$Result = unlink($PathToLanguage . '.bak');
 		}
 
-    /*now need to create the .mo file from the .po file */
+		/*now need to create the .mo file from the .po file */
 		/// @todo escape args
 		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
 		/// @todo check for failures
@@ -80,36 +84,36 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 
 		echo '</form>';
 		echo '</td></tr></table>';
-	/* End of Submit block */
+		/* End of Submit block */
 	} else {
 
-    /* now we need to parse the resulting array into something we can show the user */
+		/* now we need to parse the resulting array into something we can show the user */
 
 		$j = 1;
 
-		for ($i=17; $i<=$LangFileEntries; $i++) {			/* start at line 18 to skip the header */
-			if (mb_substr($LangFile[$i], 0, 2) == '#:') {		/* it's a module reference */
-				$AlsoIn[$j] .= str_replace(' ','<br />', mb_substr($LangFile[$i],3)) . '<br />';
-			} elseif (mb_substr($LangFile[$i], 0 , 5) == 'msgid') {
-				$DefaultText[$j] = mb_substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
-			} elseif (mb_substr($LangFile[$i], 0 , 6) == 'msgstr') {
-				$ModuleText[$j] = mb_substr($LangFile[$i], 8, mb_strlen($LangFile[$i])-10);
+		for ($i = 17; $i <= $LangFileEntries; $i++) {            /* start at line 18 to skip the header */
+			if (mb_substr($LangFile[$i], 0, 2) == '#:') {        /* it's a module reference */
+				$AlsoIn[$j] .= str_replace(' ', '<br />', mb_substr($LangFile[$i], 3)) . '<br />';
+			} elseif (mb_substr($LangFile[$i], 0, 5) == 'msgid') {
+				$DefaultText[$j] = mb_substr($LangFile[$i], 7, mb_strlen($LangFile[$i]) - 9);
+			} elseif (mb_substr($LangFile[$i], 0, 6) == 'msgstr') {
+				$ModuleText[$j] = mb_substr($LangFile[$i], 8, mb_strlen($LangFile[$i]) - 10);
 				$Msgstr[$j] = $i;
 				$j++;
 			}
 		}
 		$TotalLines = $j - 1;
 
-/* stick it on the screen */
+		/* stick it on the screen */
 
-    echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
+		echo '<br />&nbsp;' . __('When finished modifying you must click on Modify at the bottom in order to save changes');
 		echo '<div class="centre">';
 		echo '<br />';
 		prnMsg(__('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', __('PLEASE NOTE'));
 		echo '<br />';
 		echo '</div>';
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table>';
 		echo '<tr><th ALIGN="center">' . __('Language File for') . ' "' . $_SESSION['Language'] . '"</th></tr>';
@@ -123,10 +127,10 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		echo '<th>' . __('Exists in') . '</th>';
 		echo '</tr>' . "\n";
 
-		for ($i=1; $i<=$TotalLines; $i++) {
+		for ($i = 1; $i <= $TotalLines; $i++) {
 			if ($ModuleText[$i] == "") {
 				echo '<tr>';
-				echo '<td VALIGN="top"><I>' .  $DefaultText[$i] . '</I></td>';
+				echo '<td VALIGN="top"><I>' . $DefaultText[$i] . '</I></td>';
 				echo '<td VALIGN="top"><input type="text" size="60" name="moduletext_' . $Msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
 				echo '<td VALIGN="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $Msgstr[$i] . '" value="' . $Msgstr[$i] . '" /></td>';
 				echo '</tr>';
@@ -145,5 +149,6 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		echo '</form>';
 		echo '</div>';
 	}
+}
 
 include('includes/footer.php');

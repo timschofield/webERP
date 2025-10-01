@@ -24,7 +24,7 @@ class Receipt_Batch {
 	/*Constructor function initialises a new receipt batch */
 		$this->Items = array();
 		$this->ItemCounter=0;
-		$this->total=0;
+		$this->Total=0;
 	}
 
 	function Receipt_Batch() {
@@ -35,7 +35,7 @@ class Receipt_Batch {
 		if ((isset($Customer) OR isset($GLCode)) AND ($Amount + $Discount) !=0){
 			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $Tag);
 			$this->ItemCounter++;
-			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;
+			$this->Total = $this->Total + ($Amount + $Discount) / $this->ExRate;
 			Return 1;
 		}
 		Return 0;
@@ -43,7 +43,7 @@ class Receipt_Batch {
 
 	function remove_receipt_item($RcptID){
 
-		$this->total = $this->total - ($this->Items[$RcptID]->Amount + $this->Items[$RcptID]->Discount) / $this->ExRate;
+		$this->Total = $this->Total - ($this->Items[$RcptID]->Amount + $this->Items[$RcptID]->Discount) / $this->ExRate;
 		unset($this->Items[$RcptID]);
 
 	}
@@ -72,7 +72,7 @@ class Receipt {
 		$this->GLCode = $GLCode;
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
-		$this->tag = $Tag;
+		$this->Tag = $Tag;
 		$Result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
 		if (DB_num_rows($Result)==1){
 			$TagRow = DB_fetch_array($Result);

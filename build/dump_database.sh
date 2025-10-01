@@ -88,7 +88,7 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" != 'true' ] && [ "$ADD_DROP_TABLES_OPTION" 
 	exit 1
 fi
 
-mysql -u"$MYSQL_USER"  -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
+mysql -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER"  -p"$MYSQL_PASSWORD" "$MYSQL_DATABASE" < "$BASE_DIR/build/TruncateAuditTrail.sql"
 
 if [ "$ADD_CREATE_SCHEMA_STATEMENTS" = true ]; then
 	# @todo add default collation to be utf8mb4
@@ -119,11 +119,10 @@ if [ "$ADD_CREATE_TABLES_STATEMENTS" = true ]; then
 		TARGET_FILE=demo.sql
 	fi
 
-	# @todo review the list of excluded tables
-	echo mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
-		--skip-set-charset --no-data $ADD_DROP_TABLES_OPTION
+	# the `--column-statistics=0` option is needed when using mysqldump from mysql to access some mariadb versions
 
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+	# @todo review the list of excluded tables
+	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 	    --skip-set-charset --no-data $ADD_DROP_TABLES_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.buckets" \
 		--ignore-table="${MYSQL_DATABASE}.levels" \
@@ -144,7 +143,7 @@ fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = default ]; then
 	# @todo review the list of included tables
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION "$MYSQL_DATABASE" \
 		accountgroups \
 		accountsection \
@@ -188,7 +187,7 @@ fi
 
 if [ "$ACTION" = all ] || [ "$ACTION" = demo ]; then
 	# @todo review the list of excluded tables
-	mysqldump -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
+	mysqldump --column-statistics=0 -h"$MYSQL_HOST" -P"$MYSQL_PORT" -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" \
 		$MYSQL_DUMP_OPTIONS $SORT_ROWS_OPTION \
 		--ignore-table="${MYSQL_DATABASE}.mrpsupplies" \
 		--ignore-table="${MYSQL_DATABASE}.mrpplanedorders" \

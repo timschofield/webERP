@@ -3,7 +3,7 @@
 set -e
 
 help() {
-	printf "Usage: setup_db.sh [OPIONS]
+	printf "Usage: setup_db.sh [OPTIONS]
 
 Used to start a DB, set up appropriately.
 
@@ -21,9 +21,13 @@ DB_PORT=3306
 DB_PASSWORD=root
 
 # parse cli options and arguments
-while getopts ":P:p:t:v:" opt
+while getopts ":hP:p:t:v:" opt
 do
 	case $opt in
+		h)
+			help
+			exit 0
+			;;
 		P)
 			DB_PORT="$OPTARG"
 			;;
@@ -32,15 +36,15 @@ do
 			;;
 		t)
 			DB_TYPE="$OPTARG"
-		;;
+			;;
 		v)
 			DB_VERSION="$OPTARG"
-		;;
+			;;
 		\?)
 			printf "\n\e[31mERROR: unknown option -${OPTARG}\e[0m\n\n" >&2
 			help
 			exit 1
-		;;
+			;;
 	esac
 done
 shift $((OPTIND-1))
@@ -89,7 +93,7 @@ if [ "$DB_VERSION" = native ]; then
 				exit 1
 			fi
 			if [ -z "$GITHUB_ACTION" ]; then
-				apt-get install mysql-server
+				DEBIAN_FRONTEND=noninteractive apt-get install -y mysql-server
 			fi
 			sudo cp ./tests/setup/config/mysql/test.cnf /etc/mysql/conf.d/
 			# Start the service
@@ -101,7 +105,7 @@ if [ "$DB_VERSION" = native ]; then
 				exit 1
 			fi
 			if [ -z "$GITHUB_ACTION" ]; then
-				apt-get install mariadb-server
+				DEBIAN_FRONTEND=noninteractive apt-get install -y mariadb-server
 			fi
 			sudo cp ./tests/setup/config/mariadb/test.cnf /etc/mysql/conf.d/
 			# Start the service

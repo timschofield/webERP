@@ -190,7 +190,7 @@ function submit($TypeOfShop) {
 						$NamaVariant = "";
 					}
 
-					$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Name = ItemMarketplaceName("LAZADA", $StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
 					$Price = round($MyRow['price']);
 					$PriceDiscount = '';
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 

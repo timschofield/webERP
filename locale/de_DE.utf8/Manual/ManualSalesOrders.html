@@ -1,0 +1,133 @@
+<br /><br />
+<a name="SalesOrders"><font size="+3"><b>Kundenaufträge</b></font></a>
+<br /><br />
+<font size="+2"><b>Funktionalität</b></font>
+<br /><br />
+<ul>
+<li>Kundenaufträge können erfasst und bearbeitet und über die Kundenauftragsnummer angegeben werden.</li>
+<li>Die Gesamtauftragsmenge für ein Lagermaterial wird als Bedarf in der Bestandsübersicht angezeigt.</li>
+<li>Die Gesamtauftragsmenge für ein Sammelmaterial wird als Bedarf der zugehörigen Komponenten in der Bestandsübersicht angezeigt.</li>
+<li>Die die noch zu fakturierende Auftragsmenge wird für jede einzelne Auftragsposition gepflegt.</li>
+<li>Die erfassten Aufträge können direkt ohne oder mit nur geringfügigen zusätzlichen Eingaben fakturiert werden.</li> 
+<li>Zu einem Kundenauftrag sind mehrere Auslieferungen möglich. Der Auftrag erhält einen Bezug zu jeder Lieferung.</li>
+<li>Lieferdifferenzen werden immer dann aufgezeichnet, wenn Auslieferungen nicht der bestellten Menge entsprechen und mit einem DIFOT-Bericht (Delivery in full on time) ausgewertet.</li>
+<li>Die Preise werden automatisch auf der Grundlage der Umsatzart/Preisliste, Niederlassung und Währung ermittelt.</li>
+<li>Mengenabhängige Rabatte, auch über einen Bereich von Produkten werden automatisch auf der Grundlage der Rabattstaffeln berechnet.</li>
+<li>Warenanhänger / begleitscheine werden per Laserdrucker oder auf vorgedruckten Formularen erstellt.</li>
+<li>Das Auslieferungslager ist vom Benutzer auswählbar</li>
+<li>Frei formatierbare Lieferanschrift, normalerweise die Straßenadresse des Kunden.</li>
+<li>Daueraufträge, die bis zu einem vorgegebenen Endedatum mit einer Periodizität von bis zu einem Jahr wiederkehren.</li>
+</ul>
+
+<!-- Help Begin: SelectOrderItems -->
+
+<font size="+2"><b>Kundenaufträge erfassen</b></font>
+<br /><br />
+Sie wählen Hauptmenü &rarr; Aufträge &rarr; Vorgänge &rarr; Auftrag anlegen.
+<br /><br />
+<font size="+1"><b>Auswahl des Kunden und der Niederlassung</b></font>
+<br /><br />
+Zum Anfang zeigt die Seite zur Auftragserfassung Suchfelder für die Auswahl des Kunden und seiner Niederlassung. Der Kunde ist das Konto, auf das der Auftrag berechnet werden soll und die Niederlassung enthält alle Angaben über die Belieferung. Die Auswahl ist vergleichbar mit der Kundensuche, aber es werden nur solche Niederlassungen angezeigt, für die im Stammsatz Aufträge erlaubt sind. Die Suche kann entweder über Zeichenfolgen zur Kundennummer oder Teile zum Kundennamen erfolgen. Durch eine solche Suche wird die Anzahl der zurückgegebenen Datensätze minimiert, um die Ausgaben möglichs schnell (besonders bei einer Wählverbindung) an den Benutzer zurückzugeben. Alle auf die Suchkriterien passenden, für Aufträge erlaubten Niederlassungen werden mit jeweils einer Drucktaste zurüclgegeben. Durch das Drücken der Taste für die gewünschte Kundenniederlassung wird diese für die Erfassung des Kundenauftrages ausgewählt. Es gibt später noch die Möglichkeit, Lieferdetails abzuändern. Der Bildschirm zeigt nun die Schnellerfassung, überschrieben mit dem Namen des Kunden und der Niederlassung und der Umsatzart des Kunden.
+<br /><br />
+<font size="+1"><b>Auswahl der Kundenauftragspositionen</b></font>
+<br /><br />
+Es gibt zwei Möglichkeiten, die Einzelposten für einen Auftrag auszuwählen.
+<br /><br />
+<ul>
+<li>Als Vorgabe wird ein Schnellerfassungsbildschirm angezeigt, der die direkte Erfassung der Materialnummer und der Mengen für den Auftrag erlaubt. Die Anzahl der Zeilen für den Schnellerfassungsbildschirm kann in den Systemeinstellungen festgelegt werden. Wenn der Benutzer eine gewisse Anzahl von Positionen in die Schnellerfassung eingetragen hat, werden diese durch Drücken der Taste "Positionen erfassen" in den Auftrag übernommen. Die Preise werden auf der Grundlage der Umsatzart/Preisliste, der Währung des Kunden, der Niederlassung und dem Kunden dieses Auftrages bestimmt. Falls die Anzahl Zeilen nicht ausreicht, um alle Materialien für den Auftrag zu erfassen, kann dieser Vorgang wiederholt werden, weil die Schnellerfassungsmaske unter den bereits erfassten Auftragspositionen eingabebereit ist.</li>
+<li>Auf der Schnellerfassungsmaske gibt es auch eine Taste "Material suchen". Diese Taste ermöglicht es dem Benutzer, nach einem Material über die Warengruppe, die Materialnummer bzw. die -beschreibung zu suchen. Wenn Sie die "Suchen"-Taste drücken, nachdem Sie die entsprechenden Eingaben gemacht haben, werden die Materialien zusammen mit dem Bild des Materials - sofern es auf den Server hochgeladen wurde - angezeigt. Bilder müssen im jpeg-Format mit einem Dateinamen identisch mit der Materialnummer in das Verzeichnis, das in den Systemeinstellungen hinterlegt ist abgelegt werden. Die Materialien können über den Link "Diese bestellen" in den Kundenauftrag übernommen werden. Weitere Materialien können auf die gleiche Weise ausgewählt werden.</li>
+</ul>
+Wenn Sie die Materialien für den Auftrag ausgewählt haben, ist es möglich, die Mengen, Preise und möglichen Rabatte für jede einzelne Auftragsposition zu bearbeiten. Um den Auftragswert zu aktualisieren, müssen Sie die Taste "Neu berechnen" anklicken (das ist ein Kompromiss wegen der serverseitigen Bearbeitung mit PHP gegenüber einer Frontendseitigen Java-Bearbeitung). Rabatte werden über die Funktion der Rabattstaffel wie im entsprechenden Abschnitt beschrieben mit den eingegebenen Auftragsmengen berechnet.
+<br /><br />
+Wenn eine Position erfasst wird und die Anzeige vor einem roten Hintergrund erscheint, so bedeutet das, dass der Bestand für diese Postion in der Betriebsstätte, von der die Kundenniederlassung üblicherweise beliefert wird, nicht ausreicht. Die angezeigte Materialnummer ist gleichzeitig ein Link zu einem neuen Browserfenster, in welchem der Bestandsstatus für das Material mit dem verfügbaren Bestand für alle Lagerorte angezeigt wird.
+<br /><br />
+Eine Zeile kann jederzeit gelöscht werden, indem Sie den Link "Löschen" am Ende der Zeile anklicken.
+<br /><br />
+Die Erfassung des Auftrages kann jederzeit abgebrochen werden, indem Sie die Taste "Ganzen Auftrag stornieren" drücken.
+<br /><br />
+Der Kunde kann auch noch gewechselt werden, die Taste dazu erreichen Sie über die Taste "Material suchen"
+<br /><br />
+Wenn Sie alle Positionen ausgewählt haben, müssen Sie die Taste "Lieferangaben übernehmen" anklicken. Beachten Sie, dass bisher noch keinerlei Daten in die Datenbank geschrieben wurden, sie sind bisher nur temporär auf dem Server abgelegt. Die Lieferangaben müssen zunächst bestätigt werden, bevor der Auftrag gesichert werden kann.
+<br /><br />
+<font size="+1"><b>Lieferangaben</b></font>
+<br /><br />
+Normalerweise werden die Lieferangaben aus der Straßenadresse der Kundenniederlassung übernommen. Sie haben jedoch die Möglichkeit, diese Informationen auf diesem Bild zu überschreiben. Die Informationen werden auf dem Lifernschein und der Rechnung ausgedruckt.
+<br /><br />
+Das Liefern-ab-Lager ist die Betriebsttätte, von dem die Waren für die Kundenniederlassung üblicherweise beliefert werden. Es ist jedoch möglich, eine andere Betriebsstätte auszuwählen, wenn der Auftrag von anderswo beliefert werden soll.
+<br /><br />
+Die Nummer der Bestellung des Kunden sollte in das Feld Kundenreferenz eingetragen werden und es sollte auch die günstigste Versandart ausgewählt werden. Das System merkt sich die zuletzt für die Niederlassung verwendete Versandart
+<br /><br />
+Es ist möglich, zu den Auftragspositionen zurückzugehen, um die auf dem Schirm Lieferangaben eingegebenen Daten zu bewerten, indem Sie auf die Taste "Auftragspositionen ändern" klicken. Wenn das Liefern-ab-Lager geändert wurden, wird der Lagerbestand in dieser neuen Betriebsstätte geprüft. Die Farben der Positionen können sich dadurch geändert haben.
+<br /><br />
+Wenn die automatische Frachtkostenberechnung benutzt wird (Vorgabe in den Systemeinstellungen) werden die Versandkosten auf der Grundlage des Gesamtgewichtes und des Gesamtvolumens berechnet. Die günstigste Versanart wird auch zurückgegeben. Der Benutzer kann sich entscheiden, die berechneten Versandkosten in Rechnung zu stellen oder die billigste Versandart auszuwählen. Die berechneten Versandkosten können überschrieben werden.
+<br /><br />
+Wenn alle Angaben korrekt erfasst wurden, muss die Taste "Auftrag sichern" angeklickt werden. Es ist wichtig zu beachten, dass beim Verlassen des Auftrages ohne diese Taste zu drücken nichts in der Datenbank gespeichert wird. Wenn Sie auf ein anderes Bild klicken, verlieren Sie die eingegebenen Auftragsinformationen. Es ist durchaus möglich, verschiedene Browserfenster mit unterschiedlichen Auswertungen zur selben Zeit offen zu haben. Es ist aber nicht möglich, zwei Fenster zur Erfassung unterschiedlicher Kundenaufträge offen zu haben, die Angaben des einen Fensters würden die Angaben des anderen Fensters überschreiben.
+
+<!-- Help End: SelectOrderItems -->
+
+<br /><br />
+
+<!-- Help Begin: SelectSalesOrder -->
+
+<font size="+1"><b>Kundenauftrag ändern</b></font>
+<br /><br />
+Nur offene Kundenaufträge können geänder werden. Nur diese haben irgendwelche Mengen die noch zu beliefern und zu fakturieren sind. Auch können Auftragspositionen, die bereits vollständig fakturiert sind, nicht mehr geändert werden. Dem Auftrag können keine neuen Positionen hinzugefügt werden. Wenn eine Teilmenge der Position bereits geliefert/fakturiert ist, kann auch der Preis nicht mehr geändert werden. Mengen können nicht unter die bereits gelieferte Menge reduziert werden.
+<br /><br />
+Beachten Sie, dass die Änderung der Lieferadresse eines offenen Auftrages, zu dem schon Positionen geliefert und berechnet wurden, sich auf Wiederhol-Drucke der ursprünglichen Rechnung auswirkt, es wird die geänderte Lieferanschrift ausgegeben. Deshalb ist die Ablage eines Ausdruckes der Originalrechnung vor der Änderung notwendig.
+<br /><br />
+<b>Offene Kundenaufträge suchen</b>
+<br /><br /> 
+Es gibt verschiedene Möglichkeiten:
+<br /><br />
+<ul>
+<li>Wenn das bestellte Material bekannt ist, können Sie das Material über die Materialsuche auswählen. Unter Materialauswertungen erscheint dann der Link "Offene Kundenaufträge suchen".</li>
+<li>Wenn der Kunde bekannt ist, können Sie den Kunden über die Kundensuche auswählen. Unter Kundenauswertungen erscheint dann der Link "offene Kundenaufträge suchen", worüber nur die offenen Aufträge dieses Kunden angezeigt werden.</li>
+<li>Um alle offenen Kundenaufträge anzuzeigen, rufen Sie den Bildschirm "Offene Kundenaufträge suchen" über Hauptmenü &rarr; Aufträge &rarr; Vorgänge &rarr; Kundenaufträge ändern ohne die Angabe eines Kunden oder Materials auf und drücken auf "Alle anzeigen". Dieser Bildschirm bietet zudem die Möglichkeit, direkt nach einem Material zu suchen.</li>
+</ul>
+Die offenen Kundenaufträge werden je Betriebsstätte angezeigt, die gewünschte Betriebsstätte kann auf diesem Bild ausgewählt werden, als Standard wird die Betriebsstätte aus dem Stammsatz des Benutzers vorgegeben. Die Aufträge zu diesem Kriterium werden nur angezeigt, wenn Sie auf die Taste "Aufträge/Angebote suchen" klicken.
+<br /><br />
+Die angezeigten Aufträge haben jeweils Links zum Bearbeiten der Auftragspositionen (klicken Sie auf die Auftragsnummer), zum Fakturieren der Rechnung und zum Drucken der Lieferpapiere. Wenn der Lieferschein schon einmal gedruckt wurde, sollte der Link dies anzeigen, damit nicht versehentlich Lieferscheine mehrfach gedruckt und beliefert werden.
+<br /><br />
+<!-- Help End: SelectSalesOrder -->
+
+<!-- Help Begin: Quotations -->
+<font size="+1"><b>Angebote</b></font>
+<br /><br />
+Ein Angebot kann auf die gleiche Weise erfasst werden, wie ein Kundenauftrag. Sie kennzeichen es erst als Angebot, wenn Sie auf dem Bild Lieferangaben ganz unten "nur Angebot" auswählen. Wenn dieses Kennzeichen gesetzt ist, können Sie ein PDF-Angebot erstellen, das Sie an den Kunden senden. Wenn diese Option ausgewählt ist, wird in der Auswertung Bestandsstatus auch kein Bedarf reserviert. Angebote können Sie auf dem Bild "Offene Kundenaufträge suchen" aufrufen, indem Sie "Nur Angebote" auswählen. In diesem Falle bekommen Sie nur Angebote angezeigt. Mit dem Link zum Bearbeiten, können Sie das Angebot ändern und wenn sich der Kunde entscheidet, zum Kundenauftrag umwandeln. Außerdem gibt es einen Link, mit dem Sie das Angebot nochmals drucken können. 
+<br /><br />
+Wenn Sie ein Angebot zum Kundenauftrag geändert haben, ist die weitere Bearbeitung die gleiche wie oben für Kundenaufträge erläutert, die Lieferpapiere können gedruckt werden und der Auftrag kann fakturiert werden.
+<br /><br />
+<!-- Help End: Quotations -->
+
+<!-- Help Begin: RecurringSalesOrder -->
+<font size="+1"><b>Daueraufträge</b></font>
+<br /><br />
+Aufträge können als mit einer bestimmten Periodizität wiederkehrend erfasst werden:
+<ul>
+<li>wöchentlich</li>
+<li>vierzehntägig</li>
+<li>monatlich</li>
+<li>zweimonatlich</li>
+<li>vierteljählich</li>
+<li>halbjährlich</li>
+<li>jährlich</li>
+</ul>
+<br /><br />
+Wenn der Auftrag nur Dummymaterialien als Positionen enthält (d. h. solche, die nicht mit einer physischen Bestandsbewegung durch das Lagerpersonal verbunden sind - z. B. Jahresgebühren für das Hosten eine Webseite), kann der Auftrag auch zum automatische Fakturieren gekennzeichnet werden.
+<br /><br />
+Das Anlegen eines Dauerauftrages geschieht von der normalen Auftragserfassung aus - Positionen erfassen, dann Lieferangaben. Sie wählen lediglich am Ende nicht "Auftrag sichern" sondern "Dauerauftrag anlegen". Daraufhin erscheint ein Bild für die Erfassung von:
+<br />
+<ul>
+<li>Abstand der Ausführung</li>
+<li>Anfangsdatum - wenn der Auftrag zum ersten Mal ausgeführt wird</li>
+<li>Endedatum - nach welchem der Auftrag nicht mehr ausgeführt werden soll.</li>
+<li>Wenn alle Auftragspositionen Dummymaterialien betreffen, wird auch die Option "Automatisch fakturieren" angezeigt.</li>
+</ul>
+<br /><br />
+Es ist möglich, die angelegten Daueraufträge anzuzeigen, das erreichen Sie über Hauptmenü &rarr; Aufträge &rarr; Vorgänge &rarr; Dauerauftrag-Vorlage wählen. Dort wählen Sie die Betriebsstätte aus und drücken "Daueraufträge suchen", worauf alle Daueraufträge aufgelistet werden, die von der Betriebsstätte zu beliefern sind.
+<br /><br />
+Aus diesem Bild ist es auch möglich, den Dauerauftrag zu ändern. Die Positionen des Auftrages können nicht geändert werden, lediglich die Häufigkeit und das Endedatum. Wenn Positionen geändert werden müssen, kann der Dauerauftrag gelöscht und ein neuer Dauerauftrag angelegt werden.
+<br /><br />
+Die eigentlichen Kundenaufträge werden mit dem Skript RecurringSalesOrderProcess.php aus den Dauerauftrags-Vorlagen angelegt werden. Dieses Programm geht alle Daueraufträge (Vorlagen) durch und legt erforderlichenfalls Kundenaufträge an. Dabei werden das aktuelle Datum das Datum der letzten Ausführung und der Abstand der Ausführung berücksichtigt. Das Datum der letzten Ausführung wird dabei im Dauerauftrag um die Anzahl Tage zwischen den Ausführungen erhöht. Ebenso wird eine Email erstellt und an die in der Betriebsstätte hinterlegten Kontakadresse gesendet. Die Email teilt mit, dass ein Auftrag angelegt wurde, die Auftragsnummer und wenn der Auftrag automatisch fakturiert wurde. Idealerweise wird dieses Skript täglich zeitgesteuert aufgerufen, es ist aber auch über Hauptmenü &rarr; Aufträge &rarr; Vorgänge &rarr; Daueraufträge verarbeiten erreichbar. Es kann so oft aufgerufen werden, wie Sie wollen, und legt immer nur die notwendigen Kundenaufträge an, ohne fehlerhafte Wiederholungen.
+<br /><br />
+<!-- Help End: RecurringSalesOrder -->

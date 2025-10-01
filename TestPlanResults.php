@@ -508,20 +508,20 @@ if (isset($_GET['ListTests'])) {
 		}
 
 		switch ($MyRow['type']) {
-		 	case 0; //textbox
+			case 0: //textbox
 		 		$TypeDisp='Text Box';
 		 		break;
-		 	case 1; //select box
+			case 1: //select box
 		 		$TypeDisp='Select Box';
 				break;
-			case 2; //checkbox
+			case 2: //checkbox
 				$TypeDisp='Check Box';
 				break;
-			case 3; //datebox
+			case 3: //datebox
 				$TypeDisp='Date Box';
 				$Class="date";
 				break;
-			case 4; //range
+			case 4: //range
 				$TypeDisp='Range';
 				$RangeMin='<input  class="' .$Class. '" type="text" name="AddRangeMin' .$x.'" />';
 				$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
@@ -845,11 +845,11 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$Class="number";
 	}
 	switch ($MyRow['type']) {
-		case 0; //textbox
+		case 0: //textbox
 			$TypeDisp='Text Box';
 			$TestResult='<input type="text" size="10" maxlength="20" class="' . $Class . '" name="TestValue' .$x .'" value="' . $MyRow['testvalue'] . '"' . $BGColor . '/>';
 			break;
-		case 1; //select box
+		case 1: //select box
 			$TypeDisp='Select Box';
 			$OptionValues = explode(',',$MyRow['defaultvalue']);
 			$TestResult='<select name="TestValue' .$x .'"' . $BGColor . '/>';
@@ -862,15 +862,15 @@ while ($MyRow = DB_fetch_array($Result)) {
 			}
 			$TestResult.='</select>';
 			break;
-		case 2; //checkbox
+		case 2: //checkbox
 			$TypeDisp='Check Box';
 			break;
-		case 3; //datebox
+		case 3: //datebox
 			$TypeDisp='Date Box';
 			$Class="date";
 			$TestResult='<input type="text" size="10" maxlength="20" class="' . $Class . '" name="TestValue' .$x .'" value="' . $MyRow['testvalue'] . '"' . $BGColor . '/>';
 			break;
-		case 4; //range
+		case 4: //range
 			$TypeDisp='Range';
 			//$Class="number";
 			$TestResult='<input type="text" size="10" maxlength="20" class="' . $Class . '" name="TestValue' .$x .'" value="' . $MyRow['testvalue'] . '"' . $BGColor . '/>';

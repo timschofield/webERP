@@ -21,6 +21,14 @@ class WebTestCase extends TestCase
 	protected static $randId;
 	/** @var HttpBrowser */
 	protected $browser;
+	/** @var string */
+	protected $executingTestIdentifier;
+	/** @var string */
+	protected static $errorPrependString = '';
+	/** @var string */
+	protected static $errorAppendString = '';
+	/** @var bool|null */
+	protected static $serverRunsXDebug;
 
 	/**
 	 * Runs once before all the test methods of this object
@@ -33,10 +41,16 @@ class WebTestCase extends TestCase
 			self::$rootDir = realpath(__DIR__ . '/../..');
 		}
 
+		self::$baseUri = $_ENV['TEST_TARGET_PROTOCOL'] . '://'. $_ENV['TEST_TARGET_HOSTNAME'] .
+			($_ENV['TEST_TARGET_PORT'] != '' ? (':' . ltrim($_ENV['TEST_TARGET_PORT'], ':')) : '') .
+			rtrim($_ENV['TEST_TARGET_BASE_URL'], '/');
+
 		/// @todo  This is a file which can be read by pages server-side to validate that the request is coming from the test
 		///        It remains to be done: 1. send self::$randId as cookie on every http request, and 2. check for it server-side
-		//self::$randId = uniqid();
-		//file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
+		self::$randId = uniqid();
+		file_put_contents(sys_get_temp_dir() . '/phpunit_rand_id.txt', self::$randId);
+
+		self::checkPHPConfiguration();
 	}
 
 	/**
@@ -44,9 +58,9 @@ class WebTestCase extends TestCase
 	 */
 	public static function tearDownAfterClass(): void
 	{
-		//if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
-		//	unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
-		//}
+		if (is_file(sys_get_temp_dir() . '/phpunit_rand_id.txt')) {
+			unlink(sys_get_temp_dir() . '/phpunit_rand_id.txt');
+		}
 
 		parent::tearDownAfterClass();
 	}
@@ -56,11 +70,8 @@ class WebTestCase extends TestCase
 	 */
 	public function setUp(): void
 	{
-		self::$baseUri = $_ENV['TEST_TARGET_PROTOCOL'] . '://'. $_ENV['TEST_TARGET_HOSTNAME'] .
-			($_ENV['TEST_TARGET_PORT'] != '' ? (':' . ltrim($_ENV['TEST_TARGET_PORT'], ':')) : '') .
-			rtrim($_ENV['TEST_TARGET_BASE_URL'], '/');
 		$this->browser = new HttpBrowser(HttpClient::create());
-
+		$this->browser->setExpectedErrorStrings(self::$errorPrependString, self::$errorAppendString, self::$serverRunsXDebug);
 		parent::setUp();
 	}
 
@@ -75,8 +86,10 @@ class WebTestCase extends TestCase
 		$testStatus =  $this->status();
 		if ($testStatus instanceof TestStatus\Failure || $testStatus instanceof TestStatus\Error) {
 			if ($this->browser) {
-				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception
-				$testName = get_class($this) . '_' . $this->name();
+				/// @todo add a timestamp suffix to the filename, and/or file/line nr. of the exception.
+				///       Also, the url being requested
+				$testName = get_class($this) . '_' . $this->name() .
+					($this->executingTestIdentifier != '' ? '_' . $this->executingTestIdentifier : '');
 				file_put_contents($_ENV['TEST_ERROR_SCREENSHOTS_DIR'] . '/webpage_failing_' . $testName. '.html', $this->getResponse()->getContent());
 			}
 		}
@@ -157,11 +170,12 @@ class WebTestCase extends TestCase
 
 	/**
 	 * Scans the source code for web pages (php files).
-	 * @param string[] $dirs List of dirs. Will _not_ recurse into them
-	 * @param bool $pathAsArray when set, return an array of arrays. good for dataProvider methods
+	 * NB: does not list php scripts known to be "includes", such as those in .../include as well as api scripts
+	 * @param string[] $dirs List of dirs to use instead of the default set. Will _not_ recurse into them
+	 * @param bool $pathAsArray when set, return an array of arrays. Good for dataProvider methods
 	 * @return array every php file is returned with its path relative to the root directory (starting with '/')
 	 */
-	protected static function listWebPages(array $dirs = [], $pathAsArray=false): array
+	protected static function listWebPages(array $dirs = [], $pathAsArray = false): array
 	{
 		if (self::$rootDir == '') {
 			self::$rootDir = realpath(__DIR__ . '/../..');
@@ -171,9 +185,9 @@ class WebTestCase extends TestCase
 			// directories with scripts known to be web-accessible
 			$dirs = [
 				self::$rootDir,
-				self::$rootDir . '/api',
+				//self::$rootDir . '/api',
 				self::$rootDir . '/dashboard',
-				self::$rootDir . '/doc/Manual',
+				//self::$rootDir . '/doc/Manual',
 				self::$rootDir . '/install',
 				self::$rootDir . '/reportwriter',
 				self::$rootDir . '/reportwriter/admin',
@@ -184,12 +198,20 @@ class WebTestCase extends TestCase
 		foreach($dirs as $dir) {
 			foreach(glob($dir . '/*.php') as $path) {
 				$path = preg_replace('|^' . self::$rootDir .'|', '', realpath($path));
+				if (in_array($path, ['/config.php', '/config.distrib.php'])) {
+					continue;
+				}
 				if ($pathAsArray) {
 					$pages[] = [$path];
 				} else {
 					$pages[] = $path;
 				}
 			}
+		}
+		if ($pathAsArray) {
+			/// @todo
+		} else {
+			sort($pages);
 		}
 		return $pages;
 	}
@@ -216,8 +238,62 @@ class WebTestCase extends TestCase
 		$this->assertStringNotContainsString($crawler->getUri(), '/install/', $message);
 	}
 
-	protected function assertIsNotOnLoginPage()
+	protected function assertIsOnLoginPage(Crawler $crawler, $message = '')
 	{
-/// @todo ...
+		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for presence of login form
+		/// KL RICARD Modify the text to check
+		$this->assertStringContainsString('KL / Blink webERP', $crawler->text(), $message);
+	}
+
+	protected function assertIsNotOnLoginPage(Crawler $crawler, $message = '')
+	{
+		/// @todo what about using $this->getResponse() instead of $crawler? Also, check for absence of login form
+		/// KL RICARD Modify the text to check
+		$this->assertStringNotContainsString('KL / Blink webERP', $crawler->text(), $message);
+		
+	}
+
+	/**
+	 * Runs a prerequisite check: check for presence of required extensions and php.ini settings
+	 */
+	protected static function checkPHPConfiguration()
+	{
+		$browser = new HttpBrowser(HttpClient::create());
+		$browser->request('GET', self::$baseUri . '/tests/setup/php_config_check.php?phpunit_rand_id=' . self::$randId);
+
+		self::assertEquals(200, $browser->getResponse()->getStatusCode(), 'The server-side php configuration for running the test suite could not be checked');
+		self::assertEquals('application/json', $browser->getResponse()->getHeader('Content-Type'), 'The server-side php configuration for running the test suite could not be checked: non-json data received');
+		$config = @json_decode($browser->getResponse()->getContent(), true);
+		self::assertArrayHasKey('active_extensions', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::$serverRunsXDebug = in_array('xdebug', $config['active_extensions']);
+		self::assertArrayHasKey('ini_settings', $config, 'The server-side php configuration for running the test suite could not be checked: unexpected data received');
+		self::assertEquals(E_ALL, (int)$config['ini_settings']['error_reporting'], 'The server-side php configuration is not correct for running the test suite: error_reporting is not set to E_ALL');
+		self::assertEquals(true, (bool)$config['ini_settings']['display_errors'], 'The server-side php configuration is not correct for running the test suite: display_errors is not set to true');
+		self::assertNotEquals('', (string)$config['ini_settings']['error_prepend_string'], 'The server-side php configuration is not correct for running the test suite: error_prepend_string is null');
+		self::assertNotEquals('', (string)$config['ini_settings']['error_append_string'], 'The server-side php configuration is not correct for running the test suite: error_append_string is null');
+		self::$errorPrependString = $config['ini_settings']['error_prepend_string'];
+		self::$errorAppendString = $config['ini_settings']['error_append_string'];
+	}
+
+	protected function loginUser()
+	{
+		if (count($this->browser->getCookieJar()->all())) {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/Logout.php');
+		} else {
+			$crawler = $this->browser->request('GET', self::$baseUri . '/index.php');
+		}
+
+		// make sure we do have not been redirected to the installer (belts-and-suspenders)
+		$this->assertIsNotOnInstallerPage($crawler);
+
+		$crawler = $this->browser->submitForm('SubmitUser', [
+			'CompanyNameField' => $_ENV['TEST_DB_SCHEMA'],
+			'UserNameEntryField' => $_ENV['TEST_USER_ACCOUNT'],
+			'Password' => $_ENV['TEST_USER_PASSWORD'],
+		]);
+
+		$this->assertStringNotContainsString('ERROR Report', $crawler->text());
+		/// KL RICARD Modify the text to check
+		$this->assertStringNotContainsString('KL / Blink webERP', $crawler->text(), 'Failed logging in');
 	}
 }

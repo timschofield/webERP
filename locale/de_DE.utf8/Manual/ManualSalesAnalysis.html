@@ -1,0 +1,124 @@
+<br /><br />
+
+<!-- Help Begin: SalesAnalRepts -->
+
+<a name="SalesAnalysis"><font size="+3"><b>Umsatzauswertungen</b></font></a>
+<br /><br />
+Es gibt verschiedene Möglichkeiten, die Umsätze zu analysieren. Wenn eine schnelle Auswertung erforderlich ist, gibt es eine gewisse Flexibilität im Skript SalesGraph.php, das Sie über Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzgrafik aufrufen, Es hängt natürlich von der Ebene ab, auf der Sie Planwerte hinterlegt haben, ob ein Plan-/Ist-Vergleich etwas Sinnvolles anzeigen wird. Wenn Sie einen Bericht zu den Istzahlen wünschen, so hat webERP einen Berichtsgenerator, mit dem Ergebnisberichte angelegt werden können. Die erzeugten Berichtsvorlagen können wiederholt ausgeführt oder aber abgeändert werden. Diese Berichte können sowohl eine PDF-Datei in Druckformatierung als auch csv-Dateien für die Verwendung in den meisten Tabellenkalkulationen ausgeben.
+<br /><br />
+Sie wählen Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzanalysen. Eine Liste aller bereits früher angelegten Berichte erscheint, einschließlich Links, über die Sie
+<br /><br />
+<ul>
+<li>den Entwurf des Berichtskopfes ändern</li>
+<li>in der Definition des Berichtes die Spalten festlegen</li>
+<li>den Bericht ausführen und eine PDF-Datei erstellen</li>
+<li>den Bericht ausführen und eine CSV-Datei erstellen, die mit einer Tabellenkalkulation gelesen werden kann.</li>
+</ul>
+Darüber hinaus können Sie im unteren Teil der Seite neue Berichte definieren, um die meisten Kombinationen von Umsatzdaten anzuseigen. Im System wird eine separate Tabelle von Umsatzdaten geführt, die es ermöglichen, dass diese Berichte so schnell wie möglich ausgeführt werden können.
+<br /><br />
+Ein Ergebnisbericht besteht aus
+<br /><br />
+<ul>
+<li>der Kopfdefinition</li>
+<li>den Spaltendefinitionen</li>
+</ul>
+<b>
+Kopf des Ergebnisberichtes
+</b>
+<br /><br />
+Der erste Schritt beim Erstellen eines Ergebnisberichtes ist das Eingeben der Kopfinformationen. Diese beinhalten:
+<br /><br />
+<ul>
+<li>Die Berichtsüberschrift, eine Zeichenkette, die den Bericht beschreibt.</li>
+<li>Bis zu vier Gruppenebenen und die Auswahlkriterien für jede Ebene.</li>
+</ul>
+Jede Gruppenebene besteht aus einer der folgenden Merkmale:
+<br /><br />
+<ul>
+<li>Vertriebsbereiche</li> 
+<li>Materialnummer</li>
+<li>Kundennummer</li>
+<li>Umsatzart/Preisliste</li>
+<li>Warengruppe</li>
+<li>Kundenniederlassung</li>
+<li>Verkäufer</li>
+</ul>
+Der Bericht gruppiert die Daten auf jeder Ebene entsprechend der definierten Reihenfolge, wenn Sie z. B. einen Bericht definieren mit Materialnummer als Gruppenebene 1 und die Vertriebsbereiche als Gruppenebene 2, dann zeigt der Bericht die Materialnummern und darunter die Vertriebsbereiche, an die die Waren verkauft wurden. Meist würde es die logischere Reihenfolge sein, die Vertriebsbereiche als Gruppenebene 1 und die Materialnummer als Gruppenebene 2 anzuzeigen, damit der Bericht erläutert, aus welchen Produkten sich der Umsatz in einem Vertiebsbereich zusammensetzt.
+<br /><br />
+Für jede Gruppenebene muss ein Von-Bis-Bereich als Selektion angegeben werden. Alle Kriterien beziehen sich auf das Merkmal in der jeweiligen Gruppenebene. Für das Merkmal Vertriebsbereich müssen Sie zum Beispiel die 2 Zeichen langen Schlüssel der Vertriebsbereiche, nicht deren Beschreibung angeben. Außerdem muss der Von-Wert kleiner sein als der Bis-Wert, andernfalls gibt der Bericht keine Werte aus.
+<br /><br />
+<b>
+Spalten der Ergebnisberichte
+</b>
+<br /><br />
+Wenn Sie einen Kopf für den Bericht angelegt haben, dann können die Spalten definiert werden. Die Spalten vorhandener Berichte können jederzeit geändert werden. Aus der Seite Umsatzbericht pflegen (Hauptmenü &rarr; Debitoren &rarr; Auswertungen und Berichte &rarr; Umsatzanalysen) ist bei jedem Bericht ein Link "Spalten festlegen". Über diesen Link werden die für den Bericht definierten Spalten angezeigt, zusammen mit einem Formular, in dem Sie neue Spalten anlegen können. Für jede definierte Spalte sind die folgenden Angaben nötig:
+<br /><br />
+<ul>
+<li>Eine Spaltennummer zwischen 1 und 10. Die Nummer bestimmt, an welcher Stelle die Spalte auf der Seite ausgegeben wird. Die Spalte 1 ist am weitesten links und die Spalte 10 am rechten Rand der Seite.</li>
+<li>Zwei Felder sind für die Spaltenüberschrift vorhanden. In jedes passt ein Text mit maximal 15 Zeichen Länge.</li>
+<li>Ob es sich um eine Rechenspalte handelt oder nicht. Für Rechenspalten sind andere Angaben erforderlich, als für normale Datenspalten.</li>
+<li>Für normale Datenspalten ist ein Periodenzeitraum für die anzuzeigenden Daten erforderlich. In die Felder Von Periode und Bis Periode muss jeweils eine Zahl eingegeben werden. Weil Perioden vom System annähernd unsichtbar im Hintergrund verwaltet werden, haben Sie über den Link "Perioden anzeigen" die Möglichkeit zu prüfen, in welchen Perioden irgendwelche Zahlen vorhanden sein können. Wenn ein einzelner Monat gewünscht ist, ist der Wert in Von Periode und Bis Periode gleich.</li> 
+<li>Die Art der Daten, die in der Spalte angezeigt werden sollen kann aus der folgenden Auswahl festgelegt werden: Menge, Bruttoerlös, Nettoerlös (nach Rabatten), Bruttoergebnis, Kosten und Rabatt.</li>  
+<li>Planwerte oder Istwerte.</li>
+</ul>
+Wenn die Spalte als Rechenspalte definiert wird, ist weder die Angabe der Perioden erforderlich, noch die der Datenart und ob Plan oder ist. Wenn Sie das Feld Berechnung geändert haben, müssen Sie zunächst auf Speichern klicken, dadurch werden die für Rechenspalten notwendigen Felder angezeigt: 
+<br /><br />
+<ul>
+<li>Zählerspalte - Das ist die Spaltennummer für den ersten Operanden der Berechnung, diese Spalte muss immer angegeben werden.</li>
+<li>Nennerspalte - Das ist die Spaltennummer für den zweiten Operanden der Berechnung, wenn die Berechnung über zwei Spalten erfolgen soll. Wenn die Berechnung mit einer Konstante durchgeführt werden soll, lassen Sie dieses Feld leer.</li>
+<li>Das Rechenzeichen wird aus folgenden Angaben ausgewählt.
+<ol>
+<li>Zählerspalte geteilt durch Nennerspalte</li>
+<li>Zählerspalte geteilt durch Konstante</li>
+<li>Zählerspalte x Kontstante</li>
+<li>Zählerspalte plus Nennerspalte</li>
+<li>Zählerspalte minus Nennerspalte</li>
+</ol></li>
+<li>Die Kostante kann eine beliebige Zahl sein, die in der Berechnung verwendet wird.</li>
+<li>Das Format erlaubt es, das Ergebnis als Zahl oder als Prozentwert auszugeben.</li>
+</ul>
+Wenn Sie den Knopf Speichern drücken, wird die Spalte in die Berichtsdefinition eingefügt. Sie sollte dann in der Liste der definierten Spalten angezeigt werden und die Formularfelder sind wieder frei für die Erfassung einer neuen Spalte. Wenn Sie eine Spalte nicht mehr benötigen, gibt es auch einen Link zum Löschen.
+<br /><br />
+Die Spaltennummer selbst ist ein Link, über den Sie die Definition der Spalte verändern können. Die Definition wird im Eingabeformular angezeigt, falls Änderungen nötig werden. Beachten Sie bitte, dass sich die Spaltennummer selbst nicht ändern lässt. 
+<br /><br />
+Wenn Sie den Link Überschriften pflegen drücken wird wieder die Liste der angelegten Berichte angezeigt, um weitere Änderungen vornehmen zu können oder einen Bericht auszuführen. Um den Bericht auszuführen, klicken Sie einfach auf den Link "PDF erstellen" des Berichtes. 
+<br /><br />
+Diese Ergebnisberichte haben eine große Menge von Informationen auszuwerten (und die Berichte werden dynamisch generiert). Im Ergebnis können sie bei großen Datenbanken durchaus eine Minute oder so laufen. Dennoch wurde das Design der Datenbank sehr sorgfältig vorgenommen, um zu sichern, dass die Berichte entscheidend schneller als bei anderen Auswertungswerkzeugen erstellt werden.
+<br /><br />
+<b>
+Automatisierung der Ergebnisberichte
+</b>
+<br /><br />
+Wenn Sie die Berichte angelegt haben, ist es möglich, die Ergebnisberichte per Email an festgelegte Empfänger zu versenden. Ein Skript MailSalesReport.php ist eine Vorlage, um so etwas zu tun. Es gibt keine Links zu diesem Skript, und es ist auch keine Berechtigungsebene dafür festgelegt worden. Alles was Sie tun müssen, ist dieses Skript unter einem anderen Namen mit der Erweiterung .php im selben Verzeichnis, in dem auch die anderen Skripte liegen zu speichern.
+<br /><br />
+Das Skript muss bearbeitet werden, um die Email-Adressen der Empfänger und die Berichts-Nr. des auszuführenden Berichtes einzutragen. Die zu bearbeitenden Zeilen sind:
+<br /><br />
+/*The Sales report to send */
+<br />
+$ReportID = 4;
+<br /><br />
+/*The people to receive the emailed report */ 
+<br />
+$Recipients = array('"Root" &lt;root@localhost&gt;','"some one else" &lt;someoneelese@sowhere.com&gt;');
+<br /><br />
+Die mit /* und */ eingeklammerten Zeilen sind Kommentare.
+<br /><br />
+Wenn die Variable $ReportID nach Ihrer Wahl gesetzt ist und alle Empfänger eingetragen sind, sichern Sie die Datei.
+<br /><br />
+Um den Bericht einzuplanen, würde ein crontab-Eintrag unter Linux, der den Bericht an jedem Wochentag um 0:00 startet, wie folgt aussehen (angenommen sei: wget ist in /usr/bin/wget, der Webserver läuft auf dem gleichen Rechner und das neue Skript heißt DailySalesReport.php):
+<br /><br />
+# Scheduled email of a daily sales report
+<br /><br />
+0 0 * * 2-5 root /usr/bin/wget http://localhost/web-erp/DailySalesReport.php
+<br /><br />
+Weil die Seite selbst keine Ausgabe am Bildschirm bewirkt, würde sie im Webbrowser nichts anzeigen, obgleich sie natürlich eine weitere Email an die festgelegten Empfänger auslösen würde.
+<br /><br />
+Ein vergleichbares Vorlageskript ist unter dem Namen MailSalesReport_csv.php vorhanden, das in der gleichen Weise den Bericht als CSV-Datei an die festgelegten Empfänger versendet.
+Eine elegantere Lösung, automatisch Umsatzberichte mit email zu versenden, ist die verwendung des Skriptes report_runner.php. Dieses Skript kann direkt von der Kommandozeile gestartet werden oder con cron gestartet werden und verwendet Kommandozeilenparameter. Das den Vorzug gegenüber der festen Programmierung einer Vielzahl von Skripten, ist dass dieses mit den folgenden Parametern gestartet werden kann:
+<br /> -r reportnumber (die Nummer des webERP-Berichtes)
+<br /> -n reportname   (der Name, dem Sie dem webERP-Bericht geben wollen)
+<br /> -e emailaddress[;emailaddress;emailaddres...] (an wen Sie den Bericht senden wollen)
+<br /> [-t reporttext ]  (Einige Bemerkungen, die Sie mit dem Bericht in der email vesenden wollen)
+<br /> [ -H weberpHOME]  (das Homeverzeichnis von webERP - oder Sie bearbeiten die php-Datei)
+
+<!-- Help End: SalesAnalRepts -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 03, 2025 at 03:18 PM
+-- Generation Time: Sep 11, 2025 at 04:59 PM
 -- Server version: 10.3.39-MariaDB-log
 -- PHP Version: 8.4.11
 
@@ -2312,6 +2312,22 @@ DELIMITER $$
 CREATE TRIGGER `prices_update_timestamp` BEFORE UPDATE ON `prices` FOR EACH ROW SET NEW.date_updated = NOW()
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prodspecgroups`
+--
+
+CREATE TABLE `prodspecgroups` (
+  `groupid` smallint(6) NOT NULL,
+  `groupname` char(50) DEFAULT NULL,
+  `groupbyNo` int(11) NOT NULL DEFAULT 1,
+  `headertitle` varchar(100) DEFAULT NULL,
+  `trailertext` varchar(240) DEFAULT NULL,
+  `labels` varchar(240) NOT NULL,
+  `numcols` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- --------------------------------------------------------
 
@@ -4728,12 +4744,13 @@ ALTER TABLE `locations`
   ADD KEY `idx_locations_typeloc_partnercode_klposcashaccount` (`typeloc`,`partnercode`,`klposcashaccount`),
   ADD KEY `idx_locations_locationname_loccode` (`locationname`,`loccode`),
   ADD KEY `idx_locations_loccode_typeloc` (`loccode`,`typeloc`),
-  ADD KEY `idx_locations_typeloc_priorityDESC_loccode` (`typeloc`,`priority`,`loccode`),
-  ADD KEY `idx_locations_typeloc_priorityASC_loccode` (`typeloc`,`priority`,`loccode`),
   ADD KEY `idx_locations_typeloc_loccode` (`typeloc`,`loccode`),
   ADD KEY `idx_locations_typeloc` (`typeloc`),
   ADD KEY `idx_locations_stockreadytosell_loccode` (`stockreadytosell`,`loccode`),
-  ADD KEY `idx_locations_typeloc_smartdispatch` (`typeloc`,`smartdispatchfrom`);
+  ADD KEY `idx_locations_typeloc_smartdispatch` (`typeloc`,`smartdispatchfrom`),
+  ADD KEY `idx_locations_typeloc_flags` (`typeloc`,`alltestitems`,`allstableitems`,`allnopoitems`,`alldisc20items`,`alldisc50items`,`alldisc80items`),
+  ADD KEY `idx_locations_typeloc_priority_loccode` (`typeloc`,`priority`,`loccode`) USING BTREE,
+  ADD KEY `idx_locations_smartdispatch_typeloc_priority` (`smartdispatchfrom`,`typeloc`,`priority`,`loccode`,`zone`,`smartdispatchmaxmodels`,`smartdispatchminmodels`);
 
 --
 -- Indexes for table `locationtypes`
@@ -4747,14 +4764,22 @@ ALTER TABLE `locationtypes`
 --
 ALTER TABLE `locationusers`
   ADD PRIMARY KEY (`loccode`,`userid`),
-  ADD KEY `idx_locationusers_userid` (`userid`);
+  ADD KEY `idx_locationusers_userid` (`userid`),
+  ADD KEY `idx_locationusers_userid_canupd_loccode` (`userid`,`canupd`,`loccode`);
 
 --
 -- Indexes for table `locationzones`
 --
 ALTER TABLE `locationzones`
   ADD PRIMARY KEY (`code`),
-  ADD KEY `idx_locationzones_description` (`description`);
+  ADD KEY `idx_locationzones_description` (`description`),
+  ADD KEY `idx_locationzones_weekday0` (`code`,`smarttransferonweekday0`),
+  ADD KEY `idx_locationzones_weekday1` (`code`,`smarttransferonweekday1`),
+  ADD KEY `idx_locationzones_weekday2` (`code`,`smarttransferonweekday2`),
+  ADD KEY `idx_locationzones_weekday3` (`code`,`smarttransferonweekday3`),
+  ADD KEY `idx_locationzones_weekday4` (`code`,`smarttransferonweekday4`),
+  ADD KEY `idx_locationzones_weekday5` (`code`,`smarttransferonweekday5`),
+  ADD KEY `idx_locationzones_weekday6` (`code`,`smarttransferonweekday6`);
 
 --
 -- Indexes for table `locstock`
@@ -5034,6 +5059,14 @@ ALTER TABLE `prices`
   ADD KEY `idx_prices_stockid_type_curr_dates` (`stockid`,`typeabbrev`,`currabrev`,`startdate`,`enddate`);
 
 --
+-- Indexes for table `prodspecgroups`
+--
+ALTER TABLE `prodspecgroups`
+  ADD PRIMARY KEY (`groupid`),
+  ADD UNIQUE KEY `groupname` (`groupname`),
+  ADD KEY `groupbyNo` (`groupbyNo`);
+
+--
 -- Indexes for table `prodspecs`
 --
 ALTER TABLE `prodspecs`
@@ -5280,7 +5313,8 @@ ALTER TABLE `salesorderdetails`
   ADD KEY `idx_salesorderdetails_orderno_qtyinvoiced_stkcode` (`orderno`,`qtyinvoiced`,`stkcode`),
   ADD KEY `idx_salesorderdetails_stkcode_completed_orderno` (`stkcode`,`completed`,`orderno`),
   ADD KEY `idx_salesorderdetails_stkcode_completed_orderno_qtyinvoiced` (`stkcode`,`completed`,`orderno`,`qtyinvoiced`),
-  ADD KEY `idx_salesorderdetails_actualdispatch_stkcode_qtyinv_unitprice` (`actualdispatchdate`,`stkcode`,`qtyinvoiced`,`unitprice`);
+  ADD KEY `idx_salesorderdetails_actualdispatch_stkcode_qtyinv_unitprice` (`actualdispatchdate`,`stkcode`,`qtyinvoiced`,`unitprice`),
+  ADD KEY `idx_salesorderdetails_completed_orderno_covering` (`completed`,`orderno`,`qtyinvoiced`);
 
 --
 -- Indexes for table `salesorders`
@@ -5305,7 +5339,8 @@ ALTER TABLE `salesorders`
   ADD KEY `idx_salesorders_orddate_debtorno_quotation` (`orddate`,`debtorno`,`quotation`),
   ADD KEY `idx_salesorders_orddate_salesperson_quotation` (`orddate`,`salesperson`,`quotation`),
   ADD KEY `idx_salesorders_orddate_fromstkloc_orderno` (`orddate`,`fromstkloc`,`orderno`),
-  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`);
+  ADD KEY `idx_salesorders_fromstkloc_orddate` (`fromstkloc`,`orddate`),
+  ADD KEY `idx_salesorders_orddate_orderno` (`orddate`,`orderno`);
 
 --
 -- Indexes for table `salestypes`
@@ -5359,6 +5394,14 @@ ALTER TABLE `sellthroughsupport`
   ADD KEY `idx_sellthroughsupport_effectiveto` (`effectiveto`),
   ADD KEY `idx_sellthroughsupport_stockid` (`stockid`),
   ADD KEY `idx_sellthroughsupport_categoryid` (`categoryid`);
+
+--
+-- Indexes for table `sessions`
+--
+ALTER TABLE `sessions`
+  ADD KEY `idx_sessions_userid` (`userid`),
+  ADD KEY `idx_sessions_sessionid` (`sessionid`),
+  ADD KEY `idx_sessions_logintime` (`logintime`);
 
 --
 -- Indexes for table `session_data`
@@ -6077,6 +6120,12 @@ ALTER TABLE `pickreqdetails`
 --
 ALTER TABLE `pickserialdetails`
   MODIFY `serialmoveid` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `prodspecgroups`
+--
+ALTER TABLE `prodspecgroups`
+  MODIFY `groupid` smallint(6) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `purchorderdetails`

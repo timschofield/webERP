@@ -278,7 +278,14 @@ class Cell implements Stringable
             case DataType::TYPE_INLINE:
                 // Rich text
                 $value2 = StringHelper::convertToString($value, true);
-                $this->value = DataType::checkString(($value instanceof RichText) ? $value : $value2);
+                // Cells?->Worksheet?->Spreadsheet
+                $binder = $this->parent?->getParent()?->getParent()?->getValueBinder();
+                $preserveCr = false;
+                if ($binder !== null && method_exists($binder, 'getPreserveCr')) {
+                    /** @var bool */
+                    $preserveCr = $binder->getPreserveCr();
+                }
+                $this->value = DataType::checkString(($value instanceof RichText) ? $value : $value2, $preserveCr);
 
                 break;
             case DataType::TYPE_NUMERIC:
@@ -465,7 +472,7 @@ class Cell implements Stringable
                                     }
                                 }
                                 /** @var string $newColumn */
-                                ++$newColumn;
+                                StringHelper::stringIncrement($newColumn);
                             }
                             ++$newRow;
                         } else {
@@ -477,7 +484,7 @@ class Cell implements Stringable
                                     }
                                 }
                             }
-                            ++$newColumn;
+                            StringHelper::stringIncrement($newColumn);
                         }
                         if ($spill) {
                             break;
@@ -499,10 +506,10 @@ class Cell implements Stringable
                                     $minCol = $matches[1];
                                     $minRow = (int) $matches[2];
                                     $maxCol = $matches[4];
-                                    ++$maxCol;
+                                    StringHelper::stringIncrement($maxCol);
                                     $maxRow = (int) $matches[5];
                                     for ($row = $minRow; $row <= $maxRow; ++$row) {
-                                        for ($col = $minCol; $col !== $maxCol; ++$col) {
+                                        for ($col = $minCol; $col !== $maxCol; StringHelper::stringIncrement($col)) {
                                             /** @var string $col */
                                             if ("$col$row" !== $coordinate) {
                                                 $thisworksheet->getCell("$col$row")->setValue(null);
@@ -530,15 +537,14 @@ class Cell implements Stringable
                                         ->getCell($newColumn . $newRow)
                                         ->setValue($resultValue);
                                 }
-                                /** @var string $newColumn */
-                                ++$newColumn;
+                                StringHelper::stringIncrement($newColumn);
                             }
                             ++$newRow;
                         } else {
                             if ($row !== $newRow || $column !== $newColumn) {
                                 $thisworksheet->getCell($newColumn . $newRow)->setValue($resultRow);
                             }
-                            ++$newColumn;
+                            StringHelper::stringIncrement($newColumn);
                         }
                     }
                     $thisworksheet->getCell($column . $row);

@@ -31,7 +31,7 @@ if (isset($_POST['submit']) ) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if (!is_long((integer)$_POST['Priority'])) {
+	if (!is_long((int)$_POST['Priority'])) {
 		$InputError = 1;
 		prnMsg( __('The Contact priority must be an integer.'), 'error');
 	} elseif (mb_strlen($_POST['Note']) >200) {

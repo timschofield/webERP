@@ -24,7 +24,7 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		$px = (imagesx($im) - $TextWidth) / 2;
 		$py = (imagesy($im) - ($fh)) / 2;
 		//imagefill($im, 0, 0, $BackgroundColour);
-		imagestring($im, $Font, $px, $py, $CompanyName, $TextColour);
+		imagestring($im, $Font, (int)$px, (int)$py, $CompanyName, $TextColour);
 
 		imagesavealpha($im, true);
 
@@ -32,7 +32,6 @@ function CreateCompanyLogo($CompanyName, $Path_To_Root, $CompanyDir) {
 		if (!imagepng($im, $CompanyDir . '/logo.png')) {
 			$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
 		}
-		imagedestroy($im);
 
 	} else {
 		$Result = copy($Path_To_Root . '/images/default_logo.jpg', $CompanyDir . '/logo.jpg');
@@ -279,10 +278,6 @@ function CreateTables($Path_To_Root, $DBType) {
 			$SQLScriptFile = preg_replace('/([) ])STORED([, \n])/', ' $1PERSISTENT$2', $SQLScriptFile);
 		}
 
-		if ($DBType == 'mysqli' || $DBType == 'mysql' ) {
-			// mysql 5.5 chokes on GENERATED ALWAYS
-		}
-
 		// we disable FKs for each script, in case the previous script re-enabled them
 		/// @todo do we need to disable FKs while creating tables and inserting no data?
 		DB_IgnoreForeignKeys();
@@ -515,6 +510,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		echo '<div class="info">' . __('Populating the database with demo data.') . '</div>';
 		flush();
 
+		DB_IgnoreForeignKeys();
 		$Errors = (int)PopulateSQLDataBySQLFile($Path_To_Root. '/install/sql/demo.sql', $DBType);
 
 		/// @todo this could just be pushed into demo.sql - and checked for presence by the scripts in /build
@@ -527,11 +523,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 			$Errors++;
 			//echo '<div class="error">' . __('...') . '</div>';
 		}
+		DB_ReinstateForeignKeys();
 
-		/// @todo there is no /companies/default folder atm...
 		$CompanyDir = $Path_To_Root . '/companies/' . $DataBaseName;
-		foreach (glob($Path_To_Root . '/companies/default/part_pics/*.jp*') as $JpegFile) {
-			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
+		foreach (glob($Path_To_Root . '/companies/weberpdemo/part_pics/*.jp*') as $JpegFile) {
+			copy($Path_To_Root . "/companies/weberpdemo/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 
 		/// @todo is there need to disable foreign keys for this insert?
@@ -605,8 +601,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	}
 
 	/// @todo check for errors
+
 	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir', 'companies/" . $DataBaseName . "/part_pics')";
 	$Result = DB_query($SQL);
+
+	copy($Path_To_Root . '/companies/weberpdemo/part_pics/webERPsmall.png', $CompanyDir . '/part_pics/webERPsmall.png');
 
 	return ($Errors == 0);
 }

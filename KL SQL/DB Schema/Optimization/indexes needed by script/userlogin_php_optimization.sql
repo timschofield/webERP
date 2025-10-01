@@ -1,9 +1,9 @@
 -- =====================================================
--- INDEX OPTIMIZATION FOR UserLogin.php
+-- INDEX OPTIMIZATION FOR LoginFunctions.php
 -- =====================================================
 -- 
 -- This file contains the analysis of SQL SELECT statements
--- found in includes/UserLogin.php
+-- found in includes/LoginFunctions.php
 --
 -- Analysis Date: 2025-08-31
 -- Target Database: kl_erp
@@ -18,7 +18,7 @@
 -- Queries requiring optimization: 0
 -- Queries already optimized: 4
 --
--- RESULT: All queries in UserLogin.php are already optimally indexed!
+-- RESULT: All queries in LoginFunctions.php are already optimally indexed!
 --
 -- -----------------------------------------------------
 
@@ -98,7 +98,7 @@
 -- CONCLUSION
 -- -----------------------------------------------------
 -- 
--- UserLogin.php queries are already well-optimized:
+-- LoginFunctions.php queries are already well-optimized:
 -- - Authentication query uses primary key efficiently
 -- - Security token lookup has proper indexing
 -- - Currency queries are appropriate for their use case

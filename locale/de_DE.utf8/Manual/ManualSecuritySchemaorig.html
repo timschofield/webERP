@@ -1,0 +1,192 @@
+<br /><br />
+<a name="SecuritySchema"><font size="+3"><b>Sicherheitskonzept</b></font></a>
+<br /><br />
+Die mit der Anmeldung eingegebene Kombination Benutzername/Passwort erlaubt es dem System die für den Benutzer gültigen Rechte zu bestimmen. Es kann festgelegt werden, auf welche Seiten ein Benutzer Zugriff haben darf. Jeder Benutzer wird beim Anlegen des Stammsatzes einer Rolle zugeordnet, und die Rolle bestimmt, auf welche Seiten er zugreifen kann.
+<!-- The user name and password combination entered at logon enables the system to identify the permissions appropriate to the user. It is possible to determine and restrict which pages a user should be able to access. Each user is allocated to a Role at the time of the user set up and the role determines which pages they can access. --> 
+<br /><br />
+Die Rollen werden im Hauptmenü unter Einstellungen &rarr; Allgemeines &rarr; Rollen und Berechtigungen eingerichtet. Diese Seite ermöglicht es,
+<!-- The Role is set up under the Setup tab, General, Role Permissions - this page allows a user to  -->
+<br /><br />
+<ul>
+<li>Vorhandene Rollen zu bearbeiten und zu löschen sowie neue Rollen hinzuzufügen</li>
+<!-- <li>Add, Edit or delete an existing role</li> -->
+<li>Die Berechtigungen für jede einzelne Rolle zuzuordnen</li>
+<!-- <li>Define the permissions applicable to this role</li> -->
+</ul>
+Jedes Programmskript ist einem bestimmten Sicherheitsniveau zugeordnet. Diese Festlegung ist einzeln innerhalb jedes Skriptes fest vorgenommen. Gegenwärtig ist das eine Zahl zwischen 1 und 15, wenn mehr Sicherheitsniveaus benötigt werden, kann das erweitert werden. Die aktuellen Einstellungen für die Sicherheitsniveaus sind in der Tabelle unten angegeben.
+<!-- Each script is defined as having a specific PageSecurity level - this page security level is hard coded inside each script. At the time of writing this is a number between 1 and 15 - if more levels of security are necessary then this can be expanded. The current PageSecurity settings applicable for each page are set out in the table below. -->
+<br /><br />
+Wenn das Sicherheitsniveau eine Zahl in der Liste der an den Benutzer vergebenen Berechtigungen enthalten ist (Berechtigungen der Benutzerrolle), erhält der Benutzer Zugriff auf die jeweilige Seite.
+<!-- If the PageSecurity setting of the page is a number contained in the SESSION AllowedPageSecurityTokens array as determined from the users access level then the user will be allowed access to the page. The user access level is an integer that represents the role given to the user in the user set up page. -->
+<br /><br />
+Die Berechtigungen werden im Script session.php für alle Seiten (bzw. PDF_Starter.inc für alle PDF-Berichte) geprüft. Die Variable $_SESSION['AccessLevel'] wird aus der Datenbank abgerufen, wenn sich der Benutzer anmeldet. Diese Variable verweist auf die Benutzerrolle. Die Liste der Berechtigungen in $_SESSION['AllowedPageSecurityTokens'] wird auf der Grundlage der Zugriffsebene/Rolle des Benutzers aus der Datenbank abgerufen. Jede Seite, deren Wert des Sicherheitsniveaus $PageSecurity in der Liste enthalten ist, wird als eine zulässige Seite betrachtet.
+<!-- Access authority is checked in session.php script for all pages (or PDF_Starter.inc for PDF pages). The variable $_SESSION['AccessLevel'] is retrieved from the database when the user logs in - in session.php. This variable refers to the role of the user. The SESSION['AllowedPageSecurityTokens'] array of numbers is retrieved from the database based on the users AccessLevel - or Role. Any page that has a $PageSecurity equal to any value in this array is deemed to be an authorised page. -->
+<br /><br />
+Wenn Sie weitere Rollen wünschen, müssen Sie diese im Bild Zugriffsberechtigungen pflegen zuerst anlegen und dann die gewünschtenBerechtigungen zuordnen. Dieses Vorgehen erlaubt dem Systemverwalter eine genaue und sorgfältige Überwachung, was wer darf.
+<!-- If you wish to add more roles then you must add a new role using the Role Permissions script and add the allowed PageSecurity tokens to this role to allow users with this role to have access to these pages. This mechanism allows the system administrator to closely and accurately control who can access what. -->
+<br /><br />
+Wenn Berechtigungen einer Rolle verändert werden, so wirkt sich das auf alle Benutzer aus, die auf diese Rolle im Benutzerstamm verweisen. Wenn die Berechtigungen zur Rolle vergeben werden, ist der Bezug auf die untenstehenden Sicherheitsniveau-Werte erfordelich.
+<!-- By changing the numbers in each array the security access can be tailored for all users referring to the array being modified. When setting the numbers in the array, reference to the index of PageSecurity values below will be necessary. Of course the value of the default settings can easily be modified. -->
+<br /><br />
+Standardmäßig sind die folgenden Rollen definiert:
+<!-- The roles defined by default are as follows: -->
+<br /><br />
+Index Rolle
+<br /><br />
+1 Abfragen und Auftragserfassung (Inquiries Only)
+<br />
+
+2 Lagerverwaltung (Manufacturing/Inventory Admin)
+<br />
+
+3 Einkäufer (Purchasing officer)
+<br />
+
+4 Kreditorenbuchhalter (AP Clerk)
+<br />
+
+5 Debitorenbuchhalter (AR Clerk)
+<br />
+
+6 Buchhalter (Accountant)
+<br />
+
+7 Kundenlogin nur eigene Aufträge (Customer logon)
+<br />
+
+8 Systemverwalter (System Administrator)
+<br /><br />
+Die obenstehenden Rollen besitzen die folgenden Berechtigungen:
+<!-- The roles above have access to pages with PageSecurity tokens a follows: -->
+<br /><br />
+
+1 Abfragen und Auftragserfassung (Inquiries Only) Berechtigungen 1 und 2 
+<br />
+
+2 Lagerverwaltung (Manufacturing/Inventory Admin) Berechtigungen 1,2 und 11
+<br />
+
+3 Einkäufer (Purchasing officer) Berechtigungen Berechtigungen 1,2 und 4
+<br />
+
+4 Kreditorenbuchhalter (AP Clerk) Berechtigungen 1,2 and 5
+<br />
+
+5 Debitorenbuchhalter (AR Clerk) Berechtigungen 1,2 and 3 
+<br />
+
+6 Buchhalter (Accountant) Berechtigungen 1,2,3,4,5,6,7,8,9,10 und 11
+<br />
+
+7 Kundenlogin nur eigene Aufträge (Customer logon) nur Berechtigung 1 
+<br />
+
+8 Systemverwalter (System Administrator) 1,2,3,4,5,6,7,8,9,10,11,12,13,14 und 15 - oder alle der momentan definierten Berechtigungen
+<br /><br />
+
+<!-- The system continues to evolve and the information set out below may be different in the current version. By default, each page has the variable $PageSecurity token defined as follows: -->
+<br /><br />
+<table border="2">
+<tr><th>Programmskript-Name</th><th>Sicherheitsniveau</th></tr>
+<tr><td>index.php</td><td>1</td></tr>
+<tr><td>CustomerInquiry.php</td><td>1</td></tr>
+<tr><td>DeliveryDetails.php</td><td>1</td></tr>
+<tr><td>SelectOrderItems.php</td><td>1</td></tr>
+<tr><td>AccountGroups.php</td><td>10</td></tr>
+<tr><td>GLAccounts.php</td><td>10</td></tr>
+<tr><td>GLJournal.php</td><td>10</td></tr>
+<tr><td>BankAccounts.php</td><td>10</td></tr>
+<tr><td>COGSGLPostings.php</td><td>10</td></tr>
+<tr><td>CompanyPreferences.php</td><td>10</td></tr>
+<tr><td>PaymentTerms.php</td><td>10</td></tr>
+<tr><td>SalesGLPostings.php</td><td>10</td></tr>
+<tr><td>InventoryCostUpdate.php</td><td>10</td></tr>
+<tr><td>Prices_Customer.php</td><td>11</td></tr>
+<tr><td>Prices.php</td><td>11</td></tr>
+<tr><td>InventoryAdjustments.php</td><td>11</td></tr>
+<tr><td>Inventorys.php</td><td>11</td></tr>
+<tr><td>InventoryTransfers.php</td><td>11</td></tr>
+<tr><td>FreightCosts.php</td><td>11</td></tr>
+<tr><td>GoodsReceived.php</td><td>11</td></tr>
+<tr><td>Locations.php</td><td>11</td></tr>
+<tr><td>InventoryCategories.php</td><td>11</td></tr>
+<tr><td>TaxAuthorities.php</td><td>15</td></tr>
+<tr><td>WWW_Users.php</td><td>15</td></tr>
+<tr><td>Z_CreateCompany.php</td><td>15</td></tr>
+<tr><td>Z_DeleteCreditNote.php</td><td>15</td></tr>
+<tr><td>Z_DeleteInvoice.php</td><td>15</td></tr>
+<tr><td>Z_DeleteSalesTransActions.php</td><td>15</td></tr>
+<tr><td>Z_index.php</td><td>15</td></tr>
+<tr><td>Z_MakeInventoryLocns.php</td><td>15</td></tr>
+<tr><td>Z_RePostGLFromPeriod.php</td><td>15</td></tr>
+<tr><td>Z_ReverseSuppPaymentRun.php</td><td>15</td></tr>
+<tr><td>Z_UpdateChartDetailsBFwd.php</td><td>15</td></tr>
+<tr><td>Z_UploadForm.php</td><td>15</td></tr>
+<tr><td>Z_UploadResult.php</td><td>15</td></tr>
+<tr><td>SalesTypes.php</td><td>15</td></tr>
+<tr><td>Shippers.php</td><td>15</td></tr>
+<tr><td>AgedDebtors.php</td><td>2</td></tr>
+<tr><td>AgedSuppliers.php</td><td>2</td></tr>
+<tr><td>ConfirmDispatch_Invoice.php</td><td>2</td></tr>
+<tr><td>CustomerTransInquiry.php</td><td>2</td></tr>
+<tr><td>FTP_RadioBeacon.php</td><td>2</td></tr>
+<tr><td>InventoryPlanning.php</td><td>2</td></tr>
+<tr><td>InventoryValuation.php</td><td>2</td></tr>
+<tr><td>OrderDetails.php</td><td>2</td></tr>
+<tr><td>PeriodsInquiry.php</td><td>2</td></tr>
+<tr><td>PO_PDFPurchOrder.php</td><td>2</td></tr>
+<tr><td>PO_SelectPurchOrder.php</td><td>2</td></tr>
+<tr><td>PrintCustOrder.php</td><td>2</td></tr>
+<tr><td>PrintCustStatements.php</td><td>2</td></tr>
+<tr><td>PrintCustTrans_A4_Portrait.php</td><td>2</td></tr>
+<tr><td>PrintCustTrans.php</td><td>2</td></tr>
+<tr><td>SalesAnalReptCols.php</td><td>2</td></tr>
+<tr><td>SalesAnalRepts.php</td><td>2</td></tr>
+<tr><td>SalesAnalysis_UserDefined.php</td><td>2</td></tr>
+<tr><td>SelectCompletedOrder.php</td><td>2</td></tr>
+<tr><td>SelectCustomer.php</td><td>2</td></tr>
+<tr><td>SelectProduct.php</td><td>2</td></tr>
+<tr><td>SelectSalesOrder.php</td><td>2</td></tr>
+<tr><td>SelectSupplier.php</td><td>2</td></tr>
+<tr><td>ShiptsList.php</td><td>2</td></tr>
+<tr><td>InventoryMovements.php</td><td>2</td></tr>
+<tr><td>InventoryStatus.php</td><td>2</td></tr>
+<tr><td>InventoryUsage.php</td><td>2</td></tr>
+<tr><td>SupplierInquiry.php</td><td>2</td></tr>
+<tr><td>BOMInquiry.php</td><td>2</td></tr>
+<tr><td>BOMListing.php</td><td>2</td></tr>
+<tr><td>Credit_Invoice.php</td><td>3</td></tr>
+<tr><td>CustomerAllocations.php</td><td>3</td></tr>
+<tr><td>CustomerBranches.php</td><td>3</td></tr>
+<tr><td>CustomerReceipt.php</td><td>3</td></tr>
+<tr><td>Customers.php</td><td>3</td></tr>
+<tr><td>PDFBankingSummary.php</td><td>3</td></tr>
+<tr><td>SelectCreditItems.php</td><td>3</td></tr>
+<tr><td>Areas.php</td><td>3</td></tr>
+<tr><td>CreditStatus.php</td><td>3</td></tr>
+<tr><td>SalesPeople.php</td><td>3</td></tr>
+<tr><td>PO_Header.php</td><td>4</td></tr>
+<tr><td>PO_Items.php</td><td>4</td></tr>
+<tr><td>PurchData.php</td><td>4</td></tr>
+<tr><td>InventoryReorderLevel.php</td><td>4</td></tr>
+<tr><td>Payments.php</td><td>5</td></tr>
+<tr><td>SuppCreditGRNs.php</td><td>5</td></tr>
+<tr><td>SuppInvGRNs.php</td><td>5</td></tr>
+<tr><td>SupplierAllocations.php</td><td>5</td></tr>
+<tr><td>SupplierContacts.php</td><td>5</td></tr>
+<tr><td>SupplierCredit.php</td><td>5</td></tr>
+<tr><td>SupplierInvoice.php</td><td>5</td></tr>
+<tr><td>Suppliers.php</td><td>5</td></tr>
+<tr><td>SuppPaymentRun.php</td><td>5</td></tr>
+<tr><td>SuppShiptChgs.php</td><td>5</td></tr>
+<tr><td>SuppTransGLAnalysis.php</td><td>5</td></tr>
+<tr><td>BankMatching.php</td><td>7</td></tr>
+<tr><td>BankReconciliation.php</td><td>7</td></tr>
+<tr><td>GLAccountInquiry.php</td><td>8</td></tr>
+<tr><td>GLCodesInquiry.php</td><td>8</td></tr>
+<tr><td>GLTransInquiry.php</td><td>8</td></tr>
+<tr><td>GLTrialBalance.php</td><td>8</td></tr>
+<tr><td>SelectGLAccount.php</td><td>8</td></tr>
+<tr><td>BOMs.php</td><td>11</td></tr>
+<tr><td>WorkCentres.php</td><td>11</td></tr>
+</table>

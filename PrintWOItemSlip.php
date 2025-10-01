@@ -122,7 +122,7 @@ if (isset($WO) and isset($StockID) and $WO != '') {
 	}
 }
 
-function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
+function PrintHeader($pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockID, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
 
 	if ($PageNumber > 1) {
 		$pdf->newPage();

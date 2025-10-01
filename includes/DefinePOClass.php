@@ -54,6 +54,7 @@ class PurchOrder {
 	var $Contact;
 	var $Port;
 	var $DefaultReceivedDate;
+	var $SupplierReference;
 
 // KL RICARD
 	var $KLStatus;
