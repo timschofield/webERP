@@ -27,7 +27,7 @@ if (URLWithoutScriptNameContains(".LOCAL")) {
 	$ArchiveDBHost = 'localhost';
 	if (URLWithoutScriptNameContains("DEVELOPMENT")) {
 		// we are on ptadu-development.com (development code)
-		if (URLWithoutScriptNameContains("TEST")) {
+		if (URLWithoutScriptNameContains("/TEST")) {
 			// development environment with the test DB (safe)
 			$webERPType = 'TEST';
 			$ErrorReportingType = 'DEBUGGING';
@@ -44,7 +44,7 @@ if (URLWithoutScriptNameContains(".LOCAL")) {
 		}
 	} else {
 		// we are on ptadu.com (production code)
-		if (URLWithoutScriptNameContains("TEST")) {
+		if (URLWithoutScriptNameContains("/TEST")) {
 			// Training staff environment: we are on production code with the test DB 
 			$webERPType = 'TEST';
 			$ErrorReportingType = 'DEVELOPMENT';
