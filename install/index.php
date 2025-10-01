@@ -36,12 +36,14 @@ if (isset($_GET['Page']) && $_GET['Page'] > 0 && $_GET['Page'] <= 6) {
 	$_SESSION['Installer'] = array();
 	$_SESSION['Installer']['CurrentPage'] = 0;
 	$_SESSION['Installer']['License_Agreed'] = false;
+	/// @todo rename - move DB specific config to $_SESSION['Installer']['DB']
 	$_SESSION['Installer']['Port'] = 3306;
 	$_SESSION['Installer']['HostName'] = '';
 	$_SESSION['Installer']['Database'] = '';
 	$_SESSION['Installer']['UserName'] = '';
 	$_SESSION['Installer']['Password'] = '';
 	$_SESSION['Installer']['DBMS'] = 'mysqli';
+	$_SESSION['Installer']['DBCharset'] = 'utf8mb4';
 	$_SESSION['Installer']['AdminUser'] = 'admin';
 	// discourage default passwords
 	$_SESSION['Installer']['AdminPassword'] = '';

@@ -34,11 +34,14 @@ if (isset($_POST['Demo'])) {
 	$_SESSION['Installer']['Demo'] = 'No';
 }
 
+
 date_default_timezone_set($_SESSION['Installer']['TimeZone']);
 
 if (!CreateDataBase($Host, $DBUser, $DBPassword, $Database, $DBPort, $DBType, $Path_To_Root)) {
 	return;
 }
+// this session value is set within CreateDataBase and has to be set before including ConnectDB_xxx
+$DBCharset = $_SESSION['Installer']['DBCharset'];
 
 /// @todo we could change ConnectDB so that it does not create a new DB connection, and reuse the one we just opened...
 include($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
@@ -63,6 +66,7 @@ $configArray += [
 	'DBPassword'      => $DBPassword,
 	'DBPort'          => $DBPort,
 	'DBType'          => $DBType,
+	'DBCharset'       => $_SESSION['Installer']['DBCharset'],
 	'DefaultLanguage' => $_SESSION['Installer']['Language'],
 	'DefaultDatabase' => $Database,
 	'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']

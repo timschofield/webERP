@@ -6,4 +6,4 @@ CREATE TABLE `menuitems` (
   `url` varchar(60) NOT NULL DEFAULT '',
   `sequence` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`secroleid`,`modulelink`,`menusection`,`caption`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

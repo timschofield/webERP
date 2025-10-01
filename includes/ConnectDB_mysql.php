@@ -8,10 +8,11 @@
 
 define('LIKE', 'LIKE');
 
+global $db, $Host, $DBUser, $DBPassword, $DBPort, $DBCharset, $RootPath; // Make sure these are global, regardless of our context
+
 if (!isset($DBPort)) {
 	$DBPort = 3306;
 }
-global $db, $Host, $DBUser, $DBPassword, $DBPort;// Make sure it IS global, regardless of our context
 
 $db = mysql_connect($Host . ':' . $DBPort, $DBUser, $DBPassword);
 
@@ -24,14 +25,15 @@ if (!$db) {
 	exit();
 }
 
-//this statement sets the charset to be used for sending data to and from the db server
-//if not set, both mysql server and mysql client/library may assume otherwise
-mysql_set_charset('utf8', $db);
+// this statement sets the charset to be used for sending data to and from the db server
+// if not set, both mysql server and mysql client/library may assume otherwise
+/// @todo log a warning, or maybe even error out, if this fails
+mysql_set_charset($DBCharset, $db);
 
 /* Update to allow RecurringSalesOrdersProcess.php to run via cron */
 /// @todo test if this is in fact necessary, as RecurringSalesOrdersProcess.php also sets $_SESSION['DatabaseName']
 if (isset($DatabaseName)) {
-	if (! mysql_select_db($DatabaseName,$db)) {
+	if (! mysql_select_db($DatabaseName, $db)) {
 		echo '<br />' . __('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to login page') . '</a>';
 		//unset($DatabaseName);

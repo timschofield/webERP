@@ -33,7 +33,7 @@ ALTER TABLE locations ADD FOREIGN KEY (taxprovinceid) REFERENCES taxprovinces (t
 
 
 CREATE TABLE taxgroups (
-  taxgroupid tinyint(4) auto_increment NOT NULL,
+  taxgroupid tinyint(4) AUTO_INCREMENT NOT NULL,
   taxgroupdescription varchar(30) NOT NULL,
   PRIMARY KEY(taxgroupid)
 )TYPE=INNODB;

@@ -6,4 +6,4 @@ CREATE TABLE `debtortypenotes` (
   `date` date NOT NULL DEFAULT '1000-01-01',
   `priority` varchar(20) NOT NULL,
   PRIMARY KEY (`noteid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
