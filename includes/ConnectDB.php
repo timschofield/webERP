@@ -2,6 +2,8 @@
 
 require_once($PathPrefix .'includes/MiscFunctions.php');
 
+global $DBType;
+
 /// @todo make sure that $DBType is set and a valid db type
 
 /// @todo rewrite the following IF - $DatabaseName takes precedence over $_SESSION['DatabaseName']
@@ -16,7 +18,7 @@ if (!isset($_SESSION['DatabaseName'])) {
 		}
 		if (is_dir('companies/' . $_POST['CompanyNameField']) and $_POST['CompanyNameField'] != '..') {
 			$_SESSION['DatabaseName'] = $_POST['CompanyNameField'];
-			include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+			require_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 		} else {
 			prnMsg(__('The company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is not configured for use with this installation of webERP. Check that a directory named ' . $_POST['CompanyNameField'] . ' is set up under the companies sub-directory.'), 'error');
 			prnMsg(__('Check the company name entered' . ' (' . $_POST['CompanyNameField'] . ') ' . 'is the same as the database name.'), 'error');
@@ -25,10 +27,10 @@ if (!isset($_SESSION['DatabaseName'])) {
 	} elseif (isset($DatabaseName)) {
 		/* Scripts that do not require a login must have the $DatabaseName variable set in hard code */
 		$_SESSION['DatabaseName'] = $DatabaseName;
-		include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+		require_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 	} else {
 		/// @todo handle this situation - error out?
 	}
 } else {
-	include_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
+	require_once($PathPrefix . 'includes/ConnectDB_' . $DBType . '.php');
 }
