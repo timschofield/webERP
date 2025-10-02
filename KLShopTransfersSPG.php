@@ -5,6 +5,8 @@ require(__DIR__ . '/includes/session.php');
 $Title = __('List of Transfers from/to shop');
 include('includes/header.php');
 
+include('includes/StockFunctions.php');
+
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
@@ -66,6 +68,7 @@ echo '<table class="selection">
 				<th>' . '# Transfer' . '</th>
 				<th>' . __('Date') . '</th>
 				<th>' . __('Item') . '</th>
+				<th>' . __('QOH Shop') . '</th>
 				<th>' . __('From') . '</th>
 				<th>' . __('Qty Send') . '</th>
 				<th>' . __('To') . '</th>
@@ -77,6 +80,11 @@ echo '<table class="selection">
 $CurrentTransfer = -1;
 while ($MyRow = DB_fetch_array($Result)) {
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stockid'] . '</a>';
+	if ($_SESSION['UserStockLocation'] == $MyRow['shiploc']){
+		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['UserStockLocation']);
+	} else {
+		$QOH = 0;
+	}
 	if ($CurrentTransfer != $MyRow['reference']){
 		// The first item of the transfer
 		$CurrentTransfer = $MyRow['reference'];
@@ -87,14 +95,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$Transfer = '';
 		$TransferDate = '';
 	}
+	
 	echo '<tr class="striped_row">
 		<td class="number">' . $Transfer . '</td>
 		<td>' . $TransferDate . '</td>
 		<td>' . $CodeLink . '</td>
+		<td class="number">' . locale_number_format_zero_blank($QOH, 0) . '</td>
 		<td>' . GetLocationNameFromCode($MyRow['shiploc']) . '</td>
-		<td class="number">' . locale_number_format($MyRow['shipqty'],0) . '</td>
+		<td class="number">' . locale_number_format($MyRow['shipqty'], 0) . '</td>
 		<td>' . GetLocationNameFromCode($MyRow['recloc']) . '</td>
-		<td class="number">' . locale_number_format($MyRow['recqty'],0) . '</td>
+		<td class="number">' . locale_number_format($MyRow['recqty'], 0) . '</td>
 		</tr>';
 }
 echo '</tbody></table>';
