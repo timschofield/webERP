@@ -61,7 +61,7 @@ $SQL = "SELECT description,
 			categoryid,
 			units
 		FROM stockmaster
-		WHERE stockid = " . DB_escape_string($StockID);
+		WHERE stockid = '" . DB_escape_string($StockID) . "'";
 $Result = DB_query($SQL);
 $MyItem = DB_fetch_array($Result);
 
@@ -143,8 +143,8 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 		OR ($MyRow['loccode'] == $LocCode)) {
 		$SQL = "UPDATE locstock
 				SET reorderlevel = " . DB_escape_string($RL) . "
-				WHERE stockid = " . DB_escape_string($StockID) . "
-					AND loccode = " . DB_escape_string($MyRow['loccode']);
+				WHERE stockid = '" . DB_escape_string($StockID) . "'
+					AND loccode = '" . DB_escape_string($MyRow['loccode']) . "'";
 
 		$UpdateReorderLevel = DB_query($SQL);
 		if (DB_error_no() != 0) {
@@ -163,7 +163,6 @@ while ($MyRow = DB_fetch_array($LocStockResult)) {
 
 }
 //end of while loop
-
 
 echo '</tbody></table></div></form>';
 include('includes/footer.php');
