@@ -314,7 +314,6 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$dompdf->stream($PdfFileName, array(
 			"Attachment" => false
 		));
-		exit();
 	} else {
 		// Save PDF to file and send via email
 		$dompdf = new Dompdf(['chroot' => __DIR__]);
@@ -357,7 +356,7 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		include('includes/footer.php');
 	}
 
-	if ($ViewingOnly == 0 && $EmailResult == 1) {
+	if ($ViewingOnly == 0 OR $EmailResult == 1) {
 		$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . __('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment']);
 		$SQL = "UPDATE purchorders SET allowprint = 0,
 										dateprinted  = CURRENT_DATE,
