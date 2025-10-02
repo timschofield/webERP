@@ -1,4 +1,10 @@
 <?php
+
+//KL RICARD		
+// Changed all occurences of $f = TCPDF_STATIC::fopenLocal($name, 'wb');
+// by $f = fopen($name, 'wb');
+// to prevent error Unable to create output file:
+
 //============================================================+
 // File name   : tcpdf.php
 // Version     : 6.8.0
@@ -6980,7 +6986,7 @@ class TCPDF {
 			// copy image to cache
 			$original_file = $file;
 			$file = TCPDF_STATIC::getObjFilename('img', $this->file_id);
-			$fp = TCPDF_STATIC::fopenLocal($file, 'w');
+			$fp = fopen($file, 'w');
 			if (!$fp) {
 				$this->Error('Unable to write file: '.$file);
 			}
@@ -7683,7 +7689,7 @@ class TCPDF {
 			$pdfdoc = str_replace(TCPDF_STATIC::$byterange_string, $byterange, $pdfdoc);
 			// write the document to a temporary folder
 			$tempdoc = TCPDF_STATIC::getObjFilename('doc', $this->file_id);
-			$f = TCPDF_STATIC::fopenLocal($tempdoc, 'wb');
+			$f = fopen($tempdoc, 'wb');
 			if (!$f) {
 				$this->Error('Unable to create temporary file: '.$tempdoc);
 			}
@@ -7774,7 +7780,10 @@ class TCPDF {
 			case 'FI':
 			case 'FD': {
 				// save PDF to a local file
-				$f = TCPDF_STATIC::fopenLocal($name, 'wb');
+//KL RICARD		
+// Changed all occurences of $f = TCPDF_STATIC::fopenLocal($name, 'wb');
+// by $f = fopen($name, 'wb');
+				$f = fopen($name, 'wb');
 				if (!$f) {
 					$this->Error('Unable to create output file: '.$name);
 				}
@@ -10927,7 +10936,7 @@ class TCPDF {
 				$envelope = $seed.$pkpermissions;
 				// write the envelope data to a temporary file
 				$tempkeyfile = TCPDF_STATIC::getObjFilename('key', $this->file_id);
-				$f = TCPDF_STATIC::fopenLocal($tempkeyfile, 'wb');
+				$f = fopen($tempkeyfile, 'wb');
 				if (!$f) {
 					$this->Error('Unable to create temporary key file: '.$tempkeyfile);
 				}
