@@ -39,12 +39,8 @@ include_once('includes/CurrenciesArray.php'); // Array to retrieve currency name
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-if (!isset($_POST['Company'])) {
+if (!isset($_POST['Company']) OR $_POST['Company'] == 'ALL') {
 	$_POST['Company'] = 'ALL';
-	$Title = __('Profit and Loss for KL group');
-	$Table = 'chartmaster';
-}
-else if ($_POST['Company'] == 'ALL') {
 	$Title = __('Profit and Loss for KL Group');
 	$Table = 'chartmaster';
 }
