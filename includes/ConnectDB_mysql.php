@@ -11,7 +11,7 @@ define('LIKE', 'LIKE');
 if (!isset($DBPort)) {
 	$DBPort = 3306;
 }
-global $db;// Make sure it IS global, regardless of our context
+global $db, $Host, $DBUser, $DBPassword, $DBPort;// Make sure it IS global, regardless of our context
 
 $db = mysql_connect($Host . ':' . $DBPort, $DBUser, $DBPassword);
 

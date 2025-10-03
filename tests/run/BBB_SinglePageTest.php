@@ -18,6 +18,9 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 	 */
 	public function testAccessToAllPages(string $filePath): void
 	{
+		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
+		$this->assertTrue(true);
+
 		// use the name of the currently tested script as part of the name of the html file saved in case of failure
 		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($filePath));
 
@@ -32,9 +35,6 @@ class BBB_SinglePageTest extends LoggedInUserTestCase
 			$this->setExpectedStatusCodes([200]);
 		}
 		$crawler = $this->request('GET', self::$baseUri . $filePath);
-
-		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
-		$this->assertTrue(true);
 	}
 
 	/**

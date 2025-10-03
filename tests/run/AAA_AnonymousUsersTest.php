@@ -57,6 +57,9 @@ class AAA_AnonymousUsersTest extends AnonymousUserTestCase
 	 */
 	public function testDirectAccessToInstallerPages(string $fileName): void
 	{
+		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
+		$this->assertTrue(true);
+
 		// use the name of the currently tested script as part of the name of the html file saved in case of failure
 		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
 
@@ -64,9 +67,6 @@ class AAA_AnonymousUsersTest extends AnonymousUserTestCase
 		// be tolerant in case in the future we replace the redirect with a page-not-found
 		$this->setExpectedStatusCodes([301, 302, 404]);
 		$this->request('GET', self::$baseUri . $fileName);
-
-		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
-		$this->assertTrue(true);
 	}
 
 	/**
@@ -76,16 +76,16 @@ class AAA_AnonymousUsersTest extends AnonymousUserTestCase
 	 */
 	public function testDirectAccessToNonWebPages(string $fileName): void
 	{
+		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
+		$this->assertTrue(true);
+
 		// use the name of the currently tested script as part of the name of the html file saved in case of failure
 		$this->executingTestIdentifier = preg_replace('/\.php$/', '', basename($fileName));
 
 		$this->followRedirects(false);
 		// be tolerant in case in the future we replace the redirect with a page-not-found
 		$this->setExpectedStatusCodes([200, 301, 302, 404]);
-		$this->request('GET', self::$baseUri . $fileName);
-
-		// avoid phpunit warnings, while ensuring code coverage. The assertions are done by $this->browser
-		$this->assertTrue(true);
+		$crawler = $this->request('GET', self::$baseUri . $fileName);
 	}
 
 	/**
