@@ -8,7 +8,12 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if ($_GET['InvOrCredit']=='Invoice'){
+if (isset($_POST['DoIt'])) {
+	$_GET['InvOrCredit'] = $_POST['InvOrCredit'];
+	$_GET['FromTransNo'] = $_POST['FromTransNo'];
+}
+
+if ((isset($_POST['InvOrCredit']) and $_POST['InvOrCredit']=='Invoice') or $_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = __('Invoice');
 	$TypeCode = 10;
 } else {
@@ -20,13 +25,13 @@ $Title=__('Email') . ' ' . $TransactionType . ' ' . __('Number') . ' ' . $_GET['
 if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 
 	if ($_SESSION['InvoicePortraitFormat']==0){
-		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['TransNo'] . '&orientation=landscape&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">';
 
-		prnMsg(__('The transaction should have been emailed off') . '. ' . __('If this does not happen') . ' (' . __('if the browser does not support META Refresh') . ')' . '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
+		prnMsg(__('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['FromTransNo'] . '&orientation=landscape&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
 	} else {
-		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $_POST['TransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">';
+		echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['TransNo'] . '&orientation=portrait&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">';
 
-		prnMsg(__('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTransPortrait.php?FromTransNo=' . $_POST['FromTransNo'] . '&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
+		prnMsg(__('The transaction should have been emailed off. If this does not happen (perhaps the browser does not support META Refresh)') . '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $_POST['FromTransNo'] . '&orientation=portrait&PrintPDF=Yes&InvOrCredit=' . $_POST['InvOrCredit'] .'&Email=' . $_POST['EmailAddr'] . '">' . __('click here') . '</a> ' . __('to email the customer transaction'),'success');
 	}
 	exit();
 } elseif (isset($_POST['DoIt'])) {
@@ -34,9 +39,6 @@ if (isset($_POST['DoIt']) AND IsEmailAddress($_POST['EmailAddr'])){
 	$_GET['FromTransNo'] = $_POST['FromTransNo'];
 	prnMsg(__('The email address does not appear to be a valid email address. The transaction was not emailed'),'warn');
 }
-
-include('includes/header.php');
-
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
