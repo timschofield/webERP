@@ -1,9 +1,8 @@
 <?php
-require 'vendor/autoload.php'; // Make sure DomPDF is installed via Composer
-use Dompdf\Dompdf;
-use Dompdf\Options;
 
 require(__DIR__ . '/includes/session.php');
+
+use Dompdf\Dompdf;
 
 if (isset($_GET['WO'])) {
 	$WO = filter_number_format($_GET['WO']);
@@ -25,7 +24,7 @@ if (isset($_GET['Location'])) {
 	$Location = $_POST['Location'];
 }
 
-if (isset($WO) and isset($StockId) and $WO != '') {
+if (isset($WO) && isset($StockId) && $WO != '') {
 
 	$SQL = "SELECT woitems.qtyreqd,
 					woitems.qtyrecd,
@@ -37,22 +36,27 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 				AND woitems.wo = '" . $WO . "'
 				AND woitems.stockid = '" . $StockId . "' ";
 
-	$ErrMsg = _('The SQL to find the details of the item to produce failed');
+	$ErrMsg = __('The SQL to find the details of the item to produce failed');
 	$ResultItems = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($ResultItems) != 0) {
-		$options = new Options();
-		$options->set('isHtml5ParserEnabled', true);
-		$options->set('isRemoteEnabled', true);
+	$HTML = '<html><head><style>
+		body { font-family: Arial, sans-serif; font-size: 12px; }
+		.header { margin-bottom: 20px; }
+		.company-info { font-size: 10px; margin-bottom: 10px; }
+		.supplier-info { font-size: 12px; margin-bottom: 10px; }
+		table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+		th, td { border: 1px solid #000; padding: 4px; }
+		th { background: #eee; }
+		.totals { text-align: right; font-weight: bold; }
+		</style><link href="css/reports.css" rel="stylesheet" type="text/css" /></head><body>';
+		$ReportDate = date($_SESSION['DefaultDateFormat']);
+		$PageTitle = __('WO Production Slip');
+		$Subject = __('WO Production Slip');
 
-		$dompdf = new Dompdf($options);
-
-		$HTML = '';
-		while ($myItem = DB_fetch_array($ResultItems)) {
-			$FontSize = '12px';
-			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
-
-			$HTML .= PrintHeaderHTML($_SESSION['CompanyRecord']['coyname'], $WO, $StockId, $myItem['description'], $QtyPending, $myItem['units'], $myItem['decimalplaces'], date('Y-m-d'));
+		while ($MyItem = DB_fetch_array($ResultItems)) {
+			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
+			$HTML .= PrintHeaderHTML($_SESSION['CompanyRecord']['coyname'], $ReportDate, $WO, $StockId, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces']);
 
 			$SQLBOM = "SELECT bom.parent,
 						bom.component,
@@ -67,113 +71,110 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '" . $Location . "'
 						AND bom.parent = '" . $StockId . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+						AND bom.effectiveafter <= CURRENT_DATE
+						AND bom.effectiveto > CURRENT_DATE";
 
-			$ErrMsg = _('The bill of material could not be retrieved because');
+			$ErrMsg = __('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
 
-			$HTML .= "<table style='width:100%; border-collapse:collapse; margin-bottom:20px;'><thead>
-			<tr>
-				<th style='border:1px solid #000;padding:4px;'>Component Code</th>
-				<th style='border:1px solid #000;padding:4px;'>Qty BOM</th>
-				<th style='border:1px solid #000;padding:4px;'>Unit</th>
-				<th style='border:1px solid #000;padding:4px;'>Qty Needed</th>
-				<th style='border:1px solid #000;padding:4px;'>Unit</th>
-				<th style='border:1px solid #000;padding:4px;'>Shrinkage</th>
-				<th style='border:1px solid #000;padding:4px;'>Unit</th>
-			</tr>
-			</thead><tbody>";
+			$HTML .= '<table width="100%" border="1" cellspacing="0" cellpadding="4">
+				<thead>
+					<tr>
+						<th>' . __('Component Code') . '</th>
+						<th>' . __('Qty BOM') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Qty Needed') . '</th>
+						<th>' . __('Units') . '</th>
+						<th>' . __('Shrinkage') . '</th>
+						<th>' . __('Units') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
-			while ($myComponent = DB_fetch_array($BOMResult)) {
-				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;
-				$PrevisionShrinkage = $ComponentNeeded * ($myComponent['shrinkfactor'] / 100);
-
-				$HTML .= "<tr>
-					<td style='border:1px solid #000;padding:4px;'>{$myComponent['component']}</td>
-					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($myComponent['bomqty'], 'Variable') . "</td>
-					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
-					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($ComponentNeeded, $myComponent['decimalplaces']) . "</td>
-					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
-					<td style='border:1px solid #000;padding:4px;text-align:right;'>" . locale_number_format($PrevisionShrinkage, $myComponent['decimalplaces']) . "</td>
-					<td style='border:1px solid #000;padding:4px;'>{$myComponent['units']}</td>
-				</tr>";
+			while ($MyComponent = DB_fetch_array($BOMResult)) {
+				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
+				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
+				$HTML .= '<tr>
+					<td>' . htmlspecialchars($MyComponent['component']) . '</td>
+					<td align="right">' . locale_number_format($MyComponent['bomqty'], 'Variable') . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+					<td align="right">' . locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']) . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+					<td align="right">' . locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']) . '</td>
+					<td>' . htmlspecialchars($MyComponent['units']) . '</td>
+				</tr>';
 			}
-			$HTML .= "</tbody></table>";
+
+			$HTML .= '</tbody></table>';
+
+			// Add production notes and signature section
+			$HTML .= PrintFooterSlipHTML(__('Incidences / Production Notes'), __('Components Ready By'), __('Item Produced By'), __('Quality Control By'));
 		}
 
-		$HTML .= "<div style='margin-bottom:30px;'><strong>Incidences / Production Notes:</strong></div>";
-
-		$HTML .= PrintFooterSlipHTML(_('Components Ready By'), _('Item Produced By'), _('Quality Control By'));
-
+		// Output to PDF using Dompdf
+		$dompdf = new Dompdf();
 		$dompdf->loadHtml($HTML);
 		$dompdf->setPaper('A4', 'portrait');
 		$dompdf->render();
-
 		$filename = 'WO-' . $WO . '-' . $StockId . '-' . date('Y-m-d') . '.pdf';
 		$dompdf->stream($filename, ['Attachment' => 1]);
-		exit;
+		exit();
 	} else {
-		$Title = _('WO Item production Slip');
-		include ('includes/header.php');
-		prnMsg(_('There were no items with ready to produce'), 'info');
+		$Title = __('WO Item production Slip');
+		include('includes/header.php');
+		prnMsg(__('There were no items with ready to produce'), 'info');
 		prnMsg($SQL);
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include ('includes/footer.php');
-		exit;
+		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		include('includes/footer.php');
+		exit();
 	}
 }
 
-function PrintHeaderHTML($CompanyName, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
-	$imgTag = '';
-	$imgPath = $_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg';
-	if (file_exists($imgPath)) {
-		// DomPDF requires file:// prefix for local images
-		$imgTag = "<img src='file://$imgPath' style='width:200px;height:auto;margin-bottom:16px;' />";
-	}
-	return "
-	<div style='margin-bottom:24px;'>
-		<div style='font-size:18px;font-weight:bold;'>$CompanyName</div>
-		<div style='float:right;'>$ReportDate</div>
-		<div style='clear:both;'></div>
-		<div style='font-size:16px;font-weight:bold;margin-top:10px;'>Work Order Item Production Slip</div>
-		<div style='font-size:14px;margin-top:10px;'><strong>WO:</strong> $WO</div>
-		<div style='font-size:14px;margin-top:8px;'><strong>Item Code:</strong> $StockId &rarr; $Description</div>
-		<div style='font-size:14px;margin-top:8px;'><strong>Quantity:</strong> " . locale_number_format($Qty, $DecimalPlaces) . " $UOM</div>
-		$imgTag
-	</div>
-	";
+function PrintHeaderHTML($CompanyName, $ReportDate, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces) {
+	return '
+		<h2 style="margin-bottom:0;">' . htmlspecialchars($CompanyName) . '</h2>
+		<p style="margin-top:0;">
+			' . __('Printed') . ': ' . htmlspecialchars($ReportDate) . '
+			<br />
+			' . __('Work Order Item Production Slip') . '
+			<br />
+			' . __('WO') . ': ' . htmlspecialchars($WO) . '
+			<br />
+			' . __('Item Code') . ': ' . htmlspecialchars($StockId) . ' - ' . htmlspecialchars($Description) . '
+			<br />
+			' . __('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . htmlspecialchars($UOM) . '
+		</p>
+	';
 }
 
-function PrintFooterSlipHTML($Column1, $Column2, $Column3) {
-	$footerTable = "
-	<table style='width:100%;margin-top:30px;'>
-		<tr>
-			<td style='vertical-align:top;'>
-				<strong>$Column1:</strong><br>
-				Name: __________________<br>
-				Date: __________________<br>
-				Hour: __________________<br>
-				Signature: __________________
-			</td>
-			<td style='vertical-align:top;'>
-				<strong>$Column2:</strong><br>
-				Name: __________________<br>
-				Date: __________________<br>
-				Hour: __________________<br>
-				Signature: __________________
-			</td>
-			<td style='vertical-align:top;'>
-				<strong>$Column3:</strong><br>
-				Name: __________________<br>
-				Date: __________________<br>
-				Hour: __________________<br>
-				Signature: __________________
-			</td>
-		</tr>
-	</table>
-	";
-	return $footerTable;
+function PrintFooterSlipHTML($ProductionNotes, $Column1, $Column2, $Column3) {
+	return '
+		<h3>' . htmlspecialchars($ProductionNotes) . ':</h3>
+		<div style="height:80px;border:1px solid #000;margin-bottom:20px;"></div>
+		<table width="100%" border="0" cellspacing="0" cellpadding="8" style="margin-top:30px;">
+			<tr>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column1) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column2) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+				<td valign="top" width="33%">
+					<strong>' . htmlspecialchars($Column3) . ':</strong><br />
+					<br />' . __('Name') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Date') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Hour') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span><br />
+					<br />' . __('Signature') . ': <span style="border-bottom:1px solid #000;">' . str_repeat('&nbsp;', 45) . '</span>
+				</td>
+			</tr>
+		</table>
+	';
 }
-
-?>
