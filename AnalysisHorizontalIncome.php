@@ -48,7 +48,7 @@ else if ($_POST['Company'] == 'PTADU') {
 	$Table = 'chartmasterADU';
 }
 else if ($_POST['Company'] == 'PTSMH') {
-	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for for PT. Sungai Mutiara Hitam');
+	$Title = __('Horizontal Analysis of Statement of Comprehensive Income for PT. Sungai Mutiara Hitam');
 	$Table = 'chartmasterSMH';
 }
 else if ($_POST['Company'] == 'PTBB') {
