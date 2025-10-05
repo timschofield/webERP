@@ -111,12 +111,6 @@ if(isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionInAccounts';
 		$i++;
 	}
-	if(!ctype_digit($_POST['SequenceInTB'])) {
-		$InputError = 1;
-		prnMsg( __('The sequence in the trial balance must be an integer'),'error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
-	}
 	if(!ctype_digit($_POST['SequenceInTB']) OR $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
 		prnMsg( __('The sequence in the TB must be numeric and less than') . ' 10,000','error');
@@ -196,7 +190,7 @@ if(isset($_POST['submit'])) {
 	$MyRow = DB_fetch_array($Result);
 	if($MyRow['total_groups']>0) {
 		prnMsg( __('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
-		echo '<br />' . __('There are') . ' ' . $MyRow['groups'] . ' ' . __('general ledger accounts that refer to this account group');
+		echo '<br />' . __('There are') . ' ' . $MyRow['total_groups'] . ' ' . __('general ledger accounts that refer to this account group');
 		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
