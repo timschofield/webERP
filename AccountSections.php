@@ -10,7 +10,7 @@ $BookMark = 'AccountSections';
 include('includes/header.php');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
-	$SQL= "SELECT sectionid FROM accountsection WHERE sectionid=1";
+	$SQL = "SELECT sectionid FROM accountsection WHERE sectionid=1";
 	$Result = DB_query($SQL);
 
 	if( DB_num_rows($Result) == 0 ) {
@@ -21,7 +21,7 @@ include('includes/header.php');
 		$Result = DB_query($SQL);
 	}
 
-	$SQL= "SELECT sectionid FROM accountsection WHERE sectionid=2";
+	$SQL = "SELECT sectionid FROM accountsection WHERE sectionid=2";
 	$Result = DB_query($SQL);
 
 	if( DB_num_rows($Result) == 0 ) {
@@ -41,7 +41,7 @@ if(isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 
 	$InputError = 0;
-	$i=1;
+	$i = 1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -53,7 +53,7 @@ if(isset($_POST['submit'])) {
 					WHERE sectionid='".$_POST['SectionID']."'";
 		$Result = DB_query($SQL);
 
-		if((DB_num_rows($Result)!=0 AND !isset($_POST['SelectedSectionID']))) {
+		if((DB_num_rows($Result) != 0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
 			prnMsg( __('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
@@ -62,13 +62,13 @@ if(isset($_POST['submit'])) {
 	}
 	if(ContainsIllegalCharacters($_POST['SectionName'])) {
 		$InputError = 1;
-		prnMsg( __('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
+		prnMsg( __('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space','error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
-	if(mb_strlen($_POST['SectionName'])==0) {
+	if(mb_strlen($_POST['SectionName']) == 0) {
 		$InputError = 1;
-		prnMsg( __('The account section name must contain at least one character') ,'error');
+		prnMsg( __('The account section name must contain at least one character'),'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
@@ -85,7 +85,7 @@ if(isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if(isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID']!='' AND $InputError !=1) {
+	if(isset($_POST['SelectedSectionID']) AND $_POST['SelectedSectionID'] != '' AND $InputError != 1) {
 
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
@@ -93,7 +93,7 @@ if(isset($_POST['submit'])) {
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
 		$Msg = __('Record Updated');
-	} elseif($InputError !=1) {
+	} elseif($InputError != 1) {
 
 	/*SelectedSectionID is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account section form */
 
@@ -105,7 +105,7 @@ if(isset($_POST['submit'])) {
 		$Msg = __('Record inserted');
 	}
 
-	if($InputError!=1) {
+	if($InputError != 1) {
 		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
 		prnMsg($Msg,'success');
