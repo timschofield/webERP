@@ -9,4 +9,4 @@ CREATE TABLE `prodspecgroups` (
   PRIMARY KEY (`groupid`),
   UNIQUE KEY `groupname` (`groupname`),
   KEY `groupbyNo` (`groupbyNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

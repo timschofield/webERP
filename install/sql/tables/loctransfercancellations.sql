@@ -8,4 +8,4 @@ CREATE TABLE `loctransfercancellations` (
   KEY `Index2` (`canceldate`,`reference`,`stockid`),
   KEY `refstockid` (`reference`,`stockid`),
   KEY `cancelrefstockid` (`canceldate`,`reference`,`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

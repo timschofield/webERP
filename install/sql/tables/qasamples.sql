@@ -10,4 +10,4 @@ CREATE TABLE `qasamples` (
   PRIMARY KEY (`sampleid`),
   KEY `prodspeckey` (`prodspeckey`,`lotkey`),
   CONSTRAINT `qasamples_ibfk_1` FOREIGN KEY (`prodspeckey`) REFERENCES `prodspecs` (`keyval`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -4,4 +4,4 @@ CREATE TABLE `tenderitems` (
   `quantity` varchar(40) NOT NULL DEFAULT '',
   `units` varchar(20) NOT NULL DEFAULT 'each',
   PRIMARY KEY (`tenderid`,`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
