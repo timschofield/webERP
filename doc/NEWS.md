@@ -45,4 +45,4 @@ For detailed changelogs of v4 and earlier, please refer to [CHANGELOG.md].
 * introduced file `robots.txt` to avoid accidental indexation of site contents
 * improved the debugging of failed SQL queries when `$Debug` is set to 1
 * css styling changes
-* many bugfixes
+* various bugfixes
