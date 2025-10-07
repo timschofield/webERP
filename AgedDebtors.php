@@ -12,7 +12,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1) {
 
-	  /*Now figure out the aged analysis for the customer range under review */
+	/*Now figure out the aged analysis for the customer range under review */
 	if($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
@@ -101,39 +101,39 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
 				SUM(debtortrans.balance) AS balance,
-			SUM(
+				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 						THEN
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= paymentterms.daysbeforedue
-							THEN debtortrans.balance
-							ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= paymentterms.daysbeforedue
+								THEN debtortrans.balance
+								ELSE 0 END
 						ELSE
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0
-						THEN debtortrans.balance ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= 0
+								THEN debtortrans.balance ELSE 0 END
 					END
 				) AS due,
-			SUM(
-			  		CASE WHEN (paymentterms.daysbeforedue > 0)
-						THEN
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-							THEN debtortrans.balance
-							ELSE 0 END
-						ELSE
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
-							THEN debtortrans.balance
-							ELSE 0 END
-					END
-				) AS overdue1,
-			SUM(
+				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 						THEN
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
-							THEN debtortrans.balance
-							ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
+								THEN debtortrans.balance
+								ELSE 0 END
 						ELSE
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . "
-							THEN debtortrans.balance
-							ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
+								THEN debtortrans.balance
+								ELSE 0 END
+					END
+				) AS overdue1,
+				SUM(
+					CASE WHEN (paymentterms.daysbeforedue > 0)
+						THEN
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ")
+								THEN debtortrans.balance
+								ELSE 0 END
+						ELSE
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . "
+								THEN debtortrans.balance
+								ELSE 0 END
 					END
 				) AS overdue2
 			FROM debtorsmaster,
@@ -149,27 +149,27 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 				AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
 				AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
 				" . $SalesLimit . "
-			GROUP BY debtorsmaster.debtorno,
-					debtorsmaster.name,
-					currencies.currency,
-					paymentterms.terms,
-					paymentterms.daysbeforedue,
-					paymentterms.dayinfollowingmonth,
-					debtorsmaster.creditlimit,
-					holdreasons.dissallowinvoices,
-					holdreasons.reasondescription
-			HAVING SUM(
-				CASE WHEN (paymentterms.daysbeforedue > 0)
+				GROUP BY debtorsmaster.debtorno,
+						debtorsmaster.name,
+						currencies.currency,
+						paymentterms.terms,
+						paymentterms.daysbeforedue,
+						paymentterms.dayinfollowingmonth,
+						debtorsmaster.creditlimit,
+						holdreasons.dissallowinvoices,
+						holdreasons.reasondescription
+				HAVING SUM(
+					CASE WHEN (paymentterms.daysbeforedue > 0)
 						THEN
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-							THEN debtortrans.balance
-							ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
+								THEN debtortrans.balance
+								ELSE 0 END
 						ELSE
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
-							THEN debtortrans.balance
-							ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . "
+								THEN debtortrans.balance
+								ELSE 0 END
 					END
-					) > 0.01";
+				) > 0.01";
 
 	} elseif($_POST['All_Or_Overdues']=='HeldOnly') {
 
@@ -214,34 +214,34 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 								THEN debtortrans.balance
 								ELSE 0 END
 							ELSE
-								CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= ".$_SESSION['PastDueDays2'] . "
+								CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . "
 								THEN debtortrans.balance
 							ELSE 0 END
 						END
 					) AS overdue2
 				FROM debtorsmaster,
-				paymentterms,
-				holdreasons,
-				currencies,
-				debtortrans
+					paymentterms,
+					holdreasons,
+					currencies,
+					debtortrans
 				WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
-				AND debtorsmaster.currcode = currencies.currabrev
-				AND debtorsmaster.holdreason = holdreasons.reasoncode
-				AND debtorsmaster.debtorno = debtortrans.debtorno
-				AND holdreasons.dissallowinvoices=1
-				AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
-				AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
-				AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
-				" . $SalesLimit . "
+					AND debtorsmaster.currcode = currencies.currabrev
+					AND debtorsmaster.holdreason = holdreasons.reasoncode
+					AND debtorsmaster.debtorno = debtortrans.debtorno
+					AND holdreasons.dissallowinvoices=1
+					AND debtorsmaster.debtorno >= '" . $_POST['FromCriteria'] . "'
+					AND debtorsmaster.debtorno <= '" . $_POST['ToCriteria'] . "'
+					AND debtorsmaster.currcode ='" . $_POST['Currency'] . "'
+					" . $SalesLimit . "
 				GROUP BY debtorsmaster.debtorno,
-				debtorsmaster.name,
-				currencies.currency,
-				paymentterms.terms,
-				paymentterms.daysbeforedue,
-				paymentterms.dayinfollowingmonth,
-				debtorsmaster.creditlimit,
-				holdreasons.dissallowinvoices,
-				holdreasons.reasondescription
+					debtorsmaster.name,
+					currencies.currency,
+					paymentterms.terms,
+					paymentterms.daysbeforedue,
+					paymentterms.dayinfollowingmonth,
+					debtorsmaster.creditlimit,
+					holdreasons.dissallowinvoices,
+					holdreasons.reasondescription
 				HAVING ABS(SUM(debtortrans.balance)) >0.005";
 	}
 	$ErrMsg = __('The customer details could not be retrieved');
@@ -269,7 +269,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 		$Row = DB_fetch_array($rs);
 		$HTML .= __('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'] . '<br />';
 	}
-	$HTML .=  __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+	$HTML .=  __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -290,7 +290,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	$TotOD1=0;
 	$TotOD2=0;
 
- 	$ListCount = DB_num_rows($CustomerResult);
+	$ListCount = DB_num_rows($CustomerResult);
 	$CurrDecimalPlaces =2; //by default
 
 	while ($AgedAnalysis = DB_fetch_array($CustomerResult)) {
@@ -463,7 +463,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 } else { /*The option to print PDF was not hit */
 
-	$Title=__('Aged Debtor Analysis');
+	$Title = __('Aged Debtor Analysis');
 
 	$ViewTopic = 'ARReports';
 	$BookMark = 'AgedDebtors';
