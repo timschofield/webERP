@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-	$i=1;
+	$i = 1;
 
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(__('The area code must be three characters or less long'),'error');
 		$Errors[$i] = 'AreaCode';
 		$i++;
-	} elseif (DB_num_rows($Result)>0 AND !isset($SelectedArea)){
+	} elseif (DB_num_rows($Result) > 0 AND !isset($SelectedArea)){
 		$InputError = 1;
 		prnMsg(__('The area code entered already exists'),'error');
 		$Errors[$i] = 'AreaCode';
@@ -56,25 +56,25 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (isset($SelectedArea) AND $InputError !=1) {
+	if (isset($SelectedArea) AND $InputError != 1) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
 		$SQL = "UPDATE areas SET areadescription='" . $_POST['AreaDescription'] . "'
-								WHERE areacode = '" . $SelectedArea . "'";
+						WHERE areacode = '" . $SelectedArea . "'";
 
 		$Msg = __('Area code') . ' ' . $SelectedArea  . ' ' . __('has been updated');
 
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 	/*Selectedarea is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new area form */
 
 		$SQL = "INSERT INTO areas (areacode,
-									areadescription
-								) VALUES (
-									'" . $_POST['AreaCode'] . "',
-									'" . $_POST['AreaDescription'] . "'
-								)";
+								areadescription
+							) VALUES (
+								'" . $_POST['AreaCode'] . "',
+								'" . $_POST['AreaDescription'] . "'
+							)";
 
 		$SelectedArea = $_POST['AreaCode'];
 		$Msg = __('New area code') . ' ' . $_POST['AreaCode'] . ' ' . __('has been inserted');
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	//run the SQL from either of the above possibilites
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 		$ErrMsg = __('The area could not be added or updated because');
 		$Result = DB_query($SQL, $ErrMsg);
 		unset($SelectedArea);
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 	$SQL= "SELECT COUNT(branchcode) AS branches FROM custbranch WHERE custbranch.area='$SelectedArea'";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
-	if ($MyRow['branches']>0) {
+	if ($MyRow['branches'] > 0) {
 		$CancelDelete = 1;
 		prnMsg( __('Cannot delete this area because customer branches have been created using this area'),'warn');
 		echo '<br />' . __('There are') . ' ' . $MyRow['branches'] . ' ' . __('branches using this area code');
@@ -111,14 +111,14 @@ if (isset($_POST['submit'])) {
 		$SQL= "SELECT COUNT(area) AS records FROM salesanalysis WHERE salesanalysis.area ='$SelectedArea'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
-		if ($MyRow['records']>0) {
+		if ($MyRow['records'] > 0) {
 			$CancelDelete = 1;
 			prnMsg( __('Cannot delete this area because sales analysis records exist that use this area'),'warn');
 			echo '<br />' . __('There are') . ' ' . $MyRow['records'] . ' ' . __('sales analysis records referring this area code');
 		}
 	}
 
-	if ($CancelDelete==0) {
+	if ($CancelDelete == 0) {
 		$SQL="DELETE FROM areas WHERE areacode='" . $SelectedArea . "'";
 		$Result = DB_query($SQL);
 		prnMsg(__('Area Code') . ' ' . $SelectedArea . ' ' . __('has been deleted') .' !','success');
@@ -218,6 +218,6 @@ if (!isset($_GET['delete'])) {
 				</div>
 	</form>';
 
- } //end if record deleted no point displaying form to add record
+} //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');
