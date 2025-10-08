@@ -1343,9 +1343,9 @@ function NumberOfShops($ShopType){
 		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc = 'SHOPKL'
-					AND (alldisc20items = 1
-						OR alldisc50items = 1
-						OR alldisc80items = 1)";
+					AND (alldisc20items > 0
+						OR alldisc50items > 0
+						OR alldisc80items > 0)";
 						
 	}elseif ($ShopType == "SHOPOB"){
 		/* Optimized query for Blink discount shops:
@@ -1355,9 +1355,9 @@ function NumberOfShops($ShopType){
 		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc = 'SHOPBL'
-					AND (alldisc20items = 1
-						OR alldisc50items = 1
-						OR alldisc80items = 1)";
+					AND (alldisc20items > 0
+						OR alldisc50items > 0
+						OR alldisc80items > 0)";
 						
 	}elseif ($ShopType == "SHOPOG"){
 		/* Optimized query for General discount shops:
@@ -1367,9 +1367,9 @@ function NumberOfShops($ShopType){
 		$SQL = "SELECT COUNT(*) AS shopcount
 				FROM locations
 				WHERE typeloc IN ('SHOPKL', 'SHOPBL', 'SHOPOU')
-					AND (alldisc20items = 1
-						OR alldisc50items = 1
-						OR alldisc80items = 1)";
+					AND (alldisc20items > 0
+						OR alldisc50items > 0
+						OR alldisc80items > 0)";
 	}else{
 		// Invalid shop type - return 0
 		return 0;

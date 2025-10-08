@@ -805,38 +805,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
 		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
 
-		$StartTime = microtime(true);
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath);
-		TimeNeededForExecution("ItemsWithStockKantorButReorderLevelTokoZero", $StartTime, $KL_SystemAdmin);
-		$NumberOfTestExecuted++;
-
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
-		$StartTime = microtime(true);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
-		TimeNeededForExecution("CategoryItemsMissingInShops", $StartTime, $KL_SystemAdmin);
 	}
 }
 

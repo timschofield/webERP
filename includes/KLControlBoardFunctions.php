@@ -322,17 +322,17 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath){
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
-		$Condition = " AND locations.alltestitems = '1' ";
+		$Condition = " AND locations.alltestitems = '2' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_STABLE)){
-		$Condition = " AND locations.allstableitems = '1' ";
+		$Condition = " AND locations.allstableitems = '2' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
-		$Condition = " AND locations.allnopoitems = '1' ";
+		$Condition = " AND locations.allnopoitems = '2' ";
 	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
-		$Condition = " AND locations.alldisc20items = '1' ";
+		$Condition = " AND locations.alldisc20items = '2' ";
 	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
-		$Condition = " AND locations.alldisc50items = '1' ";
+		$Condition = " AND locations.alldisc50items = '2' ";
 	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
-		$Condition = " AND locations.alldisc80items = '1' ";
+		$Condition = " AND locations.alldisc80items = '2' ";
 	}
 	
 	$SQL="SELECT loccode
@@ -1789,23 +1789,25 @@ function ItemsInSetup($Check, $Category, $RootPath){
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
-		$TableTitleText = 'Blink or KL Discount not allowed items on KL shops';
-		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
-							OR (stockmaster.categoryid = 'DISC2A' AND locations.alldisc20items = 1)
-							OR (stockmaster.categoryid = 'DISC5A' AND locations.alldisc50items = 1)
+		$TableTitleText = 'KL Discount not allowed items on KL shops';
+		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTKA' AND locations.alltestitems > 0)
+							OR (stockmaster.categoryid = 'STABKA' AND locations.allstableitems > 0)
+							OR (stockmaster.categoryid = 'NOPOKA' AND locations.allnopoitems > 0)
+							OR (stockmaster.categoryid = 'DISC2A' AND locations.alldisc20items > 0)
+							OR (stockmaster.categoryid = 'DISC5A' AND locations.alldisc50items > 0)
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
-							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items = 1)
-							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items = 1)
+							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
+							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						) AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$TableTitleText = 'KL or Blink Discount not allowed items on BLINK shops';
-		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
-							OR (stockmaster.categoryid = 'DISC2B' AND locations.alldisc20items = 1)
-							OR (stockmaster.categoryid = 'DISC5B' AND locations.alldisc50items = 1)
+		$TableTitleText = 'Blink Discount not allowed items on BLINK shops';
+		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTBA' AND locations.alltestitems > 0)
+							OR (stockmaster.categoryid = 'STABBA' AND locations.allstableitems > 0)
+							OR (stockmaster.categoryid = 'NOPOBA' AND locations.allnopoitems > 0)
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
-							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items = 1)
-							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items = 1)
+							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
+							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						) AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($ShopType == "SHOPOU"){
@@ -2428,17 +2430,17 @@ No pending transfer regarding this item
 		$Message = 'KAPAL-LAUT with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc20items = 2 ";
 	}elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
 		$Message = 'KAPAL-LAUT with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc50items = 2 ";
 	}elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
 		$Message = 'KAPAL-LAUT with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8A' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc80items = 2 ";
 	}elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
@@ -2447,17 +2449,17 @@ No pending transfer regarding this item
 		$Message = 'BLINK with 20% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc20items = 2 ";
 	}elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
 		$Message = 'BLINK with 50% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc50items = 2 ";
 	}elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
 		$Message = 'BLINK with 80% Discount';
 		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8B' ";
 		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
-								AND locations.alldisc20items = 1 ";
+								AND locations.alldisc80items = 2 ";
 	}elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
 		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";

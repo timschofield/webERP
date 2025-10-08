@@ -959,54 +959,9 @@ if(!isset($_GET['delete'])) {
 	}
 
 	echo '</select>
-		</field>
-		<field>
-			<label for="CashSaleCustomer">' . __('Default POS Shop Code') . ':' . '</label>
-			<input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" />
-			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '</fieldhelp>
-		</field>
-		<field>
-			<label for="CashSaleBranch">' . __('POS Shop Branch Code') . ':' . '</label>
-			<input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" />
-			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '</fieldhelp>
 		</field>';
+
 	// KL RICARD Custom fields
-	echo '<field>
-			<label for="Priority">' . __('KL Priority for KL Smart Transfers') . ':</label>
-			<input type="text" name="Priority" class="number" title="' . __('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" />
-		</field>';
-
-	echo '<field>
-			<label for="SmartDispatchFrom">' . __('KL Smart Transfers from') . ':</label>
-			<input type="text" name="SmartDispatchFrom" title="' . __('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" />
-		</field>';
-
-	echo '<field>
-			<label for="SmartDispatchMaxModels">' . __('KL Smart Transfers # max models') . ':</label>
-			<input type="text" name="SmartDispatchMaxModels" class="number" title="' . __('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" />
-		</field>';
-
-	echo '<field>
-			<label for="SmartDispatchMinModels">' . __('KL Smart Transfers # min models') . ':</label>
-			<input type="text" name="SmartDispatchMinModels" class="number" title="' . __('Enter the minimum number of models to be included in KL Smart Transfers') . '" name="MinModels" value="' . $_POST['SmartDispatchMinModels'] . '" size="5" maxlength="5" />
-		</field>';
-
-	echo '<field>
-			<label for="KLyearlyRent">' . __('KL Yearly Rent IDR (Shops Only)') . ':</label>
-			<input type="text" name="KLyearlyRent" class="number" title="' . __('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" />
-		</field>';
-
-	echo '<field>
-			<label for="KLPOSCashAccount">' . __('KL POS Cash GL Account') . ':</label>
-			<input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="' . $_POST['KLPOSCashAccount'] . '" />
-			<fieldhelp>' . __('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed') . '</fieldhelp>
-		</field>';
-
-	echo '<field>
-			<label for="KLPOSTag">' . __('KL POS Tag') . ':</label>
-			<input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="' . $_POST['KLPOSTag'] . '" />
-			<fieldhelp>' . __('Enter the KL POS Tag code for this location, or leave it in blank if not needed') . '</fieldhelp>
-		</field>';
 
 	echo '<field>
 			<label for="Zone">' . __('KL Location Zone') . ':</label>
@@ -1034,96 +989,6 @@ if(!isset($_GET['delete'])) {
 		} else {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		}
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllTestItems">' . __('Display ALL TEST items?') . ':</label>
-			<select name="AllTestItems">';
-	if($_POST['AllTestItems']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllTestItems']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllStableItems">' . __('Display ALL STABLE items?') . ':</label>
-			<select name="AllStableItems">';
-	if($_POST['AllStableItems']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllStableItems']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllNoPoItems">' . __('Display ALL NO PO items?') . ':</label>
-			<select name="AllNoPoItems">';
-	if($_POST['AllNoPoItems']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllNoPoItems']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllDisc20Items">' . __('Display Discount 20% items?') . ':</label>
-			<select name="AllDisc20Items">';
-	if($_POST['AllDisc20Items']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllDisc20Items']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllDisc50Items">' . __('Display Discount 50% items?') . ':</label>
-			<select name="AllDisc50Items">';
-	if($_POST['AllDisc50Items']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllDisc50Items']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
-	}
-	echo '</select></field>';
-
-	echo '<field>
-			<label for="AllDisc80Items">' . __('Display Discount 80% items?') . ':</label>
-			<select name="AllDisc80Items">';
-	if($_POST['AllDisc80Items']==1) {
-		echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-	} else {
-		echo '<option value="1">' . __('Yes') . '</option>';
-	}
-	if($_POST['AllDisc80Items']==0) {
-		echo '<option selected="selected" value="0">' . __('No') . '</option>';
-	} else {
-		echo '<option value="0">' . __('No') . '</option>';
 	}
 	echo '</select></field>';
 
@@ -1178,21 +1043,6 @@ if(!isset($_GET['delete'])) {
 		echo '<option value="1">' . __('Yes') . '</option>';
 	}
 	echo '</select></field>';
-
-	echo '<field>
-			<label for="PackagingFrom">' . __('Receives Packaging from') . ':</label>
-			<input type="text" name="PackagingFrom" title="' . __('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" />
-		</field>';
-
-	echo '<field>
-			<label for="RLFactorForPackaging">' . __('KL RL Factor for Packaging Transfers') . ':</label>
-			<input type="text" name="RLFactorForPackaging" class="number" title="' . __('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
-		</field>';
-
-	echo '<field>
-			<label for="RLDaysForPackaging">' . __('KL RL Days for Packaging Transfers') . ':</label>
-			<input type="text" name="RLDaysForPackaging" class="number" title="' . __('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" />
-		</field>';
 
 	// KL RICARD END
 
@@ -1249,8 +1099,119 @@ if(!isset($_GET['delete'])) {
 			<fieldhelp>', __('Use this parameter to indicate whether these inventory location allows or denies the invoicing of its items.'), '</fieldhelp>
 		</field>';
 	
-	echo '</fieldset>
-		<div class="centre">
+	echo '</fieldset>';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Shop POS Settings') . '</legend>';
+	echo '<field>
+			<label for="CashSaleCustomer">' . __('Default POS Shop Code') . ':' . '</label>
+			<input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" />
+			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="CashSaleBranch">' . __('POS Shop Branch Code') . ':' . '</label>
+			<input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" />
+			<fieldhelp>' . __('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="KLyearlyRent">' . __('KL Yearly Rent IDR (Shops Only)') . ':</label>
+			<input type="text" name="KLyearlyRent" class="number" title="' . __('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" />
+		</field>';
+	echo '<field>
+			<label for="KLPOSCashAccount">' . __('KL POS Cash GL Account') . ':</label>
+			<input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="' . $_POST['KLPOSCashAccount'] . '" />
+			<fieldhelp>' . __('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="KLPOSTag">' . __('KL POS Tag') . ':</label>
+			<input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="' . $_POST['KLPOSTag'] . '" />
+			<fieldhelp>' . __('Enter the KL POS Tag code for this location, or leave it in blank if not needed') . '</fieldhelp>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Shop Items for Sale Transfer Settings') . '</legend>';
+	echo '<field>
+			<label for="Priority">' . __('KL Priority for KL Smart Transfers') . ':</label>
+			<input type="text" name="Priority" class="number" title="' . __('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" />
+		</field>';
+
+	echo '<field>
+			<label for="SmartDispatchFrom">' . __('KL Smart Transfers from') . ':</label>
+			<input type="text" name="SmartDispatchFrom" title="' . __('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="SmartDispatchMaxModels">' . __('KL Smart Transfers # max models') . ':</label>
+			<input type="text" name="SmartDispatchMaxModels" class="number" title="' . __('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="SmartDispatchMinModels">' . __('KL Smart Transfers # min models') . ':</label>
+			<input type="text" name="SmartDispatchMinModels" class="number" title="' . __('Enter the minimum number of models to be included in KL Smart Transfers') . '" name="MinModels" value="' . $_POST['SmartDispatchMinModels'] . '" size="5" maxlength="5" />
+		</field>';
+	echo '</fieldset>';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Shop Packaging Transfer Settings') . '</legend>';
+	echo '<field>
+			<label for="PackagingFrom">' . __('Receives Packaging from') . ':</label>
+			<input type="text" name="PackagingFrom" title="' . __('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="RLFactorForPackaging">' . __('KL RL Factor for Packaging Transfers') . ':</label>
+			<input type="text" name="RLFactorForPackaging" class="number" title="' . __('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
+		</field>';
+
+	echo '<field>
+			<label for="RLDaysForPackaging">' . __('KL RL Days for Packaging Transfers') . ':</label>
+			<input type="text" name="RLDaysForPackaging" class="number" title="' . __('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" />
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<fieldset>
+			<legend>' . __('Retail Shop Items for Sale Settings') . '</legend>';
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllTestItems', $_POST['AllTestItems'], 
+									__('Sale of TEST items policy'), 'Only for Retail Shops: Is this shop able to sell TEST items?', '', 36, true, false);
+
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllStableItems', $_POST['AllStableItems'], 
+									__('Sale of STABLE items policy'), 'Only for Retail Shops: Is this shop able to sell STABLE items?', '', 37, true, false);
+
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllNoPoItems', $_POST['AllNoPoItems'], 
+									__('Sale of NO PO items policy'), 'Only for Retail Shops: Is this shop able to sell NO PO items?', '', 38, true, false);
+
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllDisc20Items', $_POST['AllDisc20Items'], 
+									__('Sale of DISCOUNT 20% items policy'), 'Only for Retail Shops: Is this shop able to sell DISCOUNT 20% items?', '', 39, true, false);
+
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllDisc50Items', $_POST['AllDisc50Items'], 
+									__('Sale of DISCOUNT 50% items policy'), 'Only for Retail Shops: Is this shop able to sell DISCOUNT 50% items?', '', 40, true, false);
+
+	echo FieldToSelectFromThreeOptions(0, "None", 
+									1, "Some", 
+									2, "All",
+									'AllDisc80Items', $_POST['AllDisc80Items'], 
+									__('Sale of DISCOUNT 80% items policy'), 'Only for Retail Shops: Is this shop able to sell DISCOUNT 80% items?', '', 41, true, false);
+	echo '</fieldset>';
+
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . __('Enter Information') . '" />
 		</div>
 		</form>';

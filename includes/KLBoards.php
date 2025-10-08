@@ -2122,9 +2122,9 @@ function LocationInformationReview($RootPath){
 							<th class="SortedColumn">' . __('Priority') . '</th>
 							<th class="SortedColumn">' . __('Max Daily Tr') . '</th>
 							<th class="SortedColumn">' . __('Stock Online?') . '</th>
-							<th class="SortedColumn">' . __('All Test?') . '</th>
-							<th class="SortedColumn">' . __('All Stable?') . '</th>
-							<th class="SortedColumn">' . __('All NOPO?') . '</th>
+							<th class="SortedColumn">' . __('Sell Test?') . '</th>
+							<th class="SortedColumn">' . __('Sell Stable?') . '</th>
+							<th class="SortedColumn">' . __('Sell NOPO?') . '</th>
 							<th class="SortedColumn">' . __('Sell 20%D?') . '</th>
 							<th class="SortedColumn">' . __('Sell 50%D?') . '</th>
 							<th class="SortedColumn">' . __('Sell 80%D?') . '</th>
@@ -2142,36 +2142,14 @@ function LocationInformationReview($RootPath){
 			}else{
 				$StockOnline = "No";
 			}
-			if ($MyRow['alltestitems'] ==  1){
-				$StockTest = "Yes";
-			}else{
-				$StockTest = "No";
-			}
-			if ($MyRow['allstableitems'] ==  1){
-				$StockStable = "Yes";
-			}else{
-				$StockStable = "No";
-			}
-			if ($MyRow['allnopoitems'] ==  1){
-				$StockNoPo= "Yes";
-			}else{
-				$StockNoPo = "No";
-			}
-			if ($MyRow['alldisc20items'] ==  1){
-				$Stock20D= "Yes";
-			}else{
-				$Stock20D = "No";
-			}
-			if ($MyRow['alldisc50items'] ==  1){
-				$Stock50D= "Yes";
-			}else{
-				$Stock50D = "No";
-			}
-			if ($MyRow['alldisc80items'] ==  1){
-				$Stock80D= "Yes";
-			}else{
-				$Stock80D = "No";
-			}
+
+			$StockTest = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['alltestitems']);
+			$StockStable = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['allstableitems']);
+			$StockNoPo = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['allnopoitems']);
+			$Stock20D = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['alldisc20items']);
+			$Stock50D = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['alldisc50items']);
+			$Stock80D = GetDescriptionFromFlagItemsForSaleAllowed($MyRow['alldisc80items']);
+
 			echo '<tr class="striped_row">
 					<td class="number">' . $i . '</td>
 					<td>' . $CodeLink . '</td>
@@ -2196,6 +2174,16 @@ function LocationInformationReview($RootPath){
 		echo '</tbody>
 			</table>
 			</div>';
+	}
+}
+
+function GetDescriptionFromFlagItemsForSaleAllowed($CodeFlag){
+	if ($CodeFlag ==  2){
+		return "All";
+	}else if ($CodeFlag ==  1){
+		return "Some";
+	}else{
+		return "None";
 	}
 }
 
