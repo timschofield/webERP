@@ -50,9 +50,12 @@ and prompt for approval before applying them.
     - if git was used to clone the webERP Git source repo (i.e. if the installation was done by cloning
       the GitHub project repo), use `git pull` to update.
 
-6. Put the web site back online (e.g. restart web server)
+6. Review the notes below here for manual modifications to make in case you are upgrading from specific
+     previous versions
 
-7. Log into each company as an admin user to trigger the automatic database upgrade procedure. Each
+7. Put the web site back online (e.g. restart web server)
+
+8. Log into each company as an admin user to trigger the automatic database upgrade procedure. Each
      database (company) must be upgraded individually.
 
 NB: the new upgrade system cannot identify database schema versions prior to 3.11 and will prompt for
@@ -67,7 +70,20 @@ must manually copy any site-specific files from the old version yourself, such a
    as required).
 
 
-## Upgrading from a previous version
+## Upgrading from specific previous versions
+
+### Upgrading from a version before 5.0
+
+The naming of the following variables in config.php was changed in version 5.0:
+
+`$MySQLPort` changed to `$DBPort`
+
+Also, the following variables have been introduced:
+
+`$DBCharset = utf8_mb4`
+
+NB: if upgrading an old installation, and your database is using the `utf8_mb3` character set, you will have to
+edit the `config.php`file and add the following line: `$DBCharset = 'utf8mb3';`
 
 ### Upgrading from a version before 4.10
 

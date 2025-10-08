@@ -5,4 +5,4 @@ CREATE TABLE `locationusers` (
   `canupd` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`loccode`,`userid`),
   KEY `UserId` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

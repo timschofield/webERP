@@ -11,4 +11,4 @@ CREATE TABLE `tenders` (
   `closed` int NOT NULL DEFAULT '0',
   `requiredbydate` datetime NOT NULL DEFAULT '1000-01-01 00:00:00',
   PRIMARY KEY (`tenderid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

@@ -8,4 +8,4 @@ CREATE TABLE `fixedassetcategories` (
   `defaultdepnrate` double NOT NULL DEFAULT '0.2',
   `defaultdepntype` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`categoryid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

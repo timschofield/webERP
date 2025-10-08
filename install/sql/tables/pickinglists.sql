@@ -7,4 +7,4 @@ CREATE TABLE `pickinglists` (
   PRIMARY KEY (`pickinglistno`),
   KEY `pickinglists_ibfk_1` (`orderno`),
   CONSTRAINT `pickinglists_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

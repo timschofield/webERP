@@ -7,4 +7,4 @@ CREATE TABLE `audittrail` (
   KEY `transactiondate_2` (`transactiondate`),
   KEY `transactiondate_3` (`transactiondate`),
   CONSTRAINT `audittrail_ibfk_1` FOREIGN KEY (`userid`) REFERENCES `www_users` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

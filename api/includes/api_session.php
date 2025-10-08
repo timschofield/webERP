@@ -39,6 +39,11 @@ if (isset($MySQLPort) && !isset($DBPort)) {
 	unset($MySQLPort);
 }
 
+// another upgrade issue
+if (!isset($DBCharset)) {
+	$DBCharset = 'utf8';
+}
+
 if (isset($SessionSavePath)) {
 	session_save_path($SessionSavePath);
 }

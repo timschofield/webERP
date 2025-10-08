@@ -18,4 +18,4 @@ CREATE TABLE `timesheets` (
   KEY `wo` (`wo`),
   KEY `weekending` (`weekending`),
   CONSTRAINT `employees_ibfk_1` FOREIGN KEY (`employeeid`) REFERENCES `employees` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
