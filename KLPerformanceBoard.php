@@ -192,7 +192,10 @@ if ($ProcessSection02){
 		ShowTableTitle($TableTitleText);
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin 
+		OR $KL_OperationalManager
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
 		$StartTime = microtime(true);
 		LocationInformationReview($RootPath);
 		TimeNeededForExecution("LocationInformationReview", $StartTime, $KL_SystemAdmin);
