@@ -415,7 +415,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		}
 
 		echo '<br />
-			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . __('Print Cheque using pre-printed stationery') . '</a>
+			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '" target="_blank">' . __('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />
 			<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') , '?identifier=', urlencode($identifier) , '">
@@ -1387,6 +1387,7 @@ else {
 				</tr>
 			</thead>';
 	$ids = '';
+	$i = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
 		if (!isset($_POST['paid' . $MyRow['id']])) {
