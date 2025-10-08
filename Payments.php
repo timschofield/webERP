@@ -121,14 +121,14 @@ if (isset($_GET['SupplierID'])) {
 		else {
 
 			$FactorSQL = "SELECT coyname,
-			 					address1,
-			 					address2,
-			 					address3,
-			 					address4,
-			 					address5,
-			 					address6
-							FROM factorcompanies
-							WHERE id='" . $MyRow['factorcompanyid'] . "'";
+							address1,
+							address2,
+							address3,
+							address4,
+							address5,
+							address6
+						FROM factorcompanies
+						WHERE id='" . $MyRow['factorcompanyid'] . "'";
 
 			$FactorResult = DB_query($FactorSQL);
 			$MyFactorRow = DB_fetch_array($FactorResult);
@@ -894,7 +894,7 @@ if (!isset($_POST['DatePaid'])) {
 
 if (isset($_POST['DatePaid']) AND ($_POST['DatePaid'] == '' OR !Is_Date($_SESSION['PaymentDetail' . $identifier]->DatePaid))) {
 
-	$_POST['DatePaid'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['DatePaid'] = date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PaymentDetail' . $identifier]->DatePaid = $_POST['DatePaid'];
 }
 
