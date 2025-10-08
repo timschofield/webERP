@@ -1789,7 +1789,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
-		$TableTitleText = 'KL Discount not allowed items on KL shops';
+		$TableTitleText = 'Items not allowed on KL shops';
 		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTKA' AND locations.alltestitems > 0)
 							OR (stockmaster.categoryid = 'STABKA' AND locations.allstableitems > 0)
 							OR (stockmaster.categoryid = 'NOPOKA' AND locations.allnopoitems > 0)
@@ -1801,10 +1801,12 @@ function ItemsInWrongShops($ShopType, $RootPath){
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						) AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$TableTitleText = 'Blink Discount not allowed items on BLINK shops';
+		$TableTitleText = 'Items not allowed on BLINK shops';
 		$Condition =  " AND NOT ((stockmaster.categoryid = 'TESTBA' AND locations.alltestitems > 0)
 							OR (stockmaster.categoryid = 'STABBA' AND locations.allstableitems > 0)
 							OR (stockmaster.categoryid = 'NOPOBA' AND locations.allnopoitems > 0)
+							OR (stockmaster.categoryid = 'DISC2B' AND locations.alldisc20items > 0)
+							OR (stockmaster.categoryid = 'DISC5B' AND locations.alldisc50items > 0)
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
 							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items > 0)
 							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items > 0)
@@ -1827,13 +1829,15 @@ function ItemsInWrongShops($ShopType, $RootPath){
 	}
 	
 	$SQL = "SELECT stockmaster.stockid,
+					stockcategory.categorydescription,
 					stockmaster.description,
 					locstock.loccode,
 					locstock.quantity,
 					locstock.reorderlevel
-			FROM stockmaster, locstock, locations
+			FROM stockmaster, locstock, locations, stockcategory
 			WHERE stockmaster.stockid = locstock.stockid 
 				AND locstock.loccode = locations.loccode
+				AND stockmaster.categoryid = stockcategory.categoryid
 				" .	$Condition . "
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
@@ -1849,6 +1853,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 						<th class="SortedColumn">' . __('#') . '</th>
 						<th class="SortedColumn">' . __('Code') . '</th>
 						<th class="SortedColumn">' . __('Description') . '</th>
+						<th class="SortedColumn">' . __('Category') . '</th>
 						<th class="SortedColumn">' . __('Shop') . '</th>
 						<th class="SortedColumn">' . __('Quantity') . '</th>
 						<th class="SortedColumn">' . __('Reorder Level') . '</th>
@@ -1863,6 +1868,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 					<td class="number">' . $i . '</td>
 					<td>' . $CodeLink . '</td>
 					<td>' . $MyRow['description'] . '</td>
+					<td>' . $MyRow['categorydescription'] . '</td>
 					<td>' . $MyRow['loccode'] . '</td>
 					<td class="number">' . $MyRow['quantity'] . '</td>
 					<td class="number">' . $CodeLinkRL . '</td>
