@@ -13,7 +13,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1){
 
-	  /*Now figure out the aged analysis for the Supplier range under review */
+	/*Now figure out the aged analysis for the Supplier range under review */
 
 	if ($_POST['All_Or_Overdues']=='All'){
 		$SQL = "SELECT suppliers.supplierid,
@@ -33,7 +33,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						END) AS overdue1,
 						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+						CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						ELSE
 						CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						END) AS overdue2
@@ -73,7 +73,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						END) AS overdue1,
 						SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-							CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+							CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						ELSE
 							CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 						END) AS overdue2
@@ -87,11 +87,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 				AND suppliers.supplierid <= '" . $_POST['ToCriteria'] . "'
 				AND suppliers.currcode ='" . $_POST['Currency'] . "'
 				GROUP BY suppliers.supplierid,
-					suppliers.suppname,
-					currencies.currency,
-					paymentterms.terms,
-					paymentterms.daysbeforedue,
-					paymentterms.dayinfollowingmonth
+						suppliers.suppname,
+						currencies.currency,
+						paymentterms.terms,
+						paymentterms.daysbeforedue,
+						paymentterms.dayinfollowingmonth
 				HAVING SUM(IF (paymentterms.daysbeforedue > 0,
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END,
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END)) > 0";
@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Aged Supplier Balances For Suppliers from') . ' ' . $_POST['FromCriteria'] . ' ' . __('to') . ' ' . $_POST['ToCriteria'] . '<br />
 					' . __('And Trading in') . ' ' . $_POST['Currency'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>';
 
 	$HTML .= '<table>
@@ -179,7 +179,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 								CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate),paymentterms.dayinfollowingmonth)) >= 0 THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 							END AS due,
 							CASE WHEN paymentterms.daysbeforedue > 0 THEN
-								CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue	   AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
+								CASE WHEN TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(supptrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 							ELSE
 								CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(supptrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN supptrans.ovamount + supptrans.ovgst - supptrans.alloc ELSE 0 END
 							END AS overdue1,
@@ -311,7 +311,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 
 		echo '<field>
 				<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
-				<input tabindex="1" type="text" required="required"  autofocus="autofocus" maxlength="6" size="7" name="FromCriteria" value="1" title+"" />
+				<input tabindex="1" type="text" required="required" autofocus="autofocus" maxlength="6" size="7" name="FromCriteria" value="1" title="" />
 				<fieldhelp>' . __('Enter the first supplier code alphabetially to include in the report') . '</fieldhelp>
 			</field>';
 

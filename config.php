@@ -49,6 +49,11 @@ $DBPort = 3306;
 // $DBType = 'mysqli';
 $DBType = 'mariadb';
 
+// The DB character set.
+// For mysql/mariadb, utf8mb4 is preferred. If your database version does not support it, you can, depending on the
+// specific version, use the 'utf8' alias for 'utf8mb3'
+$DBCharset = 'utf8mb4';
+
 // sql user & password
 // Moved to KLConfig.php
 

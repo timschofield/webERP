@@ -38,12 +38,8 @@ include('includes/GLFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
-if (!isset($_POST['Company'])) {
+if (!isset($_POST['Company']) OR $_POST['Company'] == 'ALL') {
 	$_POST['Company'] = 'ALL';
-	$Title = __('Horizontal Analysis of Statement of Financial Position for KL group');
-	$Table = 'chartmaster';
-}
-else if ($_POST['Company'] == 'ALL') {
 	$Title = __('Horizontal Analysis of Statement of Financial Position for KL Group');
 	$Table = 'chartmaster';
 }

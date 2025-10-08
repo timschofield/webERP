@@ -14,4 +14,4 @@ CREATE TABLE `fixedassets` (
   `depnrate` double NOT NULL,
   `disposaldate` date NOT NULL DEFAULT '1000-01-01',
   PRIMARY KEY (`assetid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

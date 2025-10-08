@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 11, 2025 at 04:59 PM
--- Server version: 10.3.39-MariaDB-log
+-- Generation Time: Oct 04, 2025 at 08:55 AM
+-- Server version: 11.4.8-MariaDB-log
 -- PHP Version: 8.4.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -2327,7 +2327,7 @@ CREATE TABLE `prodspecgroups` (
   `trailertext` varchar(240) DEFAULT NULL,
   `labels` varchar(240) NOT NULL,
   `numcols` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 

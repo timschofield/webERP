@@ -6,4 +6,4 @@ CREATE TABLE `levels` (
   `shrinkfactor` double NOT NULL DEFAULT '0',
   `eoq` double NOT NULL DEFAULT '0',
   KEY `part` (`part`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

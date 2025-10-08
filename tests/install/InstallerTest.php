@@ -33,7 +33,6 @@ class InstallerTest extends WebTestCase
 		$_ENV['TEST_DB_SCHEMA'] = null;
 		$this->assertCanConnect();
 		$_ENV['TEST_DB_SCHEMA'] = $this->envDbSchema;
-		$this->assertTrue(true);
 	}
 
 	/**

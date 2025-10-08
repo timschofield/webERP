@@ -313,11 +313,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 					$LocationsDistributed = 0;
 					
 					// the location's order has to take into account if the shop is supposed to have all the collection or not,
-					// so we order as 1
-					// 1st: shops with all collection = true
-					// 2nd: shops with all collection = false (small shops or slow shops)
-					// 3rd: shops with higher sales of the item
-					// 4th: shops with higher sales in general
+					// the priority of the shop itself (established manually in the location script), and the sales of the item in the location
 
 					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
 						$OrderBy = " loc.alltestitems DESC, ";
@@ -325,6 +321,12 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $UpdateDB, $RootPath, 
 						$OrderBy = " loc.allstableitems DESC, ";
 					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 						$OrderBy = " loc.allnopoitems DESC, ";
+					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
+						$OrderBy = " loc.alldisc20items DESC, ";
+					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)){
+						$OrderBy = " loc.alldisc50items DESC, ";
+					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)){
+						$OrderBy = " loc.alldisc80items DESC, ";
 					}else{
 						$OrderBy = "";
 					}

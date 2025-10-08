@@ -1,42 +1,55 @@
 <?php
+require (__DIR__ . '/includes/session.php');
 
-require(__DIR__ . '/includes/session.php');
+include ('includes/SQL_CommonFunctions.php');
+include ('includes/GetPaymentMethods.php');
 
-include('includes/SQL_CommonFunctions.php');
-include('includes/GetPaymentMethods.php');
+// Add DomPDF namespace and autoload
+use Dompdf\Dompdf;
 
 class Allocation {
 	var $TransID;
 	var $Amount;
 
-	function __construct ($TransID, $Amount) {
+	function __construct($TransID, $Amount) {
 		$this->TransID = $TransID;
 		$this->Amount = $Amount;
 	}
 }
 
-if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);}
+if (isset($_POST['AmountsDueBy'])) {
+	$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);
+}
 
-if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
-	AND isset($_POST['FromCriteria'])
-	AND mb_strlen($_POST['FromCriteria'])>=1
-	AND isset($_POST['ToCriteria'])
-	AND mb_strlen($_POST['ToCriteria'])>=1
-	AND is_numeric(filter_number_format($_POST['ExRate']))){
+if ((isset($_POST['PrintPDF']) or isset($_POST['PrintPDFAndProcess'])) and isset($_POST['FromCriteria']) and mb_strlen($_POST['FromCriteria']) >= 1 and isset($_POST['ToCriteria']) and mb_strlen($_POST['ToCriteria']) >= 1 and is_numeric(filter_number_format($_POST['ExRate']))) {
 
-/*then print the report */
-	$Title = __('Payment Run - Problem Report');
-	$RefCounter = 0;
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',__('Payment Run Report'));
-	$pdf->addInfo('Subject',__('Payment Run') . ' - ' . __('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . __('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	// Start HTML for PDF
+	$HTML = '<html><head><style>
+		body { font-size: 12px; }
+		table { width: 100%; border-collapse: collapse; }
+		th, td { border: 1px solid #ccc; padding: 4px; }
+		.right { text-align: right; }
+		.left { text-align: left; }
+		.centre { text-align: center; }
+		h2 { margin-bottom: 0; }
+	</style><link href="css/reports.css" rel="stylesheet" type="text/css" /></head><body>';
 
-	$PageNumber=1;
-	$LineHeight=12;
+	$HTML .= '<h2>' . $_SESSION['CompanyRecord']['coyname'] . '</h2>';
+	$HTML .= '<h2>' . __('Payment Run Report') . '</h2>';
+	$HTML .= '<p>' . __('Suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . __('and Due By') . ' ' . $_POST['AmountsDueBy'] . '</p>';
 
-  /*Now figure out the invoice less credits due for the Supplier range under review */
-
-	include('includes/PDFPaymentRunPageHeader.php');
+	$HTML .= '<table><thead>
+		<tr>
+			<th>' . __('Supplier ID') . '</th>
+			<th>' . __('Supplier Name') . '</th>
+			<th>' . __('Terms') . '</th>
+			<th>' . __('Tran Date') . '</th>
+			<th>' . __('Type') . '</th>
+			<th>' . __('Reference') . '</th>
+			<th>' . __('Balance') . '</th>
+			<th>' . __('Diff On Exch') . '</th>
+		</tr>
+	</thead><tbody>';
 
 	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
@@ -62,15 +75,17 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	$SuppliersResult = DB_query($SQL);
 
-	$SupplierID ='';
+	$SupplierID = '';
 	$TotalPayments = 0;
 	$TotalAccumDiffOnExch = 0;
 
-	if (isset($_POST['PrintPDFAndProcess'])){
+	if (isset($_POST['PrintPDFAndProcess'])) {
 		DB_Txn_Begin();
 	}
 
-	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
+	$AccumBalance = 0;
+	$AccumDiffOnExch = 0;
+	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)) {
 
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
@@ -106,151 +121,126 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$ErrMsg = __('The details of supplier invoices due could not be retrieved');
 		$TransResult = DB_query($SQL, $ErrMsg);
-		if (DB_num_rows($TransResult)==0) {
-			include('includes/header.php');
-			prnMsg(__('There are no outstanding supplier invoices to pay'),'info');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-			include('includes/footer.php');
-			exit();
+		if (DB_num_rows($TransResult) == 0) {
+			$HTML .= '<tr><td colspan="8" class="centre">' . __('There are no outstanding supplier invoices to pay') . '</td></tr>';
+			continue;
 		}
 
 		unset($Allocs);
 		$Allocs = array();
-		$AllocCounter =0;
+		$AllocCounter = 0;
 
-		while ($DetailTrans = DB_fetch_array($TransResult)){
-
-			if ($DetailTrans['supplierid'] != $SupplierID){ /*Need to head up for a new suppliers details */
-
-				if ($SupplierID!=''){ /*only print the footer if this is not the first pass */
-					include('includes/PDFPaymentRun_PymtFooter.php');
-				}
-				$SupplierID = $DetailTrans['supplierid'];
-				$SupplierName = $DetailTrans['suppname'];
-				if (isset($_POST['PrintPDFAndProcess'])){
-					$SuppPaymentNo = GetNextTransNo(22);
-				}
-				$AccumBalance = 0;
-				$AccumDiffOnExch = 0;
-				$pdf->addTextWrap($Left_Margin,
-												$YPos,
-												450-$Left_Margin,
-												$FontSize,
-												$DetailTrans['supplierid'] . ' - ' . $DetailTrans['suppname'] . ' - ' . $DetailTrans['terms'],
-												'left');
-
-				$YPos -= $LineHeight;
-			}
-
+		while ($DetailTrans = DB_fetch_array($TransResult)) {
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
-
-			/*Positive is a favourable */
-			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
+			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) - ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
 
 			$AccumBalance += $DetailTrans['balance'];
 			$AccumDiffOnExch += $DiffOnExch;
 
-
-			if (isset($_POST['PrintPDFAndProcess'])){
-
-				/*Record the Allocations for later insertion once we have the ID of the payment SuppTrans */
-
-				$Allocs[$AllocCounter] = new Allocation($DetailTrans['id'],$DetailTrans['balance']);
+			if (isset($_POST['PrintPDFAndProcess'])) {
+				$Allocs[$AllocCounter] = new Allocation($DetailTrans['id'], $DetailTrans['balance']);
 				$AllocCounter++;
 
-				/*Now update the SuppTrans for the allocation made and the fact that it is now settled */
-
 				$SQL = "UPDATE supptrans SET settled = 1,
-											alloc = '" . $DetailTrans['trantotal'] . "',
-											diffonexch = '" . ($DetailTrans['diffonexch'] + $DiffOnExch)  . "'
-							WHERE type = '" . $DetailTrans['type'] . "'
-							AND transno = '" . $DetailTrans['transno'] . "'";
+												alloc = '" . $DetailTrans['trantotal'] . "',
+												diffonexch = '" . ($DetailTrans['diffonexch'] + $DiffOnExch) . "'
+								WHERE type = '" . $DetailTrans['type'] . "'
+								AND transno = '" . $DetailTrans['transno'] . "'";
 
-				$ErrMsg = ('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . __('could not be processed');
+				$ErrMsg = ('None of the payments will be processed since updates to the transaction records for') . ' ' . $DetailTrans['suppname'] . ' ' . __('could not be processed');
 				$ProcessResult = DB_query($SQL, $ErrMsg, '', true);
 			}
 
-			$pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
-			$pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
-
-			$YPos -=$LineHeight;
-			if ($YPos < $Bottom_Margin + $LineHeight){
-				$PageNumber++;
-				include('includes/PDFPaymentRunPageHeader.php');
-			}
-		} /*end while there are detail transactions to show */
-	} /* end while there are suppliers to retrieve transactions for */
-
-	if ($SupplierID!=''){
-		/*All the payment processing is in the below file */
-		include('includes/PDFPaymentRun_PymtFooter.php');
-
-		DB_Txn_Commit();
-
-		if (DB_error_no() !=0) {
-			$Title = __('Payment Processing - Problem Report') . '.... ';
-			include('includes/header.php');
-			prnMsg(__('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
-			DB_Txn_Rollback();
-			include('includes/footer.php');
-			exit();
+			$HTML .= '<tr>
+						<td class="left">' . $DetailTrans['supplierid'] . '</td>
+						<td class="left">' . htmlspecialchars($DetailTrans['suppname']) . '</td>
+						<td class="left">' . htmlspecialchars($DetailTrans['terms']) . '</td>
+						<td>' . $DislayTranDate . '</td>
+						<td>' . htmlspecialchars($DetailTrans['typename']) . '</td>
+						<td>' . htmlspecialchars($DetailTrans['suppreference']) . '</td>
+						<td class="right">' . locale_number_format($DetailTrans['balance'], $CurrDecimalPlaces) . '</td>
+						<td class="right">' . locale_number_format($DiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					</tr>';
 		}
-
-		$pdf->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,__('Grand Total Payments Due'), 'left');
-		$pdf->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
-		$pdf->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
-
 	}
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
-	$pdf->__destruct();
+	$HTML .= '</tbody></table>';
 
-} else { /*The option to print PDF was not hit */
+	$HTML .= '<table>
+				<tr>
+					<th colspan="2">' . __('Grand Total Payments Due') . '</th>
+				<tr>
+					<td class="right">' . __('Total Payments') . ': ' . locale_number_format($AccumBalance, $CurrDecimalPlaces) . '</td>
+					<td class="right">' . __('Total Diff On Exch') . ': ' . locale_number_format($AccumDiffOnExch, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				</tr>
+			</table>';
 
-	$Title=__('Payment Run');
+	$HTML .= '</body></html>';
+
+	// Create DomPDF instance and render
+	// Generate PDF using Dompdf
+	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF->loadHtml($HTML);
+	$DomPDF->setPaper('letter', 'portrait');
+	$DomPDF->render();
+
+	$FileName = $_SESSION['DatabaseName'] . '_Payment_Run_' . date('Y-m-d_His') . '.pdf';
+
+	// Output PDF inline in browser
+	$DomPDF->stream($FileName, array('Attachment' => false));
+
+}
+else {
+	$Title = __('Payment Run');
 	$ViewTopic = 'AccountsPayable';
 	$BookMark = '';
-	include('includes/header.php');
+	include ('includes/header.php');
 
 	echo '<p class="page_title_text">
-			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Supplier Types'). '" alt="" />' . $Title . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . __('Supplier Types') . '" alt="" />' . $Title . '
 		</p>';
 
-	if (isset($_POST['Currency']) AND !is_numeric(filter_number_format($_POST['ExRate']))){
+	if (isset($_POST['Currency']) and !is_numeric(filter_number_format($_POST['ExRate']))) {
 		echo '<br />' . __('To process payments for') . ' ' . $_POST['Currency'] . ' ' . __('a numeric exchange rate applicable for purchasing the currency to make the payment with must be entered') . '. ' . __('This rate is used to calculate the difference in exchange and make the necessary postings to the General ledger if linked') . '.';
 	}
 
 	/* show form to allow input	*/
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', __('Select Suppliers To Pay'), '</legend>';
 
-	if (!isset($_POST['FromCriteria']) OR mb_strlen($_POST['FromCriteria'])<1){
-		$DefaultFromCriteria = '1';
-	} else {
+	$SQL = "SELECT supplierid FROM suppliers ORDER BY supplierid";
+	$Result = DB_query($SQL);
+	$SupplierRow = DB_fetch_array($Result);
+	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria']) < 1) {
+		$DefaultFromCriteria = $SupplierRow['supplierid'];
+	}
+	else {
 		$DefaultFromCriteria = $_POST['FromCriteria'];
 	}
-	if (!isset($_POST['ToCriteria']) OR mb_strlen($_POST['ToCriteria'])<1){
-		$DefaultToCriteria = 'zzzzzzz';
-	} else {
+
+	$SQL = "SELECT supplierid FROM suppliers ORDER BY supplierid DESC";
+	$Result = DB_query($SQL);
+	$SupplierRow = DB_fetch_array($Result);
+	if (!isset($_POST['ToCriteria']) or mb_strlen($_POST['ToCriteria']) < 1) {
+		$DefaultToCriteria = $SupplierRow['supplierid'];
+	}
+	else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
 	echo '<field>
 			<label for="FromCriteria">' . __('From Supplier Code') . ':</label>
 			<input type="text" pattern="[^><+-]{1,10}" title="" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
-			<fieldhelp>'.__('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
+			<fieldhelp>' . __('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space' . '</fieldhelp>
 		  </field>';
 	echo '<field>
 			<label for="ToCriteria">' . __('To Supplier Code') . ':</label>
 			<input type="text" pattern="[^<>+-]{1,10}" title="" maxlength="10" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" />
-			<fieldhelp>'.__('Illegal characters are not allowed').'</fieldhelp>
+			<fieldhelp>' . __('Illegal characters are not allowed') . '</fieldhelp>
 		 </field>';
-
 
 	echo '<field>
 			<label for="Currency">' . __('For Suppliers Trading in') . ':</label>
@@ -259,30 +249,33 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$SQL = "SELECT currency, currabrev FROM currencies";
 	$Result = DB_query($SQL);
 
-	while ($MyRow=DB_fetch_array($Result)){
-	if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']) {
 			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
-	}
+		}
+		else {
+			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
+		}
 	}
 	echo '</select>
 		</field>';
 
-	if (!isset($_POST['ExRate']) OR !is_numeric(filter_number_format($_POST['ExRate']))){
+	if (!isset($_POST['ExRate']) or !is_numeric(filter_number_format($_POST['ExRate']))) {
 		$DefaultExRate = '1';
-	} else {
+	}
+	else {
 		$DefaultExRate = filter_number_format($_POST['ExRate']);
 	}
 	echo '<field>
 			<label for="ExRate">' . __('Exchange Rate') . ':</label>
-			<input type="text" class="number" title="" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate,'Variable') . '" />
-			<fieldhelp>'.__('The input must be number').'</fieldhelp>
+			<input type="text" class="number" title="" name="ExRate" maxlength="11" size="12" value="' . locale_number_format($DefaultExRate, 'Variable') . '" />
+			<fieldhelp>' . __('The input must be number') . '</fieldhelp>
 		  </field>';
 
-	if (!isset($_POST['AmountsDueBy'])){
-		$DefaultDate = Date('Y-m-d', Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
-	} else {
+	if (!isset($_POST['AmountsDueBy'])) {
+		$DefaultDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
+	}
+	else {
 		$DefaultDate = FormatDateForSQL($_POST['AmountsDueBy']);
 	}
 
@@ -299,21 +292,23 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<label for="BankAccount">' . __('Pay From Account') . ':</label>
 			<select name="BankAccount">';
 
-	if (DB_num_rows($AccountsResults)==0){
-		 echo '</select></td>
+	if (DB_num_rows($AccountsResults) == 0) {
+		echo '</select></td>
 			</field>
 			</table>
 			<p>' . __('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . __('define the bank accounts') . '</a> ' . __('and general ledger accounts to be affected') . '.
 			</p>';
-		 include('includes/footer.php');
-		 exit();
-	} else {
-		while ($MyRow=DB_fetch_array($AccountsResults)){
-			  /*list the bank account names */
+		include ('includes/footer.php');
+		exit();
+	}
+	else {
+		while ($MyRow = DB_fetch_array($AccountsResults)) {
+			/*list the bank account names */
 
-			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$MyRow['accountcode']){
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) {
 				echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-			} else {
+			}
+			else {
 				echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			}
 		}
@@ -325,16 +320,17 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<label for="PaytType">' . __('Payment Type') . ':</label>
 			<select name="PaytType">';
 
-/* The array PaytTypes is set up in config.php for user modification
-Payment types can be modified by editing that file */
+	/* The array PaytTypes is set up in config.php for user modification
+	 Payment types can be modified by editing that file */
 
 	foreach ($PaytTypes as $PaytType) {
 
-		 if (isset($_POST['PaytType']) and $_POST['PaytType']==$PaytType){
-		   echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
-		 } else {
-		   echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
-		 }
+		if (isset($_POST['PaytType']) and $_POST['PaytType'] == $PaytType) {
+			echo '<option selected="selected" value="' . $PaytType . '">' . $PaytType . '</option>';
+		}
+		else {
+			echo '<option value="' . $PaytType . '">' . $PaytType . '</option>';
+		}
 	}
 	echo '</select>
 		</field>';
@@ -345,5 +341,6 @@ Payment types can be modified by editing that file */
 				<input type="submit" name="PrintPDFAndProcess" value="' . __('Print and Process Payments') . '" />
 			</div>';
 	echo '</form>';
-	include('includes/footer.php');
-} /*end of else not PrintPDF */
+	include ('includes/footer.php');
+}
+

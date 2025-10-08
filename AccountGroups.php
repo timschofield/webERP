@@ -111,12 +111,6 @@ if(isset($_POST['submit'])) {
 		$Errors[$i] = 'SectionInAccounts';
 		$i++;
 	}
-	if(!ctype_digit($_POST['SequenceInTB'])) {
-		$InputError = 1;
-		prnMsg( __('The sequence in the trial balance must be an integer'),'error');
-		$Errors[$i] = 'SequenceInTB';
-		$i++;
-	}
 	if(!ctype_digit($_POST['SequenceInTB']) OR $_POST['SequenceInTB'] > 10000) {
 		$InputError = 1;
 		prnMsg( __('The sequence in the TB must be numeric and less than') . ' 10,000','error');
@@ -127,7 +121,7 @@ if(isset($_POST['submit'])) {
 
 	if($_POST['SelectedAccountGroup']!='' AND $InputError !=1) {
 
-		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
+		/*SelectedAccountGroup could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 		if($_POST['SelectedAccountGroup']!==$_POST['GroupName']) {
 
 			DB_IgnoreForeignKeys();
@@ -196,15 +190,15 @@ if(isset($_POST['submit'])) {
 	$MyRow = DB_fetch_array($Result);
 	if($MyRow['total_groups']>0) {
 		prnMsg( __('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
-		echo '<br />' . __('There are') . ' ' . $MyRow['groups'] . ' ' . __('general ledger accounts that refer to this account group');
+		echo '<br />' . __('There are') . ' ' . $MyRow['total_groups'] . ' ' . __('general ledger accounts that refer to this account group');
 		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<table class="selection">';
-		echo '<input  type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
+		echo '<input type="hidden" name="OriginalAccountGroup" value="' . $_GET['SelectedAccountGroup'] . '" />';
 		echo '<tr>
 				<td>' . __('Parent Group') . ':' . '</td>
-				<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ?  'class="selecterror"' : '' ) . '  name="DestinyAccountGroup">';
+				<td><select tabindex="2" ' . (in_array('ParentGroupName',$Errors) ? 'class="selecterror"' : '' ) . ' name="DestinyAccountGroup">';
 
 		$SQL = "SELECT groupname FROM accountgroups";
 		$GroupResult = DB_query($SQL, $ErrMsg);
@@ -220,8 +214,8 @@ if(isset($_POST['submit'])) {
 		echo '</td></tr>';
 		echo '<tr>
 				<td colspan="2"><div class="centre"><input tabindex="6" type="submit" name="MoveGroup" value="' . __('Move Group') . '" /></div></td>
-		  </tr>
-		  </table>';
+			</tr>
+			</table>';
 
 	} else {
 		$SQL = "SELECT COUNT(groupname) groupnames FROM accountgroups WHERE parentgroupname = '" . $_GET['SelectedAccountGroup'] . "'";
@@ -298,7 +292,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			<td>' . $PandLText . '</td>
 			<td>' . $MyRow['parentgroupname'] . '</td>';
 		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . __('Edit') . '</a></td>';
-		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this account group?') . '\');">' . __('Delete')  . '</a></td></tr>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . __('Are you sure you wish to delete this account group?') . '\');">' . __('Delete') . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody>
@@ -336,9 +330,9 @@ if(!isset($_GET['delete'])) {
 		$MyRow = DB_fetch_array($Result);
 
 		$_POST['GroupName'] = $MyRow['groupname'];
-		$_POST['SectionInAccounts']  = $MyRow['sectioninaccounts'];
-		$_POST['SequenceInTB']  = $MyRow['sequenceintb'];
-		$_POST['PandL']  = $MyRow['pandl'];
+		$_POST['SectionInAccounts'] = $MyRow['sectioninaccounts'];
+		$_POST['SequenceInTB'] = $MyRow['sequenceintb'];
+		$_POST['PandL'] = $MyRow['pandl'];
 		$_POST['ParentGroupName'] = $MyRow['parentgroupname'];
 
 		echo '<fieldset>
@@ -418,10 +412,10 @@ if(!isset($_GET['delete'])) {
 			<select name="PandL" tabindex="4" title="">';
 	if($_POST['PandL']!=0 ) {
 		echo '<option value="0">', __('No'), '</option>',
-			 '<option selected="selected" value="1">', __('Yes'), '</option>';
+			'<option selected="selected" value="1">', __('Yes'), '</option>';
 	} else {
 		echo '<option selected="selected" value="0">', __('No'), '</option>',
-			 '<option value="1">', __('Yes'), '</option>';
+			'<option value="1">', __('Yes'), '</option>';
 	}
 	echo '</select>
 		<fieldhelp', __('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>

@@ -80,19 +80,21 @@ if ($LocCode != '') {
 } else {
 	// we want to distribute to a group of locations
 	if ($AllShops == "N") {
-		// we only want to distribute between the locations with the flags allitemsXXXX == true (big shops) not to small ones with allitemsXXXX == false
+		// we only want to distribute between the locations with the flags allitemsXXXX == All (2) (big shops) 
+		// but not to small ones with allitemsXXXX == None (0) or medium with allitemsXXXX == Some (1)
+		// these flags are set in the location record in the locations table
 		if (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_TEST)) {
-			$FilterLoc = " AND locations.alltestitems = 1 ";
+			$FilterLoc = " AND locations.alltestitems > 0 ";
 		} elseif (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_STABLE)) {
-			$FilterLoc = " AND locations.allstableitems = 1 ";
+			$FilterLoc = " AND locations.allstableitems > 0 ";
 		} elseif (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)) {
-			$FilterLoc = " AND locations.allnopoitems = 1 ";
+			$FilterLoc = " AND locations.allnopoitems > 0 ";
 		} elseif (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)) {
-			$FilterLoc = " AND locations.alldisc20items = 1 ";
+			$FilterLoc = " AND locations.alldisc20items > 0 ";
 		} elseif (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)) {
-			$FilterLoc = " AND locations.alldisc50items = 1 ";
+			$FilterLoc = " AND locations.alldisc50items > 0 ";
 		} elseif (ItemInLIst($MyItem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)) {
-			$FilterLoc = " AND locations.alldisc80items = 1 ";
+			$FilterLoc = " AND locations.alldisc80items > 0 ";
 		} else {
 			$FilterLoc = "";
 		}
