@@ -127,14 +127,14 @@ if (isset($_GET['SupplierID'])) {
 		else {
 
 			$FactorSQL = "SELECT coyname,
-			 					address1,
-			 					address2,
-			 					address3,
-			 					address4,
-			 					address5,
-			 					address6
-							FROM factorcompanies
-							WHERE id='" . $MyRow['factorcompanyid'] . "'";
+							address1,
+							address2,
+							address3,
+							address4,
+							address5,
+							address6
+						FROM factorcompanies
+						WHERE id='" . $MyRow['factorcompanyid'] . "'";
 
 			$FactorResult = DB_query($FactorSQL);
 			$MyFactorRow = DB_fetch_array($FactorResult);
@@ -421,7 +421,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		}
 
 		echo '<br />
-			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '">' . __('Print Cheque using pre-printed stationery') . '</a>
+			<a href="' . $RootPath . '/PrintCheque.php?ChequeNum=' . $_POST['ChequeNum'] . '&amp;identifier=' . $identifier . '" target="_blank">' . __('Print Cheque using pre-printed stationery') . '</a>
 			<br />
 			<br />
 			<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') , '?identifier=', urlencode($identifier) , '">
@@ -943,7 +943,7 @@ if (!isset($_POST['DatePaid'])) {
 
 if (isset($_POST['DatePaid']) AND ($_POST['DatePaid'] == '' OR !Is_Date($_SESSION['PaymentDetail' . $identifier]->DatePaid))) {
 
-	$_POST['DatePaid'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['DatePaid'] = date($_SESSION['DefaultDateFormat']);
 	$_SESSION['PaymentDetail' . $identifier]->DatePaid = $_POST['DatePaid'];
 }
 
@@ -1440,6 +1440,7 @@ else {
 				</tr>
 			</thead>';
 	$ids = '';
+	$i = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
 		if (!isset($_POST['paid' . $MyRow['id']])) {
