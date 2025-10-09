@@ -20,7 +20,9 @@ else {
 }
 include('includes/header.php');
 
-if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);}
+if (isset($_POST['DatePaid'])) {
+	$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);
+}
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 $PageTitleText, '" /> ', // Icon title.
@@ -821,7 +823,7 @@ elseif (isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a n
 		$ChequeNoResult = DB_query($ChequeNoSQL);
 	}
 
-	if (!isset($_POST['Tag'])){
+	if (!isset($_POST['Tag'])) {
 		$_POST['Tag'] = array();
 	}
 
