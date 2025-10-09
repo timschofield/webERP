@@ -9,8 +9,12 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);}
-if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);}
+if (isset($_POST['EffectiveAfter'])) {
+	$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);
+}
+if (isset($_POST['EffectiveTo'])) {
+	$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);
+}
 
 function display_children($Parent, $Level, &$BOMTree) {
 	global $i;
@@ -188,7 +192,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 if (isset($_GET['SelectedParent'])) {
 	$SelectedParent = $_GET['SelectedParent'];
 }
-else if (isset($_POST['SelectedParent'])) {
+elseif (isset($_POST['SelectedParent'])) {
 	$SelectedParent = $_POST['SelectedParent'];
 }
 
@@ -478,7 +482,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 		$_POST['LocCode'] = $Location;
 		$_POST['EffectiveAfter'] = date($_SESSION['DefaultDateFormat']);
-		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') , Date('d') , (Date('y') + 20)));
+		$_POST['EffectiveTo'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') , date('d') , (date('y') + 20)));
 		$_POST['Sequence'] = $MyRow['seqnum'] + 10;
 		$_POST['WorkCentreAdded'] = '';
 		$_POST['Quantity'] = locale_number_format(1, 'Variable');
