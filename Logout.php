@@ -8,6 +8,7 @@ KL RICARD MODIFICATIONS:
 
 $AllowCronJobToBeRun=True; /* Allow all users to log off  */
 
+$PageSecurity=0;
 require(__DIR__ . '/includes/session.php');
 
 $SQL = "DELETE FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";

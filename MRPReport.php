@@ -4,22 +4,17 @@
 
 require(__DIR__ . '/includes/session.php');
 
+// Use DomPDF for PDF generation
+use Dompdf\Dompdf;
+
 if (isset($_POST['Select'])) {
 	$_POST['Part']=$_POST['Select'];
 	$_POST['PrintPDF']='Yes';
 }
 
-if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
-
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',__('MRP Report'));
-	$pdf->addInfo('Subject',__('MRP Report'));
-	$FontSize=9;
-	$PageNumber=1;
-	$LineHeight=10   ;
+if (isset($_POST['PrintPDF']) && $_POST['Part'] != '') {
 
 	// Load mrprequirements into $Requirements array
-	// Use weekindex to assign supplies, requirements, and planned orders to weekly buckets
 	$SQL = "SELECT mrprequirements.*,
 				TRUNCATE(((TO_DAYS(daterequired) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 				TO_DAYS(daterequired) - TO_DAYS(CURRENT_DATE) AS datediff
@@ -27,9 +22,9 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			WHERE part = '" . $_POST['Part'] ."'
 			ORDER BY daterequired,whererequired";
 
-	$ErrMsg = __('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc');
+	$ErrMsg = __('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, etc.');
 	$Result = DB_query($SQL, $ErrMsg);
-	if (DB_error_no() !=0) {
+	if (DB_error_no() != 0) {
 		$Errors = 1;
 	}
 
@@ -43,25 +38,22 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	}
 
 	$Requirements = array();
-	$WeeklyReq = array();
-	for ($i=0;$i<28;$i++) {
-		$WeeklyReq[$i]=0;
-	}
+	$WeeklyReq = array_fill(0, 28, 0);
 	$PastDueReq = 0;
 	$FutureReq = 0;
 	$GrossReq = 0;
 
 	while ($MyRow=DB_fetch_array($Result)) {
-			array_push($Requirements,$MyRow);
-			$GrossReq += $MyRow['quantity'];
-			if ($MyRow['datediff'] < 0) {
-				$PastDueReq += $MyRow['quantity'];
-			} elseif ($MyRow['weekindex'] > 27) {
-				$FutureReq += $MyRow['quantity'];
-			} else {
+		array_push($Requirements,$MyRow);
+		$GrossReq += $MyRow['quantity'];
+		if ($MyRow['datediff'] < 0) {
+			$PastDueReq += $MyRow['quantity'];
+		} elseif ($MyRow['weekindex'] > 27) {
+			$FutureReq += $MyRow['quantity'];
+		} else {
 			$WeeklyReq[$MyRow['weekindex']] += $MyRow['quantity'];
-			}
-	}  //end of while loop
+		}
+	}
 
 	// Load mrpsupplies into $Supplies array
 	$SQL = "SELECT mrpsupplies.*,
@@ -75,10 +67,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		$Errors = 1;
 	}
 	$Supplies = array();
-	$WeeklySup = array();
-	for ($i=0;$i<28;$i++) {
-		$WeeklySup[$i]=0;
-	}
+	$WeeklySup = array_fill(0, 28, 0);
 	$PastDueSup = 0;
 	$FutureSup = 0;
 	$QOH = 0; // Get quantity on Hand to display
@@ -97,8 +86,9 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			}
 		}
 		array_push($Supplies,$MyRow);
-	}  //end of while loop
+	}
 
+	// Load planned orders
 	$SQL = "SELECT mrpplannedorders.*,
 				   TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
 				   TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE) AS datediff
@@ -108,28 +98,23 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		$Errors = 1;
 	}
 
-	// Fields for Order Due weekly buckets based on planned orders
-	$WeeklyPlan = array();
-	for ($i=0;$i<28;$i++) {
-		$WeeklyPlan[$i]=0;
-	}
+	$WeeklyPlan = array_fill(0, 28, 0);
 	$PastDuePlan = 0;
 	$FuturePlan = 0;
 	while ($MyRow=DB_fetch_array($Result)) {
-			array_push($Supplies,$MyRow);
-			if ($MyRow['datediff'] < 0) {
-				$PastDuePlan += $MyRow['supplyquantity'];
-			} elseif ($MyRow['weekindex'] > 27) {
-				$FuturePlan += $MyRow['supplyquantity'];
-			} else {
+		array_push($Supplies,$MyRow);
+		if ($MyRow['datediff'] < 0) {
+			$PastDuePlan += $MyRow['supplyquantity'];
+		} elseif ($MyRow['weekindex'] > 27) {
+			$FuturePlan += $MyRow['supplyquantity'];
+		} else {
 			$WeeklyPlan[$MyRow['weekindex']] += $MyRow['supplyquantity'];
-			}
-	}  //end of while loop
-	// The following sorts the $Supplies array by mrpdate. Have to sort because are loading
-	// mrpsupplies and mrpplannedorders into same array
+		}
+	}
+
 	foreach ($Supplies as $key => $Row) {
-			 $MRPDate[$key] = $Row['mrpdate'];
-	 }
+		$MRPDate[$key] = $Row['mrpdate'];
+	}
 
 	if (isset($Errors)) {
 		$Title = __('MRP Report') . ' - ' . __('Problem Report');
@@ -143,11 +128,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (count($Supplies)) {
 		array_multisort($MRPDate, SORT_ASC, $Supplies);
 	}
-	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin);
-
-	$Fill = false;
-	$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
 
 	// Get and display part information
 	$SQL = "SELECT levels.*,
@@ -161,347 +141,215 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			WHERE part = '" . $_POST['Part'] . "'";
 	$Result = DB_query($SQL,'','',false);
 	$MyRow=DB_fetch_array($Result);
-	$pdf->addTextWrap($Left_Margin,$YPos,35,$FontSize,__('Part:'),'');
-	$pdf->addTextWrap(70,$YPos,100,$FontSize,$MyRow['part'],'');
-	$pdf->addTextWrap(245,$YPos,40,$FontSize,__('EOQ').':','right');
-	$pdf->addTextWrap(285,$YPos,45,$FontSize,locale_number_format($MyRow['eoq'],$MyRow['decimalplaces']),'right');
-	$pdf->addTextWrap(360,$YPos,50,$FontSize,__('On Hand:'),'right');
-	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($QOH,$MyRow['decimalplaces']),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,30,$FontSize,__('Desc:'),'');
-	$pdf->addTextWrap(70,$YPos,240,$FontSize,$MyRow['description'],'');
-	$pdf->addTextWrap(245,$YPos,40,$FontSize,__('Pan Size:'),'right');
-	$pdf->addTextWrap(285,$YPos,45,$FontSize,locale_number_format($MyRow['pansize'],$MyRow['decimalplaces']),'right');
-	$pdf->addTextWrap(360,$YPos,50,$FontSize,__('On Order:'),'right');
-	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($OpenOrd,$MyRow['decimalplaces']),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,30,$FontSize,'M/B:','');
-	$pdf->addTextWrap(70,$YPos,150,$FontSize,$MyRow['mbflag'],'');
-	$pdf->addTextWrap(225,$YPos,60,$FontSize,'Shrinkage:','right');
-	$pdf->addTextWrap(300,$YPos,30,$FontSize,locale_number_format($MyRow['shrinkfactor'],$MyRow['decimalplaces']),'right');
-	$pdf->addTextWrap(360,$YPos,50,$FontSize,__('Gross Req:'),'right');
-	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($GrossReq,$MyRow['decimalplaces']),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap(225,$YPos,60,$FontSize,'Lead Time:','right');
-	$pdf->addTextWrap(300,$YPos,30,$FontSize,$MyRow['leadtime'],'right');
-	$pdf->addTextWrap(360,$YPos,50,$FontSize,__('Last Cost:'),'right');
-	$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($MyRow['lastcost'],2),'right');
-	$YPos -= (2*$LineHeight);
 
-	// Calculate fields for prjected available weekly buckets
+	// Calculate fields for projected available weekly buckets
 	$PlannedAccum = array();
 	$PastDueAvail = ($QOH + $PastDueSup + $PastDuePlan) - $PastDueReq;
 	$WeeklyAvail = array();
 	$WeeklyAvail[0] = ($PastDueAvail + $WeeklySup[0] + $WeeklyPlan[0]) - $WeeklyReq[0];
 	$PlannedAccum[0] = $PastDuePlan + $WeeklyPlan[0];
 	for ($i = 1; $i < 28; $i++) {
-		 $WeeklyAvail[$i] = ($WeeklyAvail[$i - 1] + $WeeklySup[$i] + $WeeklyPlan[$i]) - $WeeklyReq[$i];
-		 $PlannedAccum[$i] = $PlannedAccum[$i-1] + $WeeklyPlan[$i];
+		$WeeklyAvail[$i] = ($WeeklyAvail[$i - 1] + $WeeklySup[$i] + $WeeklyPlan[$i]) - $WeeklyReq[$i];
+		$PlannedAccum[$i] = $PlannedAccum[$i-1] + $WeeklyPlan[$i];
 	}
 	$FutureAvail = ($WeeklyAvail[27] + $FutureSup + $FuturePlan) - $FutureReq;
 	$FuturePlannedaccum = $PlannedAccum[27] + $FuturePlan;
 
-	// Headers for Weekly Buckets
-	$FontSize =7;
+	// Prepare the HTML content
+	$HTML = '';
+	$HTML .= '<html>
+	<head>
+		<link href="css/reports.css" rel="stylesheet" type="text/css" />
+		<style>
+			body { font-family: DejaVu Sans, sans-serif; font-size: 12px; }
+			table { border-collapse: collapse; width: 100%; margin-bottom: 18px; }
+			th, td { border: 1px solid #666; padding: 4px 6px; font-size: 11px; }
+			th { background: #e0e8f8; }
+			.section { font-weight: bold; background: #eee; }
+			.header-table td { border: none; }
+		</style>
+	</head>
+	<body>
+		<h2 style="text-align: center;">'.htmlspecialchars($_SESSION['CompanyRecord']['coyname']).'</h2>
+		<h3 style="text-align: center;">MRP Report</h3>
+		<table class="header-table">
+			<tr>
+				<td><b>Part:</b></td>
+				<td>'.htmlspecialchars($MyRow['part']).'</td>
+				<td><b>EOQ:</b></td>
+				<td class="number">'.locale_number_format($MyRow['eoq'],$MyRow['decimalplaces']).'</td>
+				<td><b>On Hand:</b></td>
+				<td class="number">'.locale_number_format($QOH,$MyRow['decimalplaces']).'</td>
+			</tr>
+			<tr>
+				<td><b>Description:</b></td>
+				<td colspan="3">'.html_entity_decode($MyRow['description']).'</td>
+				<td><b>On Order:</b></td>
+				<td class="number">'.locale_number_format($OpenOrd,$MyRow['decimalplaces']).'</td>
+			</tr>
+			<tr>
+				<td><b>M/B:</b></td>
+				<td>'.htmlspecialchars($MyRow['mbflag']).'</td>
+				<td><b>Shrinkage:</b></td>
+				<td class="number">'.locale_number_format($MyRow['shrinkfactor'],$MyRow['decimalplaces']).'</td>
+				<td><b>Gross Req:</b></td>
+				<td class="number">'.locale_number_format($GrossReq,$MyRow['decimalplaces']).'</td>
+			</tr>
+			<tr>
+				<td><b>Lead Time:</b></td>
+				<td>'.htmlspecialchars($MyRow['leadtime']).'</td>
+				<td><b>Last Cost:</b></td>
+				<td class="number">'.locale_number_format($MyRow['lastcost'],2).'</td>
+				<td></td>
+				<td></td>
+			</tr>
+		</table>';
+
+	// Weekly Buckets Table
+	$HTML .= '<table>
+		<tr>
+			<th></th>';
 	$Dateformat = $_SESSION['DefaultDateFormat'];
-	$Today = date("$Dateformat");
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,__('Past Due'),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,$Today,'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,DateAdd($Today,'w',1),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,DateAdd($Today,'w',2),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,DateAdd($Today,'w',3),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,DateAdd($Today,'w',4),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,DateAdd($Today,'w',5),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,DateAdd($Today,'w',6),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,DateAdd($Today,'w',7),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,DateAdd($Today,'w',8),'right');
-	$YPos -=$LineHeight;
-
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Gross Reqts'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PastDueReq,0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyReq[0],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyReq[1],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyReq[2],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyReq[3],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyReq[4],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyReq[5],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyReq[6],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyReq[7],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyReq[8],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Open Order'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PastDueSup,0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklySup[0],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklySup[1],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklySup[2],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklySup[3],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklySup[4],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklySup[5],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklySup[6],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklySup[7],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklySup[8],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PastDuePlan,0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[0],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[1],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[2],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[3],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[4],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[5],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[6],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[7],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[8],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Proj Avail'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PastDueAvail,0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[0],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[1],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[2],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[3],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[4],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[5],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[6],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[7],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[8],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned Acc'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PastDuePlan,0),'right');
-	$InitialPoint = 130;
-	for($c=0;$c<9;$c++){
-		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($PlannedAccum[$c],0),'right');
-		$InitialPoint += 45;
+	$Today = date($Dateformat);
+	$HTML .= '<th>Past Due</th>';
+	for ($i=0; $i<9; $i++) {
+		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
-	$YPos -= 2 * $LineHeight;
+	$HTML .= '</tr>
+		<tr><td class="section">Gross Reqts</td><td class="number">'.locale_number_format($PastDueReq,0).'</td>';
+	for ($i=0; $i<9; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Open Order</td><td class="number">'.locale_number_format($PastDueSup,0).'</td>';
+	for ($i=0; $i<9; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Planned</td><td class="number">'.locale_number_format($PastDuePlan,0).'</td>';
+	for ($i=0; $i<9; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Proj Avail</td><td class="number">'.locale_number_format($PastDueAvail,0).'</td>';
+	for ($i=0; $i<9; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Planned Acc</td><td class="number">'.locale_number_format($PastDuePlan,0).'</td>';
+	for ($i=0; $i<9; $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+	$HTML .= '</tr></table>';
 
-	// Second Group of Weeks
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,DateAdd($Today,'w',9),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,DateAdd($Today,'w',10),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,DateAdd($Today,'w',11),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,DateAdd($Today,'w',12),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,DateAdd($Today,'w',13),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,DateAdd($Today,'w',14),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,DateAdd($Today,'w',15),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,DateAdd($Today,'w',16),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,DateAdd($Today,'w',17),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,DateAdd($Today,'w',18),'right');
-	$YPos -=$LineHeight;
-
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Gross Reqts'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyReq[9],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyReq[10],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyReq[11],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyReq[12],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyReq[13],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyReq[14],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyReq[15],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyReq[16],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyReq[17],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyReq[18],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Open Order'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklySup[9],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklySup[10],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklySup[11],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklySup[12],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklySup[13],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklySup[14],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklySup[15],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklySup[16],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklySup[17],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklySup[18],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[9],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[10],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[11],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[12],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[13],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[14],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[15],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[16],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[17],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[18],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Proj Avail'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[9],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[10],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[11],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[12],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[13],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[14],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[15],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[16],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[17],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[18],0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned Acc'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PlannedAccum[9],0),'right');
-	$InitialPoint = 130;
-	for($c=10;$c<19;$c++){
-		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($PlannedAccum[$c],0),'right');
-		$InitialPoint += 45;
+	$HTML .= '<table>
+		<tr>
+			<th></th>';
+	for ($i=9; $i<19; $i++) {
+		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
-	$YPos -= 2 * $LineHeight;
+	$HTML .= '</tr>
+		<tr><td class="section">Gross Reqts</td>';
+	for ($i=9; $i<19; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Open Order</td>';
+	for ($i=9; $i<19; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Planned</td>';
+	for ($i=9; $i<19; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Proj Avail</td>';
+	for ($i=9; $i<19; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+	$HTML .= '</tr>
+		<tr><td class="section">Planned Acc</td>';
+	for ($i=9; $i<19; $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+	$HTML .= '</tr></table>';
 
-	// Third Group of Weeks
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,DateAdd($Today,'w',19),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,DateAdd($Today,'w',20),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,DateAdd($Today,'w',21),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,DateAdd($Today,'w',22),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,DateAdd($Today,'w',23),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,DateAdd($Today,'w',24),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,DateAdd($Today,'w',25),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,DateAdd($Today,'w',26),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,DateAdd($Today,'w',27),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,"Future",'right');
-	$YPos -=$LineHeight;
-
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Gross Reqts'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyReq[19],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyReq[20],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyReq[21],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyReq[22],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyReq[23],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyReq[24],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyReq[25],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyReq[26],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyReq[27],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($FutureReq,0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Open Order'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklySup[19],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklySup[20],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklySup[21],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklySup[22],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklySup[23],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklySup[24],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklySup[25],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklySup[26],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklySup[27],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($FutureSup,0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[19],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[20],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[21],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[22],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[23],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[24],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[25],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[26],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyPlan[27],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($FuturePlan,0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Proj Avail'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[19],0),'right');
-	$pdf->addTextWrap(130,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[20],0),'right');
-	$pdf->addTextWrap(175,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[21],0),'right');
-	$pdf->addTextWrap(220,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[22],0),'right');
-	$pdf->addTextWrap(265,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[23],0),'right');
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[24],0),'right');
-	$pdf->addTextWrap(355,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[25],0),'right');
-	$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[26],0),'right');
-	$pdf->addTextWrap(445,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[27],0),'right');
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($FutureAvail,0),'right');
-	$YPos -=$LineHeight;
-	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,__('Planned Acc'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PlannedAccum[19],0),'right');
-	$InitialPoint = 130;
-	for($c=20;$c<28;$c++){
-		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($PlannedAccum[$c],0),'right');
-		$InitialPoint += 45;
+	$HTML .= '<table>
+		<tr>
+			<th></th>';
+	for ($i=19; $i<28; $i++) {
+		$HTML .= '<th>'.htmlspecialchars(DateAdd($Today,'w',$i)).'</th>';
 	}
-	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($FuturePlannedaccum,0),'right');
+	$HTML .= '<th>Future</th></tr>
+		<tr><td class="section">Gross Reqts</td>';
+	for ($i=19; $i<28; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyReq[$i],0).'</td>';
+	$HTML .= '<td class="number">'.locale_number_format($FutureReq,0).'</td></tr>
+		<tr><td class="section">Open Order</td>';
+	for ($i=19; $i<28; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklySup[$i],0).'</td>';
+	$HTML .= '<td class="number">'.locale_number_format($FutureSup,0).'</td></tr>
+		<tr><td class="section">Planned</td>';
+	for ($i=19; $i<28; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyPlan[$i],0).'</td>';
+	$HTML .= '<td class="number">'.locale_number_format($FuturePlan,0).'</td></tr>
+		<tr><td class="section">Proj Avail</td>';
+	for ($i=19; $i<28; $i++) $HTML .= '<td class="number">'.locale_number_format($WeeklyAvail[$i],0).'</td>';
+	$HTML .= '<td class="number">'.locale_number_format($FutureAvail,0).'</td></tr>
+		<tr><td class="section">Planned Acc</td>';
+	for ($i=19; $i<28; $i++) $HTML .= '<td class="number">'.locale_number_format($PlannedAccum[$i],0).'</td>';
+	$HTML .= '<td class="number">'.locale_number_format($FuturePlannedaccum,0).'</td></tr>
+	</table>';
 
-	// Headers for Demand/Supply Sections
-	$YPos -= (2*$LineHeight);
-	$pdf->addTextWrap($Left_Margin,$YPos,265,$FontSize,'D E M A N D','center');
-	$pdf->addTextWrap(290,$YPos,260,$FontSize,'S U P P L Y','center');
-	$YPos -=$LineHeight;
+	// Demand/Supply details
+	$HTML .= '<h4>Demand / Supply Details</h4>
+	<table>
+		<tr>
+			<th colspan="5">' . _('Demand') . '</th>
+			<th colspan="6">' . _('Supply') . '</th>
+		</tr>
+		<tr>
+			<th>Dem Type</th>
+			<th>Where Required</th>
+			<th>Order</th>
+			<th>Quantity</th>
+			<th>Due Date</th>
+			<th>Order No.</th>
+			<th>Sup Type</th>
+			<th>For</th>
+			<th>Quantity</th>
+			<th>Due Date</th>
+			<th>MRP Date</th>
+		</tr>';
 
-	$pdf->addTextWrap($Left_Margin,$YPos,55,$FontSize,__('Dem Type'));
-	$pdf->addTextWrap(80,$YPos,90,$FontSize,__('Where Required'));
-	$pdf->addTextWrap(170,$YPos,30,$FontSize,__('Order'),'');
-	$pdf->addTextWrap(200,$YPos,40,$FontSize,__('Quantity'),'right');
-	$pdf->addTextWrap(240,$YPos,50,$FontSize,__('Due Date'),'right');
-
-	$pdf->addTextWrap(310,$YPos,45,$FontSize,__('Order No.'),'');
-	$pdf->addTextWrap(355,$YPos,35,$FontSize,__('Sup Type'),'');
-	$pdf->addTextWrap(390,$YPos,25,$FontSize,__('For'),'');
-	$pdf->addTextWrap(415,$YPos,40,$FontSize,__('Quantity'),'right');
-	$pdf->addTextWrap(455,$YPos,50,$FontSize,__('Due Date'),'right');
-	$pdf->addTextWrap(505,$YPos,50,$FontSize,__('MRP Date'),'right');
-
-	// Details for Demand/Supply Sections
 	$i = 0;
-	while ((isset($Supplies[$i]) AND mb_strlen($Supplies[$i]['part']) > 1)
-			OR (isset($Requirements[$i]) AND mb_strlen($Requirements[$i]['part']) > 1)){
+	while ((isset($Supplies[$i]) && mb_strlen($Supplies[$i]['part']) > 1)
+		|| (isset($Requirements[$i]) && mb_strlen($Requirements[$i]['part']) > 1)) {
 
-		$YPos -=$LineHeight;
-		$FontSize=7;
-
-		/* Use to alternate between lines with transparent and painted background
-		if ($_POST['Fill'] == 'yes'){
-			$Fill=!$Fill;
-		}
-		*/
-		// Parameters for addTextWrap are defined in /includes/class.cpdf.php
-		// 1) X position 2) Y position 3) Width
-		// 4) Height 5) Text To Display  6) Alignment 7) Border 8) Fill - True to use SetFillColor
-		// and False to set for transparent
-		if (isset($Requirements[$i]['part']) and mb_strlen($Requirements[$i]['part']) > 1) {
+		$HTML .= '<tr>';
+		// Demand
+		if (isset($Requirements[$i]['part']) && mb_strlen($Requirements[$i]['part']) > 1) {
 			$FormatedReqDueDate = ConvertSQLDate($Requirements[$i]['daterequired']);
-			$pdf->addTextWrap($Left_Margin,$YPos,55,$FontSize,$Requirements[$i]['mrpdemandtype'],'');
-			$pdf->addTextWrap(80,$YPos,90,$FontSize,$Requirements[$i]['whererequired'],'');
-			$pdf->addTextWrap(170,$YPos,30,$FontSize,$Requirements[$i]['orderno'],'');
-			$pdf->addTextWrap(200,$YPos,40,$FontSize,locale_number_format($Requirements[$i]['quantity'],
-																$MyRow['decimalplaces']),'right');
-			$pdf->addTextWrap(240,$YPos,50,$FontSize,$FormatedReqDueDate,'right');
+			$HTML .= '<td>' . htmlspecialchars($Requirements[$i]['mrpdemandtype']) . '</td>
+				<td>' . htmlspecialchars($Requirements[$i]['whererequired']) . '</td>
+				<td>' . htmlspecialchars($Requirements[$i]['orderno']) . '</td>
+				<td class="number">' . locale_number_format($Requirements[$i]['quantity'],$MyRow['decimalplaces']) . '</td>
+				<td>' . htmlspecialchars($FormatedReqDueDate) . '</td>';
+		} else {
+			$HTML .= '<td colspan="5"></td>';
 		}
-		if (mb_strlen($Supplies[$i]['part']) > 1) {
+		// Supply
+		if (isset($Supplies[$i]) && mb_strlen($Supplies[$i]['part']) > 1) {
 			$SupType = $Supplies[$i]['ordertype'];
-			// If ordertype is not QOH,PO,or WO, it is an MRP generated planned order and the
-			// ordertype is actually the demandtype that caused the planned order
 			if ($SupType == 'QOH' || $SupType == 'PO' || $SupType == 'WO') {
 				$DisplayType = $SupType;
-				$ForType = " ";
+				$ForType = ' ';
 			} else {
 				$DisplayType = 'Planned';
 				$ForType = $SupType;
 			}
 			$FormatedSupDueDate = ConvertSQLDate($Supplies[$i]['duedate']);
 			$FormatedSupMRPDate = ConvertSQLDate($Supplies[$i]['mrpdate']);
-			// Order no is meaningless for QOH and REORD ordertypes
-			if ($SupType == 'QOH' OR $SupType == 'REORD') {
-				$pdf->addTextWrap(310,$YPos,45,$FontSize,' ','');
-			} else {
-				$pdf->addTextWrap(310,$YPos,45,$FontSize,$Supplies[$i]['orderno'],'');
-			}
-			$pdf->addTextWrap(355,$YPos,35,$FontSize,$DisplayType,'');
-			$pdf->addTextWrap(390,$YPos,25,$FontSize,$ForType,'');
-			$pdf->addTextWrap(415,$YPos,40,$FontSize,locale_number_format($Supplies[$i]['supplyquantity'],$MyRow['decimalplaces']),'right');
-			$pdf->addTextWrap(455,$YPos,50,$FontSize,$FormatedSupDueDate,'right');
-			$pdf->addTextWrap(505,$YPos,50,$FontSize,$FormatedSupMRPDate,'right');
+			$OrderNo = ($SupType == 'QOH' OR $SupType == 'REORD') ? ' ' : $Supplies[$i]['orderno'];
+			$HTML .= '<td>' . htmlspecialchars($OrderNo) . '</td>
+				<td>' . htmlspecialchars($DisplayType) . '</td>
+				<td>' . htmlspecialchars($ForType) . '</td>
+				<td class="number">' . locale_number_format($Supplies[$i]['supplyquantity'],$MyRow['decimalplaces']) . '</td>
+				<td>' . htmlspecialchars($FormatedSupDueDate) . '</td>
+				<td>' . htmlspecialchars($FormatedSupMRPDate) . '</td>';
+		} else {
+			$HTML .= '<td colspan="6"></td>';
 		}
-
-		if ($YPos < $Bottom_Margin + $LineHeight){
-		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin);
-		}
+		$HTML .= '</tr>';
 		$i++;
-	} /*end while loop */
-
-	$FontSize =8;
-	$YPos -= (2*$LineHeight);
-
-	if ($YPos < $Bottom_Margin + $LineHeight){
-		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin);
 	}
+	$HTML .= '</table>
+	</body></html>';
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct();
+	// Generate PDF with DomPDF
+	$DomPDF = new Dompdf(['chroot' => __DIR__]);
+	$DomPDF->loadHtml($HTML);
+	$DomPDF->setPaper('A4', 'landscape');
+	$DomPDF->render();
+	$DomPDF->stream($_SESSION['DatabaseName'] . '_MRPReport_' . date('Y-m-d') . '.pdf', array("Attachment" => false));
 
 } else { /*The option to print PDF was not hit so display form */
 
@@ -525,7 +373,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 		exit();
 	}
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . __('Search') . '" alt="" />' . ' ' . __('Search for Inventory Items') . '</p>
 		<fieldset>
@@ -713,8 +561,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 /* end query for list of records */
 /* display list if there is more than one record */
 if (isset($SearchResult) AND !isset($_POST['Select'])) {
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$ListCount = DB_num_rows($SearchResult);
 	if ($ListCount > 0) {
@@ -792,9 +639,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		//end of while loop
 		echo '</table>
-            </div>
-			</form>
-			<br />';
+			</form>';
 	}
 
 	include('includes/footer.php');
