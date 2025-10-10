@@ -52,6 +52,8 @@ $SQL = "SELECT stockmaster.categoryid,
 $ErrMsg = __('The inventory valuation could not be retrieved');
 $InventoryResult = DB_query($SQL, $ErrMsg);
 
+$ListCount = DB_num_rows($InventoryResult);
+
 $HTML = '';
 
 $HTML .= '<html>
