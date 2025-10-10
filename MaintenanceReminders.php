@@ -38,7 +38,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 	$MailText .= 'Asset' . ': ' . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: "
 		. ConvertSQLDate($MyRow['duedate']);
-	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']), Date($_SESSION['DefaultDateFormat']))) {
+	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']), date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= __('NB: THIS JOB IS OVERDUE');
 	}
 	$MailText .= "\n\n";

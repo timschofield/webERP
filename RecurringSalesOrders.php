@@ -244,7 +244,7 @@ if (isset($_POST['Process'])) {
 										'" . $_SESSION['Items'.$identifier]->Branch . "',
 										'". $_SESSION['Items'.$identifier]->CustRef ."',
 										'". $_SESSION['Items'.$identifier]->Comments ."',
-										'" . Date('Y-m-d H:i') . "',
+										'" . date('Y-m-d H:i') . "',
 										'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 										'" . $_SESSION['Items'.$identifier]->DeliverTo . "',
 										'" . $_SESSION['Items'.$identifier]->DelAdd1 . "',
@@ -439,7 +439,7 @@ if ($NewRecurringOrder=='Yes'){
 }
 
 if (!isset($_POST['StopDate'])){
-   $_POST['StopDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')+1));
+   $_POST['StopDate'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),date('d')+1,date('y')+1));
 }
 
 echo '<field>

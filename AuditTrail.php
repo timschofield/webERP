@@ -13,10 +13,10 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . __('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail']));
+	$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0, date('m')-$_SESSION['MonthsAuditTrail']));
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate']= Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate']= date($_SESSION['DefaultDateFormat']);
 }
 
 if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
@@ -207,9 +207,9 @@ if (isset($_POST['View'])) {
 				<td>' . $_SESSION['SQLString']['fields'][0] . '</td>
 				<td>' . trim(str_replace("'","",$_SESSION['SQLString']['values'][0])) . '</td></tr>';
 			for ($i=1; $i<sizeof($_SESSION['SQLString']['fields']); $i++) {
-				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) != "") &
-				(trim($_SESSION['SQLString']['fields'][$i]) != 'password') &
-				(trim($_SESSION['SQLString']['fields'][$i]) != 'www_users.password')) {
+				if (isset($_SESSION['SQLString']['values'][$i]) and (trim(str_replace("'","",$_SESSION['SQLString']['values'][$i])) !=  "") &
+				(trim($_SESSION['SQLString']['fields'][$i]) !=  'password') &
+				(trim($_SESSION['SQLString']['fields'][$i]) !=  'www_users.password')) {
 					echo '<tr style="background-color:' . $RowColour . '">';
 					echo '<td></td>
 						<td></td>

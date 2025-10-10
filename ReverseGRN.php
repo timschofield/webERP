@@ -131,7 +131,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	/*Now the purchorder header status in case it was completed  - now incomplete - just printed */
 	$SQL = "UPDATE purchorders
 			SET status = 'Printed',
-				stat_comment = CONCAT('" . Date($_SESSION['DefaultDateFormat']) . ' ' . __('GRN Reversed for') . ' ' . DB_escape_string(stripslashes($GRN['itemdescription'])) . ' ' . __('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
+				stat_comment = CONCAT('" . date($_SESSION['DefaultDateFormat']) . ' ' . __('GRN Reversed for') . ' ' . DB_escape_string(stripslashes($GRN['itemdescription'])) . ' ' . __('by') . ' ' . $_SESSION['UsersRealName'] . "<br />', stat_comment )
 			WHERE orderno = '" . $GRN['orderno'] . "'";
 
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . __('The purchase order statusand status comment could not be changed because');
@@ -335,7 +335,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) or !Is_Date($_POST['RecdAfterDate'])) {
-		$_POST['RecdAfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date("m") - 3, Date("d"), Date("Y")));
+		$_POST['RecdAfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date("m") - 3, date("d"), date("Y")));
 	}
 	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
 	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';

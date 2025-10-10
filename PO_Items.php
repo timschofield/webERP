@@ -382,7 +382,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
 
-                	echo '<a href="'.$RootPath.'/SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
+					echo '<a href="'.$RootPath.'/SupplierInvoice.php?SupplierID=' . $_SESSION['PO'.$identifier]->SupplierID . '&amp;ReceivePO=' . $_SESSION['PO'.$identifier]->OrderNo . '&amp;DeliveryDate=' . $_SESSION['PO'.$identifier]->DeliveryDate . '">' . __('Receive and Enter Purchase Invoice') . '</a>';
 		}
 
 		unset($_SESSION['PO'.$identifier]); /*Clear the PO data to allow a newy to be input*/
@@ -622,7 +622,7 @@ if (isset($_POST['NewItem'])
 						/* Work out the delivery date based on today + lead time
 					 * if > header DeliveryDate then set DeliveryDate to today + leadtime
 				        */
-						$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
+						$DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
 						if (Date1GreaterThanDate2($_SESSION['PO'.$identifier]->DeliveryDate,$DeliveryDate)){
 							$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 						}
@@ -634,7 +634,7 @@ if (isset($_POST['NewItem'])
 						$SuppliersPartNo = '';
 						$LeadTime=1;
 						if (!isset($_SESSION['PO'.$identifier]->DeliveryDate)){
-							$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',1);
+							$DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',1);
 						} else {
 							$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 						}
@@ -784,7 +784,7 @@ if (isset($_POST['UploadFile'])) {
 							/* Work out the delivery date based on today + lead time
 						 * if > header DeliveryDate then set DeliveryDate to today + leadtime
 							*/
-							$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
+							$DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$LeadTime);
 							if (Date1GreaterThanDate2($_SESSION['PO'.$identifier]->DeliveryDate,$DeliveryDate)){
 								$DeliveryDate = $_SESSION['PO'.$identifier]->DeliveryDate;
 							}

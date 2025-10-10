@@ -27,7 +27,7 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 		foreach ($_POST as $Key=>$Value) {
 			if (substr($Key,0,3) == 'WO_'){
 				if ($i>0) $WOSelected .=",";
-				if($Value == 'on'){
+				if ($Value == 'on') {
 					$WOSelected .= substr($Key,3);
 				}
 				$i++;
@@ -121,7 +121,7 @@ if (isset($_POST['ResetPart'])){
 	 unset($SelectedStockItem);
 }
 
-if (isset($SelectedWO) AND $SelectedWO!='') {
+if (isset($SelectedWO) AND $SelectedWO!= '') {
 	$SelectedWO = trim($SelectedWO);
 	if (!is_numeric($SelectedWO)){
 		  prnMsg(__('The work order number entered MUST be numeric'),'warn');
@@ -209,7 +209,7 @@ if (!isset($StockID)) {
 
 	 /* Not appropriate really to restrict search by date since may miss older
 	 ouststanding orders
-	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$OrdersAfterDate = date('d/m/Y',mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 	 */
 
 	if (!isset($SelectedWO) or ($SelectedWO=='')){
@@ -293,10 +293,10 @@ if (!isset($StockID)) {
 			</field>';
 
 		if (!isset($_POST['DateFrom'])) {
-			$_POST['DateFrom'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['DateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DateTo'])) {
-			$_POST['DateTo'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['DateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<field>
@@ -401,7 +401,7 @@ if (!isset($StockID)) {
 			$StartDateTo = "";
 		}
 
-		if (isset($SelectedWO) AND $SelectedWO !='') {
+		if (isset($SelectedWO) AND $SelectedWO != '') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
 								stockmaster.description,

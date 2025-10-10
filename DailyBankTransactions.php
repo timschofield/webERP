@@ -160,7 +160,7 @@ if (!isset($_POST['Show'])) {
 						<th class="SortedColumn">' . __('Number') . '</th>
 						<th class="SortedColumn">' . __('Amount in') . ' ' . $BankDetailRow['currcode'] . '</th>
 						<th class="SortedColumn">' . __('Balance') . ' ' . $BankDetailRow['currcode'] . '</th>';
-		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
+		if ($BankDetailRow['currcode'] !=  $_SESSION['CompanyRecord']['currencydefault']) {
 			echo '<th class="SortedColumn">' . __('Amount in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 				<th class="SortedColumn">' . __('Balance') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 		}
@@ -169,7 +169,7 @@ if (!isset($_POST['Show'])) {
 
 		$AccountCurrTotal = $BalancesRow['balance'];
 		$LocalCurrTotal = $BalancesRow['fbalance'];
-		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
+		if ($BankDetailRow['currcode'] !=  $_SESSION['CompanyRecord']['currencydefault']) {
 			echo '<tr class="total_row">
 					<td colspan="8">' . __('Balances Brought Forward') . '</td>
 					<td class="number">' . locale_number_format($BalancesRow['balance'], $BankDetailRow['decimalplaces']) . '</td>
@@ -209,7 +209,7 @@ if (!isset($_POST['Show'])) {
 						<td>' . $MyRow['chequeno'] . '</td>
 						<td class="number">' . locale_number_format($MyRow['amount'], $BankDetailRow['decimalplaces']) . '</td>
 						<td class="number">' . locale_number_format($AccountCurrTotal, $BankDetailRow['decimalplaces']) . '</td>';
-				if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
+				if ($BankDetailRow['currcode'] !=  $_SESSION['CompanyRecord']['currencydefault']) {
 					echo '<td class="number">' . locale_number_format($MyRow['amount'] / $MyRow['functionalexrate'] / $MyRow['exrate'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 						<td class="number">' . locale_number_format($LocalCurrTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 				}
@@ -217,7 +217,7 @@ if (!isset($_POST['Show'])) {
 					</tr>';
 			}
 		}
-		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
+		if ($BankDetailRow['currcode'] !=  $_SESSION['CompanyRecord']['currencydefault']) {
 			echo '<tfoot>
 					<tr class="total_row">
 						<td colspan="8">' . __('Balances Carried Forward') . '</td>

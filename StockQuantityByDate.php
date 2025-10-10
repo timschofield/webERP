@@ -72,7 +72,7 @@ echo '</select>
 	</field>';
 
 if (!isset($_POST['OnHandDate'])) {
-	$_POST['OnHandDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('y')));
+	$_POST['OnHandDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('y')));
 }
 
 echo '<field>

@@ -273,7 +273,7 @@ else {
 		  </field>';
 
 	if (!isset($_POST['AmountsDueBy'])) {
-		$DefaultDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
+		$DefaultDate = date('Y-m-d', mktime(0, 0, 0, date('m') + 1, 0, date('y')));
 	}
 	else {
 		$DefaultDate = FormatDateForSQL($_POST['AmountsDueBy']);

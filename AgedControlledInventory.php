@@ -5,7 +5,7 @@ require(__DIR__ . '/includes/session.php');
 $PricesSecurity = 12; // don't show pricing info unless security token 12 available to user
 
 $Today =  time();
-$Title = __('Aged Controlled Inventory') . ' ' . __('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
+$Title = __('Aged Controlled Inventory') . ' ' . __('as-of') . ' ' . date(($_SESSION['DefaultDateFormat']), $Today);
 $ViewTopic = 'Inventory';
 $BookMark = 'AgedControlled';
 include('includes/header.php');

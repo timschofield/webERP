@@ -516,7 +516,7 @@ if (!isset($SuppliersResult)) {
 			$_POST['EffectiveFrom'] = ConvertSQLDate($MyRow['effectivefrom']);
 		} else { // we are copying a blank record effective from today
 			$_POST['Price'] = 0;
-			$_POST['EffectiveFrom'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['EffectiveFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		$CurrCode = $MyRow['currcode'];
 		$CurrDecimalPlaces = $MyRow['currdecimalplaces'];
@@ -568,7 +568,7 @@ if (!isset($SuppliersResult)) {
 		$_POST['Price'] = 0;
 	}
 	if (!isset($_POST['EffectiveFrom'])) {
-		$_POST['EffectiveFrom'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['EffectiveFrom'] = date($_SESSION['DefaultDateFormat']);
 	}
 	if (!isset($_POST['SuppliersUOM'])) {
 		$_POST['SuppliersUOM'] = '';
@@ -696,13 +696,13 @@ if (!isset($SuppliersResult)) {
 
 		echo '</tbody><input type="hidden" name="NumberOfDiscounts" value="' . $i . '" />';
 
-		$DefaultEndDate = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m') + 1,0,Date('y')));
+		$DefaultEndDate = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m') + 1,0,date('y')));
 
 		echo '<tr>
 				<td><input type="text" name="DiscountNarrative" value="" maxlength="20" size="20" /></td>
 				<td><input type="text" class="number" name="DiscountAmount" value="0" maxlength="10" size="11" /></td>
 				<td><input type="text" class="number" name="DiscountPercent" value="0" maxlength="5" size="6" /></td>
-				<td><input type="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" /></td>
 				<td><input type="date" name="DiscountEffectiveTo" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
 			</tr>
 			</table>';

@@ -25,7 +25,7 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 	$CustomerID = $_SESSION['CustomerID'];
 }
 //Check if the users have proper authority
-if ($_SESSION['SalesmanLogin'] != '') {
+if ($_SESSION['SalesmanLogin'] !=  '') {
 	$ViewAllowed = false;
 	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = __('Failed to retrieve sales data');
@@ -65,7 +65,7 @@ if (isset($_GET['Status'])) {
 }
 
 if (!isset($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y')));
+	$_POST['TransAfterDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') - $_SESSION['NumberOfMonthMustBeShown'], date('d'), date('Y')));
 }
 
 $SQL = "SELECT debtorsmaster.name,
@@ -165,7 +165,7 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $Theme, '/images/customer.png" title="', __('Customer'), '" alt="" />', __('Customer'), ': ', stripslashes($CustomerID), ' - ', $CustomerRecord['name'], '<br />', __('All amounts stated in'), ': ', $CustomerRecord['currency'], '<br />', __('Terms'), ': ', $CustomerRecord['terms'], '<br />', __('Credit Limit'), ': ', locale_number_format($CustomerRecord['creditlimit'], 0), '<br />', __('Credit Status'), ': ', $CustomerRecord['reasondescription'], '
 	</p>';
 
-if ($CustomerRecord['dissallowinvoices'] != 0) {
+if ($CustomerRecord['dissallowinvoices'] !=  0) {
 	echo '<br /><font color="red" size="4"><b>', __('ACCOUNT ON HOLD'), '</font></b><br />';
 }
 

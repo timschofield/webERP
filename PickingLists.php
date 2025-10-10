@@ -93,7 +93,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 						WHERE pickreq.prid = '" . $_GET['Prid'] . "'
 							AND pickreq.closed=0";
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$OrderHeaderSQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
@@ -290,7 +290,7 @@ else {
 			foreach ($Itm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 				$_SESSION['Items' . $identifier]->LineItems[$Itm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 			}
-		} else if (isset($_POST[$Itm->LineNumber . '_QtyDispatched'])) {
+		} elseif (isset($_POST[$Itm->LineNumber . '_QtyDispatched'])) {
 			if (is_numeric(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched'])) and filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched']) <= ($_SESSION['Items' . $identifier]->LineItems[$Itm->LineNumber]->Quantity - $_SESSION['Items' . $identifier]->LineItems[$Itm->LineNumber]->QtyInv)) {
 
 				$_SESSION['Items' . $identifier]->LineItems[$Itm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$Itm->LineNumber . '_QtyDispatched']), $Itm->DecimalPlaces);
@@ -344,7 +344,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		foreach ($LnItm->SerialItems as $SerialItem) { //calculate QtyDispatched from bundle quantities
 			$_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched += $SerialItem->BundleQty;
 		}
-	} else if (isset($_POST[$LnItm->LineNumber . '_QtyDispatched'])) {
+	} elseif (isset($_POST[$LnItm->LineNumber . '_QtyDispatched'])) {
 		if (is_numeric(filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched'])) and filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched']) <= ($_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->Quantity - $_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyInv)) {
 
 			$_SESSION['Items' . $identifier]->LineItems[$LnItm->LineNumber]->QtyDispatched = round(filter_number_format($_POST[$LnItm->LineNumber . '_QtyDispatched']), $LnItm->DecimalPlaces);
@@ -397,14 +397,14 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 } //end foreach ($Line)
 
 if (!isset($_POST['DispatchDate']) or !is_date($_POST['DispatchDate'])) {
-	$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat'], CalcEarliestDispatchDate());
+	$DefaultDispatchDate = date($_SESSION['DefaultDateFormat'], CalcEarliestDispatchDate());
 } else {
 	$DefaultDispatchDate = $_POST['DispatchDate'];
 }
 
 echo '</table>';
 
-if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
+if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] !=  '') {
 
 	if ($_SESSION['ProhibitNegativeStock'] == 1) { // checks for negative stock after processing invoice
 		//sadly this check does not combine quantities occuring twice on and order and each line is considered individually :-(
@@ -422,7 +422,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 			$ErrMsg = __('Could not retrieve the quantity left at the location once this order is invoiced (for the purposes of checking that stock will not go negative because)');
 			$Result = DB_query($SQL, $ErrMsg);
 			$CheckNegRow = DB_fetch_array($Result);
-			if (($CheckNegRow['mbflag'] == 'B' or $CheckNegRow['mbflag'] == 'M') and mb_substr($OrderLine->StockID, 0, 4) != 'ASSET') {
+			if (($CheckNegRow['mbflag'] == 'B' or $CheckNegRow['mbflag'] == 'M') and mb_substr($OrderLine->StockID, 0, 4) !=  'ASSET') {
 				if ($CheckNegRow['quantity'] < $OrderLine->QtyDispatched) {
 					prnMsg(__('Invoicing the selected order would result in negative stock. The system parameters are set to prohibit negative stocks from occurring. This invoice cannot be created until the stock on hand is corrected.'), 'error', $OrderLine->StockID . ' ' . $CheckNegRow['description'] . ' - ' . __('Negative Stock Prohibited'));
 					$NegativesFound = true;
@@ -506,7 +506,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result) != count($_SESSION['Items' . $identifier]->LineItems)) {
+	if (DB_num_rows($Result) !=  count($_SESSION['Items' . $identifier]->LineItems)) {
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if  not 	then someone has already invoiced or credited some lines */
 
 		echo '<br />';
@@ -521,7 +521,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		$TotalQtyInv += $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyDispatched; //need total qty later to distribute freight equally
-		if ($_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity != $MyRow['quantity'] or $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv != $MyRow['qtyinvoiced']) {
+		if ($_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity !=  $MyRow['quantity'] or $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv !=  $MyRow['qtyinvoiced']) {
 
 			echo '<br />' . __('Orig order for') . ' ' . $MyRow['orderlineno'] . ' ' . __('has a quantity of') . ' ' . $MyRow['quantity'] . ' ' . __('and an invoiced qty of') . ' ' . $MyRow['qtyinvoiced'] . ' ' . __('the session shows quantity of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->Quantity . ' ' . __('and quantity invoice of') . ' ' . $_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyInv;
 
@@ -680,7 +680,7 @@ else {
 				<label for="Status">' . __('Pick List Status') . ':</label>
 				<select name="Status">';
 
-	if (($_SESSION['Items' . $identifier]->Status != 'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
+	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		if ($_POST['Status'] == 'Picked') {
 			echo '<option selected="selected" value="Picked">' . __('Picked') . '</option>';
@@ -695,7 +695,7 @@ else {
 		echo '<option value="Shipped">' . __('Shipped') . '</option>';
 	}
 
-	if (($_SESSION['Items' . $identifier]->Status != 'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
+	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to cancel an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		if ($_POST['Status'] == 'Cancelled') {
 			echo '<option selected="selected" value="Cancelled">' . __('Cancelled') . '</option>';
@@ -734,7 +734,7 @@ else {
 	++$j;
 	echo '</fieldset>';
 
-	if (($_SESSION['Items' . $identifier]->Status != 'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
+	if (($_SESSION['Items' . $identifier]->Status !=  'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		echo '<div class="centre">
 				<input type="submit" tabindex="' . $j . '" name="Update" value="' . __('Update') . '" />';

@@ -187,7 +187,7 @@ if (
 		</field>';
 
 	if (!isset($_POST['PaymentDate'])) {
-		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') + 1, 0, Date('y')));
+		$DefaultDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') + 1, 0, date('y')));
 	} else {
 		$DefaultDate = $_POST['PaymentDate'];
 	}

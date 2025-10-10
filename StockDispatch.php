@@ -160,7 +160,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . __('From') . ' ' . $FromLocation . '<br />
 					' . __('To') . ' ' . $ToLocation . '<br />
 					' . __('Transfer No') . ' ' . $Trf_ID . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Category') . ': ' . $_POST['StockCat'] . ' - ' . $CategoryDescription . '<br />
 					' . __('Dispatch Percent') . ': ' . $_POST['Percent'] . '%<br />
 					' . __('Strategy') . ': ' . $Strategy . '<br />

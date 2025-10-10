@@ -19,10 +19,10 @@ if (isset($_GET['SelectedSampleID'])){
 }
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime(date($_SESSION['DefaultDateFormat']) . ' - 15 days'));
+	$_POST['FromDate']=date(($_SESSION['DefaultDateFormat']), strtotime(date($_SESSION['DefaultDateFormat']) . ' - 15 days'));
 }
 if (!isset($_POST['ToDate'])){
-	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 }
 
 $Errors = array();
@@ -50,12 +50,12 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		if (!Is_Date($_POST['FromDate'])) {
 			$InputError = 1;
 			prnMsg(__('Invalid From Date'),'error');
-			$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
+			$_POST['FromDate']=date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
 		}
 		if (!Is_Date($_POST['ToDate'])) {
 			$InputError = 1;
 			prnMsg(__('Invalid To Date'),'error');
-			$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (isset($_POST['SearchParts'])) {
 			if ($_POST['Keywords'] AND $_POST['StockCode']) {

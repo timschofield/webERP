@@ -150,11 +150,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			<label for="PeriodFrom">' . __('Select Period From') . ':</label>
 			<select name="PeriodFrom">';
 
-	if (Date('m') > $_SESSION['YearEnd']) {
+	if (date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
 	} else {
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
 	}
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
 	$Periods = DB_query($SQL);

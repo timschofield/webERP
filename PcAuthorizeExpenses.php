@@ -304,7 +304,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				<td>', $MyRow['notes'], '</td>
 				<td>', $ReceiptText, '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
-			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
+			echo '<td>' . ConvertSQLDate(date('Y-m-d'));
 		} else {
 			//compare against raw SQL format date, then convert for display.
 			if (($MyRow['authorized'] != '1000-01-01') and ($MyRow['authorized'] != '0000-00-00')) {

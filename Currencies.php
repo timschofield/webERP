@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
-	if ($MyRow[0]!=0 AND !isset($SelectedCurrency)) {
+	if ($MyRow[0]!= 0 AND !isset($SelectedCurrency)) {
 		$InputError = 1;
 		prnMsg( __('The currency already exists in the database'),'error');
 		$Errors[$i] = 'Abbreviation';
@@ -95,11 +95,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'HundredsName';
 		$i++;
 	}
-	if (($FunctionalCurrency != '') AND (isset($SelectedCurrency) AND $SelectedCurrency==$FunctionalCurrency)) {
+	if (($FunctionalCurrency !=  '') AND (isset($SelectedCurrency) AND $SelectedCurrency==$FunctionalCurrency)) {
 		$_POST['ExchangeRate'] = 1;
 	}
 
-	if (isset($SelectedCurrency) AND $InputError !=1) {
+	if (isset($SelectedCurrency) AND $InputError != 1) {
 		/*Get the previous exchange rate. We will need it later to adjust bank account balances */
 		$SQLOldRate = "SELECT rate
 				FROM currencies
@@ -118,7 +118,7 @@ if (isset($_POST['submit'])) {
 		$Msg = __('The currency definition record has been updated');
 		$NewRate = $_POST['ExchangeRate'];
 
-	} else if ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 	/*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
 		$SQL = "INSERT INTO currencies (
@@ -144,7 +144,7 @@ if (isset($_POST['submit'])) {
 	DB_Txn_Begin();
 
 	$Result = DB_query($SQL);
-	if ($InputError!=1) {
+	if ($InputError!= 1) {
 		prnMsg( $Msg,'success');
 	}
 
@@ -156,9 +156,9 @@ if (isset($_POST['submit'])) {
 	After we update to the new rate, we still have 5.000 USD on the bank account
 	but the balance value of the bank account is 50.000.000 IDR, so let's adjust the value */
 
-	if (isset($SelectedCurrency) AND $InputError !=1) {
+	if (isset($SelectedCurrency) AND $InputError != 1) {
 		/*Get the current period */
-		$PostingDate = Date($_SESSION['DefaultDateFormat']);
+		$PostingDate = date($_SESSION['DefaultDateFormat']);
 		$PeriodNo = GetPeriod($PostingDate);
 
 		/* get all the bank accounts denominated on the selected currency */
@@ -186,7 +186,7 @@ if (isset($_POST['submit'])) {
 
 			/* If some adjustment has to be done, do it! */
 			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
-			if($OldRate != $NewRate) {
+			if($OldRate !=  $NewRate) {
 
 				$SQL = "INSERT INTO gltrans (
 								type,
@@ -320,7 +320,7 @@ or deletion of the records*/
 		</tr>';
 
 	/*Get published currency rates from Eurpoean Central Bank */
-	if ($_SESSION['UpdateCurrencyRatesDaily'] != '0') {
+	if ($_SESSION['UpdateCurrencyRatesDaily'] !=  '0') {
 		$CurrencyRatesArray = GetECBCurrencyRates();
 	} else {
 		$CurrencyRatesArray = array();
@@ -357,7 +357,7 @@ or deletion of the records*/
 			$Rate = 1;
 		}
 
-		if ($MyRow['currabrev']!=$FunctionalCurrency) {
+		if ($MyRow['currabrev']!= $FunctionalCurrency) {
 			echo '	<td><img alt="" src="', $RootPath , '/images/flags/', $ImageFile, '" /></td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
 					<td>', $MyRow['currabrev'], '</td>
@@ -402,7 +402,7 @@ if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
+	if (isset($SelectedCurrency) AND $SelectedCurrency!= '') {
 		//editing an existing currency
 
 		$SQL = "SELECT
@@ -455,7 +455,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['Country'])) {
 		$_POST['Country'] = '';
 	}
-	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
+	if ($_POST['Abbreviation'] !=  $FunctionalCurrency) {
 		echo '<input type="text" name="Country" size="30" required="required" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" />';
 	} else {
 		echo '<fieldtext>' . $_POST['Country'] . '</fieldtext>';
@@ -484,7 +484,7 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate'] = 1;
 	}
-	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
+	if ($_POST['Abbreviation'] !=  $FunctionalCurrency) {
 		echo '<input class="number" maxlength="16" minlength="1" name="ExchangeRate" required="required" size="16" type="text" value="', $_POST['ExchangeRate'], '" />';
 	} else {
 		echo '<fieldtext>', $_POST['ExchangeRate'], '</fieldtext>',

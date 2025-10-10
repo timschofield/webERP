@@ -142,7 +142,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 		</table>
 		</div>
 		</form>';
-} else if (isset($_POST['submit']) and isset($_POST['supplierid'])) {
+} elseif (isset($_POST['submit']) and isset($_POST['supplierid'])) {
 	$Accepts = array();
 	$RejectsArray = array();
 	$Defers = array();

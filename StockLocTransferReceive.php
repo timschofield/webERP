@@ -396,12 +396,12 @@ if(isset($_POST['ProcessTransfer'])) {
 					RecordItemCancelledInTransfer($_SESSION['Transfer']->TrfID, $TrfLine->StockID, $TrfLine->Quantity);
 					$SQL = "UPDATE loctransfers SET recqty = recqty + '" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
 						shipqty = recqty + '" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
-								recdate = '" . Date('Y-m-d H:i:s') . "'
+								recdate = '" . date('Y-m-d H:i:s') . "'
 						WHERE reference = '" . $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '" . $TrfLine->StockID . "'";
 				} else {
 					$SQL = "UPDATE loctransfers SET recqty = recqty + '" . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) . "',
-								recdate = '" . Date('Y-m-d H:i:s') . "'
+								recdate = '" . date('Y-m-d H:i:s') . "'
 						WHERE reference = '" . $_SESSION['Transfer']->TrfID . "'
 						AND stockid = '" . $TrfLine->StockID . "'";
 				}
@@ -424,7 +424,7 @@ if(isset($_POST['ProcessTransfer'])) {
 										"\r\n" . __('Stock code') . ': ' . $TrfLine->StockID .
 										"\r\n" . __('Qty received') . ': ' . round($TrfLine->Quantity, $TrfLine->DecimalPlaces) .
 										"\r\n" . __('By user') . ': ' . $_SESSION['UserID'] .
-										"\r\n" . __('At') . ': ' . Date('Y-m-d H:i:s');
+										"\r\n" . __('At') . ': ' . date('Y-m-d H:i:s');
 					$EmailSubject = __('Cancelled balance of transfer') . ' ' . $_SESSION['Transfer']->TrfID;
 					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['InventoryManagerEmail'],
@@ -494,7 +494,7 @@ if(isset($_GET['Trf_ID'])) {
 											$MyRow['recloc'],
 											$MyRow['reclocationname'],
 											$MyRow['recaccountcode'],
-											Date($_SESSION['DefaultDateFormat']));
+											date($_SESSION['DefaultDateFormat']));
 	/*Populate the StockTransfer TransferItem s array with the lines to be transferred */
 	$i = 0;
 	do {
@@ -698,7 +698,7 @@ function RecordItemCancelledInTransfer($TransferReference, $StockID, $CancelQty)
 				FROM loctransfers AS l2
 				WHERE l2.reference = '" . $TransferReference . "'
 					AND l2.stockid ='" . $StockID . "') - " . $CancelQty . ",
-			'" . Date('Y-m-d H:i:s') . "',
+			'" . date('Y-m-d H:i:s') . "',
 			'" . $_SESSION['UserID'] . "')";
 	$ErrMsg = __('CRITICAL ERROR') . '! ' . __('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' .
 			  __('The transfer cancellation record could not be inserted because');

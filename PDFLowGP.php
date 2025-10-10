@@ -28,7 +28,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Items with low GP') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . __('and') . ' ' . $_POST['ToDate'] . '<br />
 				</div>';
 
@@ -161,8 +161,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])) {
 
 	/*if $FromDate is not set then show a form to allow input */
-		$_POST['FromDate']=Date('Y-m-d');
-		$_POST['ToDate']=Date('Y-m-d');
+		$_POST['FromDate']=date('Y-m-d');
+		$_POST['ToDate']=date('Y-m-d');
 		$_POST['GPMin']=0;
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

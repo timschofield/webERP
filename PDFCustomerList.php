@@ -296,7 +296,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . $Heading . '<br />
-				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 			</div>
 			<table>
 				<thead>
@@ -491,7 +491,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" />
 		</field>';
 
-	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
+	$DefaultActivitySince = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m')-6,0,date('y')));
 	echo '<field>
 			<label for="ActivitySince">' . __('Activity Since'). ':</label>
 			<input type="date" name="ActivitySince" size="11" maxlength="10" value="' . FormatDateForSQL($DefaultActivitySince) . '" />

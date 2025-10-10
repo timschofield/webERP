@@ -135,7 +135,7 @@ if (!isset($_POST['StockID'])) {
     echo '</form>';
 }
 
-if (isset($StockID) and $StockID!=""){
+if (isset($StockID) and $StockID!= ""){
 
 	$Result = DB_query("SELECT description,
 								units,

@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (isset($SelectedArea) AND $InputError != 1) {
+	if (isset($SelectedArea) AND $InputError !=  1) {
 
 		/*SelectedArea could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 
 		$Msg = __('Area code') . ' ' . $SelectedArea  . ' ' . __('has been updated');
 
-	} elseif ($InputError != 1) {
+	} elseif ($InputError !=  1) {
 
 	/*Selectedarea is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new area form */
 
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	//run the SQL from either of the above possibilites
-	if ($InputError != 1) {
+	if ($InputError !=  1) {
 		$ErrMsg = __('The area could not be added or updated because');
 		$Result = DB_query($SQL, $ErrMsg);
 		unset($SelectedArea);

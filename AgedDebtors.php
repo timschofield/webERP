@@ -13,10 +13,10 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and mb_strlen($_POST['ToCriteria'])>=1) {
 
 	/*Now figure out the aged analysis for the customer range under review */
-	if($_SESSION['SalesmanLogin'] != '') {
+	if($_SESSION['SalesmanLogin'] !=  '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
 	}
-	if(trim($_POST['Salesman'])!='') {
+	if(trim($_POST['Salesman'])!= '') {
 		$SalesLimit = " AND debtorsmaster.debtorno IN (SELECT DISTINCT debtorno FROM custbranch WHERE salesman = '".$_POST['Salesman']."') ";
 	} else {
 		$SalesLimit = "";
@@ -263,7 +263,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  __('to') . ' ' . $_POST['ToCriteria'] . '<br />
 					' . __('And Trading in') . ' ' . $_POST['Currency'] . '<br />';
-	if (trim($_POST['Salesman'])!=''){
+	if (trim($_POST['Salesman'])!= ''){
 		$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
 		$rs = DB_query($SQL, '', '', false, false);
 		$Row = DB_fetch_array($rs);
@@ -360,7 +360,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 						AND debtortrans.debtorno = '" . $AgedAnalysis['debtorno'] . "'
 						AND ABS(debtortrans.balance)>0.004";
 
-			if($_SESSION['SalesmanLogin'] != '') {
+			if($_SESSION['SalesmanLogin'] !=  '') {
 				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
@@ -503,7 +503,7 @@ if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 			</field>
 			<field>
 				<label for="Salesman">' . __('Only Show Customers Of') . ':' . '</label>';
-		if($_SESSION['SalesmanLogin'] != '') {
+		if($_SESSION['SalesmanLogin'] !=  '') {
 			echo '<fieldtext>', $_SESSION['UsersRealName'], '</fieldtext>';
 		}else{
 			echo '<select tabindex="4" name="Salesman">';

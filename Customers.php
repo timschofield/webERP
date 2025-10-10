@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if ($InputError !=1){
+	if ($InputError != 1){
 
 		$SQL_ClientSince = FormatDateForSQL($_POST['ClientSince']);
 
@@ -193,7 +193,7 @@ if (isset($_POST['submit'])) {
 												language_id='" . $_POST['LanguageID'] . "'
 						WHERE debtorno = '" . $_POST['DebtorNo'] . "'";
 
-				if ($OldCurrency != $_POST['CurrCode']) {
+				if ($OldCurrency !=  $_POST['CurrCode']) {
 					prnMsg( __('The currency code cannot be updated as there are already transactions for this customer'),'info');
 				}
 			}
@@ -403,7 +403,7 @@ if (isset($_POST['Add'])){
 	$Add = $_GET['Add'];
 }
 
-if(isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!='')){
+if(isset($_POST['AddContact']) AND (isset($_POST['AddContact'])!= '')){
 	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/AddCustomerContacts.php?DebtorNo=' .$DebtorNo.'">';
 }
 
@@ -540,7 +540,7 @@ if (!isset($DebtorNo)) {
 			</field>';
 	}
 
-	$DateString = Date('Y-m-d');
+	$DateString = date('Y-m-d');
 	echo '<field>
 			<label for="ClientSince">' . __('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
 			<input tabindex="10" type="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />

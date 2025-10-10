@@ -241,7 +241,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 	/*Start an SQL transaction */
 		DB_Txn_Begin();

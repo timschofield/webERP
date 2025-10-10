@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Days Between Requested Delivery Date and Invoice Date') . '<br />
 					' . $Heading . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -309,11 +309,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Report Criteria') , '</legend>
 			<field>
 				<label for="FromDate">' . __('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
-				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - 1, 0, Date('y'))) . '" />
+				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(0, 0, 0, date('m') - 1, 0, date('y'))) . '" />
 			</field>
 			<field>
 				<label for="ToDate">' . __('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
-				<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
+				<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>';
 
 	if (!isset($_POST['DaysAcceptable'])) {

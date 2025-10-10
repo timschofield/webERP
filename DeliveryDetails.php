@@ -116,7 +116,7 @@ if(isset($_POST['Update'])
 
 	 /* This check is not appropriate where orders need to be entered in retrospectively in some cases this check will be appropriate and this should be uncommented
 
-	 elseif(Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])) {
+	 elseif(Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])) {
 		$InputErrors =1;
 		echo '<br /><b>' . __('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') . $_SESSION['DispatchCutOffTime'] . __(':00 hrs. Orders placed after this time will be dispatched the following working day.');
 	}
@@ -652,7 +652,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 											 VALUES ('" . $WONo . "',
 													'" . $_SESSION['Items'.$identifier]->Location ."',
 													'" . $ContractRow['requireddate'] . "',
-													'" . Date('Y-m-d'). "')",
+													'" . date('Y-m-d'). "')",
 										$ErrMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
 			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) AS cost
@@ -961,13 +961,13 @@ echo '</select>
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
-	$_SESSION['Items'.$identifier]->DeliveryDate = Date('Y-m-d',$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->DeliveryDate = date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->QuoteDate)) {
-	$_SESSION['Items'.$identifier]->QuoteDate = Date('Y-m-d',$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->QuoteDate = date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
-	$_SESSION['Items'.$identifier]->ConfirmedDate = Date('Y-m-d',$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->ConfirmedDate = date('Y-m-d',$EarliestDispatch);
 }
 
 // The estimated Dispatch date or Delivery date for this order

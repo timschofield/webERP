@@ -13,7 +13,7 @@ if (isset($_POST['NoteDate'])) {$_POST['NoteDate'] = ConvertSQLDate($_POST['Note
 
 if (isset($_GET['Id'])){
 	$Id = (int)$_GET['Id'];
-} else if (isset($_POST['Id'])){
+} elseif (isset($_POST['Id'])){
 	$Id = (int)$_POST['Id'];
 }
 if (isset($_POST['DebtorType'])){
@@ -42,7 +42,7 @@ if (isset($_POST['submit']) ) {
 		prnMsg( __('The contacts notes may not be empty'), 'error');
 	}
 
-	if (isset($Id) and $InputError !=1) {
+	if (isset($Id) and $InputError != 1) {
 
 		$SQL = "UPDATE debtortypenotes SET note='" . $_POST['Note'] . "',
 											date='" . FormatDateForSQL($_POST['NoteDate']) . "',
@@ -51,7 +51,7 @@ if (isset($_POST['submit']) ) {
 										WHERE typeid ='".$DebtorType."'
 										AND noteid='".$Id."'";
 		$Msg = __('Customer Group Notes') . ' ' . $DebtorType  . ' ' . __('has been updated');
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 		$SQL = "INSERT INTO debtortypenotes (typeid,
 											href,
@@ -66,7 +66,7 @@ if (isset($_POST['submit']) ) {
 		$Msg = __('The contact group notes record has been added');
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 		$Result = DB_query($SQL);
 
 		echo '<br />';
@@ -184,7 +184,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['NoteID'] = '';
 		$_POST['Note']  = '';
 		$_POST['Href']  = '';
-		$_POST['NoteDate']  = Date($_SESSION['DefaultDateFormat']);
+		$_POST['NoteDate']  = date($_SESSION['DefaultDateFormat']);
 		$_POST['Priority']  = '1';
 		$_POST['typeid']  = '';
 	}

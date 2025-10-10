@@ -152,7 +152,7 @@ if (isset($_POST['SaveTemplate'])) {
 												'" . $JournalType . "'
 											)";
 			$Result = DB_query($SQL);
-			if (DB_error_no() != 0) {
+			if (DB_error_no() !=  0) {
 				prnMsg(__('The journal template header info could not be saved') , 'error');
 				include('includes/footer.php');
 				exit();
@@ -175,7 +175,7 @@ if (isset($_POST['SaveTemplate'])) {
 												)";
 				$Result = DB_query($SQL);
 				++$LineNumber;
-				if (DB_error_no() != 0) {
+				if (DB_error_no() !=  0) {
 					prnMsg(__('The journal template line info could not be saved') , 'error');
 					include('includes/footer.php');
 					exit();
@@ -340,7 +340,7 @@ elseif (isset($_GET['Delete'])) {
 
 }
 elseif (isset($_POST['Process']) and $_POST['Process'] == __('Accept')) { //user hit submit a new GL Analysis line into the journal
-	if ($_POST['GLCode'] != '') {
+	if ($_POST['GLCode'] !=  '') {
 		$Extract = explode(' - ', $_POST['GLCode']);
 		$_POST['GLCode'] = $Extract[0];
 	}
@@ -350,7 +350,7 @@ elseif (isset($_POST['Process']) and $_POST['Process'] == __('Accept')) { //user
 	elseif ($_POST['Credit'] > 0) {
 		$_POST['GLAmount'] = - filter_number_format($_POST['Credit']);
 	}
-	if ($_POST['GLManualCode'] != '') {
+	if ($_POST['GLManualCode'] !=  '') {
 		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
@@ -447,7 +447,7 @@ echo '<p class="page_title_text">
 // A new table in the first column of the main table
 if (!isset($_SESSION['JournalDetail']->JnlDate) or !Is_Date($_SESSION['JournalDetail']->JnlDate)) {
 	// Default the date to the last day of the previous month
-	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') , 0, date('Y')));
+	$_SESSION['JournalDetail']->JnlDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') , 0, date('Y')));
 }
 
 echo '<fieldset>
@@ -601,7 +601,7 @@ echo '<tr class="striped_row"><td></td>
 		<td class="number"><b>' . locale_number_format($DebitTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 		<td class="number"><b>' . locale_number_format($CreditTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</b></td>
 	</tr>';
-if ($DebitTotal != $CreditTotal) {
+if ($DebitTotal !=  $CreditTotal) {
 	echo '<tr><td class="centre" style="background-color: #fddbdb"><b>' . __('Required to balance') . ' - </b>' . locale_number_format(abs($DebitTotal - $CreditTotal) , $_SESSION['CompanyRecord']['decimalplaces']);
 }
 if ($DebitTotal > $CreditTotal) {

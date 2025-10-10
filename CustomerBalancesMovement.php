@@ -58,12 +58,12 @@ if (!isset($_POST['RunReport'])){
 
 	echo '<field>
 			<label for="FromDate">' . __('Date From') . ':</label>
-			<input type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" />
+			<input type="date" name="FromDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(0, 0, 0, date('m') - $_SESSION['NumberOfMonthMustBeShown'], date('d'), date('Y'))) . '" />
 		</field>';
 
 	echo '<field>
 			<label for="ToDate">' . __('Date To') . ':</label>
-			<input type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
+			<input type="date" name="ToDate" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 		</field>';
 
 	echo '<field>
@@ -80,11 +80,11 @@ if (!isset($_POST['RunReport'])){
 	exit();
 }
 
-if ($_POST['Customer']!='') {
+if ($_POST['Customer']!= '') {
 	$WhereClause = "debtorsmaster.debtorno='" . $_POST['Customer'] . "'";
-} elseif ($_POST['SalesArea']!='') {
+} elseif ($_POST['SalesArea']!= '') {
 	$WhereClause = "custbranch.area='" . $_POST['SalesArea'] . "'";
-} elseif ($_POST['SalesPerson']!='') {
+} elseif ($_POST['SalesPerson']!= '') {
 	$WhereClause = "custbranch.salesman='" . $_POST['SalesPerson'] . "'";
 }
 
@@ -166,7 +166,7 @@ while ($MyRow=DB_fetch_array($Result)){
 
 	$OpeningBal = $MyRow['localbalance']-$TransPostRow['localtotalpost']-$TransRow['localdebits']-$TransRow['localcredits'];
 	$ClosingBal = $MyRow['localbalance']-$TransPostRow['localtotalpost'];
-	if($OpeningBal !=0 OR $ClosingBal!=0 OR $TransRow['localdebits']!=0 OR $TransRow['localcredits']!=0) {
+	if($OpeningBal != 0 OR $ClosingBal!= 0 OR $TransRow['localdebits']!= 0 OR $TransRow['localcredits']!= 0) {
 
 		if (!isset($_POST['CreateCSV'])){
 			echo '<tr>

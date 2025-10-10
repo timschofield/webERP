@@ -63,7 +63,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Customer Balances For Customers between') . ' ' . $_POST['FromCriteria'] .  ' ' . __('and') . ' ' . $_POST['ToCriteria'] . ' ' . __('as at') . ' ' . $PeriodEndDate . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>

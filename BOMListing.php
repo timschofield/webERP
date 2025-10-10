@@ -53,7 +53,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Bill Of Material Listing for Parts Between') . ' ' . $_POST['FromCriteria'] . ' ' . __('and') . ' ' . $_POST['ToCriteria'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -73,7 +73,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	while ($BOMList = DB_fetch_array($BOMResult)){
 
-		if ($ParentPart!=$BOMList['parent']){
+		if ($ParentPart!= $BOMList['parent']){
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
 			$ParentResult = DB_query($SQL);
 			$ParentRow = DB_fetch_row($ParentResult);

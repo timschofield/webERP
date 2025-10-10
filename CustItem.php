@@ -134,10 +134,10 @@ if ($Edit == false) {
 			WHERE custitem.stockid = '" . $StockId . "'";
 	$ErrMsg = __('The customer details for the selected part could not be retrieved because');
 	$CustItemResult = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($CustItemResult) == 0 and $StockId != '') {
+	if (DB_num_rows($CustItemResult) == 0 and $StockId !=  '') {
 		prnMsg(__('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData = 1;
-	} else if ($StockId != '') {
+	} elseif ($StockId !=  '') {
 
 		echo '<table cellpadding="2">
 				<thead>
@@ -172,7 +172,7 @@ if ($Edit == false) {
 }
 /* Only show the existing records if one is not being edited */
 
-if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
+if (isset($DebtorNo) and $DebtorNo !=  '' and !isset($_POST['Searchcustomer'])) {
 	/*NOT EDITING AN EXISTING BUT customer selected or ENTERED*/
 
 	$SQL = "SELECT debtorsmaster.name,
@@ -378,7 +378,7 @@ if (!isset($DebtorsMasterResult)) {
 					<label for="DebtorNo">', __('Customer Name'), ':</label>
 					<input type="hidden" name="DebtorNo" maxlength="10" size="11" value="', $DebtorNo, '" />';
 
-		if ($DebtorNo != '') {
+		if ($DebtorNo !=  '') {
 			echo '<div class="fieldtext">', $Name;
 		}
 		if (!isset($Name) or $Name = '') {
@@ -453,7 +453,7 @@ if (!isset($DebtorsMasterResult)) {
 			</div>';
 	}
 
-	if (isset($StockLocation) and isset($StockId) and mb_strlen($StockId) != 0) {
+	if (isset($StockLocation) and isset($StockId) and mb_strlen($StockId) !=  0) {
 		echo '<div class="centre">
 				<a href="', $RootPath, '/StockStatus.php?StockID=', $StockId, '">', __('Show Stock Status'), '</a><br />
 				<a href="', $RootPath, '/StockMovements.php?StockID=', $StockId, '&StockLocation=', $StockLocation, '">', __('Show Stock Movements'), '</a><br />

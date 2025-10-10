@@ -65,7 +65,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Prices By Inventory Category') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Price List') . ' - ' . $_POST['SalesType'] . ' - ' . $SalesTypeName . '<br />
 					' . __('Effective as at') . ' - ' . $_POST['EffectiveDate'] . '<br />
 				</div>
@@ -417,7 +417,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for="EffectiveDate">', __('Effective As At'), ':</label>
-			<input required="required" maxlength="10" size="11" type="date" name="EffectiveDate" value="', Date('Y-m-d'), '" />
+			<input required="required" maxlength="10" size="11" type="date" name="EffectiveDate" value="', date('Y-m-d'), '" />
 		</field>';
 
 	// Option to show obsolete items:

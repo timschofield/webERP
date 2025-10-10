@@ -22,7 +22,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
-$DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') , 0, Date('Y')));
+$DefaultPeriodDate = date('Y-m-d', mktime(0, 0, 0, date('m') , 0, date('Y')));
 
 /*Show a form to allow input of criteria for the report */
 echo '<fieldset>
@@ -117,7 +117,7 @@ if (isset($_POST['MakeCSV'])) {
 		$Result = mkdir('./' . $_SESSION['reports_dir']);
 	}
 
-	$FileName = $_SESSION['reports_dir'] . '/Accounts_Listing_' . Date('Y-m-d') . '.csv';
+	$FileName = $_SESSION['reports_dir'] . '/Accounts_Listing_' . date('Y-m-d') . '.csv';
 
 	$fp = fopen($FileName, 'w');
 

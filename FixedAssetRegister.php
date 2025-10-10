@@ -78,7 +78,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('From') . ':' . $_POST['FromDate'] . ' ' . __('to') . ' ' . $_POST['ToDate'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -228,7 +228,7 @@ if (isset($_POST['submit']) or isset($_POST['PrintPDF']) or isset($_POST['Spread
 	elseif (isset($_POST['Spreadsheet'])) {
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-		$File = 'FixedAssetRegister-' . Date('Y-m-d') . '.' . 'ods';
+		$File = 'FixedAssetRegister-' . date('Y-m-d') . '.' . 'ods';
 
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');

@@ -21,7 +21,7 @@ $BookMark = 'AddToContract';
 include('includes/header.php');
 
 if (isset($_POST['UpdateLines']) OR isset($_POST['BackToHeader'])) {
-	if($_SESSION['Contract'.$identifier]->Status!=2){ //dont do anything if the customer has committed to the contract
+	if ($_SESSION['Contract'.$identifier]->Status!= 2) { //dont do anything if the customer has committed to the contract
 		foreach ($_SESSION['Contract'.$identifier]->ContractReqts as $ContractComponentID => $ContractRequirementItem) {
 
 			if (filter_number_format($_POST['Qty'.$ContractComponentID])==0){
@@ -47,7 +47,7 @@ if (isset($_POST['BackToHeader'])){
 
 
 if(isset($_GET['Delete'])){
-	if($_SESSION['Contract'.$identifier]->Status!=2){
+	if ($_SESSION['Contract'.$identifier]->Status!= 2) {
 		$_SESSION['Contract'.$identifier]->Remove_ContractRequirement($_GET['Delete']);
 	} else {
 		prnMsg( __('The other contract requirements cannot be altered because the customer has already placed the order'),'warn');

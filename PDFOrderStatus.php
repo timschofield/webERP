@@ -217,7 +217,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . __('Order Status Listing') . '<br />
-				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				' . __('Category') . ' - ' . $_POST['CategoryID'] . ' - ' . $CategoryDescription . '<br />
 				' . __('Location') . ' - ' . $_POST['Location'] . '<br />
 			</div>';
@@ -331,11 +331,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
 				<label for="FromDate">' . __('Enter the date from which orders are to be listed') . ':</label>
-				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m'), Date('d') - 1, Date('y'))) . '" />
+				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 1, date('y'))) . '" />
 			</field>
 			<field>
 				<label for="ToDate">' . __('Enter the date to which orders are to be listed') . ':</label>
-				<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
+				<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>
 			<field>
 				<label for="CategoryID">' . __('Inventory Category') . '</label>';

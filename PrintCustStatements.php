@@ -175,7 +175,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['FromCust']) and $_POST['FromCust
 							INNER JOIN custallocns
 								ON (debtortrans.id=custallocns.transid_allocfrom
 									OR debtortrans.id=custallocns.transid_allocto)
-							WHERE custallocns.datealloc >='" . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y'))) . "'
+							WHERE custallocns.datealloc >='" . date('Y-m-d', mktime(0, 0, 0, date('m') - 1, date('d'), date('y'))) . "'
 							AND debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
 							AND debtortrans.settled=1";
 				if ($_SESSION['SalesmanLogin'] != '') {

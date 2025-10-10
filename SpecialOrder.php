@@ -730,7 +730,7 @@ echo '<field>
 	</field>';
 
 /*Default the required delivery date to tomorrow as a starting point */
-$_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')));
+$_POST['ReqDelDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),date('d')+1,date('y')));
 
 echo '<field>
 		<label for="ReqDelDate">' . __('Required Delivery Date') . ':</label>

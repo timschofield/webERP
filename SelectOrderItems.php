@@ -872,7 +872,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (isset($_POST[$QuickEntryItemDue])) {
 				$NewItemDue = $_POST[$QuickEntryItemDue];
 			} else {
-				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+				$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
 			if (isset($_POST[$QuickEntryPOLine])) {
 				$NewPOLine = $_POST[$QuickEntryPOLine];
@@ -888,7 +888,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if(!Is_Date($NewItemDue)) {
 				prnMsg(__('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . __('The date entry') . ' ' . $NewItemDue . ' ' . __('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 				//Attempt to default the due date to something sensible?
-				$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+				$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
 			/*Now figure out if the item is a kit set - the field MBFlag='K'*/
 			$SQL = "SELECT stockmaster.mbflag
@@ -1041,7 +1041,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
 			}
 			else{
-				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			}
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
@@ -1096,7 +1096,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				if(!Is_Date($_POST['ItemDue_' . $OrderLine->LineNumber])) {
 					prnMsg(__('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . __('The date entry') . ' ' . $ItemDue . ' ' . __('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 					//Attempt to default the due date to something sensible?
-					$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+					$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 				}
 				if ($Quantity<0 OR $Price <0 OR $DiscountPercentage >100 OR $DiscountPercentage <0){
 					prnMsg(__('The item could not be updated because you are attempting to set the quantity ordered to less than 0 or the price less than 0 or the discount more than 100% or less than 0%'),'warn');
@@ -1424,7 +1424,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td class="number">' . $DisplayLineTotal . '</td>';
 			$LineDueDate = $OrderLine->ItemDue;
 			if (!Is_Date($OrderLine->ItemDue)){
-				$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+				$LineDueDate = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
@@ -1489,7 +1489,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		if ($_SESSION['FrequentlyOrderedItems']>0){ //show the Frequently Order Items selection where configured to do so
 
 // Select the most recently ordered items for quick select
-			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
+			$SixMonthsAgo = DateAdd (date($_SESSION['DefaultDateFormat']),'m',-6);
 
 			$SQL="SELECT stockmaster.units,
 						stockmaster.description,
@@ -1739,7 +1739,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				  <th>' . __('Quantity') . '</th>
 				  <th>' . __('Due Date') . '</th>
 				  </tr>';
-			$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
+			$DefaultDeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
 			for ($i=1;$i<=$_SESSION['QuickEntries'];$i++){
 
 		 		echo '<tr class="striped_row">';

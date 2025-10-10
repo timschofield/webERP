@@ -595,7 +595,7 @@ echo '<tr>
 </tr>';
 
 if (!isset($_POST['DispatchDate']) or !Is_Date($_POST['DispatchDate'])) {
-	$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat'], CalcEarliestDispatchDate());
+	$DefaultDispatchDate = date($_SESSION['DefaultDateFormat'], CalcEarliestDispatchDate());
 } else {
 	$DefaultDispatchDate = $_POST['DispatchDate'];
 }

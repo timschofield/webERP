@@ -46,7 +46,7 @@ $HTML .= '<meta name="author" content="WebERP " . $Version">
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Inventory Items With Negative Stock') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 	<table>
 		<thead>

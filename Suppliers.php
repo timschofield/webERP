@@ -770,7 +770,7 @@ if (!isset($SupplierID)) {
 	echo '</select>
 		</field>';
 
-	$DateString = Date('Y-m-d');
+	$DateString = date('Y-m-d');
 	echo '<field>
 			<label for="SupplierSince">' . __('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
 			<input type="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" />

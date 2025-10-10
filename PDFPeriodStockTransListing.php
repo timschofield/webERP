@@ -128,7 +128,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . $ReportTitle . '<br />
 					' . $ReportSubTitle . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>';
 
 	$HTML .= '<table>
@@ -210,11 +210,11 @@ else {
 			<legend>', __('Report Criteria'), '</legend>
 		<field>
 			<label for="FromDate">' . __('Enter the date from which the transactions are to be listed') . ':</label>
-			<input required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
+			<input required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 		</field>
 		<field>
 			<label for="ToDate">' . __('Enter the date to which the transactions are to be listed') . ':</label>
-			<input required="required" name="ToDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
+			<input required="required" name="ToDate" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 		</field>
 		<field>
 			<label for="TransType">' . __('Transaction type') . '</label>

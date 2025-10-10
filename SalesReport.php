@@ -57,7 +57,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Sales Report') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 					' . __('Date Range') . ' - ' . $_POST['PeriodFrom'] . ' to ' . $_POST['PeriodTo'] . '<br />
 				</div>
 				<table>

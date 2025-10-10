@@ -710,7 +710,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		echo ConvertSQLDate($_SESSION['PO' . $identifier]->Orig_OrderDate);
 	} else {
 		/* DefaultDateFormat defined in config.php */
-		echo Date($_SESSION['DefaultDateFormat']);
+		echo date($_SESSION['DefaultDateFormat']);
 	}
 	echo '</fieldtext>
 		</field>';

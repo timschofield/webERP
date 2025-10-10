@@ -37,13 +37,13 @@ if (isset($_GET['WO'])) {
 if (isset($_POST['RequiredBy'])) {
 	$_SESSION['WorkOrder' . $Identifier]->RequiredBy = $_POST['RequiredBy'];
 } else {
-	$_SESSION['WorkOrder' . $Identifier]->RequiredBy = Date($_SESSION['DefaultDateFormat']);
+	$_SESSION['WorkOrder' . $Identifier]->RequiredBy = date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_POST['StartDate'])) {
 	$_SESSION['WorkOrder' . $Identifier]->StartDate = $_POST['StartDate'];
 } else {
-	$_SESSION['WorkOrder' . $Identifier]->StartDate = Date($_SESSION['DefaultDateFormat']);
+	$_SESSION['WorkOrder' . $Identifier]->StartDate = date($_SESSION['DefaultDateFormat']);
 }
 
 if (isset($_POST['StockLocation'])) {

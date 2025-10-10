@@ -198,7 +198,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Extended Quantity BOM Listing For') . ' ' . mb_strtoupper($_POST['Part']) . '<br />
 					' . __('Build Quantity:') . ' ' . locale_number_format($_POST['Quantity'],'Variable') . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>

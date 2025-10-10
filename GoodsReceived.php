@@ -85,14 +85,14 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 if (!isset($_POST['ProcessGoodsReceived'])) {
 	if (!isset($_POST['DefaultReceivedDate']) AND !isset($_SESSION['PO' . $identifier]->DefaultReceivedDate)) {
 		/* This is meant to be the date the goods are received - it does not make sense to set this to the date that we requested delivery in the purchase order - I have not applied your change here Tim for this reason - let me know if I have it wrong - Phil */
-		$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['DefaultReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 		$_SESSION['PO' . $identifier]->DefaultReceivedDate = $_POST['DefaultReceivedDate'];
 	} else {
 		if (isset($_POST['DefaultReceivedDate']) AND is_date($_POST['DefaultReceivedDate'])) {
 			$_SESSION['PO' . $identifier]->DefaultReceivedDate = $_POST['DefaultReceivedDate'];
 		} elseif(isset($_POST['DefaultReceivedDate']) AND !is_date($_POST['DefaultReceivedDate'])) {
 			prnMsg(__('The default received date is not a date format'),'error');
-			$_POST['DefaultReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['DefaultReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 		}
 	}
 	if (!isset($_POST['SupplierReference'])) {

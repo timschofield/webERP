@@ -611,7 +611,7 @@ if (!isset($_POST['PostInvoice'])) {
 		</field>';
 
 	if (!isset($_SESSION['SuppTrans']->TranDate)) {
-		$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') , Date('d') - 1, Date('y')));
+		$_SESSION['SuppTrans']->TranDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') , date('d') - 1, date('y')));
 	}
 	echo '<field>
 			<label for="TranDate">' . __('Invoice Date') . ') :</label>
@@ -1027,7 +1027,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 		prnMsg(__('The invoice as entered cannot be processed because the invoice date entered is not in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
 
 	}
-	elseif (DateDiff(Date($_SESSION['DefaultDateFormat']) , $_SESSION['SuppTrans']->TranDate, 'd') < 0) {
+	elseif (DateDiff(date($_SESSION['DefaultDateFormat']) , $_SESSION['SuppTrans']->TranDate, 'd') < 0) {
 
 		$InputError = true;
 		prnMsg(__('The invoice as entered cannot be processed because the invoice date is after today') . '. ' . __('Purchase invoices are expected to have a date prior to or today') , 'error');

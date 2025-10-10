@@ -25,7 +25,7 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 					</style>
 				</head>
 				<body>';
-	$HTML .= '<h2>' . __('Inventory Check Comparison') . ' ' . Date($_SESSION['DefaultDateFormat']) . '</h2>';
+	$HTML .= '<h2>' . __('Inventory Check Comparison') . ' ' . date($_SESSION['DefaultDateFormat']) . '</h2>';
 
 	// Inventory Comparison file stuff and adjustments
 	if ($_POST['ReportOrClose'] == 'ReportAndClose') {
@@ -42,8 +42,8 @@ if (isset($_POST['PrintPDF']) and isset($_POST['ReportOrClose'])) {
 		$ErrMsg = __('The inventory check file could not be retrieved');
 		$StockChecks = DB_query($SQL, $ErrMsg);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
+		$SQLAdjustmentDate = FormatDateForSQL(date($_SESSION['DefaultDateFormat']));
 		$AdjustmentNumber = GetNextTransNo(17);
 
 		while ($MyRow = DB_fetch_array($StockChecks)) {

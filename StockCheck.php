@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])) {
 		th, td { border: 1px solid #000; padding: 5px; font-size: 10px; }
 		.category-header { background: #eee; font-weight: bold; font-size: 10px; }
 	</style></head><body>';
-	$HTML .= '<h1>' . __('Stock Count Sheets') . ' - ' . Date($_SESSION['DefaultDateFormat']) . '</h1>';
+	$HTML .= '<h1>' . __('Stock Count Sheets') . ' - ' . date($_SESSION['DefaultDateFormat']) . '</h1>';
 	$Category = '';
 
 	$HTML .= '<table>';

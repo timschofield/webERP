@@ -517,7 +517,7 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												CURRENT_DATE,
-												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
+												'" . GetPeriod(date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $NewStockAct . "',
 												'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 												'" . ($UnitCost * $StockQtyRow[0]) . "')";
@@ -533,7 +533,7 @@ if (isset($_POST['submit'])) {
 										VALUES ( 0,
 												'" . $JournalNo . "',
 												CURRENT_DATE,
-												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
+												'" . GetPeriod(date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $OldStockAccount . "',
 												'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 												'" . (-$UnitCost * $StockQtyRow[0]) . "')";
@@ -569,7 +569,7 @@ if (isset($_POST['submit'])) {
 											VALUES ( 0,
 													'" . $JournalNo . "',
 													CURRENT_DATE,
-													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
+													'" . GetPeriod(date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $NewWIPAct . "',
 													'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 													'" . $WIPValue . "')";
@@ -585,7 +585,7 @@ if (isset($_POST['submit'])) {
 											VALUES ( 0,
 													'" . $JournalNo . "',
 													CURRENT_DATE,
-													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
+													'" . GetPeriod(date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $OldWIPAccount . "',
 													'" . mb_substr($StockID . ' ' . __('Change stock category'), 0, 200) . "',
 													'" . (-$WIPValue) . "')";

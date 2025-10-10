@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
 	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_row($Result);
 
-	if ($MyRow[0]!=0 and !isset($SelectedReason)) {
+	if ($MyRow[0]!= 0 and !isset($SelectedReason)) {
 		$InputError = 1;
 		prnMsg( __('The credit status code already exists in the database'),'error');
 		$Errors[$i] = 'ReasonCode';
@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 
 	$Msg='';
 
-	if (isset($SelectedReason) AND $InputError !=1) {
+	if (isset($SelectedReason) AND $InputError != 1) {
 
 		/*SelectedReason could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the delete code below*/
 
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 		}
 		$Msg = __('The credit status record has been updated');
 
-	} else if ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 	/*Selected Reason is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
 
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
-	if ($Msg != '') {
+	if ($Msg !=  '') {
 		prnMsg($Msg,'success');
 	}
 	unset ($SelectedReason);
@@ -186,7 +186,7 @@ if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if (isset($SelectedReason) and ($InputError!=1)) {
+	if (isset($SelectedReason) and ($InputError!= 1)) {
 		//editing an existing status code
 
 		$SQL = "SELECT reasoncode,

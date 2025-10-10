@@ -677,11 +677,11 @@ while (false !== ($OrderFile=readdir($DirHandle))) { /*there are files in the in
 //			Place/location identification
 					/*
 					4     Goods receipt place
-          			   Place at which the goods have been received.
+		  			   Place at which the goods have been received.
   		  		   5     Place of departure
  		             (3214) Port, airport or other location from which a
 		              means of transport or transport equipment is scheduled
-     		         to depart or has departed.
+	 		         to depart or has departed.
 		          7     Place of delivery
                    (3246) Place to which the goods are to be finally
                    delivered under transport contract terms (operational
@@ -895,7 +895,7 @@ echo '</pre>';
 				if ($CreateOrder = true) {
 					//	UpdateOrder($Order);
 					DB_Txn_Begin();
-				//$Order->OrdDate = Date("Y-m-d");
+				//$Order->OrdDate = date("Y-m-d");
 					$OrderNo = GetNextTransNo(30); // next order number
 					$DelDate = FormatDateforSQL($Order->DeliveryDate);
 					$OrderDate = FormatDateforSQL($Order->OrdDate);
@@ -983,7 +983,7 @@ echo '</pre>';
 							$discountpercent = $linedetail->Disc;
 							$itemdue = FormatDateForSQL($linedetail->ItemDue);
 							if ($linedetail->ItemDue == null) {
-								$itemdue = Date("Y-m-d");
+								$itemdue = date("Y-m-d");
 							}
 							//  echo "itemdue: " . $itemdue . "<br>";
 

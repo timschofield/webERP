@@ -56,7 +56,7 @@ if (!isset($_SESSION['CreditItems' . $identifier])) {
 $LineItem = &$_SESSION['CreditItems' . $identifier]->LineItems[$LineNo];
 
 //Make sure this item is really controlled
-if ( $LineItem->Controlled != 1 ){
+if ( $LineItem->Controlled !=  1 ){
 	echo '<div class="centre"><a href="' . $RootPath . '/' . $CreditLink . '">' .  __('Back to Credit Note Entry') . '</a></div>';
 	echo '<br />';
 	prnMsg( __('Notice') . ' - ' . __('The line item must be defined as controlled to require input of the batch numbers or serial numbers being credited'),'warn');

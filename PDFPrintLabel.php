@@ -339,7 +339,7 @@ if (isset($_POST['PrintLabels']) && $NoOfLabels > 0) {
 
 		echo '<field>
 				<label for="EffectiveDate">' . __('Effective As At') . ':</label>
-				<input maxlength="10" size="11" type="date" name="EffectiveDate" value="' . Date('Y-m-d') . '" />
+				<input maxlength="10" size="11" type="date" name="EffectiveDate" value="' . date('Y-m-d') . '" />
 			</field>';
 
 		echo '<field>

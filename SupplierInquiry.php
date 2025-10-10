@@ -34,7 +34,7 @@ if(isset($_GET['FromDate'])) {
 	$_POST['TransAfterDate']=$_GET['FromDate'];
 }
 if(!isset($_POST['TransAfterDate']) OR !Is_Date($_POST['TransAfterDate'])) {
-	$_POST['TransAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-12,Date('d'),Date('Y')));
+	$_POST['TransAfterDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m')-12,date('d'),date('Y')));
 }
 
 $SQL = "SELECT suppliers.suppname,

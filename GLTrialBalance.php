@@ -382,7 +382,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	} elseif (isset($_POST['Spreadsheet'])) {
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
-		$File = 'GLTrialBalance-' . Date('Y-m-d'). '.' . 'ods';
+		$File = 'GLTrialBalance-' . date('Y-m-d'). '.' . 'ods';
 
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
@@ -413,13 +413,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-	if (Date('m') > $_SESSION['YearEnd']) {
+	if (date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
 	} else {
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
 	}
 	/*GetPeriod function creates periods if need be the return value is not used */
 	$NotUsedPeriodNo = GetPeriod($FromDate);
@@ -458,7 +458,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View']) or isset($_POST['Spreadsh
 	</field>';
 
 	if (!isset($_POST['PeriodTo']) or $_POST['PeriodTo'] == '') {
-		$DefaultPeriodTo = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, Date('m') + 1, 0, Date('Y'))));
+		$DefaultPeriodTo = GetPeriod(date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m') + 1, 0, date('Y'))));
 	} else {
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}

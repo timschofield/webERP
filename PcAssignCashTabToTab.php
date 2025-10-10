@@ -410,7 +410,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 /* Ricard: needs revision of this date initialization */
 		if (!isset($_POST['Date'])) {
-			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['Date'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<fieldset>'; //Main table

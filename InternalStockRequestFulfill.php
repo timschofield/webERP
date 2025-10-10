@@ -41,8 +41,8 @@ if (isset($_POST['UpdateAll'])) {
 			$Narrative = __('Issue') . ' ' . $Quantity . ' ' . __('of') . ' ' . $StockID . ' ' . __('to department') . ' ' . $Department . ' ' . __('from') . ' ' . $Location;
 
 			$AdjustmentNumber = GetNextTransNo(17);
-			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-			$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+			$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
+			$SQLAdjustmentDate = FormatDateForSQL(date($_SESSION['DefaultDateFormat']));
 
 			DB_Txn_Begin();
 
@@ -193,7 +193,7 @@ if (isset($_POST['UpdateAll'])) {
 				prnMsg($ConfirmationText, 'success');
 
 				if ($_SESSION['InventoryManagerEmail'] != '') {
-					$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . Date('Y-m-d H:i:s');
+					$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 					$EmailSubject = __('Internal Stock Request Fulfillment for') . ' ' . $StockID;
 					SendEmailFromWebERP($SysAdminEmail,
 										$_SESSION['InventoryManagerEmail'],

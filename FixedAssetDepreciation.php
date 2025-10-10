@@ -31,7 +31,7 @@ $AllowUserEnteredProcessDate = true;
 if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 	/*in this case default depreciation calc to the last day of last month - and allow user to select a period */
 	if (!isset($_POST['ProcessDate'])) {
-		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
+		$_POST['ProcessDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
 	} else { //ProcessDate is set - make sure it is on the last day of the month selected
 		if (!Is_Date($_POST['ProcessDate'])){
 			prnMsg(__('The date is expected to be in the format') . ' ' . $_SESSION['DefaultDateFormat'], 'error');
@@ -79,7 +79,7 @@ $SQL = "SELECT fixedassets.assetid,
 $AssetsResult = DB_query($SQL);
 
 $InputError = false; //always hope for the best
-if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
+if (Date1GreaterThanDate2($_POST['ProcessDate'],date($_SESSION['DefaultDateFormat']))){
 	prnMsg(__('No depreciation will be committed as the processing date is beyond the current date. The depreciation run can only be run for periods prior to today'),'warn');
 	$InputError =true;
 }

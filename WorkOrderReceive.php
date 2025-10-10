@@ -199,10 +199,10 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		/*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
 		$WOReceiptNo = GetNextTransNo(26);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 		if (!isset($_POST['ReceivedDate'])){
-			$_POST['ReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+			$_POST['ReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 		$SQLReceivedDate = FormatDateForSQL($_POST['ReceivedDate']);
@@ -246,7 +246,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $ItemCostRow['totalqoh']!=0){
 
 					$CostUpdateNo = GetNextTransNo(35);
-					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+					$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 					$ValueOfChange = $ItemCostRow['totalqoh'] * (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) - $ItemCostRow['cost']);
 
@@ -797,7 +797,7 @@ if ($WORow['closed']==1){
 }
 
 if (!isset($_POST['ReceivedDate'])){
-	$_POST['ReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['ReceivedDate'] = date($_SESSION['DefaultDateFormat']);
 }
 echo '<table class="selection">
 		<tr>
@@ -823,7 +823,7 @@ echo '<table class="selection">
 		</tr>
 		 <tr>
 			<td>' . __('Date Received') . ':</td>
-			<td>' . Date($_SESSION['DefaultDateFormat']) . '</td>';
+			<td>' . date($_SESSION['DefaultDateFormat']) . '</td>';
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . __('Expiry Date') . ':<td>

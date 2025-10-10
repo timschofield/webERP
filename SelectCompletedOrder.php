@@ -435,7 +435,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 }//end of which button clicked options
 
 if (!isset($_POST['OrdersAfterDate']) OR $_POST['OrdersAfterDate'] == '' OR ! Is_Date($_POST['OrdersAfterDate'])){
-	$_POST['OrdersAfterDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$_POST['OrdersAfterDate'] = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 }
 echo '<fieldset>
 		<legend class="search">', __('Sales Order Search'), '</legend>';

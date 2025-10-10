@@ -19,7 +19,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	__('Timesheet Entry'), '</p>';// Page title.
 
 //try to set some sensible defaults
-$LatestWeekEndingDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('n'),date('j')-(date('w')+$_SESSION['LastDayOfWeek'])+7,date('Y')));
+$LatestWeekEndingDate = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('n'),date('j')-(date('w')+$_SESSION['LastDayOfWeek'])+7,date('Y')));
 
 if(isset($_GET['SelectedEmployee'])) {
 	if ($_GET['SelectedEmployee']=='NewSelection'){
@@ -385,7 +385,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 		} else {
 			/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 			$WOIssueNo = GetNextTransNo(28);
-			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+			$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 			DB_Txn_Begin();
 

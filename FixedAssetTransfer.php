@@ -13,7 +13,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 	if (mb_substr($AssetToMove,0,4)=='Move') { // the form variable is of the format MoveAssetID so need to strip the move bit off
 		$AssetID	= mb_substr($AssetToMove,4);
-		if (isset($_POST['Location' . $AssetID]) AND $_POST['Location' . $AssetID] !=''){
+		if (isset($_POST['Location' . $AssetID]) AND $_POST['Location' . $AssetID] != ''){
 			$SQL		= "UPDATE fixedassets
 						SET assetlocation='".$_POST['Location'.$AssetID] ."'
 						WHERE assetid='". $AssetID . "'";
@@ -27,7 +27,7 @@ foreach ($_POST as $AssetToMove => $Value) { //Value is not used?
 
 if (isset($_GET['AssetID'])) {
 	$AssetID=$_GET['AssetID'];
-} else if (isset($_POST['AssetID'])) {
+} elseif (isset($_POST['AssetID'])) {
 	$AssetID=$_POST['AssetID'];
 } else {
 	$SQL="SELECT categoryid, categorydescription FROM fixedassetcategories";

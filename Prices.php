@@ -87,7 +87,7 @@ if (isset($_POST['submit'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	// This gives some date in 1999?? $ZeroDate = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,0,0,0));
+	// This gives some date in 1999?? $ZeroDate = date($_SESSION['DefaultDateFormat'],mktime(0,0,0,0,0,0));
 
 	if (!is_numeric(filter_number_format($_POST['Price'])) OR $_POST['Price'] == '') {
 		$InputError = 1;
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 				$InputError = 1;
 				prnMsg(__('The end date is expected to be after the start date, enter an end date after the start date for this price'), 'error');
 			}
-			if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $_POST['EndDate']) AND
+			if (Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat']), $_POST['EndDate']) AND
 				$_POST['EndDate'] != '' AND
 				FormatDateForSQL($_POST['EndDate']) != '9999-12-31') {
 				$InputError = 1;
@@ -359,10 +359,10 @@ echo '</select>
 DB_free_result($TypeResult);
 
 if (!isset($_POST['StartDate'])) {
-	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['EndDate'])) {
-	$_POST['EndDate'] = Date('9999-12-31');
+	$_POST['EndDate'] = date('9999-12-31');
 }
 echo '<field>
 		<label for="StartDate">' . __('Price Effective From Date') . ':</label>

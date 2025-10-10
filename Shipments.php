@@ -176,7 +176,7 @@ if (isset($_POST['Update'])
 		if (!Is_Date($_POST['ETA'])){
 			$InputError=1;
 			prnMsg( __('The date of expected arrival of the shipment must be entered in the format') . ' ' .$_SESSION['DefaultDateFormat'], 'error');
-		} elseif (Date1GreaterThanDate2($_POST['ETA'],Date($_SESSION['DefaultDateFormat']))==0){
+		} elseif (Date1GreaterThanDate2($_POST['ETA'],date($_SESSION['DefaultDateFormat']))==0){
 			$InputError=1;
 			prnMsg( __('An expected arrival of the shipment must be a date after today'), 'error');
 		} else {
@@ -330,7 +330,7 @@ echo '<field>
 if (isset($_SESSION['Shipment']->ETA)) {
 	echo '<input type="date" name="ETA"  maxlength="10" size="11" value="' . $ETA . '" />';
 } else {
-	echo '<input type="date" name="ETA" maxlength="10" size="11" value="' . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
+	echo '<input type="date" name="ETA" maxlength="10" size="11" value="' . FormatDateForSQL(DateAdd(date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
 }
 echo '<field>';
 

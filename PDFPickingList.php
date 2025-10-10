@@ -23,7 +23,7 @@ if (isset($_POST['Process'])) {
 	/* Retrieve the order details from the database to print */
 	$ErrMsg = __('There was a problem retrieving the order header details from the database');
 
-	if (!isset($_POST['TransDate']) and $_GET['TransNo'] != 'Preview') {
+	if (!isset($_POST['TransDate']) and $_GET['TransNo'] !=  'Preview') {
 		/* If there is no transaction date set, then it must be for a single order */
 		$SQL = "SELECT salesorders.debtorno,
 				salesorders.orderno,
@@ -59,7 +59,7 @@ if (isset($_POST['Process'])) {
 			AND salesorders.fromstkloc=locations.loccode
 			AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 	}
-	else if (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+	else if (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 		/* We are printing picking lists for all orders on a day */
 		$SQL = "SELECT salesorders.debtorno,
 					salesorders.orderno,
@@ -97,11 +97,11 @@ if (isset($_POST['Process'])) {
 				AND salesorders.deliverydate<='" . FormatDateForSQL($_POST['TransDate']) . "'";
 	}
 
-	if ($_SESSION['SalesmanLogin'] != '') {
+	if ($_SESSION['SalesmanLogin'] !=  '') {
 		$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
 
-	if (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] != 'Preview')) {
+	if (isset($_POST['TransDate']) || (isset($_GET['TransNo']) and $_GET['TransNo'] !=  'Preview')) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		/* If there are no rows, there's a problem. */
@@ -167,7 +167,7 @@ if (isset($_POST['Process'])) {
 		$order = $OrdersToPick[$i];
 		$DeliveryAddress = '';
 		for ($j = 1; $j<5; $j++) {
-			if ($order['deladd' . $j] != '') {
+			if ($order['deladd' . $j] !=  '') {
 				$DeliveryAddress .= htmlspecialchars($order['deladd' . $j]) . ", ";
 			}
 		}

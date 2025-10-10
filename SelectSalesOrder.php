@@ -348,7 +348,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				} //end if it's a new supplier and PO to create
 
 				/*reminder we are in a loop of the total of each item to place a purchase order for based on a selection of sales orders */
-				$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$ItemRow['leadtime']);
+				$DeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$ItemRow['leadtime']);
 				$SQL = "INSERT INTO purchorderdetails ( orderno,
 			  									itemcode,
 			  									deliverydate,
@@ -486,7 +486,7 @@ if (!isset($StockID)) {
 
 	 /* Not appropriate really to restrict search by date since may miss older
 	 ouststanding orders
-	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$OrdersAfterDate = date('d/m/Y',mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 	 */
 
 	if (!isset($OrderNumber) OR $OrderNumber == '') {

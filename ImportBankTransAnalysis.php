@@ -35,7 +35,7 @@ if (!isset($TransID)){
 	exit();
 }
 
-if ($_SESSION['Trans'][$TransID]->BankTransID != 0) {
+if ($_SESSION['Trans'][$TransID]->BankTransID !=  0) {
 	prnMsg(__('This transaction appears to be already entered against this bank account. By entering values in this analysis form the transaction will be entered again. Only proceed to analyse this transaction if you are sure it has not already been processed'),'warn');
 	echo '<br /><div class="centre"><a href="' . $RootPath . '/ImportBankTrans.php">' . __('Back to Main Import Screen - Recommended') . '</a></div>';
 
@@ -66,10 +66,10 @@ if (isset($_POST['AddGLCodeToTrans']) AND $_POST['AddGLCodeToTrans'] == __('Ente
 				FROM chartmaster
 				WHERE accountcode='" . $_POST['GLCode'] . "'";
 	$Result = DB_query($SQL);
-	if (DB_num_rows($Result) == 0 AND $_POST['GLCode'] != ''){
+	if (DB_num_rows($Result) == 0 AND $_POST['GLCode'] !=  ''){
 		prnMsg(__('The account code entered is not a valid code') . '. ' . __('This line cannot be added to the transaction') . '.<br />' . __('You can use the selection box to select the account you want'),'error');
 		$InputError = true;
-	} else if ($_POST['GLCode'] != '') {
+	} elseif ($_POST['GLCode'] !=  '') {
 		$MyRow = DB_fetch_row($Result);
 		$GLActName = $MyRow[1];
 		if (!is_numeric($_POST['Amount'])){
@@ -241,7 +241,7 @@ if ($AllowGLAnalysis==false){
 		</tr>
 		<tr>';
 
-	if (($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue)!=0) {
+	if (($_SESSION['Trans'][$TransID]->Amount - $TotalGLValue)!= 0) {
 		echo '<td colspan="2" class="number">' . __('Yet To Enter') . ':</font></td>
 		<td class="number"><font size="4" color="red">' . locale_number_format($_SESSION['Trans'][$TransID]->Amount-$TotalGLValue,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>';
 	} else {

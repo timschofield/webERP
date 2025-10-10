@@ -74,7 +74,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				<label for="PeriodTo">', __('Select the balance date'), '</label>
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
-	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$LastDateInPeriod = EndDateSQLFromPeriodNo($PeriodNo);
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";

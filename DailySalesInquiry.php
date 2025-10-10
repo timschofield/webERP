@@ -10,7 +10,7 @@ $BookMark = '';
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$_POST['MonthToShow'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 	/*Now get and display the sales data returned */
@@ -71,7 +71,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<div class="centre" id="ReportHeader">
 				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 				' . __('Daily Sales Inquiry') . '<br />
-				' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				' . __('For The Month Of') . ' ' . MonthAndYearFromSQLDate($EndDateSQL) . '<br />
 			</div>';
 
@@ -210,7 +210,7 @@ $HTML .= '</table>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$_POST['MonthToShow'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 	echo '<fieldset>
 			<legend>', __('Select a Month'), '</legend>

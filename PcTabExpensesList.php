@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 					pcashdetails.counterindex";
 		$Result = DB_query($SQL);
 
-		if (DB_num_rows($Result) != 0){
+		if (DB_num_rows($Result) !=  0){
 
 			// Create new PHPExcel object
 			$SpreadSheet = new Spreadsheet();
@@ -240,7 +240,7 @@ if (isset($_POST['submit'])) {
 			if ($_POST['Format'] == 'xlsx') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
-			} else if ($_POST['Format'] == 'ods') {
+			} elseif ($_POST['Format'] == 'ods') {
 				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
@@ -267,10 +267,10 @@ if (isset($_POST['submit'])) {
 
 	# Sets default date range for current month
 	if (!isset($_POST['FromDate'])){
-		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),1,date('Y')));
 	}
 	if (!isset($_POST['ToDate'])){
-		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
 	echo '<fieldset>

@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . $BankAccountName . ' ' . __('Payments Summary') . '<br />
 					' . __('From') . ' ' . $_POST['FromDate'] . ' ' . __('to') . ' ' .  $_POST['ToDate'] . '<br />
-					' . __('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . __('Printed') . ': ' . date($_SESSION['DefaultDateFormat']) . '<br />
 				</div>
 				<table>
 					<thead>
@@ -199,11 +199,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
 				<label for="FromDate">' . __('Enter the date from which cheques are to be listed') . ':</label>
-				<input name="FromDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
+				<input name="FromDate" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 			</field>';
 	echo '<field>
 			<label for="ToDate">' . __('Enter the date to which cheques are to be listed') . ':</label>
-			<input name="ToDate" maxlength="10" size="11"  type="date" value="' . Date('Y-m-d') . '" />
+			<input name="ToDate" maxlength="10" size="11"  type="date" value="' . date('Y-m-d') . '" />
 		</field>';
 	echo '<field>
 			<label for="BankAccount">' . __('Bank Account') . '</label>';

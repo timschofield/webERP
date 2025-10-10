@@ -315,7 +315,7 @@ if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous']
 					AND stockmaster.controlled <> 1
 					AND stockmaster.discontinued=0
 					ORDER BY stockmaster.stockid";
-        	} else {
+			} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units,
@@ -414,7 +414,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		if (isset($_POST[$QuickEntryItemDue])) {
 			$NewItemDue = $_POST[$QuickEntryItemDue];
 		} else {
-			$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 		}
 		if (isset($_POST[$QuickEntryPOLine])) {
 			$NewPOLine = $_POST[$QuickEntryPOLine];
@@ -430,7 +430,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 		if(!Is_Date($NewItemDue)) {
 			prnMsg(__('An invalid date entry was made for ') . ' ' . $NewItem . ' ' . __('The date entry') . ' ' . $NewItemDue . ' ' . __('must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 			//Attempt to default the due date to something sensible?
-			$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			$NewItemDue = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 		}
 		/*Now figure out if the item is a kit set - the field MBFlag='K'*/
 		$SQL = "SELECT stockmaster.mbflag,
@@ -797,7 +797,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ) { /*only show order lin
 		echo '<td class="number">' . locale_number_format($SubTotal,$_SESSION['Items'.$identifier]->CurrDecimalPlaces) . '</td>';
 		$LineDueDate = $OrderLine->ItemDue;
 		if (!Is_Date($OrderLine->ItemDue)) {
-			$LineDueDate = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			$LineDueDate = DateAdd (date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 			$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 		}
 		$i=0; // initialise the number of taxes iterated through
@@ -1087,7 +1087,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 		$HeaderSQL = "INSERT INTO salesorders (	orderno,
 												debtorno,
@@ -1112,7 +1112,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 												'" . $_SESSION['Items'.$identifier]->Branch . "',
 												'". $_SESSION['Items'.$identifier]->CustRef ."',
 												'". $_SESSION['Items'.$identifier]->Comments ."',
-												'" . Date('Y-m-d H:i') . "',
+												'" . date('Y-m-d H:i') . "',
 												'" . $_SESSION['Items'.$identifier]->DefaultSalesType . "',
 												'" . $_SESSION['Items'.$identifier]->ShipVia . "',
 												'". $_SESSION['Items'.$identifier]->DeliverTo . "',
@@ -1276,7 +1276,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.php */
 
-		$DefaultDispatchDate = Date('Y-m-d');
+		$DefaultDispatchDate = date('Y-m-d');
 
 	/*Update order header for invoice charged on */
 		$SQL = "UPDATE salesorders SET comments = CONCAT(comments,'" . ' ' . __('Invoice') . ': ' . "','" . $InvoiceNo . "') WHERE orderno= '" . $OrderNo."'";
@@ -2029,7 +2029,7 @@ if (!isset($_POST['ProcessSale'])) {
 		if ($_SESSION['FrequentlyOrderedItems']>0) { //show the Frequently Order Items selection where configured to do so
 
 	// Select the most recently ordered items for quick select
-			$SixMonthsAgo = DateAdd (Date($_SESSION['DefaultDateFormat']),'m',-6);
+			$SixMonthsAgo = DateAdd (date($_SESSION['DefaultDateFormat']),'m',-6);
 
 			$SQL="SELECT stockmaster.units,
 						stockmaster.description,
@@ -2262,7 +2262,7 @@ if (!isset($_POST['ProcessSale'])) {
 					<th>' . __('Item Code') . '</th>
 					<th>' . __('Quantity') . '</th>
 				</tr>';
-		$DefaultDeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
+		$DefaultDeliveryDate = DateAdd(date($_SESSION['DefaultDateFormat']),'d',$_SESSION['Items'.$identifier]->DeliveryDays);
 		for ($i=1;$i<=$_SESSION['QuickEntries'];$i++) {
 
 	 		echo '<tr class="striped_row">';

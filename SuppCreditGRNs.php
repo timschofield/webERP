@@ -141,7 +141,7 @@ echo '</table>
 /* Now get all the GRNs for this supplier from the database
 after the date entered */
 if (!isset($_POST['Show_Since'])){
-	$_POST['Show_Since'] =  Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
+	$_POST['Show_Since'] =  date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m')-2,date('d'),date('Y')));
 }
 
 $SQL = "SELECT grnno,

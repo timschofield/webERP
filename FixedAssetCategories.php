@@ -13,7 +13,7 @@ echo '<p class="page_title_text">
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
-} else if (isset($_POST['SelectedCategory'])){
+} elseif (isset($_POST['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_POST['SelectedCategory']);
 }
 
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 		$InputError=1;
 	}
 
-	if (isset($SelectedCategory) AND $InputError !=1) {
+	if (isset($SelectedCategory) AND $InputError != 1) {
 
 		/*SelectedCategory could also exist if submit had not been clicked this code
 		would not run in this case cos submit is false of course  see the
@@ -90,7 +90,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg(__('Updated the fixed asset category record for') . ' ' . $_POST['CategoryDescription'],'success');
 
-	} elseif ($InputError !=1) {
+	} elseif ($InputError != 1) {
 
 		$SQL = "INSERT INTO fixedassetcategories (categoryid,
 												categorydescription,
@@ -247,7 +247,7 @@ $SQL = "SELECT accountcode,
 				 accountname
 		FROM chartmaster INNER JOIN accountgroups
 		ON chartmaster.group_=accountgroups.groupname
-		WHERE accountgroups.pandl!=0
+		WHERE accountgroups.pandl!= 0
 		ORDER BY accountcode";
 
 $PnLAccountsResult = DB_query($SQL);

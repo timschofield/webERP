@@ -338,7 +338,7 @@ if (isset($_POST['Close'])) {
 	DB_data_seek($WOItemsResult,0);
 	$NoItemsOnWO = DB_num_rows($WOItemsResult);
 	$TotalVariance = $TotalUsageVar + $TotalCostVar;
-	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$WOCloseNo = GetNextTransNo(29);
 	DB_Txn_Begin();
 

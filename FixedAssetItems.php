@@ -43,7 +43,7 @@ if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
 		$UploadTheFile ='No';
 	} elseif ( $_FILES['ItemPicture']['type'] == 'text/plain' ) {  //File Type Check
 		prnMsg( __('Only graphics files can be uploaded'),'warn');
-         	$UploadTheFile ='No';
+		 	$UploadTheFile ='No';
 	}
 	foreach ($SupportedImgExt as $Ext) {
 		$File = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $Ext;
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 			$OldDetails = DB_fetch_array($Result);
 			if ($OldDetails['assetcategoryid'] !=$_POST['AssetCategoryID']  AND $OldDetails['cost']!=0){
 
-				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+				$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 				/* Get the new account codes for the new asset category */
 				$Result = DB_query("SELECT costact,
 											accumdepnact
@@ -313,7 +313,7 @@ if (isset($_POST['submit'])) {
 		DB_Txn_Begin();
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 		$TransNo = GetNextTransNo( 43 ); /* transaction type is asset deletion - (and remove cost/acc5umdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted

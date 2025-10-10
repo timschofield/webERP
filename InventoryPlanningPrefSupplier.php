@@ -30,7 +30,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$ReportTitle = __('Preferred Supplier Inventory Plan');
 	$CompanyName = $_SESSION['CompanyRecord']['coyname'];
-	$PrintDate = Date($_SESSION['DefaultDateFormat']);
+	$PrintDate = date($_SESSION['DefaultDateFormat']);
 	$Location = $_POST['Location'];
 	$LocationText = ($Location == 'All') ? __('for all stock locations') : __('for stock at') . ' ' . $Location;
 	$NumberMonthsHolding = $_POST['NumberMonthsHolding'];
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ListCount = DB_num_rows($InventoryResult);
 
 	$SupplierID = '';
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$CurrentPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	$Period_1 = $CurrentPeriod - 1;
 	$Period_2 = $CurrentPeriod - 2;
 	$Period_3 = $CurrentPeriod - 3;

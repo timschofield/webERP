@@ -83,13 +83,13 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 				<label for="PeriodFrom">', __('Select period from'), ':</label>
 				<select name="PeriodFrom" required="required">';
 
-	if (Date('m') > $_SESSION['YearEnd']) {
+	if (date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y')));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y')));
 	} else {
-		$DefaultFromDate = Date('Y-m-d', Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
-		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, Date('Y') - 1));
+		$DefaultFromDate = date('Y-m-d', mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
+		$FromDate = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, $_SESSION['YearEnd'] + 2, 0, date('Y') - 1));
 	}
 
 	$SQL = "SELECT periodno, lastdate_in_period
@@ -125,7 +125,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST
 				<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	if (!isset($_POST['PeriodTo']) OR $_POST['PeriodTo'] == '') {
-		$LastDate = date('Y-m-d', mktime(0, 0, 0, Date('m') + 1, 0, Date('Y')));
+		$LastDate = date('Y-m-d', mktime(0, 0, 0, date('m') + 1, 0, date('Y')));
 		$SQL = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
 		$MaxPrd = DB_query($SQL);
 		$MaxPrdRow = DB_fetch_row($MaxPrd);

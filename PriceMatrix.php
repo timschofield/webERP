@@ -157,7 +157,7 @@ if (isset($_GET['Edit'])){
 	$_POST['CurrAbrev'] = $_GET['CurrAbrev'];
 	$_POST['StartDate'] = ConvertSQLDate($_GET['StartDate']);
 	$_POST['EndDate'] = ConvertSQLDate($_GET['EndDate']);
-       	$_POST['QuantityBreak'] = $_GET['QuantityBreak'];
+	   	$_POST['QuantityBreak'] = $_GET['QuantityBreak'];
 }
 $SQL = "SELECT currabrev FROM currencies";
 $Result = DB_query($SQL);
@@ -208,7 +208,7 @@ if(isset($_GET['StockID'])){
 }
 echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 if (!isset($_POST['StartDate'])){
-	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
+	$_POST['StartDate'] = date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = GetMySQLMaxDate();

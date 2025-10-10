@@ -108,7 +108,7 @@ if (isset($_POST['SearchParts'])) {
 }
 /* Not appropriate really to restrict search by date since user may miss older
 * ouststanding orders
-* $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
+* $OrdersAfterDate = date("d/m/Y",mktime(0,0,0,date("m")-2,date("d"),date("Y")));
 */
 if (!isset($OrderNumber) or $OrderNumber == "") {
 	echo '<fieldset>

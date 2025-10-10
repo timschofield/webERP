@@ -468,7 +468,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 																			$MyRow['grossweight'],
 																			0,
 																			$MyRow['mbflag'],
-																			Date($_SESSION['DefaultDateFormat']),
+																			date($_SESSION['DefaultDateFormat']),
 																			0,
 																			$MyRow['discountcategory'],
 																			$MyRow['controlled'],
@@ -635,7 +635,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 														$MyRow['grossweight'],
 														0,
 														$MyRow['mbflag'],
-														Date($_SESSION['DefaultDateFormat']),
+														date($_SESSION['DefaultDateFormat']),
 														0,
 														$MyRow['discountcategory'],
 														$MyRow['controlled'],
@@ -1087,8 +1087,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 /*Now Get the next credit note number - function in SQL_CommonFunctions*/
 
 	 $CreditNo = GetNextTransNo(11);
-	 $SQLCreditDate = Date('Y-m-d');
-	 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	 $SQLCreditDate = date('Y-m-d');
+	 $PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 /*Start an SQL transaction */
 	 DB_Txn_Begin();

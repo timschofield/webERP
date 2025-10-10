@@ -191,8 +191,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$AdjustmentNumber = GetNextTransNo(17);
-		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
-		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod (date($_SESSION['DefaultDateFormat']));
+		$SQLAdjustmentDate = FormatDateForSQL(date($_SESSION['DefaultDateFormat']));
 
 		DB_Txn_Begin();
 
@@ -360,7 +360,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		prnMsg( $ConfirmationText,'success');
 
 		if ($_SESSION['InventoryManagerEmail']!=''){
-			$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . Date('Y-m-d H:i:s');
+			$ConfirmationText = $ConfirmationText . ' ' . __('by user') . ' ' . $_SESSION['UserID'] . ' ' . __('at') . ' ' . date('Y-m-d H:i:s');
 			$EmailSubject = __('Stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID;
 			SendEmailFromWebERP($SysAdminEmail,
 								$_SESSION['InventoryManagerEmail'],

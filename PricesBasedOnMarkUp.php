@@ -213,7 +213,7 @@ if (isset($_POST['UpdatePrices'])){
 		$InputError =1;
 		prnMsg(__('The end date is expected to be after the start date, enter an end date after the start date for this price'),'error');
 	}
-	if (Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']),$_POST['PriceStartDate'])){
+	if (Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat']),$_POST['PriceStartDate'])){
 		$InputError =1;
 		prnMsg(__('The date this new price is to start from is expected to be after today'),'error');
 	}
