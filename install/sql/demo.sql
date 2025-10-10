@@ -1644,15 +1644,6 @@ INSERT INTO `tendersuppliers` (`tenderid`, `supplierid`, `email`, `responded`) V
 UNLOCK TABLES;
 
 --
--- Dumping data for table `tests`
---
-
-LOCK TABLES `tests` WRITE;
-/*!40000 ALTER TABLE `tests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tests` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `timesheets`
 --
 
