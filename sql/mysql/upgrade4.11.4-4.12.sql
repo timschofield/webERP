@@ -118,9 +118,9 @@ ALTER TABLE `prodspecs`
 
 --
 -- Constraints for table `qasamples`
+-- Note: qasamples_ibfk_1 constraint removed as it violates MySQL 8.4+ requirements
+-- (prodspecs.keyval is not unique, it's part of composite PK with testid)
 --
-ALTER TABLE `qasamples`
-  ADD CONSTRAINT `qasamples_ibfk_1` FOREIGN KEY (`prodspeckey`) REFERENCES `prodspecs` (`keyval`);
 
 --
 -- Constraints for table `sampleresults`

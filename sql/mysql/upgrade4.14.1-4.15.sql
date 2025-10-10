@@ -108,8 +108,7 @@ CREATE TABLE IF NOT EXISTS pickserialdetails (
 	key (`detailno`),
 	key (`stockid`,`serialno`),
 	key (`serialno`),
-	CONSTRAINT FOREIGN KEY (`detailno`) REFERENCES pickreqdetails (`detailno`),
-	CONSTRAINT FOREIGN KEY (`stockid`,`serialno`) REFERENCES `stockserialitems`(`stockid`,`serialno`)
+	CONSTRAINT FOREIGN KEY (`detailno`) REFERENCES pickreqdetails (`detailno`)
 ) Engine=InnoDB DEFAULT CHARSET=utf8;
 
 -- TABLE pickinglists (pickinglistno, orderno, pickinglistdate, dateprinted, deliverynotedate)
