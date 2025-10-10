@@ -13,7 +13,7 @@ if (!DB_table_exists('mrprequirements')) {
 	$Title = __('MRP error');
 	include ('includes/header.php');
 	echo '<br />';
-	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href="' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
+	prnMsg(__('The MRP calculation must be run before you can run this report') . '<br />' . __('To run the MRP calculation click') . ' ' . '<a href = "' . $RootPath . '/MRP.php">' . __('here') . '</a>', 'error');
 	include ('includes/footer.php');
 	exit();
 }
@@ -24,12 +24,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ReportDate = ' ';
 	if (Is_Date($_POST['cutoffdate'])) {
 		$FormatDate = FormatDateForSQL($_POST['cutoffdate']);
-		$WhereDate = " AND duedate <= '" . $FormatDate . "' ";
+		$WhereDate = " and duedate <= '" . $FormatDate . "' ";
 		$ReportDate = ' ' . __('Through') . ' ' . $_POST['cutoffdate'];
 	}
 
 	if ($_POST['Consolidation'] == 'None') {
-		$SQL = "SELECT mrpplannedorders.*,
+	$SQL = "SELECT mrpplannedorders.*,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -40,14 +40,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					ON mrpplannedorders.part = stockmaster.stockid
 				WHERE stockmaster.mbflag IN ('B','P') " . $WhereDate . "
 				ORDER BY mrpplannedorders.part,mrpplannedorders.duedate";
-	}
+}
 	elseif ($_POST['Consolidation'] == 'Weekly') {
-		$SQL = "SELECT mrpplannedorders.part,
+	$SQL = "SELECT mrpplannedorders.part,
 					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) AS weekindex,
+					TRUNCATE(((TO_DAYS(duedate) - TO_DAYS(CURRENT_DATE)) / 7),0) as weekindex,
 					MIN(mrpplannedorders.duedate) as duedate,
 					MIN(mrpplannedorders.mrpdate) as mrpdate,
-					COUNT(*) AS consolidatedcount,
+					COUNT(*) as consolidatedcount,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -66,14 +66,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.actualcost,
 					computedcost
 				ORDER BY mrpplannedorders.part,weekindex";
-	}
+}
 	else { // This else consolidates by month
 		$SQL = "SELECT mrpplannedorders.part,
 					SUM(mrpplannedorders.supplyquantity) as supplyquantity,
-					EXTRACT(YEAR_MONTH from duedate) AS yearmonth,
+					EXTRACT(YEAR_MONTH from duedate) as yearmonth,
 					MIN(mrpplannedorders.duedate) as duedate,
 					MIN(mrpplannedorders.mrpdate) as mrpdate,
-					COUNT(*) AS consolidatedcount,
+					COUNT(*) as consolidatedcount,
 					stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.mbflag,
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title = __('Print MRP Planned Purchase Orders');
 		include ('includes/header.php');
 		prnMsg(__('There were no items with planned purchase orders'), 'info');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		echo '<br /><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 		include ('includes/footer.php');
 		exit();
 	}
@@ -121,7 +121,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</head>
 		<body>
 			<h2>' . $_SESSION['CompanyRecord']['coyname'] . '<br>' . __('MRP Planned Purchase Orders Report') . '</h2>
-			<div style="text-align:center; margin-bottom: 10px;">' . __('Consolidation') . ': ' . htmlspecialchars($_POST['Consolidation']) . ' &nbsp;&nbsp; ' . __('Through') . ' ' . htmlspecialchars($_POST['cutoffdate']) . '</div>
+			<div style = "text-align:center; margin-bottom: 10px;">' . __('Consolidation') . ': ' . htmlspecialchars($_POST['Consolidation']) . ' &nbsp;&nbsp; ' . __('Through') . ' ' . htmlspecialchars($_POST['cutoffdate']) . '</div>
 			<table>
 				<tr>
 					<th>' . __('Part Number') . '</th>
@@ -133,9 +133,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<th>' . __('Ext. Cost') . '</th>';
 
 	if ($_POST['Consolidation'] == 'None') {
-		$HTML .= '<th>' . __('Source Type') . '</th>
+	$HTML .= '<th>' . __('Source Type') . '</th>
 					  <th>' . __('Source Order') . '</th>';
-	}
+}
 	else {
 		$HTML .= '<th>' . __('Consolidations') . '</th>';
 	}
@@ -153,21 +153,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$rowClass = $Fill ? 'alt' : '';
 		$ExtCost = $MyRow['supplyquantity'] * $MyRow['computedcost'];
 
-		$HTML .= '<tr class="' . $rowClass . '">';
+		$HTML .= '<tr class = "' . $rowClass . '">';
 		$HTML .= '<td>' . htmlspecialchars($MyRow['part']) . '</td>';
 		$HTML .= '<td>' . htmlspecialchars($MyRow['description']) . '</td>';
 		$HTML .= '<td>' . ConvertSQLDate($MyRow['duedate']) . '</td>';
 		$HTML .= '<td>' . ConvertSQLDate($MyRow['mrpdate']) . '</td>';
-		$HTML .= '<td class="number">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>';
-		$HTML .= '<td class="number">' . locale_number_format($MyRow['computedcost'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
-		$HTML .= '<td class="number">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+		$HTML .= '<td class = "number">' . locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']) . '</td>';
+		$HTML .= '<td class = "number">' . locale_number_format($MyRow['computedcost'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
+		$HTML .= '<td class = "number">' . locale_number_format($ExtCost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>';
 
 		if ($_POST['Consolidation'] == 'None') {
-			$HTML .= '<td>' . htmlspecialchars($MyRow['ordertype']) . '</td>';
+	$HTML .= '<td>' . htmlspecialchars($MyRow['ordertype']) . '</td>';
 			$HTML .= '<td>' . htmlspecialchars($MyRow['orderno']) . '</td>';
-		}
+}
 		else {
-			$HTML .= '<td class="number">' . htmlspecialchars($MyRow['consolidatedcount']) . '</td>';
+			$HTML .= '<td class = "number">' . htmlspecialchars($MyRow['consolidatedcount']) . '</td>';
 		}
 
 		$HTML .= '</tr>';
@@ -179,14 +179,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<tr>
-			<th colspan="4" style="text-align:right;">' . __('Totals') . ':</th>
-			<th class="number">' . locale_number_format($TotalPartQty, 2) . '</th>
+			<th colspan = "4" style = "text-align:right;">' . __('Totals') . ':</th>
+			<th class = "number">' . locale_number_format($TotalPartQty, 2) . '</th>
 			<th></th>
-			<th class="number">' . locale_number_format($Total_ExtCost, 2) . '</th>';
+			<th class = "number">' . locale_number_format($Total_ExtCost, 2) . '</th>';
 
 	if ($_POST['Consolidation'] == 'None') {
-		$HTML .= '<th colspan="2"></th>';
-	}
+	$HTML .= '<th colspan = "2"></th>';
+}
 	else {
 		$HTML .= '<th></th>';
 	}
@@ -195,9 +195,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '</table>';
 	if (isset($_POST['PrintPDF']) or isset($_POST['Email'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
@@ -205,8 +205,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -228,7 +228,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	else {
 		$Title = __('MRP Planned Purchase Orders');
 		include ('includes/header.php');
-		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('MRP Planned Purchase Orders') . '" alt="" />' . ' ' . __('MRP Planned Purchase Orders') . '</p>';
+		echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('MRP Planned Purchase Orders') . '" alt = "" />' . ' ' . __('MRP Planned Purchase Orders') . '</p>';
 		echo $HTML;
 		include ('includes/footer.php');
 	}
@@ -239,36 +239,36 @@ else { /*The option to print PDF was not hit so display form */
 	$ViewTopic = 'MRP';
 	$BookMark = '';
 	include ('includes/header.php');
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . __('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text">
+			<img src = "' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title = "' . __('Inventory') . '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method = "post" target = "_blank">
+			<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />
 			<fieldset>
 				<legend>', __('Report Criteria'), '</legend>
 				<field>
-					<label for="Consolidation">' . __('Consolidation') . ':</label>
-					<select required="required" name="Consolidation">
-						<option selected="selected" value="None">' . __('None') . '</option>
-						<option value="Weekly">' . __('Weekly') . '</option>
-						<option value="Monthly">' . __('Monthly') . '</option>
+					<label for = "Consolidation">' . __('Consolidation') . ':</label>
+					<select required = "required" name = "Consolidation">
+						<option selected = "selected" value = "None">' . __('None') . '</option>
+						<option value = "Weekly">' . __('Weekly') . '</option>
+						<option value = "Monthly">' . __('Monthly') . '</option>
 					</select>
 			</field>
 			<field>
-				<label for="Fill">' . __('Print Option') . ':</label>
-				<select name="Fill">
-					<option selected="selected" value="yes">' . __('Print With Alternating Highlighted Lines') . '</option>
-					<option value="no">' . __('Plain Print') . '</option>
+				<label for = "Fill">' . __('Print Option') . ':</label>
+				<select name = "Fill">
+					<option selected = "selected" value = "yes">' . __('Print With Alternating Highlighted Lines') . '</option>
+					<option value = "no">' . __('Plain Print') . '</option>
 				</select>
 			</field>
 			<field>
-				<label for="cutoffdate">' . __('Cut Off Date') . ':</label>
-				<input required="required" type="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
+				<label for = "cutoffdate">' . __('Cut Off Date') . ':</label>
+				<input required = "required" type = "date" name = "cutoffdate" autofocus = "autofocus" maxlength = "10" size = "11" value = "' . date('Y-m-d') . '" />
 			</field>
 			</fieldset>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" title="Produce PDF Report" value="' . __('Print PDF') . '" />
-				<input type="submit" name="View" title="View Report" value="' . __('View') . '" />
+			<div class = "centre">
+				<input type = "submit" name = "PrintPDF" title = "Produce PDF Report" value = "' . __('Print PDF') . '" />
+				<input type = "submit" name = "View" title = "View Report" value = "' . __('View') . '" />
 			</div>
 		</form>';
 
@@ -303,7 +303,7 @@ function GetPartInfo($Part) {
 		$SQL = "SELECT supplierno, conversionfactor
 				FROM purchdata
 				WHERE stockid = '" . $Part . "'
-				AND preferred='1'";
+				and preferred = '1'";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$PartInfo[] = $MyRow['supplierno'];

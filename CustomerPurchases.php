@@ -10,9 +10,9 @@ $ViewTopic = 'ARInquiries';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'CustomerPurchases';// Anchor's id in the manual's html document.*/
 include('includes/header.php');
 
-if(isset($_GET['DebtorNo'])) {
+if (isset($_GET['DebtorNo'])) {
 	$DebtorNo = $_GET['DebtorNo'];// Set DebtorNo from $_GET['DebtorNo'].
-} elseif(isset($_POST['DebtorNo'])) {
+} elseif (isset($_POST['DebtorNo'])) {
 	$DebtorNo = $_POST['DebtorNo'];// Set DebtorNo from $_POST['DebtorNo'].
 } else {
 	prnMsg(__('This script must be called with a customer code.'), 'info');
@@ -24,15 +24,15 @@ $SQL = "SELECT debtorsmaster.name,
 				custbranch.brname
 		FROM debtorsmaster
 		INNER JOIN custbranch
-			ON debtorsmaster.debtorno=custbranch.debtorno
+			ON debtorsmaster.debtorno = custbranch.debtorno
 		WHERE debtorsmaster.debtorno = '" . $DebtorNo . "'";
 
 $ErrMsg = __('The customer details could not be retrieved by the SQL because');
 $CustomerResult = DB_query($SQL, $ErrMsg);
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/customer.png" title="' .
+echo '<p class = "page_title_text"><img alt = "" src = "'.$RootPath.'/css/'.$Theme.
+	'/images/customer.png" title = "' .
 	__('Customer') . '" /> ' .// Icon title.
 	__('Items Purchased by Customer') . '<br />' . $DebtorNo . " - " . $CustomerRecord['name'] . '</p>';// Page title.
 
@@ -51,19 +51,19 @@ $SQL = "SELECT stockmoves.stockid,
 			narrative
 		FROM stockmoves
 		INNER JOIN stockmaster
-			ON stockmaster.stockid=stockmoves.stockid
+			ON stockmaster.stockid = stockmoves.stockid
 		INNER JOIN systypes
-			ON stockmoves.type=systypes.typeid
+			ON stockmoves.type = systypes.typeid
 		INNER JOIN locations
-			ON stockmoves.loccode=locations.loccode
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+			ON stockmoves.loccode = locations.loccode
+		INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1";
 
-$SQLWhere=" WHERE stockmoves.debtorno='" . $DebtorNo . "'";
+$SQLWhere = " WHERE stockmoves.debtorno = '" . $DebtorNo . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " INNER JOIN custbranch
-				ON stockmoves.branchcode=custbranch.branchcode";
-	$SQLWhere .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
+				ON stockmoves.branchcode = custbranch.branchcode";
+	$SQLWhere .= " and custbranch.salesman = '" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $SQL .= $SQLWhere . " ORDER BY trandate DESC";
@@ -77,7 +77,7 @@ if (DB_num_rows($StockMovesResult) == 0) {
 	echo '<br />';
 } //DB_num_rows($StockMovesResult) == 0
 else {
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>' . __('Transaction Date') . '</th>
 				<th>' . __('Stock ID') . '</th>
@@ -101,15 +101,15 @@ else {
 				<td>' . $StockMovesRow['stockid'] . '</td>
 				<td>' . $StockMovesRow['description'] . '</td>
 				<td>' . __($StockMovesRow['typename']) . '</td>
-				<td class="number">' . $StockMovesRow['transno'] . '</td>
+				<td class = "number">' . $StockMovesRow['transno'] . '</td>
 				<td>' . $StockMovesRow['locationname'] . '</td>
 				<td>' . $StockMovesRow['branchcode'] . '</td>
-				<td class="number">' . -$StockMovesRow['qty'] . '</td>
+				<td class = "number">' . -$StockMovesRow['qty'] . '</td>
 				<td>' . $StockMovesRow['units'] . '</td>
-				<td class="number">' . locale_number_format($StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format(($StockMovesRow['discountpercent'] * 100),2) . '%' . '</td>
-				<td class="number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent'])), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td class="number">' . $StockMovesRow['reference'] . '</td>
+				<td class = "number">' . locale_number_format($StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent']), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class = "number">' . locale_number_format(($StockMovesRow['discountpercent'] * 100),2) . '%' . '</td>
+				<td class = "number">' . locale_number_format((-$StockMovesRow['qty'] * $StockMovesRow['price'] * (1 - $StockMovesRow['discountpercent'])), $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class = "number">' . $StockMovesRow['reference'] . '</td>
 				<td>' . $StockMovesRow['narrative'] . '</td>
 			</tr>';
 
@@ -118,6 +118,6 @@ else {
 	echo '</table>';
 }
 
-echo '<br /><div class="centre"><a href="' . $RootPath . '/SelectCustomer.php">' . __('Return to customer selection screen') . '</a></div><br />';
+echo '<br /><div class = "centre"><a href = "' . $RootPath . '/SelectCustomer.php">' . __('Return to customer selection screen') . '</a></div><br />';
 
 include('includes/footer.php');

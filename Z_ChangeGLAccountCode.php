@@ -9,47 +9,48 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = 'Z_ChangeGLAccountCode';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/gl.png" title="',// Icon image.
+echo '<p class = "page_title_text"><img alt = "" src = "', $RootPath, '/css/', $Theme,
+	'/images/gl.png" title = "',// Icon image.
 	__('Change A GL Account Code'), '" /> ',// Icon title.
 	__('Change A GL Account Code'), '</p>';// Page title.
 
 include('includes/SQL_CommonFunctions.php');
 
-if(isset($_POST['ProcessGLAccountCode'])) {
+if (isset($_POST['ProcessGLAccountCode'])) {
 
 	$InputError =0;
 
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
 
 /*First check the code exists */
-	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
-	if(DB_num_rows($Result)==0) {
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode = '" . $_POST['OldAccountCode'] . "'");
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('The GL account code') . ': ' . $_POST['OldAccountCode'] . ' ' . __('does not currently exist as a GL account code in the system'),'error');
 		$InputError =1;
 	}
 
-	if(ContainsIllegalCharacters($_POST['NewAccountCode'])) {
+	if (ContainsIllegalCharacters($_POST['NewAccountCode'])) {
 		prnMsg(__('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
 		$InputError =1;
 	}
 
-	if($_POST['NewAccountCode']=='') {
-		prnMsg(__('The new GL account code to change the old code to must be entered as well'),'error');
+	if ($_POST['NewAccountCode']=='') {
+	prnMsg(__('The new GL account code to change the old code to must be entered as well'),'error');
 		$InputError =1;
-	}
+}
 
 
 /*Now check that the new code doesn't already exist */
-	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
-	if(DB_num_rows($Result)!=0) {
+	$Result = DB_query("SELECT accountcode FROM chartmaster WHERE accountcode = '" . $_POST['NewAccountCode'] . "'");
+	if (DB_num_rows($Result) != 0) {
 		echo '<br /><br />';
 		prnMsg(__('The replacement GL account code') . ': ' . $_POST['NewAccountCode'] . ' ' . __('already exists as a GL account code in the system') . ' - ' . __('a unique GL account code must be entered for the new code'),'error');
 		$InputError =1;
 	}
 
 
-	if($InputError ==0) {// no input errors
+	if ($InputError ==0) {
+	// no input errors
 		DB_Txn_Begin();
 		echo '<br />' . __('Adding the new chartmaster record');
 		$SQL = "INSERT INTO chartmaster (accountcode,
@@ -59,7 +60,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 					accountname,
 					group_
 				FROM chartmaster
-				WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
+				WHERE accountcode = '" . $_POST['OldAccountCode'] . "'";
 
 		$ErrMsg =__('The SQL to insert the new chartmaster record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
@@ -129,33 +130,33 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 		DB_Txn_Commit();
 
 		echo '<br />' . __('Deleting the old chartmaster record');
-		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
+		$SQL = "DELETE FROM chartmaster WHERE accountcode = '" . $_POST['OldAccountCode'] . "'";
 		$ErrMsg = __('The SQL to delete the old chartmaster record failed');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		echo ' ... ' . __('completed');
 
 		echo '<p>' . __('GL account Code') . ': ' . $_POST['OldAccountCode'] . ' ' . __('was successfully changed to') . ' : ' . $_POST['NewAccountCode'];
-	}//only do the stuff above if  $InputError==0
+}//only do the stuff above if  $InputError == 0
 
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-echo '<div class="centre">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method = "post">';
+echo '<div class = "centre">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>
 	<legend>', __('GEneral Ledger Code To Change'), '</legend>
 	<field>
 		<label>' . __('Existing GL Account Code') . ':</label>
-		<input type="text" name="OldAccountCode" size="20" maxlength="20" />
+		<input type = "text" name = "OldAccountCode" size = "20" maxlength = "20" />
 	</field>
 	<field>
 		<label>' . __('New GL Account Code') . ':</label>
-		<input type="text" name="NewAccountCode" size="20" maxlength="20" />
+		<input type = "text" name = "NewAccountCode" size = "20" maxlength = "20" />
 	</field>
 	</fieldset>
-	<div class="centre">
-		<input type="submit" name="ProcessGLAccountCode" value="' . __('Process') . '" />
+	<div class = "centre">
+		<input type = "submit" name = "ProcessGLAccountCode" value = "' . __('Process') . '" />
 	</div>
 	</form>';
 

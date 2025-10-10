@@ -25,18 +25,18 @@ include('includes/SQL_CommonFunctions.php');
 include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
 
-if(isset($_GET['identifier'])) {
-	$identifier=$_GET['identifier'];
+if (isset($_GET['identifier'])) {
+	$identifier = $_GET['identifier'];
 }
 
 unset($_SESSION['WarnOnce']);
-if(!isset($_SESSION['Items'.$identifier]) OR !isset($_SESSION['Items'.$identifier]->DebtorNo)) {
+if (!isset($_SESSION['Items'.$identifier]) or !isset($_SESSION['Items'.$identifier]->DebtorNo)) {
 	prnMsg(__('This page can only be read if an order has been entered') . '. ' . __('To enter an order select customer transactions then sales order entry'),'error');
 	include('includes/footer.php');
 	exit();
 }
 
-if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
+if ($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 	prnMsg(__('This page can only be read if an there are items on the order') . '. ' . __('To enter an order select customer transactions then sales order entry'),'error');
 	include('includes/footer.php');
 	exit();
@@ -46,7 +46,7 @@ if($_SESSION['Items'.$identifier]->ItemsOrdered == 0) {
 
 $EarliestDispatch = CalcEarliestDispatchDate();
 
-if(isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
+if (isset($_POST['ProcessOrder']) or isset($_POST['MakeRecurringOrder'])) {
 
 	/*need to check for input errors in any case before order processed */
 	$_POST['Update']='Yes rerun the validation checks';//no need for gettext!
@@ -57,75 +57,74 @@ if(isset($_POST['ProcessOrder']) OR isset($_POST['MakeRecurringOrder'])) {
 
 }
 
-if(isset($_POST['Update'])
-	OR isset($_POST['BackToLineDetails'])
-	OR isset($_POST['MakeRecurringOrder'])) {
+if (isset($_POST['Update'])
+	or isset($_POST['BackToLineDetails'])
+	or isset($_POST['MakeRecurringOrder'])) {
 
 	$InputErrors =0;
-	if(mb_strlen($_POST['DeliverTo'])<=1) {
+	if (mb_strlen($_POST['DeliverTo'])<=1) {
 		$InputErrors =1;
 		prnMsg(__('You must enter the person or company to whom delivery should be made'),'error');
 	}
-	if(mb_strlen($_POST['BrAdd1'])<=1) {
+	if (mb_strlen($_POST['BrAdd1'])<=1) {
 		$InputErrors =1;
 		prnMsg(__('You should enter the street address in the box provided') . '. ' . __('Orders cannot be accepted without a valid street address'),'error');
 	}
-//	if(mb_strpos($_POST['BrAdd1'],__('Box'))>0) {
+//	if (mb_strpos($_POST['BrAdd1'],__('Box'))>0) {
 //		prnMsg(__('You have entered the word') . ' "' . __('Box') . '" ' . __('in the street address') . '. ' . __('Items cannot be delivered to') . ' ' .__('box') . ' ' . __('addresses'),'warn');
 //	}
-	if(!is_numeric($_POST['FreightCost'])) {
+	if (!is_numeric($_POST['FreightCost'])) {
 		$InputErrors =1;
 		prnMsg( __('The freight cost entered is expected to be numeric'),'error');
 	}
-	if(isset($_POST['MakeRecurringOrder']) AND $_POST['Quotation']==1) {
+	if (isset($_POST['MakeRecurringOrder']) and $_POST['Quotation']==1) {
 		$InputErrors =1;
 		prnMsg( __('A recurring order cannot be made from a quotation'),'error');
 	}
-	if(($_POST['DeliverBlind'])<=0) {
+	if (($_POST['DeliverBlind'])<=0) {
 		$InputErrors =1;
 		prnMsg(__('You must select the type of packlist to print'),'error');
 	}
 
-/*	if(mb_strlen($_POST['BrAdd3'])==0 OR !isset($_POST['BrAdd3'])) {
+/*	if (mb_strlen($_POST['BrAdd3']) == 0 or !isset($_POST['BrAdd3'])) {
 		$InputErrors =1;
 		echo "<br />A region or city must be entered.<br />";
 	}
 
 	Maybe appropriate in some installations but not here
-	if(mb_strlen($_POST['BrAdd2'])<=1) {
+	if (mb_strlen($_POST['BrAdd2'])<=1) {
 		$InputErrors =1;
 		echo "<br />You should enter the suburb in the box provided. Orders cannot be accepted without a valid suburb being entered.<br />";
 	}
 
 */
 // Check the date is OK
-	if(isset($_POST['DeliveryDate']) and !Is_Date($_POST['DeliveryDate'])) {
+	if (isset($_POST['DeliveryDate']) and !Is_Date($_POST['DeliveryDate'])) {
 		$InputErrors =1;
 		prnMsg(__('An invalid date entry was made') . '. ' . __('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
 // Check the date is OK
-	if(isset($_POST['QuoteDate']) and !Is_Date($_POST['QuoteDate'])) {
+	if (isset($_POST['QuoteDate']) and !Is_Date($_POST['QuoteDate'])) {
 		$InputErrors =1;
 		prnMsg(__('An invalid date entry was made') . '. ' . __('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
 // Check the date is OK
-	if(isset($_POST['ConfirmedDate']) and !Is_Date($_POST['ConfirmedDate'])) {
+	if (isset($_POST['ConfirmedDate']) and !Is_Date($_POST['ConfirmedDate'])) {
 		$InputErrors =1;
 		 prnMsg(__('An invalid date entry was made') . '. ' . __('The date entry must be in the format') . ' ' . $_SESSION['DefaultDateFormat'],'warn');
 	}
 
 	 /* This check is not appropriate where orders need to be entered in retrospectively in some cases this check will be appropriate and this should be uncommented
 
-	 elseif(Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])) {
+	 elseif (Date1GreaterThanDate2(date($_SESSION['DefaultDateFormat'],$EarliestDispatch), $_POST['DeliveryDate'])) {
 		$InputErrors =1;
 		echo '<br /><b>' . __('The delivery details cannot be updated because you are attempting to set the date the order is to be dispatched earlier than is possible. No dispatches are made on Saturday and Sunday. Also, the dispatch cut off time is') . $_SESSION['DispatchCutOffTime'] . __(':00 hrs. Orders placed after this time will be dispatched the following working day.');
 	}
 
 	*/
 
-	if($InputErrors==0) {
-
-		if($_SESSION['DoFreightCalc']==true) {
+	if ($InputErrors == 0) {
+	if ($_SESSION['DoFreightCalc']==true) {
 			list ($_POST['FreightCost'], $BestShipper) = CalcFreightCost($_SESSION['Items'.$identifier]->total,
 																		$_POST['BrAdd2'],
 																		$_POST['BrAdd3'],
@@ -136,10 +135,10 @@ if(isset($_POST['Update'])
 																		$_SESSION['Items'.$identifier]->totalWeight,
 																		$_SESSION['Items'.$identifier]->Location,
 																		$_SESSION['Items'.$identifier]->DefaultCurrency);
-			if( !empty($BestShipper) ) {
+			if ( !empty($BestShipper) ) {
 				$_POST['FreightCost'] = round($_POST['FreightCost'],2);
 				$_POST['ShipVia'] = $BestShipper;
-			} else {
+} else {
 				prnMsg(__($_POST['FreightCost']),'warn');
 			}
 		}
@@ -159,25 +158,25 @@ if(isset($_POST['Update'])
 					custbranch.estdeliverydays,
 					custbranch.salesman
 				FROM custbranch
-				WHERE custbranch.branchcode='" . $_SESSION['Items'.$identifier]->Branch . "'
-				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+				WHERE custbranch.branchcode = '" . $_SESSION['Items'.$identifier]->Branch . "'
+				and custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = __('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . __('cannot be retrieved because');
 		$Result = DB_query($SQL, $ErrMsg);
-		if(DB_num_rows($Result)==0) {
+		if (DB_num_rows($Result) == 0) {
 
 			prnMsg(__('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . __('against customer code') . ': ' . $_POST['Select'] . ' ' . __('could not be retrieved') . '. ' . __('Check the set up of the customer and branch'),'error');
 
 			include('includes/footer.php');
 			exit();
 		}
-		if(!isset($_POST['SpecialInstructions'])) {
+		if (!isset($_POST['SpecialInstructions'])) {
 			$_POST['SpecialInstructions']='';
 		}
-		if(!isset($_POST['DeliveryDays'])) {
+		if (!isset($_POST['DeliveryDays'])) {
 			$_POST['DeliveryDays']=0;
 		}
-		if(!isset($_SESSION['Items'.$identifier])) {
+		if (!isset($_SESSION['Items'.$identifier])) {
 			$MyRow = DB_fetch_row($Result);
 			$_SESSION['Items'.$identifier]->DeliverTo = $MyRow[0];
 			$_SESSION['Items'.$identifier]->DelAdd1 = $MyRow[1];
@@ -235,14 +234,14 @@ if(isset($_POST['Update'])
 		and show a link to set them up
 		- if shippers defined but the default shipper is bogus then use the first shipper defined
 		*/
-		if((isset($BestShipper) AND $BestShipper=='') AND ($_POST['ShipVia']=='' OR !isset($_POST['ShipVia']))) {
+		if ((isset($BestShipper) and $BestShipper == '') and ($_POST['ShipVia']=='' or !isset($_POST['ShipVia']))) {
 			$SQL = "SELECT shipper_id
 						FROM shippers
-						WHERE shipper_id='" . $_SESSION['Default_Shipper']."'";
+						WHERE shipper_id = '" . $_SESSION['Default_Shipper']."'";
 			$ErrMsg = __('There was a problem testing for the default shipper');
 			$TestShipperExists = DB_query($SQL, $ErrMsg);
 
-			if(DB_num_rows($TestShipperExists)==1) {
+			if (DB_num_rows($TestShipperExists) == 1) {
 
 				$BestShipper = $_SESSION['Default_Shipper'];
 
@@ -252,15 +251,15 @@ if(isset($_POST['Update'])
 							FROM shippers";
 				$TestShipperExists = DB_query($SQL, $ErrMsg);
 
-				if(DB_num_rows($TestShipperExists)>=1) {
+				if (DB_num_rows($TestShipperExists)>=1) {
 					$ShipperReturned = DB_fetch_row($TestShipperExists);
 					$BestShipper = $ShipperReturned[0];
 				} else {
 					prnMsg(__('We have a problem') . ' - ' . __('there are no shippers defined'). '. ' . __('Please use the link below to set up shipping or freight companies') . ', ' . __('the system expects the shipping company to be selected or a default freight company to be used'),'error');
-					echo '<a href="' . $RootPath . 'Shippers.php">' . __('Enter') . '/' . __('Amend Freight Companies') . '</a>';
+					echo '<a href = "' . $RootPath . 'Shippers.php">' . __('Enter') . '/' . __('Amend Freight Companies') . '</a>';
 				}
 			}
-			if(isset($_SESSION['Items'.$identifier]->ShipVia) AND $_SESSION['Items'.$identifier]->ShipVia!='') {
+			if (isset($_SESSION['Items'.$identifier]->ShipVia) and $_SESSION['Items'.$identifier]->ShipVia != '') {
 				$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 			} else {
 				$_POST['ShipVia']=$BestShipper;
@@ -269,63 +268,60 @@ if(isset($_POST['Update'])
 	}
 }
 
-if(isset($_POST['MakeRecurringOrder']) AND ! $InputErrors) {
+if (isset($_POST['MakeRecurringOrder']) and ! $InputErrors) {
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/RecurringSalesOrders.php?identifier='.$identifier  . '&amp;NewRecurringOrder=Yes">';
-	prnMsg(__('You should automatically be forwarded to the entry of recurring order details page') . '. ' . __('If this does not happen') . '(' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/RecurringOrders.php?identifier='.$identifier . '&amp;NewRecurringOrder=Yes">' . __('click here') . '</a> '. __('to continue'),'info');
+	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/RecurringSalesOrders.php?identifier = '.$identifier  . '&amp;NewRecurringOrder = Yes">';
+	prnMsg(__('You should automatically be forwarded to the entry of recurring order details page') . '. ' . __('If this does not happen') . '(' . __('if the browser does not support META Refresh') . ') ' . '<a href = "' . $RootPath . '/RecurringOrders.php?identifier = '.$identifier . '&amp;NewRecurringOrder = Yes">' . __('click here') . '</a> '. __('to continue'),'info');
 	include('includes/footer.php');
 	exit();
 }
 
 
-if(isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==__('Modify Order Lines')) {
+if (isset($_POST['BackToLineDetails']) and $_POST['BackToLineDetails']==__('Modify Order Lines')) {
 
-	echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier  . '">';
-	prnMsg(__('You should automatically be forwarded to the entry of the order line details page') . '. ' . __('If this does not happen') . '(' . __('if the browser does not support META Refresh') . ') ' . '<a href="' . $RootPath . '/SelectOrderItems.php?identifier='.$identifier . '">' . __('click here') . '</a> '. __('to continue'),'info');
+	echo '<meta http-equiv = "Refresh" content = "0; url = ' . $RootPath . '/SelectOrderItems.php?identifier = '.$identifier  . '">';
+	prnMsg(__('You should automatically be forwarded to the entry of the order line details page') . '. ' . __('If this does not happen') . '(' . __('if the browser does not support META Refresh') . ') ' . '<a href = "' . $RootPath . '/SelectOrderItems.php?identifier = '.$identifier . '">' . __('click here') . '</a> '. __('to continue'),'info');
 	include('includes/footer.php');
 	exit();
 
 }
 
-if(isset($_POST['ProcessOrder'])) {
+if (isset($_POST['ProcessOrder'])) {
 	/*Default OK_to_PROCESS to 1 change to 0 later if hit a snag */
-	if($InputErrors ==0) {
-		$OK_to_PROCESS = 1;
-	}
-	if($_POST['FreightCost'] != $OldFreightCost AND $_SESSION['DoFreightCalc']==true) {
-		$OK_to_PROCESS = 0;
+	if ($InputErrors ==0) {
+	$OK_to_PROCESS = 1;
+}
+	if ($_POST['FreightCost'] != $OldFreightCost and $_SESSION['DoFreightCalc']==true) {
+	$OK_to_PROCESS = 0;
 		prnMsg(__('The freight charge has been updated') . '. ' . __('Please reconfirm that the order and the freight charges are acceptable and then confirm the order again if OK') .' <br /> '. __('The new freight cost is') .' ' . $_POST['FreightCost'] . ' ' . __('and the previously calculated freight cost was') .' '. $OldFreightCost,'warn');
-	} else {
+} else {
 
 /*check the customer's payment terms */
 		$SQL = "SELECT daysbeforedue,
 				dayinfollowingmonth
 			FROM debtorsmaster,
 				paymentterms
-			WHERE debtorsmaster.paymentterms=paymentterms.termsindicator
-			AND debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
+			WHERE debtorsmaster.paymentterms = paymentterms.termsindicator
+			and debtorsmaster.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
 
 		$ErrMsg = __('The customer terms cannot be determined') . '. ' . __('This order cannot be processed because');
 		$TermsResult = DB_query($SQL, $ErrMsg);
 
 		$MyRow = DB_fetch_array($TermsResult);
-		if($MyRow['daysbeforedue']==0 AND $MyRow['dayinfollowingmonth']==0) {
-
-/* THIS IS A CASH SALE NEED TO GO OFF TO 3RD PARTY SITE SENDING MERCHANT ACCOUNT DETAILS AND CHECK FOR APPROVAL FROM 3RD PARTY SITE BEFORE CONTINUING TO PROCESS THE ORDER
+		if ($MyRow['daysbeforedue']==0 and $MyRow['dayinfollowingmonth']==0) {
+	/* THIS IS A CASH SALE NEED TO GO OFF TO 3RD PARTY SITE SENDING MERCHANT ACCOUNT DETAILS and CHECK for APPROVAL FROM 3RD PARTY SITE BEFORE CONTINUING TO PROCESS THE ORDER
 
 UNTIL ONLINE CREDIT CARD PROCESSING IS PERFORMED ASSUME OK TO PROCESS
 
-		NOT YET CODED   */
+		not YET CODED   */
 
 			$OK_to_PROCESS =1;
-
-
-		} #end if cash sale detected
+} #end if cash sale detected
 
 	} #end if else freight charge not altered
 } #end if process order
 
-if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$identifier]==0) {
+if (isset($OK_to_PROCESS) and $OK_to_PROCESS == 1 and $_SESSION['ExistingOrder'.$identifier]==0) {
 
 /* finally write the order header to the database and then the order line details */
 
@@ -426,9 +422,10 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		 * 			and AutoCreateWOs is on
 		 * 			and it is a real order (not just a quotation)*/
 
-		if($StockItem->MBflag=='M'
-			AND $_SESSION['AutoCreateWOs']==1
-			AND $_SESSION['Items'.$identifier]->Quotation!=1) {//oh yeah its all on!
+		if($StockItem->MBflag == 'M'
+			and $_SESSION['AutoCreateWOs']==1
+			and $_SESSION['Items'.$identifier]->Quotation != 1) {
+	//oh yeah its all on!
 
 			echo '<br />';
 
@@ -442,11 +439,11 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			//Now we have the data - do we need to make any more?
 			$ShortfallQuantity = $QOH-$QuantityDemand+$QuantityOnOrder;
 
-			if($ShortfallQuantity < 0) {//then we need to make a work order
+			if ($ShortfallQuantity < 0) {//then we need to make a work order
 				//How many should the work order be for??
-				if($ShortfallQuantity + $StockItem->EOQ < 0) {
+				if ($ShortfallQuantity + $StockItem->EOQ < 0) {
 					$WOQuantity = -$ShortfallQuantity;
-				} else {
+} else {
 					$WOQuantity = $StockItem->EOQ;
 				}
 
@@ -464,13 +461,13 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										'',
 										true);
 				//Need to get the latest BOM to roll up cost
-				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
+				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) as cost
 													FROM stockmaster INNER JOIN bom
-													ON stockmaster.stockid=bom.component
-													WHERE bom.parent='" . $StockItem->StockID . "'
-													AND bom.loccode='" . $_SESSION['DefaultFactoryLocation'] . "'");
+													ON stockmaster.stockid = bom.component
+													WHERE bom.parent = '" . $StockItem->StockID . "'
+													and bom.loccode = '" . $_SESSION['DefaultFactoryLocation'] . "'");
 				$CostRow = DB_fetch_row($CostResult);
-				if(is_null($CostRow[0]) OR $CostRow[0]==0) {
+				if (is_null($CostRow[0]) or $CostRow[0]==0) {
 					$Cost =0;
 					prnMsg(__('In automatically creating a work order for') . ' ' . $StockItem->StockID . ' ' . __('an item on this sales order, the cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
 				} else {
@@ -496,19 +493,19 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 									":\n" . $StockItem->StockID . ' - ' . $StockItem->ItemDescription . ' x ' . $WOQuantity . ' ' . $StockItem->Units .
 									"\n" . __('These are for') . ' ' . $_SESSION['Items'.$identifier]->CustomerName . ' ' . __('there order ref') . ': ' . $_SESSION['Items'.$identifier]->CustRef . ' ' .__('our order number') . ': ' . $OrderNo;
 
-				if($StockItem->Serialised AND $StockItem->NextSerialNo>0) {
-						//then we must create the serial numbers for the new WO also
+				if ($StockItem->Serialised and $StockItem->NextSerialNo>0) {
+	//then we must create the serial numbers for the new WO also
 						$FactoryManagerEmail .= "\n" . __('The following serial numbers have been reserved for this work order') . ':';
 
-						for ($i=0;$i<$WOQuantity;$i++) {
+						for ($i = 0; $i<$WOQuantity; $i++) {
 
 							$Result = DB_query("SELECT serialno FROM stockserialitems
-												WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
-												AND stockid='" . $StockItem->StockID ."'");
-							if(DB_num_rows($Result)!=0) {
+												WHERE serialno = '" . ($StockItem->NextSerialNo + $i) . "'
+												and stockid = '" . $StockItem->StockID ."'");
+							if (DB_num_rows($Result) != 0) {
 								$WOQuantity++;
 								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . __('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
-							} else {
+} else {
 								$SQL = "INSERT INTO woserialnos (wo,
 																stockid,
 																serialno)
@@ -522,7 +519,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 						}//end loop around creation of woserialnos
 						$NewNextSerialNo = ($StockItem->NextSerialNo + $WOQuantity +1);
 						$ErrMsg = __('Could not update the new next serial number for the item');
-						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno='" . $NewNextSerialNo . "' WHERE stockid='" . $StockItem->StockID . "'", $ErrMsg, '', true);
+						$UpdateNextSerialNoResult = DB_query("UPDATE stockmaster SET nextserialno = '" . $NewNextSerialNo . "' WHERE stockid = '" . $StockItem->StockID . "'", $ErrMsg, '', true);
 				}// end if the item is serialised and nextserialno is set
 
 				$EmailSubject = __('New Work Order Number') . ' ' . $WONo . ' ' . __('for') . ' ' . $StockItem->StockID . ' x ' . $WOQuantity;
@@ -540,52 +537,52 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 	 DB_Txn_Commit();
 	echo '<br />';
-	if($_SESSION['Items'.$identifier]->Quotation==1) {
-		prnMsg(__('Quotation Number') . ' ' . $OrderNo . ' ' . __('has been entered'),'success');
-	} else {
+	if ($_SESSION['Items'.$identifier]->Quotation == 1) {
+	prnMsg(__('Quotation Number') . ' ' . $OrderNo . ' ' . __('has been entered'),'success');
+} else {
 		prnMsg(__('Order Number') . ' ' . $OrderNo . ' ' . __('has been entered'),'success');
 	}
 
-	if(count($_SESSION['AllowedPageSecurityTokens'])>1) {
+	if (count($_SESSION['AllowedPageSecurityTokens'])>1) {
 		/* Only allow print of packing slip for internal staff - customer logon's cannot go here */
 
-		if($_POST['Quotation']==0) { /*then its not a quotation its a real order */
+		if ($_POST['Quotation']==0) {
+	/*then its not a quotation its a real order */
 
 			echo '<fieldset>
 					<tr>
-						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" /></td>
-						<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' . __('Print packing slip') . ' (' . __('Preprinted stationery') . ')' . '</a></td>
+						<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" /></td>
+						<td>' . ' ' . '<a target = "_blank" href = "' . $RootPath . '/PrintCustOrder.php?identifier = '.$identifier . '&amp;TransNo = ' . $OrderNo . '">' . __('Print packing slip') . ' (' . __('Preprinted stationery') . ')' . '</a></td>
 					</tr>';
 			echo '<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" /></td>
-					<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' . __('Print packing slip') . ' (' . __('Laser') . ')' . '</a></td>
+					<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" /></td>
+					<td>' . ' ' . '<a target = "_blank" href = "' . $RootPath . '/PrintCustOrder_generic.php?identifier = '.$identifier . '&amp;TransNo = ' . $OrderNo . '">' . __('Print packing slip') . ' (' . __('Laser') . ')' . '</a></td>
 				</tr>';
 
 			echo '<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . __('Invoice') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&amp;OrderNumber=' . $OrderNo .'">' . __('Confirm Dispatch and Produce Invoice') . '</a></td>
+					<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/reports.png" title = "' . __('Invoice') . '" alt = "" /></td>
+					<td>' . ' ' . '<a href = "' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier = '.$identifier . '&amp;OrderNumber = ' . $OrderNo .'">' . __('Confirm Dispatch and Produce Invoice') . '</a></td>
 				</tr>';
 
 			echo '</fieldset>';
-
-		} else {
+} else {
 			/*link to print the quotation */
 			echo '<fieldset>
 					<tr>
-						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt=""></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '&orientation=landscape" target="_blank">' . __('Print Quotation (Landscape)') . '</a></td>
+						<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Order') . '" alt = ""></td>
+						<td>' . ' ' . '<a href = "' . $RootPath . '/PDFQuotation.php?identifier = '.$identifier . '&amp;QuotationNo = ' . $OrderNo . '&orientation = landscape" target = "_blank">' . __('Print Quotation (Landscape)') . '</a></td>
 					</tr>';
 			echo '<fieldset>
 					<tr>
-						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt="" /></td>
-						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '&orientation=portrait" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
+						<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Order') . '" alt = "" /></td>
+						<td>' . ' ' . '<a href = "' . $RootPath . '/PDFQuotation.php?identifier = '.$identifier . '&amp;QuotationNo = ' . $OrderNo . '&orientation = portrait" target = "_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
 					</tr>
 					</fieldset>';
 		}
 		echo '<fieldset>
 				<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="'. $RootPath .'/SelectOrderItems.php?identifier='.$identifier . '&amp;NewOrder=Yes">' .  __('Add Another Sales Order')  . '</a></td>
+					<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/sales.png" title = "' . __('Order') . '" alt = "" /></td>
+					<td>' . ' ' . '<a href = "'. $RootPath .'/SelectOrderItems.php?identifier = '.$identifier . '&amp;NewOrder = Yes">' .  __('Add Another Sales Order')  . '</a></td>
 				</tr>
 				</fieldset>
 					</table>';
@@ -599,7 +596,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	include('includes/footer.php');
 	exit();
 
-} elseif(isset($OK_to_PROCESS) AND ($OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$identifier]!=0)) {
+} elseif (isset($OK_to_PROCESS) and ($OK_to_PROCESS == 1 and $_SESSION['ExistingOrder'.$identifier]!=0)) {
 
 /* update the order header then update the old order line details and insert the new lines */
 
@@ -610,18 +607,19 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	DB_Txn_Begin();
 
 	/*see if this is a contract quotation being changed to an order? */
-	if($_SESSION['Items'.$identifier]->Quotation==0) {//now its being changed? to an order
+	if ($_SESSION['Items'.$identifier]->Quotation == 0) {
+	//now its being changed? to an order
 		$ContractResult = DB_query("SELECT contractref,
 											requireddate
-									FROM contracts WHERE orderno='" .  $_SESSION['ExistingOrder'.$identifier] ."'
-									AND status=1");
-		if(DB_num_rows($ContractResult)==1) {//then it is a contract quotation being changed to an order
+									FROM contracts WHERE orderno = '" .  $_SESSION['ExistingOrder'.$identifier] ."'
+									and status = 1");
+		if (DB_num_rows($ContractResult) == 1) {//then it is a contract quotation being changed to an order
 			$ContractRow = DB_fetch_array($ContractResult);
 			$WONo = GetNextTransNo(40);
 			$ErrMsg = __('Could not update the contract status');
-			$UpdContractResult = DB_query("UPDATE contracts SET status=2,
-															wo='" . $WONo . "'
-										WHERE orderno='" .$_SESSION['ExistingOrder'.$identifier] . "'",
+			$UpdContractResult = DB_query("UPDATE contracts SET status = 2,
+															wo = '" . $WONo . "'
+										WHERE orderno = '" .$_SESSION['ExistingOrder'.$identifier] . "'",
 										$ErrMsg,
 										'',
 										true);
@@ -641,7 +639,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													'2099-12-31',
 													quantity
 											FROM contractbom
-											WHERE contractref='" . $ContractRow['contractref'] . "'",
+											WHERE contractref = '" . $ContractRow['contractref'] . "'",
 											$ErrMsg);
 
 			$ErrMsg = __('Unable to insert a new work order for the sales order item');
@@ -655,20 +653,20 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													'" . date('Y-m-d'). "')",
 										$ErrMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
-			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) AS cost
+			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) as cost
 									FROM stockmaster INNER JOIN contractbom
-									ON stockmaster.stockid=contractbom.stockid
-									WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'");
+									ON stockmaster.stockid = contractbom.stockid
+									WHERE contractbom.contractref = '" .  $ContractRow['contractref'] . "'");
 			$CostRow = DB_fetch_row($CostResult);
-			if(is_null($CostRow[0]) OR $CostRow[0]==0) {
+			if (is_null($CostRow[0]) or $CostRow[0]==0) {
 				$Cost =0;
 				prnMsg(__('In automatically creating a work order for') . ' ' . $ContractRow['contractref'] . ' ' . __('an item on this sales order, the cost of this item as accumulated from the sum of the component costs is nil. This could be because there is no bill of material set up ... you may wish to double check this'),'warn');
-			} else {
+} else {
 				$Cost = $CostRow[0];//cost of contract BOM
 			}
-			$CostResult = DB_query("SELECT SUM(costperunit*quantity) AS cost
+			$CostResult = DB_query("SELECT SUM(costperunit*quantity) as cost
 									FROM contractreqts
-									WHERE contractreqts.contractref='" .  $ContractRow['contractref'] . "'");
+									WHERE contractreqts.contractref = '" .  $ContractRow['contractref'] . "'");
 			$CostRow = DB_fetch_row($CostResult);
 			//add other requirements cost to cost of contract BOM
 			$Cost += $CostRow[0];
@@ -716,7 +714,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										printedpackingslip = '" . $_POST['ReprintPackingSlip'] . "',
 										quotation = '" . $_SESSION['Items'.$identifier]->Quotation . "',
 										deliverblind = '" . $_SESSION['Items'.$identifier]->DeliverBlind . "'
-						WHERE salesorders.orderno='" . $_SESSION['ExistingOrder'.$identifier] ."'";
+						WHERE salesorders.orderno = '" . $_SESSION['ExistingOrder'.$identifier] ."'";
 
 	$ErrMsg = __('The order cannot be updated because');
 	$InsertQryResult = DB_query($HeaderSQL, $ErrMsg, '', true);
@@ -725,20 +723,20 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 		/* Check to see if the quantity reduced to the same quantity
 		as already invoiced - so should set the line to completed */
-		if($StockItem->Quantity == $StockItem->QtyInv) {
-			$Completed = 1;
-		} else {  /* order line is not complete */
+		if ($StockItem->Quantity == $StockItem->QtyInv) {
+	$Completed = 1;
+} else {  /* order line is not complete */
 			$Completed = 0;
 		}
 
-		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice='"  . $StockItem->Price . "',
-													quantity='" . $StockItem->Quantity . "',
-													discountpercent='" . floatval($StockItem->DiscountPercent) . "',
-													completed='" . $Completed . "',
-													poline='" . $StockItem->POLine . "',
-													itemdue='" . FormatDateForSQL($StockItem->ItemDue) . "'
-						WHERE salesorderdetails.orderno='" . $_SESSION['ExistingOrder'.$identifier] . "'
-						AND salesorderdetails.orderlineno='" . $StockItem->LineNumber . "'";
+		$LineItemsSQL = "UPDATE salesorderdetails SET unitprice = '"  . $StockItem->Price . "',
+													quantity = '" . $StockItem->Quantity . "',
+													discountpercent = '" . floatval($StockItem->DiscountPercent) . "',
+													completed = '" . $Completed . "',
+													poline = '" . $StockItem->POLine . "',
+													itemdue = '" . FormatDateForSQL($StockItem->ItemDue) . "'
+						WHERE salesorderdetails.orderno = '" . $_SESSION['ExistingOrder'.$identifier] . "'
+						and salesorderdetails.orderlineno = '" . $StockItem->LineNumber . "'";
 
 		$ErrMsg = __('The updated order line cannot be modified because');
 		$Upd_LineItemResult = DB_query($LineItemsSQL, $ErrMsg, '', true);
@@ -750,42 +748,43 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	unset($_SESSION['Items'.$identifier]->LineItems);
 	unset($_SESSION['Items'.$identifier]);
 
-	if($Quotation) {//handle Quotations and Orders print after modification
+	if ($Quotation) {
+	//handle Quotations and Orders print after modification
 		prnMsg(__('Quotation Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . __('has been updated'),'success');
 
 		/*link to print the quotation */
 		echo '<fieldset>
 				<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt=""></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '&orientation=landscape" target="_blank">' .  __('Print Quotation (Landscape)')  . '</a></td>
+					<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Order') . '" alt = ""></td>
+					<td>' . ' ' . '<a href = "' . $RootPath . '/PDFQuotation.php?identifier = '.$identifier . '&amp;QuotationNo = ' . $_SESSION['ExistingOrder'.$identifier] . '&orientation = landscape" target = "_blank">' .  __('Print Quotation (Landscape)')  . '</a></td>
 				</tr>
 				</fieldset>';
 		echo '<fieldset>
 				<tr>
-					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Order') . '" alt="" /></td>
-					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '&orientation=portrait" target="_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
+					<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Order') . '" alt = "" /></td>
+					<td>' . ' ' . '<a href = "' . $RootPath . '/PDFQuotation.php?identifier = '.$identifier . '&amp;QuotationNo = ' . $_SESSION['ExistingOrder'.$identifier] . '&orientation = portrait" target = "_blank">' .  __('Print Quotation (Portrait)')  . '</a></td>
 				</tr>
 				</fieldset>';
-	} else {
+} else {
 
 	prnMsg(__('Order Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . __('has been updated'),'success');
 
 	echo '<fieldset>
 			<tr>
-			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" /></td>
-			<td><a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier  . '&amp;TransNo=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Print packing slip - pre-printed stationery')  . '</a></td>
+			<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" /></td>
+			<td><a target = "_blank" href = "' . $RootPath . '/PrintCustOrder.php?identifier = '.$identifier  . '&amp;TransNo = ' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Print packing slip - pre-printed stationery')  . '</a></td>
 			</tr>';
 	echo '<tr>
-			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . __('Print') . '" alt="" /></td>
-			<td><a  target="_blank" href="' . $RootPath . '/PrintCustOrder_generic.php?identifier='.$identifier  . '&amp;TransNo=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Print packing slip') . ' (' . __('Laser') . ')'  . '</a></td>
+			<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/printer.png" title = "' . __('Print') . '" alt = "" /></td>
+			<td><a  target = "_blank" href = "' . $RootPath . '/PrintCustOrder_generic.php?identifier = '.$identifier  . '&amp;TransNo = ' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Print packing slip') . ' (' . __('Laser') . ')'  . '</a></td>
 		</tr>';
 	echo '<tr>
-			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . __('Invoice') . '" alt="" /></td>
-			<td><a href="' . $RootPath .'/ConfirmDispatch_Invoice.php?identifier='.$identifier  . '&amp;OrderNumber=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Confirm Order Delivery Quantities and Produce Invoice')  . '</a></td>
+			<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/reports.png" title = "' . __('Invoice') . '" alt = "" /></td>
+			<td><a href = "' . $RootPath .'/ConfirmDispatch_Invoice.php?identifier = '.$identifier  . '&amp;OrderNumber = ' . $_SESSION['ExistingOrder'.$identifier] . '">' .  __('Confirm Order Delivery Quantities and Produce Invoice')  . '</a></td>
 		</tr>';
 	echo '<tr>
-			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . __('Order') . '" alt="" /></td>
-			<td><a href="' . $RootPath .'/SelectSalesOrder.php?identifier='.$identifier   . '">' .  __('Select A Different Order')  . '</a></td>
+			<td><img src = "'.$RootPath.'/css/'.$Theme.'/images/sales.png" title = "' . __('Order') . '" alt = "" /></td>
+			<td><a href = "' . $RootPath .'/SelectSalesOrder.php?identifier = '.$identifier   . '">' .  __('Select A Different Order')  . '</a></td>
 		</tr>
 		</fieldset>';
 	}//end of print orders
@@ -794,28 +793,28 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 }
 
 
-if(isset($_SESSION['Items'.$identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
+if (isset($_SESSION['Items'.$identifier]->SpecialInstructions) and mb_strlen($_SESSION['Items'.$identifier]->SpecialInstructions)>0) {
 	prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'info');
 }
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Delivery') . '" alt="" />' . ' ' . __('Delivery Details') . '</p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Delivery') . '" alt = "" />' . ' ' . __('Delivery Details') . '</p>';
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . __('Customer') . '" alt="" />' . ' ' . __('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo . '<br />';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/customer.png" title = "' . __('Customer') . '" alt = "" />' . ' ' . __('Customer Code') . ' :<b> ' . $_SESSION['Items'.$identifier]->DebtorNo . '<br />';
 echo '</b>&nbsp;' . __('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></p>';
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier = ' . urlencode($identifier) . '" method = "post">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 
 /*Display the order with or without discount depending on access level*/
-if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
+if (in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 
 	echo '<table>';
 
-	if($_SESSION['Items'.$identifier]->Quotation==1) {
-		echo '<tr><th colspan="7">' . __('Quotation Summary') . '</th></tr>';
-	} else {
-		echo '<tr><th colspan="7">' . __('Order Summary') . '</th></tr>';
+	if ($_SESSION['Items'.$identifier]->Quotation == 1) {
+	echo '<tr><th colspan = "7">' . __('Quotation Summary') . '</th></tr>';
+} else {
+		echo '<tr><th colspan = "7">' . __('Order Summary') . '</th></tr>';
 	}
 	echo '<tr>
 				<th>' .  __('Item Code')  . '</th>
@@ -840,14 +839,14 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>' . $StockItem->StockID . '</td>
-			<td title="' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
-			<td class="number">' . $DisplayQuantity . '</td>
+			<td title = "' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
+			<td class = "number">' . $DisplayQuantity . '</td>
 			<td>' . $StockItem->Units . '</td>
-			<td class="number">' . $DisplayPrice . '</td>
-			<td class="number">' . $DisplayDiscount . '</td>
-			<td class="number">' . $DisplayLineTotal . '</td>
+			<td class = "number">' . $DisplayPrice . '</td>
+			<td class = "number">' . $DisplayDiscount . '</td>
+			<td class = "number">' . $DisplayLineTotal . '</td>
 		</tr>';
 
 		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
@@ -856,9 +855,9 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
-	echo '<tr class="striped_row">
-			<td colspan="6" class="number"><b>' .  __('TOTAL Excl Tax/Freight')  . '</b></td>
-			<td class="number">' . $DisplayTotal . '</td>
+	echo '<tr class = "striped_row">
+			<td colspan = "6" class = "number"><b>' .  __('TOTAL Excl Tax/Freight')  . '</b></td>
+			<td class = "number">' . $DisplayTotal . '</td>
 		</tr>
 		</table>';
 
@@ -866,11 +865,11 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<br />
 		<table>
-		<tr class="striped_row">
+		<tr class = "striped_row">
 			<td>' .  __('Total Weight') .':</td>
-			<td class="number">' . $DisplayWeight . '</td>
+			<td class = "number">' . $DisplayWeight . '</td>
 			<td>' .  __('Total Volume') .':</td>
-			<td class="number">' . $DisplayVolume . '</td>
+			<td class = "number">' . $DisplayVolume . '</td>
 		</tr>
 		</table>';
 
@@ -878,8 +877,8 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 
 /*Display the order without discount */
 
-	echo '<div class="centre"><b>' . __('Order Summary') . '</b></div>
-	<table class="selection">
+	echo '<div class = "centre"><b>' . __('Order Summary') . '</b></div>
+	<table class = "selection">
 	<tr>
 		<th>' .  __('Item Description')  . '</th>
 		<th>' .  __('Quantity')  . '</th>
@@ -899,12 +898,12 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>' . $StockItem->ItemDescription  . '</td>
-				<td class="number">' . $DisplayQuantity . '</td>
+				<td class = "number">' . $DisplayQuantity . '</td>
 				<td>' . $StockItem->Units . '</td>
-				<td class="number">' . $DisplayPrice . '</td>
-				<td class="number">' . $DisplayLineTotal . '</font></td>
+				<td class = "number">' . $DisplayPrice . '</td>
+				<td class = "number">' . $DisplayLineTotal . '</font></td>
 			</tr>';
 
 		$_SESSION['Items'.$identifier]->total = $_SESSION['Items'.$identifier]->total + $LineTotal;
@@ -917,7 +916,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 
 	$DisplayVolume = locale_number_format($_SESSION['Items'.$identifier]->totalVolume,5);
 	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<td>' . __('Total Weight') . ':</td>
 				<td>' . $DisplayWeight . '</td>
@@ -930,137 +929,137 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 
 echo '<fieldset>
 		<field>
-			<label for="DeliverTo">' .  __('Deliver To') .':</label>
-			<input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' .  stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" title="' . __('Enter the name of the customer to deliver this order to') . '" />
+			<label for = "DeliverTo">' .  __('Deliver To') .':</label>
+			<input type = "text" autofocus = "autofocus" required = "required" size = "42" maxlength = "40" name = "DeliverTo" value = "' .  stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" title = "' . __('Enter the name of the customer to deliver this order to') . '" />
 		</field>';
 
 echo '<field>
-		<label for="Location">', __('Deliver from the warehouse at'), ':</label>
-		<select name="Location">';
+		<label for = "Location">', __('Deliver from the warehouse at'), ':</label>
+		<select name = "Location">';
 
-if($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$identifier]->Location)) {
+if ($_SESSION['Items'.$identifier]->Location == '' or !isset($_SESSION['Items'.$identifier]->Location)) {
 	$_SESSION['Items'.$identifier]->Location = $DefaultStockLocation;
 }
 
 $SQL = "SELECT locations.loccode, locationname
 	FROM locations
 	INNER JOIN locationusers
-	ON locationusers.loccode=locations.loccode
-		AND locationusers.userid='" . $_SESSION['UserID'] . "'
-		AND locationusers.canupd=1
-	WHERE locations.allowinvoicing='1'
+	ON locationusers.loccode = locations.loccode
+		and locationusers.userid = '" . $_SESSION['UserID'] . "'
+		and locationusers.canupd = 1
+	WHERE locations.allowinvoicing = '1'
 	ORDER BY locations.locationname";
 $ErrMsg = __('The stock locations could not be retrieved');
 $StkLocsResult = DB_query($SQL, $ErrMsg);
 // COMMENT: What if there is no authorized locations available for this user?
-while($MyRow=DB_fetch_array($StkLocsResult)) {
-	echo '<option', ($_SESSION['Items'.$identifier]->Location==$MyRow['loccode'] ? ' selected="selected"' : ''), ' value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+while ($MyRow = DB_fetch_array($StkLocsResult)) {
+	echo '<option', ($_SESSION['Items'.$identifier]->Location == $MyRow['loccode'] ? ' selected = "selected"' : ''), ' value = "', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 }
 echo '</select>
 	</field>';
 
 // Set the default date to earliest possible date if not set already
-if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
+if (!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
 	$_SESSION['Items'.$identifier]->DeliveryDate = date('Y-m-d',$EarliestDispatch);
 }
-if(!isset($_SESSION['Items'.$identifier]->QuoteDate)) {
+if (!isset($_SESSION['Items'.$identifier]->QuoteDate)) {
 	$_SESSION['Items'.$identifier]->QuoteDate = date('Y-m-d',$EarliestDispatch);
 }
-if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
+if (!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 	$_SESSION['Items'.$identifier]->ConfirmedDate = date('Y-m-d',$EarliestDispatch);
 }
 
 // The estimated Dispatch date or Delivery date for this order
 echo '<field>
-		<label for="DeliveryDate">' .  __('Estimated Delivery Date') .':</label>
-		<input type="date" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
+		<label for = "DeliveryDate">' .  __('Estimated Delivery Date') .':</label>
+		<input type = "date" size = "11" maxlength = "10" name = "DeliveryDate" value = "' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title = ""/>
 		<fieldhelp>' . __('Enter the estimated delivery date requested by the customer') . '</fieldhelp>
 	</field>';
 // The date when a quote was issued to the customer
 echo '<field>
-		<label for="QuoteDate">' .  __('Quote Date') .':</label>
-		<input type="date" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
+		<label for = "QuoteDate">' .  __('Quote Date') .':</label>
+		<input type = "date" size = "11" maxlength = "10" name = "QuoteDate" value = "' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
 	</field>';
 // The date when the customer confirmed their order
 echo '<field>
-		<label for="ConfirmedDate">' .  __('Confirmed Order Date') .':</label>
-		<input type="date" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
+		<label for = "ConfirmedDate">' .  __('Confirmed Order Date') .':</label>
+		<input type = "date" size = "11" maxlength = "10" name = "ConfirmedDate" value = "' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
 	</field>
 	<field>
-		<label for="BrAdd1">' .  __('Delivery Address 1 (Street)') . ':</label>
-		<input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '" />
+		<label for = "BrAdd1">' .  __('Delivery Address 1 (Street)') . ':</label>
+		<input type = "text" size = "42" maxlength = "40" name = "BrAdd1" value = "' . $_SESSION['Items'.$identifier]->DelAdd1 . '" />
 	</field>
 	<field>
-		<label for="BrAdd2">' .  __('Delivery Address 2 (Street)') . ':</label>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '" /></td>
+		<label for = "BrAdd2">' .  __('Delivery Address 2 (Street)') . ':</label>
+		<td><input type = "text" size = "42" maxlength = "40" name = "BrAdd2" value = "' . $_SESSION['Items'.$identifier]->DelAdd2 . '" /></td>
 	</field>
 	<field>
-		<label for="BrAdd3">' .  __('Delivery Address 3 (Suburb/City)') . ':</label>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '" /></td>
+		<label for = "BrAdd3">' .  __('Delivery Address 3 (Suburb/City)') . ':</label>
+		<td><input type = "text" size = "42" maxlength = "40" name = "BrAdd3" value = "' . $_SESSION['Items'.$identifier]->DelAdd3 . '" /></td>
 	</field>
 	<field>
-		<label for="BrAdd4">' .  __('Delivery Address 4 (State/Province)') . ':</label>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items'.$identifier]->DelAdd4 . '" /></td>
+		<label for = "BrAdd4">' .  __('Delivery Address 4 (State/Province)') . ':</label>
+		<td><input type = "text" size = "42" maxlength = "40" name = "BrAdd4" value = "' . $_SESSION['Items'.$identifier]->DelAdd4 . '" /></td>
 	</field>
 	<field>
-		<label for="BrAdd5">' .  __('Delivery Address 5 (Postal Code)') . ':</label>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items'.$identifier]->DelAdd5 . '" /></td>
+		<label for = "BrAdd5">' .  __('Delivery Address 5 (Postal Code)') . ':</label>
+		<td><input type = "text" size = "42" maxlength = "40" name = "BrAdd5" value = "' . $_SESSION['Items'.$identifier]->DelAdd5 . '" /></td>
 	</field>';
 echo '<field>
-		<label for="BrAdd6">' . __('Country') . ':</label>
-		<select name="BrAdd6">';
+		<label for = "BrAdd6">' . __('Country') . ':</label>
+		<select name = "BrAdd6">';
 foreach ($CountriesArray as $CountryEntry => $CountryName) {
-	if(isset($_POST['BrAdd6']) AND (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))) {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
-	} elseif(!isset($_POST['BrAdd6']) AND $CountryName == $_SESSION['Items'.$identifier]->DelAdd6) {
-		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
+	if (isset($_POST['BrAdd6']) and (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))) {
+		echo '<option selected = "selected" value = "' . $CountryName . '">' . $CountryName  . '</option>';
+	} elseif (!isset($_POST['BrAdd6']) and $CountryName == $_SESSION['Items'.$identifier]->DelAdd6) {
+		echo '<option selected = "selected" value = "' . $CountryName . '">' . $CountryName  . '</option>';
 	} else {
-		echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
+		echo '<option value = "' . $CountryName . '">' . $CountryName  . '</option>';
 	}
 }
 echo '</select>
 	</field>';
 
 echo'<field>
-		<label for="PhoneNo">' .  __('Contact Phone Number') .':</label>
-		<input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="" />
+		<label for = "PhoneNo">' .  __('Contact Phone Number') .':</label>
+		<input type = "tel" size = "25" maxlength = "25" required = "required" name = "PhoneNo" value = "' . $_SESSION['Items'.$identifier]->PhoneNo . '" title = "" />
 		<fieldhelp>' . __('Enter the telephone number of the contact at the delivery address.') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="Email">' . __('Contact Email') . ':</label>
-		<input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" title="" />
+		<label for = "Email">' . __('Contact Email') . ':</label>
+		<input type = "email" size = "40" maxlength = "38" name = "Email" value = "' . $_SESSION['Items'.$identifier]->Email . '" title = "" />
 		<fieldhelp>' . __('Enter the email address of the contact at the delivery address') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="CustRef">' .  __('Customer Reference') .':</label>
-		<input type="text" size="25"  maxlength="50" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="" />
+		<label for = "CustRef">' .  __('Customer Reference') .':</label>
+		<input type = "text" size = "25"  maxlength = "50" name = "CustRef" value = "' . $_SESSION['Items'.$identifier]->CustRef . '" title = "" />
 		<fieldhelp>' . __('Enter the customer\'s purchase order reference relevant to this order') . '</fieldhelp>
 	</field>
 	<field>
-		<label for="Comments">' .  __('Comments') .':</label>
-		<textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments  . '</textarea>
+		<label for = "Comments">' .  __('Comments') .':</label>
+		<textarea name = "Comments" cols = "31" rows = "5">' . $_SESSION['Items'.$identifier]->Comments  . '</textarea>
 	</field>';
 
-	if($CustomerLogin  == 1) {
-		echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items'.$identifier]->SalesPerson . '" />
-			<input type="hidden" name="DeliverBlind" value="1" />
-			<input type="hidden" name="FreightCost" value="0" />
-			<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />
-			<input type="hidden" name="Quotation" value="0" />';
-	} else {
+	if ($CustomerLogin  == 1) {
+	echo '<input type = "hidden" name = "SalesPerson" value = "' . $_SESSION['Items'.$identifier]->SalesPerson . '" />
+			<input type = "hidden" name = "DeliverBlind" value = "1" />
+			<input type = "hidden" name = "FreightCost" value = "0" />
+			<input type = "hidden" name = "ShipVia" value = "' . $_SESSION['Items'.$identifier]->ShipVia . '" />
+			<input type = "hidden" name = "Quotation" value = "0" />';
+} else {
 		echo '<field>
-				<label for="SalesPerson">' . __('Sales person'). ':</label>
-				<select name="SalesPerson">';
-		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
-		if(!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ) {
+				<label for = "SalesPerson">' . __('Sales person'). ':</label>
+				<select name = "SalesPerson">';
+		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1");
+		if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin']!=null ) {
 			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 		}
 
 		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
-			if($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson) {
-				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
-			} else {
-				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson) {
+	echo '<option selected = "selected" value = "' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+} else {
+				echo '<option value = "' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 			}
 		}
 
@@ -1071,86 +1070,86 @@ echo'<field>
 		address on the packlist */
 
 		echo '<field>
-				<label for="DeliverBlind">' . __('Packlist Type') . ':</label>
-				<select name="DeliverBlind">';
+				<label for = "DeliverBlind">' . __('Packlist Type') . ':</label>
+				<select name = "DeliverBlind">';
 
-		if($_SESSION['Items'.$identifier]->DeliverBlind ==2) {
-			echo '<option value="1">' . __('Show Company Details/Logo') . '</option>';
-			echo '<option selected="selected" value="2">' . __('Hide Company Details/Logo') . '</option>';
-		} else {
-			echo '<option selected="selected" value="1">' . __('Show Company Details/Logo') . '</option>';
-			echo '<option value="2">' . __('Hide Company Details/Logo') . '</option>';
+		if ($_SESSION['Items'.$identifier]->DeliverBlind ==2) {
+	echo '<option value = "1">' . __('Show Company Details/Logo') . '</option>';
+			echo '<option selected = "selected" value = "2">' . __('Hide Company Details/Logo') . '</option>';
+} else {
+			echo '<option selected = "selected" value = "1">' . __('Show Company Details/Logo') . '</option>';
+			echo '<option value = "2">' . __('Hide Company Details/Logo') . '</option>';
 		}
 		echo '</select>
 			</field>';
 
-		if(isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1) {
+		if (isset($_SESSION['PrintedPackingSlip']) and $_SESSION['PrintedPackingSlip']==1) {
 
 			echo '<field>
-					<label for="ReprintPackingSlip">' .  __('Reprint packing slip') .':</label>
-					<select name="ReprintPackingSlip">';
-			echo '<option value="0">' . __('Yes') . '</option>';
-			echo '<option selected="selected" value="1">' . __('No') . '</option>';
+					<label for = "ReprintPackingSlip">' .  __('Reprint packing slip') .':</label>
+					<select name = "ReprintPackingSlip">';
+			echo '<option value = "0">' . __('Yes') . '</option>';
+			echo '<option selected = "selected" value = "1">' . __('No') . '</option>';
 			echo '</select>	'. __('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</field>';
 		} else {
-			echo '<field><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></field>';
+			echo '<field><td><input type = "hidden" name = "ReprintPackingSlip" value = "0" /></td></field>';
 		}
 
 		echo '<field>
-				<label for="FreightCost">' .  __('Charge Freight Cost ex tax') .':</label>
-				<input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" />';
+				<label for = "FreightCost">' .  __('Charge Freight Cost ex tax') .':</label>
+				<input type = "text" class = "number" size = "10" maxlength = "12" name = "FreightCost" value = "' . $_SESSION['Items'.$identifier]->FreightCost . '" />';
 
-		if($_SESSION['DoFreightCalc']==true) {
-			echo '<td><input type="submit" name="Update" value="' . __('Recalc Freight Cost') . '" /></td>';
-		}
+		if ($_SESSION['DoFreightCalc']==true) {
+	echo '<td><input type = "submit" name = "Update" value = "' . __('Recalc Freight Cost') . '" /></td>';
+}
 		echo '</field>';
 
-		if((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)) {
+		if ((!isset($_POST['ShipVia']) or $_POST['ShipVia']=='') and isset($_SESSION['Items'.$identifier]->ShipVia)) {
 			$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 		}
 
 		echo '<field>
-				<label for="ShipVia">' .  __('Freight/Shipper Method') .':</label>
-				<select name="ShipVia">';
+				<label for = "ShipVia">' .  __('Freight/Shipper Method') .':</label>
+				<select name = "ShipVia">';
 
 		$ErrMsg = __('The shipper details could not be retrieved');
 
 		$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 		$ShipperResults = DB_query($SQL, $ErrMsg);
-		while ($MyRow=DB_fetch_array($ShipperResults)) {
-			if($MyRow['shipper_id']==$_POST['ShipVia']) {
-				echo '<option selected="selected" value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+		while ($MyRow = DB_fetch_array($ShipperResults)) {
+			if ($MyRow['shipper_id']==$_POST['ShipVia']) {
+	echo '<option selected = "selected" value = "' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
+} else {
+				echo '<option value = "' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
 			}
 		}
 		echo '</select>
 			</field>';
 
 		echo '<field>
-				<label for="Quotation">' .  __('Quotation Only') .':</label>
-				<select name="Quotation">';
-		if($_SESSION['Items'.$identifier]->Quotation==1) {
-			echo '<option selected="selected" value="1">' . __('Yes') . '</option>';
-			echo '<option value="0">' . __('No') . '</option>';
-		} else {
-			echo '<option value="1">' . __('Yes') . '</option>';
-			echo '<option selected="selected" value="0">' . __('No') . '</option>';
+				<label for = "Quotation">' .  __('Quotation Only') .':</label>
+				<select name = "Quotation">';
+		if ($_SESSION['Items'.$identifier]->Quotation == 1) {
+	echo '<option selected = "selected" value = "1">' . __('Yes') . '</option>';
+			echo '<option value = "0">' . __('No') . '</option>';
+} else {
+			echo '<option value = "1">' . __('Yes') . '</option>';
+			echo '<option selected = "selected" value = "0">' . __('No') . '</option>';
 		}
 		echo '</select>
 			</field>';
-	}//end if it is NOT a CustomerLogin
+	}//end if it is not a CustomerLogin
 
 echo '</fieldset>';
 
-echo '<div class="centre">
-		<input type="submit" name="BackToLineDetails" value="' . __('Modify Order Lines') . '" />';
+echo '<div class = "centre">
+		<input type = "submit" name = "BackToLineDetails" value = "' . __('Modify Order Lines') . '" />';
 
-if($_SESSION['ExistingOrder'.$identifier]==0) {
-	echo '<input type="submit" name="ProcessOrder" value="' . __('Place Order') . '" />';
-	echo '<input type="submit" name="MakeRecurringOrder" value="' . __('Create Recurring Order') . '" />';
+if ($_SESSION['ExistingOrder'.$identifier]==0) {
+	echo '<input type = "submit" name = "ProcessOrder" value = "' . __('Place Order') . '" />';
+	echo '<input type = "submit" name = "MakeRecurringOrder" value = "' . __('Create Recurring Order') . '" />';
 } else {
-	echo '<input type="submit" name="ProcessOrder" value="' . __('Commit Order Changes') . '" />';
+	echo '<input type = "submit" name = "ProcessOrder" value = "' . __('Commit Order Changes') . '" />';
 }
 
 echo '</div>

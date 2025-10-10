@@ -26,19 +26,19 @@ if (isset($_POST['Days'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($SelectedTabs == '') {
-		prnMsg(__('You must first select a petty cash tab to authorise'), 'error');
+	prnMsg(__('You must first select a petty cash tab to authorise'), 'error');
 		unset($SelectedTabs);
-	}
+}
 }
 if (isset($_POST['Go'])) {
 	if ($Days <= 0) {
-		prnMsg(__('The number of days must be a positive number'), 'error');
+	prnMsg(__('The number of days must be a positive number'), 'error');
 		$Days = 30;
-	}
+}
 }
 
-echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', __('Petty Cash'), '" alt="" />', $Title, '
+echo '<p class = "page_title_text">
+			<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title = "', __('Petty Cash'), '" alt = "" />', $Title, '
 		</p>';
 
 if (isset($SelectedTabs)) {
@@ -51,8 +51,8 @@ echo '</form></fieldset>';
 }
 
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
-	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 	if (!isset($Days)) {
 		$Days = 30;
 	}
@@ -60,10 +60,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', __('Detail of tab cash assignments for the last'), ' :</label>
-				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', __('Days'), '
-				<input type="submit" name="Go" value="', __('Go'), '" />
+				<label for = "SelectedTabs">', __('Detail of tab cash assignments for the last'), ' :</label>
+				<input type = "hidden" name = "SelectedTabs" value = "', $SelectedTabs, '" />
+				<input type = "text" class = "number" name = "Days" value = "', $Days, '" maxlength = "3" size = "4" />', __('Days'), '
+				<input type = "submit" name = "Go" value = "', __('Go'), '" />
 			</field>
 		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
@@ -82,13 +82,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				currencies.decimalplaces
 			FROM pcashdetails, pctabs, currencies
 			WHERE pcashdetails.tabcode = pctabs.tabcode
-				AND pctabs.currency = currencies.currabrev
-				AND pcashdetails.tabcode = '" . $SelectedTabs . "'
-				AND pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '" . $Days . "' DAY)
-				AND pcashdetails.codeexpense='ASSIGNCASH'
+				and pctabs.currency = currencies.currabrev
+				and pcashdetails.tabcode = '" . $SelectedTabs . "'
+				and pcashdetails.date >= DATE_SUB(CURDATE(), INTERVAL '" . $Days . "' DAY)
+				and pcashdetails.codeexpense = 'ASSIGNCASH'
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<th>', __('Date'), '</th>
 				<th>', __('Expense Code'), '</th>
@@ -103,9 +103,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		//update database if update pressed
 		if (isset($_POST['Submit']) and $_POST['Submit'] == __('Update') and isset($_POST[$MyRow['counterindex']]) and $MyRow['posted'] == 0) {
 			$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
-			if ($MyRow['rate'] == 1) { // functional currency
+			if ($MyRow['rate'] == 1) {
+	// functional currency
 				$Amount = $MyRow['amount'];
-			} else { // other currencies
+} else { // other currencies
 				$Amount = $MyRow['amount'] / $MyRow['rate'];
 			}
 			// it can only be ASSIGNCASH, not expenses
@@ -128,7 +129,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`narrative`,
 											`amount`,
 											`jobref`)
-									VALUES (NULL,
+									VALUES (null,
 											'" . $Type . "',
 											'" . $TypeNo . "',
 											0,
@@ -149,7 +150,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`narrative`,
 										`amount`,
 										`jobref`
-									) VALUES (NULL,
+									) VALUES (null,
 										'" . $Type . "',
 										'" . $TypeNo . "',
 										0,
@@ -202,10 +203,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			}
 		}
 
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $MyRow['codeexpense'], '</td>
-			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+			<td class = "number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
 			<td>', $MyRow['notes'], '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(date('Y-m-d'));
@@ -214,50 +215,50 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			if (($MyRow['authorized'] != '1000-01-01')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
-				echo '<td align="right"><input type="checkbox" name="', $MyRow['counterindex'], '" />';
+				echo '<td align = "right"><input type = "checkbox" name = "', $MyRow['counterindex'], '" />';
 			}
 		}
-		echo '<input type="hidden" name="SelectedIndex" value="', $MyRow['counterindex'], '" />
+		echo '<input type = "hidden" name = "SelectedIndex" value = "', $MyRow['counterindex'], '" />
 			</td>
 		</tr>';
 	} //end of looping
 	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '<tr>
-			<td colspan="2" class="number">', __('Current balance'), ':</td>
-			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+			<td colspan = "2" class = "number">', __('Current balance'), ':</td>
+			<td class = "number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
 
 	echo '</table>';
-	echo '<div class="centre">
-			<input type="submit" name="Submit" value="', __('Update'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Submit" value = "', __('Update'), '" />
 		</div>
 	</form>';
 } else {
 	/*The option to submit was not hit so display form */
-	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
-	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<form method = "post" action = "', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
+	echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 	$SQL = "SELECT tabcode
 		FROM pctabs
-		WHERE authorizer='" . $_SESSION['UserID'] . "'";
+		WHERE authorizer = '" . $_SESSION['UserID'] . "'";
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
+	echo '<table class = "selection">
 			<tr>
 				<td>', __('Authorise cash assigned to petty cash tab'), ':</td>
-				<td><select required="required" name="SelectedTabs">';
+				<td><select required = "required" name = "SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
-			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
+			echo '<option selected = "selected" value = "', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		} else {
-			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
+			echo '<option value = "', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
 	} //end while loop get type of tab
 	echo '</select>
 			</td>
 		</tr>';
 	echo '</table>'; // close main table
-	echo '<div class="centre">
-			<input type="submit" name="Process" value="', __('Accept'), '" />
-			<input type="reset" name="Cancel" value="', __('Cancel'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Process" value = "', __('Accept'), '" />
+			<input type = "reset" name = "Cancel" value = "', __('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }

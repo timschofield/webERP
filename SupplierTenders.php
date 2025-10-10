@@ -30,10 +30,10 @@ if (!isset($_POST['SupplierID'])) {
 	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_array($Result);
 	if ($MyRow['supplierid']=='') {
-		prnMsg(__('This functionality can only be accessed via a supplier login.'), 'warning');
+	prnMsg(__('This functionality can only be accessed via a supplier login.'), 'warning');
 		include('includes/footer.php');
 		exit();
-	} else {
+} else {
 		$_POST['SupplierID']=$MyRow['supplierid'];
 	}
 }
@@ -59,7 +59,7 @@ if (isset($_POST['Confirm'])) {
 	$SQL="UPDATE tendersuppliers
 			SET responded=1
 			WHERE supplierid='" . $_SESSION['offer'.$identifier]->SupplierID . "'
-			AND tenderid='" . $_SESSION['offer'.$identifier]->TenderID . "'";
+			and tenderid='" . $_SESSION['offer'.$identifier]->TenderID . "'";
 	$Result = DB_query($SQL);
 }
 
@@ -107,7 +107,7 @@ if (isset($_POST['Process'])) {
 					INNER JOIN locations
 					ON tenders.location=locations.loccode
 					WHERE closed=0
-					AND tenderid='".$_SESSION['offer'.$identifier]->TenderID."'";
+					and tenderid='".$_SESSION['offer'.$identifier]->TenderID."'";
 	$LocationResult = DB_query($LocationSQL);
 	$MyLocationRow=DB_fetch_row($LocationResult);
 	$CurrencySQL="SELECT decimalplaces from currencies WHERE currabrev='".$_SESSION['offer'.$identifier]->CurrCode."'";
@@ -118,8 +118,8 @@ if (isset($_POST['Process'])) {
 			<td valign="top" style="background-color:#cccce5">';
 	for ($i=1; $i<8; $i++) {
 		if ($MyLocationRow[$i]!='') {
-			echo $MyLocationRow[$i] . '<br />';
-		}
+	echo $MyLocationRow[$i] . '<br />';
+}
 	}
 	echo '</td>';
 	echo '<th colspan="8" style="vertical-align:top"><font size="2" color="#616161">' . __('Tender Number') . ': ' .$_SESSION['offer'.$identifier]->TenderID . '</font></th>';
@@ -161,7 +161,7 @@ if (isset($_POST['Process'])) {
 /* If the supplierID is set then it must be a login from the supplier but if nothing else is
  * set then the supplier must have just logged in so show them the choices.
  */
-if (isset($_POST['SupplierID']) AND empty($_POST['TenderType']) AND empty($_POST['Search']) AND empty($_POST['NewItem']) AND empty($_GET['Delete'])) {
+if (isset($_POST['SupplierID']) and empty($_POST['TenderType']) and empty($_POST['Search']) and empty($_POST['NewItem']) and empty($_GET['Delete'])) {
 	if (isset($_SESSION['offer'.$identifier])) {
 		unset($_SESSION['offer'.$identifier]);
 	}
@@ -185,7 +185,7 @@ if (isset($_POST['SupplierID']) AND empty($_POST['TenderType']) AND empty($_POST
 		</form>';
 }
 
-if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
+if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
 	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key,0,7)=='StockID') {
 			$Index = mb_substr($key,7,mb_strlen($key)-7);
@@ -193,7 +193,7 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 			$Quantity=filter_number_format($_POST['Qty'.$Index]);
 			$Price=filter_number_format($_POST['Price'.$Index]);
 			$UOM=$_POST['uom'.$Index];
-			if (isset($UOM) AND $Quantity>0) {
+			if (isset($UOM) and $Quantity>0) {
 				$SQL="SELECT description, decimalplaces FROM stockmaster WHERE stockid='".$StockID."'";
 				$Result = DB_query($SQL);
 				$MyRow=DB_fetch_array($Result);
@@ -211,7 +211,7 @@ if (isset($_POST['NewItem']) AND !isset($_POST['Refresh'])) {
 	}
 }
 
-if (isset($_POST['Refresh']) AND !isset($_POST['NewItem'])) {
+if (isset($_POST['Refresh']) and !isset($_POST['NewItem'])) {
 	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key,0,7)=='StockID') {
 			$Index = mb_substr($key,7,mb_strlen($key)-7);
@@ -289,7 +289,7 @@ if (isset($_POST['Save'])) {
 
 /*The supplier has chosen option 1
  */
-if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['Refresh']) AND !isset($_GET['Delete'])) {
+if (isset($_POST['TenderType']) and $_POST['TenderType']==1 and !isset($_POST['Refresh']) and !isset($_GET['Delete'])) {
 	$SQL="SELECT offers.offerid,
 				offers.stockid,
 				stockmaster.description,
@@ -302,7 +302,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 			INNER JOIN stockmaster
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
-				AND offers.expirydate >= CURRENT_DATE";
+				and offers.expirydate >= CURRENT_DATE";
 	$Result = DB_query($SQL);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
@@ -335,9 +335,9 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 
 	foreach ($_SESSION['offer'.$identifier]->LineItems as $LineItems) {
 		if ($LineItems->Deleted==false) {
-			if ($LineItems->ExpiryDate < date('Y-m-d')) {
+	if ($LineItems->ExpiryDate < date('Y-m-d')) {
 				echo '<tr style="background-color:#F7A9A9">';
-			} else {
+} else {
 				echo '<tr class="striped_row">';
 			}
 
@@ -356,27 +356,27 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 	echo '</table>';
 	echo '<input type="hidden" name="TenderType" value="'.$_POST['TenderType'].'" />';
 	if ($_POST['TenderType']==1) {
-		echo '<br />
+	echo '<br />
 				<div class="centre">
 					<input type="submit" name="Update" value="Update offer" />
 					<input type="submit" name="Refresh" value="Refresh screen" />
 				</div>';
-	} else if ($_POST['TenderType']==2) {
-		echo '<br />
+} elseif ($_POST['TenderType']==2) {
+	echo '<br />
 				<div class="centre">
 					<input type="submit" name="Save" value="Save offer" />
 					<input type="submit" name="Refresh" value="Refresh screen" />
 				</div>';
-	}
+}
 	echo '</form>';
 }
 
 /*The supplier has chosen option 2
  */
 if (isset($_POST['TenderType'])
-	AND $_POST['TenderType']==2
-	AND !isset($_POST['Search'])
-	OR isset($_GET['Delete'])) {
+	and $_POST['TenderType']==2
+	and !isset($_POST['Search'])
+	or isset($_GET['Delete'])) {
 
 	if (!isset($_SESSION['offer'.$identifier])) {
 		$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
@@ -406,14 +406,14 @@ if (isset($_POST['TenderType'])
 		$_POST['StockCat'] = '';
 	}
 	if ($_POST['StockCat'] == 'All') {
-		echo '<option selected="selected" value="All">' . __('All') . '</option>';
-	} else {
+	echo '<option selected="selected" value="All">' . __('All') . '</option>';
+} else {
 		echo '<option value="All">' . __('All') . '</option>';
 	}
 	while ($MyRow1 = DB_fetch_array($Result)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
-			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
-		} else {
+	echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+} else {
 			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
@@ -431,7 +431,7 @@ if (isset($_POST['TenderType'])
 	echo '</field>';
 
 	echo '<field>
-			<label for="StockCode">'. '<b>' . __('OR') . ' </b>' . __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
+			<label for="StockCode">'. '<b>' . __('or') . ' </b>' . __('Enter partial') . ' <b>' . __('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" autofocus="autofocus" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -448,9 +448,9 @@ if (isset($_POST['TenderType'])
 /*The supplier has chosen option 3
  */
 if (isset($_POST['TenderType'])
-	AND $_POST['TenderType']==3
-	AND !isset($_POST['Search'])
-	OR isset($_GET['Delete'])) {
+	and $_POST['TenderType']==3
+	and !isset($_POST['Search'])
+	or isset($_GET['Delete'])) {
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Tenders') . '" alt="" />' . ' ' . __('Tenders Waiting For Offers') . '</p>';
 	$SQL="SELECT DISTINCT tendersuppliers.tenderid,
@@ -461,8 +461,8 @@ if (isset($_POST['TenderType'])
 			LEFT JOIN tenders
 			ON tenders.tenderid=tendersuppliers.tenderid
 			WHERE tendersuppliers.supplierid='" . $_POST['SupplierID'] . "'
-			AND tenders.closed=0
-			AND tendersuppliers.responded=0
+			and tenders.closed=0
+			and tendersuppliers.responded=0
 			ORDER BY tendersuppliers.tenderid";
 	$Result = DB_query($SQL);
 	echo '<table class="selection">';
@@ -486,7 +486,7 @@ if (isset($_POST['TenderType'])
 						INNER JOIN locations
 						ON tenders.location=locations.loccode
 						WHERE closed=0
-						AND tenderid='".$MyRow[0]."'";
+						and tenderid='".$MyRow[0]."'";
 		$LocationResult = DB_query($LocationSQL);
 		$MyLocationRow=DB_fetch_row($LocationResult);
 		echo '<tr>
@@ -494,8 +494,8 @@ if (isset($_POST['TenderType'])
 				<td valign="top" style="background-color:#cccce5">';
 		for ($i=1; $i<8; $i++) {
 			if ($MyLocationRow[$i]!='') {
-				echo $MyLocationRow[$i] . '<br />';
-			}
+	echo $MyLocationRow[$i] . '<br />';
+}
 		}
 		echo '</td>';
 		echo '<th colspan="8" style="vertical-align:top"><font size="2" color="#616161">' . __('Tender Number') . ': ' .$MyRow[0] . '</font></th>';
@@ -516,7 +516,7 @@ if (isset($_POST['TenderType'])
 					ON tenderitems.stockid=stockmaster.stockid
 					LEFT JOIN purchdata
 					ON tenderitems.stockid=purchdata.stockid
-					AND purchdata.supplierno='".$_POST['SupplierID']."'
+					and purchdata.supplierno='".$_POST['SupplierID']."'
 					LEFT JOIN tenders
 					ON tenders.tenderid=tenderitems.tenderid
 					WHERE tenderitems.tenderid='" . $MyRow[0] . "'";
@@ -547,8 +547,8 @@ if (isset($_POST['TenderType'])
 					<td>' . ConvertSQLDate($MyItemRow['requiredbydate']) . '</td>';
 
 			if ($MyItemRow['suppliersuom']=='') {
-				$MyItemRow['suppliersuom']=$MyItemRow['units'];
-			}
+	$MyItemRow['suppliersuom']=$MyItemRow['units'];
+}
 			echo '<td><input type="text" class="number" title="'.__('Input must be in numeric format').'" size="10" name="Qty'. $i . '" value="' . locale_number_format($MyItemRow['quantity'], $MyItemRow['decimalplaces']) . '" /></td>
 				<input type="hidden" name="UOM'. $i . '" value="' . $MyItemRow['units'] . '" />
 				<input type="hidden" name="DecimalPlaces'. $i . '" value="' . $MyItemRow['decimalplaces'] . '" />
@@ -569,11 +569,11 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . __('Tenders') . '" alt="" />' . ' ' . __('Select items to offer from').' '.$Supplier  . '</p>';
 
-	if ($_POST['Keywords'] AND $_POST['StockCode']) {
-		prnMsg( __('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
-	}
+	if ($_POST['Keywords'] and $_POST['StockCode']) {
+	prnMsg( __('Stock description keywords have been used in preference to the Stock code extract entered'), 'info' );
+}
 	if ($_POST['Keywords']) {
-		//insert wildcard characters in spaces
+	//insert wildcard characters in spaces
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		if ($_POST['StockCat']=='All'){
@@ -583,29 +583,28 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
-					AND stockmaster.description " . LIKE . " '$SearchString'
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					and stockmaster.description " . LIKE . " '$SearchString'
 					ORDER BY stockmaster.stockid";
-		} else {
+} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
-					AND stockmaster.description " . LIKE . " '$SearchString'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					and stockmaster.description " . LIKE . " '$SearchString'
+					and stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
 		}
 
-	} elseif ($_POST['StockCode']){
-
-		$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
+	} elseif ($_POST['StockCode']) {
+	$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
 
 		if ($_POST['StockCat']=='All'){
 			$SQL = "SELECT stockmaster.stockid,
@@ -614,49 +613,49 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
-					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					and stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					ORDER BY stockmaster.stockid";
-		} else {
+} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
-					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					and stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
+					and stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
 		}
 
 	} else {
-		if ($_POST['StockCat']=='All'){
-			$SQL = "SELECT stockmaster.stockid,
+		if ($_POST['StockCat']=='All') {
+	$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
 					ORDER BY stockmaster.stockid";
-		} else {
+} else {
 			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
 					ON stockmaster.categoryid=stockcategory.categoryid
 					WHERE stockmaster.mbflag!='D'
-					AND stockmaster.mbflag!='A'
-					AND stockmaster.mbflag!='K'
-					AND stockmaster.discontinued!=1
-					AND stockmaster.categoryid='" . $_POST['StockCat'] . "'
+					and stockmaster.mbflag!='A'
+					and stockmaster.mbflag!='K'
+					and stockmaster.discontinued!=1
+					and stockmaster.categoryid='" . $_POST['StockCat'] . "'
 					ORDER BY stockmaster.stockid";
 		}
 	}
@@ -704,7 +703,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					LEFT JOIN unitsofmeasure
 					ON purchdata.suppliersuom=unitsofmeasure.unitid
 					WHERE supplierno='".$_POST['SupplierID']."'
-					AND stockid='" . $MyRow['stockid'] . "'";
+					and stockid='" . $MyRow['stockid'] . "'";
 
 			$UOMresult=DB_query($UOMsql);
 			if (DB_num_rows($UOMresult)>0) {
@@ -729,19 +728,18 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					</tr>';
 			$i++;
 			$PartsDisplayed++;
-			if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-				break;
-			}
+			if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show) {
+	break;
+}
 #end of page full new headings if
 		}
 #end of while loop
 		echo '</table>';
-		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show){
-
+		if ($PartsDisplayed == $Maximum_Number_Of_Parts_To_Show) {
 	/*$Maximum_Number_Of_Parts_To_Show defined in config.php */
 			prnMsg( __('Only the first') . ' ' . $Maximum_Number_Of_Parts_To_Show . ' ' . __('can be displayed') . '. ' .
 				__('Please restrict your search to only the parts required'),'info');
-		}
+}
 		echo '<a name="end"></a>
 				<br />
 				<div class="centre">

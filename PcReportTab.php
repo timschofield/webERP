@@ -47,7 +47,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQLDecimalPlaces = "SELECT decimalplaces
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
-						AND tabcode='" . $SelectedTabs . "'";
+						and tabcode = '" . $SelectedTabs . "'";
 	$Result = DB_query($SQLDecimalPlaces);
 	$MyRow = DB_fetch_array($Result);
 	$CurrDecimalPlaces = $MyRow['decimalplaces'];
@@ -58,34 +58,34 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '<html>
 					<head>';
-		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+		$HTML .= '<link href = "css/reports.css" rel = "stylesheet" type = "text/css" />';
 	}
 
-	$CurrencySQL = "SELECT currency FROM currencies WHERE currabrev='" . $Tabs['currency'] . "'";
+	$CurrencySQL = "SELECT currency FROM currencies WHERE currabrev = '" . $Tabs['currency'] . "'";
 	$CurrencyResult = DB_query($CurrencySQL);
 	$CurrencyRow = DB_fetch_array($CurrencyResult);
 
-	$UserSQL = "SELECT realname FROM www_users WHERE userid='" . $Tabs['usercode'] . "'";
+	$UserSQL = "SELECT realname FROM www_users WHERE userid = '" . $Tabs['usercode'] . "'";
 	$UserResult = DB_query($UserSQL);
 	$UserRow = DB_fetch_array($UserResult);
 
-	$AssignerSQL = "SELECT realname FROM www_users WHERE userid='" . $Tabs['assigner'] . "'";
+	$AssignerSQL = "SELECT realname FROM www_users WHERE userid = '" . $Tabs['assigner'] . "'";
 	$AssignerResult = DB_query($AssignerSQL);
 	$AssignerRow = DB_fetch_array($AssignerResult);
 
-	$AuthoriserSQL = "SELECT realname FROM www_users WHERE userid='" . $Tabs['authorizer'] . "'";
+	$AuthoriserSQL = "SELECT realname FROM www_users WHERE userid = '" . $Tabs['authorizer'] . "'";
 	$AuthoriserResult = DB_query($AuthoriserSQL);
 	$AuthoriserRow = DB_fetch_array($AuthoriserResult);
 
-	$AuthExpSQL = "SELECT realname FROM www_users WHERE userid='" . $Tabs['authorizerexpenses'] . "'";
+	$AuthExpSQL = "SELECT realname FROM www_users WHERE userid = '" . $Tabs['authorizerexpenses'] . "'";
 	$AuthExpResult = DB_query($AuthExpSQL);
 	$AuthExpRow = DB_fetch_array($AuthExpResult);
 
-	$HTML .= '<meta name="author" content="WebERP " . $Version">
-					<meta name="Creator" content="webERP https://www.weberp.org">
+	$HTML .= '<meta name = "author" content = "WebERP " . $Version">
+					<meta name = "Creator" content = "webERP https://www.weberp.org">
 				</head>
 				<body>
-				<div class="centre" id="ReportHeader">
+				<div class = "centre" id = "ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
 					' . __('Tab Code') . ': ' . $SelectedTabs . '<br />
 					' . __('User') . ': ' . $Tabs['usercode'] . ' - ' . $UserRow['realname'] . '<br />
@@ -100,13 +100,13 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQLBalance = "SELECT SUM(amount)
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
-			AND date < '" . $SQLFromDate . "'";
+			and date < '" . $SQLFromDate . "'";
 
 	$TabBalance = DB_query($SQLBalance);
 
 	$Balance = DB_fetch_array($TabBalance);
 
-	if( !isset($Balance['0'])){
+	if ( !isset($Balance['0'])){
 		$Balance['0'] = 0;
 	}
 
@@ -118,14 +118,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQLBalanceNotAut = "SELECT SUM(amount)
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
-			AND authorized = '1000-01-01'
-			AND date < '" . $SQLFromDate . "'";
+			and authorized = '1000-01-01'
+			and date < '" . $SQLFromDate . "'";
 
 	$TabBalanceNotAut = DB_query($SQLBalanceNotAut);
 
 	$BalanceNotAut = DB_fetch_array($TabBalanceNotAut);
 
-	if( !isset($BalanceNotAut['0'])){
+	if ( !isset($BalanceNotAut['0'])){
 		$BalanceNotAut['0'] = 0;
 	}
 
@@ -151,20 +151,20 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					notes
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
-				AND date >= '" . $SQLFromDate . "'
-				AND date <= '" . $SQLToDate . "'
+				and date >= '" . $SQLFromDate . "'
+				and date <= '" . $SQLToDate . "'
 			ORDER BY date, counterindex Asc";
 
 	$TabDetail = DB_query($SQL,
 						__('No Petty Cash movements for this tab were returned by the SQL because'),
 						__('The SQL that failed was:'));
 
-	$HTML .=  '<table class="selection">
+	$HTML .=  '<table class = "selection">
 			<thead>
 				<tr>
-					<th class="SortedColumn">' . __('Date of Expense') . '</th>
-					<th class="SortedColumn">' . __('Expense Code') . '</th>
-					<th class="SortedColumn">' . __('Gross Amount') . '</th>
+					<th class = "SortedColumn">' . __('Date of Expense') . '</th>
+					<th class = "SortedColumn">' . __('Expense Code') . '</th>
+					<th class = "SortedColumn">' . __('Gross Amount') . '</th>
 					<th>' . __('Tax') . '</th>
 					<th>' . __('Tax Group') . '</th>
 					<th>' . __('Business Purpose') . '</th>
@@ -189,7 +189,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 							taxrate,
 							amount
 						FROM pcashdetailtaxes
-						WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+						WHERE pccashdetail = '" . $MyRow['counterindex'] . "'";
 		$TaxResult = DB_query($TaxSQL);
 
 		while ($MyTaxRow = DB_fetch_array($TaxResult)) {
@@ -203,7 +203,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$ReceiptSQL = "SELECT hashfile,
 								extension
 								FROM pcreceipts
-								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+								WHERE pccashdetail = '" . $MyRow['counterindex'] . "'";
 		$ReceiptResult = DB_query($ReceiptSQL);
 		$ReceiptRow = DB_fetch_array($ReceiptResult);
 		if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
@@ -211,14 +211,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$ReceiptExt = $ReceiptRow['extension'];
 			$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 			$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-			$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
+			$ReceiptText = '<a href = "' . $ReceiptPath . '" download = "ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . __('Download attachment') . '</a>';
 		} else {
 			$ReceiptText = __('No attachment');
 		}
 
 		if ($MyRow['authorized'] == '1000-01-01' or $MyRow['authorized'] == '0000-00-00') {
-					$AuthorisedDate = __('Unauthorised');
-				} else {
+	$AuthorisedDate = __('Unauthorised');
+} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
 
@@ -227,30 +227,30 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
 
 		$ResultDes = DB_query($SQLDes);
-		$Description=DB_fetch_array($ResultDes);
+		$Description = DB_fetch_array($ResultDes);
 		if (!isset($Description[0])) {
 				$ExpenseCodeDes = 'ASSIGNCASH';
 		} else {
 				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 		}
 
-		$HTML .=  '<tr class="striped_row">
-					<td class="date">' . ConvertSQLDate($MyRow['date']) . '</td>
+		$HTML .=  '<tr class = "striped_row">
+					<td class = "date">' . ConvertSQLDate($MyRow['date']) . '</td>
 					<td>' . $ExpenseCodeDes . '</td>
-					<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
-					<td class="number">' . $TaxesTaxAmount . '</td>
+					<td class = "number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
+					<td class = "number">' . $TaxesTaxAmount . '</td>
 					<td>' . $TaxesDescription . '</td>
 					<td>' . $MyRow['purpose'] . '</td>
 					<td>' . $MyRow['notes'] . '</td>
 					<td>' . $ReceiptText . '</td>
-					<td class="date">' . $AuthorisedDate . '</td>
+					<td class = "date">' . $AuthorisedDate . '</td>
 				</tr>';
 	}
 
-	$SQLAmount="SELECT sum(amount)
+	$SQLAmount = "SELECT sum(amount)
 				FROM pcashdetails
 				WHERE tabcode = '" . $SelectedTabs . "'
-				AND date <= '" . $SQLToDate . "'";
+				and date <= '" . $SQLToDate . "'";
 
 	$ResultAmount = DB_query($SQLAmount);
 	$Amount = DB_fetch_array($ResultAmount);
@@ -261,28 +261,28 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML .= '</tbody>
 		<tfoot>
-			<tr class="total_row">
-				<td colspan="2" class="number">' . __('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
-				<td class="number">' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td>
+			<tr class = "total_row">
+				<td colspan = "2" class = "number">' . __('Balance at') . ' ' .$_POST['ToDate'] . ':</td>
+				<td class = "number">' . locale_number_format($Amount[0],$_SESSION['CompanyRecord']['decimalplaces']) . ' </td>
 				<td>' . $Tabs['currency'] . '</td>
-				<td colspan="6"></td>
+				<td colspan = "6"></td>
 			</tr>
 		</tfoot>';
 
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</tbody>
-				<div class="footer fixed-section">
-					<div class="right">
-						<span class="page-number">Page </span>
+				<div class = "footer fixed-section">
+					<div class = "right">
+						<span class = "page-number">Page </span>
 					</div>
 				</div>
 			</table>';
 	} else {
 		$HTML .= '</tbody>
 				</table>
-				<div class="centre">
-					<form><input type="submit" name="close" value="' . __('Close') . '" onclick="window.close()" /></form>
+				<div class = "centre">
+					<form><input type = "submit" name = "close" value = "' . __('Close') . '" onclick = "window.close()" /></form>
 				</div>';
 	}
 	$HTML .= '</body>
@@ -305,8 +305,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		$Title = __('Petty Cash Management Report');
 		include('includes/header.php');
-		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry'). '" alt="" />' . ' ' . $Title . '
+		echo '<p class = "page_title_text">
+				<img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title = "' . __('Payment Entry'). '" alt = "" />' . ' ' . $Title . '
 			</p>';
 		echo $HTML;
 		include('includes/footer.php');
@@ -316,11 +316,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 } else {
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . __('Payment Entry')
-	. '" alt="" />' . ' ' . $Title . '</p>';
+	echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title = "' . __('Payment Entry')
+	. '" alt = "" />' . ' ' . $Title . '</p>';
 
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form method = "post" action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target = "_blank">
+		<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0,0,0,date('m'),1,date('Y')));
@@ -334,22 +334,22 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<fieldset>
 			<legend>', __('Report Criteria'), '</legend>
 			<field>
-				<label for="SelectedTabs">' . __('Petty Cash Tab') . ':</label>
-				<select name="SelectedTabs">';
+				<label for = "SelectedTabs">' . __('Petty Cash Tab') . ':</label>
+				<select name = "SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 				FROM pctabs
 				WHERE ( authorizer = '" . $_SESSION['UserID'] .
-					"' OR usercode = '" . $_SESSION['UserID'].
-					"' OR assigner = '" . $_SESSION['UserID'] . "' )
+					"' or usercode = '" . $_SESSION['UserID'].
+					"' or assigner = '" . $_SESSION['UserID'] . "' )
 				ORDER BY tabcode";
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectedTabs']) and $MyRow['tabcode'] == $_POST['SelectedTabs']) {
-			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
+			echo '<option selected = "selected" value = "', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		} else {
-			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
+			echo '<option value = "', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
 	} //end while loop get type of tab
 
@@ -359,17 +359,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '</select>
 		</field>
 		<field>
-			<label for="FromDate">', __('From Date'), ':</label>
-			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
+			<label for = "FromDate">', __('From Date'), ':</label>
+			<input tabindex = "2" type = "date" name = "FromDate" maxlength = "10" size = "11" value = "' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
-			<label for="FromDate">', __('To Date'), ':</label>
-			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
+			<label for = "FromDate">', __('To Date'), ':</label>
+			<input tabindex = "3" type = "date" name = "ToDate" maxlength = "10" size = "11" value = "' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		</fieldset>
-		<div class="centre">
-			<input type="submit" name="PrintPDF" value="' . __('Print PDF') . '" />
-			<input type="submit" name="View" title="View" value="' . __('Show HTML') . '" />
+		<div class = "centre">
+			<input type = "submit" name = "PrintPDF" value = "' . __('Print PDF') . '" />
+			<input type = "submit" name = "View" title = "View" value = "' . __('Show HTML') . '" />
 		</div>
 	</form>';
 	include('includes/footer.php');

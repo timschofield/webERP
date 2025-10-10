@@ -136,7 +136,7 @@ $Debug = 0; // No debug information will be shown. Recommended for production en
 // END OF USER CONFIGURABLE VARIABLES
 
 if (isset($DirectoryLevelsDeep)) {
-	for ($i = 0; $i < $DirectoryLevelsDeep; $i++) {
+	for ($i = 0;  $i < $DirectoryLevelsDeep;  $i++) {
 		$RootPath = mb_substr($RootPath, 0, strrpos($RootPath,'/'));
 	}
 }

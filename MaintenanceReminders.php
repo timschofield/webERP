@@ -8,7 +8,7 @@ $Title = __('Send maintenance reminders');
 
 $SQL = "SELECT description,
 			taskdescription,
-			ADDDATE(lastcompleted,frequencydays) AS duedate,
+			ADDDATE(lastcompleted,frequencydays) as duedate,
 			userresponsible,
 			email
 		FROM fixedassettasks
@@ -32,9 +32,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 
 	if ($LastUserResponsible != $MyRow['userresponsible']) {
-		$LastUserResponsible = $MyRow['userresponsible'];
+	$LastUserResponsible = $MyRow['userresponsible'];
 		$LastUserEmail = $MyRow['email'];
-	}
+}
 
 	$MailText .= 'Asset' . ': ' . $MyRow['description'] . "\nTask: " . $MyRow['taskdescription'] . "\nDue: "
 		. ConvertSQLDate($MyRow['duedate']);
@@ -52,7 +52,7 @@ if (DB_num_rows($Result) > 0 && IsEmailAddress($LastUserEmail)) {
 /* Now do manager emails for overdue jobs */
 $SQL = "SELECT description,
 			taskdescription,
-			ADDDATE(lastcompleted,frequencydays) AS duedate,
+			ADDDATE(lastcompleted,frequencydays) as duedate,
 			realname,
 			manager,
 			email
@@ -77,9 +77,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 
 	if ($LastManager != $MyRow['manager']) {
-		$LastManager = $MyRow['manager'];
+	$LastManager = $MyRow['manager'];
 		$LastManagerEmail = $MyRow['email'];
-	}
+}
 
 	$ManagerMailText .= __('Asset') . ': ' . $MyRow['description'] . "\n" . __('Task:') . ' ' . $MyRow['taskdescription'] . "\n"
 		. __('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);

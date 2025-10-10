@@ -13,10 +13,10 @@ if (!isset($_GET['AcknowledgementNo']) || $_GET['AcknowledgementNo'] == "") {
 	$Title = __('Select Acknowledgement To Print');
 	include('includes/header.php');
 	prnMsg(__('Select an Acknowledgement to Print before calling this page'), 'error');
-	echo '<table class="table_index">
+	echo '<table class = "table_index">
 				<tr>
-					<td class="menu_group_item">
-						<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Acknowledgements') . '</a></li>
+					<td class = "menu_group_item">
+						<ul><li><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgements = Quotes_Only">' . __('Acknowledgements') . '</a></li>
 						</ul>
 					</td>
 				</tr>
@@ -53,17 +53,17 @@ $SQL = "SELECT salesorders.customerref,
 				salesorders.branchcode,
 				locations.taxprovinceid,
 				locations.locationname,
-				currencies.decimalplaces AS currdecimalplaces
+				currencies.decimalplaces as currdecimalplaces
 			FROM salesorders
 			INNER JOIN debtorsmaster
-				ON salesorders.debtorno=debtorsmaster.debtorno
+				ON salesorders.debtorno = debtorsmaster.debtorno
 			INNER JOIN shippers
-				ON salesorders.shipvia=shippers.shipper_id
+				ON salesorders.shipvia = shippers.shipper_id
 			INNER JOIN locations
-				ON salesorders.fromstkloc=locations.loccode
+				ON salesorders.fromstkloc = locations.loccode
 			INNER JOIN currencies
-				ON debtorsmaster.currcode=currencies.currabrev
-				AND salesorders.orderno='" . $_GET['AcknowledgementNo'] . "'";
+				ON debtorsmaster.currcode = currencies.currabrev
+				and salesorders.orderno = '" . $_GET['AcknowledgementNo'] . "'";
 
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -71,10 +71,10 @@ if (DB_num_rows($Result) == 0) {
 	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
 	prnMsg(__('Unable to Locate Acknowledgement Number') . ' : ' . $_GET['AcknowledgementNo'] . ' ', 'error');
-	echo '<table class="table_index">
+	echo '<table class = "table_index">
 			<tr>
-				<td class="menu_group_item">
-					<ul><li><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgements=Quotes_Only">' . __('Outstanding Acknowledgements') . '</a></li></ul>
+				<td class = "menu_group_item">
+					<ul><li><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgements = Quotes_Only">' . __('Outstanding Acknowledgements') . '</a></li></ul>
 				</td>
 			</tr>
 			</table>';
@@ -103,11 +103,11 @@ $SQL = "SELECT salesorderdetails.stkcode,
 		custitem.cust_description
 	FROM salesorderdetails
 	INNER JOIN stockmaster
-		ON salesorderdetails.stkcode=stockmaster.stockid
+		ON salesorderdetails.stkcode = stockmaster.stockid
 	LEFT OUTER JOIN custitem
-		ON custitem.debtorno='" . $MyRow['debtorno'] . "'
-		AND custitem.stockid=stockmaster.stockid
-	WHERE salesorderdetails.orderno='" . $_GET['AcknowledgementNo'] . "'";
+		ON custitem.debtorno = '" . $MyRow['debtorno'] . "'
+		and custitem.stockid = stockmaster.stockid
+	WHERE salesorderdetails.orderno = '" . $_GET['AcknowledgementNo'] . "'";
 
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -132,8 +132,8 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	$SQL3 = "SELECT taxgrouptaxes.taxauthid
 				FROM taxgrouptaxes
 				INNER JOIN custbranch
-					ON taxgrouptaxes.taxgroupid=custbranch.taxgroupid
-				WHERE custbranch.branchcode='" . $Branch . "'";
+					ON taxgrouptaxes.taxgroupid = custbranch.taxgroupid
+				WHERE custbranch.branchcode = '" . $Branch . "'";
 	$Result3 = DB_query($SQL3, $ErrMsg);
 	$TaxAuth = '';
 	while ($MyRow3 = DB_fetch_array($Result3)) {
@@ -143,9 +143,9 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 	// Get Tax Rate
 	$SQL4 = "SELECT taxrate
 				FROM taxauthrates
-				WHERE dispatchtaxprovince='" . $TaxProv . "'
-					AND taxcatid='" . $TaxCat . "'
-					AND taxauthority='" . $TaxAuth . "'";
+				WHERE dispatchtaxprovince = '" . $TaxProv . "'
+					and taxcatid = '" . $TaxCat . "'
+					and taxauthority = '" . $TaxAuth . "'";
 	$Result4 = DB_query($SQL4, $ErrMsg);
 	$TaxClass = 0;
 	while ($MyRow4 = DB_fetch_array($Result4)) {
@@ -163,25 +163,25 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 		<td>' . htmlspecialchars($MyRow2['stkcode']) . '</td>
 		<td>' . htmlspecialchars($MyRow2['description']) . '</td>
 		<td>' . ConvertSQLDate($MyRow2['itemdue']) . '</td>
-		<td style="text-align:right;">' . $DisplayQty . '</td>
+		<td style = "text-align:right;">' . $DisplayQty . '</td>
 		<td>' . htmlspecialchars($DisplayUOM) . '</td>
-		<td style="text-align:right;">' . $DisplayPrice . '</td>
-		<td style="text-align:right;">' . locale_number_format($LineTotal, $MyRow['currdecimalplaces']) . '</td>
+		<td style = "text-align:right;">' . $DisplayPrice . '</td>
+		<td style = "text-align:right;">' . locale_number_format($LineTotal, $MyRow['currdecimalplaces']) . '</td>
 	</tr>';
 
 	// Customer part and description
 	if ($MyRow2['cust_part'] > '') {
-		$lineItemsHtml .= '<tr>
-			<td colspan="7">' . __('Customer Part') . ': ' . htmlspecialchars($MyRow2['cust_part']) . ' ' . htmlspecialchars($MyRow2['cust_description']) . '</td>
+	$lineItemsHtml .= '<tr>
+			<td colspan = "7">' . __('Customer Part') . ': ' . htmlspecialchars($MyRow2['cust_part']) . ' ' . htmlspecialchars($MyRow2['cust_description']) . '</td>
 		</tr>';
-	}
+}
 
 	// Narrative
 	if (!empty($MyRow2['narrative'])) {
 		$Split = explode("\r\n", wordwrap($MyRow2['narrative'], 130, "\r\n"));
 		foreach ($Split as $TextLine) {
 			$lineItemsHtml .= '<tr>
-				<td colspan="7">' . htmlspecialchars($TextLine) . '</td>
+				<td colspan = "7">' . htmlspecialchars($TextLine) . '</td>
 			</tr>';
 		}
 	}
@@ -190,7 +190,7 @@ while ($MyRow2 = DB_fetch_array($Result)) {
 if ($ListCount == 0) {
 	$Title = __('Print Acknowledgement Error');
 	include('includes/header.php');
-	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?Acknowledgement=Quotes_only">Back</a></p>';
+	echo '<p>' . __('There were no items on the Acknowledgement') . '. ' . __('The Acknowledgement cannot be printed') . '<br /><a href = "' . $RootPath . '/SelectSalesOrder.php?Acknowledgement = Quotes_only">Back</a></p>';
 	include('includes/footer.php');
 	exit();
 }
@@ -237,29 +237,29 @@ $HTML = '
 		</tr>
 		' . $lineItemsHtml . '
 	</table>
-	<table class="totals">
+	<table class = "totals">
 		<tr>
-			<td style="text-align:right;" colspan="6">' . __('Total Excluding Tax') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Total Excluding Tax') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan="6">' . __('Tax') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($TaxTotal, $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Tax') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($TaxTotal, $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan="6">' . __('Freight') . ':</td>
-			<td style="text-align:right;">' . locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']) . '</td>
+			<td style = "text-align:right;" colspan = "6">' . __('Freight') . ':</td>
+			<td style = "text-align:right;">' . locale_number_format($MyRow['freightcost'], $MyRow['currdecimalplaces']) . '</td>
 		</tr>
 		<tr>
-			<td style="text-align:right;" colspan="6"><strong>' . __('Total Including Tax and Freight') . ':</strong></td>
-			<td style="text-align:right;"><strong>' . locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']) . '</strong></td>
+			<td style = "text-align:right;" colspan = "6"><strong>' . __('Total Including Tax and Freight') . ':</strong></td>
+			<td style = "text-align:right;"><strong>' . locale_number_format($AcknowledgementTotal, $MyRow['currdecimalplaces']) . '</strong></td>
 		</tr>
 	</table>
-	<div class="notes">
+	<div class = "notes">
 		<strong>' . __('Notes:') . '</strong>
 		<p>' . nl2br(htmlspecialchars($MyRow['comments'])) . '</p>
 	</div>
-	<div class="terms">
+	<div class = "terms">
 		<strong>' . __('Terms & Conditions') . ':</strong>
 		<p>' . nl2br(htmlspecialchars($Terms)) . '</p>
 	</div>

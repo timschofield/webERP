@@ -11,14 +11,14 @@ function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(',', '', $str);
 }
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . __('Inventory') .'" alt="" /><b>' . $Title. '</b></p>';
+echo '<p class = "page_title_text"><img src = "'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title = "' . __('Inventory') .'" alt = "" /><b>' . $Title. '</b></p>';
 
-echo '<div class="centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
+echo '<div class = "centre">' . __('Making a comma separated values file of the current stock quantities') . '</div>';
 
 $ErrMsg = __('The SQL to get the stock quantities failed with the message');
 
 $SQL = "SELECT stockid, SUM(quantity) FROM locstock
-			INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			INNER JOIN locationusers ON locationusers.loccode = locstock.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1
 			GROUP BY stockid HAVING SUM(quantity)<>0";
 $Result = DB_query($SQL, $ErrMsg);
 
@@ -30,8 +30,7 @@ $FileName = $_SESSION['reports_dir'] . '/StockQties.csv';
 
 $fp = fopen($FileName,'w');
 
-if ($fp==false){
-
+if ($fp == false) {
 	prnMsg(__('Could not open or create the file under') . ' ' . $_SESSION['reports_dir'] . '/StockQties.csv','error');
 	include('includes/footer.php');
 	exit();
@@ -46,6 +45,6 @@ while ($MyRow = DB_fetch_row($Result)){
 
 fclose($fp);
 
-echo '<br /><div class="centre"><a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
+echo '<br /><div class = "centre"><a href = "' . $RootPath . '/' . $_SESSION['reports_dir'] . '/StockQties.csv ">' . __('click here') . '</a> ' . __('to view the file') . '</div>';
 
 include('includes/footer.php');

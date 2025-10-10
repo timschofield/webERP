@@ -7,32 +7,32 @@ $ViewTopic = 'SalesOrders';
 $BookMark = 'RecurringSalesOrders';
 include('includes/header.php');
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
-	__('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
+echo '<form action = "' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method = "post">';
+echo '<input type = "hidden" name = "FormID" value = "' . $_SESSION['FormID'] . '" />';
+echo '<p class = "page_title_text"><img src = "' . $RootPath . '/css/' . $Theme . '/images/customer.png" title = "' .
+	__('Inventory Items') . '" alt = "" />' . ' ' . $Title . '</p>';
 
 echo '<fieldset>
-		<legend class="search">', __('Search Recurring Orders'), '</legend>
+		<legend class = "search">', __('Search Recurring Orders'), '</legend>
 		<field>
-			<label for="StockLocation">' . __('Select recurring order templates for delivery from:') . ' </label>
-			<select name="StockLocation">';
+			<label for = "StockLocation">' . __('Select recurring order templates for delivery from:') . ' </label>
+			<select name = "StockLocation">';
 
-$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode = locations.loccode and locationusers.userid = '" .  $_SESSION['UserID'] . "' and locationusers.canview = 1";
 
 $ResultStkLocs = DB_query($SQL);
 
-while ($MyRow=DB_fetch_array($ResultStkLocs)){
+while ($MyRow = DB_fetch_array($ResultStkLocs)){
 	if (isset($_POST['StockLocation'])){
-		if ($MyRow['loccode'] == $_POST['StockLocation']){
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		if ($MyRow['loccode'] == $_POST['StockLocation']) {
+	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+} else {
+			echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
-	} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-	} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+	} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']) {
+	echo '<option selected = "selected" value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+} else {
+			echo '<option value = "' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 
@@ -40,13 +40,13 @@ echo '</select>
 	</field>
 	</fieldset>';
 
-echo '<div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . __('Search Recurring Orders') . '" /></div>';
+echo '<div class = "centre"><input type = "submit" name = "SearchRecurringOrders" value = "' . __('Search Recurring Orders') . '" /></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 
 	$SQL = "SELECT recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
-				currencies.decimalplaces AS currdecimalplaces,
+				currencies.decimalplaces as currdecimalplaces,
 				custbranch.brname,
 				recurringsalesorders.customerref,
 				recurringsalesorders.orddate,
@@ -54,16 +54,16 @@ if (isset($_POST['SearchRecurringOrders'])){
 				recurringsalesorders.lastrecurrence,
 				recurringsalesorders.stopdate,
 				recurringsalesorders.frequency,
-SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurrsalesorderdetails.discountpercent)) AS ordervalue
+SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurrsalesorderdetails.discountpercent)) as ordervalue
 			FROM recurringsalesorders INNER JOIN recurrsalesorderdetails
 			ON recurringsalesorders.recurrorderno = recurrsalesorderdetails.recurrorderno
 			INNER JOIN debtorsmaster
 			ON recurringsalesorders.debtorno = debtorsmaster.debtorno
 			INNER JOIN custbranch
 			ON debtorsmaster.debtorno = custbranch.debtorno
-			AND recurringsalesorders.branchcode = custbranch.branchcode
+			and recurringsalesorders.branchcode = custbranch.branchcode
 			INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
+			ON debtorsmaster.currcode = currencies.currabrev
 			WHERE recurringsalesorders.fromstkloc = '". $_POST['StockLocation'] . "'
 			GROUP BY recurringsalesorders.recurrorderno,
 				debtorsmaster.name,
@@ -81,7 +81,7 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<table cellpadding="2" width="90%" class="selection">
+	echo '<table cellpadding = "2" width = "90%" class = "selection">
 			<tr>
 				<th>' . __('Modify') . '</th>
 				<th>' . __('Customer') . '</th>
@@ -93,22 +93,22 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 				<th>' . __('Order Total') . '</th>
 			</tr>';
 
-	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
+	while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder=' . $MyRow['recurrorderno'];
+		$ModifyPage = $RootPath . '/RecurringSalesOrders.php?ModifyRecurringSalesOrder = ' . $MyRow['recurrorderno'];
 		$FormatedLastRecurrence = ConvertSQLDate($MyRow['lastrecurrence']);
 		$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
-		echo '<tr class="striped_row">
-				<td><a href="', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
+		echo '<tr class = "striped_row">
+				<td><a href = "', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
 				<td>', $MyRow['name'], '</td>
 				<td>', $MyRow['brname'], '</td>
 				<td>', $MyRow['customerref'], '</td>
 				<td>', $FormatedLastRecurrence, '</td>
 				<td>', $FormatedStopDate, '</td>
 				<td>', $MyRow['frequency'], '</td>
-				<td class="number">', $FormatedOrderValue, '</td>
+				<td class = "number">', $FormatedOrderValue, '</td>
 			</tr>';
 	//end of page full new headings if
 	}

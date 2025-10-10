@@ -24,17 +24,17 @@ $Result = DB_query($SQL);
 header("Content-type: text/xml");
 
 // Iterate through the rows, printing XML nodes for each
-echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" . "\n<markers>\n";
+echo "<?xml version = \"1.0\" encoding = \"UTF-8\"?>" . "\n<markers>\n";
 
 while ($MyRow = DB_fetch_array($Result)){
   // ADD TO XML DOCUMENT NODE
-  echo '<marker ';
-  echo 'name="' . parseToXML($MyRow['suppname']) . '" ';
-  echo 'address="' . parseToXML($MyRow["address1"] . ", " . $MyRow["address2"] . ", " . $MyRow["address3"] . ", " . $MyRow["address4"]) . '" ';
-  echo 'lat="' . $MyRow['lat'] . '" ';
-  echo 'lng="' . $MyRow['lng'] . '" ';
-  echo 'type="' . $MyRow['supptype'] . '" ';
-  echo "/>\n";
+	echo '<marker ';
+	echo 'name = "' . parseToXML($MyRow['suppname']) . '" ';
+	echo 'address = "' . parseToXML($MyRow["address1"] . ", " . $MyRow["address2"] . ", " . $MyRow["address3"] . ", " . $MyRow["address4"]) . '" ';
+	echo 'lat = "' . $MyRow['lat'] . '" ';
+	echo 'lng = "' . $MyRow['lng'] . '" ';
+	echo 'type = "' . $MyRow['supptype'] . '" ';
+	echo "/>\n";
 }
 
 // End XML file

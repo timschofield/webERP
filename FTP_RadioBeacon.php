@@ -4,13 +4,13 @@
 
 require(__DIR__ . '/includes/session.php');
 
-$Title=__('FTP order to Radio Beacon');
+$Title = __('FTP order to Radio Beacon');
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.php');
 
-echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . __('Freight Costs') . '" alt="" />' . ' ' . $Title . '
+echo '<p class = "page_title_text">
+		<img src = "'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title = "' . __('Freight Costs') . '" alt = "" />' . ' ' . $Title . '
 	</p>';
 
 
@@ -32,10 +32,10 @@ $SQL = "SELECT salesorders.orderno,
 				debtorsmaster,
 				custbranch
 			WHERE salesorders.orderno = salesorderdetails.orderno
-			AND salesorders.debtorno = debtorsmaster.debtorno
-			AND debtorsmaster.debtorno = custbranch.debtorno
-			AND salesorderdetails.completed=0
-			AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
+			and salesorders.debtorno = debtorsmaster.debtorno
+			and debtorsmaster.debtorno = custbranch.debtorno
+			and salesorderdetails.completed = 0
+			and salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
 			GROUP BY salesorders.orderno,
 				salesorders.debtorno,
 				salesorders.branchcode,
@@ -48,7 +48,7 @@ $SalesOrdersResult = DB_query($SQL, $ErrMsg);
 
 /*show a table of the orders returned by the SQL */
 
-echo '<table cellpadding="2" width="100%">';
+echo '<table cellpadding = "2" width = "100%">';
 $TableHeader =	'<tr>
 				<th>' . __('Modify') . '</th>
 				<th>' . __('Send to') . '<br />' . __('Radio Beacon') . '</th>
@@ -65,47 +65,47 @@ $TableHeader =	'<tr>
 echo $TableHeader;
 
 $j = 1;
-while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
+while ($MyRow = DB_fetch_array($SalesOrdersResult)) {
 
-	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo=' . $MyRow['orderno'];
+	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo = ' . $MyRow['orderno'];
 	$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
 	$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 	$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($MyRow['datepackingslipprinted']);
-	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber = ' . $MyRow['orderno'];
 
-	if ($MyRow['printedpackingslip'] ==1){
-		echo '<tr class="striped_row">
-				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
-				<td><font color=RED size="2">' . __('Already') . '<br />' . __('Sent') . '</font></td>
-				<td><font size="2">', $MyRow['name'], '</font></td>
-				<td><font size="2">', $MyRow['brname'], '</font></td>
-				<td><font size="2">', $MyRow['customerref'], '</font></td>
-				<td><font size="2">', $FormatedOrderDate, '</font></td>
-				<td><font size="2">', $FormatedDelDate, '</font></td>
-				<td><font size="2">', $MyRow['deliverto'], '</font></td>
-				<td class="number"><font size="2">', $FormatedOrderValue, '</font></td>
-				<td><font size="2">', $FormatedDateLastSent, '</font></td>
+	if ($MyRow['printedpackingslip'] ==1) {
+	echo '<tr class = "striped_row">
+				<td><font size = "2"><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
+				<td><font color = RED size = "2">' . __('Already') . '<br />' . __('Sent') . '</font></td>
+				<td><font size = "2">', $MyRow['name'], '</font></td>
+				<td><font size = "2">', $MyRow['brname'], '</font></td>
+				<td><font size = "2">', $MyRow['customerref'], '</font></td>
+				<td><font size = "2">', $FormatedOrderDate, '</font></td>
+				<td><font size = "2">', $FormatedDelDate, '</font></td>
+				<td><font size = "2">', $MyRow['deliverto'], '</font></td>
+				<td class = "number"><font size = "2">', $FormatedOrderValue, '</font></td>
+				<td><font size = "2">', $FormatedDateLastSent, '</font></td>
 			</tr>';
-	} else {
-		echo '<tr class="striped_row">
-				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
-				<td><font size="2"><a href="', $FTPDispatchNote, '">' . __('Send') . '</a></font></td>
-				<td><font size="2">', $MyRow['name'], '</font></td>
-				<td><font size="2">', $MyRow['brname'], '</font></td>
-				<td><font size="2">', $MyRow['customerref'], '</font></td>
-				<td><font size="2">', $FormatedOrderDate, '</font></td>
-				<td><font size="2">', $FormatedDelDate, '</font></td>
-				<td><font size="2">', $MyRow['deliverto'], '</font></td>
-				<td class="number"><font size="2">', $FormatedOrderValue, '</font></td>
-				<td><font size="2">', $FormatedDateLastSent, '</font></td>
+} else {
+		echo '<tr class = "striped_row">
+				<td><font size = "2"><a href = "', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
+				<td><font size = "2"><a href = "', $FTPDispatchNote, '">' . __('Send') . '</a></font></td>
+				<td><font size = "2">', $MyRow['name'], '</font></td>
+				<td><font size = "2">', $MyRow['brname'], '</font></td>
+				<td><font size = "2">', $MyRow['customerref'], '</font></td>
+				<td><font size = "2">', $FormatedOrderDate, '</font></td>
+				<td><font size = "2">', $FormatedDelDate, '</font></td>
+				<td><font size = "2">', $MyRow['deliverto'], '</font></td>
+				<td class = "number"><font size = "2">', $FormatedOrderValue, '</font></td>
+				<td><font size = "2">', $FormatedDateLastSent, '</font></td>
 			</tr>';
 	}
 	$j++;
-	if ($j == 12){
-		$j=1;
+	if ($j == 12) {
+	$j = 1;
 		 echo $TableHeader;
-	}
+}
 //end of page full new headings if
 }
 //end of while loop
@@ -115,12 +115,12 @@ echo '</table>';
 
 if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
-	if ($_SESSION['CompanyRecord']==0){
-		/*CompanyRecord will be 0 if the company information could not be retrieved */
+	if ($_SESSION['CompanyRecord']==0) {
+	/*CompanyRecord will be 0 if the company information could not be retrieved */
 		prnMsg(__('There was a problem retrieving the company information ensure that the company record is correctly set up'),'error');
 		include('includes/footer.php');
 		exit();
-	}
+}
 
 	/*Now get the order header info */
 
@@ -149,24 +149,24 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 					datepackingslipprinted
 				FROM salesorders,
 					debtorsmaster
-				WHERE salesorders.debtorno=debtorsmaster.debtorno
-				AND salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
-				AND salesorders.orderno='" . $_GET['OrderNo'] . "'";
+				WHERE salesorders.debtorno = debtorsmaster.debtorno
+				and salesorders.fromstkloc = '". $_SESSION['RadioBeaconStockLocation'] . "'
+				and salesorders.orderno = '" . $_GET['OrderNo'] . "'";
 
 
 	$ErrMsg = __('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('from the database');
 	$Result = DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($Result)==1){ /*There is ony one order header returned */
+	if (DB_num_rows($Result) == 1){ /*There is ony one order header returned */
 
 		$MyRow = DB_fetch_array($Result);
-		if ($MyRow['printedpackingslip']==1){
-			prnMsg(__('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has previously been sent to Radio Beacon') . '. ' . __('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . __('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
-			echo '<p><a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
-			echo '<p><a href="' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
+		if ($MyRow['printedpackingslip']==1) {
+	prnMsg(__('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has previously been sent to Radio Beacon') . '. ' . __('It was sent on') . ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) . '<br />' . __('To re-send the order with the balance not previously dispatched and invoiced the order must be modified to allow a reprint (or re-send)') . '.<br />' . __('This check is there to ensure that duplication of dispatches to the customer are avoided'),'warn');
+			echo '<p><a href = "' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber = ' . $_GET['OrderNo'] . '">' . __('Modify the order to allow a re-send or reprint') . ' (' . __('Select Delivery Details') . ')' . '</a>';
+			echo '<p><a href = "' . $RootPath . '/index.php">' . __('Back to the menu') . '</a>';
 			include('includes/footer.php');
 			exit();
-		 }
+}
 
 		/*Now get the line items */
 		$SQL = "SELECT stkcode,
@@ -177,8 +177,8 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 						unitprice
 					FROM salesorderdetails,
 						stockmaster
-					WHERE salesorderdetails.stkcode=stockmaster.stockid
-					AND salesorderdetails.orderno=" . $_GET['OrderNo'];
+					WHERE salesorderdetails.stkcode = stockmaster.stockid
+					and salesorderdetails.orderno = " . $_GET['OrderNo'];
 
 		$ErrMsg = __('There was a problem retrieving the line details for order number') . ' ' . $_GET['OrderNo'] . ' ' . __('from the database because');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -192,13 +192,13 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			if (file_exists($FileCounter)){
 				$fCounter = file($FileCounter);
 				$FileNumber = intval($fCounter[0]);
-				if ($FileNumber < 999){
-					$FileNumber++;
-				} else {
+				if ($FileNumber < 999) {
+	$FileNumber++;
+} else {
 					$FileNumber =1;
 				}
 			} else {
-				$FileNumber=1;
+				$FileNumber = 1;
 			}
 
 			$fp = fopen($FileCounter,'w');
@@ -215,7 +215,7 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			$PDRec = array();
 			$LineCounter =0;
 
-			while ($MyRow2=DB_fetch_array($Result)){
+			while ($MyRow2 = DB_fetch_array($Result)){
 
 				$PickQty = $MyRow2['quantity']- $MyRow2['qtyinvoiced'];
 				$PDRec[$LineCounter] = 'PD^^^' . $MyRow['debtorno'] . '^' . $_GET['OrderNo'] . '^' . $FileNumber . '^^^^^^^' . $MyRow2['stkcode'] . '^^' . $MyRow2['description'] . '^1^^^' . $MyRow2['quantity'] . '^' . $PickQty . '^^^^^^^^^^^^^^DX^^^^^^^^^^^^^^1000000000^' . $MyRow['customerref'] . '^^^^^^^^^^^^^^^^^^^^^^';
@@ -224,17 +224,17 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 
 			/*the file number is used as an integer to uniquely identify multiple sendings of the order
 			 for back orders dispatched later */
-			if ($FileNumber<10){
-				$FileNumber = '00' . $FileNumber;
-			} elseif ($FileNumber <100){
-				$FileNumber = '0' . $FileNumber;
-			}
+			if ($FileNumber<10) {
+	$FileNumber = '00' . $FileNumber;
+} elseif ($FileNumber <100) {
+	$FileNumber = '0' . $FileNumber;
+}
 			$FileName = $_SESSION['RadioBeaconHomeDir'] . '/' . $FilePrefix .  $FileNumber . '.txt';
 			$fp = fopen($FileName, 'w');
 
 			fwrite($fp, $PHRecord);
 
-			foreach ($PDRec AS $PD) {
+			foreach ($PDRec as $PD) {
 				fwrite($fp, $PD);
 			}
 			fclose($fp);
@@ -252,18 +252,18 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			} // upload the file
 			$upload = ftp_put($conn_id, $FilePrefix .  $FileNumber . '.txt', $FileName, FTP_ASCII); // check upload status
 			if (!$upload) {
-				prnMsg(__('FTP upload has failed'),'success');
+	prnMsg(__('FTP upload has failed'),'success');
 				exit();
-			} else {
+} else {
 				echo '<br />' . __('Uploaded') . ' ' . $FileName . ' ' . __('to') . ' ' . $_SESSION['RadioBeaconFTP_server'];
 			} // close the FTP stream
 			ftp_quit($conn_id);
 
 			/* Update the order printed flag to prevent double sendings */
 			$SQL = "UPDATE salesorders
-					SET printedpackingslip=1,
+					SET printedpackingslip = 1,
 						datepackingslipprinted = CURRENT_DATE
-					WHERE salesorders.orderno=" . $_GET['OrderNo'];
+					WHERE salesorders.orderno = " . $_GET['OrderNo'];
 			$Result = DB_query($SQL);
 
 			echo '<p>' . __('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . __('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;

@@ -23,17 +23,17 @@ $SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails OR
 
 while ($SalesOrderDetails = DB_fetch_array($SalesOrdersResult)) {
 
-	if($OrderNo != $SalesOrderDetails['orderno']) {
-		$LineNo = 0;
-	} else {
+	if ($OrderNo != $SalesOrderDetails['orderno']) {
+	$LineNo = 0;
+} else {
 		$LineNo++;
 	}
 
 	$OrderNo = $SalesOrderDetails['orderno'];
 	DB_query('UPDATE salesorderdetails
-		SET orderlineno=' . $LineNo . '
-		WHERE orderno=' . $OrderNo . "
-		AND stkcode='" . $SalesOrderDetails['stkcode'] ."'");
+		SET orderlineno = ' . $LineNo . '
+		WHERE orderno = ' . $OrderNo . "
+		and stkcode = '" . $SalesOrderDetails['stkcode'] ."'");
 
 }
 

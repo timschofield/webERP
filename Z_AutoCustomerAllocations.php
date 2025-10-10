@@ -31,27 +31,27 @@ if (isset($_GET['DebtorNo'])) {
 				debtortrans.rate,
 				debtortrans.ovamount+debtortrans.ovgst+debtortrans.ovdiscount+debtortrans.ovfreight as total,
 				debtortrans.alloc,
-				currencies.decimalplaces AS currdecimalplaces,
+				currencies.decimalplaces as currdecimalplaces,
 				debtorsmaster.currcode
 			FROM debtortrans INNER JOIN debtorsmaster
-			ON debtortrans.debtorno=debtorsmaster.debtorno
+			ON debtortrans.debtorno = debtorsmaster.debtorno
 			INNER JOIN systypes
-			ON debtortrans.type=systypes.typeid
+			ON debtortrans.type = systypes.typeid
 			INNER JOIN currencies
-			ON debtorsmaster.currcode=currencies.currabrev
-			WHERE debtortrans.debtorno='" . $_GET['DebtorNo'] . "'
-			AND ( (debtortrans.type=12 AND debtortrans.ovamount<0) OR debtortrans.type=11)
-			AND debtortrans.settled=0
+			ON debtorsmaster.currcode = currencies.currabrev
+			WHERE debtortrans.debtorno = '" . $_GET['DebtorNo'] . "'
+			and ( (debtortrans.type = 12 and debtortrans.ovamount<0) or debtortrans.type = 11)
+			and debtortrans.settled = 0
 			ORDER BY debtortrans.id";
 
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(__('No outstanding receipts or credits to be allocated for this customer'),'info');
 		include('includes/footer.php');
 		exit();
 	}
-	 echo '<table class="selection">';
+	 echo '<table class = "selection">';
 	echo $TableHeader;
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -81,13 +81,13 @@ if (isset($_GET['DebtorNo'])) {
 					alloc
 				FROM debtortrans INNER JOIN systypes
 				ON debtortrans.type = systypes.typeid
-				WHERE debtortrans.settled=0
-				AND (systypes.typeid=10 OR (systypes.typeid=12 AND ovamount>0))
-				AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
+				WHERE debtortrans.settled = 0
+				and (systypes.typeid = 10 or (systypes.typeid = 12 and ovamount>0))
+				and debtorno = '" . $_SESSION['Alloc']->DebtorNo . "'
 				ORDER BY debtortrans.id DESC";
 		$TransResult = DB_query($SQL);
 		$BalToAllocate = $_SESSION['Alloc']->TransAmt - $MyRow['alloc'];
-		while ($MyAlloc=DB_fetch_array($TransResult) AND $BalToAllocate < 0) {
+		while ($MyAlloc = DB_fetch_array($TransResult) and $BalToAllocate < 0) {
 			if ($MyAlloc['total']-$MyAlloc['alloc']< abs($BalToAllocate)) {
 				$ThisAllocation = $MyAlloc['total']-$MyAlloc['alloc'];
 			} else {
@@ -116,8 +116,8 @@ if (isset($_GET['DebtorNo'])) {
 include('includes/footer.php');
 
 function ProcessAllocation() {
-	if ($InputError==0) {
-		//
+	if ($InputError == 0) {
+	//
 		//========[ START TRANSACTION ]===========
 		//
 		$Error = '';
@@ -139,9 +139,9 @@ function ProcessAllocation() {
 							'" . $_SESSION['Alloc']->AllocTrans . "',
 							'" . $AllocnItem->ID . "'
 						)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not insert allocation record');
-				}
+}
 			}
 			$NewAllocTotal = $AllocnItem->PrevAlloc + $AllocnItem->AllocAmt;
 			$AllAllocations = $AllAllocations + $AllocnItem->AllocAmt;
@@ -149,11 +149,11 @@ function ProcessAllocation() {
 			$TotalDiffOnExch += $AllocnItem->DiffOnExch;
 
 			$SQL = "UPDATE debtortrans
-					SET diffonexch='" . $AllocnItem->DiffOnExch . "',
+					SET diffonexch = '" . $AllocnItem->DiffOnExch . "',
 					alloc = '" . $NewAllocTotal . "',
 					settled = '" . $Settled . "'
 					WHERE id = '" . $AllocnItem->ID."'";
-			if( !$Result = DB_query($SQL) ) {
+			if ( !$Result = DB_query($SQL) ) {
 				$Error = __('Could not update difference on exchange');
 			}
 		}
@@ -166,10 +166,10 @@ function ProcessAllocation() {
 		$SQL = "UPDATE debtortrans
 				SET alloc = '" .  -$AllAllocations . "',
 				diffonexch = '" . -$TotalDiffOnExch . "',
-				settled='" . $Settled . "'
+				settled = '" . $Settled . "'
 				WHERE id = '" . $_SESSION['Alloc']->AllocTrans . "'";
 
-		if( !$Result = DB_query($SQL) ) {
+		if ( !$Result = DB_query($SQL) ) {
 			$Error = __('Could not update receipt or credit note');
 		}
 
@@ -177,7 +177,7 @@ function ProcessAllocation() {
 		$MovtInDiffOnExch = -$_SESSION['Alloc']->PrevDiffOnExch - $TotalDiffOnExch;
 
 		if ($MovtInDiffOnExch !=0) {
-			if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
+	if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1) {
 				$PeriodNo = GetPeriod($_SESSION['Alloc']->TransDate);
 				$_SESSION['Alloc']->TransDate = FormatDateForSQL($_SESSION['Alloc']->TransDate);
 
@@ -198,9 +198,9 @@ function ProcessAllocation() {
 								'',
 								'" . $MovtInDiffOnExch . "'
 							)";
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update exchange difference in General Ledger');
-				}
+}
 
 		  		$SQL = "INSERT INTO gltrans (
 							type,
@@ -218,7 +218,7 @@ function ProcessAllocation() {
 									'',
 									'" . -$MovtInDiffOnExch . "')";
 
-				if( !$Result = DB_query($SQL) ) {
+				if ( !$Result = DB_query($SQL) ) {
 					$Error = __('Could not update debtors control in General Ledger');
 				}
 			}

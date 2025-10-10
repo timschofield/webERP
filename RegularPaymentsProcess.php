@@ -10,8 +10,8 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.php');
 include('includes/GLFunctions.php');
 
-echo '<p class="page_title_text" >
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
+echo '<p class = "page_title_text" >
+		<img src = "', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title = "', $Title, '" alt = "" />', ' ', $Title, '
 	</p>';
 
 if (isset($_POST['Add'])) {
@@ -30,7 +30,7 @@ if (isset($_POST['Add'])) {
 							regularpayments.days,
 							regularpayments.frequency
 						FROM regularpayments
-						WHERE id='" . $ID . "'";
+						WHERE id = '" . $ID . "'";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_array($Result);
 			$AddedPayments[$ID]['PaymentDate'] = ConvertSQLDate($MyRow['nextpayment']);
@@ -153,9 +153,9 @@ if (isset($_POST['Add'])) {
 		$ErrMsg = __('Cannot insert a bank transaction because');
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 
-		$SQL = "UPDATE regularpayments SET nextpayment='" . FormatDateForSQL($NextPaymentDate) . "',
-											completed='" . $Completed . "'
-										WHERE id='" . $ID . "'";
+		$SQL = "UPDATE regularpayments SET nextpayment = '" . FormatDateForSQL($NextPaymentDate) . "',
+											completed = '" . $Completed . "'
+										WHERE id = '" . $ID . "'";
 		$Result = DB_query($SQL, $ErrMsg, '', true);
 		DB_Txn_Commit();
 
@@ -164,8 +164,8 @@ if (isset($_POST['Add'])) {
 
 }
 
-echo '<form method="post" id="RegularPaymentsProcess" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
-echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+echo '<form method = "post" id = "RegularPaymentsProcess" action = "', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">';
+echo '<input type = "hidden" name = "FormID" value = "', $_SESSION['FormID'], '" />';
 
 $SQL = "SELECT regularpayments.id,
 				regularpayments.frequency,
@@ -182,11 +182,11 @@ $SQL = "SELECT regularpayments.id,
 				regularpayments.nextpayment
 			FROM regularpayments
 			INNER JOIN bankaccounts
-				ON bankaccounts.accountcode=regularpayments.bankaccountcode
+				ON bankaccounts.accountcode = regularpayments.bankaccountcode
 			INNER JOIN chartmaster
-				ON chartmaster.accountcode=regularpayments.glcode
-			WHERE completed=0
-				AND nextpayment <= CURRENT_DATE";
+				ON chartmaster.accountcode = regularpayments.glcode
+			WHERE completed = 0
+				and nextpayment <= CURRENT_DATE";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
@@ -206,40 +206,40 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		/*Get suggested FunctionalExRate */
-		$FuncExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev='" . $MyRow['currabrev'] . "'");
+		$FuncExRateResult = DB_query("SELECT rate FROM currencies WHERE currabrev = '" . $MyRow['currabrev'] . "'");
 		$FuncExRateRow = DB_fetch_row($FuncExRateResult);
 		$SuggestedFunctionalExRate = $FuncExRateRow[0];
 
 		/*Get the exchange rate between the functional currency and the payment currency*/
-		$ExRateResult = DB_query("SELECT decimalplaces, rate FROM currencies WHERE currabrev='" . $MyRow['currabrev'] . "'");
+		$ExRateResult = DB_query("SELECT decimalplaces, rate FROM currencies WHERE currabrev = '" . $MyRow['currabrev'] . "'");
 		$ExRateRow = DB_fetch_row($ExRateResult);
 		$TableExRate = $ExRateRow[1]; //this is the rate of exchange between the functional currency and the payment currency
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
 		if ($SuggestedFunctionalExRate != 0) {
-			$SuggestedExRate = $TableExRate / $SuggestedFunctionalExRate;
-		} else {
+	$SuggestedExRate = $TableExRate / $SuggestedFunctionalExRate;
+} else {
 			$SuggestedExRate = 0;
 		}
 		$DecimalPLaces = $ExRateRow[0];
 		$Tags = explode(',', $MyRow['tag']);
 		$TagText = GetDescriptionsFromTagArray($Tags);
-		echo '<tr class="striped_row">
+		echo '<tr class = "striped_row">
 				<td>', $MyRow['bankaccountname'], '</td>
 				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>
 				<td>', $TagText, '</td>
-				<td class="number">', locale_number_format($MyRow['amount'], $DecimalPLaces), '</td>
-				<td class="number"><input type="text" size="10" class="number" name="FuncRate', $MyRow['id'], '" value="', $SuggestedFunctionalExRate, '" /></td>
-				<td class="number"><input type="text" size="10" class="number" name="ExRate', $MyRow['id'], '" value="', $SuggestedExRate, '" /></td>
+				<td class = "number">', locale_number_format($MyRow['amount'], $DecimalPLaces), '</td>
+				<td class = "number"><input type = "text" size = "10" class = "number" name = "FuncRate', $MyRow['id'], '" value = "', $SuggestedFunctionalExRate, '" /></td>
+				<td class = "number"><input type = "text" size = "10" class = "number" name = "ExRate', $MyRow['id'], '" value = "', $SuggestedExRate, '" /></td>
 				<td>', $MyRow['currabrev'], '</td>
 				<td>', $MyRow['narrative'], '</td>
 				<td>', ConvertSQLDate($MyRow['nextpayment']), '</td>
-				<td><input type="checkbox" name="Payment', $MyRow['id'], '" />', __('Process'), '</td>
+				<td><input type = "checkbox" name = "Payment', $MyRow['id'], '" />', __('Process'), '</td>
 			</tr>';
 	}
 	echo '</table>';
 
-	echo '<div class="centre">
-			<input type="submit" name="Add" value="', __('Process Selected payments'), '" />
+	echo '<div class = "centre">
+			<input type = "submit" name = "Add" value = "', __('Process Selected payments'), '" />
 		</div>';
 } else {
 	prnMsg(__('There are no regular payments due'), 'info');
